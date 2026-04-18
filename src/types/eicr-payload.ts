@@ -83,12 +83,28 @@ export interface EICRBoardWithSchedule {
   incoming_device_rating: string;
   polarity_confirmed: boolean;
   phase_sequence_confirmed: boolean;
+  ring_final_circuit_confirmed: boolean;
   spd_operational: boolean;
   spd_na: boolean;
+  spd_type: string;
+  spd_t1: boolean;
+  spd_t2: boolean;
+  spd_t3: boolean;
+  spd_make: string;
+  spd_model: string;
+  spd_location: string;
+  spd_rated_current_ka: string;
   main_switch_bs_en: string;
   main_switch_type: string;
   main_switch_rating: string;
   main_switch_poles: string;
+  // Per-board test instruments used (A4:2026)
+  test_instrument_multifunction: string;
+  test_instrument_continuity: string;
+  test_instrument_insulation: string;
+  test_instrument_eli: string;
+  test_instrument_rcd: string;
+  test_instrument_earth_electrode: string;
   circuit_count: number;
   circuits: EICRCircuit[];
 }
@@ -113,10 +129,28 @@ export interface EICRAdditionalBoard {
   ways: string;
   zdb: string;
   ipf: string;
+  // A4:2026 — sub-boards carry full board details (parity with main)
+  supplied_from: string;
+  incoming_device_bs_en: string;
+  incoming_device_type: string;
+  incoming_device_rating: string;
+  main_switch_bs_en: string;
+  main_switch_type: string;
+  main_switch_rating: string;
+  main_switch_poles: string;
   polarity_confirmed: boolean;
   phase_sequence_confirmed: boolean;
+  ring_final_circuit_confirmed: boolean;
   spd_operational: boolean;
   spd_na: boolean;
+  spd_type: string;
+  spd_t1: boolean;
+  spd_t2: boolean;
+  spd_t3: boolean;
+  spd_location: string;
+  spd_make: string;
+  spd_model: string;
+  spd_rated_current_ka: string;
 }
 
 export interface EICRChecklistItem {
@@ -209,6 +243,7 @@ export interface EICRPayload {
     supply_frequency: string;
     supply_ac_dc: string;
     conductor_configuration: string;
+    dc_conductor_config: string;
     phases: string;
     earthing_arrangement: string;
     supply_type: string;
@@ -221,6 +256,7 @@ export interface EICRPayload {
     prospective_fault_current: string;
     supply_polarity_confirmed: boolean;
     other_sources_of_supply: string;
+    other_sources_of_supply_present: boolean;
   };
 
   main_protective_device: {
@@ -240,6 +276,7 @@ export interface EICRPayload {
     rcd_type: string;
     rcd_time_delay: string;
     rcd_measured_time: string;
+    rcd_breaking_capacity: string;
   };
 
   distribution_board: {
@@ -347,6 +384,7 @@ export interface EICRPayload {
     inspected_by: {
       name: string;
       signature: string;
+      date: string;
       for_on_behalf_of: string;
       position: string;
       address: string;

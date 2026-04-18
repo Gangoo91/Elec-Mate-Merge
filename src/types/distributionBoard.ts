@@ -99,6 +99,14 @@ export interface DistributionBoard {
   mainSwitchRcdMa?: string;
   mainSwitchRcdMs?: string;
 
+  // Test instruments used (per-board, A4:2026 Schedule of Test Results)
+  testInstrumentMultifunction?: string; // Serial / asset number
+  testInstrumentContinuity?: string;
+  testInstrumentInsulation?: string;
+  testInstrumentEli?: string; // Earth fault loop impedance
+  testInstrumentRcd?: string;
+  testInstrumentEarthElectrode?: string;
+
   // Timestamps
   createdAt?: Date;
   updatedAt?: Date;

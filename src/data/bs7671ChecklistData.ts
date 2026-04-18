@@ -67,7 +67,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
   {
     id: 'microgenerators',
     sectionNumber: '2',
-    title: 'PRESENCE OF ADEQUATE ARRANGEMENTS FOR OTHER SOURCES SUCH AS MICROGENERATORS',
+    title: 'PRESENCE OF ADEQUATE ARRANGEMENTS FOR OTHER SOURCES SUCH AS MICROGENERATORS (551.6; 551.7)',
     description: 'Check for adequate arrangements for other sources such as microgenerators',
     items: [
       {
@@ -241,13 +241,13 @@ export const bs7671InspectionSections: InspectionSection[] = [
       {
         id: 'item_4_17',
         number: '4.17',
-        item: 'RCD(s) provided for fault protection – includes RCBOs',
+        item: 'RCDs provided for fault protection - includes RCBOs',
         clause: '411.4.204; 411.5.2; 531.2',
       },
       {
         id: 'item_4_18',
         number: '4.18',
-        item: 'RCD(s) provided for additional protection/requirements – includes RCBOs',
+        item: 'RCDs provided for additional protection/requirements - includes RCBOs',
         clause: '411.3.3; 415.1',
       },
       {
@@ -317,7 +317,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
       {
         id: 'item_5_5',
         number: '5.5',
-        item: 'Adequacy of cables for current-carrying capacity with regard to the type and nature of installation',
+        item: 'Adequacy of cables for current-carrying capacity with regard for the type and nature of installation',
         clause: 'Section 523',
       },
       {
@@ -341,13 +341,13 @@ export const bs7671InspectionSections: InspectionSection[] = [
       {
         id: 'item_5_9',
         number: '5.9',
-        item: 'Wiring system(s) appropriate for the type and nature of the installation and external influences',
+        item: 'Wiring system(s) appropriate for the types and nature of the installation and external influences',
         clause: 'Section 522',
       },
       {
         id: 'item_5_10',
         number: '5.10',
-        item: 'Concealed cables installed in prescribed zones (see Section D. Extent and limitations)',
+        item: 'Concealed cables installed in prescribed zones (see Section D. Extent of limitations)',
         clause: '522.6.202',
       },
       {
@@ -391,7 +391,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
       {
         id: 'item_5_17',
         number: '5.17',
-        item: 'Termination of cables at enclosures – indicate extent of sampling in Section D of the report',
+        item: 'Termination of cables at enclosures - indicate extent and location of sampling in Section D of the report',
         clause: 'Section 526; 526.6; 526.8; 526.5; 522.8.5',
         description:
           '• Connections soundly made and under no undue strain (526.6)\n• No basic insulation of a conductor visible outside enclosure (526.8)\n• Connections of live conductors adequately enclosed (526.5)\n• Adequately connected at point of entry to enclosure (glands, bushes etc.) (522.8.5)',
@@ -425,7 +425,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
   {
     id: 'bath_shower',
     sectionNumber: '6',
-    title: 'LOCATION(S) CONTAINING A BATH OR SHOWER',
+    title: 'LOCATIONS CONTAINING A BATH OR SHOWER',
     description: 'Special requirements for bathrooms and shower rooms',
     isConditional: true,
     conditionalNote: 'Items 6.1–6.8 apply only if the location contains a bath or shower.',
@@ -439,13 +439,13 @@ export const bs7671InspectionSections: InspectionSection[] = [
       {
         id: 'item_6_1',
         number: '6.2',
-        item: 'Where used as a protective measure, requirements for SELV or PELV met',
+        item: 'Where used as a protective measure, requirements for SELV or PELV',
         clause: '701.414.4.5',
       },
       {
         id: 'item_6_2',
         number: '6.3',
-        item: 'Shaver supply units comply with BS EN 61558-2-5 (formerly BS 3535)',
+        item: 'Shaver supply units comply with BS EN 61558-2-5 formerly BS 3535',
         clause: '701.512.3',
       },
       {
@@ -489,7 +489,7 @@ export const bs7671InspectionSections: InspectionSection[] = [
       {
         id: 'item_7_0',
         number: '7.1',
-        item: 'List all other special installations or locations present, if any. (Record separately the results of particular inspections applied.)',
+        item: 'List all other special installations or locations present. (Record separately the results of particular inspections carried out and attach to the report.)',
         clause: 'Part 7',
       },
     ],

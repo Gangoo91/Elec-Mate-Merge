@@ -15,6 +15,7 @@ const INSPECTION_ITEM_NUMBERS = [
   '1_0',
   '1_1',
   '1_2',
+  '1_3',
   '2_0',
   '3_1',
   '3_2',
@@ -191,6 +192,7 @@ const boardWithScheduleSchema = z
     incoming_device_rating: z.string().default(''),
     polarity_confirmed: z.boolean().default(false),
     phase_sequence_confirmed: z.boolean().default(false),
+    ring_final_circuit_confirmed: z.boolean().default(false),
     spd_operational: z.boolean().default(false),
     spd_na: z.boolean().default(false),
     spd_t1: z.boolean().default(false),
@@ -205,6 +207,13 @@ const boardWithScheduleSchema = z
     main_switch_type: z.string().default(''),
     main_switch_rating: z.string().default(''),
     main_switch_poles: z.string().default(''),
+    // A4:2026 — per-board test instruments (Schedule of Test Results)
+    test_instrument_multifunction: z.string().default(''),
+    test_instrument_continuity: z.string().default(''),
+    test_instrument_insulation: z.string().default(''),
+    test_instrument_eli: z.string().default(''),
+    test_instrument_rcd: z.string().default(''),
+    test_instrument_earth_electrode: z.string().default(''),
     circuit_count: z.number().default(0),
     circuits: z.array(circuitSchema).default([]),
   })
@@ -233,8 +242,18 @@ const additionalBoardSchema = z
     ways: z.string().default(''),
     zdb: z.string().default(''),
     ipf: z.string().default(''),
+    // A4:2026 — sub-boards must carry full board details (parity with main)
+    supplied_from: z.string().default(''),
+    incoming_device_bs_en: z.string().default(''),
+    incoming_device_type: z.string().default(''),
+    incoming_device_rating: z.string().default(''),
+    main_switch_bs_en: z.string().default(''),
+    main_switch_type: z.string().default(''),
+    main_switch_rating: z.string().default(''),
+    main_switch_poles: z.string().default(''),
     polarity_confirmed: z.boolean().default(false),
     phase_sequence_confirmed: z.boolean().default(false),
+    ring_final_circuit_confirmed: z.boolean().default(false),
     spd_operational: z.boolean().default(false),
     spd_na: z.boolean().default(false),
     spd_t1: z.boolean().default(false),
@@ -371,6 +390,7 @@ export const eicrPayloadSchema = z
         supply_frequency: z.string().default('50'),
         supply_ac_dc: z.string().default('ac'),
         conductor_configuration: z.string().default(''),
+        dc_conductor_config: z.string().default(''),
         phases: z.string().default(''),
         earthing_arrangement: z.string().default(''),
         supply_type: z.string().default(''),
@@ -383,6 +403,7 @@ export const eicrPayloadSchema = z
         prospective_fault_current: z.string().default(''),
         supply_polarity_confirmed: z.boolean().default(false),
         other_sources_of_supply: z.string().default(''),
+        other_sources_of_supply_present: z.boolean().default(false),
       })
       .default({}),
 
@@ -406,6 +427,7 @@ export const eicrPayloadSchema = z
         rcd_type: z.string().default(''),
         rcd_time_delay: z.string().default(''),
         rcd_measured_time: z.string().default(''),
+        rcd_breaking_capacity: z.string().default(''),
       })
       .default({}),
 
@@ -485,6 +507,7 @@ export const eicrPayloadSchema = z
         ipf: z.string().default(''),
         confirmed_correct_polarity: z.boolean().default(false),
         confirmed_phase_sequence: z.boolean().default(false),
+        ring_final_circuit_confirmed: z.boolean().default(false),
         spd_operational_status: z.boolean().default(false),
         spd_na: z.boolean().default(false),
         spd_t1: z.boolean().default(false),
@@ -547,6 +570,7 @@ export const eicrPayloadSchema = z
           .object({
             name: z.string().default(''),
             signature: z.string().default(''),
+            date: z.string().default(''),
             for_on_behalf_of: z.string().default(''),
             position: z.string().default(''),
             address: z.string().default(''),
@@ -844,6 +868,21 @@ export const eicrPayloadSchema = z
     // RCD details (flat)
     rcd_time_delay: s,
     rcd_measured_time: s,
+    rcd_breaking_capacity: s,
+
+    // A4:2026 — Supply variants + tick-box
+    other_sources_of_supply_present: b,
+    dc_conductor_config: s,
+
+    // A4:2026 — Section E + Section J
+    general_condition: s,
+    maximum_demand: s,
+    maximum_demand_unit: s,
+
+    // A4:2026 — Schedule of Test Results signature
+    schedule_tested_by_name: s,
+    schedule_tested_by_date: s,
+    schedule_tested_by_signature: s,
 
     // Section K
     no_remedial_action: b,
@@ -851,6 +890,7 @@ export const eicrPayloadSchema = z
     // Schedule counts
     inspection_schedule_count: z.number().default(1).optional(),
     test_schedule_count: z.number().default(1).optional(),
+    continuation_sheets_count: z.number().default(0).optional(),
 
     // ── Flat inspection keys (595) ─────────────────────────────────
     ...buildFlatInspectionSchema(),

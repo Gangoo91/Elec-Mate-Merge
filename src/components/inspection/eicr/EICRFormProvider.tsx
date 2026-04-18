@@ -117,10 +117,23 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       supplyPME: '',
       earthingArrangement: 'TN-C-S',
       earthElectrodeType: '',
+      // A4:2026 — Other sources tick-box + DC variant
+      otherSourcesOfSupplyPresent: 'false',
+      otherSourcesOfSupply: '',
+      dcConductorConfig: '',
       mainProtectiveDevice: '',
       mainProtectiveDeviceCustom: '',
       rcdMainSwitch: '',
       rcdRating: '',
+      rcdBreakingCapacity: '',
+      // A4:2026 — Schedule of Test Results signature + counts + Section E/J
+      scheduleTestedByName: '',
+      scheduleTestedByDate: '',
+      scheduleTestedBySignature: '',
+      continuationSheetsCount: '',
+      generalCondition: '',
+      maximumDemand: '',
+      maximumDemandUnit: 'amps',
 
       // Earthing & Bonding
       earthElectrodeResistance: '',
@@ -218,6 +231,8 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     data: formData,
     enabled: true,
     customerId: customerIdFromNav,
+    // Gate autosave while loading from cloud — stops blank initial state overwriting real data.
+    isHydrating: isLoadingReport,
   });
 
   // Helper function to check if form is empty (for auto-filling profile)
@@ -533,10 +548,22 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       supplyPME: '',
       earthingArrangement: '',
       earthElectrodeType: '',
+      // A4:2026 fields (mirror)
+      otherSourcesOfSupplyPresent: 'false',
+      otherSourcesOfSupply: '',
+      dcConductorConfig: '',
       mainProtectiveDevice: '',
       mainProtectiveDeviceCustom: '',
       rcdMainSwitch: '',
       rcdRating: '',
+      rcdBreakingCapacity: '',
+      scheduleTestedByName: '',
+      scheduleTestedByDate: '',
+      scheduleTestedBySignature: '',
+      continuationSheetsCount: '',
+      generalCondition: '',
+      maximumDemand: '',
+      maximumDemandUnit: 'amps',
       earthElectrodeResistance: '',
       mainBondingSize: '',
       mainBondingSizeCustom: '',

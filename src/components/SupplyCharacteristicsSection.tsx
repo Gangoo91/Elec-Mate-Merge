@@ -446,15 +446,29 @@ const SupplyCharacteristicsSectionInner = ({
             </FormField>
             <FormField label="Wires">
               <FormSelectSheet
-                value={formData.conductorConfiguration || ''}
-                onValueChange={(value) => onUpdate('conductorConfiguration', value)}
-                label="Conductor Configuration"
+                value={formData.supplyAcDc === 'dc' ? (formData.dcConductorConfig || '') : (formData.conductorConfiguration || '')}
+                onValueChange={(value) => {
+                  if (formData.supplyAcDc === 'dc') {
+                    onUpdate('dcConductorConfig', value);
+                  } else {
+                    onUpdate('conductorConfiguration', value);
+                  }
+                }}
+                label={formData.supplyAcDc === 'dc' ? 'DC Conductor Configuration' : 'Conductor Configuration'}
                 placeholder="—"
-                options={[
-                  { value: '2-wire', label: '2-wire', description: '1-phase, 2-wire' },
-                  { value: '3-wire', label: '3-wire', description: '2-phase or 3-phase, 3-wire' },
-                  { value: '4-wire', label: '4-wire', description: '3-phase, 4-wire' },
-                ]}
+                options={
+                  formData.supplyAcDc === 'dc'
+                    ? [
+                        { value: 'dc-2-wire', label: 'DC 2-wire' },
+                        { value: 'dc-3-wire', label: 'DC 3-wire' },
+                        { value: 'dc-other', label: 'DC Other' },
+                      ]
+                    : [
+                        { value: '2-wire', label: '2-wire', description: '1-phase, 2-wire' },
+                        { value: '3-wire', label: '3-wire', description: '2-phase or 3-phase, 3-wire' },
+                        { value: '4-wire', label: '4-wire', description: '3-phase, 4-wire' },
+                      ]
+                }
               />
             </FormField>
             <FormField label="Hz">
@@ -536,15 +550,36 @@ const SupplyCharacteristicsSectionInner = ({
                 Confirmed
               </button>
             </FormField>
+            {/* A4:2026 — Other sources of supply tick-box */}
             <FormField label="Other Sources">
+              <button
+                type="button"
+                onClick={() => {
+                  haptic.light();
+                  onUpdate('otherSourcesOfSupplyPresent', formData.otherSourcesOfSupplyPresent === 'true' ? 'false' : 'true');
+                }}
+                className={cn(
+                  'w-full h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-2',
+                  formData.otherSourcesOfSupplyPresent === 'true'
+                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                )}
+              >
+                {formData.otherSourcesOfSupplyPresent === 'true' && <Check className="h-3.5 w-3.5" />}
+                Present
+              </button>
+            </FormField>
+          </div>
+          {formData.otherSourcesOfSupplyPresent === 'true' && (
+            <FormField label="Other Sources — details (continuation sheet)">
               <Input
                 value={formData.otherSourcesOfSupply || ''}
                 onChange={(e) => onUpdate('otherSourcesOfSupply', e.target.value)}
-                placeholder="Solar, generator..."
+                placeholder="Solar PV, generator, battery storage..."
                 className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
               />
             </FormField>
-          </div>
+          )}
         </div>
       </div>
 

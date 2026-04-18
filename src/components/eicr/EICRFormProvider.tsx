@@ -146,11 +146,26 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       supplyPME: '',
       earthingArrangement: 'TN-C-S',
       earthElectrodeType: '',
+      // A4:2026 — Other sources of supply tick-box + details + DC variant
+      otherSourcesOfSupplyPresent: 'false',
+      otherSourcesOfSupply: '',
+      dcConductorConfig: '',
       mainProtectiveDevice: '',
       mainProtectiveDeviceCustom: '',
       rcdMainSwitch: '',
       rcdRating: '',
       rcdType: '',
+      rcdBreakingCapacity: '',
+      // A4:2026 — Schedule of Test Results signature
+      scheduleTestedByName: '',
+      scheduleTestedByDate: '',
+      scheduleTestedBySignature: '',
+      // A4:2026 — Section H continuation sheets count (auto-derived if blank)
+      continuationSheetsCount: '',
+      // A4:2026 — Section E General condition + Section J Maximum demand
+      generalCondition: '',
+      maximumDemand: '',
+      maximumDemandUnit: 'amps',
       mainSwitchBsEn: '',
       mainSwitchType: '',
       mainSwitchRating: '',
@@ -319,6 +334,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     enabled: true,
     customerId: customerIdFromNav,
     onReportCreated: handleReportCreated,
+    // Gate autosave while the report is loading from cloud — prevents the blank
+    // initial state from overwriting real data before hydration completes.
+    isHydrating: isLoadingReport,
   });
 
   // Helper function to check if form is empty (for auto-filling profile)
@@ -903,11 +921,23 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       supplyPME: '',
       earthingArrangement: '',
       earthElectrodeType: '',
+      // A4:2026 fields (mirror of primary defaults)
+      otherSourcesOfSupplyPresent: 'false',
+      otherSourcesOfSupply: '',
+      dcConductorConfig: '',
       mainProtectiveDevice: '',
       mainProtectiveDeviceCustom: '',
       rcdMainSwitch: '',
       rcdRating: '',
       rcdType: '',
+      rcdBreakingCapacity: '',
+      scheduleTestedByName: '',
+      scheduleTestedByDate: '',
+      scheduleTestedBySignature: '',
+      continuationSheetsCount: '',
+      generalCondition: '',
+      maximumDemand: '',
+      maximumDemandUnit: 'amps',
       mainSwitchBsEn: '',
       mainSwitchType: '',
       mainSwitchRating: '',

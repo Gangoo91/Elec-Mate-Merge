@@ -10,6 +10,7 @@
         margin: 3mm 4mm 3mm 4mm;
       }
 
+      /* A4:2026 — Schedule of Test Results MUST render landscape (30+ columns) */
       @page schedule {
         size: A4 landscape;
         margin: 3mm;
@@ -18,6 +19,13 @@
       .schedule-page {
         page: schedule;
         page-break-before: always;
+        /* Belt-and-braces: explicit landscape dimensions so even if named-page CSS
+           is ignored by the renderer, the inner table is sized for landscape A4
+           (297mm × 210mm minus margins). */
+        width: 291mm;
+        max-width: 291mm;
+        min-height: 204mm;
+        overflow: visible;
       }
 
       * {
@@ -1089,7 +1097,7 @@
       </div>
     </div>
 
-    <!-- SECTION C: DESCRIPTION OF PREMISES -->
+    <!-- SECTION C: DESCRIPTION OF PREMISES (A4:2026) -->
     <div class="section">
       <div class="section-title">Section C: Description of Premises</div>
       <div class="inline-form">
@@ -1097,69 +1105,24 @@
           <span class="inline-label">Type:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                id="domestic"
-                {%
-                if
-                installation_details.description=""
-                ="domestic"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
-              <label for="domestic">Domestic</label>
+              <input type="checkbox" id="residential" {% if installation_details.description == "domestic" or installation_details.description == "residential" %}checked{% endif %} />
+              <label for="residential">Residential</label>
             </div>
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                id="commercial"
-                {%
-                if
-                installation_details.description=""
-                ="commercial"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
+              <input type="checkbox" id="commercial" {% if installation_details.description == "commercial" %}checked{% endif %} />
               <label for="commercial">Commercial</label>
             </div>
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                id="industrial"
-                {%
-                if
-                installation_details.description=""
-                ="industrial"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
+              <input type="checkbox" id="industrial" {% if installation_details.description == "industrial" %}checked{% endif %} />
               <label for="industrial">Industrial</label>
             </div>
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                id="other"
-                {%
-                if
-                installation_details.description=""
-                ="other"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
-              <label for="other">Other</label>
+              <input type="checkbox" id="other" {% if installation_details.description == "other" %}checked{% endif %} />
+              <label for="other">Other (include brief description)</label>
             </div>
+            {% if installation_details.description == "other" and installation_details.other_premises_description != "" %}
+            <span class="inline-value" style="margin-left: 8px;">{{installation_details.other_premises_description}}</span>
+            {% endif %}
           </div>
         </div>
         <div class="inline-group">
@@ -1172,35 +1135,19 @@
           <span class="inline-label">Evidence of alterations:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                {%
-                if
-                installation_details.evidence_of_alterations=""
-                ="yes"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
+              <input type="checkbox" {% if installation_details.evidence_of_alterations == "yes" %}checked{% endif %} />
               <label>Yes</label>
             </div>
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                {%
-                if
-                installation_details.evidence_of_alterations=""
-                ="no"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
-              <label>No</label>
+              <input type="checkbox" {% if installation_details.evidence_of_alterations == "not-apparent" or installation_details.evidence_of_alterations == "no" %}checked{% endif %} />
+              <label>Not apparent</label>
             </div>
+            {% if installation_details.evidence_of_alterations == "yes" %}
+            <div class="checkbox-item" style="margin-left: 10px;">
+              <span class="inline-label">If yes, age:</span>
+              <span class="inline-value">{{installation_details.alterations_age | default: "-"}} yrs</span>
+            </div>
+            {% endif %}
           </div>
         </div>
         <div class="inline-group" style="flex: 1">
@@ -1209,52 +1156,33 @@
         </div>
       </div>
       <div class="inline-form" style="margin-top: 4px">
+        <!-- A4:2026 — Installation records available (Reg 651.1) -->
+        <div class="inline-group">
+          <span class="inline-label">Installation records available? (Reg 651.1):</span>
+          <div class="checkbox-row">
+            <div class="checkbox-item">
+              <input type="checkbox" {% if installation_details.installation_records_available == "yes" %}checked{% endif %} />
+              <label>Yes</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" {% if installation_details.installation_records_available == "no" %}checked{% endif %} />
+              <label>No</label>
+            </div>
+          </div>
+        </div>
         <div class="inline-group">
           <span class="inline-label">Date of last inspection:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                {%
-                if
-                installation_details.last_inspection_type=""
-                ="known"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
+              <input type="checkbox" {% if installation_details.last_inspection_type == "known" %}checked{% endif %} />
               <label>Known</label>
             </div>
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                {%
-                if
-                installation_details.last_inspection_type=""
-                ="unknown"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
+              <input type="checkbox" {% if installation_details.last_inspection_type == "unknown" %}checked{% endif %} />
               <label>Unknown</label>
             </div>
             <div class="checkbox-item">
-              <input
-                type="checkbox"
-                {%
-                if
-                installation_details.last_inspection_type=""
-                ="not-applicable"
-                %}
-                checked
-                {%
-                endif
-                %}
-              />
+              <input type="checkbox" {% if installation_details.last_inspection_type == "first" or installation_details.last_inspection_type == "not-applicable" %}checked{% endif %} />
               <label>N/A (First)</label>
             </div>
           </div>
@@ -1301,6 +1229,33 @@
           <span class="inline-value wide">{{installation_details.limitations_of_inspection}}</span>
         </div>
       </div>
+      <!-- A4:2026 — Operational limitations -->
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Operational limitations including the reasons:</span>
+          <span class="inline-value wide">{{installation_details.operational_limitations}}</span>
+        </div>
+      </div>
+      <!-- A4:2026 — Standard limitations boilerplate -->
+      <div class="inline-form" style="margin-top: 6px; padding: 6px 8px; background: #f8fafc; border-left: 3px solid #fbbf24;">
+        <div class="inline-group" style="flex: 1; display: block;">
+          <div style="font-size: 8.5px; font-weight: 600; color: #475569; margin-bottom: 4px;">Standard Limitations (BS 7671:2018+A4:2026):</div>
+          <div style="font-size: 8px; line-height: 1.4; color: #334155;">
+            Unless specifically agreed between the client and inspector prior to the inspection:
+            <ul style="margin: 3px 0 3px 14px; padding: 0;">
+              <li>Cables concealed within trunking and conduits, under floors, in roof spaces, and generally within the fabric of the building or underground, have not been inspected.</li>
+              <li>No checks for safety alerts, corrective actions or product recalls for electrical equipment forming part of the installation have been made.</li>
+            </ul>
+            An inspection should be made of other electrical equipment housed within an accessible roof space.
+          </div>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group">
+          <span class="inline-label">Inspection &amp; Testing carried out in accordance with BS 7671:2018, as amended to:</span>
+          <span class="inline-value">{{installation_details.bs_amendment | default: "A4:2026"}}</span>
+        </div>
+      </div>
     </div>
 
     <!-- SECTION E: SUMMARY OF CONDITION -->
@@ -1341,6 +1296,18 @@
           </div>
         </div>
       </div>
+      {% if general_condition and general_condition != "" %}
+      <div class="inline-form" style="margin-top: 6px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">General Condition (A4:2026):</span>
+          <span class="inline-value wide">{{general_condition}}</span>
+        </div>
+      </div>
+      {% endif %}
+      <!-- A4:2026 — Section E advisory note (C3 / FI) -->
+      <div style="font-size: 8px; color: #475569; margin-top: 6px; padding: 4px 6px; background: #f8fafc; border-left: 3px solid #cbd5e1; line-height: 1.4;">
+        <em>Any observation classified as 'Improvement recommended' (code C3), or 'Further investigation' (code FI), is advisory and does not affect the overall assessment but should be given due consideration.</em>
+      </div>
     </div>
 
     <!-- DECLARATION -->
@@ -1371,69 +1338,43 @@
           <tr>
             <td>
               <div class="data-field">
-                <div class="data-field-label">System Type</div>
-                <div class="checkbox-row" style="margin-top: 4px">
+                <div class="data-field-label">System Type (A4:2026)</div>
+                <div class="checkbox-row" style="margin-top: 4px; flex-wrap: wrap; gap: 8px;">
                   <div class="checkbox-item">
-                    <input
-                      type="checkbox"
-                      {%
-                      if
-                      supply_characteristics.earthing_arrangement=""
-                      ="TN-C"
-                      %}
-                      checked
-                      {%
-                      endif
-                      %}
-                    />
+                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TN-C" %}checked{% endif %} />
                     <label>TN-C</label>
                   </div>
                   <div class="checkbox-item">
-                    <input
-                      type="checkbox"
-                      {%
-                      if
-                      supply_characteristics.earthing_arrangement=""
-                      ="TN-S"
-                      %}
-                      checked
-                      {%
-                      endif
-                      %}
-                    />
+                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TN-S" %}checked{% endif %} />
                     <label>TN-S</label>
                   </div>
                   <div class="checkbox-item">
-                    <input
-                      type="checkbox"
-                      {%
-                      if
-                      supply_characteristics.earthing_arrangement=""
-                      ="TN-C-S"
-                      %}
-                      checked
-                      {%
-                      endif
-                      %}
-                    />
-                    <label>TN-C-S</label>
+                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TN-C-S" or supply_characteristics.earthing_arrangement == "TN-C-S-PME" %}checked{% endif %} />
+                    <label>TN-C-S (PME)</label>
                   </div>
                   <div class="checkbox-item">
-                    <input
-                      type="checkbox"
-                      {%
-                      if
-                      supply_characteristics.earthing_arrangement=""
-                      ="TT"
-                      %}
-                      checked
-                      {%
-                      endif
-                      %}
-                    />
+                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TN-C-S-PNB" %}checked{% endif %} />
+                    <label>TN-C-S (PNB)</label>
+                  </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TT" %}checked{% endif %} />
                     <label>TT</label>
                   </div>
+                  <div class="checkbox-item">
+                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "IT" %}checked{% endif %} />
+                    <label>IT</label>
+                  </div>
                 </div>
+              </div>
+              <!-- A4:2026 — Other sources of supply tick-box -->
+              <div class="data-field" style="margin-top: 6px;">
+                <div class="checkbox-item">
+                  <input type="checkbox" {% if supply_characteristics.other_sources_of_supply_present %}checked{% endif %} />
+                  <label>Other sources of supply (as detailed on attached continuation sheet)</label>
+                </div>
+                {% if supply_characteristics.other_sources_of_supply_present and supply_characteristics.other_sources_of_supply != "" %}
+                <div class="data-field-value" style="font-size: 8px; margin-top: 2px;">{{supply_characteristics.other_sources_of_supply}}</div>
+                {% endif %}
               </div>
               <div class="data-field">
                 <div class="data-field-label">Supply PME</div>
@@ -1461,6 +1402,12 @@
                 <div class="data-field-label">Number of Phases</div>
                 <div class="data-field-value">{{supply_characteristics.phases}}</div>
               </div>
+              {% if supply_characteristics.supply_ac_dc == "dc" and supply_characteristics.dc_conductor_config != "" %}
+              <div class="data-field">
+                <div class="data-field-label">DC Conductor Configuration (A4:2026)</div>
+                <div class="data-field-value">{{supply_characteristics.dc_conductor_config}}</div>
+              </div>
+              {% endif %}
               <div class="data-field">
                 <div class="data-field-label">Main Protective Device</div>
                 <div class="data-field-value">{{main_protective_device.device_type}}</div>
@@ -1473,16 +1420,42 @@
                 <div class="data-field-label">Breaking Capacity</div>
                 <div class="data-field-value">{{main_protective_device.breaking_capacity}} kA</div>
               </div>
+              <!-- A4:2026 — Confirmation of supply polarity -->
+              <div class="data-field">
+                <div class="checkbox-item">
+                  <input type="checkbox" {% if supply_characteristics.supply_polarity_confirmed %}checked{% endif %} />
+                  <label>Confirmation of supply polarity</label>
+                </div>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- SECTION G: BONDING -->
+    <!-- SECTION G: BONDING + A4:2026 Maximum Demand -->
     <div class="section avoid-break">
-      <div class="section-title">Section G: Main Protective Bonding Conductors</div>
-      <div class="inline-form">
+      <div class="section-title">Section G: Particulars of Installation</div>
+      <!-- A4:2026 — Means of Earthing + Maximum Demand -->
+      <div class="inline-form" style="background: #fffbeb; padding: 6px 8px; border-left: 3px solid #fbbf24;">
+        <div class="inline-group">
+          <div class="checkbox-item">
+            <input type="checkbox" {% if earthing_bonding.means_of_earthing_distributor %}checked{% endif %} />
+            <label>Distributor's facility</label>
+          </div>
+        </div>
+        <div class="inline-group">
+          <div class="checkbox-item">
+            <input type="checkbox" {% if earthing_bonding.means_of_earthing_electrode %}checked{% endif %} />
+            <label>Installation earth electrode</label>
+          </div>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Maximum Demand (load):</span>
+          <span class="inline-value">{{maximum_demand | default: "-"}} {{maximum_demand_unit | default: "A"}}</span>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
         <div class="inline-group">
           <span class="inline-label">Main Bonding Size (mm&#178;):</span>
           <span class="inline-value">{{earthing_bonding.main_bonding_size}}</span>
@@ -1534,6 +1507,12 @@
               <span class="inline-label">Ways:</span>
               <span class="inline-value">{{distribution_board.board_ways}}</span>
             </div>
+            <!-- A4:2026 — Supplied from -->
+            {% assign main_board_schedule = boards_with_schedules | first %}
+            <div class="inline-group">
+              <span class="inline-label">Supplied from:</span>
+              <span class="inline-value">{{main_board_schedule.supplied_from | default: "DNO"}}</span>
+            </div>
           </div>
           <div
             class="inline-form"
@@ -1549,33 +1528,20 @@
             </div>
             <div class="inline-group">
               <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  {%
-                  if
-                  distribution_board_verification.confirmed_correct_polarity
-                  %}
-                  checked
-                  {%
-                  endif
-                  %}
-                />
+                <input type="checkbox" {% if distribution_board_verification.confirmed_correct_polarity %}checked{% endif %} />
                 <label>Polarity Confirmed</label>
+              </div>
+            </div>
+            <!-- A4:2026 — Ring Final Circuit Confirmed -->
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if distribution_board_verification.ring_final_circuit_confirmed %}checked{% endif %} />
+                <label>Ring Final Circuit</label>
               </div>
             </div>
             <div class="inline-group">
               <div class="checkbox-item">
-                <input
-                  type="checkbox"
-                  {%
-                  if
-                  distribution_board_verification.spd_operational_status
-                  %}
-                  checked
-                  {%
-                  endif
-                  %}
-                />
+                <input type="checkbox" {% if distribution_board_verification.spd_operational_status %}checked{% endif %} />
                 <label>SPD Operational</label>
               </div>
             </div>
@@ -1601,7 +1567,7 @@
         </div>
       </div>
 
-      <!-- Additional Boards -->
+      <!-- Additional Boards (A4:2026 — full board details, SPDs, ring final, supplied from) -->
       {% for board in additional_boards %}
       <div class="board-card">
         <div class="board-card-header">
@@ -1626,6 +1592,10 @@
               <span class="inline-label">Ways:</span>
               <span class="inline-value">{{board.ways}}</span>
             </div>
+            <div class="inline-group">
+              <span class="inline-label">Supplied from:</span>
+              <span class="inline-value">{{board.supplied_from | default: "Main DB"}}</span>
+            </div>
           </div>
           <div
             class="inline-form"
@@ -1639,33 +1609,106 @@
               <span class="inline-label">Ipf (kA):</span>
               <span class="inline-value">{{board.ipf}}</span>
             </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if board.polarity_confirmed %}checked{% endif %} />
+                <label>Polarity Confirmed</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if board.phase_sequence_confirmed %}checked{% endif %} />
+                <label>Phase Sequence</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if board.ring_final_circuit_confirmed %}checked{% endif %} />
+                <label>Ring Final Circuit</label>
+              </div>
+            </div>
+          </div>
+          <!-- A4:2026 — SPD details for this sub-board -->
+          <div class="inline-form" style="border: none; padding: 0; background: transparent; margin-top: 4px">
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if board.spd_operational %}checked{% endif %} />
+                <label>SPD Operational</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if board.spd_na %}checked{% endif %} />
+                <label>N/A</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if board.spd_t1 %}checked{% endif %} />
+                <label>T1</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if board.spd_t2 %}checked{% endif %} />
+                <label>T2</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if board.spd_t3 %}checked{% endif %} />
+                <label>T3</label>
+              </div>
+            </div>
+            {% if board.spd_make and board.spd_make != "" %}
+            <div class="inline-group">
+              <span class="inline-label">SPD Make/Model:</span>
+              <span class="inline-value">{{board.spd_make}} {{board.spd_model}}</span>
+            </div>
+            {% endif %}
+            {% if board.spd_location and board.spd_location != "" %}
+            <div class="inline-group">
+              <span class="inline-label">SPD Location:</span>
+              <span class="inline-value">{{board.spd_location}}</span>
+            </div>
+            {% endif %}
+            {% if board.spd_rated_current_ka and board.spd_rated_current_ka != "" %}
+            <div class="inline-group">
+              <span class="inline-label">SPD Rated Current (kA):</span>
+              <span class="inline-value">{{board.spd_rated_current_ka}}</span>
+            </div>
+            {% endif %}
           </div>
         </div>
       </div>
       {% endfor %}
 
-      <!-- RCD Details -->
-      <div class="section-subtitle">RCD Details</div>
+      <!-- RCD Details (A4:2026 — full main switch block) -->
+      <div class="section-subtitle">If RCD Main Switch (A4:2026)</div>
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">RCD Main Switch:</span>
           <span class="inline-value">{{ rcd_details.rcd_main_switch }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">RCD Rating:</span>
-          <span class="inline-value">{{ rcd_details.rcd_rating }}</span>
+          <span class="inline-label">Type (AC/A/F/B):</span>
+          <span class="inline-value">{{ rcd_details.rcd_type }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">RCD Type:</span>
-          <span class="inline-value">{{ rcd_details.rcd_type }}</span>
+          <span class="inline-label">I&#916;n (mA):</span>
+          <span class="inline-value">{{ rcd_details.rcd_rating }}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">Time Delay (ms):</span>
           <span class="inline-value">{{ rcd_details.rcd_time_delay }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">Measured Time (ms):</span>
+          <span class="inline-label">Measured Operating Time (ms):</span>
           <span class="inline-value">{{ rcd_details.rcd_measured_time }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Breaking Capacity (kA):</span>
+          <span class="inline-value">{{ rcd_details.rcd_breaking_capacity }}</span>
         </div>
       </div>
 
@@ -1717,6 +1760,28 @@
     </div>
     {% endif %}
 
+    <!-- A4:2026 Section H — Schedules and Continuation Sheets Attached -->
+    <div class="section avoid-break">
+      <div class="section-title">Schedules and Continuation Sheet(s) Attached</div>
+      <div class="inline-form" style="font-size: 8px;">
+        <div class="inline-group">
+          <span class="inline-label">Continuation sheet(s):</span>
+          <span class="inline-value">{{continuation_sheets_count | default: 0}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Schedule(s) of Inspection:</span>
+          <span class="inline-value">{{inspection_schedule_count | default: 1}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Schedule(s) of Circuit Details &amp; Test Results:</span>
+          <span class="inline-value">{{test_schedule_count | default: 1}}</span>
+        </div>
+      </div>
+      <div style="font-size: 7.5px; color: #64748b; margin-top: 4px;">
+        The schedule(s) and continuation sheet(s) listed are part of this document and this report is valid only when they are attached to it.
+      </div>
+    </div>
+
     <!-- =============================================
      PAGE 2: SCHEDULE OF INSPECTION
      ============================================= -->
@@ -1735,8 +1800,19 @@
       </div>
     </div>
 
-    <!-- Inspection Checklist -->
+    <!-- Inspection Checklist (A4:2026) -->
     <div class="section">
+      <!-- A4:2026 — Outcome legend at top of every Schedule of Inspection page -->
+      <div style="font-size: 8px; padding: 6px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 6px;">
+        <strong>Outcomes:</strong>
+        &nbsp;✓ Acceptable condition
+        &nbsp;|&nbsp; <strong>C1</strong> or <strong>C2</strong> Unacceptable condition
+        &nbsp;|&nbsp; <strong>C3</strong> Improvement recommended
+        &nbsp;|&nbsp; <strong>FI</strong> Further investigation
+        &nbsp;|&nbsp; <strong>N/V</strong> Not verified
+        &nbsp;|&nbsp; <strong>LIM</strong> Limitation
+        &nbsp;|&nbsp; <strong>N/A</strong> Not applicable
+      </div>
       <table class="inspection-table">
         <thead>
           <tr>
@@ -1746,115 +1822,127 @@
             <th style="width: 28px">N/A</th>
             <th style="width: 35px">C1/C2</th>
             <th style="width: 28px">C3</th>
+            <th style="width: 24px">FI</th>
             <th style="width: 28px">N/V</th>
             <th style="width: 28px">LIM</th>
           </tr>
         </thead>
         <tbody>
-          {% for section in inspection_items %} {% assign section_index = forloop.index %}
+          {% for section in inspection_items %}
           <tr class="section-header-row">
-            <td colspan="8">{{section_index}}.0 &nbsp; {{section.section_name}}</td>
+            <td colspan="9">{% if section.section_number and section.section_number != "" %}{{section.section_number}}.0 &nbsp; {% endif %}{{section.section_name}}</td>
           </tr>
           {% for item in section.items %}
           <tr>
-            <td class="item-num">{{section_index}}.{{forloop.index}}</td>
+            <td class="item-num">{{item.item_number}}</td>
             <td class="item-desc">
-              {% if section_index == 1 and forloop.index == 1 %}
-              <ul class="intake-list">
-                <li>Service cable</li>
-                <li>Service head</li>
-                <li>Earthing arrangement</li>
-                <li>Meter tails</li>
-                <li>Metering equipment</li>
-                <li>Isolator (where present)</li>
-              </ul>
-              {% else %} {{item.item}} {% endif %}
+              {{item.item}}
+              {% if item.clause and item.clause != "" %}<span style="color: #64748b; font-size: 8px;">&nbsp;({{item.clause}})</span>{% endif %}
             </td>
             <td class="outcome">{% if item.outcome == "satisfactory" %}✓{% endif %}</td>
-            <td class="outcome">{% if item.outcome == "not-applicable" %}✓{% endif %}</td>
+            <td class="outcome">{% if item.outcome == "not-applicable" or item.outcome == "N/A" %}✓{% endif %}</td>
             <td class="outcome-text">
               {% if item.outcome == 'C1' or item.outcome == 'C2' %}{{item.outcome}}{% endif %}
             </td>
             <td class="outcome">{% if item.outcome == "C3" %}✓{% endif %}</td>
-            <td class="outcome">{% if item.outcome == "not-verified" %}✓{% endif %}</td>
-            <td class="outcome">{% if item.outcome == "limitation" %}✓{% endif %}</td>
+            <td class="outcome">{% if item.outcome == "FI" %}✓{% endif %}</td>
+            <td class="outcome">{% if item.outcome == "not-verified" or item.outcome == "N/V" %}✓{% endif %}</td>
+            <td class="outcome">{% if item.outcome == "limitation" or item.outcome == "LIM" %}✓{% endif %}</td>
           </tr>
           {% endfor %} {% endfor %}
         </tbody>
       </table>
+      <!-- A4:2026 — Schedule of Inspection — Tested by -->
+      <div class="inline-form" style="margin-top: 10px;">
+        <div class="inline-group">
+          <span class="inline-label">Tested by (CAPITALS):</span>
+          <span class="inline-value">{{schedule_tested_by_name}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Signature:</span>
+          <span class="inline-value">{{schedule_tested_by_signature}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{schedule_tested_by_date}}</span>
+        </div>
+      </div>
     </div>
 
     <!-- =============================================
-     PAGE 3: SCHEDULE OF TEST RESULTS (LANDSCAPE)
+     PAGE 3+: SCHEDULE OF TEST RESULTS (LANDSCAPE)
+     A4:2026 — One landscape page PER distribution board
      ============================================= -->
+    {% for board in boards_with_schedules %}
     <div class="schedule-page">
       <div class="doc-header">
         <div class="doc-header-content">
           <div class="doc-title-section">
             <div class="doc-title">SCHEDULE OF CIRCUIT DETAILS AND TEST RESULTS</div>
             <div class="doc-subtitle">
-              {{distribution_board.board_designation | default: "Main Distribution Board"}} -
-              {{distribution_board.board_location}}
+              {{board.db_reference}}{% if board.db_location and board.db_location != "" %} — {{board.db_location}}{% endif %}
             </div>
           </div>
           <div class="doc-meta">
             <div class="cert-number">{{metadata.certificate_number}}</div>
-            <div class="page-number">Page 3 of 4</div>
+            <div class="page-number">Board {{forloop.index}} of {{boards_with_schedules.size}}</div>
           </div>
         </div>
       </div>
 
-      <!-- Test Instrument Details -->
+      <!-- Test Instrument Details: global + per-board (A4:2026) -->
       <div class="section" style="margin-bottom: 6px">
         <div class="section-title" style="font-size: 9px; padding: 4px 6px">
-          Test Instrument Details
+          Test Instruments Used (serial / asset numbers)
         </div>
         <div class="inline-form" style="font-size: 8px">
           <div class="inline-group">
-            <span class="inline-label">Instrument Make/Model:</span>
-            <span class="inline-value wide">{{test_instrument_details.make_model}}</span>
+            <span class="inline-label">Multifunction:</span>
+            <span class="inline-value">{{board.test_instrument_multifunction | default: test_instrument_details.serial_number}}</span>
           </div>
           <div class="inline-group">
-            <span class="inline-label">Serial No:</span>
-            <span class="inline-value">{{test_instrument_details.serial_number}}</span>
+            <span class="inline-label">Continuity:</span>
+            <span class="inline-value">{{board.test_instrument_continuity}}</span>
           </div>
           <div class="inline-group">
-            <span class="inline-label">Calibration Date:</span>
-            <span class="inline-value">{{test_instrument_details.calibration_date}}</span>
+            <span class="inline-label">Insulation Resistance:</span>
+            <span class="inline-value">{{board.test_instrument_insulation}}</span>
           </div>
           <div class="inline-group">
-            <span class="inline-label">Test Temperature:</span>
-            <span class="inline-value">{{test_instrument_details.test_temperature}}°C</span>
+            <span class="inline-label">Earth Fault Loop Impedance:</span>
+            <span class="inline-value">{{board.test_instrument_eli}}</span>
+          </div>
+          <div class="inline-group">
+            <span class="inline-label">RCD:</span>
+            <span class="inline-value">{{board.test_instrument_rcd}}</span>
+          </div>
+          <div class="inline-group">
+            <span class="inline-label">Earth Electrode:</span>
+            <span class="inline-value">{{board.test_instrument_earth_electrode}}</span>
           </div>
         </div>
       </div>
 
-      <!-- Distribution Board Info Header -->
+      <!-- Distribution Board Info Header (per board) -->
       <div class="board-info-header">
-        <div class="board-title">
-          {{distribution_board.board_designation | default: "Main Distribution Board"}}
-        </div>
+        <div class="board-title">{{board.db_reference}}</div>
         <div class="board-details">
-          <span><strong>Location:</strong> {{distribution_board.board_location}}</span>
-          <span><strong>Manufacturer:</strong> {{distribution_board.board_manufacturer}}</span>
-          <span><strong>Type:</strong> {{distribution_board.board_type}}</span>
-          <span><strong>Ways:</strong> {{distribution_board.board_ways}}</span>
+          <span><strong>Location:</strong> {{board.db_location}}</span>
+          <span><strong>Manufacturer:</strong> {{board.db_manufacturer}}</span>
+          <span><strong>Type:</strong> {{board.db_type}}</span>
+          <span><strong>Ways:</strong> {{board.db_ways}}</span>
+          <span><strong>Supplied from:</strong> {{board.supplied_from | default: "DNO"}}</span>
         </div>
         <div class="board-verification">
-          <span
-            ><strong>Zdb:</strong> {{distribution_board_verification.zdb | default: "-"}} Ω</span
-          >
-          <span
-            ><strong>Ipf:</strong> {{distribution_board_verification.ipf | default: "-"}} kA</span
-          >
-          <span
-            >Polarity: {% if distribution_board_verification.confirmed_correct_polarity %}✓{% else
-            %}○{% endif %}</span
-          >
-          <span
-            >SPD: {% if distribution_board_verification.spd_operational_status %}✓{% else %}○{%
-            endif %}</span
-          >
+          <span><strong>Zdb:</strong> {{board.zdb | default: "-"}} Ω</span>
+          <span><strong>Ipf:</strong> {{board.ipf | default: "-"}} kA</span>
+          <span>Polarity: {% if board.polarity_confirmed %}✓{% else %}○{% endif %}</span>
+          <span>Phase Seq: {% if board.phase_sequence_confirmed %}✓{% else %}○{% endif %}</span>
+          <span>Ring Final: {% if board.ring_final_circuit_confirmed %}✓{% else %}○{% endif %}</span>
+          <span>SPD: {% if board.spd_operational %}✓{% elsif board.spd_na %}N/A{% else %}○{% endif %}</span>
+          {% if board.spd_t1 %}<span>T1 ✓</span>{% endif %}
+          {% if board.spd_t2 %}<span>T2 ✓</span>{% endif %}
+          {% if board.spd_t3 %}<span>T3 ✓</span>{% endif %}
         </div>
       </div>
 
@@ -1906,7 +1994,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for circuit in schedule_of_tests %}
+          {% for circuit in board.circuits %}
           <tr>
             <td>{{circuit.circuit_number}}</td>
             <td colspan="3" class="desc">{{circuit.circuit_description}}</td>
@@ -1942,8 +2030,50 @@
           {% endfor %}
         </tbody>
       </table>
+
+      <!-- A4:2026 — Schedule of Test Results: Tested by (Name / Signature / Date) -->
+      <div class="inline-form" style="margin-top: 10px; font-size: 8px;">
+        <div class="inline-group">
+          <span class="inline-label">Tested by (CAPITALS):</span>
+          <span class="inline-value">{{schedule_tested_by_name}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Signature:</span>
+          <span class="inline-value" style="font-style: italic; font-family: cursive;">{{schedule_tested_by_signature}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Date:</span>
+          <span class="inline-value">{{schedule_tested_by_date}}</span>
+        </div>
+      </div>
+      <!-- A4:2026 footnotes for Schedule of Test Results -->
+      <div style="font-size: 7.5px; color: #64748b; margin-top: 6px; line-height: 1.3;">
+        Notes: Not all SPDs have visible functionality indication. Not all AFDDs have a manual test button. Where Ring Final Circuit testing is not applicable, an alternative test at rated residual operating current (I&#916;n) should be performed.
+      </div>
+      <!-- A4:2026 — Codes for types of wiring (footnote table from model form) -->
+      <div style="margin-top: 8px; padding: 6px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px;">
+        <div style="font-size: 8px; font-weight: 600; color: #475569; margin-bottom: 3px;">Codes for Types of Wiring (Schedule of Circuit Details column 3)</div>
+        <table style="width: 100%; font-size: 7.5px; border-collapse: collapse;">
+          <tr>
+            <td style="padding: 2px 4px;"><strong>A</strong> Thermoplastic insulated/sheathed cables</td>
+            <td style="padding: 2px 4px;"><strong>B</strong> Thermoplastic cables in metallic conduit</td>
+            <td style="padding: 2px 4px;"><strong>C</strong> Thermoplastic cables in non-metallic conduit</td>
+          </tr>
+          <tr>
+            <td style="padding: 2px 4px;"><strong>D</strong> Thermoplastic cables in metallic trunking</td>
+            <td style="padding: 2px 4px;"><strong>E</strong> Thermoplastic cables in non-metallic trunking</td>
+            <td style="padding: 2px 4px;"><strong>F</strong> Thermoplastic SWA cables</td>
+          </tr>
+          <tr>
+            <td style="padding: 2px 4px;"><strong>G</strong> Thermosetting SWA cables</td>
+            <td style="padding: 2px 4px;"><strong>H</strong> Mineral insulated cables</td>
+            <td style="padding: 2px 4px;"><strong>O</strong> Other &mdash; please state</td>
+          </tr>
+        </table>
+      </div>
     </div>
-    <!-- End schedule-page -->
+    {% endfor %}
+    <!-- End schedule-page (A4:2026: one per distribution board) -->
 
     <!-- =============================================
      PAGE 4: DECLARATIONS & SIGNATURES
@@ -2037,6 +2167,10 @@
           <div class="sig-field">
             <span class="sig-field-label">Address</span>
             <span class="sig-field-value">{{declarations.inspected_by.address}}</span>
+          </div>
+          <div class="sig-field">
+            <span class="sig-field-label">Date</span>
+            <span class="sig-field-value" style="max-width: 100px">{{declarations.inspected_by.date}}</span>
           </div>
           <div class="sig-field">
             <span class="sig-field-label">CP Scheme</span>
@@ -2198,30 +2332,39 @@
             action is required.
           </p>
           <p>
-            <strong>9.</strong> Where <strong>FI</strong> (Further Investigation) is stated, the
+            <strong>9.</strong> For items classified as <strong>C3</strong> ('Improvement
+            recommended'), in some cases, remedial work may improve the safety of the installation.
+            However, it should be noted that a C3 observation is advisory only and does not affect
+            the overall assessment of the Report.
+          </p>
+          <p>
+            <strong>10.</strong> Where <strong>FI</strong> (Further Investigation) is stated, the
             inspection has revealed an apparent deficiency which could not be fully identified due
             to the extent or limitations.
           </p>
           <p>
-            <strong>10.</strong> For safety reasons, the electrical installation should be
+            <strong>11.</strong> For safety reasons, the electrical installation should be
             re-inspected at appropriate intervals by a skilled person. The recommended date is
-            stated in Section D.
+            stated in Section F.
           </p>
           <p>
-            <strong>11.</strong> Where the installation includes an RCD it should be tested
+            <strong>12.</strong> Where the installation includes an RCD it should be tested
             six-monthly by pressing the button marked 'T' or 'Test'.
           </p>
           <p>
-            <strong>12.</strong> Where the installation includes an AFDD having a manual test
-            facility it should be tested six-monthly.
+            <strong>13.</strong> Where the installation includes an AFDD having a manual test
+            facility it should be tested six-monthly by pressing the test button.
           </p>
           <p>
-            <strong>13.</strong> Where the installation includes an SPD the status indicator should
-            be checked to confirm operational condition.
+            <strong>14.</strong> Where the installation includes an SPD the status indicator should
+            be checked to confirm it is in operational condition in accordance with the
+            manufacturer's information.
           </p>
           <p>
-            <strong>14.</strong> Where the installation includes alternative sources of supply,
-            warning notices should be found at the origin or meter position.
+            <strong>15.</strong> Where the installation includes alternative or additional sources
+            of supply, warning notices should be found at the origin or meter position or, if remote
+            from the origin, at the consumer unit or distribution board and at all points of
+            isolation of all sources of supply.
           </p>
         </div>
       </div>

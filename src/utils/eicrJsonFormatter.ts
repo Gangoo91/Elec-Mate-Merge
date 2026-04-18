@@ -260,21 +260,23 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     }
     if (!Array.isArray(parsed)) return [];
 
-    // Group items by section
-    const sectionMap: Record<string, { section_name: string; clause: string; items: any[] }> = {};
+    // Group items by section (preserves order via sectionNumber sort)
+    const sectionMap: Record<string, { section_number: string; section_name: string; clause: string; items: any[] }> = {};
 
     parsed.forEach((item: any) => {
       const sectionName = item.section || 'General';
+      const sectionNumber = item.sectionNumber || '';
       if (!sectionMap[sectionName]) {
         sectionMap[sectionName] = {
+          section_number: sectionNumber,
           section_name: sectionName,
-          clause: item.clause || '',
+          clause: '',
           items: [],
         };
       }
       sectionMap[sectionName].items.push({
         id: item.id || '',
-        item_number: item.itemNumber || item.number || '',
+        item_number: item.number || item.itemNumber || '',
         item: item.item || item.description || '',
         clause: item.clause || '',
         outcome: item.outcome || '',
@@ -282,7 +284,12 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       });
     });
 
-    return Object.values(sectionMap);
+    // Return sorted by section_number for consistent A4 ordering (1.0, 2.0, 3.0…)
+    return Object.values(sectionMap).sort((a, b) => {
+      const an = parseInt(a.section_number, 10) || 0;
+      const bn = parseInt(b.section_number, 10) || 0;
+      return an - bn;
+    });
   };
 
   // Format additional distribution boards
@@ -294,14 +301,25 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     // Use field names from DistributionBoard type: name, reference, location, make, type, totalWays, zdb, ipf
     return boards.slice(1).map((board: any) => {
       const boardWays = getBoardWays(board);
+      // A4:2026 — prefer user-edited `reference` over auto-generated `name` ("Sub-DB1" etc)
+      const userRef = (board.reference || '').trim();
       return {
-        designation: board.name || board.reference || board.designation || '',
+        designation: userRef || board.name || board.designation || '',
         location: board.location || '',
         manufacturer: board.make || board.manufacturer || '',
         board_type: board.type || board.boardType || '',
         ways: boardWays?.toString() || board.ways || '',
         zdb: board.zdb || '',
         ipf: board.ipf || '',
+        // A4:2026 — sub-boards must carry full board details
+        supplied_from: board.suppliedFrom || '',
+        incoming_device_bs_en: board.incomingDeviceBsEn || '',
+        incoming_device_type: board.incomingDeviceType || '',
+        incoming_device_rating: board.incomingDeviceRating || '',
+        main_switch_bs_en: board.mainSwitchBsEn || '',
+        main_switch_type: board.mainSwitchType || '',
+        main_switch_rating: board.mainSwitchRating || '',
+        main_switch_poles: board.mainSwitchPoles || '',
         polarity_confirmed: board.confirmedCorrectPolarity ?? false,
         phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
         ring_final_circuit_confirmed: board.ringFinalCircuitConfirmed ?? false,
@@ -591,6 +609,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
             main_switch_type: formData['mainSwitchType'] || '',
             main_switch_rating: formData['mainSwitchRating'] || '',
             main_switch_poles: formData['mainSwitchPoles'] || '',
+            // Per-board test instruments (A4:2026 fallback)
+            test_instrument_multifunction: formData['testInstrumentMultifunction'] || '',
+            test_instrument_continuity: formData['testInstrumentContinuity'] || '',
+            test_instrument_insulation: formData['testInstrumentInsulation'] || '',
+            test_instrument_eli: formData['testInstrumentEli'] || '',
+            test_instrument_rcd: formData['testInstrumentRcd'] || '',
+            test_instrument_earth_electrode: formData['testInstrumentEarthElectrode'] || '',
             circuit_count: testResults.length,
             circuits: testResults.map(formatCircuit),
           },
@@ -627,6 +652,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         // Board verification
         polarity_confirmed: board.confirmedCorrectPolarity ?? false,
         phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
+        ring_final_circuit_confirmed: board.ringFinalCircuitConfirmed ?? false,
         // SPD details per board
         spd_operational: board.spdOperationalStatus ?? false,
         spd_na: board.spdNA ?? false,
@@ -643,6 +669,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         main_switch_type: board.mainSwitchType || '',
         main_switch_rating: board.mainSwitchRating || '',
         main_switch_poles: board.mainSwitchPoles || '',
+        // Per-board test instruments (A4:2026 — Schedule of Test Results)
+        test_instrument_multifunction: board.testInstrumentMultifunction || '',
+        test_instrument_continuity: board.testInstrumentContinuity || '',
+        test_instrument_insulation: board.testInstrumentInsulation || '',
+        test_instrument_eli: board.testInstrumentEli || '',
+        test_instrument_rcd: board.testInstrumentRcd || '',
+        test_instrument_earth_electrode: board.testInstrumentEarthElectrode || '',
         // Circuit count
         circuit_count: boardCircuits.length,
         // Circuits for this board (same format as flat schedule_of_tests)
@@ -853,6 +886,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       supply_frequency: get('supplyFrequency', '50'),
       supply_ac_dc: get('supplyAcDc', 'ac'),
       conductor_configuration: get('conductorConfiguration'),
+      dc_conductor_config: get('dcConductorConfig'),
       phases: normalisePhases(get('phases')),
       earthing_arrangement: normaliseEarthing(get('earthingArrangement')),
       // supply_type: derived from phases when not explicitly set (no UI control for supplyType in EICR form)
@@ -873,6 +907,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       prospective_fault_current: get('prospectiveFaultCurrent'),
       supply_polarity_confirmed: getBool('supplyPolarityConfirmed'),
       other_sources_of_supply: get('otherSourcesOfSupply'),
+      other_sources_of_supply_present: getBool('otherSourcesOfSupplyPresent'),
     },
 
     main_protective_device: (() => {
@@ -906,8 +941,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       const mainBoardWays = getBoardWays(mainBoard);
       const boardSize = mainBoardWays ? `${mainBoardWays}-way` : get('boardSize');
       return {
+        // A4:2026 — prefer user-edited `reference` over auto-generated `name`
         board_designation:
-          mainBoard?.name || mainBoard?.reference || get('boardDesignation', 'Main DB'),
+          (mainBoard?.reference || '').trim() || mainBoard?.name || get('boardDesignation', 'Main DB'),
         board_size: boardSize,
         board_type: mainBoard?.type || get('cuType'),
         board_location: mainBoard?.location || get('cuLocation'),
@@ -1388,6 +1424,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     prospective_fault_current: get('prospectiveFaultCurrent'),
     supply_polarity_confirmed: getBool('supplyPolarityConfirmed'),
     other_sources_of_supply: get('otherSourcesOfSupply'),
+    other_sources_of_supply_present: getBool('otherSourcesOfSupplyPresent'),
+    dc_conductor_config: get('dcConductorConfig'),
 
     // Section J - Particulars
     means_of_earthing_distributor: getBool('meansOfEarthingDistributor'),
@@ -1410,6 +1448,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     // Schedule tested by (A4:2026)
     schedule_tested_by_name: get('scheduleTestedByName'),
     schedule_tested_by_date: get('scheduleTestedByDate'),
+    schedule_tested_by_signature: get('scheduleTestedBySignature'),
 
     // Section K - Observations
     no_remedial_action: getBool('noRemedialAction'),
@@ -1419,6 +1458,14 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     test_schedule_count: (() => {
       const boards = formData['distributionBoards'] || [];
       return Array.isArray(boards) && boards.length > 0 ? boards.length : 1;
+    })(),
+    // A4:2026 Section H — continuation sheets attached
+    continuation_sheets_count: (() => {
+      const explicit = parseInt(get('continuationSheetsCount'), 10);
+      if (!isNaN(explicit) && explicit >= 0) return explicit;
+      // Auto-derive: 1 sheet per non-empty observations array overflow + extent overflow
+      const obs = formData['observations'] || formData['defectObservations'] || [];
+      return Array.isArray(obs) && obs.length > 4 ? Math.ceil(obs.length / 4) - 1 : 0;
     })(),
 
     // Conditional rendering flags for PDF template (hide blank sections)

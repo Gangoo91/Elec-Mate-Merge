@@ -64,6 +64,8 @@ const EICRInspectionChecklist = ({
       section.items.map((item) => ({
         id: item.id,
         section: section.title,
+        sectionNumber: section.sectionNumber, // A4:2026 — needed for PDF section header
+        number: item.number, // A4:2026 — needed for PDF item number column
         item: item.item,
         clause: item.clause,
         inspected: false,

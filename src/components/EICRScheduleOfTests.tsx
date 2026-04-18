@@ -2877,6 +2877,16 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 />
               </div>
             </div>
+            <div>
+              <label className="text-white text-xs mb-1.5 block">Signature</label>
+              <input
+                type="text"
+                value={formData.scheduleTestedBySignature || ''}
+                onChange={(e) => onUpdate('scheduleTestedBySignature', e.target.value)}
+                placeholder="Type signature"
+                className="w-full h-11 px-3 rounded-lg text-base touch-manipulation bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow font-[cursive] italic"
+              />
+            </div>
           </div>
         </div>
       </div>
