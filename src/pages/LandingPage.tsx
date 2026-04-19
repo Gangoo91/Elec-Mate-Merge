@@ -305,7 +305,7 @@ const faqs = [
   {
     question: 'Is the AI compliant with current regs?',
     answer:
-      'Yes. All 5 AI specialists are trained on BS 7671:2018 + Amendment 3:2024 (18th Edition). We update them when regulations change.',
+      'Yes. All 5 AI specialists are trained on BS 7671:2018 + Amendment 4:2026 (18th Edition). We update them when regulations change.',
   },
   {
     question: 'What certificates can I create?',
@@ -842,7 +842,7 @@ const LandingPage = () => {
               </h2>
               <p className="mx-auto mt-6 max-w-[42rem] text-lg leading-[1.7] text-white lg:mx-0 lg:text-xl">
                 Five AI specialists trained on{' '}
-                <span className="font-medium text-yellow-400">BS 7671:2018 + A3:2024</span>. Ask
+                <span className="font-medium text-yellow-400">BS 7671:2018 + A4:2026</span>. Ask
                 them anything — design, cost, install, maintain, sign off.
               </p>
 

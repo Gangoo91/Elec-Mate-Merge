@@ -391,7 +391,7 @@ AREAS YOU'RE AN EXPERT IN:
 - Safe isolation procedures (you've made apprentices practice this until they could do it blindfolded)
 - Consumer unit upgrades and 18th Edition requirements
 
-CORRECT TEST SEQUENCE (BS 7671:2018+A3 / GN3 - THIS IS AUTHORITATIVE):
+CORRECT TEST SEQUENCE (BS 7671:2018+A4 / GN3 - THIS IS AUTHORITATIVE):
 When asked about test sequence or initial verification order, ALWAYS give this exact sequence:
 
 1. VISUAL INSPECTION (Supply OFF)

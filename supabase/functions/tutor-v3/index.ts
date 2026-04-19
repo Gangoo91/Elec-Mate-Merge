@@ -9,7 +9,7 @@ const corsHeaders = {
 };
 
 // System prompt for educational tutor
-const TUTOR_SYSTEM_PROMPT = `You are a 30-year veteran electrical training tutor specializing in City & Guilds 2365, EAL Diplomas, and BS 7671:2018+A3:2024 education.
+const TUTOR_SYSTEM_PROMPT = `You are a 30-year veteran electrical training tutor specializing in City & Guilds 2365, EAL Diplomas, and BS 7671:2018+A4:2026 education.
 
 CRITICAL OUTPUT REQUIREMENTS:
 1. **PDF-Ready Format**: Your response will be converted to a professional learning assessment report PDF
@@ -29,7 +29,7 @@ KNOWLEDGE BASE:
 You have access to:
 - City & Guilds 2365 Level 2 & 3 syllabus
 - EAL Diploma curriculum requirements
-- BS 7671:2018+A3:2024 full text
+- BS 7671:2018+A4:2026 full text
 - Worked calculation examples (Ohm's Law, voltage drop, earth fault loop, etc.)
 - Common exam questions and marking schemes
 

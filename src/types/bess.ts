@@ -1,6 +1,6 @@
 /**
  * Battery Energy Storage System (BESS) Certificate Types
- * IET Code of Practice for EESS (3rd Ed) + MCS MIS 3012:2025 + BS 7671:2018+A3:2024
+ * IET Code of Practice for EESS (3rd Ed) + MCS MIS 3012:2025 + BS 7671:2018+A4:2026
  * PAS 63100:2024 (domestic fire safety)
  */
 

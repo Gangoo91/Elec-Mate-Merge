@@ -305,7 +305,7 @@ serve(async (req) => {
       }
 
       // === PHASE 4: STREAMLINED SYSTEM PROMPT (150 lines from 400) ===
-      const systemPrompt = `You are a UK electrical installation specialist creating BS 7671:2018+A3:2024 compliant method statements.
+      const systemPrompt = `You are a UK electrical installation specialist creating BS 7671:2018+A4:2026 compliant method statements.
 
 **CORE RULES**:
 1. UK English (metres, earthing, consumer unit, colours)

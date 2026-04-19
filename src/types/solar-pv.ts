@@ -2,7 +2,7 @@
  * Solar PV Installation Certificate Types (MCS Compliance)
  *
  * Standards Referenced:
- * - BS 7671:2018+A3:2024 (18th Edition Amendment 3 - includes bidirectional protective devices)
+ * - BS 7671:2018+A4:2026 (18th Edition Amendment 4 — AFDD, TN-C-S, schedule column updates)
  * - BS EN IEC 62446-1:2016+A1:2018 (PV commissioning, testing and documentation)
  * - MIS 3002:2025 V5.0 (MCS Solar PV Installation Standard)
  *
@@ -209,7 +209,7 @@ export interface Metering {
 }
 
 // ============================================================================
-// Test Results (BS 7671:2018+A3:2024 + BS EN IEC 62446-1:2016+A1:2018)
+// Test Results (BS 7671:2018+A4:2026 + BS EN IEC 62446-1:2016+A1:2018)
 // ============================================================================
 
 // Per-array DC tests
@@ -275,7 +275,7 @@ export interface InverterTestResult {
   notes: string;
 }
 
-// AC Side Tests (standard BS 7671:2018+A3:2024)
+// AC Side Tests (standard BS 7671:2018+A4:2026)
 export interface ACTestResults {
   // Earthing
   earthingArrangement: EarthingArrangement;
@@ -306,7 +306,7 @@ export interface ACTestResults {
   mcbType: string; // B, C, D curve
   mcbLocation: string;
 
-  // Bidirectional Protection (BS 7671:2018+A3:2024 Reg. 530.3.201)
+  // Bidirectional Protection (BS 7671:2018+A4:2026 Reg. 530.3.201)
   // Required for generating sets including solar PV, battery storage, V2G
   bidirectionalDeviceInstalled: boolean;
   bidirectionalDeviceType?: string; // e.g., "Type B RCBO", "Bidirectional MCB"
@@ -834,7 +834,7 @@ export const SHADING_FACTORS = [
 ] as const;
 
 // ============================================================================
-// RCD Type Options — BS 7671:2018+A3:2024
+// RCD Type Options — BS 7671:2018+A4:2026
 // ============================================================================
 
 export const RCD_TYPES = [
@@ -968,7 +968,7 @@ export const ANTI_ISLANDING_METHODS = [
 ] as const;
 
 // ============================================================================
-// Bidirectional Device Types — BS 7671:2018+A3:2024 Reg. 530.3.201
+// Bidirectional Device Types — BS 7671:2018+A4:2026 Reg. 530.3.201
 // ============================================================================
 
 export const BIDIRECTIONAL_DEVICE_TYPES = [

@@ -312,3 +312,17 @@ verify_jwt = false
 verify_jwt = false
 
 
+# Newsletter subscribe — called from the landing page email capture by
+# unauthenticated visitors. Must be JWT-free. Handles its own spam protection
+# via email validation + Brevo list dedup.
+[functions.newsletter-subscribe]
+verify_jwt = false
+
+
+# Meta Conversions API forwarder — called from unauthenticated landing
+# pages (PageView, Lead) and from authenticated sessions for signup/checkout
+# events. Optional shared secret protection via META_CAPI_SHARED_SECRET.
+[functions.meta-capi]
+verify_jwt = false
+
+

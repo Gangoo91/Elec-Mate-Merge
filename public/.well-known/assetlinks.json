@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.elecmate.app",
       "sha256_cert_fingerprints": [
-        "4A:FE:37:8F:C0:BC:83:1B:49:C3:CC:C1:5C:79:17:85:06:9C:69:7C:93:50:E9:FA:5A:24:33:09:25:9D:3E:20"
+        "4A:FE:37:8F:C0:BC:83:1B:49:C3:CC:C1:5C:79:17:85:06:9C:69:7C:93:50:E9:FA:5A:24:33:09:25:9D:3E:20",
+        "CE:B0:EC:0C:3C:69:93:CD:9C:39:DB:6F:2B:D9:9E:5D:6F:C8:23:08:81:79:9D:A9:5B:B8:B1:D4:D6:48:46:3C"
       ]
     }
   }

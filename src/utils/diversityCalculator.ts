@@ -1,6 +1,6 @@
 /**
  * IET On-Site Guide Table 1B / Table H2 Diversity Calculator
- * BS 7671:2018+A3:2024 Compliant
+ * BS 7671:2018+A4:2026 Compliant
  */
 
 export interface Circuit {

@@ -10,7 +10,7 @@ const corsHeaders = {
 // System prompt templates for each briefing type
 function getSystemPromptForType(briefingType: string): string {
   const prompts: Record<string, string> = {
-    'site-work': `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A3:2024 regulations.
+    'site-work': `You are a UK electrical safety briefing expert with deep knowledge of BS 7671:2018+A4:2026 regulations.
 
 Generate structured, actionable briefing content with:
 - 3-4 distinct paragraphs for overview (introduction, scope, objectives)

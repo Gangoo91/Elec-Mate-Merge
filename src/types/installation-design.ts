@@ -1,5 +1,5 @@
 // AI Installation Designer Types
-// BS 7671:2018+A3:2024 Compliant Circuit Design
+// BS 7671:2018+A4:2026 Compliant Circuit Design
 
 import { EnhancedInstallationGuidance, TestingRequirements } from './circuit-design';
 

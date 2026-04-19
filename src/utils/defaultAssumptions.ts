@@ -6,7 +6,7 @@ const COMMON = [
   'Access available during normal working hours',
   'Any additional work discovered will be quoted separately',
   'Waste removal included',
-  'Works to comply with BS 7671:2018+A3:2024 (18th Edition)',
+  'Works to comply with BS 7671:2018+A4:2026 (18th Edition)',
 ];
 
 const RESIDENTIAL = [
