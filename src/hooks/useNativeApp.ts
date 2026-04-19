@@ -182,6 +182,18 @@ export function useNativeApp() {
           console.log('[DeepLink] Opened:', url);
           try {
             const parsed = new URL(url);
+            // Persist referral codes regardless of timing — covers /r/:code paths
+            // and ?ref=XYZ query params. Read by SignUp on account creation.
+            const refFromQuery = parsed.searchParams.get('ref');
+            const refFromPath = parsed.pathname.match(/^\/r\/([A-Za-z0-9_-]+)/)?.[1];
+            const referralCode = (refFromQuery || refFromPath || '').toUpperCase();
+            if (referralCode) {
+              try {
+                localStorage.setItem('elec-mate-referral-code', referralCode);
+              } catch {
+                /* storage unavailable — not fatal */
+              }
+            }
             // Support both https://elec-mate.com/path and elecmate://path
             const path = parsed.pathname + parsed.search + parsed.hash;
             if (path && path !== '/') {

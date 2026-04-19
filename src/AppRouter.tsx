@@ -18,6 +18,7 @@ const LandingPage = lazyWithRetry(() => import('@/pages/LandingPage'));
 const Index = lazyWithRetry(() => import('@/pages/Index'));
 const SignIn = lazyWithRetry(() => import('@/pages/auth/SignIn'));
 const SignUp = lazyWithRetry(() => import('@/pages/auth/SignUp'));
+const InviteLanding = lazyWithRetry(() => import('@/pages/InviteLanding'));
 const ForgotPassword = lazyWithRetry(() => import('@/pages/auth/ForgotPassword'));
 const ResetPassword = lazyWithRetry(() => import('@/pages/auth/ResetPassword'));
 const ConfirmEmail = lazyWithRetry(() => import('@/pages/auth/ConfirmEmail'));
@@ -316,6 +317,15 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <SignUp />
+            </LazyRoute>
+          }
+        />
+        {/* Short referral invite URL — /r/ABC123 — stores code + redirects */}
+        <Route
+          path="/r/:code"
+          element={
+            <LazyRoute>
+              <InviteLanding />
             </LazyRoute>
           }
         />

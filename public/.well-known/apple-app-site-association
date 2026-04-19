@@ -12,7 +12,8 @@
           "/dashboard*",
           "/study-centre/*",
           "/jobs/*",
-          "/marketplace/*"
+          "/marketplace/*",
+          "/r/*"
         ]
       }
     ]

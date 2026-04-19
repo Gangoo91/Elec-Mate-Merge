@@ -24,6 +24,8 @@ import { storageGetSync, storageRemoveSync } from '@/utils/storage';
 import { cn } from '@/lib/utils';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
 import { useUserCount } from '@/hooks/useUserCount';
+import { trackInitiateCheckout } from '@/lib/marketing-pixels';
+import { fireServerCapi } from '@/lib/attribution';
 
 const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string; label: string }> = {
   electrician: {
@@ -151,6 +153,23 @@ const CheckoutTrial = () => {
       if (data?.url) {
         if (offerCode) storageRemoveSync('elec-mate-offer-code');
         if (referralCode) storageRemoveSync('elec-mate-referral-code');
+        // Fire InitiateCheckout on both Pixel and server CAPI before redirect
+        const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 5.99 : 12.99;
+        const eventId = trackInitiateCheckout({
+          value: checkoutValue,
+          currency: 'GBP',
+          contentName: priceInfo.label,
+          contentIds: [priceInfo.priceId],
+        });
+        fireServerCapi({
+          event_name: 'InitiateCheckout',
+          event_id: eventId,
+          email: user?.email || undefined,
+          user_id: user?.id,
+          value: checkoutValue,
+          currency: 'GBP',
+          content_name: priceInfo.label,
+        });
         // Use replace() so browser-back from Stripe skips this page
         // and jumps straight to /auth/signup instead of sitting idle here.
         window.location.replace(data.url);
@@ -161,7 +180,7 @@ const CheckoutTrial = () => {
       setError(err instanceof Error ? err.message : 'Failed to start checkout. Please try again.');
       setIsRedirecting(false);
     }
-  }, [isRedirecting, priceInfo.planId, priceInfo.priceId]);
+  }, [isRedirecting, priceInfo.planId, priceInfo.priceId, priceInfo.label, user?.email, user?.id]);
 
   const startNativePurchase = useCallback(async () => {
     if (!packagesReady) {
@@ -263,10 +282,7 @@ const CheckoutTrial = () => {
   const persistentError =
     isNative && !packagesReady && retryCount >= MAX_PACKAGE_RETRIES && !isRetrying;
   const ctaLoading =
-    isRedirecting ||
-    isPurchasing ||
-    (isNative && packagesLoading && !displayError) ||
-    isRetrying;
+    isRedirecting || isPurchasing || (isNative && packagesLoading && !displayError) || isRetrying;
 
   if (isRedirecting && !displayError) {
     return (
@@ -307,8 +323,8 @@ const CheckoutTrial = () => {
                 <span className="text-yellow-400">Zero risk.</span>
               </h1>
               <p className="mt-6 max-w-[26rem] text-lg leading-[1.65] text-white">
-                Full access from the moment you start. No charge for 7 days. Cancel in a couple
-                of clicks if it is not for you.
+                Full access from the moment you start. No charge for 7 days. Cancel in a couple of
+                clicks if it is not for you.
               </p>
             </div>
           </div>
@@ -317,7 +333,9 @@ const CheckoutTrial = () => {
             <div>Plan selected: {priceInfo.label}</div>
             <div>Trial ends on {trialEndDate}</div>
             <div>
-              {isNative ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}` : 'Secured by Stripe'}
+              {isNative
+                ? `Secured by ${platform === 'ios' ? 'Apple' : 'Google'}`
+                : 'Secured by Stripe'}
             </div>
             <div>{userCount} UK electricians already live on Elec-Mate.</div>
           </div>
@@ -335,8 +353,7 @@ const CheckoutTrial = () => {
             <div className="rounded-[2rem] border border-white/[0.08] bg-white/[0.03] p-6 shadow-[0_30px_90px_rgba(0,0,0,0.28)] sm:p-8">
               <div className="mb-5 flex justify-center">
                 <span className="inline-flex items-center gap-2 rounded-full border border-yellow-500/25 bg-yellow-500/[0.08] px-4 py-2 text-[13px] font-semibold text-yellow-400">
-                  <Clock className="h-4 w-4" />
-                  7 days free
+                  <Clock className="h-4 w-4" />7 days free
                 </span>
               </div>
 
@@ -470,7 +487,9 @@ const CheckoutTrial = () => {
               </Button>
 
               {isNative && packagesLoading && !displayError && (
-                <p className="mt-3 text-center text-[12px] text-white">Loading payment options...</p>
+                <p className="mt-3 text-center text-[12px] text-white">
+                  Loading payment options...
+                </p>
               )}
 
               <div className="mt-6 border-t border-white/[0.08] pt-5">
@@ -486,16 +505,14 @@ const CheckoutTrial = () => {
                 </div>
 
                 <p className="mt-3 text-center text-[12px] text-white">
-                  Joining{' '}
-                  <span className="font-semibold text-yellow-400">{userCount}</span> UK
+                  Joining <span className="font-semibold text-yellow-400">{userCount}</span> UK
                   electricians already live.
                 </p>
 
                 {isNative && (
                   <p className="mx-auto mt-3 max-w-[320px] text-center text-[10px] leading-relaxed text-white">
-                    Payment is charged to your{' '}
-                    {platform === 'ios' ? 'Apple ID' : 'Google account'} at confirmation and
-                    auto-renews unless cancelled 24h before the period ends.
+                    Payment is charged to your {platform === 'ios' ? 'Apple ID' : 'Google account'}{' '}
+                    at confirmation and auto-renews unless cancelled 24h before the period ends.
                   </p>
                 )}
               </div>

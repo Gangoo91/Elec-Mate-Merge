@@ -16,11 +16,15 @@ import { useNativeApp, useNativePushNotifications } from '@/hooks/useNativeApp';
 import { ActivityTracker } from '@/components/ActivityTracker';
 import { InAppBrowserDetector } from '@/components/InAppBrowserDetector';
 import { AppUpdatePrompt } from '@/components/app-update/AppUpdatePrompt';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Capacitor } from '@capacitor/core';
+import { captureAttribution } from '@/lib/attribution';
 
 // Lazy load analytics components to defer ~427KB from initial bundle
 const PostHogProvider = lazy(() => import('@/components/analytics/PostHogProvider'));
+const MarketingPixelsProvider = lazy(
+  () => import('@/components/analytics/MarketingPixelsProvider')
+);
 const SpeedInsights = lazy(() =>
   import('@vercel/speed-insights/react').then((m) => ({ default: m.SpeedInsights }))
 );
@@ -35,6 +39,16 @@ function NativeAppInit({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+// Capture UTM / gclid / fbclid on first mount, regardless of landing route —
+// users arriving directly at /auth/signup or /r/:code from an ad still need
+// first-touch attribution persisted before signup.
+function AttributionCapture() {
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) captureAttribution();
+  }, []);
+  return null;
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -46,6 +60,7 @@ function App() {
           <ThemeProvider forcedTheme="dark">
             <NotificationProvider>
               <NativeAppInit>
+                <AttributionCapture />
                 {/* Native app version check — force/optional update prompts */}
                 <AppUpdatePrompt />
                 {/* Activity tracking - logs user events to Supabase */}
@@ -56,6 +71,14 @@ function App() {
                     <></>
                   </PostHogProvider>
                 </Suspense>
+                {/* Meta Pixel + Google Ads/GA4 — web only, consent-gated to `marketing` */}
+                {!Capacitor.isNativePlatform() && (
+                  <Suspense fallback={null}>
+                    <MarketingPixelsProvider>
+                      <></>
+                    </MarketingPixelsProvider>
+                  </Suspense>
+                )}
                 <TrainingActivityMonitor />
                 <AppRouter />
                 {/* OfflineIndicator removed (ELE-707) */}

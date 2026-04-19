@@ -11,6 +11,8 @@ import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { Resend } from '../_shared/mailer.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { fireCapiEvent } from '../_shared/meta-capi.ts';
+import { capturePostHogEvent } from '../_shared/posthog-server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -899,7 +901,9 @@ serve(async (req) => {
                 // Get referrer's Stripe customer ID
                 const { data: referrerProfile } = await supabase
                   .from('profiles')
-                  .select('stripe_customer_id, successful_referrals, referral_credits_pence, subscription_tier')
+                  .select(
+                    'stripe_customer_id, successful_referrals, referral_credits_pence, subscription_tier'
+                  )
                   .eq('id', profile.referred_by)
                   .single();
 
@@ -925,84 +929,89 @@ serve(async (req) => {
                       })
                       .eq('id', profile.referred_by);
                   } else {
-                  // 1 month credit based on referrer's subscription tier
-                  const tierPrices: Record<string, number> = {
-                    apprentice: 599, apprentice_yearly: 599,
-                    electrician: 1299, electrician_yearly: 1299,
-                    business_ai: 2999, business_ai_yearly: 2999,
-                    employer: 2999, employer_yearly: 2999,
-                  };
-                  const creditPence = tierPrices[referrerProfile.subscription_tier || ''] ||
-                    (priceId ? await getMonthlyPrice(stripe, priceId) : 1299);
+                    // 1 month credit based on referrer's subscription tier
+                    const tierPrices: Record<string, number> = {
+                      apprentice: 599,
+                      apprentice_yearly: 599,
+                      electrician: 1299,
+                      electrician_yearly: 1299,
+                      business_ai: 2999,
+                      business_ai_yearly: 2999,
+                      employer: 2999,
+                      employer_yearly: 2999,
+                    };
+                    const creditPence =
+                      tierPrices[referrerProfile.subscription_tier || ''] ||
+                      (priceId ? await getMonthlyPrice(stripe, priceId) : 1299);
 
-                  // Apply Stripe balance credit (negative amount = credit to customer)
-                  try {
-                    const balanceTx = await stripe.customers.createBalanceTransaction(
-                      referrerProfile.stripe_customer_id,
-                      {
-                        amount: -creditPence, // Negative = credit
-                        currency: 'gbp',
-                        description: `Referral reward: 1 free month credit`,
-                        metadata: {
+                    // Apply Stripe balance credit (negative amount = credit to customer)
+                    try {
+                      const balanceTx = await stripe.customers.createBalanceTransaction(
+                        referrerProfile.stripe_customer_id,
+                        {
+                          amount: -creditPence, // Negative = credit
+                          currency: 'gbp',
+                          description: `Referral reward: 1 free month credit`,
+                          metadata: {
+                            referral_id: referralRow.id,
+                            referred_user_id: userId,
+                          },
+                        }
+                      );
+
+                      logger.info('Stripe balance credit applied', {
+                        referrerId: profile.referred_by,
+                        creditPence,
+                        balanceTxId: balanceTx.id,
+                      });
+
+                      // Create referral_rewards row
+                      await supabase.from('referral_rewards').insert({
+                        user_id: profile.referred_by,
+                        referral_id: referralRow.id,
+                        reward_type: 'credit',
+                        amount_pence: creditPence,
+                        stripe_credit_note_id: balanceTx.id,
+                        status: 'applied',
+                        applied_at: new Date().toISOString(),
+                      });
+
+                      // Update referral status to 'rewarded'
+                      await supabase
+                        .from('referrals')
+                        .update({ status: 'rewarded', updated_at: new Date().toISOString() })
+                        .eq('id', referralRow.id);
+
+                      // Update referrer's profile stats
+                      await supabase
+                        .from('profiles')
+                        .update({
+                          successful_referrals: successfulReferrals,
+                          total_referrals: successfulReferrals,
+                          referral_credits_pence:
+                            (referrerProfile.referral_credits_pence || 0) + creditPence,
+                        })
+                        .eq('id', profile.referred_by);
+
+                      // In-app notification for referrer
+                      const creditFormatted = `£${(creditPence / 100).toFixed(2)}`;
+                      await supabase.from('notifications').insert({
+                        user_id: profile.referred_by,
+                        type: 'referral_reward',
+                        title: 'Referral Reward!',
+                        message: `Your mate just subscribed! ${creditFormatted} credit has been applied to your account.`,
+                        data: {
                           referral_id: referralRow.id,
+                          credit_pence: creditPence,
                           referred_user_id: userId,
                         },
-                      }
-                    );
-
-                    logger.info('Stripe balance credit applied', {
-                      referrerId: profile.referred_by,
-                      creditPence,
-                      balanceTxId: balanceTx.id,
-                    });
-
-                    // Create referral_rewards row
-                    await supabase.from('referral_rewards').insert({
-                      user_id: profile.referred_by,
-                      referral_id: referralRow.id,
-                      reward_type: 'credit',
-                      amount_pence: creditPence,
-                      stripe_credit_note_id: balanceTx.id,
-                      status: 'applied',
-                      applied_at: new Date().toISOString(),
-                    });
-
-                    // Update referral status to 'rewarded'
-                    await supabase
-                      .from('referrals')
-                      .update({ status: 'rewarded', updated_at: new Date().toISOString() })
-                      .eq('id', referralRow.id);
-
-                    // Update referrer's profile stats
-                    await supabase
-                      .from('profiles')
-                      .update({
-                        successful_referrals: successfulReferrals,
-                        total_referrals: successfulReferrals,
-                        referral_credits_pence:
-                          (referrerProfile.referral_credits_pence || 0) + creditPence,
-                      })
-                      .eq('id', profile.referred_by);
-
-                    // In-app notification for referrer
-                    const creditFormatted = `£${(creditPence / 100).toFixed(2)}`;
-                    await supabase.from('notifications').insert({
-                      user_id: profile.referred_by,
-                      type: 'referral_reward',
-                      title: 'Referral Reward!',
-                      message: `Your mate just subscribed! ${creditFormatted} credit has been applied to your account.`,
-                      data: {
-                        referral_id: referralRow.id,
-                        credit_pence: creditPence,
-                        referred_user_id: userId,
-                      },
-                      read: false,
-                    });
-                  } catch (balanceErr: unknown) {
-                    logger.warn('Failed to apply Stripe balance credit (non-fatal)', {
-                      error: (balanceErr as Error)?.message,
-                    });
-                  }
+                        read: false,
+                      });
+                    } catch (balanceErr: unknown) {
+                      logger.warn('Failed to apply Stripe balance credit (non-fatal)', {
+                        error: (balanceErr as Error)?.message,
+                      });
+                    }
                   } // end else (under cap)
                 }
               }
@@ -1039,6 +1048,52 @@ serve(async (req) => {
                 data: { tier, tierName },
                 read: false,
               });
+
+              // Fire Meta CAPI event (Subscribe or StartTrial) + PostHog event
+              try {
+                const subPrice = subscription.items.data[0]?.price;
+                const amountPence = subPrice?.unit_amount || 0;
+                const currency = (subPrice?.currency || 'gbp').toUpperCase();
+                const isTrial =
+                  subscription.status === 'trialing' ||
+                  (subscription.trial_end && subscription.trial_end * 1000 > Date.now());
+                capturePostHogEvent({
+                  distinct_id: userId,
+                  event: 'subscription_started',
+                  properties: {
+                    tier,
+                    source: 'stripe',
+                    is_trial: !!isTrial,
+                    is_yearly: isYearly,
+                    amount_pence: amountPence,
+                    currency,
+                    subscription_id: subscription.id,
+                  },
+                });
+                const [firstName, ...rest] = (customer.name || '').trim().split(/\s+/);
+                const lastName = rest.join(' ');
+                fireCapiEvent({
+                  event_name: isTrial ? 'StartTrial' : 'Subscribe',
+                  event_id: `stripe_sub_${subscription.id}_${event.id}`,
+                  action_source: 'website',
+                  email: customer.email,
+                  external_id: userId,
+                  first_name: firstName || undefined,
+                  last_name: lastName || undefined,
+                  country: 'gb',
+                  custom_data: {
+                    currency,
+                    value: amountPence / 100,
+                    subscription_id: subscription.id,
+                    content_name: tier,
+                    content_category: isYearly ? 'yearly' : 'monthly',
+                  },
+                });
+              } catch (capiErr) {
+                logger.warn('Meta CAPI fire failed (non-fatal)', {
+                  error: (capiErr as Error)?.message,
+                });
+              }
             }
           } catch (emailError: unknown) {
             logger.warn('Failed to send welcome email (non-fatal)', {
@@ -1232,6 +1287,38 @@ serve(async (req) => {
           : null;
 
         await updateSubscriptionStatus(userId, true, customerId, tier, periodEnd);
+
+        // Fire Meta CAPI Subscribe event for RENEWAL invoices only
+        // (initial subscription is tracked by customer.subscription.created — avoid double-count)
+        if (invoice.billing_reason === 'subscription_cycle' && tier) {
+          try {
+            const renewCustomer = await stripe.customers.retrieve(customerId);
+            if (!renewCustomer.deleted && 'email' in renewCustomer && renewCustomer.email) {
+              const [rFirst, ...rRest] = (renewCustomer.name || '').trim().split(/\s+/);
+              fireCapiEvent({
+                event_name: 'Subscribe',
+                event_id: `stripe_invoice_${invoice.id}`,
+                action_source: 'website',
+                email: renewCustomer.email,
+                external_id: userId,
+                first_name: rFirst || undefined,
+                last_name: rRest.join(' ') || undefined,
+                country: 'gb',
+                custom_data: {
+                  currency: (invoice.currency || 'gbp').toUpperCase(),
+                  value: (invoice.amount_paid || 0) / 100,
+                  subscription_id: invoice.subscription as string,
+                  content_name: tier,
+                  content_category: 'renewal',
+                },
+              });
+            }
+          } catch (capiErr) {
+            logger.warn('Meta CAPI renewal fire failed (non-fatal)', {
+              error: (capiErr as Error)?.message,
+            });
+          }
+        }
 
         // Resolve any active dunning sequence for this invoice
         const { data: resolvedRow, error: resolveError } = await supabase

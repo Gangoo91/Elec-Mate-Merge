@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
 import { motion, useReducedMotion } from 'framer-motion';
 import {
@@ -30,7 +30,8 @@ import { Button } from '@/components/ui/button';
 import { StoreBadges } from '@/components/seo/StoreBadges';
 import { useAuth } from '@/contexts/AuthContext';
 import { useUserCount } from '@/hooks/useUserCount';
-import { storageGetSync } from '@/utils/storage';
+import { LeadMagnetSection } from '@/components/landing/LeadMagnetSection';
+import { ExitIntentModal } from '@/components/landing/ExitIntentModal';
 
 type LucideIcon = typeof GraduationCap;
 
@@ -371,10 +372,14 @@ const LandingPage = () => {
   const pricingPlans = useMemo(() => getPricingPlans(isNative), [isNative]);
   const apprenticePrice = isNative ? '£6.99' : '£5.99';
 
-  const isBot = /bot|crawl|spider|googlebot|bingbot|yandex|baidu/i.test(navigator.userAgent);
-  if (!user && !isBot && !storageGetSync('walkthrough_completed')) {
-    return <Navigate to="/walkthrough" replace />;
-  }
+  // Attribution capture moved to App.tsx (AttributionCapture component) so it
+  // runs for users landing directly on /auth/signup or /r/:code from ads, not
+  // just this page.
+
+  // Walkthrough redirect removed 2026-04-19 — was intercepting ~75% of landing
+  // traffic (1.3K /walkthrough vs 399 / in Vercel Analytics), blocking paid-ad
+  // conversion funnels and tanking Meta Pixel optimisation signal. Walkthrough
+  // route still exists for direct links; just not the default landing.
 
   return (
     <div className="bg-[#0a0a0a] text-white">
@@ -988,6 +993,9 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* ========== LEAD MAGNET — BS 7671 A4:2026 cheat sheet ========== */}
+      <LeadMagnetSection />
+
       {/* ========== EXPLORE OUR TOOLS ========== */}
       <section className="px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
@@ -1210,6 +1218,9 @@ const LandingPage = () => {
           </Link>
         </div>
       )}
+
+      {/* Desktop-only exit-intent modal — fires once per week per browser */}
+      {!user && !isNative && <ExitIntentModal />}
     </div>
   );
 };

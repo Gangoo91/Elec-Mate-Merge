@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Purchases, type PurchasesPackage, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
 import { useHaptic } from '@/hooks/useHaptic';
+import { trackInitiateCheckout, trackSubscribe } from '@/lib/marketing-pixels';
 
 // RevenueCat public API keys (loaded from .env — not secret, safe for client-side)
 const RC_IOS_API_KEY = import.meta.env.VITE_REVENUECAT_IOS_KEY || '';
@@ -207,6 +208,21 @@ export function useRevenueCat(userId?: string) {
 
       setState((prev) => ({ ...prev, isPurchasing: true, error: null }));
 
+      // Fire InitiateCheckout before the native payment sheet appears. Web-only
+      // pixels — on native, attribution is handled by RevenueCat's ad-network
+      // integrations (Meta / Google Ads) configured in the RC dashboard.
+      const priceStr = pkg.product?.priceString || '';
+      const priceNum =
+        typeof pkg.product?.price === 'number'
+          ? pkg.product.price
+          : Number(priceStr.replace(/[^0-9.]/g, '')) || 0;
+      trackInitiateCheckout({
+        value: priceNum,
+        currency: pkg.product?.currencyCode || 'GBP',
+        contentName: pkg.identifier,
+        contentIds: [pkg.product?.identifier || pkg.identifier],
+      });
+
       try {
         const { customerInfo } = await Purchases.purchasePackage({
           aPackage: pkg,
@@ -229,7 +245,17 @@ export function useRevenueCat(userId?: string) {
           isPurchasing: false,
         }));
 
-        if (isEntitled) haptic.success(); // celebratory thud on successful purchase
+        if (isEntitled) {
+          haptic.success(); // celebratory thud on successful purchase
+          // Fire browser-side Subscribe for lookalike audiences; server CAPI
+          // fires from revenuecat-webhook (authoritative).
+          trackSubscribe({
+            value: priceNum,
+            currency: pkg.product?.currencyCode || 'GBP',
+            contentName: tier || pkg.identifier,
+            subscriptionId: pkg.product?.identifier || pkg.identifier,
+          });
+        }
 
         return isEntitled;
       } catch (err: unknown) {
@@ -304,10 +330,7 @@ export function useRevenueCat(userId?: string) {
       const normalised = planId.replace(/-/g, '_');
       const tierKey = planId.replace(/-(?:monthly|yearly)$/, '');
       const resolvedKey = TIER_ALIASES[tierKey] || tierKey;
-      const resolvedNormalised = normalised.replace(
-        tierKey,
-        TIER_ALIASES[tierKey] || tierKey
-      );
+      const resolvedNormalised = normalised.replace(tierKey, TIER_ALIASES[tierKey] || tierKey);
 
       const match =
         // 1. Exact match with underscores (e.g. 'apprentice_monthly')

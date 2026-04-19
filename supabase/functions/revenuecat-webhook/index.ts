@@ -1,4 +1,6 @@
 import { serve, createClient } from '../_shared/deps.ts';
+import { fireCapiEvent } from '../_shared/meta-capi.ts';
+import { capturePostHogEvent } from '../_shared/posthog-server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -89,7 +91,17 @@ serve(async (req) => {
       });
     }
 
-    const { type, app_user_id, store, product_id, expiration_at_ms, period_type } = event;
+    const {
+      type,
+      app_user_id,
+      store,
+      product_id,
+      expiration_at_ms,
+      period_type,
+      price_in_purchased_currency,
+      currency,
+      transaction_id,
+    } = event;
 
     console.log(
       `RevenueCat event: ${type} for user ${app_user_id}, store: ${store}, product: ${product_id}`
@@ -260,6 +272,65 @@ serve(async (req) => {
       console.log(
         `Updated profile ${app_user_id}: subscribed=${subscribed}, tier=${subscriptionTier}, business_ai=${isBusinessAiTier}, is_trial=${isTrial}`
       );
+
+      // Fire Meta CAPI event for in-app purchase events (iOS/Android)
+      // INITIAL_PURCHASE = Subscribe (or StartTrial if period_type === TRIAL)
+      // RENEWAL = Subscribe
+      if (type === 'INITIAL_PURCHASE' || type === 'RENEWAL') {
+        try {
+          const { data: authUser } = await supabase.auth.admin.getUserById(app_user_id);
+          const email = authUser?.user?.email;
+          const { data: capiProfile } = await supabase
+            .from('profiles')
+            .select('full_name')
+            .eq('id', app_user_id)
+            .single();
+          const [firstName, ...rest] = (capiProfile?.full_name || '').trim().split(/\s+/);
+          const isYearly = subscriptionTier?.endsWith('_yearly') || false;
+          const eventName = type === 'INITIAL_PURCHASE' && isTrial ? 'StartTrial' : 'Subscribe';
+          if (type === 'INITIAL_PURCHASE') {
+            capturePostHogEvent({
+              distinct_id: app_user_id,
+              event: 'subscription_started',
+              properties: {
+                tier: subscriptionTier,
+                source: 'revenuecat',
+                store,
+                is_trial: !!isTrial,
+                is_yearly: isYearly,
+                value:
+                  typeof price_in_purchased_currency === 'number'
+                    ? price_in_purchased_currency
+                    : undefined,
+                currency: (currency || 'GBP').toUpperCase(),
+                subscription_id: transaction_id || undefined,
+              },
+            });
+          }
+          fireCapiEvent({
+            event_name: eventName,
+            event_id: `rc_${type}_${transaction_id || product_id}_${app_user_id}`,
+            action_source: 'app',
+            email: email || undefined,
+            external_id: app_user_id,
+            first_name: firstName || undefined,
+            last_name: rest.join(' ') || undefined,
+            country: 'gb',
+            custom_data: {
+              currency: (currency || 'GBP').toUpperCase(),
+              value:
+                typeof price_in_purchased_currency === 'number'
+                  ? price_in_purchased_currency
+                  : undefined,
+              subscription_id: transaction_id || undefined,
+              content_name: subscriptionTier || product_id,
+              content_category: type === 'RENEWAL' ? 'renewal' : isYearly ? 'yearly' : 'monthly',
+            },
+          });
+        } catch (capiErr) {
+          console.warn('[revenuecat-webhook] Meta CAPI fire failed (non-fatal)', capiErr);
+        }
+      }
     } else {
       console.log(`Unhandled event type: ${type}`);
     }
