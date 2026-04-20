@@ -45,6 +45,23 @@ const MIN_PARAGRAPH_CHUNK_TOKENS = 120;
 const VISION_MODEL = 'gpt-5-mini-2025-08-07';
 const PAGE_IMAGES_BUCKET = 'iet-docs';
 
+// Facet extraction — intelligence layer. GPT-5-mini with rigorous prompts +
+// strict JSON schema. We tried full GPT-5 but at ~25s/call it'd take 10+ hours
+// wall-time for 2k chunks, which is impractical. Mini at ~4s/call runs the
+// whole corpus in ~1 hour with quality driven primarily by the prompt (which
+// is comprehensive) + strict schema validation.
+const FACET_MODEL = 'gpt-5-mini-2025-08-07';
+// Edge-fn timeout is 150s. To stay safe: fire N chunks in parallel,
+// each OpenAI call takes ~15-25s, one wave = ~30s total. Plus embeddings +
+// DB writes ≈ 10s. Total budget ~40s per edge-fn call.
+// Wall time: 2035 chunks / 8 per call × 40s ≈ 170 minutes ≈ 3 hours.
+const FACET_BATCH_DEFAULT = 8;
+const FACET_PARALLEL = 8;
+
+// GPT-5-mini pricing ~$0.25/M input, ~$2/M output
+const FACET_INPUT_PRICE_PER_M = 0.25;
+const FACET_OUTPUT_PRICE_PER_M = 2.0;
+
 // Prompt given to the vision model for each page. Focuses on visual content
 // that plain OCR would miss, so the embedded summary complements (not duplicates)
 // the already-extracted body text. Generous length budget — the AI downstream
@@ -591,6 +608,439 @@ async function captionPageWithVision(
     output_tokens,
     cost_usd,
   };
+}
+
+// ─── Facet extraction (intelligence layer) ──────────────────────────────────
+
+interface FacetOutput {
+  facet_type: string;
+  primary_topic: string;
+  content: string;
+  system_types?: string[];
+  bs7671_zones?: string[];
+  equipment_category?: string | null;
+  protection_method?: string | null;
+  disconnection_time_s?: number | null;
+  test_equipment?: string[];
+  keywords?: string[];
+  confidence_score: number;
+}
+
+// JSON schema shown to GPT-5-mini for structured output. Constraining enums
+// dramatically improves filterability downstream (self-querying retriever
+// relies on these values being normalised).
+// OpenAI strict-mode rules:
+// 1. Every property must be listed in `required`
+// 2. `additionalProperties: false` on every object
+// 3. Optional fields use `type: ['T', 'null']` — nulls go IN the type array,
+//    NOT in enum arrays (enum with null mixed is flaky across providers)
+const FACET_SCHEMA = {
+  type: 'object',
+  additionalProperties: false,
+  required: ['facets'],
+  properties: {
+    facets: {
+      type: 'array',
+      items: {
+        type: 'object',
+        additionalProperties: false,
+        required: [
+          'facet_type',
+          'primary_topic',
+          'content',
+          'system_types',
+          'bs7671_zones',
+          'equipment_category',
+          'protection_method',
+          'disconnection_time_s',
+          'test_equipment',
+          'keywords',
+          'confidence_score',
+        ],
+        properties: {
+          facet_type: {
+            type: 'string',
+            enum: [
+              'purpose',
+              'requirement',
+              'test',
+              'scope',
+              'note',
+              'condition',
+              'exception',
+              'procedure',
+              'acceptance_criterion',
+              'reference',
+              'example',
+              'definition',
+            ],
+          },
+          primary_topic: { type: 'string' },
+          content: { type: 'string' },
+          system_types: {
+            type: 'array',
+            items: {
+              type: 'string',
+              enum: ['TN-S', 'TN-C-S', 'TN-C', 'TT', 'IT', 'PNB', 'reduced-low-voltage'],
+            },
+          },
+          bs7671_zones: {
+            type: 'array',
+            items: {
+              type: 'string',
+              enum: [
+                'bathroom',
+                'shower',
+                'outdoor',
+                'swimming-pool',
+                'sauna',
+                'marina',
+                'caravan-park',
+                'ev-charging',
+                'medical',
+                'solar-pv',
+                'construction-site',
+                'agricultural',
+                'exhibition',
+                'fairground',
+                'generic',
+              ],
+            },
+          },
+          // Nullable fields use type union with 'null' — no null inside enum
+          equipment_category: {
+            type: ['string', 'null'],
+            enum: [
+              'RCBO',
+              'RCD',
+              'MCB',
+              'MCCB',
+              'SPD',
+              'AFDD',
+              'cable',
+              'consumer-unit',
+              'isolator',
+              'switch',
+              'socket-outlet',
+              'luminaire',
+              'transformer',
+              'generator',
+              'motor',
+              'fuse',
+              'busbar',
+              'conductor',
+              'enclosure',
+              'earthing-electrode',
+            ],
+          },
+          protection_method: {
+            type: ['string', 'null'],
+            enum: [
+              'ADS',
+              'SELV',
+              'PELV',
+              'FELV',
+              'double-insulation',
+              'electrical-separation',
+              'non-conducting-location',
+              'earth-free-bonding',
+              'obstacle',
+              'placing-out-of-reach',
+            ],
+          },
+          disconnection_time_s: { type: ['number', 'null'] },
+          test_equipment: {
+            type: 'array',
+            items: {
+              type: 'string',
+              enum: [
+                'insulation-resistance-tester',
+                'loop-impedance-tester',
+                'rcd-tester',
+                'continuity-tester',
+                'multifunction-tester',
+                'clamp-meter',
+                'earth-electrode-tester',
+                'phase-rotation-tester',
+                'voltage-indicator',
+                'thermal-imager',
+                'power-quality-analyser',
+              ],
+            },
+          },
+          keywords: { type: 'array', items: { type: 'string' } },
+          confidence_score: { type: 'number', minimum: 0, maximum: 1 },
+        },
+      },
+    },
+  },
+};
+
+function buildFacetPrompt(params: {
+  docType: string;
+  editionCode: string;
+  regNumber: string | null;
+  regTitle: string | null;
+  part: string | null;
+  chapter: string | null;
+  section: string | null;
+  content: string;
+}): string {
+  const docFull =
+    params.docType === 'bs7671'
+      ? 'BS 7671 — Requirements for Electrical Installations (the UK Wiring Regulations)'
+      : params.docType === 'gn3'
+        ? 'IET Guidance Note 3 — Inspection & Testing (the practical companion to BS 7671 Part 6)'
+        : params.docType === 'osg'
+          ? 'IET On-Site Guide — the practical installer handbook aligned with BS 7671'
+          : params.docType.toUpperCase();
+
+  const loc = [
+    params.editionCode,
+    params.part,
+    params.chapter,
+    params.section,
+    params.regNumber ? `Regulation ${params.regNumber}` : null,
+    params.regTitle,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+
+  return `# DOCUMENT
+${docFull}
+
+# SOURCE LOCATION
+${loc || '(preamble / un-numbered)'}
+
+# CONTENT TO DECOMPOSE
+\`\`\`
+${params.content}
+\`\`\`
+
+# TASK
+Decompose this content into atomic compliance facets. Each facet is a
+self-contained retrieval unit — an electrician, cert validator, or AI
+assistant must be able to retrieve it alone and act on it without reading
+surrounding text.
+
+**Target density: 15-25 facets for a typical regulation, more for longer
+content. Err deliberately on the side of MORE.** A rich intelligence layer
+is the whole point of this exercise — under-extracting is the single biggest
+failure mode.
+
+## DECOMPOSITION RULES
+
+Produce ONE facet per:
+  1. Numbered sub-clause (a), (b), (c), (i), (ii)...
+  2. Distinct requirement, obligation, or prohibition ("shall", "must",
+     "shall not")
+  3. Distinct permission or allowance ("may", "is permitted")
+  4. Distinct condition or qualifier ("where...", "provided that...",
+     "except where...")
+  5. Distinct exception, exemption, or special case
+  6. Distinct numeric limit, threshold, time, or value (put the value in
+     primary_topic, e.g. "0.4 s disconnection time for 230 V TN final
+     circuits ≤ 32 A")
+  7. Distinct test method, measurement, or verification step
+  8. Distinct acceptance criterion / pass-fail rule
+  9. Distinct definition of a term
+  10. NOTE: or Note: annotation → facet_type='note' (don't skip these —
+      compliance answers often hinge on notes)
+  11. Every "see Regulation X.Y.Z" or "in accordance with BS EN ..." →
+      facet_type='reference'
+  12. Example or worked scenario → facet_type='example'
+
+## STYLE RULES FOR EACH FACET
+
+- **primary_topic**: 6-15 word one-line searchable summary. Include specific
+  terms ("TN-C-S", "RCBO", "bathroom zone 1", "0.4 s") so semantic AND
+  keyword search hit. Think: what a worried electrician would type into
+  Google.
+- **content**: 40-250 words. Self-contained. Restate enough context that it
+  reads without the parent text. Quote numeric values verbatim. Keep
+  regulatory wording ("shall", "may", "is permitted") — don't paraphrase
+  normatively into "must/can".
+- **facet_type**: choose the most specific of: purpose, requirement, test,
+  scope, note, condition, exception, procedure, acceptance_criterion,
+  reference, example, definition.
+- **confidence_score**: 0.9+ when the facet is a clear standalone claim;
+  0.7-0.8 when it's a fragment you've had to stitch context into; <0.7 if
+  you're uncertain.
+
+## METADATA RULES (populate ALL required fields — empty arrays OK, null OK)
+
+- **system_types**: only populate if the facet is about conductor
+  arrangement / earthing topology. Values: TN-S, TN-C-S, TN-C, TT, IT, PNB
+  (protective neutral bonding), reduced-low-voltage. Empty array if the
+  facet is system-agnostic.
+- **bs7671_zones**: only for Part 7 special locations. Empty for body regs.
+  Values as in schema enum.
+- **equipment_category**: the ONE piece of equipment this facet is most
+  about, or null. Don't list multiple — pick the primary.
+- **protection_method**: ADS / SELV / PELV / FELV / double-insulation /
+  electrical-separation / etc., or null.
+- **disconnection_time_s**: only when the facet specifies a maximum
+  disconnection time. Otherwise null.
+- **test_equipment**: only when the facet is about performing a specific
+  test. Empty otherwise.
+- **keywords**: 3-8 searchable synonyms and alt-phrasings an electrician
+  might type. Examples: "earth fault loop impedance", "Zs", "loop test",
+  "Megger", "PSC", "prospective fault current". Include common UK-trade
+  shorthand.
+
+## WHAT TO SKIP (don't generate facets for these)
+
+- Table-of-contents entries ("CHAPTER 41 ... 69")
+- Bibliographic reference lists ("BS EN 60898-1:2003+A1:2015")
+- Page headers / footers / "© IET" boilerplate
+- Index entries (pure lists of numbers with trailing page refs)
+- Figure captions where the caption is purely decorative ("Figure 2.1")
+
+## FEW-SHOT EXAMPLES
+
+GOOD — atomic, self-contained, well-tagged:
+\`\`\`
+{
+  "facet_type": "requirement",
+  "primary_topic": "0.4 s max disconnection time for 230 V TN final circuits up to 63 A",
+  "content": "In a TN system, for final circuits not exceeding 63 A with one or more socket-outlets, and final circuits not exceeding 32 A supplying only fixed connected current-using equipment, the maximum disconnection time required by Regulation 411.3.2.2 shall not exceed 0.4 s at a nominal voltage U0 of 230 V to earth.",
+  "system_types": ["TN-S","TN-C-S"],
+  "bs7671_zones": [],
+  "equipment_category": null,
+  "protection_method": "ADS",
+  "disconnection_time_s": 0.4,
+  "test_equipment": [],
+  "keywords": ["disconnection time","ADS","TN system","230V final circuit","socket-outlet","32A","63A","411.3.2.2"],
+  "confidence_score": 0.95
+}
+\`\`\`
+
+BAD — too vague, no metadata, not standalone:
+\`\`\`
+{
+  "facet_type": "requirement",
+  "primary_topic": "Automatic disconnection",
+  "content": "See the regulation for disconnection times.",
+  "system_types": [],
+  "bs7671_zones": [],
+  "equipment_category": null,
+  "protection_method": null,
+  "disconnection_time_s": null,
+  "test_equipment": [],
+  "keywords": ["disconnection"],
+  "confidence_score": 0.3
+}
+\`\`\`
+
+## OUTPUT
+
+Return strictly valid JSON matching the provided schema. Populate every
+required field on every facet. Use only the enum values exactly as spelled.
+Generate as many facets as the content justifies — typical density
+15-25 per regulation, but longer / denser content warrants more.`;
+}
+
+async function extractFacetsFromChunk(
+  openAiKey: string,
+  prompt: string
+): Promise<{ facets: FacetOutput[]; cost_usd: number; input_tokens: number; output_tokens: number }> {
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${openAiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: FACET_MODEL,
+      max_completion_tokens: 12000,
+      reasoning_effort: 'minimal',
+      messages: [
+        {
+          role: 'system',
+          content: `You are a principal UK electrical installation compliance expert with 25+ years on site and in committee work. You have deep working knowledge of:
+
+• BS 7671:2018+A4:2026 — the UK Wiring Regulations, every Part 1-8, every Chapter, every Appendix. You know which regs changed in A1, A2, A3, A4.
+• IET Guidance Note series (1-8) — selection & erection, isolation & switching, inspection & testing, protection against fire, electric shock, overcurrent, special locations, earthing & bonding.
+• IET On-Site Guide — practical installer workflows, standard circuits, domestic CCC shortcuts.
+• System earthing: TN-S, TN-C-S (PNB), TN-C, TT, IT — their bonding, disconnection requirements, RCD/RCBO selection.
+• Protection strategies: ADS, SELV, PELV, FELV, double insulation, electrical separation, non-conducting location.
+• Devices: MCBs, RCBOs, RCDs (Types AC/A/F/B), SPDs (Types 1/2/3), AFDDs, MCCBs, fuse characteristics.
+• Special locations (Part 7): bathrooms & zones, swimming pools, saunas, construction sites, agricultural, medical, marinas, exhibitions, EV charging, solar PV, BESS.
+• Testing: continuity, insulation resistance, earth fault loop impedance Zs/Ze/Zref, PFC, RCD trip tests, polarity, phase rotation, functional tests.
+• Certification: EIC, EICR coding (C1/C2/C3/FI), Minor Works, Schedules of Tests, Departures, Limitations.
+• UK statutory context: EAWR 1989, CDM 2015, Building Regulations Part P.
+
+Your job is to decompose regulation, guidance, and installer-guide content into dense, atomic, retrieval-ready compliance facets for a vector+BM25 hybrid RAG system used by electricians, cert validators, and an AI assistant called Mate (by Elec-Mate).
+
+PRINCIPLES:
+1. Every facet stands alone — the reader must not need the parent text.
+2. Every numeric limit, exception, condition, and note gets its OWN facet.
+3. Use precise regulatory wording ("shall", "may", "is permitted") — never paraphrase into softer "must/can".
+4. Tag metadata aggressively — system_types, zones, equipment, disconnection times — because the self-querying retriever relies on them.
+5. When uncertain about a metadata field, use null/empty array. Never fabricate.
+6. Err on the side of MORE facets — under-extraction is the single biggest failure mode of this pipeline.
+7. Output strictly valid JSON matching the provided schema. Every required field populated on every facet.`,
+        },
+        { role: 'user', content: prompt },
+      ],
+      response_format: {
+        type: 'json_schema',
+        json_schema: {
+          name: 'facet_extraction',
+          strict: true,
+          schema: FACET_SCHEMA,
+        },
+      },
+    }),
+  });
+
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(`Facet extraction failed ${res.status}: ${t.slice(0, 300)}`);
+  }
+  const j = await res.json();
+  const raw = j.choices?.[0]?.message?.content || '{"facets":[]}';
+  let parsed: { facets: FacetOutput[] };
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    parsed = { facets: [] };
+  }
+  const input_tokens = j.usage?.prompt_tokens ?? 0;
+  const output_tokens = j.usage?.completion_tokens ?? 0;
+  const cost_usd =
+    (input_tokens * FACET_INPUT_PRICE_PER_M + output_tokens * FACET_OUTPUT_PRICE_PER_M) /
+    1_000_000;
+  return {
+    facets: parsed.facets ?? [],
+    cost_usd,
+    input_tokens,
+    output_tokens,
+  };
+}
+
+function buildContextPrefix(params: {
+  docTypeShort: string;
+  editionCode: string;
+  part: string | null;
+  chapter: string | null;
+  section: string | null;
+  regNumber: string | null;
+  regTitle: string | null;
+  facetType: string;
+  primaryTopic: string;
+}): string {
+  const bits: string[] = [
+    `[${params.docTypeShort}]`,
+    params.editionCode,
+  ];
+  if (params.part) bits.push(params.part);
+  if (params.chapter) bits.push(params.chapter);
+  if (params.regNumber) bits.push(`Reg ${params.regNumber}`);
+  if (params.regTitle) bits.push(params.regTitle);
+  bits.push(`[${params.facetType}]`);
+  bits.push(params.primaryTopic);
+  return bits.filter(Boolean).join(' · ');
 }
 
 // ─── Handler ─────────────────────────────────────────────────────────────
@@ -1154,6 +1604,227 @@ serve(async (req) => {
           .update({ status: 'cancelled', completed_at: new Date().toISOString() })
           .eq('id', job_id);
         result = { cancelled: true };
+        break;
+      }
+
+      // ─── generate_facets_batch ─────────────────────────────────────
+      // Process the next N chunks that have no facets yet. Decomposes each
+      // chunk into 5-15 atomic facets via GPT-5-mini structured output,
+      // embeds each with contextual prefix, upserts into bs7671_facets.
+      //
+      // Designed to be called repeatedly by the admin UI until remaining = 0.
+      case 'generate_facets_batch': {
+        const { edition_id, batch_size = FACET_BATCH_DEFAULT } = body;
+        if (!edition_id) throw new Error('edition_id required');
+        if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
+
+        // Fetch edition meta once — used for context prefix on every facet
+        const { data: edition } = await supabaseAdmin
+          .from('bs7671_editions')
+          .select('edition_code, document_type, amendment')
+          .eq('id', edition_id)
+          .single();
+        if (!edition) throw new Error('Edition not found');
+
+        const docTypeShort =
+          edition.document_type === 'bs7671'
+            ? 'BS 7671'
+            : edition.document_type === 'gn3'
+              ? 'GN3'
+              : edition.document_type === 'osg'
+                ? 'OSG'
+                : edition.document_type.toUpperCase();
+
+        // Pull next batch via RPC (server-side NOT EXISTS). The previous
+        // client-side filter broke past 1000 facets because PostgREST caps
+        // SELECT at 1000 rows by default — resulting in the same handful of
+        // chunks being re-processed hundreds of times and generating
+        // thousands of duplicate facets.
+        const { data: pendingChunks, error: pendingErr } = await supabaseAdmin.rpc(
+          'get_pending_facet_chunks',
+          { p_edition_id: edition_id, p_limit: batch_size }
+        );
+        if (pendingErr) throw pendingErr;
+
+        if (!pendingChunks || pendingChunks.length === 0) {
+          result = { processed: 0, facets_created: 0, remaining: 0, completed: true };
+          break;
+        }
+
+        // Look up reg metadata in one go
+        const regIds = pendingChunks
+          .map((c: { regulation_id: string | null }) => c.regulation_id)
+          .filter((x: string | null): x is string => !!x);
+        const { data: regRows } = regIds.length
+          ? await supabaseAdmin
+              .from('bs7671_regulations')
+              .select('id, reg_number, title, part, chapter, section')
+              .in('id', regIds)
+          : { data: [] };
+        const regById = new Map(
+          (regRows || []).map((r: {
+            id: string;
+            reg_number: string;
+            title: string | null;
+            part: string | null;
+            chapter: string | null;
+            section: string | null;
+          }) => [r.id, r])
+        );
+
+        let totalFacetsCreated = 0;
+        let totalCostUsd = 0;
+        let chunksProcessed = 0;
+        const errors: string[] = [];
+
+        // Process chunks with bounded concurrency
+        const queue = [...pendingChunks];
+        const workers: Promise<void>[] = [];
+        for (let w = 0; w < Math.min(FACET_PARALLEL, queue.length); w++) {
+          workers.push(
+            (async () => {
+              while (queue.length > 0) {
+                const chunk = queue.shift();
+                if (!chunk) return;
+                try {
+                  const reg = chunk.regulation_id ? regById.get(chunk.regulation_id) : null;
+
+                  // Build prompt + extract facets
+                  const prompt = buildFacetPrompt({
+                    docType: edition.document_type,
+                    editionCode: edition.edition_code,
+                    regNumber: reg?.reg_number ?? null,
+                    regTitle: reg?.title ?? null,
+                    part: reg?.part ?? null,
+                    chapter: reg?.chapter ?? null,
+                    section: reg?.section ?? null,
+                    content: chunk.content,
+                  });
+                  const extraction = await extractFacetsFromChunk(openAiKey, prompt);
+                  totalCostUsd += extraction.cost_usd;
+
+                  if (extraction.facets.length === 0) {
+                    // Empty response = token-budget exhaustion or schema mismatch.
+                    // Mark as a failure so the audit panel surfaces it, rather than
+                    // silently burning cost and leaving the chunk in pending-limbo.
+                    throw new Error(
+                      `Empty facets (in=${extraction.input_tokens} out=${extraction.output_tokens})`
+                    );
+                  }
+
+                  // Build embedding inputs: context_prefix + content
+                  const facetRows: Record<string, unknown>[] = [];
+                  const embedInputs: string[] = [];
+                  for (const f of extraction.facets) {
+                    const contextPrefix = buildContextPrefix({
+                      docTypeShort,
+                      editionCode: edition.edition_code,
+                      part: reg?.part ?? null,
+                      chapter: reg?.chapter ?? null,
+                      section: reg?.section ?? null,
+                      regNumber: reg?.reg_number ?? null,
+                      regTitle: reg?.title ?? null,
+                      facetType: f.facet_type,
+                      primaryTopic: f.primary_topic,
+                    });
+                    const embedInput = `${contextPrefix}\n\n${f.content}`;
+                    embedInputs.push(embedInput);
+
+                    const hashKey = `${f.facet_type}::${f.primary_topic}::${f.content}`.slice(
+                      0,
+                      2000
+                    );
+                    const hash = await sha256Hex(normaliseForHash(hashKey));
+
+                    facetRows.push({
+                      chunk_id: chunk.id,
+                      edition_id: chunk.edition_id,
+                      regulation_id: chunk.regulation_id,
+                      document_type: edition.document_type,
+                      facet_type: f.facet_type,
+                      primary_topic: f.primary_topic,
+                      content: f.content,
+                      context_prefix: contextPrefix,
+                      system_types: f.system_types ?? [],
+                      bs7671_zones: f.bs7671_zones ?? [],
+                      equipment_category: f.equipment_category ?? null,
+                      protection_method: f.protection_method ?? null,
+                      disconnection_time_s: f.disconnection_time_s ?? null,
+                      test_equipment: f.test_equipment ?? [],
+                      keywords: f.keywords ?? [],
+                      confidence_score: f.confidence_score ?? 0.75,
+                      facet_hash: hash,
+                    });
+                  }
+
+                  // Embed in one batch call
+                  const vectors = await embedBatch(openAiKey, embedInputs);
+                  for (let i = 0; i < facetRows.length; i++) {
+                    facetRows[i].embedding = vectors[i];
+                  }
+
+                  const { error: upErr } = await supabaseAdmin
+                    .from('bs7671_facets')
+                    .upsert(facetRows, {
+                      onConflict: 'chunk_id,facet_hash',
+                      ignoreDuplicates: true,
+                    });
+                  if (upErr) throw upErr;
+
+                  totalFacetsCreated += facetRows.length;
+                  chunksProcessed += 1;
+
+                  // On success, clear any prior failure record for this chunk
+                  await supabaseAdmin
+                    .from('bs7671_facet_failures')
+                    .update({ resolved: true, resolved_at: new Date().toISOString() })
+                    .eq('chunk_id', chunk.id)
+                    .eq('resolved', false);
+                } catch (err) {
+                  const msg = err instanceof Error ? err.message : String(err);
+                  console.warn(`[generate_facets] chunk ${chunk.id} failed: ${msg}`);
+                  errors.push(`${chunk.id}: ${msg.slice(0, 120)}`);
+
+                  // Upsert failure record — increments attempts via prior lookup
+                  const { data: prior } = await supabaseAdmin
+                    .from('bs7671_facet_failures')
+                    .select('attempts')
+                    .eq('chunk_id', chunk.id)
+                    .maybeSingle();
+                  await supabaseAdmin
+                    .from('bs7671_facet_failures')
+                    .upsert(
+                      {
+                        chunk_id: chunk.id,
+                        edition_id: chunk.edition_id,
+                        error_message: msg.slice(0, 500),
+                        attempts: (prior?.attempts ?? 0) + 1,
+                        last_failed_at: new Date().toISOString(),
+                        resolved: false,
+                        resolved_at: null,
+                      },
+                      { onConflict: 'chunk_id' }
+                    );
+                }
+              }
+            })()
+          );
+        }
+        await Promise.all(workers);
+
+        // True remaining via RPC — counts chunks with no facet rows at all
+        const { data: progress } = await supabaseAdmin
+          .rpc('get_facet_progress', { p_edition_id: edition_id });
+        const remaining = progress?.[0]?.chunks_remaining ?? 0;
+
+        result = {
+          processed: chunksProcessed,
+          facets_created: totalFacetsCreated,
+          cost_usd: Number(totalCostUsd.toFixed(4)),
+          remaining: Math.max(0, Number(remaining)),
+          completed: Number(remaining) <= 0,
+          errors: errors.length > 0 ? errors.slice(0, 5) : undefined,
+        };
         break;
       }
 

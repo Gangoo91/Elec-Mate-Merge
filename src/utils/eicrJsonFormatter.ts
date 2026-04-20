@@ -276,12 +276,41 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
           items: [],
         };
       }
+      const rawOutcome = (item.outcome || '').toString();
+      const outcomeDisplay = (() => {
+        switch (rawOutcome) {
+          case 'satisfactory':
+          case 'Acceptable':
+          case '✓':
+            return 'Y';
+          case 'C1':
+            return 'C1';
+          case 'C2':
+            return 'C2';
+          case 'C3':
+            return 'C3';
+          case 'FI':
+            return 'FI';
+          case 'not-verified':
+          case 'N/V':
+            return 'N/V';
+          case 'limitation':
+          case 'LIM':
+            return 'LIM';
+          case 'not-applicable':
+          case 'N/A':
+            return 'N/A';
+          default:
+            return '';
+        }
+      })();
       sectionMap[sectionName].items.push({
         id: item.id || '',
         item_number: item.number || item.itemNumber || '',
         item: item.item || item.description || '',
         clause: item.clause || '',
-        outcome: item.outcome || '',
+        outcome: rawOutcome,
+        outcome_display: outcomeDisplay,
         notes: item.notes || '',
       });
     });
@@ -611,13 +640,6 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
             main_switch_type: formData['mainSwitchType'] || '',
             main_switch_rating: formData['mainSwitchRating'] || '',
             main_switch_poles: formData['mainSwitchPoles'] || '',
-            // Per-board test instruments (A4:2026 fallback)
-            test_instrument_multifunction: formData['testInstrumentMultifunction'] || '',
-            test_instrument_continuity: formData['testInstrumentContinuity'] || '',
-            test_instrument_insulation: formData['testInstrumentInsulation'] || '',
-            test_instrument_eli: formData['testInstrumentEli'] || '',
-            test_instrument_rcd: formData['testInstrumentRcd'] || '',
-            test_instrument_earth_electrode: formData['testInstrumentEarthElectrode'] || '',
             circuit_count: testResults.length,
             circuits: testResults.map(formatCircuit),
           },
@@ -692,19 +714,6 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         main_switch_type: fb(board.mainSwitchType, 'mainSwitchType'),
         main_switch_rating: fb(board.mainSwitchRating, 'mainSwitchRating'),
         main_switch_poles: fb(board.mainSwitchPoles, 'mainSwitchPoles'),
-        // Per-board test instruments — fall back to top-level for main board
-        test_instrument_multifunction: fb(
-          board.testInstrumentMultifunction,
-          'testInstrumentMultifunction'
-        ),
-        test_instrument_continuity: fb(board.testInstrumentContinuity, 'testInstrumentContinuity'),
-        test_instrument_insulation: fb(board.testInstrumentInsulation, 'testInstrumentInsulation'),
-        test_instrument_eli: fb(board.testInstrumentEli, 'testInstrumentEli'),
-        test_instrument_rcd: fb(board.testInstrumentRcd, 'testInstrumentRcd'),
-        test_instrument_earth_electrode: fb(
-          board.testInstrumentEarthElectrode,
-          'testInstrumentEarthElectrode'
-        ),
         // Circuit count
         circuit_count: boardCircuits.length,
         // Circuits for this board (same format as flat schedule_of_tests)

@@ -458,36 +458,7 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         );
       })()}
 
-      {/* A4:2026 — Per-board Test Instruments (serials / asset numbers) */}
-      <div className="pt-3 border-t border-white/[0.06] space-y-2">
-        <label className="text-[10px] text-white/70 uppercase tracking-wider block">Test Instruments (serial / asset)</label>
-        <div className="grid grid-cols-2 gap-2">
-          <div>
-            <label className="text-[10px] text-white block mb-1">Multifunction</label>
-            <Input value={(board as any).testInstrumentMultifunction || ''} onChange={(e) => onUpdate('testInstrumentMultifunction' as any, e.target.value)} placeholder="MFT serial" className={inputCn} />
-          </div>
-          <div>
-            <label className="text-[10px] text-white block mb-1">Continuity</label>
-            <Input value={(board as any).testInstrumentContinuity || ''} onChange={(e) => onUpdate('testInstrumentContinuity' as any, e.target.value)} placeholder="Serial / asset" className={inputCn} />
-          </div>
-          <div>
-            <label className="text-[10px] text-white block mb-1">Insulation</label>
-            <Input value={(board as any).testInstrumentInsulation || ''} onChange={(e) => onUpdate('testInstrumentInsulation' as any, e.target.value)} placeholder="Serial / asset" className={inputCn} />
-          </div>
-          <div>
-            <label className="text-[10px] text-white block mb-1">Earth fault loop</label>
-            <Input value={(board as any).testInstrumentEli || ''} onChange={(e) => onUpdate('testInstrumentEli' as any, e.target.value)} placeholder="Serial / asset" className={inputCn} />
-          </div>
-          <div>
-            <label className="text-[10px] text-white block mb-1">RCD</label>
-            <Input value={(board as any).testInstrumentRcd || ''} onChange={(e) => onUpdate('testInstrumentRcd' as any, e.target.value)} placeholder="Serial / asset" className={inputCn} />
-          </div>
-          <div>
-            <label className="text-[10px] text-white block mb-1">Earth electrode</label>
-            <Input value={(board as any).testInstrumentEarthElectrode || ''} onChange={(e) => onUpdate('testInstrumentEarthElectrode' as any, e.target.value)} placeholder="Serial / asset" className={inputCn} />
-          </div>
-        </div>
-      </div>
+      {/* Test instruments are captured once globally in the Testing tab footer — not per-board */}
     </div>
   );
 };

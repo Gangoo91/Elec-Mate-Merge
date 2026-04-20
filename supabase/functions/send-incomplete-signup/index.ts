@@ -23,6 +23,23 @@ interface EligibleUser {
   created_at: string;
 }
 
+// V10 launch-price campaign: deadline label rendered into the email + Stripe
+// payment-link URLs (one per role). Missing env var = hard error when the
+// campaign is invoked, so a misconfigured deploy can't send a broken CTA.
+const V10_DEADLINE_LABEL = 'Sunday 26 April';
+
+function getLaunchPaymentUrl(role: 'electrician' | 'apprentice'): string {
+  const envVar =
+    role === 'apprentice' ? 'STRIPE_LAUNCH_APPRENTICE_URL' : 'STRIPE_LAUNCH_ELECTRICIAN_URL';
+  const url = Deno.env.get(envVar);
+  if (!url) {
+    throw new Error(
+      `Stripe launch payment URL not configured. Set ${envVar} in the send-incomplete-signup edge function secrets.`
+    );
+  }
+  return url;
+}
+
 // Generate electrician email HTML
 function generateElectricianEmailHTML(user: EligibleUser): string {
   const firstName = user.full_name?.split(' ')[0] || 'mate';
@@ -508,6 +525,289 @@ function generateV8AppStoreLaunchHTML(firstName: string): string {
 </body></html>`;
 }
 
+// V10 "Launch price, just for you" — deadline-urgent offer with role-aware pricing.
+// Opens with V9's "quick question" warmth then pivots to a clear, time-boxed
+// offer. Each recipient gets their role's Stripe payment link baked straight
+// into the CTA so there's nothing to type — one tap buys.
+function generateV10LaunchPriceHTML(
+  firstName: string,
+  role: 'electrician' | 'apprentice',
+  paymentUrl: string,
+  deadlineLabel: string
+): string {
+  const appStoreUrl = 'https://apps.apple.com/gb/app/elec-mate/id6758948665';
+  const logoUrl = 'https://elec-mate.com/logo.jpg';
+
+  const isElectrician = role === 'electrician';
+  const oldPrice = isElectrician ? '£14.99' : '£6.99';
+  const newPrice = isElectrician ? '£9.99' : '£4.99';
+  const tierName = isElectrician ? 'Electrician' : 'Apprentice';
+  const tierTagline = isElectrician
+    ? 'Every cert, AI tools, quoting and customers — the whole working day.'
+    : 'AM2, 18th Edition, 2,000+ questions and proper study kit.';
+
+  // Role-specific feature grid — the *selling* features, not a spec sheet.
+  // Each line answers "what will this do for me?" in a tradesperson's words.
+  const features = isElectrician
+    ? [
+        {
+          icon: '&#128241;',
+          title: 'AI Board Scanner',
+          sub: 'Point at a consumer unit. Circuits read, schedule auto-filled. 20min off every EICR.',
+        },
+        {
+          icon: '&#128221;',
+          title: 'Every cert you need',
+          sub: 'EICR, EIC, Minor Works, Solar PV, EV charge point, Fire Alarm. BS 7671 A4:2026 ready.',
+        },
+        {
+          icon: '&#129302;',
+          title: '8 AI specialists on tap',
+          sub: 'Cost Engineer, Circuit Designer, Installer, Commissioning, Health &amp; Safety, Materials, Snagging, Photo Estimator.',
+        },
+        {
+          icon: '&#128176;',
+          title: 'Quote &rarr; invoice &rarr; paid',
+          sub: 'Live UK wholesaler pricing baked in. Branded PDFs. Stripe-powered invoicing.',
+        },
+        {
+          icon: '&#128737;',
+          title: 'Site Safety &amp; RAMS in 2 minutes',
+          sub: 'Site-specific RAMS generator, hazard library, daily site safety checklists, on-site incident logging.',
+        },
+        {
+          icon: '&#128188;',
+          title: 'The Business Hub',
+          sub: 'Daily morning brief, live revenue &amp; job profit, customer CRM, job pipeline, materials tracker, snagging lists, analytics &mdash; your whole round in one place.',
+        },
+      ]
+    : [
+        {
+          icon: '&#127891;',
+          title: 'Pass AM2, first go',
+          sub: 'Timed mocks with worked explanations. Exam conditions, right on your phone.',
+        },
+        {
+          icon: '&#128218;',
+          title: '2,000+ practice questions',
+          sub: 'Level 2 &amp; 3, sorted by topic. Quiz yourself on your break or in the van.',
+        },
+        {
+          icon: '&#127919;',
+          title: 'Flashcards for quick revision',
+          sub: 'Tap through topic decks between jobs. Spaced repetition built in, so things actually stick.',
+        },
+        {
+          icon: '&#128295;',
+          title: 'Inspection &amp; Testing hub',
+          sub: 'Step-by-step on every test &mdash; insulation resistance, continuity, RCD, Zs, polarity. See exactly how it&rsquo;s done.',
+        },
+        {
+          icon: '&#127916;',
+          title: 'Videos for every topic',
+          sub: 'Short walk-through videos alongside the lessons. Watch it, then try it yourself.',
+        },
+        {
+          icon: '&#128202;',
+          title: 'Full Level 2 &amp; 3 courses',
+          sub: 'Structured lessons that match what college covers. Review what you did today, nail it tomorrow.',
+        },
+        {
+          icon: '&#128207;',
+          title: '50+ electrical calculators',
+          sub: 'Zs, volt drop, cable sizing, earth fault loop. Learn by doing, with worked answers.',
+        },
+        {
+          icon: '&#128196;',
+          title: 'Site diary + OJT logbook',
+          sub: 'Log every job, every hour, every task &mdash; tied to your coursework. Audit-ready evidence.',
+        },
+      ];
+
+  // Feature rows — each a title + benefit line. One per row for breathing room.
+  const featureRows = features
+    .map(
+      (f) => `
+<tr>
+<td valign="top" style="padding:10px 0">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%"><tr>
+<td width="46" valign="top" style="padding-top:2px">
+<div style="width:38px;height:38px;background:rgba(251,191,36,0.14);border:1px solid rgba(251,191,36,0.22);border-radius:10px;text-align:center;line-height:38px;font-size:17px">${f.icon}</div>
+</td>
+<td style="padding-left:14px">
+<p style="margin:0 0 3px;font-size:15px;font-weight:700;color:#ffffff;line-height:1.3">${f.title}</p>
+<p style="margin:0;font-size:13px;color:#ffffff;line-height:1.5;opacity:0.72">${f.sub}</p>
+</td>
+</tr></table>
+</td>
+</tr>`
+    )
+    .join('');
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#000000">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#000000"><tr><td style="padding:0">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:600px;margin:0 auto;background:#000000">
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Logo -->
+<tr><td style="text-align:center;padding:0 32px">
+<img src="${logoUrl}" alt="Elec-Mate" width="96" height="96" style="display:block;border-radius:22px;margin:0 auto">
+</td></tr>
+
+<tr><td style="height:28px"></td></tr>
+
+<!-- Deadline pill -->
+<tr><td style="text-align:center;padding:0 32px">
+<div style="display:inline-block;padding:8px 18px;background:rgba(251,191,36,0.14);border:1px solid rgba(251,191,36,0.32);border-radius:999px">
+<span style="font-size:12px;font-weight:700;color:#fbbf24;letter-spacing:0.4px;text-transform:uppercase">Ends ${deadlineLabel}</span>
+</div>
+</td></tr>
+
+<tr><td style="height:20px"></td></tr>
+
+<!-- Headline -->
+<tr><td style="text-align:center;padding:0 32px">
+<h1 style="margin:0;font-size:36px;font-weight:800;color:#ffffff;line-height:1.1;letter-spacing:-0.8px">Your launch price,<br><span style="color:#fbbf24">just for you.</span></h1>
+</td></tr>
+
+<tr><td style="height:20px"></td></tr>
+
+<!-- Personal opener -->
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 14px;font-size:16px;color:#ffffff;line-height:1.7">Hey ${firstName},</p>
+<p style="margin:0 0 14px;font-size:16px;color:#ffffff;line-height:1.7">You signed up but never quite got going &mdash; and I get it. Life, jobs, the stack of things to deal with. No chase, no judgement.</p>
+<p style="margin:0;font-size:16px;color:#ffffff;line-height:1.7">So I&rsquo;m doing something for the people who haven&rsquo;t tried it yet. A one-time launch rate, locked in for as long as you stay. <strong style="color:#fbbf24">Not going back up.</strong></p>
+</td></tr>
+
+<tr><td style="height:32px"></td></tr>
+
+<!-- Price card -->
+<tr><td style="padding:0 32px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:linear-gradient(180deg,rgba(251,191,36,0.08),rgba(251,191,36,0.02));border:1px solid rgba(251,191,36,0.28);border-radius:20px">
+<tr><td style="padding:24px 24px 22px;text-align:center">
+
+<p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#fbbf24;letter-spacing:1.2px;text-transform:uppercase">Elec-Mate ${tierName}</p>
+<p style="margin:0 0 18px;font-size:13px;color:#ffffff;line-height:1.5;opacity:0.72">${tierTagline}</p>
+
+<p style="margin:0 0 6px;font-size:14px;color:#ffffff;line-height:1;opacity:0.6">
+<del style="text-decoration:line-through;text-decoration-color:rgba(248,113,113,0.9);text-decoration-thickness:2px">${oldPrice}/mo</del>
+<span style="opacity:0.85">&nbsp;normally</span>
+</p>
+
+<p style="margin:0;font-size:52px;font-weight:800;color:#fbbf24;line-height:1;letter-spacing:-1.2px">${newPrice}<span style="font-size:20px;font-weight:600;color:#ffffff;opacity:0.7">/mo</span></p>
+
+<p style="margin:14px 0 0;font-size:12px;color:#ffffff;opacity:0.6;letter-spacing:0.4px;text-transform:uppercase">Locked in &middot; Cancel anytime</p>
+
+</td></tr>
+</table>
+</td></tr>
+
+<tr><td style="height:28px"></td></tr>
+
+<!-- CTA — bulletproof button -->
+<tr><td style="text-align:center;padding:0 32px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:0 auto">
+<tr><td style="background:#fbbf24;border-radius:14px">
+<a href="${paymentUrl}" style="display:inline-block;padding:18px 34px;font-size:17px;font-weight:800;color:#000000;text-decoration:none;letter-spacing:0.2px">Claim ${newPrice}/month &rarr;</a>
+</td></tr>
+</table>
+</td></tr>
+
+<tr><td style="height:12px"></td></tr>
+
+<tr><td style="text-align:center;padding:0 32px">
+<p style="margin:0;font-size:12px;color:#ffffff;opacity:0.55">Secure checkout via Stripe &middot; No code to enter</p>
+</td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
+
+<tr><td style="height:28px"></td></tr>
+
+<!-- What's included — role-specific -->
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 14px;font-size:13px;font-weight:700;color:#fbbf24;letter-spacing:1px;text-transform:uppercase">What you get</p>
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+${featureRows}
+</table>
+</td></tr>
+
+<tr><td style="height:36px"></td></tr>
+
+<!-- Store availability — iPhone only for now; Android launching shortly -->
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 14px;font-size:13px;color:#ffffff;opacity:0.65;line-height:1.6;text-align:center">Pay once via the link above to lock in your rate. Then log in on iPhone or the web &mdash; Android is landing in the next few days.</p>
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin:0 auto">
+<tr>
+<td style="padding:0 6px"><a href="${appStoreUrl}" style="display:inline-block;padding:10px 18px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:10px;font-size:13px;color:#ffffff;text-decoration:none;font-weight:600">&#63743;&nbsp;&nbsp;Download on the App Store</a></td>
+</tr>
+</table>
+</td></tr>
+
+<tr><td style="height:36px"></td></tr>
+
+<!-- Referral perk — one more thing -->
+<tr><td style="padding:0 32px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:linear-gradient(180deg,rgba(251,191,36,0.10),rgba(251,191,36,0.03));border:1px solid rgba(251,191,36,0.32);border-radius:20px">
+<tr><td style="padding:22px 22px 20px">
+
+<p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#fbbf24;letter-spacing:1.2px;text-transform:uppercase">One more thing</p>
+<h2 style="margin:0 0 12px;font-size:20px;font-weight:800;color:#ffffff;line-height:1.25;letter-spacing:-0.3px">Once you&rsquo;re in, you can stack it.</h2>
+
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+<tr>
+<td width="42" valign="top" style="padding-top:4px">
+<div style="width:34px;height:34px;background:rgba(251,191,36,0.18);border-radius:10px;text-align:center;line-height:34px;font-size:16px">&#127873;</div>
+</td>
+<td style="padding-left:12px;padding-bottom:14px">
+<p style="margin:0 0 2px;font-size:14.5px;font-weight:700;color:#ffffff">Refer a mate &rarr; up to 2 months free</p>
+<p style="margin:0;font-size:12.5px;color:#ffffff;line-height:1.55;opacity:0.72">Each mate who signs up knocks a month off your bill. Two mates = two months free.</p>
+</td>
+</tr>
+<tr>
+<td width="42" valign="top" style="padding-top:4px">
+<div style="width:34px;height:34px;background:rgba(251,191,36,0.18);border-radius:10px;text-align:center;line-height:34px;font-size:16px">&#128176;</div>
+</td>
+<td style="padding-left:12px">
+<p style="margin:0 0 2px;font-size:14.5px;font-weight:700;color:#ffffff">&pound;100 monthly draw &mdash; and your odds are real</p>
+<p style="margin:0;font-size:12.5px;color:#ffffff;line-height:1.55;opacity:0.72">Every referral is an entry. Not loads of people have referred yet &mdash; so if you get a mate in early, your chance of pulling the &pound;100 out is properly high.</p>
+</td>
+</tr>
+</table>
+
+</td></tr>
+</table>
+</td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Divider -->
+<tr><td style="padding:0 32px"><div style="height:1px;background:rgba(255,255,255,0.08)"></div></td></tr>
+
+<tr><td style="height:28px"></td></tr>
+
+<!-- Sign-off -->
+<tr><td style="padding:0 32px">
+<p style="margin:0 0 4px;font-size:15px;color:#ffffff">Cheers,</p>
+<p style="margin:0 0 16px;font-size:15px;color:#ffffff"><span style="color:#fbbf24;font-weight:700">Andrew</span> &middot; Founder, Elec-Mate</p>
+<p style="margin:0;font-size:13px;color:#ffffff;opacity:0.75;line-height:1.7;font-style:italic">P.S. This rate genuinely closes on ${deadlineLabel}. After that it&rsquo;s ${oldPrice}/mo like everyone else. Any questions &mdash; hit reply and I&rsquo;ll answer personally.</p>
+</td></tr>
+
+<tr><td style="height:40px"></td></tr>
+
+<!-- Footer -->
+<tr><td style="text-align:center;padding:0 32px 40px">
+<p style="margin:0;font-size:11px;color:#ffffff;opacity:0.45">&copy; ${new Date().getFullYear()} Elec-Mate Ltd &middot; Built in Cumbria for UK electricians</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
 // V3 "Card Deets" email — direct, empathetic, addresses card fear head-on
 function generateV3EmailHTML(user: EligibleUser): string {
   const firstName = user.full_name?.split(' ')[0] || 'mate';
@@ -762,7 +1062,16 @@ Deno.serve(async (req) => {
       throw new Error('Unauthorized: Admin access required');
     }
 
-    const { action, userId, userIds, testEmail, manualEmail, recipientName } = await req.json();
+    const {
+      action,
+      userId,
+      userIds,
+      testEmail,
+      manualEmail,
+      recipientName,
+      role: bodyRole,
+      deadlineLabel: bodyDeadline,
+    } = await req.json();
 
     console.log(
       `Admin ${user.id} (${callerProfile.full_name}) authorized for incomplete-signup, action: ${action}`
@@ -1643,6 +1952,329 @@ Deno.serve(async (req) => {
             ? `All done! Sent ${v3SentCount} emails.`
             : `Sent ${v3SentCount}. ~${v3RemCount} remaining.`,
         };
+        break;
+      }
+
+      // ─── V10 "Launch price" campaign ──────────────────────────────────
+      case 'get_v10_stats': {
+        const { data: v10Total, error: v10TotalErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .eq('subscribed', false)
+          .eq('free_access_granted', false);
+        if (v10TotalErr) throw v10TotalErr;
+
+        const { count: v10Sent } = await supabaseAdmin
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .not('incomplete_signup_v10_sent_at', 'is', null);
+
+        const { count: v10Converted } = await supabaseAdmin
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .not('incomplete_signup_v10_sent_at', 'is', null)
+          .eq('subscribed', true);
+
+        result = {
+          totalAbandoned: (v10Total as unknown as { count: number })?.count ?? 0,
+          sent: v10Sent ?? 0,
+          conversions: v10Converted ?? 0,
+          totalEligible: ((v10Total as unknown as { count: number })?.count ?? 0) - (v10Sent ?? 0),
+          conversionRate:
+            v10Sent && v10Sent > 0 ? `${(((v10Converted ?? 0) / v10Sent) * 100).toFixed(1)}%` : '0%',
+        };
+        break;
+      }
+
+      case 'get_v10_eligible': {
+        const query = supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v10_sent_at', null)
+          .eq('subscribed', false)
+          .eq('free_access_granted', false)
+          .order('created_at', { ascending: false })
+          .limit(500);
+
+        const { data: v10Profiles, error: v10Err } = await query;
+        if (v10Err) throw v10Err;
+
+        const { data: v10AuthEmails } = await supabaseAdmin.rpc('get_auth_user_emails');
+        const v10EmailMap = new Map<string, string>();
+        (v10AuthEmails || []).forEach((u: { id: string; email: string | null }) => {
+          if (u.email) v10EmailMap.set(u.id, u.email);
+        });
+
+        const v10Users = (v10Profiles || [])
+          .map((p: Record<string, unknown>) => ({
+            ...p,
+            email: v10EmailMap.get(p.id as string) || null,
+          }))
+          .filter((p: { email: string | null }) => p.email);
+
+        result = { users: v10Users };
+        break;
+      }
+
+      case 'get_v10_sent': {
+        const { data: v10SentProfiles, error: v10SentErr } = await supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at, subscribed, incomplete_signup_v10_sent_at')
+          .not('incomplete_signup_v10_sent_at', 'is', null)
+          .order('incomplete_signup_v10_sent_at', { ascending: false })
+          .limit(200);
+        if (v10SentErr) throw v10SentErr;
+
+        result = { users: v10SentProfiles || [] };
+        break;
+      }
+
+      case 'send_v10_test': {
+        if (!testEmail) throw new Error('testEmail is required');
+        const testRole: 'electrician' | 'apprentice' =
+          bodyRole === 'apprentice' ? 'apprentice' : 'electrician';
+        const paymentUrl = getLaunchPaymentUrl(testRole);
+        const deadline = bodyDeadline || V10_DEADLINE_LABEL;
+        const firstName = recipientName?.split(' ')[0] || 'Test';
+
+        const html = generateV10LaunchPriceHTML(firstName, testRole, paymentUrl, deadline);
+        const { data: testData, error: testErr } = await resend.emails.send({
+          from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+          replyTo: 'founder@elec-mate.com',
+          to: [testEmail.trim().toLowerCase()],
+          subject: `[TEST] Your launch price — ${testRole === 'apprentice' ? '£4.99' : '£9.99'}/mo`,
+          html,
+          tags: [
+            { name: 'campaign', value: 'incomplete_signup_v10' },
+            { name: 'type', value: 'test' },
+            { name: 'role', value: testRole },
+          ],
+        });
+        if (testErr) throw new Error(`Failed to send: ${testErr.message}`);
+
+        console.log(`V10 test email (${testRole}) sent to ${testEmail} by admin ${user.id}`);
+        result = { success: true, email: testEmail, role: testRole, resendId: testData?.id };
+        break;
+      }
+
+      case 'send_v10_manual': {
+        if (!manualEmail) throw new Error('manualEmail is required');
+
+        const { data: matchedAuth } = await supabaseAdmin.rpc('get_auth_user_emails');
+        const match = (matchedAuth || []).find(
+          (u: { email?: string | null }) =>
+            u.email?.toLowerCase() === manualEmail.trim().toLowerCase()
+        );
+        let resolvedRole: 'electrician' | 'apprentice' = 'electrician';
+        let resolvedName = recipientName?.split(' ')[0] || 'mate';
+        let resolvedProfileId: string | null = null;
+
+        if (match?.id) {
+          const { data: profile } = await supabaseAdmin
+            .from('profiles')
+            .select('id, full_name, role')
+            .eq('id', match.id)
+            .single();
+          if (profile) {
+            resolvedProfileId = profile.id;
+            resolvedName = (profile.full_name as string)?.split(' ')[0] || resolvedName;
+            if (profile.role === 'apprentice') resolvedRole = 'apprentice';
+          }
+        }
+        // Allow caller to override detected role (e.g. unknown role in DB)
+        if (bodyRole === 'apprentice') resolvedRole = 'apprentice';
+        if (bodyRole === 'electrician') resolvedRole = 'electrician';
+
+        const paymentUrl = getLaunchPaymentUrl(resolvedRole);
+        const deadline = bodyDeadline || V10_DEADLINE_LABEL;
+
+        const html = generateV10LaunchPriceHTML(resolvedName, resolvedRole, paymentUrl, deadline);
+        const { data: emailData, error: emailError } = await resend.emails.send({
+          from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+          replyTo: 'founder@elec-mate.com',
+          to: [manualEmail.trim().toLowerCase()],
+          subject: `Your launch price, ${resolvedName}`,
+          html,
+          tags: [
+            { name: 'campaign', value: 'incomplete_signup_v10' },
+            { name: 'role', value: resolvedRole },
+            { name: 'user_id', value: resolvedProfileId || 'unknown' },
+          ],
+        });
+        if (emailError) throw new Error(`Failed to send: ${emailError.message}`);
+
+        if (resolvedProfileId) {
+          await supabaseAdmin
+            .from('profiles')
+            .update({ incomplete_signup_v10_sent_at: new Date().toISOString() })
+            .eq('id', resolvedProfileId);
+        }
+
+        await supabaseAdmin.from('email_logs').insert({
+          to_email: manualEmail,
+          subject: `Your launch price, ${resolvedName}`,
+          template: 'incomplete_signup_v10',
+          status: 'sent',
+          metadata: {
+            resend_id: emailData?.id,
+            user_id: resolvedProfileId,
+            role: resolvedRole,
+          },
+        });
+
+        console.log(`V10 manual email (${resolvedRole}) sent to ${manualEmail} by admin ${user.id}`);
+        result = { success: true, email: manualEmail, role: resolvedRole, resendId: emailData?.id };
+        break;
+      }
+
+      case 'send_v10_campaign': {
+        // Batch-send V10. If userIds provided, send only to those; otherwise send
+        // to all unsent eligible. Batches of 10 with 2s pause between batches.
+        const BATCH_SIZE = 10;
+        const BATCH_DELAY_MS = 2000;
+        const deadline = bodyDeadline || V10_DEADLINE_LABEL;
+
+        let query = supabaseAdmin
+          .from('profiles')
+          .select('id, full_name, username, role, created_at, subscribed, free_access_granted')
+          .or('role.eq.electrician,role.eq.apprentice')
+          .not('stripe_customer_id', 'is', null)
+          .is('incomplete_signup_v10_sent_at', null);
+
+        if (Array.isArray(userIds) && userIds.length > 0) {
+          query = query.in('id', userIds);
+        }
+
+        const { data: v10CampProfiles, error: v10CampErr } = await query.order('created_at', {
+          ascending: true,
+        });
+        if (v10CampErr) throw v10CampErr;
+
+        const v10Filtered = (v10CampProfiles || []).filter(
+          (p: { subscribed?: boolean; free_access_granted?: boolean }) =>
+            !p.subscribed && !p.free_access_granted
+        );
+
+        const { data: v10AuthEmails } = await supabaseAdmin.rpc('get_auth_user_emails');
+        const v10EmailMap = new Map<string, string>();
+        (v10AuthEmails || []).forEach((u: { id: string; email: string | null }) => {
+          if (u.email) v10EmailMap.set(u.id, u.email);
+        });
+
+        const toSend = v10Filtered
+          .map((p: Record<string, unknown>) => ({
+            ...p,
+            email: v10EmailMap.get(p.id as string) || null,
+          }))
+          .filter((p: { email: string | null }) => p.email);
+
+        if (toSend.length === 0) {
+          result = {
+            sent: 0,
+            remaining: 0,
+            complete: true,
+            message:
+              Array.isArray(userIds) && userIds.length > 0
+                ? 'No eligible users in the selected list (already sent, subscribed, or missing email).'
+                : 'All V10 emails already sent!',
+          };
+          break;
+        }
+
+        let v10SentCount = 0;
+        const v10Errors: string[] = [];
+
+        for (let batchStart = 0; batchStart < toSend.length; batchStart += BATCH_SIZE) {
+          const batch = toSend.slice(batchStart, batchStart + BATCH_SIZE);
+          const batchNum = Math.floor(batchStart / BATCH_SIZE) + 1;
+          const totalBatches = Math.ceil(toSend.length / BATCH_SIZE);
+          console.log(`V10 batch ${batchNum}/${totalBatches} (${batch.length} emails)...`);
+
+          for (const profile of batch) {
+            try {
+              const profileRole: 'electrician' | 'apprentice' =
+                (profile as { role?: string }).role === 'apprentice' ? 'apprentice' : 'electrician';
+              const paymentUrl = getLaunchPaymentUrl(profileRole);
+              const firstName =
+                ((profile as { full_name?: string }).full_name?.split(' ')[0]) || 'mate';
+              const html = generateV10LaunchPriceHTML(firstName, profileRole, paymentUrl, deadline);
+              const priceLabel = profileRole === 'apprentice' ? '£4.99' : '£9.99';
+
+              const { data: emailData, error: emailError } = await resend.emails.send({
+                from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
+                replyTo: 'founder@elec-mate.com',
+                to: [(profile as { email: string }).email.trim().toLowerCase()],
+                subject: `Your launch price, ${firstName} — ${priceLabel}/mo`,
+                html,
+                tags: [
+                  { name: 'campaign', value: 'incomplete_signup_v10' },
+                  { name: 'role', value: profileRole },
+                  { name: 'user_id', value: (profile as { id: string }).id },
+                ],
+              });
+
+              if (emailError) {
+                v10Errors.push(`${(profile as { email: string }).email}: ${emailError.message}`);
+                continue;
+              }
+
+              await supabaseAdmin
+                .from('profiles')
+                .update({ incomplete_signup_v10_sent_at: new Date().toISOString() })
+                .eq('id', (profile as { id: string }).id);
+
+              await supabaseAdmin.from('email_logs').insert({
+                to_email: (profile as { email: string }).email,
+                subject: `Your launch price, ${firstName} — ${priceLabel}/mo`,
+                template: 'incomplete_signup_v10',
+                status: 'sent',
+                metadata: {
+                  resend_id: emailData?.id,
+                  user_id: (profile as { id: string }).id,
+                  role: profileRole,
+                },
+              });
+
+              v10SentCount++;
+              await sleep(SEND_DELAY_MS);
+            } catch (err: unknown) {
+              v10Errors.push(
+                `${(profile as { email: string }).email}: ${err instanceof Error ? err.message : String(err)}`
+              );
+            }
+          }
+
+          if (batchStart + BATCH_SIZE < toSend.length) {
+            await sleep(BATCH_DELAY_MS);
+          }
+        }
+
+        console.log(
+          `V10 campaign: Sent ${v10SentCount}/${toSend.length} by admin ${user.id}.`
+        );
+
+        result = {
+          sent: v10SentCount,
+          remaining: toSend.length - v10SentCount,
+          complete: v10SentCount === toSend.length,
+          errors: v10Errors.length > 0 ? v10Errors : undefined,
+          message: `Sent ${v10SentCount} of ${toSend.length} V10 emails.`,
+        };
+        break;
+      }
+
+      case 'reset_v10_sent': {
+        const { error: v10ResetErr, count: v10ResetCount } = await supabaseAdmin
+          .from('profiles')
+          .update({ incomplete_signup_v10_sent_at: null }, { count: 'exact' })
+          .not('incomplete_signup_v10_sent_at', 'is', null);
+        if (v10ResetErr) throw v10ResetErr;
+
+        result = { reset: v10ResetCount || 0 };
         break;
       }
 

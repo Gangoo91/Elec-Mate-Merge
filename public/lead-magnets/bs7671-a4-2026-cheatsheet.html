@@ -1,0 +1,1355 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BS 7671 A4:2026 — The Cheat Sheet · Elec-Mate</title>
+    <meta
+      name="description"
+      content="Every verified change in BS 7671:2018+A4:2026, cross-checked against the published standard. Three new chapters (57 BESS, 81 Energy Efficiency, 82 Prosumer), three new sections (545 ICT earthing, 716 PoE, 730 Inland shore), Section 710 and 753 rewritten, AFDD inspection item 4.23, FI code change, buried cable methods. Mandatory 15 October 2026."
+    />
+    <style>
+      /* --------------------------------------------------------
+         BS 7671 A4:2026 — Cheat Sheet v4
+         Three × A4, print-ready. Open in Chrome → ⌘P → Save as PDF.
+         Verified against BS 7671:2018+A4:2026 (IET, 15 April 2026).
+      -------------------------------------------------------- */
+
+      @page {
+        size: A4;
+        margin: 11mm;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      :root {
+        /* Warmer, brighter palette — dropped the editorial black/white */
+        --ink: #1f2937;           /* warm dark slate, not pure black */
+        --ink-soft: #475569;
+        --muted: #64748b;
+        --mutedd: #94a3b8;
+        --line: #f1f5f9;          /* softer dividers */
+        --line-2: #e2e8f0;
+        --paper: #fffdf7;         /* warm cream — prints like paper */
+        --paper-2: #fef9e7;       /* subtle yellow tint for cards */
+        --paper-3: #fffbeb;
+
+        --accent: #facc15;
+        --accent-2: #f59e0b;
+        --accent-deep: #92400e;
+        --accent-bg: #fef3c7;
+        --accent-bg-2: #fde68a;
+
+        --new: #15803d;
+        --new-bg: #dcfce7;
+        --upd: #c2410c;
+        --upd-bg: #ffedd5;
+        --del: #be123c;
+        --del-bg: #ffe4e6;
+        --cat: #1d4ed8;
+        --cat-bg: #dbeafe;
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family:
+          'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+          sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+        -webkit-font-smoothing: antialiased;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .sheet {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 12mm 12mm 11mm;
+        margin: 0 auto;
+        background: var(--paper);
+        page-break-after: always;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sheet:last-of-type {
+        page-break-after: auto;
+      }
+
+      @media screen {
+        body {
+          background: #e5e7eb;
+          padding: 28px 0;
+        }
+        .sheet {
+          box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+          margin-bottom: 28px;
+        }
+      }
+
+      /* Typography */
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: -0.015em;
+      }
+      h1 {
+        font-size: 32pt;
+        line-height: 0.98;
+        letter-spacing: -0.03em;
+      }
+      h1 .accent {
+        color: var(--accent-deep);
+      }
+      h2 {
+        font-size: 11pt;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--ink);
+        padding-bottom: 1.5mm;
+        border-bottom: 2px solid var(--accent);
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+      h2 .count {
+        font-size: 8pt;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+      }
+      h3 {
+        font-size: 10pt;
+        letter-spacing: -0.01em;
+      }
+      p {
+        font-size: 9pt;
+        line-height: 1.5;
+        margin: 0 0 1.5mm;
+        color: var(--ink-soft);
+      }
+      code,
+      .mono {
+        font-family:
+          'SF Mono', 'JetBrains Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+        font-size: 8.5pt;
+      }
+
+      /* Top bar */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: 3mm;
+        border-bottom: 1px solid var(--line);
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 3mm;
+      }
+      .brand .mark {
+        width: 11mm;
+        height: 11mm;
+        border-radius: 2mm;
+        display: block;
+        background-image: url('data:image/jpeg;base64,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');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      .brand .copy {
+        line-height: 1.2;
+      }
+      .brand strong {
+        font-size: 10.5pt;
+      }
+      .brand span {
+        display: block;
+        font-size: 7.5pt;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .ribbon {
+        font-size: 8.5pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--accent-deep);
+        padding: 1mm 3.5mm;
+        border: 1.2px solid var(--accent-deep);
+        border-radius: 999px;
+      }
+
+      /* Hero */
+      .hero {
+        padding: 6mm 0 5mm;
+        border-bottom: 2px solid var(--accent);
+      }
+      .hero .eyebrow {
+        font-size: 8.5pt;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+        margin-bottom: 2mm;
+      }
+      .hero p.lede {
+        margin-top: 3mm;
+        font-size: 10.5pt;
+        color: var(--ink-soft);
+        line-height: 1.55;
+        max-width: 170mm;
+      }
+
+      /* Facts strip */
+      .facts {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 0;
+        margin: 5mm 0;
+      }
+      .facts .fact {
+        padding: 3mm 4mm;
+        border-right: 1px solid var(--line-2);
+      }
+      .facts .fact:last-child {
+        border-right: none;
+      }
+      .facts .fact .label {
+        font-size: 7.5pt;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .facts .fact .value {
+        margin-top: 1mm;
+        font-size: 11pt;
+        font-weight: 700;
+        color: var(--ink);
+        line-height: 1.15;
+      }
+      .facts .fact .sub {
+        font-size: 7.5pt;
+        color: var(--muted);
+        margin-top: 0.6mm;
+      }
+      .facts .fact.alarm .value {
+        color: var(--del);
+      }
+
+      /* Cards */
+      .cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2.8mm;
+        margin-top: 3.5mm;
+      }
+      .card {
+        padding: 3.5mm 4mm 3.8mm;
+        border: 1px solid var(--line-2);
+        border-radius: 2.5mm;
+        background: var(--paper-3);
+        box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+        position: relative;
+        overflow: hidden;
+        break-inside: avoid;
+      }
+      .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 1.2mm;
+        background: linear-gradient(180deg, var(--accent) 0%, var(--accent-2) 100%);
+      }
+      .card .head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 2mm;
+        margin-bottom: 1.2mm;
+      }
+      .card p {
+        font-size: 8.5pt;
+        margin: 0 0 1.5mm;
+        line-height: 1.45;
+      }
+      .card .reg {
+        margin-top: 1.2mm;
+        font-size: 7.5pt;
+        color: var(--muted);
+      }
+      .card .reg code {
+        background: var(--accent-bg);
+        color: var(--accent-deep);
+        padding: 0.4mm 1.5mm;
+        border-radius: 1mm;
+        font-weight: 600;
+        font-size: 7.5pt;
+      }
+
+      /* Badges */
+      .badge {
+        display: inline-block;
+        font-size: 7pt;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 0.6mm 2mm;
+        border-radius: 1.2mm;
+      }
+      .badge.new {
+        background: var(--new-bg);
+        color: var(--new);
+      }
+      .badge.upd {
+        background: var(--upd-bg);
+        color: var(--upd);
+      }
+      .badge.del {
+        background: var(--del-bg);
+        color: var(--del);
+      }
+      .badge.cat {
+        background: var(--cat-bg);
+        color: var(--cat);
+      }
+
+      /* Change list — each group is a proper card */
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 4mm;
+        row-gap: 4mm;
+        margin-top: 4mm;
+      }
+      .group {
+        padding: 3.5mm 4mm 3.5mm;
+        background: var(--paper-3);
+        border: 1px solid var(--line-2);
+        border-radius: 2.5mm;
+        box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      .group h3 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4mm;
+        font-size: 9.5pt;
+        text-transform: none;
+        letter-spacing: -0.005em;
+        color: var(--ink);
+        margin: 0 0 2.5mm;
+        padding: 0 0 1.5mm;
+        border-bottom: 1.5px solid var(--accent);
+      }
+      .group h3 .ch {
+        font-family: 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 7pt;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--accent-deep);
+      }
+      .group h3 > span:first-child {
+        font-weight: 700;
+      }
+      .group ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .group li {
+        display: grid;
+        grid-template-columns: 20mm 1fr;
+        column-gap: 2.5mm;
+        padding: 1.3mm 0;
+        border-top: 1px solid var(--line);
+        font-size: 8pt;
+        line-height: 1.4;
+        align-items: start;
+      }
+      .group li:first-child {
+        border-top: none;
+        padding-top: 0;
+      }
+      .group li:last-child {
+        padding-bottom: 0;
+      }
+      .group li .reg {
+        font-family: 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 7pt;
+        color: var(--accent-deep);
+        font-weight: 700;
+        padding-top: 0.5mm;
+        letter-spacing: -0.01em;
+      }
+      .group li .desc {
+        color: var(--ink-soft);
+      }
+      .group li .desc b {
+        color: var(--ink);
+      }
+
+      /* Timeline */
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        margin-top: 3mm;
+        border: 1px solid var(--line-2);
+        border-radius: 2.5mm;
+        overflow: hidden;
+        box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+      }
+      .timeline .step {
+        padding: 4mm 4.5mm;
+        border-right: 1px solid var(--line-2);
+        background: var(--paper-3);
+      }
+      .timeline .step:last-child {
+        border-right: none;
+      }
+      .timeline .date {
+        font-size: 10pt;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .timeline .what {
+        font-size: 8.5pt;
+        color: var(--muted);
+        margin-top: 1mm;
+        line-height: 1.45;
+      }
+      .timeline .step.active {
+        background: var(--accent-bg);
+      }
+      .timeline .step.active .date {
+        color: var(--accent-deep);
+      }
+      .timeline .step.deadline {
+        background: var(--del-bg);
+      }
+      .timeline .step.deadline .date {
+        color: var(--del);
+      }
+
+      /* Field-checklist (page 3) — "what to record now" */
+      .fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3mm;
+        margin-top: 3.5mm;
+      }
+      .fieldbox {
+        padding: 4mm 4.5mm 4mm;
+        border: 1px solid var(--line-2);
+        border-radius: 2.5mm;
+        background: var(--paper-3);
+        box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02);
+        break-inside: avoid;
+      }
+      .fieldbox h4 {
+        font-size: 10pt;
+        letter-spacing: -0.005em;
+        color: var(--ink);
+        margin: 0 0 2.5mm;
+        padding: 0 0 1.5mm;
+        border-bottom: 1.5px solid var(--accent);
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .fieldbox h4 .on {
+        float: none;
+        font-family: 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 7pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--accent-deep);
+      }
+
+      .fieldbox ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+      .fieldbox li {
+        font-size: 9pt;
+        line-height: 1.45;
+        padding: 1mm 0;
+        border-top: 1px dashed var(--line);
+        color: var(--ink-soft);
+      }
+      .fieldbox li:first-child {
+        border-top: none;
+        padding-top: 0;
+      }
+      .fieldbox li b {
+        color: var(--ink);
+      }
+      .fieldbox li .reg {
+        font-family: 'SF Mono', Menlo, Consolas, monospace;
+        font-size: 7.5pt;
+        color: var(--accent-deep);
+        font-weight: 600;
+        margin-right: 1.5mm;
+      }
+
+      /* CTA */
+      .cta {
+        margin-top: 5mm;
+        padding: 6mm 7mm;
+        background: linear-gradient(135deg, #1f2937 0%, #0f172a 100%);
+        color: var(--paper);
+        border-radius: 3mm;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6mm;
+        box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+      }
+      .cta h3 {
+        color: var(--accent);
+        font-size: 14pt;
+        line-height: 1.15;
+        margin-bottom: 2mm;
+      }
+      .cta p {
+        color: #d1d5db;
+        font-size: 9pt;
+        max-width: 115mm;
+        margin: 0;
+      }
+      .cta .btn {
+        background: var(--accent);
+        color: var(--ink);
+        padding: 3.5mm 6mm;
+        border-radius: 2mm;
+        font-weight: 700;
+        font-size: 10.5pt;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      /* Footer */
+      .foot {
+        margin-top: auto;
+        padding-top: 2.5mm;
+        border-top: 1px solid var(--line);
+        display: flex;
+        justify-content: space-between;
+        font-size: 7pt;
+        color: var(--muted);
+      }
+      .foot .sources {
+        max-width: 135mm;
+      }
+      .disclaimer {
+        font-size: 7.5pt;
+        color: var(--mutedd);
+        line-height: 1.55;
+        margin-top: 3mm;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ═════════════════════ PAGE 1 — Overview ═════════════════════ -->
+    <section class="sheet">
+      <div class="topbar">
+        <div class="brand">
+          <span class="mark" role="img" aria-label="Elec-Mate"></span>
+          <div class="copy">
+            <strong>Elec-Mate</strong>
+            <span>For UK electricians</span>
+          </div>
+        </div>
+        <span class="ribbon">Cheat Sheet · A4:2026</span>
+      </div>
+
+      <div class="hero">
+        <p class="eyebrow">Amendment 4 · 18th Edition · Published 15 April 2026</p>
+        <h1>
+          BS 7671<br />
+          <span class="accent">A4:2026</span> — what<br />
+          actually changed.
+        </h1>
+        <p class="lede">
+          Three new chapters, three new sections, two chapters completely rewritten, new
+          inspection items, a new AFDD block on Minor Works, and the FI code rule shifts.
+          Every item on this cheat sheet has been cross-checked against the published
+          standard with page references on file.
+        </p>
+      </div>
+
+      <div class="facts">
+        <div class="fact">
+          <div class="label">Published</div>
+          <div class="value">15 April 2026</div>
+          <div class="sub">IET / BSI</div>
+        </div>
+        <div class="fact">
+          <div class="label">May be used</div>
+          <div class="value">From 15 Apr 2026</div>
+          <div class="sub">Immediate option</div>
+        </div>
+        <div class="fact alarm">
+          <div class="label">Mandatory from</div>
+          <div class="value">15 Oct 2026</div>
+          <div class="sub">A2 + A3 withdrawn</div>
+        </div>
+        <div class="fact">
+          <div class="label">Changes flagged</div>
+          <div class="value">Side bar</div>
+          <div class="sub">in the margin</div>
+        </div>
+      </div>
+
+      <h2>
+        The eight biggest shifts
+        <span class="count">verified · A4:2026</span>
+      </h2>
+      <div class="cards">
+        <div class="card">
+          <div class="head">
+            <h3>Battery storage gets its own chapter</h3>
+            <span class="badge new">New Ch 57</span>
+          </div>
+          <p>
+            Stationary secondary batteries move out of Reg 551.8 into a whole new chapter
+            covering design, erection and verification. Stationary batteries are now treated
+            as a <b>generating set, not a load</b>. Reg 551.8 is deleted.
+          </p>
+          <div class="reg"><code>Chapter 57</code> · Reg 551.7.2.1 · Reg 551.8 deleted</div>
+        </div>
+
+        <div class="card">
+          <div class="head">
+            <h3>Power over Ethernet — new section</h3>
+            <span class="badge new">New Sect 716</span>
+          </div>
+          <p>
+            First-time BS 7671 treatment of PoE. Distribution of ELV DC power on balanced IT
+            cables per <b>BS EN 50173-1</b>, using feeding equipment to
+            <b>BS EN IEC 62368-3</b>, and reuse of existing telecoms infrastructure.
+          </p>
+          <div class="reg"><code>Section 716</code> · BS EN 50173-1 · BS EN IEC 62368-3</div>
+        </div>
+
+        <div class="card">
+          <div class="head">
+            <h3>Prosumer installations — new chapter</h3>
+            <span class="badge new">New Ch 82</span>
+          </div>
+          <p>
+            Alongside Chapter 57, a <b>new Chapter 82</b> specifically addresses prosumer's
+            low-voltage installations — bidirectional energy flow, the interface between a
+            dwelling and the grid, and the interactions between generation, storage and load.
+          </p>
+          <div class="reg"><code>Chapter 82</code> · Prosumer LV</div>
+        </div>
+
+        <div class="card">
+          <div class="head">
+            <h3>Energy efficiency is a chapter now</h3>
+            <span class="badge new">New Ch 81</span>
+          </div>
+          <p>
+            Old <b>Appendix 17 deleted</b>, replaced by full Chapter 81. Refers readers to
+            the Building Regulations (E, W, S, NI) and <b>BS HD 60364-8-1:2019</b> for
+            technical guidance.
+          </p>
+          <div class="reg"><code>Chapter 81</code> · replaces Appendix 17</div>
+        </div>
+
+        <div class="card">
+          <div class="head">
+            <h3>Functional earthing for ICT</h3>
+            <span class="badge new">New Sect 545</span>
+          </div>
+          <p>
+            Dedicated section for <b>functional earthing and functional equipotential
+            bonding</b> in ICT equipment and systems — broadcast, telecoms, data. Covers
+            cross-section, identification, continuity, main functional earthing terminal.
+          </p>
+          <div class="reg"><code>Section 545</code> · in Chapter 53</div>
+        </div>
+
+        <div class="card">
+          <div class="head">
+            <h3>Inland vessel shore supplies</h3>
+            <span class="badge new">New Sect 730</span>
+          </div>
+          <p>
+            First time covered: onshore installations dedicated to the supply of
+            <b>inland navigation vessels berthed in ports and commercial berths</b>. Most
+            marina rules apply — supply size differs.
+          </p>
+          <div class="reg"><code>Section 730</code> · marina-style</div>
+        </div>
+
+        <div class="card">
+          <div class="head">
+            <h3>Model forms split &amp; AFDD recording</h3>
+            <span class="badge upd">Appx 6</span>
+          </div>
+          <p>
+            Single-page generic schedule <b>split</b> into separate Schedule of Circuit
+            Details and Schedule of Test Results pages. <b>New AFDD recording block</b> on
+            the Minor Works certificate. Optional new initial-verification checklist added.
+          </p>
+          <div class="reg"><code>Appendix 6</code> · Sch. Insp. 4.23 (AFDD)</div>
+        </div>
+
+        <div class="card">
+          <div class="head">
+            <h3>FI code no longer = unsatisfactory</h3>
+            <span class="badge upd">EICR</span>
+          </div>
+          <p>
+            Major EICR shift: an <b>FI (Further Investigation) classification does not of
+            itself mark a condition report unsatisfactory</b>. Recipient guidance redrafted
+            and now mandatory. Photos / thermography may be appended.
+          </p>
+          <div class="reg">Reg 653.1 · 653.2 · Appendix 6 notes</div>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span>Elec-Mate · Cheat Sheet A4:2026 — Page 1 of 3</span>
+        <span>elec-mate.com</span>
+      </div>
+    </section>
+
+    <!-- ═════════════════════ PAGE 2 — Regulation changelist ═════════════════════ -->
+    <section class="sheet">
+      <div class="topbar">
+        <div class="brand">
+          <span class="mark" role="img" aria-label="Elec-Mate"></span>
+          <div class="copy">
+            <strong>Elec-Mate</strong>
+            <span>For UK electricians</span>
+          </div>
+        </div>
+        <span class="ribbon">Full changelist · A4:2026</span>
+      </div>
+
+      <h2 style="margin-top: 5mm">
+        Regulation &amp; structural changes
+        <span class="count">Parts 1–5 · cited from the standard</span>
+      </h2>
+
+      <div class="grid">
+        <!-- Part 1/2/31 -->
+        <div class="group">
+          <h3>
+            <span>Definitions &amp; structure</span>
+            <span class="ch">Part 1–2 · Ch 31</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">Part 2</span>
+              <span class="desc">
+                Terms &amp; definitions <b>expanded and modified</b>. New: <em>stationary
+                secondary battery</em>, <em>functional earthing conductor</em>, <em>main
+                functional earthing terminal</em>, PNB, PoE, bidirectional inverter, ICT
+                terms.
+              </span>
+            </li>
+            <li>
+              <span class="reg">312.2.1.1</span>
+              <span class="desc">
+                <b>New figure and requirements for PNB</b> (Protective Neutral Bonding).
+                <span class="badge new">NEW</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chapter 41 -->
+        <div class="group">
+          <h3>
+            <span>Protection against shock</span>
+            <span class="ch">Ch 41</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">411.3.4</span>
+              <span class="desc">
+                <b>Additional RCD protection for luminaires in domestic premises.</b>
+                <span class="badge new">NEW</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chapter 42 -->
+        <div class="group">
+          <h3>
+            <span>Thermal effects &amp; AFDDs</span>
+            <span class="ch">Ch 42</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">421.1.7(a)</span>
+              <span class="desc">
+                Wording tightened to <b>"High rise residential buildings"</b> — defined as
+                over 18 m in height or in excess of six storeys. AFDDs also required in
+                HMOs, purpose-built student accommodation, care homes. Recommended
+                elsewhere for ≤32 A socket-outlet final circuits.
+              </span>
+            </li>
+            <li>
+              <span class="reg">422.2</span>
+              <span class="desc">
+                Protected escape routes — cables meeting <b>422.2.1 can be installed in
+                protected corridors</b>; cables in fire-resisting enclosures deemed outside
+                the protected route.
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chapter 43/44 -->
+        <div class="group">
+          <h3>
+            <span>Overcurrent &amp; EMC</span>
+            <span class="ch">Ch 43 · 44</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">434.2.1</span>
+              <span class="desc">
+                New term introduced: <b>"inherently short-circuit and earth fault proof"</b>
+                for conductor selection and erection.
+              </span>
+            </li>
+            <li>
+              <span class="reg">434.3(a)</span>
+              <span class="desc">
+                Wording updated for conductors between an energy source and the associated
+                switchgear/controlgear where the protective device forms part of the
+                assembly.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Annex B443</span>
+              <span class="desc">
+                <b>DELETED.</b> <span class="badge del">GONE</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chapter 51/52 -->
+        <div class="group">
+          <h3>
+            <span>Identification &amp; wiring systems</span>
+            <span class="ch">Ch 51 · 52</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">Table 51</span>
+              <span class="desc">
+                New IDs for <b>combined protective + functional earthing</b>,
+                <b>combined protective + functional bonding</b>, and <b>functional bonding
+                conductor</b>. Rule: <b>do not use green-and-yellow for a functional bonding
+                conductor</b>.
+              </span>
+            </li>
+            <li>
+              <span class="reg">521.10.202</span>
+              <span class="desc">
+                Cable-support rule (replaces 521.11.201) — prevents premature collapse in
+                fire and now <b>applies throughout the installation</b>, not only in escape
+                routes.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Table 52.1</span>
+              <span class="desc">
+                Cables in walls / partitions <b>consolidated into the table</b>
+                (reorganised for clarity).
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chapter 53 -->
+        <div class="group">
+          <h3>
+            <span>Isolation, switching &amp; ICT</span>
+            <span class="ch">Ch 53 · Sect 536 · 537 · 545</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">536.4.202</span>
+              <span class="desc">
+                Redrafted — coordination between LV switchgear/controlgear and overload
+                protective device. <b>Load curtailment</b> now a valid condition.
+              </span>
+            </li>
+            <li>
+              <span class="reg">537.4.2</span>
+              <span class="desc">
+                Firefighter's switches — <b>location specified by fire engineer</b>; examples
+                include outdoor HV lighting and indoor discharge.
+              </span>
+            </li>
+            <li>
+              <span class="reg">537.4.2.1</span>
+              <span class="desc">
+                <b>DELETED</b>; 537.4.4 modified slightly.
+                <span class="badge del">DELETED</span>
+              </span>
+            </li>
+            <li>
+              <span class="reg">545</span>
+              <span class="desc">
+                New section — functional earthing &amp; equipotential bonding for ICT.
+                <span class="badge new">NEW</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chapter 55 / 56 -->
+        <div class="group">
+          <h3>
+            <span>Generating sets &amp; safety services</span>
+            <span class="ch">Ch 55 · 56</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">551.7.1</span>
+              <span class="desc">
+                New indents (c) and (d) — protection suitable for <b>bidirectional energy
+                flow</b>; prohibits source connection to the load side of an RCD under
+                certain conditions.
+              </span>
+            </li>
+            <li>
+              <span class="reg">551.7.2</span>
+              <span class="desc">
+                Split into <b>.2.1</b> (generating set on supply side; Chapter 57 batteries
+                count as generating sets) and <b>.2.2</b> (LV assembly rules for parallel
+                operation).
+              </span>
+            </li>
+            <li>
+              <span class="reg">551.8</span>
+              <span class="desc">
+                <b>DELETED</b> — stationary battery content migrated to Chapter 57.
+                <span class="badge del">DELETED</span>
+              </span>
+            </li>
+            <li>
+              <span class="reg">560.5.3 · 560.6</span>
+              <span class="desc">
+                Safety services updated to accommodate new battery / Chapter 57 interactions.
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chapter 57 NEW -->
+        <div class="group">
+          <h3>
+            <span>Stationary secondary batteries</span>
+            <span class="ch">Chapter 57 <span class="badge new">NEW</span></span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">57 scope</span>
+              <span class="desc">
+                Whole new chapter — design, erection and verification of stationary battery
+                installations for storage and supply. Treats BESS as a generating set under
+                Reg 551.7.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Exclusions</span>
+              <span class="desc">
+                Does not apply to batteries covered by product safety standards — pluggable
+                UPSs, fire &amp; emergency lighting systems, or central-safety power supply
+                systems to the relevant standards.
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Chapters 81 & 82 -->
+        <div class="group">
+          <h3>
+            <span>Efficiency &amp; prosumer</span>
+            <span class="ch">Ch 81 · Ch 82</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">81</span>
+              <span class="desc">
+                <b>New chapter — Energy Efficiency.</b> References Building Regulations and
+                BS HD 60364-8-1:2019. Replaces deleted Appendix 17.
+                <span class="badge new">NEW</span>
+              </span>
+            </li>
+            <li>
+              <span class="reg">82</span>
+              <span class="desc">
+                <b>New chapter — Prosumer's low voltage electrical installations.</b>
+                Addresses bidirectional energy flow and the interface between dwellings,
+                generation, storage and the grid.
+                <span class="badge new">NEW</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="foot">
+        <span>Elec-Mate · Cheat Sheet A4:2026 — Page 2 of 3</span>
+        <span>elec-mate.com</span>
+      </div>
+    </section>
+
+    <!-- ═════════════════════ PAGE 3 — Special locations, forms, timeline ═════════════════════ -->
+    <section class="sheet">
+      <div class="topbar">
+        <div class="brand">
+          <span class="mark" role="img" aria-label="Elec-Mate"></span>
+          <div class="copy">
+            <strong>Elec-Mate</strong>
+            <span>For UK electricians</span>
+          </div>
+        </div>
+        <span class="ribbon">Special locations &amp; forms · A4:2026</span>
+      </div>
+
+      <h2 style="margin-top: 5mm">
+        Special locations &amp; appendices
+        <span class="count">Parts 6–7 · Appendices</span>
+      </h2>
+
+      <div class="grid">
+        <!-- Part 6 / Appendix 6 -->
+        <div class="group">
+          <h3>
+            <span>Inspection &amp; testing / EICR</span>
+            <span class="ch">Part 6 · Appx 6</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">653.1</span>
+              <span class="desc">
+                EICR must <b>take account of the Appendix 6 notes</b> provided for the person
+                producing the report.
+              </span>
+            </li>
+            <li>
+              <span class="reg">653.2</span>
+              <span class="desc">
+                Report must include <b>recipient guidance</b> based on the Appendix 6 model.
+                Note added: photographic and/or thermographic images may be appended.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Appx 6</span>
+              <span class="desc">
+                <b>FI no longer renders an EICR unsatisfactory on its own.</b> Condition
+                Report notes redrafted; items rearranged for clarity.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Sch. Insp.</span>
+              <span class="desc">
+                <b>Item 4.23</b>: "Confirmation of indication that AFDD(s) are operational
+                (421.1.7; 532.6; 651.2(e))". <b>Item 1.2</b>: "Consumer's means of isolation
+                (where present)".
+              </span>
+            </li>
+            <li>
+              <span class="reg">Schedules</span>
+              <span class="desc">
+                Single-page generic schedule <b>split</b> into separate Schedule of Circuit
+                Details and Schedule of Test Results. <b>New optional initial-verification
+                checklist</b> added to Appendix 6.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Sch. Circuit Details</span>
+              <span class="desc">
+                <b>Reference Method column</b> (Col 4, per Table 4A2) and <b>Maximum
+                permitted Z<sub>s</sub> column</b> (Col 12) now explicit on the form.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Sch. Test Results</span>
+              <span class="desc">
+                <b>Column 30 — AFDD test-button result</b> ticked when the AFDD operates
+                correctly on test-button press.
+              </span>
+            </li>
+            <li>
+              <span class="reg">MW cert</span>
+              <span class="desc">
+                Minor Works gains <b>AFDD block</b> — BS EN standard, rating (A),
+                rated time delay (ms), test-button operation — plus the "not required for
+                EV charging" note.
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Special locations -->
+        <div class="group">
+          <h3>
+            <span>Special locations</span>
+            <span class="ch">Sect 710 · 716 · 722 · 730 · 753</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">710</span>
+              <span class="desc">
+                Medical — major revision. <b>Independent supplies required for Group 2</b>;
+                new schedule for supplementary equipotential bonding resistance; AFDDs via
+                <code>710.421.1.201</code>; new <b>Annex B710</b>.
+              </span>
+            </li>
+            <li>
+              <span class="reg">716</span>
+              <span class="desc">
+                <b>NEW — Power over Ethernet.</b> ELV DC over balanced IT cables.
+                <span class="badge new">NEW</span>
+              </span>
+            </li>
+            <li>
+              <span class="reg">722.411.4.1</span>
+              <span class="desc">
+                EV on PME — <b>"reasonably practicable" exception deleted</b>. External
+                influence, RCD, socket-outlet and connector rules updated.
+              </span>
+            </li>
+            <li>
+              <span class="reg">730</span>
+              <span class="desc">
+                <b>NEW — onshore supplies for inland navigation vessels</b> in ports and
+                commercial berths. <span class="badge new">NEW</span>
+              </span>
+            </li>
+            <li>
+              <span class="reg">753</span>
+              <span class="desc">
+                Heating cables &amp; embedded systems — <b>completely revised and retitled</b>.
+                Scope extended to <b>surface heating, de-icing and frost prevention — indoor
+                and outdoor</b>. Excludes industrial systems to BS EN 60519, 62395, 60079.
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Appendices -->
+        <div class="group">
+          <h3>
+            <span>Appendices</span>
+            <span class="ch">Appx 1 · 4 · 6 · 11 · 13 · 17</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">Appx 1</span>
+              <span class="desc">Schedule of British Standards <b>updated and expanded</b>.</span>
+            </li>
+            <li>
+              <span class="reg">Appx 4</span>
+              <span class="desc">
+                <b>Distinct reference methods for buried cables</b> — direct-in-soil vs in
+                duct/conduit. Tables <code>4A2, 4D4A, 4E4A, 4H4A, 4J4A</code> revised.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Appx 6</span>
+              <span class="desc">
+                Model forms redrafted; SPD &amp; AFDD fields; separate circuit-details /
+                test-results pages; FI code rule change; recipient guidance mandatory.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Appx 11</span>
+              <span class="desc">Warning &amp; user-instruction labels guidance retained.</span>
+            </li>
+            <li>
+              <span class="reg">Appx 13</span>
+              <span class="desc">
+                Escape routes — redrafted to align with <b>BS 9991, BS 9999 and Approved
+                Document B</b>. Previous floor/wall insulation-resistance method removed.
+              </span>
+            </li>
+            <li>
+              <span class="reg">Appx 17</span>
+              <span class="desc">
+                <b>DELETED</b> — content promoted to new <code>Chapter 81</code>.
+                <span class="badge del">DELETED</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Sections with no changes -->
+        <div class="group">
+          <h3>
+            <span>Not changed in A4</span>
+            <span class="ch">Sect 708 · 709 · 712 · 715 · 721</span>
+          </h3>
+          <ul>
+            <li>
+              <span class="reg">712</span>
+              <span class="desc">
+                <b>Solar PV — no A4 changes.</b> Continue to the Section 712 text as
+                published in 2018+A3:2024.
+              </span>
+            </li>
+            <li>
+              <span class="reg">708 · 709 · 721</span>
+              <span class="desc">
+                Caravans, marinas and caravan parks — no A4 technical amendments identified
+                in the Foreword summary.
+              </span>
+            </li>
+            <li>
+              <span class="reg">715 · 717 · 740</span>
+              <span class="desc">
+                ELV lighting, mobile units, structures for shows — no A4 changes identified.
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- What to record now -->
+      <h2 style="margin-top: 6mm">
+        What you now record on a certificate
+        <span class="count">new A4 fields · practical</span>
+      </h2>
+      <div class="fields">
+        <div class="fieldbox">
+          <h4>
+            On the EICR <span class="on">Schedule of Inspection &amp; Test Results</span>
+          </h4>
+          <ul>
+            <li>
+              <span class="reg">Insp 1.2</span><b>Consumer's means of isolation</b> (where present)
+            </li>
+            <li>
+              <span class="reg">Insp 4.23</span><b>AFDD operational indication</b> — "Confirmation of indication that AFDD(s) are operational"
+            </li>
+            <li>
+              <span class="reg">CD Col 4</span><b>Reference method</b> — per Table 4A2 of Appendix 4
+            </li>
+            <li>
+              <span class="reg">CD Col 12</span><b>Maximum permitted Z<sub>s</sub></b> — pre-calculated for automatic disconnection
+            </li>
+            <li>
+              <span class="reg">TR Col 30</span><b>AFDD test-button</b> — ticked when AFDD operates correctly on press
+            </li>
+            <li>
+              <span class="reg">Extras</span>Photographic / thermographic images may be <b>appended</b> to the report
+            </li>
+          </ul>
+        </div>
+        <div class="fieldbox">
+          <h4>
+            On Minor Works <span class="on">Section C — AFDD block</span>
+          </h4>
+          <ul>
+            <li>
+              <span class="reg">AFDD</span><b>Standard</b> — BS EN (e.g. BS EN 62606)
+            </li>
+            <li>
+              <span class="reg">AFDD</span><b>Rating</b> (A)
+            </li>
+            <li>
+              <span class="reg">AFDD</span><b>Rated time delay</b> (ms)
+            </li>
+            <li>
+              <span class="reg">AFDD</span><b>Test-button operation</b> — checkbox
+            </li>
+            <li>
+              <span class="reg">Note</span>AFDD not required for <b>circuits supplying EV charging equipment</b> conforming to the relevant standards
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <h2 style="margin-top: 6mm">
+        Implementation timeline
+        <span class="count">UK</span>
+      </h2>
+      <div class="timeline">
+        <div class="step active">
+          <div class="date">15 Apr 2026</div>
+          <div class="what">A4 published. May be used immediately on any new certificate.</div>
+        </div>
+        <div class="step">
+          <div class="date">Apr–Oct 2026</div>
+          <div class="what">6-month transition. A3 or A4 acceptable. Finish in-flight work under A3.</div>
+        </div>
+        <div class="step deadline">
+          <div class="date">15 Oct 2026</div>
+          <div class="what">A4 mandatory. A2 &amp; A3 withdrawn. Certifications must cite A4.</div>
+        </div>
+        <div class="step">
+          <div class="date">16 Oct 2026</div>
+          <div class="what">C&amp;G 2382-26 replaces 2382-22 for new candidates.</div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta">
+        <div>
+          <h3>Let the platform handle A4:2026 for you.</h3>
+          <p>
+            Elec-Mate certificates, AI specialists and calculators are being updated for
+            A4:2026 — EICR, EIC, Minor Works, EV, Solar PV, BESS, plus the new Chapter 57,
+            Section 716 and Chapter 82 rules. Free for seven days. No card up front.
+          </p>
+        </div>
+        <a
+          class="btn"
+          href="https://elec-mate.com/auth/signup?utm_source=pdf&utm_medium=cheatsheet&utm_campaign=a4_2026"
+          >Try it free →</a
+        >
+      </div>
+
+      <p class="disclaimer">
+        Every factual claim on this cheat sheet has been cross-referenced to
+        BS 7671:2018+A4:2026 (IET / BSI, 15 April 2026), with page numbers recorded. This is
+        a quick-reference aid — always refer to the full published standard when designing,
+        installing or certifying electrical work. Sources: IET Foreword &amp; Introduction to
+        A4:2026, Appendix 6 model forms, plus supporting commentary from
+        <em>Wiring Matters</em>, NICEIC, NAPIT and ECA. © Elec-Mate Ltd · Made in the UK.
+      </p>
+
+      <div class="foot">
+        <span class="sources"
+          >Source: BS 7671:2018+A4:2026 (OCR verified). Authoritative commentary: IET
+          <em>Wiring Matters</em>, NICEIC, NAPIT, ECA.</span
+        >
+        <span>Page 3 of 3</span>
+      </div>
+    </section>
+  </body>
+</html>

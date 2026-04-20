@@ -74,7 +74,11 @@ const EICRInspectionChecklist = ({
       }))
     );
 
-    // If we have existing form data, merge it with the expected structure
+    // If we have existing form data, merge it with the expected structure.
+    // A4:2026 FIX — only carry over outcome/notes/inspected. Item text, clause,
+    // section name + number always come from the CURRENT data file so renames
+    // (e.g. A2 → A4 wording, renumbered 1.1/1.2/1.3) never leak through from
+    // stale drafts saved before the amendment.
     if (formData.inspectionItems && formData.inspectionItems.length > 0) {
       const existingItemsMap = new Map(
         formData.inspectionItems.map((item: InspectionItem) => [item.id, item])
@@ -85,9 +89,9 @@ const EICRInspectionChecklist = ({
         return existingItem
           ? {
               ...expectedItem,
-              ...existingItem,
-              // Ensure outcome is valid
               outcome: existingItem.outcome || ('' as const),
+              notes: existingItem.notes || '',
+              inspected: existingItem.inspected ?? false,
             }
           : expectedItem;
       });

@@ -119,6 +119,28 @@
         object-fit: contain;
       }
 
+      .scheme-logo {
+        flex-shrink: 0;
+        margin-left: 12px;
+      }
+
+      .scheme-logo img {
+        max-height: 45px;
+        max-width: 100px;
+        object-fit: contain;
+      }
+
+      .scheme-logo-signature {
+        margin-top: 6px;
+        text-align: center;
+      }
+
+      .scheme-logo-signature img {
+        max-height: 55px;
+        max-width: 140px;
+        object-fit: contain;
+      }
+
       .company-name {
         font-size: 9px;
         font-weight: 600;
@@ -133,6 +155,9 @@
       .section {
         margin-bottom: 5px;
       }
+      /* Only small / critical blocks should avoid page-break-inside.
+         Large sections (inspection table, schedule of tests) must be allowed
+         to flow across pages — row-level avoid-break covers the rest. */
 
       .section-title {
         background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
@@ -144,6 +169,34 @@
         padding: 5px 8px;
         margin-bottom: 5px;
         border-left: 3px solid #f59e0b;
+        /* Never orphan a section header from its body */
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+
+      /* Inspection table rows & section headers shouldn't break mid-row */
+      .inspection-table tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .inspection-table .section-header-row {
+        page-break-after: avoid;
+        break-after: avoid;
+      }
+      /* Sub-board cards on Section H — keep the card together */
+      .board-card {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      /* Circuit table: keep each row together */
+      .circuit-table tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      /* Signature blocks — never orphan a signature from its label */
+      .signature-box, .sig-field, .inline-form {
+        page-break-inside: avoid;
+        break-inside: avoid;
       }
 
       .section-subtitle {
@@ -1041,8 +1094,8 @@
         <div class="doc-title-section">
           <div class="doc-title">ELECTRICAL INSTALLATION CONDITION REPORT</div>
           <div class="doc-subtitle">
-            Condition report for an existing electrical installation in accordance with BS 7671 (IET
-            Wiring Regulations 18th Edition + Amendment 3:2024)
+            Condition report for an existing electrical installation in accordance with BS 7671:2018
+            (IET Wiring Regulations 18th Edition + Amendment 4:2026)
           </div>
           {% if company_details.company_name %}
           <div class="company-name">{{company_details.company_name}}</div>
@@ -1050,8 +1103,13 @@
         </div>
         <div class="doc-meta">
           <div class="cert-number">{{metadata.certificate_number}}</div>
-          <div class="page-number">Page 1 of 4</div>
+          <div class="page-number">Front Sheet</div>
         </div>
+        {% if company_details.registration_scheme_logo %}
+        <div class="scheme-logo">
+          <img src="{{company_details.registration_scheme_logo}}" alt="Registration Scheme" />
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -1514,6 +1572,7 @@
               <span class="inline-value">{{main_board_schedule.supplied_from | default: "DNO"}}</span>
             </div>
           </div>
+          <!-- Row 2: Zdb / Ipf / Polarity / Phase Sequence / Ring Final -->
           <div
             class="inline-form"
             style="border: none; padding: 0; background: transparent; margin-top: 4px"
@@ -1532,13 +1591,24 @@
                 <label>Polarity Confirmed</label>
               </div>
             </div>
-            <!-- A4:2026 — Ring Final Circuit Confirmed -->
             <div class="inline-group">
               <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.ring_final_circuit_confirmed %}checked{% endif %} />
+                <input type="checkbox" {% if distribution_board_verification.confirmed_phase_sequence or main_board_schedule.phase_sequence_confirmed %}checked{% endif %} />
+                <label>Phase Sequence</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if distribution_board_verification.ring_final_circuit_confirmed or main_board_schedule.ring_final_circuit_confirmed %}checked{% endif %} />
                 <label>Ring Final Circuit</label>
               </div>
             </div>
+          </div>
+          <!-- Row 3: SPD checkboxes -->
+          <div
+            class="inline-form"
+            style="border: none; padding: 0; background: transparent; margin-top: 4px"
+          >
             <div class="inline-group">
               <div class="checkbox-item">
                 <input type="checkbox" {% if distribution_board_verification.spd_operational_status %}checked{% endif %} />
@@ -1547,23 +1617,55 @@
             </div>
             <div class="inline-group">
               <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.spd_t1 %}checked{% endif %} />
+                <input type="checkbox" {% if distribution_board_verification.spd_na %}checked{% endif %} />
+                <label>N/A</label>
+              </div>
+            </div>
+            <div class="inline-group">
+              <div class="checkbox-item">
+                <input type="checkbox" {% if main_board_schedule.spd_t1 %}checked{% endif %} />
                 <label>T1</label>
               </div>
             </div>
             <div class="inline-group">
               <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.spd_t2 %}checked{% endif %} />
+                <input type="checkbox" {% if main_board_schedule.spd_t2 %}checked{% endif %} />
                 <label>T2</label>
               </div>
             </div>
             <div class="inline-group">
               <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.spd_t3 %}checked{% endif %} />
+                <input type="checkbox" {% if main_board_schedule.spd_t3 %}checked{% endif %} />
                 <label>T3</label>
               </div>
             </div>
           </div>
+          <!-- Row 4: SPD details (only if any value present) -->
+          {% if main_board_schedule.spd_make != "" or main_board_schedule.spd_model != "" or main_board_schedule.spd_location != "" or main_board_schedule.spd_rated_current_ka != "" %}
+          <div
+            class="inline-form"
+            style="border: none; padding: 0; background: transparent; margin-top: 4px"
+          >
+            {% if main_board_schedule.spd_make != "" or main_board_schedule.spd_model != "" %}
+            <div class="inline-group">
+              <span class="inline-label">SPD Make/Model:</span>
+              <span class="inline-value">{{main_board_schedule.spd_make}} {{main_board_schedule.spd_model}}</span>
+            </div>
+            {% endif %}
+            {% if main_board_schedule.spd_location != "" %}
+            <div class="inline-group">
+              <span class="inline-label">SPD Location:</span>
+              <span class="inline-value">{{main_board_schedule.spd_location}}</span>
+            </div>
+            {% endif %}
+            {% if main_board_schedule.spd_rated_current_ka != "" %}
+            <div class="inline-group">
+              <span class="inline-label">SPD Rated Current (kA):</span>
+              <span class="inline-value">{{main_board_schedule.spd_rated_current_ka}}</span>
+            </div>
+            {% endif %}
+          </div>
+          {% endif %}
         </div>
       </div>
 
@@ -1628,7 +1730,7 @@
               </div>
             </div>
           </div>
-          <!-- A4:2026 — SPD details for this sub-board -->
+          <!-- SPD checkboxes row -->
           <div class="inline-form" style="border: none; padding: 0; background: transparent; margin-top: 4px">
             <div class="inline-group">
               <div class="checkbox-item">
@@ -1660,31 +1762,36 @@
                 <label>T3</label>
               </div>
             </div>
-            {% if board.spd_make and board.spd_make != "" %}
+          </div>
+          <!-- SPD details row (only if any value present) -->
+          {% if board.spd_make != "" or board.spd_model != "" or board.spd_location != "" or board.spd_rated_current_ka != "" %}
+          <div class="inline-form" style="border: none; padding: 0; background: transparent; margin-top: 4px">
+            {% if board.spd_make != "" or board.spd_model != "" %}
             <div class="inline-group">
               <span class="inline-label">SPD Make/Model:</span>
               <span class="inline-value">{{board.spd_make}} {{board.spd_model}}</span>
             </div>
             {% endif %}
-            {% if board.spd_location and board.spd_location != "" %}
+            {% if board.spd_location != "" %}
             <div class="inline-group">
               <span class="inline-label">SPD Location:</span>
               <span class="inline-value">{{board.spd_location}}</span>
             </div>
             {% endif %}
-            {% if board.spd_rated_current_ka and board.spd_rated_current_ka != "" %}
+            {% if board.spd_rated_current_ka != "" %}
             <div class="inline-group">
               <span class="inline-label">SPD Rated Current (kA):</span>
               <span class="inline-value">{{board.spd_rated_current_ka}}</span>
             </div>
             {% endif %}
           </div>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
 
       <!-- RCD Details (A4:2026 — full main switch block) -->
-      <div class="section-subtitle">If RCD Main Switch (A4:2026)</div>
+      <div class="section-subtitle">RCD Main Switch (where applicable)</div>
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">RCD Main Switch:</span>
@@ -1713,10 +1820,22 @@
       </div>
 
       <!-- Cables -->
-      <div class="section-subtitle">Meter & Cable Details</div>
+      <div class="section-subtitle">Meter &amp; Cable Details</div>
       <div class="inline-form">
+        {% if cables.intake_cable_type and cables.intake_cable_type != "" %}
         <div class="inline-group">
-          <span class="inline-label">Meter Tails Size:</span>
+          <span class="inline-label">Intake Cable Type:</span>
+          <span class="inline-value">{{cables.intake_cable_type}}</span>
+        </div>
+        {% endif %}
+        {% if cables.intake_cable_size and cables.intake_cable_size != "" %}
+        <div class="inline-group">
+          <span class="inline-label">Intake Cable Size (mm&#178;):</span>
+          <span class="inline-value">{{cables.intake_cable_size}}</span>
+        </div>
+        {% endif %}
+        <div class="inline-group">
+          <span class="inline-label">Meter Tails Size (mm&#178;):</span>
           <span class="inline-value">{{cables.tails_size}}</span>
         </div>
         <div class="inline-group">
@@ -1727,6 +1846,12 @@
           <span class="inline-label">Main Earth Conductor:</span>
           <span class="inline-value">{{earthing_bonding.main_earthing_conductor}}</span>
         </div>
+        {% if supply_characteristics.service_entry and supply_characteristics.service_entry != "" %}
+        <div class="inline-group">
+          <span class="inline-label">Service Entry:</span>
+          <span class="inline-value">{{supply_characteristics.service_entry}}</span>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -1795,7 +1920,7 @@
         </div>
         <div class="doc-meta">
           <div class="cert-number">{{metadata.certificate_number}}</div>
-          <div class="page-number">Page 2 of 4</div>
+          <div class="page-number">Schedule of Inspection</div>
         </div>
       </div>
     </div>
@@ -1805,7 +1930,7 @@
       <!-- A4:2026 — Outcome legend at top of every Schedule of Inspection page -->
       <div style="font-size: 8px; padding: 6px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; margin-bottom: 6px;">
         <strong>Outcomes:</strong>
-        &nbsp;✓ Acceptable condition
+        &nbsp;<strong>Y</strong> Acceptable condition
         &nbsp;|&nbsp; <strong>C1</strong> or <strong>C2</strong> Unacceptable condition
         &nbsp;|&nbsp; <strong>C3</strong> Improvement recommended
         &nbsp;|&nbsp; <strong>FI</strong> Further investigation
@@ -1813,24 +1938,19 @@
         &nbsp;|&nbsp; <strong>LIM</strong> Limitation
         &nbsp;|&nbsp; <strong>N/A</strong> Not applicable
       </div>
+      <!-- A4:2026 — Single "Outcomes" column per A4 model form (inspector writes code in one column) -->
       <table class="inspection-table">
         <thead>
           <tr>
-            <th style="width: 35px">Item</th>
+            <th style="width: 40px">Item No.</th>
             <th class="desc-header" style="width: auto">Description</th>
-            <th style="width: 28px">&#10003;</th>
-            <th style="width: 28px">N/A</th>
-            <th style="width: 35px">C1/C2</th>
-            <th style="width: 28px">C3</th>
-            <th style="width: 24px">FI</th>
-            <th style="width: 28px">N/V</th>
-            <th style="width: 28px">LIM</th>
+            <th style="width: 70px; text-align: center;">Outcomes</th>
           </tr>
         </thead>
         <tbody>
           {% for section in inspection_items %}
           <tr class="section-header-row">
-            <td colspan="9">{% if section.section_number and section.section_number != "" %}{{section.section_number}}.0 &nbsp; {% endif %}{{section.section_name}}</td>
+            <td colspan="3">{% if section.section_number and section.section_number != "" %}{{section.section_number}}.0 &nbsp; {% endif %}{{section.section_name}}</td>
           </tr>
           {% for item in section.items %}
           <tr>
@@ -1839,15 +1959,7 @@
               {{item.item}}
               {% if item.clause and item.clause != "" %}<span style="color: #64748b; font-size: 8px;">&nbsp;({{item.clause}})</span>{% endif %}
             </td>
-            <td class="outcome">{% if item.outcome == "satisfactory" %}✓{% endif %}</td>
-            <td class="outcome">{% if item.outcome == "not-applicable" or item.outcome == "N/A" %}✓{% endif %}</td>
-            <td class="outcome-text">
-              {% if item.outcome == 'C1' or item.outcome == 'C2' %}{{item.outcome}}{% endif %}
-            </td>
-            <td class="outcome">{% if item.outcome == "C3" %}✓{% endif %}</td>
-            <td class="outcome">{% if item.outcome == "FI" %}✓{% endif %}</td>
-            <td class="outcome">{% if item.outcome == "not-verified" or item.outcome == "N/V" %}✓{% endif %}</td>
-            <td class="outcome">{% if item.outcome == "limitation" or item.outcome == "LIM" %}✓{% endif %}</td>
+            <td class="outcome-text" style="text-align: center; font-weight: 600;">{{item.outcome_display}}</td>
           </tr>
           {% endfor %} {% endfor %}
         </tbody>
@@ -1890,38 +2002,27 @@
         </div>
       </div>
 
-      <!-- Test Instrument Details: global + per-board (A4:2026) -->
-      <div class="section" style="margin-bottom: 6px">
-        <div class="section-title" style="font-size: 9px; padding: 4px 6px">
-          Test Instruments Used (serial / asset numbers)
+      <!-- A4:2026 — Test Equipment block (global, rendered once per schedule page) -->
+      {% if test_instrument_details.make_model != "" or test_instrument_details.serial_number != "" or test_instrument_details.calibration_date != "" or test_instrument_details.test_temperature != "" %}
+      <div class="inline-form" style="font-size: 8px; padding: 4px 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 3px; margin-bottom: 6px;">
+        <div class="inline-group">
+          <span class="inline-label">Test Equipment:</span>
+          <span class="inline-value">{{test_instrument_details.make_model | default: "-"}}</span>
         </div>
-        <div class="inline-form" style="font-size: 8px">
-          <div class="inline-group">
-            <span class="inline-label">Multifunction:</span>
-            <span class="inline-value">{{board.test_instrument_multifunction | default: test_instrument_details.serial_number}}</span>
-          </div>
-          <div class="inline-group">
-            <span class="inline-label">Continuity:</span>
-            <span class="inline-value">{{board.test_instrument_continuity}}</span>
-          </div>
-          <div class="inline-group">
-            <span class="inline-label">Insulation Resistance:</span>
-            <span class="inline-value">{{board.test_instrument_insulation}}</span>
-          </div>
-          <div class="inline-group">
-            <span class="inline-label">Earth Fault Loop Impedance:</span>
-            <span class="inline-value">{{board.test_instrument_eli}}</span>
-          </div>
-          <div class="inline-group">
-            <span class="inline-label">RCD:</span>
-            <span class="inline-value">{{board.test_instrument_rcd}}</span>
-          </div>
-          <div class="inline-group">
-            <span class="inline-label">Earth Electrode:</span>
-            <span class="inline-value">{{board.test_instrument_earth_electrode}}</span>
-          </div>
+        <div class="inline-group">
+          <span class="inline-label">Serial:</span>
+          <span class="inline-value">{{test_instrument_details.serial_number | default: "-"}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Calibration Date:</span>
+          <span class="inline-value">{{test_instrument_details.calibration_date | default: "-"}}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Test Temp (&deg;C):</span>
+          <span class="inline-value">{{test_instrument_details.test_temperature | default: "-"}}</span>
         </div>
       </div>
+      {% endif %}
 
       <!-- Distribution Board Info Header (per board) -->
       <div class="board-info-header">
@@ -2088,7 +2189,7 @@
         </div>
         <div class="doc-meta">
           <div class="cert-number">{{metadata.certificate_number}}</div>
-          <div class="page-number">Page 4 of 4</div>
+          <div class="page-number">Declarations &amp; Signatures</div>
         </div>
       </div>
     </div>
@@ -2233,6 +2334,17 @@
             <span class="sig-field-label">Membership No</span>
             <span class="sig-field-value">{{declarations.report_authorised_by.membership_no}}</span>
           </div>
+          {% if company_details.registration_scheme or company_details.registration_scheme_logo %}
+          <div class="sig-field">
+            <span class="sig-field-label">Registration Scheme</span>
+            <span class="sig-field-value">{{company_details.registration_scheme}}</span>
+          </div>
+          {% endif %}
+          {% if company_details.registration_scheme_logo %}
+          <div class="scheme-logo-signature">
+            <img src="{{company_details.registration_scheme_logo}}" alt="{{company_details.registration_scheme | default: 'Registration Scheme'}}" />
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>

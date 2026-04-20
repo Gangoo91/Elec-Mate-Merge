@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Eye, Check, X, AlertTriangle, AlertCircle, ChevronRight } from 'lucide-react';
+import { Eye, Check, X, AlertTriangle, AlertCircle, ChevronRight, Search, Info } from 'lucide-react';
 import { InspectionItem as BaseInspectionItem } from '@/data/bs7671ChecklistData';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -18,6 +18,7 @@ interface InspectionItem {
     | 'C1'
     | 'C2'
     | 'C3'
+    | 'FI'
     | 'not-applicable'
     | 'not-verified'
     | 'limitation'
@@ -34,14 +35,16 @@ interface EnhancedInspectionItemCardProps {
   quickMarkMode?: boolean;
 }
 
-// Outcome options for quick selection
+// Outcome options for quick selection (A4:2026 — all 8 outcomes)
 const outcomeOptions = [
   { value: 'satisfactory' as const, label: 'OK', icon: Check, color: 'green' },
   { value: 'C1' as const, label: 'C1', icon: X, color: 'red' },
   { value: 'C2' as const, label: 'C2', icon: AlertCircle, color: 'orange' },
   { value: 'C3' as const, label: 'C3', icon: AlertTriangle, color: 'yellow' },
+  { value: 'FI' as const, label: 'FI', icon: Search, color: 'blue' },
+  { value: 'not-verified' as const, label: 'N/V', icon: Eye, color: 'cyan' },
+  { value: 'limitation' as const, label: 'LIM', icon: Info, color: 'purple' },
   { value: 'not-applicable' as const, label: 'N/A', icon: null, color: 'gray' },
-  { value: 'not-verified' as const, label: 'N/V', icon: Eye, color: 'blue' },
 ];
 
 const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
@@ -281,7 +284,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
         </button>
 
         {/* Outcome buttons */}
-        <div className="px-3 pb-3 grid grid-cols-6 gap-1.5">
+        <div className="px-3 pb-3 grid grid-cols-4 gap-1.5">
           {outcomeOptions.map((option) => {
             const isActive = currentOutcome === option.value;
             const colorMap: Record<string, { active: string; inactive: string }> = {
@@ -291,6 +294,8 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
               yellow: { active: 'bg-yellow-500/25 border-yellow-500/50 text-yellow-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
               gray: { active: 'bg-white/[0.15] border-white/[0.20] text-white', inactive: 'bg-white/[0.05] border-white/[0.08] text-white/60' },
               blue: { active: 'bg-blue-500/25 border-blue-500/50 text-blue-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
+              cyan: { active: 'bg-cyan-500/25 border-cyan-500/50 text-cyan-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
+              purple: { active: 'bg-purple-500/25 border-purple-500/50 text-purple-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
             };
             const colors = colorMap[option.color] || colorMap.gray;
             return (

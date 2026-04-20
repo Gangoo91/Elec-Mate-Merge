@@ -98,13 +98,6 @@ export interface EICRBoardWithSchedule {
   main_switch_type: string;
   main_switch_rating: string;
   main_switch_poles: string;
-  // Per-board test instruments used (A4:2026)
-  test_instrument_multifunction: string;
-  test_instrument_continuity: string;
-  test_instrument_insulation: string;
-  test_instrument_eli: string;
-  test_instrument_rcd: string;
-  test_instrument_earth_electrode: string;
   circuit_count: number;
   circuits: EICRCircuit[];
 }
@@ -176,6 +169,7 @@ export interface EICRInspectionSectionItem {
   item: string;
   clause: string;
   outcome: string;
+  outcome_display: string;
   notes: string;
 }
 

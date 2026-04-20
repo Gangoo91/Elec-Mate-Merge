@@ -207,13 +207,6 @@ const boardWithScheduleSchema = z
     main_switch_type: z.string().default(''),
     main_switch_rating: z.string().default(''),
     main_switch_poles: z.string().default(''),
-    // A4:2026 — per-board test instruments (Schedule of Test Results)
-    test_instrument_multifunction: z.string().default(''),
-    test_instrument_continuity: z.string().default(''),
-    test_instrument_insulation: z.string().default(''),
-    test_instrument_eli: z.string().default(''),
-    test_instrument_rcd: z.string().default(''),
-    test_instrument_earth_electrode: z.string().default(''),
     circuit_count: z.number().default(0),
     circuits: z.array(circuitSchema).default([]),
   })
@@ -293,6 +286,7 @@ const inspectionSectionItemSchema = z
     item: z.string().default(''),
     clause: z.string().default(''),
     outcome: z.string().default(''),
+    outcome_display: z.string().default(''),
     notes: z.string().default(''),
   })
   .passthrough();
