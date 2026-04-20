@@ -96,14 +96,14 @@ jobs:
         run: ./gradlew bundleRelease --stacktrace
 
       - name: Upload AAB artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: elecmate-release-aab
           path: android/app/build/outputs/bundle/release/app-release.aab
           retention-days: 30
 
       - name: Upload mapping.txt
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: elecmate-release-mapping
           path: android/app/build/outputs/mapping/release/mapping.txt
