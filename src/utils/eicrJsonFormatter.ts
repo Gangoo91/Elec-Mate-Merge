@@ -26,8 +26,7 @@ const convertToSnakeCase = (obj: any): any => {
   return obj == null ? '' : obj;
 };
 
-const normaliseRcdTimeDelay = (value: string): string =>
-  value === '__custom__' ? '' : value;
+const normaliseRcdTimeDelay = (value: string): string => (value === '__custom__' ? '' : value);
 
 export const formatEICRJson = async (formData: any, reportId: string): Promise<EICRPayload> => {
   // CRITICAL DEBUG: Log exactly what's coming in
@@ -261,7 +260,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     if (!Array.isArray(parsed)) return [];
 
     // Group items by section (preserves order via sectionNumber sort)
-    const sectionMap: Record<string, { section_number: string; section_name: string; clause: string; items: any[] }> = {};
+    const sectionMap: Record<
+      string,
+      { section_number: string; section_name: string; clause: string; items: any[] }
+    > = {};
 
     parsed.forEach((item: any) => {
       const sectionName = item.section || 'General';
@@ -626,11 +628,25 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
 
     return boards.map((board: any) => {
       const boardId = board.id || MAIN_BOARD_ID;
+      const isMainBoard = boardId === MAIN_BOARD_ID;
       // Filter circuits belonging to this board
       const boardCircuits = testResults.filter(
         (r: any) => (r.boardId || MAIN_BOARD_ID) === boardId
       );
       const boardWays = getBoardWays(board);
+
+      // For the main board, top-level formData fields are the source of truth for values
+      // entered via DistributionBoardVerificationSection (zdb, ipf, polarity, spd, etc.)
+      // and SupplyCharacteristicsSection (mainSwitchRating etc.).
+      // Sub-boards always use their own board object fields.
+      const fb = (boardVal: any, topLevelKey: string) =>
+        boardVal || (isMainBoard ? formData[topLevelKey] || '' : '');
+      const fbBool = (boardVal: any, topLevelKey: string) =>
+        boardVal !== undefined && boardVal !== null
+          ? boardVal
+          : isMainBoard
+            ? !!formData[topLevelKey]
+            : false;
 
       return {
         // Board metadata
@@ -639,43 +655,56 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         db_manufacturer: board.make || '',
         db_type: board.type || '',
         db_ways: boardWays?.toString() || '',
-        db_zdb: board.zdb || '',
-        db_ipf: board.ipf || '',
+        db_zdb: fb(board.zdb, 'zdb'),
+        db_ipf: fb(board.ipf, 'ipf'),
         // Aliases for template compatibility (some template sections use board.zdb / board.ipf)
-        zdb: board.zdb || '',
-        ipf: board.ipf || '',
+        zdb: fb(board.zdb, 'zdb'),
+        ipf: fb(board.ipf, 'ipf'),
         // Schedule page headers
         supplied_from: board.suppliedFrom || '',
         incoming_device_bs_en: board.incomingDeviceBsEn || '',
         incoming_device_type: board.incomingDeviceType || '',
         incoming_device_rating: board.incomingDeviceRating || '',
-        // Board verification
-        polarity_confirmed: board.confirmedCorrectPolarity ?? false,
-        phase_sequence_confirmed: board.confirmedPhaseSequence ?? false,
-        ring_final_circuit_confirmed: board.ringFinalCircuitConfirmed ?? false,
-        // SPD details per board
-        spd_operational: board.spdOperationalStatus ?? false,
-        spd_na: board.spdNA ?? false,
-        spd_type: board.spdType || '',
-        spd_t1: board.spdT1 ?? false,
-        spd_t2: board.spdT2 ?? false,
-        spd_t3: board.spdT3 ?? false,
-        spd_location: board.spdLocation || '',
-        spd_make: board.spdMake || '',
-        spd_model: board.spdModel || '',
-        spd_rated_current_ka: board.spdRatedCurrentKa || '',
-        // Main switch for this board
-        main_switch_bs_en: board.mainSwitchBsEn || '',
-        main_switch_type: board.mainSwitchType || '',
-        main_switch_rating: board.mainSwitchRating || '',
-        main_switch_poles: board.mainSwitchPoles || '',
-        // Per-board test instruments (A4:2026 — Schedule of Test Results)
-        test_instrument_multifunction: board.testInstrumentMultifunction || '',
-        test_instrument_continuity: board.testInstrumentContinuity || '',
-        test_instrument_insulation: board.testInstrumentInsulation || '',
-        test_instrument_eli: board.testInstrumentEli || '',
-        test_instrument_rcd: board.testInstrumentRcd || '',
-        test_instrument_earth_electrode: board.testInstrumentEarthElectrode || '',
+        // Board verification — fall back to top-level for main board
+        polarity_confirmed:
+          board.confirmedCorrectPolarity ??
+          (isMainBoard ? !!formData['confirmedCorrectPolarity'] : false),
+        phase_sequence_confirmed:
+          board.confirmedPhaseSequence ??
+          (isMainBoard ? !!formData['confirmedPhaseSequence'] : false),
+        ring_final_circuit_confirmed:
+          board.ringFinalCircuitConfirmed ??
+          (isMainBoard ? !!formData['ringFinalCircuitConfirmed'] : false),
+        // SPD details per board — fall back to top-level for main board
+        spd_operational:
+          board.spdOperationalStatus ?? (isMainBoard ? !!formData['spdOperationalStatus'] : false),
+        spd_na: board.spdNA ?? (isMainBoard ? !!formData['spdNA'] : false),
+        spd_type: fb(board.spdType, 'spdType'),
+        spd_t1: board.spdT1 ?? (isMainBoard ? !!formData['spdT1'] : false),
+        spd_t2: board.spdT2 ?? (isMainBoard ? !!formData['spdT2'] : false),
+        spd_t3: board.spdT3 ?? (isMainBoard ? !!formData['spdT3'] : false),
+        spd_location: fb(board.spdLocation, 'spdLocation'),
+        spd_make: fb(board.spdMake, 'spdMake'),
+        spd_model: fb(board.spdModel, 'spdModel'),
+        spd_rated_current_ka: fb(board.spdRatedCurrentKa, 'spdRatedCurrentKa'),
+        // Main switch — fall back to top-level for main board
+        main_switch_bs_en: fb(board.mainSwitchBsEn, 'mainSwitchBsEn'),
+        main_switch_type: fb(board.mainSwitchType, 'mainSwitchType'),
+        main_switch_rating: fb(board.mainSwitchRating, 'mainSwitchRating'),
+        main_switch_poles: fb(board.mainSwitchPoles, 'mainSwitchPoles'),
+        // Per-board test instruments — fall back to top-level for main board
+        test_instrument_multifunction: fb(
+          board.testInstrumentMultifunction,
+          'testInstrumentMultifunction'
+        ),
+        test_instrument_continuity: fb(board.testInstrumentContinuity, 'testInstrumentContinuity'),
+        test_instrument_insulation: fb(board.testInstrumentInsulation, 'testInstrumentInsulation'),
+        test_instrument_eli: fb(board.testInstrumentEli, 'testInstrumentEli'),
+        test_instrument_rcd: fb(board.testInstrumentRcd, 'testInstrumentRcd'),
+        test_instrument_earth_electrode: fb(
+          board.testInstrumentEarthElectrode,
+          'testInstrumentEarthElectrode'
+        ),
         // Circuit count
         circuit_count: boardCircuits.length,
         // Circuits for this board (same format as flat schedule_of_tests)
@@ -800,10 +829,15 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   // Normalise earthingArrangement: form default is 'tncs', select options use 'TN-C-S' etc.
   const normaliseEarthing = (raw: string): string => {
     const map: Record<string, string> = {
-      tncs: 'TN-C-S', 'tn-c-s': 'TN-C-S', 'tnc-s': 'TN-C-S',
-      tns: 'TN-S', 'tn-s': 'TN-S',
-      tnc: 'TN-C', 'tn-c': 'TN-C',
-      tt: 'TT', it: 'IT',
+      tncs: 'TN-C-S',
+      'tn-c-s': 'TN-C-S',
+      'tnc-s': 'TN-C-S',
+      tns: 'TN-S',
+      'tn-s': 'TN-S',
+      tnc: 'TN-C',
+      'tn-c': 'TN-C',
+      tt: 'TT',
+      it: 'IT',
     };
     return map[raw.toLowerCase()] ?? raw;
   };
@@ -911,18 +945,23 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     },
 
     main_protective_device: (() => {
-      // Get main board for location fallback
+      // Get main board — used as fallback when top-level fields are empty
+      // (BoardSetupCard saves to distributionBoards[0] per-board fields, not top-level)
       const mainBoard = formData.distributionBoards?.[0];
+      const mbRating = get('mainSwitchRating') || mainBoard?.mainSwitchRating || '';
       return {
-        bs_en: mainBoard?.mainSwitchBsEn || '',
+        bs_en: mainBoard?.mainSwitchBsEn || get('mainSwitchBsEn') || '',
         device_type: get('mainProtectiveDevice'),
-        main_switch_rating: get('mainSwitchRating') === '__custom__' ? get('fuseDeviceRating') : get('mainSwitchRating'),
+        main_switch_rating: mbRating === '__custom__' ? get('fuseDeviceRating') : mbRating,
         main_switch_location: get('cuLocation') || mainBoard?.location || '',
-        main_switch_poles: get('mainSwitchPoles'),
+        main_switch_poles: get('mainSwitchPoles') || mainBoard?.mainSwitchPoles || '',
         main_switch_voltage_rating: get('mainSwitchVoltageRating'),
         fuse_device_rating: get('fuseDeviceRating'),
         fuse_sub_type: get('fuseSubType'),
-        breaking_capacity: get('breakingCapacity') === '__custom__' ? get('breakingCapacityCustom') : get('breakingCapacity'),
+        breaking_capacity:
+          get('breakingCapacity') === '__custom__'
+            ? get('breakingCapacityCustom')
+            : get('breakingCapacity'),
       };
     })(),
 
@@ -943,7 +982,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       return {
         // A4:2026 — prefer user-edited `reference` over auto-generated `name`
         board_designation:
-          (mainBoard?.reference || '').trim() || mainBoard?.name || get('boardDesignation', 'Main DB'),
+          (mainBoard?.reference || '').trim() ||
+          mainBoard?.name ||
+          get('boardDesignation', 'Main DB'),
         board_size: boardSize,
         board_type: mainBoard?.type || get('cuType'),
         board_location: mainBoard?.location || get('cuLocation'),
@@ -953,9 +994,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     })(),
 
     cables: {
-      intake_cable_size: get('intakeCableSize') === 'custom' ? get('intakeCableSizeCustom') : stripUnit(get('intakeCableSize')),
+      intake_cable_size:
+        get('intakeCableSize') === 'custom'
+          ? get('intakeCableSizeCustom')
+          : stripUnit(get('intakeCableSize')),
       intake_cable_type: get('intakeCableType'),
-      tails_size: get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
+      tails_size:
+        get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
       tails_length: get('tailsLength'),
     },
 
@@ -1005,8 +1050,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         earthing_conductor_continuity_verified: getBool('earthingConductorContinuityVerified'),
         bonding_conductor_continuity_verified: getBool('bondingConductorContinuityVerified'),
         // Derive presence from size when no explicit value set (no UI control for this field)
-        supplementary_bonding: get('supplementaryBonding') ||
-          (get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize') ? 'Present' : 'N/A'),
+        supplementary_bonding:
+          get('supplementaryBonding') ||
+          (get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize')
+            ? 'Present'
+            : 'N/A'),
         supplementary_bonding_size:
           get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize'),
         supplementary_bonding_size_custom: get('supplementaryBondingSizeCustom'),
@@ -1146,7 +1194,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       company_phone: get('companyPhone'),
       company_email: get('companyEmail'),
       company_website: get('companyWebsite'),
-      company_logo: (() => { const l = get('companyLogo'); return l && l.length > 100 && !l.includes('placeholder') ? l : ''; })(),
+      company_logo: (() => {
+        const l = get('companyLogo');
+        return l && l.length > 100 && !l.includes('placeholder') ? l : '';
+      })(),
       company_tagline: get('companyTagline'),
       company_accent_color: get('companyAccentColor'),
       company_registration_number: get('companyRegistrationNumber'),
@@ -1275,11 +1326,18 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     db_ipf: formData.distributionBoards?.[0]?.ipf || '',
 
     // Cables (flat) - handle custom sizes
-    intake_cable_size: get('intakeCableSize') === 'custom' ? get('intakeCableSizeCustom') : stripUnit(get('intakeCableSize')),
-    intakeCableSize: get('intakeCableSize') === 'custom' ? get('intakeCableSizeCustom') : stripUnit(get('intakeCableSize')),
+    intake_cable_size:
+      get('intakeCableSize') === 'custom'
+        ? get('intakeCableSizeCustom')
+        : stripUnit(get('intakeCableSize')),
+    intakeCableSize:
+      get('intakeCableSize') === 'custom'
+        ? get('intakeCableSizeCustom')
+        : stripUnit(get('intakeCableSize')),
     intake_cable_type: get('intakeCableType'),
     intakeCableType: get('intakeCableType'),
-    tails_size: get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
+    tails_size:
+      get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
     tailsSize: get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
     tails_length: get('tailsLength'),
     tailsLength: get('tailsLength'),
@@ -1391,12 +1449,16 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     calibration_date: get('calibrationDate'),
 
     // Main Switch fields (flat) — handle custom values
-    main_switch_rating: get('mainSwitchRating') === '__custom__' ? get('fuseDeviceRating') : get('mainSwitchRating'),
+    main_switch_rating:
+      get('mainSwitchRating') === '__custom__' ? get('fuseDeviceRating') : get('mainSwitchRating'),
     main_switch_poles: get('mainSwitchPoles'),
     main_switch_voltage_rating: get('mainSwitchVoltageRating'),
     fuse_device_rating: get('fuseDeviceRating'),
     fuse_sub_type: get('fuseSubType'),
-    breaking_capacity: get('breakingCapacity') === '__custom__' ? get('breakingCapacityCustom') : get('breakingCapacity'),
+    breaking_capacity:
+      get('breakingCapacity') === '__custom__'
+        ? get('breakingCapacityCustom')
+        : get('breakingCapacity'),
     service_entry: get('serviceEntry'),
 
     // ============================================
@@ -1475,7 +1537,11 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     })(),
     has_departures: !!(get('designerDepartures') || '').trim(),
     has_permitted_exceptions: !!(get('permittedExceptions') || '').trim(),
-    has_earth_electrode: !!(get('earthElectrodeType') || get('earthElectrodeResistance') || '').trim(),
+    has_earth_electrode: !!(
+      get('earthElectrodeType') ||
+      get('earthElectrodeResistance') ||
+      ''
+    ).trim(),
     has_additional_boards: (() => {
       const boards = formData['distributionBoards'] || [];
       return Array.isArray(boards) && boards.length > 1;
