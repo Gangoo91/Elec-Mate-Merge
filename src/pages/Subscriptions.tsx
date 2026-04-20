@@ -21,7 +21,7 @@ import {
   Clock,
   ChevronRight,
 } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import FeatureComparison from '@/components/subscriptions/FeatureComparison';
 import SubscriptionFAQ from '@/components/subscriptions/SubscriptionFAQ';
@@ -107,6 +107,9 @@ const Subscriptions = () => {
     loadOfferings,
   } = useRevenueCat(user?.id);
   const { toast } = useToast();
+
+  const [searchParams] = useSearchParams();
+  const wasCancelled = searchParams.get('cancelled') === '1';
 
   const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
   const [isPortalLoading, setIsPortalLoading] = useState(false);
@@ -219,7 +222,9 @@ const Subscriptions = () => {
             ? 'Your discount will be applied automatically.'
             : 'Opening secure Stripe checkout page.',
         });
-        openExternalUrl(data.url);
+        // Use replace() for same-tab navigation — window.open() is blocked by mobile
+        // browsers after an async call (popup blocker treats it as unsolicited popup)
+        window.location.replace(data.url);
       } else {
         throw new Error('No checkout URL returned');
       }
@@ -302,6 +307,21 @@ const Subscriptions = () => {
       </div>
 
       <div className="px-4 max-w-2xl mx-auto pb-24 space-y-8">
+        {/* ── Cancelled / returned from Stripe ───────────────────────────── */}
+        {wasCancelled && (
+          <section className="rounded-2xl border border-yellow-500/30 bg-yellow-500/[0.06] px-4 py-3 flex items-start gap-3">
+            <span className="mt-0.5 text-yellow-400 text-[18px]">⚡</span>
+            <div>
+              <p className="text-[14px] font-semibold text-white">
+                No worries — your trial is still waiting
+              </p>
+              <p className="text-[13px] text-white/70 mt-0.5">
+                Pick a plan below to get started. No charge for 7 days.
+              </p>
+            </div>
+          </section>
+        )}
+
         {/* ── Current Plan Card ──────────────────────────────────────────── */}
         {isSubscribed && (
           <section
@@ -396,9 +416,7 @@ const Subscriptions = () => {
               </div>
               <div>
                 <p className="text-sm font-semibold text-red-400">Trial expired</p>
-                <p className="text-xs text-white mt-0.5">
-                  Subscribe below to unlock all features
-                </p>
+                <p className="text-xs text-white mt-0.5">Subscribe below to unlock all features</p>
               </div>
             </div>
           </section>

@@ -257,7 +257,7 @@ const CheckoutTrial = () => {
 
     if (!hasAttempted) {
       setHasAttempted(true);
-      if (!isNative && !profile.stripe_customer_id) {
+      if (!isNative) {
         startCheckout();
       }
     }
