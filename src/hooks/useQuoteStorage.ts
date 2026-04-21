@@ -1,18 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
 import { captureError, captureApiError, trackMilestone, addBreadcrumb } from '@/lib/sentry';
 import { trackFeatureUse } from '@/components/ActivityTracker';
 
 // Database storage for quotes (no longer using localStorage)
 
 export const useQuoteStorage = () => {
-  const [savedQuotes, setSavedQuotes] = useState<Quote[]>([]);
-  const [invoicedQuotes, setInvoicedQuotes] = useState<Quote[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const { user } = useAuth();
+  const queryClient = useQueryClient();
+  const activeKey = useMemo(() => [...QUERY_KEYS.QUOTES, 'active', user?.id] as const, [user?.id]);
+  const invoicedKey = useMemo(
+    () => [...QUERY_KEYS.QUOTES, 'invoiced', user?.id] as const,
+    [user?.id]
+  );
 
   const parseNumber = (value: unknown): number => {
     if (typeof value === 'number') {
@@ -85,8 +91,10 @@ export const useQuoteStorage = () => {
     []
   );
 
-  const fetchActiveQuotesForUser = useCallback(
-    async (userId: string): Promise<Quote[]> => {
+  const activeQuery = useQuery<Quote[]>({
+    queryKey: activeKey,
+    queryFn: async () => {
+      if (!user?.id) return [];
       const { data, error } = await supabase
         .from('quotes')
         .select(
@@ -101,12 +109,15 @@ export const useQuoteStorage = () => {
           )
         `
         )
-        .eq('user_id', userId)
+        .eq('user_id', user.id)
         .eq('invoice_raised', false)
         .is('deleted_at', null)
         .order('updated_at', { ascending: false });
 
       if (error) {
+        captureApiError(error instanceof Error ? error : new Error(String(error)), 'quotes/load', {
+          context: 'loadQuotes',
+        });
         throw error;
       }
 
@@ -121,182 +132,117 @@ export const useQuoteStorage = () => {
         }) || []
       );
     },
-    [convertDbRowToQuote]
-  );
+    enabled: !!user?.id,
+    ...QUERY_PRESETS.USER_DATA,
+  });
 
-  const fetchInvoicedQuotesForUser = useCallback(
-    async (userId: string): Promise<Quote[]> => {
+  const invoicedQuery = useQuery<Quote[]>({
+    queryKey: invoicedKey,
+    queryFn: async () => {
+      if (!user?.id) return [];
       const { data, error } = await supabase
         .from('quotes')
         .select('*')
-        .eq('user_id', userId)
+        .eq('user_id', user.id)
         .eq('invoice_raised', true)
         .is('deleted_at', null)
         .order('updated_at', { ascending: false });
 
       if (error) {
-        throw error;
-      }
-
-      return (data || []).map((row: any) => convertDbRowToQuote(row));
-    },
-    [convertDbRowToQuote]
-  );
-
-  // Manually refresh quotes from database
-  const refreshQuotes = useCallback(async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        return;
-      }
-
-      const [quotes, invoiced] = await Promise.all([
-        fetchActiveQuotesForUser(user.id),
-        fetchInvoicedQuotesForUser(user.id),
-      ]);
-
-      setSavedQuotes(quotes);
-      setInvoicedQuotes(invoiced);
-      setLastUpdated(new Date());
-    } catch (error) {
-      captureApiError(
-        error instanceof Error ? error : new Error(String(error)),
-        'quotes/refresh',
-        { context: 'refreshQuotes' }
-      );
-    }
-  }, [fetchActiveQuotesForUser, fetchInvoicedQuotesForUser]);
-
-  // Load quotes from Supabase on mount
-  useEffect(() => {
-    const loadQuotes = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) {
-          setLoading(false);
-          return;
-        }
-
-        const quotes = await fetchActiveQuotesForUser(user.id);
-        setSavedQuotes(quotes);
-        setLastUpdated(new Date());
-      } catch (error) {
-        captureApiError(
-          error instanceof Error ? error : new Error(String(error)),
-          'quotes/load',
-          { context: 'loadQuotes' }
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    // Load quotes that have been converted to invoices (for the Invoiced filter tab)
-    const loadInvoicedQuotes = async () => {
-      try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) return;
-
-        const converted = await fetchInvoicedQuotesForUser(user.id);
-        setInvoicedQuotes(converted);
-      } catch (error) {
         captureApiError(
           error instanceof Error ? error : new Error(String(error)),
           'quotes/load-invoiced',
           { context: 'loadInvoicedQuotes' }
         );
+        throw error;
       }
-    };
 
-    loadQuotes();
-    loadInvoicedQuotes();
+      return (data || []).map((row: any) => convertDbRowToQuote(row));
+    },
+    enabled: !!user?.id,
+    ...QUERY_PRESETS.USER_DATA,
+  });
 
-    // Set up real-time subscription for quote updates AND inserts
-    const setupRealtimeSubscription = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return null;
+  const savedQuotes = useMemo(() => activeQuery.data ?? [], [activeQuery.data]);
+  const invoicedQuotes = useMemo(() => invoicedQuery.data ?? [], [invoicedQuery.data]);
+  const loading = activeQuery.isLoading;
+  const lastUpdated = useMemo(
+    () => (activeQuery.dataUpdatedAt ? new Date(activeQuery.dataUpdatedAt) : new Date()),
+    [activeQuery.dataUpdatedAt]
+  );
 
-      const channel = supabase
-        .channel('quote-changes')
-        .on(
-          'postgres_changes',
-          {
-            event: 'INSERT',
-            schema: 'public',
-            table: 'quotes',
-            filter: `user_id=eq.${user.id}`,
-          },
-          (payload) => {
-            const newRecord = payload.new as any;
-            const isInvoice = !!newRecord.invoice_number;
-            const clientName = newRecord.client_data?.name || 'Client';
-            const total = parseFloat(newRecord.total || 0).toFixed(2);
+  const refreshQuotes = useCallback(async () => {
+    await Promise.all([activeQuery.refetch(), invoicedQuery.refetch()]);
+  }, [activeQuery, invoicedQuery]);
 
-            // Show toast notification for new quote or invoice (likely from voice)
+  // Set up real-time subscription for quote updates AND inserts.
+  // Realtime pushes trigger a cache invalidation; useQuery dedupes across
+  // consumers so multiple components on /dashboard share a single fetch.
+  useEffect(() => {
+    if (!user?.id) return undefined;
+
+    const channel = supabase
+      .channel(`quote-changes-${user.id}`)
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'quotes',
+          filter: `user_id=eq.${user.id}`,
+        },
+        (payload) => {
+          const newRecord = payload.new as any;
+          const isInvoice = !!newRecord.invoice_number;
+          const clientName = newRecord.client_data?.name || 'Client';
+          const total = parseFloat(newRecord.total || 0).toFixed(2);
+
+          toast({
+            title: isInvoice ? 'Invoice Created' : 'Quote Created',
+            description: `${isInvoice ? newRecord.invoice_number : newRecord.quote_number} for ${clientName} - £${total}`,
+            duration: 5000,
+          });
+
+          queryClient.invalidateQueries({ queryKey: activeKey });
+          queryClient.invalidateQueries({ queryKey: invoicedKey });
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'quotes',
+          filter: `user_id=eq.${user.id}`,
+        },
+        (payload) => {
+          const updatedQuote = payload.new as any;
+
+          if (updatedQuote.acceptance_status === 'accepted') {
             toast({
-              title: isInvoice ? 'Invoice Created' : 'Quote Created',
-              description: `${isInvoice ? newRecord.invoice_number : newRecord.quote_number} for ${clientName} - £${total}`,
+              title: 'Quote Accepted!',
+              description: `${updatedQuote.client_data?.name || 'Client'} accepted quote ${updatedQuote.quote_number}`,
               duration: 5000,
             });
-
-            // Refresh quotes to update UI
-            refreshQuotes();
+          } else if (updatedQuote.acceptance_status === 'rejected') {
+            toast({
+              title: 'Quote Declined',
+              description: `${updatedQuote.client_data?.name || 'Client'} declined quote ${updatedQuote.quote_number}`,
+              variant: 'destructive',
+              duration: 5000,
+            });
           }
-        )
-        .on(
-          'postgres_changes',
-          {
-            event: 'UPDATE',
-            schema: 'public',
-            table: 'quotes',
-            filter: `user_id=eq.${user.id}`,
-          },
-          (payload) => {
-            const updatedQuote = payload.new as any;
 
-            // Show toast notification for acceptance/rejection
-            if (updatedQuote.acceptance_status === 'accepted') {
-              toast({
-                title: 'Quote Accepted!',
-                description: `${updatedQuote.client_data?.name || 'Client'} accepted quote ${updatedQuote.quote_number}`,
-                duration: 5000,
-              });
-            } else if (updatedQuote.acceptance_status === 'rejected') {
-              toast({
-                title: 'Quote Declined',
-                description: `${updatedQuote.client_data?.name || 'Client'} declined quote ${updatedQuote.quote_number}`,
-                variant: 'destructive',
-                duration: 5000,
-              });
-            }
-
-            // Refresh quotes to update UI
-            refreshQuotes();
-          }
-        )
-        .subscribe();
-
-      return channel;
-    };
-
-    let channel: any = null;
-    setupRealtimeSubscription().then((ch) => {
-      channel = ch;
-    });
+          queryClient.invalidateQueries({ queryKey: activeKey });
+          queryClient.invalidateQueries({ queryKey: invoicedKey });
+        }
+      )
+      .subscribe();
 
     return () => {
-      if (channel) supabase.removeChannel(channel);
+      supabase.removeChannel(channel);
     };
-  }, [fetchActiveQuotesForUser, fetchInvoicedQuotesForUser, refreshQuotes]);
+  }, [user?.id, queryClient, activeKey, invoicedKey]);
 
   // Save a new quote to Supabase
   const saveQuote = useCallback(
@@ -414,8 +360,9 @@ export const useQuoteStorage = () => {
 
         // Update local state with potentially updated quote number
         const savedQuoteData = { ...quote, quoteNumber: quoteData.quote_number };
-        const updatedQuotes = [savedQuoteData, ...savedQuotes.filter((q) => q.id !== quote.id)];
-        setSavedQuotes(updatedQuotes);
+        queryClient.setQueryData<Quote[]>(activeKey, (prev) =>
+          prev ? [savedQuoteData, ...prev.filter((q) => q.id !== quote.id)] : [savedQuoteData]
+        );
 
         // Track successful quote creation/update
         trackMilestone('Quote Saved', { quoteId: quote.id, total: quote.total });
@@ -430,7 +377,7 @@ export const useQuoteStorage = () => {
         return false;
       }
     },
-    [savedQuotes]
+    [queryClient, activeKey]
   );
 
   // Delete a quote from Supabase
@@ -449,15 +396,19 @@ export const useQuoteStorage = () => {
         }
 
         // Update local state
-        const updatedQuotes = savedQuotes.filter((q) => q.id !== quoteId);
-        setSavedQuotes(updatedQuotes);
+        queryClient.setQueryData<Quote[]>(activeKey, (prev) =>
+          prev ? prev.filter((q) => q.id !== quoteId) : []
+        );
+        queryClient.setQueryData<Quote[]>(invoicedKey, (prev) =>
+          prev ? prev.filter((q) => q.id !== quoteId) : []
+        );
         return true;
       } catch (error) {
         captureError(error instanceof Error ? error : new Error('Quote delete error'), { quoteId });
         return false;
       }
     },
-    [savedQuotes]
+    [queryClient, activeKey, invoicedKey]
   );
 
   // Get quote statistics
@@ -531,7 +482,6 @@ export const useQuoteStorage = () => {
             updateData.invoice_date = invoiceDate.toISOString();
             updateData.invoice_due_date = invoiceDueDate.toISOString();
             updateData.invoice_status = 'draft';
-
           }
         }
       }
@@ -554,23 +504,25 @@ export const useQuoteStorage = () => {
 
       // Update local state
       const effectiveStatus = acceptanceStatus === 'accepted' ? 'approved' : status;
-      setSavedQuotes((prev) =>
-        prev.map((quote) =>
-          quote.id === quoteId
-            ? {
-                ...quote,
-                status: effectiveStatus,
-                tags: tags || quote.tags,
-                acceptance_status: acceptanceStatus || quote.acceptance_status,
-                accepted_at: acceptanceStatus ? new Date() : quote.accepted_at,
-                work_completion_date: tags?.includes('work_done')
-                  ? new Date()
-                  : quote.work_completion_date,
-                invoice_raised: tags?.includes('work_done') ? true : quote.invoice_raised,
-                updatedAt: new Date(),
-              }
-            : quote
-        )
+      queryClient.setQueryData<Quote[]>(activeKey, (prev) =>
+        prev
+          ? prev.map((quote) =>
+              quote.id === quoteId
+                ? {
+                    ...quote,
+                    status: effectiveStatus,
+                    tags: tags || quote.tags,
+                    acceptance_status: acceptanceStatus || quote.acceptance_status,
+                    accepted_at: acceptanceStatus ? new Date() : quote.accepted_at,
+                    work_completion_date: tags?.includes('work_done')
+                      ? new Date()
+                      : quote.work_completion_date,
+                    invoice_raised: tags?.includes('work_done') ? true : quote.invoice_raised,
+                    updatedAt: new Date(),
+                  }
+                : quote
+            )
+          : []
       );
 
       return true;
@@ -626,16 +578,18 @@ export const useQuoteStorage = () => {
       }
 
       // Update local state
-      setSavedQuotes((prev) =>
-        prev.map((quote) =>
-          quote.id === quoteId
-            ? {
-                ...quote,
-                reminder_count: (quote.reminder_count || 0) + 1,
-                lastReminderSentAt: new Date(),
-              }
-            : quote
-        )
+      queryClient.setQueryData<Quote[]>(activeKey, (prev) =>
+        prev
+          ? prev.map((quote) =>
+              quote.id === quoteId
+                ? {
+                    ...quote,
+                    reminder_count: (quote.reminder_count || 0) + 1,
+                    lastReminderSentAt: new Date(),
+                  }
+                : quote
+            )
+          : []
       );
 
       toast({
@@ -670,10 +624,12 @@ export const useQuoteStorage = () => {
       }
 
       // Update local state
-      setSavedQuotes((prev) =>
-        prev.map((quote) =>
-          quote.id === quoteId ? { ...quote, auto_followup_enabled: enabled } : quote
-        )
+      queryClient.setQueryData<Quote[]>(activeKey, (prev) =>
+        prev
+          ? prev.map((quote) =>
+              quote.id === quoteId ? { ...quote, auto_followup_enabled: enabled } : quote
+            )
+          : []
       );
 
       toast({

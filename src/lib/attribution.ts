@@ -13,7 +13,7 @@
 
 import { supabase } from '@/integrations/supabase/client';
 import { storageGetJSONSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
-import { captureError } from '@/lib/sentry';
+import { captureError, addBreadcrumb } from '@/lib/sentry';
 
 const ATTRIBUTION_KEY = 'elec-mate-attribution';
 
@@ -185,7 +185,25 @@ export async function fireServerCapi(event: {
     if (error) throw error;
   } catch (err) {
     console.warn('[attribution] Server CAPI call failed (non-fatal)', err);
-    // Surface to Sentry so we catch Meta rate limits / token expiry
+    // Transient mobile-network failures (user offline, DNS blip, CORS preflight
+    // timeout) surface as FunctionsFetchError — these are not actionable bugs,
+    // so drop to breadcrumb. Real programming/config errors (bad token, bad
+    // payload, 5xx from the edge function) still get captured.
+    const errName = err instanceof Error ? err.name : '';
+    const errMsg = err instanceof Error ? err.message : String(err);
+    const isNetworkError =
+      errName === 'FunctionsFetchError' ||
+      /Failed to send a request to the Edge Function|Failed to fetch|NetworkError/i.test(errMsg);
+
+    if (isNetworkError) {
+      addBreadcrumb('Meta CAPI network error (non-fatal)', 'analytics', {
+        event_name: event.event_name,
+        event_id: event.event_id,
+        error: errMsg,
+      });
+      return;
+    }
+
     captureError(err instanceof Error ? err : new Error(String(err)), {
       context: 'meta_capi_client_forward',
       event_name: event.event_name,
