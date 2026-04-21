@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import {
   Download,
   Eye,
+  Pencil,
   Calendar,
   Check,
   X,
@@ -208,9 +209,7 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                         </Badge>
                       </div>
                       {quote.acceptance_status === 'accepted' && quote.accepted_by_name && (
-                        <p className="text-[10px] text-white">
-                          Signed by {quote.accepted_by_name}
-                        </p>
+                        <p className="text-[10px] text-white">Signed by {quote.accepted_by_name}</p>
                       )}
                       {hasInvoiceRaised(quote) && onViewInvoice && (
                         <button
@@ -222,13 +221,16 @@ const QuoteCardView: React.FC<QuoteCardViewProps> = ({
                         </button>
                       )}
                     </div>
+                    {/* ELE-775 — was an Eye icon which read as "view", users thought quote
+                        couldn't be edited. Explicit Edit (pencil) icon makes the affordance clear. */}
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => onNavigate(`/electrician/quote-builder/${quote.id}`)}
+                      aria-label="Edit quote"
                       className="h-11 w-11 text-white hover:text-foreground"
                     >
-                      <Eye className="h-4 w-4" />
+                      <Pencil className="h-4 w-4" />
                     </Button>
                   </div>
 
