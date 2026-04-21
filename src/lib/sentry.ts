@@ -14,7 +14,9 @@ export function initSentry() {
     // Use git commit hash injected at build time, fall back to date-based
     const release =
       import.meta.env.VITE_SENTRY_RELEASE ||
-      (typeof __SENTRY_RELEASE__ !== 'undefined' ? __SENTRY_RELEASE__ : `elec-mate@${new Date().toISOString().split('T')[0]}`);
+      (typeof __SENTRY_RELEASE__ !== 'undefined'
+        ? __SENTRY_RELEASE__
+        : `elec-mate@${new Date().toISOString().split('T')[0]}`);
 
     Sentry.init({
       dsn,
@@ -26,11 +28,7 @@ export function initSentry() {
       sampleRate: 1.0,
 
       // Send errors from web, native iOS/Android (Capacitor), and dev
-      allowUrls: [
-        /https?:\/\/(www\.)?elec-mate\.com/,
-        /capacitor:\/\/localhost/,
-        /localhost/,
-      ],
+      allowUrls: [/https?:\/\/(www\.)?elec-mate\.com/, /capacitor:\/\/localhost/, /localhost/],
 
       // ── PERFORMANCE ──
       // 25% of transactions — enough for trends without burning quota
@@ -81,6 +79,11 @@ export function initSentry() {
         // Capacitor bridge in third-party WebViews (Facebook/Instagram in-app browser)
         /webkit\.messageHandlers/i,
         /Object Not Found Matching Id/i,
+
+        // Service worker lifecycle races (browser-internal, 0 users affected)
+        // e.g. "InvalidStateError: newestWorker is null" during SW update
+        /InvalidStateError.*newestWorker is null/i,
+        /Failed to update a ServiceWorker/i,
       ],
 
       // NOTE: We DO NOT ignore these anymore (they were filtered before):
@@ -160,8 +163,48 @@ export function clearSentryUser() {
 
 // ── ERROR CAPTURE ──
 
-export function captureError(error: Error, context?: Record<string, unknown>) {
-  Sentry.captureException(error, { extra: context });
+/**
+ * Coerce any thrown value into a proper Error with a readable message.
+ *
+ * Without this, code that does `captureError(err)` where `err` is a plain
+ * object (e.g. `{ message, code }` from Supabase, or a thrown literal) ends
+ * up reported in Sentry as literally `Error: [object Object]` — and the
+ * underlying message is lost. Here we preserve the original object as
+ * `extra.originalValue` so no signal is discarded.
+ */
+function normaliseError(input: unknown): { error: Error; originalValue?: unknown } {
+  if (input instanceof Error) return { error: input };
+
+  if (typeof input === 'string') return { error: new Error(input) };
+
+  if (input && typeof input === 'object') {
+    const obj = input as Record<string, unknown>;
+    const msg =
+      typeof obj.message === 'string'
+        ? obj.message
+        : typeof obj.error === 'string'
+          ? obj.error
+          : (() => {
+              try {
+                return JSON.stringify(obj);
+              } catch {
+                return String(obj);
+              }
+            })();
+    const err = new Error(msg);
+    if (typeof obj.name === 'string') err.name = obj.name;
+    if (typeof obj.stack === 'string') err.stack = obj.stack;
+    return { error: err, originalValue: input };
+  }
+
+  return { error: new Error(String(input)), originalValue: input };
+}
+
+export function captureError(error: unknown, context?: Record<string, unknown>) {
+  const { error: normalised, originalValue } = normaliseError(error);
+  Sentry.captureException(normalised, {
+    extra: { ...(context || {}), ...(originalValue ? { originalValue } : {}) },
+  });
 }
 
 export function addBreadcrumb(message: string, category: string, data?: Record<string, unknown>) {
@@ -178,57 +221,77 @@ export const journeys = {
   signup: () => Sentry.startSpan({ op: 'user.journey', name: 'Signup Flow' }, (span) => span),
   login: () => Sentry.startSpan({ op: 'user.journey', name: 'Login Flow' }, (span) => span),
   createQuote: () => Sentry.startSpan({ op: 'user.journey', name: 'Create Quote' }, (span) => span),
-  createInvoice: () => Sentry.startSpan({ op: 'user.journey', name: 'Create Invoice' }, (span) => span),
+  createInvoice: () =>
+    Sentry.startSpan({ op: 'user.journey', name: 'Create Invoice' }, (span) => span),
   payment: () => Sentry.startSpan({ op: 'user.journey', name: 'Payment Flow' }, (span) => span),
-  aiTool: (toolName: string) => Sentry.startSpan({ op: 'user.journey', name: `AI Tool: ${toolName}` }, (span) => span),
+  aiTool: (toolName: string) =>
+    Sentry.startSpan({ op: 'user.journey', name: `AI Tool: ${toolName}` }, (span) => span),
 };
 
 // ── CRITICAL ERROR TRACKING ──
 
-export function captureCriticalError(error: Error, context?: Record<string, unknown>) {
-  Sentry.captureException(error, {
+export function captureCriticalError(error: unknown, context?: Record<string, unknown>) {
+  const { error: normalised, originalValue } = normaliseError(error);
+  Sentry.captureException(normalised, {
     level: 'fatal',
     tags: { critical: 'true' },
-    extra: context,
+    extra: { ...(context || {}), ...(originalValue ? { originalValue } : {}) },
   });
 }
 
-export function capturePaymentError(error: Error, context?: Record<string, unknown>) {
-  Sentry.captureException(error, {
+export function capturePaymentError(error: unknown, context?: Record<string, unknown>) {
+  const { error: normalised, originalValue } = normaliseError(error);
+  Sentry.captureException(normalised, {
     level: 'fatal',
     tags: { category: 'payment', critical: 'true' },
-    extra: context,
+    extra: { ...(context || {}), ...(originalValue ? { originalValue } : {}) },
   });
 }
 
-export function captureApiError(error: Error, endpoint: string, context?: Record<string, unknown>) {
-  Sentry.captureException(error, {
+export function captureApiError(
+  error: unknown,
+  endpoint: string,
+  context?: Record<string, unknown>
+) {
+  const { error: normalised, originalValue } = normaliseError(error);
+  Sentry.captureException(normalised, {
     level: 'error',
     tags: { category: 'api', endpoint },
-    extra: context,
+    extra: { ...(context || {}), ...(originalValue ? { originalValue } : {}) },
   });
 }
 
 export function captureEdgeFunctionError(
-  error: Error,
+  error: unknown,
   functionName: string,
   context?: Record<string, unknown>
 ) {
-  Sentry.captureException(error, {
+  const { error: normalised, originalValue } = normaliseError(error);
+  Sentry.captureException(normalised, {
     level: 'error',
     tags: { category: 'edge_function', function_name: functionName },
-    extra: context,
+    extra: { ...(context || {}), ...(originalValue ? { originalValue } : {}) },
   });
 }
 
 // ── FEATURE & PERFORMANCE TRACKING ──
 
 export function trackFeatureUsed(featureName: string, data?: Record<string, unknown>) {
-  Sentry.addBreadcrumb({ message: `Feature used: ${featureName}`, category: 'feature', data, level: 'info' });
+  Sentry.addBreadcrumb({
+    message: `Feature used: ${featureName}`,
+    category: 'feature',
+    data,
+    level: 'info',
+  });
 }
 
 export function trackMilestone(milestone: string, data?: Record<string, unknown>) {
-  Sentry.addBreadcrumb({ message: `Milestone: ${milestone}`, category: 'milestone', data, level: 'info' });
+  Sentry.addBreadcrumb({
+    message: `Milestone: ${milestone}`,
+    category: 'milestone',
+    data,
+    level: 'info',
+  });
 }
 
 export function trackSlowOperation(
