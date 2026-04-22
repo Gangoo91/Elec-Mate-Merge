@@ -44,13 +44,25 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
   const onToolResultRef = useRef(onToolResult);
   onToolResultRef.current = onToolResult;
 
-  // Helper to get auth session
+  // Helper to get auth session. Refreshes the token if it's missing or close
+  // to expiry so that subsequent edge-function calls don't fail with a stale
+  // JWT (root cause of the "Session expired" errors fired by send-quote-resend
+  // / send-invoice-resend when a user leaves a tab open too long).
   const getAuthSession = async () => {
-    const {
+    let {
       data: { session },
     } = await supabase.auth.getSession();
-    if (!session) throw new Error('Not authenticated');
-    return session;
+
+    const expiresAt = session?.expires_at ? session.expires_at * 1000 : 0;
+    const needsRefresh = !session || expiresAt - Date.now() < 60_000; // refresh when <60s left
+
+    if (needsRefresh) {
+      const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
+      if (refreshError || !refreshed.session) throw new Error('Not authenticated');
+      session = refreshed.session;
+    }
+
+    return session!;
   };
 
   // Helper to find quote by client name or quote number
@@ -160,12 +172,14 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
         console.log('[QuoteInvoiceVoice] send_quote called:', params);
         try {
           const quote = await findQuote(params);
-          await getAuthSession(); // Verify user is authenticated
+          const session = await getAuthSession();
 
-          // Call send-quote-resend edge function (auth handled automatically by Supabase client)
+          // Pass explicit Authorization header so the edge function gets a
+          // guaranteed-fresh token (auto-attach can send a stale one).
           console.log('[QuoteInvoiceVoice] Calling send-quote-resend for quote:', quote.id);
           const { data, error } = await supabase.functions.invoke('send-quote-resend', {
             body: { quoteId: quote.id },
+            headers: { Authorization: `Bearer ${session.access_token}` },
           });
 
           console.log('[QuoteInvoiceVoice] send-quote-resend response:', { data, error });
@@ -188,12 +202,12 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
         console.log('[QuoteInvoiceVoice] send_invoice called:', params);
         try {
           const invoice = await findInvoice(params);
-          await getAuthSession(); // Verify user is authenticated
+          const session = await getAuthSession();
 
-          // Call send-invoice-resend edge function (auth handled automatically by Supabase client)
           console.log('[QuoteInvoiceVoice] Calling send-invoice-resend for invoice:', invoice.id);
           const { data, error } = await supabase.functions.invoke('send-invoice-resend', {
             body: { invoiceId: invoice.id },
+            headers: { Authorization: `Bearer ${session.access_token}` },
           });
 
           console.log('[QuoteInvoiceVoice] send-invoice-resend response:', { data, error });
@@ -576,12 +590,14 @@ export function useQuoteInvoiceVoice(options: UseQuoteInvoiceVoiceOptions = {}) 
 
           if (insertError) throw new Error(insertError.message);
 
-          // Send quote via edge function (auth handled automatically by Supabase client)
+          const sendSession = await getAuthSession();
+
           console.log('[QuoteInvoiceVoice] Calling send-quote-resend for new quote:', quote.id);
           const { data: sendData, error: sendError } = await supabase.functions.invoke(
             'send-quote-resend',
             {
               body: { quoteId: quote.id },
+              headers: { Authorization: `Bearer ${sendSession.access_token}` },
             }
           );
 

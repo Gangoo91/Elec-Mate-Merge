@@ -155,7 +155,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (userError || !user) {
       console.error('❌ User authentication error:', userError);
-      throw new Error('Session expired. Please log in again.');
+      const reason = userError?.message || (!user ? 'no_user_returned' : 'unknown');
+      throw new Error(`Session expired. Please log in again. (${reason})`);
     }
 
     console.log('✅ User authenticated:', user.id);
