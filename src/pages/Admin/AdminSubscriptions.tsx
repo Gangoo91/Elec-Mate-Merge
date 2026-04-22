@@ -1,56 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  CreditCard,
-  TrendingUp,
-  Users,
-  Crown,
-  Zap,
-  Briefcase,
-  GraduationCap,
-  ChevronRight,
-  PoundSterling,
-  Target,
-  Gift,
-  RefreshCw,
-  Download,
-  Smartphone,
-  Globe,
-  ShoppingBag,
-  Clock,
-  Timer,
-} from 'lucide-react';
+import { RefreshCw, Download } from 'lucide-react';
 import { format, formatDistanceToNow, differenceInDays, parseISO } from 'date-fns';
-import { motion } from 'framer-motion';
-import { Skeleton } from '@/components/ui/skeleton';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { cn } from '@/lib/utils';
-
-const ROLE_BADGE_COLORS: Record<string, string> = {
-  apprentice: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  electrician: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  employer: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  default: 'bg-white/10 text-white',
-};
-
-const getRoleBadgeColor = (role: string): string =>
-  ROLE_BADGE_COLORS[role] || ROLE_BADGE_COLORS.default;
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  Divider,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface SubscribedUser {
   id: string;
@@ -63,12 +35,6 @@ interface SubscribedUser {
   offer_code?: string;
   offer_price?: number;
 }
-
-const SOURCE_BADGES: Record<string, { label: string; color: string }> = {
-  stripe: { label: 'Stripe', color: 'bg-purple-500/20 text-purple-400' },
-  app_store: { label: 'App Store', color: 'bg-blue-500/20 text-blue-400' },
-  play_store: { label: 'Play Store', color: 'bg-green-500/20 text-green-400' },
-};
 
 interface PromoOffer {
   id: string;
@@ -119,10 +85,37 @@ interface RCStats {
   generatedAt: string;
 }
 
+const getInitials = (name?: string | null) => {
+  if (!name) return '??';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+};
+
+const sourceLabel = (s?: string | null) => {
+  if (s === 'stripe') return 'Stripe';
+  if (s === 'app_store') return 'App Store';
+  if (s === 'play_store') return 'Play Store';
+  return 'Stripe';
+};
+
+const sourceTone = (s?: string | null): Tone => {
+  if (s === 'app_store') return 'blue';
+  if (s === 'play_store') return 'green';
+  return 'purple';
+};
+
+const tierTone = (role?: string | null): Tone => {
+  if (role === 'employer') return 'blue';
+  if (role === 'electrician') return 'yellow';
+  if (role === 'apprentice') return 'amber';
+  return 'yellow';
+};
+
 export default function AdminSubscriptions() {
   const [search, setSearch] = useState('');
-  const [roleFilter, setRoleFilter] = useState<string>('all');
   const [sourceFilter, setSourceFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState<string>('active');
   const [selectedUser, setSelectedUser] = useState<SubscribedUser | null>(null);
 
   const { data: stripeStats } = useQuery<{
@@ -188,13 +181,11 @@ export default function AdminSubscriptions() {
   const playStoreActive = rcStats?.subscribersBySource?.play_store || 0;
   const rcActiveTrials = (rcStats?.trialUsers || []).filter((t) => !t.is_cancelled).length;
   const rcCancelledTrials = (rcStats?.trialUsers || []).filter((t) => t.is_cancelled).length;
-  const rcAllTrials = rcActiveTrials + rcCancelledTrials;
   const stripeTrials = stripeStats?.stripe.trialingSubscriptions || 0;
   const totalTrials = rcActiveTrials + stripeTrials;
   const totalActive = stripeActive + appStoreActive + playStoreActive;
   const arr = combinedMrr * 12;
 
-  // Merge tier counts from Stripe + RC
   const rcTiers = rcStats?.tiersBySource || {};
   const appStoreTiers = rcTiers.app_store || {};
   const playStoreTiers = rcTiers.play_store || {};
@@ -229,14 +220,13 @@ export default function AdminSubscriptions() {
     refetch,
     isFetching,
   } = useQuery({
-    queryKey: ['admin-subscribed-users', search, roleFilter, sourceFilter],
+    queryKey: ['admin-subscribed-users', search, sourceFilter],
     queryFn: async () => {
       let query = supabase
         .from('profiles')
         .select('id, full_name, username, role, subscribed, created_at, subscription_source')
         .eq('subscribed', true)
         .order('created_at', { ascending: false });
-      if (roleFilter !== 'all') query = query.eq('role', roleFilter);
       if (sourceFilter !== 'all') query = query.eq('subscription_source', sourceFilter);
       const { data, error } = await query;
       if (error) throw error;
@@ -291,21 +281,25 @@ export default function AdminSubscriptions() {
     URL.revokeObjectURL(url);
   };
 
-  const getRoleIcon = (role: string) => {
-    switch (role) {
-      case 'apprentice':
-        return <GraduationCap className="h-4 w-4 text-yellow-400" />;
-      case 'electrician':
-        return <Zap className="h-4 w-4 text-yellow-400" />;
-      case 'employer':
-        return <Briefcase className="h-4 w-4 text-blue-400" />;
-      default:
-        return <Users className="h-4 w-4 text-white" />;
-    }
-  };
-
   const fmtGBP = (v: number) =>
     `£${v.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  const activeTrialList = useMemo(
+    () => (rcStats?.trialUsers || []).filter((t) => !t.is_cancelled),
+    [rcStats]
+  );
+  const cancelledTrialList = useMemo(
+    () => (rcStats?.trialUsers || []).filter((t) => t.is_cancelled),
+    [rcStats]
+  );
+
+  const visibleUsers = useMemo(() => {
+    if (!users) return [];
+    if (statusFilter === 'active') return users;
+    if (statusFilter === 'trialing') return [];
+    if (statusFilter === 'cancelled') return [];
+    return users;
+  }, [users, statusFilter]);
 
   return (
     <PullToRefresh
@@ -313,506 +307,390 @@ export default function AdminSubscriptions() {
         await refetch();
       }}
     >
-      <div className="space-y-5 pb-24">
-        <AdminPageHeader
+      <PageFrame>
+        <PageHero
+          eyebrow="Billing"
           title="Subscriptions"
-          subtitle="Revenue & subscriber management"
-          icon={CreditCard}
-          iconColor="text-emerald-400"
-          iconBg="bg-emerald-500/10 border-emerald-500/20"
-          accentColor="from-emerald-500 via-green-400 to-emerald-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+          description="All active subscriptions across Stripe, App Store and Play Store."
+          tone="emerald"
           actions={
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-11 w-11 touch-manipulation"
-              onClick={exportCSV}
-              title="Export CSV"
-            >
-              <Download className="h-4 w-4" />
-            </Button>
+            <>
+              <IconButton onClick={exportCSV} aria-label="Export CSV">
+                <Download className="h-4 w-4" />
+              </IconButton>
+              <IconButton
+                onClick={() => refetch()}
+                disabled={isFetching}
+                aria-label="Refresh"
+              >
+                <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+              </IconButton>
+            </>
           }
         />
 
-        {/* ── Hero Revenue Card ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-600 via-green-600 to-teal-700"
-        >
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-emerald-400 via-green-300 to-teal-400" />
-          <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Active', value: stats.subscribed, tone: 'emerald', sub: fmtGBP(stats.mrr) + ' MRR' },
+            { label: 'Trialing', value: totalTrials, tone: 'blue', sub: `${rcActiveTrials} mobile · ${stripeTrials} web` },
+            { label: 'Past Due', value: rcCancelledTrials, tone: 'orange', sub: 'Cancelled trials' },
+            { label: 'Cancelled', value: 0, tone: 'red', sub: `${stats.conversionRate}% conversion` },
+          ]}
+        />
 
-          <div className="relative p-5">
-            <div className="flex items-center gap-2 mb-3">
-              <PoundSterling className="h-4 w-4 text-white" />
-              <span className="text-white text-xs font-medium uppercase tracking-wider">
-                Combined MRR
-              </span>
-              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold bg-white/20 text-white uppercase tracking-wider">
-                Live
-              </span>
-            </div>
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Combined MRR', value: fmtGBP(stats.mrr), accent: true, sub: `ARR ${fmtGBP(arr)}` },
+            { label: 'Stripe', value: fmtGBP(stats.stripeMrr), tone: 'purple', sub: `${stats.stripeActive} active` },
+            { label: 'App Store', value: fmtGBP(stats.rcMrr), tone: 'blue', sub: `${stats.appStoreActive} active` },
+            { label: 'Play Store', value: fmtGBP(0), tone: 'green', sub: `${stats.playStoreActive} active` },
+          ]}
+        />
 
-            <p className="text-4xl font-bold text-white tracking-tight mb-4">{fmtGBP(stats.mrr)}</p>
+        <StatStrip
+          columns={3}
+          stats={[
+            { label: 'Apprentices', value: stats.apprentice, tone: 'amber' },
+            { label: 'Electricians', value: stats.electrician, tone: 'yellow' },
+            { label: 'Employers', value: stats.employer, tone: 'blue' },
+          ]}
+        />
 
-            <div className="grid grid-cols-4 gap-2">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center">
-                <p className="text-xl font-bold text-white">{stats.subscribed}</p>
-                <p className="text-white text-[10px] uppercase tracking-wider">Active</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center">
-                <p className="text-xl font-bold text-orange-300">{totalTrials}</p>
-                <p className="text-white text-[10px] uppercase tracking-wider">Trials</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center">
-                <p className="text-xl font-bold text-white">
-                  £{arr >= 10000 ? `${(arr / 1000).toFixed(0)}k` : `${(arr / 1000).toFixed(1)}k`}
-                </p>
-                <p className="text-white text-[10px] uppercase tracking-wider">ARR</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-2.5 text-center">
-                <p className="text-xl font-bold text-white">{stats.conversionRate}%</p>
-                <p className="text-white text-[10px] uppercase tracking-wider">Conv.</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+        <FilterBar
+          tabs={[
+            { value: 'all', label: 'All sources' },
+            { value: 'stripe', label: 'Stripe' },
+            { value: 'app_store', label: 'App Store' },
+            { value: 'play_store', label: 'Play Store' },
+          ]}
+          activeTab={sourceFilter}
+          onTabChange={setSourceFilter}
+          search={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search subscribers…"
+        />
 
-        {/* ── Revenue by Source ── */}
-        <div>
-          <p className="text-xs font-semibold text-white uppercase tracking-wider mb-3 px-0.5">
-            Revenue by Source
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {/* Stripe */}
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.06] ring-1 ring-white/[0.08]">
-              <div className="w-1 self-stretch rounded-full bg-purple-500 opacity-60" />
-              <div className="w-10 h-10 rounded-xl bg-purple-500/15 flex items-center justify-center">
-                <Globe className="h-5 w-5 text-purple-400" />
-              </div>
-              <div className="flex-1">
-                <p className="text-lg font-bold text-purple-400">{fmtGBP(stats.stripeMrr)}</p>
-                <p className="text-[11px] text-white">Stripe · {stats.stripeActive} active</p>
-              </div>
-            </div>
-            {/* App Store */}
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.06] ring-1 ring-white/[0.08]">
-              <div className="w-1 self-stretch rounded-full bg-blue-500 opacity-60" />
-              <div className="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center">
-                <Smartphone className="h-5 w-5 text-blue-400" />
-              </div>
-              <div className="flex-1">
-                <p className="text-lg font-bold text-blue-400">{fmtGBP(stats.rcMrr)}</p>
-                <p className="text-[11px] text-white">
-                  App Store · {stats.appStoreActive} active · {rcActiveTrials} trial{rcActiveTrials !== 1 ? 's' : ''}{rcCancelledTrials > 0 ? ` · ${rcCancelledTrials} cancelled` : ''}
-                </p>
-              </div>
-            </div>
-            {/* Play Store */}
-            <div className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.06] ring-1 ring-white/[0.08]">
-              <div className="w-1 self-stretch rounded-full bg-green-500 opacity-60" />
-              <div className="w-10 h-10 rounded-xl bg-green-500/15 flex items-center justify-center">
-                <ShoppingBag className="h-5 w-5 text-green-400" />
-              </div>
-              <div className="flex-1">
-                <p className="text-lg font-bold text-green-400">{fmtGBP(0)}</p>
-                <p className="text-[11px] text-white">
-                  Play Store · {stats.playStoreActive} active
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <FilterBar
+          tabs={[
+            { value: 'active', label: 'Active', count: stats.subscribed },
+            { value: 'trialing', label: 'Trialing', count: totalTrials },
+            { value: 'cancelled', label: 'Cancelled', count: rcCancelledTrials },
+          ]}
+          activeTab={statusFilter}
+          onTabChange={setStatusFilter}
+        />
 
-        {/* ── Subscribers by Role ── */}
-        <div>
-          <p className="text-xs font-semibold text-white uppercase tracking-wider mb-3 px-0.5">
-            By Role
-          </p>
-          <div className="grid grid-cols-3 gap-3">
-            <div className="text-center p-3 rounded-xl bg-yellow-500/10 ring-1 ring-yellow-500/20">
-              <GraduationCap className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-white">{stats.apprentice}</p>
-              <p className="text-[10px] text-white uppercase">Apprentices</p>
-            </div>
-            <div className="text-center p-3 rounded-xl bg-yellow-500/10 ring-1 ring-yellow-500/20">
-              <Zap className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-white">{stats.electrician}</p>
-              <p className="text-[10px] text-white uppercase">Electricians</p>
-            </div>
-            <div className="text-center p-3 rounded-xl bg-blue-500/10 ring-1 ring-blue-500/20">
-              <Briefcase className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-              <p className="text-lg font-bold text-white">{stats.employer}</p>
-              <p className="text-[10px] text-white uppercase">Employers</p>
-            </div>
-          </div>
-        </div>
+        {stripeStats?.stripe?.subscriptionsByPrice &&
+          Object.keys(stripeStats.stripe.subscriptionsByPrice).length > 0 && (
+            <ListCard>
+              <ListCardHeader
+                tone="purple"
+                title="Active prices"
+                meta={
+                  <Pill tone="purple">
+                    {Object.values(stripeStats.stripe.subscriptionsByPrice).reduce(
+                      (a, b) => a + (b as number),
+                      0
+                    )}
+                  </Pill>
+                }
+              />
+              <ListBody>
+                {Object.entries(stripeStats.stripe.subscriptionsByPrice)
+                  .sort(([, a], [, b]) => (b as number) - (a as number))
+                  .map(([price, count]) => (
+                    <ListRow
+                      key={`stripe-${price}`}
+                      accent="purple"
+                      title={price}
+                      subtitle="Stripe"
+                      trailing={
+                        <>
+                          <Pill tone="purple">Stripe</Pill>
+                          <span className="text-[13px] font-semibold text-white tabular-nums w-8 text-right">
+                            {count as number}
+                          </span>
+                        </>
+                      }
+                    />
+                  ))}
+                {Object.entries(appStoreTiers).length > 0 ? (
+                  Object.entries(appStoreTiers)
+                    .sort(([, a], [, b]) => (b as number) - (a as number))
+                    .map(([tier, count]) => (
+                      <ListRow
+                        key={`ios-${tier}`}
+                        accent="blue"
+                        title={<span className="capitalize">{tier.replace('_', ' ')}</span>}
+                        subtitle="App Store"
+                        trailing={
+                          <>
+                            <Pill tone="blue">iOS</Pill>
+                            <span className="text-[13px] font-semibold text-white tabular-nums w-8 text-right">
+                              {count as number}
+                            </span>
+                          </>
+                        }
+                      />
+                    ))
+                ) : (
+                  <ListRow
+                    accent="blue"
+                    title="App Store"
+                    subtitle="iOS"
+                    trailing={
+                      <>
+                        <Pill tone="blue">iOS</Pill>
+                        <span className="text-[13px] font-semibold text-white tabular-nums w-8 text-right">
+                          {stats.appStoreActive}
+                        </span>
+                      </>
+                    }
+                  />
+                )}
+              </ListBody>
+            </ListCard>
+          )}
 
-        {/* ── Active Prices ── */}
-        <div className="rounded-xl bg-white/[0.04] ring-1 ring-white/[0.08] overflow-hidden">
-          <div className="px-4 py-3 border-b border-white/[0.06] flex items-center gap-2">
-            <CreditCard className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-semibold text-white">Active Prices</span>
-          </div>
-          <div className="p-3 space-y-1.5">
-            {/* Stripe prices */}
-            {stripeStats?.stripe?.subscriptionsByPrice &&
-              Object.entries(stripeStats.stripe.subscriptionsByPrice)
-                .sort(([, a], [, b]) => (b as number) - (a as number))
-                .map(([price, count]) => (
-                  <div
-                    key={price}
-                    className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white/[0.04]"
-                  >
-                    <div className="w-1 h-8 rounded-full bg-purple-500 opacity-60" />
-                    <span className="text-[13px] text-white font-medium flex-1">{price}</span>
-                    <Badge className="bg-purple-500/15 text-purple-400 border-0 text-[10px] font-semibold">
-                      Stripe
-                    </Badge>
-                    <span className="text-[13px] font-bold text-white w-8 text-right">
-                      {count as number}
-                    </span>
-                  </div>
-                ))}
-            {/* App Store tier breakdown */}
-            {Object.entries(appStoreTiers).length > 0 ? (
-              Object.entries(appStoreTiers)
-                .sort(([, a], [, b]) => (b as number) - (a as number))
-                .map(([tier, count]) => (
-                  <div
-                    key={`ios-${tier}`}
-                    className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white/[0.04]"
-                  >
-                    <div className="w-1 h-8 rounded-full bg-blue-500 opacity-60" />
-                    <span className="text-[13px] text-white font-medium flex-1 capitalize">
-                      {tier.replace('_', ' ')}
-                    </span>
-                    <Badge className="bg-blue-500/15 text-blue-400 border-0 text-[10px] font-semibold">
-                      iOS
-                    </Badge>
-                    <span className="text-[13px] font-bold text-white w-8 text-right">
-                      {count as number}
-                    </span>
-                  </div>
-                ))
-            ) : (
-              <div className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white/[0.04]">
-                <div className="w-1 h-8 rounded-full bg-blue-500 opacity-60" />
-                <span className="text-[13px] text-white font-medium flex-1">App Store</span>
-                <Badge className="bg-blue-500/15 text-blue-400 border-0 text-[10px] font-semibold">
-                  iOS
-                </Badge>
-                <span className="text-[13px] font-bold text-white w-8 text-right">
-                  {stats.appStoreActive}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* ── Promo Offers ── */}
         {offers && offers.length > 0 && (
-          <div className="rounded-xl bg-white/[0.04] ring-1 ring-white/[0.08] overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/[0.06] flex items-center gap-2">
-              <Gift className="h-4 w-4 text-red-400" />
-              <span className="text-sm font-semibold text-white">Active Promos</span>
-            </div>
-            <div className="p-3 space-y-1.5">
+          <ListCard>
+            <ListCardHeader
+              tone="yellow"
+              title="Active promos"
+              meta={<Pill tone="yellow">{offers.length}</Pill>}
+            />
+            <ListBody>
               {offers.map((offer) => (
-                <div
+                <ListRow
                   key={offer.id}
-                  className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.04]"
-                >
-                  <div>
-                    <p className="text-[13px] font-medium text-white">{offer.name}</p>
-                    <p className="text-[10px] text-white font-mono">{offer.code}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-[13px] font-bold text-white">£{offer.price}/mo</p>
-                    <p className="text-[10px] text-white">
-                      {offer.redemptions}
-                      {offer.max_redemptions ? `/${offer.max_redemptions}` : ''} used
-                    </p>
-                  </div>
-                </div>
+                  title={offer.name}
+                  subtitle={<span className="font-mono">{offer.code}</span>}
+                  trailing={
+                    <>
+                      <span className="text-[13px] font-semibold text-white tabular-nums">
+                        £{offer.price}/mo
+                      </span>
+                      <Pill tone="yellow">
+                        {offer.redemptions}
+                        {offer.max_redemptions ? `/${offer.max_redemptions}` : ''}
+                      </Pill>
+                    </>
+                  }
+                />
               ))}
-            </div>
-          </div>
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* ── Active Trials ── */}
         {totalTrials > 0 && (
-          <div className="rounded-xl bg-white/[0.04] ring-1 ring-white/[0.08] overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/[0.06] flex items-center gap-2">
-              <Timer className="h-4 w-4 text-orange-400" />
-              <span className="text-sm font-semibold text-white">Trials</span>
-              <div className="flex items-center gap-1.5 ml-auto">
-                <Badge className="bg-green-500/15 text-green-400 border-0 text-[10px] font-semibold">
-                  {(rcStats?.trialUsers || []).filter((t) => !t.is_cancelled).length + stripeTrials} active
-                </Badge>
-                {(rcStats?.trialUsers || []).some((t) => t.is_cancelled) && (
-                  <Badge className="bg-red-500/15 text-red-400 border-0 text-[10px] font-semibold">
-                    {(rcStats?.trialUsers || []).filter((t) => t.is_cancelled).length} cancelled
-                  </Badge>
-                )}
-              </div>
-            </div>
-            <div className="p-3 space-y-1.5">
-              {/* Stripe trials */}
+          <ListCard>
+            <ListCardHeader
+              tone="orange"
+              title="Trials"
+              meta={
+                <>
+                  <Pill tone="green">{rcActiveTrials + stripeTrials} active</Pill>
+                  {rcCancelledTrials > 0 && (
+                    <Pill tone="red">{rcCancelledTrials} cancelled</Pill>
+                  )}
+                </>
+              }
+            />
+            <ListBody>
               {stripeTrials > 0 && (
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.04]">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-8 rounded-full bg-purple-500 opacity-60" />
-                    <Globe className="h-4 w-4 text-purple-400" />
-                    <span className="text-[13px] text-white font-medium">Stripe Trials</span>
-                  </div>
-                  <span className="text-[13px] font-bold text-white">{stripeTrials}</span>
-                </div>
+                <ListRow
+                  accent="purple"
+                  title="Stripe trials"
+                  subtitle="Web"
+                  trailing={
+                    <span className="text-[13px] font-semibold text-white tabular-nums">
+                      {stripeTrials}
+                    </span>
+                  }
+                />
               )}
-              {/* RC trial users list */}
-              {(rcStats?.trialUsers || []).map((t) => {
+              {activeTrialList.map((t) => {
                 const daysLeft = t.trial_end
                   ? differenceInDays(parseISO(t.trial_end), new Date())
                   : null;
+                const trialTone: Tone =
+                  daysLeft !== null && daysLeft <= 1
+                    ? 'orange'
+                    : daysLeft !== null && daysLeft <= 3
+                      ? 'amber'
+                      : 'green';
                 return (
-                  <div
+                  <ListRow
                     key={t.id}
-                    className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white/[0.04]"
-                  >
-                    <div className={cn('w-1 h-8 rounded-full opacity-60', t.is_cancelled ? 'bg-red-500' : 'bg-orange-500')} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[13px] text-white font-medium truncate">{t.full_name}</p>
-                      <p className="text-[10px] text-white">
-                        {t.subscription_tier?.replace('_', ' ')} ·{' '}
-                        {t.subscription_source === 'app_store' ? 'iOS' : 'Android'}
-                      </p>
-                    </div>
-                    {t.is_cancelled ? (
-                      <Badge className="text-[10px] border-0 bg-red-500/15 text-red-400">
-                        Cancelled
-                      </Badge>
-                    ) : daysLeft !== null ? (
-                      <Badge
-                        className={cn(
-                          'text-[10px] border-0',
-                          daysLeft <= 1
-                            ? 'bg-orange-500/15 text-orange-400'
-                            : daysLeft <= 3
-                              ? 'bg-yellow-500/15 text-yellow-400'
-                              : 'bg-green-500/15 text-green-400'
-                        )}
-                      >
-                        {daysLeft <= 0 ? 'Expires today' : `${daysLeft}d left`}
-                      </Badge>
-                    ) : null}
-                  </div>
+                    accent="orange"
+                    lead={<Avatar initials={getInitials(t.full_name)} />}
+                    title={t.full_name || t.username}
+                    subtitle={`${(t.subscription_tier || '').replace('_', ' ')} · ${
+                      t.subscription_source === 'app_store' ? 'iOS' : 'Android'
+                    }`}
+                    trailing={
+                      daysLeft !== null ? (
+                        <Pill tone={trialTone}>
+                          {daysLeft <= 0 ? 'Expires today' : `${daysLeft}d left`}
+                        </Pill>
+                      ) : (
+                        <Pill tone="green">Trial</Pill>
+                      )
+                    }
+                  />
                 );
               })}
-              {rcAllTrials > 0 && (rcStats?.trialUsers || []).length === 0 && (
-                <div className="flex items-center justify-between p-2.5 rounded-lg bg-white/[0.04]">
-                  <div className="flex items-center gap-2">
-                    <div className="w-1 h-8 rounded-full bg-blue-500 opacity-60" />
-                    <Smartphone className="h-4 w-4 text-blue-400" />
-                    <span className="text-[13px] text-white font-medium">App Store Trials</span>
-                  </div>
-                  <span className="text-[13px] font-bold text-white">{rcAllTrials}</span>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* ── Mobile Paid Users ── */}
-        {(rcStats?.paidUsers || []).length > 0 && (
-          <div className="rounded-xl bg-white/[0.04] ring-1 ring-white/[0.08] overflow-hidden">
-            <div className="px-4 py-3 border-b border-white/[0.06] flex items-center gap-2">
-              <Smartphone className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-semibold text-white">Mobile Paid Subscribers</span>
-              <Badge className="bg-blue-500/15 text-blue-400 border-0 text-[10px] font-semibold ml-auto">
-                {rcStats?.paidUsers?.length || 0}
-              </Badge>
-            </div>
-            <div className="p-3 space-y-1.5">
-              {(rcStats?.paidUsers || []).map((u) => (
-                <div
-                  key={u.id}
-                  className="flex items-center gap-2.5 p-2.5 rounded-lg bg-white/[0.04]"
-                >
-                  <div className="w-1 h-8 rounded-full bg-emerald-500 opacity-60" />
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[13px] text-white font-medium truncate">{u.full_name}</p>
-                    <p className="text-[10px] text-white">
-                      {u.subscription_tier?.replace('_', ' ')} ·{' '}
-                      {u.subscription_source === 'app_store' ? 'iOS' : 'Android'}
-                    </p>
-                  </div>
-                  <Badge className="bg-emerald-500/15 text-emerald-400 border-0 text-[10px] font-semibold">
-                    Paid
-                  </Badge>
-                </div>
+              {cancelledTrialList.map((t) => (
+                <ListRow
+                  key={t.id}
+                  accent="red"
+                  lead={<Avatar initials={getInitials(t.full_name)} />}
+                  title={t.full_name || t.username}
+                  subtitle={`${(t.subscription_tier || '').replace('_', ' ')} · ${
+                    t.subscription_source === 'app_store' ? 'iOS' : 'Android'
+                  }`}
+                  trailing={<Pill tone="red">Cancelled</Pill>}
+                />
               ))}
-            </div>
-          </div>
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* ── Filters ── */}
-        <div className="flex flex-col sm:flex-row gap-2">
-          <AdminSearchInput
-            value={search}
-            onChange={setSearch}
-            placeholder="Search subscribers..."
-            className="flex-1"
-          />
-          <div className="flex gap-2">
-            <Select value={roleFilter} onValueChange={setRoleFilter}>
-              <SelectTrigger className="w-full sm:w-[130px] h-11 touch-manipulation">
-                <SelectValue placeholder="Role" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Roles</SelectItem>
-                <SelectItem value="apprentice">Apprentice</SelectItem>
-                <SelectItem value="electrician">Electrician</SelectItem>
-                <SelectItem value="employer">Employer</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={sourceFilter} onValueChange={setSourceFilter}>
-              <SelectTrigger className="w-full sm:w-[130px] h-11 touch-manipulation">
-                <SelectValue placeholder="Source" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Sources</SelectItem>
-                <SelectItem value="stripe">Stripe</SelectItem>
-                <SelectItem value="app_store">App Store</SelectItem>
-                <SelectItem value="play_store">Play Store</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {/* ── Subscriber List ── */}
-        {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : users?.length === 0 ? (
-          <div className="rounded-xl bg-white/[0.04] ring-1 ring-white/[0.08] p-8">
-            <AdminEmptyState
-              icon={Crown}
-              title="No subscribers yet"
-              description="Subscribed users will appear here."
+        {(rcStats?.paidUsers || []).length > 0 && (
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="Mobile paid subscribers"
+              meta={<Pill tone="blue">{rcStats?.paidUsers?.length || 0}</Pill>}
             />
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {users?.map((user) => (
-              <button
-                key={user.id}
-                className="w-full text-left rounded-xl bg-white/[0.04] ring-1 ring-white/[0.08] p-3 active:bg-white/[0.08] transition-colors touch-manipulation"
-                onClick={() => setSelectedUser(user)}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/15 flex items-center justify-center shrink-0">
-                    <Crown className="h-5 w-5 text-emerald-400" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[14px] font-medium text-white truncate">
-                      {user.full_name || 'Unknown'}
-                    </p>
-                    <p className="text-[11px] text-white">@{user.username}</p>
-                  </div>
-                  <div className="flex items-center gap-1.5 shrink-0">
-                    {user.subscription_source && SOURCE_BADGES[user.subscription_source] && (
-                      <Badge
-                        className={`${SOURCE_BADGES[user.subscription_source].color} text-[9px] border-0 px-1.5`}
-                      >
-                        {SOURCE_BADGES[user.subscription_source].label}
-                      </Badge>
-                    )}
-                    <Badge className={`${getRoleBadgeColor(user.role)} text-[10px]`}>
-                      {getRoleIcon(user.role)}
-                      <span className="ml-1 capitalize">{user.role || 'visitor'}</span>
-                    </Badge>
-                    <ChevronRight className="h-4 w-4 text-white" />
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
+            <ListBody>
+              {(rcStats?.paidUsers || []).map((u) => (
+                <ListRow
+                  key={u.id}
+                  accent="emerald"
+                  lead={<Avatar initials={getInitials(u.full_name)} />}
+                  title={u.full_name || u.username}
+                  subtitle={`${(u.subscription_tier || '').replace('_', ' ')} · ${
+                    u.subscription_source === 'app_store' ? 'iOS' : 'Android'
+                  }`}
+                  trailing={<Pill tone="emerald">Paid</Pill>}
+                />
+              ))}
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* ── User Detail Sheet ── */}
+        <Divider label="Subscribers" />
+
+        {isLoading ? (
+          <LoadingBlocks />
+        ) : !visibleUsers || visibleUsers.length === 0 ? (
+          <EmptyState
+            title={
+              statusFilter === 'trialing'
+                ? 'No trialing subscribers in list'
+                : statusFilter === 'cancelled'
+                  ? 'No cancelled subscribers'
+                  : 'No subscribers yet'
+            }
+            description={
+              statusFilter === 'trialing'
+                ? 'Trialing users appear in the Trials card above.'
+                : 'Subscribed users will appear here once they sign up.'
+            }
+          />
+        ) : (
+          <ListCard>
+            <ListCardHeader
+              tone="emerald"
+              title="Subscriptions"
+              meta={<Pill tone="emerald">{visibleUsers.length}</Pill>}
+            />
+            <ListBody>
+              {visibleUsers.map((user) => (
+                <ListRow
+                  key={user.id}
+                  lead={<Avatar initials={getInitials(user.full_name)} />}
+                  title={user.full_name || 'Unknown'}
+                  subtitle={`@${user.username}`}
+                  trailing={
+                    <>
+                      <Pill tone={tierTone(user.role)}>
+                        <span className="capitalize">{user.role || 'visitor'}</span>
+                      </Pill>
+                      <Pill tone={sourceTone(user.subscription_source)}>
+                        {sourceLabel(user.subscription_source)}
+                      </Pill>
+                    </>
+                  }
+                  onClick={() => setSelectedUser(user)}
+                />
+              ))}
+            </ListBody>
+          </ListCard>
+        )}
+
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
               <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
-                <SheetTitle className="flex items-center gap-3 text-white">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-500/15 flex items-center justify-center">
-                    <Crown className="h-6 w-6 text-emerald-400" />
-                  </div>
-                  <div>
-                    <p className="text-[16px] font-semibold">
+                <SheetTitle className="flex items-center gap-3 text-white text-left">
+                  <Avatar initials={getInitials(selectedUser?.full_name)} size="md" />
+                  <div className="min-w-0">
+                    <p className="text-[16px] font-semibold text-white truncate">
                       {selectedUser?.full_name || 'Unknown'}
                     </p>
-                    <p className="text-[12px] text-white">@{selectedUser?.username}</p>
+                    <p className="text-[12px] text-white truncate">@{selectedUser?.username}</p>
                   </div>
                 </SheetTitle>
               </SheetHeader>
 
               <div className="flex-1 overflow-auto p-5 space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
-                    <p className="text-[10px] text-white uppercase tracking-wider mb-1">Status</p>
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 rounded-full bg-emerald-400" />
-                      <span className="text-[14px] font-semibold text-emerald-400">Active</span>
-                    </div>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
-                    <p className="text-[10px] text-white uppercase tracking-wider mb-1">Plan</p>
-                    <p className="text-[14px] font-semibold text-white capitalize">
-                      {selectedUser?.role || 'Standard'}
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
-                    <p className="text-[10px] text-white uppercase tracking-wider mb-1">Source</p>
-                    <p className="text-[14px] font-semibold text-white capitalize">
-                      {(selectedUser?.subscription_source || 'stripe').replace('_', ' ')}
-                    </p>
-                  </div>
-                  <div className="p-3 rounded-xl bg-white/[0.04] ring-1 ring-white/[0.06]">
-                    <p className="text-[10px] text-white uppercase tracking-wider mb-1">
-                      Member Since
-                    </p>
-                    <p className="text-[14px] font-semibold text-white">
-                      {selectedUser?.created_at
-                        ? formatDistanceToNow(new Date(selectedUser.created_at), {
-                            addSuffix: true,
-                          })
-                        : 'Unknown'}
-                    </p>
-                  </div>
-                </div>
+                <StatStrip
+                  columns={2}
+                  stats={[
+                    { label: 'Status', value: <span className="text-[20px]">Active</span>, tone: 'emerald' },
+                    {
+                      label: 'Plan',
+                      value: (
+                        <span className="text-[20px] capitalize">
+                          {selectedUser?.role || 'Standard'}
+                        </span>
+                      ),
+                    },
+                    {
+                      label: 'Source',
+                      value: (
+                        <span className="text-[20px]">
+                          {sourceLabel(selectedUser?.subscription_source)}
+                        </span>
+                      ),
+                      tone: sourceTone(selectedUser?.subscription_source),
+                    },
+                    {
+                      label: 'Member since',
+                      value: (
+                        <span className="text-[15px]">
+                          {selectedUser?.created_at
+                            ? formatDistanceToNow(new Date(selectedUser.created_at), {
+                                addSuffix: true,
+                              })
+                            : 'Unknown'}
+                        </span>
+                      ),
+                    },
+                  ]}
+                />
               </div>
             </div>
           </SheetContent>
         </Sheet>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

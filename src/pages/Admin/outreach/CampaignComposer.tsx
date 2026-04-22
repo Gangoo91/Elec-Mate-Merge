@@ -231,7 +231,7 @@ export default function CampaignComposer({
                   className={`h-8 px-3 text-xs font-medium rounded-md touch-manipulation ${
                     step === 'compose'
                       ? 'bg-elec-yellow text-black'
-                      : 'text-white/70 hover:text-white'
+                      : 'text-white hover:text-white'
                   }`}
                 >
                   Compose
@@ -241,7 +241,7 @@ export default function CampaignComposer({
                   className={`h-8 px-3 text-xs font-medium rounded-md touch-manipulation ${
                     step === 'preview'
                       ? 'bg-elec-yellow text-black'
-                      : 'text-white/70 hover:text-white'
+                      : 'text-white hover:text-white'
                   }`}
                 >
                   Preview
@@ -369,7 +369,7 @@ export default function CampaignComposer({
                   placeholder={'<h1>Hi {{FirstName}}</h1><p>Your email content…</p>'}
                   className="min-h-[280px] font-mono text-xs leading-relaxed touch-manipulation"
                 />
-                <p className="text-[11px] text-white/50 mt-1">
+                <p className="text-[11px] text-white mt-1">
                   Tip: Tap <strong className="text-elec-yellow">Preview</strong> at the top to
                   see the email with merge tags filled in.
                 </p>
@@ -386,14 +386,14 @@ export default function CampaignComposer({
                       className={`h-9 px-3 rounded-full text-xs font-medium touch-manipulation transition-colors ${
                         form.segment_contact_types.includes(type)
                           ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.04] text-white/80 border border-white/10'
+                          : 'bg-white/[0.04] text-white border border-white/10'
                       }`}
                     >
                       {type.replace('_', ' ')}
                     </button>
                   ))}
                 </div>
-                <p className="text-[11px] text-white/50 mt-1">
+                <p className="text-[11px] text-white mt-1">
                   Leave all empty to send to every non-suppressed contact.
                 </p>
 
@@ -402,7 +402,7 @@ export default function CampaignComposer({
                   hint="Sends only to contacts with at least one matching tag."
                 >
                   <div className="relative">
-                    <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                    <Tag className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     <Input
                       value={form.segment_tags}
                       onChange={(e) => setForm((f) => ({ ...f, segment_tags: e.target.value }))}
@@ -429,7 +429,7 @@ export default function CampaignComposer({
                     </>
                   )}
                 </Button>
-                <p className="text-[11px] text-white/50 mt-2 text-center">
+                <p className="text-[11px] text-white mt-2 text-center">
                   Creates a draft — you can send a test, schedule, or start sending next.
                 </p>
               </div>
@@ -439,7 +439,7 @@ export default function CampaignComposer({
             <div className="flex-1 overflow-y-auto flex flex-col">
               <div className="px-5 py-3 border-b border-border/30 flex items-center justify-between">
                 <div className="min-w-0">
-                  <p className="text-[11px] text-white/50 uppercase tracking-wider">Subject</p>
+                  <p className="text-[11px] text-white uppercase tracking-wider">Subject</p>
                   <p className="text-white text-sm font-medium truncate">
                     {rendered?.subject || form.subject || '—'}
                   </p>
@@ -448,7 +448,7 @@ export default function CampaignComposer({
                   <button
                     onClick={() => setPreviewMode('mobile')}
                     className={`h-8 w-8 flex items-center justify-center rounded-md touch-manipulation ${
-                      previewMode === 'mobile' ? 'bg-elec-yellow text-black' : 'text-white/60'
+                      previewMode === 'mobile' ? 'bg-elec-yellow text-black' : 'text-white'
                     }`}
                   >
                     <Smartphone className="h-4 w-4" />
@@ -456,7 +456,7 @@ export default function CampaignComposer({
                   <button
                     onClick={() => setPreviewMode('desktop')}
                     className={`h-8 w-8 flex items-center justify-center rounded-md touch-manipulation ${
-                      previewMode === 'desktop' ? 'bg-elec-yellow text-black' : 'text-white/60'
+                      previewMode === 'desktop' ? 'bg-elec-yellow text-black' : 'text-white'
                     }`}
                   >
                     <Monitor className="h-4 w-4" />
@@ -464,7 +464,7 @@ export default function CampaignComposer({
                   <button
                     onClick={() => setPreviewMode('code')}
                     className={`h-8 w-8 flex items-center justify-center rounded-md touch-manipulation ${
-                      previewMode === 'code' ? 'bg-elec-yellow text-black' : 'text-white/60'
+                      previewMode === 'code' ? 'bg-elec-yellow text-black' : 'text-white'
                     }`}
                   >
                     <Code2 className="h-4 w-4" />
@@ -474,7 +474,7 @@ export default function CampaignComposer({
 
               <div className="p-4 flex-1 overflow-hidden">
                 {previewMode === 'code' ? (
-                  <pre className="w-full h-full overflow-auto rounded-xl border border-border/30 bg-black/60 text-xs text-white/80 p-4 font-mono whitespace-pre-wrap">
+                  <pre className="w-full h-full overflow-auto rounded-xl border border-border/30 bg-black/60 text-xs text-white p-4 font-mono whitespace-pre-wrap">
                     {rendered?.html || form.html_body}
                   </pre>
                 ) : (
@@ -487,7 +487,7 @@ export default function CampaignComposer({
                       <span className="w-2.5 h-2.5 rounded-full bg-red-400/60" />
                       <span className="w-2.5 h-2.5 rounded-full bg-amber-400/60" />
                       <span className="w-2.5 h-2.5 rounded-full bg-green-400/60" />
-                      <span className="ml-2 text-[10px] text-white/50">
+                      <span className="ml-2 text-[10px] text-white">
                         {previewMode === 'mobile' ? 'iPhone preview' : 'Desktop preview'} · merge tags filled
                       </span>
                     </div>
@@ -502,7 +502,7 @@ export default function CampaignComposer({
               </div>
 
               <div className="px-5 py-3 border-t border-border/50 flex items-center justify-between gap-3">
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <Badge className="bg-elec-yellow/20 text-elec-yellow text-[10px] mr-1.5">
                     <Eye className="h-2.5 w-2.5 mr-0.5 inline" />
                     Live preview
@@ -512,7 +512,7 @@ export default function CampaignComposer({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-9 text-white/70 hover:bg-white/5 touch-manipulation"
+                  className="h-9 text-white hover:bg-white/5 touch-manipulation"
                   onClick={() => setStep('compose')}
                 >
                   Back to edit
@@ -559,7 +559,7 @@ function FieldRow({
     <div>
       <Label className="text-white text-sm">{label}</Label>
       <div className="mt-1.5">{children}</div>
-      {hint && <p className="text-[11px] text-white/50 mt-1">{hint}</p>}
+      {hint && <p className="text-[11px] text-white mt-1">{hint}</p>}
     </div>
   );
 }

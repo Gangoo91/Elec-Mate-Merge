@@ -1,13 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   AlertDialog,
@@ -19,34 +15,30 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import {
-  Building2,
-  Send,
-  Users,
-  Mail,
-  Loader2,
-  TestTube,
-  MailOpen,
-  MousePointerClick,
-  MailCheck,
-  Upload,
-  Target,
-  Factory,
-  HardHat,
-  Wrench,
-  Zap,
-  Ban,
-  Trash2,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Eyebrow,
+  Divider,
+  SectionHeader,
+} from '@/components/admin/editorial';
+import { RefreshCw, Send, Upload, Loader2, TestTube, Ban, Trash2 } from 'lucide-react';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 
-// ─── Types ──────────────────────────────────────────────────
 interface BusinessContact {
   id: string;
   email: string;
@@ -79,10 +71,6 @@ interface BusinessCampaign {
   created_at: string;
 }
 
-// The scraper (outreach-ingest-leads) promotes business_leads rows into
-// outreach_contacts with tags ['business_pool', 'source:<x>', country, region].
-// contact_type is always 'employer' for scraped rows — we segment by SOURCE tag
-// which maps 1:1 to an audience-specific cold-intro template.
 const POOL_TAG = 'business_pool';
 
 type SourceKey =
@@ -119,7 +107,6 @@ const SOURCES: Exclude<SourceKey, 'all'>[] = [
   'manual',
 ];
 
-// UI labels for each segment pill
 const SOURCE_LABEL: Record<Exclude<SourceKey, 'all'>, string> = {
   directors: 'Directors',
   electricians: 'Electricians',
@@ -137,25 +124,6 @@ const SOURCE_LABEL: Record<Exclude<SourceKey, 'all'>, string> = {
   manual: 'Manual',
 };
 
-const SOURCE_ICON: Record<Exclude<SourceKey, 'all'>, typeof Factory> = {
-  directors: Building2,
-  electricians: Zap,
-  electrical_engineers: Factory,
-  supervisors: HardHat,
-  field_maintenance: Wrench,
-  estimators: Target,
-  building_services: Building2,
-  accredited: Zap,
-  geo_drill: Target,
-  hunter_ltds: Mail,
-  google_places: Target,
-  companies_house: Building2,
-  csv_import: Upload,
-  manual: Wrench,
-};
-
-// Map each segment to the Apollo / Hunter tag value that identifies it on
-// outreach_contacts rows. The scraper stores these as `source:<value>`.
 const SOURCE_TAG_MAP: Record<Exclude<SourceKey, 'all'>, string> = {
   directors: 'apollo',
   electricians: 'apollo_electricians',
@@ -173,17 +141,12 @@ const SOURCE_TAG_MAP: Record<Exclude<SourceKey, 'all'>, string> = {
   manual: 'admin_csv_paste',
 };
 
-// Reverse lookup for sourceOf()
 const TAG_TO_SOURCE_KEY: Record<string, Exclude<SourceKey, 'all'>> = Object.fromEntries(
   (Object.entries(SOURCE_TAG_MAP) as [Exclude<SourceKey, 'all'>, string][]).map(
     ([k, v]) => [v, k]
   )
 ) as Record<string, Exclude<SourceKey, 'all'>>;
 
-// Each segment pill picks its audience-specific cold-intro template.
-// "all" fires the master first-touch template (7-day trial, feature grid,
-// App Store CTA) — same email for every business-pool contact. Role-specific
-// cold-intros run as follow-ups once the master send is out the door.
 const SEGMENT_TEMPLATE_MAP: Record<SourceKey, string> = {
   all: 'business-master-intro-v1',
   directors: 'business-intro-directors-v1',
@@ -202,12 +165,9 @@ const SEGMENT_TEMPLATE_MAP: Record<SourceKey, string> = {
   manual: 'business-intro-directors-v1',
 };
 
-// Resend batch.send() accepts up to 100 emails per API call. Client loop adds
-// a 500ms gap between calls to stay comfortably under the 2 req/sec rate limit.
 const BATCH_SIZE = 100;
 const INTER_BATCH_GAP_MS = 500;
 
-// Extract the segment key from a contact's tags (e.g. "source:apollo_supervisors" → "supervisors")
 function sourceOf(contact: { tags: string[] | null }): Exclude<SourceKey, 'all'> | null {
   if (!contact.tags) return null;
   for (const t of contact.tags) {
@@ -218,12 +178,14 @@ function sourceOf(contact: { tags: string[] | null }): Exclude<SourceKey, 'all'>
   return null;
 }
 
-// ─── Edge function caller ───────────────────────────────────
-// supabase.functions.invoke() surfaces non-2xx responses as a generic
-// FunctionsHttpError whose `.message` is just "Edge Function returned a
-// non-2xx status code" — the real error is in the response body. We read
-// the body ourselves so toasts show the actual cause (e.g. "No matching
-// contacts found", "Campaign must be in draft status", etc).
+function getInitials(input: string): string {
+  const trimmed = input.trim();
+  if (!trimmed) return '??';
+  const parts = trimmed.split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 async function callOutreach<T = unknown>(
   action: string,
   payload: Record<string, unknown> = {}
@@ -258,9 +220,6 @@ async function callOutreach<T = unknown>(
   return data as T;
 }
 
-// ─── CSV parser ─────────────────────────────────────────────
-// Imported rows get the business_pool tag + source:csv_import so they show up
-// on this page alongside the scraped data.
 function parseCsvRows(raw: string): Array<{
   email: string;
   name: string | null;
@@ -276,7 +235,6 @@ function parseCsvRows(raw: string): Array<{
     .filter(Boolean);
   if (lines.length === 0) return [];
 
-  // Try to detect header row
   const firstHasEmail = lines[0].toLowerCase().includes('email');
   const header = firstHasEmail ? lines[0].split(',').map((c) => c.trim().toLowerCase()) : null;
   const dataLines = firstHasEmail ? lines.slice(1) : lines;
@@ -314,7 +272,6 @@ function parseCsvRows(raw: string): Array<{
     .filter(<T,>(x: T | null): x is T => x !== null);
 }
 
-// ─── Component ──────────────────────────────────────────────
 export default function AdminBusinessOutreach() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
@@ -335,21 +292,15 @@ export default function AdminBusinessOutreach() {
     campaignName: string;
   }>({ running: false, sent: 0, remaining: 0, failed: 0, campaignName: '' });
 
-  // Seed template on first load (idempotent — upserts by slug)
   useEffect(() => {
     callOutreach('seed_templates').catch((err) => {
       console.warn('Template seed failed (non-fatal):', err);
     });
   }, []);
 
-  // ─── Queries ────────────────────────────────────────────
-  // Always restrict to the business_pool tag — that's what the scraper sets on
-  // every promoted lead, plus what CSV imports get tagged with.
   const { data: contactsData, isLoading: contactsLoading, isFetching, refetch } = useQuery({
     queryKey: ['business-outreach-contacts', search],
     queryFn: async () => {
-      // limit=15000 covers the entire business pool (currently ~12.5k) with
-      // headroom for growth. Edge function paginates in 1000-row chunks.
       const filter: Record<string, unknown> = { limit: 15000, tag: POOL_TAG };
       if (search) filter.search = search;
       return await callOutreach<{ contacts: BusinessContact[]; total: number }>(
@@ -360,14 +311,12 @@ export default function AdminBusinessOutreach() {
     staleTime: 30 * 1000,
   });
 
-  // Client-side source filter on the business_pool result set.
   const contacts = useMemo(() => {
     const all = contactsData?.contacts || [];
     if (activeSource === 'all') return all;
     return all.filter((c) => sourceOf(c) === activeSource);
   }, [contactsData, activeSource]);
 
-  // Source-tag counts derived from the fetched pool.
   const sourceCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const c of contactsData?.contacts || []) {
@@ -415,7 +364,6 @@ export default function AdminBusinessOutreach() {
     staleTime: 30 * 1000,
   });
 
-  // ─── Mutations ──────────────────────────────────────────
   const importMutation = useMutation({
     mutationFn: async () => {
       const parsed = parseCsvRows(csvText);
@@ -447,7 +395,7 @@ export default function AdminBusinessOutreach() {
       await callOutreach('bulk_suppress', { contactIds: ids, reason: 'admin_ui' }),
     onSuccess: () => {
       haptic.success();
-      toast({ title: 'Suppressed — they won\'t be emailed', variant: 'success' });
+      toast({ title: "Suppressed — they won't be emailed", variant: 'success' });
       setSelectedIds(new Set());
       queryClient.invalidateQueries({ queryKey: ['business-outreach-contacts'] });
     },
@@ -466,10 +414,6 @@ export default function AdminBusinessOutreach() {
     onError: (err) => toast({ title: `Delete failed: ${err.message}`, variant: 'destructive' }),
   });
 
-  // ─── Helpers ────────────────────────────────────────────
-  // The template to use for this send is determined by the currently-active
-  // segment pill. Directors pill → directors template, Electricians pill →
-  // electricians template, etc. See SEGMENT_TEMPLATE_MAP above.
   async function ensureTemplate(slug: string): Promise<{
     subject: string;
     html_body: string;
@@ -510,9 +454,6 @@ export default function AdminBusinessOutreach() {
         year: 'numeric',
       })} (${ids.length})`;
 
-      // When the user has selected the entire visible segment, pass the TAG
-      // filter instead of 12k contact_ids. Server resolves with one indexed
-      // SQL query instead of 26 chunked HTTP round-trips.
       const allSelected = ids.length === sendableIds.length && ids.length > 200;
       const segmentFilter: Record<string, unknown> = allSelected
         ? {
@@ -627,7 +568,6 @@ export default function AdminBusinessOutreach() {
     }
   }
 
-  // ─── Derived ────────────────────────────────────────────
   const visibleContacts = useMemo(() => {
     if (!search) return contacts;
     const s = search.toLowerCase();
@@ -644,7 +584,6 @@ export default function AdminBusinessOutreach() {
     [visibleContacts]
   );
 
-  // Total business_pool size (pre-source-filter) — matches scraper count.
   const totalSendable = contactsData?.contacts.length || 0;
 
   const toggleOne = (id: string) => {
@@ -660,436 +599,482 @@ export default function AdminBusinessOutreach() {
     else setSelectedIds(new Set(sendableIds));
   };
 
+  const filterTabs = useMemo(() => {
+    const tabs: { value: string; label: string; count?: number }[] = [
+      { value: 'all', label: 'All', count: totalSendable },
+    ];
+    for (const s of SOURCES) {
+      const count = sourceCounts[s] || 0;
+      if (count > 0 || activeSource === s) {
+        tabs.push({ value: s, label: SOURCE_LABEL[s], count });
+      }
+    }
+    return tabs;
+  }, [sourceCounts, totalSendable, activeSource]);
+
+  const activeTemplateSlug = SEGMENT_TEMPLATE_MAP[activeSource];
+  const activeTemplateLabel =
+    activeSource === 'all'
+      ? 'Business Master — 7-day free trial + App Store CTA (all 12k)'
+      : `${activeTemplateSlug
+          .replace('business-intro-', '')
+          .replace('-v1', '')
+          .replace(/-/g, ' ')
+          .replace(/^./, (c) => c.toUpperCase())} — cold intro`;
+
   return (
     <PullToRefresh
       onRefresh={async () => {
         await refetch();
       }}
     >
-      <div className="space-y-4 pb-24">
-        <AdminPageHeader
+      <PageFrame>
+        <PageHero
+          eyebrow="Campaigns"
           title="Business Outreach"
-          subtitle="Big UK electrical firms — one template, your targets"
-          icon={Building2}
-          iconColor="text-cyan-400"
-          iconBg="bg-cyan-500/10 border-cyan-500/20"
-          accentColor="from-cyan-500 via-sky-400 to-cyan-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+          description="B2B outreach to UK electrical contractors and employers. One template, your targets — import CSVs, segment by source, send in batches."
+          tone="purple"
+          actions={
+            <>
+              <IconButton
+                onClick={() => setImportOpen(true)}
+                aria-label="Import contacts"
+              >
+                <Upload className="h-4 w-4" />
+              </IconButton>
+              <IconButton
+                onClick={() => refetch()}
+                disabled={isFetching}
+                aria-label="Refresh"
+              >
+                <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+              </IconButton>
+            </>
+          }
         />
 
-        {/* Hero */}
-        <Card className="border-cyan-500/30 bg-gradient-to-br from-cyan-500/5 to-sky-500/5 overflow-hidden">
-          <CardContent className="pt-4 pb-4 space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 min-w-0">
-                <Badge className="bg-cyan-500 text-black text-[10px] px-2 border-0 shrink-0 font-bold">
-                  V1
-                </Badge>
-                <p className="text-sm font-semibold text-white truncate">
-                  UK Electrical Firms &mdash; Cold Pitch
-                </p>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setImportOpen(true)}
-                className="h-9 gap-1.5 text-cyan-400 hover:text-cyan-300 shrink-0 touch-manipulation"
-              >
-                <Upload className="h-3.5 w-3.5" />
-                Import
-              </Button>
-            </div>
-            <p className="text-[11px] text-white/70 leading-relaxed">
-              Targets big UK electrical contractors, principal contractors, facilities management,
-              utilities, defence and nuclear. Paste CSV rows (email, name, organisation, role) to
-              build your list, then send.
-            </p>
-          </CardContent>
-        </Card>
+        <StatStrip
+          columns={4}
+          stats={[
+            {
+              label: 'Companies',
+              value: totalSendable,
+              sub: contactStats ? `${contactStats.suppressed} suppressed` : undefined,
+            },
+            {
+              label: 'Enriched',
+              value: stats?.totalSent || 0,
+              tone: 'emerald',
+            },
+            {
+              label: 'Contacted',
+              value: stats?.totalOpened || 0,
+              tone: 'purple',
+              sub: stats?.openRate ? `${stats.openRate}% open` : undefined,
+            },
+            {
+              label: 'Signed up',
+              value: stats?.totalClicked || 0,
+              accent: true,
+              sub: stats?.clickRate ? `${stats.clickRate}% CTR` : undefined,
+            },
+          ]}
+        />
 
-        {/* Test send */}
-        <Card className="border-yellow-500/20 bg-yellow-500/[0.03]">
-          <CardContent className="pt-4 pb-4 space-y-2.5">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-yellow-500/15 flex items-center justify-center">
-                <TestTube className="h-3.5 w-3.5 text-yellow-400" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-white leading-tight">
-                  Send yourself a test
-                </p>
-                <p className="text-[11px] text-white/60 leading-tight mt-0.5">
-                  Preview the business pitch. Subject prefixed [TEST]. Nobody marked sent.
-                </p>
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
+          <div className="flex items-center gap-3">
+            <TestTube className="h-4 w-4 text-elec-yellow shrink-0" />
+            <div className="min-w-0 flex-1">
+              <Eyebrow>Test send</Eyebrow>
+              <div className="mt-1 text-[13px] text-white">
+                Preview this segment's template. Subject prefixed [TEST]. Nobody marked sent.
               </div>
             </div>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                value={testEmail}
-                onChange={(e) => setTestEmail(e.target.value)}
-                placeholder="your@email.com"
-                className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-              />
-              <Button
-                onClick={sendTest}
-                disabled={!testEmail}
-                className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600 text-black font-semibold gap-1.5"
-              >
-                <Send className="h-4 w-4" />
-                Test
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Performance */}
-        <div className="grid grid-cols-4 gap-2">
-          <StatTile
-            label="Contacts"
-            value={totalSendable}
-            sub={contactStats ? `${contactStats.suppressed} suppressed` : null}
-            colorClass="text-cyan-400 bg-cyan-500/10 border-cyan-500/20"
-          />
-          <StatTile
-            label="Sent"
-            value={stats?.totalSent || 0}
-            sub={null}
-            colorClass="text-blue-400 bg-blue-500/10 border-blue-500/20"
-          />
-          <StatTile
-            label="Opened"
-            value={stats?.totalOpened || 0}
-            sub={stats?.openRate ? `${stats.openRate}%` : null}
-            colorClass="text-green-400 bg-green-500/10 border-green-500/20"
-          />
-          <StatTile
-            label="Clicked"
-            value={stats?.totalClicked || 0}
-            sub={stats?.clickRate ? `${stats.clickRate}%` : null}
-            colorClass="text-violet-400 bg-violet-500/10 border-violet-500/20"
-          />
+          </div>
+          <div className="mt-3 flex flex-col sm:flex-row gap-2">
+            <Input
+              type="email"
+              value={testEmail}
+              onChange={(e) => setTestEmail(e.target.value)}
+              placeholder="your@email.com"
+              className="h-11 text-base touch-manipulation flex-1 bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60 focus:ring-0"
+            />
+            <button
+              onClick={sendTest}
+              disabled={!testEmail}
+              className="h-11 px-5 rounded-full bg-elec-yellow text-black text-[13px] font-semibold gap-2 inline-flex items-center justify-center touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Send className="h-4 w-4" />
+              Send test
+            </button>
+          </div>
+          <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center gap-2">
+            <Pill tone={activeSource === 'all' ? 'yellow' : 'purple'}>
+              {activeSource === 'all' ? 'Master template' : 'Segment template'}
+            </Pill>
+            <span className="text-[12px] text-white truncate">{activeTemplateLabel}</span>
+          </div>
         </div>
 
-        {/* Batch progress */}
         {batchProgress.running && (
-          <Card className="border-cyan-500/30 bg-cyan-500/5">
-            <CardContent className="pt-4 pb-4 space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="flex items-center gap-2 text-cyan-400 font-semibold">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Sending {batchProgress.campaignName}
-                </span>
-                <span className="text-white">
-                  {batchProgress.sent}/{batchProgress.sent + batchProgress.remaining}
-                </span>
-              </div>
-              <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-cyan-500 to-sky-500 rounded-full transition-all duration-500"
-                  style={{
-                    width: `${
-                      batchProgress.sent + batchProgress.remaining > 0
-                        ? (batchProgress.sent / (batchProgress.sent + batchProgress.remaining)) *
-                          100
-                        : 0
-                    }%`,
-                  }}
-                />
-              </div>
-              {batchProgress.failed > 0 && (
-                <p className="text-xs text-red-400">{batchProgress.failed} failed</p>
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Tabs */}
-        <div className="flex gap-1 p-1 bg-muted/50 rounded-xl border border-border">
-          <Button
-            variant={activeTab === 'contacts' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => setActiveTab('contacts')}
-            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'contacts' ? 'bg-cyan-500 text-black hover:bg-cyan-600' : ''}`}
-          >
-            <Users className="h-3.5 w-3.5" />
-            Contacts ({totalSendable})
-          </Button>
-          <Button
-            variant={activeTab === 'campaigns' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => setActiveTab('campaigns')}
-            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'campaigns' ? 'bg-blue-500 text-black hover:bg-blue-600' : ''}`}
-          >
-            <Mail className="h-3.5 w-3.5" />
-            Campaigns ({campaigns?.length || 0})
-          </Button>
-        </div>
-
-        {/* Contacts tab */}
-        {activeTab === 'contacts' && (
-          <Card>
-            <CardContent className="pt-4 pb-4 px-3 sm:px-4 space-y-3">
-              {/* Source pills — filter the business_pool by scraper source */}
-              <div
-                className="flex gap-1.5 overflow-x-auto -mx-1 px-1"
-                style={{ scrollbarWidth: 'none' }}
-              >
-                <TypePill
-                  active={activeSource === 'all'}
-                  onClick={() => {
-                    setActiveSource('all');
-                    setSelectedIds(new Set());
-                  }}
-                  label="All"
-                  count={totalSendable}
-                  colorClass="bg-cyan-500 text-black"
-                />
-                {SOURCES.filter((s) => (sourceCounts[s] || 0) > 0 || activeSource === s).map(
-                  (s) => (
-                    <TypePill
-                      key={s}
-                      active={activeSource === s}
-                      onClick={() => {
-                        setActiveSource(s);
-                        setSelectedIds(new Set());
-                      }}
-                      label={SOURCE_LABEL[s]}
-                      count={sourceCounts[s] || 0}
-                      colorClass="bg-cyan-500/90 text-white"
-                    />
-                  )
-                )}
-              </div>
-
-              {/* Active-segment template banner — shows which template the
-                  send / test will use. "All" fires the master first-touch
-                  (7-day free trial, App Store CTA) to the whole pool; role
-                  pills fire the audience-specific cold intros as follow-ups. */}
-              <div
-                className={`rounded-xl border px-3 py-2 flex items-center gap-2 ${
-                  activeSource === 'all'
-                    ? 'border-yellow-500/40 bg-yellow-500/10'
-                    : 'border-cyan-500/30 bg-cyan-500/5'
-                }`}
-              >
-                <Mail
-                  className={`h-4 w-4 shrink-0 ${
-                    activeSource === 'all' ? 'text-yellow-400' : 'text-cyan-400'
-                  }`}
-                />
-                <div className="flex-1 min-w-0">
-                  <p
-                    className={`text-[11px] uppercase tracking-wide font-semibold ${
-                      activeSource === 'all' ? 'text-yellow-400/90' : 'text-cyan-400/80'
-                    }`}
-                  >
-                    {activeSource === 'all' ? 'Master template — first touch' : 'Template for this segment'}
-                  </p>
-                  <p className="text-xs text-white truncate">
-                    {activeSource === 'all'
-                      ? 'Business Master — 7-day free trial + App Store CTA (all 12k)'
-                      : `${SEGMENT_TEMPLATE_MAP[activeSource]
-                          .replace('business-intro-', '')
-                          .replace('-v1', '')
-                          .replace(/-/g, ' ')
-                          .replace(/^./, (c) => c.toUpperCase())} — cold intro`}
-                  </p>
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4 relative overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-purple-500/70 via-violet-400/70 to-indigo-400/70 opacity-70" />
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <Loader2 className="h-4 w-4 animate-spin text-elec-yellow shrink-0" />
+                <div className="min-w-0">
+                  <Eyebrow>Sending</Eyebrow>
+                  <div className="mt-1 text-[13px] text-white truncate">
+                    {batchProgress.campaignName}
+                  </div>
                 </div>
               </div>
-
-              <AdminSearchInput
-                value={search}
-                onChange={setSearch}
-                placeholder="Search email or company..."
+              <div className="text-[13px] text-white tabular-nums shrink-0">
+                {batchProgress.sent}/{batchProgress.sent + batchProgress.remaining}
+              </div>
+            </div>
+            <div className="mt-3 w-full h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-elec-yellow rounded-full transition-all duration-500"
+                style={{
+                  width: `${
+                    batchProgress.sent + batchProgress.remaining > 0
+                      ? (batchProgress.sent / (batchProgress.sent + batchProgress.remaining)) * 100
+                      : 0
+                  }%`,
+                }}
               />
+            </div>
+            {batchProgress.failed > 0 && (
+              <div className="mt-2 text-[11px] text-white">
+                <Pill tone="red">{batchProgress.failed} failed</Pill>
+              </div>
+            )}
+          </div>
+        )}
 
-              {visibleContacts.length > 0 && (
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                  <div className="flex items-center gap-3 min-w-0">
+        <FilterBar
+          tabs={[
+            { value: 'contacts', label: 'Contacts', count: totalSendable },
+            { value: 'campaigns', label: 'Campaigns', count: campaigns?.length || 0 },
+          ]}
+          activeTab={activeTab}
+          onTabChange={(v) => setActiveTab(v as 'contacts' | 'campaigns')}
+        />
+
+        {activeTab === 'contacts' && (
+          <>
+            <SectionHeader
+              eyebrow="Segment"
+              title="Filter by source"
+              meta={
+                activeSource !== 'all' ? (
+                  <Pill tone="purple">{SOURCE_LABEL[activeSource]}</Pill>
+                ) : undefined
+              }
+            />
+
+            <FilterBar
+              tabs={filterTabs}
+              activeTab={activeSource}
+              onTabChange={(v) => {
+                setActiveSource(v as SourceKey);
+                setSelectedIds(new Set());
+              }}
+              search={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search email or company…"
+              actions={
+                <button
+                  onClick={() => setImportOpen(true)}
+                  className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold inline-flex items-center gap-2 touch-manipulation"
+                >
+                  <Upload className="h-3.5 w-3.5" />
+                  Enrich Batch
+                </button>
+              }
+            />
+
+            {contactsLoading ? (
+              <LoadingBlocks />
+            ) : visibleContacts.length === 0 ? (
+              <EmptyState
+                title={search ? 'No matches' : 'No contacts yet'}
+                description={
+                  search
+                    ? 'Nothing matches that search.'
+                    : 'Import a CSV to get started — paste rows of email, name, organisation, role.'
+                }
+                action={!search ? 'Import contacts' : undefined}
+                onAction={!search ? () => setImportOpen(true) : undefined}
+              />
+            ) : (
+              <ListCard>
+                <ListCardHeader
+                  tone="purple"
+                  title="Companies"
+                  meta={
+                    <>
+                      <Pill tone="purple">{visibleContacts.length}</Pill>
+                      {selectedIds.size > 0 && <Pill tone="yellow">{selectedIds.size} selected</Pill>}
+                    </>
+                  }
+                />
+                <div className="flex items-center justify-between gap-3 px-5 sm:px-6 py-3 border-b border-white/[0.06]">
+                  <label className="flex items-center gap-3 touch-manipulation">
                     <Checkbox
-                      checked={
-                        sendableIds.length > 0 && selectedIds.size === sendableIds.length
-                      }
+                      checked={sendableIds.length > 0 && selectedIds.size === sendableIds.length}
                       onCheckedChange={toggleAll}
                       disabled={batchProgress.running}
-                      className="border-white/40 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500 shrink-0"
+                      className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                     />
-                    <span className="text-sm text-white whitespace-nowrap">
+                    <span className="text-[12px] text-white">
                       {selectedIds.size > 0
                         ? `${selectedIds.size} selected`
                         : `Select all · ${sendableIds.length}`}
                     </span>
-                  </div>
+                  </label>
                   {selectedIds.size > 0 && !batchProgress.running && (
-                    <div className="grid grid-cols-2 gap-2 w-full sm:w-auto sm:flex">
-                      <Button
-                        size="sm"
-                        variant="outline"
+                    <div className="flex items-center gap-2">
+                      <button
                         onClick={() => suppressMutation.mutate(Array.from(selectedIds))}
                         disabled={suppressMutation.isPending}
-                        className="gap-1.5 h-11 sm:h-10 touch-manipulation border-white/20"
+                        className="h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium inline-flex items-center gap-1.5 hover:bg-white/[0.08] touch-manipulation disabled:opacity-40"
                       >
                         <Ban className="h-3.5 w-3.5" />
                         Suppress
-                      </Button>
-                      <Button
-                        size="sm"
+                      </button>
+                      <button
                         onClick={() =>
                           setConfirmSend({
                             count: selectedIds.size,
                             ids: Array.from(selectedIds),
                           })
                         }
-                        className="gap-2 h-11 sm:h-10 touch-manipulation bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-600 hover:to-sky-600 text-black"
+                        className="h-9 px-4 rounded-full bg-elec-yellow text-black text-[12px] font-semibold inline-flex items-center gap-1.5 touch-manipulation"
                       >
-                        <Send className="h-4 w-4" />
+                        <Send className="h-3.5 w-3.5" />
                         Send {selectedIds.size}
-                      </Button>
+                      </button>
                     </div>
                   )}
                 </div>
-              )}
+                <ListBody>
+                  {visibleContacts.map((c) => {
+                    const src = sourceOf(c);
+                    const srcLabel =
+                      src && (SOURCES as readonly string[]).includes(src)
+                        ? SOURCE_LABEL[src as Exclude<SourceKey, 'all'>]
+                        : null;
+                    const displayName = c.name || c.organisation || c.email;
+                    const subtitleParts: string[] = [];
+                    if (c.organisation && c.name) subtitleParts.push(c.organisation);
+                    subtitleParts.push(c.email);
+                    if (c.role) subtitleParts.push(c.role);
 
-              {/* List */}
-              {contactsLoading ? (
-                <div className="space-y-2 animate-pulse">
-                  {[...Array(4)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3 flex items-center gap-3"
-                    >
-                      <Skeleton className="w-9 h-9 rounded-lg" />
-                      <div className="space-y-1.5 flex-1">
-                        <Skeleton className="h-4 w-40" />
-                        <Skeleton className="h-3 w-56" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : visibleContacts.length === 0 ? (
-                <AdminEmptyState
-                  icon={Building2}
-                  title={search ? 'No matches' : 'No contacts yet'}
-                  description={
-                    search
-                      ? 'Nothing matches that search.'
-                      : 'Import a CSV to get started — paste rows of email, name, organisation, role.'
+                    return (
+                      <ListRow
+                        key={c.id}
+                        lead={
+                          <div className="flex items-center gap-3">
+                            <Checkbox
+                              checked={selectedIds.has(c.id)}
+                              onCheckedChange={() => toggleOne(c.id)}
+                              disabled={c.is_suppressed}
+                              onClick={(e) => e.stopPropagation()}
+                              className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                            />
+                            <Avatar initials={getInitials(displayName)} />
+                          </div>
+                        }
+                        title={displayName}
+                        subtitle={subtitleParts.join(' · ')}
+                        trailing={
+                          <>
+                            {srcLabel && <Pill tone="purple">{srcLabel}</Pill>}
+                            {c.is_suppressed && <Pill tone="red">Suppressed</Pill>}
+                            {c.total_opens > 0 && (
+                              <Pill tone="emerald">{c.total_opens} open</Pill>
+                            )}
+                            {c.total_clicks > 0 && (
+                              <Pill tone="yellow">{c.total_clicks} click</Pill>
+                            )}
+                          </>
+                        }
+                        onClick={() => toggleOne(c.id)}
+                        className={c.is_suppressed ? 'opacity-60' : ''}
+                      />
+                    );
+                  })}
+                </ListBody>
+              </ListCard>
+            )}
+
+            {selectedIds.size > 0 && !batchProgress.running && (
+              <button
+                onClick={() => {
+                  if (confirm(`Delete ${selectedIds.size} contacts permanently?`)) {
+                    deleteMutation.mutate(Array.from(selectedIds));
                   }
-                  action={
-                    !search
-                      ? { label: 'Import contacts', onClick: () => setImportOpen(true) }
-                      : undefined
-                  }
-                />
-              ) : (
-                <div className="space-y-1.5">
-                  {visibleContacts.map((c) => (
-                    <ContactRow
-                      key={c.id}
-                      contact={c}
-                      selected={selectedIds.has(c.id)}
-                      onToggle={() => toggleOne(c.id)}
-                    />
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                }}
+                disabled={deleteMutation.isPending}
+                className="w-full h-11 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white text-[12px] font-medium inline-flex items-center justify-center gap-2 hover:bg-[hsl(0_0%_15%)] touch-manipulation disabled:opacity-40"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+                Delete selected ({selectedIds.size})
+              </button>
+            )}
+          </>
         )}
 
-        {/* Campaigns tab */}
         {activeTab === 'campaigns' && (
-          <Card>
-            <CardContent className="pt-4 pb-4 px-3 sm:px-4">
-              {!campaigns || campaigns.length === 0 ? (
-                <AdminEmptyState
-                  icon={Mail}
-                  title="No campaigns yet"
-                  description="Send to some contacts to create your first business outreach campaign."
+          <>
+            {!campaigns || campaigns.length === 0 ? (
+              <EmptyState
+                title="No campaigns yet"
+                description="Send to some contacts to create your first business outreach campaign."
+              />
+            ) : (
+              <ListCard>
+                <ListCardHeader
+                  tone="purple"
+                  title="Campaigns"
+                  meta={<Pill tone="purple">{campaigns.length}</Pill>}
                 />
-              ) : (
-                <div className="space-y-2">
-                  {campaigns.map((c) => (
-                    <CampaignRow key={c.id} campaign={c} />
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                <ListBody>
+                  {campaigns.map((c) => {
+                    const progress =
+                      c.total_recipients > 0
+                        ? Math.round((c.sent_count / c.total_recipients) * 100)
+                        : 0;
+                    const statusTone =
+                      c.status === 'completed'
+                        ? 'emerald'
+                        : c.status === 'sending'
+                          ? 'blue'
+                          : c.status === 'paused'
+                            ? 'amber'
+                            : 'indigo';
+                    return (
+                      <ListRow
+                        key={c.id}
+                        title={c.name}
+                        subtitle={
+                          <span className="flex items-center gap-3 text-[11.5px] text-white tabular-nums">
+                            <span>
+                              {c.sent_count}/{c.total_recipients} sent
+                            </span>
+                            <span>·</span>
+                            <span>{c.open_count} open</span>
+                            <span>·</span>
+                            <span>{c.click_count} click</span>
+                            {c.failed_count > 0 && (
+                              <>
+                                <span>·</span>
+                                <span>{c.failed_count} failed</span>
+                              </>
+                            )}
+                            <span>·</span>
+                            <span>
+                              {formatDistanceToNow(parseISO(c.created_at), { addSuffix: true })}
+                            </span>
+                          </span>
+                        }
+                        trailing={
+                          <>
+                            {c.total_recipients > 0 && c.status !== 'completed' && (
+                              <span className="text-[11px] text-white tabular-nums">
+                                {progress}%
+                              </span>
+                            )}
+                            <Pill tone={statusTone}>{c.status}</Pill>
+                          </>
+                        }
+                      />
+                    );
+                  })}
+                </ListBody>
+              </ListCard>
+            )}
+          </>
         )}
 
-        {/* Bulk delete (advanced) */}
-        {selectedIds.size > 0 && activeTab === 'contacts' && !batchProgress.running && (
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => {
-              if (confirm(`Delete ${selectedIds.size} contacts permanently?`)) {
-                deleteMutation.mutate(Array.from(selectedIds));
-              }
-            }}
-            disabled={deleteMutation.isPending}
-            className="w-full h-10 text-xs touch-manipulation gap-1.5 text-red-400 border-red-500/20 hover:bg-red-500/10"
-          >
-            <Trash2 className="h-3.5 w-3.5" />
-            Delete selected ({selectedIds.size})
-          </Button>
-        )}
+        <Divider label="Enrichment" />
 
-        {/* Import sheet */}
+        <StatStrip
+          columns={3}
+          stats={[
+            {
+              label: 'Active pool',
+              value: contactStats?.active ?? 0,
+              tone: 'emerald',
+            },
+            {
+              label: 'Suppressed',
+              value: contactStats?.suppressed ?? 0,
+              tone: 'red',
+            },
+            {
+              label: 'Total imported',
+              value: contactStats?.total ?? 0,
+            },
+          ]}
+        />
+
         <Sheet open={importOpen} onOpenChange={setImportOpen}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-4 pb-3 border-b border-border">
-                <SheetTitle className="flex items-center gap-2 text-sm">
-                  <Upload className="h-4 w-4 text-cyan-400" />
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="flex items-center gap-2 text-[15px] text-white">
+                  <Upload className="h-4 w-4 text-elec-yellow" />
                   Import Business Contacts
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <div className="rounded-xl bg-cyan-500/10 border border-cyan-500/20 p-3">
-                  <p className="text-[11px] text-cyan-300 leading-relaxed">
+              <div className="flex-1 overflow-y-auto p-5 space-y-4">
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
+                  <Eyebrow>How it works</Eyebrow>
+                  <p className="mt-2 text-[12.5px] text-white leading-relaxed">
                     Imported contacts are auto-tagged with{' '}
-                    <code className="bg-black/30 px-1 py-0.5 rounded">business_pool</code> and{' '}
-                    <code className="bg-black/30 px-1 py-0.5 rounded">source:csv_import</code>, so
-                    they show up here alongside scraped leads. contact_type defaults to{' '}
-                    <code className="bg-black/30 px-1 py-0.5 rounded">employer</code> to match the
-                    ingest pipeline.
+                    <code className="bg-black/30 px-1 py-0.5 rounded text-white">
+                      business_pool
+                    </code>{' '}
+                    and{' '}
+                    <code className="bg-black/30 px-1 py-0.5 rounded text-white">
+                      source:csv_import
+                    </code>
+                    , so they show up here alongside scraped leads. contact_type defaults to{' '}
+                    <code className="bg-black/30 px-1 py-0.5 rounded text-white">employer</code>.
                   </p>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-white/80">
-                    Paste CSV (email, name, organisation, role, tags)
-                  </label>
-                  <p className="text-[11px] text-white/50 leading-relaxed">
-                    Header row optional. Accepts columns: <code>email</code>, <code>name</code>,{' '}
-                    <code>organisation</code> (or company), <code>role</code> (or title),{' '}
-                    <code>tags</code> (semicolon-separated — added on top of business_pool). If no
-                    header, first column assumed to be email.
+                  <Eyebrow>Paste CSV</Eyebrow>
+                  <p className="text-[12px] text-white leading-relaxed">
+                    Header row optional. Columns: <code>email</code>, <code>name</code>,{' '}
+                    <code>organisation</code>, <code>role</code>, <code>tags</code>{' '}
+                    (semicolon-separated). If no header, first column is email.
                   </p>
                   <Textarea
                     value={csvText}
                     onChange={(e) => setCsvText(e.target.value)}
-                    placeholder={`email,name,organisation,role
-mike@balfourbeatty.com,Mike Smith,Balfour Beatty,M&E Director
-jane@sellafield.com,Jane Doe,Sellafield Ltd,Head of Electrical`}
-                    className="touch-manipulation text-[13px] font-mono min-h-[240px] focus:ring-2 focus:ring-cyan-500/20 border-white/30 focus:border-cyan-500"
+                    placeholder={`email,name,organisation,role\nmike@balfourbeatty.com,Mike Smith,Balfour Beatty,M&E Director\njane@sellafield.com,Jane Doe,Sellafield Ltd,Head of Electrical`}
+                    className="touch-manipulation text-[13px] font-mono min-h-[240px] bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60 focus:ring-0"
                   />
-                  <p className="text-[11px] text-white/50">
+                  <p className="text-[11px] text-white">
                     {csvText.split(/\r?\n/).filter((l) => l.trim()).length} lines pasted
                   </p>
                 </div>
 
-                <Button
+                <button
                   onClick={() => importMutation.mutate()}
                   disabled={!csvText.trim() || importMutation.isPending}
-                  className="w-full h-12 touch-manipulation bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-cyan-600 hover:to-sky-600 text-black font-semibold gap-2"
+                  className="w-full h-12 rounded-full bg-elec-yellow text-black text-[14px] font-semibold inline-flex items-center justify-center gap-2 touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {importMutation.isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
@@ -1097,20 +1082,19 @@ jane@sellafield.com,Jane Doe,Sellafield Ltd,Head of Electrical`}
                     <Upload className="h-4 w-4" />
                   )}
                   Import contacts
-                </Button>
+                </button>
               </div>
             </div>
           </SheetContent>
         </Sheet>
 
-        {/* Confirm send */}
         <AlertDialog
           open={!!confirmSend}
           onOpenChange={(open) => !open && setConfirmSend(null)}
         >
-          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
+          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6 bg-[hsl(0_0%_10%)] border-white/[0.06]">
             <AlertDialogHeader className="space-y-3">
-              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
+              <AlertDialogTitle className="text-base sm:text-lg leading-tight text-white">
                 Send business pitch to {confirmSend?.count} contacts?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
@@ -1120,7 +1104,7 @@ jane@sellafield.com,Jane Doe,Sellafield Ltd,Head of Electrical`}
                     {INTER_BATCH_GAP_MS}ms gap between calls (under Resend's 2 req/sec rate limit).
                     Suppressed contacts are skipped automatically.
                   </p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Recipients get an unsubscribe link. One-click unsubscribes added to your
                     suppression list.
                   </p>
@@ -1128,7 +1112,7 @@ jane@sellafield.com,Jane Doe,Sellafield Ltd,Head of Electrical`}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 pt-2">
-              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
+              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white hover:bg-[hsl(0_0%_15%)]">
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
@@ -1137,7 +1121,7 @@ jane@sellafield.com,Jane Doe,Sellafield Ltd,Head of Electrical`}
                   setConfirmSend(null);
                   createAndRunCampaign(ids);
                 }}
-                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-cyan-500 hover:bg-cyan-600 text-black font-semibold w-full sm:w-auto"
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold w-full sm:w-auto rounded-full"
               >
                 <Send className="h-4 w-4 mr-2" />
                 Send
@@ -1145,184 +1129,7 @@ jane@sellafield.com,Jane Doe,Sellafield Ltd,Head of Electrical`}
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </PageFrame>
     </PullToRefresh>
-  );
-}
-
-// ─── Sub-components ─────────────────────────────────────────
-function StatTile({
-  label,
-  value,
-  sub,
-  colorClass,
-}: {
-  label: string;
-  value: number;
-  sub: string | null;
-  colorClass: string;
-}) {
-  return (
-    <div className={`p-2.5 rounded-xl border text-center ${colorClass}`}>
-      <p className="text-lg font-bold leading-tight">{value}</p>
-      <p className="text-[10px] text-white mt-0.5">{label}</p>
-      {sub && <p className="text-[9px] opacity-70 mt-0.5">{sub}</p>}
-    </div>
-  );
-}
-
-function TypePill({
-  active,
-  onClick,
-  label,
-  count,
-  colorClass,
-}: {
-  active: boolean;
-  onClick: () => void;
-  label: string;
-  count: number;
-  colorClass: string;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`shrink-0 h-9 px-3 rounded-full text-xs font-semibold touch-manipulation transition-all ${active ? colorClass : 'bg-white/5 text-white/70 hover:bg-white/10'}`}
-    >
-      {label} &middot; {count}
-    </button>
-  );
-}
-
-function ContactRow({
-  contact,
-  selected,
-  onToggle,
-}: {
-  contact: BusinessContact;
-  selected: boolean;
-  onToggle: () => void;
-}) {
-  const src = sourceOf(contact);
-  const TypeIcon =
-    src && (SOURCES as readonly string[]).includes(src)
-      ? SOURCE_ICON[src as Exclude<SourceKey, 'all'>]
-      : Building2;
-  const srcLabel = src && (SOURCES as readonly string[]).includes(src)
-    ? SOURCE_LABEL[src as Exclude<SourceKey, 'all'>]
-    : null;
-
-  return (
-    <div
-      className={`flex items-center gap-3 p-2.5 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform ${contact.is_suppressed ? 'opacity-60' : ''}`}
-    >
-      <Checkbox
-        checked={selected}
-        onCheckedChange={onToggle}
-        disabled={contact.is_suppressed}
-        className="border-white/40 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
-      />
-      <div className="w-9 h-9 rounded-xl bg-cyan-500/20 flex items-center justify-center shrink-0">
-        <TypeIcon className="h-4 w-4 text-cyan-400" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5">
-          <p className="font-medium text-sm text-white truncate">
-            {contact.name || contact.email}
-          </p>
-          {contact.is_suppressed && (
-            <Badge className="bg-red-500/20 text-red-400 text-[9px] px-1.5 border-0 shrink-0">
-              Suppressed
-            </Badge>
-          )}
-        </div>
-        <div className="flex items-center gap-1.5 text-xs text-white/70 min-w-0">
-          <span className="truncate flex-1 min-w-0">
-            {contact.organisation || contact.email}
-          </span>
-          {srcLabel && (
-            <Badge className="bg-cyan-500/10 text-cyan-400 text-[9px] px-1.5 border-0 shrink-0">
-              {srcLabel}
-            </Badge>
-          )}
-        </div>
-        {contact.role && (
-          <p className="text-[11px] text-white/50 truncate mt-0.5">{contact.role}</p>
-        )}
-      </div>
-      {(contact.total_opens > 0 || contact.total_clicks > 0) && (
-        <div className="flex items-center gap-1 shrink-0">
-          {contact.total_opens > 0 && (
-            <Badge className="bg-green-500/20 text-green-400 text-[9px] px-1 border-0 gap-1">
-              <MailOpen className="h-2.5 w-2.5" />
-              {contact.total_opens}
-            </Badge>
-          )}
-          {contact.total_clicks > 0 && (
-            <Badge className="bg-violet-500/20 text-violet-400 text-[9px] px-1 border-0 gap-1">
-              <MousePointerClick className="h-2.5 w-2.5" />
-              {contact.total_clicks}
-            </Badge>
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function CampaignRow({ campaign }: { campaign: BusinessCampaign }) {
-  const progress =
-    campaign.total_recipients > 0
-      ? Math.round((campaign.sent_count / campaign.total_recipients) * 100)
-      : 0;
-  const statusColor =
-    campaign.status === 'completed'
-      ? 'bg-green-500/20 text-green-400'
-      : campaign.status === 'sending'
-        ? 'bg-blue-500/20 text-blue-400'
-        : campaign.status === 'paused'
-          ? 'bg-amber-500/20 text-amber-400'
-          : 'bg-slate-500/20 text-slate-400';
-
-  return (
-    <div className="rounded-xl bg-muted/50 p-3 space-y-2">
-      <div className="flex items-start justify-between gap-2">
-        <div className="min-w-0 flex-1">
-          <p className="font-medium text-sm text-white truncate">{campaign.name}</p>
-          <p className="text-[11px] text-white/60">
-            {formatDistanceToNow(parseISO(campaign.created_at), { addSuffix: true })}
-          </p>
-        </div>
-        <Badge className={`text-[10px] border-0 shrink-0 ${statusColor}`}>
-          {campaign.status}
-        </Badge>
-      </div>
-      <div className="flex items-center gap-3 text-[11px] text-white/70">
-        <span className="flex items-center gap-1">
-          <MailCheck className="h-3 w-3 text-blue-400" />
-          {campaign.sent_count}/{campaign.total_recipients}
-        </span>
-        <span className="flex items-center gap-1">
-          <MailOpen className="h-3 w-3 text-green-400" />
-          {campaign.open_count}
-        </span>
-        <span className="flex items-center gap-1">
-          <MousePointerClick className="h-3 w-3 text-violet-400" />
-          {campaign.click_count}
-        </span>
-        {campaign.failed_count > 0 && (
-          <span className="text-red-400">{campaign.failed_count} failed</span>
-        )}
-      </div>
-      {campaign.total_recipients > 0 && campaign.status !== 'completed' && (
-        <div className="w-full h-1.5 bg-black/30 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-cyan-500 to-sky-500 rounded-full transition-all"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      )}
-    </div>
   );
 }

@@ -1,22 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,30 +16,28 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  PoundSterling,
-  RefreshCw,
-  ChevronRight,
-  Check,
-  X,
-  Clock,
-  AlertTriangle,
-  MapPin,
-  Flag,
-  User,
-  Briefcase,
-  TrendingUp,
-  TrendingDown,
-  Loader2,
-} from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { RefreshCw, Check, X, Flag, Loader2 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Divider,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface PricingSubmission {
   id: string;
@@ -70,7 +57,6 @@ interface PricingSubmission {
   profiles?: { full_name: string; username: string; role: string };
 }
 
-// Quick-select rejection reasons
 const REJECTION_REASONS = [
   { id: 'unrealistic', label: 'Price seems unrealistic' },
   { id: 'spam', label: 'Spam or test submission' },
@@ -79,11 +65,39 @@ const REJECTION_REASONS = [
   { id: 'other', label: 'Other' },
 ] as const;
 
+function getInitials(name?: string | null) {
+  if (!name) return '??';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function classifyJobType(jobType: string): 'material' | 'labour' | 'equipment' {
+  const t = (jobType || '').toLowerCase();
+  if (/(labour|hour|rate|day rate|call[- ]?out)/.test(t)) return 'labour';
+  if (/(tool|equip|machine|hire|test ?kit|ladder|cable drum)/.test(t)) return 'equipment';
+  return 'material';
+}
+
+function statusToTone(status: string | null): Tone {
+  switch (status) {
+    case 'approved':
+      return 'emerald';
+    case 'rejected':
+      return 'red';
+    case 'flagged':
+      return 'orange';
+    default:
+      return 'blue';
+  }
+}
+
 export default function AdminPricingModeration() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('pending');
+  const [typeFilter, setTypeFilter] = useState<'all' | 'material' | 'labour' | 'equipment' | 'flagged'>('all');
   const [selectedSubmission, setSelectedSubmission] = useState<PricingSubmission | null>(null);
   const [selectedReasons, setSelectedReasons] = useState<string[]>([]);
   const [otherReason, setOtherReason] = useState('');
@@ -96,7 +110,6 @@ export default function AdminPricingModeration() {
     );
   };
 
-  // Fetch pricing submissions
   const {
     data: submissions,
     isLoading,
@@ -137,11 +150,13 @@ export default function AdminPricingModeration() {
     },
   });
 
-  // Get stats
   const { data: stats } = useQuery({
     queryKey: ['admin-pricing-stats'],
     queryFn: async () => {
-      const [pendingRes, approvedRes, rejectedRes, totalRes] = await Promise.all([
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+      const [pendingRes, approvedRes, rejectedRes, weekRes] = await Promise.all([
         supabase
           .from('community_pricing_submissions')
           .select('*', { count: 'exact', head: true })
@@ -154,10 +169,12 @@ export default function AdminPricingModeration() {
           .from('community_pricing_submissions')
           .select('*', { count: 'exact', head: true })
           .eq('verification_status', 'rejected'),
-        supabase.from('community_pricing_submissions').select('*', { count: 'exact', head: true }),
+        supabase
+          .from('community_pricing_submissions')
+          .select('*', { count: 'exact', head: true })
+          .gte('created_at', sevenDaysAgo.toISOString()),
       ]);
 
-      // Get average prices for comparison
       const { data: avgData } = await supabase
         .from('community_pricing_submissions')
         .select('job_type, actual_price')
@@ -176,13 +193,12 @@ export default function AdminPricingModeration() {
         pending: pendingRes.count || 0,
         approved: approvedRes.count || 0,
         rejected: rejectedRes.count || 0,
-        total: totalRes.count || 0,
+        thisWeek: weekRes.count || 0,
         avgByType,
       };
     },
   });
 
-  // Approve mutation
   const approveMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
@@ -195,7 +211,6 @@ export default function AdminPricingModeration() {
         .eq('id', id);
       if (error) throw error;
 
-      // Log the action
       await supabase.from('admin_audit_logs').insert({
         user_id: profile?.id,
         action: 'pricing_approved',
@@ -216,7 +231,6 @@ export default function AdminPricingModeration() {
     },
   });
 
-  // Reject mutation - DELETES the submission (keeps DB clean)
   const rejectMutation = useMutation({
     mutationFn: async ({
       id,
@@ -227,7 +241,6 @@ export default function AdminPricingModeration() {
       reasons: string[];
       otherText?: string;
     }) => {
-      // Log the deletion before removing
       await supabase.from('admin_audit_logs').insert({
         user_id: profile?.id,
         action: 'pricing_deleted',
@@ -236,7 +249,6 @@ export default function AdminPricingModeration() {
         new_values: { reasons, otherText },
       });
 
-      // Delete the submission permanently
       const { error } = await supabase.from('community_pricing_submissions').delete().eq('id', id);
       if (error) throw error;
     },
@@ -256,7 +268,6 @@ export default function AdminPricingModeration() {
     },
   });
 
-  // Flag as suspicious
   const flagMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
@@ -289,31 +300,6 @@ export default function AdminPricingModeration() {
     },
   });
 
-  const getStatusBadge = (status: string | null) => {
-    const styles: Record<string, string> = {
-      approved: 'bg-green-500/20 text-green-400',
-      rejected: 'bg-red-500/20 text-red-400',
-      flagged: 'bg-amber-500/20 text-amber-400',
-      pending: 'bg-blue-500/20 text-blue-400',
-    };
-    const s = status || 'pending';
-    return <Badge className={styles[s] || styles.pending}>{s}</Badge>;
-  };
-
-  const getStatusIcon = (status: string | null) => {
-    switch (status) {
-      case 'approved':
-        return <Check className="h-4 w-4 text-green-400" />;
-      case 'rejected':
-        return <X className="h-4 w-4 text-red-400" />;
-      case 'flagged':
-        return <Flag className="h-4 w-4 text-amber-400" />;
-      default:
-        return <Clock className="h-4 w-4 text-blue-400" />;
-    }
-  };
-
-  // Check if price is suspicious (>50% deviation from average)
   const isPriceSuspicious = (submission: PricingSubmission) => {
     const avgData = stats?.avgByType[submission.job_type];
     if (!avgData || avgData.count < 3) return null;
@@ -322,219 +308,203 @@ export default function AdminPricingModeration() {
     return deviation > 0.5 ? { avg, deviation } : null;
   };
 
+  const filteredSubmissions = useMemo(() => {
+    if (!submissions) return [];
+    if (typeFilter === 'all') return submissions;
+    if (typeFilter === 'flagged') {
+      return submissions.filter(
+        (s) => s.verification_status === 'flagged' || !!isPriceSuspicious(s)
+      );
+    }
+    return submissions.filter((s) => classifyJobType(s.job_type) === typeFilter);
+  }, [submissions, typeFilter, stats]);
+
+  const statusTabs = [
+    { value: 'pending', label: 'Pending', count: stats?.pending },
+    { value: 'approved', label: 'Approved', count: stats?.approved },
+    { value: 'rejected', label: 'Rejected', count: stats?.rejected },
+    { value: 'all', label: 'All' },
+  ];
+
+  const typePills: { value: typeof typeFilter; label: string }[] = [
+    { value: 'all', label: 'All' },
+    { value: 'material', label: 'Materials' },
+    { value: 'labour', label: 'Labour' },
+    { value: 'equipment', label: 'Equipment' },
+    { value: 'flagged', label: 'Flagged' },
+  ];
+
+  const listTitle = useMemo(() => {
+    if (statusFilter === 'pending') return 'Pending Submissions';
+    if (statusFilter === 'approved') return 'Approved Submissions';
+    if (statusFilter === 'rejected') return 'Rejected Submissions';
+    return 'All Submissions';
+  }, [statusFilter]);
+
+  const listTone: Tone =
+    statusFilter === 'approved'
+      ? 'emerald'
+      : statusFilter === 'rejected'
+        ? 'red'
+        : statusFilter === 'all'
+          ? 'yellow'
+          : 'emerald';
+
   return (
     <PullToRefresh
       onRefresh={async () => {
         await refetch();
       }}
     >
-      <div className="space-y-4 pb-20">
-        <AdminPageHeader
-          title="Pricing Moderation"
-          subtitle={`${stats?.pending || 0} pending review`}
-          icon={PoundSterling}
-          iconColor="text-emerald-400"
-          iconBg="bg-emerald-500/10 border-emerald-500/20"
-          accentColor="from-emerald-500 via-green-400 to-emerald-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+      <PageFrame>
+        <PageHero
+          eyebrow="Moderation"
+          title="Pricing"
+          description="Review user-submitted prices and labour rates before they enter the RAG index."
+          tone="emerald"
+          actions={
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            </IconButton>
+          }
         />
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-4 gap-2">
-          <Card
-            className={`bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20 touch-manipulation cursor-pointer ${statusFilter === 'pending' ? 'ring-2 ring-blue-500' : ''}`}
-            onClick={() => setStatusFilter('pending')}
-          >
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-blue-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.pending || 0}</p>
-                  <p className="text-xs text-muted-foreground">Pending</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card
-            className={`bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 touch-manipulation cursor-pointer ${statusFilter === 'approved' ? 'ring-2 ring-green-500' : ''}`}
-            onClick={() => setStatusFilter('approved')}
-          >
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.approved || 0}</p>
-                  <p className="text-xs text-muted-foreground">Approved</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card
-            className={`bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20 touch-manipulation cursor-pointer ${statusFilter === 'rejected' ? 'ring-2 ring-red-500' : ''}`}
-            onClick={() => setStatusFilter('rejected')}
-          >
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <X className="h-4 w-4 text-red-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.rejected || 0}</p>
-                  <p className="text-xs text-muted-foreground">Rejected</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card
-            className={`bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-yellow-500/20 touch-manipulation cursor-pointer ${statusFilter === 'all' ? 'ring-2 ring-yellow-500' : ''}`}
-            onClick={() => setStatusFilter('all')}
-          >
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <PoundSterling className="h-4 w-4 text-yellow-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.total || 0}</p>
-                  <p className="text-xs text-muted-foreground">Total</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        <StatStrip
+          columns={4}
+          stats={[
+            {
+              label: 'Pending',
+              value: stats?.pending ?? 0,
+              tone: 'orange',
+              onClick: () => setStatusFilter('pending'),
+            },
+            {
+              label: 'This Week',
+              value: stats?.thisWeek ?? 0,
+              tone: 'emerald',
+            },
+            {
+              label: 'Approved',
+              value: stats?.approved ?? 0,
+              tone: 'emerald',
+              onClick: () => setStatusFilter('approved'),
+            },
+            {
+              label: 'Rejected',
+              value: stats?.rejected ?? 0,
+              tone: 'red',
+              onClick: () => setStatusFilter('rejected'),
+            },
+          ]}
+        />
+
+        <FilterBar
+          tabs={statusTabs}
+          activeTab={statusFilter}
+          onTabChange={setStatusFilter}
+          search={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search job type, postcode, user…"
+        />
+
+        <div className="flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full overflow-x-auto hide-scrollbar">
+          {typePills.map((p) => (
+            <button
+              key={p.value}
+              onClick={() => setTypeFilter(p.value)}
+              className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation ${
+                typeFilter === p.value
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white hover:bg-white/[0.04]'
+              }`}
+            >
+              {p.label}
+            </button>
+          ))}
         </div>
 
-        {/* Search */}
-        <AdminSearchInput
-          value={search}
-          onChange={setSearch}
-          placeholder="Search by job type, postcode, user..."
-        />
-
-        {/* Submissions List */}
         {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : submissions?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={PoundSterling}
-                title="No pricing submissions"
-                description={
-                  statusFilter === 'pending'
-                    ? 'All caught up!'
-                    : 'No submissions match this filter.'
-                }
-              />
-            </CardContent>
-          </Card>
+          <LoadingBlocks />
+        ) : !filteredSubmissions || filteredSubmissions.length === 0 ? (
+          <EmptyState
+            title="No pricing submissions pending"
+            description={
+              statusFilter === 'pending'
+                ? 'All caught up — nothing awaiting moderation right now.'
+                : 'No submissions match this filter.'
+            }
+          />
         ) : (
-          <div className="space-y-2">
-            {submissions?.map((submission) => {
-              const suspicious = isPriceSuspicious(submission);
-              return (
-                <Card
-                  key={submission.id}
-                  className={`touch-manipulation active:scale-[0.99] transition-transform cursor-pointer ${suspicious ? 'border-amber-500/50' : ''}`}
-                  onClick={() => setSelectedSubmission(submission)}
-                >
-                  <CardContent className="pt-4 pb-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-3 min-w-0 flex-1">
-                        <div
-                          className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                            submission.verification_status === 'approved'
-                              ? 'bg-green-500/10'
-                              : submission.verification_status === 'rejected'
-                                ? 'bg-red-500/10'
-                                : suspicious
-                                  ? 'bg-amber-500/10'
-                                  : 'bg-blue-500/10'
-                          }`}
-                        >
-                          {suspicious ? (
-                            <AlertTriangle className="h-5 w-5 text-amber-400" />
-                          ) : (
-                            getStatusIcon(submission.verification_status)
-                          )}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-2">
-                            <p className="font-medium text-sm truncate">{submission.job_type}</p>
-                            <span className="text-green-400 font-bold">
-                              £{Number(submission.actual_price).toLocaleString()}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                            <User className="h-3 w-3" />
-                            <span className="truncate">
-                              {submission.profiles?.full_name || 'Unknown'}
-                            </span>
-                            {submission.postcode_district && (
-                              <>
-                                <span>·</span>
-                                <MapPin className="h-3 w-3" />
-                                <span>{submission.postcode_district}</span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0">
+          <ListCard>
+            <ListCardHeader
+              tone={listTone}
+              title={listTitle}
+              meta={<Pill tone={listTone}>{filteredSubmissions.length}</Pill>}
+            />
+            <ListBody>
+              {filteredSubmissions.map((r) => {
+                const suspicious = isPriceSuspicious(r);
+                const typeLabel = classifyJobType(r.job_type);
+                const statusLabel = r.verification_status || 'pending';
+                const tone = statusToTone(r.verification_status);
+                const submitter = r.profiles?.full_name || 'Unknown';
+                const unit = typeLabel === 'labour' ? '/hr' : r.postcode_district ? `· ${r.postcode_district}` : '';
+                return (
+                  <ListRow
+                    key={r.id}
+                    accent={suspicious ? 'orange' : undefined}
+                    lead={<Avatar initials={getInitials(submitter)} />}
+                    title={
+                      <span className="flex items-center gap-2">
+                        <span className="truncate">{r.job_description || r.job_type}</span>
+                        <span className="text-elec-yellow font-semibold tabular-nums shrink-0">
+                          £{Number(r.actual_price).toLocaleString()}
+                        </span>
+                      </span>
+                    }
+                    subtitle={`${typeLabel} · £${Number(r.actual_price).toLocaleString()} ${unit} · by ${submitter}`}
+                    trailing={
+                      <>
                         {suspicious && (
-                          <Badge
-                            variant="outline"
-                            className="text-xs border-amber-500 text-amber-400"
-                          >
-                            {suspicious.deviation > 1
-                              ? 'Very High'
-                              : suspicious.deviation > 0.5
-                                ? 'High'
-                                : ''}
-                          </Badge>
+                          <Pill tone="orange">
+                            {suspicious.deviation > 1 ? 'Very High' : 'High'}
+                          </Pill>
                         )}
-                        {getStatusBadge(submission.verification_status)}
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+                        <Pill tone={tone}>{statusLabel}</Pill>
+                      </>
+                    }
+                    onClick={() => setSelectedSubmission(r)}
+                  />
+                );
+              })}
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* Submission Detail Sheet */}
         <Sheet open={!!selectedSubmission} onOpenChange={() => setSelectedSubmission(null)}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center">
-                    <PoundSterling className="h-6 w-6 text-green-400" />
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="text-left">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    Review Submission
                   </div>
-                  <div className="text-left">
-                    <p>{selectedSubmission?.job_type}</p>
-                    <p className="text-2xl font-bold text-green-400">
-                      £{Number(selectedSubmission?.actual_price || 0).toLocaleString()}
-                    </p>
+                  <div className="mt-1.5 text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+                    {selectedSubmission?.job_type}
+                  </div>
+                  <div className="mt-2 text-4xl sm:text-5xl font-semibold text-elec-yellow tabular-nums tracking-tight">
+                    £{Number(selectedSubmission?.actual_price || 0).toLocaleString()}
                   </div>
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Price Comparison */}
+              <div className="flex-1 overflow-y-auto p-5 space-y-6">
                 {selectedSubmission &&
                   (() => {
                     const suspicious = isPriceSuspicious(selectedSubmission);
@@ -544,170 +514,149 @@ export default function AdminPricingModeration() {
                       const diff = selectedSubmission.actual_price - avg;
                       const pct = (diff / avg) * 100;
                       return (
-                        <Card
-                          className={
-                            suspicious
-                              ? 'border-amber-500/50 bg-amber-500/5'
-                              : 'border-green-500/30 bg-green-500/5'
-                          }
-                        >
-                          <CardHeader className="pb-2">
-                            <CardTitle className="text-sm flex items-center gap-2">
-                              {suspicious ? (
-                                <AlertTriangle className="h-4 w-4 text-amber-400" />
-                              ) : (
-                                <Check className="h-4 w-4 text-green-400" />
-                              )}
+                        <div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                               Price Comparison
-                            </CardTitle>
-                          </CardHeader>
-                          <CardContent>
-                            <div className="grid grid-cols-3 gap-3 text-center">
-                              <div>
-                                <p className="text-lg font-bold">£{avg.toFixed(0)}</p>
-                                <p className="text-xs text-muted-foreground">Average</p>
-                              </div>
-                              <div>
-                                <p
-                                  className={`text-lg font-bold flex items-center justify-center gap-1 ${diff > 0 ? 'text-red-400' : 'text-green-400'}`}
-                                >
-                                  {diff > 0 ? (
-                                    <TrendingUp className="h-4 w-4" />
-                                  ) : (
-                                    <TrendingDown className="h-4 w-4" />
-                                  )}
-                                  {pct > 0 ? '+' : ''}
-                                  {pct.toFixed(0)}%
-                                </p>
-                                <p className="text-xs text-muted-foreground">Difference</p>
-                              </div>
-                              <div>
-                                <p className="text-lg font-bold">{avgData.count}</p>
-                                <p className="text-xs text-muted-foreground">Samples</p>
-                              </div>
                             </div>
-                          </CardContent>
-                        </Card>
+                            {suspicious && <Pill tone="orange">Outlier</Pill>}
+                          </div>
+                          <StatStrip
+                            columns={3}
+                            stats={[
+                              {
+                                label: 'Average',
+                                value: `£${avg.toFixed(0)}`,
+                              },
+                              {
+                                label: 'Difference',
+                                value: `${pct > 0 ? '+' : ''}${pct.toFixed(0)}%`,
+                                tone: diff > 0 ? 'red' : 'emerald',
+                              },
+                              {
+                                label: 'Samples',
+                                value: avgData.count,
+                              },
+                            ]}
+                          />
+                        </div>
                       );
                     }
                     return null;
                   })()}
 
-                {/* Submitter Info */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <User className="h-4 w-4" />
-                      Submitted By
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Name</span>
-                      <span className="text-sm">
-                        {selectedSubmission?.profiles?.full_name || 'Unknown'}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Username</span>
-                      <span className="text-sm">
-                        @{selectedSubmission?.profiles?.username || 'unknown'}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Role</span>
-                      <Badge variant="outline">
-                        {selectedSubmission?.profiles?.role || 'unknown'}
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Submitted</span>
-                      <span className="text-sm">
-                        {selectedSubmission?.created_at &&
-                          formatDistanceToNow(new Date(selectedSubmission.created_at), {
-                            addSuffix: true,
-                          })}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Job Details */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <Briefcase className="h-4 w-4" />
-                      Job Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Job Type</span>
-                      <span className="text-sm">{selectedSubmission?.job_type}</span>
-                    </div>
-                    {selectedSubmission?.postcode_district && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Postcode</span>
-                        <span className="text-sm">{selectedSubmission.postcode_district}</span>
-                      </div>
-                    )}
-                    {selectedSubmission?.completion_date && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Completed</span>
-                        <span className="text-sm">
-                          {format(new Date(selectedSubmission.completion_date), 'dd MMM yyyy')}
+                <div>
+                  <Divider label="Submitter" />
+                  <div className="mt-4 rounded-2xl border border-white/[0.06] overflow-hidden">
+                    <div className="divide-y divide-white/[0.06]">
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Name</span>
+                        <span className="text-[13px] font-medium text-white">
+                          {selectedSubmission?.profiles?.full_name || 'Unknown'}
                         </span>
                       </div>
-                    )}
-                    {selectedSubmission?.materials_cost && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Materials</span>
-                        <span className="text-sm">
-                          £{Number(selectedSubmission.materials_cost).toLocaleString()}
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Username</span>
+                        <span className="text-[13px] font-medium text-white">
+                          @{selectedSubmission?.profiles?.username || 'unknown'}
                         </span>
                       </div>
-                    )}
-                    {selectedSubmission?.labour_hours && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Labour Hours</span>
-                        <span className="text-sm">{selectedSubmission.labour_hours}h</span>
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Role</span>
+                        <Pill tone="blue">
+                          {selectedSubmission?.profiles?.role || 'unknown'}
+                        </Pill>
                       </div>
-                    )}
-                  </CardContent>
-                </Card>
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Submitted</span>
+                        <span className="text-[13px] font-medium text-white">
+                          {selectedSubmission?.created_at &&
+                            formatDistanceToNow(new Date(selectedSubmission.created_at), {
+                              addSuffix: true,
+                            })}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                {/* Description */}
+                <div>
+                  <Divider label="Job Details" />
+                  <div className="mt-4 rounded-2xl border border-white/[0.06] overflow-hidden">
+                    <div className="divide-y divide-white/[0.06]">
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Job Type</span>
+                        <span className="text-[13px] font-medium text-white">
+                          {selectedSubmission?.job_type}
+                        </span>
+                      </div>
+                      {selectedSubmission?.postcode_district && (
+                        <div className="flex items-center justify-between px-5 py-3.5">
+                          <span className="text-[12px] text-white">Postcode</span>
+                          <span className="text-[13px] font-medium text-white">
+                            {selectedSubmission.postcode_district}
+                          </span>
+                        </div>
+                      )}
+                      {selectedSubmission?.completion_date && (
+                        <div className="flex items-center justify-between px-5 py-3.5">
+                          <span className="text-[12px] text-white">Completed</span>
+                          <span className="text-[13px] font-medium text-white">
+                            {format(new Date(selectedSubmission.completion_date), 'dd MMM yyyy')}
+                          </span>
+                        </div>
+                      )}
+                      {selectedSubmission?.materials_cost != null && (
+                        <div className="flex items-center justify-between px-5 py-3.5">
+                          <span className="text-[12px] text-white">Materials</span>
+                          <span className="text-[13px] font-medium text-white tabular-nums">
+                            £{Number(selectedSubmission.materials_cost).toLocaleString()}
+                          </span>
+                        </div>
+                      )}
+                      {selectedSubmission?.labour_hours != null && (
+                        <div className="flex items-center justify-between px-5 py-3.5">
+                          <span className="text-[12px] text-white">Labour Hours</span>
+                          <span className="text-[13px] font-medium text-white tabular-nums">
+                            {selectedSubmission.labour_hours}h
+                          </span>
+                        </div>
+                      )}
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Status</span>
+                        <Pill tone={statusToTone(selectedSubmission?.verification_status ?? null)}>
+                          {selectedSubmission?.verification_status || 'pending'}
+                        </Pill>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 {selectedSubmission?.job_description && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Description</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm whitespace-pre-wrap">
-                        {selectedSubmission.job_description}
-                      </p>
-                    </CardContent>
-                  </Card>
+                  <div>
+                    <Divider label="Description" />
+                    <p className="mt-4 text-[13px] text-white whitespace-pre-wrap leading-relaxed">
+                      {selectedSubmission.job_description}
+                    </p>
+                  </div>
                 )}
 
-                {/* Status */}
-                <Card>
-                  <CardContent className="pt-4 pb-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Verification Status</span>
-                      {selectedSubmission && getStatusBadge(selectedSubmission.verification_status)}
-                    </div>
-                  </CardContent>
-                </Card>
+                {selectedSubmission?.complexity_notes && (
+                  <div>
+                    <Divider label="Complexity Notes" />
+                    <p className="mt-4 text-[13px] text-white whitespace-pre-wrap leading-relaxed">
+                      {selectedSubmission.complexity_notes}
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Action Buttons */}
               {(!selectedSubmission?.verification_status ||
                 selectedSubmission?.verification_status === 'pending') && (
-                <SheetFooter className="p-4 border-t border-border">
+                <SheetFooter className="p-4 border-t border-white/[0.06]">
                   <div className="grid grid-cols-3 gap-2 w-full">
                     <Button
-                      className="h-12 touch-manipulation bg-green-600 hover:bg-green-700"
+                      className="h-12 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
                       onClick={() =>
                         selectedSubmission && approveMutation.mutate(selectedSubmission.id)
                       }
@@ -722,7 +671,7 @@ export default function AdminPricingModeration() {
                     </Button>
                     <Button
                       variant="outline"
-                      className="h-12 touch-manipulation border-amber-500 text-amber-500"
+                      className="h-12 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
                       onClick={() =>
                         selectedSubmission && flagMutation.mutate(selectedSubmission.id)
                       }
@@ -736,8 +685,8 @@ export default function AdminPricingModeration() {
                       {flagMutation.isPending ? '...' : 'Flag'}
                     </Button>
                     <Button
-                      variant="destructive"
-                      className="h-12 touch-manipulation"
+                      variant="outline"
+                      className="h-12 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
                       onClick={() => setShowRejectDialog(true)}
                       disabled={approveMutation.isPending || flagMutation.isPending}
                     >
@@ -751,7 +700,6 @@ export default function AdminPricingModeration() {
           </SheetContent>
         </Sheet>
 
-        {/* Reject & Delete Dialog */}
         <AlertDialog
           open={showRejectDialog}
           onOpenChange={(open) => {
@@ -762,10 +710,10 @@ export default function AdminPricingModeration() {
             }
           }}
         >
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
             <AlertDialogHeader>
-              <AlertDialogTitle>Reject & Delete</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">Reject & Delete</AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 Select reason(s) for rejection. This will permanently delete the submission.
               </AlertDialogDescription>
             </AlertDialogHeader>
@@ -774,14 +722,14 @@ export default function AdminPricingModeration() {
               {REJECTION_REASONS.map((reason) => (
                 <label
                   key={reason.id}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 cursor-pointer hover:bg-muted/70 active:bg-muted/80 transition-all touch-manipulation"
+                  className="flex items-center gap-3 p-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] cursor-pointer hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                 >
                   <Checkbox
                     checked={selectedReasons.includes(reason.id)}
                     onCheckedChange={(checked) => toggleReason(reason.id, !!checked)}
-                    className="border-white/40 data-[state=checked]:bg-red-500 data-[state=checked]:border-red-500"
+                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                   />
-                  <span className="text-sm">{reason.label}</span>
+                  <span className="text-[13px] text-white">{reason.label}</span>
                 </label>
               ))}
             </div>
@@ -791,19 +739,19 @@ export default function AdminPricingModeration() {
                 value={otherReason}
                 onChange={(e) => setOtherReason(e.target.value)}
                 placeholder="Additional notes..."
-                className="min-h-[80px] text-sm"
+                className="min-h-[80px] text-sm bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white"
               />
             )}
 
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation"
+                className="h-11 touch-manipulation bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]"
                 disabled={rejectMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 onClick={() =>
                   selectedSubmission &&
                   rejectMutation.mutate({
@@ -826,7 +774,7 @@ export default function AdminPricingModeration() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

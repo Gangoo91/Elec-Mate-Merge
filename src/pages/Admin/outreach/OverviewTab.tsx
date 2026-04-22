@@ -148,7 +148,7 @@ export default function OverviewTab({
       <div>
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-white/60" />
+            <Clock className="h-4 w-4 text-white" />
             <p className="text-sm font-semibold text-white">Recent campaigns</p>
           </div>
           <Button
@@ -170,8 +170,8 @@ export default function OverviewTab({
         ) : recent.length === 0 ? (
           <Card className="border-border/30 border-dashed">
             <CardContent className="p-6 text-center">
-              <Mail className="h-8 w-8 text-white/40 mx-auto mb-2" />
-              <p className="text-sm text-white/70">No campaigns yet</p>
+              <Mail className="h-8 w-8 text-white mx-auto mb-2" />
+              <p className="text-sm text-white">No campaigns yet</p>
               <Button
                 size="sm"
                 className="mt-3 h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation"
@@ -211,12 +211,12 @@ export default function OverviewTab({
                         {c.status}
                       </Badge>
                     </div>
-                    <p className="text-xs text-white/60 truncate mt-0.5">
+                    <p className="text-xs text-white truncate mt-0.5">
                       {c.sent_count}/{c.total_recipients} sent ·{' '}
                       {formatDistanceToNow(new Date(c.created_at), { addSuffix: true })}
                     </p>
                   </div>
-                  <ArrowRight className="h-4 w-4 text-white/40 shrink-0" />
+                  <ArrowRight className="h-4 w-4 text-white shrink-0" />
                 </CardContent>
               </Card>
             ))}
@@ -251,7 +251,7 @@ function HeroBanner({
         <h2 className="text-lg font-bold text-white leading-tight">
           Get Elec-Mate in front of every UK electrical apprentice.
         </h2>
-        <p className="text-sm text-white/70 mt-1.5 leading-relaxed">
+        <p className="text-sm text-white mt-1.5 leading-relaxed">
           Start from a V1 template, or compose something new. Test send to yourself first, then
           fire to hundreds of colleges, tutors &amp; employers.
         </p>
@@ -330,7 +330,7 @@ function QuickSend() {
           </div>
           <div>
             <p className="text-sm font-semibold text-white">Quick Send</p>
-            <p className="text-[11px] text-white/60">
+            <p className="text-[11px] text-white">
               One-off test to any address — no campaign needed.
             </p>
           </div>
@@ -341,7 +341,7 @@ function QuickSend() {
             <Sparkles className="h-5 w-5 text-elec-yellow shrink-0" />
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-white">Install templates first</p>
-              <p className="text-[11px] text-white/60 mt-0.5">
+              <p className="text-[11px] text-white mt-0.5">
                 One tap, then you can Quick Send any of 5 V1 emails.
               </p>
             </div>
@@ -361,7 +361,7 @@ function QuickSend() {
         ) : (
           <div className="space-y-2.5">
             <div>
-              <Label className="text-white/80 text-xs">Template</Label>
+              <Label className="text-white text-xs">Template</Label>
               <Select value={templateSlug} onValueChange={setTemplateSlug}>
                 <SelectTrigger className="h-11 touch-manipulation rounded-xl mt-1">
                   <SelectValue placeholder="Pick a template…" />
@@ -376,7 +376,7 @@ function QuickSend() {
               </Select>
             </div>
             <div>
-              <Label className="text-white/80 text-xs">Send to</Label>
+              <Label className="text-white text-xs">Send to</Label>
               <div className="flex gap-2 mt-1">
                 <Input
                   type="email"
@@ -399,7 +399,7 @@ function QuickSend() {
                 </Button>
               </div>
             </div>
-            <p className="text-[11px] text-white/50">
+            <p className="text-[11px] text-white">
               Arrives with merge tags filled in (Sam Tutor · Sample College · London).
             </p>
           </div>
@@ -446,11 +446,11 @@ function KPICard({
             <p className="text-3xl font-bold text-white leading-none tracking-tight">
               {value === undefined || value === null ? '—' : value}
             </p>
-            <p className="text-[11px] text-white/60 uppercase tracking-wider font-semibold mt-1.5">
+            <p className="text-[11px] text-white uppercase tracking-wider font-semibold mt-1.5">
               {label}
             </p>
             {suffix && (
-              <p className="text-[11px] text-white/50 mt-0.5 truncate">{suffix}</p>
+              <p className="text-[11px] text-white mt-0.5 truncate">{suffix}</p>
             )}
           </>
         )}
@@ -484,7 +484,7 @@ function HealthStat({
   return (
     <div className="text-center">
       <p className={`text-lg font-bold ${colour}`}>{value.toLocaleString()}</p>
-      <p className="text-[10px] text-white/60 uppercase tracking-wider">{label}</p>
+      <p className="text-[10px] text-white uppercase tracking-wider">{label}</p>
     </div>
   );
 }

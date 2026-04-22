@@ -1,50 +1,24 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import {
-  Activity,
-  Database,
-  Server,
-  RefreshCw,
-  CheckCircle,
-  XCircle,
-  Clock,
-  AlertTriangle,
-  Zap,
-  Users,
-  HardDrive,
-  Wifi,
-  Shield,
-  ChevronRight,
-} from 'lucide-react';
+import { RefreshCw, Clock } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { motion } from 'framer-motion';
-import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
-import { Skeleton } from '@/components/ui/skeleton';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-
-const sectionVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
-  }),
-};
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
-
-const listItemVariants = {
-  hidden: { opacity: 0, x: -8 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
-};
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface HealthCheck {
   name: string;
@@ -55,68 +29,41 @@ interface HealthCheck {
   details?: Record<string, unknown>;
 }
 
-/** Small SVG uptime ring — 32px, 3px stroke */
-function UptimeRing({ status }: { status: HealthCheck['status'] }) {
-  const pct = status === 'healthy' ? 100 : status === 'warning' ? 75 : status === 'error' ? 0 : 50;
-  const colour =
-    status === 'healthy'
-      ? '#4ade80'
-      : status === 'warning'
-        ? '#fbbf24'
-        : status === 'error'
-          ? '#f87171'
-          : '#60a5fa';
-  const r = 13;
-  const c = 2 * Math.PI * r;
-  const offset = c - (pct / 100) * c;
-
-  return (
-    <svg width={32} height={32} viewBox="0 0 32 32" className="shrink-0">
-      <circle cx={16} cy={16} r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth={3} />
-      <circle
-        cx={16}
-        cy={16}
-        r={r}
-        fill="none"
-        stroke={colour}
-        strokeWidth={3}
-        strokeLinecap="round"
-        strokeDasharray={c}
-        strokeDashoffset={offset}
-        transform="rotate(-90 16 16)"
-      />
-      <text
-        x={16}
-        y={16}
-        textAnchor="middle"
-        dominantBaseline="central"
-        fill={colour}
-        fontSize={pct === 100 ? 8 : 9}
-        fontWeight={700}
-      >
-        {pct}
-      </text>
-    </svg>
-  );
+function statusTone(status: HealthCheck['status']): Tone {
+  switch (status) {
+    case 'healthy':
+      return 'emerald';
+    case 'warning':
+      return 'amber';
+    case 'error':
+      return 'red';
+    case 'checking':
+      return 'blue';
+  }
 }
 
-/** Response-time label with colour coding */
-function LatencyBadge({ ms }: { ms: number | undefined }) {
-  if (ms == null) return null;
-  const colour = ms < 200 ? 'text-green-400' : ms <= 500 ? 'text-amber-400' : 'text-red-400';
-  return <span className={`text-xs font-mono ${colour}`}>{ms.toFixed(0)}ms</span>;
+function statusLabel(status: HealthCheck['status']): string {
+  switch (status) {
+    case 'healthy':
+      return 'Healthy';
+    case 'warning':
+      return 'Warning';
+    case 'error':
+      return 'Error';
+    case 'checking':
+      return 'Checking';
+  }
 }
 
 function formatCount(n: number): string {
-  if (n >= 10_000) return `${(n / 1000).toFixed(1)}k`;
   if (n >= 1_000) return `${(n / 1000).toFixed(1)}k`;
   return String(n);
 }
 
 export default function AdminSystem() {
   const [selectedCheck, setSelectedCheck] = useState<HealthCheck | null>(null);
+  const [maintenanceMode, setMaintenanceMode] = useState(false);
 
-  // Main health check query
   const {
     data: healthChecks,
     isLoading,
@@ -128,7 +75,6 @@ export default function AdminSystem() {
       const checks: HealthCheck[] = [];
       const now = new Date();
 
-      // 1. Database Connection Check
       try {
         const start = performance.now();
         const { count } = await supabase
@@ -153,7 +99,6 @@ export default function AdminSystem() {
         });
       }
 
-      // 2. Auth Service Check
       try {
         const start = performance.now();
         const { data } = await supabase.auth.getSession();
@@ -178,7 +123,6 @@ export default function AdminSystem() {
         });
       }
 
-      // 3. Realtime Connection Check
       try {
         const channels = supabase.getChannels();
         checks.push({
@@ -197,7 +141,6 @@ export default function AdminSystem() {
         });
       }
 
-      // 4. Storage Check (via profiles table as proxy)
       try {
         const { count } = await supabase
           .from('profiles')
@@ -220,7 +163,6 @@ export default function AdminSystem() {
         });
       }
 
-      // 5. Recent Activity Check
       try {
         const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000);
         const { count } = await supabase
@@ -244,7 +186,6 @@ export default function AdminSystem() {
         });
       }
 
-      // 6. Table Integrity Check
       try {
         const criticalTables = ['profiles', 'global_chat_messages', 'promo_offers'];
         const tableCounts: Record<string, number> = {};
@@ -272,10 +213,9 @@ export default function AdminSystem() {
 
       return checks;
     },
-    refetchInterval: 60000, // Refresh every minute
+    refetchInterval: 60000,
   });
 
-  // Get database stats
   const { data: dbStats } = useQuery({
     queryKey: ['admin-db-stats'],
     queryFn: async () => {
@@ -300,67 +240,29 @@ export default function AdminSystem() {
     },
   });
 
-  const getStatusIcon = (status: HealthCheck['status']) => {
-    switch (status) {
-      case 'healthy':
-        return <CheckCircle className="h-5 w-5 text-green-400" />;
-      case 'warning':
-        return <AlertTriangle className="h-5 w-5 text-amber-400" />;
-      case 'error':
-        return <XCircle className="h-5 w-5 text-red-400" />;
-      case 'checking':
-        return <RefreshCw className="h-5 w-5 text-blue-400 animate-spin" />;
-    }
-  };
+  const dbCheck = healthChecks?.find((c) => c.name === 'Database Connection');
+  const authCheck = healthChecks?.find((c) => c.name === 'Auth Service');
+  const realtimeCheck = healthChecks?.find((c) => c.name === 'Realtime Service');
+  const storageCheck = healthChecks?.find((c) => c.name === 'Storage Service');
 
-  const getStatusBadge = (status: HealthCheck['status']) => {
-    switch (status) {
-      case 'healthy':
-        return (
-          <Badge className="bg-green-500/20 text-green-400 border-green-500/30">Healthy</Badge>
-        );
-      case 'warning':
-        return (
-          <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">Warning</Badge>
-        );
-      case 'error':
-        return <Badge className="bg-red-500/20 text-red-400 border-red-500/30">Error</Badge>;
-      case 'checking':
-        return <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">Checking</Badge>;
-    }
-  };
+  const dbHealthy = dbCheck?.status === 'healthy';
+  const authHealthy = authCheck?.status === 'healthy';
+  const realtimeHealthy = realtimeCheck?.status === 'healthy';
+  const storageHealthy = storageCheck?.status === 'healthy';
 
-  const getCheckIcon = (name: string) => {
-    switch (name) {
-      case 'Database Connection':
-        return <Database className="h-5 w-5" />;
-      case 'Auth Service':
-        return <Shield className="h-5 w-5" />;
-      case 'Realtime Service':
-        return <Wifi className="h-5 w-5" />;
-      case 'Storage Service':
-        return <HardDrive className="h-5 w-5" />;
-      case 'User Activity':
-        return <Users className="h-5 w-5" />;
-      case 'Critical Tables':
-        return <Server className="h-5 w-5" />;
-      default:
-        return <Activity className="h-5 w-5" />;
-    }
-  };
+  const apiLatency = dbCheck?.responseTime != null ? `${dbCheck.responseTime.toFixed(0)}ms` : '—';
 
-  const overallStatus = healthChecks?.every((c) => c.status === 'healthy')
-    ? 'healthy'
-    : healthChecks?.some((c) => c.status === 'error')
-      ? 'error'
-      : 'warning';
+  const databaseChecks = healthChecks?.filter((c) =>
+    ['Database Connection', 'Critical Tables'].includes(c.name)
+  );
+  const edgeChecks = healthChecks?.filter((c) =>
+    ['Auth Service', 'Realtime Service'].includes(c.name)
+  );
+  const infraChecks = healthChecks?.filter((c) =>
+    ['Storage Service', 'User Activity'].includes(c.name)
+  );
 
-  const statusAccentColor =
-    overallStatus === 'healthy'
-      ? 'from-green-500 to-emerald-400'
-      : overallStatus === 'error'
-        ? 'from-red-500 to-rose-400'
-        : 'from-amber-500 to-orange-400';
+  const incidents = healthChecks?.filter((c) => c.status === 'error' || c.status === 'warning');
 
   return (
     <PullToRefresh
@@ -368,274 +270,278 @@ export default function AdminSystem() {
         await refetch();
       }}
     >
-      <div className="space-y-4 pb-20">
-        <AdminPageHeader
-          title="System Health"
-          subtitle={`${healthChecks?.length || 0} services monitored`}
-          icon={Server}
-          iconColor="text-green-400"
-          iconBg="bg-green-500/10 border-green-500/20"
-          accentColor="from-green-500 via-emerald-400 to-green-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+      <PageFrame>
+        <PageHero
+          eyebrow="Tools"
+          title="System"
+          description="Infrastructure health and maintenance mode."
+          tone="green"
+          actions={
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            </IconButton>
+          }
         />
 
-        {/* Overall Status — compact bar */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={0}>
-          <div className="glass-premium rounded-2xl overflow-hidden">
-            <div className={`h-1 bg-gradient-to-r ${statusAccentColor}`} />
-            <div className="p-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                    overallStatus === 'healthy'
-                      ? 'bg-green-500/20'
-                      : overallStatus === 'error'
-                        ? 'bg-red-500/20'
-                        : 'bg-amber-500/20'
-                  }`}
-                >
-                  {overallStatus === 'healthy' ? (
-                    <CheckCircle className="h-5 w-5 text-green-400" />
-                  ) : overallStatus === 'error' ? (
-                    <XCircle className="h-5 w-5 text-red-400" />
-                  ) : (
-                    <AlertTriangle className="h-5 w-5 text-amber-400" />
-                  )}
-                </div>
-                <div>
-                  <h2 className="text-base font-semibold !text-white">
-                    {overallStatus === 'healthy'
-                      ? 'All Systems Operational'
-                      : overallStatus === 'error'
-                        ? 'System Issues Detected'
-                        : 'Performance Warnings'}
-                  </h2>
-                  <p className="text-xs !text-white">
-                    {healthChecks?.length || 0} services monitored
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-11 w-11 touch-manipulation"
-                onClick={() => refetch()}
-                disabled={isFetching}
-              >
-                <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
-              </Button>
-            </div>
-          </div>
-        </motion.section>
+        {isLoading ? (
+          <LoadingBlocks />
+        ) : (
+          <>
+            <StatStrip
+              columns={4}
+              stats={[
+                {
+                  label: 'DB',
+                  value: dbHealthy ? 'OK' : statusLabel(dbCheck?.status ?? 'checking'),
+                  tone: dbCheck ? statusTone(dbCheck.status) : 'emerald',
+                  sub: `${formatCount(dbStats?.profiles || 0)} profiles`,
+                },
+                {
+                  label: 'Edge Functions',
+                  value: authHealthy && realtimeHealthy ? 'OK' : 'Degraded',
+                  tone: authHealthy && realtimeHealthy ? 'emerald' : 'amber',
+                  sub: realtimeCheck?.message,
+                },
+                {
+                  label: 'Storage',
+                  value: storageHealthy ? 'OK' : statusLabel(storageCheck?.status ?? 'checking'),
+                  tone: storageCheck ? statusTone(storageCheck.status) : 'emerald',
+                  sub: storageCheck?.message,
+                },
+                {
+                  label: 'API Latency',
+                  value: apiLatency,
+                  tone: 'blue',
+                  sub: 'profiles head check',
+                },
+              ]}
+            />
 
-        {/* Database Stats */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1}>
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="grid grid-cols-2 sm:grid-cols-4 gap-2"
-          >
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
-            >
-              <Users className="h-5 w-5 text-blue-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-blue-400">
-                <AnimatedCounter value={dbStats?.profiles || 0} />
-              </p>
-              <p className="text-xs text-white">Profiles</p>
-            </motion.div>
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
-            >
-              <Zap className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-yellow-400">
-                <AnimatedCounter value={dbStats?.messages || 0} />
-              </p>
-              <p className="text-xs text-white">Messages</p>
-            </motion.div>
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
-            >
-              <Server className="h-5 w-5 text-green-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-green-400">
-                <AnimatedCounter value={dbStats?.offers || 0} />
-              </p>
-              <p className="text-xs text-white">Offers</p>
-            </motion.div>
-            <motion.div
-              variants={listItemVariants}
-              whileTap={{ scale: 0.97 }}
-              className="bg-white/5 rounded-xl p-3 text-center touch-manipulation"
-            >
-              <Activity className="h-5 w-5 text-amber-400 mx-auto mb-1" />
-              <p className="text-2xl sm:text-xl font-bold text-amber-400">
-                <AnimatedCounter value={dbStats?.presence || 0} />
-              </p>
-              <p className="text-xs text-white">Presence</p>
-            </motion.div>
-          </motion.div>
-        </motion.section>
+            <StatStrip
+              columns={3}
+              stats={[
+                { label: 'Reports', value: formatCount(dbStats?.reports || 0), tone: 'yellow' },
+                { label: 'Events', value: formatCount(dbStats?.events || 0), tone: 'cyan' },
+                {
+                  label: 'Active now',
+                  value: formatCount(dbStats?.presence || 0),
+                  tone: 'emerald',
+                  sub: 'last 5 minutes',
+                },
+              ]}
+            />
 
-        {/* Database Row Counts Card */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={1.5}>
-          <div className="glass-premium rounded-2xl overflow-hidden">
-            <div className="h-1 bg-gradient-to-r from-cyan-500 to-blue-400" />
-            <div className="p-4">
-              <h3 className="text-sm font-semibold !text-white flex items-center gap-2 mb-3">
-                <Database className="h-4 w-4 text-cyan-400" />
-                Database
-              </h3>
-              <p className="text-sm !text-white">
-                Profiles: {formatCount(dbStats?.profiles || 0)} &middot; Reports:{' '}
-                {formatCount(dbStats?.reports || 0)} &middot; Events:{' '}
-                {formatCount(dbStats?.events || 0)}
-              </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* Health Checks List */}
-        <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={2}>
-          <div className="glass-premium rounded-2xl overflow-hidden">
-            <div className="h-1 bg-gradient-to-r from-purple-500 to-violet-400" />
-            <div className="p-4 pb-2">
-              <h3 className="text-sm font-semibold !text-white flex items-center gap-2">
-                <Activity className="h-4 w-4 text-blue-400" />
-                Service Health Checks
-              </h3>
-            </div>
-            {isLoading ? (
-              <div className="p-4 space-y-3 animate-pulse">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <Skeleton className="w-9 h-9 rounded-lg" />
-                      <div className="space-y-1.5 flex-1">
-                        <Skeleton className="h-4 w-32" />
-                        <Skeleton className="h-3 w-48" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <motion.div variants={containerVariants} initial="hidden" animate="visible">
-                {healthChecks?.map((check, i) => (
-                  <motion.div
-                    key={i}
-                    variants={listItemVariants}
-                    className={`flex items-center justify-between p-4 min-h-[3.5rem] touch-manipulation active:bg-white/5 cursor-pointer transition-all ${i > 0 ? 'border-t border-white/[0.04]' : ''}`}
-                    onClick={() => setSelectedCheck(check)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`w-10 h-10 rounded-xl bg-white/[0.06] flex items-center justify-center ${
-                          check.status === 'healthy'
-                            ? 'text-green-400'
-                            : check.status === 'error'
-                              ? 'text-red-400'
-                              : 'text-amber-400'
-                        }`}
-                      >
-                        {getCheckIcon(check.name)}
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm !text-white">{check.name}</p>
-                        <div className="flex items-center gap-2">
-                          <p className="text-xs !text-white">{check.message}</p>
-                          {check.responseTime != null && (
-                            <LatencyBadge ms={check.responseTime} />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <UptimeRing status={check.status} />
-                      <ChevronRight className="h-4 w-4 !text-white" />
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
+            {databaseChecks && databaseChecks.length > 0 && (
+              <ListCard>
+                <ListCardHeader
+                  tone="emerald"
+                  title="Database"
+                  meta={
+                    <Pill tone={databaseChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'}>
+                      {databaseChecks.every((c) => c.status === 'healthy') ? 'Healthy' : 'Attention'}
+                    </Pill>
+                  }
+                />
+                <ListBody>
+                  {databaseChecks.map((c) => (
+                    <ListRow
+                      key={c.name}
+                      title={c.name}
+                      subtitle={c.message}
+                      trailing={<Pill tone={statusTone(c.status)}>{statusLabel(c.status)}</Pill>}
+                      onClick={() => setSelectedCheck(c)}
+                    />
+                  ))}
+                </ListBody>
+              </ListCard>
             )}
-          </div>
-        </motion.section>
 
-        {/* Check Detail Sheet */}
+            {edgeChecks && edgeChecks.length > 0 && (
+              <ListCard>
+                <ListCardHeader
+                  tone="emerald"
+                  title="Edge Functions"
+                  meta={
+                    <Pill tone={edgeChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'}>
+                      {edgeChecks.every((c) => c.status === 'healthy') ? 'Healthy' : 'Attention'}
+                    </Pill>
+                  }
+                />
+                <ListBody>
+                  {edgeChecks.map((c) => (
+                    <ListRow
+                      key={c.name}
+                      title={c.name}
+                      subtitle={c.message}
+                      trailing={<Pill tone={statusTone(c.status)}>{statusLabel(c.status)}</Pill>}
+                      onClick={() => setSelectedCheck(c)}
+                    />
+                  ))}
+                </ListBody>
+              </ListCard>
+            )}
+
+            {infraChecks && infraChecks.length > 0 && (
+              <ListCard>
+                <ListCardHeader
+                  tone="emerald"
+                  title="Storage & Activity"
+                  meta={
+                    <Pill tone={infraChecks.every((c) => c.status === 'healthy') ? 'emerald' : 'amber'}>
+                      {infraChecks.every((c) => c.status === 'healthy') ? 'Healthy' : 'Attention'}
+                    </Pill>
+                  }
+                />
+                <ListBody>
+                  {infraChecks.map((c) => (
+                    <ListRow
+                      key={c.name}
+                      title={c.name}
+                      subtitle={c.message}
+                      trailing={<Pill tone={statusTone(c.status)}>{statusLabel(c.status)}</Pill>}
+                      onClick={() => setSelectedCheck(c)}
+                    />
+                  ))}
+                </ListBody>
+              </ListCard>
+            )}
+
+            <ListCard>
+              <ListCardHeader
+                tone="amber"
+                title="Maintenance mode"
+                meta={
+                  <Pill tone={maintenanceMode ? 'amber' : 'emerald'}>
+                    {maintenanceMode ? 'Enabled' : 'Disabled'}
+                  </Pill>
+                }
+              />
+              <ListBody>
+                <ListRow
+                  title="Global maintenance banner"
+                  subtitle="Blocks writes and shows a banner to all users. Use during deploys or DB migrations."
+                  trailing={
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={maintenanceMode}
+                      onClick={() => setMaintenanceMode((v) => !v)}
+                      className={`relative inline-flex h-7 w-12 shrink-0 cursor-pointer items-center rounded-full border border-white/[0.08] transition-colors touch-manipulation ${
+                        maintenanceMode ? 'bg-elec-yellow' : 'bg-white/[0.06]'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                          maintenanceMode ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  }
+                />
+              </ListBody>
+            </ListCard>
+
+            <ListCard>
+              <ListCardHeader
+                tone={incidents && incidents.length > 0 ? 'orange' : 'emerald'}
+                title="Recent incidents"
+                meta={
+                  <Pill tone={incidents && incidents.length > 0 ? 'orange' : 'emerald'}>
+                    {incidents?.length ?? 0}
+                  </Pill>
+                }
+              />
+              {incidents && incidents.length > 0 ? (
+                <ListBody>
+                  {incidents.map((c) => (
+                    <ListRow
+                      key={c.name}
+                      title={c.name}
+                      subtitle={`${c.message} · ${formatDistanceToNow(c.lastChecked, { addSuffix: true })}`}
+                      trailing={<Pill tone={statusTone(c.status)}>{statusLabel(c.status)}</Pill>}
+                      onClick={() => setSelectedCheck(c)}
+                    />
+                  ))}
+                </ListBody>
+              ) : (
+                <EmptyState
+                  title="No incidents"
+                  description="All services have been operating normally."
+                />
+              )}
+            </ListCard>
+          </>
+        )}
+
         <Sheet open={!!selectedCheck} onOpenChange={() => setSelectedCheck(null)}>
-          <SheetContent side="bottom" className="h-[60vh] rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="h-[60vh] rounded-t-2xl p-0 bg-[hsl(0_0%_12%)] border-white/[0.06]">
             <div className="flex flex-col h-full">
-              {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2">
                 <div className="w-12 h-1.5 bg-white/20 rounded-full" />
               </div>
 
-              <SheetHeader className="px-4 pb-4 border-b border-white/[0.06]">
-                <SheetTitle className="flex items-center gap-3">
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      selectedCheck?.status === 'healthy'
-                        ? 'bg-green-500/20 text-green-400'
-                        : selectedCheck?.status === 'error'
-                          ? 'bg-red-500/20 text-red-400'
-                          : 'bg-amber-500/20 text-amber-400'
-                    }`}
-                  >
-                    {selectedCheck && getCheckIcon(selectedCheck.name)}
-                  </div>
-                  <div>
-                    <p className="text-left">{selectedCheck?.name}</p>
-                    <div className="mt-1">
-                      {selectedCheck && getStatusBadge(selectedCheck.status)}
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="flex items-center justify-between gap-3 text-left">
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                      Service check
+                    </div>
+                    <div className="mt-1.5 text-xl font-semibold text-white tracking-tight">
+                      {selectedCheck?.name}
                     </div>
                   </div>
+                  {selectedCheck && (
+                    <Pill tone={statusTone(selectedCheck.status)}>
+                      {statusLabel(selectedCheck.status)}
+                    </Pill>
+                  )}
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <div className="glass-premium rounded-2xl overflow-hidden p-4">
-                  <h4 className="text-sm font-semibold !text-white mb-2">Status Message</h4>
-                  <p className="text-sm !text-white">{selectedCheck?.message}</p>
-                </div>
+              <div className="flex-1 overflow-y-auto p-5 space-y-4">
+                <ListCard>
+                  <ListCardHeader title="Status message" />
+                  <div className="px-5 py-4 text-sm text-white">{selectedCheck?.message}</div>
+                </ListCard>
 
                 {selectedCheck?.details && Object.keys(selectedCheck.details).length > 0 && (
-                  <div className="glass-premium rounded-2xl overflow-hidden p-4 space-y-2">
-                    <h4 className="text-sm font-semibold !text-white mb-2">Details</h4>
-                    {Object.entries(selectedCheck.details).map(([key, value]) => (
-                      <div key={key} className="flex justify-between">
-                        <span className="text-sm !text-white capitalize">
-                          {key.replace(/([A-Z])/g, ' $1').trim()}
-                        </span>
-                        <span className="text-sm font-mono">
-                          {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  <ListCard>
+                    <ListCardHeader title="Details" />
+                    <ListBody>
+                      {Object.entries(selectedCheck.details).map(([key, value]) => (
+                        <ListRow
+                          key={key}
+                          title={key.replace(/([A-Z])/g, ' $1').trim()}
+                          trailing={
+                            <span className="text-sm font-mono text-white tabular-nums">
+                              {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                            </span>
+                          }
+                        />
+                      ))}
+                    </ListBody>
+                  </ListCard>
                 )}
 
-                <div className="glass-premium rounded-2xl overflow-hidden p-4">
-                  <h4 className="text-sm font-semibold !text-white flex items-center gap-2 mb-2">
-                    <Clock className="h-4 w-4" />
-                    Last Checked
-                  </h4>
-                  <p className="text-sm !text-white">
+                <ListCard>
+                  <ListCardHeader
+                    title={
+                      <span className="flex items-center gap-2">
+                        <Clock className="h-4 w-4" />
+                        Last checked
+                      </span>
+                    }
+                  />
+                  <div className="px-5 py-4 text-sm text-white">
                     {selectedCheck?.lastChecked &&
                       formatDistanceToNow(selectedCheck.lastChecked, { addSuffix: true })}
-                  </p>
-                </div>
+                  </div>
+                </ListCard>
               </div>
             </div>
           </SheetContent>
         </Sheet>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

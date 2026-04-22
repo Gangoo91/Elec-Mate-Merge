@@ -1,13 +1,8 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -21,37 +16,32 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import {
-  BadgeCheck,
-  IdCard,
   ShieldCheck,
   ShieldX,
-  Eye,
-  Award,
-  CheckCircle,
-  XCircle,
-  Clock,
-  ChevronRight,
-  Briefcase,
-  GraduationCap,
   Loader2,
   RefreshCw,
-  CheckSquare,
-  Square,
   Download,
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
-import { Skeleton } from '@/components/ui/skeleton';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  Divider,
+  Eyebrow,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface ElecIdProfile {
   id: string;
@@ -74,14 +64,21 @@ interface ElecIdProfile {
     full_name: string;
     username: string;
     role: string;
-  };
+  } | null;
+}
+
+function getInitials(name?: string | null) {
+  if (!name) return '--';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
 export default function AdminElecIds() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState<string>('pending');
   const [selectedProfile, setSelectedProfile] = useState<ElecIdProfile | null>(null);
   const [rejectReason, setRejectReason] = useState('');
   const [showRejectDialog, setShowRejectDialog] = useState(false);
@@ -90,7 +87,6 @@ export default function AdminElecIds() {
   const [showBulkRejectDialog, setShowBulkRejectDialog] = useState(false);
   const [bulkRejectReason, setBulkRejectReason] = useState('');
 
-  // Fetch Elec-ID profiles - live updates every 30 seconds
   const {
     data: elecIds,
     isLoading,
@@ -102,13 +98,12 @@ export default function AdminElecIds() {
     refetchOnWindowFocus: true,
     staleTime: 0,
     queryFn: async () => {
-      // Step 1: Fetch Elec-ID profiles
       let query = supabase
         .from('employer_elec_id_profiles')
         .select('*')
         .order('created_at', { ascending: false });
 
-      if (statusFilter === 'verified') {
+      if (statusFilter === 'approved') {
         query = query.eq('is_verified', true);
       } else if (statusFilter === 'pending') {
         query = query.eq('is_verified', false);
@@ -123,8 +118,6 @@ export default function AdminElecIds() {
         return [];
       }
 
-      // Step 2: Fetch employee records to get user_ids
-      // employee_id in employer_elec_id_profiles references employer_employees.id
       const employeeIds = elecIdData.map((p) => p.employee_id).filter(Boolean);
       const { data: employeesData, error: employeesError } = await supabase
         .from('employer_employees')
@@ -135,10 +128,8 @@ export default function AdminElecIds() {
         console.error('Error fetching employees:', employeesError);
       }
 
-      // Create a map of employee_id -> user_id
       const employeeToUserMap = new Map(employeesData?.map((e) => [e.id, e.user_id]) || []);
 
-      // Step 3: Fetch profile data for all user_ids
       const userIds = employeesData?.map((e) => e.user_id).filter(Boolean) || [];
       const { data: profilesData, error: profilesError } = await supabase
         .from('profiles')
@@ -149,7 +140,6 @@ export default function AdminElecIds() {
         console.error('Error fetching profiles:', profilesError);
       }
 
-      // Create a map of user_id -> profile data
       const profilesMap = new Map(
         profilesData?.map((p) => [
           p.id,
@@ -157,7 +147,6 @@ export default function AdminElecIds() {
         ]) || []
       );
 
-      // Step 4: Merge the data
       let merged = elecIdData.map((elecId) => {
         const userId = employeeToUserMap.get(elecId.employee_id);
         const profile = userId ? profilesMap.get(userId) : null;
@@ -167,7 +156,6 @@ export default function AdminElecIds() {
         };
       }) as ElecIdProfile[];
 
-      // Filter by search
       if (search) {
         const searchLower = search.toLowerCase();
         merged = merged.filter(
@@ -182,14 +170,16 @@ export default function AdminElecIds() {
     },
   });
 
-  // Fetch stats - live updates every 30 seconds
   const { data: stats } = useQuery({
     queryKey: ['admin-elec-id-stats'],
     refetchInterval: 30000,
     refetchOnWindowFocus: true,
     staleTime: 0,
     queryFn: async () => {
-      const [totalRes, verifiedRes, activatedRes, hireableRes] = await Promise.all([
+      const todayIso = new Date();
+      todayIso.setHours(0, 0, 0, 0);
+
+      const [totalRes, verifiedRes, activatedRes, pendingRes, todayRes] = await Promise.all([
         supabase.from('employer_elec_id_profiles').select('*', { count: 'exact', head: true }),
         supabase
           .from('employer_elec_id_profiles')
@@ -202,19 +192,23 @@ export default function AdminElecIds() {
         supabase
           .from('employer_elec_id_profiles')
           .select('*', { count: 'exact', head: true })
-          .eq('available_for_hire', true),
+          .eq('is_verified', false),
+        supabase
+          .from('employer_elec_id_profiles')
+          .select('*', { count: 'exact', head: true })
+          .gte('created_at', todayIso.toISOString()),
       ]);
 
       return {
         total: totalRes.count || 0,
         verified: verifiedRes.count || 0,
         activated: activatedRes.count || 0,
-        hireable: hireableRes.count || 0,
+        pending: pendingRes.count || 0,
+        today: todayRes.count || 0,
       };
     },
   });
 
-  // Approve mutation via edge function
   const approveMutation = useMutation({
     mutationFn: async (id: string) => {
       const { data, error } = await supabase.functions.invoke('admin-verify-elecid', {
@@ -236,7 +230,6 @@ export default function AdminElecIds() {
     },
   });
 
-  // Reject mutation via edge function
   const rejectMutation = useMutation({
     mutationFn: async ({ id, reason }: { id: string; reason: string }) => {
       const { data, error } = await supabase.functions.invoke('admin-verify-elecid', {
@@ -260,7 +253,6 @@ export default function AdminElecIds() {
     },
   });
 
-  // Bulk approve mutation
   const bulkApproveMutation = useMutation({
     mutationFn: async (ids: string[]) => {
       const results = await Promise.allSettled(
@@ -293,7 +285,6 @@ export default function AdminElecIds() {
     },
   });
 
-  // Bulk reject mutation
   const bulkRejectMutation = useMutation({
     mutationFn: async ({ ids, reason }: { ids: string[]; reason: string }) => {
       const results = await Promise.allSettled(
@@ -355,17 +346,11 @@ export default function AdminElecIds() {
     URL.revokeObjectURL(url);
   };
 
-  // Selection helpers
-  const pendingProfiles = elecIds?.filter((p) => !p.is_verified) || [];
-  const toggleSelect = (id: string) => {
-    const newSet = new Set(selectedIds);
-    if (newSet.has(id)) {
-      newSet.delete(id);
-    } else {
-      newSet.add(id);
-    }
-    setSelectedIds(newSet);
-  };
+  const pendingProfiles = useMemo(
+    () => elecIds?.filter((p) => !p.is_verified) || [],
+    [elecIds]
+  );
+
   const selectAllPending = () => {
     setSelectedIds(new Set(pendingProfiles.map((p) => p.id)));
   };
@@ -373,39 +358,46 @@ export default function AdminElecIds() {
     setSelectedIds(new Set());
   };
 
-  const getVerificationBadge = (profile: ElecIdProfile) => {
-    if (profile.is_verified) {
-      return (
-        <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-          <ShieldCheck className="h-3 w-3 mr-1" />
-          Verified
-        </Badge>
-      );
-    }
-    return (
-      <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 text-xs">
-        <Clock className="h-3 w-3 mr-1" />
-        Pending
-      </Badge>
-    );
+  const statusTone = (profile: ElecIdProfile): Tone => {
+    if (profile.is_verified) return 'emerald';
+    return 'orange';
   };
 
-  const getTierBadge = (tier: string | null) => {
+  const statusLabel = (profile: ElecIdProfile) => {
+    if (profile.is_verified) return 'Verified';
+    return 'Pending';
+  };
+
+  const tierTone = (tier: string | null): Tone => {
     switch (tier) {
       case 'gold':
-        return <Badge className="bg-yellow-500/20 text-yellow-400 text-xs">Gold</Badge>;
+        return 'yellow';
       case 'silver':
-        return <Badge className="bg-gray-400/20 text-gray-300 text-xs">Silver</Badge>;
+        return 'cyan';
       case 'bronze':
-        return <Badge className="bg-orange-600/20 text-orange-400 text-xs">Bronze</Badge>;
+        return 'orange';
       default:
-        return (
-          <Badge variant="outline" className="text-xs">
-            Standard
-          </Badge>
-        );
+        return 'blue';
     }
   };
+
+  const headerTitle =
+    statusFilter === 'pending'
+      ? 'Pending Verification'
+      : statusFilter === 'approved'
+        ? 'Approved Profiles'
+        : statusFilter === 'activated'
+          ? 'Activated Profiles'
+          : 'All Profiles';
+
+  const headerTone: Tone =
+    statusFilter === 'pending'
+      ? 'orange'
+      : statusFilter === 'approved'
+        ? 'emerald'
+        : statusFilter === 'activated'
+          ? 'yellow'
+          : 'blue';
 
   return (
     <PullToRefresh
@@ -413,452 +405,326 @@ export default function AdminElecIds() {
         await refetch();
       }}
     >
-      <div className="space-y-6 pb-20">
-        <AdminPageHeader
-          title="Elec-ID Management"
-          subtitle={`${stats?.total || 0} profiles`}
-          icon={BadgeCheck}
-          iconColor="text-blue-400"
-          iconBg="bg-blue-500/10 border-blue-500/20"
-          accentColor="from-blue-500 via-blue-400 to-cyan-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+      <PageFrame>
+        <PageHero
+          eyebrow="Moderation"
+          title="Elec-IDs"
+          description="Verify electrician qualifications and competent-person scheme status."
+          tone="blue"
+          actions={
+            <>
+              <IconButton onClick={exportCSV} aria-label="Export CSV">
+                <Download className="h-4 w-4" />
+              </IconButton>
+              <IconButton
+                onClick={() => refetch()}
+                disabled={isFetching}
+                aria-label="Refresh"
+              >
+                <RefreshCw className={isFetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
+              </IconButton>
+            </>
+          }
         />
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <Card className="bg-gradient-to-br from-cyan-500/10 to-cyan-600/5 border-cyan-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{stats?.total || 0}</p>
-                  <p className="text-xs text-muted-foreground">Total Profiles</p>
-                </div>
-                <IdCard className="h-6 w-6 text-cyan-400" />
-              </div>
-            </CardContent>
-          </Card>
+        <StatStrip
+          columns={4}
+          stats={[
+            {
+              label: 'Queue',
+              value: stats?.pending ?? 0,
+              tone: 'orange',
+              onClick: () => setStatusFilter('pending'),
+            },
+            {
+              label: 'Today',
+              value: stats?.today ?? 0,
+              tone: 'blue',
+            },
+            {
+              label: 'Approved',
+              value: stats?.verified ?? 0,
+              tone: 'emerald',
+              onClick: () => setStatusFilter('approved'),
+            },
+            {
+              label: 'Activated',
+              value: stats?.activated ?? 0,
+              tone: 'yellow',
+              onClick: () => setStatusFilter('activated'),
+            },
+          ]}
+        />
 
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{stats?.verified || 0}</p>
-                  <p className="text-xs text-muted-foreground">Verified</p>
-                </div>
-                <ShieldCheck className="h-6 w-6 text-green-400" />
-              </div>
-            </CardContent>
-          </Card>
+        <FilterBar
+          tabs={[
+            { value: 'pending', label: 'Pending', count: stats?.pending },
+            { value: 'approved', label: 'Approved', count: stats?.verified },
+            { value: 'activated', label: 'Activated', count: stats?.activated },
+            { value: 'all', label: 'All', count: stats?.total },
+          ]}
+          activeTab={statusFilter}
+          onTabChange={setStatusFilter}
+          search={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search name, Elec-ID, ECS..."
+        />
 
-          <Card className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-yellow-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{stats?.activated || 0}</p>
-                  <p className="text-xs text-muted-foreground">Activated</p>
-                </div>
-                <CheckCircle className="h-6 w-6 text-yellow-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20">
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold">{stats?.hireable || 0}</p>
-                  <p className="text-xs text-muted-foreground">For Hire</p>
-                </div>
-                <Briefcase className="h-6 w-6 text-blue-400" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Filters */}
-        <Card>
-          <CardContent className="pt-4 pb-4">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <AdminSearchInput
-                value={search}
-                onChange={setSearch}
-                placeholder="Search name, Elec-ID, ECS..."
-                className="flex-1"
-              />
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="verified">Verified</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="activated">Activated</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-11 w-11 touch-manipulation shrink-0"
-                onClick={exportCSV}
-                title="Export CSV"
+        {pendingProfiles.length > 0 && statusFilter === 'pending' && (
+          <div className="flex flex-wrap items-center justify-between gap-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 sm:px-5 py-3">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={
+                  selectedIds.size === pendingProfiles.length && selectedIds.size > 0
+                    ? clearSelection
+                    : selectAllPending
+                }
+                className="h-11 px-4 rounded-full border border-white/[0.08] text-[12.5px] font-medium text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
               >
-                <Download className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-11 w-11 touch-manipulation shrink-0"
-                onClick={() => refetch()}
-              >
-                <RefreshCw className="h-4 w-4" />
-              </Button>
+                {selectedIds.size === pendingProfiles.length && selectedIds.size > 0
+                  ? 'Clear selection'
+                  : `Select all (${pendingProfiles.length})`}
+              </button>
+              {selectedIds.size > 0 && (
+                <span className="text-[12px] text-white">{selectedIds.size} selected</span>
+              )}
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Bulk Actions Bar */}
-        {pendingProfiles.length > 0 && (
-          <Card className={selectedIds.size > 0 ? 'border-cyan-500/30 bg-cyan-500/5' : ''}>
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center justify-between gap-3 flex-wrap">
-                <div className="flex items-center gap-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-11 touch-manipulation gap-2"
-                    onClick={
-                      selectedIds.size === pendingProfiles.length
-                        ? clearSelection
-                        : selectAllPending
-                    }
-                  >
-                    {selectedIds.size === pendingProfiles.length ? (
-                      <>
-                        <CheckSquare className="h-4 w-4" />
-                        Deselect All
-                      </>
-                    ) : (
-                      <>
-                        <Square className="h-4 w-4" />
-                        Select All Pending ({pendingProfiles.length})
-                      </>
-                    )}
-                  </Button>
-                  {selectedIds.size > 0 && (
-                    <span className="text-sm text-muted-foreground">
-                      {selectedIds.size} selected
-                    </span>
-                  )}
-                </div>
-                {selectedIds.size > 0 && (
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-11 touch-manipulation gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10"
-                      onClick={() => setShowBulkRejectDialog(true)}
-                      disabled={bulkRejectMutation.isPending}
-                    >
-                      <ShieldX className="h-4 w-4" />
-                      Reject ({selectedIds.size})
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="h-11 touch-manipulation gap-2 bg-green-500 hover:bg-green-600"
-                      onClick={() => setShowBulkApproveDialog(true)}
-                      disabled={bulkApproveMutation.isPending}
-                    >
-                      <ShieldCheck className="h-4 w-4" />
-                      Approve ({selectedIds.size})
-                    </Button>
-                  </div>
-                )}
+            {selectedIds.size > 0 && (
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setShowBulkRejectDialog(true)}
+                  disabled={bulkRejectMutation.isPending}
+                  className="h-11 px-4 rounded-full border border-white/[0.08] text-[12.5px] font-medium text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50"
+                >
+                  Reject ({selectedIds.size})
+                </button>
+                <button
+                  onClick={() => setShowBulkApproveDialog(true)}
+                  disabled={bulkApproveMutation.isPending}
+                  className="h-11 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50"
+                >
+                  Approve ({selectedIds.size})
+                </button>
               </div>
-            </CardContent>
-          </Card>
+            )}
+          </div>
         )}
 
-        {/* Elec-ID List */}
         {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <LoadingBlocks />
         ) : elecIds?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={IdCard}
-                title="No Elec-ID profiles found"
-                description="Elec-ID profiles will appear here as users create them."
-              />
-            </CardContent>
-          </Card>
+          <EmptyState
+            title="Queue is empty"
+            description="All submissions reviewed."
+          />
         ) : (
-          <div className="space-y-2">
-            {elecIds?.map((profile) => (
-              <Card
-                key={profile.id}
-                className={`touch-manipulation active:scale-[0.99] transition-transform cursor-pointer ${
-                  selectedIds.has(profile.id) ? 'border-cyan-500/50 bg-cyan-500/5' : ''
-                }`}
-                onClick={() => setSelectedProfile(profile)}
-              >
-                <CardContent className="pt-4 pb-4">
-                  <div className="flex items-start sm:items-center justify-between gap-2">
-                    <div className="flex items-start sm:items-center gap-3 min-w-0 flex-1">
-                      {/* Checkbox for pending profiles - larger touch target */}
-                      {!profile.is_verified && (
-                        <div className="pt-1 sm:pt-0">
-                          <Checkbox
-                            checked={selectedIds.has(profile.id)}
-                            onCheckedChange={() => toggleSelect(profile.id)}
-                            onClick={(e) => e.stopPropagation()}
-                            className="h-5 w-5 shrink-0 border-cyan-500/50 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
-                          />
-                        </div>
+          <ListCard>
+            <ListCardHeader
+              tone={headerTone}
+              title={headerTitle}
+              meta={
+                <Pill tone={headerTone}>
+                  {elecIds?.length ?? 0}
+                </Pill>
+              }
+            />
+            <ListBody>
+              {elecIds?.map((profile) => (
+                <ListRow
+                  key={profile.id}
+                  lead={
+                    <Avatar
+                      initials={getInitials(profile.profiles?.full_name)}
+                    />
+                  }
+                  title={profile.profiles?.full_name || 'Unknown'}
+                  subtitle={
+                    <span className="tabular-nums">
+                      {profile.elec_id_number || 'No ID'}
+                      {profile.ecs_card_type ? ` \u00b7 ${profile.ecs_card_type}` : ''}
+                      {profile.created_at
+                        ? ` \u00b7 submitted ${formatDistanceToNow(new Date(profile.created_at), { addSuffix: true })}`
+                        : ''}
+                    </span>
+                  }
+                  trailing={
+                    <>
+                      {profile.verification_tier && (
+                        <Pill tone={tierTone(profile.verification_tier)}>
+                          {profile.verification_tier}
+                        </Pill>
                       )}
-                      <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center shrink-0">
-                        <IdCard className="h-5 w-5 text-cyan-400" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-sm sm:text-base line-clamp-2 sm:truncate">
-                          {profile.profiles?.full_name || 'Unknown'}
-                        </p>
-                        <div className="flex flex-wrap items-center gap-1 sm:gap-2 mt-0.5">
-                          <span className="text-xs text-muted-foreground font-mono">
-                            {profile.elec_id_number || 'No ID'}
-                          </span>
-                          {profile.ecs_card_type && (
-                            <Badge variant="outline" className="text-xs sm:text-xs py-0">
-                              {profile.ecs_card_type}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <div className="flex flex-col items-end gap-1">
-                        {getVerificationBadge(profile)}
-                        {profile.verification_tier && getTierBadge(profile.verification_tier)}
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground hidden sm:block" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                      <Pill tone={statusTone(profile)}>{statusLabel(profile)}</Pill>
+                    </>
+                  }
+                  onClick={() => setSelectedProfile(profile)}
+                  accent={selectedIds.has(profile.id) ? 'yellow' : undefined}
+                />
+              ))}
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* Profile Detail Sheet */}
         <Sheet open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_8%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
-              {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
 
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-500/20 flex items-center justify-center">
-                    <IdCard className="h-6 w-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <p className="text-left">{selectedProfile?.profiles?.full_name}</p>
-                    <p className="text-sm font-normal text-muted-foreground font-mono">
-                      {selectedProfile?.elec_id_number || 'No Elec-ID'}
-                    </p>
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle asChild>
+                  <div className="flex items-center gap-3 text-left">
+                    <Avatar initials={getInitials(selectedProfile?.profiles?.full_name)} />
+                    <div className="min-w-0 flex-1">
+                      <div className="text-[15px] font-semibold text-white truncate">
+                        {selectedProfile?.profiles?.full_name || 'Unknown'}
+                      </div>
+                      <div className="text-[12px] text-white tabular-nums truncate">
+                        {selectedProfile?.elec_id_number || 'No Elec-ID'}
+                      </div>
+                    </div>
+                    {selectedProfile && (
+                      <Pill tone={statusTone(selectedProfile)}>
+                        {statusLabel(selectedProfile)}
+                      </Pill>
+                    )}
                   </div>
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Status Cards */}
-                <div className="grid grid-cols-2 gap-3">
-                  <Card
-                    className={
-                      selectedProfile?.is_verified ? 'border-green-500/30' : 'border-amber-500/30'
-                    }
-                  >
-                    <CardContent className="pt-3 pb-3">
-                      <div className="flex items-center gap-2">
-                        {selectedProfile?.is_verified ? (
-                          <CheckCircle className="h-5 w-5 text-green-400" />
-                        ) : (
-                          <Clock className="h-5 w-5 text-amber-400" />
-                        )}
-                        <div>
-                          <p className="text-sm font-medium">
-                            {selectedProfile?.is_verified ? 'Verified' : 'Pending'}
-                          </p>
-                          {selectedProfile?.verified_at && (
-                            <p className="text-xs text-muted-foreground">
-                              {format(new Date(selectedProfile.verified_at), 'dd MMM yyyy')}
-                            </p>
-                          )}
-                        </div>
+              <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
+                <div className="grid grid-cols-2 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
+                  <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
+                    <Eyebrow>Verification</Eyebrow>
+                    <div className="mt-2 text-[15px] font-semibold text-white">
+                      {selectedProfile?.is_verified ? 'Verified' : 'Pending'}
+                    </div>
+                    {selectedProfile?.verified_at && (
+                      <div className="mt-1 text-[11px] text-white">
+                        {format(new Date(selectedProfile.verified_at), 'dd MMM yyyy')}
                       </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card
-                    className={selectedProfile?.activated ? 'border-yellow-500/30' : 'border-muted'}
-                  >
-                    <CardContent className="pt-3 pb-3">
-                      <div className="flex items-center gap-2">
-                        {selectedProfile?.activated ? (
-                          <CheckCircle className="h-5 w-5 text-yellow-400" />
-                        ) : (
-                          <XCircle className="h-5 w-5 text-muted-foreground" />
-                        )}
-                        <div>
-                          <p className="text-sm font-medium">
-                            {selectedProfile?.activated ? 'Activated' : 'Not Active'}
-                          </p>
-                          {selectedProfile?.activated_at && (
-                            <p className="text-xs text-muted-foreground">
-                              {format(new Date(selectedProfile.activated_at), 'dd MMM yyyy')}
-                            </p>
-                          )}
-                        </div>
+                    )}
+                  </div>
+                  <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
+                    <Eyebrow>Activation</Eyebrow>
+                    <div className="mt-2 text-[15px] font-semibold text-white">
+                      {selectedProfile?.activated ? 'Active' : 'Not active'}
+                    </div>
+                    {selectedProfile?.activated_at && (
+                      <div className="mt-1 text-[11px] text-white">
+                        {format(new Date(selectedProfile.activated_at), 'dd MMM yyyy')}
                       </div>
-                    </CardContent>
-                  </Card>
+                    )}
+                  </div>
                 </div>
 
-                {/* ECS Card Details */}
                 {selectedProfile?.ecs_card_number && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm flex items-center gap-2">
-                        <Award className="h-4 w-4 text-yellow-400" />
-                        ECS Card
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Type</span>
-                        <span className="text-sm font-medium">{selectedProfile.ecs_card_type}</span>
+                  <div>
+                    <Divider label="ECS Card" />
+                    <div className="mt-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl divide-y divide-white/[0.06]">
+                      <div className="flex items-center justify-between px-4 py-3">
+                        <span className="text-[12px] text-white">Type</span>
+                        <span className="text-[13px] font-medium text-white">
+                          {selectedProfile.ecs_card_type}
+                        </span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Number</span>
-                        <span className="text-sm font-mono">{selectedProfile.ecs_card_number}</span>
+                      <div className="flex items-center justify-between px-4 py-3">
+                        <span className="text-[12px] text-white">Number</span>
+                        <span className="text-[13px] font-mono text-white tabular-nums">
+                          {selectedProfile.ecs_card_number}
+                        </span>
                       </div>
                       {selectedProfile.ecs_expiry_date && (
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Expires</span>
-                          <span className="text-sm">
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <span className="text-[12px] text-white">Expires</span>
+                          <span className="text-[13px] text-white tabular-nums">
                             {format(new Date(selectedProfile.ecs_expiry_date), 'dd MMM yyyy')}
                           </span>
                         </div>
                       )}
-                    </CardContent>
-                  </Card>
+                      {selectedProfile.verification_tier && (
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <span className="text-[12px] text-white">Tier</span>
+                          <Pill tone={tierTone(selectedProfile.verification_tier)}>
+                            {selectedProfile.verification_tier}
+                          </Pill>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 )}
 
-                {/* Profile Stats */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <Eye className="h-4 w-4 text-blue-400" />
-                      Profile Stats
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Profile Views</span>
-                      <span className="text-sm font-medium">
+                <div>
+                  <Divider label="Profile" />
+                  <div className="mt-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl divide-y divide-white/[0.06]">
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <span className="text-[12px] text-white">Profile views</span>
+                      <span className="text-[13px] font-semibold text-white tabular-nums">
                         {selectedProfile?.profile_views || 0}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Available for Hire</span>
-                      <span className="text-sm">
-                        {selectedProfile?.available_for_hire ? (
-                          <Badge className="bg-green-500/20 text-green-400 text-xs">Yes</Badge>
-                        ) : (
-                          <Badge variant="outline" className="text-xs">
-                            No
-                          </Badge>
-                        )}
-                      </span>
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <span className="text-[12px] text-white">Available for hire</span>
+                      <Pill tone={selectedProfile?.available_for_hire ? 'emerald' : 'blue'}>
+                        {selectedProfile?.available_for_hire ? 'Yes' : 'No'}
+                      </Pill>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Created</span>
-                      <span className="text-sm">
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <span className="text-[12px] text-white">Submitted</span>
+                      <span className="text-[13px] text-white">
                         {selectedProfile?.created_at &&
                           formatDistanceToNow(new Date(selectedProfile.created_at), {
                             addSuffix: true,
                           })}
                       </span>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
 
-                {/* Specialisations */}
                 {selectedProfile?.specialisations && selectedProfile.specialisations.length > 0 && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm flex items-center gap-2">
-                        <GraduationCap className="h-4 w-4 text-yellow-400" />
-                        Specialisations
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedProfile.specialisations.map((spec, i) => (
-                          <Badge key={i} variant="outline" className="text-xs">
-                            {spec}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <div>
+                    <Divider label="Specialisations" />
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {selectedProfile.specialisations.map((spec, i) => (
+                        <Pill key={i} tone="blue">
+                          {spec}
+                        </Pill>
+                      ))}
+                    </div>
+                  </div>
                 )}
 
-                {/* Bio */}
                 {selectedProfile?.bio && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm">Bio</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground">{selectedProfile.bio}</p>
-                    </CardContent>
-                  </Card>
+                  <div>
+                    <Divider label="Bio" />
+                    <p className="mt-3 text-[13px] leading-relaxed text-white">
+                      {selectedProfile.bio}
+                    </p>
+                  </div>
                 )}
               </div>
 
-              {/* Action Buttons for pending profiles */}
               {selectedProfile && !selectedProfile.is_verified && (
-                <SheetFooter className="p-4 border-t border-border">
+                <SheetFooter className="p-4 border-t border-white/[0.06]">
                   <div className="flex gap-3 w-full">
-                    <Button
-                      variant="outline"
-                      className="flex-1 h-12 touch-manipulation gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10"
+                    <button
                       onClick={() => setShowRejectDialog(true)}
                       disabled={approveMutation.isPending}
+                      className="flex-1 h-12 rounded-full border border-white/[0.08] text-[13px] font-medium text-white hover:bg-white/[0.04] transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
                     >
                       <ShieldX className="h-4 w-4" />
                       Reject
-                    </Button>
-                    <Button
-                      className="flex-1 h-12 touch-manipulation gap-2 bg-green-500 hover:bg-green-600"
-                      onClick={() => selectedProfile && approveMutation.mutate(selectedProfile.id)}
+                    </button>
+                    <button
+                      onClick={() =>
+                        selectedProfile && approveMutation.mutate(selectedProfile.id)
+                      }
                       disabled={approveMutation.isPending}
+                      className="flex-1 h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
                     >
                       {approveMutation.isPending ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -866,20 +732,20 @@ export default function AdminElecIds() {
                         <ShieldCheck className="h-4 w-4" />
                       )}
                       {approveMutation.isPending ? 'Approving...' : 'Verify'}
-                    </Button>
+                    </button>
                   </div>
                 </SheetFooter>
               )}
+
             </div>
           </SheetContent>
         </Sheet>
 
-        {/* Reject Dialog */}
         <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06] text-white">
             <AlertDialogHeader>
-              <AlertDialogTitle>Reject Verification?</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">Reject Verification?</AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 Please provide a reason for rejection. This will be sent to the user.
               </AlertDialogDescription>
             </AlertDialogHeader>
@@ -887,17 +753,17 @@ export default function AdminElecIds() {
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
               placeholder="Enter rejection reason..."
-              className="min-h-[100px]"
+              className="min-h-[100px] bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60"
             />
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation"
+                className="h-11 touch-manipulation bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04]"
                 disabled={rejectMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 onClick={() =>
                   selectedProfile &&
                   rejectMutation.mutate({ id: selectedProfile.id, reason: rejectReason })
@@ -917,24 +783,25 @@ export default function AdminElecIds() {
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* Bulk Approve Dialog */}
         <AlertDialog open={showBulkApproveDialog} onOpenChange={setShowBulkApproveDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06] text-white">
             <AlertDialogHeader>
-              <AlertDialogTitle>Bulk Approve {selectedIds.size} Profiles?</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">
+                Bulk Approve {selectedIds.size} Profiles?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 This will verify {selectedIds.size} Elec-ID profiles. This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation"
+                className="h-11 touch-manipulation bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04]"
                 disabled={bulkApproveMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation bg-green-500 hover:bg-green-600"
+                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 onClick={() => bulkApproveMutation.mutate(Array.from(selectedIds))}
                 disabled={bulkApproveMutation.isPending}
               >
@@ -954,12 +821,13 @@ export default function AdminElecIds() {
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* Bulk Reject Dialog */}
         <AlertDialog open={showBulkRejectDialog} onOpenChange={setShowBulkRejectDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06] text-white">
             <AlertDialogHeader>
-              <AlertDialogTitle>Bulk Reject {selectedIds.size} Profiles?</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">
+                Bulk Reject {selectedIds.size} Profiles?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 Please provide a reason for rejection. This will be sent to all {selectedIds.size}{' '}
                 users.
               </AlertDialogDescription>
@@ -968,17 +836,17 @@ export default function AdminElecIds() {
               value={bulkRejectReason}
               onChange={(e) => setBulkRejectReason(e.target.value)}
               placeholder="Enter rejection reason..."
-              className="min-h-[100px]"
+              className="min-h-[100px] bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60"
             />
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation"
+                className="h-11 touch-manipulation bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04]"
                 disabled={bulkRejectMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 onClick={() =>
                   bulkRejectMutation.mutate({
                     ids: Array.from(selectedIds),
@@ -1002,7 +870,7 @@ export default function AdminElecIds() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

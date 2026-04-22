@@ -1,20 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,29 +14,29 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import type { LucideIcon } from 'lucide-react';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import {
-  IdCard,
-  CheckCircle,
-  XCircle,
-  Clock,
-  Eye,
-  RefreshCw,
-  ChevronRight,
-  ShieldCheck,
-  ShieldX,
-  Award,
-  User,
-  Loader2,
-} from 'lucide-react';
+import { RefreshCw, Loader2 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
-import { Skeleton } from '@/components/ui/skeleton';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  Eyebrow,
+  Divider,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface ElecIdProfile {
   id: string;
@@ -64,17 +53,38 @@ interface ElecIdProfile {
   profiles?: { full_name: string; username: string; role: string };
 }
 
+const STATUS_TONE: Record<string, Tone> = {
+  pending: 'orange',
+  under_review: 'blue',
+  approved: 'emerald',
+  rejected: 'red',
+};
+
+function getInitials(name?: string | null): string {
+  if (!name) return '??';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function inferType(p: ElecIdProfile): string {
+  if (p.ecs_card_type) return 'Qualification';
+  if (p.ecs_card_number) return 'Scheme';
+  if (p.elec_id_number) return 'Identity';
+  return 'Insurance';
+}
+
 export default function AdminVerificationQueue() {
-  const { profile } = useAuth();
+  useAuth();
   const queryClient = useQueryClient();
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('pending');
+  const [typeFilter, setTypeFilter] = useState('all');
   const [selectedProfile, setSelectedProfile] = useState<ElecIdProfile | null>(null);
   const [rejectReason, setRejectReason] = useState('');
   const [showRejectDialog, setShowRejectDialog] = useState(false);
 
-  // Fetch verification queue via edge function to bypass RLS
   const {
     data: queue,
     isLoading,
@@ -103,7 +113,6 @@ export default function AdminVerificationQueue() {
     },
   });
 
-  // Approve mutation via edge function
   const approveMutation = useMutation({
     mutationFn: async (id: string) => {
       const { data, error } = await supabase.functions.invoke('admin-verify-elecid', {
@@ -124,7 +133,6 @@ export default function AdminVerificationQueue() {
     },
   });
 
-  // Reject mutation via edge function
   const rejectMutation = useMutation({
     mutationFn: async ({ id, reason }: { id: string; reason: string }) => {
       const { data, error } = await supabase.functions.invoke('admin-verify-elecid', {
@@ -147,292 +155,273 @@ export default function AdminVerificationQueue() {
     },
   });
 
-  const getStatusBadge = (status: string) => {
-    const styles: Record<string, { class: string; icon: LucideIcon }> = {
-      pending: { class: 'bg-amber-500/20 text-amber-400', icon: Clock },
-      under_review: { class: 'bg-blue-500/20 text-blue-400', icon: Eye },
-      approved: { class: 'bg-green-500/20 text-green-400', icon: CheckCircle },
-      rejected: { class: 'bg-red-500/20 text-red-400', icon: XCircle },
+  const stats = useMemo(() => {
+    const list = queue || [];
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    return {
+      pending: list.filter((p) => p.verification_status === 'pending').length,
+      approved: list.filter((p) => p.verification_status === 'approved').length,
+      rejected: list.filter((p) => p.verification_status === 'rejected').length,
+      today: list.filter((p) => new Date(p.created_at).getTime() >= startOfDay.getTime()).length,
     };
-    const style = styles[status] || styles.pending;
-    const Icon = style.icon;
-    return (
-      <Badge className={style.class}>
-        <Icon className="h-3 w-3 mr-1" />
-        {status.replace('_', ' ')}
-      </Badge>
-    );
-  };
+  }, [queue]);
 
-  const stats = {
-    pending: queue?.filter((p) => p.verification_status === 'pending').length || 0,
-    approved: queue?.filter((p) => p.verification_status === 'approved').length || 0,
-    rejected: queue?.filter((p) => p.verification_status === 'rejected').length || 0,
-  };
+  const filtered = useMemo(() => {
+    if (!queue) return [];
+    if (typeFilter === 'all') return queue;
+    return queue.filter((p) => inferType(p) === typeFilter);
+  }, [queue, typeFilter]);
 
   return (
-    <PullToRefresh
-      onRefresh={async () => {
-        await refetch();
-      }}
-    >
-      <div className="space-y-4 pb-20">
-        <AdminPageHeader
-          title="Verification Queue"
-          subtitle={`${stats.pending} pending review`}
-          icon={ShieldCheck}
-          iconColor="text-green-400"
-          iconBg="bg-green-500/10 border-green-500/20"
-          accentColor="from-green-500 via-emerald-400 to-green-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+    <PullToRefresh onRefresh={async () => { await refetch(); }}>
+      <PageFrame>
+        <PageHero
+          eyebrow="Moderation"
+          title="Verification"
+          description="Review pending verifications across all types."
+          tone="orange"
+          actions={
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            </IconButton>
+          }
         />
 
-        {/* Stats */}
-        <div className="grid grid-cols-3 gap-3">
-          <Card className="bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20">
-            <CardContent className="pt-4 pb-4">
-              <p className="text-xl font-bold">{stats.pending}</p>
-              <p className="text-xs text-muted-foreground">Pending</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20">
-            <CardContent className="pt-4 pb-4">
-              <p className="text-xl font-bold">{stats.approved}</p>
-              <p className="text-xs text-muted-foreground">Approved</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20">
-            <CardContent className="pt-4 pb-4">
-              <p className="text-xl font-bold">{stats.rejected}</p>
-              <p className="text-xs text-muted-foreground">Rejected</p>
-            </CardContent>
-          </Card>
-        </div>
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Pending', value: stats.pending, tone: 'orange' },
+            { label: 'Today', value: stats.today, tone: 'blue' },
+            { label: 'Approved', value: stats.approved, tone: 'emerald' },
+            { label: 'Rejected', value: stats.rejected, tone: 'red' },
+          ]}
+        />
 
-        {/* Filters */}
-        <Card>
-          <CardContent className="pt-4 pb-4">
-            <div className="flex gap-3">
-              <AdminSearchInput
-                value={search}
-                onChange={setSearch}
-                placeholder="Search..."
-                className="flex-1"
-              />
-              <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[130px] h-11 touch-manipulation">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="approved">Approved</SelectItem>
-                  <SelectItem value="rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-11 w-11 touch-manipulation"
-                onClick={() => refetch()}
-              >
-                <RefreshCw className="h-4 w-4" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <FilterBar
+          tabs={[
+            { value: 'all', label: 'All types' },
+            { value: 'Identity', label: 'Identity' },
+            { value: 'Qualification', label: 'Qualification' },
+            { value: 'Insurance', label: 'Insurance' },
+            { value: 'Scheme', label: 'Scheme' },
+          ]}
+          activeTab={typeFilter}
+          onTabChange={setTypeFilter}
+          search={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search name, Elec-ID, ECS number…"
+        />
 
-        {/* Queue List */}
+        <FilterBar
+          tabs={[
+            { value: 'pending', label: 'Pending' },
+            { value: 'approved', label: 'Approved' },
+            { value: 'rejected', label: 'Rejected' },
+            { value: 'all', label: 'All statuses' },
+          ]}
+          activeTab={statusFilter}
+          onTabChange={setStatusFilter}
+        />
+
         {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : queue?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={IdCard}
-                title="No profiles to verify"
-                description="Verification requests will appear here."
-              />
-            </CardContent>
-          </Card>
+          <LoadingBlocks />
+        ) : filtered.length === 0 ? (
+          <EmptyState
+            title="Nothing to review"
+            description="Verification requests will appear here as users submit their details."
+          />
         ) : (
-          <div className="space-y-2">
-            {queue?.map((item) => (
-              <Card
-                key={item.id}
-                className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
-                onClick={() => setSelectedProfile(item)}
-              >
-                <CardContent className="pt-4 pb-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <div className="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center shrink-0">
-                        <IdCard className="h-5 w-5 text-cyan-400" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-sm truncate">
-                          {item.profiles?.full_name || 'Unknown'}
-                        </p>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-xs text-muted-foreground font-mono">
-                            {item.elec_id_number || 'No ID'}
-                          </span>
-                          {item.ecs_card_type && (
-                            <Badge variant="outline" className="text-xs">
-                              {item.ecs_card_type}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      {getStatusBadge(item.verification_status)}
-                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <ListCard>
+            <ListCardHeader
+              tone="orange"
+              title="Queue"
+              meta={<Pill tone="orange">{filtered.length}</Pill>}
+            />
+            <ListBody>
+              {filtered.map((item) => {
+                const name = item.profiles?.full_name || 'Unknown';
+                const type = inferType(item);
+                const timeAgo = formatDistanceToNow(new Date(item.created_at), { addSuffix: true });
+                const tone = STATUS_TONE[item.verification_status] || 'amber';
+                return (
+                  <ListRow
+                    key={item.id}
+                    lead={<Avatar initials={getInitials(name)} />}
+                    title={name}
+                    subtitle={`${type} · ${timeAgo}`}
+                    trailing={
+                      <Pill tone={tone}>{item.verification_status.replace('_', ' ')}</Pill>
+                    }
+                    onClick={() => setSelectedProfile(item)}
+                  />
+                );
+              })}
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* Profile Detail Sheet */}
         <Sheet open={!!selectedProfile} onOpenChange={() => setSelectedProfile(null)}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center">
-                    <IdCard className="h-6 w-6 text-cyan-400" />
-                  </div>
-                  <div>
-                    <p className="text-left">{selectedProfile?.profiles?.full_name}</p>
-                    <p className="text-sm font-normal text-muted-foreground">
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="flex items-center gap-3 text-left">
+                  <Avatar initials={getInitials(selectedProfile?.profiles?.full_name)} />
+                  <div className="min-w-0">
+                    <div className="text-[15px] font-semibold text-white truncate">
+                      {selectedProfile?.profiles?.full_name || 'Unknown'}
+                    </div>
+                    <div className="mt-0.5 text-[12px] text-white truncate font-mono">
                       {selectedProfile?.elec_id_number || 'No Elec-ID'}
-                    </p>
+                    </div>
+                  </div>
+                  <div className="ml-auto shrink-0">
+                    {selectedProfile && (
+                      <Pill tone={STATUS_TONE[selectedProfile.verification_status] || 'amber'}>
+                        {selectedProfile.verification_status.replace('_', ' ')}
+                      </Pill>
+                    )}
                   </div>
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Status */}
-                <Card>
-                  <CardContent className="pt-4 pb-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Verification Status</span>
-                      {selectedProfile && getStatusBadge(selectedProfile.verification_status)}
+              <div className="flex-1 overflow-y-auto p-5 space-y-6">
+                <div>
+                  <Eyebrow>User details</Eyebrow>
+                  <div className="mt-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] divide-y divide-white/[0.06]">
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <span className="text-[12px] text-white">Name</span>
+                      <span className="text-[13px] text-white">
+                        {selectedProfile?.profiles?.full_name || '—'}
+                      </span>
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <span className="text-[12px] text-white">Username</span>
+                      <span className="text-[13px] text-white">
+                        @{selectedProfile?.profiles?.username || '—'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <span className="text-[12px] text-white">Role</span>
+                      <Pill tone="yellow">{selectedProfile?.profiles?.role || '—'}</Pill>
+                    </div>
+                    <div className="flex items-center justify-between px-4 py-3">
+                      <span className="text-[12px] text-white">Submitted</span>
+                      <span className="text-[13px] text-white">
+                        {selectedProfile &&
+                          format(new Date(selectedProfile.created_at), 'dd MMM yyyy · HH:mm')}
+                      </span>
+                    </div>
+                  </div>
+                </div>
 
-                {/* User Info */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <User className="h-4 w-4" />
-                      User Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Name</span>
-                      <span className="text-sm">{selectedProfile?.profiles?.full_name}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Username</span>
-                      <span className="text-sm">@{selectedProfile?.profiles?.username}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Role</span>
-                      <Badge variant="outline">{selectedProfile?.profiles?.role}</Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* ECS Card */}
                 {selectedProfile?.ecs_card_number && (
-                  <Card>
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm flex items-center gap-2">
-                        <Award className="h-4 w-4 text-yellow-400" />
-                        ECS Card
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Type</span>
-                        <span className="text-sm">{selectedProfile.ecs_card_type}</span>
+                  <div>
+                    <Eyebrow>ECS card</Eyebrow>
+                    <div className="mt-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] divide-y divide-white/[0.06]">
+                      <div className="flex items-center justify-between px-4 py-3">
+                        <span className="text-[12px] text-white">Type</span>
+                        <span className="text-[13px] text-white">
+                          {selectedProfile.ecs_card_type || '—'}
+                        </span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Number</span>
-                        <span className="text-sm font-mono">{selectedProfile.ecs_card_number}</span>
+                      <div className="flex items-center justify-between px-4 py-3">
+                        <span className="text-[12px] text-white">Number</span>
+                        <span className="text-[13px] text-white font-mono">
+                          {selectedProfile.ecs_card_number}
+                        </span>
                       </div>
                       {selectedProfile.ecs_expiry_date && (
-                        <div className="flex justify-between">
-                          <span className="text-sm text-muted-foreground">Expires</span>
-                          <span className="text-sm">
+                        <div className="flex items-center justify-between px-4 py-3">
+                          <span className="text-[12px] text-white">Expires</span>
+                          <span className="text-[13px] text-white">
                             {format(new Date(selectedProfile.ecs_expiry_date), 'dd MMM yyyy')}
                           </span>
                         </div>
                       )}
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
                 )}
 
-                {/* Rejection reason if rejected */}
-                {selectedProfile?.rejection_reason && (
-                  <Card className="border-red-500/30">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm text-red-400">Rejection Reason</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm">{selectedProfile.rejection_reason}</p>
-                    </CardContent>
-                  </Card>
+                {selectedProfile?.verification_notes && (
+                  <div>
+                    <Eyebrow>Reviewer notes</Eyebrow>
+                    <div className="mt-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
+                      <p className="text-[13px] text-white leading-relaxed">
+                        {selectedProfile.verification_notes}
+                      </p>
+                    </div>
+                  </div>
                 )}
+
+                {selectedProfile?.rejection_reason && (
+                  <div>
+                    <Eyebrow>Rejection reason</Eyebrow>
+                    <div className="mt-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
+                      <div className="flex items-start gap-2.5">
+                        <span className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-red-400 shrink-0" />
+                        <p className="text-[13px] text-white leading-relaxed">
+                          {selectedProfile.rejection_reason}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <Divider label="Audit trail" />
+                <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] divide-y divide-white/[0.06]">
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <span className="text-[12px] text-white">Submitted</span>
+                    <span className="text-[13px] text-white">
+                      {selectedProfile &&
+                        formatDistanceToNow(new Date(selectedProfile.created_at), {
+                          addSuffix: true,
+                        })}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <span className="text-[12px] text-white">Employee ID</span>
+                    <span className="text-[13px] text-white font-mono">
+                      {selectedProfile?.employee_id || '—'}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between px-4 py-3">
+                    <span className="text-[12px] text-white">Verified</span>
+                    <Pill tone={selectedProfile?.is_verified ? 'emerald' : 'amber'}>
+                      {selectedProfile?.is_verified ? 'Yes' : 'No'}
+                    </Pill>
+                  </div>
+                </div>
               </div>
 
-              {/* Action Buttons */}
               {selectedProfile?.verification_status === 'pending' && (
-                <SheetFooter className="p-4 border-t border-border">
+                <SheetFooter className="p-4 border-t border-white/[0.06]">
                   <div className="flex gap-3 w-full">
-                    <Button
-                      variant="outline"
-                      className="flex-1 h-12 touch-manipulation gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10"
+                    <button
+                      className="flex-1 h-12 rounded-full border border-white/[0.08] bg-white/[0.04] text-white text-[13px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50"
                       onClick={() => setShowRejectDialog(true)}
                       disabled={approveMutation.isPending}
                     >
-                      <ShieldX className="h-4 w-4" />
                       Reject
-                    </Button>
-                    <Button
-                      className="flex-1 h-12 touch-manipulation gap-2 bg-green-500 hover:bg-green-600"
-                      onClick={() => selectedProfile && approveMutation.mutate(selectedProfile.id)}
+                    </button>
+                    <button
+                      className="flex-1 h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold hover:brightness-110 transition touch-manipulation disabled:opacity-50 flex items-center justify-center gap-2"
+                      onClick={() =>
+                        selectedProfile && approveMutation.mutate(selectedProfile.id)
+                      }
                       disabled={approveMutation.isPending}
                     >
-                      {approveMutation.isPending ? (
+                      {approveMutation.isPending && (
                         <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <ShieldCheck className="h-4 w-4" />
                       )}
-                      {approveMutation.isPending ? 'Approving...' : 'Approve'}
-                    </Button>
+                      {approveMutation.isPending ? 'Approving…' : 'Approve'}
+                    </button>
                   </div>
                 </SheetFooter>
               )}
@@ -440,30 +429,29 @@ export default function AdminVerificationQueue() {
           </SheetContent>
         </Sheet>
 
-        {/* Reject Dialog */}
         <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
             <AlertDialogHeader>
-              <AlertDialogTitle>Reject Verification?</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">Reject verification?</AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 Please provide a reason for rejection. This will be sent to the user.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <Textarea
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
-              placeholder="Enter rejection reason..."
-              className="min-h-[100px]"
+              placeholder="Enter rejection reason…"
+              className="min-h-[100px] bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60"
             />
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation"
+                className="h-11 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
                 disabled={rejectMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+                className="h-11 touch-manipulation bg-elec-yellow text-black hover:brightness-110"
                 onClick={() =>
                   selectedProfile &&
                   rejectMutation.mutate({ id: selectedProfile.id, reason: rejectReason })
@@ -473,7 +461,7 @@ export default function AdminVerificationQueue() {
                 {rejectMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Rejecting...
+                    Rejecting…
                   </>
                 ) : (
                   'Reject'
@@ -482,7 +470,7 @@ export default function AdminVerificationQueue() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

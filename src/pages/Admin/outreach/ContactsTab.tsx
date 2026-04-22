@@ -201,7 +201,7 @@ export default function ContactsTab() {
                 className={`shrink-0 h-10 px-3.5 rounded-full border text-sm font-medium touch-manipulation transition-colors ${
                   active
                     ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-white/[0.03] text-white/80 border-white/10 hover:bg-white/[0.08]'
+                    : 'bg-white/[0.03] text-white border-white/10 hover:bg-white/[0.08]'
                 }`}
               >
                 <span className="mr-1">{s.emoji}</span>
@@ -315,7 +315,7 @@ export default function ContactsTab() {
               <Button
                 size="sm"
                 variant="ghost"
-                className="h-9 w-9 p-0 text-white/70 hover:bg-white/10 touch-manipulation"
+                className="h-9 w-9 p-0 text-white hover:bg-white/10 touch-manipulation"
                 onClick={clearSelection}
               >
                 <X className="h-4 w-4" />
@@ -341,13 +341,13 @@ export default function ContactsTab() {
       ) : (
         <>
           <div className="flex items-center justify-between px-1">
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-white">
               Showing {contacts.length} of {total}
             </p>
             <Button
               variant="ghost"
               size="sm"
-              className="h-7 text-xs text-white/60 hover:bg-white/5 touch-manipulation"
+              className="h-7 text-xs text-white hover:bg-white/5 touch-manipulation"
               onClick={selectAll}
             >
               Select all
@@ -467,9 +467,9 @@ function ContactRow({
               </Badge>
             )}
           </div>
-          <p className="text-xs text-white/60 truncate">{contact.email}</p>
+          <p className="text-xs text-white truncate">{contact.email}</p>
           {contact.organisation && (
-            <p className="text-xs text-white/60 flex items-center gap-1 mt-0.5 truncate">
+            <p className="text-xs text-white flex items-center gap-1 mt-0.5 truncate">
               <Building2 className="h-3 w-3 shrink-0" />
               <span className="truncate">{contact.organisation}</span>
             </p>
@@ -485,18 +485,18 @@ function ContactRow({
               </Badge>
             )}
             {(contact.tags || []).slice(0, 3).map((tag) => (
-              <Badge key={tag} className="bg-white/[0.06] text-white/70 text-[10px]">
+              <Badge key={tag} className="bg-white/[0.06] text-white text-[10px]">
                 {tag}
               </Badge>
             ))}
             {(contact.tags || []).length > 3 && (
-              <span className="text-[10px] text-white/50">
+              <span className="text-[10px] text-white">
                 +{(contact.tags || []).length - 3}
               </span>
             )}
           </div>
         </button>
-        <ChevronRight className="h-4 w-4 text-white/40 shrink-0" />
+        <ChevronRight className="h-4 w-4 text-white shrink-0" />
       </CardContent>
     </Card>
   );
@@ -519,7 +519,7 @@ function StatPill({
         {icon}
         {value.toLocaleString()}
       </p>
-      <p className="text-[10px] text-white/60 uppercase tracking-wider font-semibold">{label}</p>
+      <p className="text-[10px] text-white uppercase tracking-wider font-semibold">{label}</p>
     </div>
   );
 }
@@ -572,7 +572,7 @@ function ContactDetailSheet({
 
               {(contact.tags || []).length > 0 && (
                 <div>
-                  <Label className="text-white/60 text-xs uppercase tracking-wider">Tags</Label>
+                  <Label className="text-white text-xs uppercase tracking-wider">Tags</Label>
                   <div className="flex gap-1 flex-wrap mt-1.5">
                     {contact.tags.map((t) => (
                       <Badge key={t} className="bg-white/[0.06] text-white">
@@ -591,7 +591,7 @@ function ContactDetailSheet({
               {contact.is_suppressed && (
                 <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3">
                   <p className="text-red-300 font-semibold text-sm">Suppressed</p>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Reason: {contact.suppression_reason || 'Unknown'}
                   </p>
                 </div>
@@ -616,7 +616,7 @@ function ContactDetailSheet({
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <Label className="text-white/60 text-xs uppercase tracking-wider">{label}</Label>
+      <Label className="text-white text-xs uppercase tracking-wider">{label}</Label>
       <p className="text-white font-medium mt-0.5">{value}</p>
     </div>
   );
@@ -626,7 +626,7 @@ function Stat({ label, value }: { label: string; value: number }) {
   return (
     <div className="text-center">
       <p className="text-lg font-bold text-white">{value}</p>
-      <p className="text-[10px] text-white/60 uppercase tracking-wider">{label}</p>
+      <p className="text-[10px] text-white uppercase tracking-wider">{label}</p>
     </div>
   );
 }
@@ -846,7 +846,7 @@ function ImportCSVSheet({
           <div className="flex-1 overflow-y-auto p-6 space-y-4">
             <div className="bg-elec-yellow/5 border border-elec-yellow/20 rounded-xl p-3">
               <p className="text-white text-sm font-medium mb-1">CSV format</p>
-              <p className="text-white/70 text-xs font-mono">
+              <p className="text-white text-xs font-mono">
                 email, name, organisation, role, contact_type, tags
               </p>
             </div>
@@ -890,7 +890,7 @@ function ImportCSVSheet({
                       </p>
                     ))}
                     {parsed.length > 5 && (
-                      <p className="text-xs text-white/60">…and {parsed.length - 5} more</p>
+                      <p className="text-xs text-white">…and {parsed.length - 5} more</p>
                     )}
                   </div>
                 </div>

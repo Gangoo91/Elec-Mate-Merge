@@ -119,13 +119,13 @@ export default function CampaignsTab({
                 className={`shrink-0 h-10 px-3.5 rounded-full border text-sm font-medium touch-manipulation transition-colors ${
                   active
                     ? 'bg-elec-yellow text-black border-elec-yellow'
-                    : 'bg-white/[0.03] text-white/80 border-white/10 hover:bg-white/[0.08]'
+                    : 'bg-white/[0.03] text-white border-white/10 hover:bg-white/[0.08]'
                 }`}
               >
                 {s === 'all' ? 'All' : s.charAt(0).toUpperCase() + s.slice(1)}
                 <Badge
                   className={`ml-2 h-5 ${
-                    active ? 'bg-black/20 text-black' : 'bg-white/10 text-white/70'
+                    active ? 'bg-black/20 text-black' : 'bg-white/10 text-white'
                   }`}
                 >
                   {n}
@@ -233,7 +233,7 @@ function CampaignCard({
                 {campaign.status}
               </Badge>
             </div>
-            <p className="text-xs text-white/60 truncate mt-0.5">{campaign.subject}</p>
+            <p className="text-xs text-white truncate mt-0.5">{campaign.subject}</p>
           </div>
         </div>
 
@@ -253,10 +253,10 @@ function CampaignCard({
             <div className="mt-3">
               <Progress value={progress} className="h-2" />
               <div className="flex items-center justify-between mt-1.5 text-xs">
-                <span className="text-white/60">
+                <span className="text-white">
                   {campaign.sent_count}/{campaign.total_recipients}
                 </span>
-                <span className="text-white/60">{progress}%</span>
+                <span className="text-white">{progress}%</span>
               </div>
             </div>
             <div className="grid grid-cols-3 gap-2 mt-3">
@@ -283,7 +283,7 @@ function CampaignCard({
         )}
 
         {campaign.status === 'draft' && (
-          <p className="text-[11px] text-white/50 mt-2">
+          <p className="text-[11px] text-white mt-2">
             Created {formatDistanceToNow(new Date(campaign.created_at), { addSuffix: true })}
           </p>
         )}
@@ -316,7 +316,7 @@ function MiniStat({
         <Icon className="h-3 w-3" />
         <span className="text-sm font-bold">{value}</span>
       </div>
-      <p className="text-[10px] text-white/50 mt-0.5 truncate">{label}</p>
+      <p className="text-[10px] text-white mt-0.5 truncate">{label}</p>
     </div>
   );
 }

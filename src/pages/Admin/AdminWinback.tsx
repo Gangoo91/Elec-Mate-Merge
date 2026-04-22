@@ -1,8 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -17,38 +15,31 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Skeleton } from '@/components/ui/skeleton';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import {
-  RotateCcw,
-  Send,
-  Users,
-  Mail,
-  ChevronRight,
-  ChevronDown,
-  Loader2,
-  Clock,
-  Eye,
-  User,
-  Target,
-  CheckCheck,
-  TestTube,
-  MousePointerClick,
-  MailOpen,
-  FileText,
-  Flame,
-  HeartCrack,
-  Settings,
-  MailCheck,
-  Sparkles,
-} from 'lucide-react';
 import { Input } from '@/components/ui/input';
+import { RefreshCw, Send, Eye, Loader2, ChevronDown } from 'lucide-react';
 import { format, formatDistanceToNow, parseISO } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  TextAction,
+  Eyebrow,
+  Divider,
+  Dot,
+} from '@/components/admin/editorial';
 
 interface SegmentUser {
   id: string;
@@ -84,8 +75,17 @@ interface WinbackStats {
 }
 
 type SegmentKey = 'all' | 'never' | 'cancelled';
+type ViewKey = 'target' | 'sent';
 const BATCH_SIZE = 40;
 const EMAIL_VERSION = 'v10';
+
+function getInitials(name: string | null | undefined, fallback: string | null | undefined) {
+  const source = (name || fallback || '').trim();
+  if (!source) return '??';
+  const parts = source.split(/\s+/).filter(Boolean);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 
 export default function AdminWinback() {
   const queryClient = useQueryClient();
@@ -98,7 +98,7 @@ export default function AdminWinback() {
   const [testEmail, setTestEmail] = useState('');
   const [manualEmail, setManualEmail] = useState('');
   const [advancedOpen, setAdvancedOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'target' | 'sent'>('target');
+  const [activeView, setActiveView] = useState<ViewKey>('target');
   const [showPreview, setShowPreview] = useState(false);
   const [confirmSegmentSend, setConfirmSegmentSend] = useState<SegmentKey | null>(null);
 
@@ -114,7 +114,6 @@ export default function AdminWinback() {
   const {
     data: segments,
     isLoading: segmentsLoading,
-    isFetching,
     refetch,
   } = useQuery<Segments>({
     queryKey: ['admin-winback-segments'],
@@ -401,6 +400,13 @@ export default function AdminWinback() {
     else setSelectedUsers(new Set(visibleUsers.map((u) => u.id)));
   };
 
+  const refreshAll = () => {
+    refetch();
+    queryClient.invalidateQueries({ queryKey: ['admin-winback-tracking'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
+    queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
+  };
+
   const totalSent = stats?.offersSent || 0;
   const converted = stats?.conversions || 0;
   const openRate = totalSent > 0 ? Math.round((performanceStats.opened / totalSent) * 100) : 0;
@@ -421,606 +427,657 @@ export default function AdminWinback() {
         ? 'cancelled'
         : 'eligible';
 
+  const daysSince = (iso: string | null | undefined) => {
+    if (!iso) return 0;
+    return Math.max(
+      0,
+      Math.floor((Date.now() - parseISO(iso).getTime()) / (1000 * 60 * 60 * 24))
+    );
+  };
+
   return (
     <PullToRefresh
       onRefresh={async () => {
         await refetch();
       }}
     >
-      <div className="space-y-4 pb-24">
-        <AdminPageHeader
-          title="Win-Back Campaign"
-          subtitle="V10 — We've been building. You should see it."
-          icon={RotateCcw}
-          iconColor="text-amber-400"
-          iconBg="bg-amber-500/10 border-amber-500/20"
-          accentColor="from-amber-500 via-yellow-400 to-amber-500"
-          onRefresh={() => {
-            refetch();
-            queryClient.invalidateQueries({ queryKey: ['admin-winback-tracking'] });
-            queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
-            queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
-          }}
-          isRefreshing={isFetching}
+      <PageFrame>
+        <PageHero
+          eyebrow="Campaigns"
+          title="Win-Back"
+          description="Reactivate churned subscribers with targeted offers."
+          tone="red"
+          actions={
+            <IconButton onClick={refreshAll} aria-label="Refresh">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          }
         />
 
-        {/* Campaign hero */}
-        <Card className="border-amber-500/30 bg-gradient-to-br from-amber-500/5 to-orange-500/5 overflow-hidden">
-          <CardContent className="pt-4 pb-4 space-y-3">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-2 min-w-0">
-                <Badge className="bg-amber-500 text-black text-[10px] px-2 border-0 shrink-0 font-bold">
-                  V10
-                </Badge>
-                <p className="text-sm font-semibold text-white truncate">
-                  We&apos;ve been building.
-                </p>
+        {segmentsLoading && !segments ? (
+          <LoadingBlocks />
+        ) : (
+          <>
+            <StatStrip
+              columns={4}
+              stats={[
+                {
+                  label: 'Churned',
+                  value: totalEligible,
+                  tone: 'red',
+                  sub: 'Eligible to re-engage',
+                },
+                {
+                  label: 'This Month',
+                  value: cancelled.length,
+                  tone: 'orange',
+                  sub: 'Cancelled subscribers',
+                },
+                {
+                  label: 'Targeted',
+                  value: totalSent,
+                  tone: 'emerald',
+                  sub: `${EMAIL_VERSION.toUpperCase()} campaign`,
+                },
+                {
+                  label: 'Recovered',
+                  value: converted,
+                  accent: true,
+                  sub: totalSent > 0 ? `${convRate}% conversion` : 'No sends yet',
+                },
+              ]}
+            />
+
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <Eyebrow>{EMAIL_VERSION.toUpperCase()} · Win-Back email</Eyebrow>
+                <Pill tone="yellow">£9.99/mo</Pill>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setShowPreview(true)}
-                className="h-9 gap-1.5 text-amber-400 hover:text-amber-300 shrink-0 touch-manipulation"
-              >
-                <Eye className="h-3.5 w-3.5" />
-                Preview
-              </Button>
+              <div className="flex items-center gap-2">
+                <TextAction onClick={() => setShowPreview(true)}>
+                  <span className="inline-flex items-center gap-1.5">
+                    <Eye className="h-3.5 w-3.5" />
+                    Preview template
+                  </span>
+                </TextAction>
+              </div>
             </div>
-            <div className="flex items-center gap-2 p-3 rounded-xl bg-black/40 border border-white/5">
-              <Sparkles className="h-4 w-4 text-amber-400 shrink-0" />
-              <p className="text-[11px] text-white/80 leading-relaxed">
-                Electricians only · £9.99/mo via Stripe · saves £5 vs App Store
-              </p>
-            </div>
-          </CardContent>
-        </Card>
 
-        {/* Test send — always visible, check before bulk */}
-        <Card className="border-yellow-500/20 bg-yellow-500/[0.03]">
-          <CardContent className="pt-4 pb-4 space-y-2.5">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-yellow-500/15 flex items-center justify-center">
-                <TestTube className="h-3.5 w-3.5 text-yellow-400" />
-              </div>
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-white leading-tight">
-                  Send yourself a test
-                </p>
-                <p className="text-[11px] text-white/60 leading-tight mt-0.5">
-                  Preview V10 end-to-end. Subject prefixed [TEST]. Nobody marked sent.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                value={testEmail}
-                onChange={(e) => setTestEmail(e.target.value)}
-                placeholder="your@email.com or any address"
-                className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-              />
-              <Button
-                onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
-                disabled={!testEmail || sendTestMutation.isPending}
-                className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600 text-black font-semibold gap-1.5"
-              >
-                {sendTestMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <>
-                    <Send className="h-4 w-4" />
-                    Test
-                  </>
-                )}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Performance strip */}
-        <div className="grid grid-cols-4 gap-2">
-          <StatTile
-            label="Sent"
-            value={totalSent}
-            sub={null}
-            colorClass="text-blue-400 bg-blue-500/10 border-blue-500/20"
-          />
-          <StatTile
-            label="Opened"
-            value={performanceStats.opened}
-            sub={totalSent > 0 ? `${openRate}%` : null}
-            colorClass="text-green-400 bg-green-500/10 border-green-500/20"
-          />
-          <StatTile
-            label="Clicked"
-            value={performanceStats.clicked}
-            sub={totalSent > 0 ? `${clickRate}%` : null}
-            colorClass="text-violet-400 bg-violet-500/10 border-violet-500/20"
-          />
-          <StatTile
-            label="Converted"
-            value={converted}
-            sub={totalSent > 0 ? `${convRate}%` : null}
-            colorClass="text-amber-400 bg-amber-500/10 border-amber-500/20"
-          />
-        </div>
-
-        {/* Segment tiles */}
-        <div className="grid grid-cols-2 gap-3">
-          <SegmentTile
-            title="Never subscribed"
-            subtitle="Trial expired, never paid"
-            count={neverSubscribed.length}
-            loading={segmentsLoading}
-            active={activeSegment === 'never'}
-            onFocus={() => {
-              setActiveSegment('never');
-              setActiveTab('target');
-              setSelectedUsers(new Set());
-            }}
-            onSend={() => setConfirmSegmentSend('never')}
-            icon={Flame}
-            colorClass="from-rose-500/10 to-orange-500/5 border-rose-500/30"
-            iconBgClass="bg-rose-500/15 text-rose-400"
-            disabledSend={batchSending || neverSubscribed.length === 0}
-          />
-          <SegmentTile
-            title="Cancelled"
-            subtitle="Subscribed, then cancelled"
-            count={cancelled.length}
-            loading={segmentsLoading}
-            active={activeSegment === 'cancelled'}
-            onFocus={() => {
-              setActiveSegment('cancelled');
-              setActiveTab('target');
-              setSelectedUsers(new Set());
-            }}
-            onSend={() => setConfirmSegmentSend('cancelled')}
-            icon={HeartCrack}
-            colorClass="from-violet-500/10 to-fuchsia-500/5 border-violet-500/30"
-            iconBgClass="bg-violet-500/15 text-violet-400"
-            disabledSend={batchSending || cancelled.length === 0}
-          />
-        </div>
-
-        {/* Combined send */}
-        {totalEligible > 0 && !batchSending && (
-          <Button
-            onClick={() => setConfirmSegmentSend('all')}
-            className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-2"
-          >
-            <Send className="h-4 w-4" />
-            Send V10 to all {totalEligible} eligible electricians
-          </Button>
-        )}
-
-        {/* Batch progress */}
-        {batchSending && (
-          <Card className="border-amber-500/30 bg-amber-500/5">
-            <CardContent className="pt-4 pb-4 space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="flex items-center gap-2 text-amber-400 font-semibold">
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Sending batch {batchProgress.batch}/{batchProgress.totalBatches}
-                </span>
-                <span className="text-white">
-                  {batchProgress.sent}/{batchProgress.total}
-                </span>
-              </div>
-              <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500"
-                  style={{
-                    width: `${
-                      batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0
-                    }%`,
-                  }}
-                />
-              </div>
-              {batchProgress.failed > 0 && (
-                <p className="text-xs text-red-400">{batchProgress.failed} failed</p>
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Tabs */}
-        <div className="flex gap-1 p-1 bg-muted/50 rounded-xl border border-border">
-          <Button
-            variant={activeTab === 'target' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => setActiveTab('target')}
-            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'target' ? 'bg-amber-500 text-black hover:bg-amber-600' : ''}`}
-          >
-            <Target className="h-3.5 w-3.5" />
-            Target ({totalEligible})
-          </Button>
-          <Button
-            variant={activeTab === 'sent' ? 'default' : 'ghost'}
-            size="sm"
-            onClick={() => setActiveTab('sent')}
-            className={`flex-1 h-10 touch-manipulation text-sm gap-1.5 ${activeTab === 'sent' ? 'bg-blue-500 text-black hover:bg-blue-600' : ''}`}
-          >
-            <Mail className="h-3.5 w-3.5" />
-            Sent ({sentUsers?.length || 0})
-          </Button>
-        </div>
-
-        {/* Target tab */}
-        {activeTab === 'target' && (
-          <Card>
-            <CardContent className="pt-4 pb-4 px-3 sm:px-4 space-y-3">
-              {/* Segment pills */}
-              <div
-                className="flex gap-1.5 overflow-x-auto -mx-1 px-1"
-                style={{ scrollbarWidth: 'none' }}
-              >
-                <SegmentPill
-                  active={activeSegment === 'all'}
-                  onClick={() => {
-                    setActiveSegment('all');
-                    setSelectedUsers(new Set());
-                  }}
-                  label="All"
-                  count={totalEligible}
-                  colorClass="bg-amber-500 text-black"
-                />
-                <SegmentPill
-                  active={activeSegment === 'never'}
-                  onClick={() => {
-                    setActiveSegment('never');
-                    setSelectedUsers(new Set());
-                  }}
-                  label="Never"
-                  count={neverSubscribed.length}
-                  colorClass="bg-rose-500/90 text-white"
-                />
-                <SegmentPill
-                  active={activeSegment === 'cancelled'}
-                  onClick={() => {
-                    setActiveSegment('cancelled');
-                    setSelectedUsers(new Set());
-                  }}
-                  label="Cancelled"
-                  count={cancelled.length}
-                  colorClass="bg-violet-500/90 text-white"
-                />
-              </div>
-
-              <AdminSearchInput
-                value={search}
-                onChange={setSearch}
-                placeholder="Search name or email..."
-              />
-
-              {visibleUsers.length > 0 && (
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Checkbox
-                      checked={
-                        visibleUsers.length > 0 && selectedUsers.size === visibleUsers.length
-                      }
-                      onCheckedChange={toggleSelectAll}
-                      disabled={batchSending}
-                      className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                    />
-                    <span className="text-sm text-white">
-                      {selectedUsers.size > 0
-                        ? `${selectedUsers.size} selected`
-                        : 'Select all visible'}
+            {batchSending && (
+              <div className="relative bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70" />
+                <div className="px-5 sm:px-6 py-4 sm:py-5 space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                      <span className="text-sm font-semibold text-white">
+                        Sending batch {batchProgress.batch}/{batchProgress.totalBatches}
+                      </span>
+                    </div>
+                    <span className="text-[13px] font-semibold tabular-nums text-white">
+                      {batchProgress.sent}/{batchProgress.total}
                     </span>
                   </div>
-                  {selectedUsers.size > 0 && !batchSending && (
-                    <Button
-                      size="sm"
-                      onClick={() => sendBatchedEmails(Array.from(selectedUsers))}
-                      className="gap-2 h-11 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black"
-                    >
-                      <Send className="h-4 w-4" />
-                      Send to {selectedUsers.size}
-                    </Button>
+                  <div className="h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-elec-yellow rounded-full transition-all duration-500"
+                      style={{
+                        width: `${
+                          batchProgress.total > 0
+                            ? (batchProgress.sent / batchProgress.total) * 100
+                            : 0
+                        }%`,
+                      }}
+                    />
+                  </div>
+                  {batchProgress.failed > 0 && (
+                    <div className="flex items-center gap-2">
+                      <Dot tone="red" />
+                      <span className="text-[12px] text-white">
+                        {batchProgress.failed} failed
+                      </span>
+                    </div>
                   )}
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* List */}
-              {segmentsLoading ? (
-                <div className="space-y-2 animate-pulse">
-                  {[...Array(4)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-3 flex items-center gap-3"
-                    >
-                      <Skeleton className="w-9 h-9 rounded-lg" />
-                      <div className="space-y-1.5 flex-1">
-                        <Skeleton className="h-4 w-32" />
-                        <Skeleton className="h-3 w-48" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : visibleUsers.length === 0 ? (
-                <AdminEmptyState
-                  icon={Users}
-                  title={search ? 'No matches' : 'Segment is empty'}
-                  description={
-                    search
-                      ? 'No users match your search.'
-                      : 'Nothing to send in this segment right now.'
-                  }
-                />
-              ) : (
-                <div className="space-y-1.5">
-                  {visibleUsers.map((user) => (
-                    <UserRow
-                      key={user.id}
-                      user={user}
-                      selected={selectedUsers.has(user.id)}
-                      onToggle={() => toggleUserSelection(user.id)}
-                      onOpen={() => setSelectedUser(user)}
-                    />
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
+            <FilterBar
+              tabs={[
+                { value: 'target', label: 'Target', count: totalEligible },
+                { value: 'sent', label: 'Sent', count: sentUsers?.length || 0 },
+              ]}
+              activeTab={activeView}
+              onTabChange={(v) => setActiveView(v as ViewKey)}
+              search={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search name or email..."
+            />
 
-        {/* Sent tab */}
-        {activeTab === 'sent' && (
-          <Card>
-            <CardContent className="pt-4 pb-4 px-3 sm:px-4">
-              {sentLoading ? (
-                <div className="space-y-2">
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-16 bg-muted/50 rounded-lg animate-pulse" />
-                  ))}
-                </div>
-              ) : !sentUsers || sentUsers.length === 0 ? (
-                <AdminEmptyState
-                  icon={Mail}
-                  title="No emails sent yet"
-                  description="Send V10 to a segment above to see results here."
-                />
-              ) : (
-                <div className="space-y-3">
-                  <p className="text-xs text-white">{sentUsers.length} sent</p>
-                  <div className="space-y-1.5">
-                    {sentUsers.map((user) => {
-                      const userEmail = user.email?.toLowerCase();
-                      const userEvents = userEmail ? trackingByEmail.get(userEmail) : undefined;
-                      const wasDelivered = userEvents?.has('email.delivered') || false;
-                      const wasOpened = userEvents?.has('email.opened') || false;
-                      const wasClicked = userEvents?.has('email.clicked') || false;
-
-                      const versionColours: Record<string, string> = {
-                        v1: 'bg-gray-500/20 text-gray-400',
-                        v2: 'bg-green-500/20 text-green-400',
-                        v3: 'bg-emerald-500/20 text-emerald-400',
-                        v4: 'bg-amber-500/20 text-amber-400',
-                        v4b: 'bg-purple-500/20 text-purple-400',
-                        v5: 'bg-red-500/20 text-red-400',
-                        v6: 'bg-indigo-500/20 text-indigo-400',
-                        v7: 'bg-green-500/20 text-green-400',
-                        v8: 'bg-amber-500/20 text-amber-400',
-                        v9: 'bg-amber-500/20 text-amber-400',
-                        v10: 'bg-emerald-500/20 text-emerald-400',
-                      };
-                      const vClass = versionColours[user.email_version] || versionColours.v1;
-
-                      return (
-                        <div
-                          key={user.id}
-                          className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50"
-                        >
-                          <div className="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
-                            <User className="h-4 w-4 text-blue-400" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm text-white truncate">
-                              {user.full_name || user.username}
-                            </p>
-                            <p className="text-xs text-white">
-                              Sent{' '}
-                              {formatDistanceToNow(parseISO(user.winback_offer_sent_at), {
-                                addSuffix: true,
-                              })}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-1 shrink-0 flex-wrap justify-end">
-                            <Badge className={`text-[9px] px-1.5 border-0 ${vClass}`}>
-                              {user.email_version?.toUpperCase() || 'V1'}
-                            </Badge>
-                            {wasDelivered && (
-                              <Badge className="bg-blue-500/20 text-blue-400 text-[9px] px-1 border-0">
-                                <MailCheck className="h-2.5 w-2.5" />
-                              </Badge>
-                            )}
-                            {wasOpened && (
-                              <Badge className="bg-green-500/20 text-green-400 text-[9px] px-1 border-0">
-                                <MailOpen className="h-2.5 w-2.5" />
-                              </Badge>
-                            )}
-                            {wasClicked && (
-                              <Badge className="bg-violet-500/20 text-violet-400 text-[9px] px-1 border-0">
-                                <MousePointerClick className="h-2.5 w-2.5" />
-                              </Badge>
-                            )}
-                            {user.subscribed ? (
-                              <Badge className="bg-green-500/20 text-green-400 text-[10px] px-1.5 border-0">
-                                <CheckCheck className="h-3 w-3 mr-0.5" />
-                                Converted
-                              </Badge>
-                            ) : (
-                              <Badge className="bg-gray-500/20 text-gray-400 text-[10px] px-1.5 border-0">
-                                Pending
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Advanced */}
-        <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
-          <CollapsibleTrigger asChild>
-            <Button
-              variant="outline"
-              className="w-full h-11 justify-between touch-manipulation border-white/10"
-            >
-              <span className="flex items-center gap-2 text-sm text-white">
-                <Settings className="h-4 w-4" />
-                Advanced
-              </span>
-              <ChevronDown
-                className={`h-4 w-4 transition-transform ${advancedOpen ? 'rotate-180' : ''}`}
-              />
-            </Button>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <Card className="mt-2">
-              <CardContent className="pt-4 pb-4 space-y-4">
-                <div className="space-y-2">
-                  <p className="text-xs font-semibold text-white/80">
-                    Send real V10 to a specific address
-                  </p>
-                  <p className="text-[10px] text-white/50 leading-relaxed">
-                    Full send — goes through suppression check, logged, counts as sent. For testing,
-                    use the Test box at the top.
-                  </p>
-                  <div className="flex gap-2">
-                    <Input
-                      type="email"
-                      value={manualEmail}
-                      onChange={(e) => setManualEmail(e.target.value)}
-                      placeholder="recipient@example.com"
-                      className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                    <Button
-                      onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
-                      disabled={!manualEmail || sendManualMutation.isPending}
-                      className="h-11 px-4 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black"
-                    >
-                      {sendManualMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <Send className="h-4 w-4" />
-                      )}
-                    </Button>
-                  </div>
+            {activeView === 'target' && (
+              <>
+                <div
+                  className="flex gap-1.5 overflow-x-auto -mx-1 px-1"
+                  style={{ scrollbarWidth: 'none' }}
+                >
+                  <SegmentPill
+                    active={activeSegment === 'all'}
+                    onClick={() => {
+                      setActiveSegment('all');
+                      setSelectedUsers(new Set());
+                    }}
+                    label="All"
+                    count={totalEligible}
+                  />
+                  <SegmentPill
+                    active={activeSegment === 'never'}
+                    onClick={() => {
+                      setActiveSegment('never');
+                      setSelectedUsers(new Set());
+                    }}
+                    label="Never subscribed"
+                    count={neverSubscribed.length}
+                  />
+                  <SegmentPill
+                    active={activeSegment === 'cancelled'}
+                    onClick={() => {
+                      setActiveSegment('cancelled');
+                      setSelectedUsers(new Set());
+                    }}
+                    label="Cancelled"
+                    count={cancelled.length}
+                  />
                 </div>
 
-                {(sentUsers?.length || 0) > 0 && (
-                  <div className="pt-2 border-t border-white/5">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        const allSentIds = sentUsers?.map((u) => u.id) || [];
-                        if (
-                          confirm(
-                            `Reset all ${allSentIds.length} sent users so they can be re-sent?`
-                          )
-                        ) {
-                          resetSentMutation.mutate(allSentIds);
+                {(activeSegment === 'all' || activeSegment === 'cancelled') &&
+                  cancelled.length > 0 && (
+                    <ListCard>
+                      <ListCardHeader
+                        tone="red"
+                        title="Cancelled This Month"
+                        meta={<Pill tone="red">{cancelled.length}</Pill>}
+                        action={batchSending ? undefined : 'Send offer'}
+                        onAction={
+                          batchSending
+                            ? undefined
+                            : () => setConfirmSegmentSend('cancelled')
                         }
-                      }}
-                      disabled={resetSentMutation.isPending}
-                      className="w-full h-11 text-xs touch-manipulation gap-1.5"
-                    >
-                      {resetSentMutation.isPending ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      ) : (
-                        <RotateCcw className="h-3.5 w-3.5" />
-                      )}
-                      Reset all sent users (allows re-sending)
-                    </Button>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </CollapsibleContent>
-        </Collapsible>
+                      />
+                      <ListBody>
+                        {cancelled.slice(0, 50).map((u) => {
+                          const days = daysSince(u.trial_ended_at);
+                          return (
+                            <ListRow
+                              key={u.id}
+                              lead={
+                                <Avatar initials={getInitials(u.full_name, u.username)} />
+                              }
+                              title={u.full_name || u.username || 'Unknown'}
+                              subtitle={`${u.email} · Previously paying`}
+                              trailing={
+                                <>
+                                  <Pill tone="red">{days}d ago</Pill>
+                                </>
+                              }
+                              onClick={() => setSelectedUser(u)}
+                            />
+                          );
+                        })}
+                      </ListBody>
+                    </ListCard>
+                  )}
 
-        {/* User Detail Sheet */}
+                {(activeSegment === 'all' || activeSegment === 'never') &&
+                  neverSubscribed.length > 0 && (
+                    <ListCard>
+                      <ListCardHeader
+                        tone="orange"
+                        title="Never Subscribed"
+                        meta={<Pill tone="orange">{neverSubscribed.length}</Pill>}
+                        action={batchSending ? undefined : 'Send offer'}
+                        onAction={
+                          batchSending ? undefined : () => setConfirmSegmentSend('never')
+                        }
+                      />
+                      <ListBody>
+                        {neverSubscribed.slice(0, 50).map((u) => {
+                          const days = daysSince(u.trial_ended_at);
+                          return (
+                            <ListRow
+                              key={u.id}
+                              lead={
+                                <Avatar initials={getInitials(u.full_name, u.username)} />
+                              }
+                              title={u.full_name || u.username || 'Unknown'}
+                              subtitle={`${u.email} · Trial lapsed`}
+                              trailing={
+                                <>
+                                  <Pill tone="orange">{days}d ago</Pill>
+                                </>
+                              }
+                              onClick={() => setSelectedUser(u)}
+                            />
+                          );
+                        })}
+                      </ListBody>
+                    </ListCard>
+                  )}
+
+                {search && (
+                  <ListCard>
+                    <ListCardHeader
+                      tone="yellow"
+                      title="Search Results"
+                      meta={<Pill tone="yellow">{visibleUsers.length}</Pill>}
+                    />
+                    {visibleUsers.length === 0 ? (
+                      <div className="px-5 sm:px-6 py-8">
+                        <EmptyState
+                          title="No matches"
+                          description="No users match your search."
+                        />
+                      </div>
+                    ) : (
+                      <ListBody>
+                        {visibleUsers.map((u) => {
+                          const isCancelled = !!u.stripe_customer_id;
+                          const days = daysSince(u.trial_ended_at);
+                          return (
+                            <ListRow
+                              key={u.id}
+                              lead={
+                                <Avatar initials={getInitials(u.full_name, u.username)} />
+                              }
+                              title={u.full_name || u.username || 'Unknown'}
+                              subtitle={`${u.email} · ${isCancelled ? 'Cancelled' : 'Trial lapsed'}`}
+                              trailing={
+                                <>
+                                  <Pill tone={isCancelled ? 'red' : 'orange'}>
+                                    {days}d ago
+                                  </Pill>
+                                </>
+                              }
+                              onClick={() => setSelectedUser(u)}
+                            />
+                          );
+                        })}
+                      </ListBody>
+                    )}
+                  </ListCard>
+                )}
+
+                {totalEligible > 0 && visibleUsers.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader
+                      title="Active Campaigns"
+                      meta={
+                        selectedUsers.size > 0 ? (
+                          <Pill tone="yellow">{selectedUsers.size} selected</Pill>
+                        ) : undefined
+                      }
+                      action={
+                        selectedUsers.size > 0 && !batchSending
+                          ? `Send to ${selectedUsers.size}`
+                          : undefined
+                      }
+                      onAction={
+                        selectedUsers.size > 0 && !batchSending
+                          ? () => sendBatchedEmails(Array.from(selectedUsers))
+                          : undefined
+                      }
+                    />
+                    <div className="px-5 sm:px-6 py-4 flex items-center justify-between gap-3">
+                      <label className="flex items-center gap-3 touch-manipulation">
+                        <Checkbox
+                          checked={
+                            visibleUsers.length > 0 &&
+                            selectedUsers.size === visibleUsers.length
+                          }
+                          onCheckedChange={toggleSelectAll}
+                          disabled={batchSending}
+                          className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                        />
+                        <span className="text-sm text-white">
+                          {selectedUsers.size > 0
+                            ? `${selectedUsers.size} selected`
+                            : 'Select all visible'}
+                        </span>
+                      </label>
+                      {totalEligible > 0 && !batchSending && (
+                        <TextAction onClick={() => setConfirmSegmentSend('all')}>
+                          Send to all {totalEligible}
+                        </TextAction>
+                      )}
+                    </div>
+                    <ListBody>
+                      {visibleUsers.slice(0, 100).map((u) => {
+                        const isCancelled = !!u.stripe_customer_id;
+                        const selected = selectedUsers.has(u.id);
+                        return (
+                          <div
+                            key={u.id}
+                            className="group w-full flex items-center gap-3.5 px-4 sm:px-5 py-3.5 sm:py-4"
+                          >
+                            <Checkbox
+                              checked={selected}
+                              onCheckedChange={() => toggleUserSelection(u.id)}
+                              className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                            />
+                            <Avatar initials={getInitials(u.full_name, u.username)} />
+                            <button
+                              type="button"
+                              onClick={() => setSelectedUser(u)}
+                              className="flex-1 min-w-0 text-left touch-manipulation"
+                            >
+                              <div className="text-[14px] font-medium text-white truncate">
+                                {u.full_name || u.username || 'Unknown'}
+                              </div>
+                              <div className="mt-0.5 text-[11.5px] text-white truncate">
+                                {u.email}
+                              </div>
+                            </button>
+                            <Pill tone={isCancelled ? 'red' : 'orange'}>
+                              {isCancelled ? 'Cancelled' : 'Never'}
+                            </Pill>
+                          </div>
+                        );
+                      })}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {!segmentsLoading && totalEligible === 0 && (
+                  <EmptyState
+                    title="Nothing to target"
+                    description="No churned subscribers or lapsed trials right now."
+                  />
+                )}
+              </>
+            )}
+
+            {activeView === 'sent' && (
+              <>
+                <Divider label="Campaign Performance" />
+                <StatStrip
+                  columns={4}
+                  stats={[
+                    {
+                      label: 'Sent',
+                      value: totalSent,
+                      tone: 'blue',
+                    },
+                    {
+                      label: 'Opened',
+                      value: performanceStats.opened,
+                      tone: 'emerald',
+                      sub: totalSent > 0 ? `${openRate}% open rate` : undefined,
+                    },
+                    {
+                      label: 'Clicked',
+                      value: performanceStats.clicked,
+                      tone: 'purple',
+                      sub: totalSent > 0 ? `${clickRate}% click rate` : undefined,
+                    },
+                    {
+                      label: 'Recovered',
+                      value: converted,
+                      accent: true,
+                      sub: totalSent > 0 ? `${convRate}% conversion` : undefined,
+                    },
+                  ]}
+                />
+
+                {sentLoading ? (
+                  <LoadingBlocks />
+                ) : !sentUsers || sentUsers.length === 0 ? (
+                  <EmptyState
+                    title="No emails sent yet"
+                    description="Send V10 to a segment to start tracking results here."
+                    action="Go to Target"
+                    onAction={() => setActiveView('target')}
+                  />
+                ) : (
+                  <ListCard>
+                    <ListCardHeader
+                      tone="emerald"
+                      title="Sent History"
+                      meta={<Pill tone="emerald">{sentUsers.length}</Pill>}
+                    />
+                    <ListBody>
+                      {sentUsers.map((u) => {
+                        const userEmail = u.email?.toLowerCase();
+                        const userEvents = userEmail
+                          ? trackingByEmail.get(userEmail)
+                          : undefined;
+                        const wasOpened = userEvents?.has('email.opened') || false;
+                        const wasClicked = userEvents?.has('email.clicked') || false;
+
+                        return (
+                          <ListRow
+                            key={u.id}
+                            lead={
+                              <Avatar
+                                initials={getInitials(u.full_name, u.username)}
+                                online={u.subscribed}
+                              />
+                            }
+                            title={u.full_name || u.username}
+                            subtitle={`Sent ${formatDistanceToNow(
+                              parseISO(u.winback_offer_sent_at),
+                              { addSuffix: true }
+                            )} · ${u.email_version?.toUpperCase() || 'V1'}`}
+                            trailing={
+                              <>
+                                {wasOpened && <Pill tone="emerald">Opened</Pill>}
+                                {wasClicked && <Pill tone="purple">Clicked</Pill>}
+                                {u.subscribed ? (
+                                  <Pill tone="emerald">Converted</Pill>
+                                ) : (
+                                  <Pill tone="blue">Pending</Pill>
+                                )}
+                              </>
+                            }
+                          />
+                        );
+                      })}
+                    </ListBody>
+                  </ListCard>
+                )}
+              </>
+            )}
+
+            <ListCard>
+              <ListCardHeader
+                tone="yellow"
+                title="Send Test Email"
+                meta={<Pill tone="yellow">[TEST]</Pill>}
+              />
+              <div className="px-5 sm:px-6 py-4 space-y-3">
+                <p className="text-[12.5px] text-white">
+                  Preview V10 end-to-end. Subject prefixed [TEST]. Nobody marked sent.
+                </p>
+                <div className="flex gap-2">
+                  <Input
+                    type="email"
+                    value={testEmail}
+                    onChange={(e) => setTestEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    className="h-11 text-base touch-manipulation flex-1 bg-[hsl(0_0%_10%)] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white"
+                  />
+                  <Button
+                    onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
+                    disabled={!testEmail || sendTestMutation.isPending}
+                    className="h-11 px-4 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold gap-1.5"
+                  >
+                    {sendTestMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4" />
+                        Test
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </div>
+            </ListCard>
+
+            <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
+              <CollapsibleTrigger asChild>
+                <button
+                  type="button"
+                  className="w-full h-11 px-5 flex items-center justify-between bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                >
+                  <span className="text-[13px] font-semibold text-white">Advanced</span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-white transition-transform ${advancedOpen ? 'rotate-180' : ''}`}
+                  />
+                </button>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="mt-2 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-5">
+                  <div className="space-y-3">
+                    <div>
+                      <div className="text-[13px] font-semibold text-white">
+                        Send real V10 to a specific address
+                      </div>
+                      <p className="mt-1 text-[11.5px] text-white leading-relaxed">
+                        Full send — goes through suppression check, logged, counts as sent.
+                        For testing, use the Test box above.
+                      </p>
+                    </div>
+                    <div className="flex gap-2">
+                      <Input
+                        type="email"
+                        value={manualEmail}
+                        onChange={(e) => setManualEmail(e.target.value)}
+                        placeholder="recipient@example.com"
+                        className="h-11 text-base touch-manipulation flex-1 bg-[hsl(0_0%_10%)] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow text-white placeholder:text-white"
+                      />
+                      <Button
+                        onClick={() =>
+                          manualEmail && sendManualMutation.mutate(manualEmail)
+                        }
+                        disabled={!manualEmail || sendManualMutation.isPending}
+                        className="h-11 px-4 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                      >
+                        {sendManualMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <Send className="h-4 w-4" />
+                        )}
+                      </Button>
+                    </div>
+                  </div>
+
+                  {(sentUsers?.length || 0) > 0 && (
+                    <div className="pt-4 border-t border-white/[0.06]">
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const allSentIds = sentUsers?.map((u) => u.id) || [];
+                          if (
+                            confirm(
+                              `Reset all ${allSentIds.length} sent users so they can be re-sent?`
+                            )
+                          ) {
+                            resetSentMutation.mutate(allSentIds);
+                          }
+                        }}
+                        disabled={resetSentMutation.isPending}
+                        className="w-full h-11 touch-manipulation gap-2 bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04] hover:text-white"
+                      >
+                        {resetSentMutation.isPending ? (
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                          <RefreshCw className="h-4 w-4" />
+                        )}
+                        Reset all sent users
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </>
+        )}
+
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-          <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
+          <SheetContent
+            side="bottom"
+            className="h-[70vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center">
-                    <User className="h-6 w-6 text-amber-400" />
-                  </div>
-                  <div className="text-left">
-                    <p>{selectedUser?.full_name || 'Unknown'}</p>
-                    <p className="text-sm font-normal text-white">{selectedUser?.email}</p>
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle asChild>
+                  <div className="flex items-center gap-3 text-left">
+                    <Avatar
+                      initials={getInitials(
+                        selectedUser?.full_name,
+                        selectedUser?.username
+                      )}
+                    />
+                    <div className="min-w-0">
+                      <div className="text-[15px] font-semibold text-white truncate">
+                        {selectedUser?.full_name || 'Unknown'}
+                      </div>
+                      <div className="text-[12px] text-white truncate">
+                        {selectedUser?.email}
+                      </div>
+                    </div>
                   </div>
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <Card>
-                  <CardContent className="pt-4 pb-4 space-y-3">
-                    <div className="flex items-center gap-2">
-                      {selectedUser?.stripe_customer_id ? (
-                        <Badge className="bg-violet-500/20 text-violet-400 border-0 gap-1">
-                          <HeartCrack className="h-3 w-3" /> Cancelled
-                        </Badge>
-                      ) : (
-                        <Badge className="bg-rose-500/20 text-rose-400 border-0 gap-1">
-                          <Flame className="h-3 w-3" /> Never subscribed
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Signed up</span>
-                      <span className="text-sm">
-                        {selectedUser?.created_at &&
-                          format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Trial ended</span>
-                      <span className="text-sm">
-                        {selectedUser?.trial_ended_at &&
-                          format(parseISO(selectedUser.trial_ended_at), 'dd MMM yyyy')}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Days lapsed</span>
-                      <Badge variant="outline" className="text-red-400">
-                        {selectedUser?.trial_ended_at &&
-                          Math.floor(
-                            (Date.now() - parseISO(selectedUser.trial_ended_at).getTime()) /
-                              (1000 * 60 * 60 * 24)
-                          )}{' '}
-                        days
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
+              <div className="flex-1 overflow-y-auto p-5 space-y-4">
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
+                  <div className="flex items-center gap-2">
+                    {selectedUser?.stripe_customer_id ? (
+                      <Pill tone="red">Cancelled</Pill>
+                    ) : (
+                      <Pill tone="orange">Never subscribed</Pill>
+                    )}
+                  </div>
+                  <Divider />
+                  <div className="flex justify-between items-center">
+                    <span className="text-[12.5px] text-white">Signed up</span>
+                    <span className="text-[13px] font-semibold text-white tabular-nums">
+                      {selectedUser?.created_at &&
+                        format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[12.5px] text-white">Trial ended</span>
+                    <span className="text-[13px] font-semibold text-white tabular-nums">
+                      {selectedUser?.trial_ended_at &&
+                        format(parseISO(selectedUser.trial_ended_at), 'dd MMM yyyy')}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[12.5px] text-white">Days lapsed</span>
+                    <Pill tone="red">
+                      {selectedUser?.trial_ended_at
+                        ? `${daysSince(selectedUser.trial_ended_at)} days`
+                        : '—'}
+                    </Pill>
+                  </div>
+                </div>
 
                 <Button
-                  className="w-full h-12 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-semibold"
+                  className="w-full h-12 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold gap-2"
                   onClick={() => selectedUser && sendSingleMutation.mutate(selectedUser.id)}
                   disabled={sendSingleMutation.isPending}
                 >
                   {sendSingleMutation.isPending ? (
                     <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                       Sending...
                     </>
                   ) : (
                     <>
-                      <Mail className="h-4 w-4 mr-2" />
+                      <Send className="h-4 w-4" />
                       Send V10 to this user
                     </>
                   )}
@@ -1030,30 +1087,30 @@ export default function AdminWinback() {
           </SheetContent>
         </Sheet>
 
-        {/* Confirm segment send */}
         <AlertDialog
           open={!!confirmSegmentSend}
           onOpenChange={(open) => !open && setConfirmSegmentSend(null)}
         >
-          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6">
+          <AlertDialogContent className="max-w-[calc(100vw-2rem)] sm:max-w-lg rounded-2xl p-5 sm:p-6 bg-[hsl(0_0%_10%)] border-white/[0.06]">
             <AlertDialogHeader className="space-y-3">
-              <AlertDialogTitle className="text-base sm:text-lg leading-tight">
+              <AlertDialogTitle className="text-base sm:text-lg leading-tight text-white">
                 Send V10 to {confirmCount} {confirmLabel} electricians?
               </AlertDialogTitle>
               <AlertDialogDescription asChild>
-                <div className="text-sm leading-relaxed space-y-2">
-                  <p className="text-white">
-                    Sends in batches of {BATCH_SIZE} via Resend with a 2s gap between batches.
+                <div className="text-sm leading-relaxed space-y-2 text-white">
+                  <p>
+                    Sends in batches of {BATCH_SIZE} via Resend with a 2s gap between
+                    batches.
                   </p>
-                  <p className="text-white/70 text-xs">
-                    Each recipient gets marked as sent and won&apos;t reappear in this segment
-                    unless reset.
+                  <p className="text-[12px]">
+                    Each recipient gets marked as sent and won&apos;t reappear in this
+                    segment unless reset.
                   </p>
                 </div>
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex-col-reverse sm:flex-row gap-2 pt-2">
-              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0">
+              <AlertDialogCancel className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm w-full sm:w-auto mt-0 bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04] hover:text-white">
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
@@ -1062,27 +1119,32 @@ export default function AdminWinback() {
                   setConfirmSegmentSend(null);
                   if (seg) handleSendSegment(seg);
                 }}
-                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
+                className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold w-full sm:w-auto gap-2"
               >
-                <Send className="h-4 w-4 mr-2" />
+                <Send className="h-4 w-4" />
                 Send {confirmCount}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* Preview */}
         <Sheet open={showPreview} onOpenChange={setShowPreview}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-4 pb-3 border-b border-border">
-                <SheetTitle className="flex items-center gap-2 text-sm">
-                  <FileText className="h-4 w-4 text-amber-400" />
-                  V10 Preview
-                  <Badge className="bg-amber-500/20 text-amber-400 text-[10px] border-0">V10</Badge>
+              <SheetHeader className="px-5 pb-3 border-b border-white/[0.06]">
+                <SheetTitle asChild>
+                  <div className="flex items-center gap-2 text-left">
+                    <span className="text-[13px] font-semibold text-white">
+                      V10 Preview
+                    </span>
+                    <Pill tone="yellow">V10</Pill>
+                  </div>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-hidden bg-black">
@@ -1096,88 +1158,8 @@ export default function AdminWinback() {
             </div>
           </SheetContent>
         </Sheet>
-      </div>
+      </PageFrame>
     </PullToRefresh>
-  );
-}
-
-function StatTile({
-  label,
-  value,
-  sub,
-  colorClass,
-}: {
-  label: string;
-  value: number;
-  sub: string | null;
-  colorClass: string;
-}) {
-  return (
-    <div className={`p-2.5 rounded-xl border text-center ${colorClass}`}>
-      <p className="text-lg font-bold leading-tight">{value}</p>
-      <p className="text-[10px] text-white mt-0.5">{label}</p>
-      {sub && <p className="text-[9px] opacity-70 mt-0.5">{sub}</p>}
-    </div>
-  );
-}
-
-function SegmentTile({
-  title,
-  subtitle,
-  count,
-  loading,
-  active,
-  onFocus,
-  onSend,
-  icon: Icon,
-  colorClass,
-  iconBgClass,
-  disabledSend,
-}: {
-  title: string;
-  subtitle: string;
-  count: number;
-  loading: boolean;
-  active: boolean;
-  onFocus: () => void;
-  onSend: () => void;
-  icon: typeof Flame;
-  colorClass: string;
-  iconBgClass: string;
-  disabledSend: boolean;
-}) {
-  return (
-    <div
-      className={`rounded-2xl border bg-gradient-to-br ${colorClass} p-3 space-y-3 transition-all ${active ? 'ring-1 ring-amber-400/60' : ''}`}
-    >
-      <button
-        type="button"
-        onClick={onFocus}
-        className="w-full text-left space-y-2 touch-manipulation"
-      >
-        <div className="flex items-center gap-2">
-          <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${iconBgClass}`}>
-            <Icon className="h-4 w-4" />
-          </div>
-          <div className="min-w-0">
-            <p className="text-[13px] font-semibold text-white leading-tight truncate">{title}</p>
-            <p className="text-[10px] text-white/60 truncate">{subtitle}</p>
-          </div>
-        </div>
-        <div className="text-2xl font-bold text-white leading-none">
-          {loading ? <Skeleton className="h-7 w-12" /> : count}
-        </div>
-      </button>
-      <Button
-        size="sm"
-        disabled={disabledSend}
-        onClick={onSend}
-        className="w-full h-10 touch-manipulation text-xs font-semibold bg-white/10 hover:bg-white/15 text-white border border-white/10 gap-1.5"
-      >
-        <Send className="h-3.5 w-3.5" />
-        Send V10
-      </Button>
-    </div>
   );
 }
 
@@ -1186,68 +1168,28 @@ function SegmentPill({
   onClick,
   label,
   count,
-  colorClass,
 }: {
   active: boolean;
   onClick: () => void;
   label: string;
   count: number;
-  colorClass: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`shrink-0 h-9 px-3 rounded-full text-xs font-semibold touch-manipulation transition-all ${active ? colorClass : 'bg-white/5 text-white/70 hover:bg-white/10'}`}
+      className={`shrink-0 h-9 px-3.5 rounded-full text-[12.5px] font-medium touch-manipulation transition-colors whitespace-nowrap ${
+        active
+          ? 'bg-elec-yellow text-black'
+          : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white hover:bg-white/[0.04]'
+      }`}
     >
-      {label} · {count}
+      {label}
+      <span
+        className={`ml-1.5 tabular-nums text-[11px] ${active ? 'text-black/60' : 'text-white'}`}
+      >
+        {count}
+      </span>
     </button>
-  );
-}
-
-function UserRow({
-  user,
-  selected,
-  onToggle,
-  onOpen,
-}: {
-  user: SegmentUser;
-  selected: boolean;
-  onToggle: () => void;
-  onOpen: () => void;
-}) {
-  const isCancelled = !!user.stripe_customer_id;
-  return (
-    <div className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform">
-      <Checkbox
-        checked={selected}
-        onCheckedChange={onToggle}
-        onClick={(e) => e.stopPropagation()}
-        className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-      />
-      <button type="button" onClick={onOpen} className="flex-1 min-w-0 text-left">
-        <div className="flex items-center gap-1.5">
-          {isCancelled ? (
-            <HeartCrack className="h-3 w-3 text-violet-400 shrink-0" />
-          ) : (
-            <Flame className="h-3 w-3 text-rose-400 shrink-0" />
-          )}
-          <p className="font-medium text-sm text-white truncate">{user.full_name || 'Unknown'}</p>
-        </div>
-        <div className="flex items-center gap-2 text-xs text-white/70">
-          <span className="truncate max-w-[140px]">{user.email}</span>
-          <span className="shrink-0">·</span>
-          <span className="flex items-center gap-1 shrink-0">
-            <Clock className="h-3 w-3" />
-            {formatDistanceToNow(parseISO(user.trial_ended_at), {
-              addSuffix: true,
-            })}
-          </span>
-        </div>
-      </button>
-      <Button variant="ghost" size="sm" onClick={onOpen} className="h-11 px-2 touch-manipulation">
-        <ChevronRight className="h-4 w-4" />
-      </Button>
-    </div>
   );
 }

@@ -2,9 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -27,49 +25,42 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import {
-  FileSearch,
-  FileCheck,
   RefreshCw,
-  ChevronRight,
   Check,
   X,
-  Clock,
-  AlertTriangle,
-  Flag,
-  Eye,
-  User,
-  IdCard,
-  GraduationCap,
-  Car,
-  Shield,
-  Award,
-  HardHat,
   Loader2,
   ZoomIn,
   ZoomOut,
   RotateCw,
-  CheckCircle2,
-  XCircle,
-  AlertCircle,
-  Sparkles,
-  Calendar,
-  Hash,
-  Building,
   ExternalLink,
   CheckSquare,
   Square,
   SkipForward,
   ListChecks,
+  AlertTriangle,
+  FileCheck,
 } from 'lucide-react';
 import { format, formatDistanceToNow, differenceInMinutes } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
-import { Skeleton } from '@/components/ui/skeleton';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface DocumentRecord {
   id: string;
@@ -110,62 +101,53 @@ interface DocumentRecord {
   };
 }
 
-const DOCUMENT_ICONS: Record<string, typeof IdCard> = {
-  ecs_card: IdCard,
-  qualification: GraduationCap,
-  training: Award,
-  cscs: HardHat,
-  driving_licence: Car,
-  insurance: Shield,
+const STATUS_TONE: Record<string, Tone> = {
+  pending: 'orange',
+  processing: 'blue',
+  verified: 'emerald',
+  rejected: 'red',
+  needs_review: 'amber',
+  appealed: 'yellow',
 };
 
-const DOCUMENT_COLORS: Record<string, string> = {
-  ecs_card: 'text-yellow-400 bg-yellow-500/20',
-  qualification: 'text-blue-400 bg-blue-500/20',
-  training: 'text-green-400 bg-green-500/20',
-  cscs: 'text-orange-400 bg-orange-500/20',
-  driving_licence: 'text-yellow-400 bg-yellow-500/20',
-  insurance: 'text-cyan-400 bg-cyan-500/20',
+const STATUS_LABEL: Record<string, string> = {
+  pending: 'Pending',
+  processing: 'Processing',
+  verified: 'Verified',
+  rejected: 'Rejected',
+  needs_review: 'Needs Review',
+  appealed: 'Appealed',
 };
 
-const STATUS_CONFIG = {
-  pending: {
-    label: 'Pending',
-    color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    icon: Clock,
-    description: 'Awaiting AI verification',
-  },
-  processing: {
-    label: 'Processing',
-    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    icon: Loader2,
-    description: 'AI is analysing',
-  },
-  verified: {
-    label: 'Verified',
-    color: 'bg-green-500/20 text-green-400 border-green-500/30',
-    icon: CheckCircle2,
-    description: 'Successfully verified',
-  },
-  rejected: {
-    label: 'Rejected',
-    color: 'bg-red-500/20 text-red-400 border-red-500/30',
-    icon: XCircle,
-    description: 'Verification failed',
-  },
-  needs_review: {
-    label: 'Needs Review',
-    color: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-    icon: Eye,
-    description: 'Requires manual review',
-  },
-  appealed: {
-    label: 'Appealed',
-    color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-    icon: Flag,
-    description: 'User submitted appeal',
-  },
-};
+const DOC_TYPE_OPTIONS = [
+  { value: 'all', label: 'All Types' },
+  { value: 'ecs_card', label: 'ECS Card' },
+  { value: 'qualification', label: 'Qualification' },
+  { value: 'training', label: 'Training' },
+  { value: 'cscs', label: 'CSCS' },
+  { value: 'driving_licence', label: 'Driving Licence' },
+  { value: 'insurance', label: 'Insurance' },
+];
+
+function getInitials(name?: string | null): string {
+  if (!name) return '??';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function formatDocType(type: string): string {
+  return type.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function getDocumentAge(createdAt: string): string {
+  const minutes = differenceInMinutes(new Date(), new Date(createdAt));
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  return `${days}d ago`;
+}
 
 export default function AdminDocumentReview() {
   const { profile } = useAuth();
@@ -173,6 +155,7 @@ export default function AdminDocumentReview() {
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('needs_attention');
+  const [docTypeFilter, setDocTypeFilter] = useState('all');
   const [selectedDocument, setSelectedDocument] = useState<DocumentRecord | null>(null);
   const [reviewAction, setReviewAction] = useState<
     'approved' | 'rejected' | 'request_reupload' | null
@@ -189,14 +172,13 @@ export default function AdminDocumentReview() {
   const [queueMode, setQueueMode] = useState(false);
   const [queueReviewCount, setQueueReviewCount] = useState(0);
 
-  // Fetch documents with real-time updates
   const {
     data: documents,
     isLoading,
     refetch,
     isFetching,
   } = useQuery({
-    queryKey: ['admin-document-review', search, statusFilter],
+    queryKey: ['admin-document-review', search, statusFilter, docTypeFilter],
     refetchInterval: 30000,
     staleTime: 0,
     queryFn: async () => {
@@ -218,9 +200,7 @@ export default function AdminDocumentReview() {
         .order('created_at', { ascending: false })
         .limit(200);
 
-      // Filter based on status
       if (statusFilter === 'needs_attention') {
-        // Show pending, needs_review, appealed, and flagged documents
         query = query.or(
           'verification_status.eq.pending,verification_status.eq.needs_review,verification_status.eq.appealed,flagged_for_review.eq.true'
         );
@@ -230,12 +210,15 @@ export default function AdminDocumentReview() {
         query = query.eq('verification_status', statusFilter);
       }
 
+      if (docTypeFilter !== 'all') {
+        query = query.eq('document_type', docTypeFilter);
+      }
+
       const { data, error } = await query;
       if (error) throw error;
 
       let filtered = data as DocumentRecord[];
 
-      // Apply search filter
       if (search) {
         const s = search.toLowerCase();
         filtered = filtered.filter(
@@ -249,18 +232,14 @@ export default function AdminDocumentReview() {
         );
       }
 
-      // Sort: flagged first, then by age (oldest first for needs_attention)
       if (statusFilter === 'needs_attention') {
         filtered.sort((a, b) => {
-          // Flagged items first
           if (a.flagged_for_review && !b.flagged_for_review) return -1;
           if (!a.flagged_for_review && b.flagged_for_review) return 1;
-          // Then appealed
           if (a.verification_status === 'appealed' && b.verification_status !== 'appealed')
             return -1;
           if (a.verification_status !== 'appealed' && b.verification_status === 'appealed')
             return 1;
-          // Then oldest first
           return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
         });
       }
@@ -269,12 +248,11 @@ export default function AdminDocumentReview() {
     },
   });
 
-  // Auto-flag stale pending documents (>5 minutes old)
   useEffect(() => {
     const flagStaleDocuments = async () => {
       if (!documents) return;
 
-      const staleThreshold = 5; // minutes
+      const staleThreshold = 5;
       const staleDocs = documents.filter(
         (d) =>
           d.verification_status === 'pending' &&
@@ -283,7 +261,6 @@ export default function AdminDocumentReview() {
       );
 
       if (staleDocs.length > 0) {
-        console.log(`[Admin] Flagging ${staleDocs.length} stale documents`);
         const { error } = await supabase
           .from('elec_id_documents')
           .update({
@@ -305,7 +282,6 @@ export default function AdminDocumentReview() {
     flagStaleDocuments();
   }, [documents]);
 
-  // Real-time subscription for document updates
   useEffect(() => {
     const channel = supabase
       .channel('admin-doc-review-changes')
@@ -317,7 +293,6 @@ export default function AdminDocumentReview() {
           table: 'elec_id_documents',
         },
         () => {
-          console.log('[Admin] Document change detected, refreshing...');
           refetch();
         }
       )
@@ -328,31 +303,39 @@ export default function AdminDocumentReview() {
     };
   }, [refetch]);
 
-  // Get stats
   const { data: stats, refetch: refetchStats } = useQuery({
     queryKey: ['admin-document-review-stats'],
     refetchInterval: 30000,
     staleTime: 0,
     queryFn: async () => {
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
       const [
-        needsAttentionRes,
         pendingRes,
-        flaggedRes,
-        appealedRes,
+        weekRes,
         verifiedRes,
         rejectedRes,
-        totalRes,
+        flaggedRes,
+        appealedRes,
+        needsAttentionRes,
       ] = await Promise.all([
         supabase
           .from('elec_id_documents')
           .select('*', { count: 'exact', head: true })
-          .or(
-            'verification_status.eq.pending,verification_status.eq.needs_review,verification_status.eq.appealed,flagged_for_review.eq.true'
-          ),
+          .eq('verification_status', 'pending'),
         supabase
           .from('elec_id_documents')
           .select('*', { count: 'exact', head: true })
-          .eq('verification_status', 'pending'),
+          .gte('created_at', sevenDaysAgo.toISOString()),
+        supabase
+          .from('elec_id_documents')
+          .select('*', { count: 'exact', head: true })
+          .eq('verification_status', 'verified'),
+        supabase
+          .from('elec_id_documents')
+          .select('*', { count: 'exact', head: true })
+          .eq('verification_status', 'rejected'),
         supabase
           .from('elec_id_documents')
           .select('*', { count: 'exact', head: true })
@@ -364,26 +347,22 @@ export default function AdminDocumentReview() {
         supabase
           .from('elec_id_documents')
           .select('*', { count: 'exact', head: true })
-          .eq('verification_status', 'verified'),
-        supabase
-          .from('elec_id_documents')
-          .select('*', { count: 'exact', head: true })
-          .eq('verification_status', 'rejected'),
-        supabase.from('elec_id_documents').select('*', { count: 'exact', head: true }),
+          .or(
+            'verification_status.eq.pending,verification_status.eq.needs_review,verification_status.eq.appealed,flagged_for_review.eq.true'
+          ),
       ]);
       return {
-        needsAttention: needsAttentionRes.count || 0,
         pending: pendingRes.count || 0,
-        flagged: flaggedRes.count || 0,
-        appealed: appealedRes.count || 0,
+        thisWeek: weekRes.count || 0,
         verified: verifiedRes.count || 0,
         rejected: rejectedRes.count || 0,
-        total: totalRes.count || 0,
+        flagged: flaggedRes.count || 0,
+        appealed: appealedRes.count || 0,
+        needsAttention: needsAttentionRes.count || 0,
       };
     },
   });
 
-  // Review document mutation
   const reviewMutation = useMutation({
     mutationFn: async ({ id, action, notes }: { id: string; action: string; notes: string }) => {
       const updateData: Record<string, unknown> = {
@@ -410,7 +389,6 @@ export default function AdminDocumentReview() {
       const { error } = await supabase.from('elec_id_documents').update(updateData).eq('id', id);
       if (error) throw error;
 
-      // Log the action
       await supabase.from('admin_audit_logs').insert({
         user_id: profile?.id,
         action: `document_review_${action}`,
@@ -456,7 +434,6 @@ export default function AdminDocumentReview() {
     },
   });
 
-  // Bulk approve mutation
   const bulkApproveMutation = useMutation({
     mutationFn: async (ids: string[]) => {
       const updateData = {
@@ -472,7 +449,6 @@ export default function AdminDocumentReview() {
       const { error } = await supabase.from('elec_id_documents').update(updateData).in('id', ids);
       if (error) throw error;
 
-      // Log bulk action
       await supabase.from('admin_audit_logs').insert({
         user_id: profile?.id,
         action: 'document_bulk_approve',
@@ -503,7 +479,6 @@ export default function AdminDocumentReview() {
     },
   });
 
-  // Bulk reject mutation
   const bulkRejectMutation = useMutation({
     mutationFn: async ({ ids, reason }: { ids: string[]; reason: string }) => {
       const updateData = {
@@ -543,7 +518,6 @@ export default function AdminDocumentReview() {
     },
   });
 
-  // Quick approve without opening detail
   const quickApproveMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
@@ -576,7 +550,6 @@ export default function AdminDocumentReview() {
     },
   });
 
-  // Load document image when selected
   const loadDocumentImage = async (doc: DocumentRecord) => {
     setSelectedDocument(doc);
     setDocumentImageUrl(null);
@@ -593,14 +566,11 @@ export default function AdminDocumentReview() {
         .createSignedUrl(filePath, 3600);
 
       if (error) {
-        console.error('[Admin] Signed URL error:', error);
-        // Fallback: try downloading the file directly
         const { data: downloadData, error: downloadError } = await supabase.storage
           .from('elec-id-documents')
           .download(filePath);
 
         if (downloadError) {
-          console.error('[Admin] Download fallback error:', downloadError);
           toast({
             title: 'Could not load document image',
             description: error.message,
@@ -628,13 +598,11 @@ export default function AdminDocumentReview() {
     });
   };
 
-  // Selection helpers — all docs that can be actioned (not in a terminal state)
   const selectableDocs =
     documents?.filter(
       (d) => d.verification_status !== 'verified' && d.verification_status !== 'rejected'
     ) || [];
 
-  // Queue mode helpers
   const startQueue = useCallback(() => {
     if (selectableDocs.length === 0) return;
     setQueueMode(true);
@@ -688,549 +656,257 @@ export default function AdminDocumentReview() {
     setSelectedIds(new Set());
   };
 
-  const getDocumentAge = (createdAt: string) => {
-    const minutes = differenceInMinutes(new Date(), new Date(createdAt));
-    if (minutes < 60) return `${minutes}m`;
-    const hours = Math.floor(minutes / 60);
-    if (hours < 24) return `${hours}h`;
-    const days = Math.floor(hours / 24);
-    return `${days}d`;
-  };
+  const filterTabs = [
+    { value: 'all', label: 'All', count: undefined },
+    { value: 'needs_attention', label: 'Pending', count: stats?.needsAttention },
+    { value: 'verified', label: 'Approved', count: stats?.verified },
+    { value: 'flagged', label: 'Flagged', count: stats?.flagged },
+    { value: 'rejected', label: 'Rejected', count: stats?.rejected },
+  ];
 
-  const getUrgencyColor = (createdAt: string) => {
-    const minutes = differenceInMinutes(new Date(), new Date(createdAt));
-    if (minutes > 1440) return 'text-red-400'; // >24h
-    if (minutes > 60) return 'text-amber-400'; // >1h
-    return 'text-foreground/60';
-  };
+  const listTone: Tone =
+    statusFilter === 'verified'
+      ? 'emerald'
+      : statusFilter === 'rejected'
+        ? 'red'
+        : statusFilter === 'flagged'
+          ? 'amber'
+          : 'blue';
+
+  const listTitle =
+    statusFilter === 'verified'
+      ? 'Approved'
+      : statusFilter === 'rejected'
+        ? 'Rejected'
+        : statusFilter === 'flagged'
+          ? 'Flagged'
+          : statusFilter === 'all'
+            ? 'All Documents'
+            : 'Pending Review';
 
   return (
     <PullToRefresh
       onRefresh={async () => {
         await refetch();
+        await refetchStats();
       }}
     >
-      <div className="min-h-screen bg-background pb-20">
-        <AdminPageHeader
-          title="Document Review"
-          subtitle="Review and verify uploaded documents"
-          icon={FileSearch}
-          iconColor="text-purple-400"
-          iconBg="bg-purple-500/10 border-purple-500/20"
-          accentColor="from-purple-500 via-violet-400 to-purple-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
-        />
-
-        {/* Sticky Header */}
-        <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b border-white/10">
-          <div className="p-4 sm:p-6">
-            {/* Title and refresh */}
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-foreground">Document Review</h1>
-                <p className="text-sm text-foreground/60 hidden sm:block">
-                  Review and verify uploaded documents
-                </p>
-              </div>
-              <div className="flex items-center gap-2">
-                {selectableDocs.length > 0 && (
-                  <Button
-                    size="sm"
-                    onClick={startQueue}
-                    className={cn(
-                      'gap-2 h-10 touch-manipulation font-medium',
-                      queueMode
-                        ? 'bg-green-500 hover:bg-green-600 text-white'
-                        : 'bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark'
-                    )}
+      <div className="min-h-screen bg-background">
+        <div className="px-4 sm:px-6 lg:px-8">
+          <PageFrame>
+            <PageHero
+              eyebrow="Moderation"
+              title="Document Review"
+              description="Review user-uploaded certificates and documents."
+              tone="blue"
+              actions={
+                <>
+                  {selectableDocs.length > 0 && (
+                    <button
+                      onClick={startQueue}
+                      className={cn(
+                        'h-10 px-4 rounded-full text-[12.5px] font-medium touch-manipulation transition-colors inline-flex items-center gap-2',
+                        queueMode
+                          ? 'bg-emerald-500 text-white'
+                          : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                      )}
+                    >
+                      <ListChecks className="h-4 w-4" />
+                      {queueMode ? 'Reviewing' : `Queue · ${selectableDocs.length}`}
+                    </button>
+                  )}
+                  <IconButton
+                    onClick={() => {
+                      refetch();
+                      refetchStats();
+                    }}
+                    disabled={isFetching}
+                    aria-label="Refresh"
                   >
-                    <ListChecks className="h-4 w-4" />
-                    {queueMode ? `Reviewing...` : `Queue (${selectableDocs.length})`}
-                  </Button>
-                )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    refetch();
-                    refetchStats();
-                  }}
-                  disabled={isFetching}
-                  className="gap-2 h-10 touch-manipulation"
-                >
-                  <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
-                  <span className="hidden sm:inline">Refresh</span>
-                </Button>
-              </div>
-            </div>
-
-            {/* Stats Cards - Horizontal scroll on mobile */}
-            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-4 lg:grid-cols-7">
-              <button
-                onClick={() => setStatusFilter('needs_attention')}
-                className={cn(
-                  'flex-shrink-0 min-w-[120px] sm:min-w-0 p-3 rounded-xl border transition-all touch-manipulation',
-                  statusFilter === 'needs_attention'
-                    ? 'bg-red-500/20 border-red-500/50'
-                    : 'bg-card/50 border-white/10 hover:border-white/20'
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <AlertCircle
-                    className={cn(
-                      'h-5 w-5',
-                      statusFilter === 'needs_attention' ? 'text-red-400' : 'text-red-400/70'
-                    )}
-                  />
-                  <div className="text-left">
-                    <p
-                      className={cn(
-                        'text-xl font-bold',
-                        statusFilter === 'needs_attention' ? 'text-red-400' : 'text-foreground'
-                      )}
-                    >
-                      {stats?.needsAttention || 0}
-                    </p>
-                    <p className="text-xs text-foreground/60 uppercase tracking-wide">Attention</p>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => setStatusFilter('pending')}
-                className={cn(
-                  'flex-shrink-0 min-w-[100px] sm:min-w-0 p-3 rounded-xl border transition-all touch-manipulation',
-                  statusFilter === 'pending'
-                    ? 'bg-yellow-500/20 border-yellow-500/50'
-                    : 'bg-card/50 border-white/10 hover:border-white/20'
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <Clock
-                    className={cn(
-                      'h-5 w-5',
-                      statusFilter === 'pending' ? 'text-yellow-400' : 'text-yellow-400/70'
-                    )}
-                  />
-                  <div className="text-left">
-                    <p
-                      className={cn(
-                        'text-xl font-bold',
-                        statusFilter === 'pending' ? 'text-yellow-400' : 'text-foreground'
-                      )}
-                    >
-                      {stats?.pending || 0}
-                    </p>
-                    <p className="text-xs text-foreground/60 uppercase tracking-wide">Pending</p>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => setStatusFilter('flagged')}
-                className={cn(
-                  'flex-shrink-0 min-w-[100px] sm:min-w-0 p-3 rounded-xl border transition-all touch-manipulation',
-                  statusFilter === 'flagged'
-                    ? 'bg-amber-500/20 border-amber-500/50'
-                    : 'bg-card/50 border-white/10 hover:border-white/20'
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <Flag
-                    className={cn(
-                      'h-5 w-5',
-                      statusFilter === 'flagged' ? 'text-amber-400' : 'text-amber-400/70'
-                    )}
-                  />
-                  <div className="text-left">
-                    <p
-                      className={cn(
-                        'text-xl font-bold',
-                        statusFilter === 'flagged' ? 'text-amber-400' : 'text-foreground'
-                      )}
-                    >
-                      {stats?.flagged || 0}
-                    </p>
-                    <p className="text-xs text-foreground/60 uppercase tracking-wide">Flagged</p>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => setStatusFilter('appealed')}
-                className={cn(
-                  'flex-shrink-0 min-w-[100px] sm:min-w-0 p-3 rounded-xl border transition-all touch-manipulation',
-                  statusFilter === 'appealed'
-                    ? 'bg-yellow-500/20 border-yellow-500/50'
-                    : 'bg-card/50 border-white/10 hover:border-white/20'
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <Flag
-                    className={cn(
-                      'h-5 w-5',
-                      statusFilter === 'appealed' ? 'text-yellow-400' : 'text-yellow-400/70'
-                    )}
-                  />
-                  <div className="text-left">
-                    <p
-                      className={cn(
-                        'text-xl font-bold',
-                        statusFilter === 'appealed' ? 'text-yellow-400' : 'text-foreground'
-                      )}
-                    >
-                      {stats?.appealed || 0}
-                    </p>
-                    <p className="text-xs text-foreground/60 uppercase tracking-wide">Appeals</p>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => setStatusFilter('verified')}
-                className={cn(
-                  'flex-shrink-0 min-w-[100px] sm:min-w-0 p-3 rounded-xl border transition-all touch-manipulation',
-                  statusFilter === 'verified'
-                    ? 'bg-green-500/20 border-green-500/50'
-                    : 'bg-card/50 border-white/10 hover:border-white/20'
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <CheckCircle2
-                    className={cn(
-                      'h-5 w-5',
-                      statusFilter === 'verified' ? 'text-green-400' : 'text-green-400/70'
-                    )}
-                  />
-                  <div className="text-left">
-                    <p
-                      className={cn(
-                        'text-xl font-bold',
-                        statusFilter === 'verified' ? 'text-green-400' : 'text-foreground'
-                      )}
-                    >
-                      {stats?.verified || 0}
-                    </p>
-                    <p className="text-xs text-foreground/60 uppercase tracking-wide">Verified</p>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => setStatusFilter('rejected')}
-                className={cn(
-                  'flex-shrink-0 min-w-[100px] sm:min-w-0 p-3 rounded-xl border transition-all touch-manipulation',
-                  statusFilter === 'rejected'
-                    ? 'bg-red-500/20 border-red-500/50'
-                    : 'bg-card/50 border-white/10 hover:border-white/20'
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <XCircle
-                    className={cn(
-                      'h-5 w-5',
-                      statusFilter === 'rejected' ? 'text-red-400' : 'text-red-400/70'
-                    )}
-                  />
-                  <div className="text-left">
-                    <p
-                      className={cn(
-                        'text-xl font-bold',
-                        statusFilter === 'rejected' ? 'text-red-400' : 'text-foreground'
-                      )}
-                    >
-                      {stats?.rejected || 0}
-                    </p>
-                    <p className="text-xs text-foreground/60 uppercase tracking-wide">Rejected</p>
-                  </div>
-                </div>
-              </button>
-
-              <button
-                onClick={() => setStatusFilter('all')}
-                className={cn(
-                  'flex-shrink-0 min-w-[100px] sm:min-w-0 p-3 rounded-xl border transition-all touch-manipulation',
-                  statusFilter === 'all'
-                    ? 'bg-white/20 border-white/50'
-                    : 'bg-card/50 border-white/10 hover:border-white/20'
-                )}
-              >
-                <div className="flex items-center gap-2">
-                  <FileCheck
-                    className={cn(
-                      'h-5 w-5',
-                      statusFilter === 'all' ? 'text-foreground' : 'text-foreground/70'
-                    )}
-                  />
-                  <div className="text-left">
-                    <p
-                      className={cn(
-                        'text-xl font-bold',
-                        statusFilter === 'all' ? 'text-foreground' : 'text-foreground'
-                      )}
-                    >
-                      {stats?.total || 0}
-                    </p>
-                    <p className="text-xs text-foreground/60 uppercase tracking-wide">Total</p>
-                  </div>
-                </div>
-              </button>
-            </div>
-
-            {/* Search and bulk actions */}
-            <div className="mt-4 flex flex-col sm:flex-row gap-3">
-              <AdminSearchInput
-                value={search}
-                onChange={setSearch}
-                placeholder="Search by name, email, document..."
-                className="flex-1"
-              />
-
-              {statusFilter !== 'verified' &&
-                statusFilter !== 'rejected' &&
-                selectableDocs.length > 0 && (
-                  <div className="flex items-center gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="h-10 touch-manipulation gap-2"
-                      onClick={
-                        selectedIds.size === selectableDocs.length ? clearSelection : selectAll
-                      }
-                    >
-                      {selectedIds.size === selectableDocs.length ? (
-                        <>
-                          <CheckSquare className="h-4 w-4" />
-                          <span className="hidden sm:inline">Deselect</span>
-                        </>
-                      ) : (
-                        <>
-                          <Square className="h-4 w-4" />
-                          <span className="hidden sm:inline">Select All</span>
-                        </>
-                      )}
-                    </Button>
-
-                    {selectedIds.size > 0 && (
-                      <>
-                        <Button
-                          size="sm"
-                          className="h-10 touch-manipulation gap-2 bg-green-500 hover:bg-green-600"
-                          onClick={() => setShowBulkApproveDialog(true)}
-                          disabled={bulkApproveMutation.isPending}
-                        >
-                          <Check className="h-4 w-4" />
-                          <span className="hidden sm:inline">Approve</span> ({selectedIds.size})
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="h-10 touch-manipulation gap-2 border-red-500/30 text-red-400 hover:bg-red-500/10"
-                          onClick={() => setShowBulkRejectDialog(true)}
-                          disabled={bulkRejectMutation.isPending}
-                        >
-                          <X className="h-4 w-4" />
-                          <span className="hidden sm:inline">Reject</span>
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                )}
-            </div>
-          </div>
-        </div>
-
-        {/* Document List */}
-        <div className="p-4 sm:p-6 space-y-3">
-          {isLoading ? (
-            <div className="space-y-3 animate-pulse">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Skeleton className="w-9 h-9 rounded-lg" />
-                    <div className="space-y-1.5 flex-1">
-                      <Skeleton className="h-4 w-32" />
-                      <Skeleton className="h-3 w-48" />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : documents?.length === 0 ? (
-            <AdminEmptyState
-              icon={FileSearch}
-              title="All caught up!"
-              description={
-                statusFilter === 'needs_attention'
-                  ? 'No documents need attention right now'
-                  : `No ${statusFilter} documents found`
+                    <RefreshCw className={cn('h-4 w-4', isFetching && 'animate-spin')} />
+                  </IconButton>
+                </>
               }
             />
-          ) : (
-            <>
-              {documents?.map((doc) => {
-                const IconComponent = DOCUMENT_ICONS[doc.document_type] || FileCheck;
-                const iconColors =
-                  DOCUMENT_COLORS[doc.document_type] || 'text-gray-400 bg-gray-500/20';
-                const statusConfig =
-                  STATUS_CONFIG[doc.verification_status as keyof typeof STATUS_CONFIG] ||
-                  STATUS_CONFIG.pending;
-                const StatusIcon = statusConfig.icon;
-                const isSelectable =
-                  statusFilter !== 'verified' &&
-                  statusFilter !== 'rejected' &&
-                  doc.verification_status !== 'verified' &&
-                  doc.verification_status !== 'rejected';
 
-                return (
-                  <Card
-                    key={doc.id}
-                    className={cn(
-                      'border transition-all overflow-hidden',
-                      'active:scale-[0.995] touch-manipulation cursor-pointer',
-                      selectedIds.has(doc.id) && 'border-cyan-500/50 bg-cyan-500/5',
-                      doc.flagged_for_review &&
-                        !selectedIds.has(doc.id) &&
-                        'border-amber-500/30 bg-amber-500/5',
-                      doc.verification_status === 'appealed' &&
-                        !selectedIds.has(doc.id) &&
-                        'border-yellow-500/30 bg-yellow-500/5',
-                      !doc.flagged_for_review &&
-                        doc.verification_status !== 'appealed' &&
-                        !selectedIds.has(doc.id) &&
-                        'bg-white/[0.02] border-white/10 hover:border-white/20'
-                    )}
+            <StatStrip
+              columns={4}
+              stats={[
+                {
+                  label: 'Pending',
+                  value: stats?.pending ?? 0,
+                  tone: 'orange',
+                  onClick: () => setStatusFilter('needs_attention'),
+                },
+                {
+                  label: 'This Week',
+                  value: stats?.thisWeek ?? 0,
+                  tone: 'blue',
+                  onClick: () => setStatusFilter('all'),
+                },
+                {
+                  label: 'Approved',
+                  value: stats?.verified ?? 0,
+                  tone: 'emerald',
+                  onClick: () => setStatusFilter('verified'),
+                },
+                {
+                  label: 'Rejected',
+                  value: stats?.rejected ?? 0,
+                  tone: 'red',
+                  onClick: () => setStatusFilter('rejected'),
+                },
+              ]}
+            />
+
+            <FilterBar
+              tabs={filterTabs}
+              activeTab={statusFilter}
+              onTabChange={setStatusFilter}
+              search={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search by name, email, document..."
+              actions={
+                <Select value={docTypeFilter} onValueChange={setDocTypeFilter}>
+                  <SelectTrigger className="h-10 w-44 bg-[hsl(0_0%_12%)] border-white/[0.08] rounded-full text-[13px] text-white touch-manipulation">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-[hsl(0_0%_10%)] border-white/[0.08] text-white">
+                    {DOC_TYPE_OPTIONS.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value} className="text-white">
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              }
+            />
+
+            {statusFilter !== 'verified' &&
+              statusFilter !== 'rejected' &&
+              selectableDocs.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={
+                      selectedIds.size === selectableDocs.length ? clearSelection : selectAll
+                    }
+                    className="h-10 px-4 inline-flex items-center gap-2 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] font-medium text-white hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                   >
-                    <CardContent className="p-0">
-                      <div className="flex items-stretch">
-                        {/* Selection checkbox */}
-                        {isSelectable && (
-                          <div
-                            className="flex items-center justify-center px-3 border-r border-white/10"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              toggleSelect(doc.id);
-                            }}
-                          >
-                            <Checkbox
-                              checked={selectedIds.has(doc.id)}
-                              className="h-5 w-5 border-white/30 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
-                            />
-                          </div>
-                        )}
+                    {selectedIds.size === selectableDocs.length ? (
+                      <>
+                        <CheckSquare className="h-4 w-4" />
+                        Deselect
+                      </>
+                    ) : (
+                      <>
+                        <Square className="h-4 w-4" />
+                        Select all
+                      </>
+                    )}
+                  </button>
+                  {selectedIds.size > 0 && (
+                    <>
+                      <button
+                        onClick={() => setShowBulkApproveDialog(true)}
+                        disabled={bulkApproveMutation.isPending}
+                        className="h-10 px-4 inline-flex items-center gap-2 rounded-full bg-elec-yellow text-black text-[12.5px] font-medium hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50"
+                      >
+                        <Check className="h-4 w-4" />
+                        Approve ({selectedIds.size})
+                      </button>
+                      <button
+                        onClick={() => setShowBulkRejectDialog(true)}
+                        disabled={bulkRejectMutation.isPending}
+                        className="h-10 px-4 inline-flex items-center gap-2 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] font-medium text-white hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation disabled:opacity-50"
+                      >
+                        <X className="h-4 w-4" />
+                        Reject
+                      </button>
+                    </>
+                  )}
+                </div>
+              )}
 
-                        {/* Main content - clickable */}
-                        <button
-                          className="flex-1 p-4 text-left flex items-start sm:items-center gap-3"
-                          onClick={() => loadDocumentImage(doc)}
-                        >
-                          {/* Document type icon */}
-                          <div
-                            className={cn(
-                              'p-2.5 rounded-xl flex-shrink-0',
-                              iconColors.split(' ')[1]
-                            )}
-                          >
-                            <IconComponent className={cn('h-5 w-5', iconColors.split(' ')[0])} />
-                          </div>
+            {isLoading ? (
+              <LoadingBlocks />
+            ) : !documents || documents.length === 0 ? (
+              <EmptyState
+                title="No documents pending review"
+                description={
+                  statusFilter === 'needs_attention'
+                    ? 'All caught up. New uploads will appear here.'
+                    : `No ${statusFilter.replace('_', ' ')} documents found.`
+                }
+              />
+            ) : (
+              <ListCard>
+                <ListCardHeader
+                  tone={listTone}
+                  title={listTitle}
+                  meta={<Pill tone={listTone}>{documents.length}</Pill>}
+                />
+                <ListBody>
+                  {documents.map((doc) => {
+                    const tone: Tone =
+                      STATUS_TONE[doc.verification_status] ||
+                      (doc.flagged_for_review ? 'amber' : 'orange');
+                    const label = STATUS_LABEL[doc.verification_status] || 'Pending';
+                    const uploaderName =
+                      doc.elec_id_profile?.employee?.name ||
+                      (doc.extracted_data?.holderName as string | undefined) ||
+                      'Unknown';
+                    const isSelectable =
+                      statusFilter !== 'verified' &&
+                      statusFilter !== 'rejected' &&
+                      doc.verification_status !== 'verified' &&
+                      doc.verification_status !== 'rejected';
+                    const subtitle = [
+                      formatDocType(doc.document_type),
+                      uploaderName,
+                      getDocumentAge(doc.created_at),
+                    ].join(' · ');
 
-                          {/* Document info */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex flex-wrap items-center gap-2">
-                              <h4 className="font-medium text-foreground truncate text-sm sm:text-base">
-                                {doc.document_name}
-                              </h4>
-                              <Badge className={cn('text-xs border', statusConfig.color)}>
-                                <StatusIcon
-                                  className={cn(
-                                    'h-3 w-3 mr-1',
-                                    doc.verification_status === 'processing' && 'animate-spin'
-                                  )}
-                                />
-                                {statusConfig.label}
-                              </Badge>
-                              {doc.flagged_for_review && (
-                                <Badge className="text-xs bg-amber-500/20 text-amber-400 border-amber-500/30">
-                                  <Flag className="h-3 w-3 mr-1" />
-                                  Flagged
-                                </Badge>
-                              )}
-                            </div>
-
-                            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-foreground/50">
-                              <span className="capitalize">
-                                {doc.document_type.replace(/_/g, ' ')}
-                              </span>
-                              {doc.elec_id_profile?.employee?.name && (
-                                <span className="flex items-center gap-1">
-                                  <User className="h-3 w-3" />
-                                  {doc.elec_id_profile.employee.name}
-                                </span>
-                              )}
-                              {doc.verification_confidence && doc.verification_confidence > 0 && (
-                                <span className="flex items-center gap-1">
-                                  <Sparkles className="h-3 w-3" />
-                                  {Math.round(doc.verification_confidence * 100)}%
-                                </span>
-                              )}
-                              <span className={getUrgencyColor(doc.created_at)}>
-                                {getDocumentAge(doc.created_at)} ago
-                              </span>
-                            </div>
-
-                            {/* Flag reason or appeal notes */}
-                            {(doc.flag_reason || doc.appeal_notes) && (
-                              <p
-                                className={cn(
-                                  'mt-2 text-xs line-clamp-1',
-                                  doc.appeal_notes ? 'text-yellow-400' : 'text-amber-400'
-                                )}
-                              >
-                                <AlertTriangle className="h-3 w-3 inline mr-1" />
-                                {doc.appeal_notes || doc.flag_reason}
-                              </p>
-                            )}
-                          </div>
-
-                          <ChevronRight className="h-5 w-5 text-foreground/30 flex-shrink-0 hidden sm:block" />
-                        </button>
-
-                        {/* Quick actions - desktop only */}
-                        {isSelectable && (
-                          <div className="hidden lg:flex items-center gap-2 px-4 border-l border-white/10">
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="h-11 w-11 p-0 text-green-400 hover:bg-green-500/20 touch-manipulation"
+                    return (
+                      <ListRow
+                        key={doc.id}
+                        accent={doc.flagged_for_review ? 'amber' : undefined}
+                        lead={
+                          isSelectable ? (
+                            <div
+                              className="flex items-center gap-3"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                quickApproveMutation.mutate(doc.id);
+                                toggleSelect(doc.id);
                               }}
-                              disabled={quickApproveMutation.isPending}
                             >
-                              <Check className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="h-11 w-11 p-0 text-foreground/60 hover:text-foreground touch-manipulation"
-                              onClick={() => loadDocumentImage(doc)}
-                            >
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </>
-          )}
+                              <Checkbox
+                                checked={selectedIds.has(doc.id)}
+                                className="h-5 w-5 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                              />
+                              <Avatar initials={getInitials(uploaderName)} />
+                            </div>
+                          ) : (
+                            <Avatar initials={getInitials(uploaderName)} />
+                          )
+                        }
+                        title={doc.document_name}
+                        subtitle={subtitle}
+                        trailing={
+                          <>
+                            {doc.flagged_for_review && <Pill tone="amber">Flagged</Pill>}
+                            <Pill tone={tone}>{label}</Pill>
+                          </>
+                        }
+                        onClick={() => loadDocumentImage(doc)}
+                      />
+                    );
+                  })}
+                </ListBody>
+              </ListCard>
+            )}
+          </PageFrame>
         </div>
 
-        {/* Document Detail Sheet */}
         <Sheet
           open={!!selectedDocument}
           onOpenChange={() => {
@@ -1243,81 +919,70 @@ export default function AdminDocumentReview() {
         >
           <SheetContent
             side="bottom"
-            className="h-[95vh] sm:h-[90vh] p-0 rounded-t-2xl overflow-hidden bg-background border-white/20"
+            className="h-[95vh] sm:h-[90vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-white/[0.06]"
           >
             <div className="flex flex-col h-full">
-              {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
                 <div className="w-10 h-1 rounded-full bg-white/30" />
               </div>
 
-              <SheetHeader className="px-4 pb-3 border-b border-white/10 flex-shrink-0">
-                <SheetTitle className="flex items-center gap-3">
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06] flex-shrink-0">
+                <SheetTitle className="text-left">
                   {selectedDocument && (
-                    <>
-                      <div
-                        className={cn(
-                          'p-2.5 rounded-xl',
-                          DOCUMENT_COLORS[selectedDocument.document_type]?.split(' ')[1] ||
-                            'bg-gray-500/20'
+                    <div className="flex items-center gap-3">
+                      <Avatar
+                        initials={getInitials(
+                          selectedDocument.elec_id_profile?.employee?.name
                         )}
-                      >
-                        {(() => {
-                          const Icon = DOCUMENT_ICONS[selectedDocument.document_type] || FileCheck;
-                          return (
-                            <Icon
-                              className={cn(
-                                'h-5 w-5',
-                                DOCUMENT_COLORS[selectedDocument.document_type]?.split(' ')[0] ||
-                                  'text-gray-400'
-                              )}
-                            />
-                          );
-                        })()}
+                      />
+                      <div className="min-w-0 flex-1">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          {formatDocType(selectedDocument.document_type)}
+                        </div>
+                        <div className="mt-1 text-base font-semibold text-white truncate">
+                          {selectedDocument.document_name}
+                        </div>
                       </div>
-                      <div className="text-left">
-                        <p className="text-base font-semibold">{selectedDocument.document_name}</p>
-                        <p className="text-xs text-foreground/60 capitalize">
-                          {selectedDocument.document_type.replace(/_/g, ' ')}
-                        </p>
-                      </div>
-                    </>
+                    </div>
                   )}
                 </SheetTitle>
               </SheetHeader>
 
-              {/* Queue progress bar */}
               {queueMode && (
-                <div className="px-4 py-2 border-b border-white/10 bg-green-500/5 flex-shrink-0">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-green-400 font-medium flex items-center gap-1.5">
+                <div className="px-5 py-3 border-b border-white/[0.06] flex-shrink-0">
+                  <div className="flex items-center justify-between text-[11.5px]">
+                    <span className="text-elec-yellow font-medium inline-flex items-center gap-1.5">
                       <ListChecks className="h-3.5 w-3.5" />
-                      Queue Mode
+                      Queue mode
                     </span>
-                    <span className="text-foreground/60">
+                    <span className="text-white">
                       {queueReviewCount} reviewed · {selectableDocs.length} remaining
                     </span>
                   </div>
-                  <div className="mt-1.5 h-1 rounded-full bg-white/10 overflow-hidden">
+                  <div className="mt-2 h-1 rounded-full bg-white/[0.08] overflow-hidden">
                     <div
-                      className="h-full bg-green-500 rounded-full transition-all duration-300"
+                      className="h-full bg-elec-yellow rounded-full transition-all duration-300"
                       style={{
-                        width: `${selectableDocs.length + queueReviewCount > 0 ? (queueReviewCount / (selectableDocs.length + queueReviewCount)) * 100 : 0}%`,
+                        width: `${
+                          selectableDocs.length + queueReviewCount > 0
+                            ? (queueReviewCount /
+                                (selectableDocs.length + queueReviewCount)) *
+                              100
+                            : 0
+                        }%`,
                       }}
                     />
                   </div>
                 </div>
               )}
 
-              {/* Scrollable content */}
               <div className="flex-1 overflow-y-auto">
                 {selectedDocument && (
-                  <div className="p-4 space-y-4">
-                    {/* Document Image with controls */}
-                    <div className="relative rounded-xl overflow-hidden border border-white/20 bg-black/50">
+                  <div className="p-5 space-y-5">
+                    <div className="relative rounded-2xl overflow-hidden border border-white/[0.06] bg-black/40">
                       {imageLoading ? (
                         <div className="h-64 flex items-center justify-center">
-                          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
+                          <Loader2 className="h-7 w-7 animate-spin text-elec-yellow" />
                         </div>
                       ) : documentImageUrl ? (
                         <div className="relative">
@@ -1329,277 +994,277 @@ export default function AdminDocumentReview() {
                               transform: `scale(${imageZoom}) rotate(${imageRotation}deg)`,
                             }}
                           />
-                          {/* Image controls */}
                           <div className="absolute bottom-3 right-3 flex items-center gap-2">
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              className="h-11 w-11 p-0 bg-black/70 hover:bg-black/90 touch-manipulation"
+                            <IconButton
                               onClick={() => setImageZoom((z) => Math.max(0.5, z - 0.25))}
+                              aria-label="Zoom out"
                             >
                               <ZoomOut className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              className="h-11 w-11 p-0 bg-black/70 hover:bg-black/90 touch-manipulation"
+                            </IconButton>
+                            <IconButton
                               onClick={() => setImageZoom((z) => Math.min(3, z + 0.25))}
+                              aria-label="Zoom in"
                             >
                               <ZoomIn className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              className="h-11 w-11 p-0 bg-black/70 hover:bg-black/90 touch-manipulation"
+                            </IconButton>
+                            <IconButton
                               onClick={() => setImageRotation((r) => (r + 90) % 360)}
+                              aria-label="Rotate"
                             >
                               <RotateCw className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="secondary"
-                              className="h-11 w-11 p-0 bg-black/70 hover:bg-black/90 touch-manipulation"
+                            </IconButton>
+                            <IconButton
                               onClick={() => window.open(documentImageUrl, '_blank')}
+                              aria-label="Open"
                             >
                               <ExternalLink className="h-4 w-4" />
-                            </Button>
+                            </IconButton>
                           </div>
                         </div>
                       ) : (
                         <div className="h-48 flex flex-col items-center justify-center gap-2">
-                          <FileCheck className="h-12 w-12 text-foreground/30" />
-                          <p className="text-sm text-foreground/50">No image available</p>
+                          <FileCheck className="h-10 w-10 text-white" />
+                          <p className="text-[13px] text-white">No image available</p>
                         </div>
                       )}
                     </div>
 
-                    {/* Alert for flagged/appealed */}
                     {(selectedDocument.flagged_for_review ||
                       selectedDocument.verification_status === 'appealed') && (
-                      <div
-                        className={cn(
-                          'p-3 rounded-xl border',
-                          selectedDocument.verification_status === 'appealed'
-                            ? 'bg-yellow-500/10 border-yellow-500/30'
-                            : 'bg-amber-500/10 border-amber-500/30'
-                        )}
-                      >
-                        <div className="flex items-start gap-2">
-                          <AlertTriangle
+                      <ListCard>
+                        <div className="relative border-b border-white/[0.06]">
+                          <div
                             className={cn(
-                              'h-4 w-4 mt-0.5',
+                              'absolute inset-x-0 top-0 h-px bg-gradient-to-r opacity-70',
                               selectedDocument.verification_status === 'appealed'
-                                ? 'text-yellow-400'
-                                : 'text-amber-400'
+                                ? 'from-elec-yellow/80 via-amber-400/70 to-orange-400/70'
+                                : 'from-amber-500/70 via-amber-400/70 to-yellow-400/70'
                             )}
                           />
-                          <div>
-                            <p
+                          <div className="flex items-start gap-3 px-5 py-4">
+                            <AlertTriangle
                               className={cn(
-                                'text-sm font-medium',
+                                'h-4 w-4 mt-0.5 shrink-0',
                                 selectedDocument.verification_status === 'appealed'
-                                  ? 'text-yellow-400'
+                                  ? 'text-elec-yellow'
                                   : 'text-amber-400'
                               )}
-                            >
-                              {selectedDocument.verification_status === 'appealed'
-                                ? 'User Appeal'
-                                : 'Flagged for Review'}
-                            </p>
-                            <p className="text-sm text-foreground/70 mt-1">
-                              {selectedDocument.appeal_notes || selectedDocument.flag_reason}
-                            </p>
+                            />
+                            <div className="min-w-0 flex-1">
+                              <div className="text-[13px] font-semibold text-white">
+                                {selectedDocument.verification_status === 'appealed'
+                                  ? 'User Appeal'
+                                  : 'Flagged for Review'}
+                              </div>
+                              <div className="mt-1 text-[13px] text-white">
+                                {selectedDocument.appeal_notes || selectedDocument.flag_reason}
+                              </div>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </ListCard>
                     )}
 
-                    {/* User Info */}
                     {selectedDocument.elec_id_profile?.employee && (
-                      <div className="p-3 rounded-xl bg-card/50 border border-white/10">
-                        <h4 className="text-xs font-medium text-foreground/60 uppercase tracking-wide mb-2">
-                          Uploaded by
-                        </h4>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center">
-                            <User className="h-5 w-5 text-elec-yellow" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-foreground">
+                      <ListCard>
+                        <ListCardHeader title="Uploaded by" />
+                        <div className="px-5 py-4 flex items-center gap-3">
+                          <Avatar
+                            initials={getInitials(selectedDocument.elec_id_profile.employee.name)}
+                          />
+                          <div className="min-w-0">
+                            <div className="text-[14px] font-medium text-white truncate">
                               {selectedDocument.elec_id_profile.employee.name || 'Unknown'}
-                            </p>
-                            <p className="text-xs text-foreground/60">
+                            </div>
+                            <div className="text-[11.5px] text-white truncate">
                               {selectedDocument.elec_id_profile.employee.email}
-                            </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </ListCard>
                     )}
 
-                    {/* Document Details Grid */}
-                    <div className="grid grid-cols-2 gap-3">
-                      {selectedDocument.verification_confidence != null && (
-                        <div className="p-3 rounded-xl bg-card/50 border border-white/10">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
-                            <span className="text-xs text-foreground/60">AI Confidence</span>
-                          </div>
-                          <p className="text-lg font-bold text-foreground">
-                            {Math.round(selectedDocument.verification_confidence * 100)}%
-                          </p>
-                        </div>
-                      )}
+                    <ListCard>
+                      <ListCardHeader title="Details" />
+                      <ListBody>
+                        {selectedDocument.verification_confidence != null && (
+                          <ListRow
+                            title="AI Confidence"
+                            trailing={
+                              <span className="text-[14px] font-semibold text-white tabular-nums">
+                                {Math.round(selectedDocument.verification_confidence * 100)}%
+                              </span>
+                            }
+                          />
+                        )}
+                        <ListRow
+                          title="Uploaded"
+                          subtitle={`${formatDistanceToNow(
+                            new Date(selectedDocument.created_at)
+                          )} ago`}
+                          trailing={
+                            <span className="text-[13px] text-white">
+                              {format(new Date(selectedDocument.created_at), 'd MMM yyyy')}
+                            </span>
+                          }
+                        />
+                        {selectedDocument.document_number && (
+                          <ListRow
+                            title="Document No."
+                            trailing={
+                              <span className="text-[13px] font-mono text-white">
+                                {selectedDocument.document_number}
+                              </span>
+                            }
+                          />
+                        )}
+                        {selectedDocument.issuing_body && (
+                          <ListRow
+                            title="Issuer"
+                            trailing={
+                              <span className="text-[13px] text-white">
+                                {selectedDocument.issuing_body}
+                              </span>
+                            }
+                          />
+                        )}
+                        {selectedDocument.expiry_date && (
+                          <ListRow
+                            title="Expiry Date"
+                            trailing={
+                              <span className="text-[13px] text-white">
+                                {format(new Date(selectedDocument.expiry_date), 'd MMM yyyy')}
+                              </span>
+                            }
+                          />
+                        )}
+                      </ListBody>
+                    </ListCard>
 
-                      <div className="p-3 rounded-xl bg-card/50 border border-white/10">
-                        <div className="flex items-center gap-2 mb-1">
-                          <Calendar className="h-3.5 w-3.5 text-foreground/60" />
-                          <span className="text-xs text-foreground/60">Uploaded</span>
-                        </div>
-                        <p className="text-sm font-medium text-foreground">
-                          {format(new Date(selectedDocument.created_at), 'd MMM yyyy')}
-                        </p>
-                        <p className="text-xs text-foreground/50">
-                          {formatDistanceToNow(new Date(selectedDocument.created_at))} ago
-                        </p>
-                      </div>
-
-                      {selectedDocument.document_number && (
-                        <div className="p-3 rounded-xl bg-card/50 border border-white/10">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Hash className="h-3.5 w-3.5 text-foreground/60" />
-                            <span className="text-xs text-foreground/60">Document No.</span>
-                          </div>
-                          <p className="text-sm font-medium text-foreground font-mono">
-                            {selectedDocument.document_number}
-                          </p>
-                        </div>
-                      )}
-
-                      {selectedDocument.issuing_body && (
-                        <div className="p-3 rounded-xl bg-card/50 border border-white/10">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Building className="h-3.5 w-3.5 text-foreground/60" />
-                            <span className="text-xs text-foreground/60">Issuer</span>
-                          </div>
-                          <p className="text-sm font-medium text-foreground">
-                            {selectedDocument.issuing_body}
-                          </p>
-                        </div>
-                      )}
-
-                      {selectedDocument.expiry_date && (
-                        <div className="p-3 rounded-xl bg-card/50 border border-white/10 col-span-2">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Calendar className="h-3.5 w-3.5 text-foreground/60" />
-                            <span className="text-xs text-foreground/60">Expiry Date</span>
-                          </div>
-                          <p className="text-sm font-medium text-foreground">
-                            {format(new Date(selectedDocument.expiry_date), 'd MMMM yyyy')}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Extracted Data */}
                     {selectedDocument.extracted_data &&
                       Object.keys(selectedDocument.extracted_data).length > 0 && (
-                        <div className="p-3 rounded-xl bg-card/50 border border-white/10">
-                          <h4 className="text-xs font-medium text-foreground/60 uppercase tracking-wide mb-3">
-                            AI Extracted Data
-                          </h4>
-                          <div className="space-y-2">
+                        <ListCard>
+                          <ListCardHeader title="AI Extracted Data" />
+                          <ListBody>
                             {Object.entries(selectedDocument.extracted_data).map(([key, value]) => {
                               if (!value) return null;
                               const confidence = selectedDocument.extraction_confidence?.[key];
                               const isLowConfidence = confidence != null && confidence < 0.6;
                               return (
-                                <div key={key} className="flex justify-between items-start text-sm">
-                                  <span className="text-foreground/60 capitalize">
-                                    {key.replace(/([A-Z])/g, ' $1').trim()}
-                                  </span>
-                                  <span
-                                    className={cn(
-                                      'font-medium text-right',
-                                      isLowConfidence ? 'text-amber-400' : 'text-foreground'
-                                    )}
-                                  >
-                                    {String(value)}
-                                    {isLowConfidence && (
-                                      <span className="text-xs text-amber-400 ml-1">
-                                        ({Math.round((confidence || 0) * 100)}%)
-                                      </span>
-                                    )}
-                                  </span>
-                                </div>
+                                <ListRow
+                                  key={key}
+                                  title={
+                                    <span className="capitalize">
+                                      {key.replace(/([A-Z])/g, ' $1').trim()}
+                                    </span>
+                                  }
+                                  trailing={
+                                    <span
+                                      className={cn(
+                                        'text-[13px] font-medium text-right',
+                                        isLowConfidence ? 'text-amber-400' : 'text-white'
+                                      )}
+                                    >
+                                      {String(value)}
+                                      {isLowConfidence && (
+                                        <span className="ml-1 text-[11px] text-amber-400">
+                                          ({Math.round((confidence || 0) * 100)}%)
+                                        </span>
+                                      )}
+                                    </span>
+                                  }
+                                />
                               );
                             })}
-                          </div>
-                        </div>
+                          </ListBody>
+                        </ListCard>
                       )}
 
-                    {/* Previous rejection reason if any */}
                     {selectedDocument.rejection_reason &&
                       selectedDocument.verification_status !== 'rejected' && (
-                        <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30">
-                          <h4 className="text-xs font-medium text-red-400 uppercase tracking-wide mb-1">
-                            Previous Rejection
-                          </h4>
-                          <p className="text-sm text-foreground/80">
+                        <ListCard>
+                          <ListCardHeader tone="red" title="Previous Rejection" />
+                          <div className="px-5 py-4 text-[13px] text-white">
                             {selectedDocument.rejection_reason}
-                          </p>
-                        </div>
+                          </div>
+                        </ListCard>
                       )}
 
-                    {/* Review Actions */}
+                    {selectedDocument.review_notes && (
+                      <ListCard>
+                        <ListCardHeader title="Review Thread" />
+                        <ListBody>
+                          <ListRow
+                            lead={<Avatar initials="AM" />}
+                            title="Admin note"
+                            subtitle={
+                              selectedDocument.reviewed_at
+                                ? `${formatDistanceToNow(
+                                    new Date(selectedDocument.reviewed_at)
+                                  )} ago`
+                                : undefined
+                            }
+                            trailing={
+                              <span className="text-[13px] text-white max-w-[180px] truncate">
+                                {selectedDocument.review_notes}
+                              </span>
+                            }
+                          />
+                        </ListBody>
+                      </ListCard>
+                    )}
+
                     {selectedDocument.verification_status !== 'verified' && (
                       <div className="space-y-4 pt-2">
-                        <h4 className="text-sm font-semibold text-foreground">Review Decision</h4>
+                        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          Review Decision
+                        </div>
 
                         <div className="grid grid-cols-3 gap-2">
                           <button
                             className={cn(
-                              'flex flex-col items-center justify-center p-4 rounded-xl border transition-all touch-manipulation',
+                              'flex flex-col items-center justify-center h-24 rounded-2xl border transition-colors touch-manipulation',
                               reviewAction === 'approved'
-                                ? 'bg-green-500 border-green-500 text-white'
-                                : 'bg-green-500/10 border-green-500/30 text-green-400 hover:bg-green-500/20'
+                                ? 'bg-elec-yellow border-elec-yellow text-black'
+                                : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_15%)]'
                             )}
                             onClick={() => setReviewAction('approved')}
                           >
-                            <Check className="h-6 w-6 mb-1" />
-                            <span className="text-xs font-medium">Approve</span>
+                            <Check className="h-5 w-5 mb-1.5" />
+                            <span className="text-[12px] font-medium">Approve</span>
                           </button>
                           <button
                             className={cn(
-                              'flex flex-col items-center justify-center p-4 rounded-xl border transition-all touch-manipulation',
+                              'flex flex-col items-center justify-center h-24 rounded-2xl border transition-colors touch-manipulation',
                               reviewAction === 'rejected'
-                                ? 'bg-red-500 border-red-500 text-white'
-                                : 'bg-red-500/10 border-red-500/30 text-red-400 hover:bg-red-500/20'
+                                ? 'bg-white text-black border-white'
+                                : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_15%)]'
                             )}
                             onClick={() => setReviewAction('rejected')}
                           >
-                            <X className="h-6 w-6 mb-1" />
-                            <span className="text-xs font-medium">Reject</span>
+                            <X className="h-5 w-5 mb-1.5" />
+                            <span className="text-[12px] font-medium">Reject</span>
                           </button>
                           <button
                             className={cn(
-                              'flex flex-col items-center justify-center p-4 rounded-xl border transition-all touch-manipulation',
+                              'flex flex-col items-center justify-center h-24 rounded-2xl border transition-colors touch-manipulation',
                               reviewAction === 'request_reupload'
-                                ? 'bg-amber-500 border-amber-500 text-white'
-                                : 'bg-amber-500/10 border-amber-500/30 text-amber-400 hover:bg-amber-500/20'
+                                ? 'bg-white text-black border-white'
+                                : 'bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_15%)]'
                             )}
                             onClick={() => setReviewAction('request_reupload')}
                           >
-                            <RefreshCw className="h-6 w-6 mb-1" />
-                            <span className="text-xs font-medium">Re-upload</span>
+                            <RefreshCw className="h-5 w-5 mb-1.5" />
+                            <span className="text-[12px] font-medium">Re-upload</span>
                           </button>
                         </div>
 
                         {reviewAction && (
                           <div className="space-y-2">
-                            <Label className="text-sm text-foreground/70">
+                            <Label className="text-[12px] text-white">
                               {reviewAction === 'approved'
                                 ? 'Notes (optional)'
-                                : 'Reason (required for rejection)'}
+                                : 'Reason (required)'}
                             </Label>
                             <Textarea
                               value={reviewNotes}
@@ -1611,33 +1276,33 @@ export default function AdminDocumentReview() {
                                     ? 'What should be improved in the new upload?'
                                     : 'Any notes about this approval...'
                               }
-                              className="bg-card/50 border-white/20 min-h-[80px] text-base touch-manipulation"
+                              className="bg-[hsl(0_0%_12%)] border-white/[0.08] min-h-[80px] text-[14px] text-white placeholder:text-white touch-manipulation"
                             />
                           </div>
                         )}
                       </div>
                     )}
 
-                    {/* Already verified message */}
                     {selectedDocument.verification_status === 'verified' && (
-                      <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/30 text-center">
-                        <CheckCircle2 className="h-8 w-8 text-green-400 mx-auto mb-2" />
-                        <p className="font-medium text-green-400">Document Verified</p>
-                        {selectedDocument.reviewed_at && (
-                          <p className="text-xs text-foreground/60 mt-1">
-                            Reviewed {formatDistanceToNow(new Date(selectedDocument.reviewed_at))}{' '}
-                            ago
-                          </p>
-                        )}
-                      </div>
+                      <ListCard>
+                        <ListCardHeader tone="emerald" title="Document Verified" />
+                        <div className="px-5 py-5 text-center">
+                          <div className="text-[13px] text-white">
+                            {selectedDocument.reviewed_at
+                              ? `Reviewed ${formatDistanceToNow(
+                                  new Date(selectedDocument.reviewed_at)
+                                )} ago`
+                              : 'This document has been verified.'}
+                          </div>
+                        </div>
+                      </ListCard>
                     )}
                   </div>
                 )}
               </div>
 
-              {/* Fixed footer with action buttons */}
               {selectedDocument && selectedDocument.verification_status !== 'verified' && (
-                <div className="flex-shrink-0 p-4 border-t border-white/10 bg-background">
+                <div className="flex-shrink-0 p-4 border-t border-white/[0.06] bg-[hsl(0_0%_10%)]">
                   <div className="flex gap-3">
                     {queueMode ? (
                       <>
@@ -1648,15 +1313,15 @@ export default function AdminDocumentReview() {
                             setSelectedDocument(null);
                             setQueueReviewCount(0);
                           }}
-                          className="h-12 touch-manipulation border-white/20 px-4"
+                          className="h-12 touch-manipulation border-white/[0.08] bg-[hsl(0_0%_12%)] text-white hover:bg-[hsl(0_0%_15%)] px-4"
                         >
-                          Exit Queue
+                          Exit
                         </Button>
                         <Button
                           variant="outline"
                           onClick={skipInQueue}
                           disabled={selectableDocs.length <= 1}
-                          className="h-12 touch-manipulation border-white/20 px-4"
+                          className="h-12 touch-manipulation border-white/[0.08] bg-[hsl(0_0%_12%)] text-white hover:bg-[hsl(0_0%_15%)] px-4"
                         >
                           <SkipForward className="h-4 w-4 mr-1.5" />
                           Skip
@@ -1666,7 +1331,7 @@ export default function AdminDocumentReview() {
                       <Button
                         variant="outline"
                         onClick={() => setSelectedDocument(null)}
-                        className="flex-1 h-12 touch-manipulation border-white/20"
+                        className="flex-1 h-12 touch-manipulation border-white/[0.08] bg-[hsl(0_0%_12%)] text-white hover:bg-[hsl(0_0%_15%)]"
                       >
                         Cancel
                       </Button>
@@ -1678,13 +1343,7 @@ export default function AdminDocumentReview() {
                         reviewMutation.isPending ||
                         (reviewAction !== 'approved' && !reviewNotes.trim())
                       }
-                      className={cn(
-                        'flex-1 h-12 touch-manipulation font-semibold',
-                        reviewAction === 'approved' && 'bg-green-500 hover:bg-green-600',
-                        reviewAction === 'rejected' && 'bg-red-500 hover:bg-red-600',
-                        reviewAction === 'request_reupload' && 'bg-amber-500 hover:bg-amber-600',
-                        !reviewAction && 'bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark'
-                      )}
+                      className="flex-1 h-12 touch-manipulation font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black disabled:opacity-50"
                     >
                       {reviewMutation.isPending ? (
                         <>
@@ -1699,7 +1358,11 @@ export default function AdminDocumentReview() {
                             <RefreshCw className="h-4 w-4 mr-2" />
                           )}
                           {reviewAction
-                            ? `Confirm ${reviewAction === 'request_reupload' ? 'Request' : reviewAction.charAt(0).toUpperCase() + reviewAction.slice(1)}`
+                            ? `Confirm ${
+                                reviewAction === 'request_reupload'
+                                  ? 'Request'
+                                  : reviewAction.charAt(0).toUpperCase() + reviewAction.slice(1)
+                              }`
                             : 'Select Action'}
                         </>
                       )}
@@ -1711,25 +1374,26 @@ export default function AdminDocumentReview() {
           </SheetContent>
         </Sheet>
 
-        {/* Bulk Approve Dialog */}
         <AlertDialog open={showBulkApproveDialog} onOpenChange={setShowBulkApproveDialog}>
-          <AlertDialogContent className="bg-background border-white/20">
+          <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.08] text-white">
             <AlertDialogHeader>
-              <AlertDialogTitle>Approve {selectedIds.size} Documents?</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">
+                Approve {selectedIds.size} Documents?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 This will mark {selectedIds.size} documents as verified. This action cannot be
                 undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation"
+                className="h-11 touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_15%)]"
                 disabled={bulkApproveMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation bg-green-500 hover:bg-green-600"
+                className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black"
                 onClick={() => bulkApproveMutation.mutate(Array.from(selectedIds))}
                 disabled={bulkApproveMutation.isPending}
               >
@@ -1741,7 +1405,7 @@ export default function AdminDocumentReview() {
                 ) : (
                   <>
                     <Check className="h-4 w-4 mr-2" />
-                    Approve All
+                    Approve all
                   </>
                 )}
               </AlertDialogAction>
@@ -1749,12 +1413,13 @@ export default function AdminDocumentReview() {
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* Bulk Reject Dialog */}
         <AlertDialog open={showBulkRejectDialog} onOpenChange={setShowBulkRejectDialog}>
-          <AlertDialogContent className="bg-background border-white/20">
+          <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.08] text-white">
             <AlertDialogHeader>
-              <AlertDialogTitle>Reject {selectedIds.size} Documents?</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">
+                Reject {selectedIds.size} Documents?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 Please provide a reason for rejection. This will be sent to all users.
               </AlertDialogDescription>
             </AlertDialogHeader>
@@ -1762,17 +1427,17 @@ export default function AdminDocumentReview() {
               value={bulkRejectReason}
               onChange={(e) => setBulkRejectReason(e.target.value)}
               placeholder="Enter rejection reason..."
-              className="min-h-[100px] bg-card/50 border-white/20"
+              className="min-h-[100px] bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white"
             />
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation"
+                className="h-11 touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_15%)]"
                 disabled={bulkRejectMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
+                className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black"
                 onClick={() =>
                   bulkRejectMutation.mutate({
                     ids: Array.from(selectedIds),
@@ -1789,13 +1454,15 @@ export default function AdminDocumentReview() {
                 ) : (
                   <>
                     <X className="h-4 w-4 mr-2" />
-                    Reject All
+                    Reject all
                   </>
                 )}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
+
+        <div className="pb-20" />
       </div>
     </PullToRefresh>
   );

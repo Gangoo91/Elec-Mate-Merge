@@ -4,13 +4,9 @@ import { useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { batchedInQuery } from '@/utils/batchedQuery';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -19,38 +15,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import AdminPagination from '@/components/admin/AdminPagination';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import {
-  Search,
+  RefreshCw,
   Shield,
   ShieldOff,
-  ShieldCheck,
-  UserCheck,
-  IdCard,
-  ChevronRight,
-  RefreshCw,
-  Users,
-  Crown,
-  Zap,
-  Clock,
-  Calendar,
-  CreditCard,
-  Mail,
-  User,
   Trash2,
   Gift,
   AlertTriangle,
   XCircle,
-  CheckSquare,
-  Square,
   Loader2,
   MessageSquare,
-  Filter,
-  X,
-  TrendingUp,
-  Activity,
-  Sparkles,
   Download,
+  X,
 } from 'lucide-react';
 import {
   AlertDialog,
@@ -62,18 +38,38 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { formatDistanceToNow, format, differenceInDays } from 'date-fns';
+import { format, differenceInDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
-import { getInitials, ROLE_COLORS, calculateEngagementScore, getScoreColor, SCORE_COLOR_MAP, formatTimeShort } from '@/utils/adminUtils';
+import {
+  getInitials,
+  ROLE_COLORS,
+  calculateEngagementScore,
+  formatTimeShort,
+} from '@/utils/adminUtils';
 import MessageUserSheet from '@/components/admin/MessageUserSheet';
 import UserManagementSheet from '@/components/admin/UserManagementSheet';
 import SwipeableAdminRow from '@/components/admin/SwipeableAdminRow';
 import { useAdminUsersBase } from '@/hooks/useAdminUsersBase';
 import { useHaptic } from '@/hooks/useHaptic';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import { motion } from 'framer-motion';
-import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  Dot,
+  TextAction,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface UserProfile {
   id: string;
@@ -115,55 +111,31 @@ const roleColors: Record<string, { bg: string; text: string; border: string }> =
   ])
 );
 
-const roleBorderColors: Record<string, string> = {
-  apprentice: 'border-l-purple-500',
-  electrician: 'border-l-yellow-500',
-  employer: 'border-l-blue-500',
-  college: 'border-l-green-500',
-  visitor: 'border-l-gray-500',
+const roleToneMap: Record<string, Tone> = {
+  apprentice: 'purple',
+  electrician: 'yellow',
+  employer: 'blue',
+  college: 'green',
+  visitor: 'cyan',
 };
 
 const roleFilters = [
-  { value: 'all', label: 'All', icon: Users },
-  { value: 'electrician', label: 'Sparks', icon: Zap },
-  { value: 'apprentice', label: 'Apprentice', icon: User },
-  { value: 'employer', label: 'Employer', icon: Crown },
+  { value: 'all', label: 'All' },
+  { value: 'electrician', label: 'Sparks' },
+  { value: 'apprentice', label: 'Apprentice' },
+  { value: 'employer', label: 'Employer' },
 ];
 
 const quickFilters = [
   { value: 'all', label: 'All' },
-  { value: 'active_today', label: 'Active Today' },
+  { value: 'active_today', label: 'Active today' },
   { value: 'trials', label: 'Trials' },
   { value: 'subscribed', label: 'Subscribed' },
   { value: 'free', label: 'Free' },
-  { value: 'never_logged_in', label: 'Never Logged In' },
-  { value: 'most_engaged', label: 'Most Engaged' },
+  { value: 'never_logged_in', label: 'Never logged in' },
+  { value: 'most_engaged', label: 'Most engaged' },
 ];
 
-/* ── Animation variants matching AdminDashboard ── */
-const sectionVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.06, duration: 0.35, ease: 'easeOut' },
-  }),
-};
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.04, delayChildren: 0 },
-  },
-};
-
-const listItemVariants = {
-  hidden: { opacity: 0, x: -8 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.2, ease: 'easeOut' } },
-};
-
-/** Compact relative time: "2h ago", "3d ago", "just now" */
 function relativeTime(dateStr: string | undefined | null): string {
   if (!dateStr) return 'never';
   const ms = Date.now() - new Date(dateStr).getTime();
@@ -183,7 +155,6 @@ export default function AdminUsers() {
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [quickFilter, setQuickFilter] = useState('all');
-  const [showFilters, setShowFilters] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserProfile | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [messageUser, setMessageUser] = useState<{
@@ -213,7 +184,6 @@ export default function AdminUsers() {
 
   const isSuperAdmin = profile?.admin_role === 'super_admin';
 
-  // Shared cached edge function call — reused across AdminUsers/AdminTrials
   const {
     data: baseUsers,
     isLoading: baseLoading,
@@ -308,7 +278,6 @@ export default function AdminUsers() {
           case 'never_logged_in':
             allUsers = allUsers.filter((u: UserProfile) => !u.last_sign_in && !u.last_seen);
             break;
-          // 'most_engaged' is handled in sortedUsers memo (needs engagementMap from separate query)
         }
       }
 
@@ -323,8 +292,6 @@ export default function AdminUsers() {
     await refetchEnrichment();
   };
 
-  // Engagement score data — fetch for ALL users only when sorting/filtering by
-  // engagement, otherwise fetch only for the current page to avoid large queries.
   const needsFullEngagement = sortBy === 'engagement' || quickFilter === 'most_engaged';
   const allUserIds = useMemo(() => users?.map((u) => u.id) || [], [users]);
   const { data: engagementData } = useQuery({
@@ -379,7 +346,6 @@ export default function AdminUsers() {
     if (!users) return [];
     let filtered = [...users];
 
-    // Handle most_engaged filter here (needs engagementMap from separate query)
     if (quickFilter === 'most_engaged') {
       filtered = filtered.filter((u) => {
         const score = engagementMap?.get(u.id);
@@ -418,7 +384,6 @@ export default function AdminUsers() {
     return sortedUsers.slice(start, start + itemsPerPage);
   }, [sortedUsers, currentPage, itemsPerPage]);
 
-  // Page-scoped engagement query — only runs when NOT in full-engagement mode
   const paginatedUserIds = useMemo(() => paginatedUsers.map((u) => u.id), [paginatedUsers]);
   const { data: pageEngagementData } = useQuery({
     queryKey: ['admin-users-engagement-page', paginatedUserIds],
@@ -446,7 +411,6 @@ export default function AdminUsers() {
     },
   });
 
-  // Merge: full engagement data takes priority, fall back to page-scoped data
   const effectiveEngagementMap = engagementMap || pageEngagementData?.scoreMap;
   const effectiveEngagementRawMap = engagementRawMap || pageEngagementData?.rawMap;
 
@@ -814,7 +778,21 @@ export default function AdminUsers() {
     URL.revokeObjectURL(url);
   };
 
-  const activeFiltersCount = (roleFilter !== 'all' ? 1 : 0) + (quickFilter !== 'all' ? 1 : 0);
+  const tierPill = (user: UserProfile): { tone: Tone; label: string } | null => {
+    if (user.subscribed && user.stripe_customer_id) {
+      return {
+        tone: 'amber',
+        label: `Pro${user.subscription_tier ? ` · ${user.subscription_tier}` : ''}`,
+      };
+    }
+    if (user.free_access_granted) {
+      return { tone: 'emerald', label: 'Free access' };
+    }
+    if (user.subscribed) {
+      return { tone: 'amber', label: user.subscription_tier || 'Subscribed' };
+    }
+    return null;
+  };
 
   return (
     <PullToRefresh
@@ -822,587 +800,351 @@ export default function AdminUsers() {
         await refetch();
       }}
     >
-      <div className="space-y-4 pb-20">
-        <AdminPageHeader
+      <PageFrame>
+        <PageHero
+          eyebrow="Directory"
           title="Users"
-          subtitle="Manage all registered users"
-          icon={Users}
-          iconColor="text-blue-400"
-          iconBg="bg-blue-500/10 border-blue-500/20"
-          accentColor="from-blue-500 via-blue-400 to-cyan-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+          description="Manage every registered electrician, apprentice and employer on the platform."
+          tone="yellow"
+          actions={
+            <>
+              <IconButton onClick={exportCSV} aria-label="Export CSV">
+                <Download className="h-4 w-4" />
+              </IconButton>
+              <IconButton
+                onClick={() => refetch()}
+                disabled={isFetching}
+                aria-label="Refresh"
+              >
+                <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+              </IconButton>
+            </>
+          }
         />
 
-        {/* ── Hero Stats Card ── */}
-        <motion.section
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={0}
-          className="relative overflow-hidden glass-premium rounded-2xl"
-        >
-          {/* 2px gradient accent line */}
-          <div className="h-[2px] bg-gradient-to-r from-amber-500 via-yellow-400 to-orange-500" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent pointer-events-none" />
-          <div className="absolute top-0 right-0 w-32 h-32 bg-amber-400/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Total', value: stats.total },
+            { label: 'Online', value: stats.online, tone: 'green' },
+            { label: 'Paying', value: stats.subscribed, accent: true },
+            { label: 'New this week', value: stats.thisWeek, tone: 'emerald' },
+          ]}
+        />
 
-          <div className="relative pt-6 pb-6 px-5">
-            <div className="flex items-center justify-between mb-5">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                  <Users className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <p className="text-white text-sm font-medium">Total Users</p>
-                  <AnimatedCounter
-                    value={stats.total}
-                    className="text-5xl font-bold text-white tracking-tight"
-                  />
-                </div>
+        <div className="space-y-4">
+          <FilterBar
+            tabs={quickFilters.map((f) => ({ value: f.value, label: f.label }))}
+            activeTab={quickFilter}
+            onTabChange={(value) => {
+              setQuickFilter(value);
+              if (value === 'all') {
+                searchParams.delete('filter');
+              } else {
+                searchParams.set('filter', value);
+              }
+              setSearchParams(searchParams);
+            }}
+            search={search}
+            onSearchChange={setSearch}
+            searchPlaceholder="Search by name or email…"
+            actions={
+              <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
+                <SelectTrigger className="h-10 w-[140px] shrink-0 rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] focus:border-elec-yellow/60 text-[13px] text-white touch-manipulation">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] text-white">
+                  <SelectItem value="name">Name</SelectItem>
+                  <SelectItem value="joined">Joined</SelectItem>
+                  <SelectItem value="last_active">Last active</SelectItem>
+                  <SelectItem value="engagement">Engagement</SelectItem>
+                </SelectContent>
+              </Select>
+            }
+          />
+
+          <div className="flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full overflow-x-auto hide-scrollbar">
+            {roleFilters.map((filter) => {
+              const isActive = roleFilter === filter.value;
+              return (
+                <button
+                  key={filter.value}
+                  onClick={() => setRoleFilter(filter.value)}
+                  className={`px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation ${
+                    isActive
+                      ? 'bg-white/[0.08] text-white'
+                      : 'text-white hover:text-white hover:bg-white/[0.04]'
+                  }`}
+                >
+                  {filter.label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {selectedIds.size > 0 && (
+          <div className="sticky top-0 z-10 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
+            <div className="flex items-center justify-between gap-3 px-4 sm:px-5 py-3">
+              <div className="flex items-center gap-3">
+                <Checkbox
+                  checked={isAllSelected}
+                  onCheckedChange={toggleSelectAll}
+                  className="border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                />
+                <span className="text-[13px] font-semibold text-white tabular-nums">
+                  {selectedIds.size} selected
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-12 w-12 rounded-2xl bg-white/10 hover:bg-white/20 text-white touch-manipulation backdrop-blur-sm"
-                  onClick={exportCSV}
-                  title="Export CSV"
-                >
-                  <Download className="h-5 w-5" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-12 w-12 rounded-2xl bg-white/10 hover:bg-white/20 text-white touch-manipulation backdrop-blur-sm"
-                  onClick={() => refetch()}
-                  disabled={isFetching}
-                >
-                  <RefreshCw className={`h-5 w-5 ${isFetching ? 'animate-spin' : ''}`} />
-                </Button>
-              </div>
-            </div>
-
-            {/* Mini Stats Row */}
-            <div className="grid grid-cols-4 gap-2">
-              <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
-                <div className="flex items-center justify-center gap-1 mb-0.5">
-                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                  <AnimatedCounter value={stats.online} className="text-lg font-bold text-white" />
-                </div>
-                <p className="text-[11px] text-white uppercase tracking-wide font-medium">Online</p>
-              </div>
-              <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
-                <div className="flex items-center justify-center gap-1 mb-0.5">
-                  <Sparkles className="h-3.5 w-3.5 text-amber-300" />
-                  <AnimatedCounter
-                    value={stats.subscribed}
-                    className="text-lg font-bold text-white"
-                  />
-                </div>
-                <p className="text-[11px] text-white uppercase tracking-wide font-medium">Paid</p>
-              </div>
-              <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
-                <div className="flex items-center justify-center gap-1 mb-0.5">
-                  <TrendingUp className="h-3.5 w-3.5 text-emerald-300" />
-                  <AnimatedCounter
-                    value={stats.thisWeek}
-                    className="text-lg font-bold text-white"
-                  />
-                </div>
-                <p className="text-[11px] text-white uppercase tracking-wide font-medium">New</p>
-              </div>
-              <div className="bg-white/[0.06] backdrop-blur-sm rounded-xl p-2.5 text-center border border-white/10">
-                <div className="flex items-center justify-center gap-1 mb-0.5">
-                  <IdCard className="h-3.5 w-3.5 text-cyan-300" />
-                  <AnimatedCounter value={stats.elecIds} className="text-lg font-bold text-white" />
-                </div>
-                <p className="text-[11px] text-white uppercase tracking-wide font-medium">IDs</p>
-              </div>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* ── Search & Sort & Filter Bar ── */}
-        <motion.div
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={1}
-          className="flex gap-3"
-        >
-          <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
-            <Input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by name or email..."
-              className="h-13 pl-12 pr-4 text-base rounded-2xl bg-card/80 border-border/30 focus:border-yellow-500 focus:ring-yellow-500/20 focus:ring-2 touch-manipulation placeholder:text-white"
-            />
-            {search && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-11 w-11 rounded-xl hover:bg-yellow-500/10 touch-manipulation"
-                onClick={() => setSearch('')}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
-          <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
-            <SelectTrigger className="h-13 w-[130px] shrink-0 rounded-2xl bg-card/80 border-border/30 focus:border-yellow-500 focus:ring-yellow-500/20 touch-manipulation text-sm text-white">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent className="bg-card border-border/50 text-white">
-              <SelectItem value="name">Name</SelectItem>
-              <SelectItem value="joined">Joined</SelectItem>
-              <SelectItem value="last_active">Last Active</SelectItem>
-              <SelectItem value="engagement">Engagement</SelectItem>
-            </SelectContent>
-          </Select>
-          <Button
-            variant="outline"
-            size="icon"
-            className={`h-13 w-13 rounded-2xl touch-manipulation relative border-border/30 ${
-              activeFiltersCount > 0
-                ? 'border-yellow-500 bg-yellow-500/10'
-                : 'hover:border-yellow-500/30 hover:bg-yellow-500/5'
-            }`}
-            onClick={() => setShowFilters(!showFilters)}
-          >
-            <Filter className={`h-5 w-5 ${activeFiltersCount > 0 ? 'text-yellow-400' : ''}`} />
-            {activeFiltersCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white text-xs flex items-center justify-center font-bold shadow-lg">
-                {activeFiltersCount}
-              </span>
-            )}
-          </Button>
-        </motion.div>
-
-        {/* ── Quick Filter Chips ── */}
-        <motion.div
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={2}
-          className="flex flex-wrap gap-2"
-        >
-          {quickFilters.map((filter) => {
-            const isActive = quickFilter === filter.value;
-            return (
-              <button
-                key={filter.value}
-                onClick={() => {
-                  setQuickFilter(filter.value);
-                  if (filter.value === 'all') {
-                    searchParams.delete('filter');
-                  } else {
-                    searchParams.set('filter', filter.value);
-                  }
-                  setSearchParams(searchParams);
-                }}
-                className={`h-9 px-3.5 rounded-xl text-[12px] font-semibold touch-manipulation transition-all flex items-center active:scale-[0.97] ${
-                  isActive
-                    ? 'bg-amber-500/20 text-amber-400 ring-1 ring-amber-500/40 shadow-sm shadow-amber-500/10'
-                    : 'bg-white/[0.06] text-white ring-1 ring-white/[0.08]'
-                }`}
-              >
-                {filter.label}
-              </button>
-            );
-          })}
-        </motion.div>
-
-        {/* ── Role Filters — Collapsible ── */}
-        {showFilters && (
-          <motion.div
-            variants={sectionVariants}
-            initial="hidden"
-            animate="visible"
-            custom={0}
-            className="glass-premium rounded-2xl overflow-hidden"
-          >
-            {/* 2px accent line */}
-            <div className="h-[2px] bg-gradient-to-r from-yellow-500/60 via-amber-400/40 to-transparent" />
-            <div className="p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <User className="h-4 w-4 text-yellow-400" />
-                <span className="text-sm font-semibold text-white">Filter by Role</span>
-              </div>
-              <div className="flex gap-2 flex-wrap">
-                {roleFilters.map((filter) => {
-                  const Icon = filter.icon;
-                  return (
-                    <Button
-                      key={filter.value}
-                      variant={roleFilter === filter.value ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setRoleFilter(filter.value)}
-                      className={`h-11 px-4 rounded-xl touch-manipulation font-medium ${
-                        roleFilter === filter.value
-                          ? 'bg-gradient-to-r from-amber-500 to-yellow-600 text-white hover:from-amber-600 hover:to-yellow-700 border-0 shadow-md'
-                          : 'bg-card border-border/30 hover:border-yellow-500/30'
-                      }`}
-                    >
-                      <Icon className="h-4 w-4 mr-2" />
-                      {filter.label}
-                    </Button>
-                  );
-                })}
-              </div>
-              {activeFiltersCount > 0 && (
-                <Button
-                  variant="ghost"
                   size="sm"
-                  className="mt-3 h-11 text-yellow-400 hover:text-yellow-300 hover:bg-yellow-500/10 touch-manipulation"
-                  onClick={() => {
-                    setRoleFilter('all');
-                    setQuickFilter('all');
-                    searchParams.delete('filter');
-                    setSearchParams(searchParams);
-                  }}
+                  className="h-10 rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-medium"
+                  onClick={() => bulkGrantMutation.mutate([...selectedIds])}
+                  disabled={bulkActionPending}
                 >
-                  <X className="h-4 w-4 mr-1" />
-                  Clear all filters
+                  {bulkActionPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Gift className="h-4 w-4 mr-1.5" />
+                  )}
+                  Grant
                 </Button>
-              )}
-            </div>
-          </motion.div>
-        )}
-
-        {/* ── Bulk Action Bar ── */}
-        {selectedIds.size > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="sticky top-0 z-10 glass-premium rounded-2xl overflow-hidden shadow-lg"
-          >
-            <div className="h-[2px] bg-gradient-to-r from-yellow-500 via-amber-400 to-orange-500" />
-            <div className="py-3 px-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Checkbox
-                    checked={isAllSelected}
-                    onCheckedChange={toggleSelectAll}
-                    className="border-yellow-500/50 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500"
-                  />
-                  <span className="text-sm font-bold text-yellow-300">
-                    {selectedIds.size} selected
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Button
-                    size="sm"
-                    className="h-10 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 touch-manipulation rounded-xl font-semibold shadow-md"
-                    onClick={() => bulkGrantMutation.mutate([...selectedIds])}
-                    disabled={bulkActionPending}
-                  >
-                    {bulkActionPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Gift className="h-4 w-4 mr-1.5" />
-                    )}
-                    Grant
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    className="h-10 touch-manipulation rounded-xl font-semibold"
-                    onClick={() => bulkRevokeMutation.mutate([...selectedIds])}
-                    disabled={bulkActionPending}
-                  >
-                    <XCircle className="h-4 w-4 mr-1.5" />
-                    Revoke
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="h-10 w-10 touch-manipulation rounded-xl text-white hover:bg-white/10"
-                    onClick={() => setSelectedIds(new Set())}
-                  >
-                    <X className="h-5 w-5" />
-                  </Button>
-                </div>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="h-10 rounded-full text-white hover:text-white hover:bg-white/[0.06] touch-manipulation"
+                  onClick={() => bulkRevokeMutation.mutate([...selectedIds])}
+                  disabled={bulkActionPending}
+                >
+                  <XCircle className="h-4 w-4 mr-1.5" />
+                  Revoke
+                </Button>
+                <IconButton
+                  onClick={() => setSelectedIds(new Set())}
+                  aria-label="Clear selection"
+                >
+                  <X className="h-4 w-4" />
+                </IconButton>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
 
-        {/* ── Results Count ── */}
-        <motion.div
-          variants={sectionVariants}
-          initial="hidden"
-          animate="visible"
-          custom={3}
-          className="flex items-center justify-between px-1"
-        >
-          <p className="text-sm text-white font-medium">
-            {users?.length === allUsersCount
-              ? `${users?.length || 0} users`
-              : `${users?.length || 0} of ${allUsersCount} users`}
-          </p>
-          {paginatedUsers.length > 0 && (
-            <button
-              onClick={toggleSelectAll}
-              className="text-sm text-yellow-400 hover:text-yellow-300 font-semibold touch-manipulation"
-            >
-              {isAllSelected ? 'Deselect all' : 'Select all'}
-            </button>
-          )}
-        </motion.div>
-
-        {/* ── User Cards ── */}
         {isLoading ? (
-          <div className="space-y-3">
-            {[...Array(5)].map((_, i) => (
-              <div key={i} className="glass-premium rounded-2xl animate-pulse overflow-hidden">
-                <div className="h-[2px] bg-white/5" />
-                <div className="p-4 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-xl bg-white/[0.06]" />
-                    <div className="w-12 h-12 rounded-2xl bg-white/[0.06]" />
-                    <div className="flex-1 space-y-2">
-                      <div className="h-4 bg-white/[0.06] rounded w-32" />
-                      <div className="h-3 bg-white/[0.06] rounded w-48" />
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <div className="h-6 bg-white/[0.06] rounded-full w-20" />
-                    <div className="h-6 bg-white/[0.06] rounded-full w-24" />
-                  </div>
-                  <div className="h-3 bg-white/[0.06] rounded w-40" />
-                </div>
-              </div>
-            ))}
-          </div>
+          <LoadingBlocks />
         ) : users?.length === 0 ? (
-          <div className="glass-premium rounded-2xl overflow-hidden">
-            <div className="py-12 px-4">
-              <AdminEmptyState
-                icon={Users}
-                title="No users found"
-                description="Try adjusting your search or filters."
-              />
-            </div>
-          </div>
+          <EmptyState
+            title="No users found"
+            description="Try adjusting your search or filters."
+          />
         ) : (
-          <>
-            <motion.div
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="space-y-3"
-            >
+          <ListCard>
+            <ListCardHeader
+              tone="yellow"
+              title={users?.length === allUsersCount ? 'All users' : 'Filtered users'}
+              meta={
+                <div className="flex items-center gap-2">
+                  <Pill tone="yellow">
+                    {users?.length === allUsersCount
+                      ? `${users?.length || 0}`
+                      : `${users?.length || 0} / ${allUsersCount}`}
+                  </Pill>
+                  {paginatedUsers.length > 0 && (
+                    <TextAction onClick={toggleSelectAll}>
+                      {isAllSelected ? 'Deselect all' : 'Select all'}
+                    </TextAction>
+                  )}
+                </div>
+              }
+            />
+            <ListBody>
               {paginatedUsers.map((user) => {
                 const roleKey = user.role?.toLowerCase() || 'visitor';
-                const borderColor = roleBorderColors[roleKey] || roleBorderColors.visitor;
+                const accentTone = roleToneMap[roleKey] || 'cyan';
                 const joinedDays = user.created_at
                   ? differenceInDays(new Date(), new Date(user.created_at))
                   : null;
+                const tier = tierPill(user);
+                const engagementScore = effectiveEngagementMap?.get(user.id);
+                const rawEngagement = effectiveEngagementRawMap?.get(user.id);
+                const isSelected = selectedIds.has(user.id);
 
                 return (
-                  <motion.div key={user.id} variants={listItemVariants}>
-                    <SwipeableAdminRow
-                      actions={[
-                        {
-                          icon: <MessageSquare className="h-4 w-4" />,
-                          label: 'Message',
-                          colour: 'bg-blue-500',
-                          onClick: () => {
-                            setMessageUser({
-                              id: user.id,
-                              full_name: user.full_name || undefined,
-                              email: user.email || undefined,
-                              role: user.role || undefined,
-                            });
-                          },
+                  <SwipeableAdminRow
+                    key={user.id}
+                    actions={[
+                      {
+                        icon: <MessageSquare className="h-4 w-4" />,
+                        label: 'Message',
+                        colour: 'bg-blue-500',
+                        onClick: () => {
+                          setMessageUser({
+                            id: user.id,
+                            full_name: user.full_name || undefined,
+                            email: user.email || undefined,
+                            role: user.role || undefined,
+                          });
                         },
-                        {
-                          icon: <Gift className="h-4 w-4" />,
-                          label: 'Grant',
-                          colour: 'bg-green-500',
-                          onClick: () => {
-                            openGrantSheet(user);
-                          },
+                      },
+                      {
+                        icon: <Gift className="h-4 w-4" />,
+                        label: 'Grant',
+                        colour: 'bg-emerald-500',
+                        onClick: () => {
+                          openGrantSheet(user);
                         },
-                      ]}
-                      className="rounded-2xl"
+                      },
+                    ]}
+                  >
+                    <div
+                      className={`relative ${
+                        isSelected ? 'bg-white/[0.04]' : ''
+                      }`}
                     >
-                      <div
-                        className={`group relative glass-premium rounded-2xl overflow-hidden border-l-2 ${borderColor} transition-all duration-200 touch-manipulation cursor-pointer active:scale-[0.98] ${
-                          selectedIds.has(user.id)
-                            ? 'ring-1 ring-yellow-500/50 bg-yellow-500/5 shadow-lg shadow-yellow-500/10'
-                            : 'hover:bg-white/5 hover:shadow-md'
-                        }`}
-                        onClick={() => handleUserClick(user)}
-                      >
-                        <div className="p-4">
-                          <div className="flex items-start gap-3">
-                            {/* Checkbox */}
-                            <div
-                              className="shrink-0 min-h-[44px] min-w-[44px] flex items-center justify-center touch-manipulation -ml-1"
+                      <ListRow
+                        accent={accentTone}
+                        lead={
+                          <div
+                            className="flex items-center gap-3"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <button
+                              className="min-h-[44px] min-w-[28px] flex items-center justify-center touch-manipulation"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 toggleSelection(user.id);
                               }}
+                              aria-label={isSelected ? 'Deselect' : 'Select'}
                             >
                               <Checkbox
-                                checked={selectedIds.has(user.id)}
-                                className="h-5 w-5 rounded-md border-2 border-white/20 data-[state=checked]:bg-yellow-500 data-[state=checked]:border-yellow-500"
+                                checked={isSelected}
+                                className="h-4 w-4 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black pointer-events-none"
                               />
-                            </div>
-
-                            {/* Avatar with online dot + engagement ring */}
-                            <div className="relative shrink-0 mt-0.5">
-                              <Avatar className="h-11 w-11 rounded-xl border-2 border-white/10">
-                                <AvatarImage src={user.avatar_url || undefined} />
-                                <AvatarFallback
-                                  className={`rounded-xl text-sm font-bold ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text}`}
-                                >
-                                  {getInitials(user.full_name)}
-                                </AvatarFallback>
-                              </Avatar>
-                              {user.isOnline && (
-                                <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-card" />
-                              )}
-                              {effectiveEngagementMap?.has(user.id) && (() => {
-                                const score = effectiveEngagementMap.get(user.id)!;
-                                const color = getScoreColor(score);
-                                const strokeColor = SCORE_COLOR_MAP[color].stroke;
-                                const circumference = Math.PI * 19;
-                                const dashOffset = circumference - (score / 100) * circumference;
-                                return (
-                                  <svg width="22" height="22" viewBox="0 0 24 24" className="absolute -top-1.5 -right-1.5">
-                                    <circle cx="12" cy="12" r="9.5" fill="rgba(0,0,0,0.8)" stroke="rgba(255,255,255,0.1)" strokeWidth="2.5" />
-                                    <circle cx="12" cy="12" r="9.5" fill="none" stroke={strokeColor} strokeWidth="2.5"
-                                      strokeDasharray={circumference} strokeDashoffset={dashOffset} strokeLinecap="round" transform="rotate(-90 12 12)" />
-                                    <text x="12" y="12" textAnchor="middle" dominantBaseline="central" fill={strokeColor} fontSize="7" fontWeight="700">{score}</text>
-                                  </svg>
-                                );
-                              })()}
-                            </div>
-
-                            {/* Content */}
-                            <div className="flex-1 min-w-0">
-                              {/* Line 1 — Full name */}
-                              <div className="flex items-center gap-1.5">
-                                <p className="font-bold text-[15px] text-white truncate">
-                                  {user.full_name || 'No name'}
-                                </p>
-                                {user.subscribed && (
-                                  <div className="shrink-0 w-4.5 h-4.5 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center">
-                                    <Sparkles className="h-2.5 w-2.5 text-white" />
-                                  </div>
-                                )}
-                                {user.admin_role && (
-                                  <div className="shrink-0 w-4.5 h-4.5 rounded-full bg-gradient-to-br from-red-400 to-rose-600 flex items-center justify-center">
-                                    <Shield className="h-2.5 w-2.5 text-white" />
-                                  </div>
-                                )}
-                              </div>
-
-                              {/* Line 2 — Email */}
-                              <p className="text-[13px] text-white truncate mt-0.5">
-                                {user.email || `@${user.username}`}
-                              </p>
-
-                              {/* Line 3 — Badges */}
-                              <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
-                                <Badge
-                                  className={`text-[10px] px-2 py-0 h-5 font-semibold rounded-full ${getRoleStyle(user.role).bg} ${getRoleStyle(user.role).text} border-0`}
-                                >
-                                  {user.role || 'visitor'}
-                                </Badge>
-                                {user.subscribed && user.stripe_customer_id ? (
-                                  <Badge className="text-[10px] px-2 py-0 h-5 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0">
-                                    Pro{user.subscription_tier ? ` · ${user.subscription_tier}` : ''}
-                                  </Badge>
-                                ) : user.free_access_granted ? (
-                                  <Badge className="text-[10px] px-2 py-0 h-5 font-semibold rounded-full bg-emerald-500/15 text-emerald-400 border-0">
-                                    Free Access
-                                  </Badge>
-                                ) : user.subscribed ? (
-                                  <Badge className="text-[10px] px-2 py-0 h-5 font-semibold rounded-full bg-amber-500/15 text-amber-400 border-0">
-                                    {user.subscription_tier || 'Subscribed'}
-                                  </Badge>
-                                ) : null}
-                                {user.isOnline ? (
-                                  <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-green-500/15 text-green-400">Online</span>
-                                ) : user.last_seen ? (
-                                  <span className="text-[10px] font-medium text-white">{relativeTime(user.last_seen)}</span>
-                                ) : null}
-                              </div>
-
-                              {/* Line 4 — Engagement stats */}
-                              <div className="flex items-center gap-2 mt-1.5 text-[11px] text-white">
-                                <span>
-                                  {joinedDays !== null
-                                    ? joinedDays === 0 ? 'Joined today' : `Joined ${joinedDays}d ago`
-                                    : 'Joined'}
-                                </span>
-                                {effectiveEngagementRawMap?.has(user.id) && (() => {
-                                  const raw = effectiveEngagementRawMap.get(user.id)!;
-                                  return (
-                                    <>
-                                      <span className="text-white">·</span>
-                                      <span>{formatTimeShort(raw.total_seconds_tracked)}</span>
-                                      <span className="text-white">·</span>
-                                      <span>{raw.unique_pages_visited} pages</span>
-                                      <span className="text-white">·</span>
-                                      <span>{raw.login_count} logins</span>
-                                    </>
-                                  );
-                                })()}
-                              </div>
-                            </div>
-
-                            {/* Chevron */}
-                            <ChevronRight className="shrink-0 h-4 w-4 text-white mt-2" />
+                            </button>
+                            <Avatar
+                              initials={getInitials(user.full_name) || '—'}
+                              online={user.isOnline ? true : undefined}
+                            />
                           </div>
-                        </div>
-                      </div>
-                    </SwipeableAdminRow>
-                  </motion.div>
+                        }
+                        title={
+                          <span className="flex items-center gap-1.5">
+                            <span className="truncate">
+                              {user.full_name || 'No name'}
+                            </span>
+                            {user.admin_role && (
+                              <Shield className="h-3 w-3 text-elec-yellow shrink-0" />
+                            )}
+                          </span>
+                        }
+                        subtitle={
+                          <span className="flex flex-col gap-1">
+                            <span className="truncate">
+                              {user.email || (user.username ? `@${user.username}` : '—')}
+                            </span>
+                            <span className="flex items-center gap-1.5 flex-wrap">
+                              <Pill tone={accentTone}>
+                                {user.role || 'visitor'}
+                              </Pill>
+                              {tier && <Pill tone={tier.tone}>{tier.label}</Pill>}
+                              {engagementScore !== undefined && (
+                                <Pill
+                                  tone={
+                                    engagementScore >= 70
+                                      ? 'emerald'
+                                      : engagementScore >= 40
+                                        ? 'amber'
+                                        : 'cyan'
+                                  }
+                                >
+                                  {engagementScore}
+                                </Pill>
+                              )}
+                            </span>
+                            <span className="flex items-center gap-2 text-[10.5px] text-white">
+                              <span>
+                                {joinedDays !== null
+                                  ? joinedDays === 0
+                                    ? 'Joined today'
+                                    : `Joined ${joinedDays}d ago`
+                                  : 'Joined'}
+                              </span>
+                              {user.isOnline ? (
+                                <>
+                                  <span>·</span>
+                                  <span className="flex items-center gap-1">
+                                    <Dot tone="green" />
+                                    Online
+                                  </span>
+                                </>
+                              ) : user.last_seen ? (
+                                <>
+                                  <span>·</span>
+                                  <span>{relativeTime(user.last_seen)}</span>
+                                </>
+                              ) : null}
+                              {rawEngagement && (
+                                <>
+                                  <span>·</span>
+                                  <span>
+                                    {formatTimeShort(rawEngagement.total_seconds_tracked)}
+                                  </span>
+                                  <span>·</span>
+                                  <span>{rawEngagement.login_count} logins</span>
+                                </>
+                              )}
+                            </span>
+                          </span>
+                        }
+                        onClick={() => handleUserClick(user)}
+                      />
+                    </div>
+                  </SwipeableAdminRow>
                 );
               })}
-            </motion.div>
-
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <AdminPagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                totalItems={users?.length || 0}
-                itemsPerPage={itemsPerPage}
-                onPageChange={setCurrentPage}
-                onItemsPerPageChange={(val) => {
-                  setItemsPerPage(val);
-                  setCurrentPage(1);
-                }}
-                className="mt-4"
-              />
-            )}
-          </>
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* ── User Detail Sheet ── */}
+        {totalPages > 1 && !isLoading && users && users.length > 0 && (
+          <AdminPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={users?.length || 0}
+            itemsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+            onItemsPerPageChange={(val) => {
+              setItemsPerPage(val);
+              setCurrentPage(1);
+            }}
+          />
+        )}
+
         <UserManagementSheet
-          user={selectedUser ? {
-            id: selectedUser.id,
-            full_name: selectedUser.full_name,
-            email: selectedUser.email || undefined,
-            role: selectedUser.role || undefined,
-            subscribed: selectedUser.subscribed,
-            subscription_tier: selectedUser.subscription_tier || undefined,
-            subscription_end: (selectedUser as Record<string, unknown>).subscription_end as string | undefined,
-            stripe_customer_id: selectedUser.stripe_customer_id || undefined,
-            free_access_granted: selectedUser.free_access_granted,
-            free_access_expires_at: (selectedUser as Record<string, unknown>).free_access_expires_at as string | undefined,
-            free_access_reason: (selectedUser as Record<string, unknown>).free_access_reason as string | undefined,
-            created_at: selectedUser.created_at,
-            last_sign_in: selectedUser.last_sign_in || undefined,
-          } : null}
+          user={
+            selectedUser
+              ? {
+                  id: selectedUser.id,
+                  full_name: selectedUser.full_name,
+                  email: selectedUser.email || undefined,
+                  role: selectedUser.role || undefined,
+                  subscribed: selectedUser.subscribed,
+                  subscription_tier: selectedUser.subscription_tier || undefined,
+                  subscription_end: (selectedUser as Record<string, unknown>)
+                    .subscription_end as string | undefined,
+                  stripe_customer_id: selectedUser.stripe_customer_id || undefined,
+                  free_access_granted: selectedUser.free_access_granted,
+                  free_access_expires_at: (selectedUser as Record<string, unknown>)
+                    .free_access_expires_at as string | undefined,
+                  free_access_reason: (selectedUser as Record<string, unknown>)
+                    .free_access_reason as string | undefined,
+                  created_at: selectedUser.created_at,
+                  last_sign_in: selectedUser.last_sign_in || undefined,
+                }
+              : null
+          }
           open={!!selectedUser}
           onOpenChange={(open) => !open && setSelectedUser(null)}
           extraActions={
@@ -1410,11 +1152,7 @@ export default function AdminUsers() {
               <div className="flex gap-2">
                 <Button
                   variant="outline"
-                  className={`flex-1 h-11 touch-manipulation rounded-xl ${
-                    selectedUser?.admin_role
-                      ? 'border-red-500/30 text-red-400 hover:bg-red-500/10'
-                      : 'border-orange-500/30 text-orange-400 hover:bg-orange-500/10'
-                  }`}
+                  className="flex-1 h-11 touch-manipulation rounded-full bg-[hsl(0_0%_12%)] border-white/[0.08] text-white hover:bg-white/[0.06]"
                   onClick={() =>
                     selectedUser &&
                     grantAdminMutation.mutate({
@@ -1425,52 +1163,58 @@ export default function AdminUsers() {
                   disabled={grantAdminMutation.isPending}
                 >
                   {selectedUser?.admin_role ? (
-                    <><ShieldOff className="h-4 w-4 mr-2" />Remove Admin</>
+                    <>
+                      <ShieldOff className="h-4 w-4 mr-2" />
+                      Remove admin
+                    </>
                   ) : (
-                    <><Shield className="h-4 w-4 mr-2" />Make Admin</>
+                    <>
+                      <Shield className="h-4 w-4 mr-2" />
+                      Make admin
+                    </>
                   )}
                 </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-11 w-11 touch-manipulation rounded-xl text-red-400 hover:text-red-500 hover:bg-red-500/10"
+                <IconButton
                   onClick={() => setDeleteDialogOpen(true)}
+                  aria-label="Delete user"
                 >
-                  <Trash2 className="h-5 w-5" />
-                </Button>
+                  <Trash2 className="h-4 w-4" />
+                </IconButton>
               </div>
             ) : undefined
           }
         />
 
-        {/* Delete Confirmation Dialog */}
         <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-          <AlertDialogContent className="rounded-2xl">
+          <AlertDialogContent className="rounded-2xl bg-[hsl(0_0%_12%)] border-white/[0.06]">
             <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-500" />
-                Delete User Permanently?
+              <AlertDialogTitle className="flex items-center gap-2 text-white">
+                <AlertTriangle className="h-5 w-5 text-amber-400" />
+                Delete user permanently?
               </AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogDescription className="text-white">
                 This will permanently delete{' '}
-                <strong>{selectedUser?.full_name || selectedUser?.email}</strong> and all their
-                data. This action cannot be undone.
+                <strong className="text-white">
+                  {selectedUser?.full_name || selectedUser?.email}
+                </strong>{' '}
+                and all their data. This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+              <AlertDialogCancel className="rounded-full bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04]">
+                Cancel
+              </AlertDialogCancel>
               <AlertDialogAction
-                className="bg-red-500 hover:bg-red-600 rounded-xl"
+                className="rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
                 onClick={() => selectedUser && deleteUserMutation.mutate(selectedUser.id)}
                 disabled={deleteUserMutation.isPending}
               >
-                {deleteUserMutation.isPending ? 'Deleting...' : 'Delete User'}
+                {deleteUserMutation.isPending ? 'Deleting…' : 'Delete user'}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* Message User Sheet (from swipe action) */}
         <MessageUserSheet
           open={!!messageUser}
           onOpenChange={(open) => {
@@ -1479,7 +1223,6 @@ export default function AdminUsers() {
           user={messageUser}
         />
 
-        {/* Grant Access Sheet */}
         <Sheet
           open={!!grantSheetUser}
           onOpenChange={(open) => {
@@ -1488,31 +1231,35 @@ export default function AdminUsers() {
         >
           <SheetContent
             side="bottom"
-            className="h-auto max-h-[50vh] rounded-t-3xl p-0 border-t border-border/50"
+            className="h-auto max-h-[60vh] rounded-t-3xl p-0 border-t border-white/[0.06] bg-[hsl(0_0%_10%)]"
           >
-            <div className="flex flex-col bg-background">
-              {/* Drag Handle */}
+            <div className="flex flex-col">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/20" />
+                <div className="w-12 h-1.5 rounded-full bg-white/15" />
               </div>
 
               <div className="px-6 pb-6 pt-2 space-y-5">
-                {/* Header */}
                 <div>
-                  <h3 className="text-lg font-bold text-foreground">Grant Free Access</h3>
-                  <p className="text-sm text-white mt-0.5">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                    Grant
+                  </div>
+                  <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                    Free access
+                  </h3>
+                  <p className="mt-1 text-[13px] text-white">
                     {grantSheetUser?.full_name || 'User'} · {grantSheetUser?.role || 'visitor'}
                   </p>
                 </div>
 
-                {/* Tier Selector */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Tier</label>
+                  <label className="text-[11px] font-medium uppercase tracking-[0.14em] text-white">
+                    Tier
+                  </label>
                   <Select value={grantTier} onValueChange={setGrantTier}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-card border-border/50 focus:border-yellow-500 focus:ring-yellow-500">
+                    <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_14%)] border-white/[0.08] focus:border-elec-yellow/60 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-card border-border/50">
+                    <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] text-white">
                       <SelectItem value="Apprentice">Apprentice</SelectItem>
                       <SelectItem value="Electrician">Electrician</SelectItem>
                       <SelectItem value="Employer">Employer</SelectItem>
@@ -1520,26 +1267,26 @@ export default function AdminUsers() {
                   </Select>
                 </div>
 
-                {/* Duration Selector */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">Duration</label>
+                  <label className="text-[11px] font-medium uppercase tracking-[0.14em] text-white">
+                    Duration
+                  </label>
                   <Select value={grantDuration} onValueChange={setGrantDuration}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-card border-border/50 focus:border-yellow-500 focus:ring-yellow-500">
+                    <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_14%)] border-white/[0.08] focus:border-elec-yellow/60 text-white">
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-card border-border/50">
-                      <SelectItem value="7">1 Week</SelectItem>
-                      <SelectItem value="30">30 Days</SelectItem>
-                      <SelectItem value="90">90 Days</SelectItem>
-                      <SelectItem value="365">1 Year</SelectItem>
-                      <SelectItem value="never">Never Expires</SelectItem>
+                    <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] text-white">
+                      <SelectItem value="7">1 week</SelectItem>
+                      <SelectItem value="30">30 days</SelectItem>
+                      <SelectItem value="90">90 days</SelectItem>
+                      <SelectItem value="365">1 year</SelectItem>
+                      <SelectItem value="never">Never expires</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                {/* Confirm Button */}
                 <Button
-                  className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 shadow-lg shadow-emerald-500/20 font-semibold text-base"
+                  className="w-full h-12 touch-manipulation rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-base"
                   onClick={handleConfirmGrant}
                   disabled={grantSubscriptionMutation.isPending}
                 >
@@ -1548,13 +1295,26 @@ export default function AdminUsers() {
                   ) : (
                     <Gift className="h-5 w-5 mr-2" />
                   )}
-                  Grant Access
+                  Grant access
                 </Button>
               </div>
             </div>
           </SheetContent>
         </Sheet>
-      </div>
+
+        {isSuperAdmin && selectedUser?.subscribed && (
+          <div className="hidden">
+            <button
+              onClick={() =>
+                selectedUser && revokeSubscriptionMutation.mutate(selectedUser.id)
+              }
+              disabled={revokeSubscriptionMutation.isPending}
+            >
+              revoke
+            </button>
+          </div>
+        )}
+      </PageFrame>
     </PullToRefresh>
   );
 }

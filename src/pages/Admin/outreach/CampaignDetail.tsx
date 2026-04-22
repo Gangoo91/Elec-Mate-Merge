@@ -239,7 +239,7 @@ export default function CampaignDetail({
                     {localCampaign.status}
                   </Badge>
                   {localCampaign.scheduled_at && (
-                    <span className="text-[11px] text-white/60 flex items-center gap-1">
+                    <span className="text-[11px] text-white flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       {format(new Date(localCampaign.scheduled_at), 'dd MMM HH:mm')}
                     </span>
@@ -355,7 +355,7 @@ export default function CampaignDetail({
                 {localCampaign.status === 'scheduled' && (
                   <Button
                     variant="ghost"
-                    className="w-full h-10 gap-2 text-white/70 hover:bg-white/5 touch-manipulation"
+                    className="w-full h-10 gap-2 text-white hover:bg-white/5 touch-manipulation"
                     onClick={() => unscheduleMutation.mutate()}
                     disabled={unscheduleMutation.isPending}
                   >
@@ -407,7 +407,7 @@ export default function CampaignDetail({
                   <CheckCircle2 className="h-5 w-5 text-green-400" />
                   <div className="flex-1">
                     <p className="text-green-300 font-semibold text-sm">Campaign complete</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       {localCampaign.sent_count} emails sent
                       {localCampaign.completed_at &&
                         ` · ${format(new Date(localCampaign.completed_at), 'dd MMM yyyy HH:mm')}`}
@@ -601,8 +601,8 @@ export default function CampaignDetail({
 function MetaRow({ label, value, muted }: { label: string; value: string; muted?: boolean }) {
   return (
     <div>
-      <p className="text-[11px] text-white/50 uppercase tracking-wider font-semibold">{label}</p>
-      <p className={`text-sm mt-0.5 ${muted ? 'text-white/70' : 'text-white font-medium'}`}>
+      <p className="text-[11px] text-white uppercase tracking-wider font-semibold">{label}</p>
+      <p className={`text-sm mt-0.5 ${muted ? 'text-white' : 'text-white font-medium'}`}>
         {value}
       </p>
     </div>
@@ -626,8 +626,8 @@ function MetricTile({
     <div className={`rounded-xl border p-3 ${accent}`}>
       <Icon className="h-4 w-4 mb-1" />
       <p className="text-xl font-bold text-white">{value}</p>
-      <p className="text-[10px] text-white/70 uppercase tracking-wider">{label}</p>
-      {sub && <p className="text-[10px] text-white/50 mt-0.5">{sub}</p>}
+      <p className="text-[10px] text-white uppercase tracking-wider">{label}</p>
+      {sub && <p className="text-[10px] text-white mt-0.5">{sub}</p>}
     </div>
   );
 }

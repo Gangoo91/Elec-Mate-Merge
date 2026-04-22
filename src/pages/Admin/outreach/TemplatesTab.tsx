@@ -56,7 +56,7 @@ export default function TemplatesTab({ onUseTemplate }: TemplatesTabProps) {
           <CardContent className="p-5 text-center">
             <Sparkles className="h-8 w-8 text-elec-yellow mx-auto mb-2" />
             <p className="font-semibold text-white text-lg">Seed 5 V1 templates</p>
-            <p className="text-sm text-white/70 mt-1 mb-4">
+            <p className="text-sm text-white mt-1 mb-4">
               College cold pitch, tutor free access, apprentice spotlight, 7-day follow-up,
               employer nudge. All in V10 tone. Fully editable after.
             </p>
@@ -81,7 +81,7 @@ export default function TemplatesTab({ onUseTemplate }: TemplatesTabProps) {
         <Button
           variant="ghost"
           size="sm"
-          className="w-full justify-center h-10 text-white/60 hover:text-white hover:bg-white/5 touch-manipulation"
+          className="w-full justify-center h-10 text-white hover:text-white hover:bg-white/5 touch-manipulation"
           onClick={() => seedMutation.mutate()}
           disabled={seedMutation.isPending}
         >
@@ -125,10 +125,10 @@ export default function TemplatesTab({ onUseTemplate }: TemplatesTabProps) {
                       </Badge>
                     </div>
                   </div>
-                  <p className="text-xs text-white/70 line-clamp-2 mb-3 min-h-[32px]">
+                  <p className="text-xs text-white line-clamp-2 mb-3 min-h-[32px]">
                     {t.description || 'No description.'}
                   </p>
-                  <p className="text-xs text-white/50 mb-1 uppercase tracking-wider font-semibold">
+                  <p className="text-xs text-white mb-1 uppercase tracking-wider font-semibold">
                     Subject
                   </p>
                   <p className="text-xs text-white line-clamp-1 mb-3">{t.subject}</p>
@@ -137,7 +137,7 @@ export default function TemplatesTab({ onUseTemplate }: TemplatesTabProps) {
                     <Button
                       size="sm"
                       variant="ghost"
-                      className="flex-1 h-9 text-white/70 hover:bg-white/5 touch-manipulation"
+                      className="flex-1 h-9 text-white hover:bg-white/5 touch-manipulation"
                       onClick={() => setPreview(t)}
                     >
                       <Eye className="h-3.5 w-3.5 mr-1" />
@@ -183,16 +183,16 @@ export default function TemplatesTab({ onUseTemplate }: TemplatesTabProps) {
               </SheetHeader>
               <div className="flex-1 overflow-y-auto">
                 <div className="px-6 pt-4 pb-3 border-b border-border/30">
-                  <p className="text-xs text-white/50 uppercase tracking-wider font-semibold">
+                  <p className="text-xs text-white uppercase tracking-wider font-semibold">
                     Subject
                   </p>
                   <p className="text-white font-medium mt-1">{preview.subject}</p>
                   {preview.preheader && (
                     <>
-                      <p className="text-xs text-white/50 uppercase tracking-wider font-semibold mt-3">
+                      <p className="text-xs text-white uppercase tracking-wider font-semibold mt-3">
                         Preheader
                       </p>
-                      <p className="text-sm text-white/80 mt-1">{preview.preheader}</p>
+                      <p className="text-sm text-white mt-1">{preview.preheader}</p>
                     </>
                   )}
                 </div>

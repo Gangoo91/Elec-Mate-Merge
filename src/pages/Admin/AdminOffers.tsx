@@ -1,13 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
@@ -26,30 +24,36 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  Divider,
+  type Tone,
+} from '@/components/admin/editorial';
 import {
   Plus,
   Copy,
-  Gift,
-  Users,
-  Calendar,
   Check,
   Trash2,
-  ChevronRight,
-  User,
   Loader2,
-  AlertTriangle,
-  Mail,
+  RefreshCw,
   Send,
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import { copyToClipboard } from '@/utils/clipboard';
-import { cn } from '@/lib/utils';
-import { Skeleton } from '@/components/ui/skeleton';
 
 interface Offer {
   id: string;
@@ -82,6 +86,8 @@ interface SentEmail {
   status: string;
 }
 
+type FilterTab = 'active' | 'scheduled' | 'expired' | 'all';
+
 export default function AdminOffers() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
@@ -91,8 +97,9 @@ export default function AdminOffers() {
   const [deleteOfferId, setDeleteOfferId] = useState<string | null>(null);
   const [sendOffer, setSendOffer] = useState<Offer | null>(null);
   const [sendEmail, setSendEmail] = useState('');
+  const [activeTab, setActiveTab] = useState<FilterTab>('active');
+  const [search, setSearch] = useState('');
 
-  // Form state
   const [newOffer, setNewOffer] = useState({
     name: '',
     price: '3.99',
@@ -104,8 +111,7 @@ export default function AdminOffers() {
   const haptic = useHaptic();
   const isSuperAdmin = profile?.admin_role === 'super_admin';
 
-  // Fetch offers via edge function to bypass RLS
-  const { data: offers, isLoading, isFetching, refetch } = useQuery({
+  const { data: offers, isLoading, refetch } = useQuery({
     queryKey: ['admin-offers'],
     queryFn: async () => {
       const { data, error } = await supabase.functions.invoke('admin-manage-offers', {
@@ -115,10 +121,9 @@ export default function AdminOffers() {
       if (data?.error) throw new Error(data.error);
       return (data?.offers || []) as Offer[];
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
+    staleTime: 2 * 60 * 1000,
   });
 
-  // Fetch redemptions for selected offer via edge function
   const { data: redemptions } = useQuery({
     queryKey: ['offer-redemptions', selectedOffer?.id],
     queryFn: async () => {
@@ -131,10 +136,9 @@ export default function AdminOffers() {
       return (data?.redemptions || []) as Redemption[];
     },
     enabled: !!selectedOffer?.id,
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
+    staleTime: 2 * 60 * 1000,
   });
 
-  // Create offer mutation via edge function
   const createOfferMutation = useMutation({
     mutationFn: async () => {
       const expiresAt = newOffer.expires_days
@@ -184,7 +188,6 @@ export default function AdminOffers() {
     },
   });
 
-  // Toggle offer active status via edge function
   const toggleOfferMutation = useMutation({
     mutationFn: async ({ id, isActive }: { id: string; isActive: boolean }) => {
       const { data, error } = await supabase.functions.invoke('admin-manage-offers', {
@@ -203,7 +206,6 @@ export default function AdminOffers() {
     },
   });
 
-  // Delete offer mutation via edge function
   const deleteOfferMutation = useMutation({
     mutationFn: async (id: string) => {
       const { data, error } = await supabase.functions.invoke('admin-manage-offers', {
@@ -227,7 +229,6 @@ export default function AdminOffers() {
     },
   });
 
-  // Fetch sent emails for selected offer
   const { data: sentEmails } = useQuery({
     queryKey: ['offer-sent-emails', sendOffer?.id],
     queryFn: async () => {
@@ -240,10 +241,9 @@ export default function AdminOffers() {
       return (data?.emails || []) as SentEmail[];
     },
     enabled: !!sendOffer?.id,
-    staleTime: 30 * 1000, // 30 seconds
+    staleTime: 30 * 1000,
   });
 
-  // Send promo email mutation
   const sendEmailMutation = useMutation({
     mutationFn: async ({ offerId, emails }: { offerId: string; emails: string[] }) => {
       if (emails.length === 1) {
@@ -295,7 +295,6 @@ export default function AdminOffers() {
   const handleSendOffer = () => {
     if (!sendOffer?.id || !sendEmail.trim()) return;
 
-    // Parse emails (comma, semicolon, or newline separated)
     const emails = sendEmail
       .split(/[,;\n]/)
       .map((e) => e.trim().toLowerCase())
@@ -313,18 +312,72 @@ export default function AdminOffers() {
     sendEmailMutation.mutate({ offerId: sendOffer.id, emails });
   };
 
-  const getPlanColor = (planId: string) => {
-    switch (planId) {
-      case 'apprentice':
-        return 'bg-yellow-500/20 text-yellow-400';
-      case 'electrician':
-        return 'bg-blue-500/20 text-blue-400';
-      case 'employer':
-        return 'bg-green-500/20 text-green-400';
-      default:
-        return 'bg-gray-500/20 text-gray-400';
-    }
+  const now = Date.now();
+  const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+  const getOfferStatus = (offer: Offer): FilterTab => {
+    if (!offer.is_active) return 'scheduled';
+    if (offer.expires_at && new Date(offer.expires_at).getTime() < now) return 'expired';
+    return 'active';
   };
+
+  const getStatusTone = (offer: Offer): Tone => {
+    const status = getOfferStatus(offer);
+    if (status === 'expired') return 'red';
+    if (status === 'scheduled') return 'amber';
+    if (offer.expires_at && new Date(offer.expires_at).getTime() - now < sevenDays) return 'orange';
+    return 'emerald';
+  };
+
+  const getStatusLabel = (offer: Offer): string => {
+    const status = getOfferStatus(offer);
+    if (status === 'expired') return 'Expired';
+    if (status === 'scheduled') return 'Inactive';
+    if (offer.expires_at && new Date(offer.expires_at).getTime() - now < sevenDays) return 'Expiring';
+    return 'Active';
+  };
+
+  const stats = useMemo(() => {
+    const list = offers ?? [];
+    const active = list.filter((o) => getOfferStatus(o) === 'active').length;
+    const expiringSoon = list.filter(
+      (o) =>
+        o.is_active &&
+        o.expires_at &&
+        new Date(o.expires_at).getTime() > now &&
+        new Date(o.expires_at).getTime() - now < sevenDays,
+    ).length;
+    const totalRedemptions = list.reduce((sum, o) => sum + (o.redemptions || 0), 0);
+    const discountGiven = list.reduce(
+      (sum, o) => sum + (o.redemptions || 0) * (o.price || 0),
+      0,
+    );
+    return { active, expiringSoon, totalRedemptions, discountGiven };
+  }, [offers, now, sevenDays]);
+
+  const counts = useMemo(() => {
+    const list = offers ?? [];
+    return {
+      active: list.filter((o) => getOfferStatus(o) === 'active').length,
+      scheduled: list.filter((o) => getOfferStatus(o) === 'scheduled').length,
+      expired: list.filter((o) => getOfferStatus(o) === 'expired').length,
+      all: list.length,
+    };
+  }, [offers]);
+
+  const filteredOffers = useMemo(() => {
+    const list = offers ?? [];
+    const q = search.trim().toLowerCase();
+    return list.filter((o) => {
+      if (activeTab !== 'all' && getOfferStatus(o) !== activeTab) return false;
+      if (!q) return true;
+      return (
+        o.name.toLowerCase().includes(q) ||
+        o.code.toLowerCase().includes(q) ||
+        o.plan_id.toLowerCase().includes(q)
+      );
+    });
+  }, [offers, activeTab, search]);
 
   return (
     <PullToRefresh
@@ -332,463 +385,453 @@ export default function AdminOffers() {
         await queryClient.invalidateQueries({ queryKey: ['admin-offers'] });
       }}
     >
-      <div className="space-y-6 pb-20">
-        <AdminPageHeader
-          title="Promo Offers"
-          subtitle="Create and manage promotional pricing links"
-          icon={Gift}
-          iconColor="text-violet-400"
-          iconBg="bg-violet-500/10 border-violet-500/20"
-          accentColor="from-violet-500 via-purple-400 to-violet-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+      <PageFrame>
+        <PageHero
+          eyebrow="Billing"
+          title="Offers"
+          description="Promo codes and limited-time discounts."
+          tone="yellow"
           actions={
-            <Button
-              className="gap-2 bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 h-11 touch-manipulation"
-              onClick={() => setCreateOpen(true)}
-            >
-              <Plus className="h-4 w-4" />
-              Create Offer
-            </Button>
+            <>
+              <button
+                onClick={() => setCreateOpen(true)}
+                className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation"
+              >
+                New Offer
+              </button>
+              <IconButton onClick={() => refetch()} aria-label="Refresh">
+                <RefreshCw className="h-4 w-4" />
+              </IconButton>
+            </>
           }
         />
 
-        {/* Offers List */}
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Active Offers', value: stats.active, tone: 'emerald' },
+            { label: 'Expiring Soon', value: stats.expiringSoon, tone: 'orange' },
+            { label: 'Redemptions', value: stats.totalRedemptions, accent: true },
+            {
+              label: 'Discount Given',
+              value: `£${stats.discountGiven.toFixed(2)}`,
+            },
+          ]}
+        />
+
+        <FilterBar
+          tabs={[
+            { value: 'active', label: 'Active', count: counts.active },
+            { value: 'scheduled', label: 'Scheduled', count: counts.scheduled },
+            { value: 'expired', label: 'Expired', count: counts.expired },
+            { value: 'all', label: 'All', count: counts.all },
+          ]}
+          activeTab={activeTab}
+          onTabChange={(v) => setActiveTab(v as FilterTab)}
+          search={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search offers, codes or plans…"
+        />
+
         {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : offers?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={Gift}
-                title="No offers yet"
-                description="Create your first promo offer to get started."
-                action={{
-                  label: 'Create Offer',
-                  onClick: () => setCreateOpen(true),
-                }}
-              />
-            </CardContent>
-          </Card>
+          <LoadingBlocks />
+        ) : filteredOffers.length === 0 ? (
+          <EmptyState
+            title={
+              (offers?.length ?? 0) === 0
+                ? 'No offers yet'
+                : 'No offers match this filter'
+            }
+            description={
+              (offers?.length ?? 0) === 0
+                ? 'Create your first promo offer to get started.'
+                : 'Try a different filter or search term.'
+            }
+            action={(offers?.length ?? 0) === 0 ? 'Create offer' : undefined}
+            onAction={(offers?.length ?? 0) === 0 ? () => setCreateOpen(true) : undefined}
+          />
         ) : (
-          <div className="grid gap-4">
-            {offers?.map((offer) => (
-              <Card key={offer.id} className={!offer.is_active ? 'opacity-60' : ''}>
-                <CardContent className="pt-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-semibold">{offer.name}</h3>
-                        <Badge className={getPlanColor(offer.plan_id)}>{offer.plan_id}</Badge>
-                        {!offer.is_active && (
-                          <Badge variant="outline" className="text-muted-foreground">
-                            Inactive
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                        <span className="font-mono text-foreground">£{offer.price}/mo</span>
-                        <button
-                          onClick={() => setSelectedOffer(offer)}
-                          className="flex items-center gap-1 touch-manipulation active:opacity-70 transition-opacity"
-                        >
-                          <Users className="h-4 w-4" />
-                          <span className="underline underline-offset-2">
-                            {offer.redemptions}
-                            {offer.max_redemptions && `/${offer.max_redemptions}`} used
-                          </span>
-                          <ChevronRight className="h-3 w-3" />
-                        </button>
-                        {offer.expires_at && (
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            Expires {format(new Date(offer.expires_at), 'dd MMM yyyy')}
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 mt-2">
-                        <code className="text-xs bg-muted px-2 py-1 rounded font-mono">
-                          {offer.code}
-                        </code>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-7 gap-1"
-                          onClick={() => handleCopyToClipboard(offer.code)}
-                        >
-                          {copiedCode === offer.code ? (
-                            <Check className="h-3 w-3 text-green-500" />
-                          ) : (
-                            <Copy className="h-3 w-3" />
-                          )}
-                          Copy Link
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      {offer.is_active && (
-                        <Button variant="outline" size="sm" onClick={() => setSendOffer(offer)}>
-                          <Mail className="h-4 w-4 mr-1.5" />
-                          Send
-                        </Button>
-                      )}
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() =>
-                          toggleOfferMutation.mutate({
-                            id: offer.id,
-                            isActive: !offer.is_active,
-                          })
-                        }
-                      >
-                        {offer.is_active ? 'Deactivate' : 'Activate'}
-                      </Button>
-                      {isSuperAdmin && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="text-red-400 hover:text-red-500 hover:bg-red-500/10"
-                          onClick={() => setDeleteOfferId(offer.id)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <ListCard>
+            <ListCardHeader
+              tone="yellow"
+              title="Offers"
+              meta={<Pill tone="yellow">{filteredOffers.length}</Pill>}
+            />
+            <ListBody>
+              {filteredOffers.map((offer) => {
+                const tone = getStatusTone(offer);
+                const label = getStatusLabel(offer);
+                const expiresText = offer.expires_at
+                  ? `expires ${format(new Date(offer.expires_at), 'dd MMM yyyy')}`
+                  : 'no expiry';
+                const subtitle = `${offer.code} · £${offer.price}/mo · ${offer.plan_id} · ${expiresText}`;
+                const maxText = offer.max_redemptions ?? '∞';
+                return (
+                  <ListRow
+                    key={offer.id}
+                    title={offer.name}
+                    subtitle={subtitle}
+                    trailing={
+                      <>
+                        <Pill tone={tone}>{label}</Pill>
+                        <span className="text-[11px] text-white tabular-nums">
+                          {offer.redemptions}/{maxText}
+                        </span>
+                      </>
+                    }
+                    onClick={() => setSelectedOffer(offer)}
+                  />
+                );
+              })}
+            </ListBody>
+          </ListCard>
         )}
+      </PageFrame>
 
-        {/* Redemptions Sheet */}
-        <Sheet open={!!selectedOffer} onOpenChange={() => setSelectedOffer(null)}>
-          <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
-            <div className="flex flex-col h-full">
-              {/* Drag Handle */}
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
-              </div>
-
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="text-left flex items-center gap-2">
-                  <Gift className="h-5 w-5 text-yellow-400" />
-                  {selectedOffer?.name} Redemptions
-                </SheetTitle>
-                <p className="text-sm text-muted-foreground text-left">
-                  {selectedOffer?.redemptions || 0} total redemptions · £{selectedOffer?.price}/mo
-                </p>
-              </SheetHeader>
-
-              <div className="flex-1 overflow-y-auto p-4">
-                {redemptions?.length === 0 ? (
-                  <div className="text-center py-8">
-                    <Users className="h-10 w-10 text-muted-foreground mx-auto mb-3" />
-                    <p className="text-sm text-muted-foreground">No redemptions yet</p>
-                  </div>
-                ) : (
-                  <div className="space-y-2">
-                    {redemptions?.map((redemption) => (
-                      <div
-                        key={redemption.id}
-                        className="flex items-center gap-3 p-3 rounded-xl bg-muted/50"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center shrink-0">
-                          <User className="h-5 w-5 text-yellow-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm truncate">
-                            {redemption.profiles?.full_name || 'Unknown User'}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            {formatDistanceToNow(new Date(redemption.redeemed_at), {
-                              addSuffix: true,
-                            })}
-                          </p>
-                        </div>
-                        {redemption.amount_paid && (
-                          <Badge className="bg-green-500/20 text-green-400">
-                            £{redemption.amount_paid}
-                          </Badge>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
+      <Sheet open={!!selectedOffer} onOpenChange={() => setSelectedOffer(null)}>
+        <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]">
+          <div className="flex flex-col h-full">
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-10 h-1 rounded-full bg-white/20" />
             </div>
-          </SheetContent>
-        </Sheet>
 
-        {/* Create Offer Sheet */}
-        <Sheet open={createOpen} onOpenChange={setCreateOpen}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
-            <div className="flex flex-col h-full">
-              {/* Drag Handle */}
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+            <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+              <SheetTitle className="text-left text-white text-xl font-semibold tracking-tight">
+                {selectedOffer?.name}
+              </SheetTitle>
+              <p className="text-[13px] text-white text-left">
+                {selectedOffer?.redemptions || 0} redemptions · £{selectedOffer?.price}/mo ·{' '}
+                <span className="font-mono">{selectedOffer?.code}</span>
+              </p>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-y-auto p-5 space-y-5">
+              {selectedOffer && (
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-10 touch-manipulation bg-transparent border-white/[0.12] text-white hover:bg-white/[0.06] hover:text-white"
+                    onClick={() => handleCopyToClipboard(selectedOffer.code)}
+                  >
+                    {copiedCode === selectedOffer.code ? (
+                      <Check className="h-4 w-4 mr-1.5" />
+                    ) : (
+                      <Copy className="h-4 w-4 mr-1.5" />
+                    )}
+                    Copy link
+                  </Button>
+                  {selectedOffer.is_active && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-10 touch-manipulation bg-transparent border-white/[0.12] text-white hover:bg-white/[0.06] hover:text-white"
+                      onClick={() => setSendOffer(selectedOffer)}
+                    >
+                      <Send className="h-4 w-4 mr-1.5" />
+                      Send
+                    </Button>
+                  )}
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-10 touch-manipulation bg-transparent border-white/[0.12] text-white hover:bg-white/[0.06] hover:text-white"
+                    onClick={() =>
+                      toggleOfferMutation.mutate({
+                        id: selectedOffer.id,
+                        isActive: !selectedOffer.is_active,
+                      })
+                    }
+                  >
+                    {selectedOffer.is_active ? 'Deactivate' : 'Activate'}
+                  </Button>
+                  {isSuperAdmin && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="h-10 touch-manipulation bg-transparent border-white/[0.12] text-white hover:bg-white/[0.06] hover:text-white"
+                      onClick={() => setDeleteOfferId(selectedOffer.id)}
+                    >
+                      <Trash2 className="h-4 w-4 mr-1.5" />
+                      Delete
+                    </Button>
+                  )}
+                </div>
+              )}
+
+              <Divider label="Redemptions" />
+
+              {!redemptions ? (
+                <LoadingBlocks />
+              ) : redemptions.length === 0 ? (
+                <EmptyState
+                  title="No redemptions yet"
+                  description="When someone signs up with this code, they'll appear here."
+                />
+              ) : (
+                <ListCard>
+                  <ListBody>
+                    {redemptions.map((redemption) => (
+                      <ListRow
+                        key={redemption.id}
+                        title={redemption.profiles?.full_name || 'Unknown user'}
+                        subtitle={formatDistanceToNow(new Date(redemption.redeemed_at), {
+                          addSuffix: true,
+                        })}
+                        trailing={
+                          redemption.amount_paid ? (
+                            <Pill tone="emerald">£{redemption.amount_paid}</Pill>
+                          ) : undefined
+                        }
+                      />
+                    ))}
+                  </ListBody>
+                </ListCard>
+              )}
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      <Sheet open={createOpen} onOpenChange={setCreateOpen}>
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]">
+          <div className="flex flex-col h-full">
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-10 h-1 rounded-full bg-white/20" />
+            </div>
+
+            <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+              <SheetTitle className="text-left text-white text-xl font-semibold tracking-tight">
+                Create promo offer
+              </SheetTitle>
+              <p className="text-[13px] text-white text-left">
+                Create a special pricing offer with a unique signup link.
+              </p>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-y-auto p-5 space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-white text-[12px] font-medium">
+                  Offer name
+                </Label>
+                <Input
+                  id="name"
+                  placeholder="e.g., Founder Offer"
+                  value={newOffer.name}
+                  onChange={(e) => setNewOffer({ ...newOffer, name: e.target.value })}
+                  className="h-11 text-base touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow"
+                />
               </div>
 
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="text-left flex items-center gap-2">
-                  <Gift className="h-5 w-5 text-orange-400" />
-                  Create Promo Offer
-                </SheetTitle>
-                <p className="text-sm text-muted-foreground text-left">
-                  Create a special pricing offer with a unique signup link.
-                </p>
-              </SheetHeader>
-
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Offer Name</Label>
+                  <Label htmlFor="price" className="text-white text-[12px] font-medium">
+                    Price (GBP)
+                  </Label>
                   <Input
-                    id="name"
-                    placeholder="e.g., Founder Offer"
-                    value={newOffer.name}
-                    onChange={(e) => setNewOffer({ ...newOffer, name: e.target.value })}
-                    className="h-11 touch-manipulation"
+                    id="price"
+                    type="number"
+                    step="0.01"
+                    placeholder="3.99"
+                    value={newOffer.price}
+                    onChange={(e) => setNewOffer({ ...newOffer, price: e.target.value })}
+                    className="h-11 text-base touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="price">Price (GBP)</Label>
-                    <Input
-                      id="price"
-                      type="number"
-                      step="0.01"
-                      placeholder="3.99"
-                      value={newOffer.price}
-                      onChange={(e) => setNewOffer({ ...newOffer, price: e.target.value })}
-                      className="h-11 touch-manipulation"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="plan">Plan</Label>
-                    <Select
-                      value={newOffer.plan_id}
-                      onValueChange={(v) => setNewOffer({ ...newOffer, plan_id: v })}
-                    >
-                      <SelectTrigger className="h-11 touch-manipulation">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="apprentice">Apprentice</SelectItem>
-                        <SelectItem value="electrician">Electrician</SelectItem>
-                        <SelectItem value="employer">Employer</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="max">Max Redemptions</Label>
-                    <Input
-                      id="max"
-                      type="number"
-                      placeholder="Unlimited"
-                      value={newOffer.max_redemptions}
-                      onChange={(e) =>
-                        setNewOffer({ ...newOffer, max_redemptions: e.target.value })
-                      }
-                      className="h-11 touch-manipulation"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="expires">Expires In (days)</Label>
-                    <Input
-                      id="expires"
-                      type="number"
-                      placeholder="30"
-                      value={newOffer.expires_days}
-                      onChange={(e) => setNewOffer({ ...newOffer, expires_days: e.target.value })}
-                      className="h-11 touch-manipulation"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="plan" className="text-white text-[12px] font-medium">
+                    Plan
+                  </Label>
+                  <Select
+                    value={newOffer.plan_id}
+                    onValueChange={(v) => setNewOffer({ ...newOffer, plan_id: v })}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                      <SelectItem value="apprentice">Apprentice</SelectItem>
+                      <SelectItem value="electrician">Electrician</SelectItem>
+                      <SelectItem value="employer">Employer</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
-              <SheetFooter className="p-4 border-t border-border">
-                <Button
-                  className="w-full h-12 touch-manipulation bg-gradient-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600"
-                  onClick={() => createOfferMutation.mutate()}
-                  disabled={!newOffer.name || createOfferMutation.isPending}
-                >
-                  {createOfferMutation.isPending ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Creating...
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="h-4 w-4 mr-2" />
-                      Create Offer
-                    </>
-                  )}
-                </Button>
-              </SheetFooter>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="max" className="text-white text-[12px] font-medium">
+                    Max redemptions
+                  </Label>
+                  <Input
+                    id="max"
+                    type="number"
+                    placeholder="Unlimited"
+                    value={newOffer.max_redemptions}
+                    onChange={(e) =>
+                      setNewOffer({ ...newOffer, max_redemptions: e.target.value })
+                    }
+                    className="h-11 text-base touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="expires" className="text-white text-[12px] font-medium">
+                    Expires in (days)
+                  </Label>
+                  <Input
+                    id="expires"
+                    type="number"
+                    placeholder="30"
+                    value={newOffer.expires_days}
+                    onChange={(e) => setNewOffer({ ...newOffer, expires_days: e.target.value })}
+                    className="h-11 text-base touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow"
+                  />
+                </div>
+              </div>
             </div>
-          </SheetContent>
-        </Sheet>
 
-        {/* Delete Confirmation Dialog */}
-        <AlertDialog open={!!deleteOfferId} onOpenChange={() => setDeleteOfferId(null)}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-red-500" />
-                Delete Offer?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                This will permanently delete this promo offer. Users who have already redeemed it
-                will keep their subscription, but no new redemptions will be possible.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                className="h-11 touch-manipulation"
-                disabled={deleteOfferMutation.isPending}
+            <SheetFooter className="p-5 border-t border-white/[0.06]">
+              <Button
+                className="w-full h-12 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+                onClick={() => createOfferMutation.mutate()}
+                disabled={!newOffer.name || createOfferMutation.isPending}
               >
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600"
-                onClick={() => deleteOfferId && deleteOfferMutation.mutate(deleteOfferId)}
-                disabled={deleteOfferMutation.isPending}
-              >
-                {deleteOfferMutation.isPending ? (
+                {createOfferMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Deleting...
+                    Creating...
                   </>
                 ) : (
-                  'Delete Offer'
+                  <>
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create offer
+                  </>
                 )}
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+              </Button>
+            </SheetFooter>
+          </div>
+        </SheetContent>
+      </Sheet>
 
-        {/* Send Offer Sheet */}
-        <Sheet
-          open={!!sendOffer}
-          onOpenChange={() => {
-            setSendOffer(null);
-            setSendEmail('');
-          }}
-        >
-          <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
-            <div className="flex flex-col h-full">
-              {/* Drag Handle */}
-              <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
-              </div>
+      <AlertDialog open={!!deleteOfferId} onOpenChange={() => setDeleteOfferId(null)}>
+        <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-white">Delete offer?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
+              This will permanently delete this promo offer. Users who have already redeemed it
+              will keep their subscription, but no new redemptions will be possible.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              className="h-11 touch-manipulation bg-transparent border-white/[0.12] text-white hover:bg-white/[0.06] hover:text-white"
+              disabled={deleteOfferMutation.isPending}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction
+              className="h-11 touch-manipulation bg-red-500 hover:bg-red-600 text-white"
+              onClick={() => deleteOfferId && deleteOfferMutation.mutate(deleteOfferId)}
+              disabled={deleteOfferMutation.isPending}
+            >
+              {deleteOfferMutation.isPending ? (
+                <>
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                'Delete offer'
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="text-left flex items-center gap-2">
-                  <Mail className="h-5 w-5 text-orange-400" />
-                  Send {sendOffer?.name}
-                </SheetTitle>
-                <p className="text-sm text-muted-foreground text-left">
-                  Send this offer to users via email. They'll receive a link to sign up with the
-                  discount.
-                </p>
-              </SheetHeader>
-
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Email Input */}
-                <div className="space-y-2">
-                  <Label htmlFor="send-email">Email Address(es)</Label>
-                  <Textarea
-                    id="send-email"
-                    placeholder="Enter email addresses (one per line or comma-separated)"
-                    value={sendEmail}
-                    onChange={(e) => setSendEmail(e.target.value)}
-                    className="min-h-[100px] touch-manipulation text-base"
-                  />
-                  <p className="text-xs text-muted-foreground">
-                    Separate multiple emails with commas, semicolons, or new lines
-                  </p>
-                </div>
-
-                {/* Send Button */}
-                <Button
-                  className="w-full h-12 touch-manipulation bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600"
-                  onClick={handleSendOffer}
-                  disabled={!sendEmail.trim() || sendEmailMutation.isPending}
-                >
-                  {sendEmailMutation.isPending ? (
-                    <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4 mr-2" />
-                      Send Offer
-                    </>
-                  )}
-                </Button>
-
-                {/* Previously Sent Section */}
-                <div className="pt-4 border-t border-border">
-                  <h4 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                    Previously Sent ({sentEmails?.length || 0})
-                  </h4>
-                  {sentEmails?.length === 0 ? (
-                    <p className="text-sm text-muted-foreground text-center py-4">
-                      No emails sent for this offer yet
-                    </p>
-                  ) : (
-                    <div className="space-y-2 max-h-[200px] overflow-y-auto">
-                      {sentEmails?.map((sent) => (
-                        <div
-                          key={sent.id}
-                          className="flex items-center justify-between p-3 rounded-xl bg-muted/50"
-                        >
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center shrink-0">
-                              <Mail className="h-4 w-4 text-orange-400" />
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium truncate max-w-[180px]">
-                                {sent.email}
-                              </p>
-                              <p className="text-xs text-muted-foreground">
-                                {formatDistanceToNow(new Date(sent.sent_at), { addSuffix: true })}
-                              </p>
-                            </div>
-                          </div>
-                          <Badge className="bg-green-500/20 text-green-400 text-xs">
-                            {sent.status}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
+      <Sheet
+        open={!!sendOffer}
+        onOpenChange={() => {
+          setSendOffer(null);
+          setSendEmail('');
+        }}
+      >
+        <SheetContent side="bottom" className="h-[80vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]">
+          <div className="flex flex-col h-full">
+            <div className="flex justify-center pt-3 pb-2">
+              <div className="w-10 h-1 rounded-full bg-white/20" />
             </div>
-          </SheetContent>
-        </Sheet>
-      </div>
+
+            <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+              <SheetTitle className="text-left text-white text-xl font-semibold tracking-tight">
+                Send {sendOffer?.name}
+              </SheetTitle>
+              <p className="text-[13px] text-white text-left">
+                Send this offer to users via email. They'll receive a link to sign up with the
+                discount.
+              </p>
+            </SheetHeader>
+
+            <div className="flex-1 overflow-y-auto p-5 space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="send-email" className="text-white text-[12px] font-medium">
+                  Email address(es)
+                </Label>
+                <Textarea
+                  id="send-email"
+                  placeholder="Enter email addresses (one per line or comma-separated)"
+                  value={sendEmail}
+                  onChange={(e) => setSendEmail(e.target.value)}
+                  className="min-h-[120px] touch-manipulation text-base bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow"
+                />
+                <p className="text-[11px] text-white">
+                  Separate multiple emails with commas, semicolons, or new lines.
+                </p>
+              </div>
+
+              <Button
+                className="w-full h-12 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold"
+                onClick={handleSendOffer}
+                disabled={!sendEmail.trim() || sendEmailMutation.isPending}
+              >
+                {sendEmailMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="h-4 w-4 mr-2" />
+                    Send offer
+                  </>
+                )}
+              </Button>
+
+              <Divider label={`Previously Sent · ${sentEmails?.length || 0}`} />
+
+              {sentEmails?.length === 0 ? (
+                <EmptyState
+                  title="No emails sent yet"
+                  description="Recipients of this offer will appear here once you send it."
+                />
+              ) : (
+                <ListCard>
+                  <ListBody>
+                    {sentEmails?.map((sent) => (
+                      <ListRow
+                        key={sent.id}
+                        title={sent.email}
+                        subtitle={formatDistanceToNow(new Date(sent.sent_at), {
+                          addSuffix: true,
+                        })}
+                        trailing={<Pill tone="emerald">{sent.status}</Pill>}
+                      />
+                    ))}
+                  </ListBody>
+                </ListCard>
+              )}
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </PullToRefresh>
   );
 }

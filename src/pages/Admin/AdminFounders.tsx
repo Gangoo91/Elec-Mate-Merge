@@ -1,10 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   AlertDialog,
@@ -17,44 +13,26 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
-import {
-  Crown,
-  Send,
-  RefreshCw,
-  Mail,
-  Check,
-  Clock,
-  ChevronRight,
-  Loader2,
-  MailCheck,
-  Eye,
-  Zap,
-  Play,
-  Pause,
-  RotateCcw,
-  Timer,
-  CheckCircle2,
-  Circle,
-  Target,
-  TrendingUp,
-  UserPlus,
-} from 'lucide-react';
-import { formatDistanceToNow } from 'date-fns';
+import { RefreshCw, Loader2, Play, Pause, Send, Timer, RotateCcw, Mail } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
-
-interface Prospect {
-  id: string;
-  email: string;
-  send_count: number;
-  invite_token: string;
-  last_campaign_sent_at: string | null;
-  delivered_at: string | null;
-  opened_at: string | null;
-  clicked_at: string | null;
-}
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  TextAction,
+} from '@/components/admin/editorial';
 
 interface CampaignStatus {
   totalProspects: number;
@@ -62,6 +40,13 @@ interface CampaignStatus {
   remaining: number;
   sentEmails: string[];
   remainingEmails: string[];
+}
+
+function getInitials(email: string) {
+  const name = email.split('@')[0];
+  const parts = name.split(/[._-]/).filter(Boolean);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
 }
 
 export default function AdminFounders() {
@@ -76,6 +61,8 @@ export default function AdminFounders() {
   const [autoSending, setAutoSending] = useState(false);
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const [inviteEmail, setInviteEmail] = useState('');
+  const [activeTab, setActiveTab] = useState<'all' | 'sent' | 'remaining'>('all');
+  const [search, setSearch] = useState('');
   const [lastBatchResult, setLastBatchResult] = useState<{
     sent: number;
     failed: number;
@@ -84,11 +71,9 @@ export default function AdminFounders() {
     errors?: string[];
   } | null>(null);
 
-  // Fetch campaign status
   const {
     data: status,
     isLoading,
-    isFetching,
     refetch,
   } = useQuery<CampaignStatus>({
     queryKey: ['founder-final-push-status'],
@@ -104,7 +89,6 @@ export default function AdminFounders() {
     },
   });
 
-  // Send test email mutation
   const sendTestMutation = useMutation({
     mutationFn: async () => {
       const { data, error } = await supabase.functions.invoke('founder-final-push', {
@@ -128,10 +112,8 @@ export default function AdminFounders() {
     },
   });
 
-  // Send individual invite mutation
   const sendInviteMutation = useMutation({
     mutationFn: async (email: string) => {
-      // Step 1: Create the invite
       const { data: createData, error: createError } = await supabase.functions.invoke(
         'send-founder-invite',
         { body: { action: 'bulk_create', emails: [email] } }
@@ -139,7 +121,6 @@ export default function AdminFounders() {
       if (createError) throw createError;
       if (createData?.error) throw new Error(createData.error);
 
-      // Step 2: Get the invite row so we have the ID
       const { data: listData, error: listError } = await supabase.functions.invoke(
         'send-founder-invite',
         { body: { action: 'list' } }
@@ -150,7 +131,6 @@ export default function AdminFounders() {
       );
       if (!invite) throw new Error('Invite created but could not find it to send');
 
-      // Step 3: Send the email
       const { data: sendData, error: sendError } = await supabase.functions.invoke(
         'send-founder-invite',
         { body: { action: 'send_invite', inviteId: invite.id } }
@@ -178,7 +158,6 @@ export default function AdminFounders() {
     },
   });
 
-  // Send batch mutation
   const sendBatchMutation = useMutation({
     mutationFn: async () => {
       const { data, error } = await supabase.functions.invoke('founder-final-push', {
@@ -198,7 +177,6 @@ export default function AdminFounders() {
           title: `Batch sent! (${data.sent} emails)`,
           description: `${data.remaining} remaining — next batch in 10s`,
         });
-        // Start auto-send countdown
         if (autoSending) {
           setCountdown(10);
         }
@@ -221,7 +199,6 @@ export default function AdminFounders() {
     },
   });
 
-  // Countdown timer — auto-sends next batch when it hits 0
   useEffect(() => {
     if (countdown > 0) {
       countdownRef.current = setInterval(() => {
@@ -229,7 +206,6 @@ export default function AdminFounders() {
           if (prev <= 1) {
             clearInterval(countdownRef.current!);
             countdownRef.current = null;
-            // Fire next batch
             sendBatchMutation.mutate();
             return 0;
           }
@@ -245,7 +221,6 @@ export default function AdminFounders() {
     };
   }, [countdown > 0]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Reset campaign mutation
   const resetCampaignMutation = useMutation({
     mutationFn: async () => {
       const { data, error } = await supabase.functions.invoke('founder-final-push', {
@@ -292,14 +267,39 @@ export default function AdminFounders() {
     }
   };
 
-  const handleRefresh = () => {
-    refetch();
-  };
-
   const totalProspects = status?.totalProspects || 0;
   const sentCount = status?.sent || 0;
   const remainingCount = status?.remaining || 0;
   const progressPercent = totalProspects > 0 ? Math.round((sentCount / totalProspects) * 100) : 0;
+
+  const sentEmails = status?.sentEmails ?? [];
+  const remainingEmails = status?.remainingEmails ?? [];
+
+  const filteredList = (() => {
+    const base =
+      activeTab === 'sent'
+        ? sentEmails.map((e) => ({ email: e, status: 'sent' as const }))
+        : activeTab === 'remaining'
+          ? remainingEmails.map((e) => ({ email: e, status: 'remaining' as const }))
+          : [
+              ...sentEmails.map((e) => ({ email: e, status: 'sent' as const })),
+              ...remainingEmails.map((e) => ({ email: e, status: 'remaining' as const })),
+            ];
+    if (!search.trim()) return base;
+    const q = search.trim().toLowerCase();
+    return base.filter((x) => x.email.toLowerCase().includes(q));
+  })();
+
+  const previewList = filteredList.slice(0, 8);
+
+  const perks = [
+    { title: 'Lifetime price lock', sub: '£3.99/month forever — never changes' },
+    { title: 'Full platform access', sub: 'Inspection & testing, quotes, invoices' },
+    { title: 'AI-powered features', sub: 'Circuit designer, cost engineer, health & safety' },
+    { title: 'Elec-ID verification', sub: 'Stand out to employers and clients' },
+    { title: 'Study centre', sub: 'Level 2, 3 and upskilling courses' },
+    { title: 'Employer Hub access', sub: 'Worth £39.99/month on its own' },
+  ];
 
   return (
     <PullToRefresh
@@ -307,562 +307,432 @@ export default function AdminFounders() {
         await refetch();
       }}
     >
-      <div className="space-y-4 pb-20">
-        <AdminPageHeader
-          title="Founders Campaign"
-          subtitle="Final push campaign for founding members"
-          icon={Crown}
-          iconColor="text-amber-400"
-          iconBg="bg-amber-500/10 border-amber-500/20"
-          accentColor="from-amber-500 via-yellow-400 to-amber-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+      <PageFrame>
+        <PageHero
+          eyebrow="Community"
+          title="Founders"
+          description="Lifetime founder subscribers — tap to manage perks."
+          tone="yellow"
+          actions={
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
+            </IconButton>
+          }
         />
 
-        {/* Hero Card - Final Push Campaign */}
-        <Card className="relative overflow-hidden border-0 bg-gradient-to-br from-yellow-500 via-amber-500 to-orange-500">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent" />
-          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-          <CardContent className="relative pt-6 pb-6">
-            <div className="flex items-center justify-between mb-5">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-lg">
-                  <Crown className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <p className="text-yellow-100 text-sm font-medium">Final Push Campaign</p>
-                  <p className="text-3xl font-bold text-white tracking-tight">52 Prospects</p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-12 w-12 rounded-2xl bg-white/15 hover:bg-white/25 text-white touch-manipulation backdrop-blur-sm"
-                onClick={handleRefresh}
-                disabled={isLoading}
-              >
-                <RefreshCw className={`h-5 w-5 ${isLoading ? 'animate-spin' : ''}`} />
-              </Button>
-            </div>
+        {isLoading ? (
+          <LoadingBlocks />
+        ) : (
+          <>
+            <StatStrip
+              columns={4}
+              stats={[
+                { label: 'Total Founders', value: totalProspects, accent: true },
+                { label: 'Active', value: sentCount, tone: 'emerald' },
+                { label: 'New This Month', value: sentCount, tone: 'green' },
+                {
+                  label: 'Lifetime Revenue',
+                  value: `£${(sentCount * 3.99).toFixed(2)}`,
+                  sub: `${progressPercent}% activated`,
+                },
+              ]}
+            />
 
-            {/* Progress Bar */}
-            <div className="mb-4">
-              <div className="flex items-center justify-between text-sm text-white mb-2">
-                <span>Campaign Progress</span>
-                <span className="font-bold text-white">{progressPercent}%</span>
-              </div>
-              <Progress value={progressPercent} className="h-3 bg-white/20" />
-            </div>
+            <FilterBar
+              tabs={[
+                { value: 'all', label: 'All', count: sentEmails.length + remainingEmails.length },
+                { value: 'sent', label: 'Active', count: sentEmails.length },
+                { value: 'remaining', label: 'Pending', count: remainingEmails.length },
+              ]}
+              activeTab={activeTab}
+              onTabChange={(v) => setActiveTab(v as 'all' | 'sent' | 'remaining')}
+              search={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search founders…"
+            />
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-2">
-              <div className="bg-white/15 backdrop-blur-sm rounded-xl p-3 text-center border border-white/10">
-                <div className="flex items-center justify-center gap-1.5 mb-1">
-                  <CheckCircle2 className="h-4 w-4 text-green-300" />
-                  <span className="text-2xl font-bold text-white">{sentCount}</span>
-                </div>
-                <p className="text-xs text-yellow-100 uppercase tracking-wide font-medium">Sent</p>
-              </div>
-              <div className="bg-white/15 backdrop-blur-sm rounded-xl p-3 text-center border border-white/10">
-                <div className="flex items-center justify-center gap-1.5 mb-1">
-                  <Clock className="h-4 w-4 text-amber-200" />
-                  <span className="text-2xl font-bold text-white">{remainingCount}</span>
-                </div>
-                <p className="text-xs text-yellow-100 uppercase tracking-wide font-medium">
-                  Remaining
-                </p>
-              </div>
-              <div className="bg-white/15 backdrop-blur-sm rounded-xl p-3 text-center border border-white/10">
-                <div className="flex items-center justify-center gap-1.5 mb-1">
-                  <Target className="h-4 w-4 text-white" />
-                  <span className="text-2xl font-bold text-white">{totalProspects}</span>
-                </div>
-                <p className="text-xs text-yellow-100 uppercase tracking-wide font-medium">Total</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Send Individual Invite */}
-        <Card className="border-emerald-500/30 bg-gradient-to-r from-emerald-500/10 to-green-500/10">
-          <CardContent className="pt-5 pb-5">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 flex items-center justify-center shrink-0">
-                <UserPlus className="h-6 w-6 text-emerald-400" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-foreground">Send Individual Invite</h3>
-                <p className="text-sm text-muted-foreground">
-                  Create &amp; send the £3.99 founder offer to anyone
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <Input
-                type="email"
-                placeholder="email@example.com"
-                value={inviteEmail}
-                onChange={(e) => setInviteEmail(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && inviteEmail.trim() && inviteEmail.includes('@')) {
-                    sendInviteMutation.mutate(inviteEmail.trim());
-                  }
-                }}
-                className="h-12 text-base touch-manipulation rounded-xl border-emerald-500/30 focus:border-emerald-500 focus:ring-emerald-500"
-                disabled={sendInviteMutation.isPending}
+            <ListCard>
+              <ListCardHeader
+                tone="yellow"
+                title="Founders"
+                meta={<Pill tone="yellow">{filteredList.length}</Pill>}
+                action="View all"
+                onAction={() => setShowProspectList(true)}
               />
-              <Button
-                className="h-12 px-5 gap-2 bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-semibold touch-manipulation rounded-xl shadow-lg shadow-emerald-500/25 shrink-0"
-                onClick={() => sendInviteMutation.mutate(inviteEmail.trim())}
-                disabled={
-                  sendInviteMutation.isPending || !inviteEmail.trim() || !inviteEmail.includes('@')
-                }
-              >
-                {sendInviteMutation.isPending ? (
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                ) : (
-                  <Send className="h-5 w-5" />
-                )}
-                Send
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Send Controls */}
-        <Card className="border-yellow-500/30 bg-gradient-to-r from-yellow-500/10 to-amber-500/10">
-          <CardContent className="pt-5 pb-5">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-yellow-500/20 flex items-center justify-center shrink-0">
-                <Zap className="h-6 w-6 text-yellow-400" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-foreground">Send in Batches of 7</h3>
-                <p className="text-sm text-muted-foreground">
-                  {remainingCount > 0
-                    ? `${remainingCount} emails left to send`
-                    : 'All emails have been sent!'}
-                </p>
-              </div>
-            </div>
-
-            {remainingCount > 0 ? (
-              <div className="space-y-3">
-                {!isSending ? (
-                  <Button
-                    className="w-full h-14 gap-3 bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold touch-manipulation rounded-xl shadow-lg shadow-yellow-500/25 text-lg"
-                    onClick={() => setConfirmSendBatch(true)}
-                  >
-                    <Play className="h-6 w-6" />
-                    {sentCount > 0 ? 'Continue Sending' : 'Start Auto-Send'}
-                  </Button>
-                ) : (
-                  <div className="space-y-3">
-                    {sendBatchMutation.isPending ? (
-                      <div className="w-full h-14 gap-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-xl shadow-lg text-lg flex items-center justify-center">
-                        <Loader2 className="h-6 w-6 animate-spin" />
-                        Sending batch...
-                      </div>
-                    ) : countdown > 0 ? (
-                      <div className="w-full h-14 gap-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold rounded-xl shadow-lg text-lg flex items-center justify-center">
-                        <Timer className="h-6 w-6" />
-                        Next batch in {countdown}s...
-                      </div>
-                    ) : (
-                      <Button
-                        className="w-full h-14 gap-3 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold touch-manipulation rounded-xl shadow-lg text-lg"
-                        onClick={handleSendNextBatch}
-                      >
-                        <Send className="h-6 w-6" />
-                        Send Next 7
-                      </Button>
-                    )}
-                    <Button
-                      variant="outline"
-                      className="w-full h-12 gap-2 border-yellow-500/30 text-yellow-500 hover:bg-yellow-500/10 font-semibold touch-manipulation rounded-xl"
-                      onClick={handlePause}
-                      disabled={sendBatchMutation.isPending}
-                    >
-                      <Pause className="h-5 w-5" />
-                      Pause
-                    </Button>
+              <ListBody>
+                {previewList.length === 0 ? (
+                  <div className="px-5 py-10">
+                    <EmptyState
+                      title="No founders yet"
+                      description="Prospects will appear here once invites are created."
+                    />
                   </div>
+                ) : (
+                  previewList.map((p, i) => (
+                    <ListRow
+                      key={`${p.email}-${i}`}
+                      lead={<Avatar initials={getInitials(p.email)} online={p.status === 'sent'} />}
+                      title={p.email.split('@')[0]}
+                      subtitle={`${p.email} · ${p.status === 'sent' ? 'Activated' : 'Pending invite'}`}
+                      trailing={
+                        <>
+                          <Pill tone="yellow">Founder</Pill>
+                          <span className="text-[11px] text-white tabular-nums">£3.99</span>
+                        </>
+                      }
+                      onClick={() => setShowProspectList(true)}
+                    />
+                  ))
                 )}
-              </div>
-            ) : (
-              <div className="space-y-3">
-                <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
-                  <CheckCircle2 className="h-8 w-8 text-green-400 mx-auto mb-2" />
-                  <p className="text-green-400 font-semibold">Campaign Complete!</p>
-                  <p className="text-sm text-muted-foreground">
-                    All {totalProspects} emails have been sent
-                  </p>
-                </div>
-                <Button
-                  className="w-full h-12 gap-2 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-semibold touch-manipulation rounded-xl"
-                  onClick={() => setConfirmReset(true)}
-                  disabled={resetCampaignMutation.isPending}
-                >
-                  {resetCampaignMutation.isPending ? (
-                    <>
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                      Resetting...
-                    </>
-                  ) : (
-                    <>
-                      <RotateCcw className="h-5 w-5" />
-                      Reset & Resend All
-                    </>
-                  )}
-                </Button>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+              </ListBody>
+            </ListCard>
 
-        {/* Last Batch Result */}
-        {lastBatchResult && (
-          <Card
-            className={`border-${lastBatchResult.failed > 0 ? 'red' : 'green'}-500/30 bg-${lastBatchResult.failed > 0 ? 'red' : 'green'}-500/5`}
-          >
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div
-                  className={`w-10 h-10 rounded-xl ${lastBatchResult.failed > 0 ? 'bg-amber-500/20' : 'bg-green-500/20'} flex items-center justify-center`}
+            <ListCard>
+              <ListCardHeader
+                tone="yellow"
+                title="Perks & benefits"
+                meta={<Pill tone="yellow">{perks.length}</Pill>}
+              />
+              <ListBody>
+                {perks.map((perk, i) => (
+                  <ListRow
+                    key={i}
+                    lead={
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] text-[11px] font-semibold text-white tabular-nums">
+                        {String(i + 1).padStart(2, '0')}
+                      </span>
+                    }
+                    title={perk.title}
+                    subtitle={perk.sub}
+                  />
+                ))}
+              </ListBody>
+            </ListCard>
+
+            <ListCard>
+              <ListCardHeader
+                tone="yellow"
+                title="Send individual invite"
+                meta={<Pill tone="emerald">£3.99</Pill>}
+              />
+              <div className="px-5 sm:px-6 py-4 sm:py-5 space-y-3">
+                <Input
+                  type="email"
+                  placeholder="email@example.com"
+                  value={inviteEmail}
+                  onChange={(e) => setInviteEmail(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && inviteEmail.trim() && inviteEmail.includes('@')) {
+                      sendInviteMutation.mutate(inviteEmail.trim());
+                    }
+                  }}
+                  className="h-11 text-[13px] bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white rounded-full px-4 touch-manipulation focus-visible:border-elec-yellow/60 focus-visible:ring-0"
+                  disabled={sendInviteMutation.isPending}
+                />
+                <button
+                  onClick={() => sendInviteMutation.mutate(inviteEmail.trim())}
+                  disabled={
+                    sendInviteMutation.isPending ||
+                    !inviteEmail.trim() ||
+                    !inviteEmail.includes('@')
+                  }
+                  className="w-full h-11 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-50 inline-flex items-center justify-center gap-2"
                 >
-                  <MailCheck
-                    className={`h-5 w-5 ${lastBatchResult.failed > 0 ? 'text-amber-400' : 'text-green-400'}`}
+                  {sendInviteMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Send className="h-4 w-4" />
+                  )}
+                  Send founder invite
+                </button>
+              </div>
+            </ListCard>
+
+            <ListCard>
+              <ListCardHeader
+                tone="yellow"
+                title="Batch campaign"
+                meta={
+                  <Pill tone={remainingCount > 0 ? 'yellow' : 'emerald'}>
+                    {remainingCount > 0 ? `${remainingCount} left` : 'Complete'}
+                  </Pill>
+                }
+              />
+              <div className="px-5 sm:px-6 py-4 sm:py-5 space-y-3">
+                <div className="flex items-center justify-between text-[12px] text-white">
+                  <span>Progress</span>
+                  <span className="tabular-nums font-semibold">{progressPercent}%</span>
+                </div>
+                <div className="h-1.5 w-full rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className="h-full bg-elec-yellow transition-all"
+                    style={{ width: `${progressPercent}%` }}
                   />
                 </div>
-                <div>
-                  <p className="font-semibold text-foreground">Last Batch Sent</p>
-                  <p className="text-sm text-muted-foreground">
-                    {lastBatchResult.sent} sent
-                    {lastBatchResult.failed > 0 && `, ${lastBatchResult.failed} failed`}
-                  </p>
+
+                {remainingCount > 0 ? (
+                  <div className="space-y-2 pt-1">
+                    {!isSending ? (
+                      <button
+                        onClick={() => setConfirmSendBatch(true)}
+                        className="w-full h-11 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation inline-flex items-center justify-center gap-2"
+                      >
+                        <Play className="h-4 w-4" />
+                        {sentCount > 0 ? 'Continue sending' : 'Start auto-send'}
+                      </button>
+                    ) : (
+                      <>
+                        {sendBatchMutation.isPending ? (
+                          <div className="w-full h-11 rounded-full bg-white/[0.06] border border-white/[0.08] text-white text-[13px] font-semibold inline-flex items-center justify-center gap-2">
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            Sending batch…
+                          </div>
+                        ) : countdown > 0 ? (
+                          <div className="w-full h-11 rounded-full bg-white/[0.06] border border-white/[0.08] text-white text-[13px] font-semibold inline-flex items-center justify-center gap-2">
+                            <Timer className="h-4 w-4" />
+                            Next batch in {countdown}s
+                          </div>
+                        ) : (
+                          <button
+                            onClick={handleSendNextBatch}
+                            className="w-full h-11 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation inline-flex items-center justify-center gap-2"
+                          >
+                            <Send className="h-4 w-4" />
+                            Send next 7
+                          </button>
+                        )}
+                        <button
+                          onClick={handlePause}
+                          disabled={sendBatchMutation.isPending}
+                          className="w-full h-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[13px] font-semibold touch-manipulation inline-flex items-center justify-center gap-2 disabled:opacity-50"
+                        >
+                          <Pause className="h-4 w-4" />
+                          Pause
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ) : (
+                  <div className="pt-1 space-y-2">
+                    <div className="text-[12px] text-white text-center py-2">
+                      All {totalProspects} invites delivered.
+                    </div>
+                    <button
+                      onClick={() => setConfirmReset(true)}
+                      disabled={resetCampaignMutation.isPending}
+                      className="w-full h-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[13px] font-semibold touch-manipulation inline-flex items-center justify-center gap-2 disabled:opacity-50"
+                    >
+                      {resetCampaignMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <RotateCcw className="h-4 w-4" />
+                      )}
+                      Reset & resend all
+                    </button>
+                  </div>
+                )}
+
+                <div className="pt-2 border-t border-white/[0.06] flex items-center justify-between">
+                  <div>
+                    <div className="text-[13px] text-white font-medium">Test email</div>
+                    <div className="text-[11.5px] text-white">
+                      Preview before sending to the batch
+                    </div>
+                  </div>
+                  <TextAction onClick={() => setConfirmSendTest(true)}>Send test →</TextAction>
                 </div>
               </div>
-              {lastBatchResult.sentEmails && lastBatchResult.sentEmails.length > 0 && (
-                <div className="bg-background/50 rounded-xl p-3 space-y-1 mb-3">
-                  {lastBatchResult.sentEmails.map((email, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm">
-                      <Check className="h-3.5 w-3.5 text-green-400" />
-                      <span className="text-muted-foreground truncate">{email}</span>
-                    </div>
+            </ListCard>
+
+            {lastBatchResult && (
+              <ListCard>
+                <ListCardHeader
+                  tone={lastBatchResult.failed > 0 ? 'orange' : 'emerald'}
+                  title="Last batch"
+                  meta={
+                    <Pill tone={lastBatchResult.failed > 0 ? 'orange' : 'emerald'}>
+                      {lastBatchResult.sent} sent
+                      {lastBatchResult.failed > 0 && ` · ${lastBatchResult.failed} failed`}
+                    </Pill>
+                  }
+                />
+                <ListBody>
+                  {lastBatchResult.sentEmails?.map((email, i) => (
+                    <ListRow
+                      key={`sent-${i}`}
+                      lead={<Avatar initials={getInitials(email)} size="sm" online />}
+                      title={email}
+                      trailing={<Pill tone="emerald">Sent</Pill>}
+                    />
                   ))}
-                </div>
-              )}
-              {lastBatchResult.errors && lastBatchResult.errors.length > 0 && (
-                <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3 space-y-1">
-                  <p className="text-xs font-semibold text-red-400 mb-2">Failed to send:</p>
-                  {lastBatchResult.errors.map((error, i) => (
-                    <div key={i} className="flex items-center gap-2 text-sm">
-                      <span className="text-red-400">✗</span>
-                      <span className="text-red-300 truncate text-xs">{error}</span>
-                    </div>
+                  {lastBatchResult.errors?.map((err, i) => (
+                    <ListRow
+                      key={`err-${i}`}
+                      title={err}
+                      trailing={<Pill tone="red">Failed</Pill>}
+                      accent="red"
+                    />
                   ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                </ListBody>
+              </ListCard>
+            )}
+          </>
         )}
 
-        {/* Test Email */}
-        <Card className="border-yellow-500/30 bg-yellow-500/5">
-          <CardContent className="pt-4 pb-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center">
-                  <Eye className="h-5 w-5 text-yellow-400" />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">Test Email</p>
-                  <p className="text-sm text-muted-foreground">Preview before sending</p>
-                </div>
-              </div>
-              <Button
-                variant="outline"
-                className="h-11 gap-2 border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/10 font-semibold touch-manipulation rounded-xl"
-                onClick={() => setConfirmSendTest(true)}
-                disabled={sendTestMutation.isPending}
-              >
-                {sendTestMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Mail className="h-4 w-4" />
-                )}
-                Send Test
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Prospect List */}
-        <Card className="border-border/30">
-          <CardHeader className="pb-3">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-semibold flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-yellow-400" />
-                Prospect Tracking
-              </CardTitle>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-11 gap-1.5 text-yellow-400 hover:text-yellow-300 hover:bg-yellow-500/10 touch-manipulation"
-                onClick={() => setShowProspectList(true)}
-              >
-                View All
-                <ChevronRight className="h-4 w-4" />
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 gap-3">
-              {/* Sent */}
-              <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-4 text-center">
-                <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center mx-auto mb-2">
-                  <CheckCircle2 className="h-5 w-5 text-green-400" />
-                </div>
-                <p className="text-2xl font-bold text-green-400">{sentCount}</p>
-                <p className="text-xs text-muted-foreground">Emails Sent</p>
-              </div>
-              {/* Remaining */}
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 text-center">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center mx-auto mb-2">
-                  <Circle className="h-5 w-5 text-amber-400" />
-                </div>
-                <p className="text-2xl font-bold text-amber-400">{remainingCount}</p>
-                <p className="text-xs text-muted-foreground">To Send</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Email Preview Card */}
-        <Card className="border-border/30">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Mail className="h-4 w-4 text-blue-400" />
-              Email Template
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="bg-slate-900 rounded-xl p-4 border border-slate-700 text-sm">
-              <div className="text-slate-400 text-xs mb-3 pb-2 border-b border-slate-700">
-                Subject:{' '}
-                <span className="text-white">You're missing out on £3.99/month forever</span>
-              </div>
-              <div className="text-slate-300 space-y-3">
-                <p>Hey,</p>
-                <p>
-                  Quick one - you signed up for the Elec-Mate founder offer but never activated it.
-                </p>
-                <p className="text-white font-medium">
-                  300+ people are already using the app and you're missing out.
-                </p>
-                <div className="space-y-2 pl-2">
-                  <p>
-                    ⚡ <strong>Full platform access</strong> - Inspection & testing,
-                    quotes/invoices, everything
-                  </p>
-                  <p>
-                    ⚡ <strong>AI-powered features</strong> - Circuit designer, cost engineer,
-                    health & safety
-                  </p>
-                  <p>
-                    ⚡ <strong>Elec-ID verification</strong> - Stand out to employers and clients
-                  </p>
-                  <p>
-                    ⚡ <strong>Study centre</strong> - Level 2, 3 & electrical upskilling courses
-                  </p>
-                  <p>
-                    ⚡ <strong>Employer Hub access</strong> - Worth £39.99/month on its own
-                  </p>
-                  <p>
-                    ⚡ <strong>Price locked forever</strong> - You'll never pay more than
-                    £3.99/month
-                  </p>
-                </div>
-              </div>
-              <div className="mt-4 bg-yellow-500 text-black text-center py-3 rounded-xl font-bold text-sm">
-                Claim Your Founder Spot
-              </div>
-              <p className="text-slate-400 text-xs text-center mt-2">
-                💡 If you see a red error page, just hit refresh and it'll take you through.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Prospect List Sheet */}
         <Sheet open={showProspectList} onOpenChange={setShowProspectList}>
           <SheetContent
             side="bottom"
-            className="h-[85vh] rounded-t-3xl p-0 border-t border-border/50"
+            className="h-[85vh] rounded-t-3xl p-0 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]"
           >
-            <div className="flex flex-col h-full bg-background">
+            <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-muted-foreground/20" />
+                <div className="w-12 h-1.5 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-6 pb-4 border-b border-border/50">
-                <SheetTitle className="flex items-center gap-2">
-                  <Crown className="h-5 w-5 text-yellow-400" />
-                  All 52 Prospects
+              <SheetHeader className="px-6 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="text-white flex items-center gap-2">
+                  All {totalProspects} founders
+                  <Pill tone="yellow">{totalProspects}</Pill>
                 </SheetTitle>
               </SheetHeader>
-              <div className="flex-1 overflow-y-auto p-4">
-                {/* Sent Emails */}
-                {status?.sentEmails && status.sentEmails.length > 0 && (
-                  <div className="mb-6">
-                    <h3 className="text-sm font-semibold text-green-400 mb-3 flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4" />
-                      Sent ({status.sentEmails.length})
-                    </h3>
-                    <div className="space-y-2">
-                      {status.sentEmails.map((email, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-3 p-3 rounded-xl bg-green-500/10 border border-green-500/20"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
-                            <Check className="h-4 w-4 text-green-400" />
-                          </div>
-                          <span className="text-sm truncate flex-1">{email}</span>
-                          <Badge className="bg-green-500/20 text-green-400 text-xs">Sent</Badge>
-                        </div>
+              <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                {sentEmails.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader
+                      tone="emerald"
+                      title="Active"
+                      meta={<Pill tone="emerald">{sentEmails.length}</Pill>}
+                    />
+                    <ListBody>
+                      {sentEmails.map((email, i) => (
+                        <ListRow
+                          key={`s-${i}`}
+                          lead={<Avatar initials={getInitials(email)} size="sm" online />}
+                          title={email.split('@')[0]}
+                          subtitle={email}
+                          trailing={<Pill tone="emerald">Founder</Pill>}
+                        />
                       ))}
-                    </div>
-                  </div>
+                    </ListBody>
+                  </ListCard>
                 )}
 
-                {/* Remaining Emails */}
-                {status?.remainingEmails && status.remainingEmails.length > 0 && (
-                  <div>
-                    <h3 className="text-sm font-semibold text-amber-400 mb-3 flex items-center gap-2">
-                      <Circle className="h-4 w-4" />
-                      To Send ({status.remainingEmails.length})
-                    </h3>
-                    <div className="space-y-2">
-                      {status.remainingEmails.map((email, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center gap-3 p-3 rounded-xl bg-muted/30 border border-border/30"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
-                            <Clock className="h-4 w-4 text-amber-400" />
-                          </div>
-                          <span className="text-sm truncate flex-1 text-muted-foreground">
-                            {email}
-                          </span>
-                          <Badge className="bg-amber-500/20 text-amber-400 text-xs">Pending</Badge>
-                        </div>
+                {remainingEmails.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader
+                      tone="amber"
+                      title="Pending"
+                      meta={<Pill tone="amber">{remainingEmails.length}</Pill>}
+                    />
+                    <ListBody>
+                      {remainingEmails.map((email, i) => (
+                        <ListRow
+                          key={`r-${i}`}
+                          lead={<Avatar initials={getInitials(email)} size="sm" online={false} />}
+                          title={email.split('@')[0]}
+                          subtitle={email}
+                          trailing={<Pill tone="amber">Pending</Pill>}
+                        />
                       ))}
-                    </div>
-                  </div>
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {sentEmails.length === 0 && remainingEmails.length === 0 && (
+                  <EmptyState
+                    title="No prospects"
+                    description="Founder invites will appear here once created."
+                  />
                 )}
               </div>
             </div>
           </SheetContent>
         </Sheet>
 
-        {/* Confirm Send Batch Dialog */}
         <AlertDialog open={confirmSendBatch} onOpenChange={setConfirmSendBatch}>
-          <AlertDialogContent className="rounded-2xl">
+          <AlertDialogContent className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
             <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center">
-                  <Send className="h-5 w-5 text-yellow-400" />
-                </div>
-                Start Campaign?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">Start campaign?</AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 This will send emails to {remainingCount} prospects in batches of 7 with a 10-second
                 pause between each batch. You can pause at any time.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="h-11 touch-manipulation rounded-xl">
+              <AlertDialogCancel className="h-11 touch-manipulation rounded-full bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]">
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation rounded-xl bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-semibold"
+                className="h-11 touch-manipulation rounded-full bg-elec-yellow text-black font-semibold"
                 onClick={handleStartCampaign}
               >
                 <Play className="h-4 w-4 mr-2" />
-                Start Sending
+                Start sending
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* Confirm Reset Dialog */}
         <AlertDialog open={confirmReset} onOpenChange={setConfirmReset}>
-          <AlertDialogContent className="rounded-2xl">
+          <AlertDialogContent className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
             <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
-                  <RotateCcw className="h-5 w-5 text-orange-400" />
-                </div>
-                Reset Campaign?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">Reset campaign?</AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 This will reset all sent flags so every prospect receives the email again. People
                 who already have accounts will still be filtered out automatically.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="h-11 touch-manipulation rounded-xl">
+              <AlertDialogCancel className="h-11 touch-manipulation rounded-full bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]">
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation rounded-xl bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold"
+                className="h-11 touch-manipulation rounded-full bg-elec-yellow text-black font-semibold"
                 onClick={() => resetCampaignMutation.mutate()}
               >
                 <RotateCcw className="h-4 w-4 mr-2" />
-                Reset & Resend
+                Reset & resend
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
 
-        {/* Confirm Send Test Dialog */}
         <AlertDialog open={confirmSendTest} onOpenChange={setConfirmSendTest}>
-          <AlertDialogContent className="rounded-2xl">
+          <AlertDialogContent className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
             <AlertDialogHeader>
-              <AlertDialogTitle>Send Test Email?</AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogTitle className="text-white">Send test email?</AlertDialogTitle>
+              <AlertDialogDescription className="text-white">
                 This will send a test email to founder@elec-mate.com so you can preview how it
                 looks.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation rounded-xl"
+                className="h-11 touch-manipulation rounded-full bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]"
                 disabled={sendTestMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation rounded-xl bg-yellow-500 hover:bg-yellow-600"
+                className="h-11 touch-manipulation rounded-full bg-elec-yellow text-black font-semibold"
                 onClick={() => sendTestMutation.mutate()}
                 disabled={sendTestMutation.isPending}
               >
                 {sendTestMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    Sending...
+                    Sending…
                   </>
                 ) : (
                   <>
                     <Mail className="h-4 w-4 mr-2" />
-                    Send Test
+                    Send test
                   </>
                 )}
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

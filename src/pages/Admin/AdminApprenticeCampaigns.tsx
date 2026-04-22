@@ -3,14 +3,8 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { formatDistanceToNow, parseISO, format, differenceInDays } from 'date-fns';
-import { Skeleton } from '@/components/ui/skeleton';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
 import { useHaptic } from '@/hooks/useHaptic';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -26,22 +20,24 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import {
-  Users,
-  Send,
-  Mail,
-  Loader2,
-  Target,
-  ChevronRight,
-  Clock,
-  Eye,
-  User,
-  CheckCheck,
-  GraduationCap,
-  TrendingUp,
-  Gift,
-  RotateCcw,
-  CalendarDays,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  Eyebrow,
+  Divider,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  type Tone,
+} from '@/components/admin/editorial';
+import { RefreshCw, Send, Loader2, Mail, Eye, RotateCcw } from 'lucide-react';
 
 interface EligibleUser {
   id: string;
@@ -74,22 +70,30 @@ const EMAIL_VERSIONS = {
 
 type EmailVersion = keyof typeof EMAIL_VERSIONS;
 
+function getInitials(name: string | null | undefined, fallback = '?') {
+  if (!name) return fallback;
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
 export default function AdminApprenticeCampaigns() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
 
   const [search, setSearch] = useState('');
+  const [activeTab, setActiveTab] = useState<'all' | 'recent' | 'older'>('all');
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [selectedUser, setSelectedUser] = useState<EligibleUser | null>(null);
   const [confirmSendAll, setConfirmSendAll] = useState(false);
   const [showSentHistory, setShowSentHistory] = useState(false);
+  const [showTools, setShowTools] = useState(false);
   const [testEmail, setTestEmail] = useState('');
   const [manualEmail, setManualEmail] = useState('');
   const [emailVersion, setEmailVersion] = useState<EmailVersion>('v3');
 
   const campaignType = 'trial_winback' as const;
 
-  // ─── Queries ────────────────────────────────────────────
   const { data: stats, isLoading: statsLoading, isFetching: statsFetching, refetch } = useQuery({
     queryKey: ['apprentice-campaign-stats', campaignType],
     queryFn: async () => {
@@ -128,7 +132,6 @@ export default function AdminApprenticeCampaigns() {
     staleTime: 30000,
   });
 
-  // ─── Mutations ──────────────────────────────────────────
   const campaignParams = {
     campaignType,
     email_version: emailVersion,
@@ -247,18 +250,41 @@ export default function AdminApprenticeCampaigns() {
     },
   });
 
-  // ─── Filtering & Selection ─────────────────────────────
-  const filteredUsers = useMemo(() => {
+  const filteredUsers = useMemo<EligibleUser[]>(() => {
     if (!eligibleUsers) return [];
-    if (!search) return eligibleUsers;
-    const q = search.toLowerCase();
-    return eligibleUsers.filter(
-      (u: EligibleUser) =>
-        u.full_name?.toLowerCase().includes(q) ||
-        u.email?.toLowerCase().includes(q) ||
-        u.username?.toLowerCase().includes(q)
-    );
-  }, [eligibleUsers, search]);
+    let list = eligibleUsers as EligibleUser[];
+
+    if (activeTab !== 'all') {
+      list = list.filter((u) => {
+        const days = differenceInDays(new Date(), parseISO(u.created_at));
+        const lapsed = Math.max(0, days - 7);
+        if (activeTab === 'recent') return lapsed <= 30;
+        if (activeTab === 'older') return lapsed > 30;
+        return true;
+      });
+    }
+
+    if (search) {
+      const q = search.toLowerCase();
+      list = list.filter(
+        (u) =>
+          u.full_name?.toLowerCase().includes(q) ||
+          u.email?.toLowerCase().includes(q) ||
+          u.username?.toLowerCase().includes(q)
+      );
+    }
+
+    return list;
+  }, [eligibleUsers, search, activeTab]);
+
+  const tabCounts = useMemo(() => {
+    const all = (eligibleUsers ?? []) as EligibleUser[];
+    const recent = all.filter((u) => {
+      const lapsed = Math.max(0, differenceInDays(new Date(), parseISO(u.created_at)) - 7);
+      return lapsed <= 30;
+    }).length;
+    return { all: all.length, recent, older: all.length - recent };
+  }, [eligibleUsers]);
 
   const toggleUserSelection = (uid: string) => {
     setSelectedUsers((prev) => {
@@ -273,7 +299,7 @@ export default function AdminApprenticeCampaigns() {
     if (selectedUsers.size === filteredUsers.length) {
       setSelectedUsers(new Set());
     } else {
-      setSelectedUsers(new Set(filteredUsers.map((u: EligibleUser) => u.id)));
+      setSelectedUsers(new Set(filteredUsers.map((u) => u.id)));
     }
   };
 
@@ -283,7 +309,6 @@ export default function AdminApprenticeCampaigns() {
     }
   };
 
-  // Compute date range from eligible users
   const dateRange = useMemo(() => {
     if (!eligibleUsers || eligibleUsers.length === 0) return null;
     const dates = eligibleUsers.map((u: EligibleUser) => new Date(u.created_at).getTime());
@@ -295,6 +320,11 @@ export default function AdminApprenticeCampaigns() {
     };
   }, [eligibleUsers]);
 
+  const totalEligible = stats?.totalEligible ?? 0;
+  const offersSent = stats?.offersSent ?? 0;
+  const conversions = stats?.conversions ?? 0;
+  const conversionRate = stats?.conversionRate ?? 0;
+
   return (
     <PullToRefresh
       onRefresh={async () => {
@@ -304,579 +334,523 @@ export default function AdminApprenticeCampaigns() {
         ]);
       }}
     >
-      <div className="space-y-4 pb-20">
-        <AdminPageHeader
-          title="Apprentice Win-Back"
-          subtitle="Re-engage lapsed trial apprentices with targeted emails"
-          icon={GraduationCap}
-          iconColor="text-purple-400"
-          iconBg="bg-purple-500/10 border-purple-500/20"
-          accentColor="from-purple-500 via-violet-400 to-purple-500"
-          onRefresh={() => refetch()}
-          isRefreshing={statsFetching}
+      <PageFrame>
+        <PageHero
+          eyebrow="Campaigns"
+          title="Apprentice Campaigns"
+          description="Targeted outreach to Level 2 & 3 apprentices."
+          tone="blue"
+          actions={
+            <IconButton
+              onClick={() => refetch()}
+              disabled={statsFetching}
+              aria-label="Refresh"
+            >
+              <RefreshCw className={`h-4 w-4 ${statsFetching ? 'animate-spin' : ''}`} />
+            </IconButton>
+          }
         />
 
-        {/* Hero Stats Row */}
-        <div className="grid grid-cols-4 gap-2">
-          <Card className="bg-gradient-to-br from-amber-500/10 to-amber-500/5 border-amber-500/20">
-            <CardContent className="pt-3 pb-2.5 px-3">
-              <div className="flex items-center gap-1.5 mb-0.5">
-                <Target className="h-3.5 w-3.5 text-amber-400" />
-                <span className="text-[10px] text-white">Eligible</span>
-              </div>
-              <p className="text-xl font-bold">
-                {statsLoading ? '...' : stats?.totalEligible || 0}
-              </p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20">
-            <CardContent className="pt-3 pb-2.5 px-3">
-              <div className="flex items-center gap-1.5 mb-0.5">
-                <Send className="h-3.5 w-3.5 text-blue-400" />
-                <span className="text-[10px] text-white">Sent</span>
-              </div>
-              <p className="text-xl font-bold">{statsLoading ? '...' : stats?.offersSent || 0}</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/20">
-            <CardContent className="pt-3 pb-2.5 px-3">
-              <div className="flex items-center gap-1.5 mb-0.5">
-                <CheckCheck className="h-3.5 w-3.5 text-green-400" />
-                <span className="text-[10px] text-white">Converted</span>
-              </div>
-              <p className="text-xl font-bold">{statsLoading ? '...' : stats?.conversions || 0}</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/20">
-            <CardContent className="pt-3 pb-2.5 px-3">
-              <div className="flex items-center gap-1.5 mb-0.5">
-                <TrendingUp className="h-3.5 w-3.5 text-purple-400" />
-                <span className="text-[10px] text-white">Rate</span>
-              </div>
-              <p className="text-xl font-bold">
-                {statsLoading ? '...' : `${stats?.conversionRate || 0}%`}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Apprentices', value: statsLoading ? '…' : totalEligible },
+            { label: 'Active', value: statsLoading ? '…' : Math.max(0, totalEligible - offersSent), tone: 'emerald' },
+            { label: 'Campaigns Sent', value: statsLoading ? '…' : offersSent, tone: 'blue' },
+            { label: 'Conversion', value: statsLoading ? '…' : `${conversionRate}`, sub: `${conversions} converted`, accent: true },
+          ]}
+        />
 
-        {/* Audience Insight */}
-        <Card className="border-amber-500/20">
-          <CardContent className="pt-4 pb-4 px-4">
-            <div className="flex items-start gap-3">
-              <div className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0 mt-0.5">
-                <CalendarDays className="h-4 w-4 text-amber-400" />
-              </div>
-              <div>
-                <p className="text-sm text-white leading-relaxed">
-                  <strong className="text-amber-400">
-                    {statsLoading ? '...' : stats?.totalEligible || 0} apprentices
-                  </strong>{' '}
-                  signed up
-                  {dateRange ? ` between ${dateRange.earliest} \u2013 ${dateRange.latest}` : ''} and
-                  didn't subscribe after their 7-day trial.
-                  {stats?.offersSent === 0
-                    ? ' None have been contacted yet.'
-                    : ` ${stats?.offersSent || 0} have been contacted so far.`}
+        {usersLoading ? (
+          <LoadingBlocks />
+        ) : (
+          <>
+            {dateRange && (
+              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 sm:px-6 py-4 sm:py-5">
+                <Eyebrow>Audience window</Eyebrow>
+                <p className="mt-2 text-[13px] sm:text-sm text-white leading-relaxed">
+                  <span className="font-semibold">{totalEligible} apprentices</span> signed up between{' '}
+                  {dateRange.earliest} – {dateRange.latest} and didn't subscribe after their 7-day trial.{' '}
+                  {offersSent === 0
+                    ? 'None have been contacted yet.'
+                    : `${offersSent} have been contacted so far.`}
                 </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Email Version Selector */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <Mail className="h-4 w-4 text-amber-400" />
-              Email Version
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {(Object.keys(EMAIL_VERSIONS) as EmailVersion[]).map((v) => {
-              const config = EMAIL_VERSIONS[v];
-              const isActive = emailVersion === v;
-              return (
-                <button
-                  key={v}
-                  onClick={() => setEmailVersion(v)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-xl touch-manipulation transition-all text-left ${
-                    isActive
-                      ? 'bg-gradient-to-r from-amber-500/15 to-orange-500/10 border border-amber-500/40'
-                      : 'bg-muted/30 border border-transparent hover:bg-muted/50'
-                  }`}
-                >
-                  <div
-                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                      isActive ? 'border-amber-400' : 'border-white/30'
-                    }`}
-                  >
-                    {isActive && <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p
-                      className={`text-sm font-medium ${isActive ? 'text-amber-400' : 'text-white'}`}
-                    >
-                      {config.label}
-                    </p>
-                    <p className="text-xs text-white">{config.description}</p>
-                  </div>
-                  {v === 'v3' && (
-                    <Badge className="bg-green-500/20 text-green-400 text-[10px] shrink-0">
-                      New
-                    </Badge>
-                  )}
-                </button>
-              );
-            })}
-          </CardContent>
-        </Card>
-
-        {/* Action Bar */}
-        <Card>
-          <CardContent className="pt-4 pb-4 px-4 space-y-3">
-            {/* Test email */}
-            <div>
-              <label className="text-sm text-white mb-2 block">Send test email</label>
-              <div className="flex gap-2">
-                <Input
-                  type="email"
-                  value={testEmail}
-                  onChange={(e) => setTestEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-                <Button
-                  onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
-                  disabled={!testEmail || sendTestMutation.isPending}
-                  className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600"
-                >
-                  {sendTestMutation.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-              <p className="text-xs text-white mt-1">
-                Preview the {EMAIL_VERSIONS[emailVersion].label.toLowerCase()} email in your inbox
-              </p>
-            </div>
-
-            {/* Manual email */}
-            <div className="pt-2 border-t border-border/50">
-              <label className="text-sm text-white mb-2 block">Send to any email</label>
-              <div className="flex gap-2">
-                <Input
-                  type="email"
-                  value={manualEmail}
-                  onChange={(e) => setManualEmail(e.target.value)}
-                  placeholder="anyone@email.com"
-                  className="h-11 text-base touch-manipulation flex-1 border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                />
-                <Button
-                  onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
-                  disabled={!manualEmail || sendManualMutation.isPending}
-                  className="h-11 px-4 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-white"
-                >
-                  {sendManualMutation.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-            </div>
-
-            {/* Reset & History */}
-            <div className="flex gap-2 pt-2 border-t border-border/50">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => resetSentMutation.mutate()}
-                disabled={resetSentMutation.isPending}
-                className="gap-1.5 h-11 touch-manipulation flex-1"
-              >
-                {resetSentMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <RotateCcw className="h-4 w-4" />
-                )}
-                Reset Sent
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowSentHistory(true)}
-                className="gap-1.5 h-11 touch-manipulation flex-1"
-              >
-                <Eye className="h-4 w-4" />
-                Sent History
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* User List */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <Target className="h-4 w-4 text-amber-400" />
-                Lapsed Apprentices
-              </span>
-              <Badge variant="outline" className="text-xs">
-                {filteredUsers.length} users
-              </Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {/* Search & bulk actions */}
-            <div className="flex items-center gap-2">
-              <AdminSearchInput
-                value={search}
-                onChange={setSearch}
-                placeholder="Search name or email..."
-                className="flex-1"
-              />
-            </div>
-
-            {filteredUsers.length > 0 && (
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Checkbox
-                    checked={
-                      filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
-                    }
-                    onCheckedChange={toggleSelectAll}
-                    className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                  />
-                  <span className="text-sm text-white">
-                    {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
-                  </span>
-                </div>
-
-                {selectedUsers.size > 0 && (
-                  <Button
-                    size="sm"
-                    onClick={handleSendSelected}
-                    disabled={sendBulkMutation.isPending}
-                    className="gap-2 h-11 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-white"
-                  >
-                    {sendBulkMutation.isPending ? (
-                      <>
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <Send className="h-4 w-4" />
-                        Send to {selectedUsers.size}
-                      </>
-                    )}
-                  </Button>
-                )}
               </div>
             )}
 
-            {/* User rows */}
-            {usersLoading ? (
-              <div className="space-y-3 animate-pulse">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                    <div className="flex items-center gap-3">
-                      <Skeleton className="w-9 h-9 rounded-lg" />
-                      <div className="space-y-1.5 flex-1">
-                        <Skeleton className="h-4 w-32" />
-                        <Skeleton className="h-3 w-48" />
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : filteredUsers.length === 0 ? (
-              <AdminEmptyState
-                icon={Users}
-                title="No eligible users"
-                description={
-                  search
-                    ? 'No users match your search criteria.'
-                    : 'No lapsed apprentices eligible for win-back right now.'
-                }
+            <FilterBar
+              tabs={[
+                { value: 'all', label: 'All', count: tabCounts.all },
+                { value: 'recent', label: 'Recent (≤30d)', count: tabCounts.recent },
+                { value: 'older', label: 'Older (>30d)', count: tabCounts.older },
+              ]}
+              activeTab={activeTab}
+              onTabChange={(v) => setActiveTab(v as typeof activeTab)}
+              search={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search name or email…"
+              actions={
+                <button
+                  onClick={() => setShowTools(true)}
+                  className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation"
+                >
+                  New Campaign
+                </button>
+              }
+            />
+
+            <Divider label={`Email version · ${EMAIL_VERSIONS[emailVersion].label}`} />
+
+            <ListCard>
+              <ListCardHeader
+                tone="blue"
+                title="Email version"
+                meta={<Pill tone="blue">{Object.keys(EMAIL_VERSIONS).length} options</Pill>}
               />
-            ) : (
-              <div className="space-y-2">
-                {filteredUsers.map((user: EligibleUser) => {
-                  const daysSinceSignup = differenceInDays(new Date(), parseISO(user.created_at));
-                  const daysSinceTrial = Math.max(0, daysSinceSignup - 7);
-
+              <ListBody>
+                {(Object.keys(EMAIL_VERSIONS) as EmailVersion[]).map((v) => {
+                  const config = EMAIL_VERSIONS[v];
+                  const isActive = emailVersion === v;
                   return (
-                    <div
-                      key={user.id}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-muted/50 touch-manipulation active:scale-[0.99] transition-transform"
-                    >
-                      <Checkbox
-                        checked={selectedUsers.has(user.id)}
-                        onCheckedChange={() => toggleUserSelection(user.id)}
-                        onClick={(e) => e.stopPropagation()}
-                        className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
-                      />
-
-                      <div
-                        className="flex-1 min-w-0 cursor-pointer"
-                        onClick={() => setSelectedUser(user)}
-                      >
-                        <div className="flex items-center gap-2">
-                          <p className="font-medium text-sm truncate">
-                            {user.full_name || 'Unknown'}
-                          </p>
-                          <Badge className="bg-orange-500/20 text-orange-400 text-[10px]">
-                            {daysSinceTrial}d lapsed
-                          </Badge>
+                    <ListRow
+                      key={v}
+                      onClick={() => setEmailVersion(v)}
+                      accent={isActive ? 'yellow' : undefined}
+                      lead={
+                        <div
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                            isActive ? 'border-elec-yellow' : 'border-white/30'
+                          }`}
+                        >
+                          {isActive && <div className="w-2.5 h-2.5 rounded-full bg-elec-yellow" />}
                         </div>
-                        <div className="flex items-center gap-2 text-xs text-white">
-                          <span className="truncate max-w-[140px]">{user.email}</span>
-                          <span>&middot;</span>
-                          <span className="flex items-center gap-1">
-                            <Clock className="h-3 w-3" />
-                            {format(parseISO(user.created_at), 'dd MMM yy')}
-                          </span>
-                        </div>
-                      </div>
-
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => setSelectedUser(user)}
-                        className="h-11 px-2 touch-manipulation"
-                      >
-                        <ChevronRight className="h-4 w-4" />
-                      </Button>
-                    </div>
+                      }
+                      title={config.label}
+                      subtitle={config.description}
+                      trailing={v === 'v3' ? <Pill tone="emerald">New</Pill> : undefined}
+                    />
                   );
                 })}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+              </ListBody>
+            </ListCard>
 
-        {/* Sent History Sheet */}
-        <Sheet open={showSentHistory} onOpenChange={setShowSentHistory}>
-          <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
+            <ListCard>
+              <ListCardHeader
+                tone="blue"
+                title="Apprentices"
+                meta={<Pill tone="blue">{filteredUsers.length}</Pill>}
+                action={selectedUsers.size > 0 ? `Send to ${selectedUsers.size}` : 'Sent history'}
+                onAction={
+                  selectedUsers.size > 0 ? handleSendSelected : () => setShowSentHistory(true)
+                }
+              />
+
+              {filteredUsers.length > 0 && (
+                <div className="flex items-center justify-between px-5 sm:px-6 py-3 border-b border-white/[0.06]">
+                  <label className="flex items-center gap-3 touch-manipulation cursor-pointer">
+                    <Checkbox
+                      checked={
+                        filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
+                      }
+                      onCheckedChange={toggleSelectAll}
+                      className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                    />
+                    <span className="text-[12px] font-medium text-white">
+                      {selectedUsers.size > 0 ? `${selectedUsers.size} selected` : 'Select all'}
+                    </span>
+                  </label>
+                  {selectedUsers.size > 0 && (
+                    <button
+                      onClick={handleSendSelected}
+                      disabled={sendBulkMutation.isPending}
+                      className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation disabled:opacity-50 inline-flex items-center gap-2"
+                    >
+                      {sendBulkMutation.isPending ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin" /> Sending…
+                        </>
+                      ) : (
+                        <>
+                          <Send className="h-4 w-4" /> Send to {selectedUsers.size}
+                        </>
+                      )}
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {filteredUsers.length === 0 ? (
+                <div className="p-4 sm:p-6">
+                  <EmptyState
+                    title="No apprentices match"
+                    description={
+                      search
+                        ? 'No users match your search criteria.'
+                        : 'No lapsed apprentices eligible for win-back right now.'
+                    }
+                  />
+                </div>
+              ) : (
+                <ListBody>
+                  {filteredUsers.map((user) => {
+                    const daysSinceSignup = differenceInDays(
+                      new Date(),
+                      parseISO(user.created_at)
+                    );
+                    const daysSinceTrial = Math.max(0, daysSinceSignup - 7);
+                    const statusTone: Tone =
+                      daysSinceTrial <= 14 ? 'emerald' : daysSinceTrial <= 45 ? 'amber' : 'red';
+                    const statusLabel = `${daysSinceTrial}d lapsed`;
+
+                    return (
+                      <ListRow
+                        key={user.id}
+                        lead={
+                          <div className="flex items-center gap-3">
+                            <Checkbox
+                              checked={selectedUsers.has(user.id)}
+                              onCheckedChange={() => toggleUserSelection(user.id)}
+                              onClick={(e) => e.stopPropagation()}
+                              className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                            />
+                            <Avatar initials={getInitials(user.full_name ?? user.username)} />
+                          </div>
+                        }
+                        title={user.full_name || user.username || 'Unknown'}
+                        subtitle={`${user.email} · ${format(parseISO(user.created_at), 'dd MMM yy')}`}
+                        trailing={<Pill tone={statusTone}>{statusLabel}</Pill>}
+                        onClick={() => setSelectedUser(user)}
+                      />
+                    );
+                  })}
+                </ListBody>
+              )}
+            </ListCard>
+
+            <ListCard>
+              <ListCardHeader
+                tone="blue"
+                title="Campaign history"
+                meta={
+                  <Pill tone="blue">
+                    {offersSent} sent
+                  </Pill>
+                }
+                action="Open history"
+                onAction={() => setShowSentHistory(true)}
+              />
+              <ListBody>
+                <ListRow
+                  title="Trial win-back"
+                  subtitle={`${EMAIL_VERSIONS[emailVersion].label}`}
+                  trailing={
+                    <div className="flex items-center gap-2">
+                      <Pill tone="blue">{offersSent} sent</Pill>
+                      <Pill tone="emerald">{conversions} converted</Pill>
+                      <Pill tone="yellow">{conversionRate}%</Pill>
+                    </div>
+                  }
+                  onClick={() => setShowSentHistory(true)}
+                />
+              </ListBody>
+            </ListCard>
+          </>
+        )}
+
+        <Sheet open={showTools} onOpenChange={setShowTools}>
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)]">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="text-left flex items-center gap-2">
-                  <Mail className="h-5 w-5 text-blue-400" />
-                  Sent History
-                </SheetTitle>
-                <p className="text-sm text-white text-left">
-                  Win-back emails sent to lapsed apprentices
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="text-left text-white">New campaign</SheetTitle>
+                <p className="text-[12.5px] text-white text-left">
+                  Send test, target a specific address, or reset sent status.
                 </p>
               </SheetHeader>
-
-              <div className="flex-1 overflow-y-auto p-4">
-                {sentLoading ? (
-                  <div className="space-y-3 animate-pulse">
-                    {[...Array(3)].map((_, i) => (
-                      <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                        <div className="flex items-center gap-3">
-                          <Skeleton className="w-9 h-9 rounded-lg" />
-                          <div className="space-y-1.5 flex-1">
-                            <Skeleton className="h-4 w-32" />
-                            <Skeleton className="h-3 w-48" />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+              <div className="flex-1 overflow-y-auto p-5 space-y-6">
+                <div>
+                  <Eyebrow>Send test email</Eyebrow>
+                  <div className="mt-3 flex gap-2">
+                    <Input
+                      type="email"
+                      value={testEmail}
+                      onChange={(e) => setTestEmail(e.target.value)}
+                      placeholder="your@email.com"
+                      className="h-11 text-base touch-manipulation flex-1 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                    <Button
+                      onClick={() => testEmail && sendTestMutation.mutate(testEmail)}
+                      disabled={!testEmail || sendTestMutation.isPending}
+                      className="h-11 px-4 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                    >
+                      {sendTestMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Send className="h-4 w-4" />
+                      )}
+                    </Button>
                   </div>
+                  <p className="mt-2 text-[11.5px] text-white">
+                    Preview {EMAIL_VERSIONS[emailVersion].label.toLowerCase()} in your inbox.
+                  </p>
+                </div>
+
+                <Divider />
+
+                <div>
+                  <Eyebrow>Send to any email</Eyebrow>
+                  <div className="mt-3 flex gap-2">
+                    <Input
+                      type="email"
+                      value={manualEmail}
+                      onChange={(e) => setManualEmail(e.target.value)}
+                      placeholder="anyone@email.com"
+                      className="h-11 text-base touch-manipulation flex-1 bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                    <Button
+                      onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
+                      disabled={!manualEmail || sendManualMutation.isPending}
+                      className="h-11 px-4 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                    >
+                      {sendManualMutation.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <Send className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
+                </div>
+
+                <Divider />
+
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => resetSentMutation.mutate()}
+                    disabled={resetSentMutation.isPending}
+                    className="h-11 touch-manipulation bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04] gap-2"
+                  >
+                    {resetSentMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <RotateCcw className="h-4 w-4" />
+                    )}
+                    Reset sent
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      setShowTools(false);
+                      setShowSentHistory(true);
+                    }}
+                    className="h-11 touch-manipulation bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04] gap-2"
+                  >
+                    <Eye className="h-4 w-4" />
+                    Sent history
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        <Sheet open={showSentHistory} onOpenChange={setShowSentHistory}>
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)]">
+            <div className="flex flex-col h-full">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-10 h-1 rounded-full bg-white/20" />
+              </div>
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="text-left text-white">Sent history</SheetTitle>
+                <p className="text-[12.5px] text-white text-left">
+                  Win-back emails sent to lapsed apprentices.
+                </p>
+              </SheetHeader>
+              <div className="flex-1 overflow-y-auto p-5">
+                {sentLoading ? (
+                  <LoadingBlocks />
                 ) : !sentUsers || sentUsers.length === 0 ? (
-                  <AdminEmptyState
-                    icon={Mail}
+                  <EmptyState
                     title="No emails sent yet"
                     description="Send the win-back email to see results here."
                   />
                 ) : (
-                  <div className="space-y-2">
-                    {sentUsers.map((user) => (
-                      <div
-                        key={user.id}
-                        className="flex items-center gap-3 p-3 rounded-xl bg-muted/50"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
-                          <User className="h-5 w-5 text-purple-400" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm truncate">
-                            {user.full_name || user.username}
-                          </p>
-                          <div className="flex items-center gap-2 text-xs text-white">
-                            <span>
-                              {formatDistanceToNow(parseISO(user.apprentice_campaign_sent_at), {
-                                addSuffix: true,
-                              })}
-                            </span>
-                          </div>
-                        </div>
-                        {user.subscribed ? (
-                          <Badge className="bg-green-500/20 text-green-400 text-xs">
-                            <CheckCheck className="h-3 w-3 mr-1" />
-                            Subscribed
-                          </Badge>
-                        ) : (
-                          <Badge className="bg-orange-500/20 text-orange-400 text-xs">
-                            Pending
-                          </Badge>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                  <ListCard>
+                    <ListBody>
+                      {sentUsers.map((user) => (
+                        <ListRow
+                          key={user.id}
+                          lead={<Avatar initials={getInitials(user.full_name ?? user.username)} />}
+                          title={user.full_name || user.username}
+                          subtitle={formatDistanceToNow(
+                            parseISO(user.apprentice_campaign_sent_at),
+                            { addSuffix: true }
+                          )}
+                          trailing={
+                            user.subscribed ? (
+                              <Pill tone="emerald">Subscribed</Pill>
+                            ) : (
+                              <Pill tone="orange">Pending</Pill>
+                            )
+                          }
+                        />
+                      ))}
+                    </ListBody>
+                  </ListCard>
                 )}
               </div>
             </div>
           </SheetContent>
         </Sheet>
 
-        {/* User Detail Sheet */}
         <Sheet open={!!selectedUser} onOpenChange={() => setSelectedUser(null)}>
-          <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)]">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-500/20 flex items-center justify-center">
-                    <User className="h-6 w-6 text-amber-400" />
-                  </div>
-                  <div>
-                    <p className="text-left">{selectedUser?.full_name || 'Unknown'}</p>
-                    <p className="text-sm font-normal text-white">{selectedUser?.email}</p>
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
+                <SheetTitle className="flex items-center gap-3 text-white">
+                  <Avatar initials={getInitials(selectedUser?.full_name ?? selectedUser?.username)} />
+                  <div className="text-left">
+                    <div className="text-[15px] font-semibold text-white">
+                      {selectedUser?.full_name || 'Unknown'}
+                    </div>
+                    <div className="text-[12px] font-normal text-white">
+                      {selectedUser?.email}
+                    </div>
                   </div>
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <GraduationCap className="h-4 w-4 text-purple-400" />
-                      User Information
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Signed Up</span>
-                      <span className="text-sm">
-                        {selectedUser?.created_at &&
-                          format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Trial Ended</span>
-                      <span className="text-sm">
-                        {selectedUser?.created_at &&
-                          format(
-                            new Date(
-                              new Date(selectedUser.created_at).getTime() + 7 * 24 * 60 * 60 * 1000
-                            ),
-                            'dd MMM yyyy'
-                          )}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Days Since Trial</span>
-                      <Badge className="bg-orange-500/20 text-orange-400 text-xs">
-                        {selectedUser?.created_at
-                          ? `${Math.max(0, differenceInDays(new Date(), parseISO(selectedUser.created_at)) - 7)} days`
-                          : '-'}
-                      </Badge>
-                    </div>
-                    {selectedUser?.last_sign_in && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Last Active</span>
-                        <span className="text-sm">
-                          {formatDistanceToNow(parseISO(selectedUser.last_sign_in), {
-                            addSuffix: true,
-                          })}
+              <div className="flex-1 overflow-y-auto p-5 space-y-5">
+                <ListCard>
+                  <ListCardHeader tone="blue" title="Apprentice details" />
+                  <ListBody>
+                    <ListRow
+                      title="Signed up"
+                      trailing={
+                        <span className="text-[13px] text-white tabular-nums">
+                          {selectedUser?.created_at &&
+                            format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
                         </span>
-                      </div>
+                      }
+                    />
+                    <ListRow
+                      title="Trial ended"
+                      trailing={
+                        <span className="text-[13px] text-white tabular-nums">
+                          {selectedUser?.created_at &&
+                            format(
+                              new Date(
+                                new Date(selectedUser.created_at).getTime() +
+                                  7 * 24 * 60 * 60 * 1000
+                              ),
+                              'dd MMM yyyy'
+                            )}
+                        </span>
+                      }
+                    />
+                    <ListRow
+                      title="Days since trial"
+                      trailing={
+                        <Pill tone="orange">
+                          {selectedUser?.created_at
+                            ? `${Math.max(
+                                0,
+                                differenceInDays(new Date(), parseISO(selectedUser.created_at)) - 7
+                              )}d`
+                            : '—'}
+                        </Pill>
+                      }
+                    />
+                    {selectedUser?.last_sign_in && (
+                      <ListRow
+                        title="Last active"
+                        trailing={
+                          <span className="text-[13px] text-white">
+                            {formatDistanceToNow(parseISO(selectedUser.last_sign_in), {
+                              addSuffix: true,
+                            })}
+                          </span>
+                        }
+                      />
                     )}
                     {selectedUser?.apprentice_campaign_sent_at && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Last Campaign</span>
-                        <span className="text-sm">
-                          {formatDistanceToNow(parseISO(selectedUser.apprentice_campaign_sent_at), {
-                            addSuffix: true,
-                          })}
-                        </span>
-                      </div>
+                      <ListRow
+                        title="Last campaign"
+                        trailing={
+                          <span className="text-[13px] text-white">
+                            {formatDistanceToNow(
+                              parseISO(selectedUser.apprentice_campaign_sent_at),
+                              { addSuffix: true }
+                            )}
+                          </span>
+                        }
+                      />
                     )}
-                  </CardContent>
-                </Card>
+                  </ListBody>
+                </ListCard>
 
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2">
-                      <Send className="h-4 w-4 text-amber-400" />
-                      Send Win-Back Email
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-xs text-white mb-3">
-                      Using {EMAIL_VERSIONS[emailVersion].label}
-                    </p>
+                <ListCard>
+                  <ListCardHeader
+                    tone="yellow"
+                    title="Send win-back email"
+                    meta={<Pill tone="yellow">{EMAIL_VERSIONS[emailVersion].label}</Pill>}
+                  />
+                  <div className="p-5">
                     <Button
-                      className="w-full h-12 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-white font-semibold"
-                      onClick={() => selectedUser && sendSingleMutation.mutate(selectedUser.id)}
+                      className="w-full h-12 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                      onClick={() =>
+                        selectedUser && sendSingleMutation.mutate(selectedUser.id)
+                      }
                       disabled={sendSingleMutation.isPending}
                     >
                       {sendSingleMutation.isPending ? (
                         <>
                           <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          Sending...
+                          Sending…
                         </>
                       ) : (
                         <>
                           <Mail className="h-4 w-4 mr-2" />
-                          Send Win-Back Email
+                          Send win-back email
                         </>
                       )}
                     </Button>
-                  </CardContent>
-                </Card>
+                  </div>
+                </ListCard>
               </div>
             </div>
           </SheetContent>
         </Sheet>
 
-        {/* Confirm Bulk Send Dialog */}
         <AlertDialog open={confirmSendAll} onOpenChange={setConfirmSendAll}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
             <AlertDialogHeader>
-              <AlertDialogTitle>
-                Send win-back email to {selectedUsers.size} apprentices?
+              <AlertDialogTitle className="text-white">
+                Send win-back to {selectedUsers.size} apprentices?
               </AlertDialogTitle>
-              <AlertDialogDescription>
-                This will send the {EMAIL_VERSIONS[emailVersion].label.toLowerCase()} email to{' '}
+              <AlertDialogDescription className="text-white">
+                This will send {EMAIL_VERSIONS[emailVersion].label.toLowerCase()} to{' '}
                 {selectedUsers.size} lapsed apprentice{selectedUsers.size === 1 ? '' : 's'}. This
                 action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+              <AlertDialogCancel className="h-11 touch-manipulation bg-transparent border-white/[0.08] text-white hover:bg-white/[0.04]">
+                Cancel
+              </AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => sendBulkMutation.mutate(Array.from(selectedUsers))}
-                className="h-11 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 text-white"
+                className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black"
               >
                 {sendBulkMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Sending...
+                    Sending…
                   </>
                 ) : (
                   <>
@@ -888,7 +862,7 @@ export default function AdminApprenticeCampaigns() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

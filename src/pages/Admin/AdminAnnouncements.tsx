@@ -1,21 +1,13 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,31 +19,33 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import PullToRefresh from '@/components/admin/PullToRefresh';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import {
-  Megaphone,
+  RefreshCw,
   Plus,
-  Bell,
-  AlertTriangle,
-  CheckCircle,
-  Info,
-  XCircle,
   Eye,
   EyeOff,
   Trash2,
-  Edit,
-  Users,
   Loader2,
-  Calendar,
-  Clock,
   Pencil,
-  X,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
-import { Skeleton } from '@/components/ui/skeleton';
-import { motion } from 'framer-motion';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface Announcement {
   id: string;
@@ -68,6 +62,8 @@ interface Announcement {
   dismissal_count?: number;
 }
 
+type StatusKey = 'all' | 'live' | 'scheduled' | 'draft' | 'expired';
+
 const defaultAnnouncement = {
   title: '',
   message: '',
@@ -78,7 +74,6 @@ const defaultAnnouncement = {
   ends_at: '',
 };
 
-/* ── Compact relative time ── */
 function relativeTime(date: Date): string {
   const diff = Date.now() - date.getTime();
   const mins = Math.floor(diff / 60000);
@@ -93,20 +88,18 @@ function relativeTime(date: Date): string {
   return `${Math.floor(days / 30)}mo ago`;
 }
 
-/* ── Type colours ── */
-const typeConfig: Record<string, { bg: string; border: string; text: string; dot: string }> = {
-  info: { bg: 'bg-blue-500/10', border: 'border-l-blue-400', text: 'text-blue-400', dot: 'bg-blue-400' },
-  warning: { bg: 'bg-amber-500/10', border: 'border-l-amber-400', text: 'text-amber-400', dot: 'bg-amber-400' },
-  success: { bg: 'bg-green-500/10', border: 'border-l-green-400', text: 'text-green-400', dot: 'bg-green-400' },
-  error: { bg: 'bg-red-500/10', border: 'border-l-red-400', text: 'text-red-400', dot: 'bg-red-400' },
+const typeToneMap: Record<Announcement['type'], Tone> = {
+  info: 'blue',
+  warning: 'amber',
+  success: 'emerald',
+  error: 'red',
 };
 
-const typeIcons: Record<string, React.ReactNode> = {
-  info: <Info className="h-4 w-4" />,
-  warning: <AlertTriangle className="h-4 w-4" />,
-  success: <CheckCircle className="h-4 w-4" />,
-  error: <XCircle className="h-4 w-4" />,
-};
+function audienceLabel(roles: string[]): string {
+  if (!roles?.length) return 'No audience';
+  if (roles.length === 4) return 'All roles';
+  return `${roles.length} role${roles.length === 1 ? '' : 's'}`;
+}
 
 export default function AdminAnnouncements() {
   const { profile } = useAuth();
@@ -116,14 +109,14 @@ export default function AdminAnnouncements() {
   const [editAnnouncement, setEditAnnouncement] = useState<Announcement | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [formData, setFormData] = useState(defaultAnnouncement);
+  const [activeTab, setActiveTab] = useState<StatusKey>('all');
+  const [search, setSearch] = useState('');
 
   const isSuperAdmin = profile?.admin_role === 'super_admin';
 
-  // Fetch announcements via edge function
   const {
     data: announcements,
     isLoading,
-    isFetching,
     refetch,
   } = useQuery({
     queryKey: ['admin-announcements'],
@@ -138,7 +131,6 @@ export default function AdminAnnouncements() {
     staleTime: 2 * 60 * 1000,
   });
 
-  // Create announcement via edge function
   const createMutation = useMutation({
     mutationFn: async (formData: typeof defaultAnnouncement) => {
       const payload = {
@@ -171,7 +163,6 @@ export default function AdminAnnouncements() {
     },
   });
 
-  // Update announcement via edge function
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: Partial<Announcement> }) => {
       const payload = {
@@ -204,7 +195,6 @@ export default function AdminAnnouncements() {
     },
   });
 
-  // Delete announcement via edge function
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
       const { data, error } = await supabase.functions.invoke('admin-manage-announcements', {
@@ -225,20 +215,78 @@ export default function AdminAnnouncements() {
     },
   });
 
-  const getStatusInfo = (a: Announcement) => {
-    if (a.starts_at && new Date(a.starts_at) > new Date()) {
-      return { label: 'Scheduled', cls: 'bg-amber-500/15 text-amber-400' };
-    }
-    if (a.ends_at && new Date(a.ends_at) < new Date()) {
-      return { label: 'Expired', cls: 'bg-red-500/15 text-red-400' };
-    }
-    if (a.is_active) {
-      return { label: 'Live', cls: 'bg-green-500/15 text-green-400' };
-    }
-    return { label: 'Inactive', cls: 'bg-white/[0.06] !text-white' };
+  const classify = (a: Announcement): StatusKey => {
+    if (a.starts_at && new Date(a.starts_at) > new Date()) return 'scheduled';
+    if (a.ends_at && new Date(a.ends_at) < new Date()) return 'expired';
+    if (a.is_active) return 'live';
+    return 'draft';
   };
 
-  const activeCount = announcements?.filter((a) => a.is_active).length || 0;
+  const statusToneMap: Record<Exclude<StatusKey, 'all'>, Tone> = {
+    live: 'emerald',
+    scheduled: 'blue',
+    draft: 'amber',
+    expired: 'red',
+  };
+
+  const statusLabel: Record<Exclude<StatusKey, 'all'>, string> = {
+    live: 'Live',
+    scheduled: 'Scheduled',
+    draft: 'Draft',
+    expired: 'Expired',
+  };
+
+  const counts = useMemo(() => {
+    const c = { live: 0, scheduled: 0, draft: 0, expired: 0, total: 0 };
+    (announcements || []).forEach((a) => {
+      const s = classify(a);
+      c[s]++;
+      c.total++;
+    });
+    return c;
+  }, [announcements]);
+
+  const totalReach = useMemo(() => {
+    return (announcements || []).reduce((sum, a) => sum + (a.dismissal_count || 0), 0);
+  }, [announcements]);
+
+  const clickRate = useMemo(() => {
+    if (!announcements || announcements.length === 0) return 0;
+    const active = announcements.filter((a) => a.is_active);
+    if (active.length === 0) return 0;
+    const avg = active.reduce((sum, a) => sum + (a.dismissal_count || 0), 0) / active.length;
+    return Math.min(100, Math.round(avg));
+  }, [announcements]);
+
+  const filtered = useMemo(() => {
+    const list = announcements || [];
+    return list.filter((a) => {
+      if (activeTab !== 'all' && classify(a) !== activeTab) return false;
+      if (search.trim()) {
+        const q = search.toLowerCase();
+        if (
+          !a.title.toLowerCase().includes(q) &&
+          !a.message.toLowerCase().includes(q)
+        ) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [announcements, activeTab, search]);
+
+  const tabs = [
+    { value: 'all', label: 'All', count: counts.total },
+    { value: 'live', label: 'Live', count: counts.live },
+    { value: 'scheduled', label: 'Scheduled', count: counts.scheduled },
+    { value: 'draft', label: 'Draft', count: counts.draft },
+    { value: 'expired', label: 'Expired', count: counts.expired },
+  ];
+
+  const openCreate = () => {
+    setFormData(defaultAnnouncement);
+    setCreateOpen(true);
+  };
 
   return (
     <PullToRefresh
@@ -246,168 +294,162 @@ export default function AdminAnnouncements() {
         await refetch();
       }}
     >
-      <div className="pb-20 space-y-4">
-        <AdminPageHeader
+      <PageFrame>
+        <PageHero
+          eyebrow="Tools"
           title="Announcements"
-          subtitle={`${activeCount} active`}
-          icon={Megaphone}
-          iconColor="text-amber-400"
-          iconBg="bg-amber-500/10 border-amber-500/20"
-          accentColor="from-amber-500 via-yellow-400 to-amber-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+          description="In-app broadcasts and scheduled messages."
+          tone="yellow"
           actions={
-            <Button
-              className="h-11 gap-2 rounded-xl touch-manipulation bg-gradient-to-br from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/20 px-4"
-              onClick={() => setCreateOpen(true)}
-            >
-              <Plus className="h-4 w-4" />
-              New
-            </Button>
+            <>
+              <button
+                onClick={openCreate}
+                className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation inline-flex items-center gap-1.5"
+              >
+                <Plus className="h-4 w-4" />
+                New Announcement
+              </button>
+              <IconButton onClick={() => refetch()} aria-label="Refresh">
+                <RefreshCw className="h-4 w-4" />
+              </IconButton>
+            </>
           }
         />
 
-        {/* ── List ── */}
         {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : announcements?.length === 0 ? (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center py-20 px-4"
-          >
-            <div className="w-20 h-20 rounded-full bg-white/[0.04] flex items-center justify-center mb-5">
-              <Megaphone className="h-10 w-10 !text-white" />
-            </div>
-            <h3 className="text-base font-semibold !text-white mb-1">No announcements</h3>
-            <p className="text-sm !text-white text-center max-w-[240px] mb-5">
-              Create your first announcement to notify users
-            </p>
-            <Button
-              onClick={() => setCreateOpen(true)}
-              className="h-11 rounded-xl touch-manipulation gap-2 bg-gradient-to-br from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/20 px-5"
-            >
-              <Plus className="h-4 w-4" />
-              Create Announcement
-            </Button>
-          </motion.div>
+          <LoadingBlocks />
         ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
-            className="rounded-2xl overflow-hidden border border-white/[0.06]"
-          >
-            {announcements?.map((announcement, index) => {
-              const tc = typeConfig[announcement.type] || typeConfig.info;
-              const status = getStatusInfo(announcement);
+          <>
+            <StatStrip
+              columns={4}
+              stats={[
+                { label: 'Live', value: counts.live, tone: 'emerald' },
+                { label: 'Scheduled', value: counts.scheduled, tone: 'blue' },
+                { label: 'Total Reach', value: totalReach },
+                { label: 'Click Rate', value: `${clickRate}%`, accent: true },
+              ]}
+            />
 
-              return (
-                <motion.div
-                  key={announcement.id}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: index * 0.04, duration: 0.2 }}
-                  className={cn(
-                    'transition-all duration-150',
-                    index > 0 && 'border-t border-white/[0.04]',
-                    !announcement.is_active ? 'opacity-40 bg-white/[0.01]' : 'bg-white/[0.02]'
-                  )}
-                >
-                  <div className="p-4">
-                    {/* Top: Status + Time + Actions */}
-                    <div className="flex items-center justify-between mb-2.5">
-                      <div className="flex items-center gap-2">
-                        <Badge className={cn('text-[10px] px-2 py-0.5 h-5 font-semibold rounded-md border-0 capitalize', status.cls)}>
-                          {status.label}
-                        </Badge>
-                        <Badge className={cn('text-[10px] px-2 py-0.5 h-5 font-semibold rounded-md border-0 capitalize', tc.bg, tc.text)}>
-                          {announcement.type}
-                        </Badge>
-                        <span className="text-[11px] !text-white font-medium">
-                          {relativeTime(new Date(announcement.created_at))}
-                        </span>
-                      </div>
-                      <div className="flex items-center">
-                        <button
-                          onClick={() =>
-                            updateMutation.mutate({
-                              id: announcement.id,
-                              data: { is_active: !announcement.is_active },
-                            })
-                          }
-                          className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation active:scale-95 transition-all"
-                        >
-                          {announcement.is_active ? (
-                            <EyeOff className="h-3.5 w-3.5 !text-white" />
-                          ) : (
-                            <Eye className="h-3.5 w-3.5 !text-white" />
-                          )}
-                        </button>
-                        <button
-                          onClick={() => setEditAnnouncement(announcement)}
-                          className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation active:scale-95 transition-all"
-                        >
-                          <Pencil className="h-3.5 w-3.5 !text-white" />
-                        </button>
-                        {isSuperAdmin && (
-                          <button
-                            onClick={() => setDeleteId(announcement.id)}
-                            className="h-9 w-9 flex items-center justify-center rounded-lg hover:bg-red-500/10 touch-manipulation active:scale-95 transition-all"
-                          >
-                            <Trash2 className="h-3.5 w-3.5 text-red-400" />
-                          </button>
-                        )}
-                      </div>
-                    </div>
+            <FilterBar
+              tabs={tabs}
+              activeTab={activeTab}
+              onTabChange={(v) => setActiveTab(v as StatusKey)}
+              search={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search announcements…"
+            />
 
-                    {/* Title */}
-                    <p className="font-semibold text-[15px] !text-white mb-1">
-                      {announcement.title}
-                    </p>
+            {filtered.length === 0 ? (
+              <EmptyState
+                title={
+                  announcements && announcements.length === 0
+                    ? 'No announcements yet'
+                    : 'No matches'
+                }
+                description={
+                  announcements && announcements.length === 0
+                    ? 'Create your first announcement to notify users.'
+                    : 'Try a different filter or search term.'
+                }
+                action={
+                  announcements && announcements.length === 0
+                    ? 'Create announcement'
+                    : undefined
+                }
+                onAction={
+                  announcements && announcements.length === 0 ? openCreate : undefined
+                }
+              />
+            ) : (
+              <ListCard>
+                <ListCardHeader
+                  tone="yellow"
+                  title="Announcements"
+                  meta={<Pill tone="yellow">{filtered.length}</Pill>}
+                />
+                <ListBody>
+                  {filtered.map((a) => {
+                    const statusKey = classify(a);
+                    const statusTone = statusToneMap[statusKey];
+                    const typeTone = typeToneMap[a.type];
+                    const audience = audienceLabel(a.target_roles);
+                    const preview =
+                      a.message.length > 60 ? `${a.message.slice(0, 60)}…` : a.message;
+                    const reach = a.dismissal_count || 0;
 
-                    {/* Message */}
-                    <p className="text-[13px] !text-white line-clamp-2 leading-relaxed mb-2.5">
-                      {announcement.message}
-                    </p>
-
-                    {/* Footer stats */}
-                    <div className="flex items-center gap-4 text-[11px] !text-white font-medium">
-                      <span className="flex items-center gap-1.5">
-                        <Users className="h-3 w-3" />
-                        {announcement.target_roles.length === 4 ? 'All roles' : `${announcement.target_roles.length} roles`}
-                      </span>
-                      <span className="flex items-center gap-1.5">
-                        <Eye className="h-3 w-3" />
-                        {announcement.dismissal_count || 0} dismissed
-                      </span>
-                      {announcement.is_dismissible && (
-                        <span className="flex items-center gap-1.5">
-                          <X className="h-3 w-3" />
-                          Dismissible
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+                    return (
+                      <ListRow
+                        key={a.id}
+                        accent={typeTone}
+                        title={
+                          <span className="flex items-center gap-2">
+                            <span className="truncate text-white">{a.title}</span>
+                            <span className="text-[11px] text-white tabular-nums shrink-0">
+                              {relativeTime(new Date(a.created_at))}
+                            </span>
+                          </span>
+                        }
+                        subtitle={`${preview} · ${audience}`}
+                        trailing={
+                          <>
+                            <Pill tone={statusTone}>{statusLabel[statusKey]}</Pill>
+                            <span className="text-[11px] text-white tabular-nums">
+                              {reach}
+                            </span>
+                            <div className="flex items-center gap-1 ml-1">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  updateMutation.mutate({
+                                    id: a.id,
+                                    data: { is_active: !a.is_active },
+                                  });
+                                }}
+                                className="h-9 w-9 flex items-center justify-center rounded-full hover:bg-white/[0.06] touch-manipulation text-white"
+                                aria-label={a.is_active ? 'Deactivate' : 'Activate'}
+                              >
+                                {a.is_active ? (
+                                  <EyeOff className="h-3.5 w-3.5" />
+                                ) : (
+                                  <Eye className="h-3.5 w-3.5" />
+                                )}
+                              </button>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setEditAnnouncement(a);
+                                }}
+                                className="h-9 w-9 flex items-center justify-center rounded-full hover:bg-white/[0.06] touch-manipulation text-white"
+                                aria-label="Edit"
+                              >
+                                <Pencil className="h-3.5 w-3.5" />
+                              </button>
+                              {isSuperAdmin && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setDeleteId(a.id);
+                                  }}
+                                  className="h-9 w-9 flex items-center justify-center rounded-full hover:bg-white/[0.06] touch-manipulation text-white"
+                                  aria-label="Delete"
+                                >
+                                  <Trash2 className="h-3.5 w-3.5" />
+                                </button>
+                              )}
+                            </div>
+                          </>
+                        }
+                        onClick={() => setEditAnnouncement(a)}
+                        className={!a.is_active ? 'opacity-60' : undefined}
+                      />
+                    );
+                  })}
+                </ListBody>
+              </ListCard>
+            )}
+          </>
         )}
 
-        {/* ── Create/Edit Sheet ── */}
         <Sheet
           open={createOpen || !!editAnnouncement}
           onOpenChange={(open) => {
@@ -424,14 +466,15 @@ export default function AdminAnnouncements() {
                 <div className="w-12 h-1.5 rounded-full bg-white/20" />
               </div>
               <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
-                <SheetTitle className="!text-white text-lg">
+                <SheetTitle className="text-white text-lg">
                   {editAnnouncement ? 'Edit Announcement' : 'New Announcement'}
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto p-5 space-y-6">
-                {/* Title */}
                 <div className="space-y-2">
-                  <Label className="!text-white text-xs font-semibold uppercase tracking-wider">Title</Label>
+                  <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
+                    Title
+                  </Label>
                   <Input
                     value={editAnnouncement?.title || formData.title}
                     onChange={(e) =>
@@ -440,13 +483,14 @@ export default function AdminAnnouncements() {
                         : setFormData({ ...formData, title: e.target.value })
                     }
                     placeholder="e.g. New feature available"
-                    className="h-12 touch-manipulation bg-white/[0.04] border-white/[0.08] rounded-xl text-base focus:!border-yellow-500 placeholder:!text-white"
+                    className="h-12 touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] rounded-xl text-base text-white placeholder:text-white focus:border-elec-yellow"
                   />
                 </div>
 
-                {/* Message */}
                 <div className="space-y-2">
-                  <Label className="!text-white text-xs font-semibold uppercase tracking-wider">Message</Label>
+                  <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
+                    Message
+                  </Label>
                   <Textarea
                     value={editAnnouncement?.message || formData.message}
                     onChange={(e) =>
@@ -455,17 +499,17 @@ export default function AdminAnnouncements() {
                         : setFormData({ ...formData, message: e.target.value })
                     }
                     placeholder="What do you want to tell users?"
-                    className="min-h-[100px] touch-manipulation bg-white/[0.04] border-white/[0.08] rounded-xl text-base focus:!border-yellow-500 placeholder:!text-white"
+                    className="min-h-[100px] touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] rounded-xl text-base text-white placeholder:text-white focus:border-elec-yellow"
                   />
                 </div>
 
-                {/* Type — Chip selector */}
                 <div className="space-y-2">
-                  <Label className="!text-white text-xs font-semibold uppercase tracking-wider">Type</Label>
+                  <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
+                    Type
+                  </Label>
                   <div className="grid grid-cols-4 gap-2">
                     {(['info', 'warning', 'success', 'error'] as const).map((t) => {
                       const selected = (editAnnouncement?.type || formData.type) === t;
-                      const cfg = typeConfig[t];
                       return (
                         <button
                           key={t}
@@ -478,13 +522,12 @@ export default function AdminAnnouncements() {
                             }
                           }}
                           className={cn(
-                            'h-11 rounded-xl text-sm font-semibold capitalize touch-manipulation transition-all active:scale-95 flex items-center justify-center gap-1.5',
+                            'h-11 rounded-full text-[12.5px] font-medium capitalize touch-manipulation transition-colors',
                             selected
-                              ? cn(cfg.bg, cfg.text, 'ring-2', t === 'info' ? 'ring-blue-400' : t === 'warning' ? 'ring-amber-400' : t === 'success' ? 'ring-green-400' : 'ring-red-400')
-                              : 'bg-white/[0.04] !text-white border border-white/[0.08]'
+                              ? 'bg-elec-yellow text-black'
+                              : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04]'
                           )}
                         >
-                          <span className={selected ? cfg.text : '!text-white'}>{typeIcons[t]}</span>
                           {t}
                         </button>
                       );
@@ -492,33 +535,71 @@ export default function AdminAnnouncements() {
                   </div>
                 </div>
 
-                {/* Options section */}
                 <div className="space-y-3">
-                  <Label className="!text-white text-xs font-semibold uppercase tracking-wider">Options</Label>
+                  <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
+                    Audience
+                  </Label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {(['visitor', 'apprentice', 'electrician', 'employer'] as const).map(
+                      (role) => {
+                        const current =
+                          editAnnouncement?.target_roles || formData.target_roles;
+                        const selected = current.includes(role);
+                        return (
+                          <button
+                            key={role}
+                            type="button"
+                            onClick={() => {
+                              const next = selected
+                                ? current.filter((r) => r !== role)
+                                : [...current, role];
+                              if (editAnnouncement) {
+                                setEditAnnouncement({
+                                  ...editAnnouncement,
+                                  target_roles: next,
+                                });
+                              } else {
+                                setFormData({ ...formData, target_roles: next });
+                              }
+                            }}
+                            className={cn(
+                              'h-11 rounded-full text-[12.5px] font-medium capitalize touch-manipulation transition-colors',
+                              selected
+                                ? 'bg-elec-yellow text-black'
+                                : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08] hover:bg-white/[0.04]'
+                            )}
+                          >
+                            {role}
+                          </button>
+                        );
+                      }
+                    )}
+                  </div>
+                </div>
 
-                  {/* Dismissible toggle */}
-                  <div className="flex items-center justify-between p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                    <div className="flex items-center gap-3">
-                      <X className="h-4 w-4 !text-white" />
-                      <p className="text-sm font-medium !text-white">Dismissible</p>
-                    </div>
+                <div className="space-y-3">
+                  <Label className="text-white text-[10px] font-semibold uppercase tracking-[0.18em]">
+                    Options
+                  </Label>
+
+                  <div className="flex items-center justify-between px-4 py-3.5 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08]">
+                    <p className="text-sm font-medium text-white">Dismissible</p>
                     <Switch
                       checked={editAnnouncement?.is_dismissible ?? formData.is_dismissible}
                       onCheckedChange={(checked) =>
                         editAnnouncement
-                          ? setEditAnnouncement({ ...editAnnouncement, is_dismissible: checked })
+                          ? setEditAnnouncement({
+                              ...editAnnouncement,
+                              is_dismissible: checked,
+                            })
                           : setFormData({ ...formData, is_dismissible: checked })
                       }
                     />
                   </div>
 
-                  {/* Schedule toggle + input */}
-                  <div className="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden">
-                    <div className="flex items-center justify-between p-3.5">
-                      <div className="flex items-center gap-3">
-                        <Calendar className="h-4 w-4 text-yellow-400" />
-                        <p className="text-sm font-medium !text-white">Schedule for later</p>
-                      </div>
+                  <div className="rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] overflow-hidden">
+                    <div className="flex items-center justify-between px-4 py-3.5">
+                      <p className="text-sm font-medium text-white">Schedule for later</p>
                       <Switch
                         checked={!!(editAnnouncement?.starts_at || formData.starts_at)}
                         onCheckedChange={(checked) => {
@@ -532,29 +613,32 @@ export default function AdminAnnouncements() {
                         }}
                       />
                     </div>
-                    {(editAnnouncement?.starts_at || formData.starts_at || (editAnnouncement && editAnnouncement.starts_at !== '')) && (
-                      <div className="px-3.5 pb-3.5 pt-0">
+                    {(editAnnouncement?.starts_at ||
+                      formData.starts_at ||
+                      (editAnnouncement && editAnnouncement.starts_at !== '')) && (
+                      <div className="px-4 pb-4">
                         <Input
                           type="datetime-local"
-                          value={editAnnouncement?.starts_at?.slice(0, 16) || formData.starts_at}
+                          value={
+                            editAnnouncement?.starts_at?.slice(0, 16) || formData.starts_at
+                          }
                           onChange={(e) =>
                             editAnnouncement
-                              ? setEditAnnouncement({ ...editAnnouncement, starts_at: e.target.value })
+                              ? setEditAnnouncement({
+                                  ...editAnnouncement,
+                                  starts_at: e.target.value,
+                                })
                               : setFormData({ ...formData, starts_at: e.target.value })
                           }
-                          className="h-11 touch-manipulation bg-white/[0.04] border-white/[0.08] rounded-lg focus:!border-yellow-500"
+                          className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] rounded-lg text-white focus:border-elec-yellow"
                         />
                       </div>
                     )}
                   </div>
 
-                  {/* Auto-expire toggle + input */}
-                  <div className="rounded-xl bg-white/[0.04] border border-white/[0.08] overflow-hidden">
-                    <div className="flex items-center justify-between p-3.5">
-                      <div className="flex items-center gap-3">
-                        <Clock className="h-4 w-4 text-red-400" />
-                        <p className="text-sm font-medium !text-white">Auto-expire</p>
-                      </div>
+                  <div className="rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.08] overflow-hidden">
+                    <div className="flex items-center justify-between px-4 py-3.5">
+                      <p className="text-sm font-medium text-white">Auto-expire</p>
                       <Switch
                         checked={!!(editAnnouncement?.ends_at || formData.ends_at)}
                         onCheckedChange={(checked) => {
@@ -568,17 +652,26 @@ export default function AdminAnnouncements() {
                         }}
                       />
                     </div>
-                    {(editAnnouncement?.ends_at || formData.ends_at || (editAnnouncement && editAnnouncement.ends_at !== '' && editAnnouncement.ends_at !== null)) && (
-                      <div className="px-3.5 pb-3.5 pt-0">
+                    {(editAnnouncement?.ends_at ||
+                      formData.ends_at ||
+                      (editAnnouncement &&
+                        editAnnouncement.ends_at !== '' &&
+                        editAnnouncement.ends_at !== null)) && (
+                      <div className="px-4 pb-4">
                         <Input
                           type="datetime-local"
-                          value={editAnnouncement?.ends_at?.slice(0, 16) || formData.ends_at}
+                          value={
+                            editAnnouncement?.ends_at?.slice(0, 16) || formData.ends_at
+                          }
                           onChange={(e) =>
                             editAnnouncement
-                              ? setEditAnnouncement({ ...editAnnouncement, ends_at: e.target.value })
+                              ? setEditAnnouncement({
+                                  ...editAnnouncement,
+                                  ends_at: e.target.value,
+                                })
                               : setFormData({ ...formData, ends_at: e.target.value })
                           }
-                          className="h-11 touch-manipulation bg-white/[0.04] border-white/[0.08] rounded-lg focus:!border-yellow-500"
+                          className="h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] rounded-lg text-white focus:border-elec-yellow"
                         />
                       </div>
                     )}
@@ -587,10 +680,13 @@ export default function AdminAnnouncements() {
               </div>
               <SheetFooter className="p-5 border-t border-white/[0.06]">
                 <Button
-                  className="w-full h-12 touch-manipulation rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-black font-semibold shadow-lg shadow-amber-500/20 text-base"
+                  className="w-full h-12 touch-manipulation rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base"
                   onClick={() => {
                     if (editAnnouncement) {
-                      updateMutation.mutate({ id: editAnnouncement.id, data: editAnnouncement });
+                      updateMutation.mutate({
+                        id: editAnnouncement.id,
+                        data: editAnnouncement,
+                      });
                     } else {
                       createMutation.mutate(formData);
                     }
@@ -600,7 +696,7 @@ export default function AdminAnnouncements() {
                   {createMutation.isPending || updateMutation.isPending ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      {editAnnouncement ? 'Saving...' : 'Creating...'}
+                      {editAnnouncement ? 'Saving…' : 'Creating…'}
                     </>
                   ) : editAnnouncement ? (
                     'Save Changes'
@@ -613,7 +709,6 @@ export default function AdminAnnouncements() {
           </SheetContent>
         </Sheet>
 
-        {/* ── Delete Confirmation ── */}
         <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
           <AlertDialogContent>
             <AlertDialogHeader>
@@ -622,20 +717,20 @@ export default function AdminAnnouncements() {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel
-                className="h-11 touch-manipulation rounded-xl"
+                className="h-11 touch-manipulation rounded-full"
                 disabled={deleteMutation.isPending}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600 rounded-xl"
+                className="h-11 touch-manipulation bg-red-500 hover:bg-red-600 rounded-full"
                 onClick={() => deleteId && deleteMutation.mutate(deleteId)}
                 disabled={deleteMutation.isPending}
               >
                 {deleteMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Deleting...
+                    Deleting…
                   </>
                 ) : (
                   'Delete'
@@ -644,7 +739,7 @@ export default function AdminAnnouncements() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

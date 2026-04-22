@@ -1,38 +1,40 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import {
-  AlertTriangle,
-  Mail,
-  MailWarning,
-  CheckCircle,
-  ChevronRight,
   RefreshCw,
   Download,
   ExternalLink,
   Loader2,
   Send,
-  ArrowRight,
-  XCircle,
   MessageCircle,
   Ban,
+  CheckCircle,
 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
-import { Skeleton } from '@/components/ui/skeleton';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
 import { toast } from 'sonner';
-
-// ─── Types ───────────────────────────────────────────────────────────────────
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Divider,
+  Eyebrow,
+} from '@/components/admin/editorial';
 
 interface FailedPaymentRow {
   id: string;
@@ -59,70 +61,57 @@ interface FailedPaymentRecord extends FailedPaymentRow {
   username: string | null;
 }
 
-type StatusFilter = 'active' | 'emailed' | 'final' | 'recovered' | null;
+type TimeFilter = '24h' | '7d' | '30d' | 'all';
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+function getInitials(name: string | null | undefined): string {
+  if (!name) return '?';
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('') || '?';
+}
 
-function getDunningStage(record: FailedPaymentRecord): string {
-  if (record.resolved) return 'Recovered';
-  if (record.emails_sent === 3) return 'Final Notice';
-  if (record.emails_sent === 2) return 'Email 2 Sent';
-  if (record.emails_sent === 1) return 'Email 1 Sent';
+function getStageLabel(r: FailedPaymentRecord): string {
+  if (r.resolved) return 'Recovered';
+  if (r.emails_sent === 3) return 'Final Notice';
+  if (r.emails_sent === 2) return 'Email 2 Sent';
+  if (r.emails_sent === 1) return 'Email 1 Sent';
   return 'Pending';
 }
 
-function getStageOrder(stage: string): number {
-  switch (stage) {
-    case 'Pending':
-      return 0;
-    case 'Email 1 Sent':
-      return 1;
-    case 'Email 2 Sent':
-      return 2;
-    case 'Final Notice':
-      return 3;
-    case 'Recovered':
-      return 4;
-    default:
-      return 5;
-  }
+function getStageTone(r: FailedPaymentRecord): 'yellow' | 'amber' | 'orange' | 'red' | 'emerald' {
+  if (r.resolved) return 'emerald';
+  if (r.emails_sent === 3) return 'red';
+  if (r.emails_sent === 2) return 'orange';
+  if (r.emails_sent === 1) return 'amber';
+  return 'yellow';
 }
 
-function getStageColour(stage: string): string {
-  switch (stage) {
-    case 'Pending':
-      return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
-    case 'Email 1 Sent':
-      return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
-    case 'Email 2 Sent':
-      return 'bg-orange-500/20 text-orange-400 border-orange-500/30';
-    case 'Final Notice':
-      return 'bg-red-500/20 text-red-400 border-red-500/30';
-    case 'Recovered':
-      return 'bg-green-500/20 text-green-400 border-green-500/30';
-    default:
-      return 'bg-muted text-white';
-  }
+function withinWindow(createdAt: string, filter: TimeFilter): boolean {
+  if (filter === 'all') return true;
+  const created = new Date(createdAt).getTime();
+  const now = Date.now();
+  const diffMs = now - created;
+  if (filter === '24h') return diffMs <= 24 * 60 * 60 * 1000;
+  if (filter === '7d') return diffMs <= 7 * 24 * 60 * 60 * 1000;
+  if (filter === '30d') return diffMs <= 30 * 24 * 60 * 60 * 1000;
+  return true;
 }
 
-function getStageIcon(stage: string) {
-  switch (stage) {
-    case 'Recovered':
-      return <CheckCircle className="h-5 w-5 text-green-400" />;
-    case 'Final Notice':
-      return <MailWarning className="h-5 w-5 text-red-400" />;
-    case 'Email 2 Sent':
-    case 'Email 1 Sent':
-      return <Mail className="h-5 w-5 text-amber-400" />;
-    default:
-      return <AlertTriangle className="h-5 w-5 text-yellow-400" />;
-  }
+function isToday(iso: string): boolean {
+  const d = new Date(iso);
+  const now = new Date();
+  return (
+    d.getFullYear() === now.getFullYear() &&
+    d.getMonth() === now.getMonth() &&
+    d.getDate() === now.getDate()
+  );
 }
-
-// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function AdminFailedPayments() {
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>(null);
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>('all');
   const [search, setSearch] = useState('');
   const [selectedRecord, setSelectedRecord] = useState<FailedPaymentRecord | null>(null);
   const [messageSheetOpen, setMessageSheetOpen] = useState(false);
@@ -132,7 +121,6 @@ export default function AdminFailedPayments() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
 
-  // Prefill message template when opening the dialog
   const openMessageSheet = (template: 'cancel_or_pay' | 'custom') => {
     if (!selectedRecord) return;
     haptic.medium();
@@ -153,13 +141,10 @@ export default function AdminFailedPayments() {
     setMessageSheetOpen(true);
   };
 
-  // ── Data fetching ────────────────────────────────────────────────────────
-
   const {
     data: records,
     isLoading,
     refetch,
-    isFetching,
   } = useQuery({
     queryKey: ['admin-failed-payments'],
     queryFn: async () => {
@@ -172,7 +157,6 @@ export default function AdminFailedPayments() {
 
       const rows = (data ?? []) as FailedPaymentRow[];
 
-      // Enrich with profile names
       const userIds = [...new Set(rows.map((r) => r.user_id))];
       const profileMap = new Map<string, { full_name: string; username: string }>();
 
@@ -194,8 +178,6 @@ export default function AdminFailedPayments() {
     refetchInterval: 60000,
     staleTime: 30000,
   });
-
-  // ── Mutations ────────────────────────────────────────────────────────────
 
   const sendNextMutation = useMutation({
     mutationFn: async (recordId: string) => {
@@ -226,7 +208,6 @@ export default function AdminFailedPayments() {
       haptic.success();
       toast.success(`Email ${data.emailNumber} sent successfully`);
       queryClient.invalidateQueries({ queryKey: ['admin-failed-payments'] });
-      // Update selected record in-place
       if (data.record) setSelectedRecord(data.record);
     },
     onError: (err: Error) => {
@@ -392,54 +373,61 @@ export default function AdminFailedPayments() {
     },
   });
 
-  // ── Stats ────────────────────────────────────────────────────────────────
+  const retryAllMutation = useMutation({
+    mutationFn: async (ids: string[]) => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData?.session?.access_token;
+      let successCount = 0;
+      let failCount = 0;
+
+      for (const recordId of ids) {
+        const res = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/admin-dunning-email`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+              apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+            },
+            body: JSON.stringify({ action: 'send_next', recordId }),
+          }
+        );
+        if (res.ok) successCount++;
+        else failCount++;
+      }
+
+      return { successCount, failCount };
+    },
+    onSuccess: (data) => {
+      haptic.success();
+      toast.success(`Retried: ${data.successCount} sent, ${data.failCount} failed`);
+      queryClient.invalidateQueries({ queryKey: ['admin-failed-payments'] });
+    },
+    onError: (err: Error) => {
+      haptic.error();
+      toast.error(err.message);
+    },
+  });
 
   const stats = useMemo(() => {
     const all = records ?? [];
-    return {
-      active: all.filter((r) => !r.resolved).length,
-      emailed: all.filter((r) => r.emails_sent >= 1 && !r.resolved).length,
-      final: all.filter((r) => r.emails_sent === 3 && !r.resolved).length,
-      recovered: all.filter((r) => r.resolved).length,
-    };
-  }, [records]);
-
-  // ── Pipeline counts ──────────────────────────────────────────────────────
-
-  const pipeline = useMemo(() => {
-    const all = records ?? [];
     const unresolved = all.filter((r) => !r.resolved);
-    const recoveredRecords = all.filter((r) => r.resolved);
     return {
+      failedToday: all.filter((r) => !r.resolved && isToday(r.created_at)).length,
+      atRiskPence: unresolved.reduce((sum, r) => sum + (r.amount_due || 0), 0),
+      retried: all.filter((r) => r.emails_sent >= 1).length,
+      recovered: all.filter((r) => r.resolved).length,
       pending: unresolved.filter((r) => r.emails_sent === 0).length,
       email1: unresolved.filter((r) => r.emails_sent === 1).length,
       email2: unresolved.filter((r) => r.emails_sent === 2).length,
-      email3: unresolved.filter((r) => r.emails_sent === 3).length,
-      recovered: recoveredRecords.length,
-      lost: 0, // placeholder for future lost status
-      total: all.length,
-      totalOutstanding: unresolved.reduce((sum, r) => sum + (r.amount_due || 0), 0),
-      recoveredAmount: recoveredRecords.reduce((sum, r) => sum + (r.amount_due || 0), 0),
+      finalNotice: unresolved.filter((r) => r.emails_sent === 3).length,
     };
   }, [records]);
 
-  const recoveryRate =
-    pipeline.total > 0 ? ((pipeline.recovered / pipeline.total) * 100).toFixed(1) : '0';
-
-  // ── Filtered & grouped ───────────────────────────────────────────────────
-
   const filtered = useMemo(() => {
     let list = records ?? [];
-
-    // Apply status filter
-    if (statusFilter === 'active') list = list.filter((r) => !r.resolved);
-    else if (statusFilter === 'emailed')
-      list = list.filter((r) => r.emails_sent >= 1 && !r.resolved);
-    else if (statusFilter === 'final')
-      list = list.filter((r) => r.emails_sent === 3 && !r.resolved);
-    else if (statusFilter === 'recovered') list = list.filter((r) => r.resolved);
-
-    // Apply search
+    list = list.filter((r) => withinWindow(r.created_at, timeFilter));
     if (search) {
       const q = search.toLowerCase();
       list = list.filter(
@@ -449,22 +437,8 @@ export default function AdminFailedPayments() {
           r.stripe_invoice_id?.toLowerCase().includes(q)
       );
     }
-
     return list;
-  }, [records, statusFilter, search]);
-
-  const grouped = useMemo(() => {
-    const groups = new Map<string, FailedPaymentRecord[]>();
-    for (const r of filtered) {
-      const stage = getDunningStage(r);
-      const existing = groups.get(stage) ?? [];
-      existing.push(r);
-      groups.set(stage, existing);
-    }
-    return [...groups.entries()].sort(([a], [b]) => getStageOrder(a) - getStageOrder(b));
-  }, [filtered]);
-
-  // ── CSV export ───────────────────────────────────────────────────────────
+  }, [records, timeFilter, search]);
 
   const exportCSV = () => {
     if (!records || records.length === 0) return;
@@ -495,14 +469,32 @@ export default function AdminFailedPayments() {
     URL.revokeObjectURL(url);
   };
 
-  // ── Stat card tap handler ────────────────────────────────────────────────
-
-  const toggleFilter = (filter: StatusFilter) => {
-    haptic.selection();
-    setStatusFilter((prev) => (prev === filter ? null : filter));
+  const refresh = () => {
+    haptic.light();
+    refetch();
   };
 
-  // ── Render ───────────────────────────────────────────────────────────────
+  const retryAllUnresolved = () => {
+    const targets = filtered.filter((r) => !r.resolved && r.emails_sent < 3);
+    if (targets.length === 0) {
+      toast.info('Nothing to retry in the current view');
+      return;
+    }
+    haptic.medium();
+    retryAllMutation.mutate(targets.map((t) => t.id));
+  };
+
+  const atRiskAmount = (stats.atRiskPence / 100).toLocaleString('en-GB', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  const timeTabs = [
+    { value: '24h', label: 'Last 24h' },
+    { value: '7d', label: 'Last 7d' },
+    { value: '30d', label: 'Last 30d' },
+    { value: 'all', label: 'All' },
+  ];
 
   return (
     <PullToRefresh
@@ -510,422 +502,172 @@ export default function AdminFailedPayments() {
         await refetch();
       }}
     >
-      <div className="space-y-6 pb-20">
-        <AdminPageHeader
+      <PageFrame>
+        <PageHero
+          eyebrow="Billing"
           title="Failed Payments"
-          subtitle="Monitor and resolve failed payment attempts"
-          icon={AlertTriangle}
-          iconColor="text-red-400"
-          iconBg="bg-red-500/10 border-red-500/20"
-          accentColor="from-red-500 via-rose-400 to-red-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
-        />
-
-        {/* Recovery Metrics Strip */}
-        <div className="grid grid-cols-3 gap-2">
-          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
-            <p className="text-[10px] font-medium text-white">At Risk</p>
-            <p className="text-sm font-bold text-red-400">
-              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
-                pipeline.totalOutstanding / 100
-              )}
-            </p>
-          </div>
-          <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
-            <p className="text-[10px] font-medium text-white">Recovery Rate</p>
-            <p className="text-sm font-bold text-green-400">{recoveryRate}%</p>
-          </div>
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 h-14 touch-manipulation flex flex-col justify-center">
-            <p className="text-[10px] font-medium text-white">Recovered</p>
-            <p className="text-sm font-bold text-emerald-400">
-              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(
-                pipeline.recoveredAmount / 100
-              )}
-            </p>
-          </div>
-        </div>
-
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-11 w-11 touch-manipulation"
-              onClick={exportCSV}
-              title="Export CSV"
-            >
-              <Download className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-11 w-11 touch-manipulation"
-              disabled={backfillMutation.isPending}
-              onClick={async () => {
-                haptic.medium();
-                backfillMutation.mutate();
-              }}
-              title="Sync from Stripe"
-            >
-              {backfillMutation.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <RefreshCw className="h-4 w-4" />
-              )}
-            </Button>
-          </div>
-        </div>
-
-        {/* Stats Cards — clickable to filter */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {/* Active */}
-          <Card
-            className={`bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-all ${
-              statusFilter === 'active' ? 'ring-2 ring-yellow-500' : ''
-            }`}
-            onClick={() => toggleFilter('active')}
-          >
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold text-white">{stats.active}</p>
-                  <p className="text-xs text-white">Active</p>
-                </div>
-                <AlertTriangle className="h-6 w-6 text-red-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Emails Sent */}
-          <Card
-            className={`bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-all ${
-              statusFilter === 'emailed' ? 'ring-2 ring-yellow-500' : ''
-            }`}
-            onClick={() => toggleFilter('emailed')}
-          >
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold text-white">{stats.emailed}</p>
-                  <p className="text-xs text-white">Emails Sent</p>
-                </div>
-                <Mail className="h-6 w-6 text-amber-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Final Notice */}
-          <Card
-            className={`bg-gradient-to-br from-orange-500/10 to-orange-600/5 border-orange-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-all ${
-              statusFilter === 'final' ? 'ring-2 ring-yellow-500' : ''
-            }`}
-            onClick={() => toggleFilter('final')}
-          >
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold text-white">{stats.final}</p>
-                  <p className="text-xs text-white">Final Notice</p>
-                </div>
-                <MailWarning className="h-6 w-6 text-orange-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Recovered */}
-          <Card
-            className={`bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 cursor-pointer touch-manipulation active:scale-[0.98] transition-all ${
-              statusFilter === 'recovered' ? 'ring-2 ring-yellow-500' : ''
-            }`}
-            onClick={() => toggleFilter('recovered')}
-          >
-            <CardContent className="pt-4 pb-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xl font-bold text-white">{stats.recovered}</p>
-                  <p className="text-xs text-white">Recovered</p>
-                </div>
-                <CheckCircle className="h-6 w-6 text-green-400" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Dunning Stage Pipeline */}
-        {(records?.length ?? 0) > 0 && (
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm text-white">Dunning Pipeline</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between overflow-x-auto gap-1">
-                {[
-                  {
-                    label: 'Pending',
-                    count: pipeline.pending,
-                    bg: 'bg-yellow-500/20',
-                    text: 'text-yellow-400',
-                    border: 'border-yellow-500/40',
-                    icon: <AlertTriangle className="h-3 w-3" />,
-                  },
-                  {
-                    label: 'Email 1',
-                    count: pipeline.email1,
-                    bg: 'bg-amber-500/20',
-                    text: 'text-amber-400',
-                    border: 'border-amber-500/40',
-                    icon: <Mail className="h-3 w-3" />,
-                  },
-                  {
-                    label: 'Email 2',
-                    count: pipeline.email2,
-                    bg: 'bg-orange-500/20',
-                    text: 'text-orange-400',
-                    border: 'border-orange-500/40',
-                    icon: <Mail className="h-3 w-3" />,
-                  },
-                  {
-                    label: 'Final',
-                    count: pipeline.email3,
-                    bg: 'bg-red-500/20',
-                    text: 'text-red-400',
-                    border: 'border-red-500/40',
-                    icon: <MailWarning className="h-3 w-3" />,
-                  },
-                  {
-                    label: 'Recovered',
-                    count: pipeline.recovered,
-                    bg: 'bg-green-500/20',
-                    text: 'text-green-400',
-                    border: 'border-green-500/40',
-                    icon: <CheckCircle className="h-3 w-3" />,
-                  },
-                  {
-                    label: 'Lost',
-                    count: pipeline.lost,
-                    bg: 'bg-zinc-500/20',
-                    text: 'text-zinc-400',
-                    border: 'border-zinc-500/40',
-                    icon: <XCircle className="h-3 w-3" />,
-                  },
-                ].map((stage, idx, arr) => (
-                  <div key={stage.label} className="flex items-center gap-1 shrink-0">
-                    <div
-                      className={`flex flex-col items-center gap-1 px-2 py-2 rounded-lg border ${stage.border} ${stage.bg} ${stage.count > 0 ? 'opacity-100' : 'opacity-40'}`}
-                    >
-                      <div className={`${stage.text} flex items-center gap-1`}>
-                        {stage.icon}
-                        <span className="text-lg font-bold leading-none">{stage.count}</span>
-                      </div>
-                      <span className="text-[9px] font-medium text-white whitespace-nowrap">
-                        {stage.label}
-                      </span>
-                    </div>
-                    {idx < arr.length - 1 && <ArrowRight className="h-3 w-3 text-white shrink-0" />}
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Search */}
-        <AdminSearchInput
-          value={search}
-          onChange={setSearch}
-          placeholder="Search by name or invoice..."
-        />
-
-        {/* Records List */}
-        {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3"
+          description="Recover revenue lost to failed card charges."
+          tone="red"
+          actions={
+            <>
+              <IconButton
+                onClick={exportCSV}
+                aria-label="Export CSV"
               >
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : filtered.length === 0 ? (
-          <Card className="border-dashed">
-            <CardContent className="pt-8 pb-8">
-              <AdminEmptyState
-                icon={CheckCircle}
-                title={search || statusFilter ? 'No matches' : 'No failed payments yet'}
-                description={
-                  search || statusFilter
-                    ? 'No records match your current filter.'
-                    : 'Import existing failed invoices from Stripe, or they will appear here automatically when a payment fails.'
+                <Download className="h-4 w-4" />
+              </IconButton>
+              <IconButton
+                onClick={() => {
+                  haptic.medium();
+                  backfillMutation.mutate();
+                }}
+                disabled={backfillMutation.isPending}
+                aria-label="Sync from Stripe"
+              >
+                {backfillMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <RefreshCw className="h-4 w-4" />
+                )}
+              </IconButton>
+              <IconButton onClick={refresh} aria-label="Refresh">
+                <RefreshCw className="h-4 w-4" />
+              </IconButton>
+            </>
+          }
+        />
+
+        {isLoading ? (
+          <LoadingBlocks />
+        ) : (
+          <>
+            <StatStrip
+              columns={4}
+              stats={[
+                { label: 'Failed Today', value: stats.failedToday, tone: 'red' },
+                { label: 'At Risk £', value: '£' + atRiskAmount, tone: 'orange' },
+                { label: 'Retried', value: stats.retried, tone: 'blue' },
+                { label: 'Recovered', value: stats.recovered, accent: true },
+              ]}
+            />
+
+            <div className="space-y-4">
+              <Eyebrow>Dunning Stage Breakdown</Eyebrow>
+              <StatStrip
+                columns={4}
+                numbered
+                stats={[
+                  { label: 'Pending', value: stats.pending },
+                  { label: 'Email 1 Sent', value: stats.email1 },
+                  { label: 'Email 2 Sent', value: stats.email2 },
+                  { label: 'Final Notice', value: stats.finalNotice },
+                ]}
+              />
+            </div>
+
+            <FilterBar
+              tabs={timeTabs}
+              activeTab={timeFilter}
+              onTabChange={(v) => {
+                haptic.selection();
+                setTimeFilter(v as TimeFilter);
+              }}
+              search={search}
+              onSearchChange={setSearch}
+              searchPlaceholder="Search by name or invoice..."
+              actions={
+                <button
+                  onClick={retryAllUnresolved}
+                  disabled={retryAllMutation.isPending}
+                  className="h-10 px-4 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-50 touch-manipulation"
+                >
+                  {retryAllMutation.isPending ? 'Retrying...' : 'Retry All'}
+                </button>
+              }
+            />
+
+            {filtered.length === 0 ? (
+              <EmptyState
+                title="No failed payments"
+                description="Every charge succeeded in the selected period."
+                action={!search && timeFilter === 'all' ? 'Import from Stripe' : undefined}
+                onAction={
+                  !search && timeFilter === 'all'
+                    ? () => {
+                        haptic.medium();
+                        backfillMutation.mutate();
+                      }
+                    : undefined
                 }
               />
-              {!search && !statusFilter && (
-                <div className="flex justify-center mt-4">
-                  <Button
-                    className="h-11 px-6 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-semibold"
-                    disabled={backfillMutation.isPending}
-                    onClick={() => {
-                      haptic.medium();
-                      backfillMutation.mutate();
-                    }}
-                  >
-                    {backfillMutation.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                    ) : (
-                      <Download className="h-4 w-4 mr-2" />
-                    )}
-                    {backfillMutation.isPending ? 'Importing from Stripe...' : 'Import from Stripe'}
-                  </Button>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="space-y-4">
-            {grouped.map(([stage, items]) => (
-              <Card key={stage}>
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm flex items-center gap-2 text-white">
-                    {getStageIcon(stage)}
-                    {stage}
-                    <Badge className={`${getStageColour(stage)} text-xs ml-auto`}>
-                      {items.length}
-                    </Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  {items.map((record) => (
-                    <div
-                      key={record.id}
-                      className="p-4 rounded-xl bg-white/[0.03] ring-1 ring-white/[0.08] active:scale-[0.99] touch-manipulation cursor-pointer transition-transform"
-                      onClick={() => {
-                        haptic.light();
-                        setSelectedRecord(record);
-                      }}
-                    >
-                      {/* Row 1 — Name + Amount */}
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-3 min-w-0 flex-1">
-                          <div
-                            className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${
-                              record.resolved
-                                ? 'bg-green-500/15 text-green-400'
-                                : 'bg-red-500/15 text-red-400'
-                            }`}
-                          >
-                            {record.resolved ? (
-                              <CheckCircle className="h-4 w-4" />
-                            ) : (
-                              <AlertTriangle className="h-4 w-4" />
-                            )}
-                          </div>
-                          <p className="font-semibold text-[15px] text-white truncate">
-                            {record.full_name || 'Unknown'}
-                          </p>
-                        </div>
-                        <span className="text-[15px] font-bold text-white shrink-0">
-                          £{(record.amount_due / 100).toFixed(2)}
-                        </span>
-                      </div>
+            ) : (
+              <ListCard>
+                <ListCardHeader
+                  tone="red"
+                  title="Failed Charges"
+                  meta={<Pill tone="red">{filtered.length}</Pill>}
+                />
+                <ListBody>
+                  {filtered.map((r) => {
+                    const stage = getStageLabel(r);
+                    const tone = getStageTone(r);
+                    const timeAgo = formatDistanceToNow(new Date(r.created_at), {
+                      addSuffix: true,
+                    });
+                    const amount = `£${(r.amount_due / 100).toFixed(2)}`;
+                    const reason = `${r.emails_sent}/3 emails`;
+                    const subtitleEmail = r.username || r.stripe_invoice_id || '—';
 
-                      {/* Row 2 — Time + Stage + Send */}
-                      <div className="flex items-center justify-between mt-2.5 pl-12">
-                        <span className="text-xs text-white">
-                          {formatDistanceToNow(new Date(record.created_at), { addSuffix: true })}
-                        </span>
-                        <div className="flex items-center gap-2">
-                          <Badge
-                            className={`text-[10px] font-mono ${
-                              record.emails_sent === 3
-                                ? 'bg-red-500/15 text-red-400 border-red-500/30'
-                                : record.emails_sent >= 1
-                                  ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
-                                  : 'bg-white/[0.06] text-white'
-                            }`}
-                          >
-                            {record.emails_sent}/3
-                          </Badge>
-                          {!record.resolved && record.emails_sent < 3 && (
-                            <button
-                              className="h-8 px-2.5 rounded-lg text-[10px] font-bold bg-amber-500/10 text-amber-400 ring-1 ring-amber-500/20 touch-manipulation flex items-center gap-1 active:scale-95 transition-transform"
-                              disabled={sendNextMutation.isPending}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                haptic.medium();
-                                sendNextMutation.mutate(record.id);
-                              }}
-                            >
-                              {sendNextMutation.isPending ? (
-                                <Loader2 className="h-3 w-3 animate-spin" />
-                              ) : (
-                                <Send className="h-3 w-3" />
-                              )}
-                              Send
-                            </button>
-                          )}
-                          <ChevronRight className="h-4 w-4 text-white" />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    return (
+                      <ListRow
+                        key={r.id}
+                        lead={<Avatar initials={getInitials(r.full_name)} />}
+                        title={r.full_name || 'Unknown'}
+                        subtitle={`${subtitleEmail} · ${amount} · ${reason}`}
+                        trailing={
+                          <>
+                            <Pill tone={tone}>{stage}</Pill>
+                            <span className="text-[11px] text-white tabular-nums">{timeAgo}</span>
+                          </>
+                        }
+                        onClick={() => {
+                          haptic.light();
+                          setSelectedRecord(r);
+                        }}
+                      />
+                    );
+                  })}
+                </ListBody>
+              </ListCard>
+            )}
+          </>
         )}
 
-        {/* ── Detail Bottom Sheet ─────────────────────────────────────────── */}
         <Sheet open={!!selectedRecord} onOpenChange={() => setSelectedRecord(null)}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)]">
             <div className="flex flex-col h-full">
-              {/* Drag Handle */}
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
 
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
                 <SheetTitle className="flex items-center gap-3">
-                  <div
-                    className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                      selectedRecord?.resolved
-                        ? 'bg-gradient-to-br from-green-500/20 to-green-600/20'
-                        : 'bg-gradient-to-br from-red-500/20 to-red-600/20'
-                    }`}
-                  >
-                    {selectedRecord?.resolved ? (
-                      <CheckCircle className="h-6 w-6 text-green-400" />
-                    ) : (
-                      <AlertTriangle className="h-6 w-6 text-red-400" />
-                    )}
-                  </div>
-                  <div>
-                    <p className="text-left text-white">{selectedRecord?.full_name || 'Unknown'}</p>
-                    <p className="text-sm font-normal text-white">
+                  <Avatar initials={getInitials(selectedRecord?.full_name)} />
+                  <div className="min-w-0">
+                    <p className="text-left text-white text-base font-semibold truncate">
+                      {selectedRecord?.full_name || 'Unknown'}
+                    </p>
+                    <p className="text-[12px] font-normal text-white tabular-nums">
                       £{selectedRecord ? (selectedRecord.amount_due / 100).toFixed(2) : '0.00'}
                     </p>
                   </div>
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Email Timeline */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2 text-white">
-                      <Mail className="h-4 w-4 text-amber-400" />
-                      Email Timeline
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
+              <div className="flex-1 overflow-y-auto p-5 space-y-5">
+                <ListCard>
+                  <ListCardHeader title="Email Timeline" tone="amber" />
+                  <ListBody>
                     {[1, 2, 3].map((num) => {
                       const sentAt = selectedRecord?.[
                         `email_${num}_sent_at` as keyof FailedPaymentRecord
@@ -935,234 +677,210 @@ export default function AdminFailedPayments() {
                         !isSent &&
                         !selectedRecord?.resolved &&
                         selectedRecord?.emails_sent === num - 1;
+                      const titleText =
+                        num === 1
+                          ? `Email ${num} — Payment Issue`
+                          : num === 2
+                            ? `Email ${num} — Overdue`
+                            : `Email ${num} — Final Notice`;
+                      const subtitle = isSent
+                        ? format(new Date(sentAt!), 'dd MMM yyyy HH:mm')
+                        : isNext
+                          ? 'Ready to send'
+                          : 'Pending';
 
                       return (
-                        <div key={num} className="flex items-center gap-3">
-                          {/* Stepper dot */}
-                          <div
-                            className={`w-3 h-3 rounded-full shrink-0 ${
-                              isSent ? 'bg-green-400' : 'bg-muted-foreground/30'
-                            }`}
-                          />
-                          <div className="flex-1 flex items-center justify-between">
-                            <div>
-                              <span className="text-sm text-white">
-                                Email {num}
-                                {num === 1
-                                  ? ' — Payment Issue'
-                                  : num === 2
-                                    ? ' — Overdue'
-                                    : ' — Final Notice'}
-                              </span>
-                              {isSent && (
-                                <p className="text-xs text-white">
-                                  {format(new Date(sentAt!), 'dd MMM yyyy HH:mm')}
-                                </p>
-                              )}
-                              {!isSent && !isNext && <p className="text-xs text-white">Pending</p>}
-                            </div>
-                            {isNext && (
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="h-8 text-xs touch-manipulation border-amber-500/30 text-amber-400"
+                        <ListRow
+                          key={num}
+                          title={titleText}
+                          subtitle={subtitle}
+                          trailing={
+                            isSent ? (
+                              <Pill tone="emerald">Sent</Pill>
+                            ) : isNext ? (
+                              <button
                                 disabled={sendNextMutation.isPending}
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   haptic.medium();
                                   sendNextMutation.mutate(selectedRecord!.id);
                                 }}
+                                className="h-9 px-3 rounded-full bg-elec-yellow text-black text-[12px] font-semibold flex items-center gap-1.5 disabled:opacity-50 touch-manipulation"
                               >
                                 {sendNextMutation.isPending ? (
-                                  <Loader2 className="h-3 w-3 animate-spin mr-1" />
+                                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
                                 ) : (
-                                  <Send className="h-3 w-3 mr-1" />
+                                  <Send className="h-3.5 w-3.5" />
                                 )}
-                                Send Now
-                              </Button>
-                            )}
-                            {isSent && (
-                              <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
-                                Sent
-                              </Badge>
-                            )}
-                          </div>
-                        </div>
+                                Send
+                              </button>
+                            ) : (
+                              <Pill tone="yellow">Pending</Pill>
+                            )
+                          }
+                        />
                       );
                     })}
-                  </CardContent>
-                </Card>
+                  </ListBody>
+                </ListCard>
 
-                {/* Invoice Details */}
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm flex items-center gap-2 text-white">
-                      <AlertTriangle className="h-4 w-4 text-red-400" />
-                      Invoice Details
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Invoice ID</span>
-                      <span className="text-sm font-mono truncate max-w-[200px] text-white">
-                        {selectedRecord?.stripe_invoice_id}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Customer ID</span>
-                      <span className="text-sm font-mono truncate max-w-[200px] text-white">
-                        {selectedRecord?.stripe_customer_id || '—'}
-                      </span>
-                    </div>
+                <ListCard>
+                  <ListCardHeader title="Invoice Details" tone="red" />
+                  <ListBody>
+                    <ListRow
+                      title="Invoice ID"
+                      trailing={
+                        <span className="text-[12px] font-mono text-white truncate max-w-[180px]">
+                          {selectedRecord?.stripe_invoice_id}
+                        </span>
+                      }
+                    />
+                    <ListRow
+                      title="Customer ID"
+                      trailing={
+                        <span className="text-[12px] font-mono text-white truncate max-w-[180px]">
+                          {selectedRecord?.stripe_customer_id || '—'}
+                        </span>
+                      }
+                    />
                     {selectedRecord?.hosted_invoice_url && (
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Invoice Link</span>
-                        <a
-                          href={selectedRecord.hosted_invoice_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-sm text-blue-400 touch-manipulation"
-                        >
-                          View <ExternalLink className="h-3.5 w-3.5" />
-                        </a>
-                      </div>
+                      <ListRow
+                        title="Invoice Link"
+                        trailing={
+                          <a
+                            href={selectedRecord.hosted_invoice_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-[12px] text-elec-yellow touch-manipulation"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            View <ExternalLink className="h-3.5 w-3.5" />
+                          </a>
+                        }
+                      />
                     )}
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Created</span>
-                      <span className="text-sm text-white">
-                        {selectedRecord?.created_at &&
-                          format(new Date(selectedRecord.created_at), 'dd MMM yyyy HH:mm')}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-white">Updated</span>
-                      <span className="text-sm text-white">
-                        {selectedRecord?.updated_at &&
-                          format(new Date(selectedRecord.updated_at), 'dd MMM yyyy HH:mm')}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
+                    <ListRow
+                      title="Created"
+                      trailing={
+                        <span className="text-[12px] text-white tabular-nums">
+                          {selectedRecord?.created_at &&
+                            format(new Date(selectedRecord.created_at), 'dd MMM yyyy HH:mm')}
+                        </span>
+                      }
+                    />
+                    <ListRow
+                      title="Updated"
+                      trailing={
+                        <span className="text-[12px] text-white tabular-nums">
+                          {selectedRecord?.updated_at &&
+                            format(new Date(selectedRecord.updated_at), 'dd MMM yyyy HH:mm')}
+                        </span>
+                      }
+                    />
+                  </ListBody>
+                </ListCard>
 
-                {/* Resolution Card */}
                 {selectedRecord?.resolved && (
-                  <Card className="border-green-500/20">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm flex items-center gap-2 text-white">
-                        <CheckCircle className="h-4 w-4 text-green-400" />
-                        Resolution
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Status</span>
-                        <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                          Recovered
-                        </Badge>
-                      </div>
+                  <ListCard>
+                    <ListCardHeader title="Resolution" tone="emerald" />
+                    <ListBody>
+                      <ListRow title="Status" trailing={<Pill tone="emerald">Recovered</Pill>} />
                       {selectedRecord.resolved_at && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-white">Resolved At</span>
-                          <span className="text-sm text-white">
-                            {format(new Date(selectedRecord.resolved_at), 'dd MMM yyyy HH:mm')}
-                          </span>
-                        </div>
+                        <ListRow
+                          title="Resolved At"
+                          trailing={
+                            <span className="text-[12px] text-white tabular-nums">
+                              {format(new Date(selectedRecord.resolved_at), 'dd MMM yyyy HH:mm')}
+                            </span>
+                          }
+                        />
                       )}
-                    </CardContent>
-                  </Card>
+                    </ListBody>
+                  </ListCard>
                 )}
 
-                {/* Final Stage Card — visible at 3/3 */}
                 {selectedRecord && !selectedRecord.resolved && selectedRecord.emails_sent === 3 && (
-                  <Card className="border-pink-500/30 bg-gradient-to-br from-pink-500/[0.04] to-purple-500/[0.04]">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm flex items-center gap-2 text-white">
-                        <MailWarning className="h-4 w-4 text-pink-400" />
-                        Final Stage — Decision Time
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <p className="text-xs text-white/70 leading-relaxed">
+                  <ListCard>
+                    <ListCardHeader title="Final Stage — Decision Time" tone="red" />
+                    <div className="p-5 space-y-4">
+                      <p className="text-[12.5px] text-white leading-relaxed">
                         All three automated emails have gone out. Send a personal note asking them
                         to either pay or cancel — or pull the plug yourself.
                       </p>
 
                       {selectedRecord.personal_message_sent_at && (
-                        <div className="rounded-lg bg-emerald-500/[0.08] ring-1 ring-emerald-500/20 px-3 py-2 flex items-center gap-2">
-                          <CheckCircle className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                          <p className="text-[11px] text-emerald-300">
+                        <div className="rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] px-4 py-3 flex items-center gap-2">
+                          <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0" />
+                          <p className="text-[12px] text-white">
                             Personal message sent{' '}
                             {formatDistanceToNow(
                               new Date(selectedRecord.personal_message_sent_at),
-                              {
-                                addSuffix: true,
-                              }
+                              { addSuffix: true }
                             )}
                           </p>
                         </div>
                       )}
 
-                      <div className="grid grid-cols-2 gap-2">
-                        <Button
-                          className="h-12 touch-manipulation bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold"
+                      <Divider />
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
                           onClick={() => openMessageSheet('cancel_or_pay')}
+                          className="h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 touch-manipulation"
                         >
-                          <MessageCircle className="h-4 w-4 mr-1.5" />
+                          <MessageCircle className="h-4 w-4" />
                           Personal Msg
-                        </Button>
-                        <Button
-                          variant="outline"
-                          className="h-12 touch-manipulation border-red-500/40 text-red-400 hover:bg-red-500/10"
+                        </button>
+                        <button
                           disabled={!selectedRecord.stripe_subscription_id}
                           onClick={() => {
                             haptic.medium();
                             setCancelConfirmOpen(true);
                           }}
+                          className="h-12 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[13px] font-semibold flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation"
                         >
-                          <Ban className="h-4 w-4 mr-1.5" />
+                          <Ban className="h-4 w-4" />
                           Cancel Sub
-                        </Button>
+                        </button>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </ListCard>
                 )}
 
-                {/* Action Buttons (if not resolved) */}
                 {selectedRecord && !selectedRecord.resolved && (
-                  <div className="space-y-3 pt-2">
+                  <div className="space-y-3 pt-1">
                     {selectedRecord.emails_sent < 3 && (
-                      <Button
-                        className="w-full h-12 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-semibold"
+                      <button
                         disabled={sendNextMutation.isPending}
                         onClick={() => {
                           haptic.medium();
                           sendNextMutation.mutate(selectedRecord.id);
                         }}
+                        className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation"
                       >
                         {sendNextMutation.isPending ? (
-                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                          <Loader2 className="h-4 w-4 animate-spin" />
                         ) : (
-                          <Send className="h-4 w-4 mr-2" />
+                          <Send className="h-4 w-4" />
                         )}
                         Send Email {selectedRecord.emails_sent + 1}
-                      </Button>
+                      </button>
                     )}
-                    <Button
-                      variant="outline"
-                      className="w-full h-12 touch-manipulation border-green-500/30 text-green-400 hover:bg-green-500/10"
+                    <button
                       disabled={resolveMutation.isPending}
                       onClick={() => {
                         haptic.medium();
                         resolveMutation.mutate(selectedRecord.id);
                       }}
+                      className="w-full h-12 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[13px] font-semibold flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation"
                     >
                       {resolveMutation.isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                        <Loader2 className="h-4 w-4 animate-spin" />
                       ) : (
-                        <CheckCircle className="h-4 w-4 mr-2" />
+                        <CheckCircle className="h-4 w-4" />
                       )}
                       Mark as Resolved
-                    </Button>
+                    </button>
                   </div>
                 )}
               </div>
@@ -1170,80 +888,71 @@ export default function AdminFailedPayments() {
           </SheetContent>
         </Sheet>
 
-        {/* ── Personal Message Sheet ───────────────────────────────────────── */}
         <Sheet open={messageSheetOpen} onOpenChange={setMessageSheetOpen}>
-          <SheetContent side="bottom" className="h-[92vh] rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="h-[92vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)]">
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06]">
                 <SheetTitle className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-pink-500/20 to-purple-500/20">
-                    <MessageCircle className="h-6 w-6 text-pink-400" />
-                  </div>
-                  <div>
-                    <p className="text-left text-white">Send Personal Message</p>
-                    <p className="text-sm font-normal text-white/60">
-                      From founder@elec-mate.com → {selectedRecord?.full_name || 'user'}
+                  <Avatar initials={getInitials(selectedRecord?.full_name) || 'M'} />
+                  <div className="min-w-0">
+                    <p className="text-left text-white text-base font-semibold">
+                      Send Personal Message
+                    </p>
+                    <p className="text-[12px] font-normal text-white truncate">
+                      founder@elec-mate.com → {selectedRecord?.full_name || 'user'}
                     </p>
                   </div>
                 </SheetTitle>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {/* Template toggles */}
+              <div className="flex-1 overflow-y-auto p-5 space-y-5">
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => openMessageSheet('cancel_or_pay')}
-                    className="h-11 rounded-lg bg-pink-500/10 ring-1 ring-pink-500/30 text-pink-300 text-xs font-semibold touch-manipulation active:scale-[0.98] transition-transform"
+                    className="h-11 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold touch-manipulation"
                   >
                     Cancel or Pay?
                   </button>
                   <button
                     type="button"
                     onClick={() => openMessageSheet('custom')}
-                    className="h-11 rounded-lg bg-white/[0.04] ring-1 ring-white/[0.08] text-white text-xs font-semibold touch-manipulation active:scale-[0.98] transition-transform"
+                    className="h-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12.5px] font-semibold touch-manipulation"
                   >
                     Custom
                   </button>
                 </div>
 
-                {/* Subject */}
                 <div>
-                  <label className="text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5 block">
-                    Subject
-                  </label>
+                  <Eyebrow>Subject</Eyebrow>
                   <Input
                     value={messageSubject}
                     onChange={(e) => setMessageSubject(e.target.value)}
                     placeholder="A quick question about your subscription"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-pink-500 focus:ring-pink-500"
+                    className="mt-2 h-11 text-base touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60 focus:ring-elec-yellow/30"
                   />
                 </div>
 
-                {/* Body */}
                 <div>
-                  <label className="text-[11px] font-semibold text-white/60 uppercase tracking-wider mb-1.5 block">
-                    Message
-                  </label>
+                  <Eyebrow>Message</Eyebrow>
                   <Textarea
                     value={messageBody}
                     onChange={(e) => setMessageBody(e.target.value)}
                     placeholder="Type your personal message..."
-                    className="touch-manipulation text-base min-h-[260px] focus:ring-2 focus:ring-pink-500/20 border-white/30 focus:border-pink-500"
+                    className="mt-2 touch-manipulation text-base min-h-[260px] bg-[hsl(0_0%_12%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60 focus:ring-elec-yellow/30"
                   />
-                  <p className="mt-2 text-[10px] text-white/50 leading-relaxed">
+                  <p className="mt-2 text-[11px] text-white leading-relaxed">
                     Invoice pay button will be added automatically below the message. Replies go
                     straight to founder@elec-mate.com.
                   </p>
                 </div>
               </div>
 
-              <div className="p-4 border-t border-border space-y-2">
-                <Button
-                  className="w-full h-12 touch-manipulation bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-semibold"
+              <div className="p-5 border-t border-white/[0.06] space-y-2">
+                <button
                   disabled={
                     sendPersonalMessageMutation.isPending ||
                     !messageSubject.trim() ||
@@ -1257,75 +966,72 @@ export default function AdminFailedPayments() {
                       body: messageBody.trim(),
                     });
                   }}
+                  className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation"
                 >
                   {sendPersonalMessageMutation.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    <Send className="h-4 w-4 mr-2" />
+                    <Send className="h-4 w-4" />
                   )}
                   Send Message
-                </Button>
-                <Button
-                  variant="ghost"
-                  className="w-full h-11 text-white/60"
+                </button>
+                <button
                   onClick={() => setMessageSheetOpen(false)}
+                  className="w-full h-11 rounded-full text-white text-[12.5px] font-medium touch-manipulation"
                 >
                   Cancel
-                </Button>
+                </button>
               </div>
             </div>
           </SheetContent>
         </Sheet>
 
-        {/* ── Cancel Subscription Confirm Sheet ────────────────────────────── */}
         <Sheet open={cancelConfirmOpen} onOpenChange={setCancelConfirmOpen}>
-          <SheetContent side="bottom" className="rounded-t-2xl p-0">
+          <SheetContent side="bottom" className="rounded-t-2xl p-0 bg-[hsl(0_0%_10%)]">
             <div className="flex flex-col">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-              <div className="px-6 pt-4 pb-6 space-y-4">
-                <div className="w-14 h-14 rounded-2xl bg-red-500/15 ring-1 ring-red-500/30 flex items-center justify-center mx-auto">
-                  <Ban className="h-7 w-7 text-red-400" />
-                </div>
-                <div className="text-center space-y-1">
-                  <h3 className="text-lg font-bold text-white">
+              <div className="px-6 pt-4 pb-6 space-y-5">
+                <div className="text-center space-y-2">
+                  <Eyebrow>Confirm</Eyebrow>
+                  <h3 className="text-xl font-semibold text-white tracking-tight">
                     Cancel {selectedRecord?.full_name || 'user'}'s subscription?
                   </h3>
-                  <p className="text-sm text-white/60">
-                    This cancels immediately in Stripe and clears their subscribed flag. It can't be
-                    undone from here — they'd need to re-subscribe.
+                  <p className="text-[13px] text-white leading-relaxed max-w-sm mx-auto">
+                    This cancels immediately in Stripe and clears their subscribed flag. It can't
+                    be undone from here — they'd need to re-subscribe.
                   </p>
                 </div>
-                <div className="space-y-2 pt-2">
-                  <Button
-                    className="w-full h-12 touch-manipulation bg-red-500 hover:bg-red-600 text-white font-semibold"
+                <Divider />
+                <div className="space-y-2">
+                  <button
                     disabled={cancelSubMutation.isPending}
                     onClick={() => {
                       if (!selectedRecord) return;
                       cancelSubMutation.mutate(selectedRecord.id);
                     }}
+                    className="w-full h-12 rounded-full bg-elec-yellow text-black text-[13px] font-semibold flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation"
                   >
                     {cancelSubMutation.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      <Loader2 className="h-4 w-4 animate-spin" />
                     ) : (
-                      <Ban className="h-4 w-4 mr-2" />
+                      <Ban className="h-4 w-4" />
                     )}
                     Yes, cancel their subscription
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    className="w-full h-11 text-white/60"
+                  </button>
+                  <button
                     onClick={() => setCancelConfirmOpen(false)}
+                    className="w-full h-11 rounded-full text-white text-[12.5px] font-medium touch-manipulation"
                   >
                     Keep it active
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>
           </SheetContent>
         </Sheet>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

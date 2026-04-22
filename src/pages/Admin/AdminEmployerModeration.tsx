@@ -2,20 +2,10 @@ import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,26 +16,29 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import {
-  Briefcase,
-  RefreshCw,
-  ChevronRight,
-  Check,
-  X,
-  Clock,
-  AlertTriangle,
-  MapPin,
-  Flag,
-  Loader2,
-} from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { RefreshCw, Check, X, Flag, Loader2 } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
-import AdminSearchInput from '@/components/admin/AdminSearchInput';
-import AdminEmptyState from '@/components/admin/AdminEmptyState';
-import AdminPageHeader from '@/components/admin/AdminPageHeader';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import { useHaptic } from '@/hooks/useHaptic';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  LoadingBlocks,
+  EmptyState,
+  Divider,
+  Eyebrow,
+  type Tone,
+} from '@/components/admin/editorial';
 
 interface Vacancy {
   id: string;
@@ -67,6 +60,31 @@ interface Vacancy {
   created_at: string;
 }
 
+function getInitials(input?: string | null) {
+  if (!input) return '—';
+  const parts = input.trim().split(/\s+/).slice(0, 2);
+  return parts.map((p) => p[0]?.toUpperCase() ?? '').join('') || '—';
+}
+
+function statusToTone(status: string | null | undefined): Tone {
+  switch (status) {
+    case 'approved':
+      return 'emerald';
+    case 'rejected':
+      return 'red';
+    case 'flagged':
+      return 'amber';
+    case 'pending':
+    default:
+      return 'blue';
+  }
+}
+
+function statusLabel(status: string | null | undefined) {
+  if (!status) return 'Pending';
+  return status.charAt(0).toUpperCase() + status.slice(1);
+}
+
 export default function AdminEmployerModeration() {
   const { profile } = useAuth();
   const queryClient = useQueryClient();
@@ -79,7 +97,6 @@ export default function AdminEmployerModeration() {
   const [moderationReason, setModerationReason] = useState('');
   const haptic = useHaptic();
 
-  // Fetch vacancies
   const {
     data: vacancies,
     isLoading,
@@ -115,7 +132,6 @@ export default function AdminEmployerModeration() {
     },
   });
 
-  // Get moderation stats
   const { data: stats } = useQuery({
     queryKey: ['admin-vacancy-moderation-stats'],
     queryFn: async () => {
@@ -146,7 +162,6 @@ export default function AdminEmployerModeration() {
     },
   });
 
-  // Moderate vacancy
   const moderateMutation = useMutation({
     mutationFn: async ({ id, status, reason }: { id: string; status: string; reason: string }) => {
       const { error } = await supabase
@@ -161,7 +176,6 @@ export default function AdminEmployerModeration() {
         .eq('id', id);
       if (error) throw error;
 
-      // Log the action
       await supabase.from('admin_audit_logs').insert({
         user_id: profile?.id,
         action: `vacancy_${status}`,
@@ -185,29 +199,6 @@ export default function AdminEmployerModeration() {
     },
   });
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'approved':
-        return <Check className="h-4 w-4 text-green-400" />;
-      case 'rejected':
-        return <X className="h-4 w-4 text-red-400" />;
-      case 'flagged':
-        return <Flag className="h-4 w-4 text-amber-400" />;
-      default:
-        return <Clock className="h-4 w-4 text-blue-400" />;
-    }
-  };
-
-  const getStatusBadge = (status: string) => {
-    const styles: Record<string, string> = {
-      approved: 'bg-green-500/20 text-green-400',
-      rejected: 'bg-red-500/20 text-red-400',
-      flagged: 'bg-amber-500/20 text-amber-400',
-      pending: 'bg-blue-500/20 text-blue-400',
-    };
-    return <Badge className={styles[status] || ''}>{status}</Badge>;
-  };
-
   const handleModerate = () => {
     if (!selectedVacancy || !moderationAction) return;
     moderateMutation.mutate({
@@ -222,194 +213,163 @@ export default function AdminEmployerModeration() {
     });
   };
 
+  const formatSalary = (v: Vacancy) => {
+    if (v.salary_min && v.salary_max) {
+      return `£${v.salary_min.toLocaleString()}–£${v.salary_max.toLocaleString()}${v.salary_period ? `/${v.salary_period}` : ''}`;
+    }
+    if (v.salary_min) return `£${v.salary_min.toLocaleString()}+`;
+    if (v.salary_max) return `up to £${v.salary_max.toLocaleString()}`;
+    return 'Rate on request';
+  };
+
+  const tabs = [
+    { value: 'pending', label: 'Pending', count: stats?.pending ?? 0 },
+    { value: 'approved', label: 'Live', count: stats?.approved ?? 0 },
+    { value: 'flagged', label: 'Flagged', count: stats?.flagged ?? 0 },
+    { value: 'rejected', label: 'Expired', count: stats?.rejected ?? 0 },
+    { value: 'all', label: 'All' },
+  ];
+
   return (
     <PullToRefresh
       onRefresh={async () => {
         await refetch();
       }}
     >
-      <div className="space-y-4 pb-20">
-        <AdminPageHeader
-          title="Vacancy Moderation"
-          subtitle={`${stats?.pending || 0} pending review`}
-          icon={Briefcase}
-          iconColor="text-blue-400"
-          iconBg="bg-blue-500/10 border-blue-500/20"
-          accentColor="from-blue-500 via-blue-400 to-cyan-500"
-          onRefresh={() => refetch()}
-          isRefreshing={isFetching}
+      <PageFrame>
+        <PageHero
+          eyebrow="Moderation"
+          title="Employer Vacancies"
+          description="Review job postings before they go live."
+          tone="purple"
+          actions={
+            <IconButton
+              onClick={() => refetch()}
+              aria-label="Refresh"
+              disabled={isFetching}
+            >
+              <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
+            </IconButton>
+          }
         />
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-4 gap-2">
-          <Card
-            className={`bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20 touch-manipulation cursor-pointer ${statusFilter === 'pending' ? 'ring-2 ring-blue-500' : ''}`}
-            onClick={() => setStatusFilter('pending')}
-          >
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-blue-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.pending || 0}</p>
-                  <p className="text-xs text-muted-foreground">Pending</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card
-            className={`bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 touch-manipulation cursor-pointer ${statusFilter === 'approved' ? 'ring-2 ring-green-500' : ''}`}
-            onClick={() => setStatusFilter('approved')}
-          >
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <Check className="h-4 w-4 text-green-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.approved || 0}</p>
-                  <p className="text-xs text-muted-foreground">Approved</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card
-            className={`bg-gradient-to-br from-red-500/10 to-red-600/5 border-red-500/20 touch-manipulation cursor-pointer ${statusFilter === 'rejected' ? 'ring-2 ring-red-500' : ''}`}
-            onClick={() => setStatusFilter('rejected')}
-          >
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <X className="h-4 w-4 text-red-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.rejected || 0}</p>
-                  <p className="text-xs text-muted-foreground">Rejected</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card
-            className={`bg-gradient-to-br from-amber-500/10 to-amber-600/5 border-amber-500/20 touch-manipulation cursor-pointer ${statusFilter === 'flagged' ? 'ring-2 ring-amber-500' : ''}`}
-            onClick={() => setStatusFilter('flagged')}
-          >
-            <CardContent className="pt-3 pb-3">
-              <div className="flex items-center gap-2">
-                <Flag className="h-4 w-4 text-amber-400" />
-                <div>
-                  <p className="text-lg font-bold">{stats?.flagged || 0}</p>
-                  <p className="text-xs text-muted-foreground">Flagged</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <StatStrip
+          columns={4}
+          stats={[
+            {
+              label: 'Pending',
+              value: stats?.pending ?? 0,
+              tone: 'orange',
+              onClick: () => setStatusFilter('pending'),
+            },
+            {
+              label: 'Live',
+              value: stats?.approved ?? 0,
+              tone: 'emerald',
+              onClick: () => setStatusFilter('approved'),
+            },
+            {
+              label: 'Flagged',
+              value: stats?.flagged ?? 0,
+              tone: 'red',
+              onClick: () => setStatusFilter('flagged'),
+            },
+            {
+              label: 'Expired',
+              value: stats?.rejected ?? 0,
+              tone: 'amber',
+              onClick: () => setStatusFilter('rejected'),
+            },
+          ]}
+        />
 
-        {/* Search */}
-        <AdminSearchInput value={search} onChange={setSearch} placeholder="Search vacancies..." />
+        <FilterBar
+          tabs={tabs}
+          activeTab={statusFilter}
+          onTabChange={setStatusFilter}
+          search={search}
+          onSearchChange={setSearch}
+          searchPlaceholder="Search vacancies…"
+        />
 
-        {/* Vacancy List */}
         {isLoading ? (
-          <div className="space-y-3 animate-pulse">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-9 h-9 rounded-lg" />
-                  <div className="space-y-1.5 flex-1">
-                    <Skeleton className="h-4 w-32" />
-                    <Skeleton className="h-3 w-48" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : vacancies?.length === 0 ? (
-          <Card>
-            <CardContent className="pt-6">
-              <AdminEmptyState
-                icon={Briefcase}
-                title="No vacancies to moderate"
-                description={
-                  statusFilter === 'pending' ? 'All caught up!' : 'No vacancies match this filter.'
-                }
-              />
-            </CardContent>
-          </Card>
+          <LoadingBlocks />
+        ) : !vacancies || vacancies.length === 0 ? (
+          <EmptyState
+            title="No vacancies to review"
+            description={
+              statusFilter === 'pending'
+                ? 'All caught up. New submissions will appear here.'
+                : 'No vacancies match this filter.'
+            }
+          />
         ) : (
-          <div className="space-y-2">
-            {vacancies?.map((vacancy) => (
-              <Card
-                key={vacancy.id}
-                className="touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
-                onClick={() => setSelectedVacancy(vacancy)}
-              >
-                <CardContent className="pt-4 pb-4">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <div
-                        className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                          vacancy.moderation_status === 'approved'
-                            ? 'bg-green-500/10'
-                            : vacancy.moderation_status === 'rejected'
-                              ? 'bg-red-500/10'
-                              : vacancy.moderation_status === 'flagged'
-                                ? 'bg-amber-500/10'
-                                : 'bg-blue-500/10'
-                        }`}
-                      >
-                        {getStatusIcon(vacancy.moderation_status)}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="font-medium text-sm truncate">{vacancy.title}</p>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                          {vacancy.location && (
-                            <>
-                              <MapPin className="h-3 w-3" />
-                              <span className="truncate">{vacancy.location}</span>
-                              <span>·</span>
-                            </>
-                          )}
-                          {vacancy.type && (
-                            <Badge variant="outline" className="text-xs">
-                              {vacancy.type}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      {getStatusBadge(vacancy.moderation_status)}
-                      <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <ListCard>
+            <ListCardHeader
+              tone="purple"
+              title="Vacancies"
+              meta={<Pill tone="purple">{vacancies.length}</Pill>}
+            />
+            <ListBody>
+              {vacancies.map((vacancy) => {
+                const tone = statusToTone(vacancy.moderation_status);
+                return (
+                  <ListRow
+                    key={vacancy.id}
+                    lead={<Avatar initials={getInitials(vacancy.title)} />}
+                    title={vacancy.title}
+                    subtitle={
+                      <span className="text-white">
+                        {[
+                          vacancy.type || 'Vacancy',
+                          vacancy.location || 'Location TBC',
+                          formatSalary(vacancy),
+                        ].join(' · ')}
+                      </span>
+                    }
+                    trailing={
+                      <Pill tone={tone}>{statusLabel(vacancy.moderation_status)}</Pill>
+                    }
+                    accent={tone}
+                    onClick={() => setSelectedVacancy(vacancy)}
+                  />
+                );
+              })}
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* Vacancy Detail Sheet */}
         <Sheet open={!!selectedVacancy} onOpenChange={() => setSelectedVacancy(null)}>
-          <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] rounded-t-2xl p-0 bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
             <div className="flex flex-col h-full">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+                <div className="w-10 h-1 rounded-full bg-white/20" />
               </div>
-              <SheetHeader className="px-4 pb-4 border-b border-border">
-                <SheetTitle className="flex items-center gap-2 text-left">
-                  <Briefcase className="h-5 w-5" />
+              <SheetHeader className="px-5 pb-4 border-b border-white/[0.06] text-left">
+                <Eyebrow>Vacancy review</Eyebrow>
+                <SheetTitle className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-tight mt-1.5">
                   {selectedVacancy?.title}
                 </SheetTitle>
-                <div className="flex items-center gap-2 mt-2">
-                  {selectedVacancy && getStatusBadge(selectedVacancy.moderation_status)}
-                  <Badge variant="outline">{selectedVacancy?.type || 'Full-time'}</Badge>
+                <div className="flex items-center gap-2 mt-3">
+                  {selectedVacancy && (
+                    <Pill tone={statusToTone(selectedVacancy.moderation_status)}>
+                      {statusLabel(selectedVacancy.moderation_status)}
+                    </Pill>
+                  )}
+                  <Pill tone="blue">{selectedVacancy?.type || 'Full-time'}</Pill>
                 </div>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">Job Details</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-muted-foreground">Posted</span>
-                      <span className="text-sm">
+              <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
+                <ListCard>
+                  <ListCardHeader tone="purple" title="Job details" />
+                  <div className="divide-y divide-white/[0.06]">
+                    <div className="flex items-center justify-between px-5 py-3.5">
+                      <span className="text-[12px] text-white">Posted</span>
+                      <span className="text-[13px] text-white tabular-nums">
                         {selectedVacancy?.created_at &&
                           formatDistanceToNow(new Date(selectedVacancy.created_at), {
                             addSuffix: true,
@@ -417,89 +377,116 @@ export default function AdminEmployerModeration() {
                       </span>
                     </div>
                     {selectedVacancy?.location && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Location</span>
-                        <span className="text-sm">{selectedVacancy.location}</span>
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Location</span>
+                        <span className="text-[13px] text-white">{selectedVacancy.location}</span>
                       </div>
                     )}
                     {(selectedVacancy?.salary_min || selectedVacancy?.salary_max) && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Salary</span>
-                        <span className="text-sm">
-                          £{selectedVacancy.salary_min?.toLocaleString()} - £
-                          {selectedVacancy.salary_max?.toLocaleString()}{' '}
-                          {selectedVacancy.salary_period && `/${selectedVacancy.salary_period}`}
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Salary</span>
+                        <span className="text-[13px] text-white tabular-nums">
+                          {formatSalary(selectedVacancy)}
                         </span>
                       </div>
                     )}
                     {selectedVacancy?.closing_date && (
-                      <div className="flex justify-between">
-                        <span className="text-sm text-muted-foreground">Closing Date</span>
-                        <span className="text-sm">
+                      <div className="flex items-center justify-between px-5 py-3.5">
+                        <span className="text-[12px] text-white">Closing date</span>
+                        <span className="text-[13px] text-white tabular-nums">
                           {format(new Date(selectedVacancy.closing_date), 'dd MMM yyyy')}
                         </span>
                       </div>
                     )}
-                  </CardContent>
-                </Card>
+                  </div>
+                </ListCard>
 
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-sm">Description</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm whitespace-pre-wrap">{selectedVacancy?.description}</p>
-                  </CardContent>
-                </Card>
+                {selectedVacancy?.description && (
+                  <ListCard>
+                    <ListCardHeader tone="blue" title="Description" />
+                    <div className="px-5 py-4">
+                      <p className="text-[13px] text-white whitespace-pre-wrap leading-relaxed">
+                        {selectedVacancy.description}
+                      </p>
+                    </div>
+                  </ListCard>
+                )}
+
+                {selectedVacancy?.requirements && selectedVacancy.requirements.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader tone="yellow" title="Requirements" />
+                    <ListBody>
+                      {selectedVacancy.requirements.map((req, i) => (
+                        <ListRow
+                          key={i}
+                          title={<span className="text-white">{req}</span>}
+                        />
+                      ))}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {selectedVacancy?.benefits && selectedVacancy.benefits.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader tone="emerald" title="Benefits" />
+                    <ListBody>
+                      {selectedVacancy.benefits.map((b, i) => (
+                        <ListRow
+                          key={i}
+                          title={<span className="text-white">{b}</span>}
+                        />
+                      ))}
+                    </ListBody>
+                  </ListCard>
+                )}
 
                 {selectedVacancy?.moderation_notes && (
-                  <Card className="border-amber-500/30">
-                    <CardHeader className="pb-2">
-                      <CardTitle className="text-sm text-amber-400 flex items-center gap-2">
-                        <AlertTriangle className="h-4 w-4" />
-                        Moderation Notes
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-sm">{selectedVacancy.moderation_notes}</p>
+                  <ListCard>
+                    <ListCardHeader tone="amber" title="Moderation notes" />
+                    <div className="px-5 py-4">
+                      <p className="text-[13px] text-white leading-relaxed">
+                        {selectedVacancy.moderation_notes}
+                      </p>
                       {selectedVacancy.moderated_at && (
-                        <p className="text-xs text-muted-foreground mt-2">
-                          Moderated{' '}
-                          {formatDistanceToNow(new Date(selectedVacancy.moderated_at), {
-                            addSuffix: true,
-                          })}
-                        </p>
+                        <>
+                          <Divider />
+                          <p className="text-[11px] text-white mt-3">
+                            Moderated{' '}
+                            {formatDistanceToNow(new Date(selectedVacancy.moderated_at), {
+                              addSuffix: true,
+                            })}
+                          </p>
+                        </>
                       )}
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </ListCard>
                 )}
               </div>
 
-              {/* Moderation Actions */}
               {selectedVacancy?.moderation_status === 'pending' && (
-                <SheetFooter className="p-4 border-t border-border">
+                <SheetFooter className="p-4 border-t border-white/[0.06] bg-[hsl(0_0%_10%)]">
                   <div className="grid grid-cols-3 gap-2 w-full">
                     <Button
-                      className="h-12 touch-manipulation bg-green-600 hover:bg-green-700"
+                      className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
                       onClick={() => setModerationAction('approve')}
                     >
-                      <Check className="h-4 w-4 mr-2" />
+                      <Check className="h-4 w-4 mr-1.5" />
                       Approve
                     </Button>
                     <Button
                       variant="outline"
-                      className="h-12 touch-manipulation border-amber-500 text-amber-500"
+                      className="h-11 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
                       onClick={() => setModerationAction('flag')}
                     >
-                      <Flag className="h-4 w-4 mr-2" />
+                      <Flag className="h-4 w-4 mr-1.5" />
                       Flag
                     </Button>
                     <Button
-                      variant="destructive"
-                      className="h-12 touch-manipulation"
+                      variant="outline"
+                      className="h-11 touch-manipulation border-white/[0.08] bg-white/[0.04] text-white hover:bg-white/[0.08]"
                       onClick={() => setModerationAction('reject')}
                     >
-                      <X className="h-4 w-4 mr-2" />
+                      <X className="h-4 w-4 mr-1.5" />
                       Reject
                     </Button>
                   </div>
@@ -509,21 +496,20 @@ export default function AdminEmployerModeration() {
           </SheetContent>
         </Sheet>
 
-        {/* Moderation Confirmation Dialog */}
         <AlertDialog open={!!moderationAction} onOpenChange={() => setModerationAction(null)}>
-          <AlertDialogContent>
+          <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] text-white">
             <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center gap-2">
-                {moderationAction === 'approve' && <Check className="h-5 w-5 text-green-400" />}
+              <AlertDialogTitle className="flex items-center gap-2 text-white">
+                {moderationAction === 'approve' && <Check className="h-5 w-5 text-emerald-400" />}
                 {moderationAction === 'reject' && <X className="h-5 w-5 text-red-400" />}
                 {moderationAction === 'flag' && <Flag className="h-5 w-5 text-amber-400" />}
                 {moderationAction === 'approve'
-                  ? 'Approve Vacancy'
+                  ? 'Approve vacancy'
                   : moderationAction === 'reject'
-                    ? 'Reject Vacancy'
-                    : 'Flag Vacancy'}
+                    ? 'Reject vacancy'
+                    : 'Flag vacancy'}
               </AlertDialogTitle>
-              <AlertDialogDescription>
+              <AlertDialogDescription className="text-white">
                 {moderationAction === 'approve'
                   ? 'This vacancy will be visible to all users.'
                   : moderationAction === 'reject'
@@ -532,31 +518,27 @@ export default function AdminEmployerModeration() {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <div className="space-y-2 py-2">
-              <Label>Reason (optional)</Label>
+              <Label className="text-white">Reason (optional)</Label>
               <Textarea
-                placeholder="Add a note about this moderation decision..."
+                placeholder="Add a note about this moderation decision…"
                 value={moderationReason}
                 onChange={(e) => setModerationReason(e.target.value)}
-                className="min-h-[80px] touch-manipulation"
+                className="min-h-[80px] touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/60"
               />
             </div>
             <AlertDialogFooter>
-              <AlertDialogCancel className="h-11 touch-manipulation">Cancel</AlertDialogCancel>
+              <AlertDialogCancel className="h-11 touch-manipulation bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]">
+                Cancel
+              </AlertDialogCancel>
               <AlertDialogAction
-                className={`h-11 touch-manipulation ${
-                  moderationAction === 'approve'
-                    ? 'bg-green-600 hover:bg-green-700'
-                    : moderationAction === 'reject'
-                      ? 'bg-red-500 hover:bg-red-600'
-                      : 'bg-amber-500 hover:bg-amber-600'
-                }`}
+                className="h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90 font-medium"
                 onClick={handleModerate}
                 disabled={moderateMutation.isPending}
               >
                 {moderateMutation.isPending ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Processing...
+                    Processing…
                   </>
                 ) : (
                   'Confirm'
@@ -565,7 +547,7 @@ export default function AdminEmployerModeration() {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

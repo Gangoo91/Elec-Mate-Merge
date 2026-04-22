@@ -105,11 +105,11 @@ function StatCard({
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-[11px] uppercase tracking-wider text-white/60 font-semibold">
+            <p className="text-[11px] uppercase tracking-wider text-white font-semibold">
               {label}
             </p>
             <p className="text-2xl font-bold text-white mt-1 tabular-nums">{value}</p>
-            {sub && <p className="text-[11px] text-white/50 mt-1">{sub}</p>}
+            {sub && <p className="text-[11px] text-white mt-1">{sub}</p>}
           </div>
           <div className={`rounded-lg p-2 border ${accents[accent]}`}>
             <Icon className="h-4 w-4" />
@@ -190,7 +190,7 @@ export default function AdminColdOutreach() {
               className={`h-11 px-4 rounded-xl text-sm font-semibold whitespace-nowrap touch-manipulation ${
                 activeTab === t
                   ? 'bg-elec-yellow text-black'
-                  : 'bg-white/5 text-white/70 hover:bg-white/10'
+                  : 'bg-white/5 text-white hover:bg-white/10'
               }`}
             >
               {t === 'summary' ? 'Summary' : t === 'replies' ? 'Replies' : 'Attributed users'}
@@ -314,7 +314,7 @@ export default function AdminColdOutreach() {
                       <div className="overflow-x-auto">
                         <table className="w-full text-xs sm:text-sm">
                           <thead>
-                            <tr className="text-left text-white/60 border-b border-white/10">
+                            <tr className="text-left text-white border-b border-white/10">
                               <th className="py-2 pr-3">Day</th>
                               <th className="py-2 pr-3 tabular-nums">Sent</th>
                               <th className="py-2 pr-3 tabular-nums">Opened</th>
@@ -393,15 +393,15 @@ export default function AdminColdOutreach() {
                     <div key={r.id} className="p-4 touch-manipulation">
                       <div className="flex items-center justify-between gap-2">
                         <p className="font-semibold text-white truncate">{r.email}</p>
-                        <span className="text-[11px] text-white/50 whitespace-nowrap">
+                        <span className="text-[11px] text-white whitespace-nowrap">
                           {formatDistanceToNow(parseISO(r.occurred_at), { addSuffix: true })}
                         </span>
                       </div>
                       {r.reply_subject && (
-                        <p className="text-[13px] text-white/70 mt-1 truncate">{r.reply_subject}</p>
+                        <p className="text-[13px] text-white mt-1 truncate">{r.reply_subject}</p>
                       )}
                       {r.reply_text && (
-                        <p className="text-[13px] text-white/80 mt-2 line-clamp-3 whitespace-pre-wrap">
+                        <p className="text-[13px] text-white mt-2 line-clamp-3 whitespace-pre-wrap">
                           {r.reply_text}
                         </p>
                       )}
@@ -409,7 +409,7 @@ export default function AdminColdOutreach() {
                   ))}
                 </div>
               ) : (
-                <div className="p-8 text-center text-white/60">
+                <div className="p-8 text-center text-white">
                   <Inbox className="h-8 w-8 mx-auto mb-2 opacity-50" />
                   No replies yet.
                 </div>
@@ -436,7 +436,7 @@ export default function AdminColdOutreach() {
                     >
                       <div className="min-w-0 flex-1">
                         <p className="text-sm font-semibold text-white truncate">{u.email}</p>
-                        <p className="text-[11px] text-white/60 mt-0.5">
+                        <p className="text-[11px] text-white mt-0.5">
                           {u.source_segment || '—'} · signed up{' '}
                           {formatDistanceToNow(parseISO(u.signup_at), { addSuffix: true })}
                         </p>
@@ -457,7 +457,7 @@ export default function AdminColdOutreach() {
                   ))}
                 </div>
               ) : (
-                <div className="p-8 text-center text-white/60">
+                <div className="p-8 text-center text-white">
                   <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
                   No attributed signups yet.
                 </div>

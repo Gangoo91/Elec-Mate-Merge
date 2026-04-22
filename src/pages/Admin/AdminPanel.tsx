@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useSwipeable } from 'react-swipeable';
@@ -6,94 +6,68 @@ import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 import { useAdminPrefetch } from '@/hooks/useAdminPrefetch';
 import OfflineBanner from '@/components/admin/OfflineBanner';
+import { ArrowLeft, ChevronDown, Search } from 'lucide-react';
+import { Kbd, AnimatePresence } from '@/components/admin/editorial';
+import { motion } from 'framer-motion';
 import {
-  LayoutDashboard,
-  Users,
-  Gift,
-  IdCard,
-  CreditCard,
-  MessageSquare,
-  Activity,
-  Shield,
-  ShieldCheck,
-  Megaphone,
-  DollarSign,
-  HeadphonesIcon,
-  History,
-  Mail,
-  BarChart3,
-  Flag,
-  Settings,
-  CheckSquare,
-  Briefcase,
-  Download,
-  ChevronDown,
-  ChevronUp,
-  PoundSterling,
-  Crown,
-  FileCheck,
-  Camera,
-  ArrowLeft,
-  Rocket,
-  Inbox,
-  Timer,
-  GraduationCap,
-  UserPlus,
-  AlertTriangle,
-  Send,
-  Tag,
-  BookOpen,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
+  CommandPalette,
+  type CommandItem,
+} from '@/components/admin/editorial/CommandPalette';
 
-// Primary navigation items - always visible
-const primaryNavItems = [
-  { name: 'Dashboard', path: '/admin', icon: LayoutDashboard },
-  { name: 'Users', path: '/admin/users', icon: Users },
-  { name: 'Trials', path: '/admin/trials', icon: Timer },
-  { name: 'Revenue', path: '/admin/revenue', icon: DollarSign },
-  { name: 'Messages', path: '/admin/user-messages', icon: Inbox },
-  { name: 'IET Knowledge', path: '/admin/iet-knowledge', icon: BookOpen },
+type NavItem = { name: string; path: string };
+
+const primaryNavItems: NavItem[] = [
+  { name: 'Dashboard', path: '/admin' },
+  { name: 'Users', path: '/admin/users' },
+  { name: 'Trials', path: '/admin/trials' },
+  { name: 'Revenue', path: '/admin/revenue' },
+  { name: 'Messages', path: '/admin/user-messages' },
+  { name: 'IET Knowledge', path: '/admin/iet-knowledge' },
 ];
 
-// Campaigns - outreach & growth
-const campaignNavItems = [
-  { name: 'Incomplete Signup', path: '/admin/incomplete-signup', icon: UserPlus },
-  { name: 'Win-Back', path: '/admin/winback', icon: Gift },
-  { name: 'Apprentice Campaigns', path: '/admin/apprentice-campaigns', icon: GraduationCap },
-  { name: 'College Outreach', path: '/admin/outreach', icon: GraduationCap },
-  { name: 'Business Outreach', path: '/admin/business-outreach', icon: Briefcase },
-  { name: 'Founders', path: '/admin/founders', icon: Crown },
-  { name: 'Early Access', path: '/admin/early-access', icon: Rocket },
+const campaignNavItems: NavItem[] = [
+  { name: 'Incomplete Signup', path: '/admin/incomplete-signup' },
+  { name: 'Win-Back', path: '/admin/winback' },
+  { name: 'Apprentice Campaigns', path: '/admin/apprentice-campaigns' },
+  { name: 'College Outreach', path: '/admin/outreach' },
+  { name: 'Business Outreach', path: '/admin/business-outreach' },
+  { name: 'Founders', path: '/admin/founders' },
+  { name: 'Early Access', path: '/admin/early-access' },
 ];
 
-// Moderation - content & employer review
-const moderationNavItems = [
-  { name: 'Elec-IDs', path: '/admin/elec-ids', icon: IdCard },
-  { name: 'Verification', path: '/admin/verification', icon: CheckSquare },
-  { name: 'Doc Review', path: '/admin/document-review', icon: FileCheck },
-  { name: 'Employer Moderation', path: '/admin/vacancies', icon: Briefcase },
-  { name: 'Pricing Moderation', path: '/admin/pricing', icon: PoundSterling },
+const moderationNavItems: NavItem[] = [
+  { name: 'Elec-IDs', path: '/admin/elec-ids' },
+  { name: 'Verification', path: '/admin/verification' },
+  { name: 'Doc Review', path: '/admin/document-review' },
+  { name: 'Employer Moderation', path: '/admin/vacancies' },
+  { name: 'Pricing Moderation', path: '/admin/pricing' },
 ];
 
-// Billing - subscriptions & payments
-const billingNavItems = [
-  { name: 'Subscriptions', path: '/admin/subscriptions', icon: CreditCard },
-  { name: 'Failed Payments', path: '/admin/failed-payments', icon: AlertTriangle },
-  { name: 'Offers', path: '/admin/offers', icon: Tag },
+const billingNavItems: NavItem[] = [
+  { name: 'Subscriptions', path: '/admin/subscriptions' },
+  { name: 'Failed Payments', path: '/admin/failed-payments' },
+  { name: 'Offers', path: '/admin/offers' },
 ];
 
-// Admin tools - in expandable section (rarely used)
-const adminToolItems = [
-  { name: 'Announcements', path: '/admin/announcements', icon: Megaphone },
-  { name: 'Emails', path: '/admin/emails', icon: Mail },
-  { name: 'Analytics', path: '/admin/analytics', icon: BarChart3 },
-  { name: 'System', path: '/admin/system', icon: Activity },
-  { name: 'Flags', path: '/admin/feature-flags', icon: Flag },
-  { name: 'Settings', path: '/admin/settings', icon: Settings },
-  { name: 'Audit', path: '/admin/audit', icon: History },
-  { name: 'Export', path: '/admin/export', icon: Download },
-  { name: 'Support', path: '/admin/support', icon: HeadphonesIcon },
+const adminToolItems: NavItem[] = [
+  { name: 'Announcements', path: '/admin/announcements' },
+  { name: 'Emails', path: '/admin/emails' },
+  { name: 'Analytics', path: '/admin/analytics' },
+  { name: 'System', path: '/admin/system' },
+  { name: 'Flags', path: '/admin/feature-flags' },
+  { name: 'Settings', path: '/admin/settings' },
+  { name: 'Audit', path: '/admin/audit' },
+  { name: 'Export', path: '/admin/export' },
+  { name: 'Support', path: '/admin/support' },
+];
+
+type GroupKey = 'campaigns' | 'moderation' | 'billing' | 'tools';
+
+const GROUPS: { key: GroupKey; label: string; items: NavItem[] }[] = [
+  { key: 'campaigns', label: 'Campaigns', items: campaignNavItems },
+  { key: 'moderation', label: 'Moderation', items: moderationNavItems },
+  { key: 'billing', label: 'Billing', items: billingNavItems },
+  { key: 'tools', label: 'Tools', items: adminToolItems },
 ];
 
 export default function AdminPanel() {
@@ -102,55 +76,95 @@ export default function AdminPanel() {
   const location = useLocation();
   const queryClient = useQueryClient();
   const { handlePrefetch } = useAdminPrefetch(queryClient);
-  const [showCampaigns, setShowCampaigns] = useState(false);
-  const [showModeration, setShowModeration] = useState(false);
-  const [showBilling, setShowBilling] = useState(false);
-  const [showTools, setShowTools] = useState(false);
+  const [openGroup, setOpenGroup] = useState<GroupKey | null>(null);
+  const [paletteOpen, setPaletteOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  // Protect admin routes
   useEffect(() => {
     if (!isLoading && !profile?.admin_role) {
       navigate('/dashboard', { replace: true });
     }
   }, [profile, isLoading, navigate]);
 
-  // Auto-expand sections based on current path
   useEffect(() => {
-    const matchesGroup = (items: typeof campaignNavItems) =>
-      items.some(
-        (item) => location.pathname === item.path || location.pathname.startsWith(item.path + '/')
-      );
-    if (matchesGroup(campaignNavItems)) setShowCampaigns(true);
-    if (matchesGroup(moderationNavItems)) setShowModeration(true);
-    if (matchesGroup(billingNavItems)) setShowBilling(true);
-    if (matchesGroup(adminToolItems)) setShowTools(true);
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setPaletteOpen((v) => !v);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  const commandItems: CommandItem[] = useMemo(() => {
+    const items: CommandItem[] = [];
+    primaryNavItems.forEach((n) =>
+      items.push({ id: `nav:${n.path}`, label: n.name, group: 'Pages', path: n.path })
+    );
+    GROUPS.forEach((g) =>
+      g.items.forEach((n) =>
+        items.push({
+          id: `nav:${n.path}`,
+          label: n.name,
+          group: g.label,
+          path: n.path,
+        })
+      )
+    );
+    return items;
+  }, []);
+
+  // Close dropdown on outside click / Esc
+  useEffect(() => {
+    if (!openGroup) return;
+    const onDown = (e: MouseEvent) => {
+      if (!dropdownRef.current?.contains(e.target as Node)) setOpenGroup(null);
+    };
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpenGroup(null);
+    };
+    document.addEventListener('mousedown', onDown);
+    document.addEventListener('keydown', onEsc);
+    return () => {
+      document.removeEventListener('mousedown', onDown);
+      document.removeEventListener('keydown', onEsc);
+    };
+  }, [openGroup]);
+
+  // Close dropdown when route changes
+  useEffect(() => {
+    setOpenGroup(null);
   }, [location.pathname]);
 
-  // Swipe between primary nav pages. Returns -1 when the current path isn't a
-  // primary page — swipe is then a no-op so we don't accidentally yank users
-  // off secondary pages (winback, outreach, etc.) onto /admin/users.
-  const currentPrimaryIndex = useMemo(() => {
-    return primaryNavItems.findIndex(
-      (item) =>
-        location.pathname === item.path ||
-        (item.path !== '/admin' && location.pathname.startsWith(item.path + '/'))
-    );
+  const isActivePath = (path: string) =>
+    location.pathname === path ||
+    (path !== '/admin' && location.pathname.startsWith(path + '/'));
+
+  const activeGroupKey: GroupKey | null = useMemo(() => {
+    for (const g of GROUPS) {
+      if (g.items.some((i) => isActivePath(i.path))) return g.key;
+    }
+    return null;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
+
+  const currentPrimaryIndex = useMemo(
+    () => primaryNavItems.findIndex((item) => isActivePath(item.path)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [location.pathname]
+  );
 
   const swipeHandlers = useSwipeable({
     onSwipedLeft: () => {
       if (currentPrimaryIndex < 0) return;
       const next = currentPrimaryIndex + 1;
-      if (next < primaryNavItems.length) {
-        navigate(primaryNavItems[next].path);
-      }
+      if (next < primaryNavItems.length) navigate(primaryNavItems[next].path);
     },
     onSwipedRight: () => {
       if (currentPrimaryIndex < 0) return;
       const prev = currentPrimaryIndex - 1;
-      if (prev >= 0) {
-        navigate(primaryNavItems[prev].path);
-      }
+      if (prev >= 0) navigate(primaryNavItems[prev].path);
     },
     delta: 60,
     trackTouch: true,
@@ -158,193 +172,167 @@ export default function AdminPanel() {
     preventScrollOnSwipe: false,
   });
 
-  // Prefetch data on hover/touch for faster navigation
   const onPrefetch = useCallback((path: string) => handlePrefetch(path), [handlePrefetch]);
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow" />
+        <div className="h-8 w-8 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
       </div>
     );
   }
-
-  if (!profile?.admin_role) {
-    return null;
-  }
+  if (!profile?.admin_role) return null;
 
   const isSuperAdmin = profile.admin_role === 'super_admin';
 
-  const renderNavItem = (item: {
-    name: string;
-    path: string;
-    icon: React.ComponentType<{ className?: string }>;
-  }) => {
-    const isActive =
-      location.pathname === item.path ||
-      (item.path !== '/admin' && location.pathname.startsWith(item.path + '/'));
-    const Icon = item.icon;
-
+  const NavPill = ({ item }: { item: NavItem }) => {
+    const active = isActivePath(item.path);
     return (
-      <Button
+      <button
         key={item.path}
-        variant={isActive ? 'default' : 'ghost'}
-        size="sm"
         onClick={() => navigate(item.path)}
         onMouseEnter={() => onPrefetch(item.path)}
         onTouchStart={() => onPrefetch(item.path)}
         className={cn(
-          'shrink-0 gap-1.5 sm:gap-2 touch-manipulation h-11 sm:h-9 px-3 sm:px-4 text-xs sm:text-sm',
-          isActive
-            ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
-            : '!text-white hover:text-foreground'
+          'shrink-0 h-9 sm:h-10 px-3.5 sm:px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+          active
+            ? 'bg-elec-yellow text-black'
+            : 'text-white hover:text-white hover:bg-white/[0.05]'
         )}
       >
-        <Icon className="h-4 w-4" />
         {item.name}
-      </Button>
+      </button>
     );
   };
 
   return (
     <div className="bg-background min-h-screen -mt-3 sm:-mt-4 md:-mt-6">
-      {/* Offline Banner */}
       <OfflineBanner />
 
-      {/* Sticky Header — matches NativePageWrapper pattern */}
-      <header className="sticky top-0 z-40 bg-background border-b border-white/[0.06]">
-        <div className="px-4">
-          {/* Title Row */}
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-white/[0.06]">
+        <div className="px-4 sm:px-6 lg:px-8">
+          {/* Title row */}
           <div className="flex items-center h-14 gap-3">
             <button
               onClick={() => navigate('/dashboard')}
-              className="flex items-center justify-center -ml-2 h-11 w-11 rounded-xl hover:bg-white/5 active:scale-95 transition-all touch-manipulation"
+              aria-label="Back to app"
+              className="flex items-center justify-center -ml-2 h-10 w-10 rounded-full hover:bg-white/[0.05] active:scale-95 transition-all touch-manipulation"
             >
-              <ArrowLeft className="h-5 w-5 !text-white" />
+              <ArrowLeft className="h-5 w-5 text-white" />
             </button>
-
-            <div className="p-1.5 rounded-lg bg-red-500/10">
-              <Shield className="h-4 w-4 text-red-400" />
-            </div>
-
-            <div className="flex-1 min-w-0">
-              <span className="text-base font-semibold text-foreground">Admin Panel</span>
-              <div className="flex items-center gap-1.5">
-                {isSuperAdmin ? (
-                  <ShieldCheck className="h-3 w-3 text-red-400" />
-                ) : (
-                  <Shield className="h-3 w-3 text-orange-400" />
-                )}
-                <span className="text-xs !text-white">
-                  {isSuperAdmin ? 'Super Admin' : 'Admin'}
-                </span>
+            <div className="min-w-0 flex-1">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                {isSuperAdmin ? 'Super Admin' : 'Admin'}
               </div>
+              <div className="text-[15px] font-semibold text-white truncate">Admin Panel</div>
             </div>
+            <button
+              onClick={() => setPaletteOpen(true)}
+              aria-label="Open command palette"
+              className="shrink-0 flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.05] border border-white/[0.08] hover:bg-white/[0.08] text-white/80 hover:text-white transition-colors touch-manipulation"
+            >
+              <Search className="h-4 w-4" />
+              <span className="hidden sm:inline text-[12.5px]">Search</span>
+              <Kbd className="hidden sm:inline-flex">⌘K</Kbd>
+            </button>
           </div>
 
-          {/* Primary Navigation */}
-          <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
-            {primaryNavItems.map(renderNavItem)}
+          {/* Navigation rail */}
+          <nav
+            ref={dropdownRef}
+            className="relative flex items-center gap-1.5 pb-2 overflow-x-auto hide-scrollbar"
+          >
+            {primaryNavItems.map((item) => (
+              <NavPill key={item.path} item={item} />
+            ))}
 
-            {/* Campaigns Button */}
-            <Button
-              variant={showCampaigns ? 'secondary' : 'ghost'}
-              size="sm"
-              onClick={() => setShowCampaigns(!showCampaigns)}
-              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
-            >
-              Campaigns
-              {showCampaigns ? (
-                <ChevronUp className="h-3 w-3" />
-              ) : (
-                <ChevronDown className="h-3 w-3" />
-              )}
-            </Button>
+            <div className="mx-1 h-5 w-px bg-white/[0.08] shrink-0" aria-hidden />
 
-            {/* Moderation Button */}
-            <Button
-              variant={showModeration ? 'secondary' : 'ghost'}
-              size="sm"
-              onClick={() => setShowModeration(!showModeration)}
-              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
-            >
-              Moderation
-              {showModeration ? (
-                <ChevronUp className="h-3 w-3" />
-              ) : (
-                <ChevronDown className="h-3 w-3" />
-              )}
-            </Button>
+            {GROUPS.map((g) => {
+              const isOpen = openGroup === g.key;
+              const isActive = activeGroupKey === g.key;
+              return (
+                <div key={g.key} className="relative shrink-0">
+                  <button
+                    onClick={() => setOpenGroup(isOpen ? null : g.key)}
+                    className={cn(
+                      'shrink-0 h-9 sm:h-10 px-3.5 sm:px-4 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation flex items-center gap-1.5',
+                      isOpen || isActive
+                        ? 'bg-white/[0.08] text-white'
+                        : 'text-white hover:text-white hover:bg-white/[0.05]'
+                    )}
+                  >
+                    {g.label}
+                    <ChevronDown
+                      className={cn(
+                        'h-3.5 w-3.5 transition-transform',
+                        isOpen && 'rotate-180'
+                      )}
+                    />
+                  </button>
+                </div>
+              );
+            })}
+          </nav>
 
-            {/* Billing Button */}
-            <Button
-              variant={showBilling ? 'secondary' : 'ghost'}
-              size="sm"
-              onClick={() => setShowBilling(!showBilling)}
-              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
-            >
-              Billing
-              {showBilling ? (
-                <ChevronUp className="h-3 w-3" />
-              ) : (
-                <ChevronDown className="h-3 w-3" />
-              )}
-            </Button>
-
-            {/* Tools Button */}
-            <Button
-              variant={showTools ? 'secondary' : 'ghost'}
-              size="sm"
-              onClick={() => setShowTools(!showTools)}
-              className="shrink-0 gap-1 touch-manipulation h-11 sm:h-9 px-3 text-xs sm:text-sm !text-white"
-            >
-              Tools
-              {showTools ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-            </Button>
-          </div>
+          {/* Dropdown panel */}
+          <AnimatePresence>
+            {openGroup && (
+              <motion.div
+                key={openGroup}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute left-0 right-0 top-full bg-background/98 backdrop-blur border-b border-white/[0.08] shadow-2xl"
+              >
+                <div className="px-4 sm:px-6 lg:px-8 py-3">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
+                    {GROUPS.find((g) => g.key === openGroup)?.label}
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {GROUPS.find((g) => g.key === openGroup)?.items.map((item) => {
+                      const active = isActivePath(item.path);
+                      return (
+                        <button
+                          key={item.path}
+                          onClick={() => {
+                            setOpenGroup(null);
+                            navigate(item.path);
+                          }}
+                          onMouseEnter={() => onPrefetch(item.path)}
+                          onTouchStart={() => onPrefetch(item.path)}
+                          className={cn(
+                            'h-9 px-3.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+                            active
+                              ? 'bg-elec-yellow text-black'
+                              : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.08] hover:text-white'
+                          )}
+                        >
+                          {item.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-
-        {/* Campaigns Navigation - Expandable */}
-        {showCampaigns && (
-          <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-              {campaignNavItems.map(renderNavItem)}
-            </div>
-          </div>
-        )}
-
-        {/* Moderation Navigation - Expandable */}
-        {showModeration && (
-          <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-              {moderationNavItems.map(renderNavItem)}
-            </div>
-          </div>
-        )}
-
-        {/* Billing Navigation - Expandable */}
-        {showBilling && (
-          <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-              {billingNavItems.map(renderNavItem)}
-            </div>
-          </div>
-        )}
-
-        {/* Tools Navigation - Expandable */}
-        {showTools && (
-          <div className="px-4 pb-2 border-t border-white/[0.06] pt-2">
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-1">
-              {adminToolItems.map(renderNavItem)}
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* Admin Content — swipeable between primary pages */}
-      <div className="p-4 pb-20 safe-bottom" {...swipeHandlers}>
+      <div
+        className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-20 safe-bottom"
+        {...swipeHandlers}
+      >
         <Outlet />
       </div>
+
+      <CommandPalette
+        open={paletteOpen}
+        onOpenChange={setPaletteOpen}
+        items={commandItems}
+      />
     </div>
   );
 }
