@@ -5,6 +5,8 @@ export type NavItem = {
   adminOnly?: boolean;
   allowedEmails?: string[];
   dividerAfter?: boolean;
+  badge?: string;
+  badgeVariant?: 'early' | 'new';
 };
 
 export const mainNavItems: NavItem[] = [
@@ -22,6 +24,13 @@ export const mainNavItems: NavItem[] = [
     name: 'Electrical Hub',
     path: '/electrician',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
+  },
+  {
+    name: 'Mate',
+    path: '/electrician/business-ai',
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
+    badge: 'Early access',
+    badgeVariant: 'early',
   },
   {
     name: 'Employer Hub',

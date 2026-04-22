@@ -43,10 +43,22 @@ const SidebarNavLink = ({ item, onItemClick }: SidebarNavLinkProps) => {
         )}
       >
         <span className={cn(
-          'transition-colors duration-200',
+          'flex items-center gap-2 transition-colors duration-200',
           isActive ? 'text-elec-yellow font-semibold tracking-tight' : 'text-white font-medium'
         )}>
           {item.name}
+          {item.badge && (
+            <span
+              className={cn(
+                'text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded',
+                item.badgeVariant === 'early'
+                  ? 'bg-amber-500/15 border border-amber-500/40 text-amber-400'
+                  : 'bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow'
+              )}
+            >
+              {item.badge}
+            </span>
+          )}
         </span>
         {isActive && (
           <span className="w-1.5 h-5 rounded-full bg-elec-yellow" />
