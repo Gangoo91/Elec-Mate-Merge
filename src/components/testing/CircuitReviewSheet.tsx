@@ -75,6 +75,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
   const [circuits, setCircuits] = useState<DetectedCircuit[]>(initialCircuits);
   const [originalCircuits, setOriginalCircuits] = useState<DetectedCircuit[]>(initialCircuits);
   const [editingCircuit, setEditingCircuit] = useState<DetectedCircuit | null>(null);
+  const [newCircuit, setNewCircuit] = useState<DetectedCircuit | null>(null);
   const [isReversed, setIsReversed] = useState(false);
   const [showPhotoPreview, setShowPhotoPreview] = useState(false);
   const [showContributeModal, setShowContributeModal] = useState(false);
@@ -131,6 +132,46 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
       const filtered = prev.filter((c) => c.id !== id);
       return filtered.map((c, i) => ({ ...c, position: i + 1 }));
     });
+  };
+
+  const handleMoveCircuit = (id: string, direction: 'up' | 'down') => {
+    setCircuits((prev) => {
+      const idx = prev.findIndex((c) => c.id === id);
+      if (idx === -1) return prev;
+      const targetIdx = direction === 'up' ? idx - 1 : idx + 1;
+      if (targetIdx < 0 || targetIdx >= prev.length) return prev;
+      const next = [...prev];
+      [next[idx], next[targetIdx]] = [next[targetIdx], next[idx]];
+      return next.map((c, i) => ({ ...c, position: i + 1 }));
+    });
+  };
+
+  // Generate a blank circuit used to seed the Edit modal when the user taps
+  // "Add Circuit". `crypto.randomUUID` is available in all browsers we target
+  // (and on iOS Safari in Capacitor). Positioning is handled on save.
+  const handleStartAddCircuit = () => {
+    const blank: DetectedCircuit = {
+      id:
+        typeof crypto !== 'undefined' && 'randomUUID' in crypto
+          ? crypto.randomUUID()
+          : `new-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      position: circuits.length + 1,
+      label: '',
+      device: 'MCB',
+      rating: null,
+      curve: null,
+      confidence: 'high', // user is creating it manually → verified
+      phase: '1P',
+    };
+    setNewCircuit(blank);
+  };
+
+  const handleSaveNewCircuit = (added: DetectedCircuit) => {
+    setCircuits((prev) => {
+      const next = [...prev, added];
+      return next.map((c, i) => ({ ...c, position: i + 1 }));
+    });
+    setNewCircuit(null);
   };
 
   const handleAddAll = () => {
@@ -256,21 +297,25 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
             <div className="px-4 py-3 sm:px-6 sm:py-4">
               {/* Responsive: single column on mobile, 2-col on wider screens */}
               <div className="space-y-2 sm:space-y-2.5 md:grid md:grid-cols-2 md:gap-2.5 md:space-y-0">
-                {circuits.map((circuit) => (
+                {circuits.map((circuit, idx) => (
                   <CircuitReviewCard
                     key={circuit.id}
                     circuit={circuit}
                     onEdit={() => handleEditCircuit(circuit)}
                     onRemove={() => handleRemoveCircuit(circuit.id)}
+                    onMoveUp={() => handleMoveCircuit(circuit.id, 'up')}
+                    onMoveDown={() => handleMoveCircuit(circuit.id, 'down')}
+                    canMoveUp={idx > 0}
+                    canMoveDown={idx < circuits.length - 1}
                   />
                 ))}
               </div>
 
-              {/* Add circuit placeholder */}
+              {/* Add circuit — opens the edit modal pre-seeded with a blank
+                  circuit. Saves append to the end; user can then move it up
+                  to land it where they want (see handleMoveCircuit). */}
               <button
-                onClick={() => {
-                  // Could open an add circuit modal - for now just a visual cue
-                }}
+                onClick={handleStartAddCircuit}
                 className="mt-2.5 w-full py-3 rounded-xl border border-dashed border-white/10 text-white/80 text-sm font-medium flex items-center justify-center gap-2 hover:border-white/20 hover:text-white hover:bg-white/[0.02] transition-all touch-manipulation"
               >
                 <Plus className="h-4 w-4" />
@@ -322,12 +367,21 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
         </SheetContent>
       </Sheet>
 
-      {/* Edit modal */}
+      {/* Edit modal — existing circuit */}
       {editingCircuit && (
         <CircuitEditModal
           circuit={editingCircuit}
           onSave={handleUpdateCircuit}
           onClose={() => setEditingCircuit(null)}
+        />
+      )}
+
+      {/* Edit modal — new circuit (reuses the same component) */}
+      {newCircuit && (
+        <CircuitEditModal
+          circuit={newCircuit}
+          onSave={handleSaveNewCircuit}
+          onClose={() => setNewCircuit(null)}
         />
       )}
 

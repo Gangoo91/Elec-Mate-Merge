@@ -9,7 +9,15 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, AlertTriangle, CheckCircle2, CircleDot } from 'lucide-react';
+import {
+  Pencil,
+  Trash2,
+  AlertTriangle,
+  CheckCircle2,
+  CircleDot,
+  ChevronUp,
+  ChevronDown,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface DetectedCircuit {
@@ -33,6 +41,10 @@ interface CircuitReviewCardProps {
   circuit: DetectedCircuit;
   onEdit: () => void;
   onRemove: () => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
+  canMoveUp?: boolean;
+  canMoveDown?: boolean;
 }
 
 const confidenceConfig = {
@@ -63,6 +75,10 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
   circuit,
   onEdit,
   onRemove,
+  onMoveUp,
+  onMoveDown,
+  canMoveUp = false,
+  canMoveDown = false,
 }) => {
   const config = confidenceConfig[circuit.confidence];
   const ConfidenceIcon = config.icon;
@@ -134,10 +150,35 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
       {/* Right side: confidence + actions */}
       <div className="flex items-center gap-0.5 pr-1.5 flex-shrink-0">
         <ConfidenceIcon className={cn('h-4 w-4 flex-shrink-0', config.iconCls)} />
+        {onMoveUp && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onMoveUp}
+            disabled={!canMoveUp}
+            aria-label="Move up"
+            className="h-8 w-7 touch-manipulation text-white hover:text-white hover:bg-white/10 rounded-lg disabled:opacity-25 disabled:hover:bg-transparent"
+          >
+            <ChevronUp className="h-4 w-4" />
+          </Button>
+        )}
+        {onMoveDown && (
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={onMoveDown}
+            disabled={!canMoveDown}
+            aria-label="Move down"
+            className="h-8 w-7 touch-manipulation text-white hover:text-white hover:bg-white/10 rounded-lg disabled:opacity-25 disabled:hover:bg-transparent"
+          >
+            <ChevronDown className="h-4 w-4" />
+          </Button>
+        )}
         <Button
           variant="ghost"
           size="icon"
           onClick={onEdit}
+          aria-label="Edit circuit"
           className="h-8 w-8 touch-manipulation text-white hover:text-white hover:bg-white/10 rounded-lg"
         >
           <Pencil className="h-3.5 w-3.5" />
@@ -146,6 +187,7 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
           variant="ghost"
           size="icon"
           onClick={onRemove}
+          aria-label="Remove circuit"
           className="h-8 w-8 touch-manipulation text-white/80 hover:text-red-400 hover:bg-red-500/10 rounded-lg"
         >
           <Trash2 className="h-3.5 w-3.5" />

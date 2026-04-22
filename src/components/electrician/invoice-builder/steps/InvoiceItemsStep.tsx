@@ -262,22 +262,40 @@ export const InvoiceItemsStep = ({
     setHoursSheetOpen(false);
   };
 
-  // Scanner handlers - keep sheet open during processing
+  // Scanner handlers - keep sheet open during processing.
+  // Any throw from scanner.handleCapture/Upload bubbled up as an
+  // undefined-result crash (ELE-718) — guard with try/catch + optional chaining.
   const handleScanCapture = async (imageData: string, file: File) => {
-    // Don't close sheet - let user see the processing state
-    const result = await scanner.handleCapture(imageData, file);
-    if (result.success && result.items.length > 0) {
-      setScannerSheetOpen(false);
-      setScanResultsOpen(true);
+    try {
+      const result = await scanner.handleCapture(imageData, file);
+      if (result?.success && (result.items?.length ?? 0) > 0) {
+        setScannerSheetOpen(false);
+        setScanResultsOpen(true);
+      }
+    } catch (err) {
+      console.error('[InvoiceItemsStep] Scan capture error:', err);
+      toast({
+        title: 'Scan failed',
+        description: 'We couldn\u2019t read that image. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
   const handleScanUpload = async (files: File[]) => {
-    // Don't close sheet - let user see the processing state
-    const result = await scanner.handleUpload(files);
-    if (result.success && result.items.length > 0) {
-      setScannerSheetOpen(false);
-      setScanResultsOpen(true);
+    try {
+      const result = await scanner.handleUpload(files);
+      if (result?.success && (result.items?.length ?? 0) > 0) {
+        setScannerSheetOpen(false);
+        setScanResultsOpen(true);
+      }
+    } catch (err) {
+      console.error('[InvoiceItemsStep] Scan upload error:', err);
+      toast({
+        title: 'Scan failed',
+        description: 'We couldn\u2019t read that upload. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 

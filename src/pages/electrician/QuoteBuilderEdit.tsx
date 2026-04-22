@@ -5,7 +5,7 @@ import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { Button } from '@/components/ui/button';
-import { Loader2, ArrowLeft, FileText } from 'lucide-react';
+import { Loader2, ArrowLeft, FileText, Copy } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 const QuoteBuilderEdit = () => {
@@ -168,6 +168,40 @@ const QuoteBuilderEdit = () => {
             </h1>
             <p className="text-[11px] text-white">Make changes to your quote</p>
           </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              // Strip identity + status fields so the new quote starts clean.
+              // The wizard generates a new quoteNumber on save.
+              const {
+                id: _id,
+                quoteNumber: _qn,
+                createdAt: _ca,
+                updatedAt: _ua,
+                accepted_at: _aa,
+                accepted_by_name: _abn,
+                accepted_by_email: _abe,
+                acceptance_status: _as,
+                acceptance_method: _am,
+                invoice_raised: _ir,
+                invoice_number: _in,
+                ...rest
+              } = quote;
+              const duplicate: Partial<Quote> = {
+                ...rest,
+                status: 'draft',
+                acceptance_status: 'pending',
+              };
+              navigate('/electrician/quote-builder/create', {
+                state: { duplicateFrom: duplicate, duplicateSourceNumber: quote.quoteNumber },
+              });
+            }}
+            className="h-9 px-3 rounded-lg text-white hover:bg-white/5 touch-manipulation active:scale-95 gap-1.5"
+          >
+            <Copy className="h-4 w-4" />
+            <span className="text-[13px] font-medium">Duplicate</span>
+          </Button>
         </div>
       </header>
 

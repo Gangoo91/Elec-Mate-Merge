@@ -6,6 +6,7 @@ import { ArrowLeft } from 'lucide-react';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useState, useEffect } from 'react';
+import type { Quote } from '@/types/quote';
 import { VoiceFormProvider } from '@/contexts/VoiceFormContext';
 import { useHaptic } from '@/hooks/useHaptic';
 import { Button } from '@/components/ui/button';
@@ -83,6 +84,14 @@ const QuoteBuilderCreate = () => {
 
   // Read projectId from URL — when coming from a project page
   const projectId = new URLSearchParams(location.search).get('projectId') || undefined;
+
+  // Duplicate source — passed via navigate state from QuoteBuilderEdit.
+  // When present, the wizard starts pre-populated with the source quote's
+  // content minus any identity/status fields (see ELE-776).
+  const duplicateFrom = (location.state as { duplicateFrom?: Partial<Quote> } | null)
+    ?.duplicateFrom;
+  const duplicateSourceNumber = (location.state as { duplicateSourceNumber?: string } | null)
+    ?.duplicateSourceNumber;
 
   // Load cost data, certificate data, or site visit data from sessionStorage
   useEffect(() => {
@@ -300,6 +309,20 @@ const QuoteBuilderCreate = () => {
             <p className="text-[12px] text-white mt-0.5">{materialsContext.materials.length} {materialsContext.materials.length === 1 ? 'item' : 'items'} pre-filled</p>
           </motion.div>
         )}
+        {duplicateFrom && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-4 mt-4 px-4 py-3 rounded-xl bg-sky-500/[0.06] border border-sky-500/15"
+          >
+            <p className="text-[13px] font-semibold text-sky-400">
+              Duplicated from {duplicateSourceNumber || 'existing quote'}
+            </p>
+            <p className="text-[12px] text-white mt-0.5">
+              A new quote number will be generated on save.
+            </p>
+          </motion.div>
+        )}
 
         {/* Main Content */}
         <main className="px-0 sm:px-2 py-3">
@@ -311,13 +334,20 @@ const QuoteBuilderCreate = () => {
             <QuoteWizard
               onQuoteGenerated={handleQuoteGenerated}
               initialQuote={
-                projectId
+                duplicateFrom
                   ? {
-                      project_id: projectId,
-                      ...(projectContext?.client && { client: projectContext.client }),
-                      ...(projectContext?.jobDetails && { jobDetails: projectContext.jobDetails }),
+                      ...duplicateFrom,
+                      ...(projectId && { project_id: projectId }),
                     }
-                  : undefined
+                  : projectId
+                    ? {
+                        project_id: projectId,
+                        ...(projectContext?.client && { client: projectContext.client }),
+                        ...(projectContext?.jobDetails && {
+                          jobDetails: projectContext.jobDetails,
+                        }),
+                      }
+                    : undefined
               }
               initialCostData={costContext}
               initialCertificateData={certificateContext}
