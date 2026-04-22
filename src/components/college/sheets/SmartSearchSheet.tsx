@@ -1,8 +1,6 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { storageGetJSONSync, storageSetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type {
@@ -10,8 +8,8 @@ import type {
   CollegeStaff,
   CollegeCohort,
 } from '@/contexts/CollegeSupabaseContext';
-import { getInitials, getStatusColour, getRoleLabel } from '@/utils/collegeHelpers';
-import { Search, GraduationCap, UserCog, UsersRound, Clock, X } from 'lucide-react';
+import { getInitials, getRoleLabel } from '@/utils/collegeHelpers';
+import { Pill, type Tone } from '@/components/college/primitives';
 
 const RECENT_SEARCHES_KEY = 'elecmate_college_recent_searches';
 const MAX_RECENT = 5;
@@ -29,6 +27,16 @@ interface RecentSearch {
   timestamp: number;
 }
 
+function statusTone(status: string): Tone {
+  const s = status.toLowerCase();
+  if (s.includes('active') || s.includes('complete') || s.includes('enrolled')) return 'green';
+  if (s.includes('pending') || s.includes('progress')) return 'amber';
+  if (s.includes('withdrawn') || s.includes('inactive') || s.includes('fail')) return 'red';
+  return 'yellow';
+}
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+
 export function SmartSearchSheet({
   open,
   onOpenChange,
@@ -41,12 +49,10 @@ export function SmartSearchSheet({
   const inputRef = useRef<HTMLInputElement>(null);
   const [recentSearches, setRecentSearches] = useState<RecentSearch[]>([]);
 
-  // Load recent searches from storage
   useEffect(() => {
     setRecentSearches(storageGetJSONSync<RecentSearch[]>(RECENT_SEARCHES_KEY, []));
   }, []);
 
-  // Focus input when sheet opens
   useEffect(() => {
     if (open) {
       setTimeout(() => inputRef.current?.focus(), 100);
@@ -122,47 +128,47 @@ export function SmartSearchSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           {/* Drag Handle */}
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
           {/* Search Header */}
-          <SheetHeader className="flex-shrink-0 px-4 pb-3">
+          <SheetHeader className="flex-shrink-0 px-5 pb-4">
             <SheetTitle className="sr-only">Search People</SheetTitle>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-              <Input
+              <input
                 ref={inputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search students, staff, cohorts..."
-                className="pl-9 pr-9 h-12 text-base touch-manipulation bg-elec-gray border-white/10 focus:border-elec-yellow"
+                placeholder="Search students, staff, cohorts…"
+                className="h-12 w-full pl-4 pr-11 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl text-white text-[14px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
               />
               {query && (
                 <button
-                  className="absolute right-3 top-1/2 -translate-y-1/2 h-6 w-6 flex items-center justify-center rounded-full bg-white/10 touch-manipulation"
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 h-7 w-7 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white text-[14px] touch-manipulation"
                   onClick={() => setQuery('')}
+                  aria-label="Clear"
                 >
-                  <X className="h-3.5 w-3.5 text-white" />
+                  ×
                 </button>
               )}
             </div>
           </SheetHeader>
 
           {/* Results */}
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 pb-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-5">
             {/* No query — show recent searches */}
             {!query.trim() && recentSearches.length > 0 && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
-                    Recent Searches
-                  </h3>
+                  <div className={eyebrow}>Recent Searches</div>
                   <button
-                    className="text-xs text-white touch-manipulation"
+                    type="button"
+                    className="text-[12px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
                     onClick={clearRecentSearches}
                   >
                     Clear
@@ -171,11 +177,11 @@ export function SmartSearchSheet({
                 {recentSearches.map((recent) => (
                   <button
                     key={recent.timestamp}
-                    className="w-full flex items-center gap-3 p-3 rounded-lg bg-elec-gray/50 hover:bg-elec-gray border border-white/5 touch-manipulation transition-colors"
+                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation transition-colors"
                     onClick={() => setQuery(recent.query)}
                   >
-                    <Clock className="h-4 w-4 text-white shrink-0" />
-                    <span className="text-sm text-white">{recent.query}</span>
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/30 shrink-0" />
+                    <span className="text-[13px] text-white">{recent.query}</span>
                   </button>
                 ))}
               </div>
@@ -183,10 +189,9 @@ export function SmartSearchSheet({
 
             {/* No query, no recent */}
             {!query.trim() && recentSearches.length === 0 && (
-              <div className="flex flex-col items-center justify-center py-16 text-center">
-                <Search className="h-12 w-12 text-white mb-3" />
-                <p className="text-sm font-medium text-white">Search everyone</p>
-                <p className="text-xs text-white mt-1">
+              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-14 text-center">
+                <div className="text-[14px] font-medium text-white">Search everyone</div>
+                <p className="mt-2 text-[12.5px] text-white/50 max-w-md mx-auto leading-relaxed">
                   Find students, staff, or cohorts by name, email, or ULN
                 </p>
               </div>
@@ -194,47 +199,40 @@ export function SmartSearchSheet({
 
             {/* Results with query */}
             {query.trim() && (
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {/* No results */}
                 {totalResults === 0 && (
-                  <div className="flex flex-col items-center py-12 text-center">
-                    <Search className="h-10 w-10 text-white mb-3" />
-                    <p className="text-sm text-white">No results for "{query}"</p>
+                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 text-center">
+                    <div className="text-[13px] text-white">No results for "{query}"</div>
                   </div>
                 )}
 
                 {/* Students */}
                 {results.students.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-2">
-                      <GraduationCap className="h-3.5 w-3.5 text-elec-yellow" />
-                      Students
-                      <Badge variant="secondary" className="text-[10px] ml-auto">
-                        {results.students.length}
-                      </Badge>
-                    </h3>
+                    <div className="flex items-center justify-between">
+                      <div className={eyebrow}>Students</div>
+                      <Pill tone="yellow">{results.students.length}</Pill>
+                    </div>
                     {results.students.map((student) => (
                       <button
                         key={student.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-lg bg-elec-gray/50 hover:bg-elec-gray border border-white/5 touch-manipulation transition-colors"
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation transition-colors"
                         onClick={() => handleSelectStudent(student)}
                       >
                         <Avatar className="h-9 w-9 shrink-0">
                           <AvatarImage src={student.photo_url ?? undefined} />
-                          <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-xs font-semibold">
+                          <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-[11px] font-semibold">
                             {getInitials(student.name)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0 text-left">
-                          <p className="text-sm font-medium text-white truncate">{student.name}</p>
-                          <p className="text-xs text-white truncate">{student.email}</p>
+                          <p className="text-[13px] font-medium text-white truncate">
+                            {student.name}
+                          </p>
+                          <p className="text-[11.5px] text-white/50 truncate">{student.email}</p>
                         </div>
-                        <Badge
-                          variant="outline"
-                          className={`${getStatusColour(student.status)} text-[10px] shrink-0`}
-                        >
-                          {student.status}
-                        </Badge>
+                        <Pill tone={statusTone(student.status)}>{student.status}</Pill>
                       </button>
                     ))}
                   </div>
@@ -243,37 +241,31 @@ export function SmartSearchSheet({
                 {/* Staff */}
                 {results.staff.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-2">
-                      <UserCog className="h-3.5 w-3.5 text-info" />
-                      Staff
-                      <Badge variant="secondary" className="text-[10px] ml-auto">
-                        {results.staff.length}
-                      </Badge>
-                    </h3>
+                    <div className="flex items-center justify-between">
+                      <div className={eyebrow}>Staff</div>
+                      <Pill tone="blue">{results.staff.length}</Pill>
+                    </div>
                     {results.staff.map((member) => (
                       <button
                         key={member.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-lg bg-elec-gray/50 hover:bg-elec-gray border border-white/5 touch-manipulation transition-colors"
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation transition-colors"
                         onClick={() => handleSelectStaff(member)}
                       >
                         <Avatar className="h-9 w-9 shrink-0">
                           <AvatarImage src={member.photo_url ?? undefined} />
-                          <AvatarFallback className="bg-info/10 text-info text-xs font-semibold">
+                          <AvatarFallback className="bg-blue-500/10 text-blue-400 text-[11px] font-semibold">
                             {getInitials(member.name)}
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0 text-left">
-                          <p className="text-sm font-medium text-white truncate">{member.name}</p>
-                          <p className="text-xs text-white truncate">
+                          <p className="text-[13px] font-medium text-white truncate">
+                            {member.name}
+                          </p>
+                          <p className="text-[11.5px] text-white/50 truncate">
                             {getRoleLabel(member.role)} — {member.department}
                           </p>
                         </div>
-                        <Badge
-                          variant="outline"
-                          className={`${getStatusColour(member.status)} text-[10px] shrink-0`}
-                        >
-                          {member.status}
-                        </Badge>
+                        <Pill tone={statusTone(member.status)}>{member.status}</Pill>
                       </button>
                     ))}
                   </div>
@@ -282,31 +274,25 @@ export function SmartSearchSheet({
                 {/* Cohorts */}
                 {results.cohorts.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-2">
-                      <UsersRound className="h-3.5 w-3.5 text-success" />
-                      Cohorts
-                      <Badge variant="secondary" className="text-[10px] ml-auto">
-                        {results.cohorts.length}
-                      </Badge>
-                    </h3>
+                    <div className="flex items-center justify-between">
+                      <div className={eyebrow}>Cohorts</div>
+                      <Pill tone="green">{results.cohorts.length}</Pill>
+                    </div>
                     {results.cohorts.map((cohort) => (
                       <button
                         key={cohort.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-lg bg-elec-gray/50 hover:bg-elec-gray border border-white/5 touch-manipulation transition-colors"
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation transition-colors"
                         onClick={() => handleSelectCohort(cohort)}
                       >
-                        <div className="h-9 w-9 rounded-full bg-success/10 flex items-center justify-center shrink-0">
-                          <UsersRound className="h-4 w-4 text-success" />
+                        <div className="h-9 w-9 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400" />
                         </div>
                         <div className="flex-1 min-w-0 text-left">
-                          <p className="text-sm font-medium text-white truncate">{cohort.name}</p>
+                          <p className="text-[13px] font-medium text-white truncate">
+                            {cohort.name}
+                          </p>
                         </div>
-                        <Badge
-                          variant="outline"
-                          className={`${getStatusColour(cohort.status)} text-[10px] shrink-0`}
-                        >
-                          {cohort.status}
-                        </Badge>
+                        <Pill tone={statusTone(cohort.status)}>{cohort.status}</Pill>
                       </button>
                     ))}
                   </div>

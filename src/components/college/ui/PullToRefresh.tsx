@@ -1,5 +1,4 @@
 import { useState, useRef, useCallback } from 'react';
-import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface PullToRefreshProps {
@@ -74,15 +73,16 @@ export function PullToRefresh({ onRefresh, children, className }: PullToRefreshP
           opacity: Math.min(pullDistance / THRESHOLD, 1),
         }}
       >
-        <Loader2
+        <span
           className={cn(
-            'h-5 w-5 text-elec-yellow transition-transform duration-200',
+            'h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow transition-transform duration-200',
             isRefreshing && 'animate-spin',
             pullDistance >= THRESHOLD && !isRefreshing && 'scale-125'
           )}
           style={{
             transform: isRefreshing ? undefined : `rotate(${(pullDistance / THRESHOLD) * 360}deg)`,
           }}
+          aria-hidden
         />
       </div>
 

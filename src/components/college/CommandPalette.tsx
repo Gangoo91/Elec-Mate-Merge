@@ -10,27 +10,8 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from '@/components/ui/command';
-import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import {
-  Search,
-  Users,
-  GraduationCap,
-  UserCog,
-  BookOpen,
-  ClipboardCheck,
-  FolderOpen,
-  FileText,
-  Calendar,
-  Settings,
-  Plus,
-  ArrowRight,
-  Sparkles,
-  Zap,
-  LayoutDashboard,
-  UsersRound,
-  Building2,
-} from 'lucide-react';
+import { Pill, type Tone } from '@/components/college/primitives';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
 interface CommandPaletteProps {
@@ -40,67 +21,43 @@ interface CommandPaletteProps {
 }
 
 export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPaletteProps) {
-  const { students, staff, courses, cohorts, grades: assessments } = useCollegeSupabase();
+  const { students, staff, courses, cohorts: _cohorts, grades: assessments } = useCollegeSupabase();
   const [search, setSearch] = useState('');
 
-  // Reset search when dialog closes
   useEffect(() => {
     if (!open) setSearch('');
   }, [open]);
 
-  // Navigation items
-  const navigationItems = [
-    {
-      label: 'Overview',
-      section: 'overview' as CollegeSection,
-      icon: LayoutDashboard,
-      shortcut: 'G O',
-    },
-    { label: 'People Hub', section: 'peoplehub' as CollegeSection, icon: Users, shortcut: 'G P' },
-    {
-      label: 'Curriculum Hub',
-      section: 'curriculumhub' as CollegeSection,
-      icon: BookOpen,
-      shortcut: 'G C',
-    },
-    {
-      label: 'Assessment Hub',
-      section: 'assessmenthub' as CollegeSection,
-      icon: ClipboardCheck,
-      shortcut: 'G A',
-    },
-    {
-      label: 'Resources Hub',
-      section: 'resourceshub' as CollegeSection,
-      icon: FolderOpen,
-      shortcut: 'G R',
-    },
+  const navigationItems: { label: string; section: CollegeSection; shortcut: string }[] = [
+    { label: 'Overview', section: 'overview', shortcut: 'G O' },
+    { label: 'People Hub', section: 'peoplehub', shortcut: 'G P' },
+    { label: 'Curriculum Hub', section: 'curriculumhub', shortcut: 'G C' },
+    { label: 'Assessment Hub', section: 'assessmenthub', shortcut: 'G A' },
+    { label: 'Resources Hub', section: 'resourceshub', shortcut: 'G R' },
   ];
 
-  const sectionItems = [
-    { label: 'Students', section: 'students' as CollegeSection, icon: GraduationCap },
-    { label: 'Tutors', section: 'tutors' as CollegeSection, icon: UserCog },
-    { label: 'Cohorts', section: 'cohorts' as CollegeSection, icon: UsersRound },
-    { label: 'Courses', section: 'courses' as CollegeSection, icon: BookOpen },
-    { label: 'Grading', section: 'grading' as CollegeSection, icon: ClipboardCheck },
-    { label: 'Portfolios', section: 'portfolio' as CollegeSection, icon: FolderOpen },
-    { label: 'Attendance', section: 'attendance' as CollegeSection, icon: Calendar },
-    { label: 'ILP Management', section: 'ilpmanagement' as CollegeSection, icon: FileText },
-    { label: 'EPA Tracking', section: 'epatracking' as CollegeSection, icon: Zap },
-    { label: 'Employer Portal', section: 'employerportal' as CollegeSection, icon: Building2 },
-    { label: 'LTI Settings', section: 'ltisettings' as CollegeSection, icon: Settings },
-    { label: 'College Settings', section: 'collegesettings' as CollegeSection, icon: Settings },
+  const sectionItems: { label: string; section: CollegeSection }[] = [
+    { label: 'Students', section: 'students' },
+    { label: 'Tutors', section: 'tutors' },
+    { label: 'Cohorts', section: 'cohorts' },
+    { label: 'Courses', section: 'courses' },
+    { label: 'Grading', section: 'grading' },
+    { label: 'Portfolios', section: 'portfolio' },
+    { label: 'Attendance', section: 'attendance' },
+    { label: 'ILP Management', section: 'ilpmanagement' },
+    { label: 'EPA Tracking', section: 'epatracking' },
+    { label: 'Employer Portal', section: 'employerportal' },
+    { label: 'LTI Settings', section: 'ltisettings' },
+    { label: 'College Settings', section: 'collegesettings' },
   ];
 
-  // Quick actions
   const quickActions = [
-    { label: 'Record Grade', action: 'grading', icon: ClipboardCheck },
-    { label: 'Add Student', action: 'students', icon: Plus },
-    { label: 'New Lesson Plan', action: 'lessonplans', icon: Plus },
-    { label: 'Take Attendance', action: 'attendance', icon: Calendar },
+    { label: 'Record grade', action: 'grading' as CollegeSection },
+    { label: 'Add student', action: 'students' as CollegeSection },
+    { label: 'New lesson plan', action: 'lessonplans' as CollegeSection },
+    { label: 'Take attendance', action: 'attendance' as CollegeSection },
   ];
 
-  // Filter search results
   const filteredStudents = useMemo(() => {
     if (!search || search.length < 2) return [];
     const query = search.toLowerCase();
@@ -159,20 +116,16 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
     [onNavigate, onOpenChange]
   );
 
-  const getRoleColor = (role: string) => {
-    switch (role) {
-      case 'tutor':
-        return 'bg-info/10 text-info';
-      case 'assessor':
-        return 'bg-success/10 text-success';
-      case 'iqa':
-        return 'bg-warning/10 text-warning';
-      case 'head_of_department':
-        return 'bg-purple-500/10 text-purple-500';
-      default:
-        return 'bg-muted text-white';
-    }
-  };
+  const roleTone = (role: string): Tone =>
+    role === 'tutor'
+      ? 'blue'
+      : role === 'assessor'
+        ? 'emerald'
+        : role === 'iqa'
+          ? 'amber'
+          : role === 'head_of_department'
+            ? 'purple'
+            : 'yellow';
 
   const formatRole = (role: string) => {
     switch (role) {
@@ -190,6 +143,12 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         return role;
     }
   };
+
+  const statusTone = (status: string): Tone =>
+    status === 'Active' ? 'green' : status === 'Withdrawn' ? 'red' : 'yellow';
+
+  const assessmentStatusTone = (status: string | null): Tone =>
+    status === 'Graded' ? 'green' : status === 'Pending' ? 'amber' : 'blue';
 
   const hasSearchResults =
     filteredStudents.length > 0 ||
@@ -211,14 +170,14 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
       />
       <CommandList>
         <CommandEmpty>
-          <div className="py-6 text-center">
-            <Search className="h-8 w-8 text-white mx-auto mb-2 opacity-50" />
-            <p className="text-sm text-white">No results found</p>
-            <p className="text-xs text-white mt-1">Try searching for students, staff, or courses</p>
+          <div className="py-8 text-center">
+            <p className="text-[13px] font-medium text-white">No results</p>
+            <p className="mt-1 text-[11.5px] text-white/50">
+              Try searching for students, staff or courses.
+            </p>
           </div>
         </CommandEmpty>
 
-        {/* Search Results */}
         {filteredStudents.length > 0 && (
           <CommandGroup heading="Students">
             {filteredStudents.map((student) => {
@@ -240,12 +199,12 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium">{student.full_name}</p>
-                    <p className="text-xs text-white truncate">{student.apprenticeship_standard}</p>
+                    <p className="text-[13px] font-medium text-white">{student.full_name}</p>
+                    <p className="text-[11px] text-white/50 truncate">
+                      {student.apprenticeship_standard}
+                    </p>
                   </div>
-                  <Badge variant="outline" className="text-xs">
-                    {student.status}
-                  </Badge>
+                  <Pill tone={statusTone(student.status)}>{student.status}</Pill>
                 </CommandItem>
               );
             })}
@@ -268,14 +227,14 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                   className="flex items-center gap-3"
                 >
                   <Avatar className="h-8 w-8">
-                    <AvatarFallback className={`text-xs ${getRoleColor(member.role)}`}>
+                    <AvatarFallback className="text-xs bg-blue-500/10 text-blue-400">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium">{member.full_name}</p>
-                    <p className="text-xs text-white">{formatRole(member.role)}</p>
+                    <p className="text-[13px] font-medium text-white">{member.full_name}</p>
                   </div>
+                  <Pill tone={roleTone(member.role)}>{formatRole(member.role)}</Pill>
                 </CommandItem>
               );
             })}
@@ -290,12 +249,13 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                 onSelect={() => handleSelect('courses')}
                 className="flex items-center gap-3"
               >
-                <div className="h-8 w-8 rounded bg-muted flex items-center justify-center">
-                  <BookOpen className="h-4 w-4" />
-                </div>
+                <span
+                  aria-hidden
+                  className="h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0"
+                />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{course.name}</p>
-                  <p className="text-xs text-white">{course.code}</p>
+                  <p className="text-[13px] font-medium text-white">{course.name}</p>
+                  <p className="text-[11px] text-white/50 tabular-nums">{course.code}</p>
                 </div>
               </CommandItem>
             ))}
@@ -310,16 +270,16 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                 onSelect={() => handleSelect('grading')}
                 className="flex items-center gap-3"
               >
-                <div className="h-8 w-8 rounded bg-muted flex items-center justify-center">
-                  <ClipboardCheck className="h-4 w-4" />
-                </div>
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-amber-400 shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{assessment.unit_name || 'Assessment'}</p>
-                  <p className="text-xs text-white">{assessment.assessment_type}</p>
+                  <p className="text-[13px] font-medium text-white">
+                    {assessment.unit_name || 'Assessment'}
+                  </p>
+                  <p className="text-[11px] text-white/50">{assessment.assessment_type}</p>
                 </div>
-                <Badge variant="outline" className="text-xs">
-                  {assessment.status}
-                </Badge>
+                {assessment.status && (
+                  <Pill tone={assessmentStatusTone(assessment.status)}>{assessment.status}</Pill>
+                )}
               </CommandItem>
             ))}
           </CommandGroup>
@@ -327,21 +287,21 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
 
         {hasSearchResults && <CommandSeparator />}
 
-        {/* Quick Actions - show when no search or minimal search */}
         {(!search || search.length < 2) && (
           <>
-            <CommandGroup heading="Quick Actions">
+            <CommandGroup heading="Quick actions">
               {quickActions.map((action) => (
                 <CommandItem
                   key={action.label}
-                  onSelect={() => handleSelect(action.action as CollegeSection)}
+                  onSelect={() => handleSelect(action.action)}
                   className="flex items-center gap-3"
                 >
-                  <div className="h-8 w-8 rounded bg-elec-yellow/10 flex items-center justify-center">
-                    <action.icon className="h-4 w-4 text-elec-yellow" />
-                  </div>
-                  <span>{action.label}</span>
-                  <ArrowRight className="h-3 w-3 text-white ml-auto" />
+                  <span
+                    aria-hidden
+                    className="h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0"
+                  />
+                  <span className="text-[13px] text-white flex-1">{action.label}</span>
+                  <span className="text-elec-yellow/70 text-[12px]">→</span>
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -355,8 +315,8 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                   onSelect={() => handleSelect(item.section)}
                   className="flex items-center gap-3"
                 >
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.label}</span>
+                  <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-white/40 shrink-0" />
+                  <span className="text-[13px] text-white">{item.label}</span>
                   <CommandShortcut>{item.shortcut}</CommandShortcut>
                 </CommandItem>
               ))}
@@ -364,15 +324,15 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
 
             <CommandSeparator />
 
-            <CommandGroup heading="Go to Section">
+            <CommandGroup heading="Go to section">
               {sectionItems.slice(0, 6).map((item) => (
                 <CommandItem
                   key={item.section}
                   onSelect={() => handleSelect(item.section)}
                   className="flex items-center gap-3"
                 >
-                  <item.icon className="h-4 w-4" />
-                  <span>{item.label}</span>
+                  <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-white/30 shrink-0" />
+                  <span className="text-[13px] text-white">{item.label}</span>
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -380,25 +340,22 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         )}
       </CommandList>
 
-      <div className="border-t p-2 flex items-center justify-between text-xs text-white">
+      <div className="border-t border-white/[0.06] p-3 flex items-center justify-between text-[11px] text-white/50">
         <div className="flex items-center gap-4">
-          <span className="flex items-center gap-1">
-            <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">↵</kbd>
+          <span className="flex items-center gap-1.5">
+            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[10px]">↵</kbd>
             Select
           </span>
-          <span className="flex items-center gap-1">
-            <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">↑↓</kbd>
+          <span className="flex items-center gap-1.5">
+            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[10px]">↑↓</kbd>
             Navigate
           </span>
-          <span className="flex items-center gap-1">
-            <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px]">Esc</kbd>
+          <span className="flex items-center gap-1.5">
+            <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[10px]">Esc</kbd>
             Close
           </span>
         </div>
-        <div className="flex items-center gap-1">
-          <Sparkles className="h-3 w-3 text-elec-yellow" />
-          <span>AI-powered search</span>
-        </div>
+        <span className="text-elec-yellow/70 text-[11px] font-medium">AI-powered</span>
       </div>
     </CommandDialog>
   );

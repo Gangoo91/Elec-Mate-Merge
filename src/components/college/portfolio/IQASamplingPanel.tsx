@@ -1,17 +1,6 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import {
   Select,
   SelectContent,
@@ -20,26 +9,23 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetFooter,
+} from '@/components/ui/sheet';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  CheckCircle2,
-  Clock,
-  AlertTriangle,
-  Search,
-  ClipboardCheck,
-  FileCheck,
-  Loader2,
-  Eye,
-  RefreshCw,
-} from 'lucide-react';
 import { useIQASampling, SamplingCandidate, SamplingRecord } from '@/hooks/college/useIQASampling';
+import {
+  SectionHeader,
+  StatStrip,
+  ListCard,
+  Pill,
+  EmptyState,
+  LoadingState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface IQASamplingPanelProps {
   onViewSubmission?: (submissionId: string) => void;
@@ -97,380 +83,332 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
     setActionRequired('');
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-GB', {
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
     });
-  };
 
-  const getStatusBadge = (status: string) => {
+  const getStatusTone = (status: string): Tone => {
     switch (status) {
       case 'verified':
-        return (
-          <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Verified</Badge>
-        );
+        return 'green';
       case 'concerns_raised':
-        return (
-          <Badge className="bg-red-500/10 text-red-500 border-red-500/20">Concerns Raised</Badge>
-        );
+        return 'red';
       default:
-        return (
-          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">Pending</Badge>
-        );
+        return 'amber';
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'verified':
+        return 'Verified';
+      case 'concerns_raised':
+        return 'Concerns Raised';
+      default:
+        return 'Pending';
     }
   };
 
   if (isLoading) {
-    return (
-      <Card className="bg-white/5 border-elec-gray/40">
-        <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        </CardContent>
-      </Card>
-    );
+    return <LoadingState />;
   }
 
   return (
     <div className="space-y-6">
       {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <Search className="h-5 w-5 text-blue-400" />
-              <div>
-                <p className="text-xs text-white">To Sample</p>
-                <p className="text-xl font-bold">{stats.pendingCandidates}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      <StatStrip
+        columns={5}
+        stats={[
+          { value: stats.pendingCandidates, label: 'To Sample', tone: 'blue' },
+          { value: stats.pendingVerification, label: 'Pending Review', tone: 'amber' },
+          { value: stats.verified, label: 'Verified', tone: 'green' },
+          { value: stats.concernsRaised, label: 'Concerns', tone: 'red' },
+          { value: stats.totalSampled, label: 'Total Sampled', accent: true },
+        ]}
+      />
 
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-amber-400" />
-              <div>
-                <p className="text-xs text-white">Pending Review</p>
-                <p className="text-xl font-bold">{stats.pendingVerification}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-5 w-5 text-green-400" />
-              <div>
-                <p className="text-xs text-white">Verified</p>
-                <p className="text-xl font-bold">{stats.verified}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-red-400" />
-              <div>
-                <p className="text-xs text-white">Concerns</p>
-                <p className="text-xl font-bold">{stats.concernsRaised}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
-              <div>
-                <p className="text-xs text-white">Total Sampled</p>
-                <p className="text-xl font-bold">{stats.totalSampled}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Main Tabs */}
+      {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <div className="flex items-center justify-between">
-          <TabsList className="bg-white/5 border border-elec-gray/40">
-            <TabsTrigger value="candidates">Sampling Candidates</TabsTrigger>
-            <TabsTrigger value="records">Sampling Records</TabsTrigger>
+        <div className="flex items-center justify-between gap-3">
+          <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
+            <TabsTrigger
+              value="candidates"
+              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            >
+              Sampling Candidates
+            </TabsTrigger>
+            <TabsTrigger
+              value="records"
+              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            >
+              Sampling Records
+            </TabsTrigger>
           </TabsList>
-          <Button
-            variant="outline"
-            size="sm"
+          <button
             onClick={() => {
               refetchCandidates();
               refetchRecords();
             }}
-            className="border-elec-gray/40"
+            className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
           >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
+            Refresh →
+          </button>
         </div>
 
-        <TabsContent value="candidates" className="mt-4">
-          <Card className="bg-white/5 border-elec-gray/40">
-            <CardHeader>
-              <CardTitle className="text-base">Submissions Available for Sampling</CardTitle>
-              <CardDescription>
-                Select submissions to add to your IQA sampling queue
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-elec-gray/40">
-                    <TableHead className="text-white">Student</TableHead>
-                    <TableHead className="text-white">Category</TableHead>
-                    <TableHead className="text-white">Assessor</TableHead>
-                    <TableHead className="text-white text-center">Grade</TableHead>
-                    <TableHead className="text-white text-center">Signed Off</TableHead>
-                    <TableHead className="text-white w-24"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {candidates.map((candidate) => (
-                    <TableRow key={candidate.id} className="border-elec-gray/40">
-                      <TableCell>
-                        <div>
-                          <p className="font-medium">{candidate.studentName}</p>
-                          <p className="text-xs text-white">{candidate.qualificationTitle}</p>
-                        </div>
-                      </TableCell>
-                      <TableCell>{candidate.categoryName}</TableCell>
-                      <TableCell className="text-white">{candidate.assessorName}</TableCell>
-                      <TableCell className="text-center">
-                        <Badge variant="outline" className="capitalize">
-                          {candidate.grade}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-center text-sm">
-                        {formatDate(candidate.signedOffAt)}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          {onViewSubmission && (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => onViewSubmission(candidate.id)}
-                            >
-                              <Eye className="h-4 w-4" />
-                            </Button>
-                          )}
-                          <Button
-                            size="sm"
-                            onClick={() => handleSample(candidate.id)}
-                            className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
-                          >
-                            Sample
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {candidates.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={6} className="text-center text-white py-12">
-                        No submissions available for sampling
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+        {/* Candidates */}
+        <TabsContent value="candidates" className="mt-6 space-y-4">
+          <div>
+            <SectionHeader
+              eyebrow="01 · Available"
+              title="Submissions Available for Sampling"
+            />
+            <p className="mt-2 text-[13px] text-white/55">
+              Select submissions to add to your IQA sampling queue
+            </p>
+          </div>
+
+          {candidates.length === 0 ? (
+            <EmptyState
+              title="No submissions available for sampling"
+              description="Signed-off submissions will appear here for IQA review."
+            />
+          ) : (
+            <ListCard>
+              {candidates.map((candidate) => (
+                <div
+                  key={candidate.id}
+                  className="px-5 sm:px-6 py-4 sm:py-5 flex flex-col sm:flex-row sm:items-center gap-4"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[15px] font-medium text-white truncate">
+                      {candidate.studentName}
+                    </div>
+                    <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                      {candidate.qualificationTitle} · {candidate.categoryName}
+                    </div>
+                    <div className="mt-2 flex flex-wrap items-center gap-2 text-[11.5px] text-white/45">
+                      <span>Assessor: {candidate.assessorName}</span>
+                      <span>·</span>
+                      <span>Signed off {formatDate(candidate.signedOffAt)}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <Pill tone="indigo" className="capitalize">
+                      {candidate.grade}
+                    </Pill>
+                    {onViewSubmission && (
+                      <button
+                        onClick={() => onViewSubmission(candidate.id)}
+                        className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                      >
+                        View
+                      </button>
+                    )}
+                    <button
+                      onClick={() => handleSample(candidate.id)}
+                      className="h-10 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
+                    >
+                      Sample
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </ListCard>
+          )}
         </TabsContent>
 
-        <TabsContent value="records" className="mt-4">
-          <Card className="bg-white/5 border-elec-gray/40">
-            <CardHeader>
-              <CardTitle className="text-base">Sampling Records</CardTitle>
-              <CardDescription>Review and verify sampled submissions</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow className="border-elec-gray/40">
-                    <TableHead className="text-white">Student</TableHead>
-                    <TableHead className="text-white">Category</TableHead>
-                    <TableHead className="text-white text-center">Sampled</TableHead>
-                    <TableHead className="text-white text-center">Status</TableHead>
-                    <TableHead className="text-white w-24"></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {samplingRecords.map((record) => (
-                    <TableRow key={record.id} className="border-elec-gray/40">
-                      <TableCell>
-                        <p className="font-medium">{record.studentName}</p>
-                      </TableCell>
-                      <TableCell>{record.categoryName}</TableCell>
-                      <TableCell className="text-center text-sm">
-                        {formatDate(record.sampledAt)}
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {getStatusBadge(record.verificationStatus)}
-                      </TableCell>
-                      <TableCell>
-                        {record.verificationStatus === 'pending' ? (
-                          <Button
-                            size="sm"
-                            onClick={() => setSelectedRecord(record)}
-                            className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
-                          >
-                            Review
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => setSelectedRecord(record)}
-                          >
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {samplingRecords.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center text-white py-12">
-                        No sampling records yet
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+        {/* Records */}
+        <TabsContent value="records" className="mt-6 space-y-4">
+          <div>
+            <SectionHeader eyebrow="02 · Records" title="Sampling Records" />
+            <p className="mt-2 text-[13px] text-white/55">
+              Review and verify sampled submissions
+            </p>
+          </div>
+
+          {samplingRecords.length === 0 ? (
+            <EmptyState
+              title="No sampling records yet"
+              description="Sampled submissions will appear here for verification."
+            />
+          ) : (
+            <ListCard>
+              {samplingRecords.map((record) => (
+                <div
+                  key={record.id}
+                  className="px-5 sm:px-6 py-4 sm:py-5 flex items-center gap-4"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[15px] font-medium text-white truncate">
+                      {record.studentName}
+                    </div>
+                    <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                      {record.categoryName} · Sampled {formatDate(record.sampledAt)}
+                    </div>
+                  </div>
+                  <Pill tone={getStatusTone(record.verificationStatus)}>
+                    {getStatusLabel(record.verificationStatus)}
+                  </Pill>
+                  <button
+                    onClick={() => setSelectedRecord(record)}
+                    className={
+                      record.verificationStatus === 'pending'
+                        ? 'h-10 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation'
+                        : 'text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation'
+                    }
+                  >
+                    {record.verificationStatus === 'pending' ? 'Review' : 'View'}
+                  </button>
+                </div>
+              ))}
+            </ListCard>
+          )}
         </TabsContent>
       </Tabs>
 
-      {/* Verification Dialog */}
-      <Dialog open={!!selectedRecord} onOpenChange={() => setSelectedRecord(null)}>
-        <DialogContent className="bg-elec-dark border-elec-gray/40 max-w-lg">
-          <DialogHeader>
-            <DialogTitle>IQA Verification</DialogTitle>
-            <DialogDescription>
-              {selectedRecord?.studentName} - {selectedRecord?.categoryName}
-            </DialogDescription>
-          </DialogHeader>
+      {/* Verification Sheet (converted from Dialog) */}
+      <Sheet open={!!selectedRecord} onOpenChange={(open) => !open && setSelectedRecord(null)}>
+        <SheetContent
+          side="bottom"
+          className="h-auto max-h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+        >
+          <div className="flex flex-col">
+            <div className="flex justify-center pt-2.5 pb-1">
+              <div className="h-1 w-10 rounded-full bg-white/20" />
+            </div>
+            <SheetHeader className="px-5 pb-4">
+              <SheetTitle className="text-base text-white">IQA Verification</SheetTitle>
+              <p className="text-[12.5px] text-white/55 mt-1">
+                {selectedRecord?.studentName} — {selectedRecord?.categoryName}
+              </p>
+            </SheetHeader>
 
-          {selectedRecord?.verificationStatus === 'pending' ? (
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label>Verification Decision *</Label>
-                <Select value={verificationStatus} onValueChange={setVerificationStatus}>
-                  <SelectTrigger className="bg-white/5 border-elec-gray/40">
-                    <SelectValue placeholder="Select decision" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-gray/40">
-                    <SelectItem value="verified">Verified - Assessment Accurate</SelectItem>
-                    <SelectItem value="concerns_raised">Concerns Raised</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="px-5 pb-4 overflow-y-auto flex-1">
+              {selectedRecord?.verificationStatus === 'pending' ? (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label className="text-[12.5px] text-white/70">Verification Decision *</Label>
+                    <Select value={verificationStatus} onValueChange={setVerificationStatus}>
+                      <SelectTrigger className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white focus:border-elec-yellow/60 rounded-xl">
+                        <SelectValue placeholder="Select decision" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+                        <SelectItem value="verified">Verified — Assessment Accurate</SelectItem>
+                        <SelectItem value="concerns_raised">Concerns Raised</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              <div className="space-y-2">
-                <Label>Assessor Feedback Quality</Label>
-                <Select value={feedbackQuality} onValueChange={setFeedbackQuality}>
-                  <SelectTrigger className="bg-white/5 border-elec-gray/40">
-                    <SelectValue placeholder="Rate feedback quality" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-gray/40">
-                    <SelectItem value="excellent">Excellent</SelectItem>
-                    <SelectItem value="good">Good</SelectItem>
-                    <SelectItem value="adequate">Adequate</SelectItem>
-                    <SelectItem value="needs_improvement">Needs Improvement</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                  <div className="space-y-2">
+                    <Label className="text-[12.5px] text-white/70">Assessor Feedback Quality</Label>
+                    <Select value={feedbackQuality} onValueChange={setFeedbackQuality}>
+                      <SelectTrigger className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white focus:border-elec-yellow/60 rounded-xl">
+                        <SelectValue placeholder="Rate feedback quality" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+                        <SelectItem value="excellent">Excellent</SelectItem>
+                        <SelectItem value="good">Good</SelectItem>
+                        <SelectItem value="adequate">Adequate</SelectItem>
+                        <SelectItem value="needs_improvement">Needs Improvement</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              <div className="space-y-2">
-                <Label>Grading Accuracy</Label>
-                <Select value={gradingAccuracy} onValueChange={setGradingAccuracy}>
-                  <SelectTrigger className="bg-white/5 border-elec-gray/40">
-                    <SelectValue placeholder="Rate grading accuracy" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-elec-gray/40">
-                    <SelectItem value="accurate">Accurate</SelectItem>
-                    <SelectItem value="questionable">Questionable</SelectItem>
-                    <SelectItem value="inaccurate">Inaccurate</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
+                  <div className="space-y-2">
+                    <Label className="text-[12.5px] text-white/70">Grading Accuracy</Label>
+                    <Select value={gradingAccuracy} onValueChange={setGradingAccuracy}>
+                      <SelectTrigger className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white focus:border-elec-yellow/60 rounded-xl">
+                        <SelectValue placeholder="Rate grading accuracy" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+                        <SelectItem value="accurate">Accurate</SelectItem>
+                        <SelectItem value="questionable">Questionable</SelectItem>
+                        <SelectItem value="inaccurate">Inaccurate</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
 
-              <div className="space-y-2">
-                <Label>IQA Notes</Label>
-                <Textarea
-                  placeholder="Add verification notes..."
-                  value={iqaNotes}
-                  onChange={(e) => setIqaNotes(e.target.value)}
-                  className="bg-white/5 border-elec-gray/40"
-                />
-              </div>
+                  <div className="space-y-2">
+                    <Label className="text-[12.5px] text-white/70">IQA Notes</Label>
+                    <Textarea
+                      placeholder="Add verification notes…"
+                      value={iqaNotes}
+                      onChange={(e) => setIqaNotes(e.target.value)}
+                      className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 touch-manipulation text-base"
+                    />
+                  </div>
 
-              {verificationStatus === 'concerns_raised' && (
-                <div className="space-y-2">
-                  <Label>Action Required</Label>
-                  <Textarea
-                    placeholder="Describe the action required..."
-                    value={actionRequired}
-                    onChange={(e) => setActionRequired(e.target.value)}
-                    className="bg-white/5 border-elec-gray/40"
-                  />
+                  {verificationStatus === 'concerns_raised' && (
+                    <div className="space-y-2">
+                      <Label className="text-[12.5px] text-white/70">Action Required</Label>
+                      <Textarea
+                        placeholder="Describe the action required…"
+                        value={actionRequired}
+                        onChange={(e) => setActionRequired(e.target.value)}
+                        className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 touch-manipulation text-base"
+                      />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                      Status
+                    </div>
+                    <div className="mt-1 text-[14px] font-medium text-white capitalize">
+                      {selectedRecord?.verificationStatus.replace('_', ' ')}
+                    </div>
+                  </div>
+                  {selectedRecord?.iqaNotes && (
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                        IQA Notes
+                      </div>
+                      <p className="mt-1 text-[13px] text-white/70 leading-relaxed">
+                        {selectedRecord.iqaNotes}
+                      </p>
+                    </div>
+                  )}
+                  {selectedRecord?.actionRequired && (
+                    <div className="bg-[hsl(0_0%_12%)] border border-red-500/20 rounded-xl p-4">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-400">
+                        Action Required
+                      </div>
+                      <p className="mt-1 text-[13px] text-white/70 leading-relaxed">
+                        {selectedRecord.actionRequired}
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
-          ) : (
-            <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white">Status</p>
-                <p className="font-medium capitalize">{selectedRecord?.verificationStatus}</p>
-              </div>
-              {selectedRecord?.iqaNotes && (
-                <div className="p-4 rounded-lg bg-white/5">
-                  <p className="text-sm text-white">IQA Notes</p>
-                  <p>{selectedRecord.iqaNotes}</p>
-                </div>
-              )}
-              {selectedRecord?.actionRequired && (
-                <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                  <p className="text-sm text-red-400">Action Required</p>
-                  <p>{selectedRecord.actionRequired}</p>
-                </div>
-              )}
-            </div>
-          )}
 
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setSelectedRecord(null)}>
-              {selectedRecord?.verificationStatus === 'pending' ? 'Cancel' : 'Close'}
-            </Button>
-            {selectedRecord?.verificationStatus === 'pending' && (
-              <Button
-                onClick={handleVerification}
-                disabled={!verificationStatus || isSubmitting}
-                className="bg-elec-yellow text-black hover:bg-elec-yellow/80"
-              >
-                {isSubmitting ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
-                Submit Verification
-              </Button>
-            )}
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <SheetFooter className="border-t border-white/[0.06] p-5">
+              <div className="flex gap-3 w-full">
+                <button
+                  onClick={() => setSelectedRecord(null)}
+                  className="flex-1 h-11 px-5 rounded-full text-[13px] font-medium text-white/70 border border-white/[0.08] hover:bg-white/5 transition-colors touch-manipulation"
+                >
+                  {selectedRecord?.verificationStatus === 'pending' ? 'Cancel' : 'Close'}
+                </button>
+                {selectedRecord?.verificationStatus === 'pending' && (
+                  <button
+                    onClick={handleVerification}
+                    disabled={!verificationStatus || isSubmitting}
+                    className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+                  >
+                    {isSubmitting ? 'Submitting…' : 'Submit Verification'}
+                  </button>
+                )}
+              </div>
+            </SheetFooter>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

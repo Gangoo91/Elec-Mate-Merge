@@ -21,7 +21,6 @@ import {
 import { useCollegeGrades, useGradeAssessment } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
-import { CheckSquare, Loader2 } from 'lucide-react';
 
 interface RecordGradeDialogProps {
   open: boolean;
@@ -115,10 +114,7 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <CheckSquare className="h-5 w-5 text-elec-yellow" />
-            Record Grade
-          </DialogTitle>
+          <DialogTitle>Record grade</DialogTitle>
           <DialogDescription>
             Grade an assessment submission. All fields marked with * are required.
           </DialogDescription>
@@ -263,14 +259,7 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
                 isSubmitting || !formData.assessmentId || !formData.grade || !formData.assessorId
               }
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                'Record Grade'
-              )}
+              {isSubmitting ? 'Saving…' : 'Record Grade'}
             </Button>
           </DialogFooter>
         </form>

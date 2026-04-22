@@ -1,40 +1,28 @@
 /**
- * AssessmentCalendarSection — Calendar view for assessors planning site visits and assessments.
- * Month navigation, day grid, day detail, add assessment, upcoming list.
+ * AssessmentCalendarSection — Calendar view for assessors.
+ * Editorial redesign: typography-led, no icons.
  */
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import {
-  ChevronLeft,
-  ChevronRight,
-  Plus,
-  Calendar,
-  MapPin,
-  Clock,
-  User,
-  Eye,
-  MessageSquare,
-  ClipboardCheck,
-  Award,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  ListCard,
+  Pill,
+  EmptyState,
+  itemVariants,
+  toneDot,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface AssessmentCalendarSectionProps {
   onNavigate: (section: CollegeSection) => void;
 }
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-};
 
 type AssessmentType = 'Observation' | 'Professional Discussion' | 'Portfolio Review' | 'Gateway Meeting';
 
@@ -43,8 +31,8 @@ interface ScheduledAssessment {
   studentId: string;
   studentName: string;
   assessmentType: AssessmentType;
-  date: string; // YYYY-MM-DD
-  time: string; // HH:MM
+  date: string;
+  time: string;
   location: string;
   notes: string;
 }
@@ -56,23 +44,18 @@ const ASSESSMENT_TYPES: AssessmentType[] = [
   'Gateway Meeting',
 ];
 
-const typeColors: Record<AssessmentType, { dot: string; bg: string; text: string; border: string }> = {
-  Observation: { dot: 'bg-blue-400', bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20' },
-  'Professional Discussion': { dot: 'bg-purple-400', bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20' },
-  'Portfolio Review': { dot: 'bg-emerald-400', bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20' },
-  'Gateway Meeting': { dot: 'bg-amber-400', bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20' },
-};
-
-const typeIcons: Record<AssessmentType, typeof Eye> = {
-  Observation: Eye,
-  'Professional Discussion': MessageSquare,
-  'Portfolio Review': ClipboardCheck,
-  'Gateway Meeting': Award,
+const typeTone: Record<AssessmentType, Tone> = {
+  Observation: 'blue',
+  'Professional Discussion': 'purple',
+  'Portfolio Review': 'emerald',
+  'Gateway Meeting': 'amber',
 };
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSectionProps) {
+export function AssessmentCalendarSection({
+  onNavigate: _onNavigate,
+}: AssessmentCalendarSectionProps) {
   const { students } = useCollegeSupabase();
 
   const today = new Date();
@@ -81,10 +64,8 @@ export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSect
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
 
-  // Assessment data (local state)
   const [assessments, setAssessments] = useState<ScheduledAssessment[]>([]);
 
-  // Add form state
   const [newAssessment, setNewAssessment] = useState({
     studentId: '',
     assessmentType: 'Observation' as AssessmentType,
@@ -93,10 +74,8 @@ export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSect
     notes: '',
   });
 
-  // Calendar calculations
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay(); // 0=Sun
-  // Convert to Mon=0 based
+  const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay();
   const startOffset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
 
   const monthName = new Date(currentYear, currentMonth).toLocaleDateString('en-GB', {
@@ -118,7 +97,6 @@ export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSect
     return map;
   }, [assessments]);
 
-  // Navigation
   const handlePrevMonth = () => {
     if (currentMonth === 0) {
       setCurrentMonth(11);
@@ -139,17 +117,20 @@ export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSect
     setSelectedDay(null);
   };
 
-  // Selected day's assessments
-  const selectedDateStr = selectedDay ? getDateStr(selectedDay) : null;
-  const selectedDayAssessments = selectedDateStr ? (assessmentsByDate[selectedDateStr] || []) : [];
+  const goToToday = () => {
+    setCurrentYear(today.getFullYear());
+    setCurrentMonth(today.getMonth());
+    setSelectedDay(today.getDate());
+  };
 
-  // Upcoming 7 days
+  const selectedDateStr = selectedDay ? getDateStr(selectedDay) : null;
+  const selectedDayAssessments = selectedDateStr ? assessmentsByDate[selectedDateStr] || [] : [];
+
   const upcomingAssessments = useMemo(() => {
     const now = new Date();
     now.setHours(0, 0, 0, 0);
     const sevenDaysLater = new Date(now);
     sevenDaysLater.setDate(sevenDaysLater.getDate() + 7);
-
     return assessments
       .filter((a) => {
         const d = new Date(a.date);
@@ -161,7 +142,6 @@ export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSect
       });
   }, [assessments]);
 
-  // Add assessment handler
   const handleAddAssessment = () => {
     if (!newAssessment.studentId || !selectedDateStr) return;
     const student = students.find((s) => s.id === newAssessment.studentId);
@@ -176,320 +156,321 @@ export function AssessmentCalendarSection({ onNavigate }: AssessmentCalendarSect
       notes: newAssessment.notes,
     };
     setAssessments((prev) => [...prev, assessment]);
-    setNewAssessment({ studentId: '', assessmentType: 'Observation', time: '09:00', location: '', notes: '' });
+    setNewAssessment({
+      studentId: '',
+      assessmentType: 'Observation',
+      time: '09:00',
+      location: '',
+      notes: '',
+    });
     setShowAddForm(false);
   };
 
   const activeStudents = students.filter((s) => s.status === 'Active');
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
-      {/* Month Navigation */}
+    <PageFrame>
       <motion.div variants={itemVariants}>
-        <div className="card-surface overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 opacity-30" />
-          <div className="relative z-10 p-4 flex items-center justify-between">
+        <PageHero
+          eyebrow="Tools · Assessment Calendar"
+          title="Assessment calendar"
+          description="Schedule observations, professional discussions, portfolio reviews and gateway meetings."
+          tone="amber"
+          actions={
             <button
-              onClick={handlePrevMonth}
-              className="w-11 h-11 rounded-full bg-white/[0.05] border border-white/[0.06] flex items-center justify-center touch-manipulation active:scale-[0.98] transition-all"
+              onClick={goToToday}
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
             >
-              <ChevronLeft className="h-5 w-5 text-white" />
+              Today →
             </button>
-            <h2 className="text-base font-semibold text-white">{monthName}</h2>
-            <button
-              onClick={handleNextMonth}
-              className="w-11 h-11 rounded-full bg-white/[0.05] border border-white/[0.06] flex items-center justify-center touch-manipulation active:scale-[0.98] transition-all"
-            >
-              <ChevronRight className="h-5 w-5 text-white" />
-            </button>
-          </div>
+          }
+        />
+      </motion.div>
+
+      {/* Month Nav */}
+      <motion.div variants={itemVariants}>
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-2 flex items-center justify-between">
+          <button
+            onClick={handlePrevMonth}
+            className="h-10 px-4 text-[12.5px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
+          >
+            ← Previous
+          </button>
+          <h2 className="text-[13px] font-semibold text-white tracking-tight">{monthName}</h2>
+          <button
+            onClick={handleNextMonth}
+            className="h-10 px-4 text-[12.5px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
+          >
+            Next →
+          </button>
         </div>
       </motion.div>
 
       {/* Calendar Grid */}
       <motion.div variants={itemVariants}>
-        <div className="card-surface overflow-hidden">
-          <div className="relative z-10 p-3">
-            {/* Weekday headers */}
-            <div className="grid grid-cols-7 gap-1 mb-1">
-              {WEEKDAYS.map((day) => (
-                <div key={day} className="text-center text-[10px] font-medium text-white uppercase tracking-wider py-1">
-                  {day}
-                </div>
-              ))}
-            </div>
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3 sm:p-4">
+          <div className="grid grid-cols-7 gap-1 mb-2">
+            {WEEKDAYS.map((day) => (
+              <div
+                key={day}
+                className="text-center text-[10px] font-medium text-white/40 uppercase tracking-[0.14em] py-1"
+              >
+                {day}
+              </div>
+            ))}
+          </div>
 
-            {/* Day cells */}
-            <div className="grid grid-cols-7 gap-1">
-              {/* Empty cells for offset */}
-              {Array.from({ length: startOffset }).map((_, i) => (
-                <div key={`empty-${i}`} className="aspect-square" />
-              ))}
+          <div className="grid grid-cols-7 gap-1">
+            {Array.from({ length: startOffset }).map((_, i) => (
+              <div key={`empty-${i}`} className="aspect-square" />
+            ))}
 
-              {/* Day cells */}
-              {Array.from({ length: daysInMonth }).map((_, i) => {
-                const day = i + 1;
-                const dateStr = getDateStr(day);
-                const dayAssessments = assessmentsByDate[dateStr] || [];
-                const isToday = dateStr === todayStr;
-                const isSelected = selectedDay === day;
+            {Array.from({ length: daysInMonth }).map((_, i) => {
+              const day = i + 1;
+              const dateStr = getDateStr(day);
+              const dayAssessments = assessmentsByDate[dateStr] || [];
+              const isToday = dateStr === todayStr;
+              const isSelected = selectedDay === day;
+              const uniqueTypes = [...new Set(dayAssessments.map((a) => a.assessmentType))];
 
-                // Get unique assessment types for dots
-                const uniqueTypes = [...new Set(dayAssessments.map((a) => a.assessmentType))];
-
-                return (
-                  <button
-                    key={day}
-                    onClick={() => setSelectedDay(day === selectedDay ? null : day)}
+              return (
+                <button
+                  key={day}
+                  onClick={() => setSelectedDay(day === selectedDay ? null : day)}
+                  className={cn(
+                    'aspect-square rounded-lg flex flex-col items-center justify-center touch-manipulation transition-colors relative',
+                    isSelected
+                      ? 'bg-elec-yellow/15 ring-1 ring-elec-yellow/40'
+                      : isToday
+                        ? 'bg-white/[0.04] ring-1 ring-white/[0.08]'
+                        : 'hover:bg-white/[0.03]'
+                  )}
+                >
+                  <span
                     className={cn(
-                      'aspect-square rounded-lg flex flex-col items-center justify-center touch-manipulation active:scale-[0.95] transition-all relative',
-                      isSelected
-                        ? 'bg-elec-yellow/10 border border-elec-yellow/30'
-                        : isToday
-                        ? 'bg-blue-500/10 border border-blue-500/20'
-                        : 'hover:bg-white/[0.03] border border-transparent'
+                      'text-[13px] font-medium tabular-nums',
+                      isSelected ? 'text-elec-yellow' : isToday ? 'text-white' : 'text-white/70'
                     )}
                   >
-                    <span
-                      className={cn(
-                        'text-sm font-medium',
-                        isSelected ? 'text-elec-yellow' : isToday ? 'text-blue-400' : 'text-white'
-                      )}
-                    >
-                      {day}
-                    </span>
-                    {uniqueTypes.length > 0 && (
-                      <div className="flex gap-0.5 mt-0.5">
-                        {uniqueTypes.slice(0, 3).map((type) => (
-                          <div
-                            key={type}
-                            className={cn('w-1.5 h-1.5 rounded-full', typeColors[type].dot)}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
+                    {day}
+                  </span>
+                  {uniqueTypes.length > 0 && (
+                    <div className="flex gap-0.5 mt-1">
+                      {uniqueTypes.slice(0, 3).map((type) => (
+                        <div
+                          key={type}
+                          className={cn('w-1 h-1 rounded-full', toneDot[typeTone[type]])}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </motion.div>
 
       {/* Day Detail */}
       {selectedDay !== null && (
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-              {new Date(currentYear, currentMonth, selectedDay).toLocaleDateString('en-GB', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-              })}
-            </h2>
-            <button
-              onClick={() => setShowAddForm(!showAddForm)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-elec-yellow text-black text-xs font-semibold touch-manipulation active:scale-[0.98] transition-all h-11 min-h-[44px]"
-            >
-              <Plus className="h-3.5 w-3.5" />
-              Add Assessment
-            </button>
-          </div>
+        <motion.section variants={itemVariants} className="space-y-5">
+          <SectionHeader
+            eyebrow={new Date(currentYear, currentMonth, selectedDay).toLocaleDateString(
+              'en-GB',
+              { weekday: 'long' }
+            )}
+            title={new Date(currentYear, currentMonth, selectedDay).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            })}
+            action={showAddForm ? 'Cancel' : 'Add assessment'}
+            onAction={() => setShowAddForm(!showAddForm)}
+          />
 
-          {/* Add Assessment Form */}
           {showAddForm && (
-            <div className="card-surface overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 to-yellow-400 opacity-30" />
-              <div className="relative z-10 p-4 space-y-3">
-                {/* Student selector */}
-                <div>
-                  <label className="text-xs font-medium text-white uppercase tracking-wider mb-1.5 block">Student</label>
-                  <select
-                    value={newAssessment.studentId}
-                    onChange={(e) => setNewAssessment((p) => ({ ...p, studentId: e.target.value }))}
-                    className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
-                  >
-                    <option value="">Select a student...</option>
-                    {activeStudents.map((s) => (
-                      <option key={s.id} value={s.id}>{s.name}</option>
-                    ))}
-                  </select>
-                </div>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
+              <div>
+                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Student
+                </label>
+                <select
+                  value={newAssessment.studentId}
+                  onChange={(e) =>
+                    setNewAssessment((p) => ({ ...p, studentId: e.target.value }))
+                  }
+                  className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                >
+                  <option value="">Select a student…</option>
+                  {activeStudents.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-                {/* Assessment type */}
-                <div>
-                  <label className="text-xs font-medium text-white uppercase tracking-wider mb-1.5 block">Type</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {ASSESSMENT_TYPES.map((type) => {
-                      const Icon = typeIcons[type];
-                      const colors = typeColors[type];
-                      return (
-                        <button
-                          key={type}
-                          onClick={() => setNewAssessment((p) => ({ ...p, assessmentType: type }))}
-                          className={cn(
-                            'flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium border touch-manipulation active:scale-[0.98] transition-all h-11 min-h-[44px]',
-                            newAssessment.assessmentType === type
-                              ? `${colors.bg} ${colors.text} ${colors.border}`
-                              : 'bg-white/[0.02] text-white border-white/[0.06]'
-                          )}
-                        >
-                          <Icon className="h-3.5 w-3.5" />
-                          <span className="truncate">{type}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
+              <div>
+                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Type
+                </label>
+                <div className="mt-2 grid grid-cols-2 gap-1.5">
+                  {ASSESSMENT_TYPES.map((type) => {
+                    const selected = newAssessment.assessmentType === type;
+                    return (
+                      <button
+                        key={type}
+                        onClick={() =>
+                          setNewAssessment((p) => ({ ...p, assessmentType: type }))
+                        }
+                        className={cn(
+                          'h-11 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation flex items-center justify-center gap-1.5',
+                          selected
+                            ? 'bg-elec-yellow text-black'
+                            : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white/70 hover:text-white'
+                        )}
+                      >
+                        <span
+                          aria-hidden
+                          className={cn('w-1.5 h-1.5 rounded-full', toneDot[typeTone[type]])}
+                        />
+                        <span className="truncate">{type}</span>
+                      </button>
+                    );
+                  })}
                 </div>
+              </div>
 
-                {/* Time */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-medium text-white uppercase tracking-wider mb-1.5 block">Time</label>
+                  <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                    Time
+                  </label>
                   <input
                     type="time"
                     value={newAssessment.time}
                     onChange={(e) => setNewAssessment((p) => ({ ...p, time: e.target.value }))}
-                    className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
+                    className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] tabular-nums focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
                   />
                 </div>
-
-                {/* Location */}
                 <div>
-                  <label className="text-xs font-medium text-white uppercase tracking-wider mb-1.5 block">Location / Notes</label>
+                  <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                    Location / Notes
+                  </label>
                   <input
                     type="text"
                     placeholder="e.g. Site visit — 42 Oak Lane"
                     value={newAssessment.location}
-                    onChange={(e) => setNewAssessment((p) => ({ ...p, location: e.target.value }))}
-                    className="w-full h-11 px-3 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow/40 focus:outline-none touch-manipulation"
+                    onChange={(e) =>
+                      setNewAssessment((p) => ({ ...p, location: e.target.value }))
+                    }
+                    className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
                   />
                 </div>
+              </div>
 
-                {/* Submit */}
-                <div className="flex gap-2">
-                  <button
-                    onClick={handleAddAssessment}
-                    disabled={!newAssessment.studentId}
-                    className={cn(
-                      'flex-1 h-11 rounded-lg text-sm font-semibold touch-manipulation active:scale-[0.98] transition-all',
-                      newAssessment.studentId
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-white/[0.04] text-white border border-white/[0.06]'
-                    )}
-                  >
-                    Schedule
-                  </button>
-                  <button
-                    onClick={() => setShowAddForm(false)}
-                    className="h-11 px-4 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white text-sm touch-manipulation active:scale-[0.98] transition-all"
-                  >
-                    Cancel
-                  </button>
-                </div>
+              <div className="flex items-center justify-end gap-3 pt-1">
+                <button
+                  onClick={() => setShowAddForm(false)}
+                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleAddAssessment}
+                  disabled={!newAssessment.studentId}
+                  className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+                >
+                  Schedule →
+                </button>
               </div>
             </div>
           )}
 
-          {/* Day's Assessments */}
           {selectedDayAssessments.length === 0 ? (
-            <div className="card-surface p-6 text-center">
-              <Calendar className="h-8 w-8 text-white mx-auto mb-2" />
-              <p className="text-sm text-white">No assessments scheduled for this day.</p>
-            </div>
+            <EmptyState title="No assessments scheduled for this day" />
           ) : (
-            <div className="space-y-2">
+            <ListCard>
               {selectedDayAssessments
                 .sort((a, b) => a.time.localeCompare(b.time))
-                .map((assessment) => {
-                  const colors = typeColors[assessment.assessmentType];
-                  const Icon = typeIcons[assessment.assessmentType];
-                  return (
-                    <div key={assessment.id} className="card-surface-interactive overflow-hidden">
-                      <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-40', `from-${assessment.assessmentType === 'Observation' ? 'blue' : assessment.assessmentType === 'Professional Discussion' ? 'purple' : assessment.assessmentType === 'Portfolio Review' ? 'emerald' : 'amber'}-500`)} />
-                      <div className="relative z-10 p-3.5 flex items-center gap-3">
-                        <div className={cn('p-2 rounded-xl border', colors.bg, colors.border)}>
-                          <Icon className={cn('h-4 w-4', colors.text)} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-white">{assessment.studentName}</p>
-                          <div className="flex items-center gap-2 mt-0.5">
-                            <span className={cn('px-2 py-0.5 rounded-full text-[10px] font-semibold border', colors.bg, colors.text, colors.border)}>
-                              {assessment.assessmentType}
-                            </span>
-                            <span className="text-[11px] text-white flex items-center gap-1">
-                              <Clock className="h-3 w-3" />
-                              {assessment.time}
-                            </span>
+                .map((a) => (
+                  <div
+                    key={a.id}
+                    className="flex items-start gap-4 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors"
+                  >
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'w-[3px] self-stretch rounded-full shrink-0',
+                        toneDot[typeTone[a.assessmentType]]
+                      )}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline justify-between gap-2">
+                        <div className="min-w-0">
+                          <div className="text-[14px] font-medium text-white truncate">
+                            {a.studentName}
                           </div>
-                          {assessment.location && (
-                            <p className="text-[11px] text-white flex items-center gap-1 mt-1">
-                              <MapPin className="h-3 w-3" />
-                              {assessment.location}
-                            </p>
-                          )}
+                          <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                            {a.time}
+                            {a.location ? ` · ${a.location}` : ''}
+                          </div>
                         </div>
-                        <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center shrink-0">
-                          <ChevronRight className="w-3.5 h-3.5 text-elec-yellow" />
-                        </div>
+                        <Pill tone={typeTone[a.assessmentType]}>{a.assessmentType}</Pill>
                       </div>
                     </div>
-                  );
-                })}
-            </div>
+                  </div>
+                ))}
+            </ListCard>
           )}
         </motion.section>
       )}
 
-      {/* Upcoming Assessments */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">Upcoming (Next 7 Days)</h2>
+      {/* Upcoming 7 days */}
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader eyebrow="Upcoming" title="Next 7 days" />
         {upcomingAssessments.length === 0 ? (
-          <div className="card-surface p-6 text-center">
-            <p className="text-sm text-white">No assessments scheduled in the next 7 days.</p>
-          </div>
+          <EmptyState title="Nothing scheduled in the next 7 days" />
         ) : (
-          <div className="space-y-2">
-            {upcomingAssessments.map((assessment) => {
-              const colors = typeColors[assessment.assessmentType];
-              const Icon = typeIcons[assessment.assessmentType];
-              const dateLabel = new Date(assessment.date).toLocaleDateString('en-GB', {
+          <ListCard>
+            {upcomingAssessments.map((a) => {
+              const dateLabel = new Date(a.date).toLocaleDateString('en-GB', {
                 weekday: 'short',
                 day: 'numeric',
                 month: 'short',
               });
-
               return (
-                <div key={assessment.id} className="card-surface-interactive overflow-hidden">
-                  <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-30', `from-${assessment.assessmentType === 'Observation' ? 'blue' : assessment.assessmentType === 'Professional Discussion' ? 'purple' : assessment.assessmentType === 'Portfolio Review' ? 'emerald' : 'amber'}-500`)} />
-                  <div className="relative z-10 p-3.5 flex items-center gap-3">
-                    <div className={cn('p-2 rounded-xl border', colors.bg, colors.border)}>
-                      <Icon className={cn('h-4 w-4', colors.text)} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-white">{assessment.studentName}</p>
-                      <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-                        <span className={cn('px-2 py-0.5 rounded-full text-[10px] font-semibold border', colors.bg, colors.text, colors.border)}>
-                          {assessment.assessmentType}
-                        </span>
-                        <span className="text-[11px] text-white">{dateLabel} at {assessment.time}</span>
+                <div
+                  key={a.id}
+                  className="flex items-start gap-4 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors"
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'w-[3px] self-stretch rounded-full shrink-0',
+                      toneDot[typeTone[a.assessmentType]]
+                    )}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="text-[14px] font-medium text-white truncate">
+                          {a.studentName}
+                        </div>
+                        <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                          {dateLabel} · {a.time}
+                          {a.location ? ` · ${a.location}` : ''}
+                        </div>
                       </div>
-                      {assessment.location && (
-                        <p className="text-[11px] text-white flex items-center gap-1 mt-1">
-                          <MapPin className="h-3 w-3" />
-                          {assessment.location}
-                        </p>
-                      )}
-                    </div>
-                    <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center shrink-0">
-                      <ChevronRight className="w-3.5 h-3.5 text-elec-yellow" />
+                      <Pill tone={typeTone[a.assessmentType]}>{a.assessmentType}</Pill>
                     </div>
                   </div>
                 </div>
               );
             })}
-          </div>
+          </ListCard>
         )}
       </motion.section>
-    </motion.div>
+    </PageFrame>
   );
 }

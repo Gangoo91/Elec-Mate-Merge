@@ -1,38 +1,21 @@
 import { useState, useMemo } from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { useCollege } from '@/contexts/CollegeContext';
-import {
-  Bell,
-  MessageSquare,
-  AlertCircle,
-  CheckCircle2,
-  Clock,
-  FileText,
-  FolderOpen,
-  ClipboardCheck,
-  X,
-  Check,
-  ChevronRight,
-} from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
+import { Pill, toneDot, type Tone } from '@/components/college/primitives';
 
 interface NotificationCenterProps {
   onNavigate?: (section: string) => void;
 }
 
 export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
-  const { comments, workAssignments, assessments, portfolioEvidence, resolveComment } =
-    useCollege();
+  const { comments, workAssignments, assessments } = useCollege();
   const [open, setOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('all');
 
-  // Get notifications from various sources
   const notifications = useMemo(() => {
     const items: Array<{
       id: string;
@@ -50,7 +33,6 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
       isResolved: boolean;
     }> = [];
 
-    // Comments with @mentions or requiring action (for current user - staff-1 in mock)
     comments
       .filter(
         (c) => (c.mentions.includes('staff-1') || c.actionOwner === 'staff-1') && !c.isResolved
@@ -76,7 +58,6 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
         });
       });
 
-    // Work assignments pending
     workAssignments
       .filter((w) => w.assignedTo === 'staff-1' && w.status !== 'Completed')
       .forEach((work) => {
@@ -84,7 +65,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
           id: `work-${work.id}`,
           type: 'action',
           title: `${work.itemTitle}`,
-          description: `Assigned by ${work.assignedByName} - ${work.priority} priority`,
+          description: `Assigned by ${work.assignedByName} · ${work.priority} priority`,
           contextType: work.itemType,
           contextId: work.itemId,
           timestamp: work.createdAt,
@@ -94,7 +75,6 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
         });
       });
 
-    // Upcoming deadlines (assessments due soon)
     const today = new Date();
     const nextWeek = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
     assessments
@@ -108,7 +88,9 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
           id: `deadline-${assessment.id}`,
           type: 'deadline',
           title: `Assessment due soon`,
-          description: `${assessment.unitTitle} - Due ${new Date(assessment.dueDate!).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`,
+          description: `${assessment.unitTitle} · Due ${new Date(
+            assessment.dueDate!
+          ).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}`,
           contextType: 'assessment',
           contextId: assessment.id,
           timestamp: assessment.dueDate!,
@@ -118,7 +100,6 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
         });
       });
 
-    // Sort by timestamp (newest first)
     return items.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   }, [comments, workAssignments, assessments]);
 
@@ -133,46 +114,25 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
   const mentionCount = notifications.filter((n) => n.type === 'mention').length;
   const actionCount = notifications.filter((n) => n.requiresAction && !n.isResolved).length;
 
-  const getTypeIcon = (type: string) => {
-    switch (type) {
-      case 'mention':
-        return <MessageSquare className="h-4 w-4 text-info" />;
-      case 'action':
-        return <AlertCircle className="h-4 w-4 text-warning" />;
-      case 'deadline':
-        return <Clock className="h-4 w-4 text-destructive" />;
-      default:
-        return <Bell className="h-4 w-4" />;
-    }
-  };
+  const typeTone = (type: string): Tone =>
+    type === 'mention'
+      ? 'blue'
+      : type === 'action'
+        ? 'amber'
+        : type === 'deadline'
+          ? 'red'
+          : 'yellow';
 
-  const getContextIcon = (contextType: string) => {
-    switch (contextType) {
-      case 'evidence':
-        return <FileText className="h-3 w-3" />;
-      case 'portfolio':
-        return <FolderOpen className="h-3 w-3" />;
-      case 'assessment':
-        return <ClipboardCheck className="h-3 w-3" />;
-      default:
-        return <FileText className="h-3 w-3" />;
-    }
-  };
-
-  const getRoleColor = (role?: string) => {
-    switch (role) {
-      case 'tutor':
-        return 'bg-info/10 text-info';
-      case 'assessor':
-        return 'bg-success/10 text-success';
-      case 'iqa':
-        return 'bg-warning/10 text-warning';
-      case 'student':
-        return 'bg-elec-yellow/10 text-elec-yellow';
-      default:
-        return 'bg-muted text-muted-foreground';
-    }
-  };
+  const roleTone = (role?: string): Tone =>
+    role === 'tutor'
+      ? 'blue'
+      : role === 'assessor'
+        ? 'emerald'
+        : role === 'iqa'
+          ? 'amber'
+          : role === 'student'
+            ? 'yellow'
+            : 'yellow';
 
   const formatTime = (dateStr: string) => {
     const date = new Date(dateStr);
@@ -182,7 +142,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffMins < 1) return 'Just now';
+    if (diffMins < 1) return 'now';
     if (diffMins < 60) return `${diffMins}m`;
     if (diffHours < 24) return `${diffHours}h`;
     if (diffDays < 7) return `${diffDays}d`;
@@ -190,7 +150,6 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
   };
 
   const handleNotificationClick = (notification: (typeof notifications)[0]) => {
-    // Navigate to relevant section
     if (onNavigate) {
       switch (notification.contextType) {
         case 'evidence':
@@ -210,7 +169,6 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
 
   return (
     <>
-      {/* Backdrop scrim — dims page content behind panel, consistent with search overlay */}
       {open && (
         <div
           className="fixed inset-0 bg-black/50 z-40"
@@ -218,170 +176,171 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
         />
       )}
       <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn('relative', open && 'bg-elec-yellow/10 text-elec-yellow')}
+        <PopoverTrigger asChild>
+          <button
+            className={cn(
+              'text-[12.5px] font-medium transition-colors touch-manipulation whitespace-nowrap inline-flex items-center gap-1.5',
+              open ? 'text-elec-yellow' : 'text-white/70 hover:text-white'
+            )}
+          >
+            Alerts
+            {unreadCount > 0 && (
+              <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-semibold tabular-nums">
+                {unreadCount > 9 ? '9+' : unreadCount}
+              </span>
+            )}
+          </button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-[calc(100vw-1rem)] sm:w-96 p-0 z-50 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-2xl"
+          align="end"
         >
-          <Bell className="h-5 w-5" />
-          {unreadCount > 0 && (
-            <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-destructive text-destructive-foreground text-xs font-bold flex items-center justify-center animate-pulse">
-              {unreadCount > 9 ? '9+' : unreadCount}
-            </span>
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[calc(100vw-1rem)] sm:w-96 p-0 z-50" align="end">
-        <div className="p-4 border-b">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold flex items-center gap-2">
-              <Bell className="h-4 w-4" />
-              Notifications
-            </h3>
-            <div className="flex items-center gap-1">
+          <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
+            <div>
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                Notifications
+              </div>
+              <div className="mt-0.5 text-[13px] font-semibold text-white">
+                {unreadCount > 0 ? `${unreadCount} unread` : 'All caught up'}
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
               {unreadCount > 0 && (
-                <Button variant="ghost" size="sm" className="text-xs h-7">
+                <button className="text-[11.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation">
                   Mark all read
-                </Button>
+                </button>
               )}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7"
+              <button
                 onClick={() => setOpen(false)}
+                className="text-[11.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
               >
-                <X className="h-4 w-4" />
-              </Button>
+                Close
+              </button>
             </div>
           </div>
-        </div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full grid grid-cols-3 rounded-none border-b bg-transparent h-10">
-            <TabsTrigger
-              value="all"
-              className="text-xs data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none"
-            >
-              All
-              {unreadCount > 0 && (
-                <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-[10px]">
-                  {unreadCount}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger
-              value="mentions"
-              className="text-xs data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none"
-            >
-              @Mentions
-              {mentionCount > 0 && (
-                <Badge variant="secondary" className="ml-1 h-5 px-1.5 text-[10px]">
-                  {mentionCount}
-                </Badge>
-              )}
-            </TabsTrigger>
-            <TabsTrigger
-              value="actions"
-              className="text-xs data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none"
-            >
-              Actions
-              {actionCount > 0 && (
-                <Badge
-                  variant="secondary"
-                  className="ml-1 h-5 px-1.5 text-[10px] bg-warning/20 text-warning"
-                >
-                  {actionCount}
-                </Badge>
-              )}
-            </TabsTrigger>
-          </TabsList>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06]">
+              <TabsTrigger
+                value="all"
+                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
+              >
+                All
+                {unreadCount > 0 && (
+                  <span className="text-[10px] tabular-nums opacity-70">{unreadCount}</span>
+                )}
+              </TabsTrigger>
+              <TabsTrigger
+                value="mentions"
+                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
+              >
+                Mentions
+                {mentionCount > 0 && (
+                  <span className="text-[10px] tabular-nums opacity-70">{mentionCount}</span>
+                )}
+              </TabsTrigger>
+              <TabsTrigger
+                value="actions"
+                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
+              >
+                Actions
+                {actionCount > 0 && (
+                  <span className="text-[10px] font-semibold text-amber-400 tabular-nums">
+                    {actionCount}
+                  </span>
+                )}
+              </TabsTrigger>
+            </TabsList>
 
-          <ScrollArea className="max-h-[400px]">
-            <TabsContent value={activeTab} className="m-0">
-              {filteredNotifications.length === 0 ? (
-                <div className="py-10 text-center">
-                  <Bell className="h-8 w-8 text-muted-foreground mx-auto mb-2 opacity-30" />
-                  <p className="text-sm font-medium text-white">All caught up</p>
-                  <p className="text-xs text-muted-foreground mt-1">No notifications right now</p>
-                </div>
-              ) : (
-                <div className="divide-y">
-                  {filteredNotifications.map((notification) => (
-                    <div
-                      key={notification.id}
-                      className={cn(
-                        'p-3 hover:bg-muted/50 cursor-pointer active:bg-muted/70 transition-all touch-manipulation',
-                        !notification.isRead && 'bg-elec-yellow/5'
-                      )}
-                      onClick={() => handleNotificationClick(notification)}
-                    >
-                      <div className="flex gap-3">
-                        {notification.authorInitials ? (
-                          <Avatar className="h-9 w-9 shrink-0">
-                            <AvatarFallback
-                              className={cn(
-                                'text-xs font-semibold',
-                                getRoleColor(notification.authorRole)
-                              )}
-                            >
-                              {notification.authorInitials}
-                            </AvatarFallback>
-                          </Avatar>
-                        ) : (
-                          <div className="h-9 w-9 rounded-full bg-muted flex items-center justify-center shrink-0">
-                            {getTypeIcon(notification.type)}
-                          </div>
+            <ScrollArea className="max-h-[420px]">
+              <TabsContent value={activeTab} className="m-0">
+                {filteredNotifications.length === 0 ? (
+                  <div className="py-12 text-center">
+                    <div className="text-[13px] font-medium text-white">All caught up</div>
+                    <div className="mt-1 text-[11.5px] text-white/50">No notifications right now</div>
+                  </div>
+                ) : (
+                  <div className="divide-y divide-white/[0.06]">
+                    {filteredNotifications.map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={cn(
+                          'px-5 py-4 hover:bg-white/[0.03] cursor-pointer transition-colors touch-manipulation',
+                          !notification.isRead && 'bg-elec-yellow/[0.03]'
                         )}
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-start justify-between gap-2">
-                            <p className="text-sm font-medium line-clamp-1">{notification.title}</p>
-                            <span className="text-xs text-muted-foreground shrink-0">
-                              {formatTime(notification.timestamp)}
-                            </span>
-                          </div>
-                          <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
-                            {notification.description}
-                          </p>
-                          <div className="flex items-center gap-2 mt-1.5">
-                            <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-5 gap-1">
-                              {getContextIcon(notification.contextType)}
-                              {notification.contextType}
-                            </Badge>
-                            {notification.requiresAction && !notification.isResolved && (
-                              <Badge
-                                variant="outline"
-                                className="text-[10px] px-1.5 py-0 h-5 bg-warning/10 text-warning border-warning/20"
+                        onClick={() => handleNotificationClick(notification)}
+                      >
+                        <div className="flex gap-3">
+                          {notification.authorInitials ? (
+                            <Avatar className="h-9 w-9 shrink-0 ring-1 ring-white/[0.08]">
+                              <AvatarFallback
+                                className={cn(
+                                  'text-[11px] font-semibold',
+                                  roleTone(notification.authorRole) === 'blue' &&
+                                    'bg-blue-500/10 text-blue-400',
+                                  roleTone(notification.authorRole) === 'emerald' &&
+                                    'bg-emerald-500/10 text-emerald-400',
+                                  roleTone(notification.authorRole) === 'amber' &&
+                                    'bg-amber-500/10 text-amber-400',
+                                  roleTone(notification.authorRole) === 'yellow' &&
+                                    'bg-elec-yellow/10 text-elec-yellow'
+                                )}
                               >
-                                Action needed
-                              </Badge>
-                            )}
+                                {notification.authorInitials}
+                              </AvatarFallback>
+                            </Avatar>
+                          ) : (
+                            <div className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0">
+                              <span
+                                aria-hidden
+                                className={cn(
+                                  'h-1.5 w-1.5 rounded-full',
+                                  toneDot[typeTone(notification.type)]
+                                )}
+                              />
+                            </div>
+                          )}
+
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="text-[13px] font-medium text-white line-clamp-1">
+                                {notification.title}
+                              </p>
+                              <span className="text-[11px] text-white/40 shrink-0 tabular-nums">
+                                {formatTime(notification.timestamp)}
+                              </span>
+                            </div>
+                            <p className="text-[11.5px] text-white/50 line-clamp-2 mt-0.5 leading-relaxed">
+                              {notification.description}
+                            </p>
+                            <div className="flex items-center gap-1.5 mt-2">
+                              <Pill tone="yellow">{notification.contextType}</Pill>
+                              {notification.requiresAction && !notification.isResolved && (
+                                <Pill tone="amber">Action needed</Pill>
+                              )}
+                            </div>
                           </div>
                         </div>
-
-                        <ChevronRight className="h-4 w-4 text-muted-foreground shrink-0 mt-1" />
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </TabsContent>
-          </ScrollArea>
-        </Tabs>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
+            </ScrollArea>
+          </Tabs>
 
-        {notifications.length > 0 && (
-          <>
-            <Separator />
-            <div className="p-2">
-              <Button variant="ghost" className="w-full text-xs h-8" onClick={() => setOpen(false)}>
-                View all notifications
-              </Button>
+          {notifications.length > 0 && (
+            <div className="border-t border-white/[0.06] px-5 py-3">
+              <button
+                onClick={() => setOpen(false)}
+                className="w-full text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation text-center"
+              >
+                View all notifications →
+              </button>
             </div>
-          </>
-        )}
-      </PopoverContent>
-    </Popover>
+          )}
+        </PopoverContent>
+      </Popover>
     </>
   );
 }

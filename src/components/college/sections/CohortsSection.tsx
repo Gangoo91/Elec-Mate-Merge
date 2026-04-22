@@ -1,31 +1,25 @@
 import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import { motion } from 'framer-motion';
 import { NewCohortDialog } from '@/components/college/dialogs/NewCohortDialog';
 import { TakeAttendanceDialog } from '@/components/college/dialogs/TakeAttendanceDialog';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
 import { formatUKDateShort } from '@/utils/collegeHelpers';
-import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
-import { Search, Plus, Users, Calendar, MoreVertical, Filter } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  FilterBar,
+  EmptyState,
+  Pill,
+  itemVariants,
+} from '@/components/college/primitives';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 interface CohortsSectionProps {
   onNavigate?: (section: CollegeSection) => void;
@@ -37,193 +31,179 @@ export function CohortsSection({ onNavigate }: CohortsSectionProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [newCohortOpen, setNewCohortOpen] = useState(false);
-  const [editCohortOpen, setEditCohortOpen] = useState(false);
   const [takeAttendanceOpen, setTakeAttendanceOpen] = useState(false);
 
   const filteredCohorts = cohorts.filter((cohort) => {
     const matchesSearch = cohort.name.toLowerCase().includes(searchQuery.toLowerCase());
-
     const matchesStatus = filterStatus === 'all' || cohort.status === filterStatus;
-
     return matchesSearch && matchesStatus;
   });
 
-  const getStatusColor = (status: string | null) => {
-    switch (status) {
-      case 'Active':
-        return 'bg-success/10 text-success border-success/20';
-      case 'Planning':
-        return 'bg-info/10 text-info border-info/20';
-      case 'Completed':
-        return 'bg-muted text-white';
-      case 'Cancelled':
-        return 'bg-destructive/10 text-destructive border-destructive/20';
-      default:
-        return 'bg-muted text-white';
-    }
-  };
-
-  const getStudentCount = (cohortId: string): number => {
-    return students.filter((s) => s.cohort_id === cohortId && s.status === 'Active').length;
-  };
+  const getStudentCount = (cohortId: string): number =>
+    students.filter((s) => s.cohort_id === cohortId && s.status === 'Active').length;
 
   const getTutorName = (tutorId: string | null): string => {
     if (!tutorId) return 'Unassigned';
     return staff.find((s) => s.id === tutorId)?.name || 'Unknown';
   };
 
+  const activeCount = cohorts.filter((c) => c.status === 'Active').length;
+
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <CollegeSectionHeader
-        title="Cohorts"
-        description={`${cohorts.filter((c) => c.status === 'Active').length} active cohorts`}
-        actions={
-          <Button className="gap-2" onClick={() => setNewCohortOpen(true)}>
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">New Cohort</span>
-          </Button>
-        }
-      />
-
-      {/* Search and Filter */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search cohorts..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
-          />
-        </div>
-        <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-full sm:w-[150px] h-11 touch-manipulation">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="Active">Active</SelectItem>
-            <SelectItem value="Planning">Planning</SelectItem>
-            <SelectItem value="Completed">Completed</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Cohorts Grid */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {filteredCohorts.map((cohort) => {
-          const currentStudents = getStudentCount(cohort.id);
-          const maxStudents = cohort.max_students ?? 20;
-          const capacityPercent = (currentStudents / maxStudents) * 100;
-
-          return (
-            <Card
-              key={cohort.id}
-              className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300"
+    <PageFrame>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="People · Cohorts"
+          title="Class groups"
+          description={`${activeCount} active cohort${activeCount === 1 ? '' : 's'} currently enrolled.`}
+          tone="emerald"
+          actions={
+            <button
+              onClick={() => setNewCohortOpen(true)}
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
             >
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <div>
-                    <h3 className="font-semibold text-white">{cohort.name}</h3>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge variant="outline" className={getStatusColor(cohort.status)}>
-                      {cohort.status}
-                    </Badge>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-11 w-11 touch-manipulation"
-                        >
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation"
-                          onClick={() =>
-                            toast({
-                              title: cohort.name,
-                              description: `${currentStudents} students enrolled. Tutor: ${getTutorName(cohort.tutor_id)}`,
-                            })
-                          }
-                        >
-                          View Details
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation"
-                          onClick={() => {
-                            setEditCohortOpen(true);
-                            toast({
-                              title: 'Edit Cohort',
-                              description: 'Cohort editing is coming soon.',
-                            });
-                          }}
-                        >
-                          Edit Cohort
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation"
-                          onClick={() => onNavigate?.('students')}
-                        >
-                          View Students
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          className="h-11 touch-manipulation"
-                          onClick={() => setTakeAttendanceOpen(true)}
-                        >
-                          Take Register
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </div>
-                </div>
+              New cohort →
+            </button>
+          }
+        />
+      </motion.div>
 
-                {/* Capacity Bar */}
-                <div className="mb-3">
-                  <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-white">Capacity</span>
-                    <span className="font-medium text-white">
-                      {currentStudents}/{maxStudents} students
+      <motion.div variants={itemVariants}>
+        <FilterBar
+          tabs={[
+            { value: 'all', label: 'All', count: cohorts.length },
+            { value: 'Active', label: 'Active', count: activeCount },
+            {
+              value: 'Planning',
+              label: 'Planning',
+              count: cohorts.filter((c) => c.status === 'Planning').length,
+            },
+            {
+              value: 'Completed',
+              label: 'Completed',
+              count: cohorts.filter((c) => c.status === 'Completed').length,
+            },
+          ]}
+          activeTab={filterStatus}
+          onTabChange={setFilterStatus}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search cohorts…"
+        />
+      </motion.div>
+
+      {filteredCohorts.length === 0 ? (
+        <EmptyState
+          title="No cohorts found"
+          description="Try adjusting filters, or create a new cohort."
+          action="New cohort"
+          onAction={() => setNewCohortOpen(true)}
+        />
+      ) : (
+        <motion.div variants={itemVariants}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            {filteredCohorts.map((cohort) => {
+              const currentStudents = getStudentCount(cohort.id);
+              const maxStudents = cohort.max_students ?? 20;
+              const capacityPercent = Math.min((currentStudents / maxStudents) * 100, 100);
+              const toneForStatus =
+                cohort.status === 'Active'
+                  ? 'emerald'
+                  : cohort.status === 'Planning'
+                    ? 'blue'
+                    : cohort.status === 'Cancelled'
+                      ? 'red'
+                      : 'yellow';
+
+              return (
+                <div
+                  key={cohort.id}
+                  className="group bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 flex flex-col min-h-[180px]"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Cohort
+                      </div>
+                      <h3 className="mt-1.5 text-lg font-semibold text-white tracking-tight truncate">
+                        {cohort.name}
+                      </h3>
+                    </div>
+                    <div className="flex items-start gap-1.5 shrink-0">
+                      <Pill tone={toneForStatus}>{cohort.status}</Pill>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <button
+                            className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                            aria-label="Options"
+                          >
+                            ⋯
+                          </button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={() =>
+                              toast({
+                                title: cohort.name,
+                                description: `${currentStudents} students · Tutor: ${getTutorName(cohort.tutor_id)}`,
+                              })
+                            }
+                          >
+                            View details
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={() => onNavigate?.('students')}
+                          >
+                            View students
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="h-11 touch-manipulation"
+                            onClick={() => setTakeAttendanceOpen(true)}
+                          >
+                            Take register
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </div>
+                  </div>
+
+                  {/* Capacity */}
+                  <div className="mt-4">
+                    <div className="flex items-baseline justify-between text-[11px]">
+                      <span className="text-white/50 uppercase tracking-[0.12em]">Capacity</span>
+                      <span className="font-medium text-white tabular-nums">
+                        {currentStudents}/{maxStudents}
+                      </span>
+                    </div>
+                    <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-elec-yellow/80 rounded-full transition-all"
+                        style={{ width: `${capacityPercent}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex-grow" />
+
+                  <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px]">
+                    <span className="text-white/60 truncate">
+                      Tutor · {getTutorName(cohort.tutor_id)}
+                    </span>
+                    <span className="text-white/50 tabular-nums shrink-0 ml-3">
+                      {formatUKDateShort(cohort.start_date)} → {formatUKDateShort(cohort.end_date)}
                     </span>
                   </div>
-                  <Progress value={capacityPercent} className="h-2" />
                 </div>
-
-                <div className="grid grid-cols-2 gap-2 text-sm text-white">
-                  <div className="flex items-center gap-1.5">
-                    <Users className="h-3.5 w-3.5" />
-                    <span className="truncate">{getTutorName(cohort.tutor_id)}</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 mt-3 pt-3 border-t text-xs text-white">
-                  <Calendar className="h-3.5 w-3.5" />
-                  <span>{formatUKDateShort(cohort.start_date)}</span>
-                  <span>→</span>
-                  <span>{formatUKDateShort(cohort.end_date)}</span>
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-
-        {filteredCohorts.length === 0 && (
-          <Card className="col-span-full">
-            <CardContent className="p-8 text-center">
-              <p className="text-white">No cohorts found matching your criteria.</p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+              );
+            })}
+          </div>
+        </motion.div>
+      )}
 
       <NewCohortDialog open={newCohortOpen} onOpenChange={setNewCohortOpen} />
       <TakeAttendanceDialog open={takeAttendanceOpen} onOpenChange={setTakeAttendanceOpen} />
-    </div>
+    </PageFrame>
   );
 }

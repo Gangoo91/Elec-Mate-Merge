@@ -5,8 +5,6 @@ import { useAuth } from '@/contexts/AuthContext';
 import { CommandPalette } from '@/components/college/CommandPalette';
 import { NotificationCenter } from '@/components/college/NotificationCenter';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
-import { Button } from '@/components/ui/button';
-import { Search, ArrowLeft, School, Settings, Loader2 } from 'lucide-react';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 
 // Lazy-loaded sections for code splitting
@@ -552,45 +550,40 @@ const CollegeDashboard = () => {
   return (
     <CollegeSupabaseProvider collegeId={profile?.college_id ?? undefined}>
       <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-        {/* Sticky Header */}
+        {/* Sticky Header — editorial text-only nav */}
         <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
-          <div className="px-4 py-2">
-            <div className="flex items-center gap-3 h-11">
-              <Button
-                variant="ghost"
-                size="icon"
-                aria-label="Go back"
+          <div className="mx-auto max-w-7xl px-4">
+            <div className="flex items-center h-12 gap-4 sm:gap-6">
+              <button
                 onClick={activeSection === 'overview' ? handleGoHome : handleBack}
-                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+                aria-label="Go back"
+                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
               >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                  <School className="h-4 w-4 text-emerald-400" />
-                </div>
-                <h1 className="text-base font-semibold text-white truncate">{sectionTitles[activeSection]}</h1>
+                ← Back
+              </button>
+              <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40 hidden sm:inline">
+                  College
+                </span>
+                <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
+                <h1 className="text-[13px] sm:text-sm font-semibold text-white truncate tracking-tight">
+                  {sectionTitles[activeSection]}
+                </h1>
               </div>
-              <div className="flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon"
+              <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+                <button
                   onClick={() => setCommandPaletteOpen(true)}
-                  aria-label="Search"
-                  className="text-white hover:text-white hover:bg-white/10 rounded-xl h-9 w-9 touch-manipulation"
+                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
                 >
-                  <Search className="h-4 w-4" />
-                </Button>
+                  Search
+                </button>
                 <NotificationCenter onNavigate={handleNavigate} />
-                <Button
-                  variant="ghost"
-                  size="icon"
+                <button
                   onClick={() => setActiveSection('collegesettings')}
-                  aria-label="Settings"
-                  className="text-white hover:text-white hover:bg-white/10 rounded-xl h-9 w-9 touch-manipulation"
+                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
                 >
-                  <Settings className="h-4 w-4" />
-                </Button>
+                  Settings
+                </button>
               </div>
             </div>
           </div>

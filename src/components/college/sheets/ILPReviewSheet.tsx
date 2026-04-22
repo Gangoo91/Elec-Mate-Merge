@@ -1,11 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -23,8 +17,7 @@ import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
 import { useHapticFeedback, SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
 import { useToast } from '@/hooks/use-toast';
 import { formatUKDateShort } from '@/utils/collegeHelpers';
-import { cn } from '@/lib/utils';
-import { ClipboardCheck, Loader2, Save, Target, Calendar } from 'lucide-react';
+import { Pill, LoadingState, type Tone } from '@/components/college/primitives';
 import type { ILPTarget } from '@/services/college';
 
 interface ILPReviewSheetProps {
@@ -37,19 +30,33 @@ type TargetStatus = ILPTarget['status'];
 
 const statusOptions: TargetStatus[] = ['Pending', 'In Progress', 'Achieved', 'Overdue'];
 
-const getTargetStatusColour = (status: string) => {
+const targetStatusTone = (status: string): Tone => {
   switch (status) {
     case 'Achieved':
-      return 'bg-success/10 text-success border-success/20';
+      return 'green';
     case 'In Progress':
-      return 'bg-info/10 text-info border-info/20';
+      return 'blue';
     case 'Overdue':
-      return 'bg-orange-500/10 text-orange-400 border-orange-500/20';
+      return 'orange';
     case 'Pending':
     default:
-      return 'bg-muted text-white border-white/10';
+      return 'yellow';
   }
 };
+
+const inputClass =
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+const textareaClass =
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[120px] resize-none';
+
+const selectTriggerClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+
+const selectContentClass =
+  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
 
 export function ILPReviewSheet({ ilpId, open, onOpenChange }: ILPReviewSheetProps) {
   const { data: ilp, isLoading } = useCollegeILP(ilpId!);
@@ -76,7 +83,6 @@ export function ILPReviewSheet({ ilpId, open, onOpenChange }: ILPReviewSheetProp
     return staffList.filter((s) => s.role === 'tutor');
   }, [staffList]);
 
-  // Initialise form when ILP data loads
   useEffect(() => {
     if (ilp) {
       const targets = ilp.targets ?? [];
@@ -102,7 +108,6 @@ export function ILPReviewSheet({ ilpId, open, onOpenChange }: ILPReviewSheetProp
     try {
       const targets = ilp.targets ?? [];
 
-      // Update each changed target status
       const statusPromises = targets
         .map((target, index) => {
           if (targetStatuses[index] && targetStatuses[index] !== target.status) {
@@ -118,14 +123,12 @@ export function ILPReviewSheet({ ilpId, open, onOpenChange }: ILPReviewSheetProp
 
       await Promise.all(statusPromises);
 
-      // Conduct the review
       await reviewILP.mutateAsync({
         id: ilpId,
-        reviewerId: reviewerId,
-        nextReviewDate: nextReviewDate,
+        reviewerId,
+        nextReviewDate,
       });
 
-      // Show success animation
       setShowSuccess(true);
       triggerSuccess(true);
 
@@ -157,122 +160,97 @@ export function ILPReviewSheet({ ilpId, open, onOpenChange }: ILPReviewSheetProp
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-            <SheetTitle className="text-xl text-left flex items-center gap-2">
-              <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
-              Conduct ILP Review
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className={eyebrow}>ILP Review</div>
+            <SheetTitle className="text-[20px] font-semibold text-white mt-1 text-left">
+              Conduct ILP review
             </SheetTitle>
-            <p className="text-sm text-white text-left">{student?.name ?? 'Loading...'}</p>
+            <p className="text-[12.5px] text-white/55 mt-1 text-left">
+              {student?.name ?? 'Loading…'}
+            </p>
           </SheetHeader>
 
-          {/* Scrollable Form */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
             {isLoading ? (
-              <div className="space-y-3">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-20 bg-muted animate-pulse rounded-lg" />
-                ))}
-              </div>
+              <LoadingState />
             ) : (
               <>
-                {/* Target Status Updates */}
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Target Status Updates
-                  </h4>
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                  <div className={eyebrow}>Target Status Updates</div>
 
                   {targets.length > 0 ? (
                     targets.map((target, index) => (
-                      <Card key={index} className="border-white/10">
-                        <CardContent className="p-3 space-y-2">
-                          <div className="flex items-start gap-2">
-                            <Target className="h-4 w-4 mt-0.5 shrink-0 text-elec-yellow" />
-                            <div className="flex-1 min-w-0">
-                              <p className="text-sm text-white">{target.description}</p>
-                              <p className="text-xs text-white mt-0.5">
-                                Due: {formatUKDateShort(target.target_date)}
-                              </p>
-                            </div>
+                      <div
+                        key={index}
+                        className="rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06] p-4 space-y-3"
+                      >
+                        <div className="flex items-start gap-2">
+                          <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0 mt-1.5" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[13px] text-white leading-relaxed">
+                              {target.description}
+                            </p>
+                            <p className="text-[11px] text-white/50 mt-1">
+                              Due: {formatUKDateShort(target.target_date)}
+                            </p>
                           </div>
-                          <div className="flex items-center gap-2">
-                            <Badge
-                              variant="outline"
-                              className={cn(
-                                'text-xs shrink-0',
-                                getTargetStatusColour(target.status)
-                              )}
-                            >
-                              Was: {target.status}
-                            </Badge>
-                            <span className="text-xs text-white">to</span>
-                            <Select
-                              value={targetStatuses[index] ?? target.status}
-                              onValueChange={(value) =>
-                                handleTargetStatusChange(index, value as TargetStatus)
-                              }
-                            >
-                              <SelectTrigger className="h-11 touch-manipulation flex-1">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {statusOptions.map((status) => (
-                                  <SelectItem key={status} value={status}>
-                                    {status}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </CardContent>
-                      </Card>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Pill tone={targetStatusTone(target.status)}>Was: {target.status}</Pill>
+                          <span className="text-[11px] text-white/50">→</span>
+                          <Select
+                            value={targetStatuses[index] ?? target.status}
+                            onValueChange={(value) =>
+                              handleTargetStatusChange(index, value as TargetStatus)
+                            }
+                          >
+                            <SelectTrigger className={`${selectTriggerClass} flex-1`}>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className={selectContentClass}>
+                              {statusOptions.map((status) => (
+                                <SelectItem key={status} value={status}>
+                                  {status}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
                     ))
                   ) : (
-                    <Card className="border-white/10">
-                      <CardContent className="p-6 text-center">
-                        <Target className="h-8 w-8 mx-auto text-white mb-2" />
-                        <p className="text-sm text-white">No targets to review.</p>
-                      </CardContent>
-                    </Card>
+                    <div className="rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06] px-6 py-8 text-center">
+                      <div className="text-[13px] text-white/70">No targets to review.</div>
+                    </div>
                   )}
                 </div>
 
-                {/* Review Notes */}
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Review Notes
-                  </h4>
-                  <Textarea
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                  <div className={eyebrow}>Review Notes</div>
+                  <textarea
                     value={reviewNotes}
                     onChange={(e) => setReviewNotes(e.target.value)}
-                    placeholder="Record notes from this review..."
-                    className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+                    placeholder="Record notes from this review…"
+                    className={textareaClass}
                   />
                 </div>
 
-                {/* Review Details */}
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Review Details
-                  </h4>
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                  <div className={eyebrow}>Review Details</div>
 
-                  <div>
-                    <Label htmlFor="review-reviewer">Reviewer *</Label>
+                  <div className="space-y-1.5">
+                    <div className="text-[11.5px] text-white/60">Reviewer *</div>
                     <Select value={reviewerId} onValueChange={setReviewerId}>
-                      <SelectTrigger className="h-11 touch-manipulation">
+                      <SelectTrigger className={selectTriggerClass}>
                         <SelectValue placeholder="Select reviewer" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className={selectContentClass}>
                         {tutors.map((tutor) => (
                           <SelectItem key={tutor.id} value={tutor.id}>
                             {tutor.name}
@@ -282,19 +260,13 @@ export function ILPReviewSheet({ ilpId, open, onOpenChange }: ILPReviewSheetProp
                     </Select>
                   </div>
 
-                  <div>
-                    <Label htmlFor="review-next-date">
-                      <span className="flex items-center gap-1.5">
-                        <Calendar className="h-3.5 w-3.5" />
-                        Next Review Date *
-                      </span>
-                    </Label>
-                    <Input
-                      id="review-next-date"
+                  <div className="space-y-1.5">
+                    <div className="text-[11.5px] text-white/60">Next Review Date *</div>
+                    <input
                       type="date"
                       value={nextReviewDate}
                       onChange={(e) => setNextReviewDate(e.target.value)}
-                      className="h-11 touch-manipulation"
+                      className={inputClass}
                     />
                   </div>
                 </div>
@@ -302,37 +274,26 @@ export function ILPReviewSheet({ ilpId, open, onOpenChange }: ILPReviewSheetProp
             )}
           </div>
 
-          {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation"
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
+            <button
+              type="button"
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
+              className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 touch-manipulation gap-2"
+            </button>
+            <button
+              type="button"
               onClick={handleSubmit}
               disabled={!canSubmit}
+              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Submitting...
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  Complete Review
-                </>
-              )}
-            </Button>
+              {isSubmitting ? 'Submitting…' : 'Complete Review →'}
+            </button>
           </SheetFooter>
         </div>
 
-        {/* Success overlay */}
         <SuccessCheckmark show={showSuccess} />
       </SheetContent>
     </Sheet>

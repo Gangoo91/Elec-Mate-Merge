@@ -1,23 +1,20 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { CollegeFeatureTile } from '@/components/college/CollegeFeatureTile';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
-import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import { motion } from 'framer-motion';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
 import { useQueryClient } from '@tanstack/react-query';
 import {
-  BookMarked,
-  Presentation,
-  FileText,
-  Plus,
-  Upload,
-  Sparkles,
-  Shield,
-  Clock,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  ListCard,
+  ListRow,
+  Pill,
+  itemVariants,
+} from '@/components/college/primitives';
 
 interface CurriculumHubProps {
   onNavigate: (section: CollegeSection) => void;
@@ -25,7 +22,6 @@ interface CurriculumHubProps {
 
 export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
   const { courses, lessonPlans, getUpcomingLessonsData } = useCollegeSupabase();
-  const { staggerContainer, staggerItem } = useHapticFeedback();
   const queryClient = useQueryClient();
 
   const handleRefresh = async () => {
@@ -36,182 +32,212 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
   const activeCourses = courses.filter((c) => c.status === 'Active').length;
   const upcomingLessons = getUpcomingLessonsData();
   const draftLessons = lessonPlans.filter((lp) => lp.status === 'Draft').length;
+  const totalLessons = lessonPlans.length;
 
   return (
     <PullToRefresh onRefresh={handleRefresh}>
-      <motion.div
-        className="space-y-4 md:space-y-6"
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
-      >
-        <CollegeSectionHeader
-          title="Curriculum Hub"
-          description="Manage courses, lesson plans and teaching resources"
-          action={
-            <Button
-              className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black h-11 touch-manipulation"
-              onClick={() => onNavigate('lessonplans')}
-            >
-              <Plus className="h-4 w-4" />
-              New Lesson
-            </Button>
-          }
-        />
+      <PageFrame>
+        {/* HERO */}
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Curriculum Hub"
+            title="Courses, lessons & materials"
+            description="Plan qualifications, lesson sequences and teaching resources — powered by AI where useful."
+            tone="emerald"
+            actions={
+              <button
+                onClick={() => onNavigate('lessonplans')}
+                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              >
+                New lesson →
+              </button>
+            }
+          />
+        </motion.div>
 
-        {/* Quick Stats */}
-        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-          <Card className="relative overflow-hidden bg-elec-yellow/[0.08] border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow/50" />
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5 group-hover:scale-110 transition-transform duration-300">
-                <BookMarked className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <div>
-                <p className="text-lg font-bold text-white">{activeCourses}</p>
-                <p className="text-xs text-white">Courses</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="relative overflow-hidden bg-info/[0.08] border-info/20 hover:border-info/40 hover:bg-info/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-info via-blue-400 to-info/50" />
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-info/20 to-info/5 border border-info/20 shadow-lg shadow-info/5 group-hover:scale-110 transition-transform duration-300">
-                <Presentation className="h-4 w-4 text-info" />
-              </div>
-              <div>
-                <p className="text-lg font-bold text-white">{lessonPlans.length}</p>
-                <p className="text-xs text-white">Lessons</p>
-              </div>
-            </CardContent>
-          </Card>
-          {draftLessons > 0 && (
-            <Card className="relative overflow-hidden bg-warning/[0.08] border-warning/20 hover:border-warning/40 hover:bg-warning/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-warning via-orange-400 to-warning/50" />
-              <CardContent className="p-3 flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5 group-hover:scale-110 transition-transform duration-300">
-                  <Clock className="h-4 w-4 text-warning" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold text-white">{draftLessons}</p>
-                  <p className="text-xs text-white">Drafts</p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+        {/* STATS */}
+        <motion.div variants={itemVariants}>
+          <StatStrip
+            columns={4}
+            stats={[
+              {
+                value: activeCourses,
+                label: 'Courses',
+                sub: 'Active qualifications',
+                onClick: () => onNavigate('courses'),
+              },
+              {
+                value: totalLessons,
+                label: 'Lessons',
+                sub: 'Planned',
+                onClick: () => onNavigate('lessonplans'),
+              },
+              {
+                value: draftLessons,
+                label: 'Drafts',
+                sub: 'Awaiting publish',
+                onClick: () => onNavigate('lessonplans'),
+                accent: draftLessons > 0,
+              },
+              {
+                value: upcomingLessons.length,
+                label: 'Upcoming',
+                sub: 'Scheduled this week',
+                onClick: () => onNavigate('timetable'),
+              },
+            ]}
+          />
+        </motion.div>
 
-        {/* Main Navigation */}
-        <motion.div variants={staggerItem}>
-          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-elec-yellow rounded-full"></span>
-            Content Management
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <CollegeFeatureTile
-              icon={BookMarked}
+        {/* CONTENT MANAGEMENT */}
+        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+          <SectionHeader eyebrow="Content Management" title="Build your curriculum" />
+          <HubGrid columns={4}>
+            <HubCard
+              number="01"
+              eyebrow="Qualifications & Units"
               title="Courses"
-              description="Qualifications & units"
+              description="Manage qualifications, unit structures and assessment criteria."
+              tone="emerald"
+              meta={`${activeCourses} active`}
               onClick={() => onNavigate('courses')}
-              badge={`${activeCourses} active`}
             />
-            <CollegeFeatureTile
-              icon={Presentation}
+            <HubCard
+              number="02"
+              eyebrow="Plans & Delivery"
               title="Lesson Plans"
-              description="Create & manage lessons"
+              description="Create, sequence and publish lesson plans per cohort."
+              tone="blue"
+              meta={draftLessons > 0 ? `${draftLessons} drafts` : `${totalLessons} plans`}
               onClick={() => onNavigate('lessonplans')}
-              badge={draftLessons > 0 ? `${draftLessons} drafts` : undefined}
-              badgeVariant="warning"
             />
-            <CollegeFeatureTile
-              icon={FileText}
+            <HubCard
+              number="03"
+              eyebrow="Materials Library"
               title="Teaching Resources"
-              description="Materials & uploads"
+              description="Slides, handouts and reference materials for lessons."
+              tone="amber"
+              meta="Uploads & links"
               onClick={() => onNavigate('teachingresources')}
             />
-            <CollegeFeatureTile
-              icon={Shield}
+            <HubCard
+              number="04"
+              eyebrow="Quality & Policy"
               title="Compliance & QA"
-              description="Policies & quality docs"
+              description="Policies, quality documentation and Ofsted-ready records."
+              tone="purple"
+              meta="Docs & reports"
               onClick={() => onNavigate('compliancedocs')}
             />
-          </div>
-        </motion.div>
+          </HubGrid>
+        </motion.section>
 
-        {/* AI Tools */}
-        <motion.div variants={staggerItem}>
-          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-gradient-to-b from-success to-green-500 rounded-full"></span>
-            AI-Powered Tools
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <CollegeFeatureTile
-              icon={Sparkles}
+        {/* AI-POWERED */}
+        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+          <SectionHeader eyebrow="AI-Powered" title="Intelligent tools" />
+          <HubGrid columns={2}>
+            <HubCard
+              number="05"
+              eyebrow="Notes & Summaries"
               title="Teaching Notebook"
-              description="AI-powered notes, summaries & quiz generation"
+              description="AI-assisted notes, lesson summaries and auto-generated quizzes."
+              tone="yellow"
+              meta="AI"
+              badge={<Pill tone="yellow">AI</Pill>}
               onClick={() => onNavigate('tutornotebook')}
-              badge="AI"
-              badgeVariant="success"
             />
-          </div>
-        </motion.div>
+            <HubCard
+              number="06"
+              eyebrow="Scheduled Delivery"
+              title="Timetable"
+              description="Weekly lesson schedule across cohorts, rooms and tutors."
+              tone="purple"
+              meta={`${upcomingLessons.length} this week`}
+              onClick={() => onNavigate('timetable')}
+            />
+          </HubGrid>
+        </motion.section>
 
-        {/* Upcoming Lessons */}
+        {/* UPCOMING LESSONS */}
         {upcomingLessons.length > 0 && (
-          <motion.div variants={staggerItem}>
-            <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-              <span className="w-1.5 h-6 bg-gradient-to-b from-info to-blue-500 rounded-full"></span>
-              Upcoming This Week
-            </h2>
-            <CollegeFeatureTile
-              icon={Clock}
-              title={upcomingLessons[0]?.title || 'View scheduled lessons'}
-              description={`${upcomingLessons.length} lessons scheduled`}
-              onClick={() => onNavigate('lessonplans')}
-              badge={`${upcomingLessons.length}`}
-              badgeVariant="info"
+          <motion.section variants={itemVariants} className="space-y-5">
+            <SectionHeader
+              eyebrow="This Week"
+              title="Upcoming lessons"
+              action="View timetable"
+              onAction={() => onNavigate('timetable')}
             />
-          </motion.div>
+            <ListCard>
+              {upcomingLessons.slice(0, 5).map((lesson) => (
+                <ListRow
+                  key={lesson.id}
+                  onClick={() => onNavigate('lessonplans')}
+                  title={lesson.title}
+                  subtitle={lesson.cohortName}
+                  trailing={
+                    <div className="text-right shrink-0">
+                      <div className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                        {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', {
+                          weekday: 'short',
+                        })}
+                      </div>
+                      <div className="mt-0.5 text-[13px] font-medium tabular-nums text-white">
+                        {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                        })}
+                      </div>
+                    </div>
+                  }
+                />
+              ))}
+            </ListCard>
+          </motion.section>
         )}
 
-        {/* Quick Actions */}
-        <motion.div variants={staggerItem}>
-          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <CollegeFeatureTile
-              icon={Plus}
-              title="New Lesson"
-              description="Create plan"
+        {/* QUICK ACTIONS */}
+        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+          <SectionHeader eyebrow="Quick Actions" title="Create & capture" />
+          <HubGrid columns={4}>
+            <HubCard
+              size="sm"
+              eyebrow="Plan"
+              title="New lesson"
+              description="Start a lesson plan."
+              tone="blue"
               onClick={() => onNavigate('lessonplans')}
-              compact
+              cta="Create"
             />
-            <CollegeFeatureTile
-              icon={Upload}
-              title="Upload Resource"
-              description="Add materials"
+            <HubCard
+              size="sm"
+              eyebrow="Upload"
+              title="Add resource"
+              description="Upload slides or handouts."
+              tone="amber"
               onClick={() => onNavigate('teachingresources')}
-              compact
+              cta="Upload"
             />
-            <CollegeFeatureTile
-              icon={BookMarked}
-              title="Add Course"
-              description="New qualification"
+            <HubCard
+              size="sm"
+              eyebrow="Course"
+              title="New qualification"
+              description="Add a course framework."
+              tone="emerald"
               onClick={() => onNavigate('courses')}
-              compact
+              cta="Add"
             />
-            <CollegeFeatureTile
-              icon={Sparkles}
-              title="AI Notebook"
-              description="Generate content"
+            <HubCard
+              size="sm"
+              eyebrow="AI"
+              title="Notebook"
+              description="Generate from AI."
+              tone="yellow"
               onClick={() => onNavigate('tutornotebook')}
-              compact
+              cta="Open"
             />
-          </div>
-        </motion.div>
-      </motion.div>
+          </HubGrid>
+        </motion.section>
+      </PageFrame>
     </PullToRefresh>
   );
 }

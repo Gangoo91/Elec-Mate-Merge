@@ -8,9 +8,7 @@
 import { useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Loader2, KeyRound, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 
@@ -80,14 +78,14 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center gap-3">
-        <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-          <KeyRound className="h-5 w-5 text-blue-400" />
+      <div>
+        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+          Invite Code
         </div>
-        <div>
-          <h3 className="text-sm font-semibold text-white">Have an invite code?</h3>
-          <p className="text-xs text-white">Your college will have provided this to you</p>
-        </div>
+        <h3 className="mt-1.5 text-[15px] font-semibold text-white">Have an invite code?</h3>
+        <p className="text-[12.5px] text-white/55">
+          Your college will have provided this to you
+        </p>
       </div>
 
       {/* Input row */}
@@ -104,17 +102,14 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
         </div>
-        <Button
+        <button
+          type="button"
           onClick={handleSubmit}
           disabled={isSubmitting || code.trim().length < 4}
-          className="h-12 px-5 bg-gradient-to-r from-yellow-400 to-amber-400 text-black font-semibold hover:from-yellow-300 hover:to-amber-300 touch-manipulation rounded-xl disabled:opacity-40 disabled:from-yellow-400/50 disabled:to-amber-400/50"
+          className="h-12 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
         >
-          {isSubmitting ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <ArrowRight className="h-5 w-5" />
-          )}
-        </Button>
+          {isSubmitting ? 'Linking…' : 'Join →'}
+        </button>
       </div>
 
       {/* Result feedback */}
@@ -132,11 +127,12 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
             }`}
           >
             <div className="flex items-start gap-3">
-              {result.success ? (
-                <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0 mt-0.5" />
-              ) : (
-                <AlertTriangle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
-              )}
+              <span
+                aria-hidden
+                className={`inline-block h-1.5 w-1.5 rounded-full shrink-0 mt-2 ${
+                  result.success ? 'bg-green-400' : 'bg-red-400'
+                }`}
+              />
               <div>
                 <p
                   className={`text-sm font-medium ${result.success ? 'text-green-400' : 'text-red-400'}`}

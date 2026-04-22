@@ -1,19 +1,18 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { useCollegeGrade, useUpdateGrade } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useToast } from '@/hooks/use-toast';
 import { SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
-import { Loader2, MessageSquare, Send } from 'lucide-react';
+import { LoadingState } from '@/components/college/primitives';
 
 interface FeedbackSheetProps {
   gradeId: string | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
 
 export function FeedbackSheet({ gradeId, open, onOpenChange }: FeedbackSheetProps) {
   const { data: grade, isLoading } = useCollegeGrade(gradeId!);
@@ -29,7 +28,6 @@ export function FeedbackSheet({ gradeId, open, onOpenChange }: FeedbackSheetProp
     return students.find((s) => s.id === grade.student_id) ?? null;
   }, [grade, students]);
 
-  // Pre-populate feedback text when grade data loads
   useEffect(() => {
     if (grade?.feedback) {
       setFeedbackText(grade.feedback);
@@ -38,9 +36,11 @@ export function FeedbackSheet({ gradeId, open, onOpenChange }: FeedbackSheetProp
     }
   }, [grade?.feedback, gradeId]);
 
-  const handleFeedbackGenerated = useCallback((feedback: string) => {
+  // Retain callback for external AI generation integrations
+  const _handleFeedbackGenerated = useCallback((feedback: string) => {
     setFeedbackText(feedback);
   }, []);
+  void _handleFeedbackGenerated;
 
   const handleApplyFeedback = () => {
     if (!gradeId || !feedbackText.trim()) return;
@@ -74,86 +74,59 @@ export function FeedbackSheet({ gradeId, open, onOpenChange }: FeedbackSheetProp
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Loading State */}
-          {isLoading && (
-            <div className="flex-1 flex items-center justify-center">
-              <Loader2 className="h-8 w-8 animate-spin text-white" />
-            </div>
-          )}
+          {isLoading && <LoadingState className="flex-1" />}
 
-          {/* Content */}
           {!isLoading && grade && (
             <>
-              {/* Header */}
-              <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-elec-yellow/20 border border-elec-yellow/30 flex items-center justify-center shrink-0">
-                    <MessageSquare className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <SheetTitle className="text-lg text-left">Assessment Feedback</SheetTitle>
-                    <p className="text-sm text-white mt-0.5">
-                      {student?.name ?? 'Unknown Student'} — {grade.unit_name ?? 'Unassigned Unit'}
-                    </p>
-                  </div>
-                </div>
+              <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+                <div className={eyebrow}>Assessment Feedback</div>
+                <SheetTitle className="text-[18px] font-semibold text-white mt-1 text-left">
+                  {grade.unit_name ?? 'Unassigned Unit'}
+                </SheetTitle>
+                <p className="text-[12.5px] text-white/55 mt-1 text-left">
+                  {student?.name ?? 'Unknown Student'}
+                </p>
               </SheetHeader>
 
-              {/* Scrollable Body */}
-              <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-                {/* Feedback Textarea */}
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="feedback-text"
-                    className="text-sm font-semibold text-white flex items-center gap-2"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Feedback Text
-                  </Label>
-                  <Textarea
-                    id="feedback-text"
+              <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                  <div className={eyebrow}>Feedback Text</div>
+                  <textarea
                     value={feedbackText}
                     onChange={(e) => setFeedbackText(e.target.value)}
-                    placeholder="Write or edit feedback for this assessment. You can also use the AI generator above to create a draft."
-                    className="touch-manipulation text-base min-h-[160px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 text-white"
+                    placeholder="Write or edit feedback for this assessment. You can also use the AI generator to create a draft."
+                    className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[160px] resize-none"
                   />
-                  <p className="text-xs text-white">{feedbackText.length} characters</p>
+                  <p className="text-[11px] text-white/40">{feedbackText.length} characters</p>
                 </div>
               </div>
 
-              {/* Footer */}
-              <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-                <Button
-                  variant="outline"
-                  className="flex-1 h-11 touch-manipulation"
+              <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
+                <button
+                  type="button"
                   onClick={() => onOpenChange(false)}
+                  className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
                 >
                   Cancel
-                </Button>
-                <Button
-                  className="flex-1 h-11 touch-manipulation gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                </button>
+                <button
+                  type="button"
                   onClick={handleApplyFeedback}
                   disabled={updateGrade.isPending || !feedbackText.trim()}
+                  className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                 >
-                  {updateGrade.isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                  Apply Feedback
-                </Button>
+                  {updateGrade.isPending ? 'Saving…' : 'Apply Feedback →'}
+                </button>
               </SheetFooter>
             </>
           )}
 
-          {/* Success Checkmark Animation */}
           <SuccessCheckmark show={showSuccess} />
         </div>
       </SheetContent>

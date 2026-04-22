@@ -9,11 +9,9 @@ import {
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { useCollege } from '@/contexts/CollegeContext';
-import { AtSign, Send, AlertCircle, X } from 'lucide-react';
 import {
   Command,
   CommandEmpty,
@@ -207,15 +205,11 @@ export function AddCommentDialog({
           {/* Mentions */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium flex items-center gap-1">
-                <AtSign className="h-3.5 w-3.5" />
-                Mentions
-              </Label>
+              <Label className="text-sm font-medium">Mentions</Label>
               <Popover open={mentionPopoverOpen} onOpenChange={setMentionPopoverOpen}>
                 <PopoverTrigger asChild>
                   <Button variant="outline" size="sm" className="h-7 text-xs">
-                    <AtSign className="h-3 w-3 mr-1" />
-                    Add Mention
+                    @ Add Mention
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-64 p-0" align="end">
@@ -258,19 +252,19 @@ export function AddCommentDialog({
             {selectedMentions.length > 0 ? (
               <div className="flex flex-wrap gap-1">
                 {selectedMentions.map((mention) => (
-                  <Badge
+                  <span
                     key={mention.id}
-                    variant="secondary"
-                    className="flex items-center gap-1 pr-1"
+                    className="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full border border-elec-yellow/20 bg-elec-yellow/10 text-elec-yellow text-[11px]"
                   >
                     @{mention.name}
                     <button
                       onClick={() => handleRemoveMention(mention.id)}
-                      className="ml-1 hover:bg-muted rounded-full p-0.5"
+                      className="ml-0.5 hover:bg-white/10 rounded-full h-4 w-4 flex items-center justify-center text-[12px] touch-manipulation"
+                      aria-label="Remove mention"
                     >
-                      <X className="h-3 w-3" />
+                      ×
                     </button>
-                  </Badge>
+                  </span>
                 ))}
               </div>
             ) : (
@@ -283,7 +277,7 @@ export function AddCommentDialog({
           {/* Requires action toggle */}
           <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
             <div className="flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 text-warning" />
+              <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
               <div>
                 <Label htmlFor="requires-action" className="text-sm font-medium cursor-pointer">
                   Requires Action
@@ -308,7 +302,6 @@ export function AddCommentDialog({
             disabled={!content.trim()}
             className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
           >
-            <Send className="h-4 w-4 mr-2" />
             Post Comment
           </Button>
         </DialogFooter>

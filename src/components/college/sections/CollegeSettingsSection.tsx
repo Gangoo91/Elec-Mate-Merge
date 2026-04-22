@@ -1,73 +1,69 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
-import { Settings, Building2, Bell, Calendar, Shield, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import {
+  PageFrame,
+  PageHero,
+  ListCard,
+  SectionHeader,
+  Pill,
+  itemVariants,
+} from '@/components/college/primitives';
 
 const upcomingFeatures = [
   {
-    icon: Building2,
-    title: 'Institution Details',
-    description: 'Name, address, Ofsted number, contact info',
+    eyebrow: 'Institution',
+    title: 'Institution details',
+    description: 'Name, address, Ofsted number and contact info.',
   },
   {
-    icon: Bell,
-    title: 'Notification Preferences',
-    description: 'Email, push and in-app alert settings per role',
+    eyebrow: 'Notifications',
+    title: 'Notification preferences',
+    description: 'Email, push and in-app alert settings per role.',
   },
   {
-    icon: Calendar,
-    title: 'Academic Year Settings',
-    description: 'Term dates, holiday periods and assessment windows',
+    eyebrow: 'Calendar',
+    title: 'Academic year settings',
+    description: 'Term dates, holiday periods and assessment windows.',
   },
   {
-    icon: Shield,
-    title: 'Security & Access Policies',
-    description: 'Two-factor auth, session timeouts and role permissions',
+    eyebrow: 'Security',
+    title: 'Security & access policies',
+    description: 'Two-factor auth, session timeouts and role permissions.',
   },
 ];
 
 export function CollegeSettingsSection() {
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <CollegeSectionHeader
-        title="College Settings"
-        description="Manage your institution settings and preferences"
-      />
+    <PageFrame>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Resources · College Settings"
+          title="Institution configuration"
+          description="Manage your institution-wide settings, preferences and policies."
+          tone="indigo"
+          actions={<Pill tone="yellow">Coming soon</Pill>}
+        />
+      </motion.div>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray overflow-hidden">
-        <CardContent className="p-6 sm:p-8">
-          {/* Header */}
-          <div className="flex items-start gap-4 mb-6">
-            <div className="h-12 w-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-              <Settings className="h-6 w-6 text-elec-yellow" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white">Coming Soon</h3>
-              <p className="text-sm text-white mt-0.5">
-                We're building a full settings panel for your institution.
-              </p>
-            </div>
-          </div>
-
-          {/* Upcoming features list */}
-          <div className="space-y-3">
-            {upcomingFeatures.map((feature) => (
-              <div
-                key={feature.title}
-                className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]"
-              >
-                <div className="h-8 w-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <feature.icon className="h-4 w-4 text-elec-yellow" />
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader eyebrow="Planned Features" title="What's coming" />
+        <ListCard>
+          {upcomingFeatures.map((feature) => (
+            <div
+              key={feature.title}
+              className="flex items-center gap-4 px-5 sm:px-6 py-5"
+            >
+              <div className="flex-1 min-w-0">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  {feature.eyebrow}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-white">{feature.title}</p>
-                  <p className="text-xs text-white mt-0.5">{feature.description}</p>
-                </div>
-                <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-1" />
+                <div className="mt-1 text-[15px] font-medium text-white">{feature.title}</div>
+                <div className="mt-0.5 text-[12px] text-white/50">{feature.description}</div>
               </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+              <Pill tone="yellow">Soon</Pill>
+            </div>
+          ))}
+        </ListCard>
+      </motion.section>
+    </PageFrame>
   );
 }

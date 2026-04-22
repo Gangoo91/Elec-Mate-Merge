@@ -1,50 +1,39 @@
 /**
- * TimetableSection — Weekly timetable view showing lessons across the college.
- * Mobile: one day at a time with day tabs. Desktop: 5-day grid.
+ * TimetableSection — Weekly timetable view.
+ * Editorial redesign: typography-led, no icons.
  */
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import {
-  ChevronLeft,
-  ChevronRight,
-  Calendar,
-  Clock,
-  User,
-  Users,
-  Loader2,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import {
+  PageFrame,
+  PageHero,
+  LoadingState,
+  itemVariants,
+  toneDot,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface TimetableSectionProps {
   onNavigate: (section: CollegeSection) => void;
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-};
-
 const DAY_NAMES = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'] as const;
 const DAY_FULL_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] as const;
 
-const TUTOR_COLOURS = [
-  'border-l-blue-400',
-  'border-l-emerald-400',
-  'border-l-amber-400',
-  'border-l-purple-400',
-  'border-l-rose-400',
-  'border-l-cyan-400',
-  'border-l-orange-400',
-  'border-l-indigo-400',
-] as const;
+const TUTOR_TONES: Tone[] = [
+  'blue',
+  'emerald',
+  'amber',
+  'purple',
+  'red',
+  'cyan',
+  'orange',
+  'indigo',
+];
 
 const getMonday = (d: Date) => {
   const date = new Date(d);
@@ -69,29 +58,26 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
   const [currentWeekStart, setCurrentWeekStart] = useState(() => getMonday(new Date()));
   const [selectedDayIndex, setSelectedDayIndex] = useState(() => {
     const today = new Date().getDay();
-    // 0=Sun, 1=Mon...5=Fri, 6=Sat → map to 0-4, default to 0 for weekend
     return today >= 1 && today <= 5 ? today - 1 : 0;
   });
   const [selectedTutorId, setSelectedTutorId] = useState<string | null>(null);
 
-  // Build tutor colour map
-  const tutorColourMap = useMemo(() => {
-    const map = new Map<string, string>();
+  const tutorToneMap = useMemo(() => {
+    const map = new Map<string, Tone>();
     const tutors = staff.filter((s) => s.role === 'tutor');
-    tutors.forEach((t, i) => {
-      map.set(t.id, TUTOR_COLOURS[i % TUTOR_COLOURS.length]);
-    });
+    tutors.forEach((t, i) => map.set(t.id, TUTOR_TONES[i % TUTOR_TONES.length]));
     return map;
   }, [staff]);
 
-  // Week dates
-  const weekDates = useMemo(() => {
-    return Array.from({ length: 5 }, (_, i) => {
-      const d = new Date(currentWeekStart);
-      d.setDate(d.getDate() + i);
-      return d;
-    });
-  }, [currentWeekStart]);
+  const weekDates = useMemo(
+    () =>
+      Array.from({ length: 5 }, (_, i) => {
+        const d = new Date(currentWeekStart);
+        d.setDate(d.getDate() + i);
+        return d;
+      }),
+    [currentWeekStart]
+  );
 
   const weekEnd = useMemo(() => {
     const d = new Date(currentWeekStart);
@@ -99,51 +85,41 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
     return d;
   }, [currentWeekStart]);
 
-  // Filter lessons for this week
-  const weekLessons = useMemo(() => {
-    return lessonPlans.filter((lp) => {
-      if (!lp.scheduled_date) return false;
-      const d = new Date(lp.scheduled_date);
-      return d >= currentWeekStart && d <= weekEnd;
-    });
-  }, [lessonPlans, currentWeekStart, weekEnd]);
+  const weekLessons = useMemo(
+    () =>
+      lessonPlans.filter((lp) => {
+        if (!lp.scheduled_date) return false;
+        const d = new Date(lp.scheduled_date);
+        return d >= currentWeekStart && d <= weekEnd;
+      }),
+    [lessonPlans, currentWeekStart, weekEnd]
+  );
 
-  // Filtered by tutor
-  const filteredLessons = useMemo(() => {
-    if (!selectedTutorId) return weekLessons;
-    return weekLessons.filter((lp) => lp.tutor_id === selectedTutorId);
-  }, [weekLessons, selectedTutorId]);
+  const filteredLessons = useMemo(
+    () => (selectedTutorId ? weekLessons.filter((lp) => lp.tutor_id === selectedTutorId) : weekLessons),
+    [weekLessons, selectedTutorId]
+  );
 
-  // Group by day index (0=Mon, 4=Fri)
   const lessonsByDay = useMemo(() => {
     const groups: Map<number, typeof filteredLessons> = new Map();
     for (let i = 0; i < 5; i++) groups.set(i, []);
-
     filteredLessons.forEach((lp) => {
       if (!lp.scheduled_date) return;
       const d = new Date(lp.scheduled_date);
-      const dayOfWeek = d.getDay(); // 0=Sun...6=Sat
-      const idx = dayOfWeek - 1; // Mon=0...Fri=4
-      if (idx >= 0 && idx <= 4) {
-        groups.get(idx)!.push(lp);
-      }
+      const idx = d.getDay() - 1;
+      if (idx >= 0 && idx <= 4) groups.get(idx)!.push(lp);
     });
-
-    // Sort each day by time
     groups.forEach((lessons) => {
-      lessons.sort((a, b) => {
-        if (!a.scheduled_date || !b.scheduled_date) return 0;
-        return new Date(a.scheduled_date).getTime() - new Date(b.scheduled_date).getTime();
-      });
+      lessons.sort((a, b) =>
+        !a.scheduled_date || !b.scheduled_date
+          ? 0
+          : new Date(a.scheduled_date).getTime() - new Date(b.scheduled_date).getTime()
+      );
     });
-
     return groups;
   }, [filteredLessons]);
 
-  // Tutors for filter
-  const tutorsList = useMemo(() => {
-    return staff.filter((s) => s.role === 'tutor');
-  }, [staff]);
+  const tutorsList = useMemo(() => staff.filter((s) => s.role === 'tutor'), [staff]);
 
   const navigateWeek = (direction: -1 | 1) => {
     setCurrentWeekStart((prev) => {
@@ -153,100 +129,81 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
     });
   };
 
-  const goToCurrentWeek = () => {
-    setCurrentWeekStart(getMonday(new Date()));
-  };
+  const goToCurrentWeek = () => setCurrentWeekStart(getMonday(new Date()));
 
-  const getCohortName = (cohortId: string | null) => {
-    if (!cohortId) return 'Unassigned';
-    return cohorts.find((c) => c.id === cohortId)?.name ?? 'Unknown';
-  };
+  const getCohortName = (cohortId: string | null) =>
+    !cohortId ? 'Unassigned' : cohorts.find((c) => c.id === cohortId)?.name ?? 'Unknown';
+  const getTutorName = (tutorId: string | null) =>
+    !tutorId ? 'TBC' : staff.find((s) => s.id === tutorId)?.name ?? 'Unknown';
+  const getTutorTone = (tutorId: string | null): Tone =>
+    !tutorId ? 'yellow' : tutorToneMap.get(tutorId) ?? 'yellow';
 
-  const getTutorName = (tutorId: string | null) => {
-    if (!tutorId) return 'TBC';
-    return staff.find((s) => s.id === tutorId)?.name ?? 'Unknown';
-  };
+  if (isLoading) return <LoadingState />;
 
-  const getTutorColour = (tutorId: string | null) => {
-    if (!tutorId) return 'border-l-white/20';
-    return tutorColourMap.get(tutorId) ?? 'border-l-white/20';
-  };
-
-  if (isLoading) {
+  const renderLessonCard = (lp: (typeof lessonPlans)[0]) => {
+    const tone = getTutorTone(lp.tutor_id);
     return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-      </div>
-    );
-  }
-
-  const renderLessonCard = (lp: (typeof lessonPlans)[0]) => (
-    <button
-      key={lp.id}
-      onClick={() => onNavigate('lessonplans')}
-      className="w-full text-left touch-manipulation"
-    >
-      <div
-        className={cn(
-          'group card-surface-interactive overflow-hidden active:scale-[0.98] transition-all border-l-[3px]',
-          getTutorColour(lp.tutor_id)
-        )}
+      <button
+        key={lp.id}
+        onClick={() => onNavigate('lessonplans')}
+        className="w-full text-left touch-manipulation"
       >
-        <div className="relative z-10 p-3 space-y-1.5">
-          <p className="text-sm font-semibold text-white leading-tight">{lp.title}</p>
-          <div className="flex items-center gap-3 flex-wrap">
-            <span className="flex items-center gap-1 text-[11px] text-white">
-              <Users className="h-3 w-3 text-blue-400 shrink-0" />
-              {getCohortName(lp.cohort_id)}
-            </span>
-            <span className="flex items-center gap-1 text-[11px] text-white">
-              <User className="h-3 w-3 text-emerald-400 shrink-0" />
-              {getTutorName(lp.tutor_id)}
-            </span>
-            {lp.scheduled_date && (
-              <span className="flex items-center gap-1 text-[11px] text-white">
-                <Clock className="h-3 w-3 text-amber-400 shrink-0" />
-                {formatTime(lp.scheduled_date)}
-                {lp.duration_minutes ? ` (${lp.duration_minutes}min)` : ''}
-              </span>
-            )}
+        <div className="group bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors rounded-xl border border-white/[0.06] p-3 flex gap-3">
+          <span
+            aria-hidden
+            className={cn('w-[3px] shrink-0 rounded-full self-stretch', toneDot[tone])}
+          />
+          <div className="min-w-0 flex-1">
+            <p className="text-[13px] font-medium text-white leading-snug truncate">{lp.title}</p>
+            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-white/50">
+              <span className="truncate">{getCohortName(lp.cohort_id)}</span>
+              <span className="truncate">{getTutorName(lp.tutor_id)}</span>
+              {lp.scheduled_date && (
+                <span className="tabular-nums">
+                  {formatTime(lp.scheduled_date)}
+                  {lp.duration_minutes ? ` · ${lp.duration_minutes}m` : ''}
+                </span>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </button>
-  );
+      </button>
+    );
+  };
 
   const renderDayColumn = (dayIndex: number, showHeader: boolean = true) => {
     const dayLessons = lessonsByDay.get(dayIndex) ?? [];
-    const isToday =
-      weekDates[dayIndex].toDateString() === new Date().toDateString();
-
+    const isToday = weekDates[dayIndex].toDateString() === new Date().toDateString();
     return (
       <div key={dayIndex} className="space-y-2 min-w-0">
         {showHeader && (
           <div
             className={cn(
-              'text-center py-2 rounded-lg',
-              isToday ? 'bg-elec-yellow/10 border border-elec-yellow/20' : 'bg-white/[0.02]'
+              'text-center py-2 rounded-lg border',
+              isToday
+                ? 'bg-elec-yellow/10 border-elec-yellow/20'
+                : 'bg-[hsl(0_0%_10%)] border-white/[0.06]'
             )}
           >
             <p
               className={cn(
-                'text-xs font-semibold uppercase tracking-wider',
-                isToday ? 'text-elec-yellow' : 'text-white'
+                'text-[10px] font-medium uppercase tracking-[0.18em]',
+                isToday ? 'text-elec-yellow' : 'text-white/50'
               )}
             >
               {DAY_NAMES[dayIndex]}
             </p>
-            <p className="text-[10px] text-white">{formatDate(weekDates[dayIndex])}</p>
+            <p className="mt-0.5 text-[11px] font-medium text-white tabular-nums">
+              {formatDate(weekDates[dayIndex])}
+            </p>
           </div>
         )}
         <div className="space-y-2">
           {dayLessons.length > 0 ? (
             dayLessons.map(renderLessonCard)
           ) : (
-            <div className="card-surface p-4 text-center">
-              <p className="text-[11px] text-white">No lessons</p>
+            <div className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-lg p-3 text-center">
+              <p className="text-[11px] text-white/40">No lessons</p>
             </div>
           )}
         </div>
@@ -255,44 +212,55 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
   };
 
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-4">
-      {/* Week Navigation */}
+    <PageFrame>
       <motion.div variants={itemVariants}>
-        <div className="card-surface p-3 flex items-center justify-between">
+        <PageHero
+          eyebrow="Tools · Timetable"
+          title="Weekly timetable"
+          description={`${formatDate(currentWeekStart)} — ${formatDate(weekEnd)} · Lessons across all cohorts.`}
+          tone="purple"
+          actions={
+            <button
+              onClick={goToCurrentWeek}
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+            >
+              This week →
+            </button>
+          }
+        />
+      </motion.div>
+
+      {/* Week nav */}
+      <motion.div variants={itemVariants}>
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-2 flex items-center justify-between">
           <button
             onClick={() => navigateWeek(-1)}
-            className="h-11 w-11 flex items-center justify-center rounded-xl bg-white/[0.05] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+            className="h-10 px-4 text-[12.5px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
-            <ChevronLeft className="h-5 w-5 text-white" />
+            ← Previous
           </button>
-          <button
-            onClick={goToCurrentWeek}
-            className="flex items-center gap-2 touch-manipulation active:scale-[0.98] transition-all px-3 py-1.5 rounded-lg"
-          >
-            <Calendar className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-semibold text-white">
-              {formatDate(currentWeekStart)} — {formatDate(weekEnd)}
-            </span>
-          </button>
+          <div className="text-[13px] font-semibold text-white tabular-nums">
+            {formatDate(currentWeekStart)} — {formatDate(weekEnd)}
+          </div>
           <button
             onClick={() => navigateWeek(1)}
-            className="h-11 w-11 flex items-center justify-center rounded-xl bg-white/[0.05] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
+            className="h-10 px-4 text-[12.5px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
-            <ChevronRight className="h-5 w-5 text-white" />
+            Next →
           </button>
         </div>
       </motion.div>
 
-      {/* Tutor Filter */}
+      {/* Tutor filter */}
       <motion.div variants={itemVariants}>
-        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar">
           <button
             onClick={() => setSelectedTutorId(null)}
             className={cn(
-              'shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border touch-manipulation active:scale-[0.98] transition-all',
+              'shrink-0 h-9 px-3.5 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
               !selectedTutorId
-                ? 'bg-elec-yellow text-black border-elec-yellow'
-                : 'bg-white/[0.04] text-white border-white/[0.06]'
+                ? 'bg-elec-yellow text-black'
+                : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white/70 hover:text-white'
             )}
           >
             All Tutors
@@ -302,52 +270,53 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
               key={tutor.id}
               onClick={() => setSelectedTutorId(tutor.id === selectedTutorId ? null : tutor.id)}
               className={cn(
-                'shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border touch-manipulation active:scale-[0.98] transition-all',
+                'shrink-0 h-9 px-3.5 rounded-full text-[12px] font-medium transition-colors touch-manipulation inline-flex items-center gap-1.5',
                 selectedTutorId === tutor.id
-                  ? 'bg-elec-yellow text-black border-elec-yellow'
-                  : 'bg-white/[0.04] text-white border-white/[0.06]'
+                  ? 'bg-elec-yellow text-black'
+                  : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white/70 hover:text-white'
               )}
             >
+              <span
+                aria-hidden
+                className={cn('h-1.5 w-1.5 rounded-full', toneDot[getTutorTone(tutor.id)])}
+              />
               {tutor.name}
             </button>
           ))}
         </div>
       </motion.div>
 
-      {/* Mobile: Day tabs + single day view */}
-      <motion.div variants={itemVariants} className="block sm:hidden space-y-3">
-        <div className="flex gap-1">
+      {/* Mobile: day tabs */}
+      <motion.div variants={itemVariants} className="block sm:hidden space-y-4">
+        <div className="grid grid-cols-5 gap-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-1">
           {DAY_NAMES.map((day, idx) => {
-            const isToday =
-              weekDates[idx].toDateString() === new Date().toDateString();
-            const lessonCount = lessonsByDay.get(idx)?.length ?? 0;
-
+            const isToday = weekDates[idx].toDateString() === new Date().toDateString();
+            const count = lessonsByDay.get(idx)?.length ?? 0;
+            const selected = selectedDayIndex === idx;
             return (
               <button
                 key={day}
                 onClick={() => setSelectedDayIndex(idx)}
                 className={cn(
-                  'flex-1 py-2 rounded-lg text-center touch-manipulation active:scale-[0.98] transition-all relative',
-                  selectedDayIndex === idx
-                    ? 'bg-elec-yellow/10 border border-elec-yellow/20'
-                    : 'bg-white/[0.02] border border-transparent'
+                  'py-2 rounded-xl text-center transition-colors touch-manipulation relative',
+                  selected
+                    ? 'bg-elec-yellow text-black'
+                    : isToday
+                      ? 'text-elec-yellow'
+                      : 'text-white/70 hover:text-white'
                 )}
               >
+                <p className="text-[10px] font-semibold uppercase tracking-wider">{day}</p>
                 <p
                   className={cn(
-                    'text-xs font-semibold uppercase tracking-wider',
-                    selectedDayIndex === idx
-                      ? 'text-elec-yellow'
-                      : isToday
-                        ? 'text-elec-yellow'
-                        : 'text-white'
+                    'mt-0.5 text-[11px] tabular-nums',
+                    selected ? 'text-black/70' : 'text-white/50'
                   )}
                 >
-                  {day}
+                  {weekDates[idx].getDate()}
                 </p>
-                <p className="text-[10px] text-white">{weekDates[idx].getDate()}</p>
-                {lessonCount > 0 && (
-                  <div className="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-elec-yellow" />
+                {count > 0 && !selected && (
+                  <div className="absolute top-1.5 right-1.5 w-1 h-1 rounded-full bg-elec-yellow" />
                 )}
               </button>
             );
@@ -355,17 +324,20 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
         </div>
 
         <div>
-          <h3 className="text-xs font-medium text-white uppercase tracking-wider px-0.5 mb-2">
-            {DAY_FULL_NAMES[selectedDayIndex]} {formatDate(weekDates[selectedDayIndex])}
-          </h3>
-          {renderDayColumn(selectedDayIndex, false)}
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            {DAY_FULL_NAMES[selectedDayIndex]}
+          </div>
+          <div className="mt-1 text-base font-semibold text-white tabular-nums">
+            {formatDate(weekDates[selectedDayIndex])}
+          </div>
+          <div className="mt-3">{renderDayColumn(selectedDayIndex, false)}</div>
         </div>
       </motion.div>
 
-      {/* Desktop: 5-day grid */}
+      {/* Desktop 5-day grid */}
       <motion.div variants={itemVariants} className="hidden sm:grid sm:grid-cols-5 gap-3">
         {Array.from({ length: 5 }, (_, i) => renderDayColumn(i))}
       </motion.div>
-    </motion.div>
+    </PageFrame>
   );
 }

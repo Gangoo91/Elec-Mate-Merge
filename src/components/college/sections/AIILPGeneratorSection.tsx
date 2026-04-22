@@ -6,29 +6,20 @@
 import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { copyToClipboard } from '@/utils/clipboard';
-import {
-  Search,
-  Sparkles,
-  User,
-  ChevronRight,
-  Loader2,
-  Calendar,
-  Target,
-  Award,
-  ClipboardList,
-  CheckCircle2,
-  BarChart3,
-  Copy,
-  RefreshCw,
-  Save,
-  AlertTriangle,
-  TrendingUp,
-  Briefcase,
-  BookOpen,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  ListCard,
+  Pill,
+  EmptyState,
+  LoadingState,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
 
 /* ------------------------------------------------------------------ */
 /*  Props                                                              */
@@ -95,22 +86,6 @@ function categoryColour(cat: SMARTTarget['category']) {
       return 'amber';
     case 'professional':
       return 'emerald';
-  }
-}
-
-/* ------------------------------------------------------------------ */
-/*  Helper: risk badge                                                 */
-/* ------------------------------------------------------------------ */
-
-function riskBadge(level: string | null) {
-  const base = 'text-xs font-semibold px-2 py-0.5 rounded-full';
-  switch (level?.toLowerCase()) {
-    case 'high':
-      return <span className={cn(base, 'bg-red-500/20 text-red-400')}>High Risk</span>;
-    case 'medium':
-      return <span className={cn(base, 'bg-amber-500/20 text-amber-400')}>Medium Risk</span>;
-    default:
-      return <span className={cn(base, 'bg-emerald-500/20 text-emerald-400')}>Low Risk</span>;
   }
 }
 
@@ -480,291 +455,254 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
   /*  Loading state                                                    */
   /* ---------------------------------------------------------------- */
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-24">
-        <Loader2 className="h-6 w-6 animate-spin text-yellow-400" />
-        <span className="ml-2 text-sm text-white">Loading student data...</span>
-      </div>
-    );
-  }
-
-  /* ---------------------------------------------------------------- */
-  /*  Render                                                           */
-  /* ---------------------------------------------------------------- */
+  if (isLoading) return <LoadingState />;
 
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      className="space-y-4 pb-24"
-    >
-      {/* Header */}
+    <PageFrame>
       <motion.div variants={itemVariants}>
-        <div className="flex items-center gap-3 mb-1">
-          <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20">
-            <Sparkles className="h-5 w-5 text-purple-400" />
-          </div>
-          <div>
-            <h2 className="text-lg font-bold text-white">AI ILP Generator</h2>
-            <p className="text-xs text-white mt-0.5">
-              Auto-generate SMART targets and ILP review comments from student data
-            </p>
-          </div>
-        </div>
+        <PageHero
+          eyebrow="Tools · AI ILP Generator"
+          title="AI ILP generator"
+          description="Auto-generate SMART targets and ILP review comments from student attendance, progress and assessment data."
+          tone="yellow"
+          actions={<Pill tone="yellow">AI</Pill>}
+        />
       </motion.div>
 
       {/* Student Picker */}
-      <motion.div variants={itemVariants} className="card-surface rounded-2xl overflow-hidden">
-        <div className="h-1 bg-gradient-to-r from-purple-500 via-violet-500 to-blue-500" />
-        <div className="p-4 space-y-3">
-          <p className="text-xs font-medium text-white uppercase tracking-wider">Select Student</p>
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader eyebrow="Step 01" title="Select a student" />
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search by name, email or ULN…"
+            className="w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+          />
 
-          {/* Search input */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by name, email, or ULN..."
-              className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white placeholder:text-white focus:outline-none focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 touch-manipulation"
-            />
-          </div>
-
-          {/* Student rows */}
-          <div className="max-h-56 overflow-y-auto space-y-1.5 -mx-1 px-1">
-            {filteredStudents.length === 0 && (
-              <p className="text-sm text-white py-4 text-center">No students found.</p>
-            )}
-            {filteredStudents.map((s) => {
-              const sCourse = s.course_id ? courses.find((c) => c.id === s.course_id) : null;
-              const sCohort = s.cohort_id ? cohorts.find((c) => c.id === s.cohort_id) : null;
-              const isSelected = s.id === selectedStudentId;
-              return (
-                <button
-                  key={s.id}
-                  onClick={() => selectStudent(s.id)}
-                  className={cn(
-                    'card-surface-interactive w-full flex items-center gap-3 p-3 rounded-xl text-left touch-manipulation active:scale-[0.98] transition-all',
-                    isSelected && 'ring-2 ring-yellow-500/60 bg-yellow-500/5'
-                  )}
-                >
-                  <div className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20 shrink-0">
-                    <User className="h-4 w-4 text-blue-400" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{s.name}</p>
-                    <p className="text-xs text-white truncate">
-                      {sCourse?.name ?? 'No course'} {sCohort ? `- ${sCohort.name}` : ''}
-                    </p>
-                  </div>
-                  {riskBadge(s.risk_level)}
-                  <div className="p-1.5 rounded-full bg-yellow-500/10 shrink-0">
-                    <ChevronRight className="h-3.5 w-3.5 text-yellow-400" />
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Empty state */}
-      {!student && (
-        <motion.div variants={itemVariants} className="card-surface rounded-2xl overflow-hidden">
-          <div className="h-1 bg-gradient-to-r from-white/5 to-white/10" />
-          <div className="p-8 flex flex-col items-center text-center space-y-3">
-            <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
-              <Target className="h-6 w-6 text-purple-400" />
+          {filteredStudents.length === 0 ? (
+            <p className="text-[12px] text-white/40 py-4 text-center">No students found.</p>
+          ) : (
+            <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl max-h-[280px] overflow-y-auto divide-y divide-white/[0.04]">
+              {filteredStudents.map((s) => {
+                const sCourse = s.course_id ? courses.find((c) => c.id === s.course_id) : null;
+                const sCohort = s.cohort_id ? cohorts.find((c) => c.id === s.cohort_id) : null;
+                const isSelected = s.id === selectedStudentId;
+                const rTone: Tone =
+                  s.risk_level?.toLowerCase() === 'high'
+                    ? 'red'
+                    : s.risk_level?.toLowerCase() === 'medium'
+                      ? 'amber'
+                      : 'green';
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => selectStudent(s.id)}
+                    className={cn(
+                      'w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.03] transition-colors text-left touch-manipulation',
+                      isSelected && 'bg-elec-yellow/[0.06]'
+                    )}
+                  >
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'w-[3px] self-stretch rounded-full shrink-0',
+                        isSelected ? 'bg-elec-yellow' : 'bg-transparent'
+                      )}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[13.5px] font-medium text-white truncate">
+                        {s.name}
+                      </div>
+                      <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                        {sCourse?.name ?? 'No course'}
+                        {sCohort ? ` · ${sCohort.name}` : ''}
+                      </div>
+                    </div>
+                    <Pill tone={rTone}>
+                      {rTone === 'red'
+                        ? 'High risk'
+                        : rTone === 'amber'
+                          ? 'Medium risk'
+                          : 'Low risk'}
+                    </Pill>
+                  </button>
+                );
+              })}
             </div>
-            <p className="text-sm font-medium text-white">No student selected</p>
-            <p className="text-xs text-white max-w-xs">
-              Choose a student above to view their summary and generate an AI-powered ILP review
-              with SMART targets.
-            </p>
-          </div>
+          )}
+        </div>
+      </motion.section>
+
+      {/* No student selected */}
+      {!student && (
+        <motion.div variants={itemVariants}>
+          <EmptyState
+            title="No student selected"
+            description="Choose a student above to view their summary and generate an AI-powered ILP review."
+          />
         </motion.div>
       )}
 
-      {/* Student Summary Card */}
+      {/* Student Summary + Generate */}
       {student && (
-        <motion.div
-          variants={itemVariants}
-          className="card-surface rounded-2xl overflow-hidden"
-        >
-          <div className="h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500" />
-          <div className="p-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <p className="text-xs font-medium text-white uppercase tracking-wider">
-                Student Summary
-              </p>
-              {riskBadge(student.risk_level)}
-            </div>
+        <motion.section variants={itemVariants} className="space-y-5">
+          <SectionHeader eyebrow="Step 02" title="Review the snapshot" />
 
-            <div className="flex items-center gap-3 mb-2">
-              <div className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                <User className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-white">{student.name}</p>
-                <p className="text-xs text-white">
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-5">
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Student
+                </div>
+                <div className="mt-1 text-lg sm:text-xl font-semibold text-white tracking-tight truncate">
+                  {student.name}
+                </div>
+                <div className="mt-0.5 text-[12px] text-white/50 truncate">
                   {course?.name ?? 'No course assigned'}
-                  {cohort ? ` - ${cohort.name}` : ''}
-                </p>
+                  {cohort ? ` · ${cohort.name}` : ''}
+                </div>
               </div>
+              <Pill
+                tone={
+                  student.risk_level?.toLowerCase() === 'high'
+                    ? 'red'
+                    : student.risk_level?.toLowerCase() === 'medium'
+                      ? 'amber'
+                      : 'green'
+                }
+              >
+                {student.risk_level?.toLowerCase() === 'high'
+                  ? 'High risk'
+                  : student.risk_level?.toLowerCase() === 'medium'
+                    ? 'Medium risk'
+                    : 'Low risk'}
+              </Pill>
             </div>
 
-            {/* KPI strip */}
-            <div className="grid grid-cols-2 gap-2">
-              {/* Attendance */}
-              <div className="card-surface rounded-xl p-3 space-y-1">
-                <div className="flex items-center gap-1.5">
-                  <Calendar className="h-3.5 w-3.5 text-blue-400" />
-                  <span className="text-xs text-white">Attendance</span>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
+              <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Attendance
                 </div>
-                <p className="text-lg font-bold text-white">
-                  {attendanceRate !== null ? `${attendanceRate}%` : '--'}
-                </p>
-                <p className="text-xs text-white">{studentAttendance.length} sessions</p>
+                <div className="mt-2 text-2xl font-semibold tabular-nums text-white leading-none">
+                  {attendanceRate !== null ? `${attendanceRate}%` : '—'}
+                </div>
+                <div className="mt-2 text-[11px] text-white/50 tabular-nums">
+                  {studentAttendance.length} sessions
+                </div>
               </div>
-
-              {/* Grades */}
-              <div className="card-surface rounded-xl p-3 space-y-1">
-                <div className="flex items-center gap-1.5">
-                  <BarChart3 className="h-3.5 w-3.5 text-amber-400" />
-                  <span className="text-xs text-white">Grades</span>
+              <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Grades
                 </div>
-                <p className="text-lg font-bold text-white">
+                <div className="mt-2 text-2xl font-semibold tabular-nums text-white leading-none">
                   {studentGrades.length > 0
                     ? `${studentGrades.filter((g) => g.score !== null && g.score >= 50).length}/${studentGrades.length}`
-                    : '--'}
-                </p>
-                <p className="text-xs text-white">units passed</p>
-              </div>
-
-              {/* EPA */}
-              <div className="card-surface rounded-xl p-3 space-y-1">
-                <div className="flex items-center gap-1.5">
-                  <Award className="h-3.5 w-3.5 text-emerald-400" />
-                  <span className="text-xs text-white">EPA</span>
+                    : '—'}
                 </div>
-                <p className="text-sm font-bold text-white">
+                <div className="mt-2 text-[11px] text-white/50">units passed</div>
+              </div>
+              <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  EPA
+                </div>
+                <div className="mt-2 text-base font-semibold text-white leading-tight">
                   {studentEPA?.status ?? 'Not Started'}
-                </p>
+                </div>
                 {studentEPA?.result && (
-                  <p className="text-xs text-white">{studentEPA.result}</p>
+                  <div className="mt-2 text-[11px] text-white/50">{studentEPA.result}</div>
                 )}
               </div>
-
-              {/* ILP Targets */}
-              <div className="card-surface rounded-xl p-3 space-y-1">
-                <div className="flex items-center gap-1.5">
-                  <ClipboardList className="h-3.5 w-3.5 text-purple-400" />
-                  <span className="text-xs text-white">ILP Targets</span>
+              <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  ILP Targets
                 </div>
-                <p className="text-lg font-bold text-white">
+                <div className="mt-2 text-2xl font-semibold tabular-nums text-white leading-none">
                   {ilpTargets.total > 0
                     ? `${ilpTargets.achieved}/${ilpTargets.total}`
-                    : '--'}
-                </p>
-                <p className="text-xs text-white">achieved</p>
+                    : '—'}
+                </div>
+                <div className="mt-2 text-[11px] text-white/50">achieved</div>
               </div>
             </div>
 
-            {/* Generate button */}
             <button
               onClick={handleGenerate}
               disabled={generating}
-              className="w-full h-12 rounded-xl bg-yellow-500 text-black font-semibold text-sm flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-60"
+              className="w-full h-12 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {generating ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Generating Review...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="h-4 w-4" />
-                  Generate ILP Review with AI
-                </>
-              )}
+              {generating ? 'Generating review…' : 'Generate ILP review with AI →'}
             </button>
           </div>
-        </motion.div>
+        </motion.section>
       )}
 
-      {/* Generated Review Card */}
+      {/* Generated review */}
       <AnimatePresence>
         {review && student && (
-          <motion.div
+          <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="space-y-4"
+            className="space-y-5"
           >
-            {/* Review header */}
-            <div className="card-surface rounded-2xl overflow-hidden">
-              <div className="h-1 bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500" />
-              <div className="p-4 space-y-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-xs font-medium text-white uppercase tracking-wider">
-                    Generated ILP Review
-                  </p>
-                  <span className="text-xs text-white">
-                    {fmtDate(new Date(review.reviewDate))}
-                  </span>
-                </div>
+            <SectionHeader
+              eyebrow="Step 03"
+              title="Generated review"
+              action="Save to ILP"
+              onAction={() => onNavigate('ilpmanagement')}
+            />
 
-                {/* Overall progress */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                      <TrendingUp className="h-3.5 w-3.5 text-amber-400" />
-                    </div>
-                    <p className="text-xs font-medium text-white uppercase tracking-wider">
-                      Overall Progress
-                    </p>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
+              <div className="p-5 sm:p-6 space-y-5">
+                <div className="flex items-baseline justify-between">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                    Review
                   </div>
-                  <p className="text-sm text-white leading-relaxed">{review.overallComment}</p>
+                  <div className="text-[11px] text-white/50 tabular-nums">
+                    {fmtDate(new Date(review.reviewDate))}
+                  </div>
                 </div>
 
-                {/* Strengths */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                    </div>
-                    <p className="text-xs font-medium text-white uppercase tracking-wider">
-                      Strengths
-                    </p>
+                <div>
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
+                    Overall Progress
+                  </div>
+                  <p className="text-[13.5px] text-white leading-relaxed">{review.overallComment}</p>
+                </div>
+
+                <div className="pt-5 border-t border-white/[0.06]">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
+                    Strengths
                   </div>
                   <ul className="space-y-1.5">
                     {review.strengths.map((s, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0" />
-                        <span className="text-sm text-white">{s}</span>
+                      <li key={i} className="flex items-start gap-2.5">
+                        <span
+                          aria-hidden
+                          className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"
+                        />
+                        <span className="text-[13px] text-white/80 leading-relaxed">{s}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Areas for Development */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20">
-                      <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />
-                    </div>
-                    <p className="text-xs font-medium text-white uppercase tracking-wider">
-                      Areas for Development
-                    </p>
+                <div className="pt-5 border-t border-white/[0.06]">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
+                    Areas for development
                   </div>
                   <ul className="space-y-1.5">
                     {review.areasForDevelopment.map((a, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-1.5 shrink-0" />
-                        <span className="text-sm text-white">{a}</span>
+                      <li key={i} className="flex items-start gap-2.5">
+                        <span
+                          aria-hidden
+                          className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0"
+                        />
+                        <span className="text-[13px] text-white/80 leading-relaxed">{a}</span>
                       </li>
                     ))}
                   </ul>
@@ -773,121 +711,88 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
             </div>
 
             {/* SMART Targets */}
-            <div className="card-surface rounded-2xl overflow-hidden">
-              <div className="h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500" />
-              <div className="p-4 space-y-3">
-                <p className="text-xs font-medium text-white uppercase tracking-wider">
-                  SMART Targets
-                </p>
-
-                <div className="space-y-3">
-                  {review.targets.map((t, i) => {
-                    const col = categoryColour(t.category);
-                    const IconComp =
-                      t.category === 'attendance'
-                        ? Calendar
-                        : t.category === 'academic'
-                          ? BookOpen
-                          : Briefcase;
-                    return (
-                      <div
-                        key={i}
-                        className="card-surface-interactive rounded-xl overflow-hidden"
-                      >
-                        <div
-                          className={cn(
-                            'h-0.5',
-                            col === 'blue' && 'bg-blue-500',
-                            col === 'amber' && 'bg-amber-500',
-                            col === 'emerald' && 'bg-emerald-500'
-                          )}
-                        />
-                        <div className="p-3 space-y-2">
+            <div className="space-y-3">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                SMART targets
+              </div>
+              <ListCard>
+                {review.targets.map((t, i) => {
+                  const col = categoryColour(t.category);
+                  const tTone: Tone =
+                    col === 'blue' ? 'blue' : col === 'amber' ? 'amber' : 'emerald';
+                  return (
+                    <div
+                      key={i}
+                      className="flex items-start gap-4 px-5 sm:px-6 py-5"
+                    >
+                      <span
+                        aria-hidden
+                        className={cn(
+                          'w-[3px] self-stretch rounded-full shrink-0',
+                          tTone === 'blue'
+                            ? 'bg-blue-400'
+                            : tTone === 'amber'
+                              ? 'bg-amber-400'
+                              : 'bg-emerald-400'
+                        )}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                            Target {i + 1}
+                          </div>
                           <div className="flex items-center gap-2">
-                            <div
-                              className={cn(
-                                'p-1.5 rounded-lg border',
-                                col === 'blue' && 'bg-blue-500/10 border-blue-500/20',
-                                col === 'amber' && 'bg-amber-500/10 border-amber-500/20',
-                                col === 'emerald' && 'bg-emerald-500/10 border-emerald-500/20'
-                              )}
-                            >
-                              <IconComp
-                                className={cn(
-                                  'h-3.5 w-3.5',
-                                  col === 'blue' && 'text-blue-400',
-                                  col === 'amber' && 'text-amber-400',
-                                  col === 'emerald' && 'text-emerald-400'
-                                )}
-                              />
-                            </div>
-                            <span
-                              className={cn(
-                                'text-xs font-semibold px-2 py-0.5 rounded-full',
-                                col === 'blue' && 'bg-blue-500/20 text-blue-400',
-                                col === 'amber' && 'bg-amber-500/20 text-amber-400',
-                                col === 'emerald' && 'bg-emerald-500/20 text-emerald-400'
-                              )}
-                            >
+                            <Pill tone={tTone}>
                               {t.category.charAt(0).toUpperCase() + t.category.slice(1)}
-                            </span>
-                            <span className="ml-auto text-xs text-white">
+                            </Pill>
+                            <span className="text-[11px] text-white/50 tabular-nums">
                               {fmtDate(new Date(t.targetDate))}
                             </span>
                           </div>
-                          <p className="text-sm text-white leading-relaxed">{t.description}</p>
-                          <div className="flex items-start gap-2 bg-white/5 rounded-lg p-2">
-                            <Target className="h-3.5 w-3.5 text-yellow-400 mt-0.5 shrink-0" />
-                            <p className="text-xs text-white">{t.successCriteria}</p>
+                        </div>
+                        <p className="mt-2 text-[13.5px] text-white leading-relaxed">
+                          {t.description}
+                        </p>
+                        <div className="mt-3 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-white/40">
+                            Success criteria
                           </div>
+                          <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                            {t.successCriteria}
+                          </p>
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
+                    </div>
+                  );
+                })}
+              </ListCard>
             </div>
 
             {/* Action buttons */}
-            <motion.div variants={itemVariants} className="flex flex-col gap-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3">
+              <button
+                onClick={handleRegenerate}
+                disabled={generating}
+                className="h-11 px-5 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white rounded-full text-[12.5px] font-medium hover:bg-[hsl(0_0%_15%)] disabled:opacity-40 transition-colors touch-manipulation"
+              >
+                {generating ? 'Regenerating…' : 'Regenerate'}
+              </button>
+              <button
+                onClick={handleCopy}
+                className="h-11 px-5 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white rounded-full text-[12.5px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+              >
+                {copied ? 'Copied ✓' : 'Copy review'}
+              </button>
               <button
                 onClick={() => onNavigate('ilpmanagement')}
-                className="w-full h-12 rounded-xl bg-yellow-500 text-black font-semibold text-sm flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-transform"
+                className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
               >
-                <Save className="h-4 w-4" />
-                Save to ILP
+                Save to ILP →
               </button>
-
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={handleRegenerate}
-                  disabled={generating}
-                  className="h-11 rounded-xl border border-white/20 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-60"
-                >
-                  <RefreshCw className={cn('h-4 w-4', generating && 'animate-spin')} />
-                  Regenerate
-                </button>
-                <button
-                  onClick={handleCopy}
-                  className="h-11 rounded-xl border border-white/20 text-white text-sm font-medium flex items-center justify-center gap-2 touch-manipulation active:scale-[0.98] transition-transform"
-                >
-                  {copied ? (
-                    <>
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                      Copied
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="h-4 w-4" />
-                      Copy
-                    </>
-                  )}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </motion.section>
         )}
       </AnimatePresence>
-    </motion.div>
+    </PageFrame>
   );
 }

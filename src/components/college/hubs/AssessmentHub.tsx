@@ -1,11 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { CollegeFeatureTile } from '@/components/college/CollegeFeatureTile';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
-import { Button } from '@/components/ui/button';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
 import { RecordGradeSheet } from '@/components/college/sheets/RecordGradeSheet';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { usePendingGrades } from '@/hooks/college/useCollegeGrades';
@@ -15,16 +10,15 @@ import { useCollegeAttendance } from '@/hooks/college/useCollegeAttendance';
 import { useWorkQueue } from '@/hooks/college/useWorkQueue';
 import { useQueryClient } from '@tanstack/react-query';
 import {
-  CheckSquare,
-  Clock,
-  Target,
-  Award,
-  TrendingUp,
-  FolderOpen,
-  Inbox,
-  Plus,
-  Sparkles,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  Pill,
+  itemVariants,
+} from '@/components/college/primitives';
 
 interface AssessmentHubProps {
   onNavigate: (section: CollegeSection) => void;
@@ -36,7 +30,6 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
   const { data: epaRecords = [] } = useCollegeEPAs();
   const { data: attendance = [] } = useCollegeAttendance();
   const { stats: workStats } = useWorkQueue();
-  const { staggerContainer, staggerItem } = useHapticFeedback();
   const queryClient = useQueryClient();
   const [gradeSheetOpen, setGradeSheetOpen] = useState(false);
 
@@ -66,189 +59,151 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
 
   return (
     <PullToRefresh onRefresh={handleRefresh}>
-      <motion.div
-        className="space-y-4 md:space-y-6"
-        variants={staggerContainer}
-        initial="hidden"
-        animate="visible"
-      >
-        <CollegeSectionHeader
-          title="Assessment Hub"
-          description="Track grades, attendance, ILPs and EPA progress"
-          action={
-            <Button
-              className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black h-11 touch-manipulation"
-              onClick={() => setGradeSheetOpen(true)}
-            >
-              <Plus className="h-4 w-4" />
-              Record Grade
-            </Button>
-          }
-        />
+      <PageFrame>
+        {/* HERO */}
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Assessment Hub"
+            title="Grading, progress & EPA"
+            description="Mark assessments, track attendance, run ILP reviews and drive learners to EPA gateway."
+            tone="amber"
+            actions={
+              <button
+                onClick={() => setGradeSheetOpen(true)}
+                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              >
+                Record grade →
+              </button>
+            }
+          />
+        </motion.div>
 
-        {/* Quick Stats */}
-        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-1 -mx-4 px-4 md:mx-0 md:px-0">
-          <Card className="relative overflow-hidden bg-warning/[0.08] border-warning/20 hover:border-warning/40 hover:bg-warning/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-warning via-orange-400 to-warning/50" />
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5 group-hover:scale-110 transition-transform duration-300">
-                <CheckSquare className="h-4 w-4 text-warning" />
-              </div>
-              <div>
-                <p className="text-lg font-bold text-white">{pendingAssessments}</p>
-                <p className="text-xs text-white">Pending</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="relative overflow-hidden bg-success/[0.08] border-success/20 hover:border-success/40 hover:bg-success/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-success via-green-400 to-success/50" />
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5 group-hover:scale-110 transition-transform duration-300">
-                <Clock className="h-4 w-4 text-success" />
-              </div>
-              <div>
-                <p className="text-lg font-bold text-white">{avgAttendance}%</p>
-                <p className="text-xs text-white">Attendance</p>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="relative overflow-hidden bg-elec-yellow/[0.08] border-elec-yellow/20 hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
-            <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow/50" />
-            <CardContent className="p-3 flex items-center gap-2">
-              <div className="p-2 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5 group-hover:scale-110 transition-transform duration-300">
-                <Award className="h-4 w-4 text-elec-yellow" />
-              </div>
-              <div>
-                <p className="text-lg font-bold text-white">{studentsAtGateway}</p>
-                <p className="text-xs text-white">Gateway</p>
-              </div>
-            </CardContent>
-          </Card>
-          {overdueILPReviews > 0 && (
-            <Card className="relative overflow-hidden bg-warning/[0.08] border-warning/20 hover:border-warning/40 hover:bg-warning/[0.12] shrink-0 transition-all duration-300 cursor-pointer group touch-manipulation">
-              <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-warning via-orange-400 to-warning/50" />
-              <CardContent className="p-3 flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5 group-hover:scale-110 transition-transform duration-300">
-                  <Target className="h-4 w-4 text-warning" />
-                </div>
-                <div>
-                  <p className="text-lg font-bold text-white">{overdueILPReviews}</p>
-                  <p className="text-xs text-white">Overdue ILPs</p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+        {/* STATS */}
+        <motion.div variants={itemVariants}>
+          <StatStrip
+            columns={4}
+            stats={[
+              {
+                value: pendingAssessments,
+                label: 'Pending',
+                sub: 'Awaiting grading',
+                onClick: () => onNavigate('grading'),
+                accent: pendingAssessments > 0,
+              },
+              {
+                value: `${avgAttendance}%`,
+                label: 'Attendance',
+                sub: 'Rolling average',
+                onClick: () => onNavigate('attendance'),
+                tone: avgAttendance >= 85 ? 'green' : avgAttendance >= 70 ? 'amber' : 'red',
+              },
+              {
+                value: studentsAtGateway,
+                label: 'Gateway',
+                sub: 'Ready / pre-gateway',
+                onClick: () => onNavigate('epatracking'),
+              },
+              {
+                value: overdueILPReviews,
+                label: 'Overdue ILPs',
+                sub: 'Reviews outstanding',
+                onClick: () => onNavigate('ilpmanagement'),
+                accent: overdueILPReviews > 0,
+              },
+            ]}
+          />
+        </motion.div>
 
-        {/* Grading & Attendance */}
-        <motion.div variants={staggerItem}>
-          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
-            Grading & Attendance
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <CollegeFeatureTile
-              icon={CheckSquare}
+        {/* GRADING & ATTENDANCE */}
+        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+          <SectionHeader eyebrow="Grading & Attendance" title="Capture assessment data" />
+          <HubGrid columns={2}>
+            <HubCard
+              number="01"
+              eyebrow="Marking & Grades"
               title="Grading"
-              description="Mark assessments & record grades"
+              description="Mark assessments, record grades and review assessor feedback."
+              tone="amber"
+              meta={pendingAssessments > 0 ? `${pendingAssessments} pending` : 'All caught up'}
+              badge={pendingAssessments > 0 ? <Pill tone="amber">{pendingAssessments}</Pill> : undefined}
               onClick={() => onNavigate('grading')}
-              badge={pendingAssessments > 0 ? `${pendingAssessments} pending` : undefined}
-              badgeVariant="warning"
             />
-            <CollegeFeatureTile
-              icon={Clock}
+            <HubCard
+              number="02"
+              eyebrow="Registers & Records"
               title="Attendance"
-              description="Record & track attendance"
+              description="Take registers, view patterns and flag attendance concerns."
+              tone="green"
+              meta={`${avgAttendance}% average`}
               onClick={() => onNavigate('attendance')}
-              badge={`${avgAttendance}%`}
-              badgeVariant="success"
             />
-          </div>
-        </motion.div>
+          </HubGrid>
+        </motion.section>
 
-        {/* Progress & ILP */}
-        <motion.div variants={staggerItem}>
-          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-gradient-to-b from-info to-blue-500 rounded-full"></span>
-            Progress & Learning Plans
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            <CollegeFeatureTile
-              icon={Target}
+        {/* PROGRESS & ILP */}
+        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+          <SectionHeader eyebrow="Progress & Learning Plans" title="Track learner journeys" />
+          <HubGrid columns={3}>
+            <HubCard
+              number="03"
+              eyebrow="Individual Plans"
               title="ILP Management"
-              description="Learning plans & reviews"
+              description="Learning plans, SMART targets and review cycles."
+              tone="orange"
+              meta={overdueILPReviews > 0 ? `${overdueILPReviews} overdue` : 'On schedule'}
+              badge={overdueILPReviews > 0 ? <Pill tone="orange">{overdueILPReviews}</Pill> : undefined}
               onClick={() => onNavigate('ilpmanagement')}
-              badge={overdueILPReviews > 0 ? `${overdueILPReviews} overdue` : undefined}
-              badgeVariant="warning"
-              compact
             />
-            <CollegeFeatureTile
-              icon={TrendingUp}
+            <HubCard
+              number="04"
+              eyebrow="RAG Status"
               title="Progress Tracking"
-              description="Student RAG status"
+              description="Learner RAG ratings, progress scores and at-risk flags."
+              tone="blue"
+              meta="Cohort progress"
               onClick={() => onNavigate('progresstracking')}
-              compact
             />
-            <CollegeFeatureTile
-              icon={FolderOpen}
+            <HubCard
+              number="05"
+              eyebrow="Evidence & Submissions"
               title="Portfolios"
-              description="Evidence & submissions"
+              description="Portfolio evidence, AI-assisted reviews and resubmissions."
+              tone="purple"
+              meta="AI-reviewed"
+              badge={<Pill tone="yellow">AI</Pill>}
               onClick={() => onNavigate('portfolio')}
-              compact
             />
-          </div>
-        </motion.div>
+          </HubGrid>
+        </motion.section>
 
-        {/* EPA Tracking */}
-        <motion.div variants={staggerItem}>
-          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-gradient-to-b from-success to-green-500 rounded-full"></span>
-            End Point Assessment
-          </h2>
-          <CollegeFeatureTile
-            icon={Award}
-            title="EPA Tracking"
-            description="Gateway readiness & EPA progress"
-            onClick={() => onNavigate('epatracking')}
-            badge={studentsAtGateway > 0 ? `${studentsAtGateway} at gateway` : undefined}
-            badgeVariant="success"
-          />
-        </motion.div>
-
-        {/* Work Queue */}
-        <motion.div variants={staggerItem}>
-          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-gradient-to-b from-warning to-orange-500 rounded-full"></span>
-            Work Queue
-          </h2>
-          <CollegeFeatureTile
-            icon={Inbox}
-            title="Work Queue"
-            description="Pending reviews & assignments"
-            onClick={() => onNavigate('workqueue')}
-            badge={pendingWork > 0 ? `${pendingWork} items` : undefined}
-            badgeVariant="warning"
-          />
-        </motion.div>
-
-        {/* AI-Powered */}
-        <motion.div variants={staggerItem}>
-          <h2 className="text-base md:text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-gradient-to-b from-elec-yellow to-amber-500 rounded-full"></span>
-            AI-Powered
-          </h2>
-          <CollegeFeatureTile
-            icon={Sparkles}
-            title="AI Portfolio Review"
-            description="Analyse submissions against qualification criteria"
-            onClick={() => onNavigate('portfolio')}
-            badge="AI"
-            badgeVariant="success"
-          />
-        </motion.div>
+        {/* EPA */}
+        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+          <SectionHeader eyebrow="End Point Assessment" title="Gateway to EPA" />
+          <HubGrid columns={2}>
+            <HubCard
+              number="06"
+              eyebrow="Gateway Readiness"
+              title="EPA Tracking"
+              description="Gateway readiness checks, EPA scheduling and outcomes."
+              tone="green"
+              meta={studentsAtGateway > 0 ? `${studentsAtGateway} at gateway` : 'None ready'}
+              onClick={() => onNavigate('epatracking')}
+            />
+            <HubCard
+              number="07"
+              eyebrow="Review Queue"
+              title="Work Queue"
+              description="Pending reviews, assignments and assessor tasks."
+              tone="amber"
+              meta={pendingWork > 0 ? `${pendingWork} items` : 'Clear'}
+              badge={pendingWork > 0 ? <Pill tone="amber">{pendingWork}</Pill> : undefined}
+              onClick={() => onNavigate('workqueue')}
+            />
+          </HubGrid>
+        </motion.section>
 
         <RecordGradeSheet open={gradeSheetOpen} onOpenChange={setGradeSheetOpen} />
-      </motion.div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

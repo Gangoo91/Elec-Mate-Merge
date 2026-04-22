@@ -1,28 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
-import {
-  Mic,
-  MicOff,
-  Square,
-  Play,
-  Pause,
-  Trash2,
-  FileAudio,
-  Sparkles,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  ChevronRight,
-  Loader2,
-  Volume2,
-  Download,
-  RefreshCw,
-} from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -30,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Pill } from "@/components/college/primitives";
 
 interface VoiceEvidenceCaptureProps {
   studentName?: string;
@@ -231,46 +210,42 @@ export function VoiceEvidenceCapture({
 
   if (compact) {
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm flex items-center gap-2">
-            <Mic className="h-4 w-4 text-elec-yellow" />
-            Voice Evidence
-            <Badge className="bg-elec-yellow/20 text-elec-yellow text-[10px]">AI</Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <p className="text-sm text-muted-foreground mb-3">
-            Record observations and discussions with automatic transcription
-          </p>
-          <div className="flex items-center justify-between p-2 rounded-lg bg-background border border-border">
-            <div className="flex items-center gap-2">
-              <FileAudio className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm">Record & transcribe</span>
-            </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">VOICE EVIDENCE</div>
+            <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">Voice capture</h3>
           </div>
-        </CardContent>
-      </Card>
+          <Pill tone="yellow">AI</Pill>
+        </div>
+        <p className="mt-3 text-[13px] text-white/55 leading-relaxed">
+          Record observations and discussions with automatic transcription
+        </p>
+        <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/[0.06]">
+          <span className="text-sm text-white/70">Record &amp; transcribe</span>
+          <span className="text-[13px] font-medium text-elec-yellow/90">→</span>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Mic className="h-5 w-5 text-elec-yellow" />
-          Voice Evidence Capture
-          <Badge className="bg-elec-yellow/20 text-elec-yellow">AI Transcription</Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+      <div className="p-5 sm:p-6 pb-4 flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">VOICE EVIDENCE</div>
+          <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">Voice evidence capture</h3>
+        </div>
+        <Pill tone="yellow">AI Transcription</Pill>
+      </div>
+
+      <div className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-4">
         {/* Permission Warning */}
         {hasPermission === false && (
-          <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20">
+          <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
             <div className="flex items-start gap-2">
-              <AlertCircle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
-              <div className="text-xs text-destructive">
+              <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-red-400 shrink-0" aria-hidden />
+              <div className="text-xs text-red-400">
                 <p className="font-medium">Microphone access required</p>
                 <p className="mt-1">Please allow microphone access in your browser to record audio evidence.</p>
               </div>
@@ -296,19 +271,19 @@ export function VoiceEvidenceCapture({
         </div>
 
         {/* Recording Interface */}
-        <div className="p-4 rounded-lg bg-background border border-border">
+        <div className="p-5 rounded-xl bg-black/30 border border-white/[0.06]">
           {/* Timer Display */}
           <div className="text-center mb-4">
             <div className="flex items-center justify-center gap-2 mb-2">
               {isRecording && (
-                <div className={`w-3 h-3 rounded-full ${isPaused ? 'bg-amber-500' : 'bg-red-500 animate-pulse'}`} />
+                <div className={`w-2.5 h-2.5 rounded-full ${isPaused ? 'bg-amber-400' : 'bg-red-400 animate-pulse'}`} aria-hidden />
               )}
-              <span className="text-3xl font-mono font-bold">
+              <span className="text-3xl font-mono font-semibold tabular-nums text-white tracking-tight">
                 {formatTime(recordingTime)}
               </span>
             </div>
-            <p className="text-xs text-muted-foreground">
-              {isRecording ? (isPaused ? "Paused" : "Recording...") : audioBlob ? "Recording complete" : "Ready to record"}
+            <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">
+              {isRecording ? (isPaused ? "Paused" : "Recording") : audioBlob ? "Complete" : "Ready to record"}
             </p>
           </div>
 
@@ -318,10 +293,11 @@ export function VoiceEvidenceCapture({
               <Button
                 onClick={startRecording}
                 disabled={hasPermission === false}
-                className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-full px-6 font-medium gap-2"
               >
-                <Mic className="h-4 w-4" />
+                <span className="h-2 w-2 rounded-full bg-black" aria-hidden />
                 Start Recording
+                <span aria-hidden>→</span>
               </Button>
             )}
 
@@ -331,17 +307,19 @@ export function VoiceEvidenceCapture({
                   variant="outline"
                   size="icon"
                   onClick={pauseRecording}
-                  className="h-10 w-10"
+                  className="h-11 w-11 rounded-full"
+                  aria-label={isPaused ? "Resume" : "Pause"}
                 >
-                  {isPaused ? <Play className="h-4 w-4" /> : <Pause className="h-4 w-4" />}
+                  <span aria-hidden className="text-base">{isPaused ? "▶" : "‖"}</span>
                 </Button>
                 <Button
-                  variant="destructive"
+                  variant="outline"
                   size="icon"
                   onClick={stopRecording}
-                  className="h-10 w-10"
+                  className="h-11 w-11 rounded-full border-red-500/40 text-red-400 hover:text-red-300 hover:border-red-400"
+                  aria-label="Stop"
                 >
-                  <Square className="h-4 w-4" />
+                  <span aria-hidden className="text-base">■</span>
                 </Button>
               </>
             )}
@@ -352,17 +330,19 @@ export function VoiceEvidenceCapture({
                   variant="outline"
                   size="icon"
                   onClick={togglePlayback}
-                  className="h-10 w-10"
+                  className="h-11 w-11 rounded-full"
+                  aria-label={isPlaying ? "Pause" : "Play"}
                 >
-                  {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                  <span aria-hidden className="text-base">{isPlaying ? "‖" : "▶"}</span>
                 </Button>
                 <Button
                   variant="outline"
                   size="icon"
                   onClick={clearRecording}
-                  className="h-10 w-10 text-destructive hover:text-destructive"
+                  className="h-11 w-11 rounded-full text-red-400 hover:text-red-300"
+                  aria-label="Delete"
                 >
-                  <Trash2 className="h-4 w-4" />
+                  <span aria-hidden className="text-base">×</span>
                 </Button>
               </>
             )}
@@ -381,7 +361,7 @@ export function VoiceEvidenceCapture({
 
         {/* Audio Visualization (placeholder) */}
         {isRecording && (
-          <div className="h-16 rounded-lg bg-background border border-border flex items-center justify-center px-4">
+          <div className="h-16 rounded-xl bg-black/30 border border-white/[0.06] flex items-center justify-center px-4">
             <div className="flex items-end gap-1 h-10">
               {[...Array(20)].map((_, i) => (
                 <div
@@ -402,22 +382,22 @@ export function VoiceEvidenceCapture({
           <Button
             onClick={transcribeAudio}
             disabled={isTranscribing}
-            className="w-full gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-full px-6 font-medium gap-2"
           >
             {isTranscribing ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow animate-spin" aria-hidden />
                 Transcribing with AI...
               </>
             ) : transcription ? (
               <>
-                <RefreshCw className="h-4 w-4" />
+                <span aria-hidden>⟳</span>
                 Re-transcribe
               </>
             ) : (
               <>
-                <Sparkles className="h-4 w-4" />
                 Transcribe with AI
+                <span aria-hidden>→</span>
               </>
             )}
           </Button>
@@ -425,26 +405,26 @@ export function VoiceEvidenceCapture({
 
         {/* Transcription Result */}
         {transcription && (
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-semibold flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-success" />
-                Transcription
-              </h3>
-              <Badge className="bg-success/20 text-success">Complete</Badge>
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+              <div>
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">TRANSCRIPTION</div>
+                <h4 className="mt-1 text-base font-semibold text-white tracking-tight">AI output</h4>
+              </div>
+              <Pill tone="green">Complete</Pill>
             </div>
-            <div className="p-3 rounded-lg bg-background border border-border">
-              <p className="text-sm whitespace-pre-wrap">{transcription}</p>
+            <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
+              <p className="text-sm whitespace-pre-wrap text-white/85 leading-relaxed">{transcription}</p>
             </div>
 
             {/* Recording Info */}
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <Clock className="h-3 w-3" />
+            <div className="flex items-center gap-4 text-[11.5px] text-white/50">
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-white/30" aria-hidden />
                 <span>Duration: {formatTime(recordingTime)}</span>
               </div>
-              <div className="flex items-center gap-1">
-                <FileAudio className="h-3 w-3" />
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-white/30" aria-hidden />
                 <span>Type: {contextOptions.find(o => o.value === selectedContext)?.label}</span>
               </div>
             </div>
@@ -453,22 +433,30 @@ export function VoiceEvidenceCapture({
 
         {/* Tips */}
         {!audioBlob && !isRecording && (
-          <div className="p-3 rounded-lg bg-info/10 border border-info/20">
-            <div className="flex items-start gap-2">
-              <Volume2 className="h-4 w-4 text-info mt-0.5 shrink-0" />
-              <div className="text-xs text-info">
-                <p className="font-medium mb-1">Recording Tips:</p>
-                <ul className="space-y-0.5 list-disc list-inside">
-                  <li>Find a quiet environment with minimal background noise</li>
-                  <li>Speak clearly and at a moderate pace</li>
-                  <li>Include specific details about the work being observed</li>
-                  <li>Reference assessment criteria where relevant</li>
-                </ul>
-              </div>
-            </div>
+          <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">TIPS</div>
+            <p className="mt-1.5 text-sm font-medium text-white">Recording tips</p>
+            <ul className="mt-3 space-y-1.5 text-[12.5px] text-white/60">
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                Find a quiet environment with minimal background noise
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                Speak clearly and at a moderate pace
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                Include specific details about the work being observed
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                Reference assessment criteria where relevant
+              </li>
+            </ul>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Progress } from '@/components/ui/progress';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -16,7 +11,7 @@ import {
 import { useCollegeStudent, useUpdateCollegeStudent } from '@/hooks/college/useCollegeStudents';
 import { useToast } from '@/hooks/use-toast';
 import { useHapticFeedback, SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
-import { TrendingUp, Loader2, Save, AlertTriangle } from 'lucide-react';
+import { Pill, LoadingState, type Tone } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 
 interface ProgressUpdateSheetProps {
@@ -25,13 +20,36 @@ interface ProgressUpdateSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const RISK_LEVELS = [
-  { value: 'none', label: 'None', colour: 'text-white' },
-  { value: 'low', label: 'Low', colour: 'text-success' },
-  { value: 'medium', label: 'Medium', colour: 'text-warning' },
-  { value: 'high', label: 'High', colour: 'text-orange-400' },
-  { value: 'critical', label: 'Critical', colour: 'text-destructive' },
-] as const;
+const RISK_LEVELS: { value: string; label: string; tone: Tone }[] = [
+  { value: 'none', label: 'None', tone: 'yellow' },
+  { value: 'low', label: 'Low', tone: 'green' },
+  { value: 'medium', label: 'Medium', tone: 'amber' },
+  { value: 'high', label: 'High', tone: 'orange' },
+  { value: 'critical', label: 'Critical', tone: 'red' },
+];
+
+const inputClass =
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+const textareaClass =
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[120px] resize-none';
+
+const selectTriggerClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+
+const selectContentClass =
+  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+
+function riskTone(level?: string | null): Tone {
+  const l = (level || '').toLowerCase();
+  if (l === 'critical') return 'red';
+  if (l === 'high') return 'orange';
+  if (l === 'medium') return 'amber';
+  if (l === 'low') return 'green';
+  return 'yellow';
+}
 
 export function ProgressUpdateSheet({ studentId, open, onOpenChange }: ProgressUpdateSheetProps) {
   const { data: student, isLoading } = useCollegeStudent(studentId || '');
@@ -44,7 +62,6 @@ export function ProgressUpdateSheet({ studentId, open, onOpenChange }: ProgressU
   const [newRisk, setNewRisk] = useState('');
   const [notes, setNotes] = useState('');
 
-  // Populate form when student data loads
   useEffect(() => {
     if (student) {
       setNewProgress(String(student.progress_percent ?? 0));
@@ -53,7 +70,6 @@ export function ProgressUpdateSheet({ studentId, open, onOpenChange }: ProgressU
     }
   }, [student]);
 
-  // Reset form when sheet closes
   useEffect(() => {
     if (!open) {
       setNewProgress('');
@@ -81,7 +97,6 @@ export function ProgressUpdateSheet({ studentId, open, onOpenChange }: ProgressU
         },
       });
 
-      // Show success animation
       setShowSuccess(true);
       triggerSuccess(true);
 
@@ -110,151 +125,113 @@ export function ProgressUpdateSheet({ studentId, open, onOpenChange }: ProgressU
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-            <SheetTitle className="text-xl text-left flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-elec-yellow" />
-              Update Progress
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className={eyebrow}>Progress Update</div>
+            <SheetTitle className="text-[20px] font-semibold text-white mt-1 text-left">
+              Update progress
             </SheetTitle>
-            <p className="text-sm text-white text-left">
-              {isLoading ? 'Loading student...' : `Update progress for ${student?.name}`}
+            <p className="text-[12.5px] text-white/55 mt-1 text-left">
+              {isLoading ? 'Loading student…' : `Update progress for ${student?.name}`}
             </p>
           </SheetHeader>
 
-          {/* Scrollable Form */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
             {isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-              </div>
+              <LoadingState />
             ) : (
               <>
-                {/* Current Progress Display */}
-                <Card className="border-white/10">
-                  <CardContent className="p-4 space-y-3">
-                    <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                      Current Progress
-                    </h4>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-white">Overall Completion</span>
-                      <span className="text-lg font-bold text-white">{currentProgress}%</span>
-                    </div>
-                    <Progress value={currentProgress} className="h-2" />
-                    <div className="flex items-center gap-2 text-sm text-white">
-                      <AlertTriangle
-                        className={cn(
-                          'h-4 w-4',
-                          student?.risk_level === 'High'
-                            ? 'text-destructive'
-                            : student?.risk_level === 'Medium'
-                              ? 'text-warning'
-                              : 'text-success'
-                        )}
-                      />
-                      <span>
-                        Current risk level:{' '}
-                        <span className="font-medium">{student?.risk_level || 'None'}</span>
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* New Progress Input */}
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    New Progress
-                  </h4>
-                  <div>
-                    <Label htmlFor="new-progress">Progress Percentage *</Label>
-                    <Input
-                      id="new-progress"
-                      type="number"
-                      min={0}
-                      max={100}
-                      value={newProgress}
-                      onChange={(e) => setNewProgress(e.target.value)}
-                      className="h-11 touch-manipulation"
-                      placeholder="0 - 100"
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                  <div className={eyebrow}>Current Progress</div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[13px] text-white/70">Overall completion</span>
+                    <span className="text-[22px] font-semibold text-white tabular-nums">
+                      {currentProgress}%
+                    </span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                    <motion.div
+                      className="h-full rounded-full bg-elec-yellow"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${currentProgress}%` }}
+                      transition={{ duration: 0.6 }}
                     />
-                    {progressDelta !== 0 && newProgress !== '' && (
-                      <p
-                        className={cn(
-                          'text-xs mt-1 font-medium',
-                          progressDelta > 0 ? 'text-success' : 'text-destructive'
-                        )}
-                      >
-                        {progressDelta > 0 ? '+' : ''}
-                        {progressDelta}% from current
-                      </p>
-                    )}
+                  </div>
+                  <div className="flex items-center gap-2 text-[12px] text-white/70">
+                    <span>Current risk level:</span>
+                    <Pill tone={riskTone(student?.risk_level)}>{student?.risk_level || 'None'}</Pill>
                   </div>
                 </div>
 
-                {/* Risk Level */}
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Risk Level
-                  </h4>
-                  <div>
-                    <Label htmlFor="risk-level">Risk Assessment *</Label>
-                    <Select value={newRisk} onValueChange={setNewRisk}>
-                      <SelectTrigger className="h-11 touch-manipulation">
-                        <SelectValue placeholder="Select risk level" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {RISK_LEVELS.map((level) => (
-                          <SelectItem key={level.value} value={level.value}>
-                            <span className={level.colour}>{level.label}</span>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                  <div className={eyebrow}>New Progress *</div>
+                  <input
+                    type="number"
+                    min={0}
+                    max={100}
+                    value={newProgress}
+                    onChange={(e) => setNewProgress(e.target.value)}
+                    className={inputClass}
+                    placeholder="0 – 100"
+                  />
+                  {progressDelta !== 0 && newProgress !== '' && (
+                    <p
+                      className={cn(
+                        'text-[12px] font-medium',
+                        progressDelta > 0 ? 'text-green-400' : 'text-red-400'
+                      )}
+                    >
+                      {progressDelta > 0 ? '+' : ''}
+                      {progressDelta}% from current
+                    </p>
+                  )}
                 </div>
 
-                {/* Notes */}
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Progress Notes
-                  </h4>
-                  <div>
-                    <Label htmlFor="progress-notes">Notes (optional)</Label>
-                    <Textarea
-                      id="progress-notes"
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      className="touch-manipulation text-base min-h-[120px]"
-                      placeholder="Add any notes about this progress update..."
-                    />
-                  </div>
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                  <div className={eyebrow}>Risk Level *</div>
+                  <Select value={newRisk} onValueChange={setNewRisk}>
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select risk level" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {RISK_LEVELS.map((level) => (
+                        <SelectItem key={level.value} value={level.value}>
+                          {level.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                  <div className={eyebrow}>Progress Notes (Optional)</div>
+                  <textarea
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    className={textareaClass}
+                    placeholder="Add any notes about this progress update…"
+                  />
                 </div>
               </>
             )}
           </div>
 
-          {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation"
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
+            <button
+              type="button"
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
+              className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 touch-manipulation gap-2"
+            </button>
+            <button
+              type="button"
               onClick={handleSubmit}
               disabled={
                 isSubmitting ||
@@ -263,23 +240,13 @@ export function ProgressUpdateSheet({ studentId, open, onOpenChange }: ProgressU
                 parsedNewProgress < 0 ||
                 parsedNewProgress > 100
               }
+              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  Save Progress
-                </>
-              )}
-            </Button>
+              {isSubmitting ? 'Saving…' : 'Save Progress →'}
+            </button>
           </SheetFooter>
         </div>
 
-        {/* Success overlay */}
         <SuccessCheckmark show={showSuccess} />
       </SheetContent>
     </Sheet>

@@ -1,37 +1,6 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
-import { cn } from '@/lib/utils';
-import {
-  BookOpen,
-  Plus,
-  Upload,
-  FileText,
-  MessageSquare,
-  Sparkles,
-  Search,
-  MoreVertical,
-  FolderPlus,
-  Trash2,
-  Share2,
-  Clock,
-  Bot,
-  Send,
-  FileUp,
-  Link,
-  File,
-  Image,
-  Video,
-  Mic,
-  X,
-  ChevronRight,
-  Lightbulb,
-  ListChecks,
-  FileQuestion,
-  Presentation,
-} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,6 +16,20 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
+import {
+  PageFrame,
+  PageHero,
+  SectionHeader,
+  ListCard,
+  HubGrid,
+  EmptyState,
+  FilterBar,
+  Pill,
+  itemVariants,
+  toneDot,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface Notebook {
   id: string;
@@ -54,7 +37,7 @@ interface Notebook {
   description?: string;
   sourceCount: number;
   lastUpdated: string;
-  color: string;
+  tone: Tone;
 }
 
 interface Source {
@@ -72,7 +55,6 @@ interface ChatMessage {
   timestamp: string;
 }
 
-// Mock data for notebooks
 const mockNotebooks: Notebook[] = [
   {
     id: '1',
@@ -80,7 +62,7 @@ const mockNotebooks: Notebook[] = [
     description: 'Notes and resources for EAL Level 2',
     sourceCount: 12,
     lastUpdated: '2024-01-15',
-    color: 'bg-blue-500',
+    tone: 'blue',
   },
   {
     id: '2',
@@ -88,7 +70,7 @@ const mockNotebooks: Notebook[] = [
     description: 'H&S regulations and procedures',
     sourceCount: 8,
     lastUpdated: '2024-01-10',
-    color: 'bg-green-500',
+    tone: 'emerald',
   },
   {
     id: '3',
@@ -96,7 +78,7 @@ const mockNotebooks: Notebook[] = [
     description: 'Unit assessment criteria and mapping',
     sourceCount: 15,
     lastUpdated: '2024-01-08',
-    color: 'bg-purple-500',
+    tone: 'purple',
   },
 ];
 
@@ -120,10 +102,12 @@ const mockSources: Source[] = [
   { id: '5', name: 'Lesson observation notes', type: 'note', addedAt: '2024-01-08' },
 ];
 
+const tones: Tone[] = ['blue', 'emerald', 'purple', 'amber', 'yellow', 'cyan'];
+
 export function TutorNotebookSection() {
   const [notebooks, setNotebooks] = useState<Notebook[]>(mockNotebooks);
   const [selectedNotebook, setSelectedNotebook] = useState<Notebook | null>(null);
-  const [sources, setSources] = useState<Source[]>(mockSources);
+  const [sources] = useState<Source[]>(mockSources);
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [chatInput, setChatInput] = useState('');
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
@@ -132,44 +116,21 @@ export function TutorNotebookSection() {
   const [newNotebookDesc, setNewNotebookDesc] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const getSourceIcon = (type: Source['type']) => {
-    switch (type) {
-      case 'document':
-        return <FileText className="h-4 w-4" />;
-      case 'link':
-        return <Link className="h-4 w-4" />;
-      case 'image':
-        return <Image className="h-4 w-4" />;
-      case 'video':
-        return <Video className="h-4 w-4" />;
-      case 'audio':
-        return <Mic className="h-4 w-4" />;
-      case 'note':
-        return <FileText className="h-4 w-4" />;
-      default:
-        return <File className="h-4 w-4" />;
-    }
-  };
-
   const handleSendMessage = () => {
     if (!chatInput.trim()) return;
-
     const userMessage: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
       content: chatInput,
       timestamp: new Date().toISOString(),
     };
-
     setChatMessages((prev) => [...prev, userMessage]);
     setChatInput('');
-
-    // Simulate AI response
     setTimeout(() => {
       const aiResponse: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: `Based on the sources in "${selectedNotebook?.name}", here's what I found:\n\nThe BS7671 18th Edition establishes the requirements for electrical installations. Key points include:\n\n1. **Earthing Requirements** - All installations must have effective earthing arrangements\n2. **Circuit Protection** - Overcurrent protection must be provided for all circuits\n3. **Testing Requirements** - Installations must be tested and verified before energisation\n\nWould you like me to elaborate on any of these points or generate study materials?`,
+        content: `Based on the sources in "${selectedNotebook?.name}", here's what I found:\n\nThe BS7671 18th Edition establishes the requirements for electrical installations. Key points include:\n\n• Earthing requirements — all installations must have effective earthing\n• Circuit protection — overcurrent protection for all circuits\n• Testing — installations must be verified before energisation\n\nWould you like me to elaborate or generate study materials?`,
         timestamp: new Date().toISOString(),
       };
       setChatMessages((prev) => [...prev, aiResponse]);
@@ -178,24 +139,14 @@ export function TutorNotebookSection() {
 
   const handleCreateNotebook = () => {
     if (!newNotebookName.trim()) return;
-
-    const colors = [
-      'bg-blue-500',
-      'bg-green-500',
-      'bg-purple-500',
-      'bg-orange-500',
-      'bg-pink-500',
-      'bg-cyan-500',
-    ];
     const newNotebook: Notebook = {
       id: Date.now().toString(),
       name: newNotebookName,
       description: newNotebookDesc,
       sourceCount: 0,
       lastUpdated: new Date().toISOString().split('T')[0],
-      color: colors[Math.floor(Math.random() * colors.length)],
+      tone: tones[Math.floor(Math.random() * tones.length)],
     };
-
     setNotebooks((prev) => [...prev, newNotebook]);
     setNewNotebookName('');
     setNewNotebookDesc('');
@@ -208,158 +159,147 @@ export function TutorNotebookSection() {
       nb.description?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Notebook list view
+  /* ─────────── LIST VIEW ─────────── */
   if (!selectedNotebook) {
     return (
-      <div className="space-y-6 animate-fade-in">
-        <CollegeSectionHeader
-          title="Teaching Notebook"
-          description="AI-powered notes and resource organization"
-          icon={BookOpen}
-          actions={
-            <Button
-              className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-              onClick={() => setIsCreateDialogOpen(true)}
-            >
-              <Plus className="h-4 w-4" />
-              New Notebook
-            </Button>
-          }
-        />
-
-        {/* Search */}
-        <div className="relative">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search notebooks..."
-            className={cn('bg-elec-gray border-elec-yellow/20', !searchQuery && 'pl-10')}
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      <PageFrame>
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Curriculum · Notebook"
+            title="Teaching notebook"
+            description="AI-powered notes, lesson summaries and quiz generation from your own source materials."
+            tone="yellow"
+            actions={
+              <button
+                onClick={() => setIsCreateDialogOpen(true)}
+                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              >
+                New notebook →
+              </button>
+            }
           />
-        </div>
+        </motion.div>
 
-        {/* AI Feature Highlight */}
-        <Card className="border-elec-yellow/30 bg-gradient-to-r from-elec-yellow/10 to-elec-yellow/5">
-          <CardContent className="p-5">
-            <div className="flex items-start gap-4">
-              <div className="h-12 w-12 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
-                <Sparkles className="h-6 w-6 text-elec-yellow" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-foreground mb-1">
-                  AI-Powered Teaching Assistant
-                </h3>
-                <p className="text-sm text-white mb-3">
-                  Upload your notes, lesson plans, and resources. Ask questions, generate summaries,
-                  create quizzes, and get AI-powered insights from your teaching materials.
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
-                    Summarize content
-                  </span>
-                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
-                    Generate quizzes
-                  </span>
-                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
-                    Create study guides
-                  </span>
-                  <span className="text-xs bg-elec-yellow/20 text-elec-yellow px-2 py-1 rounded-full">
-                    Q&A chat
-                  </span>
-                </div>
-              </div>
+        <motion.div variants={itemVariants}>
+          <FilterBar
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search notebooks…"
+          />
+        </motion.div>
+
+        {/* AI feature strip */}
+        <motion.div variants={itemVariants}>
+          <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              AI-Powered
             </div>
-          </CardContent>
-        </Card>
+            <h3 className="mt-2 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+              Teaching assistant
+            </h3>
+            <p className="mt-2 text-[13px] text-white/55 max-w-2xl leading-relaxed">
+              Upload lesson notes, plans and resources. Ask questions, generate summaries, create
+              quizzes and get insights from your own materials.
+            </p>
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              <Pill tone="yellow">Summarise</Pill>
+              <Pill tone="yellow">Quizzes</Pill>
+              <Pill tone="yellow">Study guides</Pill>
+              <Pill tone="yellow">Q&A chat</Pill>
+            </div>
+          </div>
+        </motion.div>
 
-        {/* Notebooks Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filteredNotebooks.map((notebook) => (
-            <Card
-              key={notebook.id}
-              className="group cursor-pointer border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300 hover:scale-[1.02]"
-              onClick={() => setSelectedNotebook(notebook)}
-            >
-              <CardContent className="p-5">
-                <div className="flex items-start justify-between mb-3">
+        {/* NOTEBOOKS */}
+        <motion.section variants={itemVariants} className="space-y-5">
+          <SectionHeader eyebrow="Your Notebooks" title={`${notebooks.length} notebooks`} />
+          {filteredNotebooks.length === 0 ? (
+            <EmptyState
+              title="No notebooks found"
+              description="Create your first notebook to start organising teaching materials."
+              action="New notebook"
+              onAction={() => setIsCreateDialogOpen(true)}
+            />
+          ) : (
+            <HubGrid columns={3}>
+              {filteredNotebooks.map((notebook, i) => (
+                <button
+                  key={notebook.id}
+                  onClick={() => setSelectedNotebook(notebook)}
+                  className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 text-left touch-manipulation flex flex-col min-h-[180px]"
+                >
                   <div
-                    className={`h-10 w-10 rounded-lg ${notebook.color} flex items-center justify-center`}
-                  >
-                    <BookOpen className="h-5 w-5 text-foreground" />
-                  </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-8 w-8 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                    className={cn(
+                      'absolute inset-x-0 top-0 h-px opacity-70 group-hover:opacity-100 transition-opacity',
+                      toneDot[notebook.tone]
+                    )}
+                  />
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                      {String(i + 1).padStart(2, '0')} · Notebook
+                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger
+                        asChild
+                        onClick={(e) => e.stopPropagation()}
                       >
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>
-                        <Share2 className="h-4 w-4 mr-2" />
-                        Share
-                      </DropdownMenuItem>
-                      <DropdownMenuItem className="text-destructive">
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-                <h3 className="font-semibold text-foreground mb-1">{notebook.name}</h3>
-                {notebook.description && (
-                  <p className="text-sm text-white mb-3 line-clamp-2">
-                    {notebook.description}
-                  </p>
-                )}
-                <div className="flex items-center justify-between text-xs text-white">
-                  <span className="flex items-center gap-1">
-                    <FileText className="h-3 w-3" />
-                    {notebook.sourceCount} sources
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {new Date(notebook.lastUpdated).toLocaleDateString()}
-                  </span>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                        <button
+                          className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                          aria-label="Options"
+                        >
+                          ⋯
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem>Share</DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="text-red-400"
+                          onClick={() => setNotebooks((prev) => prev.filter((n) => n.id !== notebook.id))}
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold text-white tracking-tight leading-snug">
+                    {notebook.name}
+                  </h3>
+                  {notebook.description && (
+                    <p className="mt-2 text-[12.5px] leading-relaxed text-white/55 line-clamp-2">
+                      {notebook.description}
+                    </p>
+                  )}
+                  <div className="flex-grow" />
+                  <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px] text-white/50">
+                    <span className="tabular-nums">{notebook.sourceCount} sources</span>
+                    <span className="tabular-nums">
+                      {new Date(notebook.lastUpdated).toLocaleDateString('en-GB', {
+                        day: 'numeric',
+                        month: 'short',
+                      })}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </HubGrid>
+          )}
+        </motion.section>
 
-          {/* Create New Card */}
-          <Card
-            className="cursor-pointer border-dashed border-2 border-elec-yellow/30 bg-transparent hover:bg-elec-yellow/5 hover:border-elec-yellow/50 transition-all duration-300"
-            onClick={() => setIsCreateDialogOpen(true)}
-          >
-            <CardContent className="p-5 h-full flex flex-col items-center justify-center min-h-[180px]">
-              <div className="h-12 w-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center mb-3">
-                <FolderPlus className="h-6 w-6 text-elec-yellow" />
-              </div>
-              <p className="text-sm text-white">Create new notebook</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Create Notebook Dialog */}
         <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogContent className="bg-elec-dark border-elec-yellow/20">
+          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
             <DialogHeader>
-              <DialogTitle>Create New Notebook</DialogTitle>
+              <DialogTitle>New notebook</DialogTitle>
             </DialogHeader>
-            <div className="space-y-4 py-4">
+            <div className="space-y-4 py-2">
               <div className="space-y-2">
-                <Label htmlFor="name">Notebook Name</Label>
+                <Label htmlFor="name">Name</Label>
                 <Input
                   id="name"
-                  placeholder="e.g., Electrical Theory Notes"
+                  placeholder="e.g. Electrical theory notes"
                   value={newNotebookName}
                   onChange={(e) => setNewNotebookName(e.target.value)}
-                  className="bg-elec-gray border-elec-yellow/20"
+                  className="h-11 touch-manipulation bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow"
                 />
               </div>
               <div className="space-y-2">
@@ -369,296 +309,256 @@ export function TutorNotebookSection() {
                   placeholder="What's this notebook about?"
                   value={newNotebookDesc}
                   onChange={(e) => setNewNotebookDesc(e.target.value)}
-                  className="bg-elec-gray border-elec-yellow/20"
+                  className="touch-manipulation bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow"
                 />
               </div>
             </div>
-            <DialogFooter>
-              <Button variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+            <DialogFooter className="flex items-center justify-end gap-3">
+              <button
+                onClick={() => setIsCreateDialogOpen(false)}
+                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+              >
                 Cancel
-              </Button>
-              <Button
-                className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+              </button>
+              <button
                 onClick={handleCreateNotebook}
                 disabled={!newNotebookName.trim()}
+                className="text-[12.5px] font-medium text-elec-yellow hover:opacity-90 disabled:opacity-40 transition-colors touch-manipulation"
               >
-                Create Notebook
-              </Button>
+                Create notebook →
+              </button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
-      </div>
+      </PageFrame>
     );
   }
 
-  // Notebook detail view with AI chat
+  /* ─────────── DETAIL VIEW ─────────── */
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="flex items-center gap-4">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setSelectedNotebook(null)}
-          className="gap-1 text-white hover:text-foreground"
-        >
-          <ChevronRight className="h-4 w-4 rotate-180" />
-          Back
-        </Button>
-        <div className="h-6 w-px bg-border" />
-        <div className="flex items-center gap-3 flex-1">
-          <div
-            className={`h-8 w-8 rounded-lg ${selectedNotebook.color} flex items-center justify-center`}
+    <PageFrame>
+      <motion.div variants={itemVariants} className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4 min-w-0 flex-1">
+          <button
+            onClick={() => setSelectedNotebook(null)}
+            className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
           >
-            <BookOpen className="h-4 w-4 text-foreground" />
-          </div>
-          <div>
-            <h1 className="font-semibold text-foreground">{selectedNotebook.name}</h1>
-            <p className="text-xs text-white">{sources.length} sources</p>
+            ← Back
+          </button>
+          <div className="h-4 w-px bg-white/10" aria-hidden />
+          <div className="min-w-0">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              Notebook
+            </div>
+            <h1 className="mt-0.5 text-xl sm:text-2xl font-semibold text-white tracking-tight truncate">
+              {selectedNotebook.name}
+            </h1>
           </div>
         </div>
-        <Button
-          className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+        <button
           onClick={() => setIsAddSourceDialogOpen(true)}
+          className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap shrink-0"
         >
-          <Upload className="h-4 w-4" />
-          Add Source
-        </Button>
-      </div>
+          Add source →
+        </button>
+      </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Sources Panel */}
-        <div className="lg:col-span-1 space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Sources
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {sources.map((source) => (
-                <div
-                  key={source.id}
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-background/50 cursor-pointer active:bg-background/70 transition-all touch-manipulation group"
-                >
-                  <div className="h-8 w-8 rounded bg-elec-yellow/10 flex items-center justify-center text-elec-yellow">
-                    {getSourceIcon(source.type)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">{source.name}</p>
-                    <p className="text-xs text-white">
-                      {source.size || new Date(source.addedAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-6 w-6 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+      <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* LEFT: sources + ai actions */}
+        <div className="lg:col-span-1 space-y-5">
+          <div>
+            <SectionHeader eyebrow="Sources" title={`${sources.length} items`} />
+            <div className="mt-4">
+              <ListCard>
+                {sources.map((source) => (
+                  <div
+                    key={source.id}
+                    className="flex items-center gap-3 px-5 sm:px-6 py-3 hover:bg-[hsl(0_0%_15%)] transition-colors"
                   >
-                    <X className="h-3 w-3" />
-                  </Button>
-                </div>
-              ))}
-
-              <Button
-                variant="outline"
-                className="w-full mt-3 border-dashed border-elec-yellow/30 hover:bg-elec-yellow/10"
-                onClick={() => setIsAddSourceDialogOpen(true)}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add source
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Quick Actions */}
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-elec-yellow" />
-                AI Actions
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10"
-                onClick={() => {
-                  setChatInput('Generate a summary of all the content in this notebook');
-                  handleSendMessage();
-                }}
-              >
-                <Lightbulb className="h-4 w-4 text-elec-yellow" />
-                Generate Summary
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10"
-              >
-                <ListChecks className="h-4 w-4 text-elec-yellow" />
-                Create Quiz
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10"
-              >
-                <FileQuestion className="h-4 w-4 text-elec-yellow" />
-                Study Guide
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full justify-start gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10"
-              >
-                <Presentation className="h-4 w-4 text-elec-yellow" />
-                Lesson Outline
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* AI Chat Panel */}
-        <div className="lg:col-span-2">
-          <Card className="border-elec-yellow/20 bg-elec-gray h-[600px] flex flex-col">
-            <CardHeader className="pb-3 border-b border-elec-yellow/10">
-              <CardTitle className="text-base flex items-center gap-2">
-                <Bot className="h-4 w-4 text-elec-yellow" />
-                AI Assistant
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex-1 flex flex-col p-0">
-              {/* Chat Messages */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {chatMessages.length === 0 ? (
-                  <div className="h-full flex flex-col items-center justify-center text-center p-6">
-                    <div className="h-16 w-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mb-4">
-                      <MessageSquare className="h-8 w-8 text-elec-yellow" />
-                    </div>
-                    <h3 className="font-semibold text-foreground mb-2">
-                      Ask anything about your sources
-                    </h3>
-                    <p className="text-sm text-white max-w-md mb-4">
-                      The AI has read all your uploaded documents and can answer questions, create
-                      summaries, generate quizzes, and more.
-                    </p>
-                    <div className="flex flex-wrap gap-2 justify-center">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-xs"
-                        onClick={() => setChatInput('What are the key points from my notes?')}
-                      >
-                        Key points from notes
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-xs"
-                        onClick={() => setChatInput('Create a 5-question quiz on this topic')}
-                      >
-                        Create a quiz
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="text-xs"
-                        onClick={() => setChatInput('Explain the main concepts in simple terms')}
-                      >
-                        Simplify concepts
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  chatMessages.map((message) => (
-                    <div
-                      key={message.id}
-                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div
-                        className={`max-w-[80%] rounded-lg p-3 ${
-                          message.role === 'user'
-                            ? 'bg-elec-yellow text-black'
-                            : 'bg-background border border-elec-yellow/20'
-                        }`}
-                      >
-                        {message.role === 'assistant' && (
-                          <div className="flex items-center gap-2 mb-2">
-                            <Bot className="h-4 w-4 text-elec-yellow" />
-                            <span className="text-xs text-white">AI Assistant</span>
-                          </div>
-                        )}
-                        <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'h-1.5 w-1.5 rounded-full shrink-0',
+                        source.type === 'document'
+                          ? 'bg-blue-400'
+                          : source.type === 'link'
+                            ? 'bg-purple-400'
+                            : source.type === 'image'
+                              ? 'bg-emerald-400'
+                              : source.type === 'video'
+                                ? 'bg-red-400'
+                                : source.type === 'audio'
+                                  ? 'bg-amber-400'
+                                  : 'bg-white/40'
+                      )}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[13px] font-medium text-white truncate">
+                        {source.name}
+                      </div>
+                      <div className="mt-0.5 text-[11px] text-white/50 tabular-nums">
+                        {source.size || new Date(source.addedAt).toLocaleDateString('en-GB')}
                       </div>
                     </div>
-                  ))
-                )}
-              </div>
-
-              {/* Chat Input */}
-              <div className="p-4 border-t border-elec-yellow/10">
-                <div className="flex gap-2">
-                  <Input
-                    placeholder="Ask about your sources..."
-                    value={chatInput}
-                    onChange={(e) => setChatInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                    className="bg-background border-elec-yellow/20"
-                  />
-                  <Button
-                    className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-                    onClick={handleSendMessage}
-                    disabled={!chatInput.trim()}
-                  >
-                    <Send className="h-4 w-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Add Source Dialog */}
-      <Dialog open={isAddSourceDialogOpen} onOpenChange={setIsAddSourceDialogOpen}>
-        <DialogContent className="bg-elec-dark border-elec-yellow/20">
-          <DialogHeader>
-            <DialogTitle>Add Source</DialogTitle>
-          </DialogHeader>
-          <div className="grid grid-cols-2 gap-3 py-4">
-            <Button
-              variant="outline"
-              className="h-24 flex flex-col items-center justify-center gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10"
-            >
-              <FileUp className="h-6 w-6 text-elec-yellow" />
-              <span className="text-sm">Upload File</span>
-            </Button>
-            <Button
-              variant="outline"
-              className="h-24 flex flex-col items-center justify-center gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10"
-            >
-              <Link className="h-6 w-6 text-elec-yellow" />
-              <span className="text-sm">Add Link</span>
-            </Button>
-            <Button
-              variant="outline"
-              className="h-24 flex flex-col items-center justify-center gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10"
-            >
-              <FileText className="h-6 w-6 text-elec-yellow" />
-              <span className="text-sm">Write Note</span>
-            </Button>
-            <Button
-              variant="outline"
-              className="h-24 flex flex-col items-center justify-center gap-2 border-elec-yellow/20 hover:bg-elec-yellow/10"
-            >
-              <Video className="h-6 w-6 text-elec-yellow" />
-              <span className="text-sm">YouTube Link</span>
-            </Button>
+                  </div>
+                ))}
+                <button
+                  onClick={() => setIsAddSourceDialogOpen(true)}
+                  className="w-full px-5 sm:px-6 py-3 text-left text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                >
+                  Add source →
+                </button>
+              </ListCard>
+            </div>
           </div>
-          <p className="text-xs text-white text-center">
-            Supported: PDF, Word, PowerPoint, Images, YouTube, Web links
+
+          <div>
+            <SectionHeader eyebrow="AI Actions" title="Quick prompts" />
+            <div className="mt-4">
+              <ListCard>
+                {[
+                  { label: 'Generate summary', prompt: 'Generate a summary of all content' },
+                  { label: 'Create quiz', prompt: 'Create a 5-question quiz on this topic' },
+                  { label: 'Study guide', prompt: 'Create a study guide from these sources' },
+                  { label: 'Lesson outline', prompt: 'Create a lesson outline from these sources' },
+                ].map((action) => (
+                  <button
+                    key={action.label}
+                    onClick={() => {
+                      setChatInput(action.prompt);
+                      setTimeout(handleSendMessage, 0);
+                    }}
+                    className="group w-full px-5 sm:px-6 py-4 text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation flex items-center justify-between"
+                  >
+                    <span className="text-[13.5px] font-medium text-white group-hover:text-elec-yellow transition-colors">
+                      {action.label}
+                    </span>
+                    <span className="text-elec-yellow/70 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
+                      →
+                    </span>
+                  </button>
+                ))}
+              </ListCard>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT: chat */}
+        <div className="lg:col-span-2">
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden flex flex-col h-[600px]">
+            <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                AI Assistant
+              </div>
+              <h3 className="mt-1 text-base font-semibold text-white">
+                Ask anything about your sources
+              </h3>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4">
+              {chatMessages.length === 0 ? (
+                <div className="h-full flex flex-col items-center justify-center text-center">
+                  <h3 className="text-base font-semibold text-white">Start a conversation</h3>
+                  <p className="mt-2 text-[13px] text-white/55 max-w-md leading-relaxed">
+                    The AI has read all your sources. Ask questions, request summaries, generate
+                    quizzes.
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-2 justify-center">
+                    {[
+                      'What are the key points from my notes?',
+                      'Create a 5-question quiz on this topic',
+                      'Explain the main concepts in simple terms',
+                    ].map((prompt) => (
+                      <button
+                        key={prompt}
+                        onClick={() => setChatInput(prompt)}
+                        className="text-[11.5px] font-medium text-white/70 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] rounded-full px-3 py-1.5 transition-colors touch-manipulation"
+                      >
+                        {prompt}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                chatMessages.map((message) => (
+                  <div
+                    key={message.id}
+                    className={cn(
+                      'flex',
+                      message.role === 'user' ? 'justify-end' : 'justify-start'
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        'max-w-[80%] rounded-2xl px-4 py-3 text-[13.5px] leading-relaxed',
+                        message.role === 'user'
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/[0.04] border border-white/[0.06] text-white'
+                      )}
+                    >
+                      {message.role === 'assistant' && (
+                        <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40 mb-1.5">
+                          AI Assistant
+                        </div>
+                      )}
+                      <p className="whitespace-pre-wrap">{message.content}</p>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06]">
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder="Ask about your sources…"
+                  value={chatInput}
+                  onChange={(e) => setChatInput(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                  className="flex-1 h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                />
+                <button
+                  onClick={handleSendMessage}
+                  disabled={!chatInput.trim()}
+                  className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      <Dialog open={isAddSourceDialogOpen} onOpenChange={setIsAddSourceDialogOpen}>
+        <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+          <DialogHeader>
+            <DialogTitle>Add source</DialogTitle>
+          </DialogHeader>
+          <div className="grid grid-cols-2 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            {[
+              { label: 'Upload file', desc: 'PDF, Word, slides' },
+              { label: 'Add link', desc: 'URL or web page' },
+              { label: 'Write note', desc: 'Quick text note' },
+              { label: 'Video link', desc: 'YouTube or video URL' },
+            ].map((opt) => (
+              <button
+                key={opt.label}
+                className="group bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 text-left touch-manipulation flex flex-col min-h-[100px]"
+              >
+                <span className="text-[14px] font-semibold text-white group-hover:text-elec-yellow transition-colors">
+                  {opt.label}
+                </span>
+                <span className="mt-1 text-[11.5px] text-white/50">{opt.desc}</span>
+              </button>
+            ))}
+          </div>
+          <p className="text-[11.5px] text-white/40 text-center">
+            Supported · PDF · Word · PowerPoint · Images · YouTube · Web links
           </p>
         </DialogContent>
       </Dialog>
-    </div>
+    </PageFrame>
   );
 }

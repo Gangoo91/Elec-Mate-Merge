@@ -20,7 +20,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import { GraduationCap, Loader2 } from 'lucide-react';
 
 interface AddStudentDialogProps {
   open: boolean;
@@ -93,10 +92,7 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       <ResponsiveDialogContent className="sm:max-w-[500px]">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="flex items-center gap-2">
-            <GraduationCap className="h-5 w-5 text-elec-yellow" />
-            Enrol New Student
-          </ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>Enrol new student</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>
             Add a new student to the system. All fields marked with * are required.
           </ResponsiveDialogDescription>
@@ -207,14 +203,7 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
             className="h-11 touch-manipulation"
             onClick={handleSubmit}
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Enrolling...
-              </>
-            ) : (
-              'Enrol Student'
-            )}
+            {isSubmitting ? 'Enrolling…' : 'Enrol student'}
           </Button>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>

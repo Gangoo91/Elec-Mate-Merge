@@ -3,31 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStaff } from '@/contexts/CollegeSupabaseContext';
+import { getInitials, getRoleLabel, formatUKDateShort } from '@/utils/collegeHelpers';
 import {
-  getInitials,
-  getStatusColour,
-  getRoleLabel,
-  formatUKDateShort,
-} from '@/utils/collegeHelpers';
-import {
-  Mail,
-  Phone,
-  Calendar,
-  Edit,
-  Award,
-  Users,
-  Briefcase,
-  GraduationCap,
-  Clock,
-  Archive,
-  ClipboardList,
-} from 'lucide-react';
+  ListCard,
+  ListRow,
+  Pill,
+  EmptyState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface StaffDetailSheetProps {
   staff: CollegeStaff | null;
@@ -56,116 +41,104 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
     [assignedCohorts]
   );
 
-  const getStudentCount = (cohortId: string): number => {
-    return students.filter((s) => s.cohort_id === cohortId && s.status === 'Active').length;
-  };
+  const getStudentCount = (cohortId: string): number =>
+    students.filter((s) => s.cohort_id === cohortId && s.status === 'Active').length;
 
-  const totalStudents = useMemo(() => {
-    return activeCohorts.reduce((sum, c) => sum + getStudentCount(c.id), 0);
-  }, [activeCohorts, students]);
+  const totalStudents = useMemo(
+    () => activeCohorts.reduce((sum, c) => sum + getStudentCount(c.id), 0),
+    [activeCohorts, students]
+  );
 
   if (!staff) return null;
+
+  const statusTone: Tone =
+    staff.status === 'Active'
+      ? 'green'
+      : staff.status === 'On Leave'
+        ? 'amber'
+        : 'red';
+
+  const cohortStatusTone = (status: string | null): Tone =>
+    status === 'Active'
+      ? 'green'
+      : status === 'Planning'
+        ? 'blue'
+        : status === 'Completed'
+          ? 'yellow'
+          : 'red';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-5">
             <div className="flex items-start gap-4">
-              <Avatar className="h-16 w-16 shrink-0 ring-2 ring-offset-2 ring-offset-background ring-info/50">
+              <Avatar className="h-16 w-16 shrink-0 ring-1 ring-white/[0.08]">
                 <AvatarImage src={staff.photo_url ?? undefined} />
-                <AvatarFallback className="bg-info/10 text-info text-lg font-semibold">
+                <AvatarFallback className="bg-blue-500/10 text-blue-400 text-lg font-semibold">
                   {getInitials(staff.name)}
                 </AvatarFallback>
               </Avatar>
 
               <div className="flex-1 min-w-0">
-                <SheetTitle className="text-xl text-left">{staff.name}</SheetTitle>
-                <p className="text-sm text-white mt-0.5">{staff.department}</p>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <Badge variant="outline" className={getStatusColour(staff.status)}>
-                    {staff.status}
-                  </Badge>
-                  <Badge variant="secondary" className="flex items-center gap-1">
-                    <Briefcase className="h-3 w-3" />
-                    {getRoleLabel(staff.role)}
-                  </Badge>
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Staff
+                </div>
+                <SheetTitle className="mt-1 text-xl text-left">{staff.name}</SheetTitle>
+                <p className="mt-0.5 text-[11.5px] text-white/50">{staff.department || 'No department'}</p>
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  <Pill tone={statusTone}>{staff.status}</Pill>
+                  <Pill tone="blue">{getRoleLabel(staff.role)}</Pill>
                   {activeCohorts.length > 0 && (
-                    <Badge variant="secondary" className="flex items-center gap-1">
-                      <Users className="h-3 w-3" />
-                      {activeCohorts.length} cohort
-                      {activeCohorts.length !== 1 ? 's' : ''}
-                    </Badge>
+                    <Pill tone="yellow">
+                      {activeCohorts.length} cohort{activeCohorts.length !== 1 ? 's' : ''}
+                    </Pill>
                   )}
                 </div>
               </div>
             </div>
 
-            {/* Quick Actions */}
-            <div className="flex gap-2 mt-4">
+            <div className="flex items-center gap-4 mt-5">
               {staff.phone && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 h-11 touch-manipulation gap-2"
-                  asChild
+                <a
+                  href={`tel:${staff.phone}`}
+                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
                 >
-                  <a href={`tel:${staff.phone}`}>
-                    <Phone className="h-4 w-4" />
-                    Call
-                  </a>
-                </Button>
-              )}
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 h-11 touch-manipulation gap-2"
-                asChild
-              >
-                <a href={`mailto:${staff.email}`}>
-                  <Mail className="h-4 w-4" />
-                  Email
+                  Call
                 </a>
-              </Button>
+              )}
+              <a
+                href={`mailto:${staff.email}`}
+                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+              >
+                Email
+              </a>
             </div>
           </SheetHeader>
 
-          {/* Tabs */}
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <TabsList className="w-full justify-start gap-0 h-auto p-1 bg-muted/50 rounded-none border-b border-border flex-shrink-0">
-              <TabsTrigger
-                value="details"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Details
-              </TabsTrigger>
-              <TabsTrigger
-                value="cohorts"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Cohorts
-              </TabsTrigger>
-              <TabsTrigger
-                value="notes"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Notes
-              </TabsTrigger>
+            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06] flex-shrink-0">
+              {['details', 'cohorts', 'notes'].map((tab) => (
+                <TabsTrigger
+                  key={tab}
+                  value={tab}
+                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
+                >
+                  {tab}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
             <div className="flex-1 overflow-y-auto overscroll-contain">
               <AnimatePresence mode="wait">
-                {/* Details Tab */}
                 {activeTab === 'details' && (
                   <motion.div
                     key="details"
@@ -174,130 +147,141 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5 space-y-5"
                   >
-                    {/* Contact Details */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-info" />
-                          Contact Details
-                        </h4>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex items-center gap-3 text-white">
-                            <Mail className="h-4 w-4 shrink-0" />
-                            <span className="truncate">{staff.email}</span>
-                          </div>
-                          {staff.phone && (
-                            <div className="flex items-center gap-3 text-white">
-                              <Phone className="h-4 w-4 shrink-0" />
-                              <span>{staff.phone}</span>
-                            </div>
-                          )}
-                          <div className="flex items-center gap-3 text-white">
-                            <Briefcase className="h-4 w-4 shrink-0" />
-                            <span>{staff.department || 'No department'}</span>
-                          </div>
-                          {staff.max_teaching_hours && (
-                            <div className="flex items-center gap-3 text-white">
-                              <Clock className="h-4 w-4 shrink-0" />
-                              <span>{staff.max_teaching_hours} hours/week maximum</span>
-                            </div>
-                          )}
+                    {/* Contact */}
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Contact
+                      </div>
+                      <div className="mt-3 space-y-2 text-[13px]">
+                        <div className="flex items-center justify-between">
+                          <span className="text-white/50">Email</span>
+                          <a
+                            href={`mailto:${staff.email}`}
+                            className="text-white hover:text-elec-yellow truncate ml-3 max-w-[60%]"
+                          >
+                            {staff.email}
+                          </a>
                         </div>
-                      </CardContent>
-                    </Card>
+                        {staff.phone && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-white/50">Phone</span>
+                            <a
+                              href={`tel:${staff.phone}`}
+                              className="text-white hover:text-elec-yellow tabular-nums"
+                            >
+                              {staff.phone}
+                            </a>
+                          </div>
+                        )}
+                        <div className="flex items-center justify-between">
+                          <span className="text-white/50">Department</span>
+                          <span className="text-white">{staff.department || '—'}</span>
+                        </div>
+                        {staff.max_teaching_hours && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-white/50">Max hours</span>
+                            <span className="text-white tabular-nums">
+                              {staff.max_teaching_hours}h/week
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
 
                     {/* Qualifications */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-info" />
-                          Qualifications
-                        </h4>
-                        <div className="space-y-3">
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Qualifications
+                      </div>
+                      {!staff.teaching_qual && !staff.assessor_qual && !staff.iqa_qual ? (
+                        <p className="mt-3 text-[12.5px] text-white/50">
+                          No qualifications recorded.
+                        </p>
+                      ) : (
+                        <div className="mt-3 space-y-3">
                           {staff.teaching_qual && (
-                            <div className="flex items-center gap-3">
-                              <Award className="h-4 w-4 text-success shrink-0" />
+                            <div className="flex items-center justify-between">
                               <div>
-                                <p className="text-xs text-white">Teaching Qualification</p>
-                                <p className="text-sm font-medium text-white">
+                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                                  Teaching
+                                </div>
+                                <div className="mt-0.5 text-[13px] text-white">
                                   {staff.teaching_qual}
-                                </p>
+                                </div>
                               </div>
+                              <Pill tone="green">Verified</Pill>
                             </div>
                           )}
                           {staff.assessor_qual && (
-                            <div className="flex items-center gap-3">
-                              <Award className="h-4 w-4 text-info shrink-0" />
+                            <div className="flex items-center justify-between">
                               <div>
-                                <p className="text-xs text-white">Assessor Qualification</p>
-                                <p className="text-sm font-medium text-white">
+                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                                  Assessor
+                                </div>
+                                <div className="mt-0.5 text-[13px] text-white">
                                   {staff.assessor_qual}
-                                </p>
+                                </div>
                               </div>
+                              <Pill tone="blue">Verified</Pill>
                             </div>
                           )}
                           {staff.iqa_qual && (
-                            <div className="flex items-center gap-3">
-                              <Award className="h-4 w-4 text-warning shrink-0" />
+                            <div className="flex items-center justify-between">
                               <div>
-                                <p className="text-xs text-white">IQA Qualification</p>
-                                <p className="text-sm font-medium text-white">{staff.iqa_qual}</p>
+                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                                  IQA
+                                </div>
+                                <div className="mt-0.5 text-[13px] text-white">{staff.iqa_qual}</div>
                               </div>
+                              <Pill tone="amber">Verified</Pill>
                             </div>
                           )}
-                          {!staff.teaching_qual && !staff.assessor_qual && !staff.iqa_qual && (
-                            <p className="text-sm text-white">No qualifications recorded.</p>
-                          )}
                         </div>
-                      </CardContent>
-                    </Card>
+                      )}
+                    </div>
 
                     {/* Specialisations */}
                     {staff.specialisations && staff.specialisations.length > 0 && (
-                      <Card className="border-white/10">
-                        <CardContent className="p-4 space-y-3">
-                          <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-info" />
-                            Specialisations
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {staff.specialisations.map((spec, i) => (
-                              <Badge key={i} variant="secondary" className="text-xs">
-                                {spec}
-                              </Badge>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                          Specialisations
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {staff.specialisations.map((spec, i) => (
+                            <Pill key={i} tone="yellow">{spec}</Pill>
+                          ))}
+                        </div>
+                      </div>
                     )}
 
-                    {/* Summary Stats */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4">
-                        <div className="grid grid-cols-3 gap-4 text-center">
-                          <div>
-                            <p className="text-2xl font-bold text-white">{activeCohorts.length}</p>
-                            <p className="text-xs text-white">Active Cohorts</p>
+                    {/* Summary */}
+                    <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+                      {[
+                        { label: 'Active Cohorts', value: activeCohorts.length },
+                        { label: 'Students', value: totalStudents },
+                        {
+                          label: 'Max Hours',
+                          value: staff.max_teaching_hours ?? '—',
+                        },
+                      ].map((stat) => (
+                        <div
+                          key={stat.label}
+                          className="bg-[hsl(0_0%_12%)] px-4 py-4 text-center"
+                        >
+                          <div className="text-2xl font-semibold tabular-nums text-white leading-none">
+                            {stat.value}
                           </div>
-                          <div>
-                            <p className="text-2xl font-bold text-white">{totalStudents}</p>
-                            <p className="text-xs text-white">Students</p>
-                          </div>
-                          <div>
-                            <p className="text-2xl font-bold text-white">
-                              {staff.max_teaching_hours ?? '-'}
-                            </p>
-                            <p className="text-xs text-white">Max Hours</p>
+                          <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-white/40">
+                            {stat.label}
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                      ))}
+                    </div>
                   </motion.div>
                 )}
 
-                {/* Cohorts Tab */}
                 {activeTab === 'cohorts' && (
                   <motion.div
                     key="cohorts"
@@ -306,67 +290,62 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5"
                   >
-                    {assignedCohorts.length > 0 ? (
-                      <div className="space-y-3">
+                    {assignedCohorts.length === 0 ? (
+                      <EmptyState
+                        title="No assigned cohorts"
+                        description="This staff member is not currently assigned to any cohorts."
+                      />
+                    ) : (
+                      <ListCard>
                         {assignedCohorts.map((cohort) => {
                           const studentCount = getStudentCount(cohort.id);
                           const maxStudents = cohort.max_students ?? 20;
                           const capacityPercent = (studentCount / maxStudents) * 100;
-
                           return (
-                            <Card key={cohort.id} className="border-white/10">
-                              <CardContent className="p-4 space-y-3">
-                                <div className="flex items-start justify-between gap-2">
-                                  <div>
-                                    <h4 className="font-semibold text-white">{cohort.name}</h4>
+                            <div
+                              key={cohort.id}
+                              className="flex items-start gap-4 px-5 sm:px-6 py-5"
+                            >
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-baseline justify-between gap-2">
+                                  <div className="text-[14px] font-medium text-white truncate">
+                                    {cohort.name}
                                   </div>
-                                  <Badge
-                                    variant="outline"
-                                    className={getStatusColour(cohort.status)}
-                                  >
+                                  <Pill tone={cohortStatusTone(cohort.status)}>
                                     {cohort.status}
-                                  </Badge>
+                                  </Pill>
                                 </div>
-
-                                {/* Capacity */}
-                                <div>
-                                  <div className="flex justify-between text-xs text-white mb-1">
-                                    <span>Capacity</span>
-                                    <span className="font-medium">
-                                      {studentCount}/{maxStudents} students
+                                <div className="mt-2">
+                                  <div className="flex items-baseline justify-between text-[11px]">
+                                    <span className="text-white/50 uppercase tracking-[0.12em]">
+                                      Capacity
+                                    </span>
+                                    <span className="font-medium text-white tabular-nums">
+                                      {studentCount}/{maxStudents}
                                     </span>
                                   </div>
-                                  <Progress value={capacityPercent} className="h-1.5" />
+                                  <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                                    <div
+                                      className="h-full bg-elec-yellow/80 rounded-full"
+                                      style={{ width: `${capacityPercent}%` }}
+                                    />
+                                  </div>
                                 </div>
-
-                                <div className="flex items-center gap-2 text-xs text-white pt-1">
-                                  <Calendar className="h-3.5 w-3.5" />
-                                  <span>{formatUKDateShort(cohort.start_date)}</span>
-                                  <span>&rarr;</span>
-                                  <span>{formatUKDateShort(cohort.end_date)}</span>
+                                <div className="mt-2 text-[11px] text-white/50 tabular-nums">
+                                  {formatUKDateShort(cohort.start_date)} →{' '}
+                                  {formatUKDateShort(cohort.end_date)}
                                 </div>
-                              </CardContent>
-                            </Card>
+                              </div>
+                            </div>
                           );
                         })}
-                      </div>
-                    ) : (
-                      <Card className="border-white/10">
-                        <CardContent className="p-8 text-center space-y-3">
-                          <GraduationCap className="h-12 w-12 mx-auto text-white" />
-                          <p className="text-white font-medium">No Assigned Cohorts</p>
-                          <p className="text-sm text-white">
-                            This staff member is not currently assigned to any cohorts.
-                          </p>
-                        </CardContent>
-                      </Card>
+                      </ListCard>
                     )}
                   </motion.div>
                 )}
 
-                {/* Notes Tab */}
                 {activeTab === 'notes' && (
                   <motion.div
                     key="notes"
@@ -375,42 +354,36 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5"
                   >
-                    <Card className="border-white/10">
-                      <CardContent className="p-8 text-center space-y-3">
-                        <ClipboardList className="h-12 w-12 mx-auto text-white" />
-                        <p className="text-white font-medium">Notes Coming Soon</p>
-                        <p className="text-sm text-white">
-                          Staff notes and communication log will appear here.
-                        </p>
-                      </CardContent>
-                    </Card>
+                    <EmptyState
+                      title="Notes coming soon"
+                      description="Staff notes and communication log will appear here."
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
           </Tabs>
 
-          {/* Footer Actions */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation gap-2"
-              onClick={() => onEdit?.(staff)}
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-5 flex-row items-center justify-end gap-4">
+            <button
+              onClick={() => onOpenChange(false)}
+              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
             >
-              <Edit className="h-4 w-4" />
-              Edit
-            </Button>
+              Close
+            </button>
             {staff.status === 'Active' && (
-              <Button
-                variant="outline"
-                className="h-11 touch-manipulation gap-2 border-warning/30 text-warning hover:bg-warning/10"
-              >
-                <Archive className="h-4 w-4" />
+              <button className="text-[12.5px] font-medium text-amber-400 hover:text-amber-300 transition-colors touch-manipulation">
                 Archive
-              </Button>
+              </button>
             )}
+            <button
+              onClick={() => onEdit?.(staff)}
+              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
+            >
+              Edit →
+            </button>
           </SheetFooter>
         </div>
       </SheetContent>

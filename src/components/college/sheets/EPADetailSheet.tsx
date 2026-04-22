@@ -2,9 +2,6 @@ import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -23,16 +20,10 @@ import { formatUKDateShort } from '@/utils/collegeHelpers';
 import { cn } from '@/lib/utils';
 import type { EPAStatus } from '@/services/college';
 import {
-  CheckCircle2,
-  Circle,
-  Clock,
-  Calendar,
-  FileText,
-  Award,
-  Loader2,
-  Save,
-  User,
-} from 'lucide-react';
+  Pill,
+  LoadingState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface EPADetailSheetProps {
   epaId: string | null;
@@ -62,22 +53,18 @@ const tabVariants = {
   exit: { opacity: 0, x: -20 },
 };
 
-function getEPAStatusBadgeColour(status: EPAStatus | null): string {
-  switch (status) {
-    case 'Not Started':
-      return 'bg-muted text-white';
-    case 'In Progress':
-      return 'bg-info/10 text-info border-info/20';
-    case 'Pre-Gateway':
-      return 'bg-warning/10 text-warning border-warning/20';
-    case 'Gateway Ready':
-      return 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
-    case 'Complete':
-      return 'bg-success/10 text-success border-success/20';
-    default:
-      return 'bg-muted text-white';
-  }
-}
+const statusTone = (status: EPAStatus | null): Tone =>
+  status === 'Not Started'
+    ? 'yellow'
+    : status === 'In Progress'
+      ? 'blue'
+      : status === 'Pre-Gateway'
+        ? 'amber'
+        : status === 'Gateway Ready'
+          ? 'yellow'
+          : status === 'Complete'
+            ? 'green'
+            : 'yellow';
 
 export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProps) {
   const { data: epa, isLoading } = useCollegeEPA(epaId!);
@@ -91,18 +78,15 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
   const [showSuccess, setShowSuccess] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Details tab state
   const [editStatus, setEditStatus] = useState<EPAStatus | null>(null);
   const [editGatewayDate, setEditGatewayDate] = useState('');
   const [editEpaDate, setEditEpaDate] = useState('');
 
-  // Notes tab state
   const [notesText, setNotesText] = useState('');
   const [notesInitialised, setNotesInitialised] = useState(false);
 
   const studentName = students?.find((s) => s.id === epa?.student_id)?.name ?? 'Unknown Student';
 
-  // Initialise editable fields when EPA data loads
   if (epa && !notesInitialised) {
     setNotesText(epa.notes ?? '');
     setEditStatus(epa.status ?? 'Not Started');
@@ -111,7 +95,6 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
     setNotesInitialised(true);
   }
 
-  // Reset state when sheet closes
   const handleOpenChange = useCallback(
     (value: boolean) => {
       if (!value) {
@@ -137,7 +120,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
       triggerSuccess();
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 1500);
-      toast({ title: 'Status updated', description: `EPA status changed to ${newStatus}` });
+      toast({ title: 'Status updated', description: `EPA status → ${newStatus}` });
     } catch {
       toast({ title: 'Error', description: 'Failed to update status', variant: 'destructive' });
     } finally {
@@ -151,10 +134,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
     try {
       await updateEPA.mutateAsync({
         id: epa.id,
-        updates: {
-          gateway_date: editGatewayDate || null,
-          epa_date: editEpaDate || null,
-        },
+        updates: { gateway_date: editGatewayDate || null, epa_date: editEpaDate || null },
       });
       triggerSuccess();
       setShowSuccess(true);
@@ -171,10 +151,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
     if (!epa) return;
     setIsSaving(true);
     try {
-      await updateEPA.mutateAsync({
-        id: epa.id,
-        updates: { notes: notesText },
-      });
+      await updateEPA.mutateAsync({ id: epa.id, updates: { notes: notesText } });
       triggerSuccess();
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 1500);
@@ -196,68 +173,48 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
         <div className="flex flex-col h-full bg-background">
           <SuccessCheckmark show={showSuccess} />
 
-          {/* Drag Handle */}
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-5">
             {isLoading ? (
-              <div className="flex items-center justify-center py-4">
-                <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-              </div>
+              <LoadingState />
             ) : (
-              <div className="flex items-start gap-4">
-                <div className="h-12 w-12 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0">
-                  <Award className="h-6 w-6 text-elec-yellow" />
+              <div>
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  End Point Assessment
                 </div>
-                <div className="flex-1 min-w-0">
-                  <SheetTitle className="text-xl text-left">{studentName}</SheetTitle>
-                  <p className="text-sm text-white mt-0.5">End Point Assessment</p>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    <Badge
-                      variant="outline"
-                      className={getEPAStatusBadgeColour(epa?.status ?? null)}
-                    >
-                      {epa?.status ?? 'Not Started'}
-                    </Badge>
-                  </div>
+                <SheetTitle className="mt-1 text-xl text-left">{studentName}</SheetTitle>
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  <Pill tone={statusTone(epa?.status ?? null)}>
+                    {epa?.status ?? 'Not Started'}
+                  </Pill>
+                  {epa?.result && <Pill tone="green">Result · {epa.result}</Pill>}
                 </div>
               </div>
             )}
           </SheetHeader>
 
-          {/* Tabs */}
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <TabsList className="w-full justify-start gap-0 h-auto p-1 bg-muted/50 rounded-none border-b border-border flex-shrink-0">
-              <TabsTrigger
-                value="timeline"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Timeline
-              </TabsTrigger>
-              <TabsTrigger
-                value="details"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Details
-              </TabsTrigger>
-              <TabsTrigger
-                value="notes"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Notes
-              </TabsTrigger>
+            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06] flex-shrink-0">
+              {['timeline', 'details', 'notes'].map((tab) => (
+                <TabsTrigger
+                  key={tab}
+                  value={tab}
+                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
+                >
+                  {tab}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
             <div className="flex-1 overflow-y-auto overscroll-contain">
               <AnimatePresence mode="wait">
-                {/* Timeline Tab */}
                 {activeTab === 'timeline' && (
                   <motion.div
                     key="timeline"
@@ -266,94 +223,62 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-2"
+                    className="p-5"
                   >
-                    <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-5">
                       EPA Journey
-                    </h4>
+                    </div>
 
-                    <div className="relative pl-8">
-                      {/* Vertical line */}
-                      <div className="absolute left-[15px] top-3 bottom-3 w-0.5 bg-white/10" />
+                    <div className="relative pl-6 space-y-5">
+                      <div className="absolute left-[5px] top-1 bottom-1 w-px bg-white/[0.08]" />
 
                       {EPA_STEPS.map((step, index) => {
                         const isCompleted = index < currentStatusIndex;
                         const isCurrent = index === currentStatusIndex;
-                        const isFuture = index > currentStatusIndex;
 
                         let dateLabel: string | null = null;
-                        if (step.status === 'Not Started' && epa?.created_at) {
+                        if (step.status === 'Not Started' && epa?.created_at)
                           dateLabel = formatUKDateShort(epa.created_at);
-                        }
-                        if (step.status === 'Gateway Ready' && epa?.gateway_date) {
+                        if (step.status === 'Gateway Ready' && epa?.gateway_date)
                           dateLabel = formatUKDateShort(epa.gateway_date);
-                        }
-                        if (step.status === 'Complete') {
-                          if (epa?.epa_date) {
-                            dateLabel = formatUKDateShort(epa.epa_date);
-                          }
-                        }
+                        if (step.status === 'Complete' && epa?.epa_date)
+                          dateLabel = formatUKDateShort(epa.epa_date);
 
                         return (
-                          <div
-                            key={step.status}
-                            className="relative flex items-start gap-4 pb-6 last:pb-0"
-                          >
-                            {/* Step indicator */}
+                          <div key={step.status} className="relative">
                             <div
                               className={cn(
-                                'absolute left-[-17px] z-10 flex items-center justify-center rounded-full',
-                                isCompleted && 'h-7 w-7 bg-success',
-                                isCurrent && 'h-7 w-7 bg-elec-yellow ring-4 ring-elec-yellow/20',
-                                isFuture && 'h-7 w-7 bg-white/10'
+                                'absolute -left-6 top-1 h-2.5 w-2.5 rounded-full',
+                                isCompleted && 'bg-emerald-400',
+                                isCurrent && 'bg-elec-yellow ring-4 ring-elec-yellow/20',
+                                !isCompleted && !isCurrent && 'bg-white/20'
                               )}
-                            >
-                              {isCompleted ? (
-                                <CheckCircle2 className="h-4 w-4 text-white" />
-                              ) : isCurrent ? (
-                                <Clock className="h-4 w-4 text-black" />
-                              ) : (
-                                <Circle className="h-4 w-4 text-white" />
-                              )}
-                            </div>
-
-                            {/* Step content */}
-                            <div
-                              className={cn(
-                                'flex-1 rounded-lg p-3 border',
-                                isCompleted && 'bg-success/5 border-success/20',
-                                isCurrent && 'bg-elec-yellow/5 border-elec-yellow/20',
-                                isFuture && 'bg-white/5 border-white/10'
-                              )}
-                            >
-                              <div className="flex items-center justify-between">
-                                <p
-                                  className={cn(
-                                    'text-sm font-medium',
-                                    isCompleted && 'text-success',
-                                    isCurrent && 'text-elec-yellow',
-                                    isFuture && 'text-white'
-                                  )}
-                                >
-                                  {step.label}
-                                </p>
-                                {dateLabel && (
-                                  <span className="text-xs text-white">{dateLabel}</span>
+                            />
+                            <div className="flex items-baseline justify-between gap-3">
+                              <div
+                                className={cn(
+                                  'text-[13px] font-medium',
+                                  isCompleted && 'text-emerald-400',
+                                  isCurrent && 'text-elec-yellow',
+                                  !isCompleted && !isCurrent && 'text-white/50'
                                 )}
+                              >
+                                {step.label}
                               </div>
-                              {isCurrent && (
-                                <p className="text-xs text-white mt-1">Current stage</p>
-                              )}
-                              {step.status === 'Complete' && epa?.result && isCompleted && (
-                                <Badge
-                                  variant="outline"
-                                  className="mt-2 bg-success/10 text-success border-success/20"
-                                >
-                                  Result: {epa.result}
-                                </Badge>
+                              {dateLabel && (
+                                <span className="text-[11px] text-white/50 tabular-nums">
+                                  {dateLabel}
+                                </span>
                               )}
                             </div>
+                            {isCurrent && (
+                              <div className="mt-0.5 text-[11px] text-white/40">Current stage</div>
+                            )}
+                            {step.status === 'Complete' && epa?.result && isCompleted && (
+                              <div className="mt-1.5">
+                                <Pill tone="green">Result · {epa.result}</Pill>
+                              </div>
+                            )}
                           </div>
                         );
                       })}
@@ -361,7 +286,6 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                   </motion.div>
                 )}
 
-                {/* Details Tab */}
                 {activeTab === 'details' && (
                   <motion.div
                     key="details"
@@ -370,138 +294,101 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5 space-y-5"
                   >
-                    {/* Status */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                          Status
-                        </h4>
-                        <Select
-                          value={editStatus ?? 'Not Started'}
-                          onValueChange={(val) => handleStatusUpdate(val as EPAStatus)}
-                          disabled={isSaving}
-                        >
-                          <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                            <SelectItem value="Not Started" className="h-11 touch-manipulation">
-                              Not Started
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Status
+                      </div>
+                      <Select
+                        value={editStatus ?? 'Not Started'}
+                        onValueChange={(val) => handleStatusUpdate(val as EPAStatus)}
+                        disabled={isSaving}
+                      >
+                        <SelectTrigger className="h-11 touch-manipulation bg-[hsl(0_0%_9%)] border-white/[0.08] text-white focus:border-elec-yellow/60">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                          {EPA_STEPS.map((s) => (
+                            <SelectItem key={s.status} value={s.status} className="h-11 touch-manipulation">
+                              {s.label}
                             </SelectItem>
-                            <SelectItem value="In Progress" className="h-11 touch-manipulation">
-                              In Progress
-                            </SelectItem>
-                            <SelectItem value="Pre-Gateway" className="h-11 touch-manipulation">
-                              Pre-Gateway
-                            </SelectItem>
-                            <SelectItem value="Gateway Ready" className="h-11 touch-manipulation">
-                              Gateway Ready
-                            </SelectItem>
-                            <SelectItem value="Complete" className="h-11 touch-manipulation">
-                              Complete
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </CardContent>
-                    </Card>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                    {/* Dates */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-4">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                          Key Dates
-                        </h4>
-                        <div className="space-y-3">
-                          <div>
-                            <Label className="text-xs text-white mb-1 block">Gateway Date</Label>
-                            <Input
-                              type="date"
-                              value={editGatewayDate}
-                              onChange={(e) => setEditGatewayDate(e.target.value)}
-                              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                            />
-                          </div>
-                          <div>
-                            <Label className="text-xs text-white mb-1 block">EPA Date</Label>
-                            <Input
-                              type="date"
-                              value={editEpaDate}
-                              onChange={(e) => setEditEpaDate(e.target.value)}
-                              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                            />
-                          </div>
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Key Dates
+                      </div>
+                      <div className="space-y-3">
+                        <div>
+                          <Label className="text-[11px] text-white/50 mb-1.5 block">
+                            Gateway date
+                          </Label>
+                          <Input
+                            type="date"
+                            value={editGatewayDate}
+                            onChange={(e) => setEditGatewayDate(e.target.value)}
+                            className="h-11 text-[13px] touch-manipulation bg-[hsl(0_0%_9%)] border-white/[0.08] text-white tabular-nums focus:border-elec-yellow/60"
+                          />
                         </div>
-                        <Button
-                          className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/80 gap-2"
+                        <div>
+                          <Label className="text-[11px] text-white/50 mb-1.5 block">
+                            EPA date
+                          </Label>
+                          <Input
+                            type="date"
+                            value={editEpaDate}
+                            onChange={(e) => setEditEpaDate(e.target.value)}
+                            className="h-11 text-[13px] touch-manipulation bg-[hsl(0_0%_9%)] border-white/[0.08] text-white tabular-nums focus:border-elec-yellow/60"
+                          />
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-end">
+                        <button
                           onClick={handleDetailsSave}
                           disabled={isSaving}
+                          className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                         >
-                          {isSaving ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <Save className="h-4 w-4" />
-                          )}
-                          Save Dates
-                        </Button>
-                      </CardContent>
-                    </Card>
+                          {isSaving ? 'Saving…' : 'Save dates →'}
+                        </button>
+                      </div>
+                    </div>
 
-                    {/* Result */}
-                    {epa?.status === 'Complete' && epa?.result && (
-                      <Card className="border-white/10">
-                        <CardContent className="p-4 space-y-3">
-                          <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-success" />
-                            Result
-                          </h4>
-                          <Badge
-                            variant="outline"
-                            className="bg-success/10 text-success border-success/20 text-sm"
-                          >
-                            {epa.result}
-                          </Badge>
-                        </CardContent>
-                      </Card>
-                    )}
-
-                    {/* Meta Info */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                          Record Info
-                        </h4>
-                        <div className="grid grid-cols-2 gap-3 text-sm">
-                          <div>
-                            <p className="text-white text-xs">Updated By</p>
-                            <p className="text-white font-medium flex items-center gap-1">
-                              <User className="h-3.5 w-3.5" />
-                              {epa?.updated_by ?? '-'}
-                            </p>
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Record Info
+                      </div>
+                      <div className="mt-3 grid grid-cols-2 gap-3 text-[13px]">
+                        <div>
+                          <div className="text-[11px] text-white/40 uppercase tracking-[0.12em]">
+                            Updated by
                           </div>
-                          <div>
-                            <p className="text-white text-xs">Last Updated</p>
-                            <p className="text-white font-medium">
-                              {formatUKDateShort(epa?.updated_at)}
-                            </p>
+                          <div className="mt-0.5 text-white">{epa?.updated_by ?? '—'}</div>
+                        </div>
+                        <div>
+                          <div className="text-[11px] text-white/40 uppercase tracking-[0.12em]">
+                            Updated
                           </div>
-                          <div>
-                            <p className="text-white text-xs">Created</p>
-                            <p className="text-white font-medium">
-                              {formatUKDateShort(epa?.created_at)}
-                            </p>
+                          <div className="mt-0.5 text-white tabular-nums">
+                            {formatUKDateShort(epa?.updated_at)}
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                        <div>
+                          <div className="text-[11px] text-white/40 uppercase tracking-[0.12em]">
+                            Created
+                          </div>
+                          <div className="mt-0.5 text-white tabular-nums">
+                            {formatUKDateShort(epa?.created_at)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </motion.div>
                 )}
 
-                {/* Notes Tab */}
                 {activeTab === 'notes' && (
                   <motion.div
                     key="notes"
@@ -510,75 +397,65 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5"
                   >
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <FileText className="h-4 w-4 text-elec-yellow" />
-                          EPA Notes
-                        </h4>
-                        {epa?.notes && (
-                          <div className="rounded-lg bg-elec-gray p-3 border border-white/10">
-                            <p className="text-sm text-white whitespace-pre-wrap">{epa.notes}</p>
-                            <p className="text-xs text-white mt-2">
-                              Last updated: {formatUKDateShort(epa.updated_at)}
-                            </p>
-                          </div>
-                        )}
-                        <Label className="text-xs text-white block">
-                          {epa?.notes ? 'Update Notes' : 'Add Notes'}
-                        </Label>
-                        <Textarea
-                          value={notesText}
-                          onChange={(e) => setNotesText(e.target.value)}
-                          placeholder="Enter EPA notes, observations, or follow-up actions..."
-                          className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                        />
-                        <Button
-                          className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/80 gap-2"
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        EPA Notes
+                      </div>
+                      {epa?.notes && (
+                        <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-4">
+                          <p className="text-[13px] text-white/80 leading-relaxed whitespace-pre-wrap">
+                            {epa.notes}
+                          </p>
+                          <p className="mt-2 text-[11px] text-white/40 tabular-nums">
+                            Last updated · {formatUKDateShort(epa.updated_at)}
+                          </p>
+                        </div>
+                      )}
+                      <Label className="text-[11px] text-white/50 block">
+                        {epa?.notes ? 'Update notes' : 'Add notes'}
+                      </Label>
+                      <Textarea
+                        value={notesText}
+                        onChange={(e) => setNotesText(e.target.value)}
+                        placeholder="Enter EPA notes, observations or follow-up actions…"
+                        className="touch-manipulation text-[13px] min-h-[140px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60"
+                      />
+                      <div className="flex items-center justify-end">
+                        <button
                           onClick={handleNotesSave}
                           disabled={isSaving}
+                          className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                         >
-                          {isSaving ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <Save className="h-4 w-4" />
-                          )}
-                          Save Notes
-                        </Button>
-                      </CardContent>
-                    </Card>
+                          {isSaving ? 'Saving…' : 'Save notes →'}
+                        </button>
+                      </div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
           </Tabs>
 
-          {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              className="flex-1 h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/80 gap-2"
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-5">
+            <button
               onClick={() => {
                 if (epa?.status) {
                   const nextIndex = STATUS_ORDER[epa.status] + 1;
                   const nextStep = EPA_STEPS[nextIndex];
-                  if (nextStep) {
-                    handleStatusUpdate(nextStep.status);
-                  }
+                  if (nextStep) handleStatusUpdate(nextStep.status);
                 }
               }}
               disabled={isSaving || !epa || epa.status === 'Complete'}
+              className="w-full h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isSaving ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <CheckCircle2 className="h-4 w-4" />
-              )}
-              {epa?.status === 'Complete'
-                ? 'EPA Complete'
-                : `Advance to ${EPA_STEPS[(STATUS_ORDER[epa?.status ?? 'Not Started'] ?? 0) + 1]?.label ?? 'Next'}`}
-            </Button>
+              {isSaving
+                ? 'Saving…'
+                : epa?.status === 'Complete'
+                  ? 'EPA complete'
+                  : `Advance to ${EPA_STEPS[(STATUS_ORDER[epa?.status ?? 'Not Started'] ?? 0) + 1]?.label ?? 'next'} →`}
+            </button>
           </SheetFooter>
         </div>
       </SheetContent>

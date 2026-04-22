@@ -6,31 +6,6 @@
  */
 
 import React, { useState } from 'react';
-import {
-  Camera,
-  FileText,
-  Award,
-  ClipboardList,
-  Users,
-  BookOpen,
-  Calendar,
-  Video,
-  PenTool,
-  Calculator,
-  CheckCircle2,
-  Circle,
-  AlertCircle,
-  Clock,
-  Plus,
-  Trash2,
-  Edit2,
-  MoreVertical,
-  UserCheck,
-} from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   DropdownMenu,
@@ -49,25 +24,33 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 import { useEvidenceRequirements } from '@/hooks/useEvidenceRequirements';
 import { useTutorRequirements } from '@/hooks/useTutorRequirements';
 import AddRequirementDialog from './AddRequirementDialog';
 import type { EvidenceTypeCode, TutorPortfolioRequirement } from '@/types/evidence';
+import {
+  SectionHeader,
+  StatStrip,
+  ListCard,
+  Pill,
+  EmptyState,
+  LoadingState,
+  type Tone,
+} from '@/components/college/primitives';
 
-// Icon mapping for evidence types
-const EVIDENCE_ICONS: Record<EvidenceTypeCode, React.ReactNode> = {
-  photo: <Camera className="h-4 w-4" />,
-  document: <FileText className="h-4 w-4" />,
-  certificate: <Award className="h-4 w-4" />,
-  test_result: <ClipboardList className="h-4 w-4" />,
-  witness: <Users className="h-4 w-4" />,
-  reflection: <BookOpen className="h-4 w-4" />,
-  work_log: <Calendar className="h-4 w-4" />,
-  video: <Video className="h-4 w-4" />,
-  drawing: <PenTool className="h-4 w-4" />,
-  calculation: <Calculator className="h-4 w-4" />,
+// Evidence type short-labels (no icons)
+const EVIDENCE_LABELS: Record<EvidenceTypeCode, string> = {
+  photo: 'Photo',
+  document: 'Document',
+  certificate: 'Certificate',
+  test_result: 'Test',
+  witness: 'Witness',
+  reflection: 'Reflection',
+  work_log: 'Work log',
+  video: 'Video',
+  drawing: 'Drawing',
+  calculation: 'Calculation',
 };
 
 interface StudentRequirementsPanelProps {
@@ -90,7 +73,6 @@ export function StudentRequirementsPanel({
     null
   );
 
-  // Get unit-level requirements (read-only view)
   const {
     requirements: unitRequirements,
     evidenceTypes,
@@ -98,7 +80,6 @@ export function StudentRequirementsPanel({
     getEvidenceType,
   } = useEvidenceRequirements({ categoryId });
 
-  // Get tutor-assigned requirements (CRUD)
   const {
     requirements: tutorRequirements,
     isLoading: tutorLoading,
@@ -113,13 +94,12 @@ export function StudentRequirementsPanel({
 
   const isLoading = unitLoading || tutorLoading;
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-GB', {
+  const formatDate = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
     });
-  };
 
   const handleCreateRequirement = async (data: {
     title: string;
@@ -152,7 +132,6 @@ export function StudentRequirementsPanel({
     dueDate?: string;
   }) => {
     if (!editingRequirement) return;
-
     try {
       await updateRequirement(editingRequirement.id, {
         title: data.title,
@@ -171,7 +150,6 @@ export function StudentRequirementsPanel({
 
   const handleDeleteRequirement = async () => {
     if (!deletingRequirement) return;
-
     try {
       await deleteRequirement(deletingRequirement.id);
       setDeletingRequirement(null);
@@ -196,195 +174,158 @@ export function StudentRequirementsPanel({
   const completedRequirements = tutorRequirements.filter((r) => r.status === 'completed');
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-end justify-between gap-4">
         <div>
-          <h3 className="text-lg font-semibold">Evidence Requirements</h3>
-          <p className="text-sm text-white">Manage custom requirements for this student</p>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            Evidence Requirements
+          </div>
+          <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+            Requirements
+          </h3>
+          <p className="mt-1 text-[13px] text-white/55">
+            Manage custom requirements for this student
+          </p>
         </div>
-        <Button onClick={() => setIsAddDialogOpen(true)} className="gap-2">
-          <Plus className="h-4 w-4" />
+        <button
+          onClick={() => setIsAddDialogOpen(true)}
+          className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation shrink-0"
+        >
           Add Requirement
-        </Button>
+        </button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-3">
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded bg-amber-500/10">
-                <AlertCircle className="h-4 w-4 text-amber-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Active</p>
-                <p className="text-lg font-semibold">{activeCount}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded bg-green-500/10">
-                <CheckCircle2 className="h-4 w-4 text-green-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Completed</p>
-                <p className="text-lg font-semibold">{completedCount}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded bg-blue-500/10">
-                <FileText className="h-4 w-4 text-blue-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Unit Reqs</p>
-                <p className="text-lg font-semibold">{unitRequirements.length}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <StatStrip
+        columns={3}
+        stats={[
+          { value: activeCount, label: 'Active', tone: 'amber' },
+          { value: completedCount, label: 'Completed', tone: 'green' },
+          { value: unitRequirements.length, label: 'Unit Reqs', tone: 'blue' },
+        ]}
+      />
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'unit' | 'tutor')}>
-        <TabsList className="bg-white/5 border border-elec-gray/40">
-          <TabsTrigger value="tutor">
+        <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
+          <TabsTrigger
+            value="tutor"
+            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+          >
             Your Requirements
             {activeCount > 0 && (
-              <Badge className="ml-2 bg-amber-500/20 text-amber-400">{activeCount}</Badge>
+              <span className="ml-1.5 tabular-nums text-[11px]">{activeCount}</span>
             )}
           </TabsTrigger>
-          <TabsTrigger value="unit">Unit Requirements</TabsTrigger>
+          <TabsTrigger
+            value="unit"
+            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+          >
+            Unit Requirements
+          </TabsTrigger>
         </TabsList>
 
-        {/* Tutor Requirements Tab */}
-        <TabsContent value="tutor" className="mt-4 space-y-4">
+        {/* Tutor Requirements */}
+        <TabsContent value="tutor" className="mt-6 space-y-4">
           {isLoading ? (
-            <Card className="bg-white/5 border-elec-gray/40 animate-pulse">
-              <CardContent className="py-12 text-center">
-                <p className="text-white">Loading requirements...</p>
-              </CardContent>
-            </Card>
+            <LoadingState />
           ) : tutorRequirements.length === 0 ? (
-            <Card className="bg-white/5 border-elec-gray/40">
-              <CardContent className="py-12 text-center">
-                <UserCheck className="h-12 w-12 text-white mx-auto mb-4" />
-                <p className="text-white mb-2">No custom requirements assigned</p>
-                <p className="text-sm text-white mb-4">
-                  Add specific evidence requirements for this student
-                </p>
-                <Button onClick={() => setIsAddDialogOpen(true)} variant="outline">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Requirement
-                </Button>
-              </CardContent>
-            </Card>
+            <EmptyState
+              title="No custom requirements assigned"
+              description="Add specific evidence requirements for this student."
+              action="Add requirement"
+              onAction={() => setIsAddDialogOpen(true)}
+            />
           ) : (
-            <div className="space-y-3">
-              {/* Active Requirements */}
+            <div className="space-y-5">
               {activeRequirements.length > 0 && (
                 <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-white">Active</h4>
-                  {activeRequirements.map((req) => (
-                    <RequirementCard
-                      key={req.id}
-                      requirement={req}
-                      onEdit={() => setEditingRequirement(req)}
-                      onDelete={() => setDeletingRequirement(req)}
-                      onToggleComplete={() => handleToggleComplete(req)}
-                      formatDate={formatDate}
-                    />
-                  ))}
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                    Active
+                  </div>
+                  <div className="space-y-2">
+                    {activeRequirements.map((req) => (
+                      <RequirementCard
+                        key={req.id}
+                        requirement={req}
+                        onEdit={() => setEditingRequirement(req)}
+                        onDelete={() => setDeletingRequirement(req)}
+                        onToggleComplete={() => handleToggleComplete(req)}
+                        formatDate={formatDate}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
 
-              {/* Completed Requirements */}
               {completedRequirements.length > 0 && (
-                <div className="space-y-2 mt-6">
-                  <h4 className="text-sm font-medium text-white">Completed</h4>
-                  {completedRequirements.map((req) => (
-                    <RequirementCard
-                      key={req.id}
-                      requirement={req}
-                      onEdit={() => setEditingRequirement(req)}
-                      onDelete={() => setDeletingRequirement(req)}
-                      onToggleComplete={() => handleToggleComplete(req)}
-                      formatDate={formatDate}
-                    />
-                  ))}
+                <div className="space-y-2">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                    Completed
+                  </div>
+                  <div className="space-y-2">
+                    {completedRequirements.map((req) => (
+                      <RequirementCard
+                        key={req.id}
+                        requirement={req}
+                        onEdit={() => setEditingRequirement(req)}
+                        onDelete={() => setDeletingRequirement(req)}
+                        onToggleComplete={() => handleToggleComplete(req)}
+                        formatDate={formatDate}
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
           )}
         </TabsContent>
 
-        {/* Unit Requirements Tab (Read-only) */}
-        <TabsContent value="unit" className="mt-4">
+        {/* Unit Requirements */}
+        <TabsContent value="unit" className="mt-6">
           {unitLoading ? (
-            <Card className="bg-white/5 border-elec-gray/40 animate-pulse">
-              <CardContent className="py-12 text-center">
-                <p className="text-white">Loading unit requirements...</p>
-              </CardContent>
-            </Card>
+            <LoadingState />
           ) : unitRequirements.length === 0 ? (
-            <Card className="bg-white/5 border-elec-gray/40">
-              <CardContent className="py-12 text-center">
-                <FileText className="h-12 w-12 text-white mx-auto mb-4" />
-                <p className="text-white">No unit-level evidence requirements defined</p>
-              </CardContent>
-            </Card>
+            <EmptyState
+              title="No unit-level evidence requirements defined"
+              description="Unit requirements will appear here when configured."
+            />
           ) : (
-            <Card className="bg-white/5 border-elec-gray/40">
-              <CardContent className="p-0">
-                <div className="divide-y divide-elec-gray/40">
-                  {unitRequirements.map((req) => (
-                    <div key={req.id} className="p-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-3">
-                          <Badge variant="outline" className="font-mono">
-                            {req.assessment_criterion}
-                          </Badge>
-                          <div className="flex items-center gap-1.5">
-                            {req.evidence_type_codes.map((code) => {
-                              const type = getEvidenceType(code);
-                              return type ? (
-                                <Tooltip key={code}>
-                                  <TooltipTrigger>
-                                    <span style={{ color: type.color }}>
-                                      {EVIDENCE_ICONS[code]}
-                                    </span>
-                                  </TooltipTrigger>
-                                  <TooltipContent>{type.name}</TooltipContent>
-                                </Tooltip>
-                              ) : null;
-                            })}
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          {req.is_mandatory && (
-                            <Badge className="bg-amber-500/20 text-amber-400">Required</Badge>
-                          )}
-                          <span className="text-sm text-white">{req.quantity_required}x</span>
-                        </div>
+            <ListCard>
+              {unitRequirements.map((req) => (
+                <div key={req.id} className="px-5 sm:px-6 py-4 sm:py-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3 flex-wrap">
+                      <Pill tone="indigo">{req.assessment_criterion}</Pill>
+                      <div className="flex flex-wrap gap-1.5">
+                        {req.evidence_type_codes.map((code) => (
+                          <Pill key={code} tone="cyan">
+                            {EVIDENCE_LABELS[code] || code}
+                          </Pill>
+                        ))}
                       </div>
-                      {req.assessment_criterion_text && (
-                        <p className="text-sm text-white mt-2">{req.assessment_criterion_text}</p>
-                      )}
-                      {req.guidance && (
-                        <p className="text-xs text-white mt-1 italic">{req.guidance}</p>
-                      )}
                     </div>
-                  ))}
+                    <div className="flex items-center gap-2 shrink-0">
+                      {req.is_mandatory && <Pill tone="amber">Required</Pill>}
+                      <span className="text-[13px] text-white/70 tabular-nums">
+                        {req.quantity_required}×
+                      </span>
+                    </div>
+                  </div>
+                  {req.assessment_criterion_text && (
+                    <p className="mt-2 text-[13px] text-white/70 leading-relaxed">
+                      {req.assessment_criterion_text}
+                    </p>
+                  )}
+                  {req.guidance && (
+                    <p className="mt-1.5 text-[12px] text-white/45 italic leading-relaxed">
+                      {req.guidance}
+                    </p>
+                  )}
                 </div>
-              </CardContent>
-            </Card>
+              ))}
+            </ListCard>
           )}
         </TabsContent>
       </Tabs>
@@ -420,19 +361,21 @@ export function StudentRequirementsPanel({
         open={!!deletingRequirement}
         onOpenChange={(open) => !open && setDeletingRequirement(null)}
       >
-        <AlertDialogContent className="bg-elec-dark border-elec-gray/40">
+        <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Requirement</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Delete Requirement</AlertDialogTitle>
+            <AlertDialogDescription className="text-white/60">
               Are you sure you want to delete "{deletingRequirement?.title}"? This action cannot be
               undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-white/5 border-elec-gray/40">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="bg-transparent border-white/[0.08] text-white/70 hover:bg-white/5 hover:text-white rounded-full">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteRequirement}
-              className="bg-red-600 hover:bg-red-700"
+              className="bg-red-600 hover:bg-red-700 text-white rounded-full"
             >
               Delete
             </AlertDialogAction>
@@ -470,94 +413,97 @@ function RequirementCard({
   const isOverdue =
     requirement.due_date && !isCompleted && new Date(requirement.due_date) < new Date();
 
+  const dueDateTone: Tone = isOverdue ? 'red' : isDueSoon ? 'amber' : 'blue';
+
   return (
-    <Card
+    <div
       className={cn(
-        'bg-white/5 border-elec-gray/40 transition-colors',
+        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 transition-opacity',
         isCompleted && 'opacity-60'
       )}
     >
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2">
-              <button
-                onClick={onToggleComplete}
-                className="shrink-0 p-1 -m-1 rounded hover:bg-white/10 transition-colors"
-              >
-                {isCompleted ? (
-                  <CheckCircle2 className="h-5 w-5 text-green-500" />
-                ) : (
-                  <Circle className="h-5 w-5 text-white" />
-                )}
-              </button>
-              <h4 className={cn('font-medium truncate', isCompleted && 'line-through text-white')}>
-                {requirement.title}
-              </h4>
-              {requirement.is_mandatory && (
-                <Badge className="bg-amber-500/20 text-amber-400 shrink-0">Required</Badge>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={onToggleComplete}
+              aria-label={isCompleted ? 'Mark as active' : 'Mark as complete'}
+              className={cn(
+                'shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors touch-manipulation',
+                isCompleted
+                  ? 'bg-green-500/20 border-green-500'
+                  : 'bg-transparent border-white/30 hover:border-elec-yellow'
               )}
-            </div>
-
-            {requirement.description && (
-              <p className="text-sm text-white mt-1 line-clamp-2">{requirement.description}</p>
-            )}
-
-            <div className="flex items-center gap-3 mt-2">
-              <div className="flex items-center gap-1">
-                {requirement.evidence_type_codes.map((code) => (
-                  <span key={code} className="text-white">
-                    {EVIDENCE_ICONS[code as EvidenceTypeCode]}
-                  </span>
-                ))}
-              </div>
-              <span className="text-xs text-white">{requirement.quantity_required}x required</span>
-              {requirement.due_date && (
-                <Badge
-                  variant={isOverdue ? 'destructive' : isDueSoon ? 'outline' : 'secondary'}
-                  className="text-xs"
-                >
-                  <Clock className="h-3 w-3 mr-1" />
-                  {formatDate(requirement.due_date)}
-                </Badge>
+            >
+              {isCompleted && <span className="text-green-400 text-[11px] font-bold">✓</span>}
+            </button>
+            <h4
+              className={cn(
+                'text-[15px] font-medium truncate',
+                isCompleted ? 'line-through text-white/55' : 'text-white'
               )}
-            </div>
+            >
+              {requirement.title}
+            </h4>
+            {requirement.is_mandatory && <Pill tone="amber">Required</Pill>}
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="shrink-0">
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-elec-dark border-elec-gray/40">
-              <DropdownMenuItem onClick={onEdit}>
-                <Edit2 className="h-4 w-4 mr-2" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={onToggleComplete}>
-                {isCompleted ? (
-                  <>
-                    <Circle className="h-4 w-4 mr-2" />
-                    Mark as Active
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle2 className="h-4 w-4 mr-2" />
-                    Mark as Complete
-                  </>
-                )}
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={onDelete} className="text-red-400">
-                <Trash2 className="h-4 w-4 mr-2" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {requirement.description && (
+            <p className="mt-2 text-[13px] text-white/60 line-clamp-2 leading-relaxed pl-8">
+              {requirement.description}
+            </p>
+          )}
+
+          <div className="mt-3 flex items-center flex-wrap gap-2 pl-8">
+            <div className="flex flex-wrap gap-1.5">
+              {requirement.evidence_type_codes.map((code) => (
+                <Pill key={code} tone="cyan">
+                  {EVIDENCE_LABELS[code as EvidenceTypeCode] || code}
+                </Pill>
+              ))}
+            </div>
+            <span className="text-[11.5px] text-white/45 tabular-nums">
+              {requirement.quantity_required}× required
+            </span>
+            {requirement.due_date && (
+              <Pill tone={dueDateTone}>Due {formatDate(requirement.due_date)}</Pill>
+            )}
+          </div>
         </div>
-      </CardContent>
-    </Card>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button
+              aria-label="Options"
+              className="shrink-0 h-9 w-9 rounded-full flex items-center justify-center text-white/60 hover:bg-white/5 hover:text-white transition-colors touch-manipulation"
+            >
+              <span className="text-lg leading-none">⋯</span>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            align="end"
+            className="bg-[hsl(0_0%_12%)] border-white/[0.08] min-w-[180px]"
+          >
+            <DropdownMenuItem onClick={onEdit} className="text-white/80 focus:bg-white/5">
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={onToggleComplete}
+              className="text-white/80 focus:bg-white/5"
+            >
+              {isCompleted ? 'Mark as active' : 'Mark as complete'}
+            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-white/[0.06]" />
+            <DropdownMenuItem
+              onClick={onDelete}
+              className="text-red-400 focus:bg-red-500/10 focus:text-red-400"
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    </div>
   );
 }
 

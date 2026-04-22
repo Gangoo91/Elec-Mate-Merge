@@ -1,40 +1,17 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Progress } from '@/components/ui/progress';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
 import { useCollegeStudents, useStudentsAtRisk } from '@/hooks/college/useCollegeStudents';
 import type { CollegeStudent } from '@/services/college/collegeStudentService';
 import { useCollegeCohorts } from '@/hooks/college/useCollegeCohorts';
 import { useCollegeAttendance } from '@/hooks/college/useCollegeAttendance';
-import { cn } from '@/lib/utils';
 import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailSheet';
 import { ProgressUpdateSheet } from '@/components/college/sheets/ProgressUpdateSheet';
 import { useToast } from '@/hooks/use-toast';
 import { ProgressCardSkeletonList } from '@/components/college/ui/ProgressCardSkeleton';
-import { motion } from 'framer-motion';
-import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { useQueryClient } from '@tanstack/react-query';
 import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
-import {
-  Search,
-  User,
-  MoreVertical,
-  Filter,
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  Target,
-  Calendar,
-  BarChart3,
-  Loader2,
-  Mail,
-  Phone,
-} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,12 +19,18 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  Pill,
+  EmptyState,
+  SectionHeader,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 export function ProgressTrackingSection() {
   const { data: students = [], isLoading: studentsLoading } = useCollegeStudents();
@@ -57,7 +40,6 @@ export function ProgressTrackingSection() {
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const { staggerContainer, staggerItem } = useHapticFeedback();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
@@ -71,13 +53,9 @@ export function ProgressTrackingSection() {
     await queryClient.invalidateQueries({ queryKey: ['college-attendance'] });
   };
 
-  const isLoading = studentsLoading;
-
   const getAvatarInitials = (name: string): string => {
     const parts = name.trim().split(/\s+/);
-    if (parts.length >= 2) {
-      return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
-    }
+    if (parts.length >= 2) return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
     return name.slice(0, 2).toUpperCase();
   };
 
@@ -88,61 +66,38 @@ export function ProgressTrackingSection() {
     return Math.round((present / records.length) * 100);
   };
 
-  // Combine progress data with student info
   const progressData = students
     .filter((s) => s.status === 'Active')
     .map((student) => {
       const attendanceRate = getStudentAttendanceRate(student.id);
       const overallProgress = student.progress_percent ?? 0;
       const isAtRisk = student.risk_level === 'high' || student.risk_level === 'critical';
-
-      return {
-        ...student,
-        attendanceRate,
-        overallProgress,
-        isAtRisk,
-      };
+      return { ...student, attendanceRate, overallProgress, isAtRisk };
     });
 
   const filteredProgress = progressData.filter((data) => {
     const matchesSearch =
       data.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (data.uln && data.uln.toLowerCase().includes(searchQuery.toLowerCase()));
-
     const matchesStatus =
       filterStatus === 'all' ||
       (filterStatus === 'at-risk' && data.isAtRisk) ||
       (filterStatus === 'on-track' && !data.isAtRisk && data.overallProgress >= 70) ||
       (filterStatus === 'behind' && !data.isAtRisk && data.overallProgress < 70);
-
     const matchesCohort = filterCohort === 'all' || data.cohort_id === filterCohort;
-
     return matchesSearch && matchesStatus && matchesCohort;
   });
 
-  // Sort by progress (lowest first for attention)
   const sortedProgress = [...filteredProgress].sort(
     (a, b) => a.overallProgress - b.overallProgress
   );
 
-  const getCohortName = (cohortId?: string | null) => {
-    if (!cohortId) return 'Unassigned';
-    return cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
-  };
+  const getCohortName = (cohortId?: string | null) =>
+    !cohortId ? 'Unassigned' : cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
 
-  const getProgressColor = (percent: number) => {
-    if (percent >= 80) return 'text-success';
-    if (percent >= 60) return 'text-warning';
-    return 'text-destructive';
-  };
+  const progressTone = (percent: number): Tone =>
+    percent >= 80 ? 'green' : percent >= 60 ? 'amber' : 'red';
 
-  const getProgressBg = (percent: number) => {
-    if (percent >= 80) return 'bg-success';
-    if (percent >= 60) return 'bg-warning';
-    return 'bg-destructive';
-  };
-
-  // Calculate cohort averages
   const cohortAverages = cohorts
     .filter((c) => c.status === 'Active')
     .map((cohort) => {
@@ -153,475 +108,310 @@ export function ProgressTrackingSection() {
               cohortStudents.reduce((sum, s) => sum + s.overallProgress, 0) / cohortStudents.length
             )
           : 0;
-      const avgAttendance =
-        cohortStudents.length > 0
-          ? Math.round(
-              cohortStudents.reduce((sum, s) => sum + s.attendanceRate, 0) / cohortStudents.length
-            )
-          : 0;
-
       return {
         ...cohort,
         avgProgress,
-        avgAttendance,
         studentCount: cohortStudents.length,
         atRiskCount: cohortStudents.filter((s) => s.isAtRisk).length,
       };
     });
 
-  if (isLoading) {
-    return (
-      <div className="space-y-4 md:space-y-6 animate-fade-in">
-        <CollegeSectionHeader title="Progress Tracking" description="Loading..." />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {[1, 2, 3, 4].map((i) => (
-            <div key={i} className="h-20 rounded-lg bg-muted/50 animate-pulse" />
-          ))}
-        </div>
-        <ProgressCardSkeletonList count={4} />
-      </div>
-    );
-  }
+  const onTrackCount = progressData.filter((p) => p.overallProgress >= 80).length;
+  const attentionCount = progressData.filter(
+    (p) => p.overallProgress >= 60 && p.overallProgress < 80
+  ).length;
+  const avgProgressAll = Math.round(
+    progressData.reduce((sum, p) => sum + p.overallProgress, 0) / (progressData.length || 1)
+  );
 
   return (
     <PullToRefresh onRefresh={handleRefresh}>
-      <div className="space-y-4 md:space-y-6 animate-fade-in">
-        <CollegeSectionHeader
-          title="Progress Tracking"
-          description={`${studentsAtRisk.length} students at risk`}
-          actions={
-            <Button
-              className="gap-2 h-11 touch-manipulation"
-              onClick={() =>
-                toast({
-                  title: 'Export coming soon',
-                  description: 'Progress report export is being developed.',
-                })
-              }
-            >
-              <BarChart3 className="h-4 w-4" />
-              <span className="hidden sm:inline">Export Report</span>
-            </Button>
-          }
-        />
+      <PageFrame>
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Assessment · Progress"
+            title="Progress tracking"
+            description={`${studentsAtRisk.length} student${studentsAtRisk.length === 1 ? '' : 's'} at risk of falling behind.`}
+            tone="blue"
+            actions={
+              <button
+                onClick={() =>
+                  toast({
+                    title: 'Export coming soon',
+                    description: 'Progress report export is being developed.',
+                  })
+                }
+                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              >
+                Export →
+              </button>
+            }
+          />
+        </motion.div>
 
-        {/* Summary Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <Card className="bg-success/10 border-success/20">
-            <CardContent className="p-3">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-success" />
-                <div>
-                  <p className="text-lg font-bold text-foreground">
-                    {progressData.filter((p) => p.overallProgress >= 80).length}
-                  </p>
-                  <p className="text-xs text-white">On Track (80%+)</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-warning/10 border-warning/20">
-            <CardContent className="p-3">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-warning" />
-                <div>
-                  <p className="text-lg font-bold text-foreground">
-                    {
-                      progressData.filter((p) => p.overallProgress >= 60 && p.overallProgress < 80)
-                        .length
-                    }
-                  </p>
-                  <p className="text-xs text-white">Needs Attention</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-destructive/10 border-destructive/20">
-            <CardContent className="p-3">
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-destructive" />
-                <div>
-                  <p className="text-lg font-bold text-foreground">{studentsAtRisk.length}</p>
-                  <p className="text-xs text-white">At Risk</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="bg-primary/10 border-primary/20">
-            <CardContent className="p-3">
-              <div className="flex items-center gap-2">
-                <Target className="h-4 w-4 text-primary" />
-                <div>
-                  <p className="text-lg font-bold text-foreground">
-                    {Math.round(
-                      progressData.reduce((sum, p) => sum + p.overallProgress, 0) /
-                        (progressData.length || 1)
-                    )}
-                    %
-                  </p>
-                  <p className="text-xs text-white">Avg Progress</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <motion.div variants={itemVariants}>
+          <StatStrip
+            columns={4}
+            stats={[
+              { value: onTrackCount, label: 'On Track', sub: '80%+ progress', tone: 'green' },
+              { value: attentionCount, label: 'Attention', sub: '60–80% progress', tone: 'amber' },
+              {
+                value: studentsAtRisk.length,
+                label: 'At Risk',
+                sub: 'Requires action',
+                tone: 'red',
+                accent: studentsAtRisk.length > 0,
+              },
+              { value: `${avgProgressAll}%`, label: 'Avg Progress', sub: 'Across active' },
+            ]}
+          />
+        </motion.div>
 
-        {/* Cohort Overview */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm">Cohort Progress Overview</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
+        {cohortAverages.length > 0 && (
+          <motion.section variants={itemVariants} className="space-y-5">
+            <SectionHeader eyebrow="Cohorts" title="Progress by cohort" />
+            <ListCard>
               {cohortAverages.map((cohort) => (
-                <div key={cohort.id} className="flex items-center gap-4">
-                  <div className="w-32 truncate text-sm font-medium">{cohort.name}</div>
-                  <div className="flex-1">
-                    <Progress value={cohort.avgProgress} className="h-2" />
+                <div
+                  key={cohort.id}
+                  className="flex items-center gap-4 px-5 sm:px-6 py-4"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[14px] font-medium text-white truncate">{cohort.name}</div>
+                    <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                      {cohort.studentCount} students
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-white">
-                    <span>{cohort.avgProgress}%</span>
-                    <span>{cohort.studentCount} students</span>
-                    {cohort.atRiskCount > 0 && (
-                      <Badge
-                        variant="outline"
-                        className="bg-destructive/10 text-destructive text-xs"
-                      >
-                        {cohort.atRiskCount} at risk
-                      </Badge>
-                    )}
+                  <div className="w-32 sm:w-48 h-1 bg-white/[0.06] rounded-full overflow-hidden shrink-0">
+                    <div
+                      className="h-full bg-elec-yellow/80 rounded-full transition-all"
+                      style={{ width: `${cohort.avgProgress}%` }}
+                    />
                   </div>
+                  <div className="text-[13px] font-medium tabular-nums text-white w-10 text-right shrink-0">
+                    {cohort.avgProgress}%
+                  </div>
+                  {cohort.atRiskCount > 0 && (
+                    <Pill tone="red">{cohort.atRiskCount} at risk</Pill>
+                  )}
                 </div>
               ))}
-            </div>
-          </CardContent>
-        </Card>
+            </ListCard>
+          </motion.section>
+        )}
 
-        {/* Students At Risk Alert */}
         {studentsAtRisk.length > 0 && (
-          <Card className="border-destructive/50 bg-destructive/5">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm flex items-center gap-2 text-destructive">
-                <AlertTriangle className="h-4 w-4" />
-                Students At Risk - Immediate Attention Required
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-2">
-                {studentsAtRisk.slice(0, 5).map((student) => (
-                  <Badge
-                    key={student.id}
-                    variant="outline"
-                    className="bg-destructive/10 text-destructive border-destructive/20"
-                  >
-                    {student.name}
-                  </Badge>
-                ))}
-                {studentsAtRisk.length > 5 && (
-                  <Badge variant="outline" className="text-xs">
-                    +{studentsAtRisk.length - 5} more
-                  </Badge>
-                )}
+          <motion.div variants={itemVariants}>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-start gap-4">
+              <span aria-hidden className="w-[3px] h-10 rounded-full bg-red-400 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                  Immediate attention
+                </div>
+                <div className="mt-1 text-[15px] font-medium text-white">
+                  {studentsAtRisk.length} student{studentsAtRisk.length !== 1 ? 's' : ''} at risk
+                </div>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {studentsAtRisk.slice(0, 8).map((student) => (
+                    <Pill key={student.id} tone="red">
+                      {student.name}
+                    </Pill>
+                  ))}
+                  {studentsAtRisk.length > 8 && (
+                    <span className="text-[11px] text-white/40 px-1.5 py-1">
+                      +{studentsAtRisk.length - 8}
+                    </span>
+                  )}
+                </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </motion.div>
         )}
 
-        {/* Search and Filters */}
-        <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm py-3 -mx-4 px-4 md:mx-0 md:px-0 flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-            )}
-            <Input
-              placeholder="Search students..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
-            />
-          </div>
-          <Select value={filterStatus} onValueChange={setFilterStatus}>
-            <SelectTrigger className="w-full sm:w-[150px] h-11 touch-manipulation">
-              <Filter className="h-4 w-4 mr-2" />
-              <SelectValue placeholder="Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all" className="h-11 touch-manipulation">
-                All Students
-              </SelectItem>
-              <SelectItem value="on-track" className="h-11 touch-manipulation">
-                On Track
-              </SelectItem>
-              <SelectItem value="behind" className="h-11 touch-manipulation">
-                Behind
-              </SelectItem>
-              <SelectItem value="at-risk" className="h-11 touch-manipulation">
-                At Risk
-              </SelectItem>
-            </SelectContent>
-          </Select>
-          <Select value={filterCohort} onValueChange={setFilterCohort}>
-            <SelectTrigger className="w-full sm:w-[180px] h-11 touch-manipulation">
-              <SelectValue placeholder="Cohort" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all" className="h-11 touch-manipulation">
-                All Cohorts
-              </SelectItem>
-              {cohorts
-                .filter((c) => c.status === 'Active')
-                .map((cohort) => (
-                  <SelectItem key={cohort.id} value={cohort.id} className="h-11 touch-manipulation">
-                    {cohort.name}
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        {/* Filter Chips */}
-        {(filterStatus !== 'all' || filterCohort !== 'all') && (
-          <div className="flex flex-wrap gap-2">
-            {filterStatus !== 'all' && (
-              <Badge
-                variant="secondary"
-                className="gap-1 h-8 touch-manipulation cursor-pointer"
-                onClick={() => setFilterStatus('all')}
+        <motion.div variants={itemVariants}>
+          <FilterBar
+            tabs={[
+              { value: 'all', label: 'All', count: progressData.length },
+              { value: 'on-track', label: 'On Track', count: onTrackCount },
+              { value: 'behind', label: 'Behind', count: attentionCount },
+              { value: 'at-risk', label: 'At Risk', count: studentsAtRisk.length },
+            ]}
+            activeTab={filterStatus}
+            onTabChange={setFilterStatus}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search name or ULN…"
+            actions={
+              <select
+                value={filterCohort}
+                onChange={(e) => setFilterCohort(e.target.value)}
+                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
               >
-                {filterStatus === 'at-risk'
-                  ? 'At Risk'
-                  : filterStatus === 'on-track'
-                    ? 'On Track'
-                    : 'Behind'}{' '}
-                <span className="ml-1">&times;</span>
-              </Badge>
-            )}
-            {filterCohort !== 'all' && (
-              <Badge
-                variant="secondary"
-                className="gap-1 h-8 touch-manipulation cursor-pointer"
-                onClick={() => setFilterCohort('all')}
-              >
-                {cohorts.find((c) => c.id === filterCohort)?.name || filterCohort}{' '}
-                <span className="ml-1">&times;</span>
-              </Badge>
-            )}
-          </div>
-        )}
-
-        {/* Student Progress List */}
-        <motion.div
-          className="grid gap-3"
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-        >
-          {sortedProgress.map((data) => (
-            <motion.div variants={staggerItem} key={data.id}>
-              <SwipeableCard
-                leftActions={[
-                  {
-                    icon: <Mail className="h-5 w-5" />,
-                    label: 'Email',
-                    onClick: () => {
-                      if (data.email) window.location.href = 'mailto:' + data.email;
-                    },
-                    className: 'bg-info text-white',
-                  },
-                  {
-                    icon: <Phone className="h-5 w-5" />,
-                    label: 'Call',
-                    onClick: () => {
-                      if (data.phone) window.location.href = 'tel:' + data.phone;
-                    },
-                    className: 'bg-success text-white',
-                  },
-                ]}
-                rightActions={[
-                  {
-                    icon: <AlertTriangle className="h-5 w-5" />,
-                    label: 'Flag Risk',
-                    onClick: () => {
-                      setSelectedStudentId(data.id);
-                      setProgressSheetOpen(true);
-                    },
-                    className: 'bg-warning text-white',
-                  },
-                ]}
-              >
-                <Card
-                  className={`hover:shadow-md transition-shadow ${
-                    data.isAtRisk ? 'border-l-4 border-l-destructive' : ''
-                  }`}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-4">
-                      <Avatar className="h-10 w-10 shrink-0">
-                        <AvatarImage src={data.photo_url ?? undefined} />
-                        <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                          {getAvatarInitials(data.name)}
-                        </AvatarFallback>
-                      </Avatar>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-2">
-                          <div>
-                            <div className="flex items-center gap-2">
-                              <h3 className="font-semibold text-foreground">{data.name}</h3>
-                              {data.isAtRisk && (
-                                <Badge
-                                  variant="outline"
-                                  className="bg-destructive/10 text-destructive text-xs"
-                                >
-                                  At Risk
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="text-sm text-white">{getCohortName(data.cohort_id)}</p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-11 w-11 touch-manipulation"
-                                >
-                                  <MoreVertical className="h-4 w-4" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => {
-                                    setSelectedStudent(data);
-                                    setProfileSheetOpen(true);
-                                  }}
-                                >
-                                  View Full Profile
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => {
-                                    setSelectedStudentId(data.id);
-                                    setProgressSheetOpen(true);
-                                  }}
-                                >
-                                  Update Progress
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => {
-                                    setSelectedStudentId(data.id);
-                                    setProgressSheetOpen(true);
-                                    toast({
-                                      title: 'Schedule Review',
-                                      description:
-                                        'Use the progress sheet to schedule an ILP review for ' +
-                                        data.name,
-                                    });
-                                  }}
-                                >
-                                  Schedule Review
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => {
-                                    if (data.email) {
-                                      window.location.href = 'mailto:' + data.email;
-                                    } else {
-                                      toast({
-                                        title: 'No email',
-                                        description: 'No email address on file for this student.',
-                                      });
-                                    }
-                                  }}
-                                >
-                                  Contact Student
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => {
-                                    if (data.employer_email) {
-                                      window.location.href = 'mailto:' + data.employer_email;
-                                    } else {
-                                      toast({
-                                        title: 'Contact Employer',
-                                        description: 'No employer contact on file for ' + data.name,
-                                      });
-                                    }
-                                  }}
-                                >
-                                  Contact Employer
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </div>
-                        </div>
-
-                        {/* Progress Bars */}
-                        <div className="grid grid-cols-2 gap-4 mt-3">
-                          <div>
-                            <div className="flex items-center justify-between text-xs mb-1">
-                              <span className="text-white">Overall Progress</span>
-                              <span
-                                className={`font-medium ${getProgressColor(data.overallProgress)}`}
-                              >
-                                {data.overallProgress}%
-                              </span>
-                            </div>
-                            <Progress
-                              value={data.overallProgress}
-                              className={`h-2 ${getProgressBg(data.overallProgress)}`}
-                            />
-                          </div>
-                          <div>
-                            <div className="flex items-center justify-between text-xs mb-1">
-                              <span className="text-white">Attendance</span>
-                              <span
-                                className={`font-medium ${getProgressColor(data.attendanceRate)}`}
-                              >
-                                {data.attendanceRate}%
-                              </span>
-                            </div>
-                            <Progress
-                              value={data.attendanceRate}
-                              className={`h-2 ${getProgressBg(data.attendanceRate)}`}
-                            />
-                          </div>
-                        </div>
-
-                        {/* Expected End Date */}
-                        {data.expected_end_date && (
-                          <div className="flex flex-wrap items-center gap-4 mt-3 text-xs text-white">
-                            <div className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              <span>
-                                Due:{' '}
-                                {new Date(data.expected_end_date).toLocaleDateString('en-GB', {
-                                  month: 'short',
-                                  year: 'numeric',
-                                })}
-                              </span>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </SwipeableCard>
-            </motion.div>
-          ))}
-
-          {sortedProgress.length === 0 && (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <p className="text-white">No students found matching your criteria.</p>
-              </CardContent>
-            </Card>
-          )}
+                <option value="all">All Cohorts</option>
+                {cohorts
+                  .filter((c) => c.status === 'Active')
+                  .map((cohort) => (
+                    <option key={cohort.id} value={cohort.id}>
+                      {cohort.name}
+                    </option>
+                  ))}
+              </select>
+            }
+          />
         </motion.div>
+
+        {studentsLoading ? (
+          <ProgressCardSkeletonList count={4} />
+        ) : sortedProgress.length === 0 ? (
+          <EmptyState title="No students found" description="Try adjusting filters." />
+        ) : (
+          <motion.div variants={itemVariants}>
+            <ListCard>
+              {sortedProgress.map((data) => (
+                <SwipeableCard
+                  key={data.id}
+                  leftActions={[
+                    {
+                      label: 'Email',
+                      onClick: () => {
+                        if (data.email) window.location.href = 'mailto:' + data.email;
+                      },
+                      className: 'bg-blue-500/90 text-white',
+                    },
+                    {
+                      label: 'Call',
+                      onClick: () => {
+                        if (data.phone) window.location.href = 'tel:' + data.phone;
+                      },
+                      className: 'bg-emerald-500/90 text-white',
+                    },
+                  ]}
+                  rightActions={[
+                    {
+                      label: 'Flag',
+                      onClick: () => {
+                        setSelectedStudentId(data.id);
+                        setProgressSheetOpen(true);
+                      },
+                      className: 'bg-amber-500/90 text-white',
+                    },
+                  ]}
+                >
+                  <div className="group flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors">
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'w-[3px] self-stretch rounded-full shrink-0',
+                        data.isAtRisk ? 'bg-red-400' : 'bg-transparent'
+                      )}
+                    />
+                    <Avatar className="h-10 w-10 shrink-0 ring-1 ring-white/[0.08]">
+                      <AvatarImage src={data.photo_url ?? undefined} />
+                      <AvatarFallback className="bg-blue-500/10 text-blue-400 text-xs font-semibold">
+                        {getAvatarInitials(data.name)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline justify-between gap-2">
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <div className="text-[15px] font-medium text-white truncate">
+                              {data.name}
+                            </div>
+                            {data.isAtRisk && <Pill tone="red">At Risk</Pill>}
+                          </div>
+                          <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                            {getCohortName(data.cohort_id)}
+                          </div>
+                        </div>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button
+                              className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation shrink-0"
+                              aria-label="Options"
+                            >
+                              ⋯
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                              className="h-11"
+                              onClick={() => {
+                                setSelectedStudent(data);
+                                setProfileSheetOpen(true);
+                              }}
+                            >
+                              View profile
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="h-11"
+                              onClick={() => {
+                                setSelectedStudentId(data.id);
+                                setProgressSheetOpen(true);
+                              }}
+                            >
+                              Update progress
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="h-11"
+                              onClick={() => {
+                                if (data.email)
+                                  window.location.href = 'mailto:' + data.email;
+                              }}
+                            >
+                              Contact student
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+
+                      <div className="mt-3 grid grid-cols-2 gap-4">
+                        <div>
+                          <div className="flex items-baseline justify-between text-[11px]">
+                            <span className="text-white/50 uppercase tracking-[0.12em]">
+                              Progress
+                            </span>
+                            <Pill tone={progressTone(data.overallProgress)}>{data.overallProgress}%</Pill>
+                          </div>
+                          <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-elec-yellow/80 rounded-full"
+                              style={{ width: `${data.overallProgress}%` }}
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex items-baseline justify-between text-[11px]">
+                            <span className="text-white/50 uppercase tracking-[0.12em]">
+                              Attendance
+                            </span>
+                            <Pill tone={progressTone(data.attendanceRate)}>{data.attendanceRate}%</Pill>
+                          </div>
+                          <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-emerald-400/80 rounded-full"
+                              style={{ width: `${data.attendanceRate}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      {data.expected_end_date && (
+                        <div className="mt-3 text-[11px] text-white/50 tabular-nums">
+                          Due{' '}
+                          {new Date(data.expected_end_date).toLocaleDateString('en-GB', {
+                            month: 'short',
+                            year: 'numeric',
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </SwipeableCard>
+              ))}
+            </ListCard>
+          </motion.div>
+        )}
 
         <StudentDetailSheet
           student={selectedStudent}
@@ -633,7 +423,7 @@ export function ProgressTrackingSection() {
           open={progressSheetOpen}
           onOpenChange={setProgressSheetOpen}
         />
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

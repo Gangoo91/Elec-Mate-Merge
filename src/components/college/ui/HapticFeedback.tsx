@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 /**
@@ -87,13 +86,15 @@ export function SuccessCheckmark({ show }: { show: boolean }) {
             transition={{ duration: 0.5, ease: 'easeOut' }}
             className="h-20 w-20 rounded-full bg-success/20 border-2 border-success flex items-center justify-center"
           >
-            <motion.div
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
+            <motion.span
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 0.3 }}
+              className="text-[40px] leading-none font-semibold text-success"
+              aria-hidden
             >
-              <Check className="h-10 w-10 text-success" strokeWidth={3} />
-            </motion.div>
+              ✓
+            </motion.span>
           </motion.div>
         </motion.div>
       )}

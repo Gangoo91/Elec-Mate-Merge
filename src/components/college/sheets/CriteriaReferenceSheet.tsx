@@ -8,37 +8,8 @@
 
 import React from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import {
-  BookOpen,
-  FileText,
-  Camera,
-  Calculator,
-  Video,
-  ClipboardList,
-  PenTool,
-  Eye,
-  Award,
-  Loader2,
-} from 'lucide-react';
+import { Pill, LoadingState } from '@/components/college/primitives';
 import { useEvidenceRequirements } from '@/hooks/useEvidenceRequirements';
-import type { UnitEvidenceRequirement } from '@/types/evidence';
-
-// ── Evidence type icon mapping ─────────────────────────────────
-
-const evidenceTypeIcons: Record<string, React.ReactNode> = {
-  photo: <Camera className="h-4 w-4" />,
-  document: <FileText className="h-4 w-4" />,
-  certificate: <Award className="h-4 w-4" />,
-  test_result: <ClipboardList className="h-4 w-4" />,
-  witness: <Eye className="h-4 w-4" />,
-  reflection: <PenTool className="h-4 w-4" />,
-  work_log: <ClipboardList className="h-4 w-4" />,
-  video: <Video className="h-4 w-4" />,
-  drawing: <PenTool className="h-4 w-4" />,
-  calculation: <Calculator className="h-4 w-4" />,
-};
 
 // ── Props ──────────────────────────────────────────────────────
 
@@ -76,135 +47,108 @@ export function CriteriaReferenceSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           {/* Drag handle */}
           <div className="flex justify-center pt-2.5 pb-1">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
           {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-            <SheetTitle className="text-base flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-elec-yellow" />
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
               Criteria Reference
+            </div>
+            <SheetTitle className="text-[17px] font-semibold text-white mt-1">
+              {acRef ? `AC ${acRef}` : 'Criterion'}
             </SheetTitle>
-            {acRef && (
-              <Badge
-                variant="outline"
-                className="w-fit mt-1 border-elec-yellow/30 text-elec-yellow font-mono"
-              >
-                AC {acRef}
-              </Badge>
-            )}
           </SheetHeader>
 
           {/* Scrollable content */}
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5 space-y-4">
             {isLoading ? (
-              <div className="flex items-center justify-center py-12">
-                <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-              </div>
+              <LoadingState />
             ) : (
               <>
                 {/* AC Description */}
-                <Card className="bg-white/5 border-elec-gray/40">
-                  <CardContent className="p-4">
-                    <h4 className="text-sm font-medium text-elec-yellow mb-2">
-                      Assessment Criterion
-                    </h4>
-                    <p className="text-sm text-white leading-relaxed">
-                      {matchingReq?.assessment_criterion_text || acText || `AC ${acRef}`}
-                    </p>
-                  </CardContent>
-                </Card>
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
+                    Assessment Criterion
+                  </div>
+                  <p className="text-[13px] text-white leading-relaxed">
+                    {matchingReq?.assessment_criterion_text || acText || `AC ${acRef}`}
+                  </p>
+                </div>
 
                 {/* Evidence Requirements */}
                 {matchingReq && (
-                  <Card className="bg-white/5 border-elec-gray/40">
-                    <CardContent className="p-4 space-y-3">
-                      <h4 className="text-sm font-medium text-elec-yellow">
+                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
                         Evidence Requirements
-                      </h4>
-
-                      {/* Required evidence types */}
-                      <div className="space-y-2">
-                        {matchingReq.evidence_type_codes.map((code) => (
-                          <div
-                            key={code}
-                            className="flex items-center gap-3 p-2.5 rounded-lg bg-white/5"
-                          >
-                            <div className="h-8 w-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center text-elec-yellow">
-                              {evidenceTypeIcons[code] || <FileText className="h-4 w-4" />}
-                            </div>
-                            <div className="flex-1">
-                              <p className="text-sm text-white capitalize">
-                                {code.replace(/_/g, ' ')}
-                              </p>
-                            </div>
-                            <Badge variant="outline" className="text-white border-white/20">
-                              {matchingReq.quantity_required ?? 1}x required
-                            </Badge>
-                          </div>
-                        ))}
                       </div>
+                      {matchingReq.is_mandatory && <Pill tone="red">Mandatory</Pill>}
+                    </div>
 
-                      {/* Minimum quantity */}
-                      {matchingReq.min_quantity != null && matchingReq.min_quantity > 0 && (
-                        <p className="text-xs text-white">
-                          Minimum {matchingReq.min_quantity} piece
-                          {matchingReq.min_quantity > 1 ? 's' : ''} of evidence required
-                        </p>
-                      )}
+                    {/* Required evidence types */}
+                    <div className="space-y-2">
+                      {matchingReq.evidence_type_codes.map((code) => (
+                        <div
+                          key={code}
+                          className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]"
+                        >
+                          <div className="flex-1">
+                            <p className="text-[13px] text-white capitalize">
+                              {code.replace(/_/g, ' ')}
+                            </p>
+                          </div>
+                          <Pill tone="yellow">{matchingReq.quantity_required ?? 1}× required</Pill>
+                        </div>
+                      ))}
+                    </div>
 
-                      {/* Mandatory badge */}
-                      {matchingReq.is_mandatory && (
-                        <Badge className="bg-red-500/20 text-red-400 border-red-500/30">
-                          Mandatory
-                        </Badge>
-                      )}
-                    </CardContent>
-                  </Card>
+                    {/* Minimum quantity */}
+                    {matchingReq.min_quantity != null && matchingReq.min_quantity > 0 && (
+                      <p className="text-[12px] text-white/60">
+                        Minimum {matchingReq.min_quantity} piece
+                        {matchingReq.min_quantity > 1 ? 's' : ''} of evidence required
+                      </p>
+                    )}
+                  </div>
                 )}
 
                 {/* Guidance */}
                 {matchingReq?.guidance && (
-                  <Card className="bg-blue-500/10 border-blue-500/20">
-                    <CardContent className="p-4">
-                      <h4 className="text-sm font-medium text-blue-400 mb-2">Guidance</h4>
-                      <p className="text-sm text-white leading-relaxed">{matchingReq.guidance}</p>
-                    </CardContent>
-                  </Card>
+                  <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-5">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-blue-400 mb-2">
+                      Guidance
+                    </div>
+                    <p className="text-[13px] text-white leading-relaxed">{matchingReq.guidance}</p>
+                  </div>
                 )}
 
                 {/* Example Description */}
                 {matchingReq?.example_description && (
-                  <Card className="bg-white/5 border-elec-gray/40">
-                    <CardContent className="p-4">
-                      <h4 className="text-sm font-medium text-elec-yellow mb-2">
-                        Example Evidence
-                      </h4>
-                      <p className="text-sm text-white leading-relaxed">
-                        {matchingReq.example_description}
-                      </p>
-                    </CardContent>
-                  </Card>
+                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
+                      Example Evidence
+                    </div>
+                    <p className="text-[13px] text-white leading-relaxed">
+                      {matchingReq.example_description}
+                    </p>
+                  </div>
                 )}
 
                 {/* No requirements found */}
                 {!matchingReq && (
-                  <Card className="bg-white/5 border-elec-gray/40">
-                    <CardContent className="py-8 text-center">
-                      <FileText className="h-10 w-10 text-white mx-auto mb-3" />
-                      <p className="text-sm text-white">
-                        No specific evidence requirements have been defined for this criterion yet.
-                      </p>
-                      <p className="text-xs text-white mt-2">
-                        Use your professional judgement when assessing evidence against this
-                        criterion.
-                      </p>
-                    </CardContent>
-                  </Card>
+                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 text-center">
+                    <div className="text-[14px] font-medium text-white">
+                      No specific evidence requirements defined
+                    </div>
+                    <p className="mt-2 text-[12.5px] text-white/50 max-w-md mx-auto leading-relaxed">
+                      Use your professional judgement when assessing evidence against this criterion.
+                    </p>
+                  </div>
                 )}
               </>
             )}

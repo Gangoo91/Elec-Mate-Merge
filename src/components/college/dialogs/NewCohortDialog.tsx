@@ -19,7 +19,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import { UsersRound, Loader2 } from 'lucide-react';
 
 interface NewCohortDialogProps {
   open: boolean;
@@ -142,10 +141,7 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       <ResponsiveDialogContent className="sm:max-w-[550px]">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="flex items-center gap-2">
-            <UsersRound className="h-5 w-5 text-elec-yellow" />
-            Create New Cohort
-          </ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>Create new cohort</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>
             Set up a new cohort for a course. All fields marked with * are required.
           </ResponsiveDialogDescription>
@@ -390,14 +386,7 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
             className="h-11 touch-manipulation"
             onClick={handleSubmit}
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating...
-              </>
-            ) : (
-              'Create Cohort'
-            )}
+            {isSubmitting ? 'Creating…' : 'Create Cohort'}
           </Button>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>

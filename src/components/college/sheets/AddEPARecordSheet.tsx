@@ -1,10 +1,5 @@
 import { useState, useCallback } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -17,12 +12,26 @@ import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useToast } from '@/hooks/use-toast';
 import { useHapticFeedback, SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
 import type { EPAStatus } from '@/services/college';
-import { Award, Calendar, FileText, Loader2, Plus, User } from 'lucide-react';
 
 interface AddEPARecordSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+const inputClass =
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+const textareaClass =
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[120px] resize-none';
+
+const selectTriggerClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+
+const selectContentClass =
+  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
+
+const eyebrow =
+  'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
 
 export function AddEPARecordSheet({ open, onOpenChange }: AddEPARecordSheetProps) {
   const { data: students, isLoading: studentsLoading } = useCollegeStudents();
@@ -104,15 +113,14 @@ export function AddEPARecordSheet({ open, onOpenChange }: AddEPARecordSheetProps
     }
   };
 
-  // Sort students alphabetically for the dropdown
   const sortedStudents = (students ?? [])
     .filter((s) => s.status === 'Active')
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           <SuccessCheckmark show={showSuccess} />
 
           {/* Drag Handle */}
@@ -121,158 +129,130 @@ export function AddEPARecordSheet({ open, onOpenChange }: AddEPARecordSheetProps
           </div>
 
           {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-            <div className="flex items-start gap-4">
-              <div className="h-12 w-12 rounded-full bg-elec-yellow/10 flex items-center justify-center shrink-0">
-                <Award className="h-6 w-6 text-elec-yellow" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <SheetTitle className="text-xl text-left">Add EPA Record</SheetTitle>
-                <p className="text-sm text-white mt-0.5">
-                  Create a new End Point Assessment record
-                </p>
-              </div>
-            </div>
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className={eyebrow}>End Point Assessment</div>
+            <SheetTitle className="text-[20px] font-semibold text-white mt-1 text-left">
+              Add EPA record
+            </SheetTitle>
+            <p className="text-[12.5px] text-white/55 mt-1 text-left">
+              Create a new End Point Assessment record
+            </p>
           </SheetHeader>
 
           {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-            {/* Student Selector */}
-            <Card className="border-white/10">
-              <CardContent className="p-4 space-y-3">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <User className="h-4 w-4 text-elec-yellow" />
-                  Student
-                </h4>
-                <Select
-                  value={selectedStudentId}
-                  onValueChange={setSelectedStudentId}
-                  disabled={studentsLoading}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                    <SelectValue placeholder="Select a student" />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground max-h-[280px]">
-                    {sortedStudents.map((student) => (
-                      <SelectItem
-                        key={student.id}
-                        value={student.id}
-                        className="h-11 touch-manipulation"
-                      >
-                        {student.name}
-                      </SelectItem>
-                    ))}
-                    {sortedStudents.length === 0 && (
-                      <div className="p-4 text-center text-sm text-white">
-                        No active students found
-                      </div>
-                    )}
-                  </SelectContent>
-                </Select>
-              </CardContent>
-            </Card>
+          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
+            {/* Student */}
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Student</div>
+              <Select
+                value={selectedStudentId}
+                onValueChange={setSelectedStudentId}
+                disabled={studentsLoading}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select a student" />
+                </SelectTrigger>
+                <SelectContent className={`${selectContentClass} max-h-[280px]`}>
+                  {sortedStudents.map((student) => (
+                    <SelectItem
+                      key={student.id}
+                      value={student.id}
+                      className="h-11 touch-manipulation"
+                    >
+                      {student.name}
+                    </SelectItem>
+                  ))}
+                  {sortedStudents.length === 0 && (
+                    <div className="p-4 text-center text-[13px] text-white/50">
+                      No active students found
+                    </div>
+                  )}
+                </SelectContent>
+              </Select>
+            </div>
 
             {/* Initial Status */}
-            <Card className="border-white/10">
-              <CardContent className="p-4 space-y-3">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                  Initial Status
-                </h4>
-                <Select value={status} onValueChange={(val) => setStatus(val as EPAStatus)}>
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                    <SelectItem value="Not Started" className="h-11 touch-manipulation">
-                      Not Started
-                    </SelectItem>
-                    <SelectItem value="In Progress" className="h-11 touch-manipulation">
-                      In Progress
-                    </SelectItem>
-                    <SelectItem value="Pre-Gateway" className="h-11 touch-manipulation">
-                      Pre-Gateway
-                    </SelectItem>
-                    <SelectItem value="Gateway Ready" className="h-11 touch-manipulation">
-                      Gateway Ready
-                    </SelectItem>
-                    <SelectItem value="Complete" className="h-11 touch-manipulation">
-                      Complete
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </CardContent>
-            </Card>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Initial Status</div>
+              <Select value={status} onValueChange={(val) => setStatus(val as EPAStatus)}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="Not Started" className="h-11 touch-manipulation">
+                    Not Started
+                  </SelectItem>
+                  <SelectItem value="In Progress" className="h-11 touch-manipulation">
+                    In Progress
+                  </SelectItem>
+                  <SelectItem value="Pre-Gateway" className="h-11 touch-manipulation">
+                    Pre-Gateway
+                  </SelectItem>
+                  <SelectItem value="Gateway Ready" className="h-11 touch-manipulation">
+                    Gateway Ready
+                  </SelectItem>
+                  <SelectItem value="Complete" className="h-11 touch-manipulation">
+                    Complete
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
 
             {/* Dates */}
-            <Card className="border-white/10">
-              <CardContent className="p-4 space-y-4">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <Calendar className="h-4 w-4 text-elec-yellow" />
-                  Dates (Optional)
-                </h4>
-                <div className="space-y-3">
-                  <div>
-                    <Label className="text-xs text-white mb-1 block">Gateway Date</Label>
-                    <Input
-                      type="date"
-                      value={gatewayDate}
-                      onChange={(e) => setGatewayDate(e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-xs text-white mb-1 block">EPA Date</Label>
-                    <Input
-                      type="date"
-                      value={epaDate}
-                      onChange={(e) => setEpaDate(e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                    />
-                  </div>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
+              <div className={eyebrow}>Dates (Optional)</div>
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <div className="text-[11.5px] text-white/60">Gateway Date</div>
+                  <input
+                    type="date"
+                    value={gatewayDate}
+                    onChange={(e) => setGatewayDate(e.target.value)}
+                    className={inputClass}
+                  />
                 </div>
-              </CardContent>
-            </Card>
+                <div className="space-y-1.5">
+                  <div className="text-[11.5px] text-white/60">EPA Date</div>
+                  <input
+                    type="date"
+                    value={epaDate}
+                    onChange={(e) => setEpaDate(e.target.value)}
+                    className={inputClass}
+                  />
+                </div>
+              </div>
+            </div>
 
             {/* Notes */}
-            <Card className="border-white/10">
-              <CardContent className="p-4 space-y-3">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                  Notes
-                </h4>
-                <Textarea
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Add any initial notes about this EPA record..."
-                  className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                />
-              </CardContent>
-            </Card>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Notes</div>
+              <textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Add any initial notes about this EPA record..."
+                className={textareaClass}
+              />
+            </div>
           </div>
 
           {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation"
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
+            <button
+              type="button"
               onClick={() => handleOpenChange(false)}
               disabled={isSubmitting}
+              className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/80 gap-2"
+            </button>
+            <button
+              type="button"
               onClick={handleCreate}
               disabled={isSubmitting || !selectedStudentId}
+              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isSubmitting ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Plus className="h-4 w-4" />
-              )}
-              Create Record
-            </Button>
+              {isSubmitting ? 'Creating…' : 'Create Record →'}
+            </button>
           </SheetFooter>
         </div>
       </SheetContent>

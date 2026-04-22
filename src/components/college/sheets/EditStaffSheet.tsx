@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStaff, StaffRole } from '@/contexts/CollegeSupabaseContext';
 import { useHapticFeedback, SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
@@ -13,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Edit, Loader2, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface EditStaffSheetProps {
@@ -45,6 +41,18 @@ const SPECIALISATIONS = [
   'Emergency Lighting',
   'PAT Testing',
 ];
+
+const inputClass =
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+const selectTriggerClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+
+const selectContentClass =
+  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const fieldLabel = 'text-[11.5px] text-white/60';
 
 export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProps) {
   const { updateStaff } = useCollegeSupabase();
@@ -118,7 +126,6 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
         status: formData.status,
       });
 
-      // Show success animation
       setShowSuccess(true);
       triggerSuccess(true);
 
@@ -147,82 +154,68 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-            <SheetTitle className="text-xl text-left flex items-center gap-2">
-              <Edit className="h-5 w-5 text-info" />
-              Edit Staff Member
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className={eyebrow}>Edit Staff Member</div>
+            <SheetTitle className="text-[20px] font-semibold text-white mt-1 text-left">
+              {staff.name}
             </SheetTitle>
-            <p className="text-sm text-white text-left">Update details for {staff.name}</p>
+            <p className="text-[12.5px] text-white/55 mt-1 text-left">
+              Update details for {staff.name}
+            </p>
           </SheetHeader>
 
-          {/* Scrollable Form */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-            {/* Personal Details */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-info" />
-                Personal Details
-              </h4>
-              <div>
-                <Label htmlFor="staff-name">Full Name *</Label>
-                <Input
-                  id="staff-name"
+          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Personal Details</div>
+              <div className="space-y-1.5">
+                <div className={fieldLabel}>Full Name *</div>
+                <input
                   value={formData.name}
                   onChange={(e) => handleChange('name', e.target.value)}
-                  className="h-11 touch-manipulation"
-                  required
+                  className={inputClass}
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="staff-email">Email *</Label>
-                  <Input
-                    id="staff-email"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Email *</div>
+                  <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    className="h-11 touch-manipulation"
-                    required
+                    className={inputClass}
                   />
                 </div>
-                <div>
-                  <Label htmlFor="staff-phone">Phone</Label>
-                  <Input
-                    id="staff-phone"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Phone</div>
+                  <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                   />
                 </div>
               </div>
             </div>
 
-            {/* Role & Department */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-info" />
-                Role & Department
-              </h4>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Role & Department</div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="staff-role">Role *</Label>
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Role *</div>
                   <Select
                     value={formData.role}
                     onValueChange={(value) => handleChange('role', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       <SelectItem value="tutor">Tutor</SelectItem>
                       <SelectItem value="head_of_department">Head of Department</SelectItem>
                       <SelectItem value="support">Support Staff</SelectItem>
@@ -230,16 +223,16 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
                     </SelectContent>
                   </Select>
                 </div>
-                <div>
-                  <Label htmlFor="staff-dept">Department</Label>
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Department</div>
                   <Select
                     value={formData.department}
                     onValueChange={(value) => handleChange('department', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue placeholder="Select department" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       {DEPARTMENTS.map((dept) => (
                         <SelectItem key={dept} value={dept}>
                           {dept}
@@ -249,16 +242,16 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
                   </Select>
                 </div>
               </div>
-              <div>
-                <Label htmlFor="staff-status">Status</Label>
+              <div className="space-y-1.5">
+                <div className={fieldLabel}>Status</div>
                 <Select
                   value={formData.status}
                   onValueChange={(value) => handleChange('status', value)}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     <SelectItem value="Active">Active</SelectItem>
                     <SelectItem value="On Leave">On Leave</SelectItem>
                     <SelectItem value="Archived">Archived</SelectItem>
@@ -267,115 +260,97 @@ export function EditStaffSheet({ staff, open, onOpenChange }: EditStaffSheetProp
               </div>
             </div>
 
-            {/* Qualifications & Hours */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-info" />
-                Qualifications
-              </h4>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Qualifications</div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="staff-max-hours">Max Hours/Week</Label>
-                  <Input
-                    id="staff-max-hours"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Max Hours/Week</div>
+                  <input
                     type="number"
                     min="0"
                     max="40"
                     value={formData.max_teaching_hours}
                     onChange={(e) => handleChange('max_teaching_hours', e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                     placeholder="35"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="staff-teaching">Teaching Qual</Label>
-                  <Input
-                    id="staff-teaching"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Teaching Qual</div>
+                  <input
                     value={formData.teaching_qual}
                     onChange={(e) => handleChange('teaching_qual', e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                     placeholder="PGCE, AET"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="staff-assessor">Assessor Qual</Label>
-                  <Input
-                    id="staff-assessor"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Assessor Qual</div>
+                  <input
                     value={formData.assessor_qual}
                     onChange={(e) => handleChange('assessor_qual', e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                     placeholder="L3 TAQA"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="staff-iqa">IQA Qual</Label>
-                  <Input
-                    id="staff-iqa"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>IQA Qual</div>
+                  <input
                     value={formData.iqa_qual}
                     onChange={(e) => handleChange('iqa_qual', e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                     placeholder="L4 IQA"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Specialisations */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-info" />
-                Specialisations
-              </h4>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Specialisations</div>
               <div className="flex flex-wrap gap-2">
-                {SPECIALISATIONS.map((spec) => (
-                  <Button
-                    key={spec}
-                    type="button"
-                    variant={formData.specialisations.includes(spec) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`h-11 touch-manipulation ${formData.specialisations.includes(spec) ? 'bg-info hover:bg-info/90 text-white' : ''}`}
-                    onClick={() => toggleSpecialisation(spec)}
-                  >
-                    {spec}
-                  </Button>
-                ))}
+                {SPECIALISATIONS.map((spec) => {
+                  const active = formData.specialisations.includes(spec);
+                  return (
+                    <button
+                      key={spec}
+                      type="button"
+                      onClick={() => toggleSpecialisation(spec)}
+                      className={`h-9 px-3.5 rounded-full text-[12px] font-medium touch-manipulation transition-colors border ${
+                        active
+                          ? 'bg-elec-yellow text-black border-elec-yellow'
+                          : 'bg-[hsl(0_0%_9%)] text-white/70 border-white/[0.08] hover:border-white/20'
+                      }`}
+                    >
+                      {spec}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
 
-          {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation"
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
+            <button
+              type="button"
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
+              className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 touch-manipulation gap-2"
+            </button>
+            <button
+              type="button"
               onClick={handleSubmit}
               disabled={isSubmitting || !formData.name || !formData.email}
+              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  Save Changes
-                </>
-              )}
-            </Button>
+              {isSubmitting ? 'Saving…' : 'Save Changes →'}
+            </button>
           </SheetFooter>
         </div>
 
-        {/* Success overlay */}
         <SuccessCheckmark show={showSuccess} />
       </SheetContent>
     </Sheet>

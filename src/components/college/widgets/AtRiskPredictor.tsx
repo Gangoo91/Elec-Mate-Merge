@@ -3,18 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import {
-  AlertTriangle,
-  TrendingDown,
-  Clock,
-  Target,
-  ChevronRight,
-  Brain,
-  Sparkles,
-  UserX,
-  Calendar,
-  BookOpen,
-} from 'lucide-react';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
@@ -259,212 +247,217 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
 
   if (compact) {
     return (
-      <Card className="relative overflow-hidden glass-premium hover:border-warning/30 transition-all duration-300">
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500" />
-        <div className="absolute -top-8 -right-8 w-24 h-24 bg-orange-500/[0.04] rounded-full blur-3xl pointer-events-none" />
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5">
-                <Brain className="h-3.5 w-3.5 text-warning" />
+      <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl hover:bg-[hsl(0_0%_14%)] transition-colors">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500/70 via-amber-400/70 to-orange-500/70" />
+        <div className="p-5 sm:p-6">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                At-Risk · AI
               </div>
-              <span>At-Risk Predictor</span>
-              <Badge className="bg-elec-yellow/20 text-elec-yellow text-[10px]">
-                <Sparkles className="h-2.5 w-2.5 mr-0.5" />
-                AI
-              </Badge>
+              <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">
+                At-risk predictor
+              </h3>
             </div>
-            <span className="text-lg font-bold text-orange-500">{atRiskStudents.length}</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="flex gap-2 mb-3">
-            {riskCounts.critical > 0 && (
-              <Badge className={getRiskColor('critical')}>{riskCounts.critical} Critical</Badge>
-            )}
-            {riskCounts.high > 0 && (
-              <Badge className={getRiskColor('high')}>{riskCounts.high} High</Badge>
-            )}
+            <div className="text-right shrink-0">
+              <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">
+                {atRiskStudents.length}
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/40">
+                flagged
+              </div>
+            </div>
           </div>
-          {filteredStudents.slice(0, 2).map((student) => (
-            <div
-              key={student.id}
-              className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
-              onClick={() => onNavigate?.('progresstracking')}
-            >
-              <div className="min-w-0">
-                <p className="text-sm font-medium truncate">{student.name}</p>
-                <p className="text-xs text-white">{student.riskFactors[0]?.label}</p>
-              </div>
-              <Badge className={getRiskColor(student.riskLevel)}>{student.riskScore}%</Badge>
+
+          {/* Severity pills */}
+          {(riskCounts.critical > 0 || riskCounts.high > 0 || riskCounts.medium > 0) && (
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {riskCounts.critical > 0 && (
+                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 tabular-nums">
+                  {riskCounts.critical} critical
+                </span>
+              )}
+              {riskCounts.high > 0 && (
+                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20 tabular-nums">
+                  {riskCounts.high} high
+                </span>
+              )}
+              {riskCounts.medium > 0 && (
+                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 tabular-nums">
+                  {riskCounts.medium} medium
+                </span>
+              )}
             </div>
-          ))}
-          {atRiskStudents.length > 2 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="w-full mt-2 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
-              onClick={() => onNavigate?.('progresstracking')}
-            >
-              View all {atRiskStudents.length} at-risk students
-              <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
           )}
-        </CardContent>
-      </Card>
+
+          {/* Top students */}
+          {filteredStudents.length > 0 && (
+            <div className="mt-5 divide-y divide-white/[0.06] border-t border-white/[0.06]">
+              {filteredStudents.slice(0, 2).map((student) => (
+                <button
+                  key={student.id}
+                  onClick={() => onNavigate?.('progresstracking')}
+                  className="w-full flex items-center justify-between gap-3 py-3 hover:bg-white/[0.02] transition-colors text-left touch-manipulation"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-medium text-white truncate">{student.name}</div>
+                    <div className="mt-0.5 text-[11px] text-white/50 truncate">
+                      {student.riskFactors[0]?.label}
+                    </div>
+                  </div>
+                  <span className="text-sm font-semibold tabular-nums text-white shrink-0">
+                    {student.riskScore}%
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* CTA */}
+          {atRiskStudents.length > 0 && (
+            <button
+              onClick={() => onNavigate?.('progresstracking')}
+              className="mt-4 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+            >
+              View all {atRiskStudents.length} at-risk students →
+            </button>
+          )}
+
+          {atRiskStudents.length === 0 && (
+            <div className="mt-5 pt-4 border-t border-white/[0.06] text-[12px] text-white/50">
+              No at-risk students detected — all learners on track.
+            </div>
+          )}
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="relative overflow-hidden glass-premium hover:border-warning/30 transition-all duration-300">
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-orange-500 via-amber-400 to-orange-500" />
-      <div className="absolute -top-8 -right-8 w-24 h-24 bg-orange-500/[0.04] rounded-full blur-3xl pointer-events-none" />
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-xl bg-gradient-to-br from-warning/20 to-warning/5 border border-warning/20 shadow-lg shadow-warning/5">
-              <Brain className="h-4 w-4 text-warning" />
+    <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-orange-500/70 via-amber-400/70 to-orange-500/70" />
+      <div className="p-5 sm:p-6">
+        {/* Header */}
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              At-Risk · AI
             </div>
-            <span>At-Risk Predictor</span>
-            <Badge className="bg-elec-yellow/20 text-elec-yellow">
-              <Sparkles className="h-3 w-3 mr-1" />
-              AI-Powered
-            </Badge>
+            <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+              At-risk predictor
+            </h3>
           </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-white">Total at risk:</span>
-            <span className="text-2xl font-bold text-orange-500">{atRiskStudents.length}</span>
+          <div className="text-right shrink-0">
+            <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">
+              {atRiskStudents.length}
+            </div>
+            <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/40">
+              total flagged
+            </div>
           </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {/* Risk Level Summary */}
-        <div className="grid grid-cols-4 gap-2 mb-4">
-          <button
-            onClick={() => setSelectedFilter(selectedFilter === 'critical' ? 'all' : 'critical')}
-            className={`p-3 rounded-lg border transition-all ${
-              selectedFilter === 'critical'
-                ? 'border-red-500 bg-red-500/10'
-                : 'border-white/10 hover:border-red-500/50'
-            }`}
-          >
-            <p className="text-2xl font-bold text-red-500">{riskCounts.critical}</p>
-            <p className="text-xs text-white">Critical</p>
-          </button>
-          <button
-            onClick={() => setSelectedFilter(selectedFilter === 'high' ? 'all' : 'high')}
-            className={`p-3 rounded-lg border transition-all ${
-              selectedFilter === 'high'
-                ? 'border-orange-500 bg-orange-500/10'
-                : 'border-white/10 hover:border-orange-500/50'
-            }`}
-          >
-            <p className="text-2xl font-bold text-orange-500">{riskCounts.high}</p>
-            <p className="text-xs text-white">High</p>
-          </button>
-          <button
-            onClick={() => setSelectedFilter(selectedFilter === 'medium' ? 'all' : 'medium')}
-            className={`p-3 rounded-lg border transition-all ${
-              selectedFilter === 'medium'
-                ? 'border-amber-500 bg-amber-500/10'
-                : 'border-white/10 hover:border-amber-500/50'
-            }`}
-          >
-            <p className="text-2xl font-bold text-amber-500">{riskCounts.medium}</p>
-            <p className="text-xs text-white">Medium</p>
-          </button>
-          <button
-            onClick={() => setSelectedFilter('all')}
-            className={`p-3 rounded-lg border transition-all ${
-              selectedFilter === 'all'
-                ? 'border-elec-yellow bg-elec-yellow/10'
-                : 'border-white/10 hover:border-elec-yellow/50'
-            }`}
-          >
-            <p className="text-2xl font-bold text-elec-yellow">{atRiskStudents.length}</p>
-            <p className="text-xs text-white">All</p>
-          </button>
+        </div>
+
+        {/* Risk Level Filter */}
+        <div className="mt-5 grid grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
+          {[
+            { key: 'critical' as const, value: riskCounts.critical, label: 'Critical', color: 'text-red-400' },
+            { key: 'high' as const, value: riskCounts.high, label: 'High', color: 'text-orange-400' },
+            { key: 'medium' as const, value: riskCounts.medium, label: 'Medium', color: 'text-amber-400' },
+            { key: 'all' as const, value: atRiskStudents.length, label: 'All', color: 'text-elec-yellow' },
+          ].map((f) => (
+            <button
+              key={f.key}
+              onClick={() => setSelectedFilter(selectedFilter === f.key ? 'all' : f.key)}
+              className={`bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-3 text-center ${selectedFilter === f.key ? 'bg-[hsl(0_0%_15%)]' : ''}`}
+            >
+              <div className={`text-2xl font-semibold tabular-nums ${f.color}`}>{f.value}</div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/50">
+                {f.label}
+              </div>
+            </button>
+          ))}
         </div>
 
         {/* Student List */}
-        <div className="space-y-3 max-h-[400px] overflow-y-auto">
+        <div className="mt-5 space-y-3 max-h-[480px] overflow-y-auto">
           {filteredStudents.map((student) => (
             <div
               key={student.id}
-              className="p-4 rounded-lg border border-white/10 bg-white/[0.03] hover:border-elec-yellow/30 transition-all cursor-pointer"
+              className="p-4 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] hover:bg-[hsl(0_0%_13%)] transition-colors cursor-pointer"
               onClick={() => onNavigate?.('progresstracking')}
             >
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h4 className="font-semibold">{student.name}</h4>
-                    <Badge className={getRiskColor(student.riskLevel)}>
-                      {student.riskLevel.toUpperCase()}
-                    </Badge>
-                  </div>
-                  <p className="text-sm text-white">{student.cohort}</p>
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="min-w-0">
+                  <h4 className="text-[15px] font-medium text-white truncate">{student.name}</h4>
+                  <p className="mt-0.5 text-[11.5px] text-white/50 truncate">{student.cohort}</p>
                 </div>
-                <div className="text-right">
-                  <p className="text-2xl font-bold text-white">{student.riskScore}%</p>
-                  <p className="text-xs text-white">Risk Score</p>
+                <div className="text-right shrink-0">
+                  <p className="text-xl font-semibold tabular-nums text-white leading-none">
+                    {student.riskScore}%
+                  </p>
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/40">Risk</p>
                 </div>
               </div>
 
               {/* Risk Factors */}
-              <div className="flex flex-wrap gap-2 mb-3">
-                {student.riskFactors.map((factor, idx) => {
-                  const Icon = getRiskIcon(factor.type);
-                  return (
-                    <div
-                      key={idx}
-                      className={`flex items-center gap-1.5 px-2 py-1 rounded text-xs ${getRiskColor(factor.severity)}`}
-                      title={factor.description}
-                    >
-                      <Icon className="h-3 w-3" />
-                      {factor.label}
-                    </div>
-                  );
-                })}
+              <div className="flex flex-wrap gap-1">
+                {student.riskFactors.map((factor, idx) => (
+                  <span
+                    key={idx}
+                    className={`text-[11px] font-medium px-2 py-0.5 rounded-full border tabular-nums ${getRiskColor(factor.severity)}`}
+                    title={factor.description}
+                  >
+                    {factor.label}
+                  </span>
+                ))}
               </div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-2 gap-4 mb-3">
+              <div className="mt-3 grid grid-cols-2 gap-4">
                 <div>
-                  <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-white">Attendance</span>
+                  <div className="flex items-baseline justify-between text-[11px]">
+                    <span className="text-white/50 uppercase tracking-[0.12em]">Attendance</span>
                     <span
-                      className={student.attendance < 85 ? 'text-orange-500' : 'text-white'}
+                      className={`font-medium tabular-nums ${student.attendance < 85 ? 'text-orange-400' : 'text-white'}`}
                     >
                       {student.attendance}%
                     </span>
                   </div>
-                  <Progress value={student.attendance} className="h-1.5" />
+                  <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-emerald-400/80 rounded-full"
+                      style={{ width: `${student.attendance}%` }}
+                    />
+                  </div>
                 </div>
                 <div>
-                  <div className="flex items-center justify-between text-xs mb-1">
-                    <span className="text-white">Progress</span>
+                  <div className="flex items-baseline justify-between text-[11px]">
+                    <span className="text-white/50 uppercase tracking-[0.12em]">Progress</span>
                     <span
-                      className={
-                        student.progressPercentage < 50 ? 'text-orange-500' : 'text-white'
-                      }
+                      className={`font-medium tabular-nums ${student.progressPercentage < 50 ? 'text-orange-400' : 'text-white'}`}
                     >
                       {student.progressPercentage}%
                     </span>
                   </div>
-                  <Progress value={student.progressPercentage} className="h-1.5" />
+                  <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-elec-yellow/80 rounded-full"
+                      style={{ width: `${student.progressPercentage}%` }}
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* Recommended Actions */}
-              <div className="border-t border-white/10 pt-3">
-                <p className="text-xs font-medium text-white mb-2 flex items-center gap-1">
-                  <Sparkles className="h-3 w-3 text-elec-yellow" />
+              <div className="mt-3 pt-3 border-t border-white/[0.06]">
+                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40 mb-2">
                   AI Recommended Actions
                 </p>
-                <ul className="space-y-1">
+                <ul className="space-y-1.5">
                   {student.recommendedActions.slice(0, 2).map((action, idx) => (
-                    <li key={idx} className="text-xs text-white flex items-start gap-2">
-                      <ChevronRight className="h-3 w-3 text-elec-yellow mt-0.5 shrink-0" />
+                    <li key={idx} className="text-[12px] text-white/70 flex items-start gap-2">
+                      <span className="text-elec-yellow mt-0.5 shrink-0">→</span>
                       {action}
                     </li>
                   ))}
@@ -474,14 +467,13 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           ))}
 
           {filteredStudents.length === 0 && (
-            <div className="text-center py-8 text-white">
-              <Brain className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>No at-risk students detected</p>
-              <p className="text-sm mt-1">All students are on track!</p>
+            <div className="text-center py-10 text-white/50">
+              <p className="text-[14px] font-medium text-white">No at-risk students detected</p>
+              <p className="text-[12px] mt-1 text-white/50">All learners on track.</p>
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

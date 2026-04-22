@@ -1,29 +1,14 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import {
-  CheckCircle2,
-  Clock,
-  AlertCircle,
-  FileText,
-  Brain,
-  Wrench,
-  Heart,
-  ChevronRight,
-  Target,
-} from 'lucide-react';
 import { CoverageMatrixEntry, KSBMapping } from '@/hooks/college/useCollegePortfolios';
+import {
+  SectionHeader,
+  StatStrip,
+  ListCard,
+  Pill,
+  EmptyState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface CoverageMatrixViewProps {
   coverageMatrix: CoverageMatrixEntry[];
@@ -42,12 +27,10 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState('categories');
 
-  // Group KSBs by type
   const knowledgeKSBs = ksbMappings.filter((k) => k.ksbType === 'knowledge');
   const skillKSBs = ksbMappings.filter((k) => k.ksbType === 'skill');
   const behaviourKSBs = ksbMappings.filter((k) => k.ksbType === 'behaviour');
 
-  // Calculate stats
   const totalCategories = coverageMatrix.length;
   const completedCategories = coverageMatrix.filter((c) => c.status === 'complete').length;
   const inProgressCategories = coverageMatrix.filter((c) => c.status === 'in_progress').length;
@@ -55,288 +38,251 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
 
   const totalKSBs = ksbMappings.length;
   const verifiedKSBs = ksbMappings.filter((k) => k.mappingStatus === 'verified').length;
-  const partialKSBs = ksbMappings.filter((k) => k.mappingStatus === 'partial').length;
 
-  const getStatusIcon = (status: string) => {
+  const getStatusTone = (status: string): Tone => {
     switch (status) {
       case 'complete':
-        return <CheckCircle2 className="h-4 w-4 text-green-500" />;
+        return 'green';
       case 'in_progress':
-        return <Clock className="h-4 w-4 text-amber-500" />;
+        return 'amber';
       default:
-        return <AlertCircle className="h-4 w-4 text-gray-400" />;
+        return 'blue';
     }
   };
 
-  const getStatusBadge = (status: string) => {
+  const getStatusLabel = (status: string) => {
     switch (status) {
       case 'complete':
-        return (
-          <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Complete</Badge>
-        );
+        return 'Complete';
       case 'in_progress':
-        return (
-          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">In Progress</Badge>
-        );
+        return 'In Progress';
       default:
-        return (
-          <Badge variant="outline" className="text-gray-400">
-            Not Started
-          </Badge>
-        );
+        return 'Not Started';
     }
   };
 
-  const getKSBIcon = (type: string) => {
-    switch (type) {
-      case 'knowledge':
-        return <Brain className="h-4 w-4 text-blue-400" />;
-      case 'skill':
-        return <Wrench className="h-4 w-4 text-green-400" />;
-      case 'behaviour':
-        return <Heart className="h-4 w-4 text-pink-400" />;
+  const getKSBMappingTone = (status: string): Tone => {
+    switch (status) {
+      case 'verified':
+        return 'green';
+      case 'partial':
+        return 'amber';
       default:
-        return <Target className="h-4 w-4" />;
+        return 'blue';
     }
   };
 
   const KSBSection = ({
     title,
     items,
-    icon,
+    tone,
   }: {
     title: string;
     items: KSBMapping[];
-    icon: React.ReactNode;
+    tone: Tone;
   }) => {
     const verified = items.filter((k) => k.mappingStatus === 'verified').length;
     const progress = items.length > 0 ? Math.round((verified / items.length) * 100) : 0;
 
     return (
-      <Card className="bg-white/5 border-elec-gray/40">
-        <CardHeader className="pb-2">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              {icon}
-              <CardTitle className="text-sm font-medium">{title}</CardTitle>
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <span
+              className={
+                tone === 'blue'
+                  ? 'inline-block h-1.5 w-1.5 rounded-full bg-blue-400'
+                  : tone === 'green'
+                    ? 'inline-block h-1.5 w-1.5 rounded-full bg-green-400'
+                    : 'inline-block h-1.5 w-1.5 rounded-full bg-purple-400'
+              }
+            />
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              {title}
             </div>
-            <Badge variant="outline">
-              {verified}/{items.length}
-            </Badge>
           </div>
-          <Progress value={progress} className="h-1.5 mt-2" />
-        </CardHeader>
-        <CardContent className="pt-2">
-          <div className="space-y-2 max-h-64 overflow-y-auto">
-            {items.map((ksb) => (
-              <div
-                key={ksb.id}
-                className="flex items-center justify-between p-2 rounded-lg bg-white/5 text-sm"
-              >
-                <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <Badge variant="outline" className="shrink-0 text-xs">
-                    {ksb.ksbCode}
-                  </Badge>
-                  <span className="truncate text-white">{ksb.ksbTitle}</span>
-                </div>
-                <div className="flex items-center gap-2 ml-2">
-                  {ksb.mappingStatus === 'verified' ? (
-                    <CheckCircle2 className="h-4 w-4 text-green-500" />
-                  ) : ksb.mappingStatus === 'partial' ? (
-                    <Clock className="h-4 w-4 text-amber-500" />
-                  ) : (
-                    <AlertCircle className="h-4 w-4 text-gray-400" />
-                  )}
-                </div>
+          <Pill tone={tone}>
+            {verified}/{items.length}
+          </Pill>
+        </div>
+
+        <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow/80 rounded-full"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+
+        <div className="mt-4 space-y-1.5 max-h-64 overflow-y-auto">
+          {items.map((ksb) => (
+            <div
+              key={ksb.id}
+              className="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]"
+            >
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <Pill tone="indigo">{ksb.ksbCode}</Pill>
+                <span className="text-[13px] text-white/70 truncate">{ksb.ksbTitle}</span>
               </div>
-            ))}
-            {items.length === 0 && (
-              <p className="text-center text-white py-4 text-sm">
-                No {title.toLowerCase()} mapped yet
-              </p>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+              <Pill tone={getKSBMappingTone(ksb.mappingStatus)}>
+                {ksb.mappingStatus === 'verified'
+                  ? 'Verified'
+                  : ksb.mappingStatus === 'partial'
+                    ? 'Partial'
+                    : 'Pending'}
+              </Pill>
+            </div>
+          ))}
+          {items.length === 0 && (
+            <p className="text-center text-white/45 py-4 text-[12.5px]">
+              No {title.toLowerCase()} mapped yet
+            </p>
+          )}
+        </div>
+      </div>
     );
   };
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Student Header */}
       {(studentName || qualificationTitle) && (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-          <div>
-            {studentName && <h3 className="text-lg font-semibold">{studentName}</h3>}
-            {qualificationTitle && <p className="text-sm text-white">{qualificationTitle}</p>}
-          </div>
+        <div>
+          {studentName && (
+            <h3 className="text-xl font-semibold text-white tracking-tight">{studentName}</h3>
+          )}
+          {qualificationTitle && (
+            <p className="mt-1 text-[13px] text-white/55">{qualificationTitle}</p>
+          )}
         </div>
       )}
 
-      {/* Summary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-blue-500/10">
-                <FileText className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Categories</p>
-                <p className="text-xl font-bold">
-                  {completedCategories}/{totalCategories}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Stats */}
+      <StatStrip
+        stats={[
+          {
+            value: `${completedCategories}/${totalCategories}`,
+            label: 'Categories',
+            tone: 'blue',
+          },
+          {
+            value: `${verifiedKSBs}/${totalKSBs}`,
+            label: 'KSBs Verified',
+            tone: 'green',
+          },
+          { value: inProgressCategories, label: 'In Progress', tone: 'amber' },
+          { value: notStartedCategories, label: 'Not Started' },
+        ]}
+      />
 
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-green-500/10">
-                <CheckCircle2 className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">KSBs Verified</p>
-                <p className="text-xl font-bold">
-                  {verifiedKSBs}/{totalKSBs}
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-amber-500/10">
-                <Clock className="h-5 w-5 text-amber-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">In Progress</p>
-                <p className="text-xl font-bold">{inProgressCategories}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-gray-500/10">
-                <AlertCircle className="h-5 w-5 text-gray-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Not Started</p>
-                <p className="text-xl font-bold">{notStartedCategories}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Main Content Tabs */}
+      {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="bg-white/5 border border-elec-gray/40">
-          <TabsTrigger value="categories">Unit Coverage</TabsTrigger>
-          <TabsTrigger value="ksbs">KSB Mapping</TabsTrigger>
+        <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
+          <TabsTrigger
+            value="categories"
+            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+          >
+            Unit Coverage
+          </TabsTrigger>
+          <TabsTrigger
+            value="ksbs"
+            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+          >
+            KSB Mapping
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="categories" className="mt-4">
-          <Card className="bg-white/5 border-elec-gray/40">
-            <CardHeader>
-              <CardTitle className="text-base">Qualification Unit Coverage</CardTitle>
-              <CardDescription>
-                Track evidence coverage across all qualification units
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow className="border-elec-gray/40">
-                      <TableHead className="text-white">Category</TableHead>
-                      <TableHead className="text-white text-center">Evidence</TableHead>
-                      <TableHead className="text-white text-center">Verified</TableHead>
-                      <TableHead className="text-white">Progress</TableHead>
-                      <TableHead className="text-white text-center">Status</TableHead>
-                      <TableHead className="text-white w-10"></TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {coverageMatrix.map((entry) => (
-                      <TableRow
-                        key={entry.id}
-                        className="border-elec-gray/40 hover:bg-white/5 cursor-pointer"
-                        onClick={() => onCategoryClick?.(entry.categoryId)}
-                      >
-                        <TableCell className="font-medium">{entry.categoryName}</TableCell>
-                        <TableCell className="text-center">
-                          {entry.completedEntries}/{entry.requiredEntries}
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {entry.verifiedCriteria}/{entry.totalCriteria}
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center gap-2">
-                            <Progress value={entry.completionPercentage} className="h-2 w-20" />
-                            <span className="text-xs text-white">
-                              {entry.completionPercentage}%
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className="text-center">
-                          {getStatusBadge(entry.status)}
-                        </TableCell>
-                        <TableCell>
-                          {onCategoryClick && <ChevronRight className="h-4 w-4 text-white" />}
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                    {coverageMatrix.length === 0 && (
-                      <TableRow>
-                        <TableCell colSpan={6} className="text-center text-white py-8">
-                          No coverage data available
-                        </TableCell>
-                      </TableRow>
+        <TabsContent value="categories" className="mt-6 space-y-4">
+          <SectionHeader
+            eyebrow="Units"
+            title="Qualification Unit Coverage"
+          />
+          <p className="text-[13px] text-white/55">
+            Track evidence coverage across all qualification units
+          </p>
+
+          {coverageMatrix.length === 0 ? (
+            <EmptyState
+              title="No coverage data available"
+              description="Coverage will appear here once evidence is submitted against units."
+            />
+          ) : (
+            <ListCard>
+              {coverageMatrix.map((entry) => {
+                const Inner = (
+                  <div className="px-5 sm:px-6 py-4 sm:py-5 flex items-center gap-4 w-full">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[15px] font-medium text-white truncate">
+                        {entry.categoryName}
+                      </div>
+                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px] text-white/50">
+                        <span>
+                          Evidence{' '}
+                          <span className="text-white/70 tabular-nums">
+                            {entry.completedEntries}/{entry.requiredEntries}
+                          </span>
+                        </span>
+                        <span>
+                          Verified{' '}
+                          <span className="text-white/70 tabular-nums">
+                            {entry.verifiedCriteria}/{entry.totalCriteria}
+                          </span>
+                        </span>
+                      </div>
+                      <div className="mt-2 flex items-center gap-2">
+                        <div className="flex-1 h-1 bg-white/[0.06] rounded-full overflow-hidden max-w-[180px]">
+                          <div
+                            className="h-full bg-elec-yellow/80 rounded-full"
+                            style={{ width: `${entry.completionPercentage}%` }}
+                          />
+                        </div>
+                        <span className="text-[11.5px] text-white/55 tabular-nums">
+                          {entry.completionPercentage}%
+                        </span>
+                      </div>
+                    </div>
+                    <Pill tone={getStatusTone(entry.status)} className="shrink-0">
+                      {getStatusLabel(entry.status)}
+                    </Pill>
+                    {onCategoryClick && (
+                      <span className="text-[13px] font-medium text-elec-yellow/90 shrink-0">
+                        →
+                      </span>
                     )}
-                  </TableBody>
-                </Table>
-              </div>
-            </CardContent>
-          </Card>
+                  </div>
+                );
+
+                return onCategoryClick ? (
+                  <button
+                    key={entry.id}
+                    onClick={() => onCategoryClick(entry.categoryId)}
+                    className="w-full text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                  >
+                    {Inner}
+                  </button>
+                ) : (
+                  <div key={entry.id} className="w-full">
+                    {Inner}
+                  </div>
+                );
+              })}
+            </ListCard>
+          )}
         </TabsContent>
 
-        <TabsContent value="ksbs" className="mt-4">
+        <TabsContent value="ksbs" className="mt-6 space-y-4">
+          <SectionHeader eyebrow="Standards" title="KSB Mapping" />
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <KSBSection
-              title="Knowledge"
-              items={knowledgeKSBs}
-              icon={<Brain className="h-5 w-5 text-blue-400" />}
-            />
-            <KSBSection
-              title="Skills"
-              items={skillKSBs}
-              icon={<Wrench className="h-5 w-5 text-green-400" />}
-            />
-            <KSBSection
-              title="Behaviours"
-              items={behaviourKSBs}
-              icon={<Heart className="h-5 w-5 text-pink-400" />}
-            />
+            <KSBSection title="Knowledge" items={knowledgeKSBs} tone="blue" />
+            <KSBSection title="Skills" items={skillKSBs} tone="green" />
+            <KSBSection title="Behaviours" items={behaviourKSBs} tone="purple" />
           </div>
 
           {ksbMappings.length === 0 && (
-            <Card className="bg-white/5 border-elec-gray/40 mt-4">
-              <CardContent className="p-8 text-center">
-                <Target className="h-12 w-12 text-white mx-auto mb-4" />
-                <p className="text-white">No KSB mappings available yet</p>
-                <p className="text-sm text-white mt-1">
-                  KSBs will appear here once evidence is mapped to apprenticeship standards
-                </p>
-              </CardContent>
-            </Card>
+            <EmptyState
+              title="No KSB mappings available yet"
+              description="KSBs will appear here once evidence is mapped to apprenticeship standards"
+            />
           )}
         </TabsContent>
       </Tabs>

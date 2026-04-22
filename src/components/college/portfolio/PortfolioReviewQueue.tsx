@@ -1,38 +1,24 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import {
-  Clock,
-  AlertTriangle,
-  CheckCircle,
-  Search,
-  Filter,
-  MoreVertical,
-  Eye,
-  MessageSquare,
-  FileCheck,
-  RefreshCw,
-  Loader2,
-} from 'lucide-react';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useSubmissionQueue, SubmissionQueueItem } from '@/hooks/college/usePortfolioSubmissions';
+import {
+  SectionHeader,
+  StatStrip,
+  ListCard,
+  Pill,
+  EmptyState,
+  LoadingState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface PortfolioReviewQueueProps {
   onViewSubmission: (submissionId: string) => void;
@@ -45,295 +31,197 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
 }) => {
   const { submissions, stats, isLoading, refetch } = useSubmissionQueue();
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterPriority, setFilterPriority] = useState<string | null>(null);
+  const [filterPriority, setFilterPriority] = useState<string>('all');
 
   const filteredSubmissions = submissions.filter((sub) => {
     const matchesSearch =
       searchTerm === '' ||
       sub.studentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       sub.categoryName.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesPriority = !filterPriority || sub.priority === filterPriority;
+    const matchesPriority = filterPriority === 'all' || sub.priority === filterPriority;
     return matchesSearch && matchesPriority;
   });
 
-  const getPriorityBadge = (priority: string) => {
+  const getPriorityTone = (priority: string): Tone => {
     switch (priority) {
       case 'high':
-        return <Badge className="bg-red-500/10 text-red-500 border-red-500/20">High</Badge>;
+        return 'red';
       case 'medium':
-        return <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">Medium</Badge>;
+        return 'amber';
       default:
-        return <Badge className="bg-green-500/10 text-green-500 border-green-500/20">Low</Badge>;
+        return 'green';
     }
   };
 
-  const getStatusBadge = (status: string) => {
+  const getPriorityLabel = (priority: string) => {
+    switch (priority) {
+      case 'high':
+        return 'High';
+      case 'medium':
+        return 'Medium';
+      default:
+        return 'Low';
+    }
+  };
+
+  const getStatusTone = (status: string): Tone => {
     switch (status) {
       case 'submitted':
-        return (
-          <Badge variant="outline" className="border-blue-500/30 text-blue-400">
-            New
-          </Badge>
-        );
+        return 'blue';
       case 'under_review':
-        return (
-          <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20">
-            Under Review
-          </Badge>
-        );
+        return 'purple';
       case 'resubmitted':
-        return (
-          <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20">Resubmitted</Badge>
-        );
+        return 'amber';
       default:
-        return <Badge variant="outline">{status}</Badge>;
+        return 'yellow';
     }
   };
 
-  const getInitials = (name: string) => {
-    return name
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'submitted':
+        return 'New';
+      case 'under_review':
+        return 'Under Review';
+      case 'resubmitted':
+        return 'Resubmitted';
+      default:
+        return status;
+    }
+  };
+
+  const getInitials = (name: string) =>
+    name
       .split(' ')
       .map((n) => n[0])
       .join('')
       .toUpperCase()
       .slice(0, 2);
-  };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-GB', {
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
     });
-  };
 
   if (isLoading) {
-    return (
-      <Card className="bg-white/5 border-elec-gray/40">
-        <CardContent className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        </CardContent>
-      </Card>
-    );
+    return <LoadingState />;
   }
 
   return (
-    <div className="space-y-4">
-      {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <FileCheck className="h-5 w-5 text-blue-400" />
-              <div>
-                <p className="text-xs text-white">Total Queue</p>
-                <p className="text-xl font-bold">{stats.total}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+    <div className="space-y-6">
+      {/* Stats */}
+      <StatStrip
+        columns={5}
+        stats={[
+          { value: stats.total, label: 'Total Queue' },
+          { value: stats.highPriority, label: 'High Priority', tone: 'red' },
+          { value: stats.mediumPriority, label: 'Medium', tone: 'amber' },
+          { value: stats.lowPriority, label: 'Low', tone: 'green' },
+          { value: `${stats.avgDaysWaiting}d`, label: 'Avg Wait' },
+        ]}
+      />
 
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-red-400" />
-              <div>
-                <p className="text-xs text-white">High Priority</p>
-                <p className="text-xl font-bold">{stats.highPriority}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Header + Filters */}
+      <div className="flex flex-col gap-4">
+        <SectionHeader
+          eyebrow="02 · Review"
+          title="Review Queue"
+          action="Refresh"
+          onAction={() => refetch()}
+        />
+        <p className="text-[13px] text-white/55">Submissions awaiting assessor review</p>
 
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-amber-400" />
-              <div>
-                <p className="text-xs text-white">Medium</p>
-                <p className="text-xl font-bold">{stats.mediumPriority}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-400" />
-              <div>
-                <p className="text-xs text-white">Low</p>
-                <p className="text-xl font-bold">{stats.lowPriority}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <Clock className="h-5 w-5 text-white" />
-              <div>
-                <p className="text-xs text-white">Avg Wait</p>
-                <p className="text-xl font-bold">{stats.avgDaysWaiting}d</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Input
+            placeholder="Search student or category…"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 rounded-full px-4 touch-manipulation flex-1"
+          />
+          <Select value={filterPriority} onValueChange={setFilterPriority}>
+            <SelectTrigger className="w-full sm:w-44 h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] rounded-full text-[13px] text-white focus:border-elec-yellow/60">
+              <SelectValue placeholder="All priorities" />
+            </SelectTrigger>
+            <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+              <SelectItem value="all">All priorities</SelectItem>
+              <SelectItem value="high">High priority</SelectItem>
+              <SelectItem value="medium">Medium priority</SelectItem>
+              <SelectItem value="low">Low priority</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      {/* Queue Table */}
-      <Card className="bg-white/5 border-elec-gray/40">
-        <CardHeader className="pb-3">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-              <CardTitle className="text-base">Review Queue</CardTitle>
-              <CardDescription>Submissions awaiting assessor review</CardDescription>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="relative flex-1 sm:w-64">
-                {!searchTerm && (
-                  <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white pointer-events-none" />
-                )}
-                <Input
-                  placeholder="Search student or category..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className={cn('bg-white/5 border-elec-gray/40', !searchTerm && 'pl-8')}
-                />
+      {/* Submission list */}
+      {filteredSubmissions.length === 0 ? (
+        <EmptyState
+          title={
+            submissions.length === 0
+              ? 'No submissions awaiting review'
+              : 'No submissions match your search'
+          }
+          description={
+            submissions.length === 0
+              ? 'All caught up. New submissions will appear here.'
+              : 'Try adjusting your filters or search term.'
+          }
+        />
+      ) : (
+        <ListCard>
+          {filteredSubmissions.map((submission) => (
+            <button
+              key={submission.id}
+              onClick={() => onViewSubmission(submission.id)}
+              className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+            >
+              <Avatar className="h-10 w-10 shrink-0">
+                <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-xs font-semibold">
+                  {getInitials(submission.studentName)}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <div className="text-sm sm:text-[15px] font-medium text-white truncate">
+                    {submission.studentName}
+                  </div>
+                  <Pill tone={getStatusTone(submission.status)} className="shrink-0">
+                    {getStatusLabel(submission.status)}
+                  </Pill>
+                </div>
+                <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                  {submission.categoryName} · {submission.qualificationTitle}
+                </div>
               </div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="icon" className="border-elec-gray/40">
-                    <Filter className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="bg-elec-dark border-elec-gray/40">
-                  <DropdownMenuItem onClick={() => setFilterPriority(null)}>
-                    All Priorities
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setFilterPriority('high')}>
-                    High Priority
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setFilterPriority('medium')}>
-                    Medium Priority
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setFilterPriority('low')}>
-                    Low Priority
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => refetch()}
-                className="border-elec-gray/40"
-              >
-                <RefreshCw className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow className="border-elec-gray/40">
-                  <TableHead className="text-white">Student</TableHead>
-                  <TableHead className="text-white">Category</TableHead>
-                  <TableHead className="text-white text-center">Submitted</TableHead>
-                  <TableHead className="text-white text-center">Attempt</TableHead>
-                  <TableHead className="text-white text-center">Wait</TableHead>
-                  <TableHead className="text-white text-center">Priority</TableHead>
-                  <TableHead className="text-white text-center">Status</TableHead>
-                  <TableHead className="text-white w-10"></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredSubmissions.map((submission) => (
-                  <TableRow
-                    key={submission.id}
-                    className="border-elec-gray/40 hover:bg-white/5 cursor-pointer"
-                    onClick={() => onViewSubmission(submission.id)}
-                  >
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <Avatar className="h-8 w-8">
-                          <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-xs">
-                            {getInitials(submission.studentName)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="min-w-0">
-                          <p className="font-medium truncate">{submission.studentName}</p>
-                          <p className="text-xs text-white truncate">
-                            {submission.qualificationTitle}
-                          </p>
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <span className="text-sm">{submission.categoryName}</span>
-                    </TableCell>
-                    <TableCell className="text-center text-sm">
-                      {formatDate(submission.submittedAt)}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <Badge variant="outline" className="text-xs">
-                        #{submission.submissionCount}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      <span
-                        className={`text-sm ${submission.daysAwaitingReview > 7 ? 'text-red-400' : submission.daysAwaitingReview > 3 ? 'text-amber-400' : ''}`}
-                      >
-                        {submission.daysAwaitingReview}d
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {getPriorityBadge(submission.priority)}
-                    </TableCell>
-                    <TableCell className="text-center">
-                      {getStatusBadge(submission.status)}
-                    </TableCell>
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
-                          <Button variant="ghost" size="icon" className="h-8 w-8">
-                            <MoreVertical className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                          align="end"
-                          className="bg-elec-dark border-elec-gray/40"
-                        >
-                          <DropdownMenuItem onClick={() => onViewSubmission(submission.id)}>
-                            <Eye className="h-4 w-4 mr-2" />
-                            View Details
-                          </DropdownMenuItem>
-                          {onStartReview && submission.status === 'submitted' && (
-                            <DropdownMenuItem onClick={() => onStartReview(submission.id)}>
-                              <MessageSquare className="h-4 w-4 mr-2" />
-                              Start Review
-                            </DropdownMenuItem>
-                          )}
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
-                {filteredSubmissions.length === 0 && (
-                  <TableRow>
-                    <TableCell colSpan={8} className="text-center text-white py-12">
-                      {submissions.length === 0
-                        ? 'No submissions awaiting review'
-                        : 'No submissions match your search'}
-                    </TableCell>
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-        </CardContent>
-      </Card>
+              <div className="hidden sm:flex flex-col items-end gap-1 shrink-0">
+                <div
+                  className={cn(
+                    'text-[13px] font-medium tabular-nums',
+                    submission.daysAwaitingReview > 7
+                      ? 'text-red-400'
+                      : submission.daysAwaitingReview > 3
+                        ? 'text-amber-400'
+                        : 'text-white/70'
+                  )}
+                >
+                  {submission.daysAwaitingReview}d wait
+                </div>
+                <div className="text-[10px] uppercase tracking-[0.16em] text-white/40">
+                  Attempt #{submission.submissionCount}
+                </div>
+              </div>
+              <div className="shrink-0 flex items-center gap-2">
+                <Pill tone={getPriorityTone(submission.priority)}>
+                  {getPriorityLabel(submission.priority)}
+                </Pill>
+                <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
+                  →
+                </span>
+              </div>
+            </button>
+          ))}
+        </ListCard>
+      )}
     </div>
   );
 };

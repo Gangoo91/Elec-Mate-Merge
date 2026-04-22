@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -26,22 +23,6 @@ import {
   SheetTitle,
   SheetFooter,
 } from '@/components/ui/sheet';
-import {
-  FileText,
-  CheckCircle2,
-  XCircle,
-  MessageSquare,
-  Download,
-  Image,
-  File,
-  AlertTriangle,
-  Award,
-  Send,
-  Loader2,
-  ArrowLeft,
-  Link2,
-  Sparkles,
-} from 'lucide-react';
 import { useAIPortfolioReview } from '@/hooks/college/useAIPortfolioReview';
 import type { CriterionAnalysis } from '@/hooks/college/useAIPortfolioReview';
 import { AIReviewSheet } from '@/components/college/sheets/AIReviewSheet';
@@ -63,6 +44,14 @@ import {
 } from '@/components/college/ui/HapticFeedback';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  PageFrame,
+  SectionHeader,
+  Pill,
+  EmptyState,
+  LoadingState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface SubmissionReviewPanelProps {
   submissionId: string;
@@ -81,7 +70,6 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
   const { staggerContainer, staggerItem, triggerSuccess } = useHapticFeedback();
   const { toast } = useToast();
 
-  // Criteria hook — only active when we have submission data
   const {
     checklistData,
     isLoading: criteriaLoading,
@@ -103,18 +91,15 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
-  // Criteria linker sheet state
   const [linkerOpen, setLinkerOpen] = useState(false);
   const [linkerItemId, setLinkerItemId] = useState('');
   const [linkerItemTitle, setLinkerItemTitle] = useState('');
   const [linkerCurrentACs, setLinkerCurrentACs] = useState<string[]>([]);
   const [isLinkSaving, setIsLinkSaving] = useState(false);
 
-  // AI Review
   const { reviewSubmission, isReviewing, result: aiResult, clearResult } = useAIPortfolioReview();
   const [aiSheetOpen, setAiSheetOpen] = useState(false);
 
-  // Criteria reference sheet state
   const [refSheetOpen, setRefSheetOpen] = useState(false);
   const [refSheetAC, setRefSheetAC] = useState<string | null>(null);
   const [refSheetACText, setRefSheetACText] = useState<string | undefined>();
@@ -288,43 +273,50 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
 
   // ── Helpers ──────────────────────────────────────────────────
 
-  const getFileIcon = (fileType: string) => {
-    if (fileType.startsWith('image/')) return <Image className="h-4 w-4" />;
-    return <File className="h-4 w-4" />;
-  };
-
   const formatFileSize = (bytes: number) => {
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   };
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-GB', {
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
     });
+
+  const getStatusTone = (status: string): Tone => {
+    switch (status) {
+      case 'submitted':
+        return 'blue';
+      case 'under_review':
+        return 'purple';
+      case 'resubmitted':
+        return 'amber';
+      case 'approved':
+        return 'green';
+      default:
+        return 'yellow';
+    }
   };
 
   // ── Loading state ────────────────────────────────────────────
 
   if (isLoading) {
     return (
-      <div className="space-y-6">
-        {/* Header skeleton */}
-        <div className="flex items-center gap-3 animate-pulse">
-          <div className="h-10 w-10 rounded-lg bg-white/10" />
-          <div className="space-y-2">
-            <div className="h-5 w-48 bg-white/10 rounded" />
-            <div className="h-3 w-32 bg-white/5 rounded" />
+      <PageFrame>
+        <div className="space-y-6 pt-6 sm:pt-8">
+          <div className="flex items-center gap-3 animate-pulse">
+            <div className="h-10 w-10 rounded-lg bg-white/10" />
+            <div className="space-y-2">
+              <div className="h-5 w-48 bg-white/10 rounded" />
+              <div className="h-3 w-32 bg-white/5 rounded" />
+            </div>
           </div>
-        </div>
-        {/* Student info skeleton */}
-        <Card className="bg-white/5 border-elec-gray/40 animate-pulse">
-          <CardContent className="p-4">
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 animate-pulse">
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 rounded-full bg-white/10" />
               <div className="flex-1 space-y-2">
@@ -332,267 +324,236 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 <div className="h-3 w-48 bg-white/5 rounded" />
               </div>
             </div>
-          </CardContent>
-        </Card>
-        {/* Criteria skeleton */}
-        <CriteriaChecklistSkeleton />
-        {/* Items skeleton */}
-        {[1, 2].map((i) => (
-          <Card key={i} className="bg-white/5 border-elec-gray/40 animate-pulse">
-            <CardContent className="p-4 space-y-3">
+          </div>
+          <CriteriaChecklistSkeleton />
+          {[1, 2].map((i) => (
+            <div
+              key={i}
+              className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3 animate-pulse"
+            >
               <div className="h-4 w-3/4 bg-white/10 rounded" />
               <div className="h-3 w-full bg-white/5 rounded" />
               <div className="h-3 w-2/3 bg-white/5 rounded" />
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+            </div>
+          ))}
+        </div>
+      </PageFrame>
     );
   }
 
   if (!submission) {
     return (
-      <Card className="bg-white/5 border-elec-gray/40">
-        <CardContent className="py-12 text-center">
-          <AlertTriangle className="h-12 w-12 text-amber-400 mx-auto mb-4" />
-          <p className="text-white">Submission not found</p>
-          <Button
-            variant="outline"
-            onClick={onBack}
-            className="mt-4 h-11 touch-manipulation"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Queue
-          </Button>
-        </CardContent>
-      </Card>
+      <PageFrame>
+        <EmptyState
+          title="Submission not found"
+          description="This submission may have been removed or is no longer accessible."
+          action="Back to Queue"
+          onAction={onBack}
+        />
+      </PageFrame>
     );
   }
 
   // ── Portfolio Item Card ──────────────────────────────────────
 
   const PortfolioItemCard = ({ item }: { item: SubmissionPortfolioItem }) => {
-    // Get ACs linked to this item from portfolio_items.assessment_criteria_met
     const itemACs: string[] = (item as any).assessmentCriteriaMet || [];
 
     return (
-      <Card className="bg-white/5 border-elec-gray/40">
-        <CardHeader className="pb-2">
-          <div className="flex items-start justify-between">
-            <div>
-              <CardTitle className="text-sm font-medium">{item.title}</CardTitle>
-              <CardDescription className="text-xs mt-1 text-white">
-                Created {formatDate(item.createdAt)} •{' '}
-                {Math.floor(item.timeSpent / 60)}h logged
-              </CardDescription>
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <div className="text-[15px] font-medium text-white">{item.title}</div>
+            <div className="mt-1 text-[11.5px] text-white/50">
+              Created {formatDate(item.createdAt)} · {Math.floor(item.timeSpent / 60)}h logged
             </div>
-            <Badge variant="outline" className="capitalize">
-              {item.status}
-            </Badge>
           </div>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {item.description && (
-            <p className="text-sm text-white">{item.description}</p>
-          )}
+          <Pill tone="blue" className="capitalize shrink-0">
+            {item.status}
+          </Pill>
+        </div>
 
-          {item.skillsDemonstrated.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              {item.skillsDemonstrated.map((skill, idx) => (
-                <Badge key={idx} variant="outline" className="text-xs">
-                  {skill}
-                </Badge>
+        {item.description && (
+          <p className="text-[13px] text-white/70 leading-relaxed">{item.description}</p>
+        )}
+
+        {item.skillsDemonstrated.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {item.skillsDemonstrated.map((skill, idx) => (
+              <Pill key={idx} tone="indigo">
+                {skill}
+              </Pill>
+            ))}
+          </div>
+        )}
+
+        {item.reflectionNotes && (
+          <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-4">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-blue-400">
+              Student Reflection
+            </div>
+            <p className="mt-2 text-[13px] text-white/70 leading-relaxed">{item.reflectionNotes}</p>
+          </div>
+        )}
+
+        {itemACs.length > 0 && (
+          <div className="space-y-2">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              Linked Criteria ({itemACs.length})
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {itemACs.map((ac) => (
+                <button
+                  key={ac}
+                  onClick={() => handleOpenReference(ac)}
+                  className="touch-manipulation"
+                >
+                  <Pill tone="yellow">AC {ac}</Pill>
+                </button>
               ))}
             </div>
-          )}
-
-          {item.reflectionNotes && (
-            <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-              <p className="text-xs text-blue-400 font-medium mb-1">
-                Student Reflection
-              </p>
-              <p className="text-sm text-white">{item.reflectionNotes}</p>
-            </div>
-          )}
-
-          {/* Assessment Criteria badges (NEW) */}
-          {itemACs.length > 0 && (
-            <div className="space-y-1.5">
-              <p className="text-xs text-white font-medium">
-                Linked Criteria ({itemACs.length})
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {itemACs.map((ac) => (
-                  <Badge
-                    key={ac}
-                    variant="outline"
-                    className="text-xs border-elec-yellow/30 text-elec-yellow cursor-pointer touch-manipulation"
-                    onClick={() => handleOpenReference(ac)}
-                  >
-                    AC {ac}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Link to Criteria button (NEW) */}
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-9 touch-manipulation text-white border-white/20 hover:border-elec-yellow/40 hover:text-elec-yellow"
-            onClick={() => handleOpenLinker(item.id, item.title, itemACs)}
-          >
-            <Link2 className="h-3.5 w-3.5 mr-1.5" />
-            Link to Criteria
-          </Button>
-
-          {item.evidenceFiles.length > 0 && (
-            <div className="space-y-2">
-              <p className="text-xs text-white font-medium">
-                Evidence Files ({item.evidenceFiles.length})
-              </p>
-              <div className="grid gap-2">
-                {item.evidenceFiles.map((file) => (
-                  <div
-                    key={file.id}
-                    className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-elec-gray/40"
-                  >
-                    <div className="flex items-center gap-2 min-w-0">
-                      {getFileIcon(file.fileType)}
-                      <span className="text-sm truncate">{file.fileName}</span>
-                      <span className="text-xs text-white">
-                        {formatFileSize(file.fileSize)}
-                      </span>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-11 w-11 shrink-0 touch-manipulation"
-                      onClick={() => window.open(file.fileUrl, '_blank')}
-                    >
-                      <Download className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Per-item comments */}
-          <div className="pt-3 border-t border-border/50">
-            <EvidenceComments
-              evidenceId={item.id}
-              evidenceTitle={item.title}
-              inline={true}
-            />
           </div>
-        </CardContent>
-      </Card>
+        )}
+
+        <button
+          onClick={() => handleOpenLinker(item.id, item.title, itemACs)}
+          className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+        >
+          Link to criteria →
+        </button>
+
+        {item.evidenceFiles.length > 0 && (
+          <div className="space-y-2">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              Evidence Files ({item.evidenceFiles.length})
+            </div>
+            <div className="space-y-2">
+              {item.evidenceFiles.map((file) => (
+                <div
+                  key={file.id}
+                  className="flex items-center justify-between gap-3 p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13px] text-white truncate">{file.fileName}</div>
+                    <div className="mt-0.5 text-[11px] text-white/45">
+                      {formatFileSize(file.fileSize)}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => window.open(file.fileUrl, '_blank')}
+                    className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation shrink-0"
+                  >
+                    Download →
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div className="pt-4 border-t border-white/[0.06]">
+          <EvidenceComments evidenceId={item.id} evidenceTitle={item.title} inline={true} />
+        </div>
+      </div>
     );
   };
 
   // ── Render ───────────────────────────────────────────────────
 
   return (
-    <div className="space-y-6">
-      {/* Success animation */}
+    <PageFrame>
       <SuccessCheckmark show={showSuccess} />
 
       {/* Header */}
-      <div className="flex items-start justify-between">
-        <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="icon"
+      <div className="pt-6 sm:pt-8 flex items-start justify-between gap-4">
+        <div className="flex items-center gap-4 min-w-0 flex-1">
+          <button
             onClick={onBack}
-            className="h-11 w-11 touch-manipulation"
+            className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
           >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h2 className="text-xl font-bold">Review Submission</h2>
-            <p className="text-sm text-white">{submission.categoryName}</p>
+            ← Back
+          </button>
+          <div className="min-w-0 flex-1">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              Review Submission
+            </div>
+            <h1 className="mt-1 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-tight truncate">
+              {submission.categoryName}
+            </h1>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="shrink-0 flex items-center gap-2">
           {['submitted', 'under_review', 'resubmitted'].includes(submission.status) && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-11 touch-manipulation gap-2 border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/10"
+            <button
               onClick={handleAIReview}
               disabled={isReviewing}
+              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isReviewing ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                <Sparkles className="h-4 w-4" />
-              )}
-              AI Review
-            </Button>
+              {isReviewing ? 'Reviewing…' : 'AI Review'}
+            </button>
           )}
-          <Badge variant="outline" className="capitalize">
+          <Pill tone={getStatusTone(submission.status)} className="capitalize">
             {submission.status.replace('_', ' ')}
-          </Badge>
+          </Pill>
         </div>
       </div>
 
       {/* Student Info */}
-      <Card className="bg-white/5 border-elec-gray/40">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-12 w-12">
-              <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow">
-                {submission.studentName
-                  .split(' ')
-                  .map((n) => n[0])
-                  .join('')
-                  .toUpperCase()
-                  .slice(0, 2)}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-              <p className="font-semibold">{submission.studentName}</p>
-              <p className="text-sm text-white">
-                {submission.qualificationTitle}
-              </p>
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-12 w-12">
+            <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold">
+              {submission.studentName
+                .split(' ')
+                .map((n) => n[0])
+                .join('')
+                .toUpperCase()
+                .slice(0, 2)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1 min-w-0">
+            <div className="text-[15px] font-medium text-white truncate">
+              {submission.studentName}
             </div>
-            <div className="text-right">
-              <p className="text-sm">
-                <span className="text-white">Submitted:</span>{' '}
-                {formatDate(submission.submittedAt)}
-              </p>
-              <p className="text-sm">
-                <span className="text-white">Attempt:</span> #
-                {submission.submissionCount}
-              </p>
+            <div className="mt-0.5 text-[12.5px] text-white/55 truncate">
+              {submission.qualificationTitle}
             </div>
           </div>
-        </CardContent>
-      </Card>
+          <div className="text-right shrink-0 hidden sm:block">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              Submitted
+            </div>
+            <div className="mt-0.5 text-[12.5px] text-white tabular-nums">
+              {formatDate(submission.submittedAt)}
+            </div>
+            <div className="mt-1.5 text-[11px] text-white/45">
+              Attempt #{submission.submissionCount}
+            </div>
+          </div>
+        </div>
+      </div>
 
-      {/* Previous Feedback (if resubmission) */}
+      {/* Previous Feedback */}
       {submission.previousFeedback && (
-        <Card className="bg-amber-500/10 border-amber-500/20">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <MessageSquare className="h-4 w-4 text-amber-400" />
+        <div className="bg-[hsl(0_0%_12%)] border border-amber-500/20 rounded-2xl p-5 sm:p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-400">
               Previous Feedback
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-sm text-white">{submission.previousFeedback}</p>
-            {submission.previousGrade && (
-              <Badge className="mt-2" variant="outline">
-                Previous Grade: {submission.previousGrade}
-              </Badge>
-            )}
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+          <p className="text-[13px] text-white/70 leading-relaxed">
+            {submission.previousFeedback}
+          </p>
+          {submission.previousGrade && (
+            <div className="mt-3">
+              <Pill tone="amber">Previous Grade: {submission.previousGrade}</Pill>
+            </div>
+          )}
+        </div>
       )}
 
-      {/* Assessment Criteria Checklist (NEW) */}
+      {/* Criteria Checklist */}
       {criteriaLoading ? (
         <CriteriaChecklistSkeleton />
       ) : (
@@ -603,7 +564,6 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             onToggleCriterion={handleToggleCriterion}
             onOpenReference={handleOpenReference}
             onLinkCriteria={(acRef) => {
-              // Find the first portfolio item to link to
               if (submission.portfolioItems.length > 0) {
                 const firstItem = submission.portfolioItems[0];
                 handleOpenLinker(firstItem.id, firstItem.title, []);
@@ -616,34 +576,32 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
 
       {/* Portfolio Items */}
       <div className="space-y-4">
-        <h3 className="font-semibold flex items-center gap-2">
-          <FileText className="h-5 w-5 text-elec-yellow" />
-          Portfolio Evidence ({submission.portfolioItems.length} items)
-        </h3>
-        <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-        >
+        <SectionHeader
+          eyebrow="03 · Evidence"
+          title={`Portfolio Evidence (${submission.portfolioItems.length})`}
+        />
+        <motion.div variants={staggerContainer} initial="hidden" animate="visible">
           <Accordion type="single" collapsible className="space-y-2">
             {submission.portfolioItems.map((item, index) => (
               <motion.div key={item.id} variants={staggerItem}>
                 <AccordionItem
                   value={item.id}
-                  className="border-elec-gray/40"
+                  className="border border-white/[0.06] rounded-2xl overflow-hidden bg-[hsl(0_0%_12%)]"
                 >
-                  <AccordionTrigger className="hover:no-underline px-4 py-3 bg-white/5 rounded-lg min-h-[44px] touch-manipulation">
-                    <div className="flex items-center gap-3 text-left">
-                      <span className="text-white text-sm">
-                        #{index + 1}
+                  <AccordionTrigger className="hover:no-underline px-5 py-4 min-h-[56px] touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
+                    <div className="flex items-center gap-3 text-left flex-1 min-w-0">
+                      <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/40 tabular-nums shrink-0">
+                        {String(index + 1).padStart(2, '0')}
                       </span>
-                      <span className="font-medium">{item.title}</span>
-                      <Badge variant="outline" className="ml-auto mr-4">
+                      <span className="text-[14px] font-medium text-white truncate">
+                        {item.title}
+                      </span>
+                      <Pill tone="blue" className="ml-auto mr-3 shrink-0">
                         {item.evidenceFiles.length} files
-                      </Badge>
+                      </Pill>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="pt-2">
+                  <AccordionContent className="px-5 pb-5 pt-2">
                     <PortfolioItemCard item={item} />
                   </AccordionContent>
                 </AccordionItem>
@@ -653,242 +611,198 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         </motion.div>
       </div>
 
-      {/* Review Actions */}
+      {/* Start Review */}
       {submission.status === 'submitted' && (
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <Button
-              onClick={handleStartReview}
-              className="w-full h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/80"
-            >
-              <MessageSquare className="h-4 w-4 mr-2" />
-              Start Review
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+          <button
+            onClick={handleStartReview}
+            className="w-full h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
+          >
+            Start Review
+          </button>
+        </div>
       )}
 
       {/* Feedback Form */}
-      {(submission.status === 'under_review' ||
-        submission.status === 'resubmitted') && (
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardHeader>
-            <CardTitle className="text-base">Assessor Feedback</CardTitle>
-            <CardDescription className="text-white">
-              Provide detailed feedback on this submission
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
+      {(submission.status === 'under_review' || submission.status === 'resubmitted') && (
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-5">
+          <div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              Assessor Feedback
+            </div>
+            <h3 className="mt-1 text-lg font-semibold text-white">Provide detailed feedback</h3>
+          </div>
+
+          <div className="space-y-2">
+            <Label className="text-[12.5px] text-white/70">Overall Feedback *</Label>
+            <Textarea
+              placeholder="Provide comprehensive feedback on the submission…"
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 min-h-[120px] touch-manipulation text-base"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>Overall Feedback *</Label>
+              <Label className="text-[12.5px] text-white/70">Strengths Noted</Label>
               <Textarea
-                placeholder="Provide comprehensive feedback on the submission..."
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                className="bg-white/5 border-elec-gray/40 min-h-[120px] touch-manipulation text-base"
+                placeholder="What did the student do well?"
+                value={strengths}
+                onChange={(e) => setStrengths(e.target.value)}
+                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 touch-manipulation text-base"
               />
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Strengths Noted</Label>
-                <Textarea
-                  placeholder="What did the student do well?"
-                  value={strengths}
-                  onChange={(e) => setStrengths(e.target.value)}
-                  className="bg-white/5 border-elec-gray/40 touch-manipulation text-base"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Areas for Improvement</Label>
-                <Textarea
-                  placeholder="What could be improved?"
-                  value={improvements}
-                  onChange={(e) => setImprovements(e.target.value)}
-                  className="bg-white/5 border-elec-gray/40 touch-manipulation text-base"
-                />
-              </div>
-            </div>
-
             <div className="space-y-2">
-              <Label>Grade *</Label>
-              <Select value={grade} onValueChange={setGrade}>
-                <SelectTrigger className="bg-white/5 border-elec-gray/40 h-11 touch-manipulation">
-                  <SelectValue placeholder="Select grade" />
-                </SelectTrigger>
-                <SelectContent className="bg-elec-dark border-elec-gray/40">
-                  <SelectItem value="distinction" className="h-11 touch-manipulation">
-                    Distinction
-                  </SelectItem>
-                  <SelectItem value="merit" className="h-11 touch-manipulation">
-                    Merit
-                  </SelectItem>
-                  <SelectItem value="pass" className="h-11 touch-manipulation">
-                    Pass
-                  </SelectItem>
-                  <SelectItem value="refer" className="h-11 touch-manipulation">
-                    Refer (Resubmission Required)
-                  </SelectItem>
-                  <SelectItem value="not_yet_competent" className="h-11 touch-manipulation">
-                    Not Yet Competent
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+              <Label className="text-[12.5px] text-white/70">Areas for Improvement</Label>
+              <Textarea
+                placeholder="What could be improved?"
+                value={improvements}
+                onChange={(e) => setImprovements(e.target.value)}
+                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 touch-manipulation text-base"
+              />
             </div>
+          </div>
 
-            <div className="flex gap-3 pt-4">
-              <Button
-                variant="outline"
-                className="border-red-500/30 text-red-400 hover:bg-red-500/10 h-11 touch-manipulation"
-                onClick={() => setShowRejectSheet(true)}
-              >
-                <XCircle className="h-4 w-4 mr-2" />
-                Request More Evidence
-              </Button>
-              <Button
-                className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/80 h-11 touch-manipulation"
-                onClick={handleSubmitFeedback}
-                disabled={!feedback || !grade || isSubmitting}
-              >
-                {isSubmitting ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4 mr-2" />
-                )}
-                Submit Feedback
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+          <div className="space-y-2">
+            <Label className="text-[12.5px] text-white/70">Grade *</Label>
+            <Select value={grade} onValueChange={setGrade}>
+              <SelectTrigger className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white focus:border-elec-yellow/60 touch-manipulation rounded-xl">
+                <SelectValue placeholder="Select grade" />
+              </SelectTrigger>
+              <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+                <SelectItem value="distinction">Distinction</SelectItem>
+                <SelectItem value="merit">Merit</SelectItem>
+                <SelectItem value="pass">Pass</SelectItem>
+                <SelectItem value="refer">Refer (Resubmission Required)</SelectItem>
+                <SelectItem value="not_yet_competent">Not Yet Competent</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 pt-2">
+            <button
+              onClick={() => setShowRejectSheet(true)}
+              className="h-11 px-5 rounded-full text-[13px] font-medium text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-colors touch-manipulation"
+            >
+              Request more evidence
+            </button>
+            <button
+              onClick={handleSubmitFeedback}
+              disabled={!feedback || !grade || isSubmitting}
+              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+            >
+              {isSubmitting ? 'Submitting…' : 'Submit Feedback'}
+            </button>
+          </div>
+        </div>
       )}
 
       {/* Sign-off Section */}
       {submission.status === 'approved' && (
-        <Card className="bg-green-500/10 border-green-500/20">
-          <CardHeader>
-            <CardTitle className="text-base flex items-center gap-2">
-              <Award className="h-5 w-5 text-green-400" />
+        <div className="bg-[hsl(0_0%_12%)] border border-green-500/20 rounded-2xl p-5 sm:p-6">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-green-400" />
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-green-400">
               Ready for Sign-off
-            </CardTitle>
-            <CardDescription className="text-white">
-              This submission has been approved. Sign off to complete the
-              assessment.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button
-              onClick={() => setShowSignOffSheet(true)}
-              className="w-full bg-green-600 hover:bg-green-700 h-11 touch-manipulation"
-            >
-              <CheckCircle2 className="h-4 w-4 mr-2" />
-              Sign Off Submission
-            </Button>
-          </CardContent>
-        </Card>
+            </div>
+          </div>
+          <h3 className="text-lg font-semibold text-white">Sign off submission</h3>
+          <p className="mt-1 text-[13px] text-white/55">
+            This submission has been approved. Sign off to complete the assessment.
+          </p>
+          <button
+            onClick={() => setShowSignOffSheet(true)}
+            className="mt-5 w-full h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
+          >
+            Sign Off Submission
+          </button>
+        </div>
       )}
 
-      {/* Sign-off Bottom Sheet (converted from Dialog) */}
+      {/* Sign-off Sheet */}
       <Sheet open={showSignOffSheet} onOpenChange={setShowSignOffSheet}>
         <SheetContent
           side="bottom"
-          className="h-auto max-h-[50vh] p-0 rounded-t-2xl overflow-hidden"
+          className="h-auto max-h-[50vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
         >
-          <div className="flex flex-col bg-background">
-            {/* Drag handle */}
+          <div className="flex flex-col">
             <div className="flex justify-center pt-2.5 pb-1">
               <div className="h-1 w-10 rounded-full bg-white/20" />
             </div>
-
-            <SheetHeader className="px-4 pb-4">
-              <SheetTitle className="text-base">Confirm Sign-off</SheetTitle>
-              <p className="text-sm text-white mt-1">
-                By signing off this submission, you confirm that all evidence
-                has been reviewed and meets the required standard for this
-                qualification unit.
+            <SheetHeader className="px-5 pb-4">
+              <SheetTitle className="text-base text-white">Confirm Sign-off</SheetTitle>
+              <p className="text-[13px] text-white/55 mt-1">
+                By signing off this submission, you confirm that all evidence has been reviewed
+                and meets the required standard for this qualification unit.
               </p>
             </SheetHeader>
-
-            <SheetFooter className="border-t border-border p-4">
+            <SheetFooter className="border-t border-white/[0.06] p-5">
               <div className="flex gap-3 w-full">
-                <Button
-                  variant="outline"
-                  className="flex-1 h-11 touch-manipulation"
+                <button
                   onClick={() => setShowSignOffSheet(false)}
+                  className="flex-1 h-11 px-5 rounded-full text-[13px] font-medium text-white/70 border border-white/[0.08] hover:bg-white/5 transition-colors touch-manipulation"
                 >
                   Cancel
-                </Button>
-                <Button
+                </button>
+                <button
                   onClick={handleSignOff}
                   disabled={isSubmitting}
-                  className="flex-1 bg-green-600 hover:bg-green-700 h-11 touch-manipulation"
+                  className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                 >
-                  {isSubmitting ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : null}
-                  Confirm Sign-off
-                </Button>
+                  {isSubmitting ? 'Confirming…' : 'Confirm Sign-off'}
+                </button>
               </div>
             </SheetFooter>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Request Evidence Bottom Sheet (converted from Dialog) */}
+      {/* Request Evidence Sheet */}
       <Sheet open={showRejectSheet} onOpenChange={setShowRejectSheet}>
         <SheetContent
           side="bottom"
-          className="h-auto max-h-[60vh] p-0 rounded-t-2xl overflow-hidden"
+          className="h-auto max-h-[60vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
         >
-          <div className="flex flex-col bg-background">
-            {/* Drag handle */}
+          <div className="flex flex-col">
             <div className="flex justify-center pt-2.5 pb-1">
               <div className="h-1 w-10 rounded-full bg-white/20" />
             </div>
-
-            <SheetHeader className="px-4 pb-4">
-              <SheetTitle className="text-base">
-                Request Additional Evidence
-              </SheetTitle>
-              <p className="text-sm text-white mt-1">
+            <SheetHeader className="px-5 pb-4">
+              <SheetTitle className="text-base text-white">Request Additional Evidence</SheetTitle>
+              <p className="text-[13px] text-white/55 mt-1">
                 Explain what additional evidence the student needs to provide.
               </p>
             </SheetHeader>
-
-            <div className="px-4 pb-4">
+            <div className="px-5 pb-4">
               <Textarea
-                placeholder="Describe the additional evidence required..."
+                placeholder="Describe the additional evidence required…"
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
-                className="bg-white/5 border-elec-gray/40 min-h-[100px] touch-manipulation text-base"
+                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 min-h-[100px] touch-manipulation text-base"
               />
             </div>
-
-            <SheetFooter className="border-t border-border p-4">
+            <SheetFooter className="border-t border-white/[0.06] p-5">
               <div className="flex gap-3 w-full">
-                <Button
-                  variant="outline"
-                  className="flex-1 h-11 touch-manipulation"
+                <button
                   onClick={() => setShowRejectSheet(false)}
+                  className="flex-1 h-11 px-5 rounded-full text-[13px] font-medium text-white/70 border border-white/[0.08] hover:bg-white/5 transition-colors touch-manipulation"
                 >
                   Cancel
-                </Button>
-                <Button
+                </button>
+                <button
                   onClick={handleRequestMoreEvidence}
                   disabled={!rejectionReason || isSubmitting}
-                  className="flex-1 bg-amber-600 hover:bg-amber-700 h-11 touch-manipulation"
+                  className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                 >
-                  {isSubmitting ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  ) : null}
-                  Send Request
-                </Button>
+                  {isSubmitting ? 'Sending…' : 'Send Request'}
+                </button>
               </div>
             </SheetFooter>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Criteria Linker Sheet */}
       <CriteriaLinkerSheet
         open={linkerOpen}
         onOpenChange={setLinkerOpen}
@@ -900,7 +814,6 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         isSaving={isLinkSaving}
       />
 
-      {/* Criteria Reference Sheet */}
       <CriteriaReferenceSheet
         open={refSheetOpen}
         onOpenChange={setRefSheetOpen}
@@ -909,7 +822,6 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         categoryId={submission.categoryId}
       />
 
-      {/* AI Review Sheet */}
       <AIReviewSheet
         open={aiSheetOpen}
         onOpenChange={(open) => {
@@ -921,7 +833,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         onApplyFeedback={handleApplyAIFeedback}
         onApplyCriteria={handleApplyAICriteria}
       />
-    </div>
+    </PageFrame>
   );
 };
 

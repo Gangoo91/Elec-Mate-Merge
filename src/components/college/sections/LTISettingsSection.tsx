@@ -5,34 +5,19 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
 import { useToast } from '@/hooks/use-toast';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import {
-  Plus,
-  Plug,
-  Settings,
-  CheckCircle2,
-  XCircle,
-  AlertTriangle,
-  MoreVertical,
-  RefreshCw,
-  Copy,
-  ExternalLink,
-  Key,
-  Link2,
-  Shield,
-  Users,
-  FileCheck,
-  Trash2,
-  ChevronRight,
-  ArrowRight,
-  BookOpen,
-  HelpCircle,
-  Zap,
-  Check,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  Pill,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -217,19 +202,6 @@ export function LTISettingsSection() {
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'Connected':
-        return <CheckCircle2 className="h-3.5 w-3.5" />;
-      case 'Disconnected':
-        return <XCircle className="h-3.5 w-3.5" />;
-      case 'Pending':
-        return <AlertTriangle className="h-3.5 w-3.5" />;
-      default:
-        return <Plug className="h-3.5 w-3.5" />;
-    }
-  };
-
   const getPlatformColor = (type: string) => {
     const colors: Record<string, string> = {
       canvas: 'bg-red-500',
@@ -241,452 +213,407 @@ export function LTISettingsSection() {
   };
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <CollegeSectionHeader
-        title="LTI / VLE Integration"
-        description="Connect to Canvas, Moodle, Blackboard and other LMS platforms"
-        icon={Plug}
-        actions={
-          <Button
-            className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-            onClick={() => setIsAddDialogOpen(true)}
-          >
-            <Plus className="h-4 w-4" />
-            Add Platform
-          </Button>
-        }
-      />
+    <PageFrame>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Resources · VLE Integration"
+          title="LTI & VLE integration"
+          description="Connect to Canvas, Moodle, Blackboard and other LMS platforms via LTI 1.3."
+          tone="blue"
+          actions={
+            <button
+              onClick={() => setIsAddDialogOpen(true)}
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+            >
+              Add platform →
+            </button>
+          }
+        />
+      </motion.div>
 
       {/* Connection Overview */}
-      <div className="grid grid-cols-3 gap-3">
-        <Card className="bg-green-500/10 border-green-500/20">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-green-500">
-              {platforms.filter((p) => p.status === 'Connected').length}
-            </p>
-            <p className="text-xs text-white">Connected</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-elec-yellow">
-              {platforms.reduce((sum, p) => sum + p.stats.launches, 0).toLocaleString()}
-            </p>
-            <p className="text-xs text-white">Total Launches</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-blue-500/10 border-blue-500/20">
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-blue-500">
-              {platforms.reduce((sum, p) => sum + p.stats.users, 0)}
-            </p>
-            <p className="text-xs text-white">Linked Users</p>
-          </CardContent>
-        </Card>
-      </div>
+      <motion.div variants={itemVariants}>
+        <StatStrip
+          columns={3}
+          stats={[
+            {
+              value: platforms.filter((p) => p.status === 'Connected').length,
+              label: 'Connected',
+              sub: 'Active platforms',
+              tone: 'green',
+            },
+            {
+              value: platforms.reduce((sum, p) => sum + p.stats.launches, 0),
+              label: 'Launches',
+              sub: 'Total tool launches',
+              tone: 'yellow',
+            },
+            {
+              value: platforms.reduce((sum, p) => sum + p.stats.users, 0),
+              label: 'Users',
+              sub: 'Linked accounts',
+              tone: 'blue',
+            },
+          ]}
+        />
+      </motion.div>
 
       <Tabs defaultValue="platforms">
-        <TabsList className="grid w-full grid-cols-3 bg-elec-gray">
-          <TabsTrigger value="platforms">Connected Platforms</TabsTrigger>
-          <TabsTrigger value="config">Tool Configuration</TabsTrigger>
-          <TabsTrigger value="guides">Setup Guides</TabsTrigger>
+        <TabsList className="inline-flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full h-auto w-auto">
+          <TabsTrigger
+            value="platforms"
+            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+          >
+            Platforms
+          </TabsTrigger>
+          <TabsTrigger
+            value="config"
+            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+          >
+            Configuration
+          </TabsTrigger>
+          <TabsTrigger
+            value="guides"
+            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+          >
+            Setup guides
+          </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="platforms" className="space-y-4 mt-4">
+        <TabsContent value="platforms" className="space-y-5 mt-6">
           {platforms.length === 0 ? (
-            <Card className="border-dashed border-2 border-elec-yellow/30">
-              <CardContent className="p-8 text-center">
-                <div className="h-16 w-16 rounded-full bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
-                  <Plug className="h-8 w-8 text-elec-yellow" />
-                </div>
-                <h3 className="font-semibold text-lg mb-2">No platforms connected</h3>
-                <p className="text-white mb-4 max-w-md mx-auto">
-                  Connect your VLE to enable single sign-on, grade sync, and roster import.
-                </p>
-                <div className="flex gap-3 justify-center">
-                  <Button
-                    onClick={() => setIsAddDialogOpen(true)}
-                    className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Platform
-                  </Button>
-                  <Button variant="outline" onClick={() => openSetupGuide('canvas')}>
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    View Guide
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="space-y-4">
-              {platforms.map((platform) => (
-                <Card
-                  key={platform.id}
-                  className="border-elec-yellow/20 hover:border-elec-yellow/40 transition-colors"
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-8 sm:p-12 text-center">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                No platforms connected
+              </div>
+              <h3 className="mt-2 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                Connect your first VLE
+              </h3>
+              <p className="mt-3 text-[13px] text-white/55 max-w-md mx-auto leading-relaxed">
+                Link Canvas, Moodle or Blackboard via LTI 1.3 for single sign-on, grade sync and
+                roster import.
+              </p>
+              <div className="mt-6 flex items-center justify-center gap-4">
+                <button
+                  onClick={() => setIsAddDialogOpen(true)}
+                  className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
                 >
-                  <CardContent className="p-5">
-                    <div className="flex items-start gap-4">
-                      <div
-                        className={`h-12 w-12 rounded-lg ${getPlatformColor(platform.type)} flex items-center justify-center shrink-0`}
-                      >
-                        <Plug className="h-6 w-6 text-white" />
+                  Add platform →
+                </button>
+                <button
+                  onClick={() => openSetupGuide('canvas')}
+                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                >
+                  View guide
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {platforms.map((platform) => {
+                const platformTone: Tone =
+                  platform.type === 'canvas'
+                    ? 'red'
+                    : platform.type === 'moodle'
+                      ? 'orange'
+                      : platform.type === 'blackboard'
+                        ? 'indigo'
+                        : 'yellow';
+                const statusTone: Tone =
+                  platform.status === 'Connected'
+                    ? 'green'
+                    : platform.status === 'Disconnected'
+                      ? 'red'
+                      : 'amber';
+                return (
+                  <div
+                    key={platform.id}
+                    className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden"
+                  >
+                    <div
+                      className={cn(
+                        'h-px',
+                        platformTone === 'red' && 'bg-red-400/60',
+                        platformTone === 'orange' && 'bg-orange-400/60',
+                        platformTone === 'indigo' && 'bg-indigo-400/60',
+                        platformTone === 'yellow' && 'bg-elec-yellow/60'
+                      )}
+                    />
+                    <div className="p-5 sm:p-6">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                            {platform.type}
+                          </div>
+                          <h3 className="mt-1 text-lg sm:text-xl font-semibold text-white tracking-tight">
+                            {platform.name}
+                          </h3>
+                          <p className="mt-0.5 text-[12px] text-white/50 truncate">
+                            {platform.url}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <Pill tone={statusTone}>{platform.status}</Pill>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <button
+                                className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                                aria-label="Options"
+                              >
+                                ⋯
+                              </button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem
+                                className="h-11"
+                                onClick={() => {
+                                  setSelectedPlatform(platform);
+                                  setIsConfigureDialogOpen(true);
+                                }}
+                              >
+                                Configure
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                className="h-11"
+                                onClick={() => handleSync(platform.id)}
+                              >
+                                {isSyncing === platform.id ? 'Syncing…' : 'Sync now'}
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                className="h-11"
+                                onClick={() => openExternalUrl(platform.url)}
+                              >
+                                Open LMS
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                className="h-11 text-red-400"
+                                onClick={() => handleDisconnect(platform.id)}
+                              >
+                                Disconnect
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
                       </div>
 
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-start justify-between gap-2">
-                          <div>
-                            <h3 className="font-semibold text-white">{platform.name}</h3>
-                            <p className="text-sm text-white">{platform.url}</p>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <Badge
-                              variant="outline"
-                              className={`${getStatusColor(platform.status)} flex items-center gap-1`}
+                      {/* Feature Toggles */}
+                      <div className="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        {[
+                          { key: 'deepLinking' as const, label: 'Deep linking' },
+                          { key: 'gradeSync' as const, label: 'Grade sync' },
+                          { key: 'rosterSync' as const, label: 'Roster sync' },
+                        ].map((feat) => {
+                          const enabled = platform.features[feat.key];
+                          return (
+                            <button
+                              key={feat.key}
+                              onClick={() => handleToggleFeature(platform.id, feat.key)}
+                              className="flex items-center justify-between px-4 py-3 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl hover:bg-[hsl(0_0%_13%)] transition-colors touch-manipulation text-left"
                             >
-                              {getStatusIcon(platform.status)}
-                              {platform.status}
-                            </Badge>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-11 w-11 touch-manipulation"
-                                >
-                                  <MoreVertical className="h-4 w-4" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent
-                                align="end"
-                                className="bg-elec-dark border-elec-yellow/20"
-                              >
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => {
-                                    setSelectedPlatform(platform);
-                                    setIsConfigureDialogOpen(true);
-                                  }}
-                                >
-                                  <Settings className="h-4 w-4 mr-2" />
-                                  Configure
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => handleSync(platform.id)}
-                                >
-                                  <RefreshCw
-                                    className={`h-4 w-4 mr-2 ${isSyncing === platform.id ? 'animate-spin' : ''}`}
-                                  />
-                                  Sync Now
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation"
-                                  onClick={() => openExternalUrl(platform.url)}
-                                >
-                                  <ExternalLink className="h-4 w-4 mr-2" />
-                                  Open LMS
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem
-                                  className="h-11 touch-manipulation text-red-500 focus:text-red-500"
-                                  onClick={() => handleDisconnect(platform.id)}
-                                >
-                                  <Trash2 className="h-4 w-4 mr-2" />
-                                  Disconnect
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </div>
-                        </div>
+                              <span className="text-[12px] text-white/70">{feat.label}</span>
+                              <Pill tone={enabled ? 'green' : 'yellow'}>
+                                {enabled ? 'On' : 'Off'}
+                              </Pill>
+                            </button>
+                          );
+                        })}
+                      </div>
 
-                        {/* Feature Toggles */}
-                        <div className="flex flex-wrap gap-4 mt-4">
-                          <button
-                            onClick={() => handleToggleFeature(platform.id, 'deepLinking')}
-                            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-                          >
-                            <Link2
-                              className={`h-4 w-4 ${platform.features.deepLinking ? 'text-green-500' : 'text-white'}`}
-                            />
-                            <span className="text-xs">Deep Linking</span>
-                            <Badge
-                              variant="outline"
-                              className={
-                                platform.features.deepLinking
-                                  ? 'bg-green-500/10 text-green-500 border-green-500/20'
-                                  : ''
-                              }
-                            >
-                              {platform.features.deepLinking ? 'On' : 'Off'}
-                            </Badge>
-                          </button>
-                          <button
-                            onClick={() => handleToggleFeature(platform.id, 'gradeSync')}
-                            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-                          >
-                            <FileCheck
-                              className={`h-4 w-4 ${platform.features.gradeSync ? 'text-green-500' : 'text-white'}`}
-                            />
-                            <span className="text-xs">Grade Sync</span>
-                            <Badge
-                              variant="outline"
-                              className={
-                                platform.features.gradeSync
-                                  ? 'bg-green-500/10 text-green-500 border-green-500/20'
-                                  : ''
-                              }
-                            >
-                              {platform.features.gradeSync ? 'On' : 'Off'}
-                            </Badge>
-                          </button>
-                          <button
-                            onClick={() => handleToggleFeature(platform.id, 'rosterSync')}
-                            className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-                          >
-                            <Users
-                              className={`h-4 w-4 ${platform.features.rosterSync ? 'text-green-500' : 'text-white'}`}
-                            />
-                            <span className="text-xs">Roster Sync</span>
-                            <Badge
-                              variant="outline"
-                              className={
-                                platform.features.rosterSync
-                                  ? 'bg-green-500/10 text-green-500 border-green-500/20'
-                                  : ''
-                              }
-                            >
-                              {platform.features.rosterSync ? 'On' : 'Off'}
-                            </Badge>
-                          </button>
-                        </div>
-
-                        {/* Stats */}
-                        <div className="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-elec-yellow/10 text-xs text-white">
-                          <span>{platform.stats.launches.toLocaleString()} launches</span>
-                          <span>{platform.stats.courses} courses</span>
-                          <span>{platform.stats.users} users</span>
-                          {platform.lastSync && (
-                            <span>
-                              Last sync:{' '}
-                              {new Date(platform.lastSync).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'short',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              })}
-                            </span>
-                          )}
-                        </div>
+                      {/* Stats */}
+                      <div className="mt-5 pt-5 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white/50">
+                        <span className="tabular-nums">
+                          {platform.stats.launches.toLocaleString()} launches
+                        </span>
+                        <span className="tabular-nums">{platform.stats.courses} courses</span>
+                        <span className="tabular-nums">{platform.stats.users} users</span>
+                        {platform.lastSync && (
+                          <span className="tabular-nums">
+                            Last sync{' '}
+                            {new Date(platform.lastSync).toLocaleDateString('en-GB', {
+                              day: 'numeric',
+                              month: 'short',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </span>
+                        )}
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           )}
         </TabsContent>
 
-        <TabsContent value="config" className="space-y-4 mt-4">
+        <TabsContent value="config" className="space-y-6 mt-6">
           {/* LTI Tool Configuration */}
-          <Card className="border-elec-yellow/20">
-            <CardHeader>
-              <CardTitle className="text-base flex items-center gap-2">
-                <Key className="h-4 w-4 text-elec-yellow" />
-                LTI 1.3 Tool Configuration
-              </CardTitle>
-              <CardDescription>
-                Copy these values when registering Elec-Mate in your LMS
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+              LTI 1.3 Tool Configuration
+            </div>
+            <p className="mt-2 text-[12.5px] text-white/55 leading-relaxed">
+              Copy these values when registering Elec-Mate as an LTI tool in your LMS.
+            </p>
+
+            <div className="mt-5 space-y-3">
               {[
-                { label: 'Tool Launch URL', value: ltiConfig.toolUrl, key: 'toolUrl' },
-                { label: 'OIDC Initiation URL', value: ltiConfig.oidcInitUrl, key: 'oidcInitUrl' },
-                { label: 'JWKS URL (Public Key Set)', value: ltiConfig.jwksUrl, key: 'jwksUrl' },
-                { label: 'Deep Linking URL', value: ltiConfig.deepLinkUrl, key: 'deepLinkUrl' },
+                { label: 'Tool launch URL', value: ltiConfig.toolUrl, key: 'toolUrl' },
+                {
+                  label: 'OIDC initiation URL',
+                  value: ltiConfig.oidcInitUrl,
+                  key: 'oidcInitUrl',
+                },
+                { label: 'JWKS URL (public key set)', value: ltiConfig.jwksUrl, key: 'jwksUrl' },
+                { label: 'Deep linking URL', value: ltiConfig.deepLinkUrl, key: 'deepLinkUrl' },
                 {
                   label: 'Redirect URIs',
                   value: ltiConfig.redirectUris.join(', '),
                   key: 'redirectUris',
                 },
               ].map((item) => (
-                <div key={item.key} className="space-y-2">
-                  <Label className="text-xs text-white">{item.label}</Label>
-                  <div className="flex gap-2">
-                    <Input
+                <div key={item.key}>
+                  <Label className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40">
+                    {item.label}
+                  </Label>
+                  <div className="mt-1.5 flex gap-2">
+                    <input
                       value={item.value}
                       readOnly
-                      className="font-mono text-sm bg-elec-gray border-elec-yellow/20"
+                      className="flex-1 h-11 px-4 font-mono text-[12.5px] bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
                     />
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="border-elec-yellow/20 hover:bg-elec-yellow/10"
+                    <button
                       onClick={() => handleCopyToClipboard(item.value, item.key)}
+                      className="h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white rounded-xl text-[12.5px] font-medium hover:bg-[hsl(0_0%_13%)] transition-colors touch-manipulation whitespace-nowrap"
                     >
-                      {copiedField === item.key ? (
-                        <Check className="h-4 w-4 text-green-500" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                    </Button>
+                      {copiedField === item.key ? 'Copied ✓' : 'Copy'}
+                    </button>
                   </div>
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
           {/* Security Settings */}
-          <Card className="border-elec-yellow/20">
-            <CardHeader>
-              <CardTitle className="text-base flex items-center gap-2">
-                <Shield className="h-4 w-4 text-elec-yellow" />
-                Security Settings
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+              Security Settings
+            </div>
+            <div className="mt-4 divide-y divide-white/[0.06]">
               {[
                 {
-                  label: 'Require State Parameter',
-                  desc: 'Enforce state validation for OIDC flow',
-                  default: true,
-                },
-                { label: 'Validate Nonce', desc: 'Prevent replay attacks', default: true },
-                {
-                  label: 'Auto-provision Users',
-                  desc: 'Create accounts on first LTI launch',
+                  label: 'Require state parameter',
+                  desc: 'Enforce state validation for the OIDC flow.',
                   default: true,
                 },
                 {
-                  label: 'Sync Grades Automatically',
-                  desc: 'Push grades to LMS when recorded',
+                  label: 'Validate nonce',
+                  desc: 'Prevents replay attacks on authentication tokens.',
+                  default: true,
+                },
+                {
+                  label: 'Auto-provision users',
+                  desc: 'Create accounts automatically on first LTI launch.',
+                  default: true,
+                },
+                {
+                  label: 'Sync grades automatically',
+                  desc: 'Push grades to LMS when recorded in Elec-Mate.',
                   default: false,
                 },
               ].map((setting, idx) => (
-                <div key={idx} className="flex items-center justify-between">
-                  <div>
-                    <Label>{setting.label}</Label>
-                    <p className="text-xs text-white">{setting.desc}</p>
+                <div key={idx} className="flex items-center justify-between gap-4 py-4">
+                  <div className="min-w-0">
+                    <div className="text-[13.5px] font-medium text-white">{setting.label}</div>
+                    <div className="mt-0.5 text-[11.5px] text-white/50">{setting.desc}</div>
                   </div>
                   <Switch defaultChecked={setting.default} />
                 </div>
               ))}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </TabsContent>
 
-        <TabsContent value="guides" className="space-y-4 mt-4">
-          <div className="grid gap-4 md:grid-cols-3">
-            {/* Canvas Guide */}
-            <Card
-              className="cursor-pointer border-elec-yellow/20 hover:border-red-500/50 hover:bg-red-500/5 transition-all group"
-              onClick={() => openSetupGuide('canvas')}
-            >
-              <CardContent className="p-6 text-center">
-                <div className="h-14 w-14 mx-auto mb-4 rounded-xl bg-red-500 flex items-center justify-center">
-                  <Plug className="h-7 w-7 text-white" />
+        <TabsContent value="guides" className="space-y-6 mt-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            {[
+              { type: 'canvas' as const, name: 'Canvas LMS', desc: 'Instructure Canvas', tone: 'red' as Tone },
+              { type: 'moodle' as const, name: 'Moodle', desc: 'Moodle LMS 4.x', tone: 'orange' as Tone },
+              { type: 'blackboard' as const, name: 'Blackboard', desc: 'Blackboard Learn', tone: 'indigo' as Tone },
+            ].map((guide) => (
+              <button
+                key={guide.type}
+                onClick={() => openSetupGuide(guide.type)}
+                className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 text-left touch-manipulation flex flex-col min-h-[180px]"
+              >
+                <div
+                  className={cn(
+                    'absolute inset-x-0 top-0 h-px opacity-70 group-hover:opacity-100 transition-opacity',
+                    guide.tone === 'red' && 'bg-red-400',
+                    guide.tone === 'orange' && 'bg-orange-400',
+                    guide.tone === 'indigo' && 'bg-indigo-400'
+                  )}
+                />
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Setup Guide
                 </div>
-                <h3 className="font-semibold text-lg mb-1">Canvas LMS</h3>
-                <p className="text-sm text-white mb-4">Instructure Canvas setup guide</p>
-                <Button
-                  variant="outline"
-                  className="w-full group-hover:border-red-500/50 group-hover:text-red-500"
-                >
-                  View Guide
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Moodle Guide */}
-            <Card
-              className="cursor-pointer border-elec-yellow/20 hover:border-orange-500/50 hover:bg-orange-500/5 transition-all group"
-              onClick={() => openSetupGuide('moodle')}
-            >
-              <CardContent className="p-6 text-center">
-                <div className="h-14 w-14 mx-auto mb-4 rounded-xl bg-orange-500 flex items-center justify-center">
-                  <Plug className="h-7 w-7 text-white" />
+                <h3 className="mt-2 text-lg sm:text-xl font-semibold text-white tracking-tight">
+                  {guide.name}
+                </h3>
+                <p className="mt-1 text-[12.5px] text-white/50">{guide.desc}</p>
+                <div className="flex-grow" />
+                <div className="mt-4 text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
+                  View guide →
                 </div>
-                <h3 className="font-semibold text-lg mb-1">Moodle</h3>
-                <p className="text-sm text-white mb-4">Moodle LMS setup guide</p>
-                <Button
-                  variant="outline"
-                  className="w-full group-hover:border-orange-500/50 group-hover:text-orange-500"
-                >
-                  View Guide
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Blackboard Guide */}
-            <Card
-              className="cursor-pointer border-elec-yellow/20 hover:border-gray-500/50 hover:bg-gray-500/5 transition-all group"
-              onClick={() => openSetupGuide('blackboard')}
-            >
-              <CardContent className="p-6 text-center">
-                <div className="h-14 w-14 mx-auto mb-4 rounded-xl bg-gray-700 flex items-center justify-center">
-                  <Plug className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="font-semibold text-lg mb-1">Blackboard</h3>
-                <p className="text-sm text-white mb-4">Blackboard Learn setup guide</p>
-                <Button
-                  variant="outline"
-                  className="w-full group-hover:border-gray-500/50 group-hover:text-gray-400"
-                >
-                  View Guide
-                  <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
-              </CardContent>
-            </Card>
+              </button>
+            ))}
           </div>
 
           {/* Quick Start */}
-          <Card className="border-elec-yellow/20 bg-elec-yellow/5">
-            <CardHeader>
-              <CardTitle className="text-base flex items-center gap-2">
-                <Zap className="h-4 w-4 text-elec-yellow" />
-                Quick Start Overview
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-4">
-                {[
-                  {
-                    step: '1',
-                    title: 'Register Tool',
-                    desc: 'Add Elec-Mate as an LTI tool in your LMS admin panel',
-                  },
-                  {
-                    step: '2',
-                    title: 'Copy Config',
-                    desc: 'Use the Tool Configuration values from the Config tab',
-                  },
-                  {
-                    step: '3',
-                    title: 'Add Platform',
-                    desc: 'Enter your LMS details using the Add Platform button',
-                  },
-                  {
-                    step: '4',
-                    title: 'Test Launch',
-                    desc: 'Create a test assignment and verify the connection',
-                  },
-                ].map((item) => (
-                  <div key={item.step} className="flex gap-3">
-                    <div className="h-8 w-8 rounded-full bg-elec-yellow/20 flex items-center justify-center shrink-0 text-elec-yellow font-bold">
-                      {item.step}
-                    </div>
-                    <div>
-                      <h4 className="font-medium text-sm">{item.title}</h4>
-                      <p className="text-xs text-white">{item.desc}</p>
-                    </div>
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+              Quick Start
+            </div>
+            <h3 className="mt-2 text-lg sm:text-xl font-semibold text-white tracking-tight">
+              Four steps to connect
+            </h3>
+            <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                {
+                  step: '01',
+                  title: 'Register tool',
+                  desc: 'Add Elec-Mate as an LTI tool in your LMS admin panel.',
+                },
+                {
+                  step: '02',
+                  title: 'Copy config',
+                  desc: 'Use the values from the Configuration tab.',
+                },
+                {
+                  step: '03',
+                  title: 'Add platform',
+                  desc: 'Enter your LMS details in the Platforms tab.',
+                },
+                {
+                  step: '04',
+                  title: 'Test launch',
+                  desc: 'Create a test assignment and verify the connection.',
+                },
+              ].map((item) => (
+                <div
+                  key={item.step}
+                  className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-4"
+                >
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                    Step {item.step}
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                  <h4 className="mt-2 text-[14px] font-semibold text-white">{item.title}</h4>
+                  <p className="mt-1 text-[11.5px] text-white/50 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
 
@@ -777,21 +704,10 @@ export function LTISettingsSection() {
       <Dialog open={isSetupGuideOpen} onOpenChange={setIsSetupGuideOpen}>
         <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-elec-dark border-elec-yellow/20">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-3">
-              <div
-                className={`h-8 w-8 rounded-lg ${
-                  selectedGuide === 'canvas'
-                    ? 'bg-red-500'
-                    : selectedGuide === 'moodle'
-                      ? 'bg-orange-500'
-                      : 'bg-gray-700'
-                } flex items-center justify-center`}
-              >
-                <Plug className="h-4 w-4 text-white" />
-              </div>
-              {selectedGuide === 'canvas' && 'Canvas LMS Setup Guide'}
-              {selectedGuide === 'moodle' && 'Moodle Setup Guide'}
-              {selectedGuide === 'blackboard' && 'Blackboard Learn Setup Guide'}
+            <DialogTitle>
+              {selectedGuide === 'canvas' && 'Canvas LMS setup guide'}
+              {selectedGuide === 'moodle' && 'Moodle setup guide'}
+              {selectedGuide === 'blackboard' && 'Blackboard Learn setup guide'}
             </DialogTitle>
             <DialogDescription>
               Follow these steps to connect your LMS to Elec-Mate
@@ -1120,8 +1036,7 @@ export function LTISettingsSection() {
                 setIsAddDialogOpen(true);
               }}
             >
-              Add Platform
-              <ArrowRight className="h-4 w-4 ml-2" />
+              Add Platform →
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -1195,6 +1110,6 @@ export function LTISettingsSection() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </PageFrame>
   );
 }

@@ -1,25 +1,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Textarea } from '@/components/ui/textarea';
-import { Progress } from '@/components/ui/progress';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Sparkles,
-  CheckCircle2,
-  AlertCircle,
-  MinusCircle,
-  ChevronDown,
-  ChevronUp,
-  Star,
-  TrendingUp,
-  FileText,
-  Clock,
-  Copy,
-  Check,
-} from 'lucide-react';
+import { Pill, LoadingState, type Tone } from '@/components/college/primitives';
 import { copyToClipboard } from '@/utils/clipboard';
 import type { AIReviewResult, CriterionAnalysis } from '@/hooks/college/useAIPortfolioReview';
 
@@ -37,23 +20,19 @@ interface AIReviewSheetProps {
   onApplyCriteria: (criteria: CriterionAnalysis[]) => void;
 }
 
-const GRADE_COLOURS: Record<string, { bg: string; text: string; border: string }> = {
-  distinction: {
-    bg: 'bg-emerald-500/20',
-    text: 'text-emerald-400',
-    border: 'border-emerald-500/30',
-  },
-  merit: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30' },
-  pass: { bg: 'bg-elec-yellow/20', text: 'text-elec-yellow', border: 'border-elec-yellow/30' },
-  refer: { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30' },
-  not_yet_competent: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' },
+const GRADE_TONE: Record<string, Tone> = {
+  distinction: 'emerald',
+  merit: 'blue',
+  pass: 'yellow',
+  refer: 'amber',
+  not_yet_competent: 'red',
 };
 
-const QUALITY_COLOURS: Record<string, string> = {
-  excellent: 'text-emerald-400',
-  good: 'text-blue-400',
-  adequate: 'text-elec-yellow',
-  insufficient: 'text-red-400',
+const QUALITY_TONE: Record<string, Tone> = {
+  excellent: 'emerald',
+  good: 'blue',
+  adequate: 'yellow',
+  insufficient: 'red',
 };
 
 const QUALITY_WIDTH: Record<string, number> = {
@@ -63,28 +42,24 @@ const QUALITY_WIDTH: Record<string, number> = {
   insufficient: 25,
 };
 
-function StatusIcon({ status }: { status: string }) {
-  switch (status) {
-    case 'met':
-      return <CheckCircle2 className="h-4 w-4 text-emerald-400" />;
-    case 'partially_met':
-      return <MinusCircle className="h-4 w-4 text-amber-400" />;
-    case 'not_met':
-      return <AlertCircle className="h-4 w-4 text-red-400" />;
-    default:
-      return null;
-  }
-}
+const QUALITY_BAR: Record<string, string> = {
+  excellent: 'bg-emerald-500',
+  good: 'bg-blue-500',
+  adequate: 'bg-elec-yellow',
+  insufficient: 'bg-red-500',
+};
 
-function StatusBadge({ status }: { status: string }) {
-  const config: Record<string, { bg: string; text: string; label: string }> = {
-    met: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', label: 'Met' },
-    partially_met: { bg: 'bg-amber-500/20', text: 'text-amber-400', label: 'Partial' },
-    not_met: { bg: 'bg-red-500/20', text: 'text-red-400', label: 'Not Met' },
-  };
-  const c = config[status] || config.not_met;
-  return <Badge className={`${c.bg} ${c.text} text-[10px]`}>{c.label}</Badge>;
-}
+const STATUS_TONE: Record<string, Tone> = {
+  met: 'emerald',
+  partially_met: 'amber',
+  not_met: 'red',
+};
+
+const STATUS_LABEL: Record<string, string> = {
+  met: 'Met',
+  partially_met: 'Partial',
+  not_met: 'Not Met',
+};
 
 const staggerContainer = {
   hidden: { opacity: 0 },
@@ -95,6 +70,8 @@ const staggerItem = {
   hidden: { opacity: 0, y: 6 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
 };
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
 
 export function AIReviewSheet({
   open,
@@ -108,7 +85,6 @@ export function AIReviewSheet({
   const [expandedAC, setExpandedAC] = useState<string | null>(null);
   const [copiedFeedback, setCopiedFeedback] = useState(false);
 
-  // Sync feedback when result arrives
   if (result?.draft_feedback && !editedFeedback) {
     setEditedFeedback(result.draft_feedback);
   }
@@ -140,8 +116,8 @@ export function AIReviewSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           {/* Drag Handle */}
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
@@ -150,20 +126,12 @@ export function AIReviewSheet({
           {/* Loading State */}
           {isReviewing && (
             <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-              >
-                <Sparkles className="h-10 w-10 text-elec-yellow" />
-              </motion.div>
+              <LoadingState />
               <div className="text-center">
-                <p className="text-lg font-semibold text-white">Analysing Portfolio</p>
-                <p className="text-sm text-white mt-1">
-                  Reviewing evidence against qualification criteria...
+                <p className="text-[16px] font-semibold text-white">Analysing Portfolio</p>
+                <p className="text-[13px] text-white/55 mt-1">
+                  Reviewing evidence against qualification criteria…
                 </p>
-              </div>
-              <div className="w-48">
-                <Progress value={undefined} className="h-1.5" />
               </div>
             </div>
           )}
@@ -172,48 +140,38 @@ export function AIReviewSheet({
           {result && !isReviewing && (
             <>
               {/* Header */}
-              <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full bg-elec-yellow/20 border border-elec-yellow/30 flex items-center justify-center shrink-0">
-                    <Sparkles className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <SheetTitle className="text-lg text-left">AI Portfolio Review</SheetTitle>
-                    {result.processing_time_ms && (
-                      <p className="text-xs text-white flex items-center gap-1 mt-0.5">
-                        <Clock className="h-3 w-3" />
-                        Completed in {(result.processing_time_ms / 1000).toFixed(1)}s
-                      </p>
-                    )}
-                  </div>
-                </div>
+              <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+                <div className={eyebrow}>AI Portfolio Review</div>
+                <SheetTitle className="text-[18px] font-semibold text-white mt-1 text-left">
+                  Review results
+                </SheetTitle>
+                {result.processing_time_ms && (
+                  <p className="text-[11.5px] text-white/50 mt-1 text-left">
+                    Completed in {(result.processing_time_ms / 1000).toFixed(1)}s
+                  </p>
+                )}
               </SheetHeader>
 
               {/* Scrollable Body */}
               <ScrollArea className="flex-1">
                 <motion.div
-                  className="p-4 space-y-5"
+                  className="p-5 space-y-5"
                   variants={staggerContainer}
                   initial="hidden"
                   animate="visible"
                 >
                   {/* Grade Suggestion */}
                   <motion.div variants={staggerItem}>
-                    <div
-                      className={`rounded-xl border p-4 ${GRADE_COLOURS[result.grade_suggestion]?.bg || ''} ${GRADE_COLOURS[result.grade_suggestion]?.border || ''}`}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <p className="text-xs font-medium text-white uppercase tracking-wide">
-                          Suggested Grade
-                        </p>
-                        <Badge
-                          className={`text-sm px-3 py-1 capitalize ${GRADE_COLOURS[result.grade_suggestion]?.bg || ''} ${GRADE_COLOURS[result.grade_suggestion]?.text || ''}`}
-                        >
-                          <Star className="h-3.5 w-3.5 mr-1" />
-                          {result.grade_suggestion.replace('_', ' ')}
-                        </Badge>
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={eyebrow}>Suggested Grade</div>
+                        <Pill tone={GRADE_TONE[result.grade_suggestion] || 'yellow'}>
+                          <span className="capitalize">
+                            {result.grade_suggestion.replace('_', ' ')}
+                          </span>
+                        </Pill>
                       </div>
-                      <p className="text-sm text-white leading-relaxed">
+                      <p className="text-[13px] text-white leading-relaxed">
                         {result.grade_justification}
                       </p>
                     </div>
@@ -221,133 +179,137 @@ export function AIReviewSheet({
 
                   {/* Quality Assessment */}
                   <motion.div variants={staggerItem}>
-                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                      Quality Assessment
-                    </h3>
-                    <div className="space-y-3">
-                      {(['evidence_range', 'reflection_quality', 'technical_depth'] as const).map(
-                        (key) => {
-                          const value = result.quality[key];
-                          const label = key
-                            .replace(/_/g, ' ')
-                            .replace(/\b\w/g, (c) => c.toUpperCase());
-                          return (
-                            <div key={key}>
-                              <div className="flex items-center justify-between mb-1">
-                                <span className="text-xs text-white">{label}</span>
-                                <span
-                                  className={`text-xs font-semibold capitalize ${QUALITY_COLOURS[value] || ''}`}
-                                >
-                                  {value}
-                                </span>
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className={eyebrow}>Quality Assessment</div>
+                      <div className="space-y-3 mt-3">
+                        {(['evidence_range', 'reflection_quality', 'technical_depth'] as const).map(
+                          (key) => {
+                            const value = result.quality[key];
+                            const label = key
+                              .replace(/_/g, ' ')
+                              .replace(/\b\w/g, (c) => c.toUpperCase());
+                            return (
+                              <div key={key}>
+                                <div className="flex items-center justify-between mb-1.5">
+                                  <span className="text-[12px] text-white/70">{label}</span>
+                                  <Pill tone={QUALITY_TONE[value] || 'yellow'}>
+                                    <span className="capitalize">{value}</span>
+                                  </Pill>
+                                </div>
+                                <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                                  <motion.div
+                                    className={`h-full rounded-full ${QUALITY_BAR[value] || 'bg-white/30'}`}
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${QUALITY_WIDTH[value] || 0}%` }}
+                                    transition={{ duration: 0.5, delay: 0.2 }}
+                                  />
+                                </div>
                               </div>
-                              <div className="h-2 rounded-full bg-white/10 overflow-hidden">
-                                <motion.div
-                                  className={`h-full rounded-full ${
-                                    value === 'excellent'
-                                      ? 'bg-emerald-500'
-                                      : value === 'good'
-                                        ? 'bg-blue-500'
-                                        : value === 'adequate'
-                                          ? 'bg-elec-yellow'
-                                          : 'bg-red-500'
-                                  }`}
-                                  initial={{ width: 0 }}
-                                  animate={{ width: `${QUALITY_WIDTH[value] || 0}%` }}
-                                  transition={{ duration: 0.5, delay: 0.2 }}
-                                />
-                              </div>
-                            </div>
-                          );
-                        }
-                      )}
+                            );
+                          }
+                        )}
+                      </div>
                     </div>
                   </motion.div>
 
                   {/* Criteria Coverage */}
                   <motion.div variants={staggerItem}>
-                    <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                      Criteria Coverage
-                      <Badge className="bg-white/10 text-white text-[10px] ml-auto">
-                        {metCount}/{totalCount} met
-                      </Badge>
-                    </h3>
-                    <div className="mb-3">
-                      <Progress value={coveragePercent} className="h-2" />
-                    </div>
-                    <div className="space-y-1.5">
-                      {result.criteria_analysis.map((ac) => (
-                        <button
-                          key={ac.ac_ref}
-                          className="w-full text-left p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] transition-colors touch-manipulation"
-                          onClick={() => setExpandedAC(expandedAC === ac.ac_ref ? null : ac.ac_ref)}
-                        >
-                          <div className="flex items-center gap-2">
-                            <StatusIcon status={ac.status} />
-                            <span className="text-xs font-medium text-white flex-1 truncate">
-                              AC {ac.ac_ref}
-                            </span>
-                            <StatusBadge status={ac.status} />
-                            {expandedAC === ac.ac_ref ? (
-                              <ChevronUp className="h-3.5 w-3.5 text-white" />
-                            ) : (
-                              <ChevronDown className="h-3.5 w-3.5 text-white" />
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={eyebrow}>Criteria Coverage</div>
+                        <Pill tone="yellow">
+                          {metCount}/{totalCount} met
+                        </Pill>
+                      </div>
+                      <div className="mb-4 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                        <motion.div
+                          className="h-full rounded-full bg-elec-yellow"
+                          initial={{ width: 0 }}
+                          animate={{ width: `${coveragePercent}%` }}
+                          transition={{ duration: 0.6 }}
+                        />
+                      </div>
+                      <div className="space-y-1.5">
+                        {result.criteria_analysis.map((ac) => (
+                          <button
+                            key={ac.ac_ref}
+                            className="w-full text-left p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06] hover:bg-[hsl(0_0%_11%)] transition-colors touch-manipulation"
+                            onClick={() =>
+                              setExpandedAC(expandedAC === ac.ac_ref ? null : ac.ac_ref)
+                            }
+                          >
+                            <div className="flex items-center gap-2">
+                              <span
+                                aria-hidden
+                                className={`inline-block h-1.5 w-1.5 rounded-full shrink-0 ${
+                                  ac.status === 'met'
+                                    ? 'bg-emerald-400'
+                                    : ac.status === 'partially_met'
+                                      ? 'bg-amber-400'
+                                      : 'bg-red-400'
+                                }`}
+                              />
+                              <span className="text-[12.5px] font-medium text-white flex-1 truncate">
+                                AC {ac.ac_ref}
+                              </span>
+                              <Pill tone={STATUS_TONE[ac.status] || 'red'}>
+                                {STATUS_LABEL[ac.status] || 'Not Met'}
+                              </Pill>
+                              <span className="text-[13px] text-white/50">
+                                {expandedAC === ac.ac_ref ? '−' : '+'}
+                              </span>
+                            </div>
+                            {expandedAC === ac.ac_ref && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                transition={{ duration: 0.15 }}
+                                className="mt-2 pt-2 border-t border-white/[0.06]"
+                              >
+                                <p className="text-[12px] text-white/70 leading-relaxed">
+                                  {ac.reasoning}
+                                </p>
+                                {ac.evidence_item_ids.length > 0 && (
+                                  <div className="flex flex-wrap gap-1 mt-2">
+                                    {ac.evidence_item_ids.map((id) => (
+                                      <Pill key={id} tone="yellow">
+                                        {id.slice(0, 8)}…
+                                      </Pill>
+                                    ))}
+                                  </div>
+                                )}
+                              </motion.div>
                             )}
-                          </div>
-                          {expandedAC === ac.ac_ref && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: 'auto', opacity: 1 }}
-                              transition={{ duration: 0.15 }}
-                              className="mt-2 pt-2 border-t border-white/10"
-                            >
-                              <p className="text-xs text-white leading-relaxed">{ac.reasoning}</p>
-                              {ac.evidence_item_ids.length > 0 && (
-                                <div className="flex flex-wrap gap-1 mt-1.5">
-                                  {ac.evidence_item_ids.map((id) => (
-                                    <Badge
-                                      key={id}
-                                      variant="outline"
-                                      className="text-[9px] border-elec-yellow/30 text-elec-yellow"
-                                    >
-                                      <FileText className="h-2.5 w-2.5 mr-0.5" />
-                                      {id.slice(0, 8)}...
-                                    </Badge>
-                                  ))}
-                                </div>
-                              )}
-                            </motion.div>
-                          )}
-                        </button>
-                      ))}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </motion.div>
 
                   {/* Gaps */}
                   {result.gaps.length > 0 && (
                     <motion.div variants={staggerItem}>
-                      <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                        Gaps Identified ({result.gaps.length})
-                      </h3>
-                      <div className="space-y-2">
-                        {result.gaps.map((gap, idx) => (
-                          <div
-                            key={idx}
-                            className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20"
-                          >
-                            <p className="text-xs font-semibold text-amber-400 mb-1">
-                              AC {gap.ac_ref}
-                            </p>
-                            <p className="text-xs text-white mb-1.5">{gap.what_is_missing}</p>
-                            <p className="text-xs text-white flex items-start gap-1">
-                              <TrendingUp className="h-3 w-3 text-elec-yellow mt-0.5 shrink-0" />
-                              {gap.suggestion}
-                            </p>
-                          </div>
-                        ))}
+                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className={eyebrow}>Gaps Identified</div>
+                          <Pill tone="amber">{result.gaps.length}</Pill>
+                        </div>
+                        <div className="space-y-2">
+                          {result.gaps.map((gap, idx) => (
+                            <div
+                              key={idx}
+                              className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20"
+                            >
+                              <p className="text-[12px] font-semibold text-amber-400 mb-1">
+                                AC {gap.ac_ref}
+                              </p>
+                              <p className="text-[12px] text-white/80 mb-1.5">
+                                {gap.what_is_missing}
+                              </p>
+                              <p className="text-[12px] text-white/60">→ {gap.suggestion}</p>
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -358,15 +320,15 @@ export function AIReviewSheet({
                     className="grid grid-cols-1 md:grid-cols-2 gap-4"
                   >
                     {result.strengths.length > 0 && (
-                      <div>
-                        <h3 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                          Strengths
-                        </h3>
-                        <ul className="space-y-1.5">
+                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                        <div className={eyebrow}>Strengths</div>
+                        <ul className="mt-3 space-y-2">
                           {result.strengths.map((s, idx) => (
-                            <li key={idx} className="text-xs text-white flex items-start gap-2">
-                              <CheckCircle2 className="h-3 w-3 text-emerald-400 mt-0.5 shrink-0" />
+                            <li
+                              key={idx}
+                              className="text-[12px] text-white/80 flex items-start gap-2 leading-relaxed"
+                            >
+                              <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0 mt-1.5" />
                               {s}
                             </li>
                           ))}
@@ -374,15 +336,15 @@ export function AIReviewSheet({
                       </div>
                     )}
                     {result.improvements.length > 0 && (
-                      <div>
-                        <h3 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                          Areas for Improvement
-                        </h3>
-                        <ul className="space-y-1.5">
+                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                        <div className={eyebrow}>Areas for Improvement</div>
+                        <ul className="mt-3 space-y-2">
                           {result.improvements.map((imp, idx) => (
-                            <li key={idx} className="text-xs text-white flex items-start gap-2">
-                              <TrendingUp className="h-3 w-3 text-blue-400 mt-0.5 shrink-0" />
+                            <li
+                              key={idx}
+                              className="text-[12px] text-white/80 flex items-start gap-2 leading-relaxed"
+                            >
+                              <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-400 shrink-0 mt-1.5" />
                               {imp}
                             </li>
                           ))}
@@ -393,68 +355,55 @@ export function AIReviewSheet({
 
                   {/* Draft Feedback */}
                   <motion.div variants={staggerItem}>
-                    <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                        Draft Feedback
-                      </h3>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8 text-xs text-white hover:text-elec-yellow"
-                        onClick={handleCopyFeedback}
-                      >
-                        {copiedFeedback ? (
-                          <>
-                            <Check className="h-3 w-3 mr-1" />
-                            Copied
-                          </>
-                        ) : (
-                          <>
-                            <Copy className="h-3 w-3 mr-1" />
-                            Copy
-                          </>
-                        )}
-                      </Button>
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className={eyebrow}>Draft Feedback</div>
+                        <button
+                          type="button"
+                          onClick={handleCopyFeedback}
+                          className="text-[12px] font-medium text-white/70 hover:text-elec-yellow transition-colors touch-manipulation"
+                        >
+                          {copiedFeedback ? 'Copied' : 'Copy'}
+                        </button>
+                      </div>
+                      <textarea
+                        value={editedFeedback}
+                        onChange={(e) => setEditedFeedback(e.target.value)}
+                        className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[160px] resize-none"
+                        placeholder="AI-generated feedback will appear here…"
+                      />
+                      <p className="text-[10px] text-white/40 mt-2">
+                        {editedFeedback.length} characters — edit as needed before applying
+                      </p>
                     </div>
-                    <Textarea
-                      value={editedFeedback}
-                      onChange={(e) => setEditedFeedback(e.target.value)}
-                      className="touch-manipulation text-base min-h-[160px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500 text-white"
-                      placeholder="AI-generated feedback will appear here..."
-                    />
-                    <p className="text-[10px] text-white mt-1">
-                      {editedFeedback.length} characters — edit as needed before applying
-                    </p>
                   </motion.div>
                 </motion.div>
               </ScrollArea>
 
               {/* Footer Actions */}
-              <SheetFooter className="flex-shrink-0 border-t border-border p-4">
+              <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4">
                 <div className="flex gap-2 w-full">
-                  <Button
-                    variant="outline"
-                    className="flex-1 h-11 touch-manipulation text-white"
+                  <button
+                    type="button"
                     onClick={() => onOpenChange(false)}
+                    className="h-11 px-4 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
                   >
                     Close
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="h-11 touch-manipulation border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10"
+                  </button>
+                  <button
+                    type="button"
                     onClick={handleApplyCriteria}
+                    className="h-11 px-4 text-[12.5px] font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/10 rounded-full touch-manipulation transition-colors"
                   >
-                    <CheckCircle2 className="h-4 w-4 mr-1.5" />
                     Apply Criteria
-                  </Button>
-                  <Button
-                    className="flex-1 h-11 touch-manipulation gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                  </button>
+                  <button
+                    type="button"
                     onClick={handleApplyFeedback}
+                    className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                   >
-                    <Sparkles className="h-4 w-4" />
-                    Apply Feedback
-                  </Button>
+                    Apply Feedback →
+                  </button>
                 </div>
               </SheetFooter>
             </>

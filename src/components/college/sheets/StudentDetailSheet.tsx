@@ -3,36 +3,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Card, CardContent } from '@/components/ui/card';
 import { AttendanceHeatmap } from '@/components/college/ui/AttendanceHeatmap';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
 import {
   getInitials,
-  getStatusColour,
-  getRiskBadgeColour,
   formatUKDateShort,
   computeAttendanceRate,
 } from '@/utils/collegeHelpers';
 import { cn } from '@/lib/utils';
 import {
-  Mail,
-  Phone,
-  Calendar,
-  TrendingUp,
-  Clock,
-  Edit,
-  AlertTriangle,
-  CheckCircle2,
-  XCircle,
-  UserMinus,
-  Users,
-  ClipboardList,
-  Target,
-} from 'lucide-react';
+  ListCard,
+  ListRow,
+  Pill,
+  EmptyState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface StudentDetailSheetProps {
   student: CollegeStudent | null;
@@ -85,35 +71,29 @@ export function StudentDetailSheet({
   const progressPercent = student.progress_percent ?? 0;
   const isAtRisk = student.risk_level === 'High' || student.risk_level === 'Medium';
 
-  const getAttendanceStatusIcon = (status: string | null) => {
-    switch (status) {
-      case 'Present':
-        return <CheckCircle2 className="h-4 w-4 text-success" />;
-      case 'Absent':
-        return <XCircle className="h-4 w-4 text-destructive" />;
-      case 'Late':
-        return <AlertTriangle className="h-4 w-4 text-warning" />;
-      case 'Authorised':
-        return <Calendar className="h-4 w-4 text-info" />;
-      default:
-        return <Clock className="h-4 w-4 text-white" />;
-    }
-  };
+  const statusTone: Tone =
+    student.status === 'Active'
+      ? isAtRisk
+        ? 'amber'
+        : 'green'
+      : student.status === 'Withdrawn'
+        ? 'red'
+        : 'yellow';
 
-  const getAttendanceStatusColour = (status: string | null) => {
-    switch (status) {
-      case 'Present':
-        return 'bg-success/10 text-success border-success/20';
-      case 'Absent':
-        return 'bg-destructive/10 text-destructive border-destructive/20';
-      case 'Late':
-        return 'bg-warning/10 text-warning border-warning/20';
-      case 'Authorised':
-        return 'bg-info/10 text-info border-info/20';
-      default:
-        return 'bg-muted text-white';
-    }
-  };
+  const attendanceTone = (s: string | null): Tone =>
+    s === 'Present' ? 'green' : s === 'Absent' ? 'red' : s === 'Late' ? 'amber' : 'blue';
+
+  const targetTone = (s: string): Tone =>
+    s === 'Achieved'
+      ? 'green'
+      : s === 'Overdue'
+        ? 'red'
+        : s === 'In Progress'
+          ? 'blue'
+          : 'yellow';
+
+  const attendancePctTone = attendanceRate >= 90 ? 'text-emerald-400' : attendanceRate >= 80 ? 'text-amber-400' : 'text-red-400';
+  const progressPctTone = progressPercent >= 70 ? 'text-emerald-400' : progressPercent >= 50 ? 'text-amber-400' : 'text-red-400';
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -125,20 +105,9 @@ export function StudentDetailSheet({
           </div>
 
           {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-5">
             <div className="flex items-start gap-4">
-              <Avatar
-                className={cn(
-                  'h-16 w-16 shrink-0 ring-2 ring-offset-2 ring-offset-background',
-                  student.status === 'Active'
-                    ? isAtRisk
-                      ? 'ring-warning'
-                      : 'ring-success'
-                    : student.status === 'Withdrawn'
-                      ? 'ring-destructive'
-                      : 'ring-muted'
-                )}
-              >
+              <Avatar className="h-16 w-16 shrink-0 ring-1 ring-white/[0.08]">
                 <AvatarImage src={student.photo_url ?? undefined} />
                 <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-lg font-semibold">
                   {getInitials(student.name)}
@@ -146,64 +115,47 @@ export function StudentDetailSheet({
               </Avatar>
 
               <div className="flex-1 min-w-0">
-                <SheetTitle className="text-xl text-left">{student.name}</SheetTitle>
-                {student.uln && <p className="text-sm text-white mt-0.5">ULN: {student.uln}</p>}
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <Badge variant="outline" className={getStatusColour(student.status)}>
-                    {student.status}
-                  </Badge>
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Student
+                </div>
+                <SheetTitle className="mt-1 text-xl text-left">{student.name}</SheetTitle>
+                {student.uln && (
+                  <p className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                    ULN · {student.uln}
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  <Pill tone={statusTone}>{student.status}</Pill>
                   {isAtRisk && (
-                    <Badge
-                      variant="outline"
-                      className={cn(
-                        getRiskBadgeColour(student.risk_level),
-                        'flex items-center gap-1'
-                      )}
-                    >
-                      <AlertTriangle className="h-3 w-3" />
-                      {student.risk_level} Risk
-                    </Badge>
+                    <Pill tone={student.risk_level === 'High' ? 'red' : 'amber'}>
+                      {student.risk_level} risk
+                    </Pill>
                   )}
-                  <Badge variant="secondary">{cohortName}</Badge>
+                  <Pill tone="yellow">{cohortName}</Pill>
                 </div>
               </div>
             </div>
 
             {/* Quick Actions */}
-            <div className="flex gap-2 mt-4">
+            <div className="flex items-center gap-4 mt-5">
               {student.phone && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 h-11 touch-manipulation gap-2"
-                  asChild
+                <a
+                  href={`tel:${student.phone}`}
+                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
                 >
-                  <a href={`tel:${student.phone}`}>
-                    <Phone className="h-4 w-4" />
-                    Call
-                  </a>
-                </Button>
-              )}
-              <Button
-                variant="outline"
-                size="sm"
-                className="flex-1 h-11 touch-manipulation gap-2"
-                asChild
-              >
-                <a href={`mailto:${student.email}`}>
-                  <Mail className="h-4 w-4" />
-                  Email
+                  Call
                 </a>
-              </Button>
+              )}
+              <a
+                href={`mailto:${student.email}`}
+                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+              >
+                Email
+              </a>
               {isAtRisk && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-11 touch-manipulation gap-2 border-warning/30 text-warning"
-                >
-                  <AlertTriangle className="h-4 w-4" />
-                  <span className="hidden sm:inline">Flag</span>
-                </Button>
+                <span className="text-[12.5px] font-medium text-amber-400">
+                  Flagged
+                </span>
               )}
             </div>
           </SheetHeader>
@@ -214,36 +166,21 @@ export function StudentDetailSheet({
             onValueChange={setActiveTab}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <TabsList className="w-full justify-start gap-0 h-auto p-1 bg-muted/50 rounded-none border-b border-border flex-shrink-0">
-              <TabsTrigger
-                value="overview"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Overview
-              </TabsTrigger>
-              <TabsTrigger
-                value="attendance"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Attendance
-              </TabsTrigger>
-              <TabsTrigger
-                value="ilp"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                ILP
-              </TabsTrigger>
-              <TabsTrigger
-                value="notes"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Notes
-              </TabsTrigger>
+            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06] flex-shrink-0">
+              {['overview', 'attendance', 'ilp', 'notes'].map((tab) => (
+                <TabsTrigger
+                  key={tab}
+                  value={tab}
+                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--elec-yellow))] rounded-none capitalize"
+                >
+                  {tab}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
             <div className="flex-1 overflow-y-auto overscroll-contain">
               <AnimatePresence mode="wait">
-                {/* Overview Tab */}
+                {/* Overview */}
                 {activeTab === 'overview' && (
                   <motion.div
                     key="overview"
@@ -252,117 +189,106 @@ export function StudentDetailSheet({
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5 space-y-5"
                   >
                     {/* Contact Details */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                          Contact Details
-                        </h4>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex items-center gap-3 text-white">
-                            <Mail className="h-4 w-4 shrink-0" />
-                            <span className="truncate">{student.email}</span>
-                          </div>
-                          {student.phone && (
-                            <div className="flex items-center gap-3 text-white">
-                              <Phone className="h-4 w-4 shrink-0" />
-                              <span>{student.phone}</span>
-                            </div>
-                          )}
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Contact
+                      </div>
+                      <div className="mt-3 space-y-2 text-[13px]">
+                        <div className="flex items-center justify-between">
+                          <span className="text-white/50">Email</span>
+                          <a
+                            href={`mailto:${student.email}`}
+                            className="text-white hover:text-elec-yellow truncate ml-3 max-w-[60%]"
+                          >
+                            {student.email}
+                          </a>
                         </div>
-                      </CardContent>
-                    </Card>
+                        {student.phone && (
+                          <div className="flex items-center justify-between">
+                            <span className="text-white/50">Phone</span>
+                            <a
+                              href={`tel:${student.phone}`}
+                              className="text-white hover:text-elec-yellow tabular-nums"
+                            >
+                              {student.phone}
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </div>
 
-                    {/* Enrolment Details */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                          Enrolment
-                        </h4>
-                        <div className="grid grid-cols-2 gap-3 text-sm">
-                          <div>
-                            <p className="text-white text-xs">Cohort</p>
-                            <p className="text-white font-medium">{cohortName}</p>
-                          </div>
-                          <div>
-                            <p className="text-white text-xs">Status</p>
-                            <p className="text-white font-medium">{student.status}</p>
-                          </div>
-                          <div>
-                            <p className="text-white text-xs">Start Date</p>
-                            <p className="text-white font-medium">
-                              {formatUKDateShort(student.start_date)}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-white text-xs">Expected End</p>
-                            <p className="text-white font-medium">
-                              {formatUKDateShort(student.expected_end_date)}
-                            </p>
+                    {/* Enrolment */}
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Enrolment
+                      </div>
+                      <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 text-[13px]">
+                        <div>
+                          <div className="text-[11px] text-white/40 uppercase tracking-[0.14em]">Cohort</div>
+                          <div className="mt-1 text-white font-medium">{cohortName}</div>
+                        </div>
+                        <div>
+                          <div className="text-[11px] text-white/40 uppercase tracking-[0.14em]">Status</div>
+                          <div className="mt-1 text-white font-medium">{student.status}</div>
+                        </div>
+                        <div>
+                          <div className="text-[11px] text-white/40 uppercase tracking-[0.14em]">Start</div>
+                          <div className="mt-1 text-white font-medium tabular-nums">
+                            {formatUKDateShort(student.start_date)}
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                        <div>
+                          <div className="text-[11px] text-white/40 uppercase tracking-[0.14em]">Expected End</div>
+                          <div className="mt-1 text-white font-medium tabular-nums">
+                            {formatUKDateShort(student.expected_end_date)}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
                     {/* Progress */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                          Progress
-                        </h4>
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-white">Overall Progress</span>
-                            <span className="text-lg font-bold text-white">{progressPercent}%</span>
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Progress
+                      </div>
+                      <div className="mt-3 flex items-baseline justify-between">
+                        <span className="text-[13px] text-white/60">Overall</span>
+                        <span className={cn('text-3xl font-semibold tabular-nums', progressPctTone)}>
+                          {progressPercent}%
+                        </span>
+                      </div>
+                      <div className="mt-2 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-elec-yellow/80 rounded-full transition-all"
+                          style={{ width: `${progressPercent}%` }}
+                        />
+                      </div>
+                      <div className="mt-4 pt-4 border-t border-white/[0.06] grid grid-cols-2 gap-4 text-[12px]">
+                        <div>
+                          <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                            Attendance
                           </div>
-                          <Progress value={progressPercent} className="h-2" />
-
-                          <div className="grid grid-cols-2 gap-3 pt-2">
-                            <div className="flex items-center gap-2">
-                              <Clock
-                                className={cn(
-                                  'h-4 w-4',
-                                  attendanceRate >= 90
-                                    ? 'text-success'
-                                    : attendanceRate >= 80
-                                      ? 'text-warning'
-                                      : 'text-destructive'
-                                )}
-                              />
-                              <div>
-                                <p className="text-lg font-bold text-white">{attendanceRate}%</p>
-                                <p className="text-xs text-white">Attendance</p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <TrendingUp
-                                className={cn(
-                                  'h-4 w-4',
-                                  progressPercent >= 70
-                                    ? 'text-success'
-                                    : progressPercent >= 50
-                                      ? 'text-warning'
-                                      : 'text-destructive'
-                                )}
-                              />
-                              <div>
-                                <p className="text-lg font-bold text-white">{progressPercent}%</p>
-                                <p className="text-xs text-white">Complete</p>
-                              </div>
-                            </div>
+                          <div className={cn('mt-1 text-2xl font-semibold tabular-nums leading-none', attendancePctTone)}>
+                            {attendanceRate}%
                           </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                        <div>
+                          <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                            Complete
+                          </div>
+                          <div className={cn('mt-1 text-2xl font-semibold tabular-nums leading-none', progressPctTone)}>
+                            {progressPercent}%
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </motion.div>
                 )}
 
-                {/* Attendance Tab */}
+                {/* Attendance */}
                 {activeTab === 'attendance' && (
                   <motion.div
                     key="attendance"
@@ -371,109 +297,86 @@ export function StudentDetailSheet({
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5 space-y-5"
                   >
-                    {/* Attendance Summary */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4">
-                        <div className="flex items-center justify-between mb-3">
-                          <h4 className="text-sm font-semibold text-white">Attendance Rate</h4>
-                          <span
-                            className={cn(
-                              'text-2xl font-bold',
-                              attendanceRate >= 90
-                                ? 'text-success'
-                                : attendanceRate >= 80
-                                  ? 'text-warning'
-                                  : 'text-destructive'
-                            )}
-                          >
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="flex items-baseline justify-between">
+                        <div>
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                            Attendance Rate
+                          </div>
+                          <div className={cn('mt-1 text-4xl font-semibold tabular-nums leading-none', attendancePctTone)}>
                             {attendanceRate}%
-                          </span>
+                          </div>
                         </div>
-                        <Progress
-                          value={attendanceRate}
-                          className={cn(
-                            'h-2',
-                            attendanceRate < 80 && '[&>div]:bg-destructive',
-                            attendanceRate >= 80 && attendanceRate < 90 && '[&>div]:bg-warning'
-                          )}
-                        />
-                        <div className="flex justify-between text-xs text-white mt-2">
-                          <span>{studentAttendance.length} sessions recorded</span>
-                          <span>
-                            {studentAttendance.filter((a) => a.status === 'Present').length} present
-                          </span>
+                        <div className="text-right text-[11px] text-white/50 tabular-nums">
+                          <div>{studentAttendance.length} sessions</div>
+                          <div>
+                            {studentAttendance.filter((a) => a.status === 'Present').length}{' '}
+                            present
+                          </div>
                         </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* Attendance Heatmap */}
-                    <Card className="border-white/10">
-                      <CardContent className="p-4">
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-3">
-                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                          Attendance Pattern
-                        </h4>
-                        <AttendanceHeatmap
-                          records={studentAttendance.map((a) => ({
-                            date: a.date,
-                            status: a.status,
-                          }))}
-                          weeks={8}
-                        />
-                      </CardContent>
-                    </Card>
-
-                    {/* Recent Records */}
-                    <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                      Recent Records
-                    </h4>
-                    <div className="space-y-2">
-                      {studentAttendance.slice(0, 10).map((record) => (
+                      </div>
+                      <div className="mt-4 h-1 bg-white/[0.06] rounded-full overflow-hidden">
                         <div
-                          key={record.id}
-                          className="flex items-center gap-3 p-3 rounded-lg bg-elec-gray border border-white/10"
-                        >
-                          {getAttendanceStatusIcon(record.status)}
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white">
-                              {new Date(record.date).toLocaleDateString('en-GB', {
+                          className={cn(
+                            'h-full rounded-full transition-all',
+                            attendanceRate >= 90
+                              ? 'bg-emerald-400/80'
+                              : attendanceRate >= 80
+                                ? 'bg-amber-400/80'
+                                : 'bg-red-400/80'
+                          )}
+                          style={{ width: `${attendanceRate}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                        Attendance Pattern
+                      </div>
+                      <AttendanceHeatmap
+                        records={studentAttendance.map((a) => ({
+                          date: a.date,
+                          status: a.status,
+                        }))}
+                        weeks={8}
+                      />
+                    </div>
+
+                    <div>
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                        Recent Records
+                      </div>
+                      {studentAttendance.length === 0 ? (
+                        <EmptyState title="No attendance records yet" />
+                      ) : (
+                        <ListCard>
+                          {studentAttendance.slice(0, 10).map((record) => (
+                            <ListRow
+                              key={record.id}
+                              accent={attendanceTone(record.status)}
+                              title={new Date(record.date).toLocaleDateString('en-GB', {
                                 weekday: 'long',
                                 day: 'numeric',
                                 month: 'short',
                               })}
-                            </p>
-                            {record.notes && (
-                              <p className="text-xs text-white truncate">{record.notes}</p>
-                            )}
-                          </div>
-                          <Badge
-                            variant="outline"
-                            className={cn(
-                              getAttendanceStatusColour(record.status),
-                              'text-xs shrink-0'
-                            )}
-                          >
-                            {record.status}
-                          </Badge>
-                        </div>
-                      ))}
-
-                      {studentAttendance.length === 0 && (
-                        <Card className="border-white/10">
-                          <CardContent className="p-6 text-center">
-                            <Clock className="h-8 w-8 mx-auto text-white mb-2" />
-                            <p className="text-sm text-white">No attendance records yet.</p>
-                          </CardContent>
-                        </Card>
+                              subtitle={record.notes || undefined}
+                              trailing={
+                                <Pill tone={attendanceTone(record.status)}>
+                                  {record.status}
+                                </Pill>
+                              }
+                            />
+                          ))}
+                        </ListCard>
                       )}
                     </div>
                   </motion.div>
                 )}
 
-                {/* ILP Tab */}
+                {/* ILP */}
                 {activeTab === 'ilp' && (
                   <motion.div
                     key="ilp"
@@ -482,122 +385,84 @@ export function StudentDetailSheet({
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5 space-y-5"
                   >
                     {studentILP ? (
                       <>
-                        {/* ILP Summary */}
-                        <Card className="border-white/10">
-                          <CardContent className="p-4 space-y-3">
-                            <div className="flex items-center justify-between">
-                              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                                <ClipboardList className="h-4 w-4 text-elec-yellow" />
-                                Individual Learning Plan
-                              </h4>
-                              <Badge
-                                variant="outline"
-                                className={getStatusColour(studentILP.status)}
-                              >
-                                {studentILP.status}
-                              </Badge>
+                        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                          <div className="flex items-baseline justify-between">
+                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                              Individual Learning Plan
                             </div>
-                            <div className="grid grid-cols-2 gap-3 text-sm">
-                              <div>
-                                <p className="text-white text-xs">Next Review</p>
-                                <p className="text-white font-medium">
-                                  {formatUKDateShort(studentILP.review_date)}
-                                </p>
+                            <Pill tone={studentILP.status === 'Active' ? 'green' : 'yellow'}>
+                              {studentILP.status}
+                            </Pill>
+                          </div>
+                          <div className="mt-4 grid grid-cols-2 gap-4 text-[12.5px]">
+                            <div>
+                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                                Next Review
                               </div>
-                              <div>
-                                <p className="text-white text-xs">Last Reviewed</p>
-                                <p className="text-white font-medium">
-                                  {formatUKDateShort(studentILP.last_reviewed)}
-                                </p>
+                              <div className="mt-1 text-white font-medium tabular-nums">
+                                {formatUKDateShort(studentILP.review_date)}
                               </div>
                             </div>
-                            {studentILP.support_needs && (
-                              <div>
-                                <p className="text-white text-xs mb-1">Support Needs</p>
-                                <p className="text-sm text-white bg-elec-gray rounded-lg p-2">
-                                  {studentILP.support_needs}
-                                </p>
+                            <div>
+                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                                Last Reviewed
                               </div>
-                            )}
-                          </CardContent>
-                        </Card>
+                              <div className="mt-1 text-white font-medium tabular-nums">
+                                {formatUKDateShort(studentILP.last_reviewed)}
+                              </div>
+                            </div>
+                          </div>
+                          {studentILP.support_needs && (
+                            <div className="mt-4 pt-4 border-t border-white/[0.06]">
+                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/40 mb-1.5">
+                                Support Needs
+                              </div>
+                              <p className="text-[13px] text-white/70 leading-relaxed">
+                                {studentILP.support_needs}
+                              </p>
+                            </div>
+                          )}
+                        </div>
 
-                        {/* Targets */}
-                        <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                          Targets
-                        </h4>
-                        <div className="space-y-2">
-                          {studentILP.targets?.map((target, i) => (
-                            <div
-                              key={i}
-                              className="flex items-start gap-3 p-3 rounded-lg bg-elec-gray border border-white/10"
-                            >
-                              <Target
-                                className={cn(
-                                  'h-4 w-4 mt-0.5 shrink-0',
-                                  target.status === 'Achieved'
-                                    ? 'text-success'
-                                    : target.status === 'Overdue'
-                                      ? 'text-destructive'
-                                      : target.status === 'In Progress'
-                                        ? 'text-info'
-                                        : 'text-white'
-                                )}
-                              />
-                              <div className="flex-1 min-w-0">
-                                <p className="text-sm text-white">{target.description}</p>
-                                <p className="text-xs text-white mt-1">
-                                  Due: {formatUKDateShort(target.target_date)}
-                                </p>
-                              </div>
-                              <Badge
-                                variant="outline"
-                                className={cn(
-                                  'text-xs shrink-0',
-                                  target.status === 'Achieved' &&
-                                    'bg-success/10 text-success border-success/20',
-                                  target.status === 'Overdue' &&
-                                    'bg-destructive/10 text-destructive border-destructive/20',
-                                  target.status === 'In Progress' &&
-                                    'bg-info/10 text-info border-info/20',
-                                  target.status === 'Pending' && 'bg-muted text-white'
-                                )}
-                              >
-                                {target.status}
-                              </Badge>
-                            </div>
-                          ))}
-
-                          {(!studentILP.targets || studentILP.targets.length === 0) && (
-                            <Card className="border-white/10">
-                              <CardContent className="p-6 text-center">
-                                <Target className="h-8 w-8 mx-auto text-white mb-2" />
-                                <p className="text-sm text-white">No targets set yet.</p>
-                              </CardContent>
-                            </Card>
+                        <div>
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                            Targets
+                          </div>
+                          {!studentILP.targets || studentILP.targets.length === 0 ? (
+                            <EmptyState title="No targets set yet" />
+                          ) : (
+                            <ListCard>
+                              {studentILP.targets.map((target, i) => (
+                                <ListRow
+                                  key={i}
+                                  accent={targetTone(target.status)}
+                                  title={target.description}
+                                  subtitle={`Due ${formatUKDateShort(target.target_date)}`}
+                                  trailing={
+                                    <Pill tone={targetTone(target.status)}>
+                                      {target.status}
+                                    </Pill>
+                                  }
+                                />
+                              ))}
+                            </ListCard>
                           )}
                         </div>
                       </>
                     ) : (
-                      <Card className="border-white/10">
-                        <CardContent className="p-8 text-center space-y-3">
-                          <ClipboardList className="h-12 w-12 mx-auto text-white" />
-                          <p className="text-white font-medium">No Active ILP</p>
-                          <p className="text-sm text-white">
-                            This student does not have an active Individual Learning Plan.
-                          </p>
-                        </CardContent>
-                      </Card>
+                      <EmptyState
+                        title="No active ILP"
+                        description="This student does not have an active Individual Learning Plan."
+                      />
                     )}
                   </motion.div>
                 )}
 
-                {/* Notes Tab */}
+                {/* Notes */}
                 {activeTab === 'notes' && (
                   <motion.div
                     key="notes"
@@ -606,51 +471,40 @@ export function StudentDetailSheet({
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5"
                   >
-                    <Card className="border-white/10">
-                      <CardContent className="p-8 text-center space-y-3">
-                        <ClipboardList className="h-12 w-12 mx-auto text-white" />
-                        <p className="text-white font-medium">Notes Coming Soon</p>
-                        <p className="text-sm text-white">
-                          Student notes and communication log will appear here.
-                        </p>
-                      </CardContent>
-                    </Card>
+                    <EmptyState
+                      title="Notes coming soon"
+                      description="Student notes and communication log will appear here."
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
           </Tabs>
 
-          {/* Footer Actions */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation gap-2"
-              onClick={() => onEdit?.(student)}
-            >
-              <Edit className="h-4 w-4" />
-              Edit
-            </Button>
-            {student.status === 'Active' && (
-              <Button
-                variant="outline"
-                className="h-11 touch-manipulation gap-2 border-destructive/30 text-destructive hover:bg-destructive/10"
-                onClick={() => onWithdraw?.(student)}
-              >
-                <UserMinus className="h-4 w-4" />
-                Withdraw
-              </Button>
-            )}
-            <Button
-              variant="outline"
-              className="h-11 touch-manipulation gap-2"
+          {/* Footer */}
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-5 flex-row items-center justify-end gap-4">
+            <button
               onClick={() => onOpenChange(false)}
+              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
             >
-              <Users className="h-4 w-4" />
-              Reassign
-            </Button>
+              Close
+            </button>
+            {student.status === 'Active' && (
+              <button
+                onClick={() => onWithdraw?.(student)}
+                className="text-[12.5px] font-medium text-red-400 hover:text-red-300 transition-colors touch-manipulation"
+              >
+                Withdraw
+              </button>
+            )}
+            <button
+              onClick={() => onEdit?.(student)}
+              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
+            >
+              Edit →
+            </button>
           </SheetFooter>
         </div>
       </SheetContent>

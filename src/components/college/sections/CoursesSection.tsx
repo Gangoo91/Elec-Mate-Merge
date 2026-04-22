@@ -1,25 +1,7 @@
 import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import { motion } from 'framer-motion';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
-import {
-  Search,
-  Plus,
-  BookOpen,
-  Clock,
-  Users,
-  Award,
-  MoreVertical,
-  Filter,
-  GraduationCap,
-  Layers,
-} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,12 +9,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  PageFrame,
+  PageHero,
+  FilterBar,
+  EmptyState,
+  Pill,
+  itemVariants,
+} from '@/components/college/primitives';
 
 export function CoursesSection() {
   const { courses, cohorts, students } = useCollegeSupabase();
@@ -46,42 +29,13 @@ export function CoursesSection() {
       course.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       (course.code || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
       (course.awarding_body || '').toLowerCase().includes(searchQuery.toLowerCase());
-
     const matchesLevel = filterLevel === 'all' || (course.level || '') === filterLevel;
     const matchesStatus = filterStatus === 'all' || course.status === filterStatus;
-
     return matchesSearch && matchesLevel && matchesStatus;
   });
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Active':
-        return 'bg-success/10 text-success border-success/20';
-      case 'Draft':
-        return 'bg-warning/10 text-warning border-warning/20';
-      case 'Archived':
-        return 'bg-muted text-white';
-      default:
-        return 'bg-muted text-white';
-    }
-  };
-
-  const getLevelColor = (level: string | null) => {
-    switch (level) {
-      case '2':
-        return 'bg-info/10 text-info';
-      case '3':
-        return 'bg-primary/10 text-primary';
-      case '4':
-        return 'bg-purple-500/10 text-purple-500';
-      default:
-        return 'bg-muted text-white';
-    }
-  };
-
-  const getCohortCount = (courseId: string) => {
-    return cohorts.filter((c) => c.course_id === courseId && c.status === 'Active').length;
-  };
+  const getCohortCount = (courseId: string) =>
+    cohorts.filter((c) => c.course_id === courseId && c.status === 'Active').length;
 
   const getStudentCount = (courseId: string) => {
     const courseCohorts = cohorts.filter((c) => c.course_id === courseId);
@@ -90,187 +44,167 @@ export function CoursesSection() {
     ).length;
   };
 
+  const activeCount = courses.filter((c) => c.status === 'Active').length;
+
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <CollegeSectionHeader
-        title="Courses"
-        description={`${courses.filter((c) => c.status === 'Active').length} active courses`}
-        actions={
-          <Button
-            className="gap-2 h-11 touch-manipulation"
-            onClick={() =>
-              toast({ title: 'Add Course', description: 'Course creation dialog is coming soon.' })
-            }
-          >
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">Add Course</span>
-          </Button>
-        }
-      />
+    <PageFrame>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Curriculum · Courses"
+          title="Qualifications & units"
+          description={`${activeCount} active course${activeCount === 1 ? '' : 's'}.`}
+          tone="emerald"
+          actions={
+            <button
+              onClick={() =>
+                toast({ title: 'Add Course', description: 'Course creation dialog is coming soon.' })
+              }
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+            >
+              Add course →
+            </button>
+          }
+        />
+      </motion.div>
 
-      {/* Search and Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search courses..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn(!searchQuery && 'pl-9')}
-          />
-        </div>
-        <Select value={filterLevel} onValueChange={setFilterLevel}>
-          <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
-            <GraduationCap className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Level" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Levels</SelectItem>
-            <SelectItem value="2">Level 2</SelectItem>
-            <SelectItem value="3">Level 3</SelectItem>
-            <SelectItem value="4">Level 4</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="Active">Active</SelectItem>
-            <SelectItem value="Draft">Draft</SelectItem>
-            <SelectItem value="Archived">Archived</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <motion.div variants={itemVariants}>
+        <FilterBar
+          tabs={[
+            { value: 'all', label: 'All', count: courses.length },
+            { value: 'Active', label: 'Active', count: activeCount },
+            {
+              value: 'Draft',
+              label: 'Draft',
+              count: courses.filter((c) => c.status === 'Draft').length,
+            },
+            {
+              value: 'Archived',
+              label: 'Archived',
+              count: courses.filter((c) => c.status === 'Archived').length,
+            },
+          ]}
+          activeTab={filterStatus}
+          onTabChange={setFilterStatus}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search courses, codes or awarding body…"
+          actions={
+            <select
+              value={filterLevel}
+              onChange={(e) => setFilterLevel(e.target.value)}
+              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+            >
+              <option value="all">All Levels</option>
+              <option value="2">Level 2</option>
+              <option value="3">Level 3</option>
+              <option value="4">Level 4</option>
+            </select>
+          }
+        />
+      </motion.div>
 
-      {/* Courses Grid */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {filteredCourses.map((course) => {
-          const cohortCount = getCohortCount(course.id);
-          const studentCount = getStudentCount(course.id);
+      {filteredCourses.length === 0 ? (
+        <EmptyState
+          title="No courses found"
+          description="Try adjusting your filters."
+        />
+      ) : (
+        <motion.div variants={itemVariants}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            {filteredCourses.map((course, i) => {
+              const cohortCount = getCohortCount(course.id);
+              const studentCount = getStudentCount(course.id);
+              const levelTone =
+                course.level === '2'
+                  ? 'blue'
+                  : course.level === '3'
+                    ? 'yellow'
+                    : course.level === '4'
+                      ? 'purple'
+                      : 'amber';
 
-          return (
-            <Card key={course.id} className="hover:shadow-md transition-shadow touch-manipulation">
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between gap-2 mb-3">
-                  <div className="flex items-start gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <BookOpen className="h-5 w-5 text-primary" />
+              return (
+                <div
+                  key={course.id}
+                  className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 flex flex-col min-h-[200px]"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        {String(i + 1).padStart(2, '0')} · {course.code || 'Course'}
+                      </div>
+                      <h3 className="mt-1.5 text-lg font-semibold text-white tracking-tight leading-snug">
+                        {course.name}
+                      </h3>
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-white">{course.name}</h3>
-                      <p className="text-sm text-white">{course.code || ''}</p>
-                    </div>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation shrink-0"
+                          aria-label="Options"
+                        >
+                          ⋯
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          className="h-11 touch-manipulation"
+                          onClick={() =>
+                            toast({
+                              title: course.name,
+                              description: `${course.awarding_body || 'Unknown'} · Level ${course.level || '?'} · ${course.duration_months} months`,
+                            })
+                          }
+                        >
+                          View details
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11 touch-manipulation"
+                          onClick={() =>
+                            toast({ title: 'Edit Course', description: 'Coming soon.' })
+                          }
+                        >
+                          Edit course
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11 touch-manipulation"
+                          onClick={() =>
+                            toast({
+                              title: 'Cohorts',
+                              description: `${cohortCount} active cohort${cohortCount !== 1 ? 's' : ''}.`,
+                            })
+                          }
+                        >
+                          View cohorts
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-11 w-11 touch-manipulation">
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem
-                        className="h-11 touch-manipulation"
-                        onClick={() =>
-                          toast({
-                            title: course.name,
-                            description: `${course.awarding_body || 'Unknown'} - Level ${course.level || '?'} - ${course.duration_months} months`,
-                          })
-                        }
-                      >
-                        View Details
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="h-11 touch-manipulation"
-                        onClick={() =>
-                          toast({
-                            title: 'Edit Course',
-                            description: 'Course editing is coming soon.',
-                          })
-                        }
-                      >
-                        Edit Course
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="h-11 touch-manipulation"
-                        onClick={() =>
-                          toast({
-                            title: 'View Cohorts',
-                            description: `${cohortCount} active cohort${cohortCount !== 1 ? 's' : ''} for ${course.name}`,
-                          })
-                        }
-                      >
-                        View Cohorts
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="h-11 touch-manipulation"
-                        onClick={() =>
-                          toast({ title: 'Scheme of Work', description: 'Coming soon.' })
-                        }
-                      >
-                        Scheme of Work
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="h-11 touch-manipulation"
-                        onClick={() =>
-                          toast({ title: 'Assessment Plan', description: 'Coming soon.' })
-                        }
-                      >
-                        Assessment Plan
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
 
-                <div className="flex flex-wrap gap-2 mb-3">
-                  <Badge variant="outline" className={getStatusColor(course.status)}>
-                    {course.status}
-                  </Badge>
-                  <Badge variant="secondary" className={getLevelColor(course.level)}>
-                    Level {course.level || ''}
-                  </Badge>
-                </div>
-
-                <div className="space-y-2 mb-3">
-                  <div className="flex items-center gap-2 text-sm text-white">
-                    <Award className="h-3.5 w-3.5" />
-                    <span>{course.awarding_body || ''}</span>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    <Pill tone={course.status === 'Active' ? 'green' : course.status === 'Draft' ? 'amber' : 'yellow'}>
+                      {course.status}
+                    </Pill>
+                    <Pill tone={levelTone}>Level {course.level || '?'}</Pill>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-white">
-                    <Clock className="h-3.5 w-3.5" />
-                    <span>{course.duration_months} months</span>
-                  </div>
-                </div>
 
-                <div className="flex items-center justify-between pt-3 border-t">
-                  <div className="flex items-center gap-4 text-sm">
-                    <div className="flex items-center gap-1 text-white">
-                      <Layers className="h-3.5 w-3.5" />
-                      <span>{cohortCount} cohorts</span>
-                    </div>
-                    <div className="flex items-center gap-1 text-white">
-                      <Users className="h-3.5 w-3.5" />
-                      <span>{studentCount} students</span>
-                    </div>
+                  <div className="mt-3 space-y-1 text-[11.5px] text-white/50">
+                    <div className="truncate">{course.awarding_body || 'Awarding body'}</div>
+                    <div className="tabular-nums">{course.duration_months} months duration</div>
+                  </div>
+
+                  <div className="flex-grow" />
+
+                  <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[12px] text-white/60">
+                    <span className="tabular-nums">{cohortCount} cohorts</span>
+                    <span className="tabular-nums">{studentCount} students</span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-
-        {filteredCourses.length === 0 && (
-          <Card className="col-span-full">
-            <CardContent className="p-8 text-center">
-              <p className="text-white">No courses found matching your criteria.</p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </div>
+              );
+            })}
+          </div>
+        </motion.div>
+      )}
+    </PageFrame>
   );
 }

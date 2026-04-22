@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
@@ -22,7 +16,7 @@ import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
 import { useToast } from '@/hooks/use-toast';
 import { useHapticFeedback, SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
-import { CheckSquare, Loader2, Save, Calendar, User, FileText } from 'lucide-react';
+import { Pill, type Tone } from '@/components/college/primitives';
 
 interface RecordGradeSheetProps {
   assessmentId?: string;
@@ -30,44 +24,28 @@ interface RecordGradeSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const GRADE_OPTIONS = [
-  {
-    value: 'Distinction',
-    label: 'Distinction',
-    description: 'Outstanding achievement',
-    colour: 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30',
-  },
-  {
-    value: 'Merit',
-    label: 'Merit',
-    description: 'Very good achievement',
-    colour: 'bg-info/20 text-info border-info/30',
-  },
-  {
-    value: 'Pass',
-    label: 'Pass',
-    description: 'Meets required standard',
-    colour: 'bg-success/20 text-success border-success/30',
-  },
-  {
-    value: 'Competent',
-    label: 'Competent',
-    description: 'Demonstrates competence',
-    colour: 'bg-success/20 text-success border-success/30',
-  },
-  {
-    value: 'Refer',
-    label: 'Refer',
-    description: 'Requires resubmission',
-    colour: 'bg-amber-500/20 text-amber-500 border-amber-500/30',
-  },
-  {
-    value: 'Not Yet Competent',
-    label: 'Not Yet Competent',
-    description: 'Does not meet standard',
-    colour: 'bg-destructive/20 text-destructive border-destructive/30',
-  },
-] as const;
+const GRADE_OPTIONS: { value: string; label: string; description: string; tone: Tone }[] = [
+  { value: 'Distinction', label: 'Distinction', description: 'Outstanding achievement', tone: 'yellow' },
+  { value: 'Merit', label: 'Merit', description: 'Very good achievement', tone: 'blue' },
+  { value: 'Pass', label: 'Pass', description: 'Meets required standard', tone: 'green' },
+  { value: 'Competent', label: 'Competent', description: 'Demonstrates competence', tone: 'green' },
+  { value: 'Refer', label: 'Refer', description: 'Requires resubmission', tone: 'amber' },
+  { value: 'Not Yet Competent', label: 'Not Yet Competent', description: 'Does not meet standard', tone: 'red' },
+];
+
+const inputClass =
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+const textareaClass =
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[120px] resize-none';
+
+const selectTriggerClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+
+const selectContentClass =
+  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
 
 export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGradeSheetProps) {
   const { data: grades = [] } = useCollegeGrades();
@@ -87,15 +65,12 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
     assessorId: '',
   });
 
-  // Get pending/submitted assessments that need grading
   const pendingAssessments = grades.filter(
     (a) => a.status === 'Pending' || a.status === 'Submitted' || a.status === 'Resubmission'
   );
 
-  // Get tutors for assessor selection
   const assessors = staff.filter((s) => s.role === 'tutor');
 
-  // Update form when assessmentId prop changes or sheet opens
   useEffect(() => {
     if (open) {
       setFormData({
@@ -141,7 +116,6 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
         assessorId: formData.assessorId,
       });
 
-      // Show success animation
       setShowSuccess(true);
       triggerSuccess(true);
 
@@ -175,230 +149,172 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-            <SheetTitle className="text-xl text-left flex items-center gap-2">
-              <CheckSquare className="h-5 w-5 text-elec-yellow" />
-              Record Grade
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className={eyebrow}>Assessment</div>
+            <SheetTitle className="text-[20px] font-semibold text-white mt-1 text-left">
+              Record grade
             </SheetTitle>
-            <p className="text-sm text-white text-left">
-              Grade an assessment submission. All fields marked with * are required.
+            <p className="text-[12.5px] text-white/55 mt-1 text-left">
+              Grade an assessment submission. Fields marked * are required.
             </p>
           </SheetHeader>
 
-          {/* Scrollable Form */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-            {/* Assessment Selection */}
+          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
             {!assessmentId && (
-              <div className="space-y-3">
-                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                  Select Assessment
-                </h4>
-                <div>
-                  <Label htmlFor="grade-assessment">Assessment *</Label>
-                  <Select
-                    value={formData.assessmentId}
-                    onValueChange={(value) => handleChange('assessmentId', value)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select assessment to grade" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {pendingAssessments.map((grade) => {
-                        const student = students.find((s) => s.id === grade.student_id);
-                        return (
-                          <SelectItem key={grade.id} value={grade.id}>
-                            {grade.unit_name} - {student?.name || 'Unknown'}
-                          </SelectItem>
-                        );
-                      })}
-                      {pendingAssessments.length === 0 && (
-                        <SelectItem value="no-assessments" disabled>
-                          No assessments pending
+              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                <div className={eyebrow}>Select Assessment *</div>
+                <Select
+                  value={formData.assessmentId}
+                  onValueChange={(value) => handleChange('assessmentId', value)}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select assessment to grade" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {pendingAssessments.map((grade) => {
+                      const student = students.find((s) => s.id === grade.student_id);
+                      return (
+                        <SelectItem key={grade.id} value={grade.id}>
+                          {grade.unit_name} - {student?.name || 'Unknown'}
                         </SelectItem>
-                      )}
-                    </SelectContent>
-                  </Select>
-                </div>
+                      );
+                    })}
+                    {pendingAssessments.length === 0 && (
+                      <SelectItem value="no-assessments" disabled>
+                        No assessments pending
+                      </SelectItem>
+                    )}
+                  </SelectContent>
+                </Select>
               </div>
             )}
 
-            {/* Assessment Info Card */}
             {selectedAssessment && (
-              <Card className="border-white/10">
-                <CardContent className="p-4 space-y-3">
-                  <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                    Assessment Details
-                  </h4>
-                  <p className="text-base font-medium text-white">{selectedAssessment.unit_name}</p>
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div className="flex items-center gap-2">
-                      <User className="h-4 w-4 text-white shrink-0" />
-                      <div>
-                        <p className="text-white text-xs">Student</p>
-                        <p className="text-white font-medium">
-                          {selectedStudent?.name || 'Unknown'}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-white shrink-0" />
-                      <div>
-                        <p className="text-white text-xs">Type</p>
-                        <p className="text-white font-medium">
-                          {selectedAssessment.assessment_type}
-                        </p>
-                      </div>
-                    </div>
-                    {selectedAssessment.assessed_at && (
-                      <div className="flex items-center gap-2 col-span-2">
-                        <Calendar className="h-4 w-4 text-white shrink-0" />
-                        <div>
-                          <p className="text-white text-xs">Submission Date</p>
-                          <p className="text-white font-medium">
-                            {new Date(selectedAssessment.assessed_at).toLocaleDateString('en-GB', {
-                              day: 'numeric',
-                              month: 'long',
-                              year: 'numeric',
-                            })}
-                          </p>
-                        </div>
-                      </div>
-                    )}
+              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+                <div className={eyebrow}>Assessment Details</div>
+                <p className="text-[15px] font-medium text-white">
+                  {selectedAssessment.unit_name}
+                </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <p className="text-[11px] text-white/40 uppercase tracking-wider">Student</p>
+                    <p className="text-[13px] text-white font-medium mt-0.5">
+                      {selectedStudent?.name || 'Unknown'}
+                    </p>
                   </div>
-                  <Badge variant="outline" className="text-white border-white/20">
-                    {selectedAssessment.status}
-                  </Badge>
-                </CardContent>
-              </Card>
+                  <div>
+                    <p className="text-[11px] text-white/40 uppercase tracking-wider">Type</p>
+                    <p className="text-[13px] text-white font-medium mt-0.5">
+                      {selectedAssessment.assessment_type}
+                    </p>
+                  </div>
+                  {selectedAssessment.assessed_at && (
+                    <div className="col-span-2">
+                      <p className="text-[11px] text-white/40 uppercase tracking-wider">
+                        Submission Date
+                      </p>
+                      <p className="text-[13px] text-white font-medium mt-0.5">
+                        {new Date(selectedAssessment.assessed_at).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        })}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <Pill tone="blue">{selectedAssessment.status}</Pill>
+              </div>
             )}
 
-            {/* Grade Selection */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Grade
-              </h4>
-              <div>
-                <Label htmlFor="grade-select">Grade *</Label>
-                <Select
-                  value={formData.grade}
-                  onValueChange={(value) => handleChange('grade', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select grade" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {GRADE_OPTIONS.map((option) => (
-                      <SelectItem key={option.value} value={option.value}>
-                        <div className="flex flex-col">
-                          <span>{option.label}</span>
-                          <span className="text-xs text-white">{option.description}</span>
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              {selectedGradeOption && (
-                <Badge variant="outline" className={selectedGradeOption.colour}>
-                  {selectedGradeOption.label}
-                </Badge>
-              )}
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Grade *</div>
+              <Select
+                value={formData.grade}
+                onValueChange={(value) => handleChange('grade', value)}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select grade" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {GRADE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      <div className="flex flex-col">
+                        <span>{option.label}</span>
+                        <span className="text-[11px] text-white/50">{option.description}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {selectedGradeOption && <Pill tone={selectedGradeOption.tone}>{selectedGradeOption.label}</Pill>}
             </div>
 
-            {/* Score */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Score
-              </h4>
-              <div>
-                <Label htmlFor="grade-score">Score (optional)</Label>
-                <Input
-                  id="grade-score"
-                  type="number"
-                  min={0}
-                  max={100}
-                  value={formData.score}
-                  onChange={(e) => handleChange('score', e.target.value)}
-                  className="h-11 touch-manipulation"
-                  placeholder="0 - 100"
-                />
-              </div>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Score (Optional)</div>
+              <input
+                type="number"
+                min={0}
+                max={100}
+                value={formData.score}
+                onChange={(e) => handleChange('score', e.target.value)}
+                className={inputClass}
+                placeholder="0 – 100"
+              />
             </div>
 
-            {/* Assessor */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Assessor
-              </h4>
-              <div>
-                <Label htmlFor="grade-assessor">Assessed By *</Label>
-                <Select
-                  value={formData.assessorId}
-                  onValueChange={(value) => handleChange('assessorId', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select assessor" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {assessors.map((assessor) => (
-                      <SelectItem key={assessor.id} value={assessor.id}>
-                        {assessor.name} ({assessor.role})
-                      </SelectItem>
-                    ))}
-                    {assessors.length === 0 && (
-                      <SelectItem value="no-assessors" disabled>
-                        No tutors available
-                      </SelectItem>
-                    )}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Assessed By *</div>
+              <Select
+                value={formData.assessorId}
+                onValueChange={(value) => handleChange('assessorId', value)}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select assessor" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {assessors.map((assessor) => (
+                    <SelectItem key={assessor.id} value={assessor.id}>
+                      {assessor.name} ({assessor.role})
+                    </SelectItem>
+                  ))}
+                  {assessors.length === 0 && (
+                    <SelectItem value="no-assessors" disabled>
+                      No tutors available
+                    </SelectItem>
+                  )}
+                </SelectContent>
+              </Select>
             </div>
 
-            {/* Feedback */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Feedback
-              </h4>
-              <div>
-                <Label htmlFor="grade-feedback">Feedback (optional)</Label>
-                <Textarea
-                  id="grade-feedback"
-                  value={formData.feedback}
-                  onChange={(e) => handleChange('feedback', e.target.value)}
-                  className="touch-manipulation text-base min-h-[120px]"
-                  placeholder="Provide feedback for the student..."
-                />
-              </div>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Feedback (Optional)</div>
+              <textarea
+                value={formData.feedback}
+                onChange={(e) => handleChange('feedback', e.target.value)}
+                className={textareaClass}
+                placeholder="Provide feedback for the student…"
+              />
             </div>
           </div>
 
-          {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation"
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
+            <button
+              type="button"
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
+              className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 touch-manipulation gap-2"
+            </button>
+            <button
+              type="button"
               onClick={handleSubmit}
               disabled={
                 isSubmitting ||
@@ -406,23 +322,13 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
                 !formData.grade ||
                 !formData.assessorId
               }
+              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  Record Grade
-                </>
-              )}
-            </Button>
+              {isSubmitting ? 'Saving…' : 'Record Grade →'}
+            </button>
           </SheetFooter>
         </div>
 
-        {/* Success overlay */}
         <SuccessCheckmark show={showSuccess} />
       </SheetContent>
     </Sheet>

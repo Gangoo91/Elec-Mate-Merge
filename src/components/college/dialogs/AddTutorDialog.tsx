@@ -20,7 +20,6 @@ import {
 } from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { StaffRole } from '@/contexts/CollegeSupabaseContext';
-import { UserPlus, Loader2 } from 'lucide-react';
 
 interface AddTutorDialogProps {
   open: boolean;
@@ -126,10 +125,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       <ResponsiveDialogContent className="sm:max-w-[500px]">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="flex items-center gap-2">
-            <UserPlus className="h-5 w-5 text-elec-yellow" />
-            Add New Tutor
-          </ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>Add new tutor</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>
             Add a new tutor or staff member to the system. All fields marked with * are required.
           </ResponsiveDialogDescription>
@@ -281,14 +277,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
             className="h-11 touch-manipulation"
             onClick={handleSubmit}
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Adding...
-              </>
-            ) : (
-              'Add Tutor'
-            )}
+            {isSubmitting ? 'Adding…' : 'Add Tutor'}
           </Button>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>

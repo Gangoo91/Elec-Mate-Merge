@@ -1,29 +1,11 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
 import { TakeAttendanceDialog } from '@/components/college/dialogs/TakeAttendanceDialog';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
 import { getInitials } from '@/utils/collegeHelpers';
-import { cn } from '@/lib/utils';
-import {
-  Search,
-  Plus,
-  Calendar,
-  Clock,
-  Users,
-  MoreVertical,
-  Filter,
-  CheckCircle2,
-  XCircle,
-  AlertTriangle,
-  UserCheck,
-  CalendarDays,
-} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,6 +19,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  Pill,
+  EmptyState,
+  SectionHeader,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
 
 export function AttendanceSection() {
   const { attendance, students, cohorts, updateAttendance } = useCollegeSupabase();
@@ -53,7 +47,6 @@ export function AttendanceSection() {
   const getFilteredAttendance = () => {
     const now = new Date();
     let startDate = new Date();
-
     switch (dateFilter) {
       case 'today':
         startDate = new Date(now.setHours(0, 0, 0, 0));
@@ -64,65 +57,39 @@ export function AttendanceSection() {
       case 'month':
         startDate.setMonth(startDate.getMonth() - 1);
         break;
-      default:
-        startDate.setDate(startDate.getDate() - 7);
     }
-
     return attendance.filter((record) => {
       const recordDate = new Date(record.date);
       const student = students.find((s) => s.id === record.student_id);
-
       const matchesDate = recordDate >= startDate;
       const matchesCohort = filterCohort === 'all' || student?.cohort_id === filterCohort;
       const matchesSearch =
         searchQuery === '' || student?.name.toLowerCase().includes(searchQuery.toLowerCase());
-
       return matchesDate && matchesCohort && matchesSearch;
     });
   };
 
   const filteredAttendance = getFilteredAttendance();
-
   const totalRecords = filteredAttendance.length;
   const presentCount = filteredAttendance.filter((a) => a.status === 'Present').length;
   const absentCount = filteredAttendance.filter((a) => a.status === 'Absent').length;
   const lateCount = filteredAttendance.filter((a) => a.status === 'Late').length;
   const authorisedAbsent = filteredAttendance.filter((a) => a.status === 'Authorised').length;
-
   const overallAttendanceRate =
     totalRecords > 0
       ? Math.round(((presentCount + lateCount + authorisedAbsent) / totalRecords) * 100)
       : 0;
 
-  const getStatusColor = (status: string | null) => {
-    switch (status) {
-      case 'Present':
-        return 'bg-success/10 text-success border-success/20';
-      case 'Absent':
-        return 'bg-destructive/10 text-destructive border-destructive/20';
-      case 'Late':
-        return 'bg-warning/10 text-warning border-warning/20';
-      case 'Authorised':
-        return 'bg-info/10 text-info border-info/20';
-      default:
-        return 'bg-muted text-white';
-    }
-  };
-
-  const getStatusIcon = (status: string | null) => {
-    switch (status) {
-      case 'Present':
-        return <CheckCircle2 className="h-3.5 w-3.5" />;
-      case 'Absent':
-        return <XCircle className="h-3.5 w-3.5" />;
-      case 'Late':
-        return <AlertTriangle className="h-3.5 w-3.5" />;
-      case 'Authorised':
-        return <Calendar className="h-3.5 w-3.5" />;
-      default:
-        return <Clock className="h-3.5 w-3.5" />;
-    }
-  };
+  const statusTone = (status: string | null): Tone =>
+    status === 'Present'
+      ? 'green'
+      : status === 'Absent'
+        ? 'red'
+        : status === 'Late'
+          ? 'amber'
+          : status === 'Authorised'
+            ? 'blue'
+            : 'yellow';
 
   const getStudentInfo = (studentId: string | null) => {
     const student = students.find((s) => s.id === studentId);
@@ -133,13 +100,9 @@ export function AttendanceSection() {
       cohortId: student?.cohort_id,
     };
   };
+  const getCohortName = (cohortId: string | null) =>
+    !cohortId ? 'Unassigned' : cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
 
-  const getCohortName = (cohortId: string | null) => {
-    if (!cohortId) return 'Unassigned';
-    return cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
-  };
-
-  // Get students with low attendance
   const getStudentAttendanceRate = (studentId: string): number => {
     const records = attendance.filter((a) => a.student_id === studentId);
     if (records.length === 0) return 100;
@@ -149,323 +112,238 @@ export function AttendanceSection() {
 
   const studentsWithLowAttendance = students
     .filter((s) => s.status === 'Active')
-    .map((s) => ({
-      ...s,
-      attendanceRate: getStudentAttendanceRate(s.id),
-    }))
+    .map((s) => ({ ...s, attendanceRate: getStudentAttendanceRate(s.id) }))
     .filter((s) => s.attendanceRate < 85)
     .sort((a, b) => a.attendanceRate - b.attendanceRate)
-    .slice(0, 5);
+    .slice(0, 6);
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <CollegeSectionHeader
-        title="Attendance"
-        description={`${overallAttendanceRate}% overall attendance rate`}
-        actions={
-          <Button className="gap-2" onClick={() => setTakeAttendanceOpen(true)}>
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">Take Register</span>
-          </Button>
-        }
-      />
+    <PageFrame>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Assessment · Attendance"
+          title="Registers & records"
+          description={`${overallAttendanceRate}% attendance rate across the selected period.`}
+          tone="green"
+          actions={
+            <button
+              onClick={() => setTakeAttendanceOpen(true)}
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+            >
+              Take register →
+            </button>
+          }
+        />
+      </motion.div>
 
-      {/* Summary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
-              <div>
-                <p className="text-lg font-bold text-white">{presentCount}</p>
-                <p className="text-xs text-white">Present</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <XCircle className="h-4 w-4 text-elec-yellow" />
-              <div>
-                <p className="text-lg font-bold text-white">{absentCount}</p>
-                <p className="text-xs text-white">Absent</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-elec-yellow" />
-              <div>
-                <p className="text-lg font-bold text-white">{lateCount}</p>
-                <p className="text-xs text-white">Late</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-elec-yellow" />
-              <div>
-                <p className="text-lg font-bold text-white">{authorisedAbsent}</p>
-                <p className="text-xs text-white">Authorised</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-yellow/10 border-elec-yellow/20">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2">
-              <UserCheck className="h-4 w-4 text-elec-yellow" />
-              <div>
-                <p className="text-lg font-bold text-white">{overallAttendanceRate}%</p>
-                <p className="text-xs text-white">Rate</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <motion.div variants={itemVariants}>
+        <StatStrip
+          columns={5}
+          stats={[
+            { value: presentCount, label: 'Present', sub: 'Attended', tone: 'green' },
+            { value: absentCount, label: 'Absent', sub: 'No show', tone: 'red', accent: absentCount > 0 },
+            { value: lateCount, label: 'Late', sub: 'Arrived late', tone: 'amber' },
+            { value: authorisedAbsent, label: 'Authorised', sub: 'Approved absence', tone: 'blue' },
+            {
+              value: `${overallAttendanceRate}%`,
+              label: 'Rate',
+              sub: 'Overall',
+              tone: overallAttendanceRate >= 85 ? 'green' : overallAttendanceRate >= 70 ? 'amber' : 'red',
+            },
+          ]}
+        />
+      </motion.div>
 
-      {/* Low Attendance Alert */}
       {studentsWithLowAttendance.length > 0 && (
-        <Card className="border-warning/50 bg-warning/5">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm flex items-center gap-2 text-warning">
-              <AlertTriangle className="h-4 w-4" />
-              Students Below 85% Attendance
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-wrap gap-2">
+        <motion.section variants={itemVariants} className="space-y-5">
+          <SectionHeader eyebrow="Priority" title="Below 85% attendance" />
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+            <div className="flex flex-wrap gap-1.5">
               {studentsWithLowAttendance.map((student) => (
-                <Badge
+                <Pill
                   key={student.id}
-                  variant="outline"
-                  className="bg-warning/10 text-warning border-warning/20"
+                  tone={student.attendanceRate < 70 ? 'red' : 'amber'}
                 >
-                  {student.name} ({student.attendanceRate}%)
-                </Badge>
+                  {student.name} · {student.attendanceRate}%
+                </Pill>
               ))}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </motion.section>
       )}
 
-      {/* Search and Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search by student..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
-          />
-        </div>
-        <Select value={dateFilter} onValueChange={setDateFilter}>
-          <SelectTrigger className="w-full sm:w-[140px] h-11 touch-manipulation">
-            <CalendarDays className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Period" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="today">Today</SelectItem>
-            <SelectItem value="week">This Week</SelectItem>
-            <SelectItem value="month">This Month</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={filterCohort} onValueChange={setFilterCohort}>
-          <SelectTrigger className="w-full sm:w-[180px] h-11 touch-manipulation">
-            <Users className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Cohort" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Cohorts</SelectItem>
-            {cohorts
-              .filter((c) => c.status === 'Active')
-              .map((cohort) => (
-                <SelectItem key={cohort.id} value={cohort.id}>
-                  {cohort.name}
-                </SelectItem>
-              ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Attendance Records */}
-      <div className="grid gap-2">
-        {filteredAttendance.map((record) => {
-          const studentInfo = getStudentInfo(record.student_id);
-
-          return (
-            <Card
-              key={record.id}
-              className="border-elec-yellow/20 bg-elec-gray hover:bg-elec-gray/80 hover:border-elec-yellow/40 transition-all duration-300"
+      <motion.div variants={itemVariants}>
+        <FilterBar
+          tabs={[
+            { value: 'today', label: 'Today' },
+            { value: 'week', label: 'This Week' },
+            { value: 'month', label: 'This Month' },
+          ]}
+          activeTab={dateFilter}
+          onTabChange={setDateFilter}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search by student…"
+          actions={
+            <select
+              value={filterCohort}
+              onChange={(e) => setFilterCohort(e.target.value)}
+              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
             >
-              <CardContent className="p-3">
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-9 w-9 shrink-0">
-                    <AvatarImage src={studentInfo.photoUrl} />
-                    <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-xs font-semibold">
-                      {studentInfo.initials}
-                    </AvatarFallback>
-                  </Avatar>
+              <option value="all">All Cohorts</option>
+              {cohorts
+                .filter((c) => c.status === 'Active')
+                .map((cohort) => (
+                  <option key={cohort.id} value={cohort.id}>
+                    {cohort.name}
+                  </option>
+                ))}
+            </select>
+          }
+        />
+      </motion.div>
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <div>
-                        <p className="font-medium text-sm text-white">{studentInfo.name}</p>
-                        <p className="text-xs text-white">{getCohortName(studentInfo.cohortId)}</p>
+      {filteredAttendance.length === 0 ? (
+        <EmptyState title="No attendance records" description="No records for this period. Take a register to start." />
+      ) : (
+        <motion.div variants={itemVariants}>
+          <ListCard>
+            {filteredAttendance.map((record) => {
+              const studentInfo = getStudentInfo(record.student_id);
+              const tone = statusTone(record.status);
+
+              return (
+                <div key={record.id}>
+                  <div className="flex items-center gap-4 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors">
+                    <Avatar className="h-9 w-9 shrink-0 ring-1 ring-white/[0.08]">
+                      <AvatarImage src={studentInfo.photoUrl} />
+                      <AvatarFallback className="bg-green-500/10 text-green-400 text-xs font-semibold">
+                        {studentInfo.initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[14px] font-medium text-white truncate">
+                        {studentInfo.name}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Badge
-                          variant="outline"
-                          className={`${getStatusColor(record.status)} flex items-center gap-1 text-xs`}
-                        >
-                          {getStatusIcon(record.status)}
-                          {record.status}
-                        </Badge>
-                        <span className="text-xs text-white hidden sm:block">
-                          {new Date(record.date).toLocaleDateString('en-GB', {
-                            weekday: 'short',
-                            day: 'numeric',
-                            month: 'short',
-                          })}
-                        </span>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-11 w-11 touch-manipulation"
-                            >
-                              <MoreVertical className="h-3.5 w-3.5" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => {
-                                setEditingRecordId(record.id);
-                                setEditStatus(record.status || 'Present');
-                              }}
-                            >
-                              Edit Record
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => {
-                                setNoteRecordId(noteRecordId === record.id ? null : record.id);
-                                setNoteText(record.notes || '');
-                              }}
-                            >
-                              Add Note
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() =>
-                                toast({
-                                  title: studentInfo.name,
-                                  description: 'Student detail view coming soon.',
-                                })
-                              }
-                            >
-                              View Student
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
+                      <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                        {getCohortName(studentInfo.cohortId)}
+                      </div>
+                      {record.notes && (
+                        <div className="mt-1 text-[11.5px] text-white/60 truncate">
+                          Note · {record.notes}
+                        </div>
+                      )}
+                    </div>
+                    <div className="hidden sm:block text-right shrink-0">
+                      <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                        {new Date(record.date).toLocaleDateString('en-GB', { weekday: 'short' })}
+                      </div>
+                      <div className="text-[11.5px] font-medium text-white tabular-nums">
+                        {new Date(record.date).toLocaleDateString('en-GB', {
+                          day: 'numeric',
+                          month: 'short',
+                        })}
                       </div>
                     </div>
-                    {record.notes && (
-                      <p className="text-xs text-white mt-1 truncate">Note: {record.notes}</p>
-                    )}
+                    <Pill tone={tone}>{record.status}</Pill>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          className="text-white/50 hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
+                          aria-label="Options"
+                        >
+                          ⋯
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setEditingRecordId(record.id);
+                            setEditStatus(record.status || 'Present');
+                          }}
+                        >
+                          Edit record
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11"
+                          onClick={() => {
+                            setNoteRecordId(noteRecordId === record.id ? null : record.id);
+                            setNoteText(record.notes || '');
+                          }}
+                        >
+                          Add note
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
-                </div>
-              </CardContent>
-              {editingRecordId === record.id && (
-                <div className="flex items-center gap-2 mt-2 px-3 pb-3">
-                  <Select value={editStatus} onValueChange={setEditStatus}>
-                    <SelectTrigger className="h-11 touch-manipulation flex-1">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Present">Present</SelectItem>
-                      <SelectItem value="Absent">Absent</SelectItem>
-                      <SelectItem value="Late">Late</SelectItem>
-                      <SelectItem value="Authorised">Authorised</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <Button
-                    size="sm"
-                    className="h-11 touch-manipulation"
-                    onClick={async () => {
-                      await updateAttendance(record.id, { status: editStatus });
-                      setEditingRecordId(null);
-                      toast({
-                        title: 'Record updated',
-                        description: `Status changed to ${editStatus}`,
-                      });
-                    }}
-                  >
-                    Save
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="h-11 touch-manipulation"
-                    onClick={() => setEditingRecordId(null)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              )}
-              {noteRecordId === record.id && (
-                <div className="flex items-center gap-2 mt-2 px-3 pb-3">
-                  <Input
-                    placeholder="Add a note..."
-                    value={noteText}
-                    onChange={(e) => setNoteText(e.target.value)}
-                    className="h-11 touch-manipulation flex-1"
-                  />
-                  <Button
-                    size="sm"
-                    className="h-11 touch-manipulation"
-                    onClick={async () => {
-                      await updateAttendance(record.id, { notes: noteText });
-                      setNoteRecordId(null);
-                      toast({ title: 'Note saved' });
-                    }}
-                  >
-                    Save
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="h-11 touch-manipulation"
-                    onClick={() => setNoteRecordId(null)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              )}
-            </Card>
-          );
-        })}
 
-        {filteredAttendance.length === 0 && (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <p className="text-white">No attendance records found for this period.</p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
+                  {editingRecordId === record.id && (
+                    <div className="flex items-center gap-2 px-5 sm:px-6 pb-4 bg-[hsl(0_0%_9%)]">
+                      <Select value={editStatus} onValueChange={setEditStatus}>
+                        <SelectTrigger className="h-11 touch-manipulation flex-1 bg-[hsl(0_0%_12%)] border-white/[0.08]">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="Present">Present</SelectItem>
+                          <SelectItem value="Absent">Absent</SelectItem>
+                          <SelectItem value="Late">Late</SelectItem>
+                          <SelectItem value="Authorised">Authorised</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <button
+                        onClick={async () => {
+                          await updateAttendance(record.id, { status: editStatus });
+                          setEditingRecordId(null);
+                          toast({ title: 'Record updated', description: `Set to ${editStatus}` });
+                        }}
+                        className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setEditingRecordId(null)}
+                        className="h-11 px-4 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  )}
+
+                  {noteRecordId === record.id && (
+                    <div className="flex items-center gap-2 px-5 sm:px-6 pb-4 bg-[hsl(0_0%_9%)]">
+                      <Input
+                        placeholder="Add a note…"
+                        value={noteText}
+                        onChange={(e) => setNoteText(e.target.value)}
+                        className="h-11 touch-manipulation flex-1 bg-[hsl(0_0%_12%)] border-white/[0.08] focus:border-elec-yellow"
+                      />
+                      <button
+                        onClick={async () => {
+                          await updateAttendance(record.id, { notes: noteText });
+                          setNoteRecordId(null);
+                          toast({ title: 'Note saved' });
+                        }}
+                        className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setNoteRecordId(null)}
+                        className="h-11 px-4 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </ListCard>
+        </motion.div>
+      )}
 
       <TakeAttendanceDialog open={takeAttendanceOpen} onOpenChange={setTakeAttendanceOpen} />
-    </div>
+    </PageFrame>
   );
 }

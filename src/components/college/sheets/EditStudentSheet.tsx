@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
 import { useHapticFeedback, SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
@@ -13,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Edit, Loader2, Save } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface EditStudentSheetProps {
@@ -21,6 +17,19 @@ interface EditStudentSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
+
+const inputClass =
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+const selectTriggerClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+
+const selectContentClass =
+  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+
+const fieldLabel = 'text-[11.5px] text-white/60';
 
 export function EditStudentSheet({ student, open, onOpenChange }: EditStudentSheetProps) {
   const { updateStudent, cohorts } = useCollegeSupabase();
@@ -82,7 +91,6 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
         progress_percent: formData.progress_percent ? parseInt(formData.progress_percent) : 0,
       });
 
-      // Show success animation
       setShowSuccess(true);
       triggerSuccess(true);
 
@@ -111,91 +119,76 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-            <SheetTitle className="text-xl text-left flex items-center gap-2">
-              <Edit className="h-5 w-5 text-elec-yellow" />
-              Edit Student
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className={eyebrow}>Edit Student</div>
+            <SheetTitle className="text-[20px] font-semibold text-white mt-1 text-left">
+              {student.name}
             </SheetTitle>
-            <p className="text-sm text-white text-left">Update details for {student.name}</p>
+            <p className="text-[12.5px] text-white/55 mt-1 text-left">
+              Update details for {student.name}
+            </p>
           </SheetHeader>
 
-          {/* Scrollable Form */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-            {/* Personal Details */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Personal Details
-              </h4>
-              <div>
-                <Label htmlFor="edit-name">Full Name *</Label>
-                <Input
-                  id="edit-name"
+          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Personal Details</div>
+              <div className="space-y-1.5">
+                <div className={fieldLabel}>Full Name *</div>
+                <input
                   value={formData.name}
                   onChange={(e) => handleChange('name', e.target.value)}
-                  className="h-11 touch-manipulation"
-                  required
+                  className={inputClass}
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="edit-email">Email *</Label>
-                  <Input
-                    id="edit-email"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Email *</div>
+                  <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    className="h-11 touch-manipulation"
-                    required
+                    className={inputClass}
                   />
                 </div>
-                <div>
-                  <Label htmlFor="edit-phone">Phone</Label>
-                  <Input
-                    id="edit-phone"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Phone</div>
+                  <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                   />
                 </div>
               </div>
-              <div>
-                <Label htmlFor="edit-uln">ULN</Label>
-                <Input
-                  id="edit-uln"
+              <div className="space-y-1.5">
+                <div className={fieldLabel}>ULN</div>
+                <input
                   value={formData.uln}
                   onChange={(e) => handleChange('uln', e.target.value)}
-                  className="h-11 touch-manipulation"
+                  className={inputClass}
                   placeholder="10 digit ULN"
                 />
               </div>
             </div>
 
-            {/* Enrolment */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Enrolment
-              </h4>
-              <div>
-                <Label htmlFor="edit-cohort">Cohort</Label>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Enrolment</div>
+              <div className="space-y-1.5">
+                <div className={fieldLabel}>Cohort</div>
                 <Select
                   value={formData.cohort_id}
                   onValueChange={(value) => handleChange('cohort_id', value)}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select cohort" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     {activeCohorts.map((cohort) => (
                       <SelectItem key={cohort.id} value={cohort.id}>
                         {cohort.name}
@@ -205,46 +198,40 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
                 </Select>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="edit-start">Start Date</Label>
-                  <Input
-                    id="edit-start"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Start Date</div>
+                  <input
                     type="date"
                     value={formData.start_date}
                     onChange={(e) => handleChange('start_date', e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                   />
                 </div>
-                <div>
-                  <Label htmlFor="edit-end">Expected End</Label>
-                  <Input
-                    id="edit-end"
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Expected End</div>
+                  <input
                     type="date"
                     value={formData.expected_end_date}
                     onChange={(e) => handleChange('expected_end_date', e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                   />
                 </div>
               </div>
             </div>
 
-            {/* Status & Progress */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Status & Progress
-              </h4>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Status & Progress</div>
               <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="edit-status">Status</Label>
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Status</div>
                   <Select
                     value={formData.status}
                     onValueChange={(value) => handleChange('status', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       <SelectItem value="Active">Active</SelectItem>
                       <SelectItem value="Withdrawn">Withdrawn</SelectItem>
                       <SelectItem value="Completed">Completed</SelectItem>
@@ -253,16 +240,16 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
                     </SelectContent>
                   </Select>
                 </div>
-                <div>
-                  <Label htmlFor="edit-risk">Risk Level</Label>
+                <div className="space-y-1.5">
+                  <div className={fieldLabel}>Risk Level</div>
                   <Select
                     value={formData.risk_level}
                     onValueChange={(value) => handleChange('risk_level', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       <SelectItem value="Low">Low</SelectItem>
                       <SelectItem value="Medium">Medium</SelectItem>
                       <SelectItem value="High">High</SelectItem>
@@ -270,52 +257,40 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
                   </Select>
                 </div>
               </div>
-              <div>
-                <Label htmlFor="edit-progress">Progress (%)</Label>
-                <Input
-                  id="edit-progress"
+              <div className="space-y-1.5">
+                <div className={fieldLabel}>Progress (%)</div>
+                <input
                   type="number"
                   min="0"
                   max="100"
                   value={formData.progress_percent}
                   onChange={(e) => handleChange('progress_percent', e.target.value)}
-                  className="h-11 touch-manipulation"
+                  className={inputClass}
                 />
               </div>
             </div>
           </div>
 
-          {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation"
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
+            <button
+              type="button"
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
+              className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 touch-manipulation gap-2"
+            </button>
+            <button
+              type="button"
               onClick={handleSubmit}
               disabled={isSubmitting || !formData.name || !formData.email}
+              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  Save Changes
-                </>
-              )}
-            </Button>
+              {isSubmitting ? 'Saving…' : 'Save Changes →'}
+            </button>
           </SheetFooter>
         </div>
 
-        {/* Success overlay */}
         <SuccessCheckmark show={showSuccess} />
       </SheetContent>
     </Sheet>

@@ -5,32 +5,18 @@
 
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Building2,
-  Users,
-  Clock,
-  CheckCircle2,
-  Calendar,
-  TrendingUp,
-  ChevronRight,
-  ChevronDown,
-  AlertTriangle,
-  ClipboardCheck,
-  Award,
-  Search,
-  MapPin,
-  FileText,
-  BarChart3,
-  Loader2,
-  Percent,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import {
+  SectionHeader,
+  ListCard,
+  ListRow,
+  Pill,
+  EmptyState,
+  LoadingState,
+  type Tone,
+} from '@/components/college/primitives';
 
 /* ------------------------------------------------------------------ */
 /*  Framer motion variants                                            */
@@ -95,19 +81,6 @@ function daysBetween(a: Date, b: Date): number {
   return Math.floor(Math.abs(b.getTime() - a.getTime()) / (1000 * 60 * 60 * 24));
 }
 
-function epaStatusColour(status: string): string {
-  switch (status) {
-    case 'Complete':
-      return 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25';
-    case 'Gateway Ready':
-    case 'Pre-Gateway':
-      return 'bg-blue-500/15 text-blue-400 border-blue-500/25';
-    case 'In Progress':
-      return 'bg-amber-500/15 text-amber-400 border-amber-500/25';
-    default:
-      return 'bg-white/[0.06] text-white border-white/10';
-  }
-}
 
 /* ------------------------------------------------------------------ */
 /*  Component                                                         */
@@ -256,11 +229,7 @@ export function EmployerPortalSection() {
   /* ---------- render ---------- */
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-      </div>
-    );
+    return <LoadingState />;
   }
 
   return (
@@ -268,451 +237,320 @@ export function EmployerPortalSection() {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-5"
+      className="mx-auto max-w-7xl space-y-10 sm:space-y-14 pb-12"
     >
-      {/* Header */}
-      <CollegeSectionHeader
-        title="Employer Portal"
-        description={`${totalEmployers} employer${totalEmployers !== 1 ? 's' : ''} with ${totalPlaced} active apprentice${totalPlaced !== 1 ? 's' : ''}`}
-      />
-
-      {/* ── KPI Strip ─────────────────────────────────────────── */}
-      <motion.div variants={itemVariants} className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        {[
-          {
-            value: totalEmployers,
-            label: 'Employers',
-            icon: Building2,
-            colour: 'blue',
-          },
-          {
-            value: totalPlaced,
-            label: 'Placed',
-            icon: Users,
-            colour: 'emerald',
-          },
-          {
-            value: `${otjCompliancePercent}%`,
-            label: 'OTJ Compliance',
-            icon: Percent,
-            colour: otjCompliancePercent >= 80 ? 'emerald' : otjCompliancePercent >= 50 ? 'amber' : 'red',
-          },
-          {
-            value: reviewsDue.length,
-            label: 'Reviews Due',
-            icon: ClipboardCheck,
-            colour: reviewsDue.length > 0 ? 'amber' : 'emerald',
-          },
-        ].map((kpi) => (
-          <div
-            key={kpi.label}
-            className="card-surface p-3 flex flex-col items-center touch-manipulation"
-          >
-            <div
-              className={cn(
-                'p-2 rounded-xl mb-1.5',
-                `bg-${kpi.colour}-500/10 border border-${kpi.colour}-500/20`
-              )}
-            >
-              <kpi.icon className={cn('h-4 w-4', `text-${kpi.colour}-400`)} />
-            </div>
-            <span className={cn('text-lg font-bold', `text-${kpi.colour}-400`)}>
-              {kpi.value}
-            </span>
-            <span className="text-[10px] text-white uppercase tracking-wider">{kpi.label}</span>
-          </div>
-        ))}
-      </motion.div>
-
-      {/* ── Search ─────────────────────────────────────────── */}
+      {/* Hero */}
       <motion.div variants={itemVariants}>
-        <div className="relative">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search employers or apprentices..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn(
-              'h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500',
-              !searchQuery && 'pl-9'
-            )}
-          />
+        <div className="pt-6 sm:pt-8 lg:pt-10 pb-2">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            People · Employer Portal
+          </div>
+          <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
+            Employer engagement
+          </h1>
+          <p className="mt-3 text-[13px] sm:text-sm text-white/55 max-w-2xl leading-relaxed">
+            {totalEmployers} employer{totalEmployers !== 1 ? 's' : ''} with {totalPlaced} active apprentice
+            {totalPlaced !== 1 ? 's' : ''}. Workplace engagement, reviews and OTJ compliance.
+          </p>
         </div>
       </motion.div>
 
-      {/* ── Employer Directory ─────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          Employer Directory
-        </h2>
+      {/* KPI Strip */}
+      <motion.div variants={itemVariants}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+          {[
+            { value: totalEmployers, label: 'Employers', sub: 'Active partners', colour: 'text-blue-400' },
+            { value: totalPlaced, label: 'Placed', sub: 'Active apprentices', colour: 'text-emerald-400' },
+            {
+              value: `${otjCompliancePercent}%`,
+              label: 'OTJ Compliance',
+              sub: 'On target',
+              colour:
+                otjCompliancePercent >= 80
+                  ? 'text-emerald-400'
+                  : otjCompliancePercent >= 50
+                    ? 'text-amber-400'
+                    : 'text-red-400',
+            },
+            {
+              value: reviewsDue.length,
+              label: 'Reviews Due',
+              sub: 'Awaiting employer',
+              colour: reviewsDue.length > 0 ? 'text-amber-400' : 'text-emerald-400',
+            },
+          ].map((kpi, i) => (
+            <div
+              key={kpi.label}
+              className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-8 lg:px-7 lg:py-9"
+            >
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                {String(i + 1).padStart(2, '0')} · {kpi.label}
+              </div>
+              <div
+                className={cn(
+                  'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                  'text-4xl sm:text-5xl lg:text-6xl',
+                  kpi.colour
+                )}
+              >
+                {kpi.value}
+              </div>
+              <div className="mt-3 text-[11px] text-white/50">{kpi.sub}</div>
+            </div>
+          ))}
+        </div>
+      </motion.div>
 
-        {filteredEmployers.length === 0 && (
-          <div className="card-surface p-8 text-center">
-            <Building2 className="h-10 w-10 mx-auto mb-3 text-white" />
-            <p className="text-sm text-white">
-              {searchQuery ? 'No employers match your search.' : 'No employers with active apprentices.'}
-            </p>
-          </div>
-        )}
+      {/* Search */}
+      <motion.div variants={itemVariants}>
+        <input
+          type="text"
+          placeholder="Search employers or apprentices…"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="w-full h-11 px-4 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+        />
+      </motion.div>
 
-        <div className="space-y-3">
-          {filteredEmployers.map((employer) => {
-            const isExpanded = expandedEmployer === employer.id;
-            return (
-              <div key={employer.id} className="space-y-0">
-                {/* Employer card */}
-                <button
-                  onClick={() =>
-                    setExpandedEmployer(isExpanded ? null : employer.id)
-                  }
-                  className="w-full text-left touch-manipulation active:scale-[0.98] transition-all"
-                >
-                  <div className="group card-surface-interactive overflow-hidden">
-                    {/* Gradient accent line */}
-                    <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-blue-500 via-blue-400 to-cyan-400 opacity-30 group-hover:opacity-80 transition-opacity" />
+      {/* Employer Directory */}
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader eyebrow="Employer Directory" title="Active employers" />
 
-                    <div className="relative z-10 p-4 flex items-center gap-3">
-                      {/* Icon circle */}
-                      <div className="p-2 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                        <Building2 className="h-5 w-5 text-blue-400" />
-                      </div>
+        {filteredEmployers.length === 0 ? (
+          <EmptyState
+            title={searchQuery ? 'No employers match your search' : 'No employers with active apprentices'}
+          />
+        ) : (
+          <div className="space-y-3">
+            {filteredEmployers.map((employer) => {
+              const isExpanded = expandedEmployer === employer.id;
+              const progressTone: Tone =
+                employer.avgProgress >= 70 ? 'green' : employer.avgProgress >= 40 ? 'amber' : 'red';
 
-                      {/* Info */}
+              return (
+                <div key={employer.id}>
+                  <button
+                    onClick={() => setExpandedEmployer(isExpanded ? null : employer.id)}
+                    className="group w-full bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] rounded-2xl overflow-hidden text-left touch-manipulation transition-colors"
+                  >
+                    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-blue-400/60 via-cyan-400/60 to-blue-400/60 opacity-70" />
+                    <div className="relative z-10 p-5 flex items-center gap-4">
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-white truncate">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                          Employer
+                        </div>
+                        <h3 className="mt-1 text-[15px] font-semibold text-white truncate">
                           {employer.label}
-                        </p>
-                        <div className="flex flex-wrap gap-x-4 gap-y-0.5 mt-0.5">
-                          <span className="text-[11px] text-white">
-                            {employer.apprentices.length} apprentice{employer.apprentices.length !== 1 ? 's' : ''}
+                        </h3>
+                        <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-[11.5px] text-white/50 tabular-nums">
+                          <span>
+                            {employer.apprentices.length} apprentice
+                            {employer.apprentices.length !== 1 ? 's' : ''}
                           </span>
-                          <span className="text-[11px] text-white">
-                            Att: {employer.avgAttendance}%
-                          </span>
-                          <span className="text-[11px] text-white">
-                            Prog: {employer.avgProgress}%
-                          </span>
+                          <span>{employer.avgAttendance}% attendance</span>
+                          <span>{employer.avgProgress}% progress</span>
                         </div>
                       </div>
-
-                      {/* Badge + chevron */}
-                      <Badge
+                      <Pill tone={progressTone}>{employer.avgProgress}%</Pill>
+                      <span
+                        aria-hidden
                         className={cn(
-                          'shrink-0 text-[10px] font-medium border',
-                          employer.avgProgress >= 70
-                            ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25'
-                            : employer.avgProgress >= 40
-                              ? 'bg-amber-500/15 text-amber-400 border-amber-500/25'
-                              : 'bg-red-500/15 text-red-400 border-red-500/25'
+                          'text-[18px] leading-none text-white/50 transition-transform',
+                          isExpanded && 'rotate-90'
                         )}
                       >
-                        {employer.avgProgress}%
-                      </Badge>
-                      <div className="w-7 h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all shrink-0">
-                        {isExpanded ? (
-                          <ChevronDown className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
-                        ) : (
-                          <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
-                        )}
-                      </div>
+                        ›
+                      </span>
                     </div>
-                  </div>
-                </button>
+                  </button>
 
-                {/* Expanded apprentice cards */}
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="pt-1.5 space-y-1.5 pl-4">
-                        {employer.apprentices.map((a) => (
-                          <div
-                            key={a.id}
-                            className="card-surface p-3 flex items-start gap-3 touch-manipulation active:scale-[0.98] transition-all"
-                          >
-                            {/* Avatar circle */}
-                            <div className="w-9 h-9 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
-                              <span className="text-[11px] font-semibold text-blue-400">
-                                {a.initials}
-                              </span>
-                            </div>
-
-                            <div className="flex-1 min-w-0 space-y-1.5">
-                              <div className="flex items-center justify-between gap-2">
-                                <p className="text-sm font-medium text-white truncate">
-                                  {a.name}
-                                </p>
-                                <Badge
-                                  className={cn(
-                                    'shrink-0 text-[10px] font-medium border',
-                                    epaStatusColour(a.epaStatus)
-                                  )}
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="mt-2 ml-4 sm:ml-6">
+                          <ListCard>
+                            {employer.apprentices.map((a) => {
+                              const epaTone: Tone = a.epaStatus === 'Complete'
+                                ? 'green'
+                                : a.epaStatus === 'Gateway Ready'
+                                  ? 'yellow'
+                                  : a.epaStatus === 'Pre-Gateway'
+                                    ? 'blue'
+                                    : a.epaStatus === 'In Progress'
+                                      ? 'amber'
+                                      : 'yellow';
+                              return (
+                                <div
+                                  key={a.id}
+                                  className="flex items-start gap-4 px-5 sm:px-6 py-4"
                                 >
-                                  {a.epaStatus}
-                                </Badge>
-                              </div>
-                              <p className="text-[11px] text-white truncate">{a.courseName}</p>
-
-                              {/* Stats row */}
-                              <div className="flex flex-wrap gap-x-3 gap-y-1">
-                                <span className="inline-flex items-center gap-1 text-[11px] text-white">
-                                  <CheckCircle2 className="h-3 w-3 text-emerald-400" />
-                                  Att {a.attendancePercent}%
-                                </span>
-                                <span className="inline-flex items-center gap-1 text-[11px] text-white">
-                                  <TrendingUp className="h-3 w-3 text-blue-400" />
-                                  Prog {a.progressPercent}%
-                                </span>
-                                <span
-                                  className={cn(
-                                    'inline-flex items-center gap-1 text-[11px]',
-                                    a.otjOnTrack ? 'text-emerald-400' : 'text-amber-400'
-                                  )}
-                                >
-                                  <Clock className="h-3 w-3" />
-                                  OTJ {a.otjCompleted}/{a.otjTarget}h
-                                  {a.otjOnTrack ? '' : ' (behind)'}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
+                                  <div className="h-9 w-9 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center shrink-0">
+                                    <span className="text-[11px] font-semibold text-blue-400">
+                                      {a.initials}
+                                    </span>
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <div className="flex items-baseline justify-between gap-2">
+                                      <div className="min-w-0">
+                                        <div className="text-[14px] font-medium text-white truncate">
+                                          {a.name}
+                                        </div>
+                                        <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                                          {a.courseName}
+                                        </div>
+                                      </div>
+                                      <Pill tone={epaTone}>{a.epaStatus}</Pill>
+                                    </div>
+                                    <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/50 tabular-nums">
+                                      <span>Attendance {a.attendancePercent}%</span>
+                                      <span>Progress {a.progressPercent}%</span>
+                                      <span className={a.otjOnTrack ? 'text-emerald-400' : 'text-amber-400'}>
+                                        OTJ {a.otjCompleted}/{a.otjTarget}h
+                                        {a.otjOnTrack ? '' : ' · behind'}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </ListCard>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </motion.section>
 
-      {/* ── Tri-Partite Reviews ────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          Tri-Partite Reviews
-        </h2>
-
-        <div className="card-surface overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 opacity-40" />
-
-          {reviewsDue.length === 0 ? (
-            <div className="relative z-10 p-6 text-center">
-              <CheckCircle2 className="h-8 w-8 mx-auto mb-2 text-emerald-400" />
-              <p className="text-sm font-medium text-white">All reviews up to date</p>
-              <p className="text-[11px] text-white mt-1">
+      {/* Tri-Partite Reviews */}
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader eyebrow="Compliance" title="Tri-partite reviews" />
+        {reviewsDue.length === 0 ? (
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
+            <span aria-hidden className="w-[3px] h-10 rounded-full bg-emerald-400 shrink-0" />
+            <div>
+              <div className="text-[15px] font-medium text-white">All reviews up to date</div>
+              <div className="mt-0.5 text-[12px] text-white/50">
                 No apprentices are overdue for a tri-partite review.
-              </p>
+              </div>
             </div>
-          ) : (
-            <div className="relative z-10 divide-y divide-white/[0.06]">
-              {reviewsDue.slice(0, 10).map((a) => {
-                const employer = employers.find((e) =>
-                  e.apprentices.some((ap) => ap.id === a.id)
-                );
-                const overdueDays =
-                  a.daysSinceReview !== null ? a.daysSinceReview - 84 : null;
-                return (
-                  <div
-                    key={a.id}
-                    className="p-3 flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-all cursor-pointer"
-                  >
-                    <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 shrink-0">
-                      <AlertTriangle className="h-4 w-4 text-amber-400" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{a.name}</p>
-                      <div className="flex flex-wrap gap-x-3 gap-y-0.5 mt-0.5">
-                        <span className="text-[11px] text-white">
-                          {employer?.label ?? 'Unknown employer'}
-                        </span>
-                        <span className="text-[11px] text-white">
-                          Last: {a.lastReviewDate ?? 'Never'}
-                        </span>
-                      </div>
-                    </div>
-                    <Badge
-                      className={cn(
-                        'shrink-0 text-[10px] font-medium border',
-                        overdueDays !== null && overdueDays > 0
-                          ? 'bg-red-500/15 text-red-400 border-red-500/25'
-                          : 'bg-amber-500/15 text-amber-400 border-amber-500/25'
-                      )}
-                    >
+          </div>
+        ) : (
+          <ListCard>
+            {reviewsDue.slice(0, 10).map((a) => {
+              const employer = employers.find((e) =>
+                e.apprentices.some((ap) => ap.id === a.id)
+              );
+              const overdueDays = a.daysSinceReview !== null ? a.daysSinceReview - 84 : null;
+              const tone: Tone = overdueDays !== null && overdueDays > 0 ? 'red' : 'amber';
+              return (
+                <ListRow
+                  key={a.id}
+                  accent={tone}
+                  title={a.name}
+                  subtitle={`${employer?.label ?? 'Unknown employer'} · Last: ${a.lastReviewDate ?? 'Never'}`}
+                  trailing={
+                    <Pill tone={tone}>
                       {overdueDays !== null && overdueDays > 0
                         ? `${overdueDays}d overdue`
                         : 'Due now'}
-                    </Badge>
-                    <div className="w-7 h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center shrink-0">
-                      <ChevronRight className="w-3.5 h-3.5 text-white" />
-                    </div>
-                  </div>
-                );
-              })}
-              {reviewsDue.length > 10 && (
-                <div className="p-3 text-center">
-                  <span className="text-[11px] text-white">
-                    + {reviewsDue.length - 10} more reviews due
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      </motion.section>
-
-      {/* ── Workplace Visit Log ────────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          Workplace Visit Log
-        </h2>
-
-        <div className="card-surface overflow-hidden">
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500 via-violet-400 to-indigo-400 opacity-30" />
-
-          <div className="relative z-10 p-4 space-y-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20">
-                  <MapPin className="h-4 w-4 text-purple-400" />
-                </div>
-                <p className="text-sm font-semibold text-white">Employer Visits</p>
+                    </Pill>
+                  }
+                />
+              );
+            })}
+            {reviewsDue.length > 10 && (
+              <div className="px-5 sm:px-6 py-3 text-center text-[11px] text-white/40">
+                + {reviewsDue.length - 10} more reviews due
               </div>
-              <Button
-                size="sm"
-                className="h-11 gap-1.5 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation active:scale-[0.98]"
-                onClick={() =>
-                  toast({
-                    title: 'Log Visit',
-                    description: 'Workplace visit logging is coming soon.',
-                  })
-                }
-              >
-                <Calendar className="h-3.5 w-3.5" />
-                Log Visit
-              </Button>
-            </div>
-
-            {/* Empty state */}
-            <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-6 text-center">
-              <FileText className="h-8 w-8 mx-auto mb-2 text-white" />
-              <p className="text-sm font-medium text-white">No visits recorded</p>
-              <p className="text-[11px] text-white mt-1 max-w-xs mx-auto">
-                Log employer site visits to keep a record of workplace assessments, health and
-                safety checks, and apprentice progress discussions.
-              </p>
-            </div>
-          </div>
-        </div>
+            )}
+          </ListCard>
+        )}
       </motion.section>
 
-      {/* ── OTJ Summary by Employer ────────────────────────── */}
-      <motion.section variants={itemVariants} className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          OTJ Hours by Employer
-        </h2>
+      {/* Workplace Visit Log */}
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader
+          eyebrow="Workplace Visits"
+          title="Employer site visits"
+          action="Log visit"
+          onAction={() =>
+            toast({
+              title: 'Log Visit',
+              description: 'Workplace visit logging is coming soon.',
+            })
+          }
+        />
+        <EmptyState
+          title="No visits recorded"
+          description="Log employer site visits to keep a record of workplace assessments, health & safety checks and apprentice progress discussions."
+        />
+      </motion.section>
 
+      {/* OTJ Summary */}
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader eyebrow="Off-the-Job Training" title="OTJ hours by employer" />
         {employers.length === 0 ? (
-          <div className="card-surface p-8 text-center">
-            <BarChart3 className="h-10 w-10 mx-auto mb-3 text-white" />
-            <p className="text-sm text-white">No employer data available.</p>
-          </div>
+          <EmptyState title="No employer data available" />
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {employers.map((employer) => {
               const pct =
                 employer.totalOtjRequired > 0
-                  ? Math.round(
-                      (employer.totalOtjCompleted / employer.totalOtjRequired) * 100
-                    )
+                  ? Math.round((employer.totalOtjCompleted / employer.totalOtjRequired) * 100)
                   : 0;
+              const tone: Tone = pct >= 80 ? 'green' : pct >= 50 ? 'amber' : 'red';
               return (
                 <div
                   key={employer.id}
-                  className="card-surface overflow-hidden touch-manipulation"
+                  className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6"
                 >
-                  <div
-                    className={cn(
-                      'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-30',
-                      pct >= 80
-                        ? 'from-emerald-500 to-green-400'
-                        : pct >= 50
-                          ? 'from-amber-500 to-yellow-400'
-                          : 'from-red-500 to-orange-400'
-                    )}
-                  />
-                  <div className="relative z-10 p-3.5 space-y-2">
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 min-w-0">
-                        <div
-                          className={cn(
-                            'p-1.5 rounded-lg shrink-0',
-                            pct >= 80
-                              ? 'bg-emerald-500/10 border border-emerald-500/20'
-                              : pct >= 50
-                                ? 'bg-amber-500/10 border border-amber-500/20'
-                                : 'bg-red-500/10 border border-red-500/20'
-                          )}
-                        >
-                          <Clock
-                            className={cn(
-                              'h-3.5 w-3.5',
-                              pct >= 80
-                                ? 'text-emerald-400'
-                                : pct >= 50
-                                  ? 'text-amber-400'
-                                  : 'text-red-400'
-                            )}
-                          />
-                        </div>
-                        <p className="text-sm font-medium text-white truncate">
-                          {employer.label}
-                        </p>
+                  <div className="flex items-baseline justify-between gap-3">
+                    <div className="min-w-0">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        Employer
                       </div>
-                      <span className="text-[11px] text-white shrink-0">
+                      <div className="mt-1 text-[14px] font-medium text-white truncate">
+                        {employer.label}
+                      </div>
+                    </div>
+                    <Pill tone={tone}>{pct}%</Pill>
+                  </div>
+
+                  <div className="mt-4">
+                    <div className="flex items-baseline justify-between text-[11px]">
+                      <span className="text-white/50 uppercase tracking-[0.12em]">Hours</span>
+                      <span className="font-medium text-white tabular-nums">
                         {employer.totalOtjCompleted}h / {employer.totalOtjRequired}h
                       </span>
                     </div>
-
-                    {/* Progress bar */}
-                    <div className="w-full h-2 rounded-full bg-white/[0.06] overflow-hidden">
+                    <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
                         className={cn(
-                          'h-full rounded-full transition-all duration-500',
-                          pct >= 80
-                            ? 'bg-emerald-500'
-                            : pct >= 50
-                              ? 'bg-amber-500'
-                              : 'bg-red-500'
+                          'h-full rounded-full',
+                          tone === 'green'
+                            ? 'bg-emerald-400/80'
+                            : tone === 'amber'
+                              ? 'bg-amber-400/80'
+                              : 'bg-red-400/80'
                         )}
                         style={{ width: `${Math.min(pct, 100)}%` }}
                       />
                     </div>
+                  </div>
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] text-white uppercase tracking-wider">
-                        {employer.apprentices.length} apprentice{employer.apprentices.length !== 1 ? 's' : ''}
-                      </span>
-                      <span
-                        className={cn(
-                          'text-xs font-semibold',
-                          pct >= 80
-                            ? 'text-emerald-400'
-                            : pct >= 50
-                              ? 'text-amber-400'
-                              : 'text-red-400'
-                        )}
-                      >
-                        {pct}%
-                      </span>
-                    </div>
+                  <div className="mt-3 text-[11px] text-white/50 tabular-nums">
+                    {employer.apprentices.length} apprentice
+                    {employer.apprentices.length !== 1 ? 's' : ''}
                   </div>
                 </div>
               );

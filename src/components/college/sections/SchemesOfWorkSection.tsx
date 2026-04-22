@@ -1,40 +1,22 @@
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { CollegeSectionHeader } from "@/components/college/CollegeSectionHeader";
-import { useCollege } from "@/contexts/CollegeContext";
-import { cn } from "@/lib/utils";
-import {
-  Search,
-  Plus,
-  LayoutList,
-  Calendar,
-  Clock,
-  CheckCircle2,
-  Circle,
-  MoreVertical,
-  Filter,
-  BookOpen,
-  User,
-} from "lucide-react";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useCollege } from '@/contexts/CollegeContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  PageFrame,
+  PageHero,
+  FilterBar,
+  EmptyState,
+  Pill,
+  itemVariants,
+} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
-// Mock schemes of work data - would come from context in full implementation
 const mockSchemesOfWork = [
   {
     id: 'sow-1',
@@ -98,188 +80,173 @@ const mockSchemesOfWork = [
 
 export function SchemesOfWorkSection() {
   const { courses } = useCollege();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filterStatus, setFilterStatus] = useState<string>("all");
-  const [filterCourse, setFilterCourse] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterStatus, setFilterStatus] = useState<string>('all');
+  const [filterCourse, setFilterCourse] = useState<string>('all');
 
-  const filteredSchemes = mockSchemesOfWork.filter(scheme => {
-    const matchesSearch = scheme.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  const filteredSchemes = mockSchemesOfWork.filter((scheme) => {
+    const matchesSearch =
+      scheme.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       scheme.courseName.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesStatus = filterStatus === "all" || scheme.status === filterStatus;
-    const matchesCourse = filterCourse === "all" || scheme.courseId === filterCourse;
-
+    const matchesStatus = filterStatus === 'all' || scheme.status === filterStatus;
+    const matchesCourse = filterCourse === 'all' || scheme.courseId === filterCourse;
     return matchesSearch && matchesStatus && matchesCourse;
   });
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Active': return 'bg-success/10 text-success border-success/20';
-      case 'Draft': return 'bg-warning/10 text-warning border-warning/20';
-      case 'Archived': return 'bg-muted text-muted-foreground';
-      default: return 'bg-muted text-muted-foreground';
-    }
-  };
-
-  const getProgressPercent = (completed: number, total: number) => {
-    return Math.round((completed / total) * 100);
-  };
+  const activeCount = mockSchemesOfWork.filter((s) => s.status === 'Active').length;
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <CollegeSectionHeader
-        title="Schemes of Work"
-        description={`${mockSchemesOfWork.filter(s => s.status === 'Active').length} active schemes`}
-        actions={
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">New Scheme</span>
-          </Button>
-        }
-      />
+    <PageFrame>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Curriculum · Schemes of Work"
+          title="Scheme planning"
+          description={`${activeCount} active scheme${activeCount === 1 ? '' : 's'} of work across courses.`}
+          tone="emerald"
+          actions={
+            <button className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap">
+              New scheme →
+            </button>
+          }
+        />
+      </motion.div>
 
-      {/* Search and Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search schemes..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn(!searchQuery && "pl-9")}
-          />
-        </div>
-        <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-full sm:w-[140px]">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="Active">Active</SelectItem>
-            <SelectItem value="Draft">Draft</SelectItem>
-            <SelectItem value="Archived">Archived</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={filterCourse} onValueChange={setFilterCourse}>
-          <SelectTrigger className="w-full sm:w-[180px]">
-            <BookOpen className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Course" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Courses</SelectItem>
-            {courses.filter(c => c.status === 'Active').map(course => (
-              <SelectItem key={course.id} value={course.id}>{course.name}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+      <motion.div variants={itemVariants}>
+        <FilterBar
+          tabs={[
+            { value: 'all', label: 'All', count: mockSchemesOfWork.length },
+            { value: 'Active', label: 'Active', count: activeCount },
+            {
+              value: 'Draft',
+              label: 'Draft',
+              count: mockSchemesOfWork.filter((s) => s.status === 'Draft').length,
+            },
+            {
+              value: 'Archived',
+              label: 'Archived',
+              count: mockSchemesOfWork.filter((s) => s.status === 'Archived').length,
+            },
+          ]}
+          activeTab={filterStatus}
+          onTabChange={setFilterStatus}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search schemes…"
+          actions={
+            <select
+              value={filterCourse}
+              onChange={(e) => setFilterCourse(e.target.value)}
+              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+            >
+              <option value="all">All Courses</option>
+              {courses
+                .filter((c) => c.status === 'Active')
+                .map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.name}
+                  </option>
+                ))}
+            </select>
+          }
+        />
+      </motion.div>
 
-      {/* Schemes List */}
-      <div className="grid gap-4">
-        {filteredSchemes.map((scheme) => {
-          const progressPercent = getProgressPercent(scheme.completedWeeks, scheme.totalWeeks);
+      {filteredSchemes.length === 0 ? (
+        <EmptyState title="No schemes found" description="Try adjusting filters." />
+      ) : (
+        <motion.div variants={itemVariants} className="space-y-4">
+          {filteredSchemes.map((scheme) => {
+            const progressPercent = Math.round((scheme.completedWeeks / scheme.totalWeeks) * 100);
+            const tone =
+              scheme.status === 'Active'
+                ? 'green'
+                : scheme.status === 'Draft'
+                  ? 'amber'
+                  : 'yellow';
 
-          return (
-            <Card key={scheme.id} className="hover:shadow-md transition-shadow">
-              <CardContent className="p-4">
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <LayoutList className="h-6 w-6 text-primary" />
+            return (
+              <div
+                key={scheme.id}
+                className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      {scheme.courseName} · {scheme.academicYear}
+                    </div>
+                    <h3 className="mt-1.5 text-lg sm:text-xl font-semibold text-white tracking-tight">
+                      {scheme.title}
+                    </h3>
                   </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <h3 className="font-semibold text-foreground">{scheme.title}</h3>
-                        <p className="text-sm text-muted-foreground">{scheme.courseName}</p>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge variant="outline" className={getStatusColor(scheme.status)}>
-                          {scheme.status}
-                        </Badge>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-8 w-8">
-                              <MoreVertical className="h-4 w-4" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem>View Details</DropdownMenuItem>
-                            <DropdownMenuItem>Edit Scheme</DropdownMenuItem>
-                            <DropdownMenuItem>Export to PDF</DropdownMenuItem>
-                            <DropdownMenuItem>Duplicate</DropdownMenuItem>
-                            <DropdownMenuItem>Archive</DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="mt-3">
-                      <div className="flex items-center justify-between text-xs mb-1">
-                        <span className="text-muted-foreground">Progress</span>
-                        <span className="font-medium">{scheme.completedWeeks}/{scheme.totalWeeks} weeks ({progressPercent}%)</span>
-                      </div>
-                      <Progress value={progressPercent} className="h-2" />
-                    </div>
-
-                    {/* Units Summary */}
-                    <div className="mt-3">
-                      <p className="text-xs text-muted-foreground mb-2">Units:</p>
-                      <div className="flex flex-wrap gap-2">
-                        {scheme.units.map((unit, i) => (
-                          <div
-                            key={i}
-                            className={`flex items-center gap-1 px-2 py-1 rounded-md text-xs ${
-                              unit.completed
-                                ? 'bg-success/10 text-success'
-                                : 'bg-muted text-muted-foreground'
-                            }`}
-                          >
-                            {unit.completed ? (
-                              <CheckCircle2 className="h-3 w-3" />
-                            ) : (
-                              <Circle className="h-3 w-3" />
-                            )}
-                            <span>{unit.name}</span>
-                            <span className="text-[10px] opacity-70">({unit.weeks}w)</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-4 mt-3 pt-3 border-t text-xs text-muted-foreground">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="h-3 w-3" />
-                        <span>{scheme.academicYear}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        <span>{scheme.totalWeeks} weeks total</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <User className="h-3 w-3" />
-                        <span>{scheme.createdByName}</span>
-                      </div>
-                    </div>
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <Pill tone={tone as 'green' | 'amber' | 'yellow'}>{scheme.status}</Pill>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                          aria-label="Options"
+                        >
+                          ⋯
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem className="h-11">View details</DropdownMenuItem>
+                        <DropdownMenuItem className="h-11">Edit scheme</DropdownMenuItem>
+                        <DropdownMenuItem className="h-11">Export to PDF</DropdownMenuItem>
+                        <DropdownMenuItem className="h-11">Duplicate</DropdownMenuItem>
+                        <DropdownMenuItem className="h-11">Archive</DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          );
-        })}
 
-        {filteredSchemes.length === 0 && (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <p className="text-muted-foreground">No schemes of work found matching your criteria.</p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </div>
+                <div className="mt-4">
+                  <div className="flex items-baseline justify-between text-[11.5px]">
+                    <span className="text-white/50 uppercase tracking-[0.12em]">Progress</span>
+                    <span className="font-medium text-white tabular-nums">
+                      {scheme.completedWeeks}/{scheme.totalWeeks} wks · {progressPercent}%
+                    </span>
+                  </div>
+                  <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-elec-yellow/80 rounded-full transition-all"
+                      style={{ width: `${progressPercent}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4 flex flex-wrap gap-1.5">
+                  {scheme.units.map((unit, i) => (
+                    <span
+                      key={i}
+                      className={cn(
+                        'inline-flex items-center gap-1.5 text-[11px] px-2 py-1 rounded-full border tabular-nums',
+                        unit.completed
+                          ? 'bg-green-500/10 text-green-400 border-green-500/20'
+                          : 'bg-white/[0.03] text-white/50 border-white/[0.06]'
+                      )}
+                    >
+                      <span
+                        aria-hidden
+                        className={cn(
+                          'h-1.5 w-1.5 rounded-full',
+                          unit.completed ? 'bg-green-400' : 'bg-white/30'
+                        )}
+                      />
+                      {unit.name} · {unit.weeks}w
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-5 pt-4 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white/50">
+                  <span className="tabular-nums">{scheme.totalWeeks} weeks total</span>
+                  <span>By {scheme.createdByName}</span>
+                </div>
+              </div>
+            );
+          })}
+        </motion.div>
+      )}
+    </PageFrame>
   );
 }

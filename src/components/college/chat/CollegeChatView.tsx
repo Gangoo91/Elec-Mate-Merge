@@ -2,22 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import {
-  ArrowLeft,
-  MoreVertical,
-  Send,
-  Loader2,
-  GraduationCap,
-  Building2,
-  UserCog,
-  Lock,
-  Eye,
-} from 'lucide-react';
+import { Pill } from '@/components/college/primitives';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -114,13 +103,13 @@ export function CollegeChatView({
         return {
           name: otherParticipant?.name || 'Tutor',
           subtitle: otherParticipant?.role || 'College Staff',
-          icon: <UserCog className="h-4 w-4" />,
+          icon: null,
         };
       } else {
         return {
           name: otherParticipant?.name || 'Student',
           subtitle: 'Student',
-          icon: <GraduationCap className="h-4 w-4" />,
+          icon: null,
         };
       }
     }
@@ -130,13 +119,13 @@ export function CollegeChatView({
         return {
           name: otherParticipant?.name || 'College Staff',
           subtitle: otherParticipant?.role || 'Staff Member',
-          icon: <UserCog className="h-4 w-4" />,
+          icon: null,
         };
       } else {
         return {
           name: otherParticipant?.name || 'Employer',
           subtitle: 'Employer',
-          icon: <Building2 className="h-4 w-4" />,
+          icon: null,
         };
       }
     }
@@ -167,8 +156,8 @@ export function CollegeChatView({
       <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col">
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-border">
-          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)}>
-            <ArrowLeft className="h-5 w-5" />
+          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)} aria-label="Back">
+            <span className="text-[18px]">‹</span>
           </Button>
 
           <Avatar className="h-10 w-10">
@@ -181,23 +170,21 @@ export function CollegeChatView({
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <p className="font-semibold truncate">{info.name}</p>
-              {info.icon}
             </div>
             <p className="text-sm text-muted-foreground truncate">{info.subtitle}</p>
           </div>
 
           {/* Student context badge */}
           {conversation.student && (
-            <Badge variant="outline" className="gap-1 shrink-0">
-              <GraduationCap className="h-3 w-3" />
+            <Pill tone="yellow" className="shrink-0">
               {conversation.student.first_name} {conversation.student.last_name}
-            </Badge>
+            </Pill>
           )}
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <MoreVertical className="h-5 w-5" />
+              <Button variant="ghost" size="icon" aria-label="More options">
+                <span className="text-[18px] leading-none">⋯</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
@@ -240,7 +227,7 @@ export function CollegeChatView({
                   <div key={msg.id} className="flex justify-center my-4">
                     <div className="bg-muted rounded-lg px-4 py-3 max-w-[80%]">
                       <div className="flex items-center gap-2 text-sm font-medium">
-                        <GraduationCap className="h-4 w-4 text-elec-yellow" />
+                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow" />
                         Progress Update
                       </div>
                       <p className="text-sm mt-1">{metadata?.title || msg.content}</p>
@@ -248,7 +235,9 @@ export function CollegeChatView({
                         <p className="text-xs text-muted-foreground mt-1">{metadata.details}</p>
                       )}
                       {metadata?.score !== undefined && (
-                        <Badge className="mt-2">{metadata.score}%</Badge>
+                        <Pill tone="yellow" className="mt-2">
+                          {metadata.score}%
+                        </Pill>
                       )}
                     </div>
                   </div>
@@ -281,15 +270,15 @@ export function CollegeChatView({
                   <div className="max-w-[75%]">
                     {/* Confidential indicator */}
                     {msg.is_confidential && (
-                      <div className="flex items-center gap-1 text-xs text-amber-500 mb-1">
-                        <Lock className="h-3 w-3" />
+                      <div className="flex items-center gap-1.5 text-[11px] text-amber-500 mb-1">
+                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
                         Confidential
                       </div>
                     )}
                     {/* Not visible to student indicator */}
                     {!msg.visible_to_student && currentUserType !== 'student' && (
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground mb-1">
-                        <Eye className="h-3 w-3" />
+                      <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mb-1">
+                        <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/30" />
                         Hidden from student
                       </div>
                     )}
@@ -328,11 +317,7 @@ export function CollegeChatView({
                   checked={isConfidential}
                   onCheckedChange={(checked) => setIsConfidential(checked as boolean)}
                 />
-                <Label
-                  htmlFor="confidential"
-                  className="text-xs cursor-pointer flex items-center gap-1"
-                >
-                  <Lock className="h-3 w-3" />
+                <Label htmlFor="confidential" className="text-xs cursor-pointer">
                   Confidential
                 </Label>
               </div>
@@ -344,11 +329,7 @@ export function CollegeChatView({
                   checked={visibleToStudent}
                   onCheckedChange={(checked) => setVisibleToStudent(checked as boolean)}
                 />
-                <Label
-                  htmlFor="visible-student"
-                  className="text-xs cursor-pointer flex items-center gap-1"
-                >
-                  <Eye className="h-3 w-3" />
+                <Label htmlFor="visible-student" className="text-xs cursor-pointer">
                   Visible to student
                 </Label>
               </div>
@@ -371,12 +352,9 @@ export function CollegeChatView({
             disabled={!message.trim() || isSending}
             size="icon"
             className="h-11 w-11 shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            aria-label="Send message"
           >
-            {isSending ? (
-              <Loader2 className="h-5 w-5 animate-spin" />
-            ) : (
-              <Send className="h-5 w-5" />
-            )}
+            <span className="text-[16px] font-semibold">→</span>
           </Button>
         </div>
       </SheetContent>

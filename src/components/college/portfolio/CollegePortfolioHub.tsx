@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
@@ -11,19 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Users,
-  FileCheck,
-  ClipboardCheck,
-  Award,
-  Search,
-  AlertTriangle,
-  Loader2,
-  RefreshCw,
-  ArrowLeft,
-  LayoutGrid,
-  List,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   useCollegePortfolios,
@@ -36,6 +21,17 @@ import SubmissionReviewPanel from './SubmissionReviewPanel';
 import IQASamplingPanel from './IQASamplingPanel';
 import EPAGatewayChecklist from './EPAGatewayChecklist';
 import StudentRequirementsPanel from './StudentRequirementsPanel';
+import {
+  PageFrame,
+  SectionHeader,
+  StatStrip,
+  ListCard,
+  ListRow,
+  Pill,
+  EmptyState,
+  LoadingState,
+  itemVariants,
+} from '@/components/college/primitives';
 
 type ViewMode = 'list' | 'student-detail' | 'submission-review';
 
@@ -90,11 +86,7 @@ const CollegePortfolioHub: React.FC = () => {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-      </div>
-    );
+    return <LoadingState />;
   }
 
   // Submission Review View
@@ -114,30 +106,53 @@ const CollegePortfolioHub: React.FC = () => {
   // Student Detail View
   if (viewMode === 'student-detail' && selectedStudent) {
     return (
-      <div className="space-y-6">
-        <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" onClick={handleBack}>
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h2 className="text-xl font-bold">{portfolioDetail?.studentName || 'Loading...'}</h2>
-            <p className="text-sm text-white">{portfolioDetail?.qualificationTitle}</p>
+      <PageFrame>
+        <div className="flex items-center gap-4 pt-6 sm:pt-8">
+          <button
+            onClick={handleBack}
+            className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+          >
+            ← Back
+          </button>
+          <div className="min-w-0 flex-1">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              Student Portfolio
+            </div>
+            <h2 className="mt-1 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-tight">
+              {portfolioDetail?.studentName || 'Loading…'}
+            </h2>
+            {portfolioDetail?.qualificationTitle && (
+              <p className="mt-1 text-[13px] text-white/55">{portfolioDetail.qualificationTitle}</p>
+            )}
           </div>
         </div>
 
         {detailLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-          </div>
+          <LoadingState />
         ) : portfolioDetail ? (
           <Tabs defaultValue="coverage">
-            <TabsList className="bg-white/5 border border-elec-gray/40">
-              <TabsTrigger value="coverage">Coverage Matrix</TabsTrigger>
-              <TabsTrigger value="requirements">Requirements</TabsTrigger>
-              <TabsTrigger value="gateway">EPA Gateway</TabsTrigger>
+            <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
+              <TabsTrigger
+                value="coverage"
+                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+              >
+                Coverage Matrix
+              </TabsTrigger>
+              <TabsTrigger
+                value="requirements"
+                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+              >
+                Requirements
+              </TabsTrigger>
+              <TabsTrigger
+                value="gateway"
+                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+              >
+                EPA Gateway
+              </TabsTrigger>
             </TabsList>
 
-            <TabsContent value="coverage" className="mt-4">
+            <TabsContent value="coverage" className="mt-6">
               <CoverageMatrixView
                 coverageMatrix={portfolioDetail.coverageMatrix}
                 ksbMappings={portfolioDetail.portfolioItems.flatMap((item) => item.ksbMappings)}
@@ -146,14 +161,14 @@ const CollegePortfolioHub: React.FC = () => {
               />
             </TabsContent>
 
-            <TabsContent value="requirements" className="mt-4">
+            <TabsContent value="requirements" className="mt-6">
               <StudentRequirementsPanel
                 studentId={selectedStudent.id}
                 qualificationId={selectedStudent.qualificationId}
               />
             </TabsContent>
 
-            <TabsContent value="gateway" className="mt-4">
+            <TabsContent value="gateway" className="mt-6">
               <EPAGatewayChecklist
                 studentId={selectedStudent.id}
                 qualificationId={selectedStudent.qualificationId}
@@ -161,143 +176,89 @@ const CollegePortfolioHub: React.FC = () => {
             </TabsContent>
           </Tabs>
         ) : (
-          <Card className="bg-white/5 border-elec-gray/40">
-            <CardContent className="py-12 text-center">
-              <AlertTriangle className="h-12 w-12 text-amber-400 mx-auto mb-4" />
-              <p className="text-white">Unable to load student portfolio</p>
-            </CardContent>
-          </Card>
+          <EmptyState
+            title="Unable to load student portfolio"
+            description="Please try again or return to the queue."
+          />
         )}
-      </div>
+      </PageFrame>
     );
   }
 
   // Main Hub View
   return (
-    <div className="space-y-6">
-      {/* Header Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-blue-500/10">
-                <Users className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Total Students</p>
-                <p className="text-2xl font-bold">{stats.totalStudents}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-green-500/10">
-                <FileCheck className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Active</p>
-                <p className="text-2xl font-bold">{stats.activeStudents}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-amber-500/10">
-                <ClipboardCheck className="h-5 w-5 text-amber-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Awaiting Review</p>
-                <p className="text-2xl font-bold">{stats.awaitingReview}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-red-500/10">
-                <AlertTriangle className="h-5 w-5 text-red-400" />
-              </div>
-              <div>
-                <p className="text-xs text-white">At Risk</p>
-                <p className="text-2xl font-bold">{stats.atRiskStudents}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-white/5 border-elec-gray/40">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-elec-yellow/10">
-                <Award className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                <p className="text-xs text-white">Completed</p>
-                <p className="text-2xl font-bold">{stats.completedStudents}</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+    <PageFrame>
+      {/* Stats Strip */}
+      <motion.div variants={itemVariants}>
+        <StatStrip
+          columns={5}
+          stats={[
+            { value: stats.totalStudents, label: 'Total Students' },
+            { value: stats.activeStudents, label: 'Active', tone: 'green' },
+            { value: stats.awaitingReview, label: 'Awaiting Review', tone: 'amber' },
+            { value: stats.atRiskStudents, label: 'At Risk', tone: 'red' },
+            { value: stats.completedStudents, label: 'Completed', accent: true },
+          ]}
+        />
+      </motion.div>
 
       {/* Main Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <TabsList className="bg-white/5 border border-elec-gray/40">
-            <TabsTrigger value="overview">All Students</TabsTrigger>
-            <TabsTrigger value="review">
+          <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
+            <TabsTrigger
+              value="overview"
+              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            >
+              All Students
+            </TabsTrigger>
+            <TabsTrigger
+              value="review"
+              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            >
               Review Queue
               {stats.awaitingReview > 0 && (
-                <Badge className="ml-2 bg-amber-500/20 text-amber-400">
+                <span className="ml-1.5 tabular-nums text-[11px] text-white/50 data-[state=active]:text-black/60">
                   {stats.awaitingReview}
-                </Badge>
+                </span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="iqa">IQA Sampling</TabsTrigger>
+            <TabsTrigger
+              value="iqa"
+              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            >
+              IQA Sampling
+            </TabsTrigger>
           </TabsList>
 
-          <Button
-            variant="outline"
-            size="sm"
+          <button
             onClick={() => refetch()}
-            className="border-elec-gray/40"
+            className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation self-start sm:self-auto"
           >
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Refresh
-          </Button>
+            Refresh →
+          </button>
         </div>
 
-        {/* Overview Tab - All Students */}
-        <TabsContent value="overview" className="mt-4 space-y-4">
+        {/* Overview Tab */}
+        <TabsContent value="overview" className="mt-6 space-y-6">
+          <SectionHeader eyebrow="01 · Cohort" title="Students" />
+
           {/* Filters */}
           <div className="flex flex-col sm:flex-row gap-3">
-            <div className="relative flex-1">
-              {!searchTerm && (
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white pointer-events-none" />
-              )}
-              <Input
-                placeholder="Search students..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className={cn('bg-white/5 border-elec-gray/40', !searchTerm && 'pl-8')}
-              />
-            </div>
+            <Input
+              placeholder="Search students or qualifications…"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 rounded-full px-4 touch-manipulation"
+            />
             <Select
               value={statusFilter || 'all'}
               onValueChange={(v) => setStatusFilter(v === 'all' ? null : v)}
             >
-              <SelectTrigger className="w-full sm:w-40 bg-white/5 border-elec-gray/40">
+              <SelectTrigger className="w-full sm:w-44 h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] rounded-full text-[13px] text-white focus:border-elec-yellow/60">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-elec-gray/40">
+              <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
                 <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
                 <SelectItem value="at_risk">At Risk</SelectItem>
@@ -305,57 +266,62 @@ const CollegePortfolioHub: React.FC = () => {
                 <SelectItem value="completed">Completed</SelectItem>
               </SelectContent>
             </Select>
-            <div className="flex border border-elec-gray/40 rounded-md">
-              <Button
-                variant={displayMode === 'grid' ? 'secondary' : 'ghost'}
-                size="icon"
+            <div className="inline-flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full">
+              <button
                 onClick={() => setDisplayMode('grid')}
-                className="rounded-r-none"
+                className={cn(
+                  'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
+                  displayMode === 'grid'
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white/70 hover:text-white'
+                )}
               >
-                <LayoutGrid className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={displayMode === 'list' ? 'secondary' : 'ghost'}
-                size="icon"
+                Grid
+              </button>
+              <button
                 onClick={() => setDisplayMode('list')}
-                className="rounded-l-none"
+                className={cn(
+                  'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
+                  displayMode === 'list'
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white/70 hover:text-white'
+                )}
               >
-                <List className="h-4 w-4" />
-              </Button>
+                List
+              </button>
             </div>
           </div>
 
           {/* At Risk Alert */}
           {atRiskStudents.length > 0 && (
-            <Card className="bg-red-500/10 border-red-500/20">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-3">
-                  <AlertTriangle className="h-5 w-5 text-red-400" />
-                  <div>
-                    <p className="font-medium text-red-300">
-                      {atRiskStudents.length} student{atRiskStudents.length > 1 ? 's' : ''} at risk
-                    </p>
-                    <p className="text-sm text-white">
-                      These students may need additional support
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 flex items-center gap-4">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-white">
+                  {atRiskStudents.length} student{atRiskStudents.length > 1 ? 's' : ''} at risk
+                </p>
+                <p className="text-[12.5px] text-white/55 mt-0.5">
+                  These students may need additional support
+                </p>
+              </div>
+              <Pill tone="red">At Risk</Pill>
+            </div>
           )}
 
           {/* Student Grid/List */}
           {filteredPortfolios.length === 0 ? (
-            <Card className="bg-white/5 border-elec-gray/40">
-              <CardContent className="py-12 text-center">
-                <Users className="h-12 w-12 text-white mx-auto mb-4" />
-                <p className="text-white">
-                  {studentPortfolios.length === 0
-                    ? 'No students assigned to you yet'
-                    : 'No students match your search'}
-                </p>
-              </CardContent>
-            </Card>
+            <EmptyState
+              title={
+                studentPortfolios.length === 0
+                  ? 'No students assigned to you yet'
+                  : 'No students match your search'
+              }
+              description={
+                studentPortfolios.length === 0
+                  ? 'Students will appear here once they are assigned.'
+                  : 'Try adjusting your filters or search term.'
+              }
+            />
           ) : displayMode === 'grid' ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredPortfolios.map((portfolio) => (
@@ -363,51 +329,45 @@ const CollegePortfolioHub: React.FC = () => {
                   key={portfolio.id}
                   portfolio={portfolio}
                   onViewDetails={handleViewDetails}
-                  onReviewSubmissions={(studentId) => {
+                  onReviewSubmissions={() => {
                     setActiveTab('review');
                   }}
                 />
               ))}
             </div>
           ) : (
-            <Card className="bg-white/5 border-elec-gray/40">
-              <CardContent className="p-0">
-                <div className="divide-y divide-elec-gray/40">
-                  {filteredPortfolios.map((portfolio) => (
-                    <div
-                      key={portfolio.id}
-                      className="p-4 flex items-center justify-between hover:bg-white/5 cursor-pointer active:bg-white/10 transition-all touch-manipulation"
-                      onClick={() =>
-                        handleViewDetails(portfolio.studentId, portfolio.qualificationId)
-                      }
-                    >
-                      <div className="flex items-center gap-4">
-                        <div>
-                          <p className="font-medium">{portfolio.studentName}</p>
-                          <p className="text-sm text-white">{portfolio.qualificationTitle}</p>
+            <ListCard>
+              {filteredPortfolios.map((portfolio) => (
+                <ListRow
+                  key={portfolio.id}
+                  title={portfolio.studentName}
+                  subtitle={portfolio.qualificationTitle}
+                  trailing={
+                    <div className="flex items-center gap-4">
+                      <div className="text-right">
+                        <div className="text-[15px] font-semibold tabular-nums text-white">
+                          {portfolio.completionPercentage}%
+                        </div>
+                        <div className="text-[10px] uppercase tracking-[0.16em] text-white/40">
+                          Complete
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <div className="text-right">
-                          <p className="text-sm font-medium">{portfolio.completionPercentage}%</p>
-                          <p className="text-xs text-white">Complete</p>
-                        </div>
-                        {portfolio.submissionsAwaitingReview > 0 && (
-                          <Badge className="bg-amber-500/20 text-amber-400">
-                            {portfolio.submissionsAwaitingReview} to review
-                          </Badge>
-                        )}
-                      </div>
+                      {portfolio.submissionsAwaitingReview > 0 && (
+                        <Pill tone="amber">{portfolio.submissionsAwaitingReview} to review</Pill>
+                      )}
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                  }
+                  onClick={() =>
+                    handleViewDetails(portfolio.studentId, portfolio.qualificationId)
+                  }
+                />
+              ))}
+            </ListCard>
           )}
         </TabsContent>
 
         {/* Review Queue Tab */}
-        <TabsContent value="review" className="mt-4">
+        <TabsContent value="review" className="mt-6">
           <PortfolioReviewQueue
             onViewSubmission={handleViewSubmission}
             onStartReview={handleViewSubmission}
@@ -415,11 +375,11 @@ const CollegePortfolioHub: React.FC = () => {
         </TabsContent>
 
         {/* IQA Tab */}
-        <TabsContent value="iqa" className="mt-4">
+        <TabsContent value="iqa" className="mt-6">
           <IQASamplingPanel onViewSubmission={handleViewSubmission} />
         </TabsContent>
       </Tabs>
-    </div>
+    </PageFrame>
   );
 };
 

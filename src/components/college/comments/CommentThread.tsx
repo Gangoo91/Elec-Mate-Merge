@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import { useCollege, type CollegeComment } from '@/contexts/CollegeContext';
-import { MessageSquare, Reply, Check, AlertCircle, MoreVertical, Send, AtSign } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +9,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Pill, type Tone } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface CommentThreadProps {
   contextType: 'evidence' | 'assessment' | 'ilp' | 'portfolio';
@@ -38,32 +37,20 @@ export function CommentThread({
   const [replyContent, setReplyContent] = useState('');
   const [showMentionPopover, setShowMentionPopover] = useState(false);
   const [mentionSearch, setMentionSearch] = useState('');
-  const [selectedMentions, setSelectedMentions] = useState<string[]>([]);
+  const [, setSelectedMentions] = useState<string[]>([]);
 
   const comments = getCommentsForItem(contextType, contextId);
 
-  // Build threaded structure
   const topLevelComments = comments.filter((c) => !c.parentId);
   const getReplies = (parentId: string) => comments.filter((c) => c.parentId === parentId);
 
-  // Get all mentionable users
   const mentionableUsers = [
     ...staff
       .filter((s) => s.status === 'Active')
-      .map((s) => ({
-        id: s.id,
-        name: s.name,
-        role: s.role,
-        initials: s.avatarInitials,
-      })),
+      .map((s) => ({ id: s.id, name: s.name, role: s.role, initials: s.avatarInitials })),
     ...students
       .filter((s) => s.status === 'Active')
-      .map((s) => ({
-        id: s.id,
-        name: s.name,
-        role: 'student',
-        initials: s.avatarInitials,
-      })),
+      .map((s) => ({ id: s.id, name: s.name, role: 'student', initials: s.avatarInitials })),
   ].filter(
     (u) => mentionSearch === '' || u.name.toLowerCase().includes(mentionSearch.toLowerCase())
   );
@@ -82,8 +69,6 @@ export function CommentThread({
 
   const handleSubmitComment = () => {
     if (!newComment.trim()) return;
-
-    // Extract mentions from text
     const mentionMatches = newComment.match(/@[\w\s]+/g) || [];
     const mentionIds = mentionMatches
       .map((m) => {
@@ -120,8 +105,6 @@ export function CommentThread({
 
   const handleSubmitReply = (parentId: string) => {
     if (!replyContent.trim()) return;
-
-    // Extract mentions from text
     const mentionMatches = replyContent.match(/@[\w\s]+/g) || [];
     const mentionIds = mentionMatches
       .map((m) => {
@@ -156,22 +139,31 @@ export function CommentThread({
     resolveComment(commentId, currentUserId, currentUserName);
   };
 
-  const getRoleColor = (role: string) => {
-    switch (role) {
-      case 'tutor':
-        return 'bg-info/10 text-info';
-      case 'assessor':
-        return 'bg-success/10 text-success';
-      case 'iqa':
-        return 'bg-warning/10 text-warning';
-      case 'head_of_department':
-        return 'bg-purple-500/10 text-purple-500';
-      case 'student':
-        return 'bg-elec-yellow/10 text-elec-yellow';
-      default:
-        return 'bg-muted text-muted-foreground';
-    }
-  };
+  const roleTone = (role: string): Tone =>
+    role === 'tutor'
+      ? 'blue'
+      : role === 'assessor'
+        ? 'emerald'
+        : role === 'iqa'
+          ? 'amber'
+          : role === 'head_of_department'
+            ? 'purple'
+            : role === 'student'
+              ? 'yellow'
+              : 'yellow';
+
+  const roleAvatarClass = (role: string) =>
+    role === 'tutor'
+      ? 'bg-blue-500/10 text-blue-400'
+      : role === 'assessor'
+        ? 'bg-emerald-500/10 text-emerald-400'
+        : role === 'iqa'
+          ? 'bg-amber-500/10 text-amber-400'
+          : role === 'head_of_department'
+            ? 'bg-purple-500/10 text-purple-400'
+            : role === 'student'
+              ? 'bg-elec-yellow/10 text-elec-yellow'
+              : 'bg-white/[0.06] text-white/70';
 
   const formatRole = (role: string) => {
     switch (role) {
@@ -202,7 +194,7 @@ export function CommentThread({
     const diffHours = Math.floor(diffMs / 3600000);
     const diffDays = Math.floor(diffMs / 86400000);
 
-    if (diffMins < 1) return 'Just now';
+    if (diffMins < 1) return 'now';
     if (diffMins < 60) return `${diffMins}m ago`;
     if (diffHours < 24) return `${diffHours}h ago`;
     if (diffDays < 7) return `${diffDays}d ago`;
@@ -210,7 +202,6 @@ export function CommentThread({
   };
 
   const highlightMentions = (text: string) => {
-    // Highlight @mentions in text
     const parts = text.split(/(@[\w\s]+)/g);
     return parts.map((part, i) => {
       if (part.startsWith('@')) {
@@ -224,14 +215,60 @@ export function CommentThread({
     });
   };
 
+  const renderMentionPopover = () => (
+    <Popover open={showMentionPopover} onOpenChange={setShowMentionPopover}>
+      <PopoverTrigger asChild>
+        <button
+          className="h-11 px-3 text-[12px] font-medium text-white/70 hover:text-white bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl transition-colors touch-manipulation"
+          aria-label="Mention"
+        >
+          @
+        </button>
+      </PopoverTrigger>
+      <PopoverContent
+        className="w-72 p-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-2xl"
+        align="end"
+      >
+        <input
+          type="text"
+          placeholder="Search users…"
+          value={mentionSearch}
+          onChange={(e) => setMentionSearch(e.target.value)}
+          className="w-full h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 mb-2"
+        />
+        <div className="max-h-[200px] overflow-y-auto space-y-0.5">
+          {mentionableUsers.slice(0, 10).map((user) => (
+            <button
+              key={user.id}
+              onClick={() => handleMention(user)}
+              className="w-full flex items-center gap-2.5 px-2 py-2 text-[13px] hover:bg-white/[0.04] rounded-lg text-left transition-colors touch-manipulation"
+            >
+              <Avatar className="h-7 w-7 shrink-0">
+                <AvatarFallback className={cn('text-[10px]', roleAvatarClass(user.role))}>
+                  {user.initials}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <div className="text-white truncate">{user.name}</div>
+                <div className="text-[11px] text-white/50">{formatRole(user.role)}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+
   const renderComment = (comment: CollegeComment, isReply = false) => {
     const replies = getReplies(comment.id);
 
     return (
-      <div key={comment.id} className={`${isReply ? 'ml-8 mt-3' : ''}`}>
-        <div className={`flex gap-3 ${comment.isResolved ? 'opacity-60' : ''}`}>
+      <div key={comment.id} className={cn(isReply ? 'ml-8 mt-3' : '')}>
+        <div className={cn('flex gap-3', comment.isResolved ? 'opacity-60' : '')}>
           <Avatar className="h-8 w-8 shrink-0">
-            <AvatarFallback className={`text-xs font-semibold ${getRoleColor(comment.authorRole)}`}>
+            <AvatarFallback
+              className={cn('text-[11px] font-semibold', roleAvatarClass(comment.authorRole))}
+            >
               {comment.authorInitials}
             </AvatarFallback>
           </Avatar>
@@ -239,53 +276,35 @@ export function CommentThread({
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-medium text-sm text-foreground">{comment.authorName}</span>
-                <Badge
-                  variant="outline"
-                  className={`text-[10px] px-1.5 py-0 ${getRoleColor(comment.authorRole)}`}
-                >
-                  {formatRole(comment.authorRole)}
-                </Badge>
-                <span className="text-xs text-muted-foreground">
+                <span className="font-medium text-[13px] text-white">{comment.authorName}</span>
+                <Pill tone={roleTone(comment.authorRole)}>{formatRole(comment.authorRole)}</Pill>
+                <span className="text-[11px] text-white/40 tabular-nums">
                   {formatDate(comment.createdAt)}
                 </span>
               </div>
 
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1.5">
                 {comment.requiresAction && !comment.isResolved && (
-                  <Badge
-                    variant="outline"
-                    className="bg-warning/10 text-warning text-[10px] px-1.5 py-0"
-                  >
-                    <AlertCircle className="h-3 w-3 mr-1" />
-                    Action
-                  </Badge>
+                  <Pill tone="amber">Action</Pill>
                 )}
-                {comment.isResolved && (
-                  <Badge
-                    variant="outline"
-                    className="bg-success/10 text-success text-[10px] px-1.5 py-0"
-                  >
-                    <Check className="h-3 w-3 mr-1" />
-                    Resolved
-                  </Badge>
-                )}
+                {comment.isResolved && <Pill tone="green">Resolved</Pill>}
                 {!readOnly && (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-6 w-6">
-                        <MoreVertical className="h-3 w-3" />
-                      </Button>
+                      <button
+                        className="text-white/50 hover:text-white text-[16px] leading-none px-1 touch-manipulation"
+                        aria-label="Options"
+                      >
+                        ⋯
+                      </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => setReplyingTo(comment.id)}>
-                        <Reply className="h-3 w-3 mr-2" />
                         Reply
                       </DropdownMenuItem>
                       {comment.requiresAction && !comment.isResolved && (
                         <DropdownMenuItem onClick={() => handleResolve(comment.id)}>
-                          <Check className="h-3 w-3 mr-2" />
-                          Mark Resolved
+                          Mark resolved
                         </DropdownMenuItem>
                       )}
                     </DropdownMenuContent>
@@ -294,12 +313,12 @@ export function CommentThread({
               </div>
             </div>
 
-            <p className="text-sm text-foreground/90 mt-1 whitespace-pre-wrap">
+            <p className="text-[13px] text-white/80 mt-1.5 whitespace-pre-wrap leading-relaxed">
               {highlightMentions(comment.content)}
             </p>
 
             {comment.isResolved && comment.resolvedByName && (
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="mt-1.5 text-[11px] text-white/40 tabular-nums">
                 Resolved by {comment.resolvedByName} on{' '}
                 {new Date(comment.resolvedAt!).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -308,71 +327,32 @@ export function CommentThread({
               </p>
             )}
 
-            {/* Reply input */}
             {replyingTo === comment.id && !readOnly && (
               <div className="mt-3 flex gap-2">
                 <Textarea
-                  placeholder="Write a reply..."
+                  placeholder="Write a reply…"
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
-                  className="min-h-[60px] text-sm"
+                  className="min-h-[60px] text-[13px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 resize-none"
                   rows={2}
                 />
-                <div className="flex flex-col gap-1">
-                  <Popover open={showMentionPopover} onOpenChange={setShowMentionPopover}>
-                    <PopoverTrigger asChild>
-                      <Button variant="outline" size="icon" className="h-8 w-8">
-                        <AtSign className="h-4 w-4" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-64 p-2" align="end">
-                      <input
-                        type="text"
-                        placeholder="Search users..."
-                        value={mentionSearch}
-                        onChange={(e) => setMentionSearch(e.target.value)}
-                        className="w-full px-2 py-1 text-sm border rounded mb-2 bg-background"
-                      />
-                      <div className="max-h-48 overflow-y-auto space-y-1">
-                        {mentionableUsers.slice(0, 8).map((user) => (
-                          <button
-                            key={user.id}
-                            onClick={() => handleMention(user)}
-                            className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-muted rounded text-left"
-                          >
-                            <Avatar className="h-6 w-6">
-                              <AvatarFallback className={`text-[10px] ${getRoleColor(user.role)}`}>
-                                {user.initials}
-                              </AvatarFallback>
-                            </Avatar>
-                            <div className="flex-1 min-w-0">
-                              <p className="font-medium truncate">{user.name}</p>
-                              <p className="text-xs text-muted-foreground">
-                                {formatRole(user.role)}
-                              </p>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                  <Button
-                    size="icon"
-                    className="h-8 w-8 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+                <div className="flex flex-col gap-1.5">
+                  {renderMentionPopover()}
+                  <button
                     onClick={() => handleSubmitReply(comment.id)}
                     disabled={!replyContent.trim()}
+                    className="h-11 px-4 bg-elec-yellow text-black rounded-xl text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                   >
-                    <Send className="h-4 w-4" />
-                  </Button>
+                    Send
+                  </button>
                 </div>
               </div>
             )}
           </div>
         </div>
 
-        {/* Render replies */}
         {replies.length > 0 && (
-          <div className="border-l-2 border-muted pl-2 ml-4">
+          <div className="border-l-2 border-white/[0.06] pl-2 ml-4 mt-3">
             {replies.map((reply) => renderComment(reply, true))}
           </div>
         )}
@@ -380,91 +360,52 @@ export function CommentThread({
     );
   };
 
+  const actionCount = comments.filter((c) => c.requiresAction && !c.isResolved).length;
+
   return (
-    <div className="space-y-4">
-      {/* Header */}
+    <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <MessageSquare className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm font-medium">Comments ({comments.length})</span>
+        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+          Comments · {comments.length}
         </div>
-        {comments.filter((c) => c.requiresAction && !c.isResolved).length > 0 && (
-          <Badge variant="outline" className="bg-warning/10 text-warning">
-            {comments.filter((c) => c.requiresAction && !c.isResolved).length} require action
-          </Badge>
-        )}
+        {actionCount > 0 && <Pill tone="amber">{actionCount} need action</Pill>}
       </div>
 
-      {/* New comment input */}
       {!readOnly && (
         <div className="flex gap-3">
           <Avatar className="h-8 w-8 shrink-0">
-            <AvatarFallback className={`text-xs font-semibold ${getRoleColor(currentUserRole)}`}>
+            <AvatarFallback
+              className={cn('text-[11px] font-semibold', roleAvatarClass(currentUserRole))}
+            >
               {currentUserInitials}
             </AvatarFallback>
           </Avatar>
           <div className="flex-1 flex gap-2">
             <Textarea
-              placeholder="Add a comment... Use @ to mention someone"
+              placeholder="Add a comment… use @ to mention someone"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              className="min-h-[60px] text-sm"
+              className="min-h-[60px] text-[13px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 resize-none"
               rows={2}
             />
-            <div className="flex flex-col gap-1">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" size="icon" className="h-8 w-8">
-                    <AtSign className="h-4 w-4" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-64 p-2" align="end">
-                  <input
-                    type="text"
-                    placeholder="Search users..."
-                    value={mentionSearch}
-                    onChange={(e) => setMentionSearch(e.target.value)}
-                    className="w-full px-2 py-1 text-sm border rounded mb-2 bg-background"
-                  />
-                  <div className="max-h-48 overflow-y-auto space-y-1">
-                    {mentionableUsers.slice(0, 8).map((user) => (
-                      <button
-                        key={user.id}
-                        onClick={() => handleMention(user)}
-                        className="w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-muted rounded text-left"
-                      >
-                        <Avatar className="h-6 w-6">
-                          <AvatarFallback className={`text-[10px] ${getRoleColor(user.role)}`}>
-                            {user.initials}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium truncate">{user.name}</p>
-                          <p className="text-xs text-muted-foreground">{formatRole(user.role)}</p>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </PopoverContent>
-              </Popover>
-              <Button
-                size="icon"
-                className="h-8 w-8 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            <div className="flex flex-col gap-1.5">
+              {renderMentionPopover()}
+              <button
                 onClick={handleSubmitComment}
                 disabled={!newComment.trim()}
+                className="h-11 px-4 bg-elec-yellow text-black rounded-xl text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
               >
-                <Send className="h-4 w-4" />
-              </Button>
+                Send
+              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Comments list */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {topLevelComments.length === 0 ? (
-          <p className="text-sm text-muted-foreground text-center py-4">
-            No comments yet. Be the first to add one!
+          <p className="text-[12.5px] text-white/40 text-center py-6">
+            No comments yet. Be the first to add one.
           </p>
         ) : (
           topLevelComments.map((comment) => renderComment(comment))

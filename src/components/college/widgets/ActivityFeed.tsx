@@ -1,22 +1,7 @@
 import { useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import {
-  Activity,
-  MessageSquare,
-  FileText,
-  CheckCircle2,
-  Upload,
-  UserPlus,
-  ClipboardCheck,
-  AlertCircle,
-  Calendar,
-  ChevronRight,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ActivityItem {
@@ -35,10 +20,11 @@ interface ActivityItem {
 interface ActivityFeedProps {
   maxItems?: number;
   compact?: boolean;
+  iconless?: boolean;
   onViewAll?: () => void;
 }
 
-export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: ActivityFeedProps) {
+export function ActivityFeed({ maxItems = 10, compact = false, iconless = false, onViewAll }: ActivityFeedProps) {
   const { grades: assessments, attendance, students, staff } = useCollegeSupabase();
 
   // Generate activity items from available Supabase data
@@ -100,22 +86,22 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
       .slice(0, maxItems);
   }, [assessments, attendance, students, staff, maxItems]);
 
-  const getTypeIcon = (type: string) => {
+  const getTypeDot = (type: string) => {
     switch (type) {
       case 'comment':
-        return <MessageSquare className="h-4 w-4 text-info" />;
+        return 'bg-blue-400';
       case 'evidence':
-        return <FileText className="h-4 w-4 text-elec-yellow" />;
+        return 'bg-elec-yellow';
       case 'grade':
-        return <ClipboardCheck className="h-4 w-4 text-success" />;
+        return 'bg-green-400';
       case 'attendance':
-        return <Calendar className="h-4 w-4 text-primary" />;
+        return 'bg-purple-400';
       case 'enrollment':
-        return <UserPlus className="h-4 w-4 text-info" />;
+        return 'bg-blue-400';
       case 'review':
-        return <CheckCircle2 className="h-4 w-4 text-success" />;
+        return 'bg-green-400';
       default:
-        return <Activity className="h-4 w-4" />;
+        return 'bg-white/40';
     }
   };
 
@@ -149,31 +135,203 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
     return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
   };
 
+  /* Iconless editorial variant — for best-in-class dashboard redesign.
+     Renders as a hairline-divided list, no card/icon chrome. */
+  if (iconless) {
+    if (activities.length === 0) {
+      return (
+        <div className="py-10 text-center text-[12px] text-white/40 border-y border-white/[0.06]">
+          No recent activity
+        </div>
+      );
+    }
+
+    const getRoleDot = (role: string) => {
+      switch (role) {
+        case 'tutor':
+          return 'bg-blue-400';
+        case 'assessor':
+          return 'bg-green-400';
+        case 'iqa':
+          return 'bg-amber-400';
+        case 'student':
+          return 'bg-elec-yellow';
+        default:
+          return 'bg-white/40';
+      }
+    };
+
+    return (
+      <div>
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
+          {activities.map((activity) => (
+            <div
+              key={activity.id}
+              className="flex items-start gap-4 px-5 sm:px-6 py-4 sm:py-5"
+            >
+              <span
+                className={cn(
+                  'mt-1.5 h-1.5 w-1.5 rounded-full shrink-0',
+                  getRoleDot(activity.actorRole)
+                )}
+                aria-hidden
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm text-white leading-relaxed">
+                  <span className="font-medium">{activity.actor}</span>{' '}
+                  <span className="text-white/60">{activity.action}</span>{' '}
+                  <span className="font-medium">{activity.subject}</span>
+                  {activity.target && (
+                    <>
+                      {' '}
+                      <span className="text-white/60">for</span>{' '}
+                      <span className="font-medium">{activity.target}</span>
+                    </>
+                  )}
+                </p>
+                {activity.metadata?.grade && (
+                  <span className="mt-1.5 inline-block text-[11px] font-medium px-1.5 py-0.5 rounded bg-green-500/10 text-green-400 border border-green-500/20 tabular-nums">
+                    {activity.metadata.grade}
+                  </span>
+                )}
+              </div>
+              <span className="text-[11px] tabular-nums text-white/40 shrink-0 mt-1">
+                {formatTime(activity.timestamp)}
+              </span>
+            </div>
+          ))}
+        </div>
+        {onViewAll && (
+          <button
+            onClick={onViewAll}
+            className="mt-5 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+          >
+            View all activity →
+          </button>
+        )}
+      </div>
+    );
+  }
+
   if (compact) {
     return (
-      <Card className="relative overflow-hidden glass-premium hover:border-elec-yellow/30 transition-all duration-300">
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-        <div className="absolute -top-8 -right-8 w-24 h-24 bg-elec-yellow/[0.04] rounded-full blur-3xl pointer-events-none" />
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm flex items-center gap-2">
-            <div className="p-1.5 rounded-lg bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5">
-              <Activity className="h-3.5 w-3.5 text-elec-yellow" />
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+        <div className="flex items-baseline justify-between mb-4">
+          <div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              Activity
             </div>
-            Recent Activity
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="space-y-3">
-            {activities.slice(0, 5).map((activity) => (
-              <div key={activity.id} className="flex items-start gap-2 text-left">
-                <div className="mt-0.5 flex-shrink-0">{getTypeIcon(activity.type)}</div>
-                <div className="flex-1 min-w-0">
+            <h3 className="mt-1 text-base font-semibold text-white tracking-tight">
+              Recent activity
+            </h3>
+          </div>
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-400 tabular-nums">
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Live
+          </span>
+        </div>
+        <div className="space-y-3">
+          {activities.slice(0, 5).map((activity) => (
+            <div key={activity.id} className="flex items-start gap-3 text-left">
+              <span
+                className={cn(
+                  'mt-2 h-1.5 w-1.5 rounded-full shrink-0',
+                  getTypeDot(activity.type)
+                )}
+                aria-hidden
+              />
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2">
+                  <p className="text-[12px] leading-relaxed text-white/80 line-clamp-2">
+                    <span className="font-medium text-white">{activity.actor}</span>{' '}
+                    <span className="text-white/60">{activity.action}</span>{' '}
+                    <span className="font-medium text-white">{activity.subject}</span>
+                  </p>
+                  <span className="text-[10px] text-white/40 shrink-0 tabular-nums">
+                    {formatTime(activity.timestamp)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {onViewAll && (
+          <button
+            onClick={onViewAll}
+            className="mt-4 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+          >
+            View all activity →
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-elec-yellow/80" />
+      <div className="p-5 sm:p-6 pb-4 flex items-baseline justify-between">
+        <div>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            Activity
+          </div>
+          <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+            Activity feed
+          </h3>
+        </div>
+        <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-400 tabular-nums">
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          Live
+        </span>
+      </div>
+      <ScrollArea className="h-[440px] px-5 sm:px-6 pb-5">
+        <div className="relative">
+          <div className="absolute left-[19px] top-0 bottom-0 w-px bg-white/[0.08]" />
+
+          <div className="space-y-4">
+            {activities.map((activity) => (
+              <div key={activity.id} className="flex gap-4 relative">
+                <div className="relative z-10 shrink-0">
+                  <Avatar className="h-10 w-10 ring-2 ring-[hsl(0_0%_12%)]">
+                    <AvatarFallback
+                      className={cn('text-xs font-semibold', getRoleColor(activity.actorRole))}
+                    >
+                      {activity.actorInitials}
+                    </AvatarFallback>
+                  </Avatar>
+                </div>
+
+                <div className="flex-1 min-w-0 pb-4">
                   <div className="flex items-start justify-between gap-2">
-                    <p className="text-xs line-clamp-2 text-left">
-                      <span className="font-medium">{activity.actor}</span> {activity.action}{' '}
-                      <span className="text-white">{activity.subject}</span>
-                    </p>
-                    <span className="text-[10px] text-white shrink-0 mt-0.5">
+                    <div className="min-w-0">
+                      <p className="text-[13px] leading-relaxed">
+                        <span className="font-medium text-white">{activity.actor}</span>{' '}
+                        <span className="text-white/60">{activity.action}</span>{' '}
+                        <span className="font-medium text-white">{activity.subject}</span>
+                        {activity.target && (
+                          <>
+                            {' '}
+                            <span className="text-white/60">for</span>{' '}
+                            <span className="font-medium text-white">{activity.target}</span>
+                          </>
+                        )}
+                      </p>
+                      {activity.metadata && (
+                        <div className="flex items-center gap-1.5 mt-1.5">
+                          {activity.metadata.grade && (
+                            <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 tabular-nums">
+                              {activity.metadata.grade}
+                            </span>
+                          )}
+                          {activity.metadata.mentions && (
+                            <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                              {activity.metadata.mentions}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    <span className="text-[11px] text-white/40 shrink-0 tabular-nums">
                       {formatTime(activity.timestamp)}
                     </span>
                   </div>
@@ -181,113 +339,19 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
               </div>
             ))}
           </div>
-          {onViewAll && (
-            <Button variant="ghost" className="w-full mt-3 h-8 text-xs" onClick={onViewAll}>
-              View all activity
-              <ChevronRight className="h-3 w-3 ml-1" />
-            </Button>
-          )}
-        </CardContent>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className="relative overflow-hidden glass-premium hover:border-elec-yellow/30 transition-all duration-300">
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
-      <div className="absolute -top-8 -right-8 w-24 h-24 bg-elec-yellow/[0.04] rounded-full blur-3xl pointer-events-none" />
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base flex items-center gap-2">
-            <div className="p-1.5 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/20 shadow-lg shadow-elec-yellow/5">
-              <Activity className="h-4 w-4 text-elec-yellow" />
-            </div>
-            Activity Feed
-          </CardTitle>
-          <Badge variant="outline" className="text-xs bg-success/10 text-success border-success/30">
-            Live
-            <span className="ml-1 h-2 w-2 rounded-full bg-success animate-pulse" />
-          </Badge>
         </div>
-      </CardHeader>
-      <CardContent className="pt-0">
-        <ScrollArea className="h-[400px] pr-4">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-[19px] top-0 bottom-0 w-px bg-white/10" />
+      </ScrollArea>
 
-            <div className="space-y-4">
-              {activities.map((activity, index) => (
-                <div key={activity.id} className="flex gap-4 relative">
-                  {/* Timeline dot */}
-                  <div className="relative z-10">
-                    <Avatar className="h-10 w-10 border-2 border-elec-dark">
-                      <AvatarFallback
-                        className={cn('text-xs font-semibold', getRoleColor(activity.actorRole))}
-                      >
-                        {activity.actorInitials}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-
-                  <div className="flex-1 min-w-0 pb-4">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <p className="text-sm">
-                          <span className="font-medium">{activity.actor}</span>{' '}
-                          <span className="text-white">{activity.action}</span>{' '}
-                          <span className="font-medium">{activity.subject}</span>
-                          {activity.target && (
-                            <>
-                              {' '}
-                              <span className="text-white">for</span>{' '}
-                              <span className="font-medium">{activity.target}</span>
-                            </>
-                          )}
-                        </p>
-                        {activity.metadata && (
-                          <div className="flex items-center gap-2 mt-1">
-                            {activity.metadata.grade && (
-                              <Badge
-                                variant="outline"
-                                className="text-xs bg-success/10 text-success"
-                              >
-                                {activity.metadata.grade}
-                              </Badge>
-                            )}
-                            {activity.metadata.mentions && (
-                              <Badge
-                                variant="outline"
-                                className="text-xs bg-success/10 text-success border-success/30"
-                              >
-                                {activity.metadata.mentions}
-                              </Badge>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                      <span className="text-xs text-white shrink-0">
-                        {formatTime(activity.timestamp)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </ScrollArea>
-
-        {onViewAll && (
-          <>
-            <div className="border-t border-white/10 mt-4 pt-4">
-              <Button variant="outline" className="w-full" onClick={onViewAll}>
-                View all activity
-                <ChevronRight className="h-4 w-4 ml-2" />
-              </Button>
-            </div>
-          </>
-        )}
-      </CardContent>
-    </Card>
+      {onViewAll && (
+        <div className="border-t border-white/[0.06] px-5 sm:px-6 py-3">
+          <button
+            onClick={onViewAll}
+            className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+          >
+            View all activity →
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

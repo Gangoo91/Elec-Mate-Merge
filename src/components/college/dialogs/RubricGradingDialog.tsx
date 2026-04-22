@@ -2,8 +2,8 @@ import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Pill } from '@/components/college/primitives';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import {
@@ -28,20 +28,6 @@ import { CommentThread } from '@/components/college/comments';
 import { useCollegeGrades, useGradeAssessment } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
-import {
-  CheckSquare,
-  Loader2,
-  Sparkles,
-  CheckCircle2,
-  AlertCircle,
-  XCircle,
-  ClipboardCheck,
-  Target,
-  Award,
-  MessageSquare,
-  FileCheck,
-  PenLine,
-} from 'lucide-react';
 
 interface RubricGradingDialogProps {
   open: boolean;
@@ -256,10 +242,7 @@ export function RubricGradingDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
-            Rubric Grading
-          </DialogTitle>
+          <DialogTitle>Rubric grading</DialogTitle>
           <DialogDescription>
             {grade?.unit_name} - {student?.name}
           </DialogDescription>
@@ -270,10 +253,7 @@ export function RubricGradingDialog({
           <div className="flex-1">
             <div className="flex items-center justify-between mb-1">
               <span className="text-sm font-medium">Overall Grade</span>
-              <Badge className={gradeCalculation.color}>
-                <Award className="h-3 w-3 mr-1" />
-                {gradeCalculation.grade}
-              </Badge>
+              <Pill tone="yellow">{gradeCalculation.grade}</Pill>
             </div>
             <Progress value={gradeCalculation.percentage} className="h-2" />
             <p className="text-xs text-white mt-1">
@@ -288,18 +268,9 @@ export function RubricGradingDialog({
           className="flex-1 overflow-hidden flex flex-col"
         >
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="criteria" className="gap-1">
-              <Target className="h-4 w-4" />
-              Criteria
-            </TabsTrigger>
-            <TabsTrigger value="feedback" className="gap-1">
-              <MessageSquare className="h-4 w-4" />
-              Feedback
-            </TabsTrigger>
-            <TabsTrigger value="signoff" className="gap-1">
-              <FileCheck className="h-4 w-4" />
-              Sign Off
-            </TabsTrigger>
+            <TabsTrigger value="criteria">Criteria</TabsTrigger>
+            <TabsTrigger value="feedback">Feedback</TabsTrigger>
+            <TabsTrigger value="signoff">Sign Off</TabsTrigger>
           </TabsList>
 
           {/* Criteria Scoring Tab */}
@@ -319,9 +290,9 @@ export function RubricGradingDialog({
                       <Card key={criterion.code} className="border-border">
                         <CardContent className="p-3">
                           <div className="flex items-start gap-3">
-                            <Badge variant="outline" className="font-mono shrink-0">
+                            <Pill tone="yellow" className="font-mono shrink-0">
                               {criterion.code}
-                            </Badge>
+                            </Pill>
                             <div className="flex-1 min-w-0">
                               <p className="text-sm font-medium">{criterion.text}</p>
                               <div className="flex items-center gap-2 mt-2">
@@ -375,8 +346,7 @@ export function RubricGradingDialog({
           <TabsContent value="feedback" className="flex-1 overflow-y-auto mt-4 space-y-4">
             <div className="flex items-center justify-between">
               <Label>Overall Feedback</Label>
-              <Button variant="outline" size="sm" onClick={generateAIFeedback} className="gap-1">
-                <Sparkles className="h-3 w-3 text-elec-yellow" />
+              <Button variant="outline" size="sm" onClick={generateAIFeedback}>
                 Generate with AI
               </Button>
             </div>
@@ -426,10 +396,7 @@ export function RubricGradingDialog({
             {/* Comments Section */}
             <Separator />
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold flex items-center gap-2">
-                <MessageSquare className="h-4 w-4" />
-                Discussion & Comments
-              </h3>
+              <h3 className="text-sm font-semibold">Discussion & Comments</h3>
               <p className="text-xs text-white">
                 Leave notes, request feedback, or discuss with colleagues using @mentions
               </p>
@@ -446,9 +413,9 @@ export function RubricGradingDialog({
                     <h3 className="font-semibold">Assessment Summary</h3>
                     <p className="text-sm text-white">{grade?.unit_name}</p>
                   </div>
-                  <Badge className={gradeCalculation.color + ' text-lg px-4 py-1'}>
+                  <Pill tone="yellow" className="text-lg px-4 py-1">
                     {gradeCalculation.grade}
-                  </Badge>
+                  </Pill>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 p-3 bg-muted/50 rounded-lg">
@@ -521,17 +488,7 @@ export function RubricGradingDialog({
             disabled={isSubmitting || !assessorId || !signedOff || assessedCount === 0}
             className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              <>
-                <CheckCircle2 className="h-4 w-4" />
-                Submit Grade
-              </>
-            )}
+            {isSubmitting ? 'Saving…' : 'Submit Grade'}
           </Button>
         </DialogFooter>
       </DialogContent>

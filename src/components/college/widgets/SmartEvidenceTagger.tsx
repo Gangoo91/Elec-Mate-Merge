@@ -1,29 +1,11 @@
 import { useState, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
-import {
-  Sparkles,
-  Tag,
-  FileText,
-  CheckCircle2,
-  PlusCircle,
-  X,
-  Upload,
-  Image,
-  FileVideo,
-  Link2,
-  Eye,
-  ChevronRight,
-  Loader2,
-  AlertCircle,
-  Lightbulb,
-} from "lucide-react";
 import { useCollege } from "@/contexts/CollegeContext";
+import { Pill, type Tone } from "@/components/college/primitives";
 
 interface SuggestedTag {
   criterionCode: string;
@@ -162,66 +144,60 @@ export function SmartEvidenceTagger({
     onTagsSelected?.(newTags);
   };
 
-  const getConfidenceColor = (confidence: number) => {
-    if (confidence >= 70) return "text-success";
-    if (confidence >= 50) return "text-elec-yellow";
-    return "text-amber-500";
+  const getConfidenceTone = (confidence: number): Tone => {
+    if (confidence >= 70) return "green";
+    if (confidence >= 50) return "yellow";
+    return "amber";
   };
 
-  const getConfidenceBadgeColor = (confidence: number) => {
-    if (confidence >= 70) return "bg-success/20 text-success border-success/30";
-    if (confidence >= 50) return "bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30";
-    return "bg-amber-500/20 text-amber-500 border-amber-500/30";
+  const getConfidenceDotClass = (confidence: number): string => {
+    if (confidence >= 70) return "bg-green-400";
+    if (confidence >= 50) return "bg-elec-yellow";
+    return "bg-amber-400";
   };
 
-  const getEvidenceIcon = () => {
+  const getEvidenceTypeLabel = () => {
     switch (evidenceType) {
-      case "image": return Image;
-      case "video": return FileVideo;
-      case "link": return Link2;
-      case "observation": return Eye;
-      default: return FileText;
+      case "image": return "Image";
+      case "video": return "Video";
+      case "link": return "Link";
+      case "observation": return "Observation";
+      default: return "Document";
     }
   };
 
-  const EvidenceIcon = getEvidenceIcon();
-
   if (compact) {
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-elec-yellow" />
-            Smart Evidence Tagger
-            <Badge className="bg-elec-yellow/20 text-elec-yellow text-[10px]">AI</Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <p className="text-sm text-muted-foreground mb-3">
-            Automatically map evidence to assessment criteria using AI analysis
-          </p>
-          <div className="flex items-center justify-between p-2 rounded-lg bg-background border border-border">
-            <div className="flex items-center gap-2">
-              <Tag className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm">Auto-tag uploaded evidence</span>
-            </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">SMART TAGGING</div>
+            <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">Evidence tagger</h3>
           </div>
-        </CardContent>
-      </Card>
+          <Pill tone="yellow">AI</Pill>
+        </div>
+        <p className="mt-3 text-[13px] text-white/55 leading-relaxed">
+          Automatically map evidence to assessment criteria using AI analysis
+        </p>
+        <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/[0.06]">
+          <span className="text-sm text-white/70">Auto-tag uploaded evidence</span>
+          <span className="text-[13px] font-medium text-elec-yellow/90">→</span>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-elec-yellow" />
-          Smart Evidence Tagger
-          <Badge className="bg-elec-yellow/20 text-elec-yellow">AI-Powered</Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+      <div className="p-5 sm:p-6 pb-4 flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">SMART TAGGING</div>
+          <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">Smart evidence tagger</h3>
+        </div>
+        <Pill tone="yellow">AI-Powered</Pill>
+      </div>
+
+      <div className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-4">
         {/* Evidence Input */}
         <div className="space-y-3">
           <div>
@@ -246,13 +222,13 @@ export function SmartEvidenceTagger({
           </div>
 
           {/* Evidence Type Indicator */}
-          <div className="flex items-center gap-2 p-2 rounded-lg bg-background border border-border">
-            <EvidenceIcon className="h-4 w-4 text-muted-foreground" />
-            <span className="text-sm text-muted-foreground capitalize">{evidenceType}</span>
+          <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-black/30 border border-white/[0.06]">
+            <span className="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden />
+            <span className="text-[11px] uppercase tracking-[0.18em] text-white/40">{getEvidenceTypeLabel()}</span>
             {fileName && (
               <>
-                <span className="text-muted-foreground">•</span>
-                <span className="text-sm truncate">{fileName}</span>
+                <span className="text-white/30">·</span>
+                <span className="text-sm truncate text-white/70">{fileName}</span>
               </>
             )}
           </div>
@@ -262,97 +238,105 @@ export function SmartEvidenceTagger({
         <Button
           onClick={analyzeEvidence}
           disabled={isAnalyzing || (!title && !description)}
-          className="w-full gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+          className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-full px-6 font-medium gap-2"
         >
           {isAnalyzing ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Analyzing with AI...
+              <span className="h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow animate-spin" aria-hidden />
+              Analysing with AI...
             </>
           ) : (
             <>
-              <Sparkles className="h-4 w-4" />
-              Analyze & Suggest Tags
+              Analyse &amp; Suggest Tags
+              <span aria-hidden>→</span>
             </>
           )}
         </Button>
 
         {/* Suggestions */}
         {hasAnalyzed && (
-          <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <Lightbulb className="h-4 w-4 text-elec-yellow" />
-              <h3 className="text-sm font-semibold">AI Suggestions</h3>
+          <div className="space-y-3 pt-2">
+            <div className="border-b border-white/[0.06] pb-3">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">AI SUGGESTIONS</div>
+              <h4 className="mt-1 text-base font-semibold text-white tracking-tight">Suggested criteria</h4>
             </div>
 
             {suggestedTags.length > 0 ? (
               <div className="space-y-2">
-                {suggestedTags.map((tag) => (
-                  <div
-                    key={tag.criterionCode}
-                    className={`p-3 rounded-lg border transition-all cursor-pointer ${
-                      selectedTags.includes(tag.criterionCode)
-                        ? "border-elec-yellow bg-elec-yellow/10"
-                        : "border-border bg-background hover:border-elec-yellow/50"
-                    }`}
-                    onClick={() => toggleTag(tag.criterionCode)}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex items-start gap-2">
-                        {selectedTags.includes(tag.criterionCode) ? (
-                          <CheckCircle2 className="h-5 w-5 text-elec-yellow mt-0.5 shrink-0" />
-                        ) : (
-                          <PlusCircle className="h-5 w-5 text-muted-foreground mt-0.5 shrink-0" />
-                        )}
-                        <div>
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <Badge variant="outline" className="font-mono text-xs">
-                              {tag.criterionCode}
-                            </Badge>
-                            <Badge variant="secondary" className="text-xs">
-                              {tag.unit}
-                            </Badge>
+                {suggestedTags.map((tag) => {
+                  const isSelected = selectedTags.includes(tag.criterionCode);
+                  return (
+                    <div
+                      key={tag.criterionCode}
+                      className={`p-4 rounded-xl border transition-all cursor-pointer touch-manipulation ${
+                        isSelected
+                          ? "border-elec-yellow/60 bg-elec-yellow/[0.06]"
+                          : "border-white/[0.06] bg-black/30 hover:border-elec-yellow/40"
+                      }`}
+                      onClick={() => toggleTag(tag.criterionCode)}
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex items-start gap-3 min-w-0">
+                          <span
+                            aria-hidden
+                            className={`mt-1 inline-flex items-center justify-center h-5 w-5 rounded-full border shrink-0 text-[11px] font-medium ${
+                              isSelected
+                                ? "bg-elec-yellow text-black border-elec-yellow"
+                                : "border-white/30 text-white/50"
+                            }`}
+                          >
+                            {isSelected ? "✓" : "+"}
+                          </span>
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <Pill tone="yellow" className="font-mono">
+                                {tag.criterionCode}
+                              </Pill>
+                              <Pill tone="blue">{tag.unit}</Pill>
+                            </div>
+                            <p className="text-sm mt-2 text-white">{tag.criterionText}</p>
+                            <p className="text-[11.5px] text-white/50 mt-1">{tag.reason}</p>
                           </div>
-                          <p className="text-sm mt-1">{tag.criterionText}</p>
-                          <p className="text-xs text-muted-foreground mt-1">{tag.reason}</p>
+                        </div>
+                        <div className="text-right shrink-0">
+                          <Pill tone={getConfidenceTone(tag.confidence)}>
+                            {tag.confidence}%
+                          </Pill>
+                          <p className="text-[10px] text-white/40 mt-1 uppercase tracking-[0.18em]">confidence</p>
                         </div>
                       </div>
-                      <div className="text-right shrink-0">
-                        <Badge className={getConfidenceBadgeColor(tag.confidence)}>
-                          {tag.confidence}%
-                        </Badge>
-                        <p className="text-[10px] text-muted-foreground mt-1">confidence</p>
-                      </div>
+                      <Progress value={tag.confidence} className="h-1 mt-3" />
                     </div>
-                    <Progress value={tag.confidence} className="h-1 mt-2" />
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             ) : (
-              <div className="text-center py-4 text-muted-foreground">
-                <AlertCircle className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                <p className="text-sm">No matching criteria found</p>
-                <p className="text-xs mt-1">Try adding more detail to the description</p>
+              <div className="text-center py-8 px-6 rounded-xl bg-black/30 border border-white/[0.06]">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 text-lg">
+                  ⋯
+                </div>
+                <p className="text-sm text-white mt-3 font-medium">No matching criteria found</p>
+                <p className="text-[12.5px] text-white/50 mt-1">Try adding more detail to the description</p>
               </div>
             )}
 
             {/* Selected Summary */}
             {selectedTags.length > 0 && (
-              <div className="border-t border-border pt-3">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium">Selected Tags</span>
-                  <span className="text-xs text-muted-foreground">{selectedTags.length} selected</span>
+              <div className="border-t border-white/[0.06] pt-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">SELECTED</div>
+                  <span className="text-[11.5px] text-white/50 tabular-nums">{selectedTags.length} selected</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {selectedTags.map((code) => (
-                    <Badge
+                    <button
                       key={code}
-                      className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 cursor-pointer"
                       onClick={() => toggleTag(code)}
+                      className="inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full border bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 hover:bg-elec-yellow/20 transition-colors touch-manipulation tabular-nums"
                     >
                       {code}
-                      <X className="h-3 w-3 ml-1" />
-                    </Badge>
+                      <span aria-hidden>×</span>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -362,21 +346,26 @@ export function SmartEvidenceTagger({
 
         {/* Tips */}
         {!hasAnalyzed && (
-          <div className="p-3 rounded-lg bg-info/10 border border-info/20">
-            <div className="flex items-start gap-2">
-              <Lightbulb className="h-4 w-4 text-info mt-0.5 shrink-0" />
-              <div className="text-xs text-info">
-                <p className="font-medium mb-1">Tips for better results:</p>
-                <ul className="space-y-0.5 list-disc list-inside">
-                  <li>Include specific technical terms</li>
-                  <li>Mention the type of work performed</li>
-                  <li>Reference any testing or inspections</li>
-                </ul>
-              </div>
-            </div>
+          <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">TIPS</div>
+            <p className="mt-1.5 text-sm font-medium text-white">Tips for better results</p>
+            <ul className="mt-3 space-y-1.5 text-[12.5px] text-white/60">
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                Include specific technical terms
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                Mention the type of work performed
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                Reference any testing or inspections
+              </li>
+            </ul>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

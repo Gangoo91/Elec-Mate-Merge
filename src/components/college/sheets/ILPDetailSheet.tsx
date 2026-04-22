@@ -3,25 +3,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { useCollegeILP } from '@/hooks/college/useCollegeILP';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
-import { getInitials, getStatusColour, formatUKDateShort } from '@/utils/collegeHelpers';
-import { cn } from '@/lib/utils';
+import { getInitials, formatUKDateShort } from '@/utils/collegeHelpers';
 import {
-  ClipboardList,
-  Target,
-  CheckCircle2,
-  Clock,
-  Calendar,
-  Heart,
-  History,
-  Edit,
-  Search,
-} from 'lucide-react';
+  ListCard,
+  ListRow,
+  Pill,
+  EmptyState,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface ILPDetailSheetProps {
   ilpId: string | null;
@@ -38,33 +30,23 @@ const tabVariants = {
   exit: { opacity: 0, x: -20 },
 };
 
-const getTargetStatusColour = (status: string) => {
-  switch (status) {
-    case 'Achieved':
-      return 'bg-success/10 text-success border-success/20';
-    case 'In Progress':
-      return 'bg-info/10 text-info border-info/20';
-    case 'Overdue':
-      return 'bg-orange-500/10 text-orange-400 border-orange-500/20';
-    case 'Pending':
-    default:
-      return 'bg-muted text-white border-white/10';
-  }
-};
+const targetTone = (status: string): Tone =>
+  status === 'Achieved'
+    ? 'green'
+    : status === 'In Progress'
+      ? 'blue'
+      : status === 'Overdue'
+        ? 'red'
+        : 'yellow';
 
-const getTargetIcon = (status: string) => {
-  switch (status) {
-    case 'Achieved':
-      return <CheckCircle2 className="h-4 w-4 text-success" />;
-    case 'In Progress':
-      return <Clock className="h-4 w-4 text-info" />;
-    case 'Overdue':
-      return <Calendar className="h-4 w-4 text-orange-400" />;
-    case 'Pending':
-    default:
-      return <Target className="h-4 w-4 text-white" />;
-  }
-};
+const statusTone = (status: string | null | undefined): Tone =>
+  status === 'Active'
+    ? 'green'
+    : status === 'Draft'
+      ? 'amber'
+      : status === 'Completed'
+        ? 'blue'
+        : 'yellow';
 
 export function ILPDetailSheet({
   ilpId,
@@ -99,42 +81,40 @@ export function ILPDetailSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-5">
             {isLoading ? (
               <div className="flex items-center gap-4">
-                <div className="h-14 w-14 rounded-full bg-muted animate-pulse" />
+                <div className="h-14 w-14 rounded-full bg-white/[0.04] animate-pulse" />
                 <div className="space-y-2 flex-1">
-                  <div className="h-5 w-32 bg-muted animate-pulse rounded" />
-                  <div className="h-4 w-24 bg-muted animate-pulse rounded" />
+                  <div className="h-5 w-32 bg-white/[0.04] animate-pulse rounded" />
+                  <div className="h-4 w-24 bg-white/[0.04] animate-pulse rounded" />
                 </div>
               </div>
             ) : (
               <div className="flex items-center gap-4">
-                <Avatar className="h-14 w-14 shrink-0 ring-2 ring-offset-2 ring-offset-background ring-elec-yellow">
+                <Avatar className="h-14 w-14 shrink-0 ring-1 ring-white/[0.08]">
                   <AvatarImage src={student?.photo_url ?? undefined} />
-                  <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-lg font-semibold">
+                  <AvatarFallback className="bg-orange-500/10 text-orange-400 text-lg font-semibold">
                     {student ? getInitials(student.name) : '?'}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <SheetTitle className="text-xl text-left flex items-center gap-2">
-                    <ClipboardList className="h-5 w-5 text-elec-yellow shrink-0" />
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                    Individual Learning Plan
+                  </div>
+                  <SheetTitle className="mt-1 text-xl text-left">
                     {student?.name ?? 'Unknown Student'}
                   </SheetTitle>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    <Badge variant="outline" className={getStatusColour(ilp?.status)}>
-                      {ilp?.status ?? 'Unknown'}
-                    </Badge>
+                  <div className="flex flex-wrap gap-1.5 mt-3">
+                    <Pill tone={statusTone(ilp?.status)}>{ilp?.status ?? 'Unknown'}</Pill>
                     {totalCount > 0 && (
-                      <Badge variant="secondary" className="text-white">
-                        {achievedCount}/{totalCount} Targets Achieved
-                      </Badge>
+                      <Pill tone="yellow">
+                        {achievedCount}/{totalCount} achieved
+                      </Pill>
                     )}
                   </div>
                 </div>
@@ -142,36 +122,25 @@ export function ILPDetailSheet({
             )}
           </SheetHeader>
 
-          {/* Tabs */}
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <TabsList className="w-full justify-start gap-0 h-auto p-1 bg-muted/50 rounded-none border-b border-border flex-shrink-0">
-              <TabsTrigger
-                value="targets"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Targets
-              </TabsTrigger>
-              <TabsTrigger
-                value="support"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                Support
-              </TabsTrigger>
-              <TabsTrigger
-                value="history"
-                className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-              >
-                History
-              </TabsTrigger>
+            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06] flex-shrink-0">
+              {['targets', 'support', 'history'].map((tab) => (
+                <TabsTrigger
+                  key={tab}
+                  value={tab}
+                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
+                >
+                  {tab}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
             <div className="flex-1 overflow-y-auto overscroll-contain">
               <AnimatePresence mode="wait">
-                {/* Targets Tab */}
                 {activeTab === 'targets' && (
                   <motion.div
                     key="targets"
@@ -180,55 +149,37 @@ export function ILPDetailSheet({
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-3"
+                    className="p-5"
                   >
                     {isLoading ? (
                       <div className="space-y-3">
                         {[1, 2, 3].map((i) => (
-                          <div key={i} className="h-20 bg-muted animate-pulse rounded-lg" />
+                          <div key={i} className="h-20 bg-white/[0.04] animate-pulse rounded-xl" />
                         ))}
                       </div>
-                    ) : targets.length > 0 ? (
-                      targets.map((target, i) => (
-                        <div
-                          key={i}
-                          className="flex items-start gap-3 p-3 rounded-lg bg-elec-gray border border-white/10"
-                        >
-                          {target.status === 'Achieved' ? (
-                            <CheckCircle2 className="h-5 w-5 mt-0.5 shrink-0 text-success" />
-                          ) : (
-                            getTargetIcon(target.status)
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white">{target.description}</p>
-                            <p className="text-xs text-white mt-1">
-                              Due: {formatUKDateShort(target.target_date)}
-                            </p>
-                          </div>
-                          <Badge
-                            variant="outline"
-                            className={cn('text-xs shrink-0', getTargetStatusColour(target.status))}
-                          >
-                            {target.status}
-                          </Badge>
-                        </div>
-                      ))
+                    ) : targets.length === 0 ? (
+                      <EmptyState
+                        title="No targets set"
+                        description="Add SMART targets to track this learner's progress."
+                        action="Edit targets"
+                        onAction={() => onEditTargets?.(ilpId)}
+                      />
                     ) : (
-                      <Card className="border-white/10">
-                        <CardContent className="p-8 text-center space-y-3">
-                          <Target className="h-12 w-12 mx-auto text-white" />
-                          <p className="text-white font-medium">No Targets Set</p>
-                          <p className="text-sm text-white">
-                            This ILP does not have any targets yet. Add targets to track learner
-                            progress.
-                          </p>
-                        </CardContent>
-                      </Card>
+                      <ListCard>
+                        {targets.map((target, i) => (
+                          <ListRow
+                            key={i}
+                            accent={targetTone(target.status)}
+                            title={target.description}
+                            subtitle={`Due ${formatUKDateShort(target.target_date)}`}
+                            trailing={<Pill tone={targetTone(target.status)}>{target.status}</Pill>}
+                          />
+                        ))}
+                      </ListCard>
                     )}
                   </motion.div>
                 )}
 
-                {/* Support Tab */}
                 {activeTab === 'support' && (
                   <motion.div
                     key="support"
@@ -237,49 +188,34 @@ export function ILPDetailSheet({
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5"
                   >
                     {isLoading ? (
-                      <div className="h-20 bg-muted animate-pulse rounded-lg" />
+                      <div className="h-20 bg-white/[0.04] animate-pulse rounded-xl" />
                     ) : ilp?.support_needs ? (
-                      <Card className="border-white/10">
-                        <CardContent className="p-4 space-y-3">
-                          <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                            <Heart className="h-4 w-4 text-elec-yellow" />
-                            Support Needs
-                          </h4>
-                          <div className="flex flex-wrap gap-2">
-                            {ilp.support_needs
-                              .split(',')
-                              .map((need) => need.trim())
-                              .filter(Boolean)
-                              .map((need, i) => (
-                                <Badge
-                                  key={i}
-                                  variant="outline"
-                                  className="bg-elec-yellow/10 text-white border-elec-yellow/20 py-1.5 px-3"
-                                >
-                                  {need}
-                                </Badge>
-                              ))}
-                          </div>
-                        </CardContent>
-                      </Card>
+                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                          Support Needs
+                        </div>
+                        <div className="mt-3 flex flex-wrap gap-1.5">
+                          {ilp.support_needs
+                            .split(',')
+                            .map((need) => need.trim())
+                            .filter(Boolean)
+                            .map((need, i) => (
+                              <Pill key={i} tone="yellow">{need}</Pill>
+                            ))}
+                        </div>
+                      </div>
                     ) : (
-                      <Card className="border-white/10">
-                        <CardContent className="p-8 text-center space-y-3">
-                          <Heart className="h-12 w-12 mx-auto text-white" />
-                          <p className="text-white font-medium">No Support Needs Recorded</p>
-                          <p className="text-sm text-white">
-                            No additional support needs have been identified for this learner.
-                          </p>
-                        </CardContent>
-                      </Card>
+                      <EmptyState
+                        title="No support needs recorded"
+                        description="No additional support needs have been identified for this learner."
+                      />
                     )}
                   </motion.div>
                 )}
 
-                {/* History Tab */}
                 {activeTab === 'history' && (
                   <motion.div
                     key="history"
@@ -288,85 +224,62 @@ export function ILPDetailSheet({
                     animate="center"
                     exit="exit"
                     transition={{ duration: 0.2 }}
-                    className="p-4 space-y-4"
+                    className="p-5"
                   >
                     {isLoading ? (
                       <div className="space-y-3">
                         {[1, 2, 3].map((i) => (
-                          <div key={i} className="h-16 bg-muted animate-pulse rounded-lg" />
+                          <div key={i} className="h-16 bg-white/[0.04] animate-pulse rounded-xl" />
                         ))}
                       </div>
                     ) : (
-                      <Card className="border-white/10">
-                        <CardContent className="p-4">
-                          <h4 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
-                            <History className="h-4 w-4 text-elec-yellow" />
-                            ILP Timeline
-                          </h4>
+                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-5">
+                          Timeline
+                        </div>
 
-                          {/* Timeline */}
-                          <div className="relative pl-6 space-y-6">
-                            {/* Vertical line */}
-                            <div className="absolute left-[9px] top-1 bottom-1 w-px bg-white/20" />
+                        <div className="relative pl-6 space-y-5">
+                          <div className="absolute left-[5px] top-1 bottom-1 w-px bg-white/[0.08]" />
 
-                            {/* Created */}
+                          <div className="relative">
+                            <div className="absolute -left-6 top-1 h-2.5 w-2.5 rounded-full bg-elec-yellow" />
+                            <div className="text-[13px] font-medium text-white">ILP created</div>
+                            <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                              {formatUKDateShort(ilp?.created_at)}
+                            </div>
+                          </div>
+
+                          {ilp?.last_reviewed && (
                             <div className="relative">
-                              <div className="absolute -left-6 top-0.5 h-[18px] w-[18px] rounded-full bg-elec-yellow/20 border-2 border-elec-yellow flex items-center justify-center">
-                                <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                              <div className="absolute -left-6 top-1 h-2.5 w-2.5 rounded-full bg-blue-400" />
+                              <div className="text-[13px] font-medium text-white">
+                                Last reviewed
                               </div>
-                              <div>
-                                <p className="text-sm font-medium text-white">ILP Created</p>
-                                <p className="text-xs text-white mt-0.5">
-                                  {formatUKDateShort(ilp?.created_at)}
-                                </p>
+                              <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                                {formatUKDateShort(ilp.last_reviewed)}
+                                {reviewer && ` · ${reviewer.name}`}
                               </div>
                             </div>
+                          )}
 
-                            {/* Last Reviewed */}
-                            {ilp?.last_reviewed && (
-                              <div className="relative">
-                                <div className="absolute -left-6 top-0.5 h-[18px] w-[18px] rounded-full bg-info/20 border-2 border-info flex items-center justify-center">
-                                  <div className="h-1.5 w-1.5 rounded-full bg-info" />
-                                </div>
-                                <div>
-                                  <p className="text-sm font-medium text-white">Last Reviewed</p>
-                                  <p className="text-xs text-white mt-0.5">
-                                    {formatUKDateShort(ilp.last_reviewed)}
-                                  </p>
-                                  {reviewer && (
-                                    <p className="text-xs text-white mt-0.5">
-                                      Reviewed by: {reviewer.name}
-                                    </p>
-                                  )}
-                                </div>
+                          {ilp?.review_date && (
+                            <div className="relative">
+                              <div className="absolute -left-6 top-1 h-2.5 w-2.5 rounded-full bg-orange-400" />
+                              <div className="text-[13px] font-medium text-white">
+                                Next review due
                               </div>
-                            )}
-
-                            {/* Next Review */}
-                            {ilp?.review_date && (
-                              <div className="relative">
-                                <div className="absolute -left-6 top-0.5 h-[18px] w-[18px] rounded-full bg-orange-500/20 border-2 border-orange-500 flex items-center justify-center">
-                                  <div className="h-1.5 w-1.5 rounded-full bg-orange-500" />
-                                </div>
-                                <div>
-                                  <p className="text-sm font-medium text-white">Next Review Due</p>
-                                  <p className="text-xs text-white mt-0.5">
-                                    {formatUKDateShort(ilp.review_date)}
-                                  </p>
-                                  {new Date(ilp.review_date) < new Date() && (
-                                    <Badge
-                                      variant="outline"
-                                      className="mt-1 bg-orange-500/10 text-orange-400 border-orange-500/20 text-xs"
-                                    >
-                                      Overdue
-                                    </Badge>
-                                  )}
-                                </div>
+                              <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                                {formatUKDateShort(ilp.review_date)}
                               </div>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
+                              {new Date(ilp.review_date) < new Date() && (
+                                <div className="mt-1.5">
+                                  <Pill tone="red">Overdue</Pill>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     )}
                   </motion.div>
                 )}
@@ -374,26 +287,27 @@ export function ILPDetailSheet({
             </div>
           </Tabs>
 
-          {/* Footer Actions */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation gap-2"
-              onClick={() => onConductReview?.(ilpId)}
-              disabled={isLoading || !ilp}
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-5 flex-row items-center justify-end gap-4">
+            <button
+              onClick={() => onOpenChange(false)}
+              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
             >
-              <Search className="h-4 w-4" />
-              Conduct Review
-            </Button>
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation gap-2"
+              Close
+            </button>
+            <button
               onClick={() => onEditTargets?.(ilpId)}
               disabled={isLoading || !ilp}
+              className="text-[12.5px] font-medium text-white/70 hover:text-white disabled:opacity-40 transition-colors touch-manipulation"
             >
-              <Edit className="h-4 w-4" />
-              Edit Targets
-            </Button>
+              Edit targets
+            </button>
+            <button
+              onClick={() => onConductReview?.(ilpId)}
+              disabled={isLoading || !ilp}
+              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+            >
+              Conduct review →
+            </button>
           </SheetFooter>
         </div>
       </SheetContent>

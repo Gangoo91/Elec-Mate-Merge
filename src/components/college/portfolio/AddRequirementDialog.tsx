@@ -1,23 +1,9 @@
 /**
  * AddRequirementDialog
- *
- * Dialog for tutors to create or edit custom evidence requirements
- * for individual students.
+ * Dialog for tutors to create or edit custom evidence requirements.
  */
 
 import React, { useState, useEffect } from 'react';
-import {
-  Camera,
-  FileText,
-  Award,
-  ClipboardList,
-  Users,
-  BookOpen,
-  Calendar,
-  Video,
-  PenTool,
-  Calculator,
-} from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -26,28 +12,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import { Pill } from '@/components/college/primitives';
 import type { EvidenceType, EvidenceTypeCode } from '@/types/evidence';
-
-// Icon mapping for evidence types
-const EVIDENCE_ICONS: Record<EvidenceTypeCode, React.ReactNode> = {
-  photo: <Camera className="h-4 w-4" />,
-  document: <FileText className="h-4 w-4" />,
-  certificate: <Award className="h-4 w-4" />,
-  test_result: <ClipboardList className="h-4 w-4" />,
-  witness: <Users className="h-4 w-4" />,
-  reflection: <BookOpen className="h-4 w-4" />,
-  work_log: <Calendar className="h-4 w-4" />,
-  video: <Video className="h-4 w-4" />,
-  drawing: <PenTool className="h-4 w-4" />,
-  calculation: <Calculator className="h-4 w-4" />,
-};
 
 interface RequirementFormData {
   title: string;
@@ -67,6 +38,14 @@ interface AddRequirementDialogProps {
   initialData?: RequirementFormData;
   evidenceTypes: EvidenceType[];
 }
+
+const inputClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+const textareaClass =
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
 
 export function AddRequirementDialog({
   open,
@@ -90,7 +69,6 @@ export function AddRequirementDialog({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Reset form when dialog opens/closes or initialData changes
   useEffect(() => {
     if (open) {
       if (initialData) {
@@ -127,7 +105,6 @@ export function AddRequirementDialog({
         ? prev.evidenceTypeCodes.filter((c) => c !== code)
         : [...prev.evidenceTypeCodes, code],
     }));
-    // Clear error when user makes a selection
     if (errors.evidenceTypeCodes) {
       setErrors((prev) => ({ ...prev, evidenceTypeCodes: '' }));
     }
@@ -135,28 +112,17 @@ export function AddRequirementDialog({
 
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
-
-    if (!formData.title.trim()) {
-      newErrors.title = 'Title is required';
-    }
-
-    if (formData.evidenceTypeCodes.length === 0) {
+    if (!formData.title.trim()) newErrors.title = 'Title is required';
+    if (formData.evidenceTypeCodes.length === 0)
       newErrors.evidenceTypeCodes = 'Select at least one evidence type';
-    }
-
-    if (formData.quantityRequired < 1) {
-      newErrors.quantityRequired = 'Quantity must be at least 1';
-    }
-
+    if (formData.quantityRequired < 1) newErrors.quantityRequired = 'Quantity must be at least 1';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!validate()) return;
-
     setIsSubmitting(true);
     try {
       await onSubmit({
@@ -178,20 +144,24 @@ export function AddRequirementDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-elec-dark border-elec-gray/40 max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl">
         <DialogHeader>
-          <DialogTitle>{isEditing ? 'Edit Requirement' : 'Add Custom Requirement'}</DialogTitle>
-          <DialogDescription>
+          <div className={eyebrow}>Portfolio</div>
+          <DialogTitle className="mt-1">
+            {isEditing ? 'Edit requirement' : 'Add custom requirement'}
+          </DialogTitle>
+          <DialogDescription className="text-[12.5px] text-white/55">
             {isEditing
-              ? 'Update the evidence requirement for this student'
-              : 'Create a specific evidence requirement for this student'}
+              ? 'Update the evidence requirement for this student.'
+              : 'Create a specific evidence requirement for this student.'}
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Title */}
+        <form onSubmit={handleSubmit} className="space-y-5 pt-2">
           <div className="space-y-2">
-            <Label htmlFor="title">Title *</Label>
+            <Label htmlFor="title" className="text-[11px] text-white/50">
+              Title *
+            </Label>
             <Input
               id="title"
               value={formData.title}
@@ -199,32 +169,32 @@ export function AddRequirementDialog({
                 setFormData((prev) => ({ ...prev, title: e.target.value }));
                 if (errors.title) setErrors((prev) => ({ ...prev, title: '' }));
               }}
-              placeholder="e.g., Site visit photos"
-              className="bg-white/5 border-elec-gray/40"
+              placeholder="e.g. Site visit photos"
+              className={inputClass}
             />
-            {errors.title && <p className="text-xs text-red-400">{errors.title}</p>}
+            {errors.title && <p className="text-[11px] text-red-400">{errors.title}</p>}
           </div>
 
-          {/* Description */}
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description" className="text-[11px] text-white/50">
+              Description
+            </Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-              placeholder="Optional details about what evidence is needed..."
+              placeholder="Optional details about what evidence is needed…"
               rows={2}
-              className="bg-white/5 border-elec-gray/40 resize-none"
+              className={textareaClass}
             />
           </div>
 
-          {/* Evidence Types */}
           <div className="space-y-2">
-            <Label>Evidence Types *</Label>
-            <p className="text-xs text-white">
-              Select the types of evidence the student can upload
+            <Label className="text-[11px] text-white/50">Evidence types *</Label>
+            <p className="text-[11px] text-white/50">
+              Select the types of evidence the student can upload.
             </p>
-            <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="grid grid-cols-2 gap-1.5 mt-1">
               {evidenceTypes.map((type) => {
                 const isSelected = formData.evidenceTypeCodes.includes(
                   type.code as EvidenceTypeCode
@@ -235,16 +205,20 @@ export function AddRequirementDialog({
                     type="button"
                     onClick={() => toggleEvidenceType(type.code as EvidenceTypeCode)}
                     className={cn(
-                      'flex items-center gap-2 p-2 rounded-lg border transition-colors text-left',
+                      'flex items-center justify-center gap-2 h-11 px-3 rounded-xl border transition-colors text-[12.5px] font-medium touch-manipulation',
                       isSelected
-                        ? 'border-elec-yellow bg-elec-yellow/10'
-                        : 'border-elec-gray/40 hover:border-elec-gray/60 bg-white/5'
+                        ? 'border-elec-yellow/60 bg-elec-yellow/[0.08] text-white'
+                        : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white/70 hover:text-white'
                     )}
                   >
-                    <span style={{ color: type.color }}>
-                      {EVIDENCE_ICONS[type.code as EvidenceTypeCode]}
-                    </span>
-                    <span className="text-sm">{type.name}</span>
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'w-1.5 h-1.5 rounded-full',
+                        isSelected ? 'bg-elec-yellow' : 'bg-white/30'
+                      )}
+                    />
+                    {type.name}
                   </button>
                 );
               })}
@@ -253,23 +227,20 @@ export function AddRequirementDialog({
               <div className="flex flex-wrap gap-1 mt-2">
                 {formData.evidenceTypeCodes.map((code) => {
                   const type = evidenceTypes.find((t) => t.code === code);
-                  return type ? (
-                    <Badge key={code} variant="secondary" className="text-xs">
-                      {type.name}
-                    </Badge>
-                  ) : null;
+                  return type ? <Pill key={code} tone="yellow">{type.name}</Pill> : null;
                 })}
               </div>
             )}
             {errors.evidenceTypeCodes && (
-              <p className="text-xs text-red-400">{errors.evidenceTypeCodes}</p>
+              <p className="text-[11px] text-red-400">{errors.evidenceTypeCodes}</p>
             )}
           </div>
 
-          {/* Quantity & Mandatory */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="quantity">Quantity Required</Label>
+              <Label htmlFor="quantity" className="text-[11px] text-white/50">
+                Quantity required
+              </Label>
               <Input
                 id="quantity"
                 type="number"
@@ -282,15 +253,15 @@ export function AddRequirementDialog({
                     quantityRequired: Math.max(1, parseInt(e.target.value) || 1),
                   }))
                 }
-                className="bg-white/5 border-elec-gray/40"
+                className={cn(inputClass, 'tabular-nums')}
               />
               {errors.quantityRequired && (
-                <p className="text-xs text-red-400">{errors.quantityRequired}</p>
+                <p className="text-[11px] text-red-400">{errors.quantityRequired}</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label>Mandatory?</Label>
+              <Label className="text-[11px] text-white/50">Mandatory?</Label>
               <div className="flex items-center gap-3 pt-2">
                 <Switch
                   checked={formData.isMandatory}
@@ -298,51 +269,60 @@ export function AddRequirementDialog({
                     setFormData((prev) => ({ ...prev, isMandatory: checked }))
                   }
                 />
-                <span className="text-sm text-white">
+                <span className="text-[13px] text-white">
                   {formData.isMandatory ? 'Required' : 'Optional'}
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Due Date */}
           <div className="space-y-2">
-            <Label htmlFor="dueDate">Due Date (Optional)</Label>
+            <Label htmlFor="dueDate" className="text-[11px] text-white/50">
+              Due date (optional)
+            </Label>
             <Input
               id="dueDate"
               type="date"
               value={formData.dueDate}
               onChange={(e) => setFormData((prev) => ({ ...prev, dueDate: e.target.value }))}
-              className="bg-white/5 border-elec-gray/40"
+              className={cn(inputClass, 'tabular-nums')}
               min={new Date().toISOString().split('T')[0]}
             />
           </div>
 
-          {/* Guidance */}
           <div className="space-y-2">
-            <Label htmlFor="guidance">Guidance for Student</Label>
+            <Label htmlFor="guidance" className="text-[11px] text-white/50">
+              Guidance for student
+            </Label>
             <Textarea
               id="guidance"
               value={formData.guidance}
               onChange={(e) => setFormData((prev) => ({ ...prev, guidance: e.target.value }))}
-              placeholder="Tips or specific instructions for the student..."
+              placeholder="Tips or specific instructions for the student…"
               rows={2}
-              className="bg-white/5 border-elec-gray/40 resize-none"
+              className={textareaClass}
             />
           </div>
 
-          <DialogFooter className="pt-4">
-            <Button
+          <DialogFooter className="flex items-center justify-end gap-4 pt-3">
+            <button
               type="button"
-              variant="outline"
               onClick={() => onOpenChange(false)}
-              className="border-elec-gray/40"
+              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
             >
               Cancel
-            </Button>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Saving...' : isEditing ? 'Update Requirement' : 'Add Requirement'}
-            </Button>
+            </button>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+            >
+              {isSubmitting
+                ? 'Saving…'
+                : isEditing
+                  ? 'Update requirement →'
+                  : 'Add requirement →'}
+            </button>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
+import { Pill } from '@/components/college/primitives';
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -21,7 +21,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
-import { ClipboardCheck, Loader2, CheckCircle2, XCircle, AlertTriangle, Clock } from 'lucide-react';
 
 type AttendanceStatus = 'Present' | 'Absent' | 'Late' | 'Authorised';
 
@@ -50,13 +49,12 @@ const SESSION_TYPES = [
   'Self-Study',
 ] as const;
 
-const ATTENDANCE_STATUSES: { value: AttendanceStatus; label: string; icon: typeof CheckCircle2 }[] =
-  [
-    { value: 'Present', label: 'Present', icon: CheckCircle2 },
-    { value: 'Absent', label: 'Absent', icon: XCircle },
-    { value: 'Late', label: 'Late', icon: AlertTriangle },
-    { value: 'Authorised', label: 'Auth. Absence', icon: Clock },
-  ];
+const ATTENDANCE_STATUSES: { value: AttendanceStatus; label: string; short: string }[] = [
+  { value: 'Present', label: 'Present', short: 'P' },
+  { value: 'Absent', label: 'Absent', short: 'A' },
+  { value: 'Late', label: 'Late', short: 'L' },
+  { value: 'Authorised', label: 'Auth. Absence', short: 'AA' },
+];
 
 export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAttendanceDialogProps) {
   const { students, cohorts, staff, bulkRecordAttendance } = useCollegeSupabase();
@@ -143,21 +141,6 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
     }
   };
 
-  const getStatusIcon = (status: AttendanceStatus) => {
-    switch (status) {
-      case 'Present':
-        return <CheckCircle2 className="h-4 w-4 text-success" />;
-      case 'Absent':
-        return <XCircle className="h-4 w-4 text-destructive" />;
-      case 'Late':
-        return <AlertTriangle className="h-4 w-4 text-warning" />;
-      case 'Authorised':
-        return <Clock className="h-4 w-4 text-info" />;
-      default:
-        return <Clock className="h-4 w-4" />;
-    }
-  };
-
   const presentCount = studentAttendance.filter((s) => s.status === 'Present').length;
   const absentCount = studentAttendance.filter((s) => s.status === 'Absent').length;
 
@@ -165,10 +148,7 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       <ResponsiveDialogContent className="sm:max-w-[600px]">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="flex items-center gap-2">
-            <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
-            Take Register
-          </ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>Take register</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>
             Record attendance for a cohort session.
           </ResponsiveDialogDescription>
@@ -247,14 +227,8 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
                 <div className="flex items-center justify-between">
                   <Label>Students ({studentAttendance.length})</Label>
                   <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="bg-success/10 text-success">
-                      {presentCount} Present
-                    </Badge>
-                    {absentCount > 0 && (
-                      <Badge variant="outline" className="bg-destructive/10 text-destructive">
-                        {absentCount} Absent
-                      </Badge>
-                    )}
+                    <Pill tone="green">{presentCount} Present</Pill>
+                    {absentCount > 0 && <Pill tone="red">{absentCount} Absent</Pill>}
                     <Button type="button" variant="outline" size="sm" onClick={markAllPresent}>
                       Mark All Present
                     </Button>
@@ -299,7 +273,7 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
                               onClick={() => updateStudentStatus(sa.studentId, status.value)}
                               title={status.label}
                             >
-                              <status.icon className="h-3.5 w-3.5" />
+                              {status.short}
                             </Button>
                           ))}
                         </div>
@@ -334,14 +308,7 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
             className="h-11 touch-manipulation"
             onClick={handleSubmit}
           >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              'Save Register'
-            )}
+            {isSubmitting ? 'Saving…' : 'Save Register'}
           </Button>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>

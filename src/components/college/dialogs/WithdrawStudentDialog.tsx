@@ -11,7 +11,6 @@ import {
 import { Button } from '@/components/ui/button';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
-import { AlertTriangle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface WithdrawStudentDialogProps {
@@ -61,10 +60,7 @@ export function WithdrawStudentDialog({
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       <ResponsiveDialogContent className="sm:max-w-[440px]">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="flex items-center gap-2">
-            <AlertTriangle className="h-5 w-5 text-destructive" />
-            Withdraw Student
-          </ResponsiveDialogTitle>
+          <ResponsiveDialogTitle>Withdraw student</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>
             This will change the student's status and remove them from active registers.
           </ResponsiveDialogDescription>
@@ -104,14 +100,7 @@ export function WithdrawStudentDialog({
             onClick={handleWithdraw}
             disabled={isWithdrawing}
           >
-            {isWithdrawing ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Withdrawing...
-              </>
-            ) : (
-              'Withdraw Student'
-            )}
+            {isWithdrawing ? 'Withdrawing…' : 'Withdraw Student'}
           </Button>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>

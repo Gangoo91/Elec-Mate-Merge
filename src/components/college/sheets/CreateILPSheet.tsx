@@ -1,10 +1,5 @@
 import { useState, useMemo } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -17,17 +12,6 @@ import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
 import { useHapticFeedback, SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
 import { useToast } from '@/hooks/use-toast';
-import {
-  ClipboardList,
-  Loader2,
-  Save,
-  Target,
-  Plus,
-  X,
-  Calendar,
-  Heart,
-  UserCheck,
-} from 'lucide-react';
 import type { ILPTarget } from '@/services/college';
 
 interface CreateILPSheetProps {
@@ -41,6 +25,20 @@ interface NewTarget {
   description: string;
   target_date: string;
 }
+
+const inputClass =
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+const textareaClass =
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
+
+const selectTriggerClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+
+const selectContentClass =
+  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
+
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
 
 export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
   const { data: students = [] } = useCollegeStudents();
@@ -94,7 +92,6 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
     setIsSubmitting(true);
 
     try {
-      // Build valid targets array
       const validTargets: ILPTarget[] = targets
         .filter((t) => t.description.trim() && t.target_date)
         .map((t) => ({
@@ -115,7 +112,6 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
 
       const selectedStudent = students.find((s) => s.id === studentId);
 
-      // Show success animation
       setShowSuccess(true);
       triggerSuccess(true);
 
@@ -146,175 +142,133 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
+        <div className="flex flex-col h-full">
           {/* Drag Handle */}
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
           {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-border px-4 pb-4">
-            <SheetTitle className="text-xl text-left flex items-center gap-2">
-              <ClipboardList className="h-5 w-5 text-elec-yellow" />
-              Create New ILP
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className={eyebrow}>Individual Learning Plan</div>
+            <SheetTitle className="text-[20px] font-semibold text-white mt-1 text-left">
+              Create new ILP
             </SheetTitle>
-            <p className="text-sm text-white text-left">
+            <p className="text-[12.5px] text-white/55 mt-1 text-left">
               Set up an Individual Learning Plan for a student
             </p>
           </SheetHeader>
 
           {/* Scrollable Form */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
             {/* Student Selection */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Student
-              </h4>
-              <div>
-                <Label htmlFor="ilp-student">Select Student *</Label>
-                <Select value={studentId} onValueChange={setStudentId}>
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Choose a student" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {activeStudents.map((student) => (
-                      <SelectItem key={student.id} value={student.id}>
-                        {student.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Student</div>
+              <Select value={studentId} onValueChange={setStudentId}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Choose a student" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {activeStudents.map((student) => (
+                    <SelectItem key={student.id} value={student.id}>
+                      {student.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Initial Targets */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Initial Targets
-              </h4>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Initial Targets</div>
 
               {targets.map((target, index) => (
-                <Card key={index} className="border-white/10 relative">
-                  <CardContent className="p-3 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Target className="h-4 w-4 text-elec-yellow shrink-0" />
-                        <span className="text-sm font-medium text-white">Target {index + 1}</span>
-                      </div>
-                      {targets.length > 1 && (
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-11 w-11 touch-manipulation text-white hover:text-destructive hover:bg-destructive/10"
-                          onClick={() => handleRemoveTarget(index)}
-                        >
-                          <X className="h-4 w-4" />
-                        </Button>
-                      )}
+                <div
+                  key={index}
+                  className="rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06] p-4 space-y-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                      <span className="text-[13px] font-medium text-white">Target {index + 1}</span>
                     </div>
+                    {targets.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTarget(index)}
+                        className="h-8 w-8 rounded-full flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors"
+                        aria-label="Remove target"
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
 
-                    <div>
-                      <Label htmlFor={`new-target-desc-${index}`}>Description *</Label>
-                      <Textarea
-                        id={`new-target-desc-${index}`}
-                        value={target.description}
-                        onChange={(e) => handleTargetChange(index, 'description', e.target.value)}
-                        placeholder="Describe the learning target..."
-                        className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                      />
-                    </div>
+                  <div className="space-y-1.5">
+                    <div className="text-[11.5px] text-white/60">Description *</div>
+                    <textarea
+                      value={target.description}
+                      onChange={(e) => handleTargetChange(index, 'description', e.target.value)}
+                      placeholder="Describe the learning target…"
+                      className={`${textareaClass} min-h-[80px]`}
+                    />
+                  </div>
 
-                    <div>
-                      <Label htmlFor={`new-target-date-${index}`}>
-                        <span className="flex items-center gap-1.5">
-                          <Calendar className="h-3.5 w-3.5" />
-                          Due Date *
-                        </span>
-                      </Label>
-                      <Input
-                        id={`new-target-date-${index}`}
-                        type="date"
-                        value={target.target_date}
-                        onChange={(e) => handleTargetChange(index, 'target_date', e.target.value)}
-                        className="h-11 touch-manipulation"
-                      />
-                    </div>
-                  </CardContent>
-                </Card>
+                  <div className="space-y-1.5">
+                    <div className="text-[11.5px] text-white/60">Due Date *</div>
+                    <input
+                      type="date"
+                      value={target.target_date}
+                      onChange={(e) => handleTargetChange(index, 'target_date', e.target.value)}
+                      className={inputClass}
+                    />
+                  </div>
+                </div>
               ))}
 
-              <Button
-                variant="outline"
-                className="w-full h-11 touch-manipulation gap-2 border-dashed border-white/20 text-white hover:border-elec-yellow hover:text-elec-yellow"
+              <button
+                type="button"
                 onClick={handleAddTarget}
+                className="w-full h-11 text-[12.5px] font-medium text-white/70 hover:text-elec-yellow border border-dashed border-white/[0.12] hover:border-elec-yellow/40 rounded-xl touch-manipulation transition-colors"
               >
-                <Plus className="h-4 w-4" />
-                Add Another Target
-              </Button>
+                + Add Another Target
+              </button>
             </div>
 
             {/* Support Needs */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Support Needs
-              </h4>
-              <div>
-                <Label htmlFor="ilp-support">
-                  <span className="flex items-center gap-1.5">
-                    <Heart className="h-3.5 w-3.5" />
-                    Additional Support
-                  </span>
-                </Label>
-                <Textarea
-                  id="ilp-support"
-                  value={supportNeeds}
-                  onChange={(e) => setSupportNeeds(e.target.value)}
-                  placeholder="Enter support needs, separated by commas (e.g. Dyslexia support, Extra time in assessments, Hearing loop)"
-                  className="touch-manipulation text-base min-h-[100px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-                />
-                <p className="text-xs text-white mt-1">Separate multiple needs with commas</p>
-              </div>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Support Needs</div>
+              <textarea
+                value={supportNeeds}
+                onChange={(e) => setSupportNeeds(e.target.value)}
+                placeholder="Enter support needs, separated by commas (e.g. Dyslexia support, Extra time in assessments, Hearing loop)"
+                className={`${textareaClass} min-h-[100px]`}
+              />
+              <p className="text-[11px] text-white/40">Separate multiple needs with commas</p>
             </div>
 
-            {/* Review Details */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-white flex items-center gap-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                Review Schedule
-              </h4>
+            {/* Review Schedule */}
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
+              <div className={eyebrow}>Review Schedule</div>
 
-              <div>
-                <Label htmlFor="ilp-review-date">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="h-3.5 w-3.5" />
-                    First Review Date
-                  </span>
-                </Label>
-                <Input
-                  id="ilp-review-date"
+              <div className="space-y-1.5">
+                <div className="text-[11.5px] text-white/60">First Review Date</div>
+                <input
                   type="date"
                   value={reviewDate}
                   onChange={(e) => setReviewDate(e.target.value)}
-                  className="h-11 touch-manipulation"
+                  className={inputClass}
                 />
               </div>
 
-              <div>
-                <Label htmlFor="ilp-reviewer">
-                  <span className="flex items-center gap-1.5">
-                    <UserCheck className="h-3.5 w-3.5" />
-                    Assigned Reviewer
-                  </span>
-                </Label>
+              <div className="space-y-1.5">
+                <div className="text-[11.5px] text-white/60">Assigned Reviewer</div>
                 <Select value={reviewerId} onValueChange={setReviewerId}>
-                  <SelectTrigger className="h-11 touch-manipulation">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select tutor" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     {tutors.map((tutor) => (
                       <SelectItem key={tutor.id} value={tutor.id}>
                         {tutor.name}
@@ -327,39 +281,29 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
           </div>
 
           {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-border p-4 flex-row gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation"
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
+            <button
+              type="button"
               onClick={() => {
                 resetForm();
                 onOpenChange(false);
               }}
               disabled={isSubmitting}
+              className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-11 touch-manipulation gap-2"
+            </button>
+            <button
+              type="button"
               onClick={handleSubmit}
               disabled={!canSubmit}
+              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Creating...
-                </>
-              ) : (
-                <>
-                  <Save className="h-4 w-4" />
-                  Create ILP
-                </>
-              )}
-            </Button>
+              {isSubmitting ? 'Creating…' : 'Create ILP →'}
+            </button>
           </SheetFooter>
         </div>
 
-        {/* Success overlay */}
         <SuccessCheckmark show={showSuccess} />
       </SheetContent>
     </Sheet>

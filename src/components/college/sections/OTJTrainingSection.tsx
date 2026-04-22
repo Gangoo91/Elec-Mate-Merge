@@ -1,28 +1,31 @@
 /**
  * OTJTrainingSection — Off-the-Job Training Calculator
- *
- * Calculates and displays the 20% off-the-job training requirement
- * for apprenticeships. Uses card-surface pattern, framer motion animations.
+ * Editorial redesign: typography-led, no icons.
  */
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
-import type { CollegeStudent, CollegeCourse, CollegeAttendance } from '@/contexts/CollegeSupabaseContext';
-import { cn } from '@/lib/utils';
+import type {
+  CollegeStudent,
+  CollegeCourse,
+  CollegeAttendance,
+} from '@/contexts/CollegeSupabaseContext';
 import {
-  Clock,
-  Users,
-  TrendingUp,
-  AlertTriangle,
-  CheckCircle2,
-  ChevronRight,
-  Loader2,
-  GraduationCap,
-  BarChart3,
-  Target,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  SectionHeader,
+  Pill,
+  EmptyState,
+  LoadingState,
+  itemVariants,
+  type Tone,
+} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface OTJTrainingSectionProps {
   onNavigate: (section: CollegeSection) => void;
@@ -42,16 +45,6 @@ interface StudentOTJData {
   status: OTJStatus;
 }
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } },
-};
-
 const HOURS_PER_SESSION = 6;
 const HOURS_PER_WEEK = 30;
 const OTJ_PERCENTAGE = 0.2;
@@ -64,43 +57,31 @@ function calculateOTJData(
 ): StudentOTJData | null {
   const course = courses.find((c) => c.id === student.course_id);
   if (!course || !course.duration_months) return null;
-
   const workingWeeks = course.duration_months * WEEKS_PER_MONTH;
   const requiredHours = Math.round(workingWeeks * HOURS_PER_WEEK * OTJ_PERCENTAGE);
-
-  // Count sessions where student was Present or Late
   const studentAttendance = attendance.filter(
     (a) => a.student_id === student.id && (a.status === 'Present' || a.status === 'Late')
   );
   const completedHours = studentAttendance.length * HOURS_PER_SESSION;
   const remainingHours = Math.max(0, requiredHours - completedHours);
-  const progressPercent = requiredHours > 0 ? Math.min(100, (completedHours / requiredHours) * 100) : 0;
+  const progressPercent =
+    requiredHours > 0 ? Math.min(100, (completedHours / requiredHours) * 100) : 0;
 
-  // Calculate expected progress based on time elapsed
   const startDate = student.start_date ? new Date(student.start_date) : null;
   let expectedPercent = 0;
   if (startDate) {
     const now = new Date();
     const monthsElapsed =
-      (now.getFullYear() - startDate.getFullYear()) * 12 + (now.getMonth() - startDate.getMonth());
+      (now.getFullYear() - startDate.getFullYear()) * 12 +
+      (now.getMonth() - startDate.getMonth());
     const totalMonths = course.duration_months;
     expectedPercent = totalMonths > 0 ? Math.min(100, (monthsElapsed / totalMonths) * 100) : 0;
   } else {
-    // Without start_date, use progress_percent as a proxy for time elapsed
     expectedPercent = student.progress_percent ?? 0;
   }
 
-  // Determine status
   const gap = expectedPercent - progressPercent;
-  let status: OTJStatus;
-  if (gap <= 10) {
-    status = 'On Track';
-  } else if (gap <= 20) {
-    status = 'Behind';
-  } else {
-    status = 'At Risk';
-  }
-
+  const status: OTJStatus = gap <= 10 ? 'On Track' : gap <= 20 ? 'Behind' : 'At Risk';
   return {
     student,
     course,
@@ -113,52 +94,20 @@ function calculateOTJData(
   };
 }
 
-function getStatusColour(status: OTJStatus) {
-  switch (status) {
-    case 'On Track':
-      return {
-        badge: 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
-        bar: 'bg-emerald-500',
-        icon: CheckCircle2,
-      };
-    case 'Behind':
-      return {
-        badge: 'bg-amber-500/10 text-amber-400 border border-amber-500/20',
-        bar: 'bg-amber-500',
-        icon: Clock,
-      };
-    case 'At Risk':
-      return {
-        badge: 'bg-red-500/10 text-red-400 border border-red-500/20',
-        bar: 'bg-red-500',
-        icon: AlertTriangle,
-      };
-  }
-}
-
-function getInitials(name: string): string {
-  const parts = name.trim().split(/\s+/);
-  if (parts.length >= 2) {
-    return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
-  }
-  return (parts[0]?.[0] ?? '?').toUpperCase();
-}
+const statusTone = (status: OTJStatus): Tone =>
+  status === 'On Track' ? 'emerald' : status === 'Behind' ? 'amber' : 'red';
 
 export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
   const { students, courses, attendance, isLoading } = useCollegeSupabase();
   const [activeFilter, setActiveFilter] = useState<FilterOption>('all');
 
-  // Only include active students with a course
   const otjData = useMemo(() => {
-    const activeStudents = students.filter(
-      (s) => s.status === 'Active' && s.course_id
-    );
+    const activeStudents = students.filter((s) => s.status === 'Active' && s.course_id);
     return activeStudents
       .map((s) => calculateOTJData(s, courses, attendance))
       .filter((d): d is StudentOTJData => d !== null);
   }, [students, courses, attendance]);
 
-  // KPI calculations
   const kpis = useMemo(() => {
     const total = otjData.length;
     const onTrack = otjData.filter((d) => d.status === 'On Track').length;
@@ -168,13 +117,9 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
       total > 0
         ? Math.round(otjData.reduce((sum, d) => sum + d.progressPercent, 0) / total)
         : 0;
-    const onTrackPercent = total > 0 ? Math.round((onTrack / total) * 100) : 0;
-    const behindPercent = total > 0 ? Math.round(((behind + atRisk) / total) * 100) : 0;
-
-    return { total, onTrack, behind, atRisk, avgOTJ, onTrackPercent, behindPercent };
+    return { total, onTrack, behind, atRisk, avgOTJ };
   }, [otjData]);
 
-  // Filtered data
   const filteredData = useMemo(() => {
     switch (activeFilter) {
       case 'ontrack':
@@ -188,299 +133,183 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
     }
   }, [otjData, activeFilter]);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-      </div>
-    );
-  }
+  if (isLoading) return <LoadingState />;
 
   if (otjData.length === 0) {
     return (
-      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
+      <PageFrame>
         <motion.div variants={itemVariants}>
-          <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-            Off-the-Job Training
-          </h2>
+          <PageHero
+            eyebrow="Tools · OTJ Training"
+            title="Off-the-job training"
+            description="Track the 20% off-the-job time requirement for apprentices."
+            tone="emerald"
+          />
         </motion.div>
-        <motion.div variants={itemVariants} className="card-surface p-8 text-center">
-          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 inline-flex mb-4">
-            <GraduationCap className="h-8 w-8 text-amber-400" />
-          </div>
-          <h3 className="text-base font-semibold text-white mb-2">No Apprentices Found</h3>
-          <p className="text-sm text-white mb-4">
-            Add active students with assigned courses to see OTJ training calculations.
-          </p>
-          <button
-            onClick={() => onNavigate('students')}
-            className="inline-flex items-center gap-2 px-4 h-11 rounded-lg bg-elec-yellow text-black font-medium text-sm touch-manipulation active:scale-[0.98] transition-all"
-          >
-            <Users className="h-4 w-4" />
-            View Students
-          </button>
+        <motion.div variants={itemVariants}>
+          <EmptyState
+            title="No apprentices found"
+            description="Add active students with assigned courses to see OTJ calculations."
+            action="View students"
+            onAction={() => onNavigate('students')}
+          />
         </motion.div>
-      </motion.div>
+      </PageFrame>
     );
   }
 
-  const filters: { key: FilterOption; label: string; count: number }[] = [
-    { key: 'all', label: 'All', count: kpis.total },
-    { key: 'ontrack', label: 'On Track', count: kpis.onTrack },
-    { key: 'behind', label: 'Behind', count: kpis.behind },
-    { key: 'atrisk', label: 'At Risk', count: kpis.atRisk },
-  ];
-
   return (
-    <motion.div variants={containerVariants} initial="hidden" animate="visible" className="space-y-5">
-      {/* Section Header */}
+    <PageFrame>
       <motion.div variants={itemVariants}>
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          Off-the-Job Training
-        </h2>
+        <PageHero
+          eyebrow="Tools · OTJ Training"
+          title="Off-the-job training"
+          description="The 20% off-the-job training time tracker for apprentices."
+          tone="emerald"
+        />
       </motion.div>
 
-      {/* KPI Strip */}
-      <motion.div variants={itemVariants} className="grid grid-cols-4 gap-2">
-        {[
-          {
-            value: kpis.total,
-            label: 'Apprentices',
-            icon: Users,
-            colour: 'text-blue-400',
-          },
-          {
-            value: `${kpis.onTrackPercent}%`,
-            label: 'On Track',
-            icon: CheckCircle2,
-            colour: 'text-emerald-400',
-          },
-          {
-            value: `${kpis.behindPercent}%`,
-            label: 'Behind',
-            icon: AlertTriangle,
-            colour: kpis.behindPercent > 0 ? 'text-amber-400' : 'text-white',
-          },
-          {
-            value: `${kpis.avgOTJ}%`,
-            label: 'Avg OTJ',
-            icon: BarChart3,
-            colour: 'text-purple-400',
-          },
-        ].map((stat) => (
-          <div
-            key={stat.label}
-            className="card-surface p-3 flex flex-col items-center touch-manipulation"
-          >
-            <stat.icon className={cn('h-4 w-4 mb-1', stat.colour)} />
-            <span className={cn('text-lg font-bold', stat.colour)}>{stat.value}</span>
-            <span className="text-[10px] text-white uppercase tracking-wider">{stat.label}</span>
-          </div>
-        ))}
+      <motion.div variants={itemVariants}>
+        <StatStrip
+          columns={4}
+          stats={[
+            { value: kpis.total, label: 'Apprentices', sub: 'Active', tone: 'blue' },
+            {
+              value: `${Math.round((kpis.onTrack / kpis.total) * 100)}%`,
+              label: 'On Track',
+              sub: `${kpis.onTrack} learners`,
+              tone: 'green',
+            },
+            {
+              value: `${Math.round(((kpis.behind + kpis.atRisk) / kpis.total) * 100)}%`,
+              label: 'Behind',
+              sub: `${kpis.behind + kpis.atRisk} learners`,
+              tone: 'amber',
+              accent: kpis.behind + kpis.atRisk > 0,
+            },
+            { value: `${kpis.avgOTJ}%`, label: 'Avg OTJ', sub: 'Across cohort', tone: 'purple' },
+          ]}
+        />
       </motion.div>
 
-      {/* Filter Pills */}
-      <motion.div variants={itemVariants} className="flex gap-2 overflow-x-auto pb-1">
-        {filters.map((f) => (
-          <button
-            key={f.key}
-            onClick={() => setActiveFilter(f.key)}
-            className={cn(
-              'flex-shrink-0 h-11 px-4 rounded-full text-sm font-medium touch-manipulation active:scale-[0.98] transition-all',
-              activeFilter === f.key
-                ? 'bg-elec-yellow text-black'
-                : 'bg-white/[0.05] text-white border border-white/[0.08] hover:bg-white/[0.08]'
-            )}
-          >
-            {f.label}
-            <span
-              className={cn(
-                'ml-1.5 text-xs',
-                activeFilter === f.key ? 'text-black/60' : 'text-white/60'
-              )}
-            >
-              {f.count}
-            </span>
-          </button>
-        ))}
+      <motion.div variants={itemVariants}>
+        <FilterBar
+          tabs={[
+            { value: 'all', label: 'All', count: kpis.total },
+            { value: 'ontrack', label: 'On Track', count: kpis.onTrack },
+            { value: 'behind', label: 'Behind', count: kpis.behind },
+            { value: 'atrisk', label: 'At Risk', count: kpis.atRisk },
+          ]}
+          activeTab={activeFilter}
+          onTabChange={(v) => setActiveFilter(v as FilterOption)}
+        />
       </motion.div>
 
-      {/* Student Cards */}
-      <motion.div variants={itemVariants} className="space-y-3">
-        {filteredData.length === 0 ? (
-          <div className="card-surface p-6 text-center">
-            <p className="text-sm text-white">No apprentices match this filter.</p>
-          </div>
-        ) : (
-          filteredData.map((data) => {
-            const statusStyle = getStatusColour(data.status);
-            const StatusIcon = statusStyle.icon;
-
-            return (
-              <motion.div key={data.student.id} variants={itemVariants}>
-                <div className="group card-surface-interactive overflow-hidden active:scale-[0.98] transition-all touch-manipulation">
-                  {/* Gradient accent line */}
-                  <div
-                    className={cn(
-                      'absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r opacity-30 group-hover:opacity-80 transition-opacity',
-                      data.status === 'On Track'
-                        ? 'from-emerald-500 via-emerald-400 to-green-400'
-                        : data.status === 'Behind'
-                          ? 'from-amber-500 via-amber-400 to-yellow-400'
-                          : 'from-red-500 via-red-400 to-orange-400'
-                    )}
-                  />
-
-                  <div className="relative z-10 p-4">
-                    {/* Top row: avatar, name, status badge */}
-                    <div className="flex items-start justify-between mb-3">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={cn(
-                            'p-2 rounded-xl',
-                            data.status === 'On Track'
-                              ? 'bg-emerald-500/10 border border-emerald-500/20'
-                              : data.status === 'Behind'
-                                ? 'bg-amber-500/10 border border-amber-500/20'
-                                : 'bg-red-500/10 border border-red-500/20'
-                          )}
-                        >
-                          <GraduationCap
-                            className={cn(
-                              'h-5 w-5',
-                              data.status === 'On Track'
-                                ? 'text-emerald-400'
-                                : data.status === 'Behind'
-                                  ? 'text-amber-400'
-                                  : 'text-red-400'
-                            )}
-                          />
-                        </div>
-                        <div>
-                          <h3
-                            className={cn(
-                              'text-sm font-semibold text-white transition-colors',
-                              data.status === 'On Track'
-                                ? 'group-hover:text-emerald-300'
-                                : data.status === 'Behind'
-                                  ? 'group-hover:text-amber-300'
-                                  : 'group-hover:text-red-300'
-                            )}
-                          >
-                            {data.student.name}
-                          </h3>
-                          <p className="text-[11px] text-white">
-                            {data.course?.name ?? 'Unknown Programme'}
-                            {data.course?.duration_months
-                              ? ` \u00B7 ${data.course.duration_months} months`
-                              : ''}
-                          </p>
-                        </div>
+      {filteredData.length === 0 ? (
+        <EmptyState title="No apprentices match this filter" />
+      ) : (
+        <motion.div variants={itemVariants}>
+          <ListCard>
+            {filteredData.map((data) => (
+              <div
+                key={data.student.id}
+                className="flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors"
+              >
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-baseline justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="text-[15px] font-medium text-white truncate">
+                        {data.student.name}
                       </div>
-
-                      <span
-                        className={cn(
-                          'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium',
-                          statusStyle.badge
-                        )}
-                      >
-                        <StatusIcon className="h-3 w-3" />
-                        {data.status}
-                      </span>
-                    </div>
-
-                    {/* Hours breakdown */}
-                    <div className="grid grid-cols-3 gap-2 mb-3">
-                      <div className="text-center">
-                        <span className="block text-xs text-white">Required</span>
-                        <span className="block text-sm font-bold text-white">
-                          {data.requiredHours}h
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <span className="block text-xs text-white">Completed</span>
-                        <span className="block text-sm font-bold text-emerald-400">
-                          {data.completedHours}h
-                        </span>
-                      </div>
-                      <div className="text-center">
-                        <span className="block text-xs text-white">Remaining</span>
-                        <span className="block text-sm font-bold text-amber-400">
-                          {data.remainingHours}h
-                        </span>
+                      <div className="mt-0.5 text-[11.5px] text-white/50 truncate tabular-nums">
+                        {data.course?.name ?? 'Unknown programme'}
+                        {data.course?.duration_months
+                          ? ` · ${data.course.duration_months} months`
+                          : ''}
                       </div>
                     </div>
+                    <Pill tone={statusTone(data.status)}>{data.status}</Pill>
+                  </div>
 
-                    {/* Progress bar */}
-                    <div className="mb-2">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className="text-[11px] text-white">OTJ Progress</span>
-                        <span className="text-[11px] font-medium text-white">
-                          {Math.round(data.progressPercent)}%
-                        </span>
+                  <div className="mt-3 grid grid-cols-3 gap-4 text-[11px]">
+                    <div>
+                      <div className="text-white/50 uppercase tracking-[0.12em]">Required</div>
+                      <div className="mt-0.5 text-[14px] font-medium text-white tabular-nums">
+                        {data.requiredHours}h
                       </div>
-                      <div className="h-2 rounded-full bg-white/[0.08] overflow-hidden">
-                        <div
-                          className={cn('h-full rounded-full transition-all duration-500', statusStyle.bar)}
-                          style={{ width: `${Math.min(100, data.progressPercent)}%` }}
-                        />
-                      </div>
-                      {/* Expected progress marker */}
-                      {data.expectedPercent > 0 && (
-                        <div className="relative h-0 mt-[-10px]">
-                          <div
-                            className="absolute top-0 w-0.5 h-2 bg-white/40 rounded-full"
-                            style={{ left: `${Math.min(100, data.expectedPercent)}%` }}
-                            title={`Expected: ${Math.round(data.expectedPercent)}%`}
-                          />
-                        </div>
-                      )}
                     </div>
-
-                    {/* Footer: open action */}
-                    <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/[0.06]">
-                      <span className="text-[11px] font-medium text-elec-yellow">View Details</span>
-                      <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all">
-                        <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black transition-all" />
+                    <div>
+                      <div className="text-white/50 uppercase tracking-[0.12em]">Completed</div>
+                      <div className="mt-0.5 text-[14px] font-medium text-emerald-400 tabular-nums">
+                        {data.completedHours}h
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-white/50 uppercase tracking-[0.12em]">Remaining</div>
+                      <div className="mt-0.5 text-[14px] font-medium text-amber-400 tabular-nums">
+                        {data.remainingHours}h
                       </div>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })
-        )}
-      </motion.div>
 
-      {/* Summary Card */}
-      <motion.div variants={itemVariants}>
-        <div className="card-surface p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="p-2 rounded-xl bg-purple-500/10 border border-purple-500/20">
-              <Target className="h-4 w-4 text-purple-400" />
+                  <div className="mt-3">
+                    <div className="flex items-baseline justify-between text-[11.5px]">
+                      <span className="text-white/50 uppercase tracking-[0.12em]">OTJ</span>
+                      <span className="font-medium text-white tabular-nums">
+                        {Math.round(data.progressPercent)}%
+                      </span>
+                    </div>
+                    <div className="mt-1.5 relative h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                      <div
+                        className={cn(
+                          'h-full rounded-full',
+                          data.status === 'On Track'
+                            ? 'bg-emerald-400/80'
+                            : data.status === 'Behind'
+                              ? 'bg-amber-400/80'
+                              : 'bg-red-400/80'
+                        )}
+                        style={{ width: `${Math.min(100, data.progressPercent)}%` }}
+                      />
+                    </div>
+                    {data.expectedPercent > 0 && (
+                      <div className="relative h-0 mt-[-6px]">
+                        <div
+                          className="absolute top-0 w-0.5 h-2 bg-white/60 rounded-full"
+                          style={{ left: `${Math.min(100, data.expectedPercent)}%` }}
+                          title={`Expected: ${Math.round(data.expectedPercent)}%`}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </ListCard>
+        </motion.div>
+      )}
+
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader eyebrow="Calculation Basis" title="How OTJ is calculated" />
+        <ListCard>
+          {[
+            { label: 'Working hours per week', value: '30 hours' },
+            { label: 'OTJ requirement', value: '20% of total' },
+            { label: 'Hours per session', value: '6 hours' },
+            { label: 'Weeks per month', value: '4.33 weeks' },
+          ].map((row) => (
+            <div
+              key={row.label}
+              className="flex items-center justify-between px-5 sm:px-6 py-4"
+            >
+              <span className="text-[13px] text-white/60">{row.label}</span>
+              <span className="text-[13px] font-medium text-white tabular-nums">
+                {row.value}
+              </span>
             </div>
-            <h3 className="text-sm font-semibold text-white">OTJ Calculation Basis</h3>
-          </div>
-          <div className="space-y-1.5">
-            <div className="flex items-center justify-between text-[11px]">
-              <span className="text-white">Working hours per week</span>
-              <span className="text-white font-medium">30 hours</span>
-            </div>
-            <div className="flex items-center justify-between text-[11px]">
-              <span className="text-white">OTJ requirement</span>
-              <span className="text-white font-medium">20% of total</span>
-            </div>
-            <div className="flex items-center justify-between text-[11px]">
-              <span className="text-white">Hours per session</span>
-              <span className="text-white font-medium">6 hours</span>
-            </div>
-            <div className="flex items-center justify-between text-[11px]">
-              <span className="text-white">Weeks per month</span>
-              <span className="text-white font-medium">4.33 weeks</span>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
+          ))}
+        </ListCard>
+      </motion.section>
+    </PageFrame>
   );
 }

@@ -1,12 +1,11 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { GraduationCap, Building2, UserCog, MessageSquare } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { useCollegeConversations } from '@/hooks/useCollegeChat';
 import { useAuth } from '@/contexts/AuthContext';
 import type { CollegeConversation } from '@/services/collegeChatService';
+import { Pill, EmptyState, toneDot, type Tone } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface CollegeChatListProps {
   onSelectConversation: (conversation: CollegeConversation) => void;
@@ -15,52 +14,38 @@ interface CollegeChatListProps {
 
 export function CollegeChatList({ onSelectConversation, currentUserType }: CollegeChatListProps) {
   const { user } = useAuth();
-  // Always enabled in college chat view
   const { data: conversations = [], isLoading, totalUnread } = useCollegeConversations(true);
 
   const getConversationDisplay = (conv: CollegeConversation) => {
     const type = conv.conversation_type;
     const other = conv.other_participant;
 
-    // Determine which icon to show based on conversation type
-    let icon = <MessageSquare className="h-4 w-4" />;
-    let badge = null;
+    let dotTone: Tone = 'yellow';
+    let badgeLabel: string | null = null;
+    let badgeTone: Tone = 'yellow';
 
     if (type === 'student_tutor') {
       if (currentUserType === 'student') {
-        icon = <UserCog className="h-4 w-4 text-blue-500" />;
-        badge = (
-          <Badge variant="outline" className="text-xs">
-            Tutor
-          </Badge>
-        );
+        dotTone = 'blue';
+        badgeLabel = 'Tutor';
+        badgeTone = 'blue';
       } else {
-        icon = <GraduationCap className="h-4 w-4 text-green-500" />;
-        badge = (
-          <Badge variant="outline" className="text-xs">
-            Student
-          </Badge>
-        );
+        dotTone = 'emerald';
+        badgeLabel = 'Student';
+        badgeTone = 'emerald';
       }
     } else if (type === 'college_employer') {
       if (currentUserType === 'employer') {
-        icon = <UserCog className="h-4 w-4 text-blue-500" />;
-        badge = (
-          <Badge variant="outline" className="text-xs">
-            College
-          </Badge>
-        );
+        dotTone = 'blue';
+        badgeLabel = 'College';
+        badgeTone = 'blue';
       } else {
-        icon = <Building2 className="h-4 w-4 text-orange-500" />;
-        badge = (
-          <Badge variant="outline" className="text-xs">
-            Employer
-          </Badge>
-        );
+        dotTone = 'orange';
+        badgeLabel = 'Employer';
+        badgeTone = 'orange';
       }
     }
 
-    // Get unread count for current user
     const isParticipant1 = conv.participant_1_id === user?.id;
     const unreadCount = isParticipant1 ? conv.unread_1 : conv.unread_2;
 
@@ -68,8 +53,9 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
       name: other?.name || 'Unknown',
       avatar: other?.avatar_url,
       role: other?.role,
-      icon,
-      badge,
+      dotTone,
+      badgeLabel,
+      badgeTone,
       unreadCount,
       lastMessage: conv.last_message_preview,
       lastMessageAt: conv.last_message_at,
@@ -79,9 +65,9 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
 
   if (isLoading) {
     return (
-      <div className="space-y-3">
+      <div className="space-y-2">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Skeleton key={i} className="h-20 w-full" />
+          <Skeleton key={i} className="h-20 w-full bg-white/[0.04]" />
         ))}
       </div>
     );
@@ -89,68 +75,69 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
 
   if (conversations.length === 0) {
     return (
-      <Card className="border-dashed">
-        <CardContent className="p-8 text-center">
-          <MessageSquare className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="font-semibold text-lg mb-2">No conversations yet</h3>
-          <p className="text-muted-foreground">
-            {currentUserType === 'student'
-              ? 'Your conversations with tutors will appear here'
-              : currentUserType === 'staff'
-                ? 'Conversations with students and employers will appear here'
-                : 'Conversations with college staff will appear here'}
-          </p>
-        </CardContent>
-      </Card>
+      <EmptyState
+        title="No conversations yet"
+        description={
+          currentUserType === 'student'
+            ? 'Your conversations with tutors will appear here.'
+            : currentUserType === 'staff'
+              ? 'Conversations with students and employers will appear here.'
+              : 'Conversations with college staff will appear here.'
+        }
+      />
     );
   }
 
   return (
     <div className="space-y-3">
-      {/* Unread indicator */}
       {totalUnread > 0 && (
-        <div className="flex items-center justify-between px-1 mb-2">
-          <span className="text-sm text-muted-foreground">
-            {totalUnread} unread message{totalUnread > 1 ? 's' : ''}
-          </span>
+        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 px-1">
+          {totalUnread} unread message{totalUnread > 1 ? 's' : ''}
         </div>
       )}
 
-      {conversations.map((conv) => {
-        const display = getConversationDisplay(conv);
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
+        {conversations.map((conv) => {
+          const display = getConversationDisplay(conv);
 
-        return (
-          <Card
-            key={conv.id}
-            className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
-            onClick={() => onSelectConversation(conv)}
-          >
-            <CardContent className="p-3">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <Avatar className="h-12 w-12">
+          return (
+            <button
+              key={conv.id}
+              onClick={() => onSelectConversation(conv)}
+              className="w-full px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors text-left touch-manipulation"
+            >
+              <div className="flex items-center gap-4">
+                <div className="relative shrink-0">
+                  <Avatar className="h-11 w-11 ring-1 ring-white/[0.08]">
                     <AvatarImage src={display.avatar || undefined} />
-                    <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow">
+                    <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow text-sm font-semibold">
                       {display.name.slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="absolute -bottom-1 -right-1 bg-background rounded-full p-0.5">
-                    {display.icon}
-                  </div>
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-[hsl(0_0%_12%)]',
+                      toneDot[display.dotTone]
+                    )}
+                  />
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-baseline justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
                       <p
-                        className={`font-medium truncate ${display.unreadCount > 0 ? 'text-foreground' : ''}`}
+                        className={cn(
+                          'text-[14px] font-medium truncate',
+                          display.unreadCount > 0 ? 'text-white' : 'text-white/80'
+                        )}
                       >
                         {display.name}
                       </p>
-                      {display.badge}
+                      {display.badgeLabel && <Pill tone={display.badgeTone}>{display.badgeLabel}</Pill>}
                     </div>
                     {display.lastMessageAt && (
-                      <span className="text-xs text-muted-foreground shrink-0">
+                      <span className="text-[11px] text-white/40 shrink-0 tabular-nums">
                         {formatDistanceToNow(new Date(display.lastMessageAt), {
                           addSuffix: false,
                         })}
@@ -158,41 +145,38 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
                     )}
                   </div>
 
-                  {/* Role / Student context */}
                   {(display.role || display.student) && (
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="mt-0.5 text-[11px] text-white/50 truncate">
                       {display.role}
                       {display.student && (
-                        <span className="inline-flex items-center gap-1 ml-1">
-                          <GraduationCap className="h-3 w-3" />
-                          {display.student.first_name} {display.student.last_name}
+                        <span className="ml-1">
+                          · {display.student.first_name} {display.student.last_name}
                         </span>
                       )}
                     </p>
                   )}
 
-                  <div className="flex items-center justify-between gap-2 mt-1">
+                  <div className="mt-1.5 flex items-center justify-between gap-2">
                     <p
-                      className={`text-sm truncate ${
-                        display.unreadCount > 0
-                          ? 'text-foreground font-medium'
-                          : 'text-muted-foreground'
-                      }`}
+                      className={cn(
+                        'text-[12.5px] truncate',
+                        display.unreadCount > 0 ? 'text-white/80 font-medium' : 'text-white/50'
+                      )}
                     >
                       {display.lastMessage || 'No messages yet'}
                     </p>
                     {display.unreadCount > 0 && (
-                      <Badge className="bg-elec-yellow text-black shrink-0">
-                        {display.unreadCount}
-                      </Badge>
+                      <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-semibold tabular-nums shrink-0">
+                        {display.unreadCount > 9 ? '9+' : display.unreadCount}
+                      </span>
                     )}
                   </div>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        );
-      })}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

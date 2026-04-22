@@ -1,25 +1,7 @@
 import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { CollegeSectionHeader } from '@/components/college/CollegeSectionHeader';
+import { motion } from 'framer-motion';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
-import { cn } from '@/lib/utils';
-import {
-  Search,
-  Plus,
-  FileText,
-  Calendar,
-  Clock,
-  Users,
-  MoreVertical,
-  Filter,
-  CheckCircle2,
-  AlertCircle,
-  FileEdit,
-} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,17 +9,19 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  PageFrame,
+  PageHero,
+  FilterBar,
+  EmptyState,
+  Pill,
+  ListCard,
+  itemVariants,
+  toneDot,
+} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
-/** Parse objectives from a string|null into an array of strings */
 function parseObjectives(objectives: string | null): string[] {
   if (!objectives) return [];
-  // Split by newline first, then by comma if no newlines found
   const byNewline = objectives
     .split('\n')
     .map((s) => s.trim())
@@ -61,70 +45,40 @@ export function LessonPlansSection() {
     const objectivesStr = lesson.objectives ?? '';
     const matchesSearch =
       lesson.title.toLowerCase().includes(query) || objectivesStr.toLowerCase().includes(query);
-
     const matchesStatus =
       filterStatus === 'all' ||
       lesson.status === filterStatus ||
-      // Handle Published filter matching Approved status
       (filterStatus === 'Published' && lesson.status === 'Approved') ||
       (filterStatus === 'Approved' && lesson.status === 'Published');
-
     const matchesCohort = filterCohort === 'all' || lesson.cohort_id === filterCohort;
-
     return matchesSearch && matchesStatus && matchesCohort;
   });
 
-  // Sort by scheduled date (upcoming first)
   const sortedLessons = [...filteredLessons].sort((a, b) => {
     if (!a.scheduled_date) return 1;
     if (!b.scheduled_date) return -1;
     return new Date(a.scheduled_date).getTime() - new Date(b.scheduled_date).getTime();
   });
 
-  const getStatusColor = (status: string | null) => {
+  const statusTone = (status: string | null) => {
     switch (status) {
       case 'Published':
       case 'Approved':
-        return 'bg-success/10 text-success border-success/20';
+        return 'green' as const;
       case 'Draft':
-        return 'bg-warning/10 text-warning border-warning/20';
+        return 'amber' as const;
       case 'Delivered':
-        return 'bg-info/10 text-info border-info/20';
-      case 'Archived':
-        return 'bg-muted text-white';
+        return 'blue' as const;
       default:
-        return 'bg-muted text-white';
+        return 'yellow' as const;
     }
   };
+  const statusLabel = (status: string | null) => (status === 'Approved' ? 'Published' : status ?? 'Unknown');
 
-  const getStatusIcon = (status: string | null) => {
-    switch (status) {
-      case 'Published':
-      case 'Approved':
-        return <CheckCircle2 className="h-3.5 w-3.5" />;
-      case 'Draft':
-        return <FileEdit className="h-3.5 w-3.5" />;
-      case 'Delivered':
-        return <CheckCircle2 className="h-3.5 w-3.5" />;
-      default:
-        return <AlertCircle className="h-3.5 w-3.5" />;
-    }
-  };
-
-  const getStatusLabel = (status: string | null) => {
-    if (status === 'Approved') return 'Published';
-    return status ?? 'Unknown';
-  };
-
-  const getCohortName = (cohortId: string | null) => {
-    if (!cohortId) return 'Unknown';
-    return cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
-  };
-
-  const getTutorName = (tutorId: string | null) => {
-    if (!tutorId) return 'Unknown';
-    return staff.find((s) => s.id === tutorId)?.name || 'Unknown';
-  };
+  const getCohortName = (cohortId: string | null) =>
+    !cohortId ? 'Unknown' : cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
+  const getTutorName = (tutorId: string | null) =>
+    !tutorId ? 'Unknown' : staff.find((s) => s.id === tutorId)?.name || 'Unknown';
 
   const isUpcoming = (date?: string | null) => {
     if (!date) return false;
@@ -134,140 +88,123 @@ export function LessonPlansSection() {
     weekFromNow.setDate(weekFromNow.getDate() + 7);
     return lessonDate >= today && lessonDate <= weekFromNow;
   };
-
-  const isPast = (date?: string | null) => {
-    if (!date) return false;
-    return new Date(date) < new Date();
-  };
+  const isPastUndelivered = (lesson: { scheduled_date: string | null; status: string | null }) =>
+    lesson.scheduled_date && new Date(lesson.scheduled_date) < new Date() && lesson.status !== 'Delivered';
 
   const publishedCount = lessonPlans.filter(
     (l) => l.status === 'Published' || l.status === 'Approved'
   ).length;
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <CollegeSectionHeader
-        title="Lesson Plans"
-        description={`${publishedCount} published lesson plans`}
-        actions={
-          <Button
-            className="gap-2 h-11 touch-manipulation"
-            onClick={() =>
-              toast({
-                title: 'New Lesson Plan',
-                description: 'Lesson plan creation is coming soon.',
-              })
-            }
-          >
-            <Plus className="h-4 w-4" />
-            <span className="hidden sm:inline">New Lesson Plan</span>
-          </Button>
-        }
-      />
-
-      {/* Search and Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search lesson plans..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('touch-manipulation', !searchQuery && 'pl-9')}
-          />
-        </div>
-        <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-full sm:w-[150px] h-11 touch-manipulation">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all" className="touch-manipulation">
-              All Status
-            </SelectItem>
-            <SelectItem value="Draft" className="touch-manipulation">
-              Draft
-            </SelectItem>
-            <SelectItem value="Published" className="touch-manipulation">
-              Published
-            </SelectItem>
-            <SelectItem value="Delivered" className="touch-manipulation">
-              Delivered
-            </SelectItem>
-          </SelectContent>
-        </Select>
-        <Select value={filterCohort} onValueChange={setFilterCohort}>
-          <SelectTrigger className="w-full sm:w-[180px] h-11 touch-manipulation">
-            <Users className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Cohort" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all" className="touch-manipulation">
-              All Cohorts
-            </SelectItem>
-            {cohorts
-              .filter((c) => c.status === 'Active')
-              .map((cohort) => (
-                <SelectItem key={cohort.id} value={cohort.id} className="touch-manipulation">
-                  {cohort.name}
-                </SelectItem>
-              ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Lesson Plans List */}
-      <div className="grid gap-3">
-        {sortedLessons.map((lesson) => {
-          const objectives = parseObjectives(lesson.objectives);
-          return (
-            <Card
-              key={lesson.id}
-              className={`hover:shadow-md transition-shadow ${
-                isUpcoming(lesson.scheduled_date)
-                  ? 'border-l-4 border-l-primary'
-                  : isPast(lesson.scheduled_date) && lesson.status !== 'Delivered'
-                    ? 'border-l-4 border-l-warning'
-                    : ''
-              }`}
+    <PageFrame>
+      <motion.div variants={itemVariants}>
+        <PageHero
+          eyebrow="Curriculum · Lesson Plans"
+          title="Plans & delivery"
+          description={`${publishedCount} published lesson plan${publishedCount === 1 ? '' : 's'}.`}
+          tone="blue"
+          actions={
+            <button
+              onClick={() =>
+                toast({
+                  title: 'New Lesson Plan',
+                  description: 'Lesson plan creation is coming soon.',
+                })
+              }
+              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
             >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-4">
-                  <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <FileText className="h-5 w-5 text-primary" />
-                  </div>
+              New plan →
+            </button>
+          }
+        />
+      </motion.div>
 
+      <motion.div variants={itemVariants}>
+        <FilterBar
+          tabs={[
+            { value: 'all', label: 'All', count: lessonPlans.length },
+            { value: 'Draft', label: 'Draft', count: lessonPlans.filter((l) => l.status === 'Draft').length },
+            { value: 'Published', label: 'Published', count: publishedCount },
+            { value: 'Delivered', label: 'Delivered', count: lessonPlans.filter((l) => l.status === 'Delivered').length },
+          ]}
+          activeTab={filterStatus}
+          onTabChange={setFilterStatus}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search title or objectives…"
+          actions={
+            <select
+              value={filterCohort}
+              onChange={(e) => setFilterCohort(e.target.value)}
+              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+            >
+              <option value="all">All Cohorts</option>
+              {cohorts
+                .filter((c) => c.status === 'Active')
+                .map((cohort) => (
+                  <option key={cohort.id} value={cohort.id}>
+                    {cohort.name}
+                  </option>
+                ))}
+            </select>
+          }
+        />
+      </motion.div>
+
+      {sortedLessons.length === 0 ? (
+        <EmptyState
+          title="No lesson plans found"
+          description="Try adjusting filters, or create a new lesson plan."
+        />
+      ) : (
+        <motion.div variants={itemVariants}>
+          <ListCard>
+            {sortedLessons.map((lesson) => {
+              const objectives = parseObjectives(lesson.objectives);
+              const upcoming = isUpcoming(lesson.scheduled_date);
+              const past = isPastUndelivered(lesson);
+              const tone = statusTone(lesson.status);
+
+              return (
+                <div
+                  key={lesson.id}
+                  className="group flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors"
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'w-[3px] self-stretch rounded-full shrink-0',
+                      upcoming
+                        ? 'bg-blue-400'
+                        : past
+                          ? 'bg-amber-400'
+                          : toneDot[tone]
+                    )}
+                  />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold text-white">{lesson.title}</h3>
-                          {isUpcoming(lesson.scheduled_date) && (
-                            <Badge variant="outline" className="bg-primary/10 text-primary text-xs">
-                              Upcoming
-                            </Badge>
-                          )}
+                    <div className="flex items-baseline justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-[15px] font-medium text-white truncate">
+                            {lesson.title}
+                          </h3>
+                          {upcoming && <Pill tone="blue">Upcoming</Pill>}
+                          {past && <Pill tone="amber">Overdue</Pill>}
+                        </div>
+                        <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                          {getCohortName(lesson.cohort_id)} · {getTutorName(lesson.tutor_id)}
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Badge
-                          variant="outline"
-                          className={`${getStatusColor(lesson.status)} flex items-center gap-1`}
-                        >
-                          {getStatusIcon(lesson.status)}
-                          {getStatusLabel(lesson.status)}
-                        </Badge>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <Pill tone={tone}>{statusLabel(lesson.status)}</Pill>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-11 w-11 touch-manipulation"
+                            <button
+                              className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                              aria-label="Options"
                             >
-                              <MoreVertical className="h-4 w-4" />
-                            </Button>
+                              ⋯
+                            </button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             <DropdownMenuItem
@@ -282,21 +219,17 @@ export function LessonPlansSection() {
                                 })
                               }
                             >
-                              View Plan
+                              View plan
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="h-11 touch-manipulation"
-                              onClick={() =>
-                                toast({ title: 'Edit Plan', description: 'Coming soon.' })
-                              }
+                              onClick={() => toast({ title: 'Edit Plan', description: 'Coming soon.' })}
                             >
-                              Edit Plan
+                              Edit plan
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               className="h-11 touch-manipulation"
-                              onClick={() =>
-                                toast({ title: 'Duplicate', description: 'Coming soon.' })
-                              }
+                              onClick={() => toast({ title: 'Duplicate', description: 'Coming soon.' })}
                             >
                               Duplicate
                             </DropdownMenuItem>
@@ -307,84 +240,53 @@ export function LessonPlansSection() {
                                 toast({ title: 'Marked as Delivered', description: lesson.title });
                               }}
                             >
-                              Mark as Delivered
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => window.print()}
-                            >
-                              Print
+                              Mark as delivered
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
                       </div>
                     </div>
 
-                    {/* Learning Objectives */}
                     {objectives.length > 0 && (
-                      <div className="mt-2">
-                        <p className="text-xs text-white mb-1">Learning Objectives:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {objectives.slice(0, 2).map((obj, i) => (
-                            <Badge key={i} variant="secondary" className="text-xs font-normal">
-                              {obj.length > 40 ? obj.substring(0, 40) + '...' : obj}
-                            </Badge>
-                          ))}
-                          {objectives.length > 2 && (
-                            <Badge variant="secondary" className="text-xs">
-                              +{objectives.length - 2} more
-                            </Badge>
-                          )}
-                        </div>
+                      <div className="mt-3 flex flex-wrap gap-1">
+                        {objectives.slice(0, 3).map((obj, i) => (
+                          <span
+                            key={i}
+                            className="text-[11px] text-white/60 bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
+                          >
+                            {obj.length > 40 ? obj.substring(0, 40) + '…' : obj}
+                          </span>
+                        ))}
+                        {objectives.length > 3 && (
+                          <span className="text-[11px] text-white/40 px-1.5 py-0.5">
+                            +{objectives.length - 3}
+                          </span>
+                        )}
                       </div>
                     )}
 
-                    <div className="flex flex-wrap items-center gap-4 mt-3 text-sm text-white">
-                      <div className="flex items-center gap-1">
-                        <Users className="h-3.5 w-3.5" />
-                        <span>{getCohortName(lesson.cohort_id)}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <Clock className="h-3.5 w-3.5" />
-                        <span>{lesson.duration_minutes ?? 0} mins</span>
-                      </div>
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/50">
+                      <span className="tabular-nums">{lesson.duration_minutes ?? 0} mins</span>
                       {lesson.scheduled_date && (
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3.5 w-3.5" />
-                          <span>
-                            {new Date(lesson.scheduled_date).toLocaleDateString('en-GB', {
-                              weekday: 'short',
-                              day: 'numeric',
-                              month: 'short',
-                            })}
-                          </span>
-                        </div>
+                        <span className="tabular-nums">
+                          {new Date(lesson.scheduled_date).toLocaleDateString('en-GB', {
+                            weekday: 'short',
+                            day: 'numeric',
+                            month: 'short',
+                          })}
+                        </span>
                       )}
-                    </div>
-
-                    <div className="flex items-center justify-between mt-3 pt-3 border-t">
-                      <span className="text-xs text-white">
-                        Tutor: {getTutorName(lesson.tutor_id)}
-                      </span>
-                      <span className="text-xs text-white">
-                        {lesson.resources?.length || 0} resources attached
+                      <span className="tabular-nums">
+                        {lesson.resources?.length || 0} resources
                       </span>
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          );
-        })}
-
-        {sortedLessons.length === 0 && (
-          <Card>
-            <CardContent className="p-8 text-center">
-              <p className="text-white">No lesson plans found matching your criteria.</p>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-    </div>
+              );
+            })}
+          </ListCard>
+        </motion.div>
+      )}
+    </PageFrame>
   );
 }

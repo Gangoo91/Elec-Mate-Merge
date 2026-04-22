@@ -3,19 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import {
-  Award,
-  Clock,
-  CheckCircle2,
-  AlertCircle,
-  ChevronRight,
-  Target,
-  FileCheck,
-  BookOpen,
-  Calendar,
-  Sparkles,
-  TrendingUp,
-} from 'lucide-react';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 
@@ -309,211 +296,259 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
     const nearestEPA = epaStudents[0];
     const readyCount = epaStudents.filter((s) => s.gatewayStatus === 'ready').length;
     const atRiskCount = epaStudents.filter((s) => s.gatewayStatus === 'at_risk').length;
+    const almostCount = epaStudents.filter((s) => s.gatewayStatus === 'almost').length;
 
     return (
-      <Card className="relative overflow-hidden glass-premium hover:border-success/30 transition-all duration-300">
-        <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500" />
-        <div className="absolute -top-8 -right-8 w-24 h-24 bg-green-500/[0.04] rounded-full blur-3xl pointer-events-none" />
-        <CardHeader className="pb-2">
-          <CardTitle className="text-sm flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5">
-                <Award className="h-3.5 w-3.5 text-success" />
+      <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl hover:bg-[hsl(0_0%_14%)] transition-colors">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-green-500/70 via-emerald-400/70 to-green-500/70" />
+        <div className="p-5 sm:p-6">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                EPA Gateway
               </div>
-              <span>EPA Gateway</span>
+              <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">
+                Gateway readiness
+              </h3>
             </div>
-            <span className="text-lg font-bold text-elec-yellow">{epaStudents.length}</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="flex gap-2 mb-3">
-            {readyCount > 0 && (
-              <Badge className={getStatusColor('ready')}>{readyCount} Ready</Badge>
-            )}
-            {atRiskCount > 0 && (
-              <Badge className={getStatusColor('at_risk')}>{atRiskCount} At Risk</Badge>
-            )}
+            <div className="text-right shrink-0">
+              <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-elec-yellow">
+                {epaStudents.length}
+              </div>
+              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/40">
+                tracking
+              </div>
+            </div>
           </div>
-          {nearestEPA && (
-            <div
-              className="flex items-center justify-between p-2 rounded-lg hover:bg-white/5 transition-colors cursor-pointer"
-              onClick={() => onNavigate?.('epatracking')}
-            >
-              <div className="min-w-0">
-                <p className="text-sm font-medium truncate">{nearestEPA.name}</p>
-                <p className="text-xs text-white">
-                  {nearestEPA.daysRemaining} days to EPA
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-lg font-bold text-elec-yellow">{nearestEPA.overallReadiness}%</p>
-                <p className="text-[10px] text-white">ready</p>
-              </div>
+
+          {/* Status pills */}
+          {(readyCount > 0 || almostCount > 0 || atRiskCount > 0) && (
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {readyCount > 0 && (
+                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-green-500/10 text-green-400 border border-green-500/20 tabular-nums">
+                  {readyCount} ready
+                </span>
+              )}
+              {almostCount > 0 && (
+                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 tabular-nums">
+                  {almostCount} almost
+                </span>
+              )}
+              {atRiskCount > 0 && (
+                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-red-500/10 text-red-400 border border-red-500/20 tabular-nums">
+                  {atRiskCount} at risk
+                </span>
+              )}
             </div>
           )}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="w-full mt-2 text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10"
+
+          {/* Nearest student */}
+          {nearestEPA && (
+            <div className="mt-5 pt-4 border-t border-white/[0.06]">
+              <div className="text-[10px] uppercase tracking-[0.14em] text-white/40 mb-2">
+                Nearest EPA
+              </div>
+              <button
+                onClick={() => onNavigate?.('epatracking')}
+                className="w-full flex items-center justify-between gap-3 hover:bg-white/[0.02] transition-colors text-left touch-manipulation -mx-1 px-1 py-1 rounded"
+              >
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-medium text-white truncate">{nearestEPA.name}</div>
+                  <div className="mt-0.5 text-[11px] text-white/50 tabular-nums">
+                    {nearestEPA.daysRemaining} days remaining
+                  </div>
+                </div>
+                <div className="text-right shrink-0">
+                  <div className="text-lg font-semibold tabular-nums text-white">
+                    {nearestEPA.overallReadiness}%
+                  </div>
+                  <div className="text-[10px] text-white/40 uppercase tracking-wider">ready</div>
+                </div>
+              </button>
+            </div>
+          )}
+
+          <button
             onClick={() => onNavigate?.('epatracking')}
+            className="mt-4 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
           >
-            View EPA tracking
-            <ChevronRight className="h-4 w-4 ml-1" />
-          </Button>
-        </CardContent>
-      </Card>
+            View EPA tracking →
+          </button>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className="relative overflow-hidden glass-premium hover:border-success/30 transition-all duration-300">
-      <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-green-500 via-emerald-400 to-green-500" />
-      <div className="absolute -top-8 -right-8 w-24 h-24 bg-green-500/[0.04] rounded-full blur-3xl pointer-events-none" />
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="p-1.5 rounded-xl bg-gradient-to-br from-success/20 to-success/5 border border-success/20 shadow-lg shadow-success/5">
-              <Award className="h-4 w-4 text-success" />
+    <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-green-500/70 via-emerald-400/70 to-green-500/70" />
+      <div className="p-5 sm:p-6">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              EPA Gateway · Gap analysis
             </div>
-            <span>EPA Gateway Countdown</span>
-            <Badge className="bg-elec-yellow/20 text-elec-yellow">
-              <Sparkles className="h-3 w-3 mr-1" />
-              Gap Analysis
-            </Badge>
+            <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+              Gateway countdown
+            </h3>
           </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {/* Student selector if multiple students */}
+        </div>
+
         {epaStudents.length > 1 && !studentId && (
-          <div className="flex gap-2 mb-4 overflow-x-auto hide-scrollbar pb-2">
-            {epaStudents.slice(0, 5).map((student) => (
-              <button
-                key={student.id}
-                onClick={() => setSelectedStudent(student.id)}
-                className={`shrink-0 px-3 py-2 rounded-lg border transition-all ${
-                  selectedStudent === student.id || (!selectedStudent && student === epaStudents[0])
-                    ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-white/10 hover:border-elec-yellow/50'
-                }`}
-              >
-                <p className="text-sm font-medium">{student.name.split(' ')[0]}</p>
-                <p className="text-xs text-white">{student.daysRemaining}d</p>
-              </button>
-            ))}
+          <div className="mt-5 flex gap-1.5 overflow-x-auto hide-scrollbar pb-1">
+            {epaStudents.slice(0, 5).map((student) => {
+              const selected =
+                selectedStudent === student.id ||
+                (!selectedStudent && student === epaStudents[0]);
+              return (
+                <button
+                  key={student.id}
+                  onClick={() => setSelectedStudent(student.id)}
+                  className={`shrink-0 h-11 px-3.5 rounded-full text-[12px] font-medium transition-colors touch-manipulation inline-flex items-center gap-2 ${
+                    selected
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white/70 hover:text-white'
+                  }`}
+                >
+                  {student.name.split(' ')[0]}
+                  <span className={selected ? 'text-black/60' : 'text-white/40'}>
+                    {student.daysRemaining}d
+                  </span>
+                </button>
+              );
+            })}
           </div>
         )}
 
         {selectedStudentData && (
           <>
-            {/* Countdown Header */}
-            <div className="flex items-center justify-between p-4 rounded-lg bg-white/[0.03] border border-white/10 mb-4">
+            {/* Countdown header */}
+            <div className="mt-5 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-5 flex items-center justify-between">
               <div>
-                <h3 className="font-semibold text-lg">{selectedStudentData.name}</h3>
-                <p className="text-sm text-white">{selectedStudentData.cohort}</p>
+                <div className="text-[15px] font-medium text-white">{selectedStudentData.name}</div>
+                <div className="mt-0.5 text-[11.5px] text-white/50">
+                  {selectedStudentData.cohort}
+                </div>
               </div>
               <div className="text-right">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-elec-yellow" />
-                  <span className="text-3xl font-bold text-white">
-                    {selectedStudentData.daysRemaining}
-                  </span>
+                <div className="text-3xl font-semibold tabular-nums text-elec-yellow leading-none">
+                  {selectedStudentData.daysRemaining}
                 </div>
-                <p className="text-xs text-white">days to EPA</p>
+                <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/40">
+                  days to EPA
+                </div>
               </div>
             </div>
 
             {/* Overall Readiness */}
-            <div className="mb-4">
+            <div className="mt-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium">Gateway Readiness</span>
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  Gateway Readiness
+                </div>
                 <div className="flex items-center gap-2">
-                  <Badge className={getStatusColor(selectedStudentData.gatewayStatus)}>
+                  <span
+                    className={`text-[11px] font-medium px-2 py-0.5 rounded-full border tabular-nums ${getStatusColor(selectedStudentData.gatewayStatus)}`}
+                  >
                     {getStatusLabel(selectedStudentData.gatewayStatus)}
-                  </Badge>
-                  <span className="text-lg font-bold">{selectedStudentData.overallReadiness}%</span>
+                  </span>
+                  <span className="text-[15px] font-semibold tabular-nums text-white">
+                    {selectedStudentData.overallReadiness}%
+                  </span>
                 </div>
               </div>
-              <Progress value={selectedStudentData.overallReadiness} className="h-3" />
+              <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-green-400/80 rounded-full transition-all"
+                  style={{ width: `${selectedStudentData.overallReadiness}%` }}
+                />
+              </div>
             </div>
 
-            {/* Requirements Checklist */}
-            <div className="space-y-2 mb-4">
-              <h4 className="text-sm font-medium text-white">Gateway Requirements</h4>
-              {selectedStudentData.requirements.map((req) => {
-                const Icon = getCategoryIcon(req.category);
-                return (
+            {/* Requirements */}
+            <div className="mt-5">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                Gateway Requirements
+              </div>
+              <div className="space-y-2">
+                {selectedStudentData.requirements.map((req) => (
                   <div
                     key={req.id}
-                    className="flex items-center gap-3 p-3 rounded-lg border border-white/10 bg-white/[0.03]"
+                    className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-3"
                   >
-                    <div className={`p-2 rounded-lg ${getStatusColor(req.status)}`}>
-                      <Icon className="h-4 w-4" />
+                    <div className="flex items-baseline justify-between gap-2">
+                      <div className="text-[13px] font-medium text-white truncate">{req.title}</div>
+                      <span className="text-[13px] font-semibold tabular-nums text-white">
+                        {Math.round(req.progress)}%
+                      </span>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium">{req.title}</p>
-                        <span className="text-sm font-bold">{Math.round(req.progress)}%</span>
-                      </div>
-                      <p className="text-xs text-white truncate">{req.description}</p>
-                      <Progress value={req.progress} className="h-1.5 mt-1" />
+                    <div className="mt-0.5 text-[11px] text-white/50 truncate">
+                      {req.description}
+                    </div>
+                    <div className="mt-2 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-elec-yellow/80 rounded-full"
+                        style={{ width: `${req.progress}%` }}
+                      />
                     </div>
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </div>
 
-            {/* Gaps Analysis */}
+            {/* Gaps */}
             {selectedStudentData.gaps.length > 0 && (
-              <div className="mb-4">
-                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-1">
-                  <AlertCircle className="h-4 w-4 text-amber-500" />
-                  Gaps to Address
-                </h4>
-                <div className="space-y-1">
-                  {selectedStudentData.gaps.map((gap, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2 text-sm text-amber-500 bg-amber-500/10 px-3 py-2 rounded-lg"
-                    >
-                      <ChevronRight className="h-3 w-3" />
-                      {gap}
-                    </div>
-                  ))}
+              <div className="mt-5">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
+                  Gaps to address
                 </div>
+                <ul className="space-y-1.5">
+                  {selectedStudentData.gaps.map((gap, idx) => (
+                    <li
+                      key={idx}
+                      className="flex items-start gap-2 text-[12.5px] text-amber-400 bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 leading-relaxed"
+                    >
+                      <span aria-hidden className="text-amber-400 mt-0.5 shrink-0">
+                        →
+                      </span>
+                      {gap}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
 
             {/* AI Recommendations */}
             {selectedStudentData.recommendations.length > 0 && (
-              <div className="border-t border-white/10 pt-4">
-                <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-1">
-                  <Sparkles className="h-4 w-4 text-elec-yellow" />
+              <div className="mt-5 pt-5 border-t border-white/[0.06]">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
                   AI Recommendations
-                </h4>
-                <div className="space-y-1">
-                  {selectedStudentData.recommendations.map((rec, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-sm">
-                      <TrendingUp className="h-3 w-3 text-elec-yellow mt-1 shrink-0" />
-                      {rec}
-                    </div>
-                  ))}
                 </div>
+                <ul className="space-y-1.5">
+                  {selectedStudentData.recommendations.map((rec, idx) => (
+                    <li key={idx} className="flex items-start gap-2 text-[13px] text-white/80">
+                      <span aria-hidden className="text-elec-yellow mt-0.5 shrink-0">
+                        →
+                      </span>
+                      {rec}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
           </>
         )}
 
         {epaStudents.length === 0 && (
-          <div className="text-center py-8 text-white">
-            <Award className="h-12 w-12 mx-auto mb-3 opacity-50" />
-            <p>No students approaching EPA</p>
-            <p className="text-sm mt-1">
-              Students will appear here within 6 months of their planned EPA date
+          <div className="text-center py-10 text-white/50">
+            <div className="text-[14px] font-medium text-white">No students approaching EPA</div>
+            <p className="mt-1 text-[12px] text-white/50 max-w-xs mx-auto">
+              Students will appear here within 6 months of their planned EPA date.
             </p>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
