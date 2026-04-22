@@ -215,7 +215,7 @@ const PlansList = ({ billing }: PlansListProps) => {
             >
               {/* Current Plan Banner */}
               {isCurrentPlan && (
-                <div className="bg-green-500 text-foreground text-[10px] sm:text-xs font-bold py-1.5 px-3 text-center flex items-center justify-center gap-1.5">
+                <div className="bg-green-500 text-white text-[10px] sm:text-xs font-bold py-1.5 px-3 text-center flex items-center justify-center gap-1.5">
                   <Check className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   YOUR CURRENT PLAN
                 </div>
@@ -273,7 +273,7 @@ const PlansList = ({ billing }: PlansListProps) => {
                     {getPlanIcon(plan.name)}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-base sm:text-lg font-bold text-foreground leading-tight">
+                    <h3 className="text-base sm:text-lg font-bold text-white leading-tight">
                       {plan.name}
                     </h3>
                     <p className="text-[11px] sm:text-xs text-white mt-0.5 leading-snug">
@@ -284,7 +284,7 @@ const PlansList = ({ billing }: PlansListProps) => {
 
                 {/* Price */}
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
+                  <span className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                     {displayPrice}
                   </span>
                   {plan.period && <span className="text-sm text-white">{plan.period}</span>}
@@ -334,7 +334,7 @@ const PlansList = ({ billing }: PlansListProps) => {
                       ? 'bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark shadow-md shadow-elec-yellow/20'
                       : isPremium && !isCurrentPlan && !plan.coming
                         ? 'bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white shadow-md shadow-amber-500/20'
-                        : 'bg-white/10 hover:bg-white/15 text-foreground border border-white/20',
+                        : 'bg-white/10 hover:bg-white/15 text-white border border-white/20',
                     isCurrentPlan &&
                       'bg-green-500/20 text-green-400 border-green-500/30 cursor-default shadow-none hover:bg-green-500/20',
                     plan.coming &&

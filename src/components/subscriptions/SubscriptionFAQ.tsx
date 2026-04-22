@@ -59,7 +59,7 @@ const SubscriptionFAQ = () => {
     <div className="space-y-4">
       <div className="flex items-center gap-2">
         <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-        <h2 className="text-lg sm:text-xl font-bold text-foreground">FAQ</h2>
+        <h2 className="text-lg sm:text-xl font-bold text-white">FAQ</h2>
       </div>
 
       <Accordion type="single" collapsible className="space-y-1.5">
@@ -75,7 +75,7 @@ const SubscriptionFAQ = () => {
           >
             <AccordionTrigger
               className={cn(
-                'text-left text-sm text-foreground/90 hover:text-foreground hover:no-underline',
+                'text-left text-sm text-white hover:text-white hover:no-underline',
                 'py-3.5 min-h-[44px] touch-manipulation'
               )}
             >

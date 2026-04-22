@@ -314,7 +314,6 @@ export function BusinessAISalesView() {
 
   return (
     <div className="min-h-screen bg-background text-white pb-[calc(env(safe-area-inset-bottom)+72px)] lg:pb-0">
-      <div className="pt-[env(safe-area-inset-top)]" />
 
       {/* Top nav */}
       <div className="px-4 sm:px-6 pt-3 pb-1 max-w-6xl mx-auto">
@@ -432,7 +431,7 @@ export function BusinessAISalesView() {
           variants={stagger}
           className="max-w-5xl mx-auto px-5 sm:px-8 py-14 sm:py-24 grid gap-12 lg:grid-cols-[1fr_auto] lg:items-center"
         >
-          <motion.div variants={fadeUp} className="space-y-5 order-2 lg:order-1">
+          <motion.div variants={fadeUp} className="space-y-5 order-1 lg:order-1">
             <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-elec-yellow">
               Lives on WhatsApp
             </p>
@@ -447,7 +446,7 @@ export function BusinessAISalesView() {
             </p>
           </motion.div>
 
-          <motion.div variants={fadeUp} className="order-1 lg:order-2 flex justify-center">
+          <motion.div variants={fadeUp} className="order-2 lg:order-2 flex justify-center">
             <PhoneChatMock />
           </motion.div>
         </motion.div>
@@ -952,7 +951,7 @@ function PhoneChatMock() {
       <div className="relative rounded-[52px] p-[9px] bg-gradient-to-b from-zinc-800 via-zinc-900 to-black shadow-[0_60px_120px_-30px_rgba(0,0,0,0.9),0_0_0_1px_rgba(255,255,255,0.08)]">
         <div
           className="relative rounded-[44px] overflow-hidden bg-[#0b1410]"
-          style={{ height: 660 }}
+          style={{ height: 580 }}
         >
           {/* Dynamic Island */}
           <div className="absolute top-[14px] left-1/2 -translate-x-1/2 h-[28px] w-[104px] rounded-full bg-black z-30" />

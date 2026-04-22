@@ -11,7 +11,7 @@ const SupportSection = () => {
           href="mailto:info@elec-mate.com?subject=Subscription%20Support"
           className={cn(
             'inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm touch-manipulation min-h-[44px]',
-            'text-white hover:text-foreground hover:bg-white/[0.04] active:scale-[0.98]',
+            'text-white hover:text-white hover:bg-white/[0.04] active:scale-[0.98]',
             'transition-all duration-200'
           )}
         >
@@ -24,7 +24,7 @@ const SupportSection = () => {
           href="mailto:info@elec-mate.com?subject=Live%20Chat%20Request"
           className={cn(
             'inline-flex items-center gap-2 px-3 py-2 rounded-lg text-sm touch-manipulation min-h-[44px]',
-            'text-white hover:text-foreground hover:bg-white/[0.04] active:scale-[0.98]',
+            'text-white hover:text-white hover:bg-white/[0.04] active:scale-[0.98]',
             'transition-all duration-200'
           )}
         >
