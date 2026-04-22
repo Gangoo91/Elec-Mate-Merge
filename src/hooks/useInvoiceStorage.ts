@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useCallback, useMemo } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Invoice } from '@/types/invoice';
 import { Quote } from '@/types/quote';
 import { toast } from '@/hooks/use-toast';
-import { useAuth } from '@/contexts/AuthContext';
-import { QUERY_KEYS, QUERY_PRESETS } from '@/lib/queryConfig';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 import {
   captureApiError,
@@ -16,9 +13,9 @@ import {
 } from '@/lib/sentry';
 
 export const useInvoiceStorage = () => {
-  const { user } = useAuth();
-  const queryClient = useQueryClient();
-  const queryKey = useMemo(() => [...QUERY_KEYS.INVOICES, user?.id] as const, [user?.id]);
+  const [invoices, setInvoices] = useState<Quote[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   const parseNumber = (value: unknown): number => {
     if (typeof value === 'number') {
@@ -92,15 +89,22 @@ export const useInvoiceStorage = () => {
     []
   );
 
-  const {
-    data: invoices = [],
-    isLoading,
-    dataUpdatedAt,
-    refetch,
-  } = useQuery<Quote[]>({
-    queryKey,
-    queryFn: async () => {
-      if (!user?.id) return [];
+  const fetchInvoices = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (!user) {
+        toast({
+          title: 'Authentication required',
+          description: 'Please sign in to view invoices',
+          variant: 'destructive',
+        });
+        return;
+      }
+
       const { data, error } = await supabase
         .from('quotes')
         .select('*')
@@ -109,85 +113,88 @@ export const useInvoiceStorage = () => {
         .is('deleted_at', null)
         .order('updated_at', { ascending: false });
 
-      if (error) {
-        captureApiError(
-          error instanceof Error ? error : new Error(String(error)),
-          'invoices/fetch',
-          {
-            errorMessage: error instanceof Error ? error.message : String(error),
-          }
-        );
-        toast({
-          title: 'Error loading invoices',
-          description: 'Failed to load invoices. Please try again.',
-          variant: 'destructive',
-        });
-        throw error;
-      }
+      if (error) throw error;
 
-      return (data || []).map(convertDbRowToQuote);
-    },
-    enabled: !!user?.id,
-    ...QUERY_PRESETS.USER_DATA,
-  });
-
-  const fetchInvoices = useCallback(async () => {
-    await refetch();
-  }, [refetch]);
-
-  const lastUpdated = useMemo(
-    () => (dataUpdatedAt ? new Date(dataUpdatedAt) : new Date()),
-    [dataUpdatedAt]
-  );
+      const convertedInvoices = (data || []).map(convertDbRowToQuote);
+      setInvoices(convertedInvoices);
+      setLastUpdated(new Date());
+    } catch (error) {
+      captureApiError(error instanceof Error ? error : new Error(String(error)), 'invoices/fetch', {
+        errorMessage: error instanceof Error ? error.message : String(error),
+      });
+      toast({
+        title: 'Error loading invoices',
+        description: 'Failed to load invoices. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  }, [convertDbRowToQuote]);
 
   useEffect(() => {
-    if (!user?.id) return undefined;
+    fetchInvoices();
 
-    const channel = supabase
-      .channel(`invoice-realtime-${user.id}`)
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'quotes',
-          filter: `user_id=eq.${user.id}`,
-        },
-        (payload) => {
-          const newRecord = payload.new as any;
-          if (newRecord.invoice_raised) {
-            const clientName = newRecord.client_data?.name || 'Client';
-            const total = parseFloat(newRecord.total || 0).toFixed(2);
-            toast({
-              title: 'New Invoice Created',
-              description: `${newRecord.invoice_number || 'Invoice'} for ${clientName} — £${total}`,
-              duration: 5000,
-            });
-            queryClient.invalidateQueries({ queryKey });
+    // Set up real-time subscription for invoice updates (WhatsApp AI creates invoices)
+    const setupRealtimeSubscription = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return null;
+
+      const channel = supabase
+        .channel('invoice-realtime')
+        .on(
+          'postgres_changes',
+          {
+            event: 'INSERT',
+            schema: 'public',
+            table: 'quotes',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            const newRecord = payload.new as any;
+            if (newRecord.invoice_raised) {
+              const clientName = newRecord.client_data?.name || 'Client';
+              const total = parseFloat(newRecord.total || 0).toFixed(2);
+              toast({
+                title: 'New Invoice Created',
+                description: `${newRecord.invoice_number || 'Invoice'} for ${clientName} — £${total}`,
+                duration: 5000,
+              });
+              fetchInvoices();
+            }
           }
-        }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'quotes',
-          filter: `user_id=eq.${user.id}`,
-        },
-        (payload) => {
-          const updatedRecord = payload.new as any;
-          if (updatedRecord.invoice_raised) {
-            queryClient.invalidateQueries({ queryKey });
+        )
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'quotes',
+            filter: `user_id=eq.${user.id}`,
+          },
+          (payload) => {
+            const updatedRecord = payload.new as any;
+            if (updatedRecord.invoice_raised) {
+              fetchInvoices();
+            }
           }
-        }
-      )
-      .subscribe();
+        )
+        .subscribe();
+
+      return channel;
+    };
+
+    let channel: any = null;
+    setupRealtimeSubscription().then((ch) => {
+      channel = ch;
+    });
 
     return () => {
-      supabase.removeChannel(channel);
+      if (channel) supabase.removeChannel(channel);
     };
-  }, [user?.id, queryClient, queryKey]);
+  }, [fetchInvoices]);
 
   const saveInvoice = async (invoice: Partial<Invoice>, retryCount = 0): Promise<boolean> => {
     const MAX_RETRIES = 3;
@@ -417,9 +424,7 @@ export const useInvoiceStorage = () => {
 
       // 5. Return success without refetching (database trigger handles updated_at)
       const savedInvoice = convertDbRowToQuote(updatedQuote);
-      queryClient.setQueryData<Quote[]>(queryKey, (prev) =>
-        prev ? [savedInvoice, ...prev.filter((inv) => inv.id !== savedInvoice.id)] : [savedInvoice]
-      );
+      setInvoices((prev) => [savedInvoice, ...prev.filter((inv) => inv.id !== savedInvoice.id)]);
       trackMilestone('Invoice Saved', {
         invoiceId: updatedQuote.id,
         invoiceNumber: finalInvoiceNumber,
