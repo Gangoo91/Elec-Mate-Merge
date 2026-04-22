@@ -409,13 +409,22 @@ export const EnhancedQuoteItemsStep = ({
   ];
 
   const hourOptions = [
-    { value: '1', label: '1 hour' },
-    { value: '2', label: '2 hours' },
-    { value: '4', label: '4 hours' },
-    { value: '8', label: '8 hours (1 day)' },
-    { value: '16', label: '16 hours (2 days)' },
-    { value: '24', label: '24 hours (3 days)' },
-    { value: '40', label: '40 hours (5 days)' },
+    { value: '0.5', label: '0.5 hr' },
+    { value: '1', label: '1 hr' },
+    { value: '1.5', label: '1.5 hrs' },
+    { value: '2', label: '2 hrs' },
+    { value: '2.5', label: '2.5 hrs' },
+    { value: '3', label: '3 hrs' },
+    { value: '3.5', label: '3.5 hrs' },
+    { value: '4', label: '4 hrs' },
+    { value: '4.5', label: '4.5 hrs' },
+    { value: '5', label: '5 hrs' },
+    { value: '6', label: '6 hrs' },
+    { value: '7.5', label: '7.5 hrs' },
+    { value: '8', label: '1 day' },
+    { value: '16', label: '2 days' },
+    { value: '24', label: '3 days' },
+    { value: '40', label: '5 days' },
   ];
 
   const markupOptions = [
@@ -531,9 +540,31 @@ export const EnhancedQuoteItemsStep = ({
             </div>
 
             {/* Hours */}
-            <div>
-              <label className="text-xs font-medium text-white mb-2 block">Hours</label>
-              <div className="grid grid-cols-3 gap-1.5">
+            <div className="space-y-3">
+              <label className="text-xs font-medium text-white block">Hours (decimals allowed, e.g. 3.5)</label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  placeholder="3.5"
+                  value={newItem.hours > 0 ? newItem.hours : ''}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                      const num = val === '' ? 0 : parseFloat(val);
+                      if (!isNaN(num)) handleHoursChange(num);
+                    }
+                  }}
+                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/40 touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
+                />
+                <span className="text-[13px] font-medium text-white/70">hours</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex-1 h-px bg-white/[0.12]" />
+                <span className="text-[11px] text-white/60 uppercase tracking-wide">or quick pick</span>
+                <div className="flex-1 h-px bg-white/[0.12]" />
+              </div>
+              <div className="grid grid-cols-4 gap-1.5">
                 {hourOptions.map((opt) => {
                   const isSelected = newItem.hours === parseFloat(opt.value);
                   return (

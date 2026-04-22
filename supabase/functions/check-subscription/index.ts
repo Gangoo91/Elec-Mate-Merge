@@ -3,7 +3,8 @@ import { handleError, ValidationError } from '../_shared/errors.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
-import { captureException } from '../_shared/sentry.ts';
+import { captureException, captureMessage } from '../_shared/sentry.ts';
+import { getSubscriptionPeriodEnd } from '../_shared/stripe-helpers.ts';
 import Stripe from 'https://esm.sh/stripe@14.21.0';
 
 serve(async (req) => {
@@ -231,9 +232,11 @@ serve(async (req) => {
           if (orphan.stripe_subscription_id) {
             try {
               const sub = await stripe.subscriptions.retrieve(orphan.stripe_subscription_id);
-              if (sub.current_period_end) {
-                periodEnd = new Date(sub.current_period_end * 1000).toISOString();
-              }
+              const end = getSubscriptionPeriodEnd(sub, logger, {
+                subscriptionId: sub.id,
+                source: 'orphan-reconcile',
+              });
+              if (end) periodEnd = end.toISOString();
             } catch {
               // Non-fatal
             }
@@ -344,6 +347,34 @@ serve(async (req) => {
       subscriptionTier = PRICE_TO_TIER[priceId] || 'electrician';
       logger.info('Determined subscription tier', { priceId, subscriptionTier });
 
+      // Resolve period end from Stripe (handles both legacy root and new items-level field).
+      // Writing it here is belt-and-braces — if the webhook ever misses a renewal,
+      // the next client page-load will self-heal the date.
+      const activeSubPeriodEnd = getSubscriptionPeriodEnd(activeSub, logger, {
+        subscriptionId: activeSub.id,
+        source: 'check-subscription',
+      });
+
+      // Alert if we couldn't determine period end for an active/trialing sub.
+      // This fires on user page-loads, so it's the earliest detector of schema drift.
+      if (!activeSubPeriodEnd) {
+        await captureMessage(
+          'check-subscription: active sub but current_period_end missing',
+          'error',
+          {
+            functionName: 'check-subscription',
+            userId: user.id,
+            email: user.email,
+            extra: {
+              subscriptionId: activeSub.id,
+              customerId,
+              status: activeSub.status,
+            },
+            tags: { error_type: 'stripe_period_end_missing' },
+          }
+        );
+      }
+
       // Update profile in database — persist tier + business_ai_enabled as recovery mechanism
       // Also backfill stripe_customer_id if missing (fixes pay link disconnect)
       const businessAiFlag = BUSINESS_AI_TIERS.has(subscriptionTier);
@@ -357,6 +388,9 @@ serve(async (req) => {
               business_ai_enabled: businessAiFlag,
               stripe_customer_id: customerId,
               onboarding_completed: true,
+              ...(activeSubPeriodEnd
+                ? { subscription_end: activeSubPeriodEnd.toISOString() }
+                : {}),
               updated_at: new Date().toISOString(),
             })
             .eq('id', user.id),

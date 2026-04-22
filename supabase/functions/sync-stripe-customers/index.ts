@@ -9,6 +9,7 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
+import { getSubscriptionPeriodEnd } from '../_shared/stripe-helpers.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -163,7 +164,7 @@ serve(async (req) => {
       const customerName = customer.name || null;
       const priceId = sub.items.data[0]?.price?.id || '';
       const tier = PRICE_TO_TIER[priceId] || 'electrician';
-      const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000) : null;
+      const periodEnd = getSubscriptionPeriodEnd(sub);
 
       // Priority 1: Already linked by stripe_customer_id
       const existing = profileByStripeId.get(customerId);

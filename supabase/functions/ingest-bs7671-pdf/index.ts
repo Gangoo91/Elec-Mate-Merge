@@ -62,6 +62,10 @@ const FACET_PARALLEL = 8;
 const FACET_INPUT_PRICE_PER_M = 0.25;
 const FACET_OUTPUT_PRICE_PER_M = 2.0;
 
+// Table facet extraction — uses vision so stays conservative on parallelism
+const TABLE_FACET_BATCH_DEFAULT = 4;
+const TABLE_FACET_PARALLEL = 4;
+
 // Prompt given to the vision model for each page. Focuses on visual content
 // that plain OCR would miss, so the embedded summary complements (not duplicates)
 // the already-extracted body text. Generous length budget — the AI downstream
@@ -776,6 +780,61 @@ const FACET_SCHEMA = {
   },
 };
 
+// Splits long content into ~500-800 char segments on sentence boundaries.
+// Short chunks (<=800 chars) pass through untouched. Long chunks (GN3/OSG
+// guidance paragraphs, BS7671 section preambles) get broken up so each LLM
+// call sees a right-sized input and returns properly dense facets.
+function splitIntoSegments(content: string, maxSize = 800, minSize = 400): string[] {
+  const trimmed = content.trim();
+  if (trimmed.length <= maxSize) return [trimmed];
+
+  // Prefer splitting on double newlines first (paragraph breaks)
+  const paragraphs = trimmed.split(/\n\s*\n+/);
+  const segments: string[] = [];
+  let current = '';
+
+  const flush = () => {
+    if (current.trim()) segments.push(current.trim());
+    current = '';
+  };
+
+  const pushPiece = (piece: string) => {
+    if (piece.length > maxSize) {
+      // Paragraph itself too big — split on sentences
+      const sentences = piece.split(/(?<=[.!?])\s+/);
+      for (const s of sentences) {
+        if (s.length > maxSize) {
+          // Sentence itself too big (rare) — hard-split on char count
+          for (let i = 0; i < s.length; i += maxSize) {
+            if (current.length + (s.length - i) > maxSize && current.length >= minSize) flush();
+            current += (current ? ' ' : '') + s.slice(i, i + maxSize);
+          }
+        } else {
+          if ((current + ' ' + s).length > maxSize && current.length >= minSize) flush();
+          current = current ? current + ' ' + s : s;
+        }
+      }
+    } else {
+      if ((current + '\n\n' + piece).length > maxSize && current.length >= minSize) flush();
+      current = current ? current + '\n\n' + piece : piece;
+    }
+  };
+
+  for (const p of paragraphs) pushPiece(p.trim());
+  flush();
+  return segments.length > 0 ? segments : [trimmed];
+}
+
+// Density hint the LLM sees — scales with segment length. Over-extracting is
+// the desired bias; under-extraction is the main failure mode.
+function targetFacetRange(contentLength: number): string {
+  if (contentLength < 200) return '4-8 facets';
+  if (contentLength < 500) return '8-15 facets';
+  if (contentLength < 1000) return '15-25 facets';
+  if (contentLength < 1500) return '25-35 facets';
+  return '30-45 facets';
+}
+
 function buildFacetPrompt(params: {
   docType: string;
   editionCode: string;
@@ -785,6 +844,7 @@ function buildFacetPrompt(params: {
   chapter: string | null;
   section: string | null;
   content: string;
+  segmentInfo?: { index: number; total: number };
 }): string {
   const docFull =
     params.docType === 'bs7671'
@@ -806,11 +866,16 @@ function buildFacetPrompt(params: {
     .filter(Boolean)
     .join(' · ');
 
+  const density = targetFacetRange(params.content.length);
+  const segTag = params.segmentInfo
+    ? ` (segment ${params.segmentInfo.index + 1} of ${params.segmentInfo.total})`
+    : '';
+
   return `# DOCUMENT
 ${docFull}
 
 # SOURCE LOCATION
-${loc || '(preamble / un-numbered)'}
+${loc || '(preamble / un-numbered)'}${segTag}
 
 # CONTENT TO DECOMPOSE
 \`\`\`
@@ -823,10 +888,12 @@ self-contained retrieval unit — an electrician, cert validator, or AI
 assistant must be able to retrieve it alone and act on it without reading
 surrounding text.
 
-**Target density: 15-25 facets for a typical regulation, more for longer
-content. Err deliberately on the side of MORE.** A rich intelligence layer
-is the whole point of this exercise — under-extracting is the single biggest
-failure mode.
+**Target density for THIS content (${params.content.length} chars): ${density}.**
+Err deliberately on the side of MORE. A rich intelligence layer is the whole
+point of this exercise — under-extracting is the single biggest failure mode.
+Every distinct requirement, permission, condition, exception, definition,
+numeric limit, test procedure, cross-reference and note must become its own
+facet.
 
 ## DECOMPOSITION RULES
 
@@ -1013,6 +1080,180 @@ PRINCIPLES:
     1_000_000;
   return {
     facets: parsed.facets ?? [],
+    cost_usd,
+    input_tokens,
+    output_tokens,
+  };
+}
+
+// ═════════════════════════════════════════════════════════════════════════
+// Vision-based table facet extraction
+//
+// OCR'd table text in bs7671_tables.raw_text is mostly garbage because
+// tabular content doesn't survive pdftotext. Instead we send the actual page
+// PNG to GPT-5-mini vision and have it READ the table row-by-row directly
+// from the image, producing atomic compliance facts.
+// ═════════════════════════════════════════════════════════════════════════
+
+function buildTableVisionPrompt(params: {
+  docTypeShort: string;
+  editionCode: string;
+  tableNumber: string;
+  title: string | null;
+  rawTextHint: string | null;
+  pageNumber: number;
+}): string {
+  const titleLine = params.title && params.title.length > 2 ? `\nTitle hint (may be noisy OCR): "${params.title}"` : '';
+  const rawHint = params.rawTextHint
+    ? `\n\nRAW OCR TEXT (often garbled — use ONLY as a locating hint, trust the image):\n---\n${params.rawTextHint.slice(0, 400)}\n---`
+    : '';
+
+  return `# TASK
+You are a precision ${params.docTypeShort} table interpreter. This PDF page image
+contains **${params.docTypeShort} ${params.editionCode} — Table ${params.tableNumber}** on page ${params.pageNumber}.${titleLine}${rawHint}
+
+Find Table ${params.tableNumber} on this page and decompose EVERY cell / row / column
+into atomic retrievable compliance facts. Ignore any prose, figures, or other
+tables on the same page.
+
+# EXTRACTION RULES
+
+1. **One facet per cell × dimension intersection.** A table with device types
+   (rows) × ratings (columns) × Zs values (cells) produces ONE FACET PER CELL
+   that fully states every dimension. A 10-row × 4-column table = ~40 facets.
+
+2. **Every facet is SELF-CONTAINED.** Never reference "row X" or "this column".
+   Good: "For a 32A Type B MCB to BS EN 60898 on a TN system, the maximum
+   earth fault loop impedance Zs for 0.4s disconnection = 1.15 Ω (Table ${params.tableNumber})."
+   Bad: "Row 12 col 4 is 1.15."
+
+3. **Include Table ${params.tableNumber} in every facet's primary_topic** so
+   retrieval surfaces this table specifically.
+
+4. **Footnotes, conditions, asterisks, units** get their own facets.
+   e.g. "Values marked * apply only to circuits with overcurrent protection
+   characteristic k·I² ≤ S²·k²" — one facet per condition.
+
+5. **Units matter.** Always include units (Ω, A, mm², °C, ms, V).
+
+6. **Precise vocabulary.** Use exact device terminology (BS 88-3 gG fuse, BS EN
+   60898 Type B MCB, BS EN 61009-1 RCBO Type A, etc). Never paraphrase.
+
+7. **Uncertain values**: if a cell is unreadable in the image, set
+   confidence_score ≤ 0.5 and state the uncertainty in content.
+
+8. **Metadata tags** — every facet MUST populate relevant fields:
+   - \`system_types\` (TN-S, TN-C-S, TN-C, TT, IT) if the row/col implies one
+   - \`equipment_category\` (MCB, RCBO, RCD, fuse, cable, conduit, earthing)
+   - \`protection_method\` (ADS, SELV, PELV, double_insulation, separation)
+   - \`disconnection_time_s\` (0.2, 0.4, 1.0, 5.0) if disconnection is stated
+   - \`keywords\` — all relevant technical terms
+
+9. **Facet type** — use these from the schema enum:
+   - \`acceptance_criterion\` — for data-cell facets (Zs values, k-values, current ratings, voltage drops, disconnection times — anything with a specific compliance value)
+   - \`note\` — for footnote / asterisk / condition-qualifier facets
+   - \`definition\` — for column/row-header clarifications (e.g. "Column 'Ib' means design current of the circuit")
+   - \`condition\` — for "only applies if..." / "where..." / "provided that..." clauses
+   - \`reference\` — for any cross-reference the table points to (e.g. "see Regulation 411.X")
+
+# OUTPUT
+Strict JSON matching the schema. Populate every required field on every facet.
+Density: aim for AT LEAST one facet per visible data cell. Err on the side of
+MORE. Under-extraction is the failure mode we've been fighting.`;
+}
+
+async function extractTableFacetsWithVision(
+  openAiKey: string,
+  imageSignedUrl: string,
+  prompt: string
+): Promise<{
+  facets: FacetOutput[];
+  cost_usd: number;
+  input_tokens: number;
+  output_tokens: number;
+}> {
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${openAiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: FACET_MODEL,
+      max_completion_tokens: 12000,
+      reasoning_effort: 'minimal',
+      messages: [
+        {
+          role: 'system',
+          content: `You are a principal UK electrical compliance expert. You read
+BS 7671, IET GN3 and IET OSG tables row-by-row and convert each cell into
+precise, self-contained compliance facts for a vector+BM25 hybrid RAG system.
+Never hallucinate values. Never paraphrase. Trust the image over garbled OCR.`,
+        },
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: prompt },
+            { type: 'image_url', image_url: { url: imageSignedUrl, detail: 'high' } },
+          ],
+        },
+      ],
+      response_format: {
+        type: 'json_schema',
+        json_schema: {
+          name: 'facet_extraction',
+          strict: true,
+          schema: FACET_SCHEMA,
+        },
+      },
+    }),
+  });
+
+  if (!res.ok) {
+    const t = await res.text();
+    throw new Error(`Table vision extraction failed ${res.status}: ${t.slice(0, 300)}`);
+  }
+  const j = await res.json();
+  const choice = j.choices?.[0];
+  const raw = choice?.message?.content;
+  const refusal = choice?.message?.refusal;
+  const finishReason = choice?.finish_reason;
+
+  let parsed: { facets: FacetOutput[] } = { facets: [] };
+  let parseError: string | null = null;
+  if (raw) {
+    try {
+      parsed = JSON.parse(raw);
+    } catch (e) {
+      parseError = e instanceof Error ? e.message : 'JSON.parse failed';
+    }
+  }
+
+  const input_tokens = j.usage?.prompt_tokens ?? 0;
+  const output_tokens = j.usage?.completion_tokens ?? 0;
+  const cost_usd =
+    (input_tokens * FACET_INPUT_PRICE_PER_M + output_tokens * FACET_OUTPUT_PRICE_PER_M) /
+    1_000_000;
+
+  const facets = parsed.facets ?? [];
+
+  // Diagnostic: if we got zero facets, throw a detailed error so the UI shows WHY
+  if (facets.length === 0) {
+    const detail = [
+      `finish=${finishReason ?? 'unknown'}`,
+      `in=${input_tokens}`,
+      `out=${output_tokens}`,
+      refusal ? `refusal="${refusal.slice(0, 80)}"` : null,
+      parseError ? `parse_err="${parseError.slice(0, 80)}"` : null,
+      raw ? `raw_len=${raw.length} raw_head="${raw.slice(0, 120).replace(/\n/g, ' ')}"` : 'no content',
+    ]
+      .filter(Boolean)
+      .join(' · ');
+    throw new Error(`Vision returned 0 facets (${detail})`);
+  }
+
+  return {
+    facets,
     cost_usd,
     input_tokens,
     output_tokens,
@@ -1689,33 +1930,51 @@ serve(async (req) => {
                 try {
                   const reg = chunk.regulation_id ? regById.get(chunk.regulation_id) : null;
 
-                  // Build prompt + extract facets
-                  const prompt = buildFacetPrompt({
-                    docType: edition.document_type,
-                    editionCode: edition.edition_code,
-                    regNumber: reg?.reg_number ?? null,
-                    regTitle: reg?.title ?? null,
-                    part: reg?.part ?? null,
-                    chapter: reg?.chapter ?? null,
-                    section: reg?.section ?? null,
-                    content: chunk.content,
-                  });
-                  const extraction = await extractFacetsFromChunk(openAiKey, prompt);
-                  totalCostUsd += extraction.cost_usd;
+                  // Split long chunks into 500-800 char segments so each LLM
+                  // call sees a right-sized input. Segments run in parallel
+                  // and all resulting facets get stored under the parent
+                  // chunk_id — retrieval remains reg-level accurate.
+                  const segments = splitIntoSegments(chunk.content);
+                  const extractionResults = await Promise.all(
+                    segments.map((seg, idx) => {
+                      const prompt = buildFacetPrompt({
+                        docType: edition.document_type,
+                        editionCode: edition.edition_code,
+                        regNumber: reg?.reg_number ?? null,
+                        regTitle: reg?.title ?? null,
+                        part: reg?.part ?? null,
+                        chapter: reg?.chapter ?? null,
+                        section: reg?.section ?? null,
+                        content: seg,
+                        segmentInfo:
+                          segments.length > 1
+                            ? { index: idx, total: segments.length }
+                            : undefined,
+                      });
+                      return extractFacetsFromChunk(openAiKey, prompt);
+                    })
+                  );
 
-                  if (extraction.facets.length === 0) {
-                    // Empty response = token-budget exhaustion or schema mismatch.
-                    // Mark as a failure so the audit panel surfaces it, rather than
-                    // silently burning cost and leaving the chunk in pending-limbo.
+                  const allFacets: FacetOutput[] = [];
+                  let segInTokens = 0;
+                  let segOutTokens = 0;
+                  for (const ext of extractionResults) {
+                    totalCostUsd += ext.cost_usd;
+                    segInTokens += ext.input_tokens;
+                    segOutTokens += ext.output_tokens;
+                    allFacets.push(...ext.facets);
+                  }
+
+                  if (allFacets.length === 0) {
                     throw new Error(
-                      `Empty facets (in=${extraction.input_tokens} out=${extraction.output_tokens})`
+                      `Empty facets across ${segments.length} segment(s) (in=${segInTokens} out=${segOutTokens})`
                     );
                   }
 
                   // Build embedding inputs: context_prefix + content
                   const facetRows: Record<string, unknown>[] = [];
                   const embedInputs: string[] = [];
-                  for (const f of extraction.facets) {
+                  for (const f of allFacets) {
                     const contextPrefix = buildContextPrefix({
                       docTypeShort,
                       editionCode: edition.edition_code,
@@ -1819,6 +2078,177 @@ serve(async (req) => {
 
         result = {
           processed: chunksProcessed,
+          facets_created: totalFacetsCreated,
+          cost_usd: Number(totalCostUsd.toFixed(4)),
+          remaining: Math.max(0, Number(remaining)),
+          completed: Number(remaining) <= 0,
+          errors: errors.length > 0 ? errors.slice(0, 5) : undefined,
+        };
+        break;
+      }
+
+      // ─── generate_table_facets_batch ─────────────────────────────────
+      // Vision-based table extraction: sends each table's page PNG to
+      // GPT-5-mini which reads the table directly from the image and
+      // decomposes every cell into atomic compliance facts. Bypasses the
+      // garbled OCR in bs7671_tables.raw_text.
+      case 'generate_table_facets_batch': {
+        const { edition_id, batch_size = TABLE_FACET_BATCH_DEFAULT } = body;
+        if (!edition_id) throw new Error('edition_id required');
+        if (!openAiKey) throw new Error('OPENAI_API_KEY not configured');
+
+        const { data: edition } = await supabaseAdmin
+          .from('bs7671_editions')
+          .select('edition_code, document_type')
+          .eq('id', edition_id)
+          .single();
+        if (!edition) throw new Error('Edition not found');
+
+        const docTypeShort =
+          edition.document_type === 'bs7671'
+            ? 'BS 7671'
+            : edition.document_type === 'gn3'
+              ? 'GN3'
+              : edition.document_type === 'osg'
+                ? 'OSG'
+                : edition.document_type.toUpperCase();
+
+        const { data: pendingTables, error: pendingErr } = await supabaseAdmin.rpc(
+          'get_pending_facet_tables',
+          { p_edition_id: edition_id, p_limit: batch_size }
+        );
+        if (pendingErr) throw pendingErr;
+
+        if (!pendingTables || pendingTables.length === 0) {
+          result = {
+            processed: 0,
+            facets_created: 0,
+            remaining: 0,
+            completed: true,
+            cost_usd: 0,
+          };
+          break;
+        }
+
+        let tablesProcessed = 0;
+        let totalFacetsCreated = 0;
+        let totalCostUsd = 0;
+        const errors: string[] = [];
+
+        const queue = [...pendingTables];
+        const workers: Promise<void>[] = [];
+        for (let w = 0; w < Math.min(TABLE_FACET_PARALLEL, queue.length); w++) {
+          workers.push(
+            (async () => {
+              while (queue.length > 0) {
+                const tbl = queue.shift();
+                if (!tbl) return;
+                try {
+                  // Sign the page image URL for OpenAI vision fetch
+                  const { data: signed, error: signErr } = await supabaseAdmin.storage
+                    .from(PAGE_IMAGES_BUCKET)
+                    .createSignedUrl(tbl.image_path, 900);
+                  if (signErr || !signed?.signedUrl) {
+                    throw new Error(
+                      `Could not sign image URL for table ${tbl.table_number}: ${signErr?.message || 'unknown'}`
+                    );
+                  }
+
+                  const prompt = buildTableVisionPrompt({
+                    docTypeShort,
+                    editionCode: edition.edition_code,
+                    tableNumber: tbl.table_number,
+                    title: tbl.title,
+                    rawTextHint: tbl.raw_text,
+                    pageNumber: tbl.page_number,
+                  });
+
+                  const extraction = await extractTableFacetsWithVision(
+                    openAiKey,
+                    signed.signedUrl,
+                    prompt
+                  );
+                  totalCostUsd += extraction.cost_usd;
+
+                  if (extraction.facets.length === 0) {
+                    throw new Error(
+                      `Empty facets for table ${tbl.table_number} (in=${extraction.input_tokens} out=${extraction.output_tokens})`
+                    );
+                  }
+
+                  const facetRows: Record<string, unknown>[] = [];
+                  const embedInputs: string[] = [];
+                  for (const f of extraction.facets) {
+                    const contextPrefix = `[${docTypeShort}] ${edition.edition_code} · Table ${tbl.table_number} · ${f.facet_type} · ${f.primary_topic}`;
+                    const embedInput = `${contextPrefix}\n\n${f.content}`;
+                    embedInputs.push(embedInput);
+
+                    const hashKey = `${f.facet_type}::${f.primary_topic}::${f.content}`.slice(
+                      0,
+                      2000
+                    );
+                    const hash = await sha256Hex(normaliseForHash(hashKey));
+
+                    facetRows.push({
+                      chunk_id: null,
+                      edition_id: tbl.edition_id,
+                      regulation_id: null,
+                      document_type: edition.document_type,
+                      source_type: 'table',
+                      source_id: tbl.id,
+                      facet_type: f.facet_type,
+                      primary_topic: f.primary_topic,
+                      content: f.content,
+                      context_prefix: contextPrefix,
+                      system_types: f.system_types ?? [],
+                      bs7671_zones: f.bs7671_zones ?? [],
+                      equipment_category: f.equipment_category ?? null,
+                      protection_method: f.protection_method ?? null,
+                      disconnection_time_s: f.disconnection_time_s ?? null,
+                      test_equipment: f.test_equipment ?? [],
+                      keywords: f.keywords ?? [],
+                      confidence_score: f.confidence_score ?? 0.75,
+                      facet_hash: hash,
+                      metadata: {
+                        table_number: tbl.table_number,
+                        page_number: tbl.page_number,
+                      },
+                    });
+                  }
+
+                  const vectors = await embedBatch(openAiKey, embedInputs);
+                  for (let i = 0; i < facetRows.length; i++) {
+                    facetRows[i].embedding = vectors[i];
+                  }
+
+                  const { error: upErr } = await supabaseAdmin
+                    .from('bs7671_facets')
+                    .upsert(facetRows, {
+                      onConflict: 'source_id,facet_hash',
+                      ignoreDuplicates: true,
+                    });
+                  if (upErr) throw upErr;
+
+                  totalFacetsCreated += facetRows.length;
+                  tablesProcessed += 1;
+                } catch (err) {
+                  const msg = err instanceof Error ? err.message : String(err);
+                  console.warn(`[generate_table_facets] table ${tbl.table_number} failed: ${msg}`);
+                  errors.push(`${tbl.table_number}: ${msg.slice(0, 120)}`);
+                }
+              }
+            })()
+          );
+        }
+        await Promise.all(workers);
+
+        const { data: prog } = await supabaseAdmin.rpc('get_table_facet_progress', {
+          p_edition_id: edition_id,
+        });
+        const remaining = prog?.[0]?.tables_remaining ?? 0;
+
+        result = {
+          processed: tablesProcessed,
           facets_created: totalFacetsCreated,
           cost_usd: Number(totalCostUsd.toFixed(4)),
           remaining: Math.max(0, Number(remaining)),

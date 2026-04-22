@@ -404,7 +404,7 @@ export const InvoiceItemsStep = ({
   const selectedCategory = materialCategories.find((c) => c.id === newItem.subcategory);
   const selectedEquipmentCategory = equipmentCategories.find((c) => c.id === newItem.subcategory);
 
-  const hourOptions = [0.5, 1, 1.5, 2, 3, 4, 5, 6, 8, 10, 12, 16, 24, 40];
+  const hourOptions = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 6, 7.5, 8, 10, 12, 16, 24, 40];
 
   return (
     <div className="space-y-4 text-left">
@@ -1054,28 +1054,39 @@ export const InvoiceItemsStep = ({
           <SheetHeader className="p-4 border-b border-white/[0.12]">
             <SheetTitle className="text-white text-left">Select Hours</SheetTitle>
           </SheetHeader>
-          <div className="p-4 space-y-3">
+          <div className="p-4 space-y-4">
             {/* Custom hours input */}
-            <div className="flex items-center gap-3">
-              <label className="text-[12px] text-white uppercase tracking-wide whitespace-nowrap">Custom</label>
-              <input
-                type="text"
-                inputMode="decimal"
-                placeholder="e.g. 2.5"
-                style={darkInputStyle}
-                className="flex-1 h-11 px-3 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[15px] text-white placeholder:text-white/60 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 caret-elec-yellow"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    const val = parseFloat((e.target as HTMLInputElement).value);
+            <div className="space-y-2">
+              <label className="text-[13px] font-medium text-white block">
+                Enter hours (decimals allowed, e.g. 3.5)
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  inputMode="decimal"
+                  placeholder="3.5"
+                  style={darkInputStyle}
+                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      const val = parseFloat((e.target as HTMLInputElement).value);
+                      if (!isNaN(val) && val > 0) handleHoursChange(val);
+                    }
+                  }}
+                  onBlur={(e) => {
+                    const val = parseFloat(e.target.value);
                     if (!isNaN(val) && val > 0) handleHoursChange(val);
-                  }
-                }}
-                onBlur={(e) => {
-                  const val = parseFloat(e.target.value);
-                  if (!isNaN(val) && val > 0) handleHoursChange(val);
-                }}
-              />
-              <span className="text-[12px] text-white">hrs</span>
+                  }}
+                />
+                <span className="text-[13px] font-medium text-white/70">hours</span>
+              </div>
+            </div>
+
+            {/* Divider */}
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-px bg-white/[0.12]" />
+              <span className="text-[11px] text-white/60 uppercase tracking-wide">or pick a common value</span>
+              <div className="flex-1 h-px bg-white/[0.12]" />
             </div>
 
             {/* Preset hour buttons */}

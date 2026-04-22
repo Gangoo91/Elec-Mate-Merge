@@ -19,7 +19,7 @@ export async function sendCheatSheetEmail(
   const resend = new Resend(apiKey);
   const greeting = firstName ? `Hi ${firstName},` : 'Hi mate,';
   const year = new Date().getFullYear();
-  const logoUrl = 'https://elec-mate.com/logo.jpg';
+  const logoUrl = 'https://elec-mate.com/images/elec-mate-logo-512.png';
 
   const emailHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -47,7 +47,7 @@ export async function sendCheatSheetEmail(
           <!-- Header: logo only, no badge -->
           <tr>
             <td style="padding: 40px 36px 12px;" class="mobile-padding">
-              <img src="${logoUrl}" alt="Elec-Mate" width="56" height="56" style="display: block; border-radius: 12px;">
+              <img src="${logoUrl}" alt="Elec-Mate" width="120" height="120" style="display: block; border-radius: 12px;">
             </td>
           </tr>
 
@@ -122,7 +122,7 @@ export async function sendCheatSheetEmail(
               <div style="padding-top: 18px; border-top: 1px solid #1f1f1f;">
                 <p style="margin: 0; font-size: 13px; color: #9ca3af; line-height: 1.6;">
                   <strong style="color: #d1d5db;">P.S.</strong>&nbsp; We're updating every certificate, AI specialist and calculator in Elec-Mate for A4:2026. If you fancy a look, there's a
-                  <a href="https://elec-mate.com/auth/signup?utm_source=email&utm_medium=cheatsheet&utm_campaign=lead_magnet" style="color: #facc15; text-decoration: none; border-bottom: 1px solid #facc15;">free seven-day trial</a> — otherwise, good luck out there.
+                  <a href="https://elec-mate.com/auth/signup?utm_source=email&utm_medium=cheatsheet&utm_campaign=lead_magnet" style="color: #facc15; text-decoration: none; border-bottom: 1px solid #facc15;">7-day free trial</a> — card needed, no charge until day 8, cancel in seconds any time. Otherwise, good luck out there.
                 </p>
               </div>
             </td>

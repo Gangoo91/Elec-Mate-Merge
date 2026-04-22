@@ -10,9 +10,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { Resend } from '../_shared/mailer.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
-import { captureException } from '../_shared/sentry.ts';
+import { captureException, captureMessage } from '../_shared/sentry.ts';
 import { fireCapiEvent } from '../_shared/meta-capi.ts';
 import { capturePostHogEvent } from '../_shared/posthog-server.ts';
+import { getSubscriptionPeriodEnd } from '../_shared/stripe-helpers.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -788,10 +789,29 @@ serve(async (req) => {
         const priceId = subscription.items.data[0]?.price?.id;
         const tier = priceId ? PRICE_TO_TIER[priceId] || 'unknown' : null;
 
-        // Get period end
-        const periodEnd = subscription.current_period_end
-          ? new Date(subscription.current_period_end * 1000)
-          : null;
+        // Get period end (handles both legacy root and new items-level field)
+        const periodEnd = getSubscriptionPeriodEnd(subscription, logger, {
+          subscriptionId: subscription.id,
+          eventType: event.type,
+        });
+
+        // Alert if we can't determine period end for an active sub — signals Stripe schema drift
+        if (!periodEnd && ['active', 'trialing'].includes(subscription.status)) {
+          await captureMessage(
+            'Stripe active subscription has no current_period_end — schema may have changed',
+            'error',
+            {
+              functionName: 'stripe-subscription-webhook',
+              extra: {
+                subscriptionId: subscription.id,
+                eventType: event.type,
+                customerId,
+                status: subscription.status,
+              },
+              tags: { error_type: 'stripe_period_end_missing' },
+            }
+          );
+        }
 
         // Pass setOnboardingCompleted=true for new subscriptions to mark signup flow as done
         const isNewSubscription = event.type === 'customer.subscription.created';
@@ -1282,9 +1302,29 @@ serve(async (req) => {
         const subscription = await stripe.subscriptions.retrieve(invoice.subscription as string);
         const priceId = subscription.items.data[0]?.price?.id;
         const tier = priceId ? PRICE_TO_TIER[priceId] || 'unknown' : null;
-        const periodEnd = subscription.current_period_end
-          ? new Date(subscription.current_period_end * 1000)
-          : null;
+        const periodEnd = getSubscriptionPeriodEnd(subscription, logger, {
+          subscriptionId: subscription.id,
+          invoiceId: invoice.id,
+          eventType: 'invoice.paid',
+        });
+
+        // Alert on missing period end — invoice.paid is the renewal path, critical to catch
+        if (!periodEnd && ['active', 'trialing'].includes(subscription.status)) {
+          await captureMessage(
+            'invoice.paid: active sub has no current_period_end — renewals will leak',
+            'error',
+            {
+              functionName: 'stripe-subscription-webhook',
+              extra: {
+                subscriptionId: subscription.id,
+                invoiceId: invoice.id,
+                customerId,
+                status: subscription.status,
+              },
+              tags: { error_type: 'stripe_period_end_missing' },
+            }
+          );
+        }
 
         await updateSubscriptionStatus(userId, true, customerId, tier, periodEnd);
 
@@ -1555,7 +1595,11 @@ serve(async (req) => {
           const sub = await stripe.subscriptions.retrieve(sessionSubId);
           const priceId = sub.items.data[0]?.price?.id;
           const tier = priceId ? PRICE_TO_TIER[priceId] || 'electrician' : 'electrician';
-          const periodEnd = sub.current_period_end ? new Date(sub.current_period_end * 1000) : null;
+          const periodEnd = getSubscriptionPeriodEnd(sub, logger, {
+            subscriptionId: sub.id,
+            sessionId: session.id,
+            eventType: 'checkout.session.completed',
+          });
 
           await updateSubscriptionStatus(
             linkedUserId,
