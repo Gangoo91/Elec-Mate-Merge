@@ -271,6 +271,11 @@ verify_jwt = false
 verify_jwt = false
 
 
+# Stripe Connect Webhook (invoice payments — uses Stripe signature verification, not JWT)
+[functions.stripe-connect-webhook]
+verify_jwt = false
+
+
 # Stripe Checkout (handles auth internally for better error handling)
 [functions.create-checkout]
 verify_jwt = false
