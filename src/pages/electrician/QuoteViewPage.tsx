@@ -201,9 +201,38 @@ const QuoteViewPage = () => {
     finally { setIsSendingReminder(false); }
   };
 
-  const handleDuplicate = async () => {
+  const handleDuplicate = () => {
     if (!quote) return;
-    navigate(`/electrician/quote-builder/create?duplicate=${quote.id}`);
+    // Strip identity/status fields so the wizard starts fresh — same pattern as QuoteBuilderEdit
+    const {
+      id: _id,
+      quoteNumber: _qn,
+      createdAt: _ca,
+      updatedAt: _ua,
+      accepted_at: _aa,
+      accepted_by_name: _abn,
+      accepted_by_email: _abe,
+      acceptance_status: _as,
+      acceptance_method: _am,
+      invoice_raised: _ir,
+      invoice_number: _in,
+      invoice_status: _is,
+      invoice_paid_at: _ipa,
+      pdf_document_id: _pdi,
+      docusign_envelope_id: _dei,
+      docusign_status: _ds,
+      external_invoice_id: _eii,
+      external_invoice_provider: _eip,
+      ...rest
+    } = quote;
+    const duplicate: Partial<typeof quote> = {
+      ...rest,
+      status: 'draft',
+      acceptance_status: 'pending',
+    };
+    navigate('/electrician/quote-builder/create', {
+      state: { duplicateFrom: duplicate, duplicateSourceNumber: quote.quoteNumber },
+    });
     toast({ title: 'Duplicating quote', description: 'Edit the copy and save as new' });
   };
 
