@@ -336,6 +336,12 @@ export function useNativePushNotifications() {
   // sheet opens immediately after a successful sign-in, bridging the gap
   // between push tap → login → share-the-link moment.
   useEffect(() => {
+    // Pending intents are only ever written by native push notification handlers,
+    // so this entire effect is a no-op on web. Skip it to avoid the extra
+    // supabase.auth.getUser() network call and onAuthStateChange listener that
+    // were causing a race condition / token refresh loop on Firefox.
+    if (!isNative) return;
+
     const consumePendingIntent = async (userId: string) => {
       let raw: string | null = null;
       try {
