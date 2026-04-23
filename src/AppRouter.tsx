@@ -107,6 +107,7 @@ const CustomerDetailPage = lazy(() => import('@/pages/CustomerDetailPage'));
 const CertificateExpiryPage = lazy(() => import('@/pages/CertificateExpiryPage'));
 const EmployerDashboard = lazy(() => import('@/pages/employer/EmployerDashboard'));
 const CollegeDashboard = lazy(() => import('@/pages/college/CollegeDashboard'));
+const LtiHandoff = lazy(() => import('@/pages/LtiHandoff'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('@/pages/legal/TermsOfService'));
@@ -1267,6 +1268,19 @@ const AppRouter = () => {
           element={<Navigate to="/apprentice/rights-and-pay" replace />}
         />
 
+        {/* Checkout Trial — standalone, no Layout/sidebar so the user cannot
+            escape to the rest of the app without completing the purchase. */}
+        <Route
+          path="/checkout-trial"
+          element={
+            <ProtectedRoute>
+              <LazyRoute>
+                <CheckoutTrial />
+              </LazyRoute>
+            </ProtectedRoute>
+          }
+        />
+
         {/* Main Protected Routes */}
         <Route
           path="/"
@@ -1276,14 +1290,6 @@ const AppRouter = () => {
             </ProtectedRoute>
           }
         >
-          <Route
-            path="checkout-trial"
-            element={
-              <LazyRoute>
-                <CheckoutTrial />
-              </LazyRoute>
-            }
-          />
           <Route
             path="dashboard"
             element={
@@ -1842,6 +1848,16 @@ const AppRouter = () => {
                 <CollegeGuard>
                   <CollegeDashboard />
                 </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* LTI 1.3 launch handoff — breaks out of LMS iframe then redirects to magic link */}
+          <Route
+            path="lti/handoff"
+            element={
+              <LazyRoute>
+                <LtiHandoff />
               </LazyRoute>
             }
           />

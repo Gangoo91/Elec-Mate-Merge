@@ -363,7 +363,7 @@ const Subscriptions = () => {
       <div className="px-4 sm:px-6 max-w-6xl mx-auto pb-24 space-y-10 sm:space-y-14">
         {/* Cancelled return */}
         {wasCancelled && (
-          <p className="text-[13px] text-white/80 border-l-2 border-yellow-500/60 pl-3 py-1">
+          <p className="text-[13px] text-white border-l-2 border-yellow-500/60 pl-3 py-1">
             No worries — your trial is still here. Pick a plan below when you're ready.
           </p>
         )}
@@ -374,7 +374,7 @@ const Subscriptions = () => {
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(250,204,21,0.08),transparent_55%)] pointer-events-none" />
             <div className="relative p-6 sm:p-7">
               <div className="flex items-center gap-2 mb-4">
-                <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/50">
+                <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
                   Your subscription
                 </span>
                 <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-green-500/15 border border-green-500/30">
@@ -391,7 +391,7 @@ const Subscriptions = () => {
                     {planDisplayName}
                   </h2>
                   {getRenewalDate() && (
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Next billing{' '}
                       <span className="text-white font-medium">{getRenewalDate()}</span>
                     </p>
@@ -426,12 +426,12 @@ const Subscriptions = () => {
 
         {/* Trial / expired pills */}
         {!isSubscribed && isTrialActive && (
-          <p className="text-[13px] text-white/80 border-l-2 border-amber-500/60 pl-3 py-1">
+          <p className="text-[13px] text-white border-l-2 border-amber-500/60 pl-3 py-1">
             Trial — {getDaysRemaining()} days left. Choose a plan to keep your access.
           </p>
         )}
         {!isSubscribed && !isTrialActive && trialEndsAt && (
-          <p className="text-[13px] text-white/80 border-l-2 border-red-500/60 pl-3 py-1">
+          <p className="text-[13px] text-white border-l-2 border-red-500/60 pl-3 py-1">
             Trial expired. Subscribe below to unlock all features.
           </p>
         )}
@@ -440,7 +440,7 @@ const Subscriptions = () => {
         <header className="text-center space-y-4 pt-4 sm:pt-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03]">
             <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow animate-pulse" />
-            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/70">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white">
               Pricing
             </span>
           </div>
@@ -451,16 +451,16 @@ const Subscriptions = () => {
               of your trade.
             </span>
           </h1>
-          <p className="text-base sm:text-lg text-white/60 max-w-xl mx-auto">
-            From first-year apprentice to running the whole firm. Free 7-day trial on every
-            plan — no card required.
+          <p className="text-base sm:text-lg text-white max-w-xl mx-auto">
+            From first-year apprentice to running the whole firm. Free 7-day trial on every plan —
+            no card required.
           </p>
         </header>
 
         {/* Error (RevenueCat) */}
         {errorMessage && (
           <div className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3">
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               {errorMessage.includes('cancelled') ? 'Purchase cancelled.' : 'Unable to load plans.'}
             </p>
             <Button
@@ -483,8 +483,8 @@ const Subscriptions = () => {
                 'px-5 py-2 text-sm font-semibold rounded-full transition-all duration-200',
                 'min-h-[40px] touch-manipulation active:scale-[0.98]',
                 billing === 'monthly'
-                  ? 'bg-white text-black shadow-sm'
-                  : 'text-white/70 hover:text-white'
+                  ? 'bg-elec-yellow text-black shadow-sm'
+                  : 'text-white hover:text-white'
               )}
             >
               Monthly
@@ -495,8 +495,8 @@ const Subscriptions = () => {
                 'flex items-center gap-2 px-5 py-2 text-sm font-semibold rounded-full transition-all duration-200',
                 'min-h-[40px] touch-manipulation active:scale-[0.98]',
                 billing === 'yearly'
-                  ? 'bg-white text-black shadow-sm'
-                  : 'text-white/70 hover:text-white'
+                  ? 'bg-elec-yellow text-black shadow-sm'
+                  : 'text-white hover:text-white'
               )}
             >
               Annual
@@ -515,7 +515,10 @@ const Subscriptions = () => {
         </div>
 
         {/* Row 1: Apprentice · Electrician · Mate */}
-        <section id="plans" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch scroll-mt-16">
+        <section
+          id="plans"
+          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 items-stretch scroll-mt-16"
+        >
           {rowOne.map((plan) => (
             <PlanCard
               key={plan.id}
@@ -557,7 +560,7 @@ const Subscriptions = () => {
         {/* Native IAP disclosure */}
         {isNative && (
           <section className="text-center space-y-2">
-            <p className="text-[11px] text-white/70 leading-relaxed max-w-md mx-auto">
+            <p className="text-[11px] text-white leading-relaxed max-w-md mx-auto">
               Payment will be charged to your{' '}
               {Capacitor.getPlatform() === 'ios' ? 'Apple ID' : 'Google account'} at confirmation of
               purchase. Subscription automatically renews unless cancelled at least 24 hours before
@@ -594,7 +597,7 @@ const Subscriptions = () => {
         {/* Trust strip */}
         <div className="grid grid-cols-3 gap-px rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden">
           <div className="bg-background p-4 text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-white/50 mb-1">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1">
               Secure
             </p>
             <p className="text-[13px] font-medium text-white leading-tight">
@@ -606,15 +609,13 @@ const Subscriptions = () => {
             </p>
           </div>
           <div className="bg-background p-4 text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-white/50 mb-1">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1">
               Try it
             </p>
-            <p className="text-[13px] font-medium text-white leading-tight">
-              7-day free trial
-            </p>
+            <p className="text-[13px] font-medium text-white leading-tight">7-day free trial</p>
           </div>
           <div className="bg-background p-4 text-center">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-white/50 mb-1">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-white mb-1">
               Flexible
             </p>
             <p className="text-[13px] font-medium text-white leading-tight">Cancel anytime</p>
@@ -628,7 +629,7 @@ const Subscriptions = () => {
               variant="ghost"
               onClick={handleRestore}
               disabled={isPurchasing}
-              className="text-sm text-white/70 hover:text-white hover:bg-white/5 h-11 touch-manipulation"
+              className="text-sm text-white hover:text-white hover:bg-white/5 h-11 touch-manipulation"
             >
               {isPurchasing ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Restore purchases'}
             </Button>
@@ -658,7 +659,7 @@ const Subscriptions = () => {
               <SheetTitle className="text-3xl font-bold tracking-[-0.02em] text-white leading-tight">
                 Your mobile number.
               </SheetTitle>
-              <SheetDescription className="text-white/85 text-base leading-relaxed">
+              <SheetDescription className="text-white text-base leading-relaxed">
                 Mate lives on WhatsApp, so we need your number to set up your account when your
                 invite lands.
               </SheetDescription>
@@ -668,7 +669,7 @@ const Subscriptions = () => {
               <div>
                 <label
                   htmlFor="subs-mate-phone"
-                  className="block text-[11px] font-bold uppercase tracking-[0.14em] text-white/70 mb-2"
+                  className="block text-[11px] font-bold uppercase tracking-[0.14em] text-white mb-2"
                 >
                   UK mobile
                 </label>
@@ -719,7 +720,7 @@ const Subscriptions = () => {
                 )}
               </Button>
 
-              <p className="text-[12px] text-white/60 text-center leading-relaxed">
+              <p className="text-[12px] text-white text-center leading-relaxed">
                 We&apos;ll only use this to activate Mate on WhatsApp. Unsubscribe anytime.
               </p>
             </div>
@@ -806,31 +807,34 @@ const PlanCard = ({
           ) : null}
         </div>
 
-        {/* Price — big, bold */}
-        <div className="mb-2">
+        {/* Price — fixed height so all cards align regardless of whether
+            the tier shows a numeric price or "Pricing on request" */}
+        <div className="mb-2 flex items-end min-h-[3.75rem] sm:min-h-[4.25rem]">
           {showBigPrice ? (
             <div className="flex items-baseline gap-1.5">
               <span className="text-5xl sm:text-[56px] font-extrabold tracking-tight text-white leading-none">
                 {priceMain}
               </span>
               {plan.period && (
-                <span className="text-base text-white/50 font-medium">{plan.period}</span>
+                <span className="text-base text-white font-medium">{plan.period}</span>
               )}
             </div>
           ) : (
-            <div className="text-2xl sm:text-3xl font-bold text-white/90 leading-tight">
+            <div className="text-3xl sm:text-[40px] font-extrabold tracking-tight text-white leading-none">
               {plan.price}
             </div>
           )}
         </div>
 
-        {/* Savings line (annual) */}
-        {plan.savings && (
-          <p className="text-xs font-semibold text-green-400 mb-4">{plan.savings}</p>
-        )}
+        {/* Savings line — reserve a constant row even when blank */}
+        <p className="text-xs font-semibold text-green-400 mb-4 min-h-[1rem]">
+          {plan.savings ?? '\u00A0'}
+        </p>
 
-        {/* Description */}
-        <p className="text-sm text-white/60 leading-relaxed mb-6">{plan.description}</p>
+        {/* Description — fixed height so CTA aligns across cards */}
+        <p className="text-sm text-white leading-relaxed mb-6 min-h-[3.25rem] sm:min-h-[3.5rem]">
+          {plan.description}
+        </p>
 
         {/* CTA — placed before feature list so buyers see it first */}
         <div className="mb-6">
@@ -844,7 +848,7 @@ const PlanCard = ({
           ) : plan.pricingOnRequest ? (
             <Button
               onClick={() => onCollegeContact(plan.contactEmail || 'founder@elec-mate.com')}
-              className="w-full h-12 text-sm font-bold rounded-xl bg-white text-black hover:bg-white/90 active:scale-[0.98] touch-manipulation shadow-sm"
+              className="w-full h-12 text-sm font-bold rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation shadow-[0_8px_24px_-8px_rgba(250,204,21,0.5)]"
             >
               {plan.ctaLabel || 'Get in touch'}
             </Button>
@@ -870,16 +874,14 @@ const PlanCard = ({
           ) : (
             <Button
               onClick={() =>
-                isNative
-                  ? onNativePurchase(plan.id, plan.name)
-                  : onSubscribe(plan.id, plan.priceId)
+                isNative ? onNativePurchase(plan.id, plan.name) : onSubscribe(plan.id, plan.priceId)
               }
               disabled={isLoading}
               className={cn(
-                'w-full h-12 text-sm font-bold rounded-xl active:scale-[0.98] touch-manipulation transition-all',
+                'w-full h-12 text-sm font-bold rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black active:scale-[0.98] touch-manipulation transition-all',
                 plan.popular
-                  ? 'bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-[0_8px_24px_-8px_rgba(250,204,21,0.6)]'
-                  : 'bg-white text-black hover:bg-white/90 shadow-sm'
+                  ? 'shadow-[0_10px_28px_-8px_rgba(250,204,21,0.7)]'
+                  : 'shadow-[0_8px_24px_-8px_rgba(250,204,21,0.45)]'
               )}
             >
               {isLoading ? (
@@ -895,14 +897,14 @@ const PlanCard = ({
 
         {/* Inheritance hint */}
         {plan.inheritsFrom && (
-          <p className="text-xs font-semibold text-white/50 mb-3 flex items-center gap-2">
+          <p className="text-xs font-semibold text-white mb-3 flex items-center gap-2">
             <span className="h-px flex-1 bg-white/10" />
             Everything in {plan.inheritsFrom}, plus
             <span className="h-px flex-1 bg-white/10" />
           </p>
         )}
         {!plan.inheritsFrom && (
-          <p className="text-xs font-semibold text-white/50 mb-3 flex items-center gap-2">
+          <p className="text-xs font-semibold text-white mb-3 flex items-center gap-2">
             <span className="h-px flex-1 bg-white/10" />
             What's included
             <span className="h-px flex-1 bg-white/10" />
@@ -914,15 +916,12 @@ const PlanCard = ({
           {plan.featureGroups && plan.featureGroups.length > 0 ? (
             plan.featureGroups.map((group, gi) => (
               <div key={gi} className="space-y-2">
-                <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-white/80">
+                <p className="text-[11px] font-bold uppercase tracking-[0.1em] text-white">
                   {group.heading}
                 </p>
                 <ul className="space-y-1.5">
                   {group.items.map((item, ii) => (
-                    <li
-                      key={ii}
-                      className="text-[13px] text-white/75 leading-relaxed"
-                    >
+                    <li key={ii} className="text-[13px] text-white leading-relaxed">
                       {item}
                     </li>
                   ))}
@@ -932,7 +931,7 @@ const PlanCard = ({
           ) : (
             <ul className="space-y-1.5">
               {plan.features.map((item, i) => (
-                <li key={i} className="text-[13px] text-white/75 leading-relaxed">
+                <li key={i} className="text-[13px] text-white leading-relaxed">
                   {item}
                 </li>
               ))}

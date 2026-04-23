@@ -55,7 +55,6 @@ const CheckoutTrial = () => {
   const navigate = useNavigate();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [hasAttempted, setHasAttempted] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
   const [isRetrying, setIsRetrying] = useState(false);
   const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -244,6 +243,11 @@ const CheckoutTrial = () => {
     user?.id,
   ]);
 
+  // Auth / subscription guards only. The redirect to Stripe no longer fires
+  // on mount — users now have to click the CTA to continue, so they see the
+  // plan summary, trial terms and price on our side first. (ELE-804 follow-up:
+  // web users were being auto-bounced to Stripe and bouncing at card entry
+  // because the price landed cold.)
   useEffect(() => {
     if (!user) {
       navigate('/auth/signin');
@@ -252,16 +256,8 @@ const CheckoutTrial = () => {
     if (!profile) return;
     if (profile.subscribed || profile.free_access_granted) {
       navigate('/dashboard');
-      return;
     }
-
-    if (!hasAttempted) {
-      setHasAttempted(true);
-      if (!isNative) {
-        startCheckout();
-      }
-    }
-  }, [hasAttempted, isNative, navigate, profile, startCheckout, user]);
+  }, [navigate, profile, user]);
 
   const handleSignOut = async () => {
     if (retryTimerRef.current) clearTimeout(retryTimerRef.current);

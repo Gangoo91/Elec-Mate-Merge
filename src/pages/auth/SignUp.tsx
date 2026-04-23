@@ -22,12 +22,17 @@ import { storageSetSync, storageGetSync, storageRemoveSync } from '@/utils/stora
 import { cn } from '@/lib/utils';
 import { addBreadcrumb } from '@/lib/sentry';
 import { isPasswordBreached } from '@/utils/passwordCheck';
-import { trackLead, trackCompleteRegistration } from '@/lib/marketing-pixels';
+import {
+  trackLead,
+  trackCompleteRegistration,
+  trackInitiateCheckout,
+} from '@/lib/marketing-pixels';
 import {
   persistAttributionToProfile,
   fireServerCapi,
   getStoredAttribution,
 } from '@/lib/attribution';
+import { Capacitor } from '@capacitor/core';
 
 const PASSWORD_REQUIREMENTS = [
   { id: 'length', label: '8+', test: (p: string) => p.length >= 8 },
@@ -53,6 +58,10 @@ const ROLE_OPTIONS = [
       'AI tools and calculators',
       'Job tracking and study tools',
     ],
+    pricing: {
+      web: { monthly: '£12.99', yearly: '£129.99' },
+      inApp: { monthly: '£14.99', yearly: '£149.99' },
+    },
   },
   {
     value: 'apprentice',
@@ -65,6 +74,10 @@ const ROLE_OPTIONS = [
       'Progress tracking and revision tools',
       'Calculators and study resources',
     ],
+    pricing: {
+      web: { monthly: '£5.99', yearly: '£59.99' },
+      inApp: { monthly: '£6.99', yearly: '£69.99' },
+    },
   },
 ];
 
@@ -495,8 +508,69 @@ const SignUp = () => {
         storageSetSync('elec-mate-checkout-planId', rp.planId);
         storageSetSync('elec-mate-checkout-priceId', rp.priceId);
       }
-      storageRemoveSync('elec-mate-offer-code');
       storageRemoveSync('elec-mate-onboarding-data');
+
+      // Native (iOS / Android) still needs the CheckoutTrial interstitial to
+      // trigger the RevenueCat in-app purchase flow. Web users go straight to
+      // Stripe Checkout — no interstitial, no sidebar bypass.
+      const isNative = Capacitor.isNativePlatform();
+      if (!isNative && rp) {
+        try {
+          const offerCode = storageGetSync('elec-mate-offer-code');
+          const referralCode = storageGetSync('elec-mate-referral-code');
+          const { data: checkoutData, error: checkoutErr } = await supabase.functions.invoke(
+            'create-checkout',
+            {
+              body: {
+                priceId: rp.priceId,
+                mode: 'subscription',
+                planId: rp.planId,
+                offerCode,
+                referralCode,
+              },
+            }
+          );
+          if (checkoutErr) throw new Error(checkoutErr.message);
+          if (checkoutData?.url) {
+            const checkoutValue = rp.planId.startsWith('apprentice') ? 5.99 : 12.99;
+            const eventId = trackInitiateCheckout({
+              value: checkoutValue,
+              currency: 'GBP',
+              contentName: profileForm.role,
+              contentIds: [rp.priceId],
+            });
+            fireServerCapi({
+              event_name: 'InitiateCheckout',
+              event_id: eventId,
+              email,
+              user_id: userId,
+              value: checkoutValue,
+              currency: 'GBP',
+              content_name: profileForm.role,
+            });
+            if (offerCode) storageRemoveSync('elec-mate-offer-code');
+            if (referralCode) storageRemoveSync('elec-mate-referral-code');
+            window.location.replace(checkoutData.url);
+            return;
+          }
+          throw new Error('No checkout URL returned');
+        } catch (checkoutStartErr) {
+          // Fallback: if Stripe session creation fails, fall back to the
+          // CheckoutTrial page so the user has a retry surface.
+          storageRemoveSync('elec-mate-offer-code');
+          navigate('/checkout-trial', {
+            state: {
+              error:
+                checkoutStartErr instanceof Error
+                  ? checkoutStartErr.message
+                  : 'Could not start checkout',
+            },
+          });
+          return;
+        }
+      }
+
+      storageRemoveSync('elec-mate-offer-code');
       navigate('/checkout-trial');
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -862,6 +936,56 @@ const SignUp = () => {
                                 </div>
                               ))}
                             </div>
+
+                            {/* Pricing — free trial + two tracks */}
+                            <div
+                              className={cn(
+                                'mt-4 rounded-2xl border px-4 py-3.5 space-y-2.5',
+                                selected
+                                  ? 'border-yellow-400/30 bg-yellow-400/[0.06]'
+                                  : 'border-white/[0.08] bg-white/[0.02]'
+                              )}
+                            >
+                              <div className="flex items-center gap-2">
+                                <Gift className="h-4 w-4 text-yellow-400 flex-shrink-0" />
+                                <span className="text-[13px] font-semibold text-white">
+                                  Free for 7 days · No card required
+                                </span>
+                              </div>
+                              <div className="grid grid-cols-2 gap-2">
+                                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2">
+                                  <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+                                    Web
+                                  </div>
+                                  <div className="mt-0.5 flex items-baseline gap-1">
+                                    <span className="text-[15px] font-bold text-white tabular-nums">
+                                      {option.pricing.web.monthly}
+                                    </span>
+                                    <span className="text-[11px] text-white">/mo</span>
+                                  </div>
+                                  <div className="text-[10.5px] text-white">
+                                    or {option.pricing.web.yearly}/yr
+                                  </div>
+                                </div>
+                                <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] px-3 py-2">
+                                  <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
+                                    In-app
+                                  </div>
+                                  <div className="mt-0.5 flex items-baseline gap-1">
+                                    <span className="text-[15px] font-bold text-white tabular-nums">
+                                      {option.pricing.inApp.monthly}
+                                    </span>
+                                    <span className="text-[11px] text-white">/mo</span>
+                                  </div>
+                                  <div className="text-[10.5px] text-white">
+                                    or {option.pricing.inApp.yearly}/yr
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-[10.5px] text-white">
+                                Charged after your trial ends. Cancel anytime.
+                              </div>
+                            </div>
                           </motion.button>
                         );
                       })}
@@ -877,8 +1001,9 @@ const SignUp = () => {
                       </Button>
 
                       {/* Trial note */}
-                      <div className="mt-4 text-center text-[11px] text-white">
-                        No charge for 7 days · Cancel in a couple of clicks
+                      <div className="mt-4 flex items-center justify-center gap-2 text-[11px] text-white">
+                        <Gift className="h-3.5 w-3.5 text-yellow-400" />
+                        <span>No charge for 7 days · Cancel in a couple of clicks</span>
                       </div>
                     </div>
                   </motion.div>

@@ -36,6 +36,11 @@ nul
 *.keystore
 *.jks
 
+# LTI / crypto private keys — never commit
+*.pem
+*.key
+lti-private-key*
+
 # Playwright auth state
 e2e/.auth/
 __pycache__/
