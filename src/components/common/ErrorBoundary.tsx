@@ -49,6 +49,10 @@ class ErrorBoundary extends Component<Props, State> {
     // Also detect non-Error objects (plain objects from failed dynamic imports)
     // React sometimes passes [object Object] when a lazy import promise rejects with a non-Error
     const isNonErrorObject = !(error instanceof Error) && typeof error === 'object';
+    // Classification tightened (ELE-792): bare 'text/html' / 'mime type' catch-alls
+    // were matching non-chunk errors (e.g. API responses surfaced as thrown Errors)
+    // and triggering the auto-reload path. Only match those strings when the stack
+    // actually points at a dynamic import / lazy component.
     const isChunkError =
       errorString.includes('dynamically imported module') ||
       errorString.includes('failed to fetch') ||
@@ -56,19 +60,43 @@ class ErrorBoundary extends Component<Props, State> {
       errorString.includes('loading css chunk') ||
       errorString.includes('failed to load module script') ||
       errorString.includes('importing a module script failed') ||
-      errorString.includes('mime type') ||
-      errorString.includes('text/html') ||
+      ((errorString.includes('mime type') || errorString.includes('text/html')) &&
+        stackString.includes('lazy')) ||
       (errorString.includes('typeerror') && stackString.includes('lazy')) ||
       (isNonErrorObject && stackString.includes('lazy'));
     if (isChunkError) {
+      // ELE-792: guard against infinite reload loops. If we've already reloaded
+      // once this session and still caught a chunk error, the reload clearly
+      // isn't fixing it — fall through to the normal error UI instead.
+      const reloadKey = 'errorBoundary_chunkReloaded';
+      const hasReloaded = sessionStorage.getItem(reloadKey);
+      if (hasReloaded) {
+        sessionStorage.removeItem(reloadKey);
+        console.log('[ErrorBoundary] Chunk error after reload — showing error UI');
+        captureError(error, {
+          componentStack: errorInfo.componentStack,
+          url: window.location.href,
+          errorBoundary: true,
+          chunkReloadFailed: true,
+        });
+        return;
+      }
+      sessionStorage.setItem(reloadKey, Date.now().toString());
       console.log('[ErrorBoundary] Chunk load error, auto-refreshing...');
+      // Cache-busting URL reload — plain reload() can hit the same stale HTML
+      // from disk cache on Firefox/Windows and loop forever.
+      const sep = window.location.href.includes('?') ? '&' : '?';
+      const bustedUrl = window.location.href + sep + '_cb=' + Date.now();
+      const navigate = () => {
+        window.location.href = bustedUrl;
+      };
       if ('caches' in window) {
         caches
           .keys()
           .then((keys) => Promise.all(keys.map((k) => caches.delete(k))))
-          .finally(() => window.location.reload());
+          .finally(navigate);
       } else {
-        window.location.reload();
+        navigate();
       }
       return; // Don't log to Sentry - deployment artifact, not a bug
     }
