@@ -19,6 +19,7 @@ import { AppUpdatePrompt } from '@/components/app-update/AppUpdatePrompt';
 import { lazy, Suspense, useEffect } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { captureAttribution } from '@/lib/attribution';
+import SilentErrorBoundary from '@/components/common/SilentErrorBoundary';
 
 // Lazy load analytics components to defer ~427KB from initial bundle
 const PostHogProvider = lazy(() => import('@/components/analytics/PostHogProvider'));
@@ -65,19 +66,26 @@ function App() {
                 <AppUpdatePrompt />
                 {/* Activity tracking - logs user events to Supabase */}
                 <ActivityTracker />
-                {/* Analytics providers load async - don't block render */}
-                <Suspense fallback={null}>
-                  <PostHogProvider>
-                    <></>
-                  </PostHogProvider>
-                </Suspense>
+                {/* Analytics providers load async — don't block render.
+                    Each wrapped in SilentErrorBoundary so a blocked import
+                    (adblocker blocking PostHog/Meta/Vercel) can't bubble up
+                    and unmount the entire app tree. */}
+                <SilentErrorBoundary section="PostHog">
+                  <Suspense fallback={null}>
+                    <PostHogProvider>
+                      <></>
+                    </PostHogProvider>
+                  </Suspense>
+                </SilentErrorBoundary>
                 {/* Meta Pixel + Google Ads/GA4 — web only, consent-gated to `marketing` */}
                 {!Capacitor.isNativePlatform() && (
-                  <Suspense fallback={null}>
-                    <MarketingPixelsProvider>
-                      <></>
-                    </MarketingPixelsProvider>
-                  </Suspense>
+                  <SilentErrorBoundary section="MarketingPixels">
+                    <Suspense fallback={null}>
+                      <MarketingPixelsProvider>
+                        <></>
+                      </MarketingPixelsProvider>
+                    </Suspense>
+                  </SilentErrorBoundary>
                 )}
                 <TrainingActivityMonitor />
                 <AppRouter />
@@ -92,10 +100,12 @@ function App() {
                 )}
                 {/* Vercel analytics — web only (not designed for Capacitor native) */}
                 {!Capacitor.isNativePlatform() && (
-                  <Suspense fallback={null}>
-                    <SpeedInsights />
-                    <Analytics />
-                  </Suspense>
+                  <SilentErrorBoundary section="VercelAnalytics">
+                    <Suspense fallback={null}>
+                      <SpeedInsights />
+                      <Analytics />
+                    </Suspense>
+                  </SilentErrorBoundary>
                 )}
               </NativeAppInit>
             </NotificationProvider>
