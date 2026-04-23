@@ -62,9 +62,15 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
 
     if (!hasReloaded) {
       sessionStorage.setItem(reloadKey, Date.now().toString());
-      window.location.reload();
-      // Return a promise that never resolves to prevent error display during reload
-      return new Promise(() => {});
+      // Cache-busting URL reload — plain reload() can serve the same stale
+      // HTML from disk cache (Firefox on Windows especially), re-pointing us
+      // at the same missing chunk and looping forever.
+      const sep = window.location.href.includes('?') ? '&' : '?';
+      window.location.href = window.location.href + sep + '_cb=' + Date.now();
+      // Throw (not a pending-forever promise) so the Suspense boundary's
+      // ErrorBoundary catches immediately and shows a recoverable UI if the
+      // navigation doesn't complete fast enough.
+      throw lastError;
     }
 
     // Already reloaded once - clear flag and throw error

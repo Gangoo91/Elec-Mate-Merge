@@ -1287,9 +1287,11 @@ const AppRouter = () => {
           <Route
             path="dashboard"
             element={
-              <LazyRoute>
-                <Dashboard />
-              </LazyRoute>
+              <SentryErrorBoundary section="Dashboard">
+                <LazyRoute>
+                  <Dashboard />
+                </LazyRoute>
+              </SentryErrorBoundary>
             }
           />
           <Route
