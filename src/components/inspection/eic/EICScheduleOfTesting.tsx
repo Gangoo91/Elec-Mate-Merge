@@ -608,12 +608,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       return;
     }
 
-    const boardToRemove = distributionBoards.find((b) => b.id === boardId);
     const boardCircuits = getCircuitsForBoard(testResults, boardId);
+    const mainBoardId =
+      getMainBoard(distributionBoards)?.id ?? MAIN_BOARD_ID;
 
-    // Move circuits to main board
+    // Move circuits to the CURRENT main board, not the legacy literal
     const updatedResults = testResults.map((c) =>
-      c.boardId === boardId ? { ...c, boardId: MAIN_BOARD_ID } : c
+      c.boardId === boardId ? { ...c, boardId: mainBoardId } : c
     );
 
     // Remove the board
