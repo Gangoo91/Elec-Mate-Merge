@@ -29,19 +29,28 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
     return wizardBoards;
   }, [data.distributionBoards]);
 
+  // ELE-830: resolve the current main board's id so circuits without an
+  // explicit boardId fall back to the correct board after reorder.
+  const mainBoardId = useMemo(
+    () => getMainBoard(boards)?.id ?? MAIN_BOARD_ID,
+    [boards]
+  );
+
   // Group circuits by board
   const circuitsByBoard = useMemo(() => {
     const grouped: Record<string, any[]> = {};
     boards.forEach((board) => {
-      grouped[board.id] = circuits.filter((c: any) => (c.boardId || MAIN_BOARD_ID) === board.id);
+      grouped[board.id] = circuits.filter(
+        (c: any) => (c.boardId || mainBoardId) === board.id
+      );
     });
     return grouped;
-  }, [circuits, boards]);
+  }, [circuits, boards, mainBoardId]);
 
   const handleAddCircuit = (boardId?: string) => {
     const targetBoardId = boardId || activeBoard;
     const boardCircuits = circuits.filter(
-      (c: any) => (c.boardId || MAIN_BOARD_ID) === targetBoardId
+      (c: any) => (c.boardId || mainBoardId) === targetBoardId
     );
     const newCircuit = {
       id: crypto.randomUUID(),

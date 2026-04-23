@@ -8,7 +8,13 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
-import { DistributionBoard, createMainBoard, getBoardWays, MAIN_BOARD_ID } from '@/types/distributionBoard';
+import {
+  DistributionBoard,
+  createMainBoard,
+  getBoardWays,
+  getMainBoard,
+  MAIN_BOARD_ID,
+} from '@/types/distributionBoard';
 
 // Fields managed by this section (for memoization comparison)
 const ELECTRICAL_SECTION_FIELDS = [
@@ -100,8 +106,12 @@ const ElectricalInstallationSectionInner = ({
   const handleBoardsChange = (newBoards: DistributionBoard[]) => {
     onUpdate('distributionBoards', newBoards);
 
-    // Also update legacy fields from main board for backward compatibility
-    const mainBoard = newBoards.find((b) => b.id === MAIN_BOARD_ID) || newBoards[0];
+    // ELE-830: main board is whichever sits at order 0 after reorder — fall
+    // back to legacy id or first board if nothing resolves.
+    const mainBoard =
+      getMainBoard(newBoards) ||
+      newBoards.find((b) => b.id === MAIN_BOARD_ID) ||
+      newBoards[0];
     if (mainBoard) {
       if (mainBoard.location) onUpdate('cuLocation', mainBoard.location);
       if (mainBoard.make) onUpdate('cuManufacturer', mainBoard.make);

@@ -4,7 +4,12 @@ import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { cableSizeOptions } from '@/types/cableTypes';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
-import { DistributionBoard, createMainBoard, MAIN_BOARD_ID } from '@/types/distributionBoard';
+import {
+  DistributionBoard,
+  createMainBoard,
+  getMainBoard,
+  MAIN_BOARD_ID,
+} from '@/types/distributionBoard';
 import { cn } from '@/lib/utils';
 
 const SectionTitle = ({ title }: { title: string }) => (
@@ -91,8 +96,12 @@ const EICElectricalInstallationSection = ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onUpdate('distributionBoards', newBoards as any);
 
-    // Also update legacy fields from main board for backward compatibility
-    const mainBoard = newBoards.find((b) => b.id === MAIN_BOARD_ID) || newBoards[0];
+    // ELE-830: main board is whichever sits at order 0 after reorder — fall
+    // back to legacy id or first board if nothing resolves.
+    const mainBoard =
+      getMainBoard(newBoards) ||
+      newBoards.find((b) => b.id === MAIN_BOARD_ID) ||
+      newBoards[0];
     if (mainBoard) {
       if (mainBoard.location) onUpdate('boardLocation', mainBoard.location);
       if (mainBoard.type) onUpdate('boardType', mainBoard.type);

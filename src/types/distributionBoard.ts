@@ -112,8 +112,27 @@ export interface DistributionBoard {
   updatedAt?: Date;
 }
 
-// Default main board ID for backward compatibility
+// Default main board ID for backward compatibility.
+// NOTE: This is the default ID for a new "main" board, NOT a source of truth for
+// "is this board the main?". After ELE-830 we detect main-ness from `order === 0`
+// so reordered boards resolve correctly in formatters and wizards. Use the
+// helpers below (`isMainBoard`, `getMainBoard`, `sortBoards`) instead of
+// comparing IDs directly.
 export const MAIN_BOARD_ID = 'main-cu';
+
+/** `true` when this board sits at the top of the supply chain (order === 0). */
+export const isMainBoard = (b: Pick<DistributionBoard, 'order'> | undefined | null): boolean =>
+  !!b && b.order === 0;
+
+/** Return the main board from a list, or `undefined` if none. */
+export const getMainBoard = (
+  boards: DistributionBoard[] | undefined | null
+): DistributionBoard | undefined => (boards || []).find(isMainBoard);
+
+/** Stable sort by `order` ascending. Main board (order 0) comes first. */
+export const sortBoards = (
+  boards: DistributionBoard[] | undefined | null
+): DistributionBoard[] => [...(boards || [])].sort((a, b) => a.order - b.order);
 
 /**
  * Create a new distribution board with default values

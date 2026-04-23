@@ -3,12 +3,13 @@ import { Plus } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   DistributionBoard,
-  MAIN_BOARD_ID,
   createDefaultBoard,
   createMainBoard,
   generateBoardId,
   getBoardWays,
   getNextSubBoardName,
+  isMainBoard,
+  sortBoards,
 } from '@/types/distributionBoard';
 import BoardSetupCard from './BoardSetupCard';
 
@@ -34,7 +35,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
     if (!boards || boards.length === 0) {
       return [createMainBoard()];
     }
-    return [...boards].sort((a, b) => a.order - b.order);
+    return sortBoards(boards);
   }, [boards]);
 
   // Initialize boards if empty
@@ -69,15 +70,37 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
     onBoardsChange([...currentBoards, newBoard]);
   };
 
-  // Handle removing a board
+  // Handle removing a board — guard on supply-chain position, not legacy ID
   const handleRemoveBoard = (boardId: string) => {
-    if (boardId === MAIN_BOARD_ID) return; // Can't remove main board
+    const board = currentBoards.find((b) => b.id === boardId);
+    if (!board || isMainBoard(board)) return; // Can't remove main board
 
     const updatedBoards = currentBoards
       .filter((b) => b.id !== boardId)
       .map((b, index) => ({ ...b, order: index })); // Re-order
 
     onBoardsChange(updatedBoards);
+  };
+
+  // Swap adjacent boards' `order` values (ELE-830 Phase 1).
+  // The main board (order===0) is movable too — moving a sub-board UP into the
+  // main position is the whole point of this feature (commercial supply-chain
+  // flows where the incomer is added late).
+  const handleMoveBoard = (boardId: string, direction: 'up' | 'down') => {
+    const sorted = sortBoards(currentBoards);
+    const idx = sorted.findIndex((b) => b.id === boardId);
+    if (idx < 0) return;
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= sorted.length) return;
+
+    const a = sorted[idx];
+    const b = sorted[swapIdx];
+    const updated = currentBoards.map((board) => {
+      if (board.id === a.id) return { ...board, order: b.order, updatedAt: new Date() };
+      if (board.id === b.id) return { ...board, order: a.order, updatedAt: new Date() };
+      return board;
+    });
+    onBoardsChange(updated);
   };
 
   // Handle updating a board field
@@ -105,13 +128,17 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
 
       {/* Board Cards */}
       <div className="space-y-3">
-        {currentBoards.map((board) => (
+        {currentBoards.map((board, index) => (
           <BoardSetupCard
             key={board.id}
             board={board}
             onUpdate={(field, value) => handleUpdateBoard(board.id, field, value)}
             onRemove={() => handleRemoveBoard(board.id)}
-            isRemovable={board.id !== MAIN_BOARD_ID && board.order !== 0}
+            onMoveUp={() => handleMoveBoard(board.id, 'up')}
+            onMoveDown={() => handleMoveBoard(board.id, 'down')}
+            isFirst={index === 0}
+            isLast={index === currentBoards.length - 1}
+            isRemovable={!isMainBoard(board)}
           />
         ))}
       </div>

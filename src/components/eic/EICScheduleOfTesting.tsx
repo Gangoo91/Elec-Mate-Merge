@@ -42,7 +42,9 @@ import {
   MAIN_BOARD_ID,
   createDefaultBoard,
   generateBoardId,
+  getMainBoard,
   getNextSubBoardName,
+  isMainBoard as isMainBoardFn,
 } from '@/types/distributionBoard';
 import {
   migrateToMultiBoard,
@@ -1248,7 +1250,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   };
 
   const handleRemoveBoard = (boardId: string) => {
-    if (boardId === MAIN_BOARD_ID) {
+    const boardToRemove = distributionBoards.find((b) => b.id === boardId);
+    if (!boardToRemove || isMainBoardFn(boardToRemove)) {
       toast.error('Cannot remove Main CU');
       return;
     }

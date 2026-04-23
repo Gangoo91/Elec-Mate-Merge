@@ -1,11 +1,11 @@
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import { Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronUp, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   DistributionBoard,
-  MAIN_BOARD_ID,
+  isMainBoard as isMainBoardFn,
   BOARD_MANUFACTURERS,
   BOARD_TYPES,
   BOARD_LOCATIONS,
@@ -17,6 +17,14 @@ interface BoardSetupCardProps {
   board: DistributionBoard;
   onUpdate: (field: keyof DistributionBoard | Record<string, any>, value?: any) => void;
   onRemove?: () => void;
+  /** Move this board one position up in the supply-chain list (ELE-830). */
+  onMoveUp?: () => void;
+  /** Move this board one position down. */
+  onMoveDown?: () => void;
+  /** `true` if this is the first card in the list — disables "up". */
+  isFirst?: boolean;
+  /** `true` if this is the last card in the list — disables "down". */
+  isLast?: boolean;
   isRemovable?: boolean;
   className?: string;
 }
@@ -128,28 +136,86 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   board,
   onUpdate,
   onRemove,
+  onMoveUp,
+  onMoveDown,
+  isFirst = false,
+  isLast = false,
   isRemovable = true,
   className,
 }) => {
-  const isMainBoard = board.id === MAIN_BOARD_ID || board.order === 0;
+  // ELE-830: Main-ness is position-based (order === 0), not ID-based.
+  // The dual-check preserves backwards compatibility with legacy certs where
+  // the main always had id='main-cu'.
+  const isMainBoard = isMainBoardFn(board);
+  const canReorder = (onMoveUp || onMoveDown) !== undefined;
 
   return (
     <div className={cn('space-y-3', className)}>
       {/* Board Header */}
       <div className="space-y-2">
         <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-        <div className="flex items-center justify-between">
-          <h3 className="text-xs font-medium text-white uppercase tracking-wider">
-            {board.name}
-          </h3>
-          {isRemovable && !isMainBoard && onRemove && (
-            <button
-              onClick={onRemove}
-              className="text-[10px] text-red-400/50 hover:text-red-400 touch-manipulation"
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0 flex-1">
+            <h3 className="text-xs font-medium text-white uppercase tracking-wider truncate">
+              {board.name}
+            </h3>
+            <span
+              className={cn(
+                'text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded shrink-0',
+                isMainBoard
+                  ? 'bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-blue-500/15 border border-blue-500/40 text-blue-300'
+              )}
             >
-              Remove
-            </button>
-          )}
+              {isMainBoard ? 'Main board' : 'Sub-board'}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1 shrink-0">
+            {canReorder && (
+              <>
+                <button
+                  type="button"
+                  onClick={onMoveUp}
+                  disabled={isFirst}
+                  aria-label={`Move ${board.name} up`}
+                  className={cn(
+                    'h-11 w-11 rounded-md flex items-center justify-center touch-manipulation',
+                    'border border-white/[0.08] text-white active:scale-[0.98]',
+                    isFirst
+                      ? 'opacity-25 cursor-not-allowed'
+                      : 'bg-white/[0.04] hover:bg-white/[0.08]'
+                  )}
+                >
+                  <ChevronUp className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={onMoveDown}
+                  disabled={isLast}
+                  aria-label={`Move ${board.name} down`}
+                  className={cn(
+                    'h-11 w-11 rounded-md flex items-center justify-center touch-manipulation',
+                    'border border-white/[0.08] text-white active:scale-[0.98]',
+                    isLast
+                      ? 'opacity-25 cursor-not-allowed'
+                      : 'bg-white/[0.04] hover:bg-white/[0.08]'
+                  )}
+                >
+                  <ChevronDown className="h-4 w-4" />
+                </button>
+              </>
+            )}
+            {isRemovable && !isMainBoard && onRemove && (
+              <button
+                onClick={onRemove}
+                aria-label={`Remove ${board.name}`}
+                className="h-11 px-2 text-[10px] text-red-400/70 hover:text-red-400 touch-manipulation"
+              >
+                Remove
+              </button>
+            )}
+          </div>
         </div>
       </div>
 

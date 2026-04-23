@@ -81,6 +81,11 @@ const formatCircuit = (result: any) => ({
 
 const MAIN_BOARD_ID = 'main-cu';
 
+// Local mirrors of distributionBoard helpers — this file runs in contexts
+// where we want to avoid dragging the full types module in. Keep in sync.
+const sortBoardsLocal = <T extends { order: number }>(boards: T[] | undefined | null): T[] =>
+  [...(boards || [])].sort((a, b) => a.order - b.order);
+
 const formatBoards = (formData: Record<string, any>, testResults: any[]) => {
   const boards = formData.distributionBoards || [];
 
@@ -114,10 +119,17 @@ const formatBoards = (formData: Record<string, any>, testResults: any[]) => {
     return [];
   }
 
-  return boards.map((board: any) => {
-    const boardId = board.id || MAIN_BOARD_ID;
+  // ELE-830: Sort boards by supply-chain position so PDF output matches the
+  // order the user set. Resolve the CURRENT main board's id once so circuits
+  // with no explicit boardId fall back to the current main, not the legacy id.
+  const sortedBoards = sortBoardsLocal(boards);
+  const mainBoardId =
+    sortedBoards.find((b: any) => b.order === 0)?.id ?? MAIN_BOARD_ID;
+
+  return sortedBoards.map((board: any) => {
+    const boardId = board.id || mainBoardId;
     const boardCircuits = testResults.filter(
-      (r: any) => (r.boardId || MAIN_BOARD_ID) === boardId
+      (r: any) => (r.boardId || mainBoardId) === boardId
     );
 
     return {

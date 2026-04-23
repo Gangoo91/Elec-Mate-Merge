@@ -5,7 +5,12 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
-import { getBoardWays, MAIN_BOARD_ID } from '@/types/distributionBoard';
+import {
+  getBoardWays,
+  getMainBoard,
+  MAIN_BOARD_ID,
+  sortBoards,
+} from '@/types/distributionBoard';
 import type { EICRPayload } from '@/types/eicr-payload';
 
 const toSnakeCase = (str: string): string =>
@@ -648,12 +653,19 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       return [];
     }
 
-    return boards.map((board: any) => {
-      const boardId = board.id || MAIN_BOARD_ID;
-      const isMainBoard = boardId === MAIN_BOARD_ID;
+    // ELE-830: Sort boards by supply-chain position so PDF output matches the
+    // order the user set. Main board is the one at position 0 after sort —
+    // resolve that ID once so circuits with no explicit boardId fall back to
+    // the CURRENT main, not the legacy `main-cu` literal.
+    const sortedBoards = sortBoards(boards);
+    const mainBoardId = getMainBoard(sortedBoards)?.id ?? MAIN_BOARD_ID;
+
+    return sortedBoards.map((board: any) => {
+      const boardId = board.id || mainBoardId;
+      const isMainBoard = board.order === 0;
       // Filter circuits belonging to this board
       const boardCircuits = testResults.filter(
-        (r: any) => (r.boardId || MAIN_BOARD_ID) === boardId
+        (r: any) => (r.boardId || mainBoardId) === boardId
       );
       const boardWays = getBoardWays(board);
 

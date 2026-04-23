@@ -20,7 +20,12 @@ import {
 import { Camera, Sparkles, Plus, Zap, ArrowRight, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
-import { DistributionBoard, MAIN_BOARD_ID, createMainBoard } from '@/types/distributionBoard';
+import {
+  DistributionBoard,
+  MAIN_BOARD_ID,
+  createMainBoard,
+  getMainBoard,
+} from '@/types/distributionBoard';
 
 interface BoardScanStepProps {
   data: any;
@@ -48,11 +53,18 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
     return wizardBoards;
   }, [data.distributionBoards]);
 
+  // ELE-830: resolve the current main board's id so circuits without an
+  // explicit boardId fall back to the correct board after reorder.
+  const mainBoardId = useMemo(
+    () => getMainBoard(boards)?.id ?? MAIN_BOARD_ID,
+    [boards]
+  );
+
   const selectedBoard = boards.find((b) => b.id === selectedBoardId) || boards[0];
   const hasCircuits = data.circuits && data.circuits.length > 0;
   const circuitCount = data.circuits?.length || 0;
   const selectedBoardCircuits = (data.circuits || []).filter(
-    (c: any) => (c.boardId || MAIN_BOARD_ID) === selectedBoardId
+    (c: any) => (c.boardId || mainBoardId) === selectedBoardId
   );
 
   const handleStartScan = () => {
@@ -69,7 +81,7 @@ export const BoardScanStep: React.FC<BoardScanStepProps> = ({
     }));
     // Merge with existing circuits from other boards
     const otherBoardCircuits = (data.circuits || []).filter(
-      (c: any) => (c.boardId || MAIN_BOARD_ID) !== selectedBoardId
+      (c: any) => (c.boardId || mainBoardId) !== selectedBoardId
     );
     onChange({ circuits: [...otherBoardCircuits, ...taggedCircuits] });
     setShowScanner(false);

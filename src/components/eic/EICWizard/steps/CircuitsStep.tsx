@@ -32,7 +32,12 @@ import {
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
-import { DistributionBoard, MAIN_BOARD_ID, createMainBoard } from '@/types/distributionBoard';
+import {
+  DistributionBoard,
+  MAIN_BOARD_ID,
+  createMainBoard,
+  getMainBoard,
+} from '@/types/distributionBoard';
 
 interface Circuit {
   id: string;
@@ -223,7 +228,7 @@ const CircuitEditSheet: React.FC<{
             <div className="space-y-2">
               <Label className="text-xs">Distribution Board</Label>
               <Select
-                value={editData.boardId || MAIN_BOARD_ID}
+                value={editData.boardId || MAIN_BOARD_ID /* legacy fallback */}
                 onValueChange={(v) => handleChange('boardId', v)}
               >
                 <SelectTrigger className="h-11">
@@ -417,20 +422,27 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
     return wizardBoards;
   }, [data.distributionBoards]);
 
+  // ELE-830: Current main board's actual id (not the legacy literal) — used as
+  // fallback for circuits without an explicit boardId after reorder.
+  const mainBoardId = useMemo(
+    () => getMainBoard(boards)?.id ?? MAIN_BOARD_ID,
+    [boards]
+  );
+
   // Group circuits by board
   const circuitsByBoard = useMemo(() => {
     const grouped: Record<string, Circuit[]> = {};
     boards.forEach((board) => {
-      grouped[board.id] = circuits.filter((c) => (c.boardId || MAIN_BOARD_ID) === board.id);
+      grouped[board.id] = circuits.filter((c) => (c.boardId || mainBoardId) === board.id);
     });
     return grouped;
-  }, [circuits, boards]);
+  }, [circuits, boards, mainBoardId]);
 
   const handleAddCircuit = useCallback(
     (boardId?: string) => {
       haptic.medium();
       const targetBoardId = boardId || activeBoard;
-      const boardCircuits = circuits.filter((c) => (c.boardId || MAIN_BOARD_ID) === targetBoardId);
+      const boardCircuits = circuits.filter((c) => (c.boardId || mainBoardId) === targetBoardId);
       const newCircuit: Circuit = {
         id: `circuit-${Date.now()}`,
         boardId: targetBoardId,
@@ -440,7 +452,7 @@ export const CircuitsStep: React.FC<CircuitsStepProps> = ({ data, onChange, isMo
       };
       onChange({ circuits: [...circuits, newCircuit] });
     },
-    [circuits, onChange, haptic, activeBoard]
+    [circuits, onChange, haptic, activeBoard, mainBoardId]
   );
 
   const handleEditCircuit = useCallback((circuit: Circuit) => {
