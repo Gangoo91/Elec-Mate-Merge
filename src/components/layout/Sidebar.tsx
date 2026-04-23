@@ -8,13 +8,17 @@ import { mainNavItems } from './SidebarNavItems';
 import { useEffect } from 'react';
 import { useScrollLock } from '@/hooks/use-scroll-lock';
 import SafeLink from '@/components/common/SafeLink';
+import { ChevronLeft } from 'lucide-react';
 
 interface SidebarProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  /** Desktop-only: when true, sidebar slides off-screen and content reclaims the width. */
+  desktopCollapsed?: boolean;
+  onToggleDesktopCollapsed?: () => void;
 }
 
-const Sidebar = ({ open, setOpen }: SidebarProps) => {
+const Sidebar = ({ open, setOpen, desktopCollapsed = false, onToggleDesktopCollapsed }: SidebarProps) => {
   const { profile, user } = useAuth();
 
   // Get the user role from the profile, defaulting to "visitor" if not available
@@ -67,10 +71,15 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
           'backdrop-blur-xl bg-elec-dark/90 border-r border-white/10',
           'shadow-2xl shadow-black/50',
           'transition-transform duration-300 ease-in-out',
-          'lg:relative lg:translate-x-0 lg:z-auto',
+          // Desktop: normally in the flow (lg:relative). When collapsed, flip to fixed and slide
+          // off so the main column reclaims the 256px.
+          desktopCollapsed
+            ? 'lg:fixed lg:-translate-x-full lg:z-[60]'
+            : 'lg:relative lg:translate-x-0 lg:z-auto',
           open ? 'translate-x-0' : '-translate-x-full',
           // Hide completely on mobile/tablet when closed
-          !open && 'max-lg:invisible'
+          !open && !desktopCollapsed && 'max-lg:invisible',
+          desktopCollapsed && !open && 'max-lg:invisible'
         )}
         style={{
           paddingTop: 'calc(var(--native-header-offset, 0px) + env(safe-area-inset-top, 0px))',
@@ -89,6 +98,17 @@ const Sidebar = ({ open, setOpen }: SidebarProps) => {
               <span className="text-white">Mate</span>
             </span>
           </Link>
+          {onToggleDesktopCollapsed && (
+            <button
+              type="button"
+              onClick={onToggleDesktopCollapsed}
+              aria-label="Collapse sidebar"
+              title="Collapse sidebar"
+              className="h-8 w-8 rounded-md flex items-center justify-center text-white/60 hover:text-white hover:bg-white/5 border border-white/10 transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+          )}
         </div>
 
         {/* Mobile: premium branded header */}

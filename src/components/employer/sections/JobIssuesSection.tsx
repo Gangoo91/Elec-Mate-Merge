@@ -1,34 +1,12 @@
-import { useState, useCallback } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
+import { useState, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import {
-  Search,
-  AlertTriangle,
-  AlertCircle,
-  CheckCircle,
-  Clock,
-  Calendar,
-  Wrench,
-  Package,
-  Shield,
-  MapPin,
-  Plus,
-  Loader2,
-  Eye,
-  Trash2,
-  X,
-  FileQuestion,
-  Bug,
-  Timer,
-} from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { RefreshCw, Loader2, Trash2, CheckCircle, AlertTriangle } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { format } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 import {
   useJobIssues,
   useJobIssueStats,
@@ -54,7 +32,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -65,56 +42,80 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  Divider,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  FormCard,
+  FormGrid,
+  Field,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/employer/editorial';
 
-const issueTypeIcons: Record<IssueType, React.ElementType> = {
-  Snag: Bug,
-  Variation: FileQuestion,
-  RFI: FileQuestion,
-  Defect: AlertTriangle,
-  Delay: Timer,
-  Other: AlertCircle,
+type FilterTab = 'all' | 'open' | 'critical' | 'in_progress' | 'resolved';
+
+const severityToTone: Record<IssueSeverity, Tone> = {
+  Critical: 'red',
+  High: 'red',
+  Medium: 'amber',
+  Low: 'blue',
 };
 
-const severityColors: Record<IssueSeverity, string> = {
-  Critical: 'bg-destructive text-destructive-foreground',
-  High: 'bg-destructive/80 text-destructive-foreground',
-  Medium: 'bg-warning text-warning-foreground',
-  Low: 'bg-muted text-white',
+const statusToTone: Record<IssueStatus, Tone> = {
+  Open: 'red',
+  'In Progress': 'orange',
+  Resolved: 'emerald',
+  Closed: 'blue',
+  Rejected: 'amber',
 };
 
-const statusColors: Record<IssueStatus, string> = {
-  Open: 'bg-destructive/20 text-destructive',
-  'In Progress': 'bg-warning/20 text-warning',
-  Resolved: 'bg-success/20 text-success',
-  Closed: 'bg-muted text-white',
-  Rejected: 'bg-muted text-white',
-};
+function getInitials(name?: string | null): string {
+  if (!name) return 'NA';
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return 'NA';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 
-function JobIssuesSkeleton() {
-  return (
-    <div className="space-y-4 animate-fade-in">
-      <div className="flex flex-col gap-3">
-        <Skeleton className="h-8 w-48" />
-        <Skeleton className="h-12 w-full" />
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[1, 2, 3, 4].map((i) => (
-          <Skeleton key={i} className="h-24" />
-        ))}
-      </div>
-      <div className="space-y-3">
-        {[1, 2, 3].map((i) => (
-          <Skeleton key={i} className="h-32" />
-        ))}
-      </div>
-    </div>
-  );
+function timeAgo(iso: string): string {
+  try {
+    return formatDistanceToNow(new Date(iso), { addSuffix: true });
+  } catch {
+    return '';
+  }
+}
+
+function resolvedThisWeek(issues: JobIssue[]): number {
+  const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  return issues.filter((i) => {
+    if (i.status !== 'Resolved' && i.status !== 'Closed') return false;
+    const ts = i.resolved_at ? new Date(i.resolved_at).getTime() : 0;
+    return ts >= cutoff;
+  }).length;
 }
 
 export function JobIssuesSection() {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<IssueStatus | null>(null);
+  const [filterTab, setFilterTab] = useState<FilterTab>('all');
   const [selectedIssue, setSelectedIssue] = useState<JobIssue | null>(null);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showResolveSheet, setShowResolveSheet] = useState(false);
@@ -122,7 +123,6 @@ export function JobIssuesSection() {
   const [resolutionNotes, setResolutionNotes] = useState('');
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
 
-  // Form state
   const [formData, setFormData] = useState<Partial<CreateJobIssueInput>>({
     job_id: '',
     title: '',
@@ -134,7 +134,6 @@ export function JobIssuesSection() {
     photos: [],
   });
 
-  // Data fetching
   const { data: issues = [], isLoading, error, refetch } = useJobIssues();
   const { data: stats } = useJobIssueStats();
   const { data: jobs = [] } = useJobs();
@@ -180,13 +179,12 @@ export function JobIssuesSection() {
       });
       return;
     }
-
     try {
       await createJobIssue.mutateAsync(formData as CreateJobIssueInput);
       setShowCreateSheet(false);
       resetForm();
-    } catch (error) {
-      // Error handled by hook
+    } catch (e) {
+      // handled in hook
     }
   };
 
@@ -210,327 +208,193 @@ export function JobIssuesSection() {
     });
   };
 
-  const filteredIssues = issues.filter((issue) => {
-    const matchesSearch =
-      issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      issue.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      issue.job?.title?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesStatus = statusFilter ? issue.status === statusFilter : true;
-    return matchesSearch && matchesStatus;
-  });
+  const filteredIssues = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return issues.filter((issue) => {
+      const matchesSearch =
+        !q ||
+        issue.title.toLowerCase().includes(q) ||
+        issue.description?.toLowerCase().includes(q) ||
+        issue.job?.title?.toLowerCase().includes(q);
+
+      let matchesTab = true;
+      if (filterTab === 'open') matchesTab = issue.status === 'Open';
+      else if (filterTab === 'critical')
+        matchesTab = issue.severity === 'Critical' || issue.severity === 'High';
+      else if (filterTab === 'in_progress') matchesTab = issue.status === 'In Progress';
+      else if (filterTab === 'resolved')
+        matchesTab = issue.status === 'Resolved' || issue.status === 'Closed';
+
+      return matchesSearch && matchesTab;
+    });
+  }, [issues, searchQuery, filterTab]);
+
+  const openCount = stats?.open ?? 0;
+  const inProgressCount = stats?.inProgress ?? 0;
+  const criticalCount = (stats?.critical ?? 0) + (stats?.high ?? 0);
+  const resolved7d = useMemo(() => resolvedThisWeek(issues), [issues]);
+
+  const tabs = [
+    { value: 'all', label: 'All', count: issues.length },
+    { value: 'open', label: 'Open', count: openCount },
+    { value: 'critical', label: 'Critical', count: criticalCount },
+    { value: 'in_progress', label: 'In progress', count: inProgressCount },
+    { value: 'resolved', label: 'Resolved', count: (stats?.resolved ?? 0) + (stats?.closed ?? 0) },
+  ];
 
   if (isLoading) {
-    return <JobIssuesSkeleton />;
+    return (
+      <PageFrame>
+        <LoadingBlocks />
+      </PageFrame>
+    );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <AlertCircle className="h-12 w-12 text-destructive mb-4" />
-        <h3 className="text-lg font-semibold text-foreground mb-2">Failed to load issues</h3>
-        <p className="text-sm text-foreground/70 mb-4">{error.message}</p>
-        <Button onClick={() => refetch()}>Try Again</Button>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Issues"
+          description="Problems, blockers and escalations across all jobs."
+          tone="red"
+        />
+        <EmptyState
+          title="Failed to load issues"
+          description={error.message}
+          action="Try again"
+          onAction={() => refetch()}
+        />
+      </PageFrame>
     );
   }
 
   const content = (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold text-foreground">Live Issues</h1>
-            <p className="text-sm text-white">
-              Track and resolve job blockers in real-time
-            </p>
-          </div>
-          <Button onClick={() => setShowCreateSheet(true)} className="touch-feedback">
-            <Plus className="h-4 w-4 mr-2" />
-            Report Issue
-          </Button>
-        </div>
+    <PageFrame>
+      <PageHero
+        eyebrow="Operations"
+        title="Issues"
+        description="Problems, blockers and escalations across all jobs."
+        tone="red"
+        actions={
+          <>
+            <PrimaryButton onClick={() => setShowCreateSheet(true)}>Report issue</PrimaryButton>
+            <IconButton onClick={handleRefresh} aria-label="Refresh">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </>
+        }
+      />
 
-        <div className="relative">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search issues..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('w-full bg-elec-gray h-12', !searchQuery && 'pl-9')}
+      <StatStrip
+        columns={4}
+        stats={[
+          { label: 'Open', value: openCount, tone: 'red' },
+          { label: 'Critical', value: criticalCount, tone: 'red' },
+          { label: 'In progress', value: inProgressCount, tone: 'orange' },
+          { label: 'Resolved 7d', value: resolved7d, tone: 'emerald' },
+        ]}
+      />
+
+      <FilterBar
+        tabs={tabs}
+        activeTab={filterTab}
+        onTabChange={(v) => setFilterTab(v as FilterTab)}
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search issues, jobs, descriptions…"
+      />
+
+      {filteredIssues.length === 0 ? (
+        <EmptyState
+          title="No issues"
+          description="Everything running smoothly."
+          action="Report issue"
+          onAction={() => setShowCreateSheet(true)}
+        />
+      ) : (
+        <ListCard>
+          <ListCardHeader
+            tone="red"
+            title="Issues"
+            meta={<Pill tone="red">{filteredIssues.length}</Pill>}
           />
-        </div>
-      </div>
+          <ListBody>
+            {filteredIssues.map((issue) => {
+              const reporterName =
+                issue.assigned_employee?.name || issue.job?.client || 'Unassigned';
+              const sevTone = severityToTone[issue.severity];
+              const statTone = statusToTone[issue.status];
+              const accent: Tone | undefined =
+                issue.severity === 'Critical' || issue.severity === 'High' ? 'red' : undefined;
 
-      {/* Summary Stats - Clickable filters */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        <Card
-          className={cn(
-            'bg-elec-gray cursor-pointer transition-all touch-feedback',
-            statusFilter === 'Open' && 'ring-2 ring-destructive'
-          )}
-          onClick={() => setStatusFilter(statusFilter === 'Open' ? null : 'Open')}
-        >
-          <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-destructive">{stats?.open || 0}</p>
-                <p className="text-xs md:text-sm text-white">Open</p>
-              </div>
-              <AlertCircle className="h-6 w-6 md:h-8 md:w-8 text-destructive opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card
-          className={cn(
-            'bg-elec-gray cursor-pointer transition-all touch-feedback',
-            statusFilter === 'In Progress' && 'ring-2 ring-warning'
-          )}
-          onClick={() => setStatusFilter(statusFilter === 'In Progress' ? null : 'In Progress')}
-        >
-          <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-warning">
-                  {stats?.inProgress || 0}
-                </p>
-                <p className="text-xs md:text-sm text-white">In Progress</p>
-              </div>
-              <Clock className="h-6 w-6 md:h-8 md:w-8 text-warning opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card
-          className={cn(
-            'bg-elec-gray cursor-pointer transition-all touch-feedback',
-            statusFilter === 'Resolved' && 'ring-2 ring-success'
-          )}
-          onClick={() => setStatusFilter(statusFilter === 'Resolved' ? null : 'Resolved')}
-        >
-          <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-success">{stats?.resolved || 0}</p>
-                <p className="text-xs md:text-sm text-white">Resolved</p>
-              </div>
-              <CheckCircle className="h-6 w-6 md:h-8 md:w-8 text-success opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-destructive/10 border-destructive/30 touch-feedback">
-          <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-destructive">
-                  {(stats?.critical || 0) + (stats?.high || 0)}
-                </p>
-                <p className="text-xs md:text-sm text-white">High Priority</p>
-              </div>
-              <AlertTriangle className="h-6 w-6 md:h-8 md:w-8 text-destructive opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+              const row = (
+                <ListRow
+                  key={issue.id}
+                  accent={accent}
+                  lead={<Avatar initials={getInitials(reporterName)} />}
+                  title={issue.title}
+                  subtitle={`${issue.job?.title ?? 'No job'} · ${reporterName} · ${timeAgo(issue.created_at)}`}
+                  trailing={
+                    <>
+                      <Pill tone={sevTone}>{issue.severity}</Pill>
+                      <Pill tone={statTone}>{issue.status}</Pill>
+                    </>
+                  }
+                  onClick={() => setSelectedIssue(issue)}
+                />
+              );
 
-      {/* Empty State */}
-      {filteredIssues.length === 0 && (
-        <Card className="bg-elec-gray">
-          <CardContent className="p-6 md:p-8 text-center">
-            <CheckCircle className="h-10 w-10 md:h-12 md:w-12 text-success mx-auto mb-4" />
-            <h3 className="text-base md:text-lg font-semibold text-foreground">No issues found</h3>
-            <p className="text-sm text-white mt-1 mb-4">
-              {statusFilter
-                ? `No ${statusFilter.toLowerCase()} issues`
-                : 'All clear! No issues reported yet.'}
-            </p>
-            <Button onClick={() => setShowCreateSheet(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Report First Issue
-            </Button>
-          </CardContent>
-        </Card>
+              if (isMobile && issue.status !== 'Resolved' && issue.status !== 'Closed') {
+                return (
+                  <SwipeableRow
+                    key={issue.id}
+                    rightAction={{
+                      icon: <CheckCircle className="h-6 w-6" />,
+                      label: 'Resolve',
+                      onClick: () => handleResolve(issue.id),
+                      variant: 'success',
+                    }}
+                    leftAction={{
+                      icon: <Trash2 className="h-6 w-6" />,
+                      label: 'Delete',
+                      onClick: () => setDeleteConfirmId(issue.id),
+                      variant: 'destructive',
+                    }}
+                  >
+                    {row}
+                  </SwipeableRow>
+                );
+              }
+
+              return row;
+            })}
+          </ListBody>
+        </ListCard>
       )}
-
-      {/* Issues List */}
-      <div className="space-y-3">
-        {filteredIssues.map((issue) => {
-          const IssueIcon = issueTypeIcons[issue.issue_type] || AlertCircle;
-
-          const issueCard = (
-            <Card
-              key={issue.id}
-              className={cn(
-                'bg-elec-gray overflow-hidden touch-feedback',
-                (issue.severity === 'High' || issue.severity === 'Critical') &&
-                  'border-l-4 border-l-destructive'
-              )}
-            >
-              <CardContent className="p-3 md:p-4">
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={cn(
-                        'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
-                        issue.status === 'Resolved' || issue.status === 'Closed'
-                          ? 'bg-success/20'
-                          : 'bg-destructive/20'
-                      )}
-                    >
-                      <IssueIcon
-                        className={cn(
-                          'h-5 w-5',
-                          issue.status === 'Resolved' || issue.status === 'Closed'
-                            ? 'text-success'
-                            : 'text-destructive'
-                        )}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="font-semibold text-foreground text-sm">{issue.title}</h4>
-                        <Badge className={severityColors[issue.severity] + ' text-[10px]'}>
-                          {issue.severity}
-                        </Badge>
-                        <Badge className={statusColors[issue.status] + ' text-[10px]'}>
-                          {issue.status}
-                        </Badge>
-                      </div>
-                      {issue.description && (
-                        <p className="text-xs text-white mt-1 line-clamp-2">
-                          {issue.description}
-                        </p>
-                      )}
-                      <div className="flex items-center gap-3 mt-2 text-[10px] text-white flex-wrap">
-                        <span className="flex items-center gap-1">
-                          <Wrench className="h-3 w-3" />
-                          {issue.job?.title || 'No job'}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {format(new Date(issue.created_at), 'dd MMM yyyy')}
-                        </span>
-                        {issue.location && (
-                          <span className="flex items-center gap-1">
-                            <MapPin className="h-3 w-3" />
-                            {issue.location}
-                          </span>
-                        )}
-                        {issue.due_date && (
-                          <span className="flex items-center gap-1 text-warning">
-                            <Timer className="h-3 w-3" />
-                            Due: {format(new Date(issue.due_date), 'dd MMM')}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
-                  {issue.resolution_notes && (
-                    <div className="p-2 bg-success/10 rounded-lg">
-                      <p className="text-xs text-success">
-                        <CheckCircle className="h-3 w-3 inline mr-1" />
-                        <strong>Resolution:</strong> {issue.resolution_notes}
-                      </p>
-                    </div>
-                  )}
-
-                  {issue.status !== 'Resolved' && issue.status !== 'Closed' && (
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 touch-feedback"
-                        onClick={() => setSelectedIssue(issue)}
-                      >
-                        <Eye className="h-4 w-4 mr-1" />
-                        Details
-                      </Button>
-                      <Button
-                        size="sm"
-                        onClick={() => handleResolve(issue.id)}
-                        className="flex-1 touch-feedback"
-                        disabled={updateJobIssueStatus.isPending}
-                      >
-                        {updateJobIssueStatus.isPending ? (
-                          <Loader2 className="h-4 w-4 mr-1 animate-spin" />
-                        ) : (
-                          <CheckCircle className="h-4 w-4 mr-1" />
-                        )}
-                        Resolve
-                      </Button>
-                    </div>
-                  )}
-
-                  {(issue.status === 'Resolved' || issue.status === 'Closed') && (
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 touch-feedback"
-                        onClick={() => setSelectedIssue(issue)}
-                      >
-                        <Eye className="h-4 w-4 mr-1" />
-                        View Details
-                      </Button>
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          );
-
-          // Wrap with swipeable on mobile for unresolved issues
-          if (isMobile && issue.status !== 'Resolved' && issue.status !== 'Closed') {
-            return (
-              <SwipeableRow
-                key={issue.id}
-                rightAction={{
-                  icon: <CheckCircle className="h-6 w-6" />,
-                  label: 'Resolve',
-                  onClick: () => handleResolve(issue.id),
-                  variant: 'success',
-                }}
-                leftAction={{
-                  icon: <Trash2 className="h-6 w-6" />,
-                  label: 'Delete',
-                  onClick: () => setDeleteConfirmId(issue.id),
-                  variant: 'destructive',
-                }}
-              >
-                {issueCard}
-              </SwipeableRow>
-            );
-          }
-
-          return issueCard;
-        })}
-      </div>
 
       {/* Create Issue Sheet */}
       <Sheet open={showCreateSheet} onOpenChange={setShowCreateSheet}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
-          <div className="flex flex-col h-full bg-background">
-            <SheetHeader className="p-4 border-b border-border">
-              <SheetTitle className="flex items-center gap-2">
-                <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-                Report New Issue
-              </SheetTitle>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
+          <div className="flex flex-col h-full">
+            <SheetHeader className="p-4 border-b border-white/[0.06]">
+              <SheetTitle className="text-white text-[15px] font-semibold">Report new issue</SheetTitle>
             </SheetHeader>
 
             <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-              {/* Job Selection */}
               <div className="space-y-2">
-                <Label>Job *</Label>
+                <Label className="text-white text-[12px]">Job *</Label>
                 <Select
                   value={formData.job_id}
                   onValueChange={(v) => setFormData((prev) => ({ ...prev, job_id: v }))}
                 >
-                  <SelectTrigger className="h-12 bg-elec-gray">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select a job" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray">
+                  <SelectContent className={selectContentClass}>
                     {jobs.map((job) => (
                       <SelectItem key={job.id} value={job.id}>
                         {job.title} - {job.client}
@@ -540,31 +404,29 @@ export function JobIssuesSection() {
                 </Select>
               </div>
 
-              {/* Title */}
               <div className="space-y-2">
-                <Label>Issue Title *</Label>
+                <Label className="text-white text-[12px]">Issue title *</Label>
                 <Input
                   value={formData.title}
                   onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                   placeholder="Brief description of the issue"
-                  className="h-12 bg-elec-gray"
+  className={inputClass}
                 />
               </div>
 
-              {/* Issue Type & Severity */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label>Issue Type</Label>
+                  <Label className="text-white text-[12px]">Issue type</Label>
                   <Select
                     value={formData.issue_type}
                     onValueChange={(v) =>
                       setFormData((prev) => ({ ...prev, issue_type: v as IssueType }))
                     }
                   >
-                    <SelectTrigger className="h-12 bg-elec-gray">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray">
+                    <SelectContent className={selectContentClass}>
                       <SelectItem value="Snag">Snag</SelectItem>
                       <SelectItem value="Variation">Variation</SelectItem>
                       <SelectItem value="RFI">RFI</SelectItem>
@@ -575,17 +437,17 @@ export function JobIssuesSection() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>Severity</Label>
+                  <Label className="text-white text-[12px]">Severity</Label>
                   <Select
                     value={formData.severity}
                     onValueChange={(v) =>
                       setFormData((prev) => ({ ...prev, severity: v as IssueSeverity }))
                     }
                   >
-                    <SelectTrigger className="h-12 bg-elec-gray">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-elec-gray">
+                    <SelectContent className={selectContentClass}>
                       <SelectItem value="Low">Low</SelectItem>
                       <SelectItem value="Medium">Medium</SelectItem>
                       <SelectItem value="High">High</SelectItem>
@@ -595,30 +457,30 @@ export function JobIssuesSection() {
                 </div>
               </div>
 
-              {/* Location */}
               <div className="space-y-2">
-                <Label>Location</Label>
+                <Label className="text-white text-[12px]">Location</Label>
                 <Input
                   value={formData.location || ''}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, location: e.target.value }))
+                  }
                   placeholder="Where on site is this issue?"
-                  className="h-12 bg-elec-gray"
+  className={inputClass}
                 />
               </div>
 
-              {/* Assign To */}
               <div className="space-y-2">
-                <Label>Assign To</Label>
+                <Label className="text-white text-[12px]">Assign to</Label>
                 <Select
                   value={formData.assigned_to || ''}
                   onValueChange={(v) =>
                     setFormData((prev) => ({ ...prev, assigned_to: v || undefined }))
                   }
                 >
-                  <SelectTrigger className="h-12 bg-elec-gray">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select team member" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray">
+                  <SelectContent className={selectContentClass}>
                     {employees.map((emp) => (
                       <SelectItem key={emp.id} value={emp.id}>
                         {emp.name} - {emp.role}
@@ -628,47 +490,41 @@ export function JobIssuesSection() {
                 </Select>
               </div>
 
-              {/* Due Date */}
               <div className="space-y-2">
-                <Label>Due Date</Label>
+                <Label className="text-white text-[12px]">Due date</Label>
                 <Input
                   type="date"
                   value={formData.due_date || ''}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, due_date: e.target.value || undefined }))
                   }
-                  className="h-12 bg-elec-gray"
+className={inputClass}
                 />
               </div>
 
-              {/* Description */}
               <div className="space-y-2">
-                <Label>Description</Label>
+                <Label className="text-white text-[12px]">Description</Label>
                 <Textarea
                   value={formData.description || ''}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, description: e.target.value }))
                   }
-                  placeholder="Detailed description of the issue..."
-                  className="min-h-[100px] bg-elec-gray"
+                  placeholder="Detailed description of the issue…"
+className={`${textareaClass} min-h-[100px]`}
                 />
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="p-4 border-t border-border bg-background">
-              <Button
+            <div className="p-4 border-t border-white/[0.06]">
+              <PrimaryButton
                 onClick={handleCreate}
-                className="w-full h-14 text-base font-semibold"
                 disabled={createJobIssue.isPending}
+                fullWidth
+                size="lg"
               >
-                {createJobIssue.isPending ? (
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                ) : (
-                  <Plus className="h-5 w-5 mr-2" />
-                )}
-                Report Issue
-              </Button>
+                {createJobIssue.isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                Report issue
+              </PrimaryButton>
             </div>
           </div>
         </SheetContent>
@@ -676,41 +532,37 @@ export function JobIssuesSection() {
 
       {/* Resolve Issue Sheet */}
       <Sheet open={showResolveSheet} onOpenChange={setShowResolveSheet}>
-        <SheetContent side="bottom" className="h-[50vh] p-0 rounded-t-2xl flex flex-col">
-          <div className="flex flex-col h-full bg-background">
-            <SheetHeader className="p-4 border-b border-border">
-              <SheetTitle className="flex items-center gap-2">
-                <CheckCircle className="h-5 w-5 text-success" />
-                Resolve Issue
-              </SheetTitle>
+        <SheetContent
+          side="bottom"
+          className="h-[50vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
+          <div className="flex flex-col h-full">
+            <SheetHeader className="p-4 border-b border-white/[0.06]">
+              <SheetTitle className="text-white text-[15px] font-semibold">Resolve issue</SheetTitle>
             </SheetHeader>
 
             <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
               <div className="space-y-2">
-                <Label>Resolution Notes</Label>
+                <Label className="text-white text-[12px]">Resolution notes</Label>
                 <Textarea
                   value={resolutionNotes}
                   onChange={(e) => setResolutionNotes(e.target.value)}
-                  placeholder="Describe how the issue was resolved..."
-                  className="min-h-[120px] bg-elec-gray"
+                  placeholder="Describe how the issue was resolved…"
+className={`${textareaClass} min-h-[120px]`}
                 />
               </div>
             </div>
 
-            {/* Footer */}
-            <div className="p-4 border-t border-border bg-background">
-              <Button
+            <div className="p-4 border-t border-white/[0.06]">
+              <PrimaryButton
                 onClick={handleConfirmResolve}
-                className="w-full h-14 text-base font-semibold bg-success hover:bg-success/90"
                 disabled={updateJobIssueStatus.isPending}
+                fullWidth
+                size="lg"
               >
-                {updateJobIssueStatus.isPending ? (
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                ) : (
-                  <CheckCircle className="h-5 w-5 mr-2" />
-                )}
-                Mark as Resolved
-              </Button>
+                {updateJobIssueStatus.isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
+                Mark as resolved
+              </PrimaryButton>
             </div>
           </div>
         </SheetContent>
@@ -718,97 +570,114 @@ export function JobIssuesSection() {
 
       {/* View Issue Details Sheet */}
       <Sheet open={!!selectedIssue} onOpenChange={() => setSelectedIssue(null)}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
           {selectedIssue && (
-            <div className="flex flex-col h-full bg-background">
-              <SheetHeader className="p-4 border-b border-border">
-                <div className="flex items-center justify-between">
-                  <SheetTitle className="flex items-center gap-2">
-                    <AlertTriangle className="h-5 w-5 text-elec-yellow" />
-                    Issue Details
+            <div className="flex flex-col h-full">
+              <SheetHeader className="p-4 border-b border-white/[0.06]">
+                <div className="flex items-center justify-between gap-3">
+                  <SheetTitle className="text-white text-[15px] font-semibold">
+                    Issue details
                   </SheetTitle>
-                  <Badge className={statusColors[selectedIssue.status]}>
-                    {selectedIssue.status}
-                  </Badge>
+                  <Pill tone={statusToTone[selectedIssue.status]}>{selectedIssue.status}</Pill>
                 </div>
               </SheetHeader>
 
-              <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-                {/* Issue Header */}
+              <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-5">
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-foreground">{selectedIssue.title}</h3>
+                  <h3 className="text-lg font-semibold text-white tracking-tight leading-tight">
+                    {selectedIssue.title}
+                  </h3>
                   <div className="flex gap-2 flex-wrap">
-                    <Badge className={severityColors[selectedIssue.severity]}>
+                    <Pill tone={severityToTone[selectedIssue.severity]}>
                       {selectedIssue.severity}
-                    </Badge>
-                    <Badge variant="outline">{selectedIssue.issue_type}</Badge>
+                    </Pill>
+                    <Pill tone="blue">{selectedIssue.issue_type}</Pill>
                   </div>
                 </div>
 
-                {/* Job Info */}
-                <Card className="bg-elec-gray">
-                  <CardContent className="p-4">
-                    <h4 className="font-semibold text-foreground mb-2">
-                      {selectedIssue.job?.title}
-                    </h4>
-                    <p className="text-sm text-foreground/70">{selectedIssue.job?.client}</p>
-                  </CardContent>
-                </Card>
-
-                {/* Details Grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="bg-elec-gray p-3 rounded-lg">
-                    <p className="text-xs text-foreground/70 mb-1">Reported</p>
-                    <p className="font-semibold text-foreground">
-                      {format(new Date(selectedIssue.created_at), 'dd MMM yyyy')}
-                    </p>
+                <ListCard>
+                  <ListCardHeader tone="blue" title="Job" />
+                  <div className="px-5 py-4">
+                    <div className="text-[14px] font-semibold text-white">
+                      {selectedIssue.job?.title ?? '—'}
+                    </div>
+                    <div className="mt-1 text-[12px] text-white">
+                      {selectedIssue.job?.client ?? '—'}
+                    </div>
                   </div>
-                  {selectedIssue.location && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Location</p>
-                      <p className="font-semibold text-foreground">{selectedIssue.location}</p>
-                    </div>
-                  )}
-                  {selectedIssue.due_date && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Due Date</p>
-                      <p className="font-semibold text-foreground">
-                        {format(new Date(selectedIssue.due_date), 'dd MMM yyyy')}
-                      </p>
-                    </div>
-                  )}
-                  {selectedIssue.assigned_employee && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Assigned To</p>
-                      <p className="font-semibold text-foreground">
-                        {selectedIssue.assigned_employee.name}
-                      </p>
-                    </div>
-                  )}
-                </div>
+                </ListCard>
 
-                {/* Description */}
+                <StatStrip
+                  columns={2}
+                  stats={[
+                    {
+                      label: 'Reported',
+                      value: (
+                        <span className="text-[15px] sm:text-[18px]">
+                          {format(new Date(selectedIssue.created_at), 'dd MMM yyyy')}
+                        </span>
+                      ),
+                    },
+                    ...(selectedIssue.location
+                      ? [
+                          {
+                            label: 'Location',
+                            value: (
+                              <span className="text-[15px] sm:text-[18px]">
+                                {selectedIssue.location}
+                              </span>
+                            ),
+                          },
+                        ]
+                      : []),
+                    ...(selectedIssue.due_date
+                      ? [
+                          {
+                            label: 'Due date',
+                            value: (
+                              <span className="text-[15px] sm:text-[18px]">
+                                {format(new Date(selectedIssue.due_date), 'dd MMM yyyy')}
+                              </span>
+                            ),
+                            tone: 'amber' as Tone,
+                          },
+                        ]
+                      : []),
+                    ...(selectedIssue.assigned_employee
+                      ? [
+                          {
+                            label: 'Assigned to',
+                            value: (
+                              <span className="text-[15px] sm:text-[18px]">
+                                {selectedIssue.assigned_employee.name}
+                              </span>
+                            ),
+                          },
+                        ]
+                      : []),
+                  ]}
+                />
+
                 {selectedIssue.description && (
                   <div className="space-y-2">
-                    <h4 className="font-semibold text-foreground">Description</h4>
-                    <p className="text-sm text-foreground/80 bg-elec-gray p-3 rounded-lg">
+                    <Divider label="Description" />
+                    <p className="text-[13px] text-white leading-relaxed">
                       {selectedIssue.description}
                     </p>
                   </div>
                 )}
 
-                {/* Resolution */}
                 {selectedIssue.resolution_notes && (
                   <div className="space-y-2">
-                    <h4 className="font-semibold text-success flex items-center gap-2">
-                      <CheckCircle className="h-4 w-4" />
-                      Resolution
-                    </h4>
-                    <p className="text-sm text-foreground/80 bg-success/10 p-3 rounded-lg border border-success/20">
+                    <Divider label="Resolution" />
+                    <p className="text-[13px] text-white leading-relaxed">
                       {selectedIssue.resolution_notes}
                     </p>
                     {selectedIssue.resolved_at && (
-                      <p className="text-xs text-foreground/50">
+                      <p className="text-[11px] text-white">
                         Resolved on{' '}
                         {format(new Date(selectedIssue.resolved_at), "dd MMM yyyy 'at' HH:mm")}
                       </p>
@@ -816,18 +685,17 @@ export function JobIssuesSection() {
                   </div>
                 )}
 
-                {/* Status Update */}
                 {selectedIssue.status !== 'Resolved' && selectedIssue.status !== 'Closed' && (
                   <div className="space-y-2">
-                    <Label>Update Status</Label>
+                    <Label className="text-white text-[12px]">Update status</Label>
                     <Select
                       value={selectedIssue.status}
                       onValueChange={(v) => handleStatusChange(selectedIssue.id, v as IssueStatus)}
                     >
-                      <SelectTrigger className="h-12 bg-elec-gray">
+                      <SelectTrigger className={selectTriggerClass}>
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent className="bg-elec-gray border-elec-gray">
+                      <SelectContent className={selectContentClass}>
                         <SelectItem value="Open">Open</SelectItem>
                         <SelectItem value="In Progress">In Progress</SelectItem>
                         <SelectItem value="Resolved">Resolved</SelectItem>
@@ -839,51 +707,52 @@ export function JobIssuesSection() {
                 )}
               </div>
 
-              {/* Footer */}
-              <div className="p-4 border-t border-border bg-background space-y-2">
+              <div className="p-4 border-t border-white/[0.06] space-y-2">
                 {selectedIssue.status !== 'Resolved' && selectedIssue.status !== 'Closed' && (
-                  <Button
+                  <PrimaryButton
                     onClick={() => {
+                      const id = selectedIssue.id;
                       setSelectedIssue(null);
-                      handleResolve(selectedIssue.id);
+                      handleResolve(id);
                     }}
-                    className="w-full h-14 text-base font-semibold bg-success hover:bg-success/90"
+                    fullWidth
+                    size="lg"
                   >
-                    <CheckCircle className="h-5 w-5 mr-2" />
-                    Resolve Issue
-                  </Button>
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Resolve issue
+                  </PrimaryButton>
                 )}
-                <Button
-                  variant="outline"
+                <DestructiveButton
                   onClick={() => {
                     setDeleteConfirmId(selectedIssue.id);
                     setSelectedIssue(null);
                   }}
-                  className="w-full h-12 text-destructive hover:text-destructive"
+                  fullWidth
                 >
                   <Trash2 className="h-4 w-4 mr-2" />
-                  Delete Issue
-                </Button>
+                  Delete issue
+                </DestructiveButton>
               </div>
             </div>
           )}
         </SheetContent>
       </Sheet>
 
-      {/* Delete Confirmation */}
       <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
-        <AlertDialogContent className="bg-background border-border">
+        <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.06]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Issue?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Delete issue?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               This action cannot be undone. This will permanently delete the issue record.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-red-500/90 text-white hover:bg-red-500"
             >
               {deleteJobIssue.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
               Delete
@@ -891,7 +760,7 @@ export function JobIssuesSection() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </PageFrame>
   );
 
   return isMobile ? (

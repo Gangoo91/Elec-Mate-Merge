@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -10,10 +9,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { PoundSterling, Users, Loader2, CheckCircle } from 'lucide-react';
-import { WorkerRates } from '@/types/company';
-import { CompanyProfile } from '@/types/company';
+import { WorkerRates, CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
+import { Eyebrow } from '@/components/college/primitives';
 
 const WORKER_TYPE_LABELS: Record<keyof WorkerRates, { name: string; description: string }> = {
   electrician: { name: 'Qualified Electrician', description: 'Fully qualified' },
@@ -79,42 +77,43 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
+      >
+        <div className="flex flex-col h-full bg-[#0a0a0a]">
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <div className="px-5 pb-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-              <PoundSterling className="h-5 w-5 text-emerald-400" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">Pricing & Rates</h2>
-              <p className="text-xs text-white">Hourly rates and profit margins</p>
-            </div>
-          </div>
+          <header className="px-5 sm:px-6 pb-4">
+            <Eyebrow>Pricing</Eyebrow>
+            <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
+              Pricing & rates
+            </h2>
+            <p className="mt-1 text-[13px] text-white">Hourly rates and profit margins</p>
+          </header>
 
-          <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-xs font-medium text-white uppercase tracking-wider">Hourly Rate (£)</Label>
+          <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label className="text-white font-medium text-[13px]">Hourly rate (£)</Label>
                 <Input
                   type="number"
                   step="0.50"
                   value={hourlyRate}
                   onChange={(e) => setHourlyRate(parseFloat(e.target.value) || 0)}
                   placeholder="45"
-                  className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500"
+                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
-              <div className="space-y-2">
-                <Label className="text-xs font-medium text-white uppercase tracking-wider">Payment Terms</Label>
+              <div className="space-y-1.5">
+                <Label className="text-white font-medium text-[13px]">Payment terms</Label>
                 <Select value={paymentTerms} onValueChange={setPaymentTerms}>
-                  <SelectTrigger className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500">
+                  <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
                     <SelectValue placeholder="Select payment terms" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-white/[0.1]">
+                  <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                     <SelectItem value="On receipt">Paid on receipt</SelectItem>
                     <SelectItem value="7 days">7 days</SelectItem>
                     <SelectItem value="14 days">14 days</SelectItem>
@@ -127,9 +126,9 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
 
             <div className="h-px bg-white/[0.06]" />
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-xs font-medium text-white uppercase tracking-wider">Overhead (%)</Label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-1.5">
+                <Label className="text-white font-medium text-[13px]">Overhead (%)</Label>
                 <div className="relative">
                   <Input
                     type="number"
@@ -139,14 +138,16 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                     value={overheadPercentage}
                     onChange={(e) => setOverheadPercentage(parseFloat(e.target.value) || 0)}
                     placeholder="15"
-                    className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white pr-8 focus:border-amber-500 focus:ring-amber-500"
+                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white pr-8 focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-[14px]">%</span>
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-[14px] pointer-events-none">
+                    %
+                  </span>
                 </div>
-                <p className="text-[11px] text-white">Applied to cover business running costs</p>
+                <p className="text-[11.5px] text-white">Applied to cover business running costs</p>
               </div>
-              <div className="space-y-2">
-                <Label className="text-xs font-medium text-white uppercase tracking-wider">Profit Margin (%)</Label>
+              <div className="space-y-1.5">
+                <Label className="text-white font-medium text-[13px]">Profit margin (%)</Label>
                 <div className="relative">
                   <Input
                     type="number"
@@ -156,45 +157,45 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
                     value={profitMargin}
                     onChange={(e) => setProfitMargin(parseFloat(e.target.value) || 0)}
                     placeholder="20"
-                    className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white pr-8 focus:border-amber-500 focus:ring-amber-500"
+                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white pr-8 focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-[14px]">%</span>
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-[14px] pointer-events-none">
+                    %
+                  </span>
                 </div>
-                <p className="text-[11px] text-white">Your profit on each job</p>
+                <p className="text-[11.5px] text-white">Your profit on each job</p>
               </div>
             </div>
 
             <div className="h-px bg-white/[0.06]" />
 
-            {/* Worker Rates */}
+            {/* Worker rates */}
             <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-emerald-400" />
-                <Label className="text-xs font-medium text-white uppercase tracking-wider">Worker Rates</Label>
-              </div>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              <Eyebrow>Worker rates</Eyebrow>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {(Object.keys(WORKER_TYPE_LABELS) as Array<keyof WorkerRates>).map((workerKey) => {
                   const worker = WORKER_TYPE_LABELS[workerKey];
                   return (
                     <div key={workerKey} className="space-y-1.5">
-                      <Label className="text-[11px] text-white font-medium">{worker.name}</Label>
+                      <Label className="text-white font-medium text-[12px]">{worker.name}</Label>
                       <div className="relative">
-                        <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[15px] font-medium text-white md:left-3 md:text-[14px]">
+                        <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[14px] font-medium text-white">
                           £
                         </span>
                         <Input
                           type="number"
                           step="0.50"
-                          value={workerRates[workerKey] || DEFAULT_WORKER_RATES[workerKey]}
+                          value={workerRates[workerKey] ?? DEFAULT_WORKER_RATES[workerKey]}
                           onChange={(e) => {
                             setWorkerRates({
                               ...workerRates,
                               [workerKey]: parseFloat(e.target.value) || 0,
                             });
                           }}
-                          className="h-11 rounded-xl border-white/[0.08] bg-white/[0.03] pl-9 text-white focus:border-amber-500 focus:ring-amber-500 md:pl-8"
+                          className="h-11 bg-[#0a0a0a] border-white/[0.08] pl-8 text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                         />
                       </div>
+                      <p className="text-[11px] text-white">{worker.description}</p>
                     </div>
                   );
                 })}
@@ -202,14 +203,15 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
             </div>
           </div>
 
-          <div className="p-4 border-t border-white/[0.06]">
-            <Button
+          <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06]">
+            <button
+              type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-14 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-amber-500/20"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSaving ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Saving...</> : <><CheckCircle className="mr-2 h-5 w-5" /> Save</>}
-            </Button>
+              {isSaving ? 'Saving…' : 'Save'}
+            </button>
           </div>
         </div>
       </SheetContent>

@@ -381,7 +381,7 @@ export function useStudentPortfolioDetail(studentId: string, qualificationId: st
         .single();
 
       if (!assignment) {
-        throw new Error('Not authorized to view this portfolio');
+        throw new Error('Not authorised to view this portfolio');
       }
 
       // Fetch all portfolio data in parallel

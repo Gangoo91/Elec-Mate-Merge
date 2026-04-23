@@ -30,10 +30,10 @@ interface EditableTarget {
 const statusOptions: TargetStatus[] = ['Pending', 'In Progress', 'Achieved', 'Overdue'];
 
 const inputClass =
-  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
 
 const textareaClass =
-  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[80px] resize-none';
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[80px] resize-none';
 
 const selectTriggerClass =
   'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
@@ -41,7 +41,7 @@ const selectTriggerClass =
 const selectContentClass =
   'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function ILPTargetsSheet({ ilpId, open, onOpenChange }: ILPTargetsSheetProps) {
   const { data: ilp, isLoading } = useCollegeILP(ilpId!);
@@ -168,7 +168,7 @@ export function ILPTargetsSheet({ ilpId, open, onOpenChange }: ILPTargetsSheetPr
                         <button
                           type="button"
                           onClick={() => handleRemoveTarget(index)}
-                          className="h-8 w-8 rounded-full flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors"
+                          className="h-8 w-8 rounded-full flex items-center justify-center text-white/75 hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors"
                           aria-label="Remove target"
                         >
                           ×

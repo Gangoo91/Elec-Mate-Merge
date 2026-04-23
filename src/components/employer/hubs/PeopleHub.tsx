@@ -1,16 +1,15 @@
-import BusinessCard from '@/components/business-hub/BusinessCard';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
-  Users,
-  UserSearch,
-  Briefcase,
-  CreditCard,
-  Clock,
-  MessageSquare,
-} from 'lucide-react';
+  HubLanding,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  LoadingBlocks,
+} from '@/components/employer/editorial';
 import { useActiveEmployees } from '@/hooks/useEmployees';
 import { useTalentPool } from '@/hooks/useTalentPool';
 import { useNewApplicationsCount } from '@/hooks/useVacancyApplications';
+import { useVacancies } from '@/hooks/useVacancies';
 import { useTimesheets } from '@/hooks/useTimesheets';
 import { useCommunicationStats } from '@/hooks/useCommunications';
 import { useMemo } from 'react';
@@ -20,14 +19,23 @@ interface PeopleHubProps {
 }
 
 export function PeopleHub({ onNavigate }: PeopleHubProps) {
-  const { data: employees = [] } = useActiveEmployees();
-  const { totalCount: talentCount, availableNowCount } = useTalentPool();
-  const { data: newApplicationsCount = 0 } = useNewApplicationsCount();
-  const { data: timesheets = [] } = useTimesheets();
-  const { data: commStats } = useCommunicationStats();
+  const { data: employees = [], isLoading: employeesLoading } = useActiveEmployees();
+  const {
+    totalCount: talentCount,
+    availableNowCount,
+    isLoading: talentLoading,
+  } = useTalentPool();
+  const { data: newApplicationsCount = 0, isLoading: appsLoading } =
+    useNewApplicationsCount();
+  const { data: vacancies = [], isLoading: vacanciesLoading } = useVacancies();
+  const { data: timesheets = [], isLoading: timesheetsLoading } = useTimesheets();
+  const { data: commStats, isLoading: commsLoading } = useCommunicationStats();
 
   const activeEmployees = employees.length;
   const unreadComms = commStats?.unreadCount || 0;
+  const openVacancies = Array.isArray(vacancies)
+    ? vacancies.filter((v: { status?: string }) => v?.status === 'open' || v?.status === 'active').length
+    : 0;
 
   const totalHoursThisWeek = useMemo(() => {
     const weekAgo = new Date();
@@ -38,84 +46,135 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
       .reduce((sum, ts) => sum + (ts.total_hours || 0), 0);
   }, [timesheets]);
 
-  return (
-    <div className="space-y-5 pb-6 animate-fade-in">
-      {/* Recruitment */}
-      <section className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          Recruitment
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          <BusinessCard
-            title="Talent Pool"
-            description="Browse available sparkies"
-            icon={UserSearch}
-            onClick={() => onNavigate('talentpool')}
-            accentColor="from-emerald-500 via-emerald-400 to-green-400"
-            iconColor="text-emerald-400"
-            iconBg="bg-emerald-500/10 border border-emerald-500/20"
-            liveSubtitle={availableNowCount > 0 ? `${availableNowCount} available now` : `${talentCount} total`}
-          />
-          <BusinessCard
-            title="Job Vacancies"
-            description="Post jobs & manage apps"
-            icon={Briefcase}
-            onClick={() => onNavigate('vacancies')}
-            accentColor="from-blue-500 via-blue-400 to-cyan-400"
-            iconColor="text-blue-400"
-            iconBg="bg-blue-500/10 border border-blue-500/20"
-            liveSubtitle={newApplicationsCount > 0 ? `${newApplicationsCount} new apps` : undefined}
-          />
-        </div>
-      </section>
+  const onOpenEmployees = () => onNavigate('team');
+  const onOpenElecID = () => onNavigate('elecid');
+  const onOpenTimesheets = () => onNavigate('timesheets');
+  const onOpenComms = () => onNavigate('comms');
+  const onOpenTalentPool = () => onNavigate('talentpool');
+  const onOpenVacancies = () => onNavigate('vacancies');
 
-      {/* Your Team */}
-      <section className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          Your Team
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          <BusinessCard
-            title="Team List"
-            description="Manage workers"
-            icon={Users}
-            onClick={() => onNavigate('team')}
-            accentColor="from-elec-yellow via-amber-400 to-orange-400"
-            iconColor="text-elec-yellow"
-            iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
-            liveSubtitle={activeEmployees > 0 ? `${activeEmployees} active` : undefined}
-          />
-          <BusinessCard
-            title="Credentials"
-            description="Elec-ID & compliance"
-            icon={CreditCard}
-            onClick={() => onNavigate('elecid')}
-            accentColor="from-purple-500 via-violet-400 to-indigo-400"
-            iconColor="text-purple-400"
-            iconBg="bg-purple-500/10 border border-purple-500/20"
-          />
-          <BusinessCard
-            title="Timesheets"
-            description="Hours & attendance"
-            icon={Clock}
-            onClick={() => onNavigate('timesheets')}
-            accentColor="from-orange-500 via-amber-400 to-red-400"
-            iconColor="text-orange-400"
-            iconBg="bg-orange-500/10 border border-orange-500/20"
-            liveSubtitle={totalHoursThisWeek > 0 ? `${Math.round(totalHoursThisWeek)}h this week` : undefined}
-          />
-          <BusinessCard
-            title="Comms"
-            description="Messages & alerts"
-            icon={MessageSquare}
-            onClick={() => onNavigate('comms')}
-            accentColor="from-cyan-500 via-blue-400 to-blue-500"
-            iconColor="text-cyan-400"
-            iconBg="bg-cyan-500/10 border border-cyan-500/20"
-            liveSubtitle={unreadComms > 0 ? `${unreadComms} unread` : undefined}
-          />
-        </div>
-      </section>
-    </div>
+  const isLoading =
+    employeesLoading ||
+    talentLoading ||
+    appsLoading ||
+    vacanciesLoading ||
+    timesheetsLoading ||
+    commsLoading;
+
+  return (
+    <HubLanding
+      eyebrow="Your firm"
+      title="People"
+      description="Team, credentials, timesheets, comms, talent and vacancies."
+      tone="blue"
+      stats={[
+        { label: 'Team', value: activeEmployees, onClick: onOpenEmployees },
+        { label: 'Credentials', value: activeEmployees, tone: 'emerald' },
+        { label: 'Open vacancies', value: openVacancies, tone: 'blue' },
+        { label: 'Unread messages', value: unreadComms, tone: 'amber' },
+      ]}
+    >
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : (
+        <>
+          <div className="space-y-4 sm:space-y-5">
+            <SectionHeader eyebrow="Hiring" title="Recruitment" />
+            <HubGrid columns={2}>
+              <HubCard
+                tone="blue"
+                number="01"
+                eyebrow="Talent"
+                title="Talent Pool"
+                description="Browse vetted sparkies available for work right now."
+                meta={
+                  availableNowCount > 0
+                    ? `${availableNowCount} available now`
+                    : `${talentCount} in pool`
+                }
+                cta="Open"
+                onClick={onOpenTalentPool}
+              />
+              <HubCard
+                tone="cyan"
+                number="02"
+                eyebrow="Vacancies"
+                title="Job Vacancies"
+                description="Post jobs and manage applications across your firm."
+                meta={
+                  newApplicationsCount > 0
+                    ? `${newApplicationsCount} new applications`
+                    : `${openVacancies} open`
+                }
+                cta="Open"
+                onClick={onOpenVacancies}
+              />
+            </HubGrid>
+          </div>
+
+          <div className="space-y-4 sm:space-y-5">
+            <SectionHeader eyebrow="Day-to-day" title="Your Team" />
+            <HubGrid columns={2}>
+              <HubCard
+                tone="blue"
+                number="03"
+                eyebrow="Workforce"
+                title="Team"
+                description="Operatives, supervisors and PMs on your books."
+                meta={
+                  activeEmployees > 0
+                    ? `${activeEmployees} ${activeEmployees === 1 ? 'employee' : 'employees'}`
+                    : 'No employees yet'
+                }
+                cta="Open"
+                onClick={onOpenEmployees}
+              />
+              <HubCard
+                tone="emerald"
+                number="04"
+                eyebrow="Compliance"
+                title="Credentials / Elec-IDs"
+                description="Cards, qualifications and renewal dates in one place."
+                meta={
+                  activeEmployees > 0
+                    ? `${activeEmployees} profile${activeEmployees === 1 ? '' : 's'}`
+                    : 'No profiles yet'
+                }
+                cta="Open"
+                onClick={onOpenElecID}
+              />
+              <HubCard
+                tone="amber"
+                number="05"
+                eyebrow="Hours"
+                title="Timesheets"
+                description="Approve hours, attendance and weekly submissions."
+                meta={
+                  totalHoursThisWeek > 0
+                    ? `${Math.round(totalHoursThisWeek)}h this week`
+                    : 'No hours logged'
+                }
+                cta="Open"
+                onClick={onOpenTimesheets}
+              />
+              <HubCard
+                tone="purple"
+                number="06"
+                eyebrow="Messaging"
+                title="Communications"
+                description="Internal messages, broadcasts and team alerts."
+                meta={
+                  unreadComms > 0
+                    ? `${unreadComms} unread`
+                    : 'All caught up'
+                }
+                cta="Open"
+                onClick={onOpenComms}
+              />
+            </HubGrid>
+          </div>
+        </>
+      )}
+    </HubLanding>
   );
 }

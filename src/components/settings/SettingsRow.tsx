@@ -1,76 +1,69 @@
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Arrow, Eyebrow } from '@/components/college/primitives';
 
 interface SettingsRowProps {
-  icon?: LucideIcon;
-  iconBg?: string;
-  iconColour?: string;
-  title: string;
-  description?: string;
-  children: React.ReactNode;
+  /** Top label — rendered as uppercase eyebrow */
+  label: string;
+  /** Bottom value — the actual field value */
+  value: React.ReactNode;
+  /** Optional trailing slot (pill, text action, arrow, etc.) */
+  trailing?: React.ReactNode;
+  /** If set, the row becomes a drill-in button and ends with an Arrow */
   onClick?: () => void;
   className?: string;
-  badge?: React.ReactNode;
   disabled?: boolean;
 }
 
+/**
+ * Canonical key/value row for Settings. Label is 10px uppercase white/40,
+ * value is 15px white. If onClick is set, a trailing Arrow is rendered
+ * unless a custom trailing slot is supplied.
+ */
 const SettingsRow: React.FC<SettingsRowProps> = ({
-  icon: Icon,
-  iconBg = 'bg-elec-yellow/10',
-  iconColour = 'text-elec-yellow',
-  title,
-  description,
-  children,
+  label,
+  value,
+  trailing,
   onClick,
   className,
-  badge,
   disabled = false,
 }) => {
-  const Wrapper = onClick ? 'button' : 'div';
-  const wrapperProps = onClick
-    ? {
-        onClick,
-        type: 'button' as const,
-        disabled,
-      }
-    : {};
-
-  return (
-    <Wrapper
-      {...wrapperProps}
-      className={cn(
-        'flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 rounded-lg border transition-all duration-200',
-        'bg-white/5 border-white/10',
-        onClick &&
-          !disabled &&
-          'touch-manipulation cursor-pointer hover:bg-white/[0.08] active:bg-white/[0.12] active:scale-[0.99]',
-        disabled && 'opacity-50 cursor-not-allowed',
-        className
-      )}
-    >
-      <div className="flex items-center gap-3 min-w-0">
-        {Icon && (
-          <div
-            className={cn(
-              'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
-              iconBg
-            )}
-          >
-            <Icon className={cn('h-5 w-5', iconColour)} />
-          </div>
-        )}
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <p className="text-sm font-medium text-foreground truncate">{title}</p>
-            {badge}
-          </div>
-          {description && <p className="text-xs text-muted-foreground truncate">{description}</p>}
-        </div>
+  const Inner = (
+    <>
+      <div className="flex-1 min-w-0">
+        <Eyebrow>{label}</Eyebrow>
+        <div className="mt-1 text-[15px] text-white truncate">{value}</div>
       </div>
-      <div className="flex items-center gap-2 flex-shrink-0 sm:ml-4">{children}</div>
-    </Wrapper>
+      {trailing ? (
+        <div className="shrink-0">{trailing}</div>
+      ) : onClick ? (
+        <Arrow />
+      ) : null}
+    </>
   );
+
+  const base =
+    'w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation';
+
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={disabled}
+        className={cn(
+          base,
+          'group hover:bg-[hsl(0_0%_15%)] transition-colors',
+          disabled && 'opacity-50 cursor-not-allowed',
+          className
+        )}
+      >
+        {Inner}
+      </button>
+    );
+  }
+
+  return <div className={cn(base, className)}>{Inner}</div>;
 };
 
 export default SettingsRow;

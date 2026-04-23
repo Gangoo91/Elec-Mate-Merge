@@ -1,17 +1,10 @@
 import { useState, useCallback, useMemo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
 import { PhotoViewer } from '@/components/employer/PhotoViewer';
 import { PhotoTimeline, type TimelinePhoto } from '@/components/employer/PhotoTimeline';
 import { PhotoMapView, type MapPhoto } from '@/components/employer/PhotoMapView';
 import { PhotoCompareSlider, type ComparePhoto } from '@/components/employer/PhotoCompareSlider';
-import { PhotoGalleryHeader } from '@/components/employer/PhotoGalleryHeader';
 import { PhotoFilterSheet } from '@/components/employer/PhotoFilterSheet';
-import { PhotoViewModeSheet } from '@/components/employer/PhotoViewModeSheet';
 import { UploadPhotoSheet } from '@/components/employer/dialogs/UploadPhotoSheet';
-import { FloatingActionButton } from '@/components/ui/floating-action-button';
 import {
   useJobPhotos,
   useTogglePhotoApproval,
@@ -23,14 +16,33 @@ import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { cn } from '@/lib/utils';
-import { Camera, Check, Eye, User, Clock, Plus } from 'lucide-react';
+import { Camera, Check, Eye, RefreshCw, SlidersHorizontal } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Pill,
+  Dot,
+  Avatar,
+  GroupHeader,
+  PrimaryButton,
+  type Tone,
+} from '@/components/employer/editorial';
 
-const categoryColors: Record<PhotoCategory, string> = {
-  Before: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  During: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
-  After: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-  Completion: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  Issue: 'bg-red-500/20 text-red-400 border-red-500/30',
+const categoryTone: Record<PhotoCategory, Tone> = {
+  Before: 'blue',
+  During: 'amber',
+  After: 'emerald',
+  Completion: 'purple',
+  Issue: 'red',
 };
 
 interface FilterState {
@@ -39,6 +51,8 @@ interface FilterState {
   showApproved: boolean | null;
   showShared: boolean | null;
 }
+
+type ViewMode = 'grid' | 'timeline' | 'map' | 'compare';
 
 export function PhotoGallerySection() {
   const isMobile = useIsMobile();
@@ -54,7 +68,7 @@ export function PhotoGallerySection() {
     showApproved: null,
     showShared: null,
   });
-  const [viewMode, setViewMode] = useState<'grid' | 'list' | 'timeline' | 'map'>('grid');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [viewerOpen, setViewerOpen] = useState(false);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [compareOpen, setCompareOpen] = useState(false);
@@ -62,13 +76,11 @@ export function PhotoGallerySection() {
     before: ComparePhoto;
     after: ComparePhoto;
   } | null>(null);
+  const [openDays, setOpenDays] = useState<Record<string, boolean>>({});
 
-  // Sheet states
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
-  const [viewModeSheetOpen, setViewModeSheetOpen] = useState(false);
   const [uploadSheetOpen, setUploadSheetOpen] = useState(false);
 
-  // Use photos from database
   const photos = photosData;
 
   const handleRefresh = useCallback(async () => {
@@ -76,11 +88,10 @@ export function PhotoGallerySection() {
     toast({ title: 'Photos refreshed' });
   }, [refetch]);
 
-  // Get unique jobs from photos
   const uniqueJobs = useMemo(
     () =>
       Array.from(new Set(photos.map((p) => p.jobId)))
-        .filter((jobId) => jobId) // Filter out empty job IDs
+        .filter((jobId) => jobId)
         .map((jobId) => {
           const job = jobs.find((j) => j.id === jobId);
           return {
@@ -92,7 +103,6 @@ export function PhotoGallerySection() {
     [photos, jobs]
   );
 
-  // Category counts
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     photos.forEach((p) => {
@@ -101,7 +111,6 @@ export function PhotoGallerySection() {
     return counts;
   }, [photos]);
 
-  // Filter photos
   const filteredPhotos = useMemo(() => {
     return photos.filter((photo) => {
       const matchesSearch =
@@ -122,7 +131,6 @@ export function PhotoGallerySection() {
     });
   }, [photos, searchQuery, filters]);
 
-  // Convert to timeline format
   const timelinePhotos: TimelinePhoto[] = useMemo(
     () =>
       filteredPhotos.map((p) => ({
@@ -148,7 +156,6 @@ export function PhotoGallerySection() {
     [filteredPhotos]
   );
 
-  // Convert to map format
   const mapPhotos: MapPhoto[] = useMemo(
     () =>
       filteredPhotos.map((p) => ({
@@ -167,16 +174,16 @@ export function PhotoGallerySection() {
     [filteredPhotos]
   );
 
-  // Stats
-  const stats = useMemo(
-    () => ({
+  const stats = useMemo(() => {
+    const now = new Date();
+    const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+    return {
       total: photos.length,
-      approved: photos.filter((p) => p.approved).length,
-      shared: photos.filter((p) => p.sharedWithClient).length,
-      issues: photos.filter((p) => p.category === 'Issue').length,
-    }),
-    [photos]
-  );
+      thisWeek: photos.filter((p) => new Date(p.timestamp) >= weekAgo).length,
+      jobsCovered: new Set(photos.map((p) => p.jobId).filter(Boolean)).size,
+      geoTagged: photos.filter((p) => p.location?.lat && p.location?.lng).length,
+    };
+  }, [photos]);
 
   const hasActiveFilters =
     filters.categories.length > 0 ||
@@ -217,15 +224,15 @@ export function PhotoGallerySection() {
     });
   };
 
-  const handleCompareClick = () => {
+  const handleCompareClick = useCallback(() => {
     const beforePhotos = filteredPhotos.filter((p) => p.category === 'Before');
     const afterPhotos = filteredPhotos.filter(
       (p) => p.category === 'After' || p.category === 'Completion'
     );
 
     if (beforePhotos.length > 0 && afterPhotos.length > 0) {
-      let beforePhoto = beforePhotos[0];
-      let afterPhoto = afterPhotos.find((a) => a.jobId === beforePhoto.jobId) || afterPhotos[0];
+      const beforePhoto = beforePhotos[0];
+      const afterPhoto = afterPhotos.find((a) => a.jobId === beforePhoto.jobId) || afterPhotos[0];
 
       setComparePhotos({
         before: {
@@ -248,267 +255,359 @@ export function PhotoGallerySection() {
         description: 'Need both Before and After photos to compare',
       });
     }
-  };
+  }, [filteredPhotos]);
 
   const handleUploadClick = () => {
     setUploadSheetOpen(true);
   };
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString('en-GB', {
+  const handleViewModeChange = (value: string) => {
+    const next = value as ViewMode;
+    setViewMode(next);
+    if (next === 'compare') {
+      handleCompareClick();
+    }
+  };
+
+  const formatDayKey = (dateStr: string) =>
+    new Date(dateStr).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'short',
+      year: 'numeric',
+    });
+
+  const formatTime = (dateStr: string) =>
+    new Date(dateStr).toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
     });
-  };
 
-  // Loading state
+  const photosByDay = useMemo(() => {
+    const groups = new Map<string, typeof filteredPhotos>();
+    filteredPhotos
+      .slice()
+      .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+      .forEach((photo) => {
+        const key = formatDayKey(photo.timestamp);
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key)!.push(photo);
+      });
+    return Array.from(groups.entries());
+  }, [filteredPhotos]);
+
+  const toggleDay = (key: string) =>
+    setOpenDays((prev) => ({ ...prev, [key]: prev[key] === false ? true : !prev[key] }));
+
+  const heroActions = (
+    <>
+      <PrimaryButton onClick={handleUploadClick}>Upload</PrimaryButton>
+      <IconButton onClick={handleRefresh} aria-label="Refresh photos">
+        <RefreshCw className="h-4 w-4" />
+      </IconButton>
+    </>
+  );
+
   if (isLoading) {
     return (
-      <div className="space-y-4 pb-20">
-        <div className="flex items-center justify-between">
-          <Skeleton className="h-8 w-32" />
-          <Skeleton className="h-8 w-20" />
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          {Array.from({ length: 9 }).map((_, i) => (
-            <Skeleton key={i} className="aspect-square rounded-lg" />
-          ))}
-        </div>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Photo Gallery"
+          description="Every photo from every job — timeline, map and before/after."
+          tone="cyan"
+          actions={heroActions}
+        />
+        <LoadingBlocks />
+      </PageFrame>
     );
   }
 
+  const filterPills = hasActiveFilters && (
+    <div className="flex flex-wrap items-center gap-2">
+      {filters.categories.map((cat) => (
+        <button
+          key={cat}
+          onClick={() =>
+            setFilters((prev) => ({
+              ...prev,
+              categories: prev.categories.filter((c) => c !== cat),
+            }))
+          }
+          className="touch-manipulation"
+        >
+          <Pill tone={categoryTone[cat as PhotoCategory] ?? 'yellow'}>
+            {cat}
+            <span className="ml-1.5 text-white">×</span>
+          </Pill>
+        </button>
+      ))}
+      {filters.jobs.map((jobId) => {
+        const job = uniqueJobs.find((j) => j.value === jobId);
+        return (
+          <button
+            key={jobId}
+            onClick={() =>
+              setFilters((prev) => ({
+                ...prev,
+                jobs: prev.jobs.filter((j) => j !== jobId),
+              }))
+            }
+            className="touch-manipulation"
+          >
+            <Pill tone="cyan">
+              {job?.label || 'Unknown'}
+              <span className="ml-1.5 text-white">×</span>
+            </Pill>
+          </button>
+        );
+      })}
+      {filters.showApproved && (
+        <button
+          onClick={() => setFilters((prev) => ({ ...prev, showApproved: null }))}
+          className="touch-manipulation"
+        >
+          <Pill tone="emerald">
+            <Check className="h-3 w-3 mr-1" />
+            Approved
+            <span className="ml-1.5 text-white">×</span>
+          </Pill>
+        </button>
+      )}
+      {filters.showShared && (
+        <button
+          onClick={() => setFilters((prev) => ({ ...prev, showShared: null }))}
+          className="touch-manipulation"
+        >
+          <Pill tone="blue">
+            <Eye className="h-3 w-3 mr-1" />
+            Shared
+            <span className="ml-1.5 text-white">×</span>
+          </Pill>
+        </button>
+      )}
+    </div>
+  );
+
   const content = (
-    <div className="space-y-4 pb-20">
-      {/* Compact Header */}
-      <PhotoGalleryHeader
-        stats={stats}
-        searchQuery={searchQuery}
-        onSearchChange={setSearchQuery}
-        onFilterClick={() => setFilterSheetOpen(true)}
-        onViewModeClick={() => setViewModeSheetOpen(true)}
-        hasActiveFilters={hasActiveFilters}
+    <PageFrame>
+      <PageHero
+        eyebrow="Operations"
+        title="Photo Gallery"
+        description="Every photo from every job — timeline, map and before/after."
+        tone="cyan"
+        actions={heroActions}
       />
 
-      {/* Active Filters Pills - Only show when filters are active */}
-      {hasActiveFilters && (
-        <div className="flex flex-wrap gap-2">
-          {filters.categories.map((cat) => (
-            <Badge
-              key={cat}
-              variant="secondary"
-              className={cn('gap-1', categoryColors[cat as PhotoCategory])}
-              onClick={() =>
-                setFilters((prev) => ({
-                  ...prev,
-                  categories: prev.categories.filter((c) => c !== cat),
-                }))
-              }
-            >
-              {cat}
-              <span className="ml-1 opacity-60">×</span>
-            </Badge>
-          ))}
-          {filters.jobs.map((jobId) => {
-            const job = uniqueJobs.find((j) => j.value === jobId);
-            return (
-              <Badge
-                key={jobId}
-                variant="secondary"
-                onClick={() =>
-                  setFilters((prev) => ({
-                    ...prev,
-                    jobs: prev.jobs.filter((j) => j !== jobId),
-                  }))
-                }
-              >
-                {job?.label || 'Unknown'}
-                <span className="ml-1 opacity-60">×</span>
-              </Badge>
-            );
-          })}
-          {filters.showApproved && (
-            <Badge
-              variant="secondary"
-              className="gap-1 bg-success/20 text-success"
-              onClick={() => setFilters((prev) => ({ ...prev, showApproved: null }))}
-            >
-              <Check className="h-3 w-3" />
-              Approved
-              <span className="ml-1 opacity-60">×</span>
-            </Badge>
-          )}
-          {filters.showShared && (
-            <Badge
-              variant="secondary"
-              className="gap-1 bg-info/20 text-info"
-              onClick={() => setFilters((prev) => ({ ...prev, showShared: null }))}
-            >
-              <Eye className="h-3 w-3" />
-              Shared
-              <span className="ml-1 opacity-60">×</span>
-            </Badge>
-          )}
-        </div>
-      )}
+      <StatStrip
+        columns={4}
+        stats={[
+          { label: 'Photos', value: stats.total, tone: 'cyan' },
+          { label: 'This week', value: stats.thisWeek, tone: 'blue' },
+          { label: 'Jobs covered', value: stats.jobsCovered },
+          { label: 'Geo-tagged', value: stats.geoTagged, tone: 'emerald' },
+        ]}
+      />
 
-      {/* Timeline View */}
-      {viewMode === 'timeline' && (
-        <PhotoTimeline
-          photos={timelinePhotos}
-          onPhotoClick={handleTimelinePhotoClick}
-          onToggleApproval={handleToggleApproval}
-          onToggleSharing={handleToggleSharing}
-        />
-      )}
+      <FilterBar
+        tabs={[
+          { value: 'grid', label: 'Grid' },
+          { value: 'timeline', label: 'Timeline' },
+          { value: 'map', label: 'Map' },
+          { value: 'compare', label: 'Compare' },
+        ]}
+        activeTab={viewMode}
+        onTabChange={handleViewModeChange}
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search photos, jobs, notes…"
+        actions={
+          <IconButton
+            onClick={() => setFilterSheetOpen(true)}
+            aria-label="Filter photos"
+            className={cn(hasActiveFilters && 'border-elec-yellow/60 text-elec-yellow')}
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+          </IconButton>
+        }
+      />
 
-      {/* Map View */}
-      {viewMode === 'map' && (
-        <PhotoMapView
-          photos={mapPhotos}
-          onPhotoClick={handleMapPhotoClick}
-          onToggleApproval={handleToggleApproval}
-          onToggleSharing={handleToggleSharing}
-        />
-      )}
+      {filterPills}
 
-      {/* Photo Grid - Optimised for mobile */}
       {viewMode === 'grid' && (
-        <div
-          className={cn(
-            'grid gap-2',
-            isMobile ? 'grid-cols-3' : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'
-          )}
-        >
-          {filteredPhotos.map((photo, index) => (
-            <Card
-              key={photo.id}
-              className="group cursor-pointer overflow-hidden bg-elec-gray border-border/30 touch-feedback"
-              onClick={() => handlePhotoClick(index)}
-            >
-              <div className="relative aspect-square bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
-                <Camera className="h-8 w-8 text-white" />
-
-                {/* Category dot indicator - subtle */}
-                <div
-                  className={cn(
-                    'absolute top-1.5 left-1.5 h-2.5 w-2.5 rounded-full',
-                    photo.category === 'Before' && 'bg-blue-400',
-                    photo.category === 'During' && 'bg-amber-400',
-                    photo.category === 'After' && 'bg-emerald-400',
-                    photo.category === 'Completion' && 'bg-purple-400',
-                    photo.category === 'Issue' && 'bg-red-400'
-                  )}
-                />
-
-                {/* Status indicators - corner */}
-                <div className="absolute top-1.5 right-1.5 flex gap-0.5">
-                  {photo.approved && (
-                    <div className="h-4 w-4 rounded-full bg-success/80 flex items-center justify-center">
-                      <Check className="h-2.5 w-2.5 text-foreground" />
-                    </div>
-                  )}
-                  {photo.sharedWithClient && (
-                    <div className="h-4 w-4 rounded-full bg-info/80 flex items-center justify-center">
-                      <Eye className="h-2.5 w-2.5 text-foreground" />
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Minimal info - only on larger screens */}
-              {!isMobile && (
-                <CardContent className="p-2">
-                  <p className="text-xs font-medium truncate text-foreground">{photo.jobTitle}</p>
-                  <p className="text-[10px] text-white truncate">{photo.uploadedBy}</p>
-                </CardContent>
-              )}
-            </Card>
-          ))}
-        </div>
-      )}
-
-      {/* List View */}
-      {viewMode === 'list' && (
-        <div className="space-y-2">
-          {filteredPhotos.map((photo, index) => (
-            <Card
-              key={photo.id}
-              className="cursor-pointer bg-elec-gray/50 border-border/30 touch-feedback"
-              onClick={() => handlePhotoClick(index)}
-            >
-              <CardContent className="p-3 flex items-center gap-3">
-                <div className="h-14 w-14 rounded-lg bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center flex-shrink-0 relative">
-                  <Camera className="h-6 w-6 text-white" />
-                  <div
-                    className={cn(
-                      'absolute top-1 left-1 h-2 w-2 rounded-full',
-                      photo.category === 'Before' && 'bg-blue-400',
-                      photo.category === 'During' && 'bg-amber-400',
-                      photo.category === 'After' && 'bg-emerald-400',
-                      photo.category === 'Completion' && 'bg-purple-400',
-                      photo.category === 'Issue' && 'bg-red-400'
+        <ListCard>
+          <ListCardHeader
+            tone="cyan"
+            title="All photos"
+            meta={<Pill tone="cyan">{filteredPhotos.length}</Pill>}
+          />
+          {filteredPhotos.length === 0 ? (
+            <div className="p-6">
+              <EmptyState
+                title="No photos found"
+                description={
+                  hasActiveFilters
+                    ? 'Try adjusting your filters or search.'
+                    : 'Upload your first photo to start building the gallery.'
+                }
+                action="Upload photo"
+                onAction={handleUploadClick}
+              />
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 p-4">
+              {filteredPhotos.map((photo, index) => (
+                <button
+                  key={photo.id}
+                  onClick={() => handlePhotoClick(index)}
+                  className="group relative aspect-square rounded-xl overflow-hidden bg-[hsl(0_0%_10%)] border border-white/[0.06] hover:border-white/[0.12] transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60"
+                >
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Camera className="h-7 w-7 text-white" />
+                  </div>
+                  <div className="absolute top-2 left-2">
+                    <Dot tone={categoryTone[photo.category]} />
+                  </div>
+                  <div className="absolute top-2 right-2 flex gap-1">
+                    {photo.approved && (
+                      <span className="h-4 w-4 rounded-full bg-emerald-500 flex items-center justify-center">
+                        <Check className="h-2.5 w-2.5 text-black" />
+                      </span>
                     )}
-                  />
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-sm font-medium text-foreground truncate">
+                    {photo.sharedWithClient && (
+                      <span className="h-4 w-4 rounded-full bg-blue-500 flex items-center justify-center">
+                        <Eye className="h-2.5 w-2.5 text-black" />
+                      </span>
+                    )}
+                  </div>
+                  <div className="absolute inset-x-0 bottom-0 px-2 py-1.5 bg-gradient-to-t from-black/80 to-transparent">
+                    <div className="text-[10px] font-medium text-white truncate">
                       {photo.jobTitle}
-                    </span>
-                    <Badge
-                      variant="outline"
-                      className={cn('text-[10px] px-1.5 py-0', categoryColors[photo.category])}
-                    >
-                      {photo.category}
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-white truncate">{photo.notes}</p>
-                  <div className="flex items-center gap-3 mt-1 text-[10px] text-white">
-                    <span className="flex items-center gap-1">
-                      <User className="h-2.5 w-2.5" />
-                      {photo.uploadedBy}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-2.5 w-2.5" />
-                      {formatDate(photo.timestamp)}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1 flex-shrink-0">
-                  {photo.approved && (
-                    <div className="h-5 w-5 rounded-full bg-success/20 flex items-center justify-center">
-                      <Check className="h-3 w-3 text-success" />
                     </div>
-                  )}
-                  {photo.sharedWithClient && (
-                    <div className="h-5 w-5 rounded-full bg-info/20 flex items-center justify-center">
-                      <Eye className="h-3 w-3 text-info" />
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+        </ListCard>
       )}
 
-      {/* Empty State */}
-      {filteredPhotos.length === 0 && (viewMode === 'grid' || viewMode === 'list') && (
-        <Card className="bg-elec-gray/50 border-border/30">
-          <CardContent className="p-12 text-center">
-            <Camera className="h-12 w-12 mx-auto text-white mb-4" />
-            <p className="text-white font-medium">No photos found</p>
-            <p className="text-xs text-white mt-1">Try adjusting your filters</p>
-          </CardContent>
-        </Card>
+      {viewMode === 'timeline' && (
+        <ListCard>
+          <ListCardHeader
+            tone="cyan"
+            title="Timeline"
+            meta={<Pill tone="cyan">{filteredPhotos.length}</Pill>}
+          />
+          {filteredPhotos.length === 0 ? (
+            <div className="p-6">
+              <EmptyState
+                title="No photos found"
+                description="Try adjusting your filters or search."
+              />
+            </div>
+          ) : (
+            <div className="divide-y divide-white/[0.06]">
+              {photosByDay.map(([day, dayPhotos]) => {
+                const isOpen = openDays[day] !== false;
+                return (
+                  <div key={day}>
+                    <GroupHeader
+                      tone="cyan"
+                      label={day}
+                      count={dayPhotos.length}
+                      open={isOpen}
+                      onClick={() => toggleDay(day)}
+                    />
+                    {isOpen && (
+                      <ListBody>
+                        {dayPhotos.map((photo) => {
+                          const index = filteredPhotos.findIndex((p) => p.id === photo.id);
+                          return (
+                            <ListRow
+                              key={photo.id}
+                              accent={categoryTone[photo.category]}
+                              lead={
+                                <Avatar
+                                  initials={photo.uploadedBy
+                                    .split(' ')
+                                    .map((n) => n[0])
+                                    .join('')
+                                    .toUpperCase()
+                                    .slice(0, 2)}
+                                />
+                              }
+                              title={photo.jobTitle}
+                              subtitle={`${photo.uploadedBy} · ${formatTime(photo.timestamp)}${
+                                photo.notes ? ` · ${photo.notes}` : ''
+                              }`}
+                              trailing={
+                                <>
+                                  <Pill tone={categoryTone[photo.category]}>{photo.category}</Pill>
+                                  {photo.approved && <Pill tone="emerald">Approved</Pill>}
+                                  {photo.sharedWithClient && <Pill tone="blue">Shared</Pill>}
+                                </>
+                              }
+                              onClick={() => handlePhotoClick(index)}
+                            />
+                          );
+                        })}
+                      </ListBody>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </ListCard>
       )}
 
-      {/* Photo Viewer */}
+      {viewMode === 'map' && (
+        <ListCard>
+          <ListCardHeader
+            tone="cyan"
+            title="Map"
+            meta={<Pill tone="cyan">{stats.geoTagged} geo-tagged</Pill>}
+          />
+          <div className="p-4">
+            <div className="rounded-xl overflow-hidden border border-white/[0.06]">
+              <PhotoMapView
+                photos={mapPhotos}
+                onPhotoClick={handleMapPhotoClick}
+                onToggleApproval={handleToggleApproval}
+                onToggleSharing={handleToggleSharing}
+              />
+            </div>
+          </div>
+        </ListCard>
+      )}
+
+      {viewMode === 'compare' && (
+        <ListCard>
+          <ListCardHeader tone="cyan" title="Before & after" />
+          <div className="p-4">
+            {comparePhotos ? (
+              <div className="rounded-xl overflow-hidden border border-white/[0.06]">
+                <PhotoTimeline
+                  photos={timelinePhotos.filter(
+                    (p) => p.category === 'before' || p.category === 'after' || p.category === 'completion'
+                  )}
+                  onPhotoClick={handleTimelinePhotoClick}
+                  onToggleApproval={handleToggleApproval}
+                  onToggleSharing={handleToggleSharing}
+                />
+              </div>
+            ) : (
+              <EmptyState
+                title="No comparison ready"
+                description="Need both Before and After photos in the same job to launch the slider."
+                action="Open compare slider"
+                onAction={handleCompareClick}
+              />
+            )}
+          </div>
+        </ListCard>
+      )}
+
       <PhotoViewer
         photos={filteredPhotos}
         currentIndex={currentPhotoIndex}
@@ -519,7 +618,6 @@ export function PhotoGallerySection() {
         onToggleSharing={handleToggleSharing}
       />
 
-      {/* Compare Slider */}
       {comparePhotos && (
         <PhotoCompareSlider
           beforePhoto={comparePhotos.before}
@@ -529,7 +627,6 @@ export function PhotoGallerySection() {
         />
       )}
 
-      {/* Filter Sheet */}
       <PhotoFilterSheet
         isOpen={filterSheetOpen}
         onClose={() => setFilterSheetOpen(false)}
@@ -539,27 +636,8 @@ export function PhotoGallerySection() {
         categoryCounts={categoryCounts}
       />
 
-      {/* View Mode Sheet */}
-      <PhotoViewModeSheet
-        isOpen={viewModeSheetOpen}
-        onClose={() => setViewModeSheetOpen(false)}
-        currentMode={viewMode}
-        onModeChange={setViewMode}
-        onCompareClick={handleCompareClick}
-      />
-
-      {/* Upload Photo Sheet */}
       <UploadPhotoSheet open={uploadSheetOpen} onOpenChange={setUploadSheetOpen} />
-
-      {/* Floating Action Button for Upload */}
-      {isMobile && (
-        <FloatingActionButton
-          icon={<Plus className="h-6 w-6" />}
-          onClick={handleUploadClick}
-          label="Upload Photo"
-        />
-      )}
-    </div>
+    </PageFrame>
   );
 
   return isMobile ? (

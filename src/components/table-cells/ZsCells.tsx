@@ -27,7 +27,7 @@ const ZsCellsComponent: React.FC<ZsCellsProps> = ({ result, onUpdate, validation
           onValueChange={(value) => onUpdate(result.id, 'polarity', value)}
         >
           <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
-            <SelectValue placeholder="Polarity" className="truncate" />
+            <SelectValue placeholder="—" className="truncate" />
           </SelectTrigger>
           <SelectContent className="bg-background border border-border rounded-md z-[9999] min-w-[160px]">
             <SelectItem value="Correct" className="text-xs text-white">
@@ -43,14 +43,20 @@ const ZsCellsComponent: React.FC<ZsCellsProps> = ({ result, onUpdate, validation
         </Select>
       </TableCell>
 
-      {/* Column 25: Maximum measured (Zs) */}
+      {/* Column 25: Maximum measured (Zs) — format to 2 dp on blur for neat display */}
       <TableCell className="p-0 h-8 align-middle w-24 min-w-[85px] max-w-[85px]">
         <EnhancedValidatedInput
           value={result.zs || ''}
           onChange={(value) => onUpdate(result.id, 'zs', value)}
+          onCommit={(value) => {
+            const num = parseFloat(value);
+            if (!Number.isFinite(num)) return;
+            const formatted = num.toFixed(2);
+            if (formatted !== value) onUpdate(result.id, 'zs', formatted);
+          }}
           validation={validation?.zs}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-          placeholder="Ω"
+          placeholder="—"
         />
       </TableCell>
     </>

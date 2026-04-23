@@ -1,6 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import {
   Star,
@@ -137,30 +135,37 @@ export function PremiumTalentCard({
   const topSkills = skills.slice(0, 3);
 
   return (
-    <Card
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick();
+        }
+      }}
       className={`
-        group relative overflow-hidden rounded-xl
-        bg-card/80 backdrop-blur-sm
-        border transition-all duration-300
-        hover:shadow-lg active:scale-[0.99]
-        touch-manipulation
-        ${tier.border}
+        group relative overflow-hidden rounded-2xl
+        bg-[hsl(0_0%_12%)]
+        border border-white/[0.06] transition-colors
+        hover:bg-[hsl(0_0%_14%)] active:scale-[0.99]
+        touch-manipulation cursor-pointer
         ${
           isInLabourBank
-            ? 'ring-2 ring-success/40 shadow-success/10'
-            : 'hover:border-elec-yellow/30'
+            ? 'ring-2 ring-green-400/40'
+            : ''
         }
       `}
-      onClick={onClick}
     >
       {/* Labour Bank Indicator */}
       {isInLabourBank && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-success via-success to-success/50" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-green-400/70 via-emerald-400/70 to-green-400/30" />
       )}
 
       {/* Compact Status Bar */}
       <div
-        className={`px-4 py-2 flex items-center justify-between border-b border-border/50 bg-gradient-to-r ${tier.gradient}`}
+        className={`px-4 py-2 flex items-center justify-between border-b border-white/[0.06] bg-gradient-to-r ${tier.gradient}`}
       >
         <div className="flex items-center gap-2">
           <Badge
@@ -171,33 +176,33 @@ export function PremiumTalentCard({
             {verificationTier === 'verified' && <Shield className="h-3 w-3 mr-1" />}
             {tier.label}
           </Badge>
-          <div className="flex items-center gap-1 text-sm text-foreground/70">
-            <Star className="h-3.5 w-3.5 text-warning fill-warning" />
-            <span className="font-medium text-foreground">{rating.toFixed(1)}</span>
-            {completedJobs > 0 && <span className="text-xs">({completedJobs})</span>}
+          <div className="flex items-center gap-1 text-sm text-white">
+            <Star className="h-3.5 w-3.5 text-elec-yellow fill-elec-yellow" />
+            <span className="font-medium text-white">{rating.toFixed(1)}</span>
+            {completedJobs > 0 && <span className="text-xs text-white">({completedJobs})</span>}
           </div>
         </div>
-        <div className="flex items-center gap-1 text-sm text-foreground/70">
+        <div className="flex items-center gap-1 text-sm text-white">
           <MapPin className="h-3.5 w-3.5" />
           <span>{distance}mi away</span>
         </div>
       </div>
 
       {/* Main Content */}
-      <CardContent className="p-4 space-y-3">
+      <div className="p-4 space-y-3">
         {/* Worker Info Row */}
         <div className="flex items-center gap-3">
           {/* Avatar */}
           <div className="relative shrink-0">
-            <Avatar className="w-12 h-12 ring-2 ring-border">
+            <Avatar className="w-12 h-12 ring-2 ring-white/[0.08]">
               <AvatarImage src={avatar} alt={name} />
               <AvatarFallback className={`${tier.iconBg} ${tier.color} font-bold`}>
                 {initials}
               </AvatarFallback>
             </Avatar>
             {isAvailableNow && (
-              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-success rounded-full border-2 border-background flex items-center justify-center">
-                <Check className="h-2.5 w-2.5 text-success-foreground" />
+              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 bg-green-500 rounded-full border-2 border-[hsl(0_0%_12%)] flex items-center justify-center">
+                <Check className="h-2.5 w-2.5 text-white" />
               </div>
             )}
           </div>
@@ -205,15 +210,15 @@ export function PremiumTalentCard({
           {/* Name & Details */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-foreground truncate">{name}</h3>
+              <h3 className="font-semibold text-white truncate">{name}</h3>
               {isInLabourBank && (
-                <div className="shrink-0 p-1 bg-success/20 rounded-full">
-                  <Zap className="h-3 w-3 text-success" />
+                <div className="shrink-0 p-1 bg-green-500/20 rounded-full">
+                  <Zap className="h-3 w-3 text-green-400" />
                 </div>
               )}
             </div>
-            {currentRole && <p className="text-sm text-foreground/80 truncate">{currentRole}</p>}
-            <div className="flex items-center gap-2 text-xs text-foreground/70 mt-0.5">
+            {currentRole && <p className="text-sm text-white truncate">{currentRole}</p>}
+            <div className="flex items-center gap-2 text-xs text-white mt-0.5">
               {totalYearsExperience !== undefined && totalYearsExperience > 0 && (
                 <>
                   <span className="flex items-center gap-1">
@@ -224,16 +229,16 @@ export function PremiumTalentCard({
                 </>
               )}
               {labourBankRate ? (
-                <span className="font-semibold text-success">£{labourBankRate}/day</span>
+                <span className="font-semibold text-green-400">£{labourBankRate}/day</span>
               ) : (
-                <span className="font-semibold text-foreground">£{dayRate}/day</span>
+                <span className="font-semibold text-white">£{dayRate}/day</span>
               )}
             </div>
           </div>
 
           {/* Availability Badge */}
           {isAvailableNow && (
-            <Badge className="shrink-0 bg-success/10 text-success border-success/30 text-xs">
+            <Badge className="shrink-0 bg-green-500/10 text-green-400 border-green-500/30 text-xs">
               <Clock className="h-3 w-3 mr-1" />
               Available
             </Badge>
@@ -247,13 +252,13 @@ export function PremiumTalentCard({
               <Badge
                 key={skill}
                 variant="secondary"
-                className="text-xs bg-primary/10 text-primary border border-primary/20"
+                className="text-xs bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20"
               >
                 {skill}
               </Badge>
             ))}
             {skills.length > 3 && (
-              <Badge variant="outline" className="text-xs text-foreground/70">
+              <Badge variant="outline" className="text-xs text-white border-white/[0.1]">
                 +{skills.length - 3} more
               </Badge>
             )}
@@ -267,13 +272,13 @@ export function PremiumTalentCard({
               <Badge
                 key={spec}
                 variant="secondary"
-                className="text-xs bg-white/5 border border-white/10"
+                className="text-xs bg-white/[0.04] text-white border border-white/[0.08]"
               >
                 {spec}
               </Badge>
             ))}
             {specialisms.length > 3 && (
-              <Badge variant="outline" className="text-xs text-foreground/70">
+              <Badge variant="outline" className="text-xs text-white border-white/[0.1]">
                 +{specialisms.length - 3} more
               </Badge>
             )}
@@ -281,7 +286,7 @@ export function PremiumTalentCard({
         )}
 
         {/* ECS Card & Credentials Row */}
-        <div className="flex items-center justify-between text-xs text-foreground/70 pt-1 border-t border-border/30">
+        <div className="flex items-center justify-between text-xs text-white pt-1 border-t border-white/[0.06]">
           <div className="flex items-center gap-2">
             {/* ECS Card Badge */}
             <Badge
@@ -293,28 +298,27 @@ export function PremiumTalentCard({
             </Badge>
             {topCredentials.length > 0 && (
               <span className="flex items-center gap-1">
-                <CheckCircle2 className="h-3 w-3 text-success" />
+                <CheckCircle2 className="h-3 w-3 text-green-400" />
                 {topCredentials.length} quals
               </span>
             )}
             {verifiedDocsCount > 0 && (
               <span className="flex items-center gap-1">
-                <FileCheck className="h-3 w-3 text-success" />
+                <FileCheck className="h-3 w-3 text-green-400" />
                 {verifiedDocsCount} docs
               </span>
             )}
           </div>
           {elecIdNumber && (
-            <span className="flex items-center gap-1 font-mono text-xs">{elecIdNumber}</span>
+            <span className="flex items-center gap-1 font-mono text-xs text-white">{elecIdNumber}</span>
           )}
         </div>
 
         {/* Action Buttons */}
         <div className="flex gap-2 pt-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className={`flex-1 h-11 touch-manipulation ${isSaved ? 'text-elec-yellow' : ''}`}
+          <button
+            type="button"
+            className={`flex-1 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12.5px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation inline-flex items-center justify-center ${isSaved ? 'text-elec-yellow' : 'text-white'}`}
             onClick={(e) => {
               e.stopPropagation();
               onSave();
@@ -322,11 +326,10 @@ export function PremiumTalentCard({
           >
             <Heart className={`h-4 w-4 mr-1.5 ${isSaved ? 'fill-elec-yellow' : ''}`} />
             {isSaved ? 'Saved' : 'Save'}
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className="flex-1 h-11 touch-manipulation"
+          </button>
+          <button
+            type="button"
+            className="flex-1 h-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12.5px] font-medium text-white hover:bg-white/[0.08] transition-colors touch-manipulation inline-flex items-center justify-center"
             onClick={(e) => {
               e.stopPropagation();
               onMessage();
@@ -334,11 +337,11 @@ export function PremiumTalentCard({
           >
             <MessageSquare className="h-4 w-4 mr-1.5" />
             Message
-          </Button>
+          </button>
           {isInLabourBank ? (
-            <Button
-              size="sm"
-              className="flex-1 h-11 bg-success hover:bg-success/90 text-success-foreground font-medium touch-manipulation"
+            <button
+              type="button"
+              className="flex-1 h-11 rounded-full bg-green-500 hover:bg-green-500/90 text-white text-[12.5px] font-semibold touch-manipulation inline-flex items-center justify-center"
               onClick={(e) => {
                 e.stopPropagation();
                 onBook();
@@ -346,11 +349,11 @@ export function PremiumTalentCard({
             >
               <Calendar className="h-4 w-4 mr-1.5" />
               Book
-            </Button>
+            </button>
           ) : (
-            <Button
-              size="sm"
-              className="flex-1 h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-yellow-foreground font-medium touch-manipulation"
+            <button
+              type="button"
+              className="flex-1 h-11 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12.5px] font-semibold touch-manipulation inline-flex items-center justify-center"
               onClick={(e) => {
                 e.stopPropagation();
                 onBook();
@@ -358,11 +361,11 @@ export function PremiumTalentCard({
             >
               <Briefcase className="h-4 w-4 mr-1.5" />
               Hire
-            </Button>
+            </button>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

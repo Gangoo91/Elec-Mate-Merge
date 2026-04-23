@@ -1,31 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import useSEO from '@/hooks/useSEO';
-import {
-  User,
-  IdCard,
-  Building2,
-  Settings2,
-  Shield,
-  CreditCard,
-  LogOut,
-  Crown,
-  Zap,
-  ChevronLeft,
-  ChevronRight,
-  ArrowLeft,
-  Gift,
-} from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import {
+  PageFrame,
+  Eyebrow,
+  containerVariants,
+  itemVariants,
+} from '@/components/college/primitives';
 
-// Import tab components
+// Tab components
 import AccountTab from '@/components/settings/AccountTab';
 import ElecIdTab from '@/components/settings/ElecIdTab';
 import BusinessTab from '@/components/settings/BusinessTab';
@@ -35,26 +25,23 @@ import BillingTab from '@/components/settings/BillingTab';
 import ReferralsTab from '@/components/settings/ReferralsTab';
 import SettingsNavGrid from '@/components/settings/SettingsNavGrid';
 
-// New 6-tab configuration (reduced from 10)
 const SETTINGS_TABS = [
-  { id: 'account', label: 'Account', icon: User, component: AccountTab },
-  { id: 'elec-id', label: 'Elec-ID', icon: IdCard, component: ElecIdTab },
-  { id: 'business', label: 'Business', icon: Building2, component: BusinessTab },
-  { id: 'preferences', label: 'Preferences', icon: Settings2, component: PreferencesTab },
-  { id: 'privacy', label: 'Privacy', icon: Shield, component: PrivacyTab },
-  { id: 'billing', label: 'Billing', icon: CreditCard, component: BillingTab },
-  { id: 'referrals', label: 'Refer a Mate', icon: Gift, component: ReferralsTab },
+  { id: 'account', label: 'Account', component: AccountTab },
+  { id: 'elec-id', label: 'Elec-ID', component: ElecIdTab },
+  { id: 'business', label: 'Business', component: BusinessTab },
+  { id: 'preferences', label: 'Preferences', component: PreferencesTab },
+  { id: 'privacy', label: 'Privacy', component: PrivacyTab },
+  { id: 'billing', label: 'Billing', component: BillingTab },
+  { id: 'referrals', label: 'Refer a Mate', component: ReferralsTab },
 ];
 
 const SettingsPage = () => {
-  const { user, signOut, isSubscribed, subscriptionTier } = useAuth();
-  const { addNotification } = useNotifications();
+  const { user, profile, signOut, isSubscribed, subscriptionTier } = useAuth();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryClient = useQueryClient();
 
-  // Private page - don't index
   useSEO({
     title: 'Settings',
     description: 'Manage your Elec-Mate account, billing, notifications, and preferences',
@@ -64,9 +51,8 @@ const SettingsPage = () => {
   // Handle Stripe Connect return
   useEffect(() => {
     const stripeParam = searchParams.get('stripe');
-
     if (stripeParam === 'success') {
-      toast.success('Stripe Connected Successfully!', {
+      toast.success('Stripe Connected Successfully', {
         description: 'You can now accept card payments on invoices.',
         duration: 5000,
       });
@@ -74,7 +60,6 @@ const SettingsPage = () => {
       setSearchParams(searchParams, { replace: true });
       queryClient.invalidateQueries({ queryKey: ['stripe-connect-status'] });
     }
-
     if (stripeParam === 'refresh') {
       toast.info('Please complete Stripe setup to accept payments.');
       searchParams.delete('stripe');
@@ -82,11 +67,8 @@ const SettingsPage = () => {
     }
   }, [searchParams, setSearchParams, queryClient]);
 
-  // Get tab from URL - null means show grid on mobile
+  // Tab routing — null = show grid on mobile; desktop always defaults to account
   const tabParam = searchParams.get('tab');
-
-  // Mobile: null = show grid, string = show detail
-  // Desktop: always show tabs (default to account)
   const selectedTab = isMobile ? tabParam : tabParam || 'account';
   const activeDesktopTab = tabParam || 'account';
 
@@ -100,40 +82,10 @@ const SettingsPage = () => {
   };
   const setActiveDesktopTab = (tab: string) => setSearchParams({ tab }, { replace: false });
 
-  const tabsRef = useRef<HTMLDivElement>(null);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(false);
-
   const activeTabConfig = SETTINGS_TABS.find(
     (tab) => tab.id === (isMobile ? selectedTab : activeDesktopTab)
   );
   const TabComponent = activeTabConfig?.component || AccountTab;
-  const TabIcon = activeTabConfig?.icon || User;
-
-  // Check scroll position for arrow visibility
-  const checkScrollArrows = () => {
-    if (tabsRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = tabsRef.current;
-      setShowLeftArrow(scrollLeft > 0);
-      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 5);
-    }
-  };
-
-  useEffect(() => {
-    checkScrollArrows();
-    window.addEventListener('resize', checkScrollArrows);
-    return () => window.removeEventListener('resize', checkScrollArrows);
-  }, []);
-
-  const scrollTabs = (direction: 'left' | 'right') => {
-    if (tabsRef.current) {
-      const scrollAmount = 200;
-      tabsRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth',
-      });
-    }
-  };
 
   const handleSignOut = async () => {
     await signOut();
@@ -145,157 +97,149 @@ const SettingsPage = () => {
     setActiveDesktopTab(tabId);
   };
 
-  const handleMobileBack = () => {
-    setSelectedTab(null);
-  };
+  const handleMobileBack = () => setSelectedTab(null);
 
   const handleDesktopTabSelect = (tabId: string) => {
     setActiveDesktopTab(tabId);
     setSelectedTab(tabId);
   };
 
-  const userInitials = user?.email ? user.email.substring(0, 2).toUpperCase() : 'EM';
+  const displayName = profile?.full_name || user?.email?.split('@')[0] || '';
+  const tierLabel = isSubscribed ? subscriptionTier || 'Pro' : 'Free';
+  const tierToneClass = isSubscribed ? 'text-elec-yellow' : 'text-blue-400';
 
-  // Mobile View
+  /* ────────────────────────────────────────────
+     Mobile view
+     ──────────────────────────────────────────── */
   if (isMobile) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95">
-        {/* Back Button */}
-        <div className="px-4 pt-4">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
-            onClick={() => navigate('/dashboard')}
-          >
-            <ArrowLeft className="mr-2 h-5 w-5" />
-            Back to Dashboard
-          </Button>
-        </div>
-
+      <div className="min-h-screen bg-[#0a0a0a]">
         <AnimatePresence mode="wait" initial={false}>
           {selectedTab === null ? (
-            // Mobile Grid View (List)
             <motion.div
               key="grid"
-              initial={{ opacity: 0, x: -30 }}
+              initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -30 }}
+              exit={{ opacity: 0, x: -20 }}
               transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-              className="min-h-screen"
             >
-              {/* Mobile Header */}
-              <div className="sticky top-0 z-20 bg-elec-dark border-b border-white/[0.06]">
-                <div className="px-4 py-4">
-                  <div className="flex items-center justify-between">
-                    {/* User Info */}
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-elec-yellow to-elec-yellow/70 flex items-center justify-center text-elec-dark font-bold text-base shadow-lg shadow-elec-yellow/20">
-                        {userInitials}
-                      </div>
-                      <div>
-                        <h1 className="text-lg font-bold text-white">Settings</h1>
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs text-white truncate max-w-[140px]">
-                            {user?.email || 'user@example.com'}
-                          </span>
-                          {isSubscribed ? (
-                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-elec-yellow/20 text-elec-yellow text-[10px] font-semibold">
-                              <Crown className="h-2.5 w-2.5" />
-                              {subscriptionTier || 'Pro'}
-                            </span>
-                          ) : (
-                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-white/10 text-white text-[10px]">
-                              Free
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
+              {/* Back button */}
+              <div className="px-5 pt-4">
+                <Button
+                  variant="ghost"
+                  onClick={() => navigate('/dashboard')}
+                  className="-ml-2 h-11 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                >
+                  <span className="mr-2">{'\u2190'}</span>
+                  Back to Dashboard
+                </Button>
+              </div>
 
-                    {/* Sign Out */}
+              {/* Hero */}
+              <div className="relative px-5 pt-4 pb-6">
+                <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/40 to-transparent" />
+                <Eyebrow>Account</Eyebrow>
+                <h1 className="mt-1.5 text-3xl font-semibold text-white tracking-tight leading-[1.05]">
+                  Settings
+                </h1>
+                <div className="mt-3 flex items-center flex-wrap gap-2">
+                  <span className="text-[13px] text-white truncate">
+                    {displayName || 'Your account'}
+                  </span>
+                  <span className={cn('text-[11px] font-medium uppercase tracking-[0.15em]', tierToneClass)}>
+                    {tierLabel}
+                  </span>
+                </div>
+                <div className="mt-1 text-[12px] text-white/65 truncate">
+                  {user?.email || 'user@example.com'}
+                </div>
+
+                <div className="mt-5 flex items-center gap-2">
+                  {!isSubscribed && (
                     <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-11 w-11 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-95"
-                      onClick={handleSignOut}
+                      onClick={() => navigate('/subscriptions')}
+                      className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation rounded-full px-5"
                     >
-                      <LogOut className="h-5 w-5" />
+                      Upgrade
                     </Button>
-                  </div>
+                  )}
+                  <Button
+                    variant="ghost"
+                    onClick={handleSignOut}
+                    className="h-11 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation rounded-full px-5"
+                  >
+                    Sign Out
+                  </Button>
                 </div>
               </div>
 
-              {/* Mobile Content */}
-              <div className="px-4 py-6">
-                {/* Upgrade Banner */}
-                {!isSubscribed && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-elec-yellow/20 via-elec-yellow/10 to-transparent border border-elec-yellow/20"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
-                          <Zap className="h-5 w-5 text-elec-yellow" />
-                        </div>
-                        <div>
-                          <p className="text-sm font-semibold text-white">Go Premium</p>
-                          <p className="text-xs text-white">Unlock all features</p>
-                        </div>
-                      </div>
-                      <Button
-                        onClick={() => navigate('/subscriptions')}
-                        size="sm"
-                        className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
-                      >
-                        Upgrade
-                      </Button>
-                    </div>
-                  </motion.div>
-                )}
-
-                {/* Settings Grid */}
+              {/* Grid */}
+              <div className="px-5 pb-20">
                 <SettingsNavGrid onSelect={handleMobileTabSelect} isSubscribed={isSubscribed} />
               </div>
             </motion.div>
           ) : (
-            // Mobile Detail View
             <motion.div
               key="detail"
-              initial={{ opacity: 0, x: 30 }}
+              initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 30 }}
+              exit={{ opacity: 0, x: 20 }}
               transition={{ type: 'spring', stiffness: 400, damping: 35 }}
-              className="min-h-screen"
             >
-              {/* Detail Header */}
-              <div className="sticky top-0 z-20 bg-elec-dark border-b border-white/[0.06]">
-                <div className="px-4 py-4">
-                  <div className="flex items-center gap-3">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={handleMobileBack}
-                      className="h-11 w-11 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-95"
-                    >
-                      <ArrowLeft className="h-5 w-5" />
-                    </Button>
-                    <div className="flex items-center gap-2">
-                      <TabIcon className="h-5 w-5 text-elec-yellow" />
-                      <h1 className="text-lg font-semibold text-white">
-                        {activeTabConfig?.label || 'Settings'}
-                      </h1>
-                    </div>
+              {/* Sticky detail header */}
+              <div className="sticky top-0 z-20 bg-[#0a0a0a]/95 backdrop-blur border-b border-white/[0.06]">
+                <div className="px-5 py-3 flex items-center gap-3">
+                  <Button
+                    variant="ghost"
+                    onClick={handleMobileBack}
+                    className="-ml-2 h-11 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
+                  >
+                    <span className="mr-2">{'\u2190'}</span>
+                    Back
+                  </Button>
+                  <div className="flex-1 min-w-0 text-center">
+                    <h1 className="text-[15px] font-semibold text-white truncate">
+                      {activeTabConfig?.label || 'Settings'}
+                    </h1>
+                  </div>
+                  <div className="w-[72px]" />
+                </div>
+
+                {/* Segmented scrollable pill bar (mobile tabs) */}
+                <div className="px-3 pb-3 overflow-x-auto hide-scrollbar">
+                  <div className="flex items-center gap-1.5">
+                    {SETTINGS_TABS.map((tab) => {
+                      const isActive = tab.id === selectedTab;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => setSelectedTab(tab.id)}
+                          className={cn(
+                            'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+                            isActive
+                              ? 'bg-elec-yellow text-black'
+                              : 'bg-white/[0.04] text-white/70 hover:text-white'
+                          )}
+                        >
+                          {tab.label}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
 
-              {/* Detail Content */}
-              <div className="px-4 py-6">
-                <TabComponent />
-              </div>
+              {/* Content */}
+              <motion.div
+                variants={containerVariants}
+                initial="hidden"
+                animate="visible"
+                className="px-5 py-6 pb-20"
+              >
+                <motion.div variants={itemVariants}>
+                  <TabComponent />
+                </motion.div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -303,159 +247,96 @@ const SettingsPage = () => {
     );
   }
 
-  // Desktop View
+  /* ────────────────────────────────────────────
+     Desktop view
+     ──────────────────────────────────────────── */
   return (
-    <div className="min-h-screen bg-gradient-to-b from-elec-dark via-elec-dark to-elec-dark/95 animate-fade-in">
-      {/* Back Button */}
-      <div className="px-4 md:px-6 lg:px-8 pt-4 max-w-[1600px] mx-auto">
+    <div className="min-h-screen bg-[#0a0a0a]">
+      <div className="px-6 sm:px-8 pt-4 mx-auto max-w-7xl">
         <Button
           variant="ghost"
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
           onClick={() => navigate('/dashboard')}
+          className="-ml-2 h-11 text-white hover:text-white hover:bg-white/[0.05] touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <span className="mr-2">{'\u2190'}</span>
           Back to Dashboard
         </Button>
       </div>
 
-      {/* Desktop Header */}
-      <div className="border-b border-white/[0.06] bg-elec-dark sticky top-0 z-20">
-        <div className="px-4 md:px-6 lg:px-8 py-4 max-w-[1600px] mx-auto">
-          <div className="flex items-center justify-between gap-4">
-            {/* Left: User Info */}
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br from-elec-yellow to-elec-yellow/70 flex items-center justify-center text-elec-dark font-bold text-sm md:text-base shadow-lg shadow-elec-yellow/20">
-                {userInitials}
-              </div>
-              <div className="min-w-0 hidden sm:block">
-                <h1 className="text-lg md:text-xl font-bold text-white truncate">Settings</h1>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-white truncate">
-                    {user?.email || 'user@example.com'}
-                  </span>
-                  {isSubscribed ? (
-                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-elec-yellow/20 text-elec-yellow text-xs font-medium flex-shrink-0">
-                      <Crown className="h-3 w-3" />
-                      {subscriptionTier || 'Pro'}
-                    </span>
-                  ) : (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white/10 text-white text-xs flex-shrink-0">
-                      Free
-                    </span>
-                  )}
-                </div>
-              </div>
-              <h1 className="text-lg font-bold text-white sm:hidden">Settings</h1>
+      <PageFrame className="px-6 sm:px-8">
+        {/* Hero */}
+        <div className="relative pt-6 sm:pt-8 lg:pt-10 pb-2 flex items-end justify-between gap-4 sm:gap-6">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/40 to-transparent" />
+          <div className="min-w-0 flex-1">
+            <Eyebrow>Account</Eyebrow>
+            <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
+              Settings
+            </h1>
+            <div className="mt-3 flex items-center flex-wrap gap-2">
+              <span className="text-[13px] sm:text-sm text-white truncate">
+                {displayName || 'Your account'}
+              </span>
+              <span className={cn('text-[11px] font-medium uppercase tracking-[0.15em]', tierToneClass)}>
+                {tierLabel}
+              </span>
             </div>
-
-            {/* Right: Actions */}
-            <div className="flex items-center gap-2 flex-shrink-0">
-              {!isSubscribed && (
-                <Button
-                  onClick={() => navigate('/subscriptions')}
-                  size="sm"
-                  className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold hidden sm:flex"
-                >
-                  <Zap className="h-4 w-4 mr-1.5" />
-                  Upgrade
-                </Button>
-              )}
+            <div className="mt-1 text-[12px] sm:text-[13px] text-white/65 truncate">
+              {user?.email || 'user@example.com'}
+            </div>
+          </div>
+          <div className="shrink-0 flex items-center gap-2">
+            {!isSubscribed && (
               <Button
-                variant="outline"
-                size="sm"
-                className="border-white/20 hover:bg-white/10"
-                onClick={handleSignOut}
+                onClick={() => navigate('/subscriptions')}
+                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-full px-5 touch-manipulation"
               >
-                <LogOut className="h-4 w-4 sm:mr-1.5" />
-                <span className="hidden sm:inline">Sign Out</span>
+                Upgrade
               </Button>
-            </div>
+            )}
+            <Button
+              onClick={handleSignOut}
+              className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-full px-5 touch-manipulation"
+            >
+              Sign Out
+            </Button>
           </div>
         </div>
 
-        {/* Horizontal Tab Navigation */}
-        <div className="relative px-4 md:px-6 lg:px-8 max-w-[1600px] mx-auto">
-          {/* Left scroll arrow */}
-          {showLeftArrow && (
-            <button
-              onClick={() => scrollTabs('left')}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-full flex items-center justify-center bg-gradient-to-r from-elec-dark via-elec-dark/90 to-transparent"
-              aria-label="Scroll tabs left"
-            >
-              <ChevronLeft className="h-5 w-5 text-white" />
-            </button>
-          )}
-
-          {/* Tabs container */}
-          <div
-            ref={tabsRef}
-            onScroll={checkScrollArrows}
-            className="flex items-center gap-1 overflow-x-auto scrollbar-hide pb-0 -mb-px momentum-scroll-x"
-          >
+        {/* Desktop tabs — underline style */}
+        <div className="border-b border-white/[0.06]">
+          <div className="flex items-center gap-1 overflow-x-auto hide-scrollbar -mb-px">
             {SETTINGS_TABS.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeDesktopTab === tab.id;
+              const isActive = tab.id === activeDesktopTab;
               return (
                 <button
                   key={tab.id}
                   onClick={() => handleDesktopTabSelect(tab.id)}
                   className={cn(
-                    'relative flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap transition-all duration-200 border-b-2 flex-shrink-0',
-                    'touch-manipulation active:scale-[0.98] min-h-[48px]',
+                    'relative px-4 py-3 text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation min-h-[44px]',
+                    'border-b-2',
                     isActive
                       ? 'text-elec-yellow border-elec-yellow'
-                      : 'text-white border-transparent hover:text-white hover:border-white/20'
+                      : 'text-white/55 border-transparent hover:text-white'
                   )}
                 >
-                  <Icon className={cn('h-4 w-4', isActive ? 'text-elec-yellow' : '')} />
-                  <span>{tab.label}</span>
+                  {tab.label}
                 </button>
               );
             })}
           </div>
-
-          {/* Right scroll arrow */}
-          {showRightArrow && (
-            <button
-              onClick={() => scrollTabs('right')}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-full flex items-center justify-center bg-gradient-to-l from-elec-dark via-elec-dark/90 to-transparent"
-              aria-label="Scroll tabs right"
-            >
-              <ChevronRight className="h-5 w-5 text-white" />
-            </button>
-          )}
         </div>
-      </div>
 
-      {/* Main Content */}
-      <div className="px-4 md:px-6 lg:px-8 py-6 md:py-8 max-w-[1600px] mx-auto">
-        {/* Mobile upgrade banner */}
-        {!isSubscribed && (
-          <div className="sm:hidden mb-4 p-3 rounded-xl bg-gradient-to-r from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm font-medium text-white">Go Premium</span>
-            </div>
-            <Button
-              onClick={() => navigate('/subscriptions')}
-              size="sm"
-              className="bg-elec-yellow hover:bg-elec-yellow/90 active:bg-elec-yellow/80 text-elec-dark font-semibold h-11 text-sm touch-manipulation"
-            >
-              Upgrade
-            </Button>
-          </div>
-        )}
-
-        {/* Tab Content */}
+        {/* Content */}
         <motion.div
           key={activeDesktopTab}
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
+          className="w-full"
         >
           <TabComponent />
         </motion.div>
-      </div>
+      </PageFrame>
     </div>
   );
 };

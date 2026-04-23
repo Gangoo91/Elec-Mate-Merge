@@ -102,11 +102,11 @@ export function ElevenLabsToolCard({
 
   return (
     <Card
-      className={`border-2 ${isConfigured ? 'border-green-500/50 bg-green-500/5' : 'border-border'} ${index % 2 === 0 ? 'bg-elec-gray' : 'bg-muted/20'}`}
+      className={`border ${isConfigured ? 'border-green-500/50 bg-green-500/5' : 'border-white/[0.06]'} ${index % 2 === 0 ? 'bg-[hsl(0_0%_12%)]' : 'bg-[hsl(0_0%_10%)]'}`}
     >
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
         <CollapsibleTrigger asChild>
-          <div className="flex items-center justify-between p-3 sm:p-4 cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation">
+          <div className="flex items-center justify-between p-3 sm:p-4 cursor-pointer hover:bg-white/[0.04] active:bg-white/[0.08] transition-all touch-manipulation">
             <div className="flex items-center gap-2 sm:gap-3">
               <Checkbox
                 checked={isConfigured}
@@ -139,13 +139,13 @@ export function ElevenLabsToolCard({
         </CollapsibleTrigger>
 
         <CollapsibleContent>
-          <CardContent className="pt-0 space-y-4 border-t border-border">
+          <CardContent className="pt-0 space-y-4 border-t border-white/[0.06]">
             {/* Tool Name */}
             <div className="space-y-2 pt-4">
               <label className="text-xs font-medium text-white uppercase tracking-wide">
                 Name (copy to ElevenLabs)
               </label>
-              <div className="flex items-center gap-2 bg-muted/50 rounded-md p-2">
+              <div className="flex items-center gap-2 bg-[hsl(0_0%_9%)] rounded-md p-2 border border-white/[0.08]">
                 <code className="flex-1 text-sm font-mono">{tool.name}</code>
                 <CopyButton text={tool.name} fieldName="name" />
               </div>
@@ -156,8 +156,8 @@ export function ElevenLabsToolCard({
               <label className="text-xs font-medium text-white uppercase tracking-wide">
                 Description (copy to ElevenLabs)
               </label>
-              <div className="flex items-start gap-2 bg-muted/50 rounded-md p-2">
-                <p className="flex-1 text-sm text-foreground/80">{tool.description}</p>
+              <div className="flex items-start gap-2 bg-[hsl(0_0%_9%)] rounded-md p-2 border border-white/[0.08]">
+                <p className="flex-1 text-sm text-white">{tool.description}</p>
                 <CopyButton text={tool.description} fieldName="description" />
               </div>
             </div>
@@ -172,7 +172,7 @@ export function ElevenLabsToolCard({
                 {tool.parameters.map((param, paramIndex) => (
                   <div
                     key={param.name}
-                    className="bg-muted/30 rounded-lg p-3 space-y-2 border border-border/50"
+                    className="bg-[hsl(0_0%_10%)] rounded-lg p-3 space-y-2 border border-white/[0.06]"
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-medium text-elec-yellow">
@@ -187,13 +187,13 @@ export function ElevenLabsToolCard({
 
                     <div className="grid gap-2 text-sm">
                       {/* Data Type */}
-                      <div className="flex items-center justify-between py-1 border-b border-border/30">
+                      <div className="flex items-center justify-between py-1 border-b border-white/[0.06]">
                         <span className="text-white">Data type:</span>
                         <span className="font-medium">{getDataType(param.type)}</span>
                       </div>
 
                       {/* Identifier */}
-                      <div className="flex items-center justify-between py-1 border-b border-border/30">
+                      <div className="flex items-center justify-between py-1 border-b border-white/[0.06]">
                         <span className="text-white">Identifier:</span>
                         <div className="flex items-center gap-1">
                           <code className="text-elec-yellow font-mono">{param.name}</code>
@@ -206,7 +206,7 @@ export function ElevenLabsToolCard({
                       </div>
 
                       {/* Required */}
-                      <div className="flex items-center justify-between py-1 border-b border-border/30">
+                      <div className="flex items-center justify-between py-1 border-b border-white/[0.06]">
                         <span className="text-white">Required:</span>
                         <span className={param.required ? 'text-red-400' : 'text-white'}>
                           {param.required ? 'Yes ✓' : 'No'}
@@ -214,13 +214,13 @@ export function ElevenLabsToolCard({
                       </div>
 
                       {/* Value Type */}
-                      <div className="flex items-center justify-between py-1 border-b border-border/30">
+                      <div className="flex items-center justify-between py-1 border-b border-white/[0.06]">
                         <span className="text-white">Value Type:</span>
                         <span className="font-medium">LLM Prompt</span>
                       </div>
 
                       {/* Description */}
-                      <div className="py-1 border-b border-border/30">
+                      <div className="py-1 border-b border-white/[0.06]">
                         <div className="flex items-center justify-between">
                           <span className="text-white">Description:</span>
                           <CopyButton
@@ -229,7 +229,7 @@ export function ElevenLabsToolCard({
                             size="xs"
                           />
                         </div>
-                        <p className="text-foreground/80 mt-1">{param.description}</p>
+                        <p className="text-white mt-1">{param.description}</p>
                       </div>
 
                       {/* Enum Values */}
@@ -282,11 +282,11 @@ export function ElevenLabsToolCard({
             )}
 
             {/* ElevenLabs Settings */}
-            <div className="space-y-2 pt-2 border-t border-border">
+            <div className="space-y-2 pt-2 border-t border-white/[0.06]">
               <label className="text-xs font-medium text-white uppercase tracking-wide">
                 ElevenLabs Settings
               </label>
-              <div className="grid gap-2 text-sm bg-muted/30 rounded-lg p-3">
+              <div className="grid gap-2 text-sm bg-[hsl(0_0%_10%)] rounded-lg p-3 border border-white/[0.06]">
                 <div className="flex items-center justify-between">
                   <span className="text-white">Wait for response:</span>
                   <span>{tool.waitForResponse ? 'Yes' : 'No'}</span>

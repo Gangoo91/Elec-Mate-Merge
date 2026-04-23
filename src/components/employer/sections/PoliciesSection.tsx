@@ -1,13 +1,23 @@
 import { useState, useMemo } from 'react';
-import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
-import { SectionHeader } from '@/components/employer/SectionHeader';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { QuickStats } from '@/components/employer/QuickStats';
-import { Skeleton } from '@/components/ui/skeleton';
+import { useQueryClient } from '@tanstack/react-query';
+import { RefreshCw } from 'lucide-react';
 import { PolicyViewer } from '@/components/employer/PolicyViewer';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  PrimaryButton,
+  type Tone,
+} from '@/components/employer/editorial';
 import {
   usePolicyTemplates,
   useUserPolicies,
@@ -15,56 +25,72 @@ import {
   type PolicyTemplate,
   type UserPolicy,
 } from '@/hooks/usePolicies';
-import {
-  BookOpen,
-  Shield,
-  Users,
-  FileText,
-  Search,
-  CheckCircle2,
-  Clock,
-  Sparkles,
-  ChevronRight,
-  Scale,
-} from 'lucide-react';
+
+type TabValue = 'active' | 'draft' | 'archived';
 
 export function PoliciesSection() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const queryClient = useQueryClient();
+
+  const [search, setSearch] = useState('');
+  const [tab, setTab] = useState<TabValue>('active');
   const [selectedTemplate, setSelectedTemplate] = useState<PolicyTemplate | null>(null);
   const [selectedUserPolicy, setSelectedUserPolicy] = useState<UserPolicy | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
 
-  // Fetch data
   const { data: templates = [], isLoading: templatesLoading } = usePolicyTemplates();
   const { data: userPolicies = [], isLoading: userPoliciesLoading } = useUserPolicies();
   const { data: adoptedTemplateIds = [] } = useAdoptedTemplateIds();
 
   const isLoading = templatesLoading || userPoliciesLoading;
 
-  // Filter templates and user policies
-  const filteredTemplates = useMemo(() => {
-    return templates.filter(
-      (t) =>
-        t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        t.category.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [templates, searchQuery]);
+  const refresh = () => {
+    queryClient.invalidateQueries({ queryKey: ['policyTemplates'] });
+    queryClient.invalidateQueries({ queryKey: ['userPolicies'] });
+  };
 
-  const filteredUserPolicies = useMemo(() => {
-    return userPolicies.filter((p) => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
-  }, [userPolicies, searchQuery]);
+  const reviewDuePolicies = useMemo(
+    () =>
+      userPolicies.filter(
+        (p) =>
+          p.status === 'Review Due' ||
+          (p.review_date && new Date(p.review_date) <= new Date())
+      ),
+    [userPolicies]
+  );
 
-  // Group templates by category
-  const safetyTemplates = filteredTemplates.filter((t) => t.category === 'Safety');
-  const hrTemplates = filteredTemplates.filter((t) => t.category === 'HR');
-  const legalTemplates = filteredTemplates.filter((t) => t.category === 'Legal');
+  const draftTemplates = useMemo(
+    () => templates.filter((t) => !adoptedTemplateIds.includes(t.id)),
+    [templates, adoptedTemplateIds]
+  );
 
-  // Stats
-  const totalTemplates = templates.length;
-  const adoptedCount = userPolicies.length;
-  const reviewDue = userPolicies.filter(
-    (p) => p.status === 'Review Due' || (p.review_date && new Date(p.review_date) <= new Date())
-  ).length;
+  const activeCount = userPolicies.length;
+  const awaitingCount = reviewDuePolicies.length;
+  const draftCount = draftTemplates.length;
+  const acknowledgedPct =
+    templates.length > 0
+      ? Math.round((adoptedTemplateIds.length / templates.length) * 100)
+      : 0;
+
+  const matchesSearch = (s: string) =>
+    s.toLowerCase().includes(search.toLowerCase());
+
+  const filteredActive = useMemo(
+    () => userPolicies.filter((p) => matchesSearch(p.name)),
+    [userPolicies, search]
+  );
+
+  const filteredArchived = useMemo(
+    () => reviewDuePolicies.filter((p) => matchesSearch(p.name)),
+    [reviewDuePolicies, search]
+  );
+
+  const filteredDrafts = useMemo(
+    () =>
+      draftTemplates.filter(
+        (t) => matchesSearch(t.name) || matchesSearch(t.category)
+      ),
+    [draftTemplates, search]
+  );
 
   const handleViewTemplate = (template: PolicyTemplate) => {
     setSelectedTemplate(template);
@@ -78,349 +104,180 @@ export function PoliciesSection() {
     setViewerOpen(true);
   };
 
-  const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'Safety':
-        return Shield;
-      case 'HR':
-        return Users;
-      case 'Legal':
-        return Scale;
-      default:
-        return FileText;
+  const formatDate = (value?: string | null) => {
+    if (!value) return 'never';
+    try {
+      const d = new Date(value);
+      return d.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      });
+    } catch {
+      return 'never';
     }
   };
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case 'Safety':
-        return 'text-success';
-      case 'HR':
-        return 'text-elec-yellow';
-      case 'Legal':
-        return 'text-info';
-      default:
-        return 'text-white';
-    }
+  const statusTone = (status?: string | null): Tone => {
+    if (status === 'Active') return 'emerald';
+    if (status === 'Review Due') return 'amber';
+    return 'blue';
   };
+
+  const heroActions = (
+    <>
+      <PrimaryButton
+        onClick={() => {
+          if (draftTemplates.length > 0) handleViewTemplate(draftTemplates[0]);
+        }}
+      >
+        Upload policy
+      </PrimaryButton>
+      <IconButton onClick={refresh} aria-label="Refresh">
+        <RefreshCw className="h-4 w-4" />
+      </IconButton>
+    </>
+  );
 
   if (isLoading) {
     return (
-      <div className="space-y-4 md:space-y-6 animate-fade-in">
-        <SectionHeader
-          title="Policies & Procedures"
-          description="Company policies, pre-written and editable"
+      <PageFrame>
+        <PageHero
+          eyebrow="HR & Safety"
+          title="Policies"
+          description="Upload, version, distribute and track acknowledgements."
+          tone="blue"
+          actions={heroActions}
         />
-        <Skeleton className="h-11 w-full" />
-        <div className="flex gap-2 overflow-x-auto hide-scrollbar">
-          <Skeleton className="h-16 w-24 shrink-0" />
-          <Skeleton className="h-16 w-24 shrink-0" />
-          <Skeleton className="h-16 w-24 shrink-0" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-          {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} className="h-20" />
-          ))}
-        </div>
-      </div>
+        <LoadingBlocks />
+      </PageFrame>
     );
   }
 
+  const activeTabList =
+    tab === 'active'
+      ? filteredActive
+      : tab === 'archived'
+        ? filteredArchived
+        : [];
+
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
-        title="Policies & Procedures"
-        description="Company policies, pre-written and editable"
+    <PageFrame>
+      <PageHero
+        eyebrow="HR & Safety"
+        title="Policies"
+        description="Upload, version, distribute and track acknowledgements."
+        tone="blue"
+        actions={heroActions}
       />
 
-      {/* Search */}
-      <div className="relative">
-        {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-        )}
-        <Input
-          placeholder="Search policies..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn('h-11', !searchQuery && 'pl-9')}
-        />
-      </div>
-
-      {/* Quick Stats */}
-      <QuickStats
+      <StatStrip
+        columns={4}
         stats={[
+          { label: 'Active', value: activeCount, tone: 'blue' },
+          { label: 'Awaiting ack', value: awaitingCount, tone: 'orange' },
           {
-            icon: BookOpen,
-            value: totalTemplates,
-            label: 'Available',
-            color: 'blue',
+            label: 'Acknowledged %',
+            value: `${acknowledgedPct}%`,
+            tone: 'emerald',
+            accent: true,
           },
-          {
-            icon: CheckCircle2,
-            value: adoptedCount,
-            label: 'Adopted',
-            color: 'green',
-          },
-          ...(reviewDue > 0
-            ? [
-                {
-                  icon: Clock,
-                  value: reviewDue,
-                  label: 'Review Due',
-                  color: 'yellow' as const,
-                  pulse: true,
-                },
-              ]
-            : []),
+          { label: 'Drafts', value: draftCount, tone: 'amber' },
         ]}
       />
 
-      {/* My Policies (User's adopted policies) */}
-      {filteredUserPolicies.length > 0 && (
-        <div>
-          <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
-            My Policies
-            <Badge variant="secondary" className="ml-2">
-              {filteredUserPolicies.length}
-            </Badge>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {filteredUserPolicies.map((policy) => {
-              const CategoryIcon = getCategoryIcon(policy.template?.category || 'Other');
+      <FilterBar
+        tabs={[
+          { value: 'active', label: 'Active', count: filteredActive.length },
+          { value: 'draft', label: 'Draft', count: filteredDrafts.length },
+          {
+            value: 'archived',
+            label: 'Archived',
+            count: filteredArchived.length,
+          },
+        ]}
+        activeTab={tab}
+        onTabChange={(v) => setTab(v as TabValue)}
+        search={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search policies…"
+      />
+
+      {tab === 'draft' ? (
+        filteredDrafts.length === 0 ? (
+          <EmptyState
+            title="No draft policies"
+            description="Every available template has been adopted. New templates will appear here when published."
+          />
+        ) : (
+          <ListCard>
+            <ListCardHeader
+              tone="amber"
+              title="Drafts"
+              meta={<Pill tone="amber">{filteredDrafts.length}</Pill>}
+            />
+            <ListBody>
+              {filteredDrafts.map((t) => (
+                <ListRow
+                  key={t.id}
+                  title={t.name}
+                  subtitle={`v${t.version} · ${t.category} · template`}
+                  trailing={<Pill tone="amber">Draft</Pill>}
+                  onClick={() => handleViewTemplate(t)}
+                />
+              ))}
+            </ListBody>
+          </ListCard>
+        )
+      ) : activeTabList.length === 0 ? (
+        <EmptyState
+          title={
+            tab === 'active' ? 'No active policies' : 'No policies awaiting acknowledgement'
+          }
+          description={
+            tab === 'active'
+              ? 'Adopt a template from the Draft tab to start tracking acknowledgements across your organisation.'
+              : 'All adopted policies are up to date and acknowledged.'
+          }
+          action={tab === 'active' ? 'Browse drafts' : undefined}
+          onAction={tab === 'active' ? () => setTab('draft') : undefined}
+        />
+      ) : (
+        <ListCard>
+          <ListCardHeader
+            tone="blue"
+            title="Policies"
+            meta={<Pill tone="blue">{activeTabList.length}</Pill>}
+          />
+          <ListBody>
+            {activeTabList.map((p) => {
+              const total = userPolicies.length || 1;
+              const acked = p.status === 'Active' ? total : 0;
               return (
-                <Card
-                  key={policy.id}
-                  className="hover:bg-muted/50 transition-colors cursor-pointer border-elec-yellow/20"
-                  onClick={() => handleViewUserPolicy(policy)}
-                >
-                  <CardContent className="p-3 md:p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <CategoryIcon
-                          className={`h-5 w-5 ${getCategoryColor(
-                            policy.template?.category || 'Other'
-                          )}`}
-                        />
-                        <div className="min-w-0">
-                          <p className="font-medium text-foreground text-sm truncate">
-                            {policy.name}
-                          </p>
-                          <p className="text-xs text-white">
-                            {policy.company_name || 'No company set'}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Badge
-                          variant="secondary"
-                          className={
-                            policy.status === 'Active'
-                              ? 'bg-success/10 text-success'
-                              : policy.status === 'Review Due'
-                                ? 'bg-warning/10 text-warning'
-                                : 'bg-muted'
-                          }
-                        >
-                          {policy.status}
-                        </Badge>
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <ListRow
+                  key={p.id}
+                  title={p.name}
+                  subtitle={`v${p.template?.version ?? '1'} · ${acked}/${total} acknowledged · updated ${formatDate(p.updated_at)}`}
+                  trailing={
+                    <Pill tone={statusTone(p.status)}>{p.status ?? 'Active'}</Pill>
+                  }
+                  onClick={() => handleViewUserPolicy(p)}
+                />
               );
             })}
-          </div>
-        </div>
+          </ListBody>
+        </ListCard>
       )}
 
-      {/* Info Banner for New Users */}
-      {userPolicies.length === 0 && (
-        <Card className="border-info/20 bg-info/5">
-          <CardContent className="p-4">
-            <div className="flex gap-3">
-              <div className="p-2 rounded-lg bg-info/10 h-fit">
-                <Sparkles className="h-5 w-5 text-info" />
-              </div>
-              <div>
-                <h3 className="font-medium text-foreground mb-1">Pre-Written Policies</h3>
-                <p className="text-sm text-white">
-                  Browse the templates below and click <strong>Adopt</strong> to add them to your
-                  company policies. You can customise them with your company name.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Safety Policy Templates */}
-      {safetyTemplates.length > 0 && (
-        <div>
-          <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-success rounded-full"></span>
-            Safety Policies
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {safetyTemplates.map((template) => {
-              const isAdopted = adoptedTemplateIds.includes(template.id);
-              return (
-                <Card
-                  key={template.id}
-                  className={`hover:bg-muted/50 transition-colors cursor-pointer ${
-                    isAdopted ? 'border-success/20 bg-success/5' : ''
-                  }`}
-                  onClick={() => handleViewTemplate(template)}
-                >
-                  <CardContent className="p-3 md:p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <Shield className="h-5 w-5 text-success" />
-                        <div className="min-w-0">
-                          <p className="font-medium text-foreground text-sm truncate">
-                            {template.name}
-                          </p>
-                          <p className="text-xs text-white">v{template.version}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {isAdopted ? (
-                          <Badge variant="secondary" className="bg-success/10 text-success">
-                            <CheckCircle2 className="h-3 w-3 mr-1" />
-                            Adopted
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline">View</Badge>
-                        )}
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* HR Policy Templates */}
-      {hrTemplates.length > 0 && (
-        <div>
-          <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
-            HR Policies
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {hrTemplates.map((template) => {
-              const isAdopted = adoptedTemplateIds.includes(template.id);
-              return (
-                <Card
-                  key={template.id}
-                  className={`hover:bg-muted/50 transition-colors cursor-pointer ${
-                    isAdopted ? 'border-success/20 bg-success/5' : ''
-                  }`}
-                  onClick={() => handleViewTemplate(template)}
-                >
-                  <CardContent className="p-3 md:p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <Users className="h-5 w-5 text-elec-yellow" />
-                        <div className="min-w-0">
-                          <p className="font-medium text-foreground text-sm truncate">
-                            {template.name}
-                          </p>
-                          <p className="text-xs text-white">v{template.version}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {isAdopted ? (
-                          <Badge variant="secondary" className="bg-success/10 text-success">
-                            <CheckCircle2 className="h-3 w-3 mr-1" />
-                            Adopted
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline">View</Badge>
-                        )}
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Legal Policy Templates */}
-      {legalTemplates.length > 0 && (
-        <div>
-          <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-            <span className="w-1 h-5 bg-info rounded-full"></span>
-            Legal & Compliance
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {legalTemplates.map((template) => {
-              const isAdopted = adoptedTemplateIds.includes(template.id);
-              return (
-                <Card
-                  key={template.id}
-                  className={`hover:bg-muted/50 transition-colors cursor-pointer ${
-                    isAdopted ? 'border-success/20 bg-success/5' : ''
-                  }`}
-                  onClick={() => handleViewTemplate(template)}
-                >
-                  <CardContent className="p-3 md:p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3 min-w-0">
-                        <Scale className="h-5 w-5 text-info" />
-                        <div className="min-w-0">
-                          <p className="font-medium text-foreground text-sm truncate">
-                            {template.name}
-                          </p>
-                          <p className="text-xs text-white">v{template.version}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {isAdopted ? (
-                          <Badge variant="secondary" className="bg-success/10 text-success">
-                            <CheckCircle2 className="h-3 w-3 mr-1" />
-                            Adopted
-                          </Badge>
-                        ) : (
-                          <Badge variant="outline">View</Badge>
-                        )}
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* Empty State */}
-      {filteredTemplates.length === 0 && filteredUserPolicies.length === 0 && (
-        <Card className="border-dashed">
-          <CardContent className="p-8 text-center">
-            <FileText className="h-12 w-12 text-white mx-auto mb-4" />
-            <h3 className="font-medium text-foreground mb-2">No policies found</h3>
-            <p className="text-sm text-white">Try adjusting your search query</p>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Policy Viewer Modal */}
       <PolicyViewer
         open={viewerOpen}
         onOpenChange={setViewerOpen}
         template={selectedTemplate}
         userPolicy={selectedUserPolicy}
-        isAdopted={selectedTemplate ? adoptedTemplateIds.includes(selectedTemplate.id) : false}
+        isAdopted={
+          selectedTemplate ? adoptedTemplateIds.includes(selectedTemplate.id) : false
+        }
       />
-    </div>
+    </PageFrame>
   );
 }

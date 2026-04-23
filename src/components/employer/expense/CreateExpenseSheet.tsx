@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
-  Plus,
   ArrowLeft,
   ArrowRight,
   Check,
@@ -21,10 +20,8 @@ import {
   Receipt,
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -32,11 +29,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { EXPENSE_CATEGORIES, formatCurrency, type ExpenseCategory } from '@/hooks/useExpenses';
+import { EXPENSE_CATEGORIES, formatCurrency } from '@/hooks/useExpenses';
 import type { ExpenseClaim } from '@/services/financeService';
+import {
+  Field,
+  FormCard,
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  IconButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 interface CreateExpenseSheetProps {
   open: boolean;
@@ -159,42 +167,42 @@ export function CreateExpenseSheet({
   const selectedJob = jobs.find((j) => j.id === values.job_id);
   const CategoryIcon = categoryIcons[values.category] || Package;
 
+  const stepTitle = employeeMode
+    ? step === 1
+      ? 'Expense details'
+      : step === 2
+        ? 'Category'
+        : 'Review & submit'
+    : step === 1
+      ? 'Basic info'
+      : step === 2
+        ? 'Category & job'
+        : step === 3
+          ? 'Receipt'
+          : 'Review & submit';
+
   return (
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
+        className={cn(
+          'flex flex-col p-0 bg-[hsl(0_0%_8%)] border-white/[0.08]',
+          isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]'
+        )}
       >
         {/* Header */}
-        <SheetHeader className="p-4 border-b border-border shrink-0">
+        <SheetHeader className="p-4 border-b border-white/[0.06] shrink-0">
           <div className="flex items-center gap-3">
             {step > 1 && (
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setStep(step - 1)}
-                className="h-8 w-8"
-              >
+              <IconButton aria-label="Back" onClick={() => setStep(step - 1)}>
                 <ArrowLeft className="h-4 w-4" />
-              </Button>
+              </IconButton>
             )}
-            <SheetTitle className="flex-1">
-              {employeeMode ? (
-                <>
-                  {step === 1 && 'Expense Details'}
-                  {step === 2 && 'Category'}
-                  {step === 3 && 'Review & Submit'}
-                </>
-              ) : (
-                <>
-                  {step === 1 && 'Basic Info'}
-                  {step === 2 && 'Category & Job'}
-                  {step === 3 && 'Receipt'}
-                  {step === 4 && 'Review & Submit'}
-                </>
-              )}
-            </SheetTitle>
-            <span className="text-sm text-white">
+            <div className="flex-1 min-w-0">
+              <Eyebrow>New expense</Eyebrow>
+              <SheetTitle className="mt-1 text-white text-left">{stepTitle}</SheetTitle>
+            </div>
+            <span className="text-sm text-white shrink-0">
               {step} of {totalSteps}
             </span>
           </div>
@@ -205,7 +213,7 @@ export function CreateExpenseSheet({
                 key={i}
                 className={cn(
                   'h-1 flex-1 rounded-full transition-colors',
-                  i < step ? 'bg-elec-yellow' : 'bg-muted'
+                  i < step ? 'bg-elec-yellow' : 'bg-white/[0.08]'
                 )}
               />
             ))}
@@ -213,22 +221,23 @@ export function CreateExpenseSheet({
         </SheetHeader>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {/* Step 1: Basic Info / Expense Details */}
           {step === 1 && (
-            <div className="space-y-4">
+            <FormCard eyebrow="Details">
               {/* Employee dropdown - only show in admin mode */}
               {!employeeMode && (
-                <div className="space-y-2">
-                  <Label>Employee</Label>
+                <Field label="Employee" required hint={errors.employee_id?.message}>
                   <Select
                     value={values.employee_id}
                     onValueChange={(v) => setValue('employee_id', v)}
                   >
-                    <SelectTrigger className={cn(errors.employee_id && 'border-red-500')}>
+                    <SelectTrigger
+                      className={cn(selectTriggerClass, errors.employee_id && 'border-red-500/60')}
+                    >
                       <SelectValue placeholder="Select employee" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       {employees.map((emp) => (
                         <SelectItem key={emp.id} value={emp.id}>
                           {emp.name}
@@ -236,16 +245,12 @@ export function CreateExpenseSheet({
                       ))}
                     </SelectContent>
                   </Select>
-                  {errors.employee_id && (
-                    <p className="text-xs text-red-500">{errors.employee_id.message}</p>
-                  )}
-                </div>
+                </Field>
               )}
 
-              <div className="space-y-2">
-                <Label>Amount</Label>
+              <Field label="Amount" required hint={errors.amount?.message}>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white font-medium">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white font-medium text-[13px]">
                     £
                   </span>
                   <Input
@@ -253,34 +258,32 @@ export function CreateExpenseSheet({
                     step="0.01"
                     min="0"
                     placeholder="0.00"
-                    className={cn('pl-8 text-lg h-12', errors.amount && 'border-red-500')}
+                    className={cn(
+                      inputClass,
+                      'pl-8 text-lg h-12',
+                      errors.amount && 'border-red-500/60'
+                    )}
                     value={values.amount || ''}
                     onChange={(e) => setValue('amount', parseFloat(e.target.value) || 0)}
                   />
                 </div>
-                {errors.amount && <p className="text-xs text-red-500">{errors.amount.message}</p>}
-              </div>
+              </Field>
 
-              <div className="space-y-2">
-                <Label>Description</Label>
+              <Field label="Description" required hint={errors.description?.message}>
                 <Textarea
                   placeholder="What was this expense for?"
-                  className={cn('min-h-[100px]', errors.description && 'border-red-500')}
+                  className={cn(textareaClass, 'min-h-[100px]', errors.description && 'border-red-500/60')}
                   value={values.description}
                   onChange={(e) => setValue('description', e.target.value)}
                 />
-                {errors.description && (
-                  <p className="text-xs text-red-500">{errors.description.message}</p>
-                )}
-              </div>
-            </div>
+              </Field>
+            </FormCard>
           )}
 
           {/* Step 2: Category & Job */}
           {step === 2 && (
-            <div className="space-y-6">
-              <div className="space-y-3">
-                <Label>Category</Label>
+            <>
+              <FormCard eyebrow="Category">
                 <div className="grid grid-cols-2 gap-2">
                   {EXPENSE_CATEGORIES.map(({ id, label }) => {
                     const Icon = categoryIcons[id];
@@ -291,9 +294,11 @@ export function CreateExpenseSheet({
                         type="button"
                         onClick={() => setValue('category', id)}
                         className={cn(
-                          'flex items-center gap-3 p-3 rounded-lg border transition-all',
-                          'hover:bg-muted/50 active:scale-[0.98]',
-                          isSelected ? 'border-elec-yellow bg-elec-yellow/10' : 'border-border'
+                          'flex items-center gap-3 p-3 rounded-xl border transition-all touch-manipulation',
+                          'hover:bg-white/[0.04] active:scale-[0.98]',
+                          isSelected
+                            ? 'border-elec-yellow/60 bg-elec-yellow/10'
+                            : 'border-white/[0.08] bg-[hsl(0_0%_9%)]'
                         )}
                       >
                         <Icon
@@ -302,66 +307,60 @@ export function CreateExpenseSheet({
                             isSelected ? 'text-elec-yellow' : 'text-white'
                           )}
                         />
-                        <span
-                          className={cn(
-                            'text-sm font-medium',
-                            isSelected ? 'text-foreground' : 'text-white'
-                          )}
-                        >
-                          {label}
-                        </span>
+                        <span className="text-sm font-medium text-white">{label}</span>
                         {isSelected && <Check className="h-4 w-4 text-elec-yellow ml-auto" />}
                       </button>
                     );
                   })}
                 </div>
-              </div>
+              </FormCard>
 
               {jobs.length > 0 && (
-                <div className="space-y-2">
-                  <Label>Link to Job (Optional)</Label>
-                  <Select
-                    value={values.job_id || 'none'}
-                    onValueChange={(v) => setValue('job_id', v === 'none' ? null : v)}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select job" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="none">No job linked</SelectItem>
-                      {jobs.map((job) => (
-                        <SelectItem key={job.id} value={job.id}>
-                          {job.title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <FormCard eyebrow="Job link">
+                  <Field label="Link to job (optional)">
+                    <Select
+                      value={values.job_id || 'none'}
+                      onValueChange={(v) => setValue('job_id', v === 'none' ? null : v)}
+                    >
+                      <SelectTrigger className={selectTriggerClass}>
+                        <SelectValue placeholder="Select job" />
+                      </SelectTrigger>
+                      <SelectContent className={selectContentClass}>
+                        <SelectItem value="none">No job linked</SelectItem>
+                        {jobs.map((job) => (
+                          <SelectItem key={job.id} value={job.id}>
+                            {job.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </FormCard>
               )}
-            </div>
+            </>
           )}
 
           {/* Step 3: Receipt (Admin mode only) */}
           {step === 3 && !employeeMode && (
-            <div className="space-y-4">
-              <div className="text-center py-8">
-                <div className="inline-flex p-4 rounded-full bg-muted mb-4">
+            <FormCard eyebrow="Receipt">
+              <div className="text-center py-6">
+                <div className="inline-flex p-4 rounded-full bg-white/[0.06] mb-4">
                   <Receipt className="h-8 w-8 text-white" />
                 </div>
-                <h3 className="font-semibold mb-2">Add Receipt</h3>
+                <h3 className="font-semibold text-white mb-2">Add receipt</h3>
                 <p className="text-sm text-white mb-6">
                   Upload a photo of the receipt for this expense
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Button variant="outline" className="gap-2">
-                    <Camera className="h-4 w-4" />
-                    Take Photo
-                  </Button>
-                  <Button variant="outline" className="gap-2">
-                    <Upload className="h-4 w-4" />
-                    Upload File
-                  </Button>
+                  <SecondaryButton>
+                    <Camera className="h-4 w-4 mr-2" />
+                    Take photo
+                  </SecondaryButton>
+                  <SecondaryButton>
+                    <Upload className="h-4 w-4 mr-2" />
+                    Upload file
+                  </SecondaryButton>
                 </div>
 
                 <p className="text-xs text-white mt-4">
@@ -371,35 +370,34 @@ export function CreateExpenseSheet({
 
               {/* Show preview if receipt uploaded */}
               {values.receipt_url && (
-                <Card className="p-3">
+                <div className="p-3 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)]">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-green-500/10 rounded-lg">
-                      <Check className="h-5 w-5 text-green-500" />
+                      <Check className="h-5 w-5 text-green-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium">Receipt uploaded</p>
+                      <p className="font-medium text-white">Receipt uploaded</p>
                       <p className="text-sm text-white">receipt.jpg</p>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
+                    <IconButton
+                      aria-label="Remove receipt"
                       onClick={() => setValue('receipt_url', null)}
                     >
                       <X className="h-4 w-4" />
-                    </Button>
+                    </IconButton>
                   </div>
-                </Card>
+                </div>
               )}
-            </div>
+            </FormCard>
           )}
 
           {/* Step 3 (Employee) or Step 4 (Admin): Review */}
           {((employeeMode && step === 3) || (!employeeMode && step === 4)) && (
-            <div className="space-y-4">
-              <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
+            <>
+              <div className="p-5 rounded-2xl bg-gradient-to-br from-elec-yellow/10 to-transparent border border-elec-yellow/30">
                 <div className="text-center mb-4">
-                  <p className="text-sm text-white">Total Amount</p>
-                  <p className="text-3xl font-bold text-foreground">
+                  <p className="text-sm text-white">Total amount</p>
+                  <p className="text-3xl font-bold text-white">
                     {formatCurrency(values.amount)}
                   </p>
                 </div>
@@ -407,58 +405,60 @@ export function CreateExpenseSheet({
                 <div className="space-y-3 text-sm">
                   {/* Only show Employee row in admin mode */}
                   {!employeeMode && (
-                    <div className="flex justify-between py-2 border-b border-border/50">
+                    <div className="flex justify-between py-2 border-b border-white/[0.06]">
                       <span className="text-white">Employee</span>
-                      <span className="font-medium">{selectedEmployee?.name || '-'}</span>
+                      <span className="font-medium text-white">
+                        {selectedEmployee?.name || '-'}
+                      </span>
                     </div>
                   )}
-                  <div className="flex justify-between py-2 border-b border-border/50">
+                  <div className="flex justify-between py-2 border-b border-white/[0.06]">
                     <span className="text-white">Category</span>
-                    <span className="font-medium flex items-center gap-1">
+                    <span className="font-medium flex items-center gap-1 text-white">
                       <CategoryIcon className="h-4 w-4" />
                       {values.category || '-'}
                     </span>
                   </div>
-                  <div className="flex justify-between py-2 border-b border-border/50">
+                  <div className="flex justify-between py-2 border-b border-white/[0.06]">
                     <span className="text-white">Description</span>
-                    <span className="font-medium text-right max-w-[200px] truncate">
+                    <span className="font-medium text-right max-w-[200px] truncate text-white">
                       {values.description || '-'}
                     </span>
                   </div>
                   {selectedJob && (
-                    <div className="flex justify-between py-2 border-b border-border/50">
-                      <span className="text-white">Linked Job</span>
-                      <span className="font-medium">{selectedJob.title}</span>
+                    <div className="flex justify-between py-2 border-b border-white/[0.06]">
+                      <span className="text-white">Linked job</span>
+                      <span className="font-medium text-white">{selectedJob.title}</span>
                     </div>
                   )}
                   <div className="flex justify-between py-2">
                     <span className="text-white">Receipt</span>
-                    <span className="font-medium">
+                    <span className="font-medium text-white">
                       {values.receipt_url ? 'Attached' : 'Not attached'}
                     </span>
                   </div>
                 </div>
-              </Card>
+              </div>
 
               {/* Receipt upload option in employee mode (since we skip dedicated step) */}
               {employeeMode && (
-                <Card className="p-4">
+                <FormCard eyebrow="Receipt">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div
                         className={cn(
                           'p-2 rounded-lg',
-                          values.receipt_url ? 'bg-green-500/10' : 'bg-muted'
+                          values.receipt_url ? 'bg-green-500/10' : 'bg-white/[0.06]'
                         )}
                       >
                         {values.receipt_url ? (
-                          <Check className="h-5 w-5 text-green-500" />
+                          <Check className="h-5 w-5 text-green-400" />
                         ) : (
                           <Receipt className="h-5 w-5 text-white" />
                         )}
                       </div>
                       <div>
-                        <p className="font-medium text-sm">
+                        <p className="font-medium text-sm text-white">
                           {values.receipt_url ? 'Receipt attached' : 'Add receipt (optional)'}
                         </p>
                         <p className="text-xs text-white">
@@ -467,50 +467,49 @@ export function CreateExpenseSheet({
                       </div>
                     </div>
                     {values.receipt_url ? (
-                      <Button
-                        variant="ghost"
-                        size="icon"
+                      <IconButton
+                        aria-label="Remove receipt"
                         onClick={() => setValue('receipt_url', null)}
                       >
                         <X className="h-4 w-4" />
-                      </Button>
+                      </IconButton>
                     ) : (
                       <div className="flex gap-2">
-                        <Button variant="outline" size="icon" className="h-9 w-9">
+                        <IconButton aria-label="Take photo">
                           <Camera className="h-4 w-4" />
-                        </Button>
-                        <Button variant="outline" size="icon" className="h-9 w-9">
+                        </IconButton>
+                        <IconButton aria-label="Upload file">
                           <Upload className="h-4 w-4" />
-                        </Button>
+                        </IconButton>
                       </div>
                     )}
                   </div>
-                </Card>
+                </FormCard>
               )}
-            </div>
+            </>
           )}
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-border shrink-0 pb-safe">
+        <div className="p-4 border-t border-white/[0.06] shrink-0 pb-safe">
           {step < totalSteps ? (
-            <Button
-              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
+            <PrimaryButton
+              fullWidth
               onClick={() => setStep(step + 1)}
               disabled={!canProceed()}
             >
               Continue
               <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
+            </PrimaryButton>
           ) : (
-            <Button
-              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
+            <PrimaryButton
+              fullWidth
               onClick={handleSubmit(handleFormSubmit)}
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Expense'}
+              {isSubmitting ? 'Submitting...' : 'Submit expense'}
               <Check className="h-4 w-4 ml-2" />
-            </Button>
+            </PrimaryButton>
           )}
         </div>
       </SheetContent>

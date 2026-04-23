@@ -221,7 +221,7 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
                   {a.name}
                 </span>
                 <Pill tone={STATUS_TONE[a.status]}>{a.status}</Pill>
-                <span className="text-white/30 text-[12px]" aria-hidden>
+                <span className="text-white/60 text-[12px]" aria-hidden>
                   ↻
                 </span>
               </button>
@@ -236,7 +236,7 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Key observations, differentiation notes, student engagement…"
-          className="min-h-[120px] text-sm touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.06] text-white placeholder:text-white/35 focus:border-elec-yellow"
+          className="min-h-[120px] text-sm touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.06] text-white placeholder:text-white/65 focus:border-elec-yellow"
         />
       </motion.section>
 

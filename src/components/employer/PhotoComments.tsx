@@ -2,9 +2,9 @@ import { useState, useRef, useEffect } from 'react';
 import { format, parseISO } from 'date-fns';
 import { Send, AtSign, Reply, MoreHorizontal, Smile, Trash2 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { inputClass, PrimaryButton } from './editorial';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -168,13 +168,13 @@ export const PhotoComments = ({
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-sm">{comment.authorName}</span>
+              <span className="font-medium text-sm text-white">{comment.authorName}</span>
               <span className="text-xs text-white">
                 {formatTimestamp(comment.timestamp)}
               </span>
             </div>
 
-            <p className="text-sm mt-0.5 text-foreground/90">
+            <p className="text-sm mt-0.5 text-white">
               {highlightMentions(comment.content)}
             </p>
 
@@ -189,7 +189,7 @@ export const PhotoComments = ({
                       'px-1.5 py-0.5 rounded-full text-xs flex items-center gap-1 transition-colors',
                       reaction.userReacted
                         ? 'bg-elec-yellow/20 text-elec-yellow'
-                        : 'bg-muted hover:bg-muted/80'
+                        : 'bg-white/[0.06] hover:bg-white/[0.1] text-white'
                     )}
                   >
                     {reaction.emoji} {reaction.count}
@@ -202,7 +202,7 @@ export const PhotoComments = ({
             <div className="flex items-center gap-2 mt-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
               <button
                 onClick={() => handleReply(comment.id)}
-                className="text-xs text-white hover:text-foreground flex items-center gap-1"
+                className="text-xs text-white hover:text-elec-yellow flex items-center gap-1"
               >
                 <Reply className="h-3 w-3" />
                 Reply
@@ -210,17 +210,20 @@ export const PhotoComments = ({
 
               <Popover>
                 <PopoverTrigger asChild>
-                  <button className="text-xs text-white hover:text-foreground">
+                  <button className="text-xs text-white hover:text-elec-yellow">
                     <Smile className="h-3 w-3" />
                   </button>
                 </PopoverTrigger>
-                <PopoverContent className="w-auto p-2" side="top">
+                <PopoverContent
+                  className="w-auto p-2 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
+                  side="top"
+                >
                   <div className="flex gap-1">
                     {EMOJI_OPTIONS.map((emoji) => (
                       <button
                         key={emoji}
                         onClick={() => onReaction(comment.id, emoji)}
-                        className="p-1.5 hover:bg-muted rounded transition-colors"
+                        className="p-1.5 hover:bg-white/[0.08] rounded transition-colors"
                       >
                         {emoji}
                       </button>
@@ -232,13 +235,16 @@ export const PhotoComments = ({
               {isOwn && (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="text-xs text-white hover:text-foreground">
+                    <button className="text-xs text-white hover:text-elec-yellow">
                       <MoreHorizontal className="h-3 w-3" />
                     </button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
+                  <DropdownMenuContent
+                    align="start"
+                    className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
+                  >
                     <DropdownMenuItem
-                      className="text-destructive"
+                      className="text-red-400 focus:bg-red-500/15 focus:text-red-400"
                       onClick={() => onDeleteComment(comment.id)}
                     >
                       <Trash2 className="h-3 w-3 mr-2" />
@@ -253,7 +259,7 @@ export const PhotoComments = ({
 
         {/* Replies */}
         {replies.length > 0 && (
-          <div className="border-l-2 border-border/50 ml-4 mt-2">
+          <div className="border-l-2 border-white/[0.06] ml-4 mt-2">
             {replies.map((reply) => renderComment(reply, true))}
           </div>
         )}
@@ -279,13 +285,13 @@ export const PhotoComments = ({
 
       {/* Reply indicator */}
       {replyingTo && (
-        <div className="flex items-center justify-between px-3 py-2 bg-muted/50 border-t border-border/50">
+        <div className="flex items-center justify-between px-3 py-2 bg-white/[0.04] border-t border-white/[0.06]">
           <span className="text-xs text-white">
             Replying to {comments.find((c) => c.id === replyingTo)?.authorName}
           </span>
           <button
             onClick={cancelReply}
-            className="text-xs text-white hover:text-foreground"
+            className="text-xs text-white hover:text-elec-yellow"
           >
             Cancel
           </button>
@@ -293,7 +299,7 @@ export const PhotoComments = ({
       )}
 
       {/* Input */}
-      <form onSubmit={handleSubmit} className="relative border-t border-border/50 pt-3">
+      <form onSubmit={handleSubmit} className="relative border-t border-white/[0.06] pt-3">
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Input
@@ -301,19 +307,19 @@ export const PhotoComments = ({
               value={newComment}
               onChange={handleInputChange}
               placeholder="Add a comment... Use @ to mention"
-              className="pr-10"
+              className={cn(inputClass, 'pr-10')}
             />
             <button
               type="button"
               onClick={() => setShowMentions(!showMentions)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-foreground"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-elec-yellow"
             >
               <AtSign className="h-4 w-4" />
             </button>
 
             {/* Mention dropdown */}
             {showMentions && (
-              <div className="absolute bottom-full left-0 right-0 mb-1 bg-popover border border-border rounded-lg shadow-lg max-h-48 overflow-y-auto">
+              <div className="absolute bottom-full left-0 right-0 mb-1 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-lg shadow-lg max-h-48 overflow-y-auto">
                 {filteredEmployees.length === 0 ? (
                   <div className="p-3 text-sm text-white">No team members found</div>
                 ) : (
@@ -322,14 +328,14 @@ export const PhotoComments = ({
                       key={emp.id}
                       type="button"
                       onClick={() => handleSelectMention(emp)}
-                      className="w-full flex items-center gap-2 px-3 py-2 hover:bg-muted transition-colors text-left"
+                      className="w-full flex items-center gap-2 px-3 py-2 hover:bg-white/[0.06] transition-colors text-left"
                     >
                       <Avatar className="h-6 w-6">
                         <AvatarFallback className="text-[10px] bg-elec-yellow/20 text-elec-yellow">
                           {emp.initials}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-sm">{emp.name}</span>
+                      <span className="text-sm text-white">{emp.name}</span>
                     </button>
                   ))
                 )}
@@ -337,9 +343,9 @@ export const PhotoComments = ({
             )}
           </div>
 
-          <Button type="submit" size="icon" disabled={!newComment.trim()}>
+          <PrimaryButton type="submit" disabled={!newComment.trim()} className="h-11 w-11 px-0">
             <Send className="h-4 w-4" />
-          </Button>
+          </PrimaryButton>
         </div>
       </form>
     </div>

@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Dialog,
   DialogContent,
@@ -53,6 +47,18 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  Pill,
+  Eyebrow,
+  inputClass,
+} from '@/components/employer/editorial';
 
 interface ViewQuoteSheetProps {
   open: boolean;
@@ -89,21 +95,20 @@ export function ViewQuoteSheet({
   const [isGeneratingLink, setIsGeneratingLink] = useState(false);
   const [acceptLink, setAcceptLink] = useState<string | null>(null);
   const [acceptance, setAcceptance] = useState<QuoteAcceptance | null>(null);
-  const [loadingAcceptance, setLoadingAcceptance] = useState(false);
+  const [, setLoadingAcceptance] = useState(false);
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
-  // Pre-fill email from quote
   useEffect(() => {
     if (quote) {
       setRecipientEmail((quote as any).client_email || '');
     }
   }, [quote]);
 
-  // Load acceptance data when quote opens
   useEffect(() => {
     if (open && quote) {
       loadAcceptanceData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, quote?.id]);
 
   const loadAcceptanceData = async () => {
@@ -137,16 +142,13 @@ export function ViewQuoteSheet({
   const lineItems = Array.isArray(quote.line_items) ? quote.line_items : [];
   const subtotal = lineItems.reduce((sum: number, item: any) => sum + (item.total || 0), 0);
 
-  const getStatusBadge = (status: string) => {
-    const styles: Record<string, string> = {
-      Draft: 'bg-muted text-white',
-      Sent: 'bg-warning/20 text-warning',
-      Approved: 'bg-success/20 text-success',
-      'Client Accepted': 'bg-success/20 text-success',
-      Rejected: 'bg-destructive/20 text-destructive',
-      'Client Declined': 'bg-destructive/20 text-destructive',
-    };
-    return <Badge className={styles[status] || ''}>{status}</Badge>;
+  const statusTone: Record<string, 'amber' | 'blue' | 'emerald' | 'red' | 'yellow'> = {
+    Draft: 'amber',
+    Sent: 'amber',
+    Approved: 'emerald',
+    'Client Accepted': 'emerald',
+    Rejected: 'red',
+    'Client Declined': 'red',
   };
 
   const handleApprove = () => {
@@ -206,7 +208,6 @@ export function ViewQuoteSheet({
     setIsSending(true);
 
     try {
-      // First generate the accept link if not already generated
       let linkToInclude = acceptLink;
       if (!linkToInclude) {
         const { data: linkData, error: linkError } = await supabase.functions.invoke(
@@ -227,7 +228,7 @@ export function ViewQuoteSheet({
         setAcceptLink(linkToInclude);
       }
 
-      const { data, error } = await supabase.functions.invoke('send-finance-document', {
+      const { error } = await supabase.functions.invoke('send-finance-document', {
         body: {
           type: 'quote',
           documentId: quote.id,
@@ -239,7 +240,6 @@ export function ViewQuoteSheet({
 
       if (error) throw error;
 
-      // Update quote with client email if not already set
       if (!(quote as any).client_email && targetEmail) {
         await supabase
           .from('employer_quotes')
@@ -251,7 +251,6 @@ export function ViewQuoteSheet({
       setShowEmailDialog(false);
       setRecipientEmail('');
 
-      // Refresh the quote mutation
       sendQuoteMutation.mutate(quote.id);
       loadAcceptanceData();
     } catch (error: any) {
@@ -284,580 +283,463 @@ export function ViewQuoteSheet({
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="bottom" className="h-[90vh] p-0 rounded-t-3xl">
-          <div className="flex flex-col h-full">
-            {/* Native drag indicator */}
-            <div className="pt-2 pb-1 flex justify-center">
-              <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
-            </div>
-
-            {/* Header */}
-            <SheetHeader className="px-4 pb-4 border-b border-border">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                    <FileText className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <SheetTitle className="text-lg font-semibold">{quote.quote_number}</SheetTitle>
-                    <p className="text-sm text-white">{quote.client}</p>
-                  </div>
-                </div>
-                {getStatusBadge(quote.status)}
-              </div>
-            </SheetHeader>
-
-            {/* Content */}
-            <ScrollArea className="flex-1 px-4 py-4 pb-48">
-              <div className="space-y-4">
-                {/* Client Acceptance Banner */}
-                {isClientAccepted && acceptance && (
-                  <Card className="bg-success/10 border-success/20">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <CheckCircle2 className="h-6 w-6 text-success flex-shrink-0" />
-                        <div className="flex-1 space-y-2">
-                          <div>
-                            <p className="font-semibold text-success">Client Accepted</p>
-                            <p className="text-sm text-white">
-                              {acceptance.client_name} accepted on{' '}
-                              {acceptance.responded_at &&
-                                format(new Date(acceptance.responded_at), "d MMM yyyy 'at' HH:mm")}
-                            </p>
-                          </div>
-                          {acceptance.client_notes && (
-                            <div className="text-sm">
-                              <span className="text-white">Notes: </span>
-                              {acceptance.client_notes}
-                            </div>
-                          )}
-                          {acceptance.signature_data && (
-                            <div className="space-y-1">
-                              <span className="text-sm text-white flex items-center gap-1">
-                                <Signature className="h-3 w-3" /> Client Signature
-                              </span>
-                              <img
-                                src={acceptance.signature_data}
-                                alt="Client signature"
-                                className="h-12 bg-background rounded border border-border p-1"
-                              />
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-                {isClientDeclined && acceptance && (
-                  <Card className="bg-destructive/10 border-destructive/20">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <XCircle className="h-6 w-6 text-destructive flex-shrink-0" />
-                        <div className="flex-1">
-                          <p className="font-semibold text-destructive">Client Declined</p>
-                          <p className="text-sm text-white">
-                            {acceptance.client_name} declined on{' '}
-                            {acceptance.responded_at &&
-                              format(new Date(acceptance.responded_at), "d MMM yyyy 'at' HH:mm")}
-                          </p>
-                          {acceptance.client_notes && (
-                            <div className="text-sm mt-2">
-                              <span className="text-white">Reason: </span>
-                              {acceptance.client_notes}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )}
-
-                {/* Status Timeline */}
-                <div className="flex items-center justify-between py-2">
-                  {['Draft', 'Sent', isClientAccepted ? 'Accepted' : 'Approved'].map(
-                    (step, idx) => {
-                      const isComplete =
-                        step === 'Draft' ||
-                        (step === 'Sent' &&
-                          ['Sent', 'Approved', 'Client Accepted', 'Client Declined'].includes(
-                            quote.status
-                          )) ||
-                        ((step === 'Approved' || step === 'Accepted') &&
-                          (quote.status === 'Approved' || isClientAccepted));
-                      const isCurrent =
-                        step === quote.status || (step === 'Accepted' && isClientAccepted);
-
-                      return (
-                        <div key={step} className="flex items-center">
-                          <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium
-                        ${
-                          isComplete
-                            ? 'bg-success text-success-foreground'
-                            : isCurrent
-                              ? 'bg-elec-yellow text-elec-yellow-foreground'
-                              : 'bg-muted text-white'
-                        }`}
-                          >
-                            {isComplete ? <Check className="h-4 w-4" /> : idx + 1}
-                          </div>
-                          {idx < 2 && (
-                            <div
-                              className={`w-12 h-0.5 ${isComplete ? 'bg-success' : 'bg-muted'}`}
-                            />
-                          )}
-                        </div>
-                      );
-                    }
-                  )}
-                </div>
-
-                {/* Accept Link Section (for Sent quotes) */}
-                {quote.status === 'Sent' && (
-                  <Card className="bg-elec-yellow/5 border-elec-yellow/20">
-                    <CardContent className="p-4 space-y-3">
-                      <div className="flex items-center gap-2">
-                        <LinkIcon className="h-4 w-4 text-elec-yellow" />
-                        <span className="font-medium text-sm">Client Accept Link</span>
-                      </div>
-                      {acceptLink ? (
-                        <div className="flex gap-2">
-                          <Input
-                            value={acceptLink}
-                            readOnly
-                            className="text-xs h-9 bg-background"
-                          />
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={handleCopyLink}
-                            className="h-9 px-3"
-                          >
-                            <Copy className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => openExternalUrl(acceptLink)}
-                            className="h-9 px-3"
-                          >
-                            <ExternalLink className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      ) : (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={handleGenerateAcceptLink}
-                          disabled={isGeneratingLink}
-                          className="w-full"
-                        >
-                          {isGeneratingLink ? (
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          ) : (
-                            <LinkIcon className="h-4 w-4 mr-2" />
-                          )}
-                          Generate Accept Link
-                        </Button>
-                      )}
-                      {acceptance && acceptance.status === 'pending' && (
-                        <p className="text-xs text-white">
-                          Awaiting client response. Expires{' '}
-                          {format(new Date(acceptance.expires_at), 'd MMM yyyy')}
-                        </p>
-                      )}
-                    </CardContent>
-                  </Card>
-                )}
-
-                {/* Details */}
-                <Card className="bg-elec-gray">
-                  <CardContent className="p-4 space-y-3">
-                    {/* Job Title Banner */}
-                    {(quote as any).job_title && (
-                      <div className="bg-elec-yellow/10 rounded-lg p-3 -m-1 mb-2">
-                        <span className="text-xs text-white uppercase tracking-wide">
-                          Project
-                        </span>
-                        <p className="font-semibold text-elec-yellow text-lg">
-                          {(quote as any).job_title}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Client Address */}
-                    {(quote as any).client_address && (
-                      <div>
-                        <span className="text-sm text-white">Client Address</span>
-                        <p className="font-medium whitespace-pre-line">
-                          {(quote as any).client_address}
-                        </p>
-                      </div>
-                    )}
-
-                    {quote.description && (
-                      <div>
-                        <span className="text-sm text-white">Description</span>
-                        <p className="font-medium">{quote.description}</p>
-                      </div>
-                    )}
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="flex items-center gap-2">
-                        <Calendar className="h-4 w-4 text-white" />
-                        <div>
-                          <span className="text-white">Created</span>
-                          <p className="font-medium">
-                            {new Date(quote.created_at).toLocaleDateString('en-GB')}
-                          </p>
-                        </div>
-                      </div>
-                      {quote.sent_date && (
-                        <div className="flex items-center gap-2">
-                          <Send className="h-4 w-4 text-white" />
-                          <div>
-                            <span className="text-white">Sent</span>
-                            <p className="font-medium">
-                              {new Date(quote.sent_date).toLocaleDateString('en-GB')}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                      {quote.valid_until && (
-                        <div className="flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-white" />
-                          <div>
-                            <span className="text-white">Valid Until</span>
-                            <p className="font-medium">
-                              {new Date(quote.valid_until).toLocaleDateString('en-GB')}
-                            </p>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Labour Items */}
-                {lineItems.filter((item: any) => item.type === 'labour').length > 0 && (
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-sm flex items-center gap-2">
-                      <Clock className="h-4 w-4" /> Labour
-                    </h3>
-                    <Card className="bg-elec-gray">
-                      <CardContent className="p-0">
-                        {lineItems
-                          .filter((item: any) => item.type === 'labour')
-                          .map((item: any, idx: number) => (
-                            <div
-                              key={item.id || idx}
-                              className="flex justify-between items-center p-3 border-b border-border last:border-0"
-                            >
-                              <div className="min-w-0 flex-1">
-                                <p className="font-medium text-sm truncate">{item.description}</p>
-                                <p className="text-xs text-white">
-                                  {item.quantity} hrs × £{Number(item.unitPrice || 0).toFixed(2)}/hr
-                                </p>
-                              </div>
-                              <span className="font-bold shrink-0">
-                                £{Number(item.total || 0).toFixed(2)}
-                              </span>
-                            </div>
-                          ))}
-                      </CardContent>
-                    </Card>
-                  </div>
-                )}
-
-                {/* Material Items */}
-                {lineItems.filter((item: any) => item.type !== 'labour').length > 0 && (
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-sm flex items-center gap-2">
-                      <Package className="h-4 w-4" /> Materials
-                    </h3>
-                    <Card className="bg-elec-gray">
-                      <CardContent className="p-0">
-                        {lineItems
-                          .filter((item: any) => item.type !== 'labour')
-                          .map((item: any, idx: number) => (
-                            <div
-                              key={item.id || idx}
-                              className="flex justify-between items-center p-3 border-b border-border last:border-0"
-                            >
-                              <div className="min-w-0 flex-1">
-                                <p className="font-medium text-sm truncate">{item.description}</p>
-                                <p className="text-xs text-white">
-                                  {item.quantity} {item.unit} × £
-                                  {Number(item.unitPrice || 0).toFixed(2)}
-                                </p>
-                              </div>
-                              <span className="font-bold shrink-0">
-                                £{Number(item.total || 0).toFixed(2)}
-                              </span>
-                            </div>
-                          ))}
-                      </CardContent>
-                    </Card>
-                  </div>
-                )}
-
-                {/* Totals */}
-                <Card className="bg-elec-yellow/10 border-elec-yellow/20">
-                  <CardContent className="p-4 space-y-2">
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white">Subtotal</span>
-                      <span className="font-medium">£{subtotal.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-white">VAT @ 20%</span>
-                      <span className="font-medium">£{(subtotal * 0.2).toFixed(2)}</span>
-                    </div>
-                    <Separator className="my-2" />
-                    <div className="flex justify-between items-center">
-                      <span className="text-lg font-medium">Total inc. VAT</span>
-                      <span className="text-2xl font-bold text-elec-yellow">
-                        £{Number(quote.value).toLocaleString('en-GB', { minimumFractionDigits: 2 })}
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Notes */}
-                {quote.notes && (
-                  <div className="space-y-2">
-                    <h3 className="font-semibold text-sm">Notes</h3>
-                    <Card className="bg-muted/30">
-                      <CardContent className="p-3">
-                        <p className="text-sm text-white whitespace-pre-wrap">
-                          {quote.notes}
-                        </p>
-                      </CardContent>
-                    </Card>
-                  </div>
-                )}
-
-                {/* Quick Contact & PDF */}
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => {
-                      const phone = (quote as any).client_phone;
-                      if (phone) {
-                        window.location.href = `tel:${phone}`;
-                      } else {
-                        toast.info('No phone number on file for this client');
-                      }
-                    }}
-                  >
-                    <Phone className="h-4 w-4 mr-2" />
-                    Call
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => setShowEmailDialog(true)}
-                  >
-                    <Mail className="h-4 w-4 mr-2" />
-                    Email
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    disabled={isGeneratingPdf}
-                    onClick={async () => {
-                      setIsGeneratingPdf(true);
-                      try {
-                        const { data, error } = await supabase.functions.invoke(
-                          'generate-quote-pdf',
-                          {
-                            body: { quoteId: quote.id },
-                          }
-                        );
-                        if (error) throw error;
-
-                        // Open HTML in new window for viewing (no auto-print)
-                        const viewWindow = window.open('', '_blank');
-                        if (viewWindow) {
-                          viewWindow.document.write(data.html);
-                          viewWindow.document.close();
-                          viewWindow.focus();
-                        }
-                        toast.success('Quote opened - use the button to print/save as PDF');
-                      } catch (err: any) {
-                        toast.error(err.message || 'Failed to generate quote');
-                      } finally {
-                        setIsGeneratingPdf(false);
-                      }
-                    }}
-                  >
-                    {isGeneratingPdf ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Download className="h-4 w-4 mr-1" />
-                    )}
-                    Download PDF
-                  </Button>
-                </div>
-              </div>
-            </ScrollArea>
-
-            {/* Fixed Footer Actions */}
-            <div className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border">
-              <div className="px-4 py-3 pb-safe space-y-2">
-                {quote.status === 'Draft' && (
-                  <Button onClick={handleSend} disabled={isSending} className="w-full h-12">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+        >
+          <SheetShell
+            eyebrow={quote.quote_number}
+            title={quote.client}
+            description={
+              <span className="flex items-center gap-2">
+                <Pill tone={statusTone[quote.status] ?? 'amber'}>{quote.status}</Pill>
+                <span>Value £{Number(quote.value).toLocaleString()}</span>
+              </span>
+            }
+            footer={
+              quote.status === 'Draft' ? (
+                <>
+                  <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                    Close
+                  </SecondaryButton>
+                  <PrimaryButton onClick={handleSend} disabled={isSending} fullWidth>
                     {isSending ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
                     ) : (
                       <Send className="h-4 w-4 mr-2" />
                     )}
-                    Send Email
-                  </Button>
-                )}
-                {quote.status === 'Sent' && (
-                  <div className="flex gap-2">
-                    <Button
-                      variant="destructive"
-                      className="flex-1 h-12"
-                      onClick={handleReject}
-                      disabled={updateQuoteMutation.isPending}
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      Reject
-                    </Button>
-                    <Button
-                      className="flex-1 h-12"
-                      onClick={handleApprove}
-                      disabled={updateQuoteMutation.isPending}
-                    >
-                      <Check className="h-4 w-4 mr-2" />
-                      Approve
-                    </Button>
-                  </div>
-                )}
-                {(quote.status === 'Approved' || isClientAccepted) && (
-                  <Button
-                    onClick={handleConvert}
-                    className="w-full h-12 bg-success hover:bg-success/90"
+                    Send email
+                  </PrimaryButton>
+                </>
+              ) : quote.status === 'Sent' ? (
+                <>
+                  <SecondaryButton
+                    onClick={handleReject}
+                    disabled={updateQuoteMutation.isPending}
+                    fullWidth
                   >
+                    <X className="h-4 w-4 mr-2" />
+                    Reject
+                  </SecondaryButton>
+                  <PrimaryButton
+                    onClick={handleApprove}
+                    disabled={updateQuoteMutation.isPending}
+                    fullWidth
+                  >
+                    <Check className="h-4 w-4 mr-2" />
+                    Approve
+                  </PrimaryButton>
+                </>
+              ) : quote.status === 'Approved' || isClientAccepted ? (
+                <>
+                  <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                    Close
+                  </SecondaryButton>
+                  <PrimaryButton onClick={handleConvert} fullWidth>
                     <FileText className="h-4 w-4 mr-2" />
-                    Convert to Invoice
-                  </Button>
-                )}
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="flex-1 h-10">
-                    <Copy className="h-4 w-4 mr-2" />
-                    Duplicate
-                  </Button>
-                  <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        className="flex-1 h-10 text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Delete
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>Delete Quote?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This will permanently delete quote {quote.quote_number} for {quote.client}
-                          . This action cannot be undone.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          className="bg-destructive hover:bg-destructive/90"
-                          onClick={() => {
-                            haptic.heavy();
-                            deleteQuoteMutation.mutate(quote.id, {
-                              onSuccess: () => onOpenChange(false),
-                            });
-                          }}
-                        >
-                          Delete
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
+                    Convert to invoice
+                  </PrimaryButton>
+                </>
+              ) : (
+                <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                  Close
+                </SecondaryButton>
+              )
+            }
+          >
+            {isClientAccepted && acceptance && (
+              <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/25 p-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-6 w-6 text-emerald-400 flex-shrink-0" />
+                  <div className="flex-1 space-y-2">
+                    <div>
+                      <p className="font-semibold text-emerald-400">Client accepted</p>
+                      <p className="text-sm text-white">
+                        {acceptance.client_name} accepted on{' '}
+                        {acceptance.responded_at &&
+                          format(new Date(acceptance.responded_at), "d MMM yyyy 'at' HH:mm")}
+                      </p>
+                    </div>
+                    {acceptance.client_notes && (
+                      <div className="text-sm text-white">
+                        <span className="text-white">Notes: </span>
+                        {acceptance.client_notes}
+                      </div>
+                    )}
+                    {acceptance.signature_data && (
+                      <div className="space-y-1">
+                        <span className="text-sm text-white flex items-center gap-1">
+                          <Signature className="h-3 w-3" /> Client signature
+                        </span>
+                        <img
+                          src={acceptance.signature_data}
+                          alt="Client signature"
+                          className="h-12 bg-[hsl(0_0%_9%)] rounded-lg border border-white/[0.06] p-1"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
+            )}
+
+            {isClientDeclined && acceptance && (
+              <div className="rounded-2xl bg-red-500/10 border border-red-500/25 p-4">
+                <div className="flex items-start gap-3">
+                  <XCircle className="h-6 w-6 text-red-400 flex-shrink-0" />
+                  <div className="flex-1">
+                    <p className="font-semibold text-red-400">Client declined</p>
+                    <p className="text-sm text-white">
+                      {acceptance.client_name} declined on{' '}
+                      {acceptance.responded_at &&
+                        format(new Date(acceptance.responded_at), "d MMM yyyy 'at' HH:mm")}
+                    </p>
+                    {acceptance.client_notes && (
+                      <div className="text-sm mt-2 text-white">
+                        <span className="text-white">Reason: </span>
+                        {acceptance.client_notes}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {quote.status === 'Sent' && (
+              <FormCard eyebrow="Client accept link">
+                {acceptLink ? (
+                  <div className="flex gap-2">
+                    <Input value={acceptLink} readOnly className={inputClass} />
+                    <SecondaryButton size="sm" onClick={handleCopyLink}>
+                      <Copy className="h-4 w-4" />
+                    </SecondaryButton>
+                    <SecondaryButton size="sm" onClick={() => openExternalUrl(acceptLink)}>
+                      <ExternalLink className="h-4 w-4" />
+                    </SecondaryButton>
+                  </div>
+                ) : (
+                  <SecondaryButton
+                    onClick={handleGenerateAcceptLink}
+                    disabled={isGeneratingLink}
+                    fullWidth
+                  >
+                    {isGeneratingLink ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <LinkIcon className="h-4 w-4 mr-2" />
+                    )}
+                    Generate accept link
+                  </SecondaryButton>
+                )}
+                {acceptance && acceptance.status === 'pending' && (
+                  <p className="text-xs text-white mt-2">
+                    Awaiting client response. Expires{' '}
+                    {format(new Date(acceptance.expires_at), 'd MMM yyyy')}
+                  </p>
+                )}
+              </FormCard>
+            )}
+
+            <FormCard eyebrow="Details">
+              {(quote as any).job_title && (
+                <div className="bg-elec-yellow/10 rounded-xl p-3">
+                  <Eyebrow>Project</Eyebrow>
+                  <p className="font-semibold text-elec-yellow text-lg mt-0.5">
+                    {(quote as any).job_title}
+                  </p>
+                </div>
+              )}
+              {(quote as any).client_address && (
+                <div>
+                  <Eyebrow>Client address</Eyebrow>
+                  <p className="font-medium text-white whitespace-pre-line mt-0.5">
+                    {(quote as any).client_address}
+                  </p>
+                </div>
+              )}
+              {quote.description && (
+                <div>
+                  <Eyebrow>Description</Eyebrow>
+                  <p className="font-medium text-white mt-0.5">{quote.description}</p>
+                </div>
+              )}
+              <FormGrid cols={2}>
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-white" />
+                  <div>
+                    <Eyebrow>Created</Eyebrow>
+                    <p className="font-medium text-white text-sm">
+                      {new Date(quote.created_at).toLocaleDateString('en-GB')}
+                    </p>
+                  </div>
+                </div>
+                {quote.sent_date && (
+                  <div className="flex items-center gap-2">
+                    <Send className="h-4 w-4 text-white" />
+                    <div>
+                      <Eyebrow>Sent</Eyebrow>
+                      <p className="font-medium text-white text-sm">
+                        {new Date(quote.sent_date).toLocaleDateString('en-GB')}
+                      </p>
+                    </div>
+                  </div>
+                )}
+                {quote.valid_until && (
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-white" />
+                    <div>
+                      <Eyebrow>Valid until</Eyebrow>
+                      <p className="font-medium text-white text-sm">
+                        {new Date(quote.valid_until).toLocaleDateString('en-GB')}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </FormGrid>
+            </FormCard>
+
+            {lineItems.filter((item: any) => item.type === 'labour').length > 0 && (
+              <FormCard eyebrow="Labour">
+                <div className="flex items-center gap-2 mb-1">
+                  <Clock className="h-4 w-4 text-white" />
+                  <Eyebrow>Labour</Eyebrow>
+                </div>
+                <div className="divide-y divide-white/[0.06] -mx-1">
+                  {lineItems
+                    .filter((item: any) => item.type === 'labour')
+                    .map((item: any, idx: number) => (
+                      <div
+                        key={item.id || idx}
+                        className="flex justify-between items-center px-1 py-3"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-sm text-white truncate">
+                            {item.description}
+                          </p>
+                          <p className="text-xs text-white mt-0.5">
+                            {item.quantity} hrs × £{Number(item.unitPrice || 0).toFixed(2)}/hr
+                          </p>
+                        </div>
+                        <span className="font-bold text-white shrink-0 tabular-nums">
+                          £{Number(item.total || 0).toFixed(2)}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              </FormCard>
+            )}
+
+            {lineItems.filter((item: any) => item.type !== 'labour').length > 0 && (
+              <FormCard eyebrow="Materials">
+                <div className="flex items-center gap-2 mb-1">
+                  <Package className="h-4 w-4 text-white" />
+                  <Eyebrow>Materials</Eyebrow>
+                </div>
+                <div className="divide-y divide-white/[0.06] -mx-1">
+                  {lineItems
+                    .filter((item: any) => item.type !== 'labour')
+                    .map((item: any, idx: number) => (
+                      <div
+                        key={item.id || idx}
+                        className="flex justify-between items-center px-1 py-3"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-sm text-white truncate">
+                            {item.description}
+                          </p>
+                          <p className="text-xs text-white mt-0.5">
+                            {item.quantity} {item.unit} × £
+                            {Number(item.unitPrice || 0).toFixed(2)}
+                          </p>
+                        </div>
+                        <span className="font-bold text-white shrink-0 tabular-nums">
+                          £{Number(item.total || 0).toFixed(2)}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              </FormCard>
+            )}
+
+            <div className="rounded-2xl p-4 bg-elec-yellow/10 border border-elec-yellow/30 space-y-2">
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-white">Subtotal</span>
+                <span className="font-medium text-white tabular-nums">£{subtotal.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-white">VAT @ 20%</span>
+                <span className="font-medium text-white tabular-nums">
+                  £{(subtotal * 0.2).toFixed(2)}
+                </span>
+              </div>
+              <div className="h-px w-full bg-white/[0.08] my-2" />
+              <div className="flex justify-between items-center">
+                <span className="text-lg font-medium text-white">Total inc. VAT</span>
+                <span className="text-2xl font-bold text-elec-yellow tabular-nums">
+                  £{Number(quote.value).toLocaleString('en-GB', { minimumFractionDigits: 2 })}
+                </span>
+              </div>
             </div>
-          </div>
+
+            {quote.notes && (
+              <FormCard eyebrow="Notes">
+                <p className="text-sm text-white whitespace-pre-wrap">{quote.notes}</p>
+              </FormCard>
+            )}
+
+            <FormGrid cols={3}>
+              <SecondaryButton
+                onClick={() => {
+                  const phone = (quote as any).client_phone;
+                  if (phone) {
+                    window.location.href = `tel:${phone}`;
+                  } else {
+                    toast.info('No phone number on file for this client');
+                  }
+                }}
+                fullWidth
+              >
+                <Phone className="h-4 w-4 mr-1" />
+                Call
+              </SecondaryButton>
+              <SecondaryButton onClick={() => setShowEmailDialog(true)} fullWidth>
+                <Mail className="h-4 w-4 mr-1" />
+                Email
+              </SecondaryButton>
+              <SecondaryButton
+                disabled={isGeneratingPdf}
+                onClick={async () => {
+                  setIsGeneratingPdf(true);
+                  try {
+                    const { data, error } = await supabase.functions.invoke(
+                      'generate-quote-pdf',
+                      {
+                        body: { quoteId: quote.id },
+                      }
+                    );
+                    if (error) throw error;
+
+                    const viewWindow = window.open('', '_blank');
+                    if (viewWindow) {
+                      viewWindow.document.write(data.html);
+                      viewWindow.document.close();
+                      viewWindow.focus();
+                    }
+                    toast.success('Quote opened - use the button to print/save as PDF');
+                  } catch (err: any) {
+                    toast.error(err.message || 'Failed to generate quote');
+                  } finally {
+                    setIsGeneratingPdf(false);
+                  }
+                }}
+                fullWidth
+              >
+                {isGeneratingPdf ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-1" />
+                ) : (
+                  <Download className="h-4 w-4 mr-1" />
+                )}
+                PDF
+              </SecondaryButton>
+            </FormGrid>
+
+            <FormGrid cols={2}>
+              <SecondaryButton fullWidth>
+                <Copy className="h-4 w-4 mr-2" />
+                Duplicate
+              </SecondaryButton>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <DestructiveButton fullWidth>
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Delete
+                  </DestructiveButton>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete quote?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will permanently delete quote {quote.quote_number} for {quote.client}
+                      . This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      className="bg-destructive hover:bg-destructive/90"
+                      onClick={() => {
+                        haptic.heavy();
+                        deleteQuoteMutation.mutate(quote.id, {
+                          onSuccess: () => onOpenChange(false),
+                        });
+                      }}
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </FormGrid>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
-      {/* Email Dialog */}
       <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Send Quote to Client</DialogTitle>
+            <DialogTitle>Send quote to client</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Client Email Address</Label>
+            <Field label="Client email address" required>
               <Input
-                id="email"
                 type="email"
                 placeholder="client@example.com"
                 value={recipientEmail}
                 onChange={(e) => setRecipientEmail(e.target.value)}
+                className={inputClass}
               />
-            </div>
+            </Field>
             <p className="text-sm text-white">
               This will send quote {quote.quote_number} for £{Number(quote.value).toLocaleString()}{' '}
               to the client with an accept/decline link.
             </p>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowEmailDialog(false)}>
-              Cancel
-            </Button>
-            <Button onClick={() => handleSendEmail()} disabled={!recipientEmail || isSending}>
+            <SecondaryButton onClick={() => setShowEmailDialog(false)}>Cancel</SecondaryButton>
+            <PrimaryButton onClick={() => handleSendEmail()} disabled={!recipientEmail || isSending}>
               {isSending ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
               ) : (
                 <Send className="h-4 w-4 mr-2" />
               )}
-              Send Email
-            </Button>
+              Send email
+            </PrimaryButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Link Dialog */}
       <Dialog open={showLinkDialog} onOpenChange={setShowLinkDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Quote Accept Link Generated</DialogTitle>
+            <DialogTitle>Quote accept link generated</DialogTitle>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <p className="text-sm text-white">
               Share this link with your client so they can review and accept the quote online.
             </p>
             <div className="flex gap-2">
-              <Input value={acceptLink || ''} readOnly className="text-sm" />
-              <Button variant="outline" onClick={handleCopyLink}>
+              <Input value={acceptLink || ''} readOnly className={inputClass} />
+              <SecondaryButton onClick={handleCopyLink}>
                 <Copy className="h-4 w-4" />
-              </Button>
+              </SecondaryButton>
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowLinkDialog(false)}>
-              Close
-            </Button>
-            <Button onClick={() => openExternalUrl(acceptLink || '')}>
+            <SecondaryButton onClick={() => setShowLinkDialog(false)}>Close</SecondaryButton>
+            <PrimaryButton onClick={() => openExternalUrl(acceptLink || '')}>
               <ExternalLink className="h-4 w-4 mr-2" />
-              Preview Portal
-            </Button>
+              Preview portal
+            </PrimaryButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>

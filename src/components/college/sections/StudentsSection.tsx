@@ -289,7 +289,7 @@ export function StudentsSection() {
                               <div className="text-[15px] font-medium text-white truncate">
                                 {student.name}
                               </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/50 truncate tabular-nums">
+                              <div className="mt-0.5 text-[11.5px] text-white/75 truncate tabular-nums">
                                 {student.uln ? `ULN · ${student.uln}` : getCohortName(student.cohort_id)}
                               </div>
                             </div>
@@ -331,7 +331,7 @@ export function StudentsSection() {
                             </span>
                           </div>
 
-                          <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/50">
+                          <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
                             <span
                               className={cn(
                                 'tabular-nums',

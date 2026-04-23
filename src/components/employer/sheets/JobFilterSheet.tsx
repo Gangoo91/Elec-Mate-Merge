@@ -1,16 +1,15 @@
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Slider } from '@/components/ui/slider';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Badge } from '@/components/ui/badge';
 import { X } from 'lucide-react';
+import {
+  SheetShell,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  Pill,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
+import { cn } from '@/lib/utils';
 
 export interface JobFilters {
   statuses: string[];
@@ -27,11 +26,11 @@ interface JobFilterSheetProps {
 }
 
 const STATUS_OPTIONS = [
-  { value: 'Active', label: 'Active', colour: 'bg-success' },
-  { value: 'Pending', label: 'Pending', colour: 'bg-warning' },
-  { value: 'Completed', label: 'Completed', colour: 'bg-muted-foreground' },
-  { value: 'On Hold', label: 'On Hold', colour: 'bg-info' },
-  { value: 'Cancelled', label: 'Cancelled', colour: 'bg-destructive' },
+  { value: 'Active', label: 'Active', dot: 'bg-green-400' },
+  { value: 'Pending', label: 'Pending', dot: 'bg-amber-400' },
+  { value: 'Completed', label: 'Completed', dot: 'bg-white/40' },
+  { value: 'On Hold', label: 'On Hold', dot: 'bg-cyan-400' },
+  { value: 'Cancelled', label: 'Cancelled', dot: 'bg-red-400' },
 ];
 
 export function JobFilterSheet({
@@ -74,31 +73,27 @@ export function JobFilterSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-auto max-h-[80vh] rounded-t-2xl">
-        <SheetHeader className="text-left pb-4">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="text-lg font-semibold">Filter Jobs</SheetTitle>
-            {activeFilterCount > 0 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleClearAll}
-                className="text-white"
-              >
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+      >
+        <SheetShell
+          eyebrow="Filters"
+          title="Filter jobs"
+          description="Narrow down your job list by status and value."
+          footer={
+            <>
+              <SecondaryButton onClick={handleClearAll} fullWidth>
                 <X className="h-4 w-4 mr-1" />
                 Clear all
-              </Button>
-            )}
-          </div>
-          <SheetDescription>Narrow down your job list</SheetDescription>
-        </SheetHeader>
-
-        <div className="space-y-6 pb-6">
-          {/* Status Filter */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium text-white uppercase tracking-wide">
-              Status
-            </Label>
+              </SecondaryButton>
+              <PrimaryButton onClick={() => onOpenChange(false)} fullWidth>
+                Apply{activeFilterCount > 0 ? ` (${activeFilterCount})` : ''}
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Status">
             <div className="flex flex-wrap gap-2">
               {STATUS_OPTIONS.map((option) => {
                 const isSelected = filters.statuses.includes(option.value);
@@ -106,30 +101,25 @@ export function JobFilterSheet({
                   <button
                     key={option.value}
                     onClick={() => handleStatusToggle(option.value)}
-                    className={`
-                      flex items-center gap-2 px-3 py-2 rounded-lg border transition-all
-                      ${
-                        isSelected
-                          ? 'border-elec-yellow bg-elec-yellow/10 text-foreground'
-                          : 'border-border bg-elec-gray text-white hover:border-elec-yellow/50'
-                      }
-                    `}
+                    className={cn(
+                      'inline-flex items-center gap-2 px-3 py-2 rounded-full border text-[12.5px] font-medium transition-colors touch-manipulation',
+                      isSelected
+                        ? 'bg-elec-yellow/15 border-elec-yellow/60 text-white'
+                        : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white hover:bg-white/[0.06]'
+                    )}
                   >
-                    <div className={`w-2 h-2 rounded-full ${option.colour}`} />
-                    <span className="text-sm font-medium">{option.label}</span>
+                    <span className={cn('w-1.5 h-1.5 rounded-full', option.dot)} />
+                    {option.label}
                     {isSelected && <X className="h-3 w-3 text-white" />}
                   </button>
                 );
               })}
             </div>
-          </div>
+          </FormCard>
 
-          {/* Value Range Filter */}
-          <div className="space-y-4">
-            <Label className="text-sm font-medium text-white uppercase tracking-wide">
-              Value Range
-            </Label>
-            <div className="px-1">
+          <FormCard eyebrow="Value range">
+            <div className="space-y-4">
+              <label className={fieldLabelClass}>Set minimum and maximum project value</label>
               <Slider
                 value={[filters.minValue, filters.maxValue]}
                 onValueChange={handleValueChange}
@@ -137,23 +127,14 @@ export function JobFilterSheet({
                 step={1000}
                 className="w-full"
               />
+              <div className="flex justify-between items-center">
+                <Pill tone="yellow">{formatValue(filters.minValue)}</Pill>
+                <span className="text-[11px] text-white">to</span>
+                <Pill tone="yellow">{formatValue(filters.maxValue)}</Pill>
+              </div>
             </div>
-            <div className="flex justify-between text-sm">
-              <span className="font-medium text-foreground">{formatValue(filters.minValue)}</span>
-              <span className="font-medium text-foreground">{formatValue(filters.maxValue)}</span>
-            </div>
-          </div>
-
-          {/* Apply Button */}
-          <Button onClick={() => onOpenChange(false)} className="w-full h-12 font-semibold">
-            Apply Filters
-            {activeFilterCount > 0 && (
-              <Badge variant="secondary" className="ml-2 bg-background text-elec-yellow">
-                {activeFilterCount}
-              </Badge>
-            )}
-          </Button>
-        </div>
+          </FormCard>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

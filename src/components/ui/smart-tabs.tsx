@@ -84,6 +84,73 @@ export const SmartTabs = ({
   const activeTab = tabs.find((tab) => tab.value === activeValue);
   const currentIndex = tabs.findIndex((tab) => tab.value === activeValue);
 
+  // DESKTOP — college editorial underline-tabs pattern. Mobile branch below
+  // is untouched (pill grid + haptic + auto-scroll).
+  if (!isMobile) {
+    return (
+      <div className={cn('w-full', className)}>
+        {/* Progress strip — hairline rule with count + percent */}
+        {showProgress && (
+          <div className="flex items-center gap-4 pb-3">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70 shrink-0 tabular-nums">
+              {completedCount}/{tabs.length} sections
+            </span>
+            <div className="flex-1 h-px bg-white/[0.08] relative overflow-hidden">
+              <div
+                className="absolute inset-y-0 left-0 bg-elec-yellow"
+                style={{ width: `${progressPercent}%`, transition: 'width 300ms ease-out' }}
+              />
+            </div>
+            <span className="text-[10px] tabular-nums text-white/70 shrink-0">{progressPercent}%</span>
+          </div>
+        )}
+
+        {/* Tab strip — continuous hairline, active tab overlays a 2px yellow rule */}
+        <div className="relative border-b border-white/10">
+          <div className="flex items-end gap-6 -mb-px overflow-x-auto scrollbar-hide"
+               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            {tabs.map((tab, index) => {
+              const tabComplete = isTabComplete(tab);
+              const isActive = tab.value === activeValue;
+              return (
+                <button
+                  key={tab.value}
+                  onClick={() => handleValueChange(tab.value)}
+                  className={cn(
+                    'group relative flex items-baseline gap-2 pb-3 pt-1 shrink-0 touch-manipulation',
+                    'border-b-2 transition-colors',
+                    isActive
+                      ? 'border-elec-yellow text-white'
+                      : 'border-transparent text-white/50 hover:text-white hover:border-white/20'
+                  )}
+                >
+                  <span
+                    className={cn(
+                      'text-[11px] font-semibold tabular-nums tracking-[0.18em] transition-colors',
+                      isActive ? 'text-elec-yellow' : 'text-white/40 group-hover:text-white/70'
+                    )}
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="text-white/25">·</span>
+                  <span className="text-sm font-medium tracking-tight">{tab.label}</span>
+                  {tabComplete && !isActive && (
+                    <span
+                      aria-label="completed"
+                      className="h-1.5 w-1.5 rounded-full bg-green-400/80 ml-0.5 self-center"
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-5">{activeTab?.content}</div>
+      </div>
+    );
+  }
+
   return (
     <div className={cn('w-full', className)}>
       {/* Best-in-class tab strip - always horizontal, scrollable on mobile */}
@@ -108,14 +175,13 @@ export const SmartTabs = ({
         <div
           ref={scrollRef}
           className={cn(
-            isMobile ? `grid gap-1 px-2 pb-2 ${tabs.length <= 2 ? 'grid-cols-2' : tabs.length <= 3 ? 'grid-cols-3' : tabs.length <= 4 ? 'grid-cols-4' : 'grid-cols-5'}` : 'flex gap-2 overflow-x-auto scrollbar-hide'
+            `grid gap-1 px-2 pb-2 ${tabs.length <= 2 ? 'grid-cols-2' : tabs.length <= 3 ? 'grid-cols-3' : tabs.length <= 4 ? 'grid-cols-4' : 'grid-cols-5'}`
           )}
-          style={isMobile ? undefined : { scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {tabs.map((tab, index) => {
             const tabComplete = isTabComplete(tab);
             const isActive = tab.value === activeValue;
-            const displayLabel = isMobile ? tab.shortLabel || tab.label.split(' ')[0] : tab.label;
+            const displayLabel = tab.shortLabel || tab.label.split(' ')[0];
 
             return (
               <button
@@ -125,21 +191,17 @@ export const SmartTabs = ({
                 className={cn(
                   'flex items-center justify-center gap-1 rounded-lg font-semibold touch-manipulation',
                   'active:scale-[0.98] transition-all duration-150',
+                  'text-[11px] h-9 px-1 min-w-0',
                   isActive
                     ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
                     : tabComplete
                       ? 'bg-green-500/10 text-green-400 border border-green-500/30'
-                      : 'bg-white/[0.05] text-white border border-white/[0.08]',
-                  isMobile
-                    ? 'text-[11px] h-9 px-1 min-w-0'
-                    : 'text-sm h-10 px-3 py-2.5 shrink-0'
+                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
                 )}
               >
-                {/* Step number */}
                 <span
                   className={cn(
-                    'flex items-center justify-center rounded-full font-bold shrink-0',
-                    isMobile ? 'h-4 w-4 text-[9px]' : 'h-[18px] w-[18px] text-[11px]',
+                    'flex items-center justify-center rounded-full font-bold shrink-0 h-4 w-4 text-[9px]',
                     isActive
                       ? 'bg-elec-yellow/30 text-elec-yellow'
                       : tabComplete
@@ -156,7 +218,6 @@ export const SmartTabs = ({
         </div>
       </div>
 
-      {/* Tab content */}
       <div className="mt-2">{activeTab?.content}</div>
     </div>
   );

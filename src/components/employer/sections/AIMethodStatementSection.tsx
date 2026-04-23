@@ -1,25 +1,28 @@
-import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect, useMemo } from 'react';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { SectionHeader } from '@/components/employer/SectionHeader';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
-  ClipboardList,
-  Sparkles,
-  Loader2,
-  CheckCircle,
-  AlertTriangle,
-  Download,
-  FileText,
-  RefreshCw,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Pill,
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
+} from '@/components/employer/editorial';
+import { RefreshCw, Download, Sparkles } from 'lucide-react';
 
 interface AIMethodStatementSectionProps {
   onNavigate: (section: Section) => void;
@@ -46,10 +49,15 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
     }
   }, [selectedJobPack]);
 
+  const generatedCount = useMemo(
+    () => jobPacks.filter((jp: any) => jp.method_statement_generated).length,
+    [jobPacks]
+  );
+
   const handleGenerate = async () => {
     if (!scopeDescription.trim()) {
       toast({
-        title: 'Missing Information',
+        title: 'Missing information',
         description: 'Please provide a scope description.',
         variant: 'destructive',
       });
@@ -58,11 +66,10 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
 
     setIsGenerating(true);
     setProgress(0);
-    setCurrentStep('Generating method statement...');
+    setCurrentStep('Drafting method statement…');
     setError(null);
     setResult(null);
 
-    // Simulate progress for method statement generation
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 90) return prev;
@@ -97,7 +104,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
       setIsGenerating(false);
 
       toast({
-        title: 'Method Statement Generated!',
+        title: 'Method statement generated',
         description: 'Your method statement has been created successfully.',
       });
 
@@ -138,177 +145,191 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
     setCurrentStep('');
   };
 
+  const recentGenerated = useMemo(
+    () => jobPacks.filter((jp: any) => jp.method_statement_generated).slice(0, 6),
+    [jobPacks]
+  );
+
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
-        title="Method Statement Generator"
-        description="Generate step-by-step installation procedures"
-        icon={ClipboardList}
+    <PageFrame>
+      <PageHero
+        eyebrow="Smart Docs"
+        title="AI Method Statement"
+        description="Drafts a full method statement from a short brief."
+        tone="emerald"
+        actions={
+          <IconButton onClick={handleReset} aria-label="Reset">
+            <RefreshCw className="h-4 w-4" />
+          </IconButton>
+        }
+        meta={<Pill tone="purple">AI</Pill>}
+      />
+
+      <StatStrip
+        columns={3}
+        stats={[
+          { label: 'Generated', value: String(generatedCount), tone: 'emerald' },
+          { label: 'Avg time', value: '~2 min' },
+          { label: 'Templates', value: String(jobPacks.length), tone: 'blue' },
+        ]}
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Link to Job Pack
-              </CardTitle>
-              <CardDescription>
-                Select a job pack to auto-populate scope and attach the method statement
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <JobPackSelector
-                selectedJobPackId={selectedJobPackId}
-                onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate('jobpacks')}
-              />
-            </CardContent>
-          </Card>
+        <div className="space-y-6">
+          <ListCard>
+            <ListCardHeader
+              tone="emerald"
+              title="Brief"
+              meta={<Pill tone="emerald">Step 1</Pill>}
+            />
+            <div className="p-5 sm:p-6 space-y-5">
+              <div className="space-y-2">
+                <Eyebrow>Link to job pack</Eyebrow>
+                <JobPackSelector
+                  selectedJobPackId={selectedJobPackId}
+                  onSelect={setSelectedJobPackId}
+                  onCreateNew={() => onNavigate('jobpacks')}
+                />
+              </div>
 
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">Scope of Work</CardTitle>
-              <CardDescription>
-                Describe the installation work to generate step-by-step procedures
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Textarea
-                value={scopeDescription}
-                onChange={(e) => setScopeDescription(e.target.value)}
-                placeholder="Describe the electrical installation work in detail..."
-                className="min-h-[200px] bg-elec-dark border-elec-yellow/20"
-                disabled={isGenerating}
-              />
+              <div className="space-y-2">
+                <Eyebrow>Scope of work</Eyebrow>
+                <Textarea
+                  value={scopeDescription}
+                  onChange={(e) => setScopeDescription(e.target.value)}
+                  placeholder="Describe the electrical installation work in detail…"
+                  className={`${textareaClass} min-h-[200px]`}
+                  disabled={isGenerating}
+                />
+              </div>
 
-              <Button
+              <PrimaryButton
                 onClick={handleGenerate}
                 disabled={isGenerating || !scopeDescription.trim()}
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                fullWidth
               >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Generate Method Statement
-                  </>
-                )}
-              </Button>
-            </CardContent>
-          </Card>
+                <Sparkles className="h-4 w-4 mr-2" />
+                {isGenerating ? 'Generating…' : 'Generate'}
+              </PrimaryButton>
+            </div>
+          </ListCard>
+
+          <ListCard>
+            <ListCardHeader title="What you get" />
+            <div className="px-5 sm:px-6 py-5 space-y-3">
+              {[
+                '8 to 14 detailed installation steps',
+                'Tools and materials per step',
+                'Testing procedures with pass / fail criteria',
+                'Linked hazards and safety notes',
+              ].map((line) => (
+                <div key={line} className="flex items-start gap-3">
+                  <span className="mt-1.5 h-1 w-1 rounded-full bg-elec-yellow shrink-0" />
+                  <span className="text-[13px] text-white leading-relaxed">{line}</span>
+                </div>
+              ))}
+            </div>
+          </ListCard>
         </div>
 
-        <div className="space-y-4">
-          {isGenerating && (
-            <Card className="border-info/20 bg-info/5">
-              <CardContent className="p-6">
+        <div className="space-y-6">
+          <ListCard>
+            <ListCardHeader
+              tone="purple"
+              title="Result"
+              meta={
+                isGenerating ? (
+                  <Pill tone="amber">{Math.round(progress)}%</Pill>
+                ) : result ? (
+                  <Pill tone="emerald">Ready</Pill>
+                ) : error ? (
+                  <Pill tone="red">Failed</Pill>
+                ) : (
+                  <Pill tone="blue">Idle</Pill>
+                )
+              }
+            />
+            <div className="p-5 sm:p-6">
+              {isGenerating && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-foreground">Generating Method Statement</h3>
-                    <Badge variant="secondary" className="bg-info/20 text-info">
-                      {Math.round(progress)}%
-                    </Badge>
-                  </div>
-                  <Progress value={progress} className="h-2" />
-                  <p className="text-sm text-white">{currentStep}</p>
+                  <LoadingBlocks />
+                  <p className="text-[12px] text-white text-center">{currentStep}</p>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              )}
 
-          {error && !isGenerating && (
-            <Card className="border-destructive/20 bg-destructive/5">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
-                  <div>
-                    <h3 className="font-medium text-foreground">Generation Failed</h3>
-                    <p className="text-sm text-white mt-1">{error}</p>
-                    <Button variant="outline" size="sm" className="mt-3" onClick={handleReset}>
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Try Again
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
+              {!isGenerating && error && (
+                <EmptyState
+                  title="Generation failed"
+                  description={error}
+                  action="Try again"
+                  onAction={handleReset}
+                />
+              )}
 
-          {result && !isGenerating && (
-            <Card className="border-success/20 bg-success/5">
-              <CardContent className="p-6">
+              {!isGenerating && result && (
                 <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-success/20">
-                      <CheckCircle className="h-5 w-5 text-success" />
+                  <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-5">
+                    <Eyebrow>Status</Eyebrow>
+                    <div className="mt-3 text-[28px] sm:text-[34px] font-semibold text-white tracking-tight leading-none tabular-nums">
+                      Ready
                     </div>
-                    <div>
-                      <h3 className="font-medium text-foreground">Method Statement Generated!</h3>
-                      <p className="text-sm text-white">
-                        Step-by-step procedures created
-                      </p>
-                    </div>
+                    <p className="mt-2 text-[12.5px] text-white">
+                      Step-by-step procedures created
+                      {selectedJobPackId ? ' and attached to job pack.' : '.'}
+                    </p>
                   </div>
 
                   <div className="flex gap-2">
-                    <Button
-                      onClick={handleDownload}
-                      className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                    >
+                    <PrimaryButton onClick={handleDownload} fullWidth>
                       <Download className="h-4 w-4 mr-2" />
                       Download
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={handleReset}
-                      className="border-elec-yellow/30"
-                    >
+                    </PrimaryButton>
+                    <SecondaryButton onClick={handleReset}>
                       <RefreshCw className="h-4 w-4 mr-2" />
                       New
-                    </Button>
-                  </div>
-
-                  {selectedJobPackId && (
-                    <p className="text-xs text-white text-center">
-                      ✓ Attached to Job Pack
-                    </p>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {!isGenerating && !result && !error && (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-6">
-                <div className="flex gap-3">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10 h-fit">
-                    <Sparkles className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground mb-1">Method Statement Generator</h3>
-                    <p className="text-sm text-white">
-                      Generate detailed installation procedures following BS 7671 standards.
-                    </p>
-                    <ul className="mt-3 space-y-1 text-sm text-white">
-                      <li>• 8-14 detailed installation steps</li>
-                      <li>• Tools and materials per step</li>
-                      <li>• Testing procedures with pass/fail criteria</li>
-                      <li>• Linked hazards and safety notes</li>
-                    </ul>
+                    </SecondaryButton>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              )}
+
+              {!isGenerating && !result && !error && (
+                <EmptyState
+                  title="No method statement yet"
+                  description="Add a brief and tap Generate to draft a full method statement following BS 7671."
+                />
+              )}
+            </div>
+          </ListCard>
+
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="History"
+              meta={<Pill tone="blue">{recentGenerated.length}</Pill>}
+            />
+            {recentGenerated.length === 0 ? (
+              <div className="p-5 sm:p-6">
+                <EmptyState
+                  title="No previous statements"
+                  description="Generated method statements will appear here once attached to a job pack."
+                />
+              </div>
+            ) : (
+              <ListBody>
+                {recentGenerated.map((jp: any) => (
+                  <ListRow
+                    key={jp.id}
+                    title={jp.title || 'Untitled job pack'}
+                    subtitle={jp.location || 'No location'}
+                    trailing={<Pill tone="emerald">Done</Pill>}
+                    onClick={() => setSelectedJobPackId(jp.id)}
+                  />
+                ))}
+              </ListBody>
+            )}
+          </ListCard>
         </div>
       </div>
-    </div>
+    </PageFrame>
   );
 }

@@ -5,12 +5,17 @@ import * as z from 'zod';
 import { format } from 'date-fns';
 import { Wrench, Package, Truck, Building2, Check, Calendar, PoundSterling } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import {
+  PrimaryButton,
+  SecondaryButton,
+  Field,
+  inputClass,
+  textareaClass,
+} from '@/components/employer/editorial';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
   useRecordActualCost,
@@ -118,7 +123,7 @@ export function RecordActualCostSheet({
         className={cn('flex flex-col p-0', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[450px]')}
       >
         {/* Header */}
-        <SheetHeader className="p-4 border-b border-border shrink-0">
+        <SheetHeader className="p-4 border-b border-white/[0.08] shrink-0">
           <SheetTitle>Record Actual Cost</SheetTitle>
           {jobTitle && <p className="text-sm text-white">{jobTitle}</p>}
           {/* Progress Bar */}
@@ -128,7 +133,7 @@ export function RecordActualCostSheet({
                 key={i}
                 className={cn(
                   'h-1 flex-1 rounded-full transition-colors',
-                  i <= step ? 'bg-elec-yellow' : 'bg-muted'
+                  i <= step ? 'bg-elec-yellow' : 'bg-[hsl(0_0%_12%)]'
                 )}
               />
             ))}
@@ -154,8 +159,8 @@ export function RecordActualCostSheet({
                         onClick={() => setValue('category', id)}
                         className={cn(
                           'flex flex-col items-start gap-2 p-3 rounded-lg border transition-all text-left',
-                          'hover:bg-muted/50 active:scale-[0.98]',
-                          isSelected ? 'border-elec-yellow bg-elec-yellow/10' : 'border-border'
+                          'hover:bg-white/[0.04] active:scale-[0.98]',
+                          isSelected ? 'border-elec-yellow bg-elec-yellow/10' : 'border-white/[0.08]'
                         )}
                       >
                         <div className="flex items-center gap-2 w-full">
@@ -168,7 +173,7 @@ export function RecordActualCostSheet({
                           <span
                             className={cn(
                               'text-sm font-medium flex-1',
-                              isSelected ? 'text-foreground' : 'text-white'
+                              isSelected ? 'text-white' : 'text-white'
                             )}
                           >
                             {label}
@@ -223,71 +228,68 @@ export function RecordActualCostSheet({
               )}
 
               {/* Amount */}
-              <div className="space-y-2">
-                <Label>Amount</Label>
+              <Field label="Amount">
                 <div className="relative">
-                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                   <Input
                     type="number"
                     step="0.01"
                     min="0"
                     placeholder="0.00"
-                    className={cn('pl-9 text-lg h-12', errors.amount && 'border-red-500')}
+                    className={cn(`${inputClass} pl-9`, errors.amount && 'border-red-500')}
                     value={values.amount || ''}
                     onChange={(e) => setValue('amount', parseFloat(e.target.value) || 0)}
                   />
                 </div>
-                {errors.amount && <p className="text-xs text-red-500">{errors.amount.message}</p>}
-              </div>
+                {errors.amount && <p className="text-xs text-red-500 mt-1">{errors.amount.message}</p>}
+              </Field>
 
               {/* Date */}
-              <div className="space-y-2">
-                <Label>Date</Label>
+              <Field label="Date">
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                   <Input
                     type="date"
-                    className={cn('pl-9 h-11', errors.date && 'border-red-500')}
+                    className={cn(`${inputClass} pl-9`, errors.date && 'border-red-500')}
                     value={values.date}
                     onChange={(e) => setValue('date', e.target.value)}
                   />
                 </div>
-                {errors.date && <p className="text-xs text-red-500">{errors.date.message}</p>}
-              </div>
+                {errors.date && <p className="text-xs text-red-500 mt-1">{errors.date.message}</p>}
+              </Field>
             </div>
           )}
 
           {step === 2 && (
             <div className="space-y-4">
               {/* Notes */}
-              <div className="space-y-2">
-                <Label>Notes (Optional)</Label>
+              <Field label="Notes (Optional)">
                 <Textarea
                   placeholder="Add details about this cost..."
-                  className="min-h-[120px]"
+                  className={`${textareaClass} min-h-[120px]`}
                   value={values.notes}
                   onChange={(e) => setValue('notes', e.target.value)}
                 />
-              </div>
+              </Field>
 
               {/* Summary Card */}
               <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
                 <div className="text-center mb-4">
                   <p className="text-sm text-white">Recording</p>
-                  <p className="text-3xl font-bold text-foreground">
+                  <p className="text-3xl font-bold text-white">
                     {formatCurrency(values.amount)}
                   </p>
                 </div>
 
                 <div className="space-y-3 text-sm">
-                  <div className="flex justify-between py-2 border-b border-border/50">
+                  <div className="flex justify-between py-2 border-b border-white/[0.08]">
                     <span className="text-white">Category</span>
                     <span className="font-medium flex items-center gap-1">
                       <CategoryIcon className="h-4 w-4" />
                       {selectedCategory?.label}
                     </span>
                   </div>
-                  <div className="flex justify-between py-2 border-b border-border/50">
+                  <div className="flex justify-between py-2 border-b border-white/[0.08]">
                     <span className="text-white">Date</span>
                     <span className="font-medium">
                       {format(new Date(values.date), 'dd MMM yyyy')}
@@ -337,27 +339,28 @@ export function RecordActualCostSheet({
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-border shrink-0 pb-safe">
+        <div className="p-4 border-t border-white/[0.08] shrink-0 pb-safe">
           {step === 1 ? (
-            <Button
-              className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
+            <PrimaryButton
               onClick={() => setStep(2)}
               disabled={!values.amount || values.amount <= 0}
+              fullWidth
+              size="lg"
             >
               Continue
-            </Button>
+            </PrimaryButton>
           ) : (
             <div className="flex gap-3">
-              <Button variant="outline" className="flex-1 h-12" onClick={() => setStep(1)}>
+              <SecondaryButton fullWidth onClick={() => setStep(1)}>
                 Back
-              </Button>
-              <Button
-                className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
+              </SecondaryButton>
+              <PrimaryButton
+                fullWidth
                 onClick={handleSubmit(handleFormSubmit)}
                 disabled={recordCost.isPending}
               >
                 {recordCost.isPending ? 'Recording...' : 'Record Cost'}
-              </Button>
+              </PrimaryButton>
             </div>
           )}
         </div>

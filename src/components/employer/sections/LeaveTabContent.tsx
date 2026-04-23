@@ -49,7 +49,7 @@ import type { LeaveType, LeaveStatus } from '@/hooks/useEmployeeLeave';
 const LEAVE_TYPES: { value: LeaveType; label: string; colour: string }[] = [
   { value: 'annual', label: 'Annual Leave', colour: 'bg-elec-yellow/20 text-elec-yellow' },
   { value: 'sick', label: 'Sick Leave', colour: 'bg-destructive/20 text-destructive' },
-  { value: 'unpaid', label: 'Unpaid Leave', colour: 'bg-muted text-white' },
+  { value: 'unpaid', label: 'Unpaid Leave', colour: 'bg-[hsl(0_0%_12%)] text-white' },
   { value: 'compassionate', label: 'Compassionate', colour: 'bg-info/20 text-info' },
   { value: 'training', label: 'Training', colour: 'bg-warning/20 text-warning' },
   { value: 'bank_holiday', label: 'Bank Holiday', colour: 'bg-success/20 text-success' },
@@ -67,9 +67,9 @@ const getStatusColour = (status: LeaveStatus): string => {
     case 'rejected':
       return 'bg-destructive/20 text-destructive border-destructive/30';
     case 'cancelled':
-      return 'bg-muted text-white border-muted';
+      return 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08]';
     default:
-      return 'bg-muted text-white';
+      return 'bg-[hsl(0_0%_12%)] text-white';
   }
 };
 
@@ -180,7 +180,7 @@ export function LeaveTabContent() {
     <div className="space-y-4">
       {/* Header Row */}
       <div className="flex items-center justify-between">
-        <h3 className="font-semibold text-foreground">Leave & Holidays</h3>
+        <h3 className="font-semibold text-white">Leave & Holidays</h3>
         <Button size="sm" onClick={() => setShowRequestForm(!showRequestForm)} className="gap-1.5">
           <Plus className="h-4 w-4" />
           Request Leave
@@ -191,13 +191,13 @@ export function LeaveTabContent() {
       {showRequestForm && (
         <Card className="bg-surface border-elec-yellow/30">
           <CardContent className="p-4 space-y-4">
-            <h4 className="font-medium text-foreground">New Leave Request</h4>
+            <h4 className="font-medium text-white">New Leave Request</h4>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Employee</Label>
                 <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
-                  <SelectTrigger className="bg-elec-gray">
+                  <SelectTrigger className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                     <SelectValue placeholder="Select employee" />
                   </SelectTrigger>
                   <SelectContent>
@@ -215,7 +215,7 @@ export function LeaveTabContent() {
               <div className="space-y-2">
                 <Label>Leave Type</Label>
                 <Select value={leaveType} onValueChange={(v) => setLeaveType(v as LeaveType)}>
-                  <SelectTrigger className="bg-elec-gray">
+                  <SelectTrigger className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -236,7 +236,7 @@ export function LeaveTabContent() {
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full justify-start text-left font-normal bg-elec-gray"
+                      className="w-full justify-start text-left font-normal bg-[hsl(0_0%_12%)]"
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {startDate ? format(startDate, 'PPP') : 'Pick a date'}
@@ -260,7 +260,7 @@ export function LeaveTabContent() {
                   <PopoverTrigger asChild>
                     <Button
                       variant="outline"
-                      className="w-full justify-start text-left font-normal bg-elec-gray"
+                      className="w-full justify-start text-left font-normal bg-[hsl(0_0%_12%)]"
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
                       {endDate ? format(endDate, 'PPP') : 'Pick a date'}
@@ -290,7 +290,7 @@ export function LeaveTabContent() {
                   value={halfDayPeriod}
                   onValueChange={(v) => setHalfDayPeriod(v as 'am' | 'pm')}
                 >
-                  <SelectTrigger className="w-24 bg-elec-gray">
+                  <SelectTrigger className="w-24 h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px]">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -301,7 +301,7 @@ export function LeaveTabContent() {
               )}
               <div className="ml-auto text-sm">
                 <span className="text-white">Total:</span>
-                <span className="ml-1 font-semibold text-foreground">{calculateDays()} days</span>
+                <span className="ml-1 font-semibold text-white">{calculateDays()} days</span>
               </div>
             </div>
 
@@ -311,7 +311,7 @@ export function LeaveTabContent() {
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="Add a note about this leave request..."
-                className="bg-elec-gray resize-none"
+                className="bg-[hsl(0_0%_12%)] resize-none"
                 rows={2}
               />
             </div>
@@ -346,14 +346,14 @@ export function LeaveTabContent() {
               ((ha.usedDays + ha.pendingDays) / (ha.totalDays + ha.carriedOver)) * 100;
 
             return (
-              <Card key={ha.id} className="bg-elec-gray border-border">
+              <Card key={ha.id} className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-semibold">
                       {employee.avatar}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-foreground truncate">{employee.name}</p>
+                      <p className="font-medium text-white truncate">{employee.name}</p>
                       <p className="text-xs text-white">{employee.role}</p>
                     </div>
                   </div>
@@ -361,7 +361,7 @@ export function LeaveTabContent() {
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
                       <span className="text-white">Used</span>
-                      <span className="font-medium text-foreground">
+                      <span className="font-medium text-white">
                         {ha.usedDays + ha.pendingDays} / {ha.totalDays + ha.carriedOver} days
                       </span>
                     </div>
@@ -398,7 +398,7 @@ export function LeaveTabContent() {
           {pendingRequests.map((lr) => {
             const typeInfo = getLeaveTypeInfo(lr.type);
             return (
-              <Card key={lr.id} className="bg-elec-gray border-warning/30">
+              <Card key={lr.id} className="bg-[hsl(0_0%_12%)] border-warning/30">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-full bg-warning/20 flex items-center justify-center flex-shrink-0">
@@ -406,7 +406,7 @@ export function LeaveTabContent() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-2 mb-1">
-                        <p className="font-medium text-foreground">{lr.employeeName}</p>
+                        <p className="font-medium text-white">{lr.employeeName}</p>
                         <Badge className={cn('text-xs', typeInfo.colour)}>{typeInfo.label}</Badge>
                       </div>
                       <p className="text-sm text-white mb-2">
@@ -450,10 +450,10 @@ export function LeaveTabContent() {
       <div className="space-y-3">
         <h4 className="text-sm font-medium text-white">All Requests</h4>
         {leaveRequests.length === 0 ? (
-          <Card className="bg-elec-gray border-border">
+          <Card className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
             <CardContent className="p-8 text-center">
               <Palmtree className="h-12 w-12 text-white mx-auto mb-3" />
-              <p className="text-foreground font-medium mb-1">No leave requests</p>
+              <p className="text-white font-medium mb-1">No leave requests</p>
               <p className="text-sm text-white">
                 Use the button above to create a new request.
               </p>
@@ -466,7 +466,7 @@ export function LeaveTabContent() {
             .map((lr) => {
               const typeInfo = getLeaveTypeInfo(lr.type);
               return (
-                <Card key={lr.id} className="bg-elec-gray border-border">
+                <Card key={lr.id} className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
                   <CardContent className="p-3">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-xs font-medium text-elec-yellow">
@@ -478,7 +478,7 @@ export function LeaveTabContent() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <p className="font-medium text-foreground text-sm truncate">
+                          <p className="font-medium text-white text-sm truncate">
                             {lr.employeeName}
                           </p>
                           <Badge className={cn('text-xs', typeInfo.colour)}>{typeInfo.label}</Badge>
@@ -512,7 +512,7 @@ export function LeaveTabContent() {
             >
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <span className="text-sm font-medium text-foreground min-w-[100px] text-center">
+            <span className="text-sm font-medium text-white min-w-[100px] text-center">
               {format(calendarMonth, 'MMMM yyyy')}
             </span>
             <Button
@@ -526,7 +526,7 @@ export function LeaveTabContent() {
           </div>
         </div>
 
-        <Card className="bg-elec-gray border-border overflow-hidden">
+        <Card className="bg-[hsl(0_0%_12%)] border-white/[0.08] overflow-hidden">
           <CardContent className="p-2">
             {/* Day headers */}
             <div className="grid grid-cols-7 gap-1 mb-1">
@@ -554,7 +554,7 @@ export function LeaveTabContent() {
                     key={day.toISOString()}
                     className={cn(
                       'aspect-square rounded-md flex flex-col items-center justify-center relative text-xs',
-                      isWeekendDay && 'bg-muted/30 text-white',
+                      isWeekendDay && 'bg-white/[0.04] text-white',
                       isToday && 'ring-2 ring-elec-yellow',
                       employeesOff.length > 0 && !isWeekendDay && 'bg-warning/10'
                     )}
@@ -586,7 +586,7 @@ export function LeaveTabContent() {
             </div>
 
             {/* Legend */}
-            <div className="flex justify-center gap-4 mt-3 pt-2 border-t border-border">
+            <div className="flex justify-center gap-4 mt-3 pt-2 border-t border-white/[0.08]">
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-success" />
                 <span className="text-xs text-white">Approved</span>

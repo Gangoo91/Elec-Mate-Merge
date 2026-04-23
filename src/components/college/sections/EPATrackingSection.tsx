@@ -172,14 +172,14 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
               <span aria-hidden className="w-[3px] h-10 rounded-full bg-blue-400 shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                   Action required
                 </div>
                 <div className="mt-1 text-[15px] font-medium text-white">
                   {statusCounts.gatewayReady} apprentice
                   {statusCounts.gatewayReady !== 1 ? 's' : ''} gateway ready
                 </div>
-                <div className="mt-0.5 text-[12px] text-white/50">
+                <div className="mt-0.5 text-[12px] text-white/75">
                   Review and schedule EPA assessments.
                 </div>
               </div>
@@ -279,7 +279,7 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                             <div className="text-[15px] font-medium text-white truncate">
                               {studentInfo.name}
                             </div>
-                            <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                               {getCohortName(studentInfo.cohortId)}
                             </div>
                           </div>
@@ -289,7 +289,7 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <button
-                                  className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                                  className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                                   aria-label="Options"
                                 >
                                   ⋯
@@ -328,7 +328,7 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
 
                         <div className="mt-3">
                           <div className="flex items-baseline justify-between text-[11.5px]">
-                            <span className="text-white/50 uppercase tracking-[0.12em]">
+                            <span className="text-white/75 uppercase tracking-[0.12em]">
                               EPA Progress
                             </span>
                             <span className="font-medium text-white tabular-nums">
@@ -348,7 +348,7 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                           </div>
                         </div>
 
-                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/50">
+                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
                           {epa.gateway_date && (
                             <span className="tabular-nums">
                               Gateway{' '}

@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { MessageSquare, Send, GitBranch, UserPlus, TrendingUp, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -12,6 +10,7 @@ import {
   useDeleteComment,
   JobComment,
 } from '@/hooks/useJobComments';
+import { FormCard, PrimaryButton, IconButton, textareaClass } from './editorial';
 
 interface JobActivityFeedProps {
   jobId: string;
@@ -33,11 +32,11 @@ const getCommentIcon = (type: JobComment['comment_type']) => {
 const getCommentStyles = (type: JobComment['comment_type']) => {
   switch (type) {
     case 'status_change':
-      return 'bg-info/10 text-info';
+      return 'bg-blue-500/10 text-blue-400';
     case 'assignment':
-      return 'bg-success/10 text-success';
+      return 'bg-green-500/10 text-green-400';
     case 'progress':
-      return 'bg-warning/10 text-warning';
+      return 'bg-amber-500/10 text-amber-400';
     default:
       return 'bg-elec-yellow/10 text-elec-yellow';
   }
@@ -64,115 +63,109 @@ export function JobActivityFeed({ jobId }: JobActivityFeedProps) {
 
   if (isLoading) {
     return (
-      <Card className="bg-elec-gray/50">
-        <CardContent className="p-4">
-          <div className="animate-pulse space-y-4">
-            <div className="flex gap-3">
-              <div className="h-8 w-8 bg-muted rounded-full" />
-              <div className="flex-1 space-y-2">
-                <div className="h-4 bg-muted rounded w-1/4" />
-                <div className="h-3 bg-muted rounded w-3/4" />
-              </div>
+      <FormCard>
+        <div className="animate-pulse space-y-4">
+          <div className="flex gap-3">
+            <div className="h-8 w-8 bg-white/[0.06] rounded-full" />
+            <div className="flex-1 space-y-2">
+              <div className="h-4 bg-white/[0.06] rounded w-1/4" />
+              <div className="h-3 bg-white/[0.06] rounded w-3/4" />
             </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </FormCard>
     );
   }
 
   return (
-    <Card className="bg-elec-gray/50">
-      <CardContent className="p-4 space-y-4">
-        {/* Header */}
+    <FormCard eyebrow="Activity">
+      {/* Header stats */}
+      {comments.length > 0 && (
         <div className="flex items-center gap-2">
           <MessageSquare className="h-4 w-4 text-white" />
-          <span className="text-sm font-medium text-foreground">Activity</span>
-          {comments.length > 0 && (
-            <span className="text-xs text-white">({comments.length})</span>
-          )}
+          <span className="text-sm font-medium text-white">Activity</span>
+          <span className="text-xs text-white">({comments.length})</span>
         </div>
+      )}
 
-        {/* Comment Input */}
-        <div className="flex gap-2">
-          <Avatar className="h-8 w-8 bg-elec-yellow/10 flex-shrink-0">
-            <AvatarFallback className="text-elec-yellow text-xs">You</AvatarFallback>
-          </Avatar>
-          <div className="flex-1 space-y-2">
-            <Textarea
-              placeholder="Write a comment..."
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-              className="min-h-[60px] text-sm resize-none"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
-                  handleAddComment();
-                }
-              }}
-            />
-            <div className="flex justify-between items-center">
-              <span className="text-[10px] text-white">Cmd+Enter to send</span>
-              <Button
-                size="sm"
-                className="h-7 gap-1.5"
-                onClick={handleAddComment}
-                disabled={!newComment.trim() || addComment.isPending}
+      {/* Comment Input */}
+      <div className="flex gap-2">
+        <Avatar className="h-8 w-8 bg-elec-yellow/10 flex-shrink-0">
+          <AvatarFallback className="text-elec-yellow text-xs">You</AvatarFallback>
+        </Avatar>
+        <div className="flex-1 space-y-2">
+          <Textarea
+            placeholder="Write a comment..."
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            className={cn(textareaClass, 'min-h-[60px]')}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                handleAddComment();
+              }
+            }}
+          />
+          <div className="flex justify-between items-center">
+            <span className="text-[10px] text-white">Cmd+Enter to send</span>
+            <PrimaryButton
+              size="sm"
+              onClick={handleAddComment}
+              disabled={!newComment.trim() || addComment.isPending}
+            >
+              <Send className="h-3 w-3 mr-1.5" />
+              Send
+            </PrimaryButton>
+          </div>
+        </div>
+      </div>
+
+      {/* Activity List */}
+      {comments.length > 0 && (
+        <div className="space-y-3 pt-2 border-t border-white/[0.06]">
+          {comments.map((comment) => (
+            <div key={comment.id} className="flex gap-3 group">
+              <div
+                className={cn(
+                  'h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0',
+                  getCommentStyles(comment.comment_type)
+                )}
               >
-                <Send className="h-3 w-3" />
-                Send
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* Activity List */}
-        {comments.length > 0 && (
-          <div className="space-y-3 pt-2 border-t border-border">
-            {comments.map((comment) => (
-              <div key={comment.id} className="flex gap-3 group">
-                <div
-                  className={cn(
-                    'h-8 w-8 rounded-full flex items-center justify-center flex-shrink-0',
-                    getCommentStyles(comment.comment_type)
-                  )}
-                >
-                  {getCommentIcon(comment.comment_type)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <span className="text-sm font-medium text-foreground">
-                        {comment.author_name}
-                      </span>
-                      <span className="text-xs text-white ml-2">
-                        {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}
-                      </span>
-                    </div>
-                    {comment.comment_type === 'comment' && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6 opacity-0 group-hover:opacity-100 text-white hover:text-destructive"
-                        onClick={() => deleteComment.mutate({ id: comment.id, jobId })}
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                    )}
-                  </div>
-                  <p className="text-sm text-white mt-0.5 whitespace-pre-wrap">
-                    {comment.content}
-                  </p>
-                </div>
+                {getCommentIcon(comment.comment_type)}
               </div>
-            ))}
-          </div>
-        )}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <span className="text-sm font-medium text-white">
+                      {comment.author_name}
+                    </span>
+                    <span className="text-xs text-white ml-2">
+                      {formatDistanceToNow(new Date(comment.created_at), { addSuffix: true })}
+                    </span>
+                  </div>
+                  {comment.comment_type === 'comment' && (
+                    <IconButton
+                      onClick={() => deleteComment.mutate({ id: comment.id, jobId })}
+                      aria-label="Delete comment"
+                      className="h-8 w-8 opacity-0 group-hover:opacity-100 hover:text-red-400"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </IconButton>
+                  )}
+                </div>
+                <p className="text-sm text-white mt-0.5 whitespace-pre-wrap">
+                  {comment.content}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
-        {comments.length === 0 && (
-          <div className="text-center py-4 text-sm text-white">
-            No activity yet. Be the first to comment!
-          </div>
-        )}
-      </CardContent>
-    </Card>
+      {comments.length === 0 && (
+        <div className="text-center py-4 text-sm text-white">
+          No activity yet. Be the first to comment!
+        </div>
+      )}
+    </FormCard>
   );
 }

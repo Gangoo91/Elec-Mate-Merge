@@ -1216,6 +1216,30 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     );
   };
 
+  // ELE-830: Swap adjacent boards' `order` values (Phase 1 reorder). Desktop-
+  // only entry point via BoardSection header. Same shape as MultiboardSetup.
+  const handleMoveBoard = (boardId: string, direction: 'up' | 'down') => {
+    const sorted = [...distributionBoards].sort((a, b) => a.order - b.order);
+    const idx = sorted.findIndex((b) => b.id === boardId);
+    if (idx < 0) return;
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= sorted.length) return;
+
+    const a = sorted[idx];
+    const b = sorted[swapIdx];
+    const updated = distributionBoards.map((board) => {
+      if (board.id === a.id) return { ...board, order: b.order };
+      if (board.id === b.id) return { ...board, order: a.order };
+      return board;
+    });
+    setDistributionBoards(updated);
+
+    const formDataUpdate = formatBoardsForFormData(updated, testResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+  };
+
   const handleUpdateBoard = (
     boardId: string,
     field: keyof DistributionBoard | Record<string, any>,
@@ -2676,95 +2700,117 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       ) : (
         /* DESKTOP LAYOUT - Premium Professional Dashboard */
         <div className="w-full space-y-6 py-6">
-          {/* Hero Card */}
-          <div className="testing-hero p-6">
-            <div className="relative z-10">
-              {/* Header Row */}
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30">
-                    <TestTube className="h-8 w-8 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-white">Schedule of Tests</h2>
-                    <p className="text-sm text-white">
-                      BS 7671 compliant circuit testing & verification
-                    </p>
-                  </div>
-                </div>
-
-                {/* Stats Grid */}
-                <div className="flex gap-3">
-                  <div className="testing-stat-card min-w-[80px]">
-                    <span className="text-2xl font-bold text-white">{testResults.length}</span>
-                    <span className="text-xs text-white">Circuits</span>
-                  </div>
-                  <div className="testing-stat-card min-w-[80px]">
-                    <span className="text-2xl font-bold text-green-400">{completedCount}</span>
-                    <span className="text-xs text-white">Complete</span>
-                  </div>
-                  <div className="testing-stat-card min-w-[80px]">
-                    <span className="text-2xl font-bold text-amber-400">{pendingCount}</span>
-                    <span className="text-xs text-white">Pending</span>
-                  </div>
-                  <div className="testing-stat-card min-w-[80px]">
-                    <span className="text-2xl font-bold text-elec-yellow">{progressPercent}%</span>
-                    <span className="text-xs text-white">Progress</span>
-                  </div>
-                </div>
+          {/* Hero — college editorial pattern: eyebrow + large title + hairline stat strip + slim progress bar + text-link toolbar */}
+          <div className="space-y-6">
+            <div className="flex items-end justify-between gap-4 flex-wrap">
+              <div className="min-w-0 flex-1">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  Schedule of Tests
+                </p>
+                <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
+                  BS 7671 A4:2026 circuit testing
+                </h1>
+                <p className="mt-3 text-[13px] sm:text-sm text-white/55 max-w-2xl leading-relaxed">
+                  Capture verification, continuity, insulation and loop measurements for every
+                  circuit on every board — aligned with the A4:2026 model schedule of test results.
+                </p>
               </div>
+              {testResults.length > 0 && (
+                <button
+                  onClick={removeAllTestResults}
+                  className="text-[12px] font-medium text-red-400/90 hover:text-red-300 transition-colors shrink-0 touch-manipulation"
+                >
+                  Clear all →
+                </button>
+              )}
+            </div>
 
-              {/* Secondary Actions Row - matching EIC */}
-              <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/10">
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-white hover:text-white hover:bg-white/10"
-                    onClick={() => setShowRcdPresetsDialog(true)}
+            {/* 4-cell hairline stat strip */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+              {[
+                { value: testResults.length, label: 'Circuits', toneClass: 'text-white' },
+                { value: completedCount, label: 'Complete', toneClass: 'text-green-400' },
+                { value: pendingCount, label: 'Pending', toneClass: 'text-amber-400' },
+                { value: `${progressPercent}%`, label: 'Progress', toneClass: 'text-elec-yellow' },
+              ].map((s, i) => (
+                <div
+                  key={s.label}
+                  className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 flex flex-col items-start"
+                >
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                    {String(i + 1).padStart(2, '0')} · {s.label}
+                  </span>
+                  <span
+                    className={cn(
+                      'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                      'text-4xl sm:text-5xl lg:text-6xl',
+                      s.toneClass
+                    )}
                   >
-                    <Shield className="h-4 w-4 mr-2" />
-                    RCD Presets
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-white hover:text-white hover:bg-white/10"
-                    onClick={() => setShowAnalytics(!showAnalytics)}
-                  >
-                    <BarChart3 className="h-4 w-4 mr-2" />
-                    Analytics
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className={`h-9 ${voiceActive ? 'text-green-400 bg-green-500/10' : voiceConnecting ? 'text-yellow-400 animate-pulse' : 'text-white hover:text-white hover:bg-white/10'}`}
-                    onClick={toggleVoice}
-                    disabled={voiceConnecting}
-                  >
-                    <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
-                    {voiceActive ? 'Active' : voiceConnecting ? '...' : 'Voice'}
-                  </Button>
+                    {s.value}
+                  </span>
                 </div>
-                {testResults.length > 0 && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-9 text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                    onClick={removeAllTestResults}
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Clear All
-                  </Button>
+              ))}
+            </div>
+
+            {/* Slim progress bar */}
+            {testResults.length > 0 && (
+              <div className="flex items-center gap-4">
+                <div className="flex-1 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400 transition-[width] duration-500"
+                    style={{ width: `${Math.max(2, progressPercent)}%` }}
+                  />
+                </div>
+                <span className="text-[11px] font-medium text-white/70 tabular-nums shrink-0">
+                  {completedCount}/{testResults.length} tested
+                </span>
+              </div>
+            )}
+
+            {/* Toolbar — text-link style, hairline separators */}
+            <div className="flex items-center gap-5 text-[13px] pt-4 border-t border-white/[0.06]">
+              <button
+                onClick={() => setShowRcdPresetsDialog(true)}
+                className="font-medium text-white/85 hover:text-elec-yellow transition-colors touch-manipulation"
+              >
+                RCD presets
+              </button>
+              <button
+                onClick={() => setShowAnalytics(!showAnalytics)}
+                className={cn(
+                  'font-medium transition-colors touch-manipulation',
+                  showAnalytics
+                    ? 'text-elec-yellow'
+                    : 'text-white/85 hover:text-elec-yellow'
                 )}
-              </div>
+              >
+                Analytics
+              </button>
+              <button
+                onClick={toggleVoice}
+                disabled={voiceConnecting}
+                className={cn(
+                  'font-medium transition-colors touch-manipulation disabled:opacity-60',
+                  voiceActive
+                    ? 'text-green-400 animate-pulse'
+                    : voiceConnecting
+                      ? 'text-amber-300 animate-pulse'
+                      : 'text-white/85 hover:text-elec-yellow'
+                )}
+              >
+                {voiceActive ? 'Listening…' : voiceConnecting ? 'Connecting…' : 'Voice'}
+              </button>
             </div>
           </div>
 
           {/* Analytics Section */}
           {showAnalytics && testResults.length > 0 && (
             <div className="testing-table-container p-4">
-              <TestAnalytics testResults={testResults} />
+              <TestAnalytics
+                testResults={testResults}
+                earthingArrangement={formData.earthingArrangement as string | undefined}
+              />
             </div>
           )}
 
@@ -2773,7 +2819,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
 
           {/* Distribution Boards with Circuit Tables */}
           <div className="space-y-4" data-autofill-section>
-            {sortedBoards.map((board) => {
+            {sortedBoards.map((board, boardIdx) => {
               const { circuits: boardCircuits, completedCount: boardCompleted } = boardStats[
                 board.id
               ] || {
@@ -2795,6 +2841,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   completedCount={boardCompleted}
                   showTools={true}
                   tools={createBoardTools(board.id)}
+                  onMoveUp={() => handleMoveBoard(board.id, 'up')}
+                  onMoveDown={() => handleMoveBoard(board.id, 'down')}
+                  isFirst={boardIdx === 0}
+                  isLast={boardIdx === sortedBoards.length - 1}
+                  earthingArrangement={formData.earthingArrangement as string | undefined}
+                  nominalVoltage={formData.nominalVoltage as string | undefined}
                 >
                   <EnhancedTestResultDesktopTable
                     testResults={boardCircuits}

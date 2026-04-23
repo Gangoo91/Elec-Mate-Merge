@@ -13,7 +13,6 @@ import {
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
@@ -94,11 +93,11 @@ export function TeamMemberCard({
   return (
     <Card
       className={cn(
-        'border-l-4 transition-all duration-200 cursor-pointer group',
+        'border-l-4 bg-[hsl(0_0%_12%)] border-white/[0.06] transition-all duration-200 cursor-pointer group',
         availabilityBorderColors[availability],
         isSelected
           ? 'ring-2 ring-elec-yellow bg-elec-yellow/5 shadow-md'
-          : 'hover:shadow-md hover:bg-muted/30 active:scale-[0.99]'
+          : 'hover:bg-[hsl(0_0%_15%)] active:scale-[0.99]'
       )}
       onClick={onClick}
     >
@@ -119,7 +118,7 @@ export function TeamMemberCard({
           {/* Avatar with availability ring */}
           <div className="flex-shrink-0">
             <div className={cn('rounded-full p-0.5 ring-2', availabilityRingColors[availability])}>
-              <Avatar className="h-14 w-14 border-2 border-background">
+              <Avatar className="h-14 w-14 border-2 border-[hsl(0_0%_12%)]">
                 <AvatarImage src={photo || undefined} alt={name} />
                 <AvatarFallback className="text-base bg-elec-yellow/10 text-elec-yellow font-semibold">
                   {initials}
@@ -131,7 +130,7 @@ export function TeamMemberCard({
           {/* Name & Role */}
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <h3 className="font-semibold text-foreground truncate">{name}</h3>
+              <h3 className="font-semibold text-white truncate">{name}</h3>
               <Badge
                 variant="outline"
                 className={cn('text-[10px] shrink-0 border', roleColors[teamRole])}
@@ -151,10 +150,9 @@ export function TeamMemberCard({
         {/* Contact Row */}
         <div className="flex items-center gap-2 mt-4">
           {phone && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex-1 h-9 gap-2 text-xs bg-success/5 border-success/20 hover:bg-success/10 hover:text-success"
+            <button
+              type="button"
+              className="flex-1 h-9 gap-2 text-xs flex items-center justify-center rounded-full px-3 bg-emerald-500/5 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/10 touch-manipulation"
               onClick={(e) => {
                 e.stopPropagation();
                 if (onCall) onCall(e);
@@ -163,13 +161,12 @@ export function TeamMemberCard({
             >
               <Phone className="h-3.5 w-3.5" />
               <span className="truncate">{phone}</span>
-            </Button>
+            </button>
           )}
           {email && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex-1 h-9 gap-2 text-xs bg-info/5 border-info/20 hover:bg-info/10 hover:text-info"
+            <button
+              type="button"
+              className="flex-1 h-9 gap-2 text-xs flex items-center justify-center rounded-full px-3 bg-blue-500/5 border border-blue-500/20 text-blue-400 hover:bg-blue-500/10 touch-manipulation"
               onClick={(e) => {
                 e.stopPropagation();
                 if (onEmail) onEmail(e);
@@ -179,25 +176,24 @@ export function TeamMemberCard({
               <Mail className="h-3.5 w-3.5" />
               <span className="truncate hidden sm:inline">{email}</span>
               <span className="sm:hidden">Email</span>
-            </Button>
+            </button>
           )}
           {onMessage && (
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-9 w-9 flex-shrink-0 bg-elec-yellow/5 border-elec-yellow/20 hover:bg-elec-yellow/10 hover:text-elec-yellow"
+            <button
+              type="button"
+              className="h-9 w-9 flex-shrink-0 flex items-center justify-center rounded-full bg-elec-yellow/5 border border-elec-yellow/20 text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
               onClick={(e) => {
                 e.stopPropagation();
                 onMessage(e);
               }}
             >
               <MessageSquare className="h-3.5 w-3.5" />
-            </Button>
+            </button>
           )}
         </div>
 
         {/* Stats Footer */}
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-border">
+        <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/[0.06]">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-sm">
               <Award className="h-4 w-4 text-warning" />
@@ -216,7 +212,7 @@ export function TeamMemberCard({
             {!hasElecId && (
               <Badge
                 variant="outline"
-                className="text-white border-muted-foreground/30 text-[10px]"
+                className="text-white border-white/20 text-[10px]"
               >
                 <IdCard className="h-3 w-3 mr-1" />
                 No Elec-ID
@@ -225,7 +221,7 @@ export function TeamMemberCard({
             {expiringCerts > 0 && (
               <Badge
                 variant="outline"
-                className="bg-destructive/10 text-destructive border-destructive/30 text-[10px]"
+                className="bg-red-500/10 text-red-400 border-red-500/30 text-[10px]"
               >
                 <AlertTriangle className="h-3 w-3 mr-1" />
                 {expiringCerts} Expiring

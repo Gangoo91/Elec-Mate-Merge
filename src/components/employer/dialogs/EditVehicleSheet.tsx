@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -25,8 +23,22 @@ import {
 } from '@/components/ui/alert-dialog';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Trash2, Save, Loader2, Car } from 'lucide-react';
+import { Trash2, Save, Loader2 } from 'lucide-react';
 import type { Vehicle, VehicleStatus, VehicleType, UpdateVehicleInput } from '@/hooks/useFleet';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 const VEHICLE_STATUSES: VehicleStatus[] = ['Active', 'Available', 'Maintenance', 'Off Road'];
 const VEHICLE_TYPES: VehicleType[] = ['Van', 'Truck', 'Car', 'Pickup'];
@@ -69,7 +81,6 @@ export function EditVehicleSheet({
   const [trackerFitted, setTrackerFitted] = useState(false);
   const [notes, setNotes] = useState('');
 
-  // Reset form when vehicle changes
   useEffect(() => {
     if (vehicle) {
       setRegistration(vehicle.registration);
@@ -124,261 +135,231 @@ export function EditVehicleSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
+        className={cn('p-0 overflow-hidden', isMobile ? 'h-[90vh]' : 'w-[480px]')}
       >
-        {/* Header */}
-        <SheetHeader className="p-4 border-b border-border shrink-0">
-          <SheetTitle className="flex items-center gap-2">
-            <Car className="h-5 w-5 text-elec-yellow" />
-            Edit Vehicle
-          </SheetTitle>
-        </SheetHeader>
-
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="registration">Registration *</Label>
-            <Input
-              id="registration"
-              value={registration}
-              onChange={(e) => setRegistration(e.target.value.toUpperCase())}
-              placeholder="AB12 CDE"
-              className="h-11 touch-manipulation"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label>Make</Label>
+        <SheetShell
+          eyebrow="Fleet"
+          title="Edit vehicle"
+          description="Update registration, compliance, and service details."
+          footer={
+            <>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <DestructiveButton disabled={isDeleting}>
+                    {isDeleting ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Trash2 className="h-4 w-4" />
+                    )}
+                  </DestructiveButton>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.08]">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-white">Delete vehicle</AlertDialogTitle>
+                    <AlertDialogDescription className="text-white">
+                      Are you sure you want to delete {registration}? This will also delete all
+                      associated fuel logs. This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1]">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDelete}
+                      className="bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleSave}
+                disabled={isSaving || !registration.trim()}
+                fullWidth
+              >
+                {isSaving ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-1.5" />
+                    Save
+                  </>
+                )}
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Vehicle">
+            <Field label="Registration" required>
               <Input
-                value={make}
-                onChange={(e) => setMake(e.target.value)}
-                placeholder="Ford"
-                className="h-11 touch-manipulation"
+                value={registration}
+                onChange={(e) => setRegistration(e.target.value.toUpperCase())}
+                placeholder="AB12 CDE"
+                className={inputClass}
               />
-            </div>
-            <div className="space-y-2">
-              <Label>Model</Label>
-              <Input
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                placeholder="Transit"
-                className="h-11 touch-manipulation"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-3 gap-3">
-            <div className="space-y-2">
-              <Label>Colour</Label>
-              <Input
-                value={colour}
-                onChange={(e) => setColour(e.target.value)}
-                placeholder="White"
-                className="h-11 touch-manipulation"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Year</Label>
+            </Field>
+            <FormGrid cols={2}>
+              <Field label="Make">
+                <Input
+                  value={make}
+                  onChange={(e) => setMake(e.target.value)}
+                  placeholder="Ford"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Model">
+                <Input
+                  value={model}
+                  onChange={(e) => setModel(e.target.value)}
+                  placeholder="Transit"
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+            <FormGrid cols={3}>
+              <Field label="Colour">
+                <Input
+                  value={colour}
+                  onChange={(e) => setColour(e.target.value)}
+                  placeholder="White"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Year">
+                <Input
+                  type="number"
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  placeholder="2022"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Type">
+                <Select value={vehicleType} onValueChange={(v) => setVehicleType(v as VehicleType)}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select..." />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {VEHICLE_TYPES.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormGrid>
+            <FormGrid cols={2}>
+              <Field label="Assigned to">
+                <Input
+                  value={assignedTo}
+                  onChange={(e) => setAssignedTo(e.target.value)}
+                  placeholder="Driver name"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Status">
+                <Select value={status} onValueChange={(v) => setStatus(v as VehicleStatus)}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {VEHICLE_STATUSES.map((s) => (
+                      <SelectItem key={s} value={s}>
+                        {s}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormGrid>
+            <Field label="Current mileage">
               <Input
                 type="number"
-                value={year}
-                onChange={(e) => setYear(e.target.value)}
-                placeholder="2022"
-                className="h-11 touch-manipulation"
+                value={mileage}
+                onChange={(e) => setMileage(e.target.value)}
+                placeholder="45000"
+                className={inputClass}
               />
-            </div>
-            <div className="space-y-2">
-              <Label>Type</Label>
-              <Select value={vehicleType} onValueChange={(v) => setVehicleType(v as VehicleType)}>
-                <SelectTrigger className="h-11 touch-manipulation">
-                  <SelectValue placeholder="Select..." />
-                </SelectTrigger>
-                <SelectContent className="z-[100]">
-                  {VEHICLE_TYPES.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+            </Field>
+          </FormCard>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label>Assigned To</Label>
-              <Input
-                value={assignedTo}
-                onChange={(e) => setAssignedTo(e.target.value)}
-                placeholder="Driver name"
-                className="h-11 touch-manipulation"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label>Status</Label>
-              <Select value={status} onValueChange={(v) => setStatus(v as VehicleStatus)}>
-                <SelectTrigger className="h-11 touch-manipulation">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="z-[100]">
-                  {VEHICLE_STATUSES.map((s) => (
-                    <SelectItem key={s} value={s}>
-                      {s}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>Current Mileage</Label>
-            <Input
-              type="number"
-              value={mileage}
-              onChange={(e) => setMileage(e.target.value)}
-              placeholder="45000"
-              className="h-11 touch-manipulation"
-            />
-          </div>
-
-          <div className="pt-2 border-t border-border">
-            <p className="text-sm font-medium text-white mb-3">Compliance Dates</p>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label>MOT Expiry</Label>
+          <FormCard eyebrow="Compliance dates">
+            <FormGrid cols={2}>
+              <Field label="MOT expiry">
                 <Input
                   type="date"
                   value={motExpiry}
                   onChange={(e) => setMotExpiry(e.target.value)}
-                  className="h-11 touch-manipulation"
+                  className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label>Tax Expiry</Label>
+              </Field>
+              <Field label="Tax expiry">
                 <Input
                   type="date"
                   value={taxExpiry}
                   onChange={(e) => setTaxExpiry(e.target.value)}
-                  className="h-11 touch-manipulation"
+                  className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label>Insurance Expiry</Label>
-                <Input
-                  type="date"
-                  value={insuranceExpiry}
-                  onChange={(e) => setInsuranceExpiry(e.target.value)}
-                  className="h-11 touch-manipulation"
-                />
-              </div>
-            </div>
-          </div>
+              </Field>
+            </FormGrid>
+            <Field label="Insurance expiry">
+              <Input
+                type="date"
+                value={insuranceExpiry}
+                onChange={(e) => setInsuranceExpiry(e.target.value)}
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
 
-          <div className="pt-2 border-t border-border">
-            <p className="text-sm font-medium text-white mb-3">Service Dates</p>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label>Last Service</Label>
+          <FormCard eyebrow="Service dates">
+            <FormGrid cols={2}>
+              <Field label="Last service">
                 <Input
                   type="date"
                   value={lastService}
                   onChange={(e) => setLastService(e.target.value)}
-                  className="h-11 touch-manipulation"
+                  className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label>Next Service</Label>
+              </Field>
+              <Field label="Next service">
                 <Input
                   type="date"
                   value={nextService}
                   onChange={(e) => setNextService(e.target.value)}
-                  className="h-11 touch-manipulation"
+                  className={inputClass}
                 />
+              </Field>
+            </FormGrid>
+          </FormCard>
+
+          <FormCard eyebrow="Tracker & notes">
+            <div className="flex items-center justify-between py-1">
+              <div>
+                <label className={fieldLabelClass}>Tracker fitted</label>
+                <p className="text-[11px] text-white">GPS tracking device installed</p>
               </div>
+              <Switch checked={trackerFitted} onCheckedChange={setTrackerFitted} />
             </div>
-          </div>
-
-          <div className="flex items-center justify-between py-3 border-t border-border">
-            <div>
-              <Label htmlFor="tracker">Tracker Fitted</Label>
-              <p className="text-xs text-white">GPS tracking device installed</p>
-            </div>
-            <Switch id="tracker" checked={trackerFitted} onCheckedChange={setTrackerFitted} />
-          </div>
-
-          <div className="space-y-2">
-            <Label>Notes</Label>
-            <Textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Any additional notes..."
-              className="min-h-[80px] touch-manipulation"
-            />
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-border shrink-0 pb-safe space-y-3">
-          <Button
-            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11"
-            onClick={handleSave}
-            disabled={isSaving || !registration.trim()}
-          >
-            {isSaving ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              <>
-                <Save className="h-4 w-4 mr-2" />
-                Save Changes
-              </>
-            )}
-          </Button>
-
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full h-11 text-destructive hover:text-destructive hover:bg-destructive/10"
-                disabled={isDeleting}
-              >
-                {isDeleting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Deleting...
-                  </>
-                ) : (
-                  <>
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Vehicle
-                  </>
-                )}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Vehicle</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete {registration}? This will also delete all
-                  associated fuel logs. This action cannot be undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleDelete}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                >
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
+            <Field label="Notes">
+              <Textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Any additional notes..."
+                className={`${textareaClass} min-h-[80px]`}
+              />
+            </Field>
+          </FormCard>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

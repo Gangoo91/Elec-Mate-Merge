@@ -30,7 +30,7 @@ export function SectionHeader({
           </div>
         )}
         <div className="space-y-0.5">
-          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground leading-tight">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-white leading-tight">
             {title}
           </h1>
           {description && <p className="text-xs sm:text-sm text-white">{description}</p>}

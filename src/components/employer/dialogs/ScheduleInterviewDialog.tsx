@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
@@ -16,6 +14,16 @@ import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { Calendar as CalendarIcon, Clock, Video, Phone, Building, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import {
+  FormCard,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 interface ScheduleInterviewDialogProps {
   open: boolean;
@@ -94,7 +102,6 @@ export function ScheduleInterviewDialog({
       description: `Interview with ${candidateName} scheduled for ${format(date, 'PPP')} at ${time}.`,
     });
 
-    // Reset form
     setDate(undefined);
     setTime('');
     setInterviewType('In-person');
@@ -115,145 +122,140 @@ export function ScheduleInterviewDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md">
+      <DialogContent className="max-w-md p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle>Schedule Interview</DialogTitle>
+          <DialogTitle className="text-white">Schedule interview</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Candidate Name */}
-          <div className="bg-muted/50 rounded-lg p-3">
-            <p className="text-sm text-white">Scheduling interview with</p>
-            <p className="font-medium text-foreground">{candidateName}</p>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3">
+            <p className="text-[11px] text-white uppercase tracking-[0.14em]">
+              Scheduling interview with
+            </p>
+            <p className="mt-1 text-[15px] font-semibold text-white">{candidateName}</p>
           </div>
 
-          {/* Date Picker */}
-          <div className="space-y-2">
-            <Label>Date</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className={cn(
-                    'w-full justify-start text-left font-normal',
-                    !date && 'text-white'
-                  )}
+          <FormCard eyebrow="When">
+            <div className="space-y-1.5">
+              <label className={fieldLabelClass}>Date</label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button
+                    type="button"
+                    className={cn(
+                      'w-full h-11 px-4 inline-flex items-center bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-[13px] touch-manipulation',
+                      date ? 'text-white' : 'text-white'
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4 text-white" />
+                    {date ? format(date, 'PPP') : 'Select date'}
+                  </button>
+                </PopoverTrigger>
+                <PopoverContent
+                  className="w-auto p-0 bg-[hsl(0_0%_10%)] border-white/[0.08]"
+                  align="start"
                 >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {date ? format(date, 'PPP') : 'Select date'}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={date}
-                  onSelect={setDate}
-                  disabled={(date) =>
-                    date < new Date() || date.getDay() === 0 || date.getDay() === 6
-                  }
-                  initialFocus
-                  className="pointer-events-auto"
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    disabled={(date) =>
+                      date < new Date() || date.getDay() === 0 || date.getDay() === 6
+                    }
+                    initialFocus
+                    className="pointer-events-auto"
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
 
-          {/* Time Picker */}
-          <div className="space-y-2">
-            <Label>Time</Label>
-            <Select value={time} onValueChange={setTime}>
-              <SelectTrigger className="w-full">
-                <Clock className="mr-2 h-4 w-4 text-white" />
-                <SelectValue placeholder="Select time" />
-              </SelectTrigger>
-              <SelectContent>
-                {timeSlots.map((slot) => (
-                  <SelectItem key={slot} value={slot}>
-                    {slot}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            <Field label="Time">
+              <Select value={time} onValueChange={setTime}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <Clock className="mr-2 h-4 w-4 text-white" />
+                  <SelectValue placeholder="Select time" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {timeSlots.map((slot) => (
+                    <SelectItem key={slot} value={slot}>
+                      {slot}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+          </FormCard>
 
-          {/* Interview Type */}
-          <div className="space-y-2">
-            <Label>Interview Type</Label>
+          <FormCard eyebrow="Format">
+            <label className={fieldLabelClass}>Interview type</label>
             <div className="grid grid-cols-3 gap-2">
-              {(['In-person', 'Phone', 'Video'] as const).map((type) => (
-                <Button
-                  key={type}
-                  type="button"
-                  variant={interviewType === type ? 'default' : 'outline'}
-                  className="flex flex-col items-center gap-1 h-auto py-3"
-                  onClick={() => setInterviewType(type)}
-                >
-                  {getTypeIcon(type)}
-                  <span className="text-xs">{type}</span>
-                </Button>
-              ))}
+              {(['In-person', 'Phone', 'Video'] as const).map((type) => {
+                const selected = interviewType === type;
+                return (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => setInterviewType(type)}
+                    className={cn(
+                      'flex flex-col items-center gap-1 h-auto py-3 rounded-xl border text-[12px] font-medium transition-colors touch-manipulation',
+                      selected
+                        ? 'bg-elec-yellow/10 border-elec-yellow text-elec-yellow'
+                        : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_11%)]'
+                    )}
+                  >
+                    {getTypeIcon(type)}
+                    <span>{type}</span>
+                  </button>
+                );
+              })}
             </div>
-          </div>
 
-          {/* Location (for in-person) */}
-          {interviewType === 'In-person' && (
-            <div className="space-y-2">
-              <Label>Location</Label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                <Input
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  placeholder="e.g. Head Office, Manchester"
-                  className="pl-10"
-                />
+            {interviewType === 'In-person' && (
+              <Field label="Location">
+                <div className="relative">
+                  <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+                  <Input
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    placeholder="e.g. Head Office, Manchester"
+                    className={`${inputClass} pl-10`}
+                  />
+                </div>
+              </Field>
+            )}
+            {interviewType === 'Video' && (
+              <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-[12px] text-blue-300">
+                A video call link will be sent to the candidate.
               </div>
-            </div>
-          )}
+            )}
+            {interviewType === 'Phone' && (
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 text-[12px] text-emerald-300">
+                You will call the candidate at their registered number.
+              </div>
+            )}
+          </FormCard>
 
-          {/* Video/Phone Info */}
-          {interviewType === 'Video' && (
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3 text-sm text-blue-600">
-              A video call link will be sent to the candidate.
-            </div>
-          )}
-          {interviewType === 'Phone' && (
-            <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3 text-sm text-emerald-600">
-              You will call the candidate at their registered number.
-            </div>
-          )}
-
-          {/* Summary */}
           {date && time && (
-            <div className="bg-muted/50 rounded-lg p-4 space-y-2">
-              <p className="text-sm font-medium">Interview Summary</p>
-              <div className="text-sm text-white space-y-1">
-                <p>
-                  {format(date, 'EEEE, d MMMM yyyy')} at {time}
-                </p>
-                <p className="flex items-center gap-1">
-                  {getTypeIcon(interviewType)}
-                  {interviewType}
-                  {interviewType === 'In-person' && location && ` - ${location}`}
-                </p>
-              </div>
-            </div>
+            <FormCard eyebrow="Summary">
+              <p className="text-[12.5px] text-white">
+                {format(date, 'EEEE, d MMMM yyyy')} at {time}
+              </p>
+              <p className="text-[12.5px] text-white flex items-center gap-1.5">
+                {getTypeIcon(interviewType)}
+                {interviewType}
+                {interviewType === 'In-person' && location && ` · ${location}`}
+              </p>
+            </FormCard>
           )}
 
-          {/* Actions */}
-          <div className="flex gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1"
-              onClick={() => onOpenChange(false)}
-            >
+          <div className="flex gap-2 pt-1">
+            <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
               Cancel
-            </Button>
-            <Button type="submit" className="flex-1">
-              <CalendarIcon className="h-4 w-4 mr-2" />
+            </SecondaryButton>
+            <PrimaryButton type="submit" fullWidth>
+              <CalendarIcon className="h-4 w-4 mr-1.5" />
               Schedule
-            </Button>
+            </PrimaryButton>
           </div>
         </form>
       </DialogContent>

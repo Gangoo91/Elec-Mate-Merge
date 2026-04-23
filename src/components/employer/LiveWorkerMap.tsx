@@ -1,8 +1,7 @@
 import { useState, useCallback } from 'react';
 import { GoogleMap, Marker, InfoWindow } from '@react-google-maps/api';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { SecondaryButton, IconButton } from './editorial';
 import { Navigation, Users, RefreshCw, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useGoogleMaps } from '@/contexts/GoogleMapsContext';
@@ -108,49 +107,49 @@ export function LiveWorkerMap({
 
   if (loadError) {
     return (
-      <Card className={cn('bg-elec-gray overflow-hidden', className)}>
-        <CardContent className="p-6 text-center">
-          <p className="text-destructive">Error loading Google Maps. Please check your API key.</p>
-          <Button variant="outline" className="mt-4" onClick={clearApiKey}>
+      <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
+        <div className="p-6 text-center">
+          <p className="text-red-400">Error loading Google Maps. Please check your API key.</p>
+          <SecondaryButton className="mt-4" onClick={clearApiKey}>
             Reset API Key
-          </Button>
-        </CardContent>
-      </Card>
+          </SecondaryButton>
+        </div>
+      </div>
     );
   }
 
   if (!isLoaded) {
     return (
-      <Card className={cn('bg-elec-gray overflow-hidden', className)}>
-        <CardContent className="p-6 text-center">
+      <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
+        <div className="p-6 text-center">
           <p className="text-white">Loading map...</p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     );
   }
 
   return (
-    <Card className={cn('bg-elec-gray overflow-hidden', className)}>
-      <CardHeader className="pb-2">
+    <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
+      <div className="pb-2 p-4">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg flex items-center gap-2">
+          <div className="text-lg flex items-center gap-2 font-semibold text-white">
             <Navigation className="h-5 w-5 text-elec-yellow" />
             Live Worker Map
-          </CardTitle>
+          </div>
           <div className="flex items-center gap-2">
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-xs text-white border-white/[0.1]">
               <Users className="h-3 w-3 mr-1" />
               {workerLocations.length} tracked
             </Badge>
             {onRefresh && (
-              <Button variant="ghost" size="sm" onClick={onRefresh} disabled={isLoading}>
+              <IconButton onClick={onRefresh} disabled={isLoading} aria-label="Refresh">
                 <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
-              </Button>
+              </IconButton>
             )}
           </div>
         </div>
-      </CardHeader>
-      <CardContent className="p-0 relative">
+      </div>
+      <div className="p-0 relative">
         <GoogleMap
           mapContainerStyle={{ height: '400px', width: '100%' }}
           center={DEFAULT_CENTER}
@@ -289,8 +288,8 @@ export function LiveWorkerMap({
         </GoogleMap>
 
         {/* Legend overlay */}
-        <div className="absolute bottom-4 left-4 bg-elec-gray/95 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-border">
-          <div className="text-xs font-medium text-foreground mb-2">Legend</div>
+        <div className="absolute bottom-4 left-4 bg-[hsl(0_0%_12%)]/95 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-white/[0.08]">
+          <div className="text-xs font-medium text-white mb-2">Legend</div>
           <div className="space-y-1.5">
             {/* Office marker */}
             {officeLocation?.lat && officeLocation?.lng && (
@@ -324,7 +323,7 @@ export function LiveWorkerMap({
               ))}
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

@@ -221,7 +221,7 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
                       <div className="text-[15px] font-medium text-white truncate">
                         {data.student.name}
                       </div>
-                      <div className="mt-0.5 text-[11.5px] text-white/50 truncate tabular-nums">
+                      <div className="mt-0.5 text-[11.5px] text-white/75 truncate tabular-nums">
                         {data.course?.name ?? 'Unknown programme'}
                         {data.course?.duration_months
                           ? ` · ${data.course.duration_months} months`
@@ -233,19 +233,19 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
 
                   <div className="mt-3 grid grid-cols-3 gap-4 text-[11px]">
                     <div>
-                      <div className="text-white/50 uppercase tracking-[0.12em]">Required</div>
+                      <div className="text-white/75 uppercase tracking-[0.12em]">Required</div>
                       <div className="mt-0.5 text-[14px] font-medium text-white tabular-nums">
                         {data.requiredHours}h
                       </div>
                     </div>
                     <div>
-                      <div className="text-white/50 uppercase tracking-[0.12em]">Completed</div>
+                      <div className="text-white/75 uppercase tracking-[0.12em]">Completed</div>
                       <div className="mt-0.5 text-[14px] font-medium text-emerald-400 tabular-nums">
                         {data.completedHours}h
                       </div>
                     </div>
                     <div>
-                      <div className="text-white/50 uppercase tracking-[0.12em]">Remaining</div>
+                      <div className="text-white/75 uppercase tracking-[0.12em]">Remaining</div>
                       <div className="mt-0.5 text-[14px] font-medium text-amber-400 tabular-nums">
                         {data.remainingHours}h
                       </div>
@@ -254,7 +254,7 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
 
                   <div className="mt-3">
                     <div className="flex items-baseline justify-between text-[11.5px]">
-                      <span className="text-white/50 uppercase tracking-[0.12em]">OTJ</span>
+                      <span className="text-white/75 uppercase tracking-[0.12em]">OTJ</span>
                       <span className="font-medium text-white tabular-nums">
                         {Math.round(data.progressPercent)}%
                       </span>

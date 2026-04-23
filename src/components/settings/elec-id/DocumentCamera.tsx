@@ -2,7 +2,6 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   Dialog,
   DialogContent,
@@ -10,18 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import {
-  Camera,
-  X,
-  RotateCcw,
-  Check,
-  Loader2,
-  Flashlight,
-  SwitchCamera,
-  Focus,
-  Maximize2,
-  AlertCircle,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface DocumentCameraProps {
@@ -35,12 +22,12 @@ const DOCUMENT_GUIDES = {
   ecs_card: {
     title: 'ECS Card',
     tips: ['Place card on flat surface', 'Ensure all text is visible', 'Avoid glare and shadows'],
-    aspectRatio: '85.6 / 54', // Credit card ratio
+    aspectRatio: '85.6 / 54',
   },
   qualification: {
     title: 'Qualification Certificate',
     tips: ['Capture entire document', 'Keep edges straight', 'Good lighting helps OCR'],
-    aspectRatio: '210 / 297', // A4 ratio
+    aspectRatio: '210 / 297',
   },
   driving_licence: {
     title: 'Driving Licence',
@@ -82,7 +69,6 @@ const DocumentCamera = ({
   const guide =
     DOCUMENT_GUIDES[documentType as keyof typeof DOCUMENT_GUIDES] || DOCUMENT_GUIDES.default;
 
-  // Check for multiple cameras
   useEffect(() => {
     navigator.mediaDevices?.enumerateDevices().then((devices) => {
       const videoInputs = devices.filter((d) => d.kind === 'videoinput');
@@ -90,13 +76,11 @@ const DocumentCamera = ({
     });
   }, []);
 
-  // Start camera stream
   const startCamera = useCallback(async () => {
     setError(null);
     setCapturedImage(null);
 
     try {
-      // Stop any existing stream
       if (streamRef.current) {
         streamRef.current.getTracks().forEach((track) => track.stop());
       }
@@ -118,22 +102,19 @@ const DocumentCamera = ({
         await videoRef.current.play();
         setIsStreaming(true);
 
-        // Check for torch capability
         const track = stream.getVideoTracks()[0];
         const capabilities = track.getCapabilities?.() as MediaTrackCapabilities & {
           torch?: boolean;
         };
         setHasTorch(!!capabilities?.torch);
       }
-    } catch (err: any) {
-      // AbortError is expected when switching cameras or closing dialog quickly
-      if (err.name === 'AbortError') {
-        return;
-      }
+    } catch (err: unknown) {
+      const name = (err as { name?: string })?.name;
+      if (name === 'AbortError') return;
       console.error('Camera error:', err);
-      if (err.name === 'NotAllowedError') {
+      if (name === 'NotAllowedError') {
         setError('Camera access denied. Please allow camera permissions.');
-      } else if (err.name === 'NotFoundError') {
+      } else if (name === 'NotFoundError') {
         setError('No camera found on this device.');
       } else {
         setError('Could not access camera. Please try again.');
@@ -141,7 +122,6 @@ const DocumentCamera = ({
     }
   }, [facingMode]);
 
-  // Stop camera
   const stopCamera = useCallback(() => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
@@ -154,7 +134,6 @@ const DocumentCamera = ({
     setTorchOn(false);
   }, []);
 
-  // Toggle torch/flashlight
   const toggleTorch = useCallback(async () => {
     if (!streamRef.current || !hasTorch) return;
 
@@ -169,53 +148,40 @@ const DocumentCamera = ({
     }
   }, [torchOn, hasTorch]);
 
-  // Switch camera
   const switchCamera = useCallback(() => {
     setFacingMode((prev) => (prev === 'environment' ? 'user' : 'environment'));
   }, []);
 
-  // Capture photo
   const capturePhoto = useCallback(() => {
     if (!videoRef.current || !canvasRef.current) return;
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-
     if (!ctx) return;
 
-    // Set canvas size to video dimensions
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-
-    // Draw video frame to canvas
     ctx.drawImage(video, 0, 0);
 
-    // Get image data
     const imageData = canvas.toDataURL('image/jpeg', 0.9);
     setCapturedImage(imageData);
     stopCamera();
   }, [stopCamera]);
 
-  // Retake photo
   const retakePhoto = useCallback(() => {
     setCapturedImage(null);
     startCamera();
   }, [startCamera]);
 
-  // Confirm and use photo
   const confirmPhoto = useCallback(async () => {
     if (!capturedImage) return;
-
     setIsProcessing(true);
 
     try {
-      // Convert base64 to blob/file
       const response = await fetch(capturedImage);
       const blob = await response.blob();
-      const file = new File([blob], `document-${Date.now()}.jpg`, {
-        type: 'image/jpeg',
-      });
+      const file = new File([blob], `document-${Date.now()}.jpg`, { type: 'image/jpeg' });
 
       onCapture(capturedImage, file);
       onOpenChange(false);
@@ -227,10 +193,8 @@ const DocumentCamera = ({
     }
   }, [capturedImage, onCapture, onOpenChange]);
 
-  // Track if this is the initial mount for facingMode effect
   const isInitialMount = useRef(true);
 
-  // Native: fire Capacitor Camera immediately when dialog opens — skip getUserMedia UI entirely
   useEffect(() => {
     if (!open || !isNative) return;
 
@@ -249,7 +213,6 @@ const DocumentCamera = ({
         onOpenChange(false);
       })
       .catch((err) => {
-        // User cancelled — not an error worth logging
         const msg = err?.message || '';
         if (!msg.includes('cancelled') && !msg.includes('User cancelled')) {
           console.warn('[DocumentCamera] Native capture failed:', err);
@@ -258,9 +221,8 @@ const DocumentCamera = ({
       });
   }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Web only: start camera when dialog opens
   useEffect(() => {
-    if (isNative) return; // handled above
+    if (isNative) return;
     if (open) {
       startCamera();
     } else {
@@ -274,7 +236,6 @@ const DocumentCamera = ({
     };
   }, [open, startCamera, stopCamera]);
 
-  // Restart camera when facing mode changes (but not on initial mount)
   useEffect(() => {
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -293,11 +254,13 @@ const DocumentCamera = ({
             <DialogTitle className="text-white text-lg">Scan {guide.title}</DialogTitle>
             <Button
               variant="ghost"
-              size="icon"
-              className="text-white hover:bg-white/20"
+              className="h-11 w-11 p-0 text-white hover:bg-white/20 rounded-full touch-manipulation"
               onClick={() => onOpenChange(false)}
+              aria-label="Close"
             >
-              <X className="h-5 w-5" />
+              <span aria-hidden className="text-xl leading-none">
+                ×
+              </span>
             </Button>
           </div>
           <DialogDescription className="sr-only">
@@ -306,7 +269,6 @@ const DocumentCamera = ({
         </DialogHeader>
 
         <div className="relative aspect-[3/4] bg-black">
-          {/* Video preview */}
           {!capturedImage && (
             <>
               <video
@@ -316,40 +278,28 @@ const DocumentCamera = ({
                 muted
               />
 
-              {/* Document guide overlay */}
               {isStreaming && (
                 <div className="absolute inset-0 flex items-center justify-center p-8">
                   <div
-                    className="relative border-2 border-white/50 border-dashed rounded-lg"
-                    style={{
-                      width: '85%',
-                      aspectRatio: guide.aspectRatio,
-                    }}
+                    className="relative border-2 border-white border-dashed rounded-lg"
+                    style={{ width: '85%', aspectRatio: guide.aspectRatio }}
                   >
-                    {/* Corner markers */}
                     <div className="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-elec-yellow rounded-tl" />
                     <div className="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-elec-yellow rounded-tr" />
                     <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-4 border-l-4 border-elec-yellow rounded-bl" />
                     <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-elec-yellow rounded-br" />
-
-                    {/* Center focus indicator */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Focus className="h-12 w-12 text-white" />
-                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Loading state */}
               {!isStreaming && !error && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Loader2 className="h-10 w-10 text-white animate-spin" />
+                  <div className="h-10 w-10 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
                 </div>
               )}
             </>
           )}
 
-          {/* Captured image preview */}
           {capturedImage && (
             <img
               src={capturedImage}
@@ -358,32 +308,25 @@ const DocumentCamera = ({
             />
           )}
 
-          {/* Error state */}
           {error && (
             <div className="absolute inset-0 flex items-center justify-center p-6">
-              <Card className="bg-red-500/20 border-red-500/50">
-                <CardContent className="p-4 text-center">
-                  <AlertCircle className="h-10 w-10 text-red-400 mx-auto mb-3" />
-                  <p className="text-white font-medium mb-2">Camera Error</p>
-                  <p className="text-sm text-white mb-4">{error}</p>
-                  <Button
-                    variant="outline"
-                    className="border-white/30 text-white"
-                    onClick={startCamera}
-                  >
-                    <RotateCcw className="h-4 w-4 mr-2" />
-                    Try Again
-                  </Button>
-                </CardContent>
-              </Card>
+              <div className="bg-red-500/20 border border-red-500/40 rounded-2xl p-4 text-center max-w-sm">
+                <p className="text-white font-medium mb-2">Camera Error</p>
+                <p className="text-sm text-white mb-4">{error}</p>
+                <Button
+                  variant="outline"
+                  className="border-white text-white bg-transparent rounded-xl h-11 touch-manipulation"
+                  onClick={startCamera}
+                >
+                  Try again
+                </Button>
+              </div>
             </div>
           )}
 
-          {/* Hidden canvas for capture */}
           <canvas ref={canvasRef} className="hidden" />
         </div>
 
-        {/* Tips */}
         {isStreaming && !capturedImage && (
           <div className="absolute bottom-32 left-0 right-0 px-4">
             <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3">
@@ -394,72 +337,60 @@ const DocumentCamera = ({
           </div>
         )}
 
-        {/* Controls */}
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent">
           {!capturedImage ? (
             <div className="flex items-center justify-center gap-4">
-              {/* Torch button */}
               {hasTorch && (
                 <Button
                   variant="ghost"
-                  size="icon"
                   className={cn(
-                    'h-12 w-12 rounded-full',
-                    torchOn ? 'bg-elec-yellow text-elec-dark' : 'bg-white/20 text-white'
+                    'h-12 w-12 p-0 rounded-full touch-manipulation text-sm font-medium',
+                    torchOn ? 'bg-elec-yellow text-black' : 'bg-white/20 text-white'
                   )}
                   onClick={toggleTorch}
+                  aria-label="Torch"
                 >
-                  <Flashlight className="h-5 w-5" />
+                  Torch
                 </Button>
               )}
 
-              {/* Capture button */}
               <Button
-                size="icon"
-                className="h-16 w-16 rounded-full bg-white hover:bg-white/90 text-black"
+                className="h-16 w-16 p-0 rounded-full bg-white hover:bg-white/90 text-black touch-manipulation"
                 onClick={capturePhoto}
                 disabled={!isStreaming}
+                aria-label="Capture"
               >
-                <Camera className="h-7 w-7" />
+                <span className="h-12 w-12 rounded-full border-4 border-black" aria-hidden />
               </Button>
 
-              {/* Switch camera button */}
               {hasMultipleCameras && (
                 <Button
                   variant="ghost"
-                  size="icon"
-                  className="h-12 w-12 rounded-full bg-white/20 text-white"
+                  className="h-12 w-12 p-0 rounded-full bg-white/20 text-white touch-manipulation text-sm font-medium"
                   onClick={switchCamera}
+                  aria-label="Switch camera"
                 >
-                  <SwitchCamera className="h-5 w-5" />
+                  Flip
                 </Button>
               )}
             </div>
           ) : (
             <div className="flex items-center justify-center gap-4">
-              {/* Retake button */}
               <Button
                 variant="outline"
-                className="h-12 flex-1 max-w-[140px] border-white/30 text-white"
+                className="h-12 flex-1 max-w-[140px] border-white text-white bg-transparent rounded-xl touch-manipulation"
                 onClick={retakePhoto}
                 disabled={isProcessing}
               >
-                <RotateCcw className="h-4 w-4 mr-2" />
                 Retake
               </Button>
 
-              {/* Confirm button */}
               <Button
-                className="h-12 flex-1 max-w-[140px] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
+                className="h-12 flex-1 max-w-[140px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl touch-manipulation"
                 onClick={confirmPhoto}
                 disabled={isProcessing}
               >
-                {isProcessing ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Check className="h-4 w-4 mr-2" />
-                )}
-                Use Photo
+                {isProcessing ? 'Processing…' : 'Use photo'}
               </Button>
             </div>
           )}

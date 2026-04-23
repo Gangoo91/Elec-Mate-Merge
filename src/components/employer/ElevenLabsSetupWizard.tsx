@@ -79,7 +79,7 @@ export function ElevenLabsSetupWizard({
       <label className="text-xs font-medium text-white uppercase tracking-wide">
         {label}
       </label>
-      <div className="flex items-start gap-2 bg-muted/50 rounded-md p-3 border border-border">
+      <div className="flex items-start gap-2 bg-[hsl(0_0%_9%)] rounded-md p-3 border border-white/[0.08]">
         <div className={`flex-1 text-sm ${mono ? 'font-mono' : ''}`}>{value}</div>
         <Button
           variant="ghost"
@@ -151,9 +151,9 @@ export function ElevenLabsSetupWizard({
   };
 
   return (
-    <div className="fixed inset-0 bg-background/95 backdrop-blur-sm z-50 flex flex-col">
+    <div className="fixed inset-0 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm z-50 flex flex-col">
       {/* Header */}
-      <div className="border-b border-border p-4">
+      <div className="border-b border-white/[0.06] p-4">
         <div className="flex items-center justify-between max-w-4xl mx-auto">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" onClick={onClose}>
@@ -186,7 +186,7 @@ export function ElevenLabsSetupWizard({
       </div>
 
       {/* Navigation */}
-      <div className="border-b border-border p-2">
+      <div className="border-b border-white/[0.06] p-2">
         <div className="flex items-center justify-center gap-2 max-w-4xl mx-auto">
           <Button variant="outline" size="sm" onClick={goToPrevious} disabled={currentIndex === 0}>
             <ChevronLeft className="h-4 w-4 mr-1" /> Previous
@@ -273,7 +273,7 @@ export function ElevenLabsSetupWizard({
                 {currentTool.parameters.map((param, index) => (
                   <div
                     key={param.name}
-                    className="bg-muted/30 rounded-lg p-4 space-y-3 border border-border"
+                    className="bg-[hsl(0_0%_10%)] rounded-lg p-4 space-y-3 border border-white/[0.06]"
                   >
                     <div className="flex items-center justify-between">
                       <span className="font-medium text-elec-yellow">Parameter #{index + 1}</span>
@@ -305,7 +305,7 @@ export function ElevenLabsSetupWizard({
                         <label className="text-xs font-medium text-white uppercase tracking-wide">
                           Value Type
                         </label>
-                        <div className="bg-muted/50 rounded-md p-3 border border-border text-sm">
+                        <div className="bg-[hsl(0_0%_9%)] rounded-md p-3 border border-white/[0.08] text-sm">
                           Select: <strong>LLM Prompt</strong>
                         </div>
                       </div>
@@ -340,7 +340,7 @@ export function ElevenLabsSetupWizard({
                               )}
                             </Button>
                           </div>
-                          <div className="flex flex-wrap gap-1 bg-muted/50 rounded-md p-3 border border-border max-h-40 overflow-y-auto">
+                          <div className="flex flex-wrap gap-1 bg-[hsl(0_0%_9%)] rounded-md p-3 border border-white/[0.08] max-h-40 overflow-y-auto">
                             {param.enum.map((value) => (
                               <Badge
                                 key={value}
@@ -375,7 +375,7 @@ export function ElevenLabsSetupWizard({
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="bg-muted/30 rounded-lg p-4 space-y-2 border border-border">
+              <div className="bg-[hsl(0_0%_10%)] rounded-lg p-4 space-y-2 border border-white/[0.06]">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-white">Wait for response:</span>
                   <span className="font-medium">

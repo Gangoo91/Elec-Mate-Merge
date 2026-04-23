@@ -172,8 +172,8 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         data-circuit-id={result.id}
         className={`${rowBgClass} border-b border-border/30 transition-colors`}
       >
-        {/* Circuit Number - Always visible */}
-        <TableCell className="sticky left-0 z-30 p-0 h-8 align-middle w-20 min-w-[80px] max-w-[80px] bg-card">
+        {/* Circuit Number - Always visible, sticky (ELE-830 overlap fix) */}
+        <TableCell className="sot-sticky-col p-0 h-8 align-middle w-[72px] min-w-[72px] max-w-[72px]">
           <EnhancedValidatedInput
             value={result.circuitDesignation}
             onChange={(value) => onUpdate(result.id, 'circuitDesignation', value)}
@@ -188,7 +188,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         {/* Circuit Details */}
         {!isGroupCollapsed('circuit') && (
           <>
-            <TableCell className="sticky left-[80px] z-30 p-0 h-8 align-middle min-w-[220px] max-w-[220px] bg-card">
+            <TableCell className="sot-sticky-col-2 p-0 h-8 align-middle min-w-[244px] max-w-[244px]">
               <EnhancedValidatedInput
                 value={result.circuitDescription}
                 onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}

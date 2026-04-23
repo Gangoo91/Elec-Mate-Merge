@@ -103,7 +103,7 @@ export function JobCardContextMenu({
           </ContextMenuItem>
         )}
 
-        <ContextMenuItem onClick={onArchive} className="gap-2 text-warning focus:text-warning">
+        <ContextMenuItem onClick={onArchive} className="gap-2 text-amber-400 focus:text-amber-400">
           <Archive className="h-4 w-4" />
           Archive
         </ContextMenuItem>

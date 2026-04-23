@@ -62,23 +62,18 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
     <TableHeader>
       {/* Group Headers Row */}
       <TableRow className="sot-header-group hover:bg-transparent">
-        {/* Circuit Number - Always visible */}
+        {/* Circuit Number & Phase — single-column groups; label row below carries the name,
+            so the group row cell stays empty for a clean top-left corner. */}
         <TableHead
           colSpan={1}
-          className="sot-header-group-cell w-20 min-w-[80px] max-w-[80px] bg-blue-500/10"
-        >
-          <span className="text-elec-yellow font-bold">C#</span>
-        </TableHead>
-
-        {/* Phase - Always visible */}
+          className="sot-header-group-cell sot-sticky-col w-[72px] min-w-[72px] max-w-[72px]"
+        />
         <TableHead
           colSpan={1}
-          className="sot-header-group-cell w-14 min-w-[56px] max-w-[56px] bg-purple-500/10"
-        >
-          <span className="text-purple-400 font-semibold text-xs">Phase</span>
-        </TableHead>
+          className="sot-header-group-cell w-16 min-w-[60px] max-w-[60px]"
+        />
 
-        <TableHead colSpan={isGroupCollapsed('circuit') ? 1 : 4} className="sot-header-group-cell bg-blue-500/5">
+        <TableHead colSpan={isGroupCollapsed('circuit') ? 1 : 4} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('circuit')}
             className="sot-collapse-btn w-full justify-center"
@@ -92,7 +87,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('conductor') ? 1 : 2} className="sot-header-group-cell bg-emerald-500/5">
+        <TableHead colSpan={isGroupCollapsed('conductor') ? 1 : 2} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('conductor')}
             className="sot-collapse-btn w-full justify-center"
@@ -106,7 +101,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('protection') ? 1 : 5} className="sot-header-group-cell bg-orange-500/5">
+        <TableHead colSpan={isGroupCollapsed('protection') ? 1 : 5} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('protection')}
             className="sot-collapse-btn w-full justify-center"
@@ -120,7 +115,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('rcdDetails') ? 1 : 4} className="sot-header-group-cell bg-rose-500/5">
+        <TableHead colSpan={isGroupCollapsed('rcdDetails') ? 1 : 4} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('rcdDetails')}
             className="sot-collapse-btn w-full justify-center"
@@ -134,7 +129,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('continuity') ? 1 : 5} className="sot-header-group-cell bg-violet-500/5">
+        <TableHead colSpan={isGroupCollapsed('continuity') ? 1 : 5} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('continuity')}
             className="sot-collapse-btn w-full justify-center"
@@ -148,7 +143,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 3} className="sot-header-group-cell bg-purple-500/5">
+        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 3} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('insulation')}
             className="sot-collapse-btn w-full justify-center"
@@ -162,7 +157,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('zs') ? 1 : 2} className="sot-header-group-cell bg-amber-500/5">
+        <TableHead colSpan={isGroupCollapsed('zs') ? 1 : 2} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('zs')}
             className="sot-collapse-btn w-full justify-center"
@@ -176,7 +171,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('rcd') ? 1 : 2} className="sot-header-group-cell bg-indigo-500/5">
+        <TableHead colSpan={isGroupCollapsed('rcd') ? 1 : 2} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('rcd')}
             className="sot-collapse-btn w-full justify-center"
@@ -190,7 +185,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={1} className="sot-header-group-cell bg-cyan-500/5">
+        <TableHead colSpan={1} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('afdd')}
             className="sot-collapse-btn w-full justify-center"
@@ -204,7 +199,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={1} className="sot-header-group-cell bg-teal-500/5">
+        <TableHead colSpan={1} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('functional')}
             className="sot-collapse-btn w-full justify-center"
@@ -225,14 +220,14 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
       <TableRow className="sot-header-labels hover:bg-transparent">
         {/* Circuit Number - Always visible */}
         <TableHead
-          className="sot-header-cell sot-sticky-col w-20 min-w-[80px] max-w-[80px]"
+          className="sot-header-cell sot-sticky-col w-[72px] min-w-[72px] max-w-[72px]"
           data-group="circuit"
         >
           Circuit
         </TableHead>
 
         {/* Phase - Always visible */}
-        <TableHead className="sot-header-cell w-14 min-w-[56px] max-w-[56px]" data-group="phase">
+        <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="phase">
           1P/3P
         </TableHead>
 
@@ -240,13 +235,13 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {!isGroupCollapsed('circuit') && (
           <>
             <TableHead
-              className="sot-header-cell min-w-[200px] max-w-[200px] sticky left-[80px] z-35"
+              className="sot-header-cell sot-sticky-col-2 min-w-[244px] max-w-[244px]"
               data-group="circuit"
             >
               Description
             </TableHead>
-            <TableHead className="sot-header-cell min-w-[110px] max-w-[110px]" data-group="circuit">
-              <div className="flex items-center justify-center gap-1">
+            <TableHead className="sot-header-cell min-w-[140px] max-w-[140px]" data-group="circuit">
+              <div className="flex items-center justify-center gap-2">
                 <span>Wiring Type</span>
                 {onFillAllWiringType && (
                   <Popover>
@@ -264,7 +259,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead className="sot-header-cell min-w-[90px] max-w-[90px]" data-group="circuit">
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>Ref Method</span>
                 {onFillAllRefMethod && (
                   <Popover>
@@ -312,7 +307,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {!isGroupCollapsed('protection') && (
           <>
             <TableHead
-              className="sot-header-cell w-28 min-w-[110px] max-w-[110px]"
+              className="sot-header-cell w-40 min-w-[160px] max-w-[160px]"
               data-group="protection"
             >
               BS (EN)
@@ -333,7 +328,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-20 min-w-[75px] max-w-[75px]"
               data-group="protection"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>kA</span>
                 {onFillAllKa && (
                   <Popover>
@@ -354,7 +349,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-28 min-w-[110px] max-w-[110px]"
               data-group="protection"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>Max Zs</span>
                 {onFillAllMaxZs && (
                   <Popover>
@@ -408,7 +403,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-24 min-w-[85px] max-w-[85px]"
               data-group="rcd-details"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>BS (EN)</span>
                 {onFillAllRcdBsStandard && (
                   <Popover open={rcdBsPopoverOpen} onOpenChange={setRcdBsPopoverOpen}>
@@ -456,7 +451,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
               data-group="rcd-details"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>Type</span>
                 {onFillAllRcdType && (
                   <Popover open={rcdTypePopoverOpen} onOpenChange={setRcdTypePopoverOpen}>
@@ -522,7 +517,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
               data-group="rcd-details"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>mA</span>
                 {onFillAllRcdRating && (
                   <Popover open={rcdRatingPopoverOpen} onOpenChange={setRcdRatingPopoverOpen}>
@@ -588,7 +583,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
               data-group="rcd-details"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>A</span>
                 {onFillAllRcdRatingA && (
                   <Popover open={rcdRatingAPopoverOpen} onOpenChange={setRcdRatingAPopoverOpen}>
@@ -732,10 +727,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {!isGroupCollapsed('insulation') && (
           <>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
               data-group="insulation"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>V</span>
                 {onFillAllInsulationVoltage && (
                   <Popover open={irVoltagePopoverOpen} onOpenChange={setIrVoltagePopoverOpen}>
@@ -780,10 +775,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
               data-group="insulation"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>L-N</span>
                 {onFillAllInsulationLiveNeutral && (
                   <Popover
@@ -843,10 +838,10 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
+              className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
               data-group="insulation"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>L-E</span>
                 {onFillAllInsulationLiveEarth && (
                   <Popover open={irLiveEarthPopoverOpen} onOpenChange={setIrLiveEarthPopoverOpen}>
@@ -909,7 +904,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {!isGroupCollapsed('zs') && (
           <>
             <TableHead className="sot-header-cell w-20 min-w-[70px] max-w-[70px]" data-group="zs">
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>Pol</span>
                 {onFillAllPolarity && (
                   <Popover open={polarityPopoverOpen} onOpenChange={setPolarityPopoverOpen}>
@@ -972,7 +967,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-16 min-w-[60px] max-w-[60px]"
               data-group="rcd-tests"
             >
-              <div className="flex items-center justify-center gap-1">
+              <div className="flex items-center justify-center gap-2">
                 <span>Btn</span>
                 {onFillAllRcdTestButton && (
                   <button
@@ -991,7 +986,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         {/* AFDD Test */}
         {!isGroupCollapsed('afdd') && (
           <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="afdd">
-            <div className="flex items-center justify-center gap-1">
+            <div className="flex items-center justify-center gap-2">
               <span>Test</span>
               {(onFillAllAfdd || onFillAllAfddNA) && (
                 <Popover>
@@ -1015,7 +1010,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
             className="sot-header-cell w-16 min-w-[70px] max-w-[70px]"
             data-group="functional"
           >
-            <div className="flex items-center justify-center gap-1">
+            <div className="flex items-center justify-center gap-2">
               <span>Func</span>
               {onFillAllFunctional && (
                 <button

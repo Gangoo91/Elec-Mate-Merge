@@ -364,7 +364,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <div className="text-[15px] font-medium text-white">{item.title}</div>
-            <div className="mt-1 text-[11.5px] text-white/50">
+            <div className="mt-1 text-[11.5px] text-white/75">
               Created {formatDate(item.createdAt)} · {Math.floor(item.timeSpent / 60)}h logged
             </div>
           </div>
@@ -398,7 +398,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
 
         {itemACs.length > 0 && (
           <div className="space-y-2">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Linked Criteria ({itemACs.length})
             </div>
             <div className="flex flex-wrap gap-1.5">
@@ -424,7 +424,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
 
         {item.evidenceFiles.length > 0 && (
           <div className="space-y-2">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Evidence Files ({item.evidenceFiles.length})
             </div>
             <div className="space-y-2">
@@ -435,7 +435,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 >
                   <div className="flex-1 min-w-0">
                     <div className="text-[13px] text-white truncate">{file.fileName}</div>
-                    <div className="mt-0.5 text-[11px] text-white/45">
+                    <div className="mt-0.5 text-[11px] text-white/70">
                       {formatFileSize(file.fileSize)}
                     </div>
                   </div>
@@ -474,7 +474,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             ← Back
           </button>
           <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Review Submission
             </div>
             <h1 className="mt-1 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-tight truncate">
@@ -520,13 +520,13 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             </div>
           </div>
           <div className="text-right shrink-0 hidden sm:block">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Submitted
             </div>
             <div className="mt-0.5 text-[12.5px] text-white tabular-nums">
               {formatDate(submission.submittedAt)}
             </div>
-            <div className="mt-1.5 text-[11px] text-white/45">
+            <div className="mt-1.5 text-[11px] text-white/70">
               Attempt #{submission.submissionCount}
             </div>
           </div>
@@ -590,7 +590,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 >
                   <AccordionTrigger className="hover:no-underline px-5 py-4 min-h-[56px] touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
                     <div className="flex items-center gap-3 text-left flex-1 min-w-0">
-                      <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/40 tabular-nums shrink-0">
+                      <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/55 tabular-nums shrink-0">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <span className="text-[14px] font-medium text-white truncate">
@@ -627,7 +627,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
       {(submission.status === 'under_review' || submission.status === 'resubmitted') && (
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-5">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Assessor Feedback
             </div>
             <h3 className="mt-1 text-lg font-semibold text-white">Provide detailed feedback</h3>
@@ -639,7 +639,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
               placeholder="Provide comprehensive feedback on the submission…"
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
-              className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 min-h-[120px] touch-manipulation text-base"
+              className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 min-h-[120px] touch-manipulation text-base"
             />
           </div>
 
@@ -650,7 +650,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 placeholder="What did the student do well?"
                 value={strengths}
                 onChange={(e) => setStrengths(e.target.value)}
-                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 touch-manipulation text-base"
+                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 touch-manipulation text-base"
               />
             </div>
             <div className="space-y-2">
@@ -659,7 +659,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 placeholder="What could be improved?"
                 value={improvements}
                 onChange={(e) => setImprovements(e.target.value)}
-                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 touch-manipulation text-base"
+                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 touch-manipulation text-base"
               />
             </div>
           </div>
@@ -779,7 +779,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 placeholder="Describe the additional evidence required…"
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
-                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 min-h-[100px] touch-manipulation text-base"
+                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 min-h-[100px] touch-manipulation text-base"
               />
             </div>
             <SheetFooter className="border-t border-white/[0.06] p-5">

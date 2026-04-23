@@ -1,8 +1,7 @@
-import { useState, useRef } from 'react';
-import { Button } from '@/components/ui/button';
+import { useRef, useState } from 'react';
 import { Label } from '@/components/ui/label';
-import { Upload, X, User } from 'lucide-react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 interface ProfilePhotoUploadProps {
   photoUrl?: string;
@@ -24,13 +23,11 @@ export function ProfilePhotoUpload({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       toast.error('Please select an image file');
       return;
     }
 
-    // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
       toast.error('Image must be less than 5MB');
       return;
@@ -57,44 +54,41 @@ export function ProfilePhotoUpload({
 
   return (
     <div className="space-y-3">
-      <Label className="text-foreground font-semibold">{label}</Label>
+      <Label className="text-white font-medium text-[13px]">{label}</Label>
 
       <div className="flex items-center gap-4">
-        {/* Preview */}
         <div
-          className={`relative ${isLogo ? 'w-24 h-24' : 'w-20 h-20'} bg-elec-gray-dark border-2 border-elec-gray-light rounded-lg overflow-hidden flex items-center justify-center`}
+          className={cn(
+            'relative bg-[#0a0a0a] border border-white/[0.08] rounded-2xl overflow-hidden flex items-center justify-center shrink-0',
+            isLogo ? 'w-24 h-24' : 'w-20 h-20'
+          )}
         >
           {preview ? (
             <img src={preview} alt={label} className="w-full h-full object-cover" />
           ) : (
-            <User className="w-8 h-8 text-gray-500" />
+            <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">
+              {isLogo ? 'Logo' : 'Photo'}
+            </span>
           )}
         </div>
 
-        {/* Upload/Remove Buttons */}
         <div className="flex flex-col gap-2">
-          <Button
+          <button
             type="button"
-            variant="outline"
-            size="sm"
             onClick={() => fileInputRef.current?.click()}
-            className="border-elec-yellow/50 text-foreground hover:bg-elec-yellow/10 min-h-[44px]"
+            className="h-11 px-4 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
           >
-            <Upload className="w-4 h-4 mr-2" />
-            {preview ? 'Change' : 'Upload'}
-          </Button>
+            {preview ? `Change ${isLogo ? 'logo' : 'photo'}` : `Upload ${isLogo ? 'logo' : 'photo'}`}
+          </button>
 
           {preview && (
-            <Button
+            <button
               type="button"
-              variant="ghost"
-              size="sm"
               onClick={handleRemove}
-              className="text-red-400 hover:text-red-300 hover:bg-red-400/10 min-h-[44px]"
+              className="h-11 px-4 rounded-xl border border-red-500/30 text-red-400 text-[13px] font-medium hover:bg-red-500/10 transition-colors touch-manipulation"
             >
-              <X className="w-4 h-4 mr-2" />
               Remove
-            </Button>
+            </button>
           )}
         </div>
 
@@ -107,7 +101,7 @@ export function ProfilePhotoUpload({
         />
       </div>
 
-      <p className="text-xs text-gray-300">Recommended: Square image, max 5MB (JPG, PNG, WEBP)</p>
+      <p className="text-[11.5px] text-white">Recommended: Square image, max 5MB (JPG, PNG, WEBP)</p>
     </div>
   );
 }

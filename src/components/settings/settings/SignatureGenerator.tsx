@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Type } from 'lucide-react';
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface SignatureGeneratorProps {
   onSave: (signatureData: string) => void;
@@ -18,12 +17,13 @@ const SIGNATURE_FONTS = [
 ];
 
 export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorProps) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(initialValue ?? '');
   const [selectedFont, setSelectedFont] = useState('style1');
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     generateSignature();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text, selectedFont]);
 
   const generateSignature = () => {
@@ -33,15 +33,12 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Clear canvas
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Get selected font
     const font =
       SIGNATURE_FONTS.find((f) => f.id === selectedFont)?.font || SIGNATURE_FONTS[0].font;
 
-    // Draw text
     ctx.fillStyle = '#000000';
     ctx.font = `48px ${font}`;
     ctx.textAlign = 'center';
@@ -58,65 +55,75 @@ export function SignatureGenerator({ onSave, initialValue }: SignatureGeneratorP
   };
 
   return (
-    <div className="space-y-4">
-      <div>
-        <Label htmlFor="signatureName" className="text-foreground flex items-center gap-2">
-          <Type className="h-4 w-4 text-elec-yellow" />
-          Your Name
+    <div className="space-y-5">
+      <div className="space-y-1.5">
+        <Label htmlFor="signatureName" className="text-white font-medium text-[13px]">
+          Your name
         </Label>
         <Input
           id="signatureName"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Enter your full name"
-          className="mt-1.5"
+          className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
         />
       </div>
 
-      <div className="space-y-4">
-        <Label className="text-foreground font-semibold">Select Font Style</Label>
-        <RadioGroup
-          value={selectedFont}
-          onValueChange={setSelectedFont}
-          className="grid grid-cols-2 gap-3"
-        >
-          {SIGNATURE_FONTS.map((font) => (
-            <div key={font.id} className="relative">
-              <RadioGroupItem value={font.id} id={font.id} className="peer sr-only" />
-              <label
-                htmlFor={font.id}
-                className="flex flex-col items-center justify-center rounded-lg border-2 border-elec-gray-light bg-elec-gray-dark p-4 min-h-[52px] hover:border-elec-yellow/50 peer-data-[state=checked]:border-elec-yellow cursor-pointer active:scale-[0.98] transition-all touch-manipulation"
+      <div className="space-y-3">
+        <Eyebrow>Font Style</Eyebrow>
+        <div className="grid grid-cols-2 gap-3">
+          {SIGNATURE_FONTS.map((font) => {
+            const isSelected = selectedFont === font.id;
+            return (
+              <button
+                key={font.id}
+                type="button"
+                onClick={() => setSelectedFont(font.id)}
+                className={cn(
+                  'flex flex-col items-center justify-center rounded-2xl border p-4 min-h-[72px] transition-colors touch-manipulation',
+                  isSelected
+                    ? 'border-elec-yellow/60 bg-elec-yellow/10'
+                    : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
+                )}
+                aria-pressed={isSelected}
               >
-                <span className="text-xs text-gray-400 mb-1">{font.name}</span>
+                <span className="text-[11px] uppercase tracking-[0.14em] text-white mb-1.5">
+                  {font.name}
+                </span>
                 <span
                   style={{ fontFamily: font.font, fontSize: '22px' }}
-                  className="text-foreground"
+                  className="text-white"
                 >
                   {text || 'Sample'}
                 </span>
-              </label>
-            </div>
-          ))}
-        </RadioGroup>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="space-y-2">
-        <Label className="text-foreground font-semibold">Preview</Label>
+        <Eyebrow>Preview</Eyebrow>
         <div className="w-full overflow-hidden">
-          <div className="bg-white rounded-lg p-4">
-            <canvas ref={canvasRef} width={400} height={150} className="w-full max-w-full h-auto" />
+          <div className="bg-white rounded-2xl p-4">
+            <canvas
+              ref={canvasRef}
+              width={400}
+              height={150}
+              className="w-full max-w-full h-auto"
+            />
           </div>
         </div>
       </div>
 
-      <Button
+      <button
         type="button"
         onClick={handleSave}
         disabled={!text}
-        className="w-full min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
+        className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Save Signature
-      </Button>
+        Save signature
+      </button>
     </div>
   );
 }

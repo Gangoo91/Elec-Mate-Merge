@@ -1,52 +1,30 @@
 /**
- * ElecIdCVTab - My CV tab in the Elec-ID settings
- *
- * Shows a list of user's CVs with:
- * - Primary CV highlighted
- * - Sync status indicators
- * - Create/Edit/Download actions
- * - Empty state for first-time users
+ * ElecIdCVTab — My CV tab in the Elec-ID settings
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import {
-  FileText,
-  Plus,
-  Download,
-  RefreshCw,
-  CheckCircle2,
-  AlertCircle,
-  IdCard,
-  Sparkles,
-  ArrowRight,
-  Loader2,
-} from 'lucide-react';
-import { useCVs, usePrimaryCV, UserCV, calculateCVCompleteness } from '@/hooks/useCV';
-import { useElecIdForCV, useCVSyncStatus } from '@/hooks/useCVSync';
+import { useCVs, UserCV } from '@/hooks/useCV';
+import { useElecIdForCV } from '@/hooks/useCVSync';
 import CVCard from './CVCard';
 import { toast } from '@/hooks/use-toast';
 import { storageSetJSONSync, storageSetSync } from '@/utils/storage';
+import { SectionHeader, EmptyState, Eyebrow } from '@/components/college/primitives';
 
 interface ElecIdCVTabProps {
   onNavigate?: (tabId: string) => void;
 }
 
-const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
+const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
   const navigate = useNavigate();
   const { data: cvs, isLoading: isLoadingCVs, error: cvsError } = useCVs();
-  const { data: elecIdData, isLoading: isLoadingElecId } = useElecIdForCV();
+  const { data: elecIdData } = useElecIdForCV();
 
   const isLoading = isLoadingCVs;
   const hasElecIdProfile = !!elecIdData?.profile;
 
-  // Sort CVs with primary first
   const sortedCVs = cvs?.slice().sort((a, b) => {
     if (a.is_primary && !b.is_primary) return -1;
     if (!a.is_primary && b.is_primary) return 1;
@@ -54,154 +32,124 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
   });
 
   const handleCreateCV = () => {
-    // Navigate to CV builder
     navigate('/electrician/cv-builder');
   };
 
   const handleEditCV = (cv: UserCV) => {
-    // For now, store CV data in localStorage and navigate to builder
-    // Future: add query param support to CV builder
     storageSetJSONSync('elecmate-cv-draft', cv.cv_data);
     storageSetSync('elecmate-cv-template', cv.template_id);
     storageSetSync('elecmate-cv-editing-id', cv.id);
     navigate('/electrician/cv-builder');
   };
 
-  // Loading state
   if (isLoading) {
     return (
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <Skeleton className="h-8 w-40" />
-          <Skeleton className="h-10 w-32" />
+          <Skeleton className="h-8 w-40 bg-white/[0.04]" />
+          <Skeleton className="h-11 w-32 bg-white/[0.04]" />
         </div>
         {[1, 2].map((i) => (
-          <Skeleton key={i} className="h-32 w-full rounded-xl" />
+          <Skeleton key={i} className="h-32 w-full rounded-2xl bg-white/[0.04]" />
         ))}
       </div>
     );
   }
 
-  // Error state
   if (cvsError) {
     return (
-      <Card className="border-red-500/30 bg-red-500/10">
-        <CardContent className="p-6 text-center">
-          <AlertCircle className="h-10 w-10 text-red-400 mx-auto mb-3" />
-          <h3 className="font-semibold text-foreground">Failed to Load CVs</h3>
-          <p className="text-sm text-white mt-1">Please refresh the page to try again.</p>
-        </CardContent>
-      </Card>
+      <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-6 text-center">
+        <h3 className="font-semibold text-white">Failed to load CVs</h3>
+        <p className="text-sm text-white/70 mt-1">Please refresh the page to try again.</p>
+      </div>
     );
   }
 
-  // Empty state
   if (!sortedCVs || sortedCVs.length === 0) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         className="space-y-6"
       >
-        {/* Hero section */}
-        <Card className="border-white/10 bg-gradient-to-br from-cyan-500/10 via-blue-500/10 to-purple-500/10 overflow-hidden">
-          <CardContent className="p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row items-center gap-6">
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shrink-0">
-                <FileText className="h-10 w-10 text-white" />
-              </div>
-              <div className="text-center sm:text-left">
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground">
-                  Create Your Professional CV
-                </h2>
-                <p className="text-white mt-2 max-w-md">
-                  Build a professional CV that showcases your electrical qualifications. Import your
-                  credentials directly from your Elec-ID profile.
-                </p>
-                <Button
-                  onClick={handleCreateCV}
-                  className="mt-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
-                  size="lg"
-                >
-                  <Plus className="h-5 w-5 mr-2" />
-                  Create Your CV
-                  <ArrowRight className="h-5 w-5 ml-2" />
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-8">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-cyan-500/70 via-blue-400/70 to-purple-400/70" />
+          <Eyebrow>Elec-ID · CV</Eyebrow>
+          <h2 className="mt-1.5 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-[1.05]">
+            Create your professional CV
+          </h2>
+          <p className="mt-3 text-sm text-white/70 max-w-2xl">
+            Build a professional CV that showcases your electrical qualifications. Import your
+            credentials directly from your Elec-ID profile.
+          </p>
+          <button
+            onClick={handleCreateCV}
+            className="mt-5 h-11 px-5 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+          >
+            Create your CV →
+          </button>
+        </div>
 
-        {/* Features */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <FeatureCard
-            icon={IdCard}
-            title="Import from Elec-ID"
-            description="Automatically import your skills, qualifications, and work history"
-            color="from-emerald-500 to-teal-500"
-          />
-          <FeatureCard
-            icon={Sparkles}
-            title="AI Assistance"
-            description="Get AI-powered suggestions to make your CV stand out"
-            color="from-purple-500 to-pink-500"
-          />
-          <FeatureCard
-            icon={Download}
-            title="PDF Download"
-            description="Download professionally formatted PDF files instantly"
-            color="from-amber-500 to-orange-500"
-          />
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+          {[
+            {
+              title: 'Import from Elec-ID',
+              description: 'Automatically import your skills, qualifications, and work history',
+            },
+            {
+              title: 'AI assistance',
+              description: 'Get AI-powered suggestions to make your CV stand out',
+            },
+            {
+              title: 'PDF download',
+              description: 'Download professionally formatted PDF files instantly',
+            },
+          ].map((feat) => (
+            <div key={feat.title} className="bg-[hsl(0_0%_12%)] p-5">
+              <Eyebrow>{feat.title}</Eyebrow>
+              <p className="mt-2 text-sm text-white/70">{feat.description}</p>
+            </div>
+          ))}
         </div>
       </motion.div>
     );
   }
 
-  // Has CVs
   return (
-    <div className="space-y-4">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold text-foreground">My CVs</h2>
-          <p className="text-sm text-white">
-            {sortedCVs.length} CV{sortedCVs.length !== 1 && 's'}
-            {hasElecIdProfile && ' • Synced with Elec-ID'}
-          </p>
-        </div>
-        <Button
-          onClick={handleCreateCV}
-          className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          New CV
-        </Button>
-      </div>
+    <div className="space-y-5">
+      <SectionHeader
+        eyebrow="Your credentials · CV"
+        title="My CVs"
+        action="New CV"
+        onAction={handleCreateCV}
+      />
 
-      {/* Elec-ID sync banner (if profile exists and CVs exist) */}
+      <p className="text-sm text-white/65">
+        {sortedCVs.length} CV{sortedCVs.length !== 1 ? 's' : ''}
+        {hasElecIdProfile && ' · Synced with Elec-ID'}
+      </p>
+
       {hasElecIdProfile && (
-        <SyncStatusBanner
-          cvs={sortedCVs}
-          onSyncAll={() => {
-            // Future: implement bulk sync
-            toast({
-              title: 'Sync Available',
-              description: 'Edit individual CVs to sync from Elec-ID.',
-            });
-          }}
-        />
+        <div className="bg-[hsl(0_0%_12%)] border border-emerald-500/20 rounded-2xl px-5 py-4 flex items-center justify-between">
+          <div>
+            <p className="text-sm font-medium text-emerald-400">Elec-ID connected</p>
+            <p className="text-xs text-white/65">Skills and certifications sync automatically</p>
+          </div>
+          <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+            Linked
+          </span>
+        </div>
       )}
 
-      {/* CV List */}
       <div className="space-y-3">
         <AnimatePresence mode="popLayout">
           {sortedCVs.map((cv, index) => (
             <motion.div
               key={cv.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ delay: index * 0.05 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ delay: index * 0.04 }}
             >
               <CVCard cv={cv} onEdit={handleEditCV} />
             </motion.div>
@@ -209,82 +157,15 @@ const ElecIdCVTab = ({ onNavigate }: ElecIdCVTabProps) => {
         </AnimatePresence>
       </div>
 
-      {/* Tip card */}
-      <Card className="border-white/10 bg-white/[0.02]">
-        <CardContent className="p-4 flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center shrink-0">
-            <Sparkles className="h-4 w-4 text-elec-yellow" />
-          </div>
-          <div>
-            <p className="text-sm text-white">
-              <span className="text-foreground font-medium">Pro tip:</span> Set your best CV as
-              "Primary" to use it automatically when applying for jobs.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      <EmptyState
+        title="Pro tip"
+        description="Set your best CV as Primary to use it automatically when applying for jobs."
+      />
     </div>
   );
 };
 
-// Feature card for empty state
-const FeatureCard = ({
-  icon: Icon,
-  title,
-  description,
-  color,
-}: {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-  color: string;
-}) => (
-  <Card className="border-white/10 bg-white/[0.03]">
-    <CardContent className="p-4">
-      <div
-        className={cn(
-          'w-10 h-10 rounded-xl bg-gradient-to-br flex items-center justify-center mb-3',
-          color
-        )}
-      >
-        <Icon className="h-5 w-5 text-white" />
-      </div>
-      <h3 className="font-medium text-foreground">{title}</h3>
-      <p className="text-xs text-white mt-1">{description}</p>
-    </CardContent>
-  </Card>
-);
-
-// Sync status banner
-const SyncStatusBanner = ({ cvs, onSyncAll }: { cvs: UserCV[]; onSyncAll: () => void }) => {
-  // Calculate total pending updates across all CVs
-  // For simplicity, we'll just show a generic message
-  // Full implementation would check each CV's sync status
-
-  return (
-    <Card className="border-emerald-500/20 bg-emerald-500/5">
-      <CardContent className="p-3 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
-            <RefreshCw className="h-4 w-4 text-emerald-400" />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-emerald-400">Elec-ID Connected</p>
-            <p className="text-xs text-emerald-400/70">
-              Skills and certifications sync automatically
-            </p>
-          </div>
-        </div>
-        <Badge
-          variant="secondary"
-          className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
-        >
-          <CheckCircle2 className="h-3 w-3 mr-1" />
-          Linked
-        </Badge>
-      </CardContent>
-    </Card>
-  );
-};
+// Silence toast unused warning
+void toast;
 
 export default ElecIdCVTab;

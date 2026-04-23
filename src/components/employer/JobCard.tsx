@@ -1,8 +1,5 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { StatusBadge } from './StatusBadge';
-import { MapPin, Calendar, Users, PoundSterling, ChevronRight } from 'lucide-react';
+import { Pill, type Tone } from './editorial';
 import { cn } from '@/lib/utils';
 
 export interface AssignedWorker {
@@ -28,34 +25,20 @@ interface JobCardProps {
   className?: string;
 }
 
-const getStatusColour = (status: string) => {
-  switch (status) {
-    case 'Active':
-      return 'border-l-success';
-    case 'Pending':
-      return 'border-l-warning';
-    case 'Completed':
-      return 'border-l-muted-foreground';
-    case 'On Hold':
-      return 'border-l-info';
-    case 'Cancelled':
-      return 'border-l-destructive';
-    default:
-      return 'border-l-border';
-  }
+const statusToneMap: Record<string, Tone> = {
+  Active: 'emerald',
+  Pending: 'amber',
+  Completed: 'cyan',
+  'On Hold': 'blue',
+  Cancelled: 'red',
 };
 
-const getProgressColour = (status: string) => {
-  switch (status) {
-    case 'Active':
-      return 'bg-success';
-    case 'Pending':
-      return 'bg-warning';
-    case 'Completed':
-      return 'bg-muted-foreground';
-    default:
-      return 'bg-elec-yellow';
-  }
+const progressBarTone: Record<string, string> = {
+  Active: 'bg-emerald-400',
+  Pending: 'bg-amber-400',
+  Completed: 'bg-cyan-400',
+  'On Hold': 'bg-blue-400',
+  Cancelled: 'bg-red-400',
 };
 
 export function JobCard({
@@ -77,7 +60,6 @@ export function JobCard({
     if (!val) return null;
     if (val >= 1000) {
       const kValue = val / 1000;
-      // Show decimal only if not a whole number
       return kValue % 1 === 0 ? `£${kValue}k` : `£${kValue.toFixed(1)}k`;
     }
     return `£${val.toLocaleString()}`;
@@ -85,119 +67,112 @@ export function JobCard({
 
   const displayValue = formatValue(value);
   const hasValidDates = startDate !== '-' && endDate !== '-';
+  const tone = statusToneMap[status] ?? 'amber';
+  const barClass = progressBarTone[status] ?? 'bg-elec-yellow';
 
-  return (
-    <Card
-      className={cn(
-        'cursor-pointer transition-all duration-200 border-l-4 overflow-hidden touch-manipulation',
-        'hover:border-elec-yellow/40 hover:shadow-lg hover:shadow-elec-yellow/5',
-        'active:border-elec-yellow/40 active:shadow-lg active:shadow-elec-yellow/5 active:scale-[0.98]',
-        getStatusColour(status),
-        className
-      )}
-      onClick={onClick}
-    >
-      <CardContent className="p-4 space-y-3">
-        {/* Header - Title, Client & Status */}
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0 flex-1">
-            <h3 className="font-semibold text-foreground truncate text-base leading-tight">
-              {title}
-            </h3>
-            <p className="text-sm text-white mt-0.5 truncate">{client}</p>
-          </div>
-          <div className="flex items-center gap-1.5 shrink-0">
-            <StatusBadge status={status} />
-            <ChevronRight className="h-4 w-4 text-white" />
-          </div>
+  const Inner = (
+    <div className="p-5 space-y-4">
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <h3 className="text-[14px] font-medium text-white truncate leading-tight">{title}</h3>
+          <p className="mt-0.5 text-[11.5px] text-white truncate">{client}</p>
         </div>
+        <Pill tone={tone}>{status}</Pill>
+      </div>
 
-        {/* Location */}
-        <div className="flex items-center gap-2 text-sm text-white">
-          <MapPin className="h-3.5 w-3.5 shrink-0 text-elec-yellow/70" />
-          <span className="truncate">{location}</span>
-        </div>
-
-        {/* Description */}
-        {description && (
-          <p className="text-xs text-white line-clamp-2 leading-relaxed">
-            {description}
-          </p>
+      <div className="flex items-center justify-between gap-3 text-[12px] text-white">
+        <span className="truncate">{location}</span>
+        {displayValue && (
+          <span className="text-[14px] font-semibold tabular-nums text-elec-yellow shrink-0">
+            {displayValue}
+          </span>
         )}
+      </div>
 
-        {/* Progress Bar */}
-        <div className="space-y-1.5">
-          <div className="flex justify-between items-center text-xs">
-            <span className="text-white">Progress</span>
-            <span className="font-bold text-foreground">{progress}%</span>
-          </div>
-          <div className="relative h-2 w-full rounded-full bg-muted overflow-hidden">
-            <div
-              className={cn(
-                'h-full rounded-full transition-all duration-300',
-                getProgressColour(status)
-              )}
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+      {description && (
+        <p className="text-[12px] text-white line-clamp-2 leading-relaxed">{description}</p>
+      )}
+
+      <div className="pt-4 border-t border-white/[0.06] space-y-2">
+        <div className="flex items-center justify-between text-[11px]">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            Progress
+          </span>
+          <span className="font-semibold tabular-nums text-white">{progress}%</span>
         </div>
+        <div className="relative h-1.5 w-full rounded-full bg-white/[0.06] overflow-hidden">
+          <div
+            className={cn('h-full rounded-full transition-all duration-300', barClass)}
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
 
-        {/* Footer - Dates, Workers, Value */}
-        <div className="flex items-center justify-between pt-2 border-t border-border/50 text-xs">
-          <div className="flex items-center gap-1.5 text-white">
-            {hasValidDates && (
-              <>
-                <Calendar className="h-3.5 w-3.5 shrink-0 text-elec-yellow/70" />
-                <span>{startDate}</span>
-                {endDate !== startDate && (
-                  <>
-                    <span className="text-white">→</span>
-                    <span>{endDate}</span>
-                  </>
-                )}
-              </>
-            )}
-          </div>
-
-          <div className="flex items-center gap-3">
-            {/* Worker Avatars or Count */}
-            <div className="flex items-center gap-1">
-              {assignedWorkers.length > 0 ? (
-                <div className="flex items-center">
-                  <div className="flex -space-x-1.5">
-                    {assignedWorkers.slice(0, 3).map((worker) => (
-                      <Avatar key={worker.id} className="h-5 w-5 border-2 border-background ring-0">
-                        {worker.photo_url ? (
-                          <AvatarImage src={worker.photo_url} alt={worker.name} />
-                        ) : null}
-                        <AvatarFallback className="text-[8px] bg-elec-yellow/10 text-elec-yellow font-medium">
-                          {worker.avatar_initials}
-                        </AvatarFallback>
-                      </Avatar>
-                    ))}
-                  </div>
-                  {workersCount > 3 && (
-                    <span className="ml-1 text-white font-medium">
-                      +{workersCount - 3}
-                    </span>
-                  )}
-                </div>
-              ) : (
+      <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between gap-3 text-[11px] text-white">
+        <div className="flex items-center gap-1.5 min-w-0">
+          {hasValidDates && (
+            <>
+              <span className="tabular-nums truncate">{startDate}</span>
+              {endDate !== startDate && (
                 <>
-                  <Users className="h-3.5 w-3.5 text-white" />
-                  <span className="text-white">0</span>
+                  <span>→</span>
+                  <span className="tabular-nums truncate">{endDate}</span>
                 </>
               )}
-            </div>
-
-            {displayValue && (
-              <div className="flex items-center gap-0.5 text-elec-yellow font-bold text-sm">
-                <span>{displayValue}</span>
-              </div>
-            )}
-          </div>
+            </>
+          )}
         </div>
-      </CardContent>
-    </Card>
+
+        <div className="flex items-center gap-2 shrink-0">
+          {assignedWorkers.length > 0 ? (
+            <>
+              <div className="flex -space-x-1.5">
+                {assignedWorkers.slice(0, 3).map((worker) => (
+                  <Avatar
+                    key={worker.id}
+                    className="h-6 w-6 border-2 border-[hsl(0_0%_12%)] ring-0"
+                  >
+                    {worker.photo_url ? (
+                      <AvatarImage src={worker.photo_url} alt={worker.name} />
+                    ) : null}
+                    <AvatarFallback className="text-[8px] bg-white/[0.06] text-white font-medium">
+                      {worker.avatar_initials}
+                    </AvatarFallback>
+                  </Avatar>
+                ))}
+              </div>
+              {workersCount > 3 && (
+                <span className="text-[11px] font-medium tabular-nums text-white">
+                  +{workersCount - 3}
+                </span>
+              )}
+            </>
+          ) : (
+            <span className="text-[11px] tabular-nums text-white">{workersCount} crew</span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  const base =
+    'group block w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden touch-manipulation';
+
+  if (!onClick) {
+    return <div className={cn(base, className)}>{Inner}</div>;
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        base,
+        'cursor-pointer hover:bg-[hsl(0_0%_15%)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60',
+        className
+      )}
+    >
+      {Inner}
+    </button>
   );
 }

@@ -562,7 +562,7 @@ const CollegeDashboard = () => {
                 ← Back
               </button>
               <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40 hidden sm:inline">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 hidden sm:inline">
                   College
                 </span>
                 <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />

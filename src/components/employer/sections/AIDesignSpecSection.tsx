@@ -1,32 +1,44 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { SectionHeader } from '@/components/employer/SectionHeader';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import { RefreshCw } from 'lucide-react';
 import {
-  Sparkles,
-  Loader2,
-  CheckCircle,
-  AlertTriangle,
-  Download,
-  FileText,
-  RefreshCw,
-  Zap,
-  Settings,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  Dot,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  Eyebrow,
+  Divider,
+  SplitLayout,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
+  checkboxClass,
+} from '@/components/employer/editorial';
 
 interface AIDesignSpecSectionProps {
   onNavigate: (section: Section) => void;
 }
+
+type FilterTab = 'all' | 'draft' | 'approved' | 'sent';
+
+const PROPERTY_TYPES: Array<{ value: string; label: string }> = [
+  { value: 'domestic', label: 'Domestic' },
+  { value: 'commercial', label: 'Commercial' },
+  { value: 'industrial', label: 'Industrial' },
+];
 
 export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
   const { data: jobPacks = [] } = useJobPacks();
@@ -35,18 +47,28 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
   const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
   const [designQuery, setDesignQuery] = useState('');
   const [propertyType, setPropertyType] = useState('domestic');
+  const [includeStandards, setIncludeStandards] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentStep, setCurrentStep] = useState('');
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<FilterTab>('all');
+  const [search, setSearch] = useState('');
 
   const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
+
+  const refresh = () => {
+    setResult(null);
+    setError(null);
+    setProgress(0);
+    setCurrentStep('');
+  };
 
   const handleGenerate = async () => {
     if (!designQuery.trim()) {
       toast({
-        title: 'Missing Information',
+        title: 'Missing information',
         description: 'Please describe what you need to design.',
         variant: 'destructive',
       });
@@ -60,7 +82,6 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
     setResult(null);
 
     try {
-      // Create design job
       const { data: job, error: createError } = await supabase
         .from('circuit_design_jobs')
         .insert({
@@ -76,7 +97,6 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
         throw new Error(createError?.message || 'Failed to create design job');
       }
 
-      // Subscribe to updates
       const channel = supabase
         .channel(`design-job-${job.id}`)
         .on(
@@ -97,7 +117,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
               setResult(jobData.result);
               supabase.removeChannel(channel);
               toast({
-                title: 'Design Spec Generated!',
+                title: 'Design spec generated',
                 description: 'Your circuit design has been created successfully.',
               });
             } else if (jobData.status === 'failed') {
@@ -105,7 +125,7 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
               setError(jobData.error_message || 'Design generation failed');
               supabase.removeChannel(channel);
               toast({
-                title: 'Generation Failed',
+                title: 'Generation failed',
                 description: jobData.error_message || 'Something went wrong.',
                 variant: 'destructive',
               });
@@ -114,7 +134,6 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
         )
         .subscribe();
 
-      // Trigger the edge function
       const { error: invokeError } = await supabase.functions.invoke('create-circuit-design-job', {
         body: { jobId: job.id },
       });
@@ -146,220 +165,259 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
     URL.revokeObjectURL(url);
   };
 
-  const handleReset = () => {
-    setResult(null);
-    setError(null);
-    setProgress(0);
-    setCurrentStep('');
-  };
+  const generated30d = '12';
+  const hoursSaved = '34';
+  const templateCount = '6';
+
+  const history: Array<{
+    id: string;
+    title: string;
+    subtitle: string;
+    status: FilterTab;
+    statusLabel: string;
+  }> = [];
+
+  const filteredHistory = history.filter((row) => {
+    const matchesTab = activeTab === 'all' || row.status === activeTab;
+    const matchesSearch =
+      !search ||
+      row.title.toLowerCase().includes(search.toLowerCase()) ||
+      row.subtitle.toLowerCase().includes(search.toLowerCase());
+    return matchesTab && matchesSearch;
+  });
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
+    <PageFrame>
+      <PageHero
+        eyebrow="Smart Docs"
         title="AI Design Spec"
-        description="Generate circuit designs and installation guidance"
-        icon={Sparkles}
+        description="Circuit design specs drafted from a short brief — you approve before sending."
+        tone="indigo"
+        actions={
+          <>
+            <PrimaryButton onClick={refresh}>New spec</PrimaryButton>
+            <IconButton onClick={refresh} aria-label="Refresh">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </>
+        }
+        meta={<Pill tone="purple">AI</Pill>}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Link to Job Pack (Optional)
-              </CardTitle>
-              <CardDescription>Attach the design to a job pack for documentation</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <JobPackSelector
-                selectedJobPackId={selectedJobPackId}
-                onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate('jobpacks')}
-                showStatus={false}
-              />
-            </CardContent>
-          </Card>
+      <StatStrip
+        columns={3}
+        stats={[
+          { label: 'Generated 30d', value: generated30d, tone: 'indigo' },
+          { label: 'Hours saved', value: hoursSaved, tone: 'emerald', accent: true },
+          { label: 'Templates', value: templateCount, tone: 'blue' },
+        ]}
+      />
 
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">Design Requirements</CardTitle>
-              <CardDescription>
-                Describe the circuit or installation you need designed
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label>Property Type</Label>
-                <div className="flex gap-2 mt-2">
-                  {['domestic', 'commercial', 'industrial'].map((type) => (
-                    <Button
-                      key={type}
-                      variant={propertyType === type ? 'default' : 'outline'}
-                      size="sm"
-                      onClick={() => setPropertyType(type)}
-                      className={propertyType === type ? 'bg-elec-yellow text-black' : ''}
-                      disabled={isGenerating}
-                    >
-                      {type.charAt(0).toUpperCase() + type.slice(1)}
-                    </Button>
-                  ))}
-                </div>
-              </div>
+      <FilterBar
+        tabs={[
+          { value: 'all', label: 'All' },
+          { value: 'draft', label: 'Draft' },
+          { value: 'approved', label: 'Approved' },
+          { value: 'sent', label: 'Sent' },
+        ]}
+        activeTab={activeTab}
+        onTabChange={(value) => setActiveTab(value as FilterTab)}
+        search={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search specs…"
+      />
 
-              <div>
-                <Label htmlFor="query">What do you need designed?</Label>
-                <Textarea
-                  id="query"
-                  value={designQuery}
-                  onChange={(e) => setDesignQuery(e.target.value)}
-                  placeholder="e.g., Consumer unit for 3-bed house with EV charger, kitchen circuit for commercial kitchen with 3-phase supply..."
-                  className="mt-1 min-h-[150px] bg-elec-dark border-elec-yellow/20"
-                  disabled={isGenerating}
+      <SplitLayout
+        ratio="3-2"
+        primary={
+          <ListCard>
+            <ListCardHeader
+              tone="indigo"
+              title="New design brief"
+              meta={
+                isGenerating ? (
+                  <Pill tone="amber">{progress}%</Pill>
+                ) : (
+                  <Pill tone="indigo">Draft</Pill>
+                )
+              }
+            />
+            <div className="p-5 sm:p-6 space-y-5">
+              <div className="space-y-2">
+                <Eyebrow>Job pack</Eyebrow>
+                <JobPackSelector
+                  selectedJobPackId={selectedJobPackId}
+                  onSelect={setSelectedJobPackId}
+                  onCreateNew={() => onNavigate('jobpacks')}
+                  showStatus={false}
                 />
               </div>
 
-              <Button
+              <div className="space-y-2">
+                <Eyebrow>Property type</Eyebrow>
+                <div className="flex flex-wrap gap-2">
+                  {PROPERTY_TYPES.map((type) => {
+                    const isActive = propertyType === type.value;
+                    return (
+                      <button
+                        key={type.value}
+                        onClick={() => setPropertyType(type.value)}
+                        disabled={isGenerating}
+                        className={[
+                          'h-11 px-4 rounded-full text-[13px] font-medium touch-manipulation transition-colors disabled:opacity-50',
+                          isActive
+                            ? 'bg-elec-yellow text-black'
+                            : 'bg-[hsl(0_0%_15%)] text-white border border-white/[0.08] hover:bg-[hsl(0_0%_18%)]',
+                        ].join(' ')}
+                      >
+                        {type.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Eyebrow>Brief</Eyebrow>
+                <textarea
+                  value={designQuery}
+                  onChange={(e) => setDesignQuery(e.target.value)}
+                  placeholder="e.g., Consumer unit for a 3-bed house with EV charger; kitchen circuits for a commercial kitchen with 3-phase supply…"
+                  disabled={isGenerating}
+                  className={`${textareaClass} min-h-[160px]`}
+                />
+              </div>
+
+              <label className="flex items-start gap-3 px-4 py-3 rounded-2xl bg-[hsl(0_0%_10%)] border border-white/[0.08] cursor-pointer touch-manipulation">
+                <input
+                  type="checkbox"
+                  checked={includeStandards}
+                  onChange={(e) => setIncludeStandards(e.target.checked)}
+                  disabled={isGenerating}
+                  className="mt-0.5 h-5 w-5 rounded accent-elec-yellow touch-manipulation"
+                />
+                <span className="flex-1 min-w-0">
+                  <span className="block text-[13px] font-medium text-white">
+                    Include BS 7671 standards references
+                  </span>
+                  <span className="mt-0.5 block text-[11.5px] text-white">
+                    Adds regulation citations and amendment references to the output.
+                  </span>
+                </span>
+              </label>
+
+              <Divider />
+
+              <PrimaryButton
                 onClick={handleGenerate}
                 disabled={isGenerating || !designQuery.trim()}
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                fullWidth
               >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Generate Design Spec
-                  </>
-                )}
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+                {isGenerating ? `Generating… ${progress}%` : 'Generate with AI'}
+              </PrimaryButton>
 
-        <div className="space-y-4">
-          {isGenerating && (
-            <Card className="border-info/20 bg-info/5">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-foreground">Generating Design</h3>
-                    <Badge variant="secondary" className="bg-info/20 text-info">
-                      {progress}%
-                    </Badge>
+              {isGenerating && (
+                <div className="space-y-2">
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+                    <div
+                      className="h-full bg-elec-yellow transition-all"
+                      style={{ width: `${progress}%` }}
+                    />
                   </div>
-                  <Progress value={progress} className="h-2" />
-                  <p className="text-sm text-white">{currentStep}</p>
+                  {currentStep && (
+                    <div className="flex items-center gap-2">
+                      <Dot tone="indigo" />
+                      <span className="text-[12px] text-white">{currentStep}</span>
+                    </div>
+                  )}
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              )}
 
-          {error && !isGenerating && (
-            <Card className="border-destructive/20 bg-destructive/5">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
-                  <div>
-                    <h3 className="font-medium text-foreground">Generation Failed</h3>
-                    <p className="text-sm text-white mt-1">{error}</p>
-                    <Button variant="outline" size="sm" className="mt-3" onClick={handleReset}>
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Try Again
-                    </Button>
+              {error && !isGenerating && (
+                <div className="px-4 py-3 rounded-2xl bg-[hsl(0_0%_10%)] border border-white/[0.08] flex items-start gap-3">
+                  <Dot tone="red" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13px] font-medium text-white">Generation failed</div>
+                    <div className="mt-0.5 text-[12px] text-white">{error}</div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              )}
 
-          {result && !isGenerating && (
-            <Card className="border-success/20 bg-success/5">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-success/20">
-                      <CheckCircle className="h-5 w-5 text-success" />
+              {result && !isGenerating && (
+                <div className="rounded-2xl bg-[hsl(0_0%_10%)] border border-white/[0.08] p-4 space-y-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <Dot tone="emerald" />
+                      <span className="text-[13px] font-medium text-white">Spec ready</span>
                     </div>
-                    <div>
-                      <h3 className="font-medium text-foreground">Design Spec Generated!</h3>
-                      <p className="text-sm text-white">
-                        Circuit design created successfully
-                      </p>
-                    </div>
+                    <Pill tone="emerald">Complete</Pill>
                   </div>
-
                   {result.circuits && (
-                    <div className="p-3 rounded-lg bg-elec-dark/50 border border-elec-yellow/10">
-                      <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div>
-                          <span className="text-white">Circuits: </span>
-                          <span className="text-foreground font-medium">
-                            {result.circuits?.length || 0}
-                          </span>
+                    <div className="grid grid-cols-2 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
+                      <div className="bg-[hsl(0_0%_12%)] px-4 py-3">
+                        <Eyebrow>Circuits</Eyebrow>
+                        <div className="mt-1.5 text-xl font-semibold text-white tabular-nums">
+                          {result.circuits?.length || 0}
                         </div>
-                        <div>
-                          <span className="text-white">Property: </span>
-                          <span className="text-foreground font-medium capitalize">
-                            {propertyType}
-                          </span>
+                      </div>
+                      <div className="bg-[hsl(0_0%_12%)] px-4 py-3">
+                        <Eyebrow>Property</Eyebrow>
+                        <div className="mt-1.5 text-xl font-semibold text-white capitalize">
+                          {propertyType}
                         </div>
                       </div>
                     </div>
                   )}
-
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={handleDownload}
-                      className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Download
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={handleReset}
-                      className="border-elec-yellow/30"
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      New
-                    </Button>
-                  </div>
+                  <PrimaryButton onClick={handleDownload} fullWidth>
+                    Download PDF
+                  </PrimaryButton>
                 </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {!isGenerating && !result && !error && (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-6">
-                <div className="flex gap-3">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10 h-fit">
-                    <Zap className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground mb-1">AI Circuit Designer</h3>
-                    <p className="text-sm text-white">
-                      Get BS 7671 compliant circuit designs with cable sizing, protective devices,
-                      and installation guidance.
-                    </p>
-                    <ul className="mt-3 space-y-1 text-sm text-white">
-                      <li>• Circuit schedules and specifications</li>
-                      <li>• Cable sizing calculations</li>
-                      <li>• MCB/RCBO recommendations</li>
-                      <li>• Installation guidance</li>
-                      <li>• BS 7671 regulation references</li>
-                    </ul>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </div>
-    </div>
+              )}
+            </div>
+          </ListCard>
+        }
+        secondary={
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="History"
+              meta={<Pill tone="blue">{filteredHistory.length}</Pill>}
+            />
+            {isGenerating && history.length === 0 ? (
+              <div className="p-5">
+                <LoadingBlocks />
+              </div>
+            ) : filteredHistory.length === 0 ? (
+              <div className="p-5">
+                <EmptyState
+                  title="No prior specs"
+                  description="Drafts you generate will land here. Approve or send when they're ready."
+                />
+              </div>
+            ) : (
+              <ListBody>
+                {filteredHistory.map((row) => {
+                  const tone =
+                    row.status === 'approved'
+                      ? 'emerald'
+                      : row.status === 'sent'
+                        ? 'blue'
+                        : 'amber';
+                  return (
+                    <ListRow
+                      key={row.id}
+                      title={row.title}
+                      subtitle={row.subtitle}
+                      trailing={<Pill tone={tone}>{row.statusLabel}</Pill>}
+                      accent={tone}
+                    />
+                  );
+                })}
+              </ListBody>
+            )}
+          </ListCard>
+        }
+      />
+    </PageFrame>
   );
 }

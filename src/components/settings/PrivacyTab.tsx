@@ -23,38 +23,18 @@ import {
   AlertDialogCancel,
 } from '@/components/ui/alert-dialog';
 import {
-  Shield,
-  Database,
-  Clock,
-  CheckCircle,
-  Trash2,
-  Lock,
-  Download,
-  Cookie,
-  BarChart3,
-  Loader2,
-  FileText,
-  ExternalLink,
-  ChevronDown,
-  ChevronUp,
-  ChevronRight,
-  Edit3,
-  Ban,
-  MessageSquareWarning,
-  Flag,
-  BadgeCheck,
-  Info,
-} from 'lucide-react';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.03, delayChildren: 0 } },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.22, ease: 'easeOut' } },
-};
+  ListCard,
+  ListRow,
+  SectionHeader,
+  Arrow,
+  Dot,
+  Eyebrow,
+  containerVariants,
+  itemVariants,
+  toneText,
+  type Tone,
+} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 const COOKIE_PREFERENCES_KEY = 'elec-mate-cookie-preferences';
 const isNative = Capacitor.isNativePlatform();
@@ -91,7 +71,7 @@ const PrivacyTab = () => {
   });
   const [auditLog, setAuditLog] = useState<AuditEntry[]>([]);
 
-  // Load cookie preferences — Supabase first, localStorage fallback
+  // Load cookie preferences
   useEffect(() => {
     const loadPrefs = async () => {
       if (userId) {
@@ -107,9 +87,7 @@ const PrivacyTab = () => {
         }
       }
       const saved = storageGetJSONSync<CookiePreferences | null>(COOKIE_PREFERENCES_KEY, null);
-      if (saved) {
-        setCookiePrefs(saved);
-      }
+      if (saved) setCookiePrefs(saved);
     };
     loadPrefs();
   }, [userId]);
@@ -136,7 +114,6 @@ const PrivacyTab = () => {
       setCookiePrefs(newPrefs);
       storageSetJSONSync(COOKIE_PREFERENCES_KEY, newPrefs);
       window.dispatchEvent(new CustomEvent('cookieConsentUpdated', { detail: newPrefs }));
-      // Persist to Supabase for cross-device consistency (silently falls back to localStorage if unavailable)
       if (userId) {
         try {
           await supabase
@@ -146,7 +123,7 @@ const PrivacyTab = () => {
               { onConflict: 'user_id,key' }
             );
         } catch {
-          // localStorage already saved above — Supabase sync is best-effort
+          // localStorage saved above — Supabase best-effort
         }
       }
       addNotification({
@@ -176,7 +153,6 @@ const PrivacyTab = () => {
       const fileName = `elec-mate-export-${new Date().toISOString().split('T')[0]}.json`;
 
       if (isNative) {
-        // Native: write to cache then share via OS share sheet
         const { Filesystem, Directory, Encoding } = await import('@capacitor/filesystem');
         const { Share } = await import('@capacitor/share');
         await Filesystem.writeFile({
@@ -192,7 +168,6 @@ const PrivacyTab = () => {
           dialogTitle: 'Save or share your data export',
         });
       } else {
-        // Web: blob download
         const blob = new Blob([jsonStr], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -206,11 +181,11 @@ const PrivacyTab = () => {
 
       addNotification({
         title: 'Data Exported',
-        message: 'Your data has been exported. A confirmation email has been sent to your address.',
+        message:
+          'Your data has been exported. A confirmation email has been sent to your address.',
         type: 'success',
       });
 
-      // Refresh audit log
       if (userId) {
         const { data } = await supabase
           .from('security_audit_log')
@@ -271,16 +246,23 @@ const PrivacyTab = () => {
     openExternalUrl(url);
   };
 
-  const gdprRights = [
+  interface GdprRight {
+    article: string;
+    title: string;
+    description: string;
+    action: () => void;
+    actionLabel: string;
+    tone: Tone;
+  }
+
+  const gdprRights: GdprRight[] = [
     {
       article: 'Art. 15',
       title: 'Right of Access',
       description: 'Request a copy of all personal data we hold about you.',
-      action: () => handleDataDownload(),
+      action: handleDataDownload,
       actionLabel: 'Download My Data',
-      icon: Download,
-      colour: 'text-elec-yellow',
-      bg: 'bg-elec-yellow/10',
+      tone: 'yellow',
     },
     {
       article: 'Art. 16',
@@ -292,9 +274,7 @@ const PrivacyTab = () => {
           `User ID: ${userId}\n\nPlease describe the data that needs correcting:\n`
         ),
       actionLabel: 'Request Correction',
-      icon: Edit3,
-      colour: 'text-blue-400',
-      bg: 'bg-blue-500/10',
+      tone: 'blue',
     },
     {
       article: 'Art. 17',
@@ -302,9 +282,7 @@ const PrivacyTab = () => {
       description: 'Request permanent deletion of your account and all associated data.',
       action: () => setShowDeleteDialog(true),
       actionLabel: 'Delete Account',
-      icon: Trash2,
-      colour: 'text-red-400',
-      bg: 'bg-red-500/10',
+      tone: 'red',
     },
     {
       article: 'Art. 18',
@@ -316,19 +294,15 @@ const PrivacyTab = () => {
           `User ID: ${userId}\n\nPlease describe what processing you wish to restrict:\n`
         ),
       actionLabel: 'Request Restriction',
-      icon: Ban,
-      colour: 'text-amber-400',
-      bg: 'bg-amber-500/10',
+      tone: 'amber',
     },
     {
       article: 'Art. 20',
       title: 'Right to Data Portability',
       description: 'Receive your data in a structured, machine-readable format.',
-      action: () => handleDataDownload(),
+      action: handleDataDownload,
       actionLabel: 'Export My Data',
-      icon: Database,
-      colour: 'text-green-400',
-      bg: 'bg-green-500/10',
+      tone: 'green',
     },
     {
       article: 'Art. 21',
@@ -340,9 +314,7 @@ const PrivacyTab = () => {
           `User ID: ${userId}\n\nI wish to object to the following processing:\n`
         ),
       actionLabel: 'Lodge Objection',
-      icon: MessageSquareWarning,
-      colour: 'text-purple-400',
-      bg: 'bg-purple-500/10',
+      tone: 'purple',
     },
     {
       article: 'Art. 77',
@@ -350,10 +322,15 @@ const PrivacyTab = () => {
       description: "Lodge a complaint with the Information Commissioner's Office (ICO).",
       action: () => openExternalUrl('https://ico.org.uk/make-a-complaint/'),
       actionLabel: 'Contact ICO',
-      icon: Flag,
-      colour: 'text-pink-400',
-      bg: 'bg-pink-500/10',
+      tone: 'cyan',
     },
+  ];
+
+  const legalLinks = [
+    { to: '/privacy', label: 'Privacy Policy' },
+    { to: '/terms', label: 'Terms of Service' },
+    { to: '/cookies', label: 'Cookie Policy' },
+    { to: '/dpa', label: 'Data Processing Agreement' },
   ];
 
   return (
@@ -361,92 +338,52 @@ const PrivacyTab = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="bg-background"
+      className="space-y-8"
     >
       {/* ── YOUR DATA ── */}
-      <motion.p
-        variants={itemVariants}
-        className="text-xs font-semibold text-white uppercase tracking-widest px-1 mb-2 mt-2"
-      >
-        Your Data
-      </motion.p>
-
-      {/* Data Retention */}
-      <motion.div
-        variants={itemVariants}
-        className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06]"
-      >
-        <div className="w-9 h-9 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-          <Clock className="h-4 w-4 text-blue-400" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-white">Data Retention</p>
-          <p className="text-xs text-white mt-0.5">
-            Kept while active. Deleted within 30 days of account removal.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Download My Data */}
-      <motion.button
-        variants={itemVariants}
-        onClick={handleDataDownload}
-        disabled={isExporting}
-        className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06] touch-manipulation disabled:opacity-50 active:bg-white/[0.03] transition-colors"
-      >
-        <div className="w-9 h-9 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-          {isExporting ? (
-            <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-          ) : (
-            <Download className="h-4 w-4 text-elec-yellow" />
-          )}
-        </div>
-        <div className="flex-1 min-w-0 text-left">
-          <p className="text-sm font-medium text-white">
-            {isExporting ? 'Exporting...' : 'Download My Data'}
-          </p>
-          <p className="text-xs text-white mt-0.5">Full GDPR data export (Art. 15)</p>
-        </div>
-        <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
-      </motion.button>
-
-      {/* Delete Account */}
-      <motion.button
-        variants={itemVariants}
-        onClick={() => setShowDeleteDialog(true)}
-        className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06] touch-manipulation active:bg-red-500/[0.03] transition-colors"
-      >
-        <div className="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center flex-shrink-0">
-          <Trash2 className="h-4 w-4 text-red-400" />
-        </div>
-        <div className="flex-1 min-w-0 text-left">
-          <p className="text-sm font-medium text-red-400">Delete Account</p>
-          <p className="text-xs text-white mt-0.5">Permanently remove all data (Art. 17)</p>
-        </div>
-        <ChevronRight className="h-4 w-4 text-red-400/40 flex-shrink-0" />
-      </motion.button>
-
-      {/* GDPR Rights — expandable */}
-      <motion.div variants={itemVariants} className="border-b border-white/[0.06]">
-        <button
-          onClick={() => setShowRights(!showRights)}
-          className="flex items-center gap-4 w-full py-4 touch-manipulation active:bg-white/[0.03] transition-colors"
-        >
-          <div className="w-9 h-9 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-            <BadgeCheck className="h-4 w-4 text-elec-yellow" />
-          </div>
-          <div className="flex-1 min-w-0 text-left">
-            <p className="text-sm font-medium text-white">Your GDPR Rights</p>
-            <p className="text-xs text-white mt-0.5">
-              Art. 15-21 — access, correct, erase, restrict, port, object
-            </p>
-          </div>
-          {showRights ? (
-            <ChevronUp className="h-4 w-4 text-white flex-shrink-0" />
-          ) : (
-            <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
-          )}
-        </button>
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="01" title="Your Data" />
+        <ListCard>
+          <ListRow
+            title="Data Retention"
+            subtitle="Kept while active. Deleted within 30 days of account removal."
+            accent="blue"
+          />
+          <ListRow
+            title={isExporting ? 'Exporting…' : 'Download My Data'}
+            subtitle="Full GDPR data export (Art. 15)"
+            onClick={handleDataDownload}
+            trailing={<Arrow />}
+            accent="yellow"
+          />
+          <ListRow
+            title={<span className="text-red-400">Delete Account</span>}
+            subtitle="Permanently remove all data (Art. 17)"
+            onClick={() => setShowDeleteDialog(true)}
+            trailing={
+              <span aria-hidden className="text-[13px] font-medium text-red-400">
+                {'\u2192'}
+              </span>
+            }
+            accent="red"
+          />
+          <button
+            type="button"
+            onClick={() => setShowRights(!showRights)}
+            className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+          >
+            <span aria-hidden className="w-[3px] h-10 rounded-full shrink-0 bg-elec-yellow" />
+            <div className="flex-1 min-w-0">
+              <div className="text-[15px] font-medium text-white">Your GDPR Rights</div>
+              <div className="mt-0.5 text-[11.5px] text-white/65">
+                Art. 15-21 — access, correct, erase, restrict, port, object
+              </div>
+            </div>
+            <span aria-hidden className="text-[13px] text-elec-yellow/90 shrink-0">
+              {showRights ? '▴' : '▾'}
+            </span>
+          </button>
+        </ListCard>
 
         <AnimatePresence>
           {showRights && (
@@ -457,278 +394,215 @@ const PrivacyTab = () => {
               transition={{ duration: 0.2 }}
               className="overflow-hidden"
             >
-              <div className="pb-4 space-y-1">
-                {gdprRights.map((right) => {
-                  const Icon = right.icon;
-                  return (
-                    <button
-                      key={right.article}
-                      onClick={right.action}
-                      className="flex items-center gap-3 w-full py-3 pl-[52px] pr-1 touch-manipulation active:bg-white/[0.03] transition-colors text-left"
-                    >
-                      <div
-                        className={`w-8 h-8 rounded-lg ${right.bg} flex items-center justify-center flex-shrink-0`}
-                      >
-                        <Icon className={`h-3.5 w-3.5 ${right.colour}`} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="text-[10px] font-mono text-white">{right.article}</span>
-                          <p className="text-sm font-medium text-white">{right.title}</p>
-                        </div>
-                        <p className="text-xs text-white mt-0.5 leading-relaxed">
-                          {right.description}
-                        </p>
-                      </div>
-                      <ChevronRight
-                        className={`h-3.5 w-3.5 ${right.colour} opacity-40 flex-shrink-0`}
-                      />
-                    </button>
-                  );
-                })}
-
-                {/* ICO complaint info */}
-                <div className="flex items-start gap-3 pl-[52px] pr-1 pt-2">
-                  <Info className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-white leading-relaxed">
-                    To exercise any right, contact{' '}
-                    <button
-                      onClick={() => openExternalUrl('mailto:privacy@elec-mate.com')}
-                      className="text-elec-yellow touch-manipulation"
-                    >
-                      privacy@elec-mate.com
-                    </button>
-                    . We respond within one month as required by law.
-                  </p>
-                </div>
+              <ListCard>
+                {gdprRights.map((right) => (
+                  <ListRow
+                    key={right.article}
+                    title={
+                      <span className="flex items-center gap-2">
+                        <span
+                          className={cn(
+                            'text-[10px] font-medium uppercase tracking-[0.15em]',
+                            toneText[right.tone]
+                          )}
+                        >
+                          {right.article}
+                        </span>
+                        <span className="truncate">{right.title}</span>
+                      </span>
+                    }
+                    subtitle={right.description}
+                    onClick={right.action}
+                    trailing={<Arrow />}
+                  />
+                ))}
+              </ListCard>
+              <div className="mt-2 px-1 text-[11.5px] text-white/65 leading-relaxed">
+                To exercise any right, contact{' '}
+                <button
+                  onClick={() => openExternalUrl('mailto:privacy@elec-mate.com')}
+                  className="text-elec-yellow hover:underline touch-manipulation"
+                >
+                  privacy@elec-mate.com
+                </button>
+                . We respond within one month as required by law.
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.div>
+      </motion.section>
 
       {/* ── COOKIES (web only) ── */}
       {!isNative && (
-        <>
-          <motion.p
-            variants={itemVariants}
-            className="text-xs font-semibold text-white uppercase tracking-widest px-1 mb-2 mt-6"
-          >
-            Cookies
-          </motion.p>
-
-          {/* Essential Cookies */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06]"
-          >
-            <div className="w-9 h-9 rounded-xl bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
-              <Lock className="h-4 w-4 text-elec-yellow" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <p className="text-sm font-medium text-white">Essential Cookies</p>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-elec-yellow/20 text-elec-yellow font-medium">
-                  Required
-                </span>
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader eyebrow="02" title="Cookies" />
+          <ListCard>
+            <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-[15px] font-medium text-white truncate">
+                    Essential Cookies
+                  </span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-elec-yellow">
+                    Required
+                  </span>
+                </div>
+                <div className="mt-0.5 text-[11.5px] text-white/65">
+                  Authentication and security
+                </div>
               </div>
-              <p className="text-xs text-white mt-0.5">Authentication and security</p>
+              <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                Always On
+              </span>
             </div>
-            <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-          </motion.div>
-
-          {/* Analytics Cookies */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06]"
-          >
-            <div
-              className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 ${cookiePrefs.analytics ? 'bg-cyan-500/10' : 'bg-white/5'}`}
-            >
-              <BarChart3
-                className={`h-4 w-4 ${cookiePrefs.analytics ? 'text-cyan-400' : 'text-white'}`}
+            <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+              <div className="flex-1 min-w-0">
+                <div className="text-[15px] font-medium text-white truncate">
+                  Analytics Cookies
+                </div>
+                <div className="mt-0.5 text-[11.5px] text-white/65">
+                  Help us improve the platform
+                </div>
+              </div>
+              <Switch
+                checked={cookiePrefs.analytics}
+                onCheckedChange={() => handleCookieToggle('analytics')}
               />
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-white">Analytics Cookies</p>
-              <p className="text-xs text-white mt-0.5">Help us improve the platform</p>
-            </div>
-            <Switch
-              checked={cookiePrefs.analytics}
-              onCheckedChange={() => handleCookieToggle('analytics')}
-              className="data-[state=checked]:bg-elec-yellow touch-manipulation"
-            />
-          </motion.div>
-        </>
+          </ListCard>
+        </motion.section>
       )}
 
       {/* ── LEGAL ── */}
-      <motion.p
-        variants={itemVariants}
-        className="text-xs font-semibold text-white uppercase tracking-widest px-1 mb-2 mt-6"
-      >
-        Legal
-      </motion.p>
-
-      {[
-        {
-          to: '/privacy',
-          icon: Shield,
-          colour: 'text-green-400',
-          bg: 'bg-green-500/10',
-          label: 'Privacy Policy',
-        },
-        {
-          to: '/terms',
-          icon: FileText,
-          colour: 'text-blue-400',
-          bg: 'bg-blue-500/10',
-          label: 'Terms of Service',
-        },
-        {
-          to: '/cookies',
-          icon: Cookie,
-          colour: 'text-amber-400',
-          bg: 'bg-amber-500/10',
-          label: 'Cookie Policy',
-        },
-        {
-          to: '/dpa',
-          icon: Database,
-          colour: 'text-purple-400',
-          bg: 'bg-purple-500/10',
-          label: 'Data Processing Agreement',
-        },
-      ].map(({ to, icon: Icon, colour, bg, label }) => (
-        <motion.div key={to} variants={itemVariants}>
-          <Link
-            to={to}
-            className="flex items-center gap-4 w-full py-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.03] transition-colors"
-          >
-            <div
-              className={`w-9 h-9 rounded-xl ${bg} flex items-center justify-center flex-shrink-0`}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow={isNative ? '02' : '03'} title="Legal" />
+        <ListCard>
+          {legalLinks.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
             >
-              <Icon className={`h-4 w-4 ${colour}`} />
-            </div>
-            <span className="text-sm font-medium text-white flex-1">{label}</span>
-            <ExternalLink className="h-3.5 w-3.5 text-white flex-shrink-0" />
-          </Link>
-        </motion.div>
-      ))}
+              <div className="flex-1 min-w-0 text-[15px] font-medium text-white truncate">
+                {link.label}
+              </div>
+              <Arrow />
+            </Link>
+          ))}
+        </ListCard>
+        <div className="flex items-center gap-2 px-1 pt-2">
+          <Dot tone="green" />
+          <p className="text-[11.5px] text-white/65">
+            Registered with the Information Commissioner&apos;s Office · ICO Reg: ZB935897
+          </p>
+        </div>
+      </motion.section>
 
-      {/* ICO registration */}
-      <motion.div variants={itemVariants} className="flex items-center gap-2 pt-4 px-1 pb-2">
-        <BadgeCheck className="h-3.5 w-3.5 text-white flex-shrink-0" />
-        <p className="text-xs text-white">
-          Registered with the Information Commissioner's Office &middot; ICO Reg: ZB935897
-        </p>
-      </motion.div>
-
-      {/* Privacy Activity Log */}
+      {/* ── ACTIVITY ── */}
       {auditLog.length > 0 && (
-        <>
-          <motion.p
-            variants={itemVariants}
-            className="text-xs font-semibold text-white uppercase tracking-widest px-1 mb-2 mt-6"
-          >
-            Activity
-          </motion.p>
-          {auditLog.map((entry, i) => (
-            <motion.div
-              key={i}
-              variants={itemVariants}
-              className="flex items-center justify-between gap-4 w-full py-4 border-b border-white/[0.06]"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-elec-yellow/60 flex-shrink-0" />
-                <span className="text-sm text-white">
-                  {actionLabels[entry.action] ?? entry.action}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow={isNative ? '03' : '04'}
+            title="Activity"
+          />
+          <ListCard>
+            {auditLog.map((entry, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between gap-4 px-5 sm:px-6 py-4"
+              >
+                <div className="flex items-center gap-3 min-w-0">
+                  <Dot tone="yellow" />
+                  <span className="text-[13px] text-white/80 truncate">
+                    {actionLabels[entry.action] ?? entry.action}
+                  </span>
+                </div>
+                <span className="text-[11.5px] text-white/65 tabular-nums whitespace-nowrap">
+                  {new Date(entry.created_at).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
                 </span>
               </div>
-              <span className="text-xs text-white whitespace-nowrap">
-                {new Date(entry.created_at).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </span>
-            </motion.div>
-          ))}
-        </>
+            ))}
+          </ListCard>
+        </motion.section>
       )}
 
-      {/* Delete Account Dialog */}
+      {/* ── DELETE CONFIRMATION DIALOG ── */}
       <AlertDialog
         open={showDeleteDialog}
         onOpenChange={(open) => {
           if (!isDeleting) setShowDeleteDialog(open);
         }}
       >
-        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-card/95 backdrop-blur-xl border-white/10 rounded-2xl">
+        <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center gap-2 text-red-400">
-              <Trash2 className="h-5 w-5" />
-              Delete Your Account
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-white space-y-3">
-              <span className="block">
-                This will permanently delete your account and all associated data:
-              </span>
-              <ul className="text-sm space-y-1 list-none">
-                {[
-                  'Certificates & inspection reports',
-                  'Quotes & invoices',
-                  'Elec-ID profile',
-                  'Site safety documents',
-                  'Study progress & notes',
-                ].map((item) => (
-                  <li key={item} className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-400/60 flex-shrink-0" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-              <span className="block p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm">
-                Your data will be permanently removed within 30 days. You have a grace period to
-                contact privacy@elec-mate.com to cancel.
-              </span>
-              <span className="block text-sm">
-                Type <span className="font-mono font-bold text-red-400">DELETE</span> to confirm:
-              </span>
-              <Input
-                value={deleteConfirmText}
-                onChange={(e) => setDeleteConfirmText(e.target.value)}
-                placeholder="Type DELETE to confirm"
-                className="font-mono bg-white/5 border-white/10 focus:border-red-500/50 text-white placeholder:text-white h-11 touch-manipulation"
-                autoCapitalize="none"
-                autoCorrect="off"
-              />
+            <AlertDialogTitle className="text-red-400">Delete Your Account</AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <div className="text-white/80 space-y-3">
+                <p>This will permanently delete your account and all associated data:</p>
+                <ul className="space-y-1">
+                  {[
+                    'Certificates and inspection reports',
+                    'Quotes and invoices',
+                    'Elec-ID profile',
+                    'Site safety documents',
+                    'Study progress and notes',
+                  ].map((item) => (
+                    <li key={item} className="flex items-center gap-2 text-[13px]">
+                      <span
+                        aria-hidden
+                        className="w-1.5 h-1.5 rounded-full bg-red-400/60 flex-shrink-0"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[13px]">
+                  Your data will be permanently removed within 30 days. You have a grace period to
+                  contact privacy@elec-mate.com to cancel.
+                </div>
+                <p className="text-[13px]">
+                  Type{' '}
+                  <span className="font-mono font-bold text-red-400">DELETE</span>{' '}
+                  to confirm:
+                </p>
+                <Input
+                  value={deleteConfirmText}
+                  onChange={(e) => setDeleteConfirmText(e.target.value)}
+                  placeholder="Type DELETE to confirm"
+                  className={cn(
+                    'font-mono bg-[#0a0a0a] border-white/[0.08] focus:border-red-500/50',
+                    'text-white placeholder:text-white/40 h-11 touch-manipulation'
+                  )}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                />
+              </div>
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter className="gap-2">
             <AlertDialogCancel
               disabled={isDeleting}
-              className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl text-white touch-manipulation"
+              className="min-h-[44px] bg-[#0a0a0a] border-white/[0.08] rounded-full text-white touch-manipulation"
             >
               Cancel
             </AlertDialogCancel>
             <Button
               onClick={handleConfirmDelete}
               disabled={deleteConfirmText !== 'DELETE' || isDeleting}
-              className="min-h-[44px] rounded-xl bg-red-600 hover:bg-red-700 border-0 disabled:opacity-40 text-white touch-manipulation"
+              className="min-h-[44px] rounded-full bg-red-600 hover:bg-red-700 border-0 disabled:opacity-40 text-white touch-manipulation"
             >
-              {isDeleting ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Deleting...
-                </>
-              ) : (
-                'Delete My Account'
-              )}
+              {isDeleting ? 'Deleting…' : 'Delete My Account'}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Eyebrow used to keep import tree-happy on some toolchains */}
+      <Eyebrow className="sr-only">end</Eyebrow>
     </motion.div>
   );
 };

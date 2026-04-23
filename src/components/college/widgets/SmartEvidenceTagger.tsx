@@ -171,7 +171,7 @@ export function SmartEvidenceTagger({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">SMART TAGGING</div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">SMART TAGGING</div>
             <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">Evidence tagger</h3>
           </div>
           <Pill tone="yellow">AI</Pill>
@@ -191,7 +191,7 @@ export function SmartEvidenceTagger({
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
       <div className="p-5 sm:p-6 pb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">SMART TAGGING</div>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">SMART TAGGING</div>
           <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">Smart evidence tagger</h3>
         </div>
         <Pill tone="yellow">AI-Powered</Pill>
@@ -224,10 +224,10 @@ export function SmartEvidenceTagger({
           {/* Evidence Type Indicator */}
           <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-black/30 border border-white/[0.06]">
             <span className="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden />
-            <span className="text-[11px] uppercase tracking-[0.18em] text-white/40">{getEvidenceTypeLabel()}</span>
+            <span className="text-[11px] uppercase tracking-[0.18em] text-white/55">{getEvidenceTypeLabel()}</span>
             {fileName && (
               <>
-                <span className="text-white/30">·</span>
+                <span className="text-white/60">·</span>
                 <span className="text-sm truncate text-white/70">{fileName}</span>
               </>
             )}
@@ -257,7 +257,7 @@ export function SmartEvidenceTagger({
         {hasAnalyzed && (
           <div className="space-y-3 pt-2">
             <div className="border-b border-white/[0.06] pb-3">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">AI SUGGESTIONS</div>
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">AI SUGGESTIONS</div>
               <h4 className="mt-1 text-base font-semibold text-white tracking-tight">Suggested criteria</h4>
             </div>
 
@@ -282,7 +282,7 @@ export function SmartEvidenceTagger({
                             className={`mt-1 inline-flex items-center justify-center h-5 w-5 rounded-full border shrink-0 text-[11px] font-medium ${
                               isSelected
                                 ? "bg-elec-yellow text-black border-elec-yellow"
-                                : "border-white/30 text-white/50"
+                                : "border-white/30 text-white/75"
                             }`}
                           >
                             {isSelected ? "✓" : "+"}
@@ -295,14 +295,14 @@ export function SmartEvidenceTagger({
                               <Pill tone="blue">{tag.unit}</Pill>
                             </div>
                             <p className="text-sm mt-2 text-white">{tag.criterionText}</p>
-                            <p className="text-[11.5px] text-white/50 mt-1">{tag.reason}</p>
+                            <p className="text-[11.5px] text-white/75 mt-1">{tag.reason}</p>
                           </div>
                         </div>
                         <div className="text-right shrink-0">
                           <Pill tone={getConfidenceTone(tag.confidence)}>
                             {tag.confidence}%
                           </Pill>
-                          <p className="text-[10px] text-white/40 mt-1 uppercase tracking-[0.18em]">confidence</p>
+                          <p className="text-[10px] text-white/55 mt-1 uppercase tracking-[0.18em]">confidence</p>
                         </div>
                       </div>
                       <Progress value={tag.confidence} className="h-1 mt-3" />
@@ -312,11 +312,11 @@ export function SmartEvidenceTagger({
               </div>
             ) : (
               <div className="text-center py-8 px-6 rounded-xl bg-black/30 border border-white/[0.06]">
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 text-lg">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/70 text-lg">
                   ⋯
                 </div>
                 <p className="text-sm text-white mt-3 font-medium">No matching criteria found</p>
-                <p className="text-[12.5px] text-white/50 mt-1">Try adding more detail to the description</p>
+                <p className="text-[12.5px] text-white/75 mt-1">Try adding more detail to the description</p>
               </div>
             )}
 
@@ -324,8 +324,8 @@ export function SmartEvidenceTagger({
             {selectedTags.length > 0 && (
               <div className="border-t border-white/[0.06] pt-4">
                 <div className="flex items-center justify-between mb-3">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">SELECTED</div>
-                  <span className="text-[11.5px] text-white/50 tabular-nums">{selectedTags.length} selected</span>
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">SELECTED</div>
+                  <span className="text-[11.5px] text-white/75 tabular-nums">{selectedTags.length} selected</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {selectedTags.map((code) => (
@@ -347,7 +347,7 @@ export function SmartEvidenceTagger({
         {/* Tips */}
         {!hasAnalyzed && (
           <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">TIPS</div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">TIPS</div>
             <p className="mt-1.5 text-sm font-medium text-white">Tips for better results</p>
             <ul className="mt-3 space-y-1.5 text-[12.5px] text-white/60">
               <li className="flex items-start gap-2">

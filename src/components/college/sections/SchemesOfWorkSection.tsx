@@ -171,7 +171,7 @@ export function SchemesOfWorkSection() {
               >
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                       {scheme.courseName} · {scheme.academicYear}
                     </div>
                     <h3 className="mt-1.5 text-lg sm:text-xl font-semibold text-white tracking-tight">
@@ -183,7 +183,7 @@ export function SchemesOfWorkSection() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button
-                          className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                          className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                           aria-label="Options"
                         >
                           ⋯
@@ -202,7 +202,7 @@ export function SchemesOfWorkSection() {
 
                 <div className="mt-4">
                   <div className="flex items-baseline justify-between text-[11.5px]">
-                    <span className="text-white/50 uppercase tracking-[0.12em]">Progress</span>
+                    <span className="text-white/75 uppercase tracking-[0.12em]">Progress</span>
                     <span className="font-medium text-white tabular-nums">
                       {scheme.completedWeeks}/{scheme.totalWeeks} wks · {progressPercent}%
                     </span>
@@ -223,7 +223,7 @@ export function SchemesOfWorkSection() {
                         'inline-flex items-center gap-1.5 text-[11px] px-2 py-1 rounded-full border tabular-nums',
                         unit.completed
                           ? 'bg-green-500/10 text-green-400 border-green-500/20'
-                          : 'bg-white/[0.03] text-white/50 border-white/[0.06]'
+                          : 'bg-white/[0.03] text-white/75 border-white/[0.06]'
                       )}
                     >
                       <span
@@ -238,7 +238,7 @@ export function SchemesOfWorkSection() {
                   ))}
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white/50">
+                <div className="mt-5 pt-4 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white/75">
                   <span className="tabular-nums">{scheme.totalWeeks} weeks total</span>
                   <span>By {scheme.createdByName}</span>
                 </div>

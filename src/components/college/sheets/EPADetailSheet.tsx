@@ -182,7 +182,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
               <LoadingState />
             ) : (
               <div>
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                   End Point Assessment
                 </div>
                 <SheetTitle className="mt-1 text-xl text-left">{studentName}</SheetTitle>
@@ -225,7 +225,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                     transition={{ duration: 0.2 }}
                     className="p-5"
                   >
-                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-5">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-5">
                       EPA Journey
                     </div>
 
@@ -260,19 +260,19 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                                   'text-[13px] font-medium',
                                   isCompleted && 'text-emerald-400',
                                   isCurrent && 'text-elec-yellow',
-                                  !isCompleted && !isCurrent && 'text-white/50'
+                                  !isCompleted && !isCurrent && 'text-white/75'
                                 )}
                               >
                                 {step.label}
                               </div>
                               {dateLabel && (
-                                <span className="text-[11px] text-white/50 tabular-nums">
+                                <span className="text-[11px] text-white/75 tabular-nums">
                                   {dateLabel}
                                 </span>
                               )}
                             </div>
                             {isCurrent && (
-                              <div className="mt-0.5 text-[11px] text-white/40">Current stage</div>
+                              <div className="mt-0.5 text-[11px] text-white/70">Current stage</div>
                             )}
                             {step.status === 'Complete' && epa?.result && isCompleted && (
                               <div className="mt-1.5">
@@ -297,7 +297,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                     className="p-5 space-y-5"
                   >
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Status
                       </div>
                       <Select
@@ -319,12 +319,12 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                     </div>
 
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Key Dates
                       </div>
                       <div className="space-y-3">
                         <div>
-                          <Label className="text-[11px] text-white/50 mb-1.5 block">
+                          <Label className="text-[11px] text-white/75 mb-1.5 block">
                             Gateway date
                           </Label>
                           <Input
@@ -335,7 +335,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                           />
                         </div>
                         <div>
-                          <Label className="text-[11px] text-white/50 mb-1.5 block">
+                          <Label className="text-[11px] text-white/75 mb-1.5 block">
                             EPA date
                           </Label>
                           <Input
@@ -358,18 +358,18 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                     </div>
 
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Record Info
                       </div>
                       <div className="mt-3 grid grid-cols-2 gap-3 text-[13px]">
                         <div>
-                          <div className="text-[11px] text-white/40 uppercase tracking-[0.12em]">
+                          <div className="text-[11px] text-white/55 uppercase tracking-[0.12em]">
                             Updated by
                           </div>
                           <div className="mt-0.5 text-white">{epa?.updated_by ?? '—'}</div>
                         </div>
                         <div>
-                          <div className="text-[11px] text-white/40 uppercase tracking-[0.12em]">
+                          <div className="text-[11px] text-white/55 uppercase tracking-[0.12em]">
                             Updated
                           </div>
                           <div className="mt-0.5 text-white tabular-nums">
@@ -377,7 +377,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                           </div>
                         </div>
                         <div>
-                          <div className="text-[11px] text-white/40 uppercase tracking-[0.12em]">
+                          <div className="text-[11px] text-white/55 uppercase tracking-[0.12em]">
                             Created
                           </div>
                           <div className="mt-0.5 text-white tabular-nums">
@@ -400,7 +400,7 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                     className="p-5"
                   >
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         EPA Notes
                       </div>
                       {epa?.notes && (
@@ -408,19 +408,19 @@ export function EPADetailSheet({ epaId, open, onOpenChange }: EPADetailSheetProp
                           <p className="text-[13px] text-white/80 leading-relaxed whitespace-pre-wrap">
                             {epa.notes}
                           </p>
-                          <p className="mt-2 text-[11px] text-white/40 tabular-nums">
+                          <p className="mt-2 text-[11px] text-white/70 tabular-nums">
                             Last updated · {formatUKDateShort(epa.updated_at)}
                           </p>
                         </div>
                       )}
-                      <Label className="text-[11px] text-white/50 block">
+                      <Label className="text-[11px] text-white/75 block">
                         {epa?.notes ? 'Update notes' : 'Add notes'}
                       </Label>
                       <Textarea
                         value={notesText}
                         onChange={(e) => setNotesText(e.target.value)}
                         placeholder="Enter EPA notes, observations or follow-up actions…"
-                        className="touch-manipulation text-[13px] min-h-[140px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60"
+                        className="touch-manipulation text-[13px] min-h-[140px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60"
                       />
                       <div className="flex items-center justify-end">
                         <button

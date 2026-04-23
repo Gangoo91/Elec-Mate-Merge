@@ -1,27 +1,14 @@
-import { useState, useMemo, useCallback } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { useState, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import { QuickStats, QuickStat } from '@/components/employer/QuickStats';
 import {
-  Kanban,
-  List,
-  Search,
-  MapPin,
-  Users,
-  Calendar,
-  AlertTriangle,
-  ChevronRight,
-  TrendingUp,
-  PoundSterling,
+  RefreshCw,
   Plus,
-  Filter,
   X,
-  CheckSquare,
+  Filter,
   Archive,
   LayoutTemplate,
-  RefreshCw,
+  Kanban,
+  List,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -30,7 +17,6 @@ import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
 import { ArchivedJobsSheet } from '@/components/employer/sheets/ArchivedJobsSheet';
 import { JobTemplatesSheet } from '@/components/employer/JobTemplatesSheet';
 import { JobCardContextMenu } from '@/components/employer/JobCardContextMenu';
-import { DueDateBadge } from '@/components/employer/DueDateBadge';
 import {
   useJobs,
   useUpdateJob,
@@ -47,19 +33,44 @@ import { useQueryClient } from '@tanstack/react-query';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Checkbox } from '@/components/ui/checkbox';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  Avatar,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  FilterBar,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  checkboxClass,
+  type Tone,
+} from '@/components/employer/editorial';
 
 type ViewMode = 'kanban' | 'list';
 
-const stages = [
-  { id: 'Quoted', label: 'Quoted', color: 'bg-muted' },
-  { id: 'Confirmed', label: 'Confirmed', color: 'bg-info/20' },
-  { id: 'Scheduled', label: 'Scheduled', color: 'bg-warning/20' },
-  { id: 'In Progress', label: 'In Progress', color: 'bg-elec-yellow/20' },
-  { id: 'Testing', label: 'Testing', color: 'bg-purple-500/20' },
-  { id: 'Complete', label: 'Complete', color: 'bg-success/20' },
+interface StageDef {
+  id: string;
+  label: string;
+  tone: Tone;
+}
+
+const stages: StageDef[] = [
+  { id: 'Quoted', label: 'Quoted', tone: 'amber' },
+  { id: 'Confirmed', label: 'Confirmed', tone: 'cyan' },
+  { id: 'Scheduled', label: 'Scheduled', tone: 'blue' },
+  { id: 'In Progress', label: 'In Progress', tone: 'yellow' },
+  { id: 'Testing', label: 'Testing', tone: 'purple' },
+  { id: 'Complete', label: 'Complete', tone: 'emerald' },
 ];
 
-// Map stage back to job status/progress
 const stageToStatusMap: Record<string, { status: string; progress: number }> = {
   Quoted: { status: 'Pending', progress: 0 },
   Confirmed: { status: 'On Hold', progress: 0 },
@@ -69,7 +80,6 @@ const stageToStatusMap: Record<string, { status: string; progress: number }> = {
   Complete: { status: 'Completed', progress: 100 },
 };
 
-// Map job status/progress to pipeline stage
 const getStageFromJob = (job: { status: string; progress: number }): string => {
   if (job.status === 'Completed') return 'Complete';
   if (job.status === 'Pending') return 'Quoted';
@@ -77,6 +87,23 @@ const getStageFromJob = (job: { status: string; progress: number }): string => {
   if (job.progress >= 90) return 'Testing';
   if (job.progress > 0) return 'In Progress';
   return 'Scheduled';
+};
+
+const getStageTone = (stageId: string): Tone =>
+  stages.find((s) => s.id === stageId)?.tone ?? 'yellow';
+
+const getInitials = (name: string): string => {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 0) return '—';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+};
+
+const getValueTone = (value: number): Tone => {
+  if (value >= 10000) return 'emerald';
+  if (value >= 5000) return 'yellow';
+  if (value >= 1000) return 'cyan';
+  return 'amber';
 };
 
 export function JobBoardSection() {
@@ -93,7 +120,7 @@ export function JobBoardSection() {
   const [hideCompleted, setHideCompleted] = useState(false);
   const [showArchived, setShowArchived] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
-  const [copySheetJob, setCopySheetJob] = useState<(typeof jobs)[number] | null>(null);
+  const [, setCopySheetJob] = useState<(typeof jobs)[number] | null>(null);
 
   const queryClient = useQueryClient();
   const { data: jobsData = [], isLoading, refetch } = useJobs();
@@ -104,21 +131,15 @@ export function JobBoardSection() {
   const archiveJob = useArchiveJob();
   const setAsTemplate = useSetJobAsTemplate();
 
-  // Group labels by job
   const labelsByJob = useMemo(() => {
     const map = new Map<string, JobLabel[]>();
     labelAssignments.forEach((a) => {
-      if (!map.has(a.job_id)) {
-        map.set(a.job_id, []);
-      }
-      if (a.label) {
-        map.get(a.job_id)!.push(a.label);
-      }
+      if (!map.has(a.job_id)) map.set(a.job_id, []);
+      if (a.label) map.get(a.job_id)!.push(a.label);
     });
     return map;
   }, [labelAssignments]);
 
-  // Transform jobs with stage
   const jobs = jobsData.map((job) => ({
     ...job,
     stage: getStageFromJob(job),
@@ -132,14 +153,13 @@ export function JobBoardSection() {
     return matchesSearch && matchesCompleted;
   });
 
-  const getJobsForStage = (stageId: string) => filteredJobs.filter((job) => job.stage === stageId);
+  const getJobsForStage = (stageId: string) =>
+    filteredJobs.filter((job) => job.stage === stageId);
 
   const getStageValue = (stageId: string) =>
     getJobsForStage(stageId).reduce((sum, job) => sum + (job.value || 0), 0);
 
-  const handleDragStart = (jobId: string) => {
-    setDraggedJob(jobId);
-  };
+  const handleDragStart = (jobId: string) => setDraggedJob(jobId);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -206,7 +226,6 @@ export function JobBoardSection() {
     }
   };
 
-  // Quick add handler for mobile kanban (title only, client set to TBC)
   const handleMobileQuickAdd = async (title: string, stageId: string) => {
     const { status, progress } = stageToStatusMap[stageId];
 
@@ -231,11 +250,6 @@ export function JobBoardSection() {
     }
   };
 
-  const getStageColor = (stageId: string) => {
-    const stage = stages.find((s) => s.id === stageId);
-    return stage?.color || 'bg-muted';
-  };
-
   const handleArchiveJob = async (jobId: string) => {
     try {
       await archiveJob.mutateAsync(jobId);
@@ -248,7 +262,10 @@ export function JobBoardSection() {
   const handleMoveJob = async (jobId: string, stageId: string) => {
     const { status, progress } = stageToStatusMap[stageId];
     try {
-      await updateJob.mutateAsync({ id: jobId, updates: { status: status as any, progress } });
+      await updateJob.mutateAsync({
+        id: jobId,
+        updates: { status: status as any, progress },
+      });
       toast.success(`Moved to ${stageId}`);
     } catch (error) {
       toast.error('Failed to move job');
@@ -270,12 +287,15 @@ export function JobBoardSection() {
     queryClient.invalidateQueries({ queryKey: ['job-checklist-summaries'] });
   };
 
-  // Calculate stats
   const totalJobs = jobs.length;
-  const inProgressCount = jobs.filter((j) => j.stage === 'In Progress').length;
+  const todoCount = jobs.filter((j) => j.stage === 'Quoted' || j.stage === 'Confirmed').length;
+  const inProgressCount = jobs.filter(
+    (j) => j.stage === 'Scheduled' || j.stage === 'In Progress'
+  ).length;
+  const reviewCount = jobs.filter((j) => j.stage === 'Testing').length;
+  const doneCount = jobs.filter((j) => j.stage === 'Complete').length;
   const pipelineValue = jobs.reduce((sum, j) => sum + (j.value || 0), 0);
 
-  // Mobile Kanban data - transform to expected format with checklist and label data
   const mobileKanbanItems = filteredJobs.map((job) => {
     const jobLabels = labelsByJob.get(job.id) || [];
     const checklistData = checklistSummaries[job.id];
@@ -295,152 +315,131 @@ export function JobBoardSection() {
         label: label.name,
         color: label.colour,
       })),
-      assignedWorkers: [], // Could be populated from job assignments if needed
+      assignedWorkers: [],
     };
   });
 
   const mobileStages = stages.map((stage) => ({
     id: stage.id,
     label: stage.label,
-    color: stage.color,
+    color: '',
   }));
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-elec-yellow"></div>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Job Board"
+          description="Kanban view of every job — drag cards between columns."
+          tone="blue"
+        />
+        <LoadingBlocks />
+      </PageFrame>
     );
   }
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col gap-3">
-        <div>
-          <h1 className="text-xl md:text-2xl font-bold text-foreground">Live Job Board</h1>
-          <p className="text-sm text-white">
-            Drag jobs between stages to update their status
-          </p>
-        </div>
-
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-          <div className="relative flex-1">
-            {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-            )}
-            <Input
-              placeholder="Search jobs..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn('w-full bg-elec-gray', !searchQuery && 'pl-9')}
-            />
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-2"
-              onClick={() => setShowTemplates(true)}
-            >
-              <LayoutTemplate className="h-4 w-4" />
+    <PageFrame>
+      <PageHero
+        eyebrow="Operations"
+        title="Job Board"
+        description="Kanban view of every job — drag cards between columns."
+        tone="blue"
+        actions={
+          <div className="flex items-center gap-2 flex-wrap">
+            <SecondaryButton onClick={() => setShowTemplates(true)}>
+              <LayoutTemplate className="h-4 w-4 mr-2" />
               <span className="hidden sm:inline">Templates</span>
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="gap-2"
-              onClick={() => setShowArchived(true)}
-            >
-              <Archive className="h-4 w-4" />
+            </SecondaryButton>
+            <SecondaryButton onClick={() => setShowArchived(true)}>
+              <Archive className="h-4 w-4 mr-2" />
               <span className="hidden sm:inline">Archived</span>
-            </Button>
+            </SecondaryButton>
             <Popover open={filterOpen} onOpenChange={setFilterOpen}>
               <PopoverTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2">
+                <button
+                  className="h-11 px-5 inline-flex items-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] transition-all touch-manipulation text-[13px] font-medium"
+                >
                   <Filter className="h-4 w-4" />
                   <span className="hidden sm:inline">Filters</span>
-                  {hideCompleted && (
-                    <Badge variant="secondary" className="ml-1 h-5 px-1.5">
-                      1
-                    </Badge>
-                  )}
-                </Button>
+                  {hideCompleted && <Pill tone="yellow">1</Pill>}
+                </button>
               </PopoverTrigger>
-              <PopoverContent className="w-56 p-3" align="end">
+              <PopoverContent
+                className="w-60 p-4 bg-[hsl(0_0%_12%)] border-white/[0.06] text-white"
+                align="end"
+              >
                 <div className="space-y-3">
-                  <p className="text-sm font-medium text-foreground">Filters</p>
-                  <div className="flex items-center gap-2">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
+                    Filters
+                  </div>
+                  <label
+                    htmlFor="hide-completed"
+                    className="flex items-center gap-2.5 cursor-pointer touch-manipulation"
+                  >
                     <Checkbox
                       id="hide-completed"
                       checked={hideCompleted}
                       onCheckedChange={(checked) => setHideCompleted(checked as boolean)}
+                      className={checkboxClass}
                     />
-                    <label
-                      htmlFor="hide-completed"
-                      className="text-sm text-white cursor-pointer"
-                    >
-                      Hide completed jobs
-                    </label>
-                  </div>
+                    <span className="text-[13px] text-white">Hide completed jobs</span>
+                  </label>
                 </div>
               </PopoverContent>
             </Popover>
-            <div className="flex bg-muted rounded-lg p-1">
-              <Button
-                variant={viewMode === 'kanban' ? 'secondary' : 'ghost'}
-                size="sm"
+            <div className="flex items-center bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full p-1 h-11">
+              <button
                 onClick={() => setViewMode('kanban')}
-                className="touch-feedback"
+                aria-label="Kanban view"
+                className={cn(
+                  'h-9 w-9 inline-flex items-center justify-center rounded-full transition-colors touch-manipulation',
+                  viewMode === 'kanban'
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white hover:bg-white/[0.06]'
+                )}
               >
                 <Kanban className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={viewMode === 'list' ? 'secondary' : 'ghost'}
-                size="sm"
+              </button>
+              <button
                 onClick={() => setViewMode('list')}
-                className="touch-feedback"
+                aria-label="List view"
+                className={cn(
+                  'h-9 w-9 inline-flex items-center justify-center rounded-full transition-colors touch-manipulation',
+                  viewMode === 'list'
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white hover:bg-white/[0.06]'
+                )}
               >
                 <List className="h-4 w-4" />
-              </Button>
+              </button>
             </div>
+            <IconButton onClick={handleRefresh} aria-label="Refresh">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
           </div>
-        </div>
-      </div>
+        }
+      />
 
-      {/* Compact Stats Row - Horizontal Scroll */}
-      <QuickStats
+      <StatStrip
+        columns={4}
         stats={[
-          {
-            icon: Kanban,
-            value: totalJobs,
-            label: 'Total Jobs',
-            color: 'yellow',
-          },
-          {
-            icon: TrendingUp,
-            value: inProgressCount,
-            label: 'In Progress',
-            color: 'blue',
-          },
-          {
-            icon: AlertTriangle,
-            value: 0,
-            label: 'Issues',
-            color: 'orange',
-          },
-          {
-            icon: PoundSterling,
-            value: `£${(pipelineValue / 1000).toFixed(0)}k`,
-            label: 'Pipeline',
-            color: 'green',
-          },
+          { label: 'To do', value: todoCount, tone: 'orange' },
+          { label: 'In progress', value: inProgressCount, tone: 'blue' },
+          { label: 'Review', value: reviewCount, tone: 'amber' },
+          { label: 'Done', value: doneCount, tone: 'emerald' },
         ]}
       />
 
-      {/* Kanban Board - Mobile uses MobileKanban with Pull to Refresh */}
-      {viewMode === 'kanban' &&
-        (isMobile ? (
+      <FilterBar
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search jobs…"
+      />
+
+      {viewMode === 'kanban' ? (
+        isMobile ? (
           <PullToRefresh onRefresh={handleRefresh}>
             <MobileKanban
               items={mobileKanbanItems}
@@ -462,263 +461,243 @@ export function JobBoardSection() {
               onQuickAdd={handleMobileQuickAdd}
             />
           </PullToRefresh>
+        ) : filteredJobs.length === 0 ? (
+          <EmptyState
+            title="No jobs yet"
+            description="Add your first job to start populating the board."
+            action="Add job"
+            onAction={() => setQuickAddStage('Quoted')}
+          />
         ) : (
-          <div className="overflow-x-auto pb-4 hide-scrollbar">
-            <div className="flex gap-4 min-w-max">
-              {stages.map((stage) => (
+          <div className="flex gap-3 overflow-x-auto pb-4 hide-scrollbar -mx-1 px-1">
+            {stages.map((stage) => {
+              const stageJobs = getJobsForStage(stage.id);
+              const stageValue = getStageValue(stage.id);
+              const isDragTarget = draggedJob !== null;
+
+              return (
                 <div
                   key={stage.id}
-                  className={cn('w-72 flex-shrink-0 transition-all', draggedJob && 'opacity-80')}
+                  className="w-[300px] flex-shrink-0"
                   onDragOver={handleDragOver}
                   onDrop={() => handleDrop(stage.id)}
                 >
-                  <div className={cn('rounded-lg p-3 mb-3', stage.color)}>
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-semibold text-foreground">{stage.label}</h3>
-                      <Badge variant="secondary" className="bg-background/50">
-                        {getJobsForStage(stage.id).length}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-white mt-1">
-                      £{(getStageValue(stage.id) / 1000).toFixed(0)}k value
-                    </p>
-                  </div>
+                  <ListCard
+                    className={cn(
+                      'transition-colors',
+                      isDragTarget && 'ring-1 ring-elec-yellow/30'
+                    )}
+                  >
+                    <ListCardHeader
+                      tone={stage.tone}
+                      title={stage.label}
+                      meta={
+                        <div className="flex items-center gap-2">
+                          <Pill tone={stage.tone}>{stageJobs.length}</Pill>
+                          <span className="text-[11px] tabular-nums text-white">
+                            £{(stageValue / 1000).toFixed(0)}k
+                          </span>
+                        </div>
+                      }
+                    />
+                    <ListBody>
+                      {stageJobs.map((job) => {
+                        const jobLabels = labelsByJob.get(job.id) || [];
+                        const checklistData = checklistSummaries[job.id];
+                        const valueTone = getValueTone(job.value || 0);
 
-                  <div className="space-y-3">
-                    {getJobsForStage(stage.id).map((job) => {
-                      const jobLabels = labelsByJob.get(job.id) || [];
-                      const checklistData = checklistSummaries[job.id];
-
-                      return (
-                        <JobCardContextMenu
-                          key={job.id}
-                          stages={stages}
-                          currentStage={job.stage}
-                          isTemplate={job.is_template}
-                          onCopy={() => {
-                            setSelectedJob(job);
-                            setCopySheetJob(job);
-                          }}
-                          onArchive={() => handleArchiveJob(job.id)}
-                          onMove={(stageId) => handleMoveJob(job.id, stageId)}
-                          onOpenLabels={() => handleJobClick(job.id)}
-                          onOpenChecklist={() => handleJobClick(job.id)}
-                          onOpenDetails={() => handleJobClick(job.id)}
-                          onMarkAsTemplate={() => handleSetTemplate(job.id, !job.is_template)}
-                        >
-                          <Card
-                            draggable
-                            onDragStart={() => handleDragStart(job.id)}
-                            onClick={() => handleJobClick(job.id)}
-                            className={cn(
-                              'cursor-pointer bg-elec-gray hover:shadow-md transition-all hover:scale-[1.02]',
-                              draggedJob === job.id && 'opacity-50 scale-95 rotate-2'
-                            )}
+                        return (
+                          <JobCardContextMenu
+                            key={job.id}
+                            stages={stages.map((s) => ({
+                              id: s.id,
+                              label: s.label,
+                              color: '',
+                            }))}
+                            currentStage={job.stage}
+                            isTemplate={job.is_template}
+                            onCopy={() => {
+                              setSelectedJob(job);
+                              setCopySheetJob(job);
+                            }}
+                            onArchive={() => handleArchiveJob(job.id)}
+                            onMove={(stageId) => handleMoveJob(job.id, stageId)}
+                            onOpenLabels={() => handleJobClick(job.id)}
+                            onOpenChecklist={() => handleJobClick(job.id)}
+                            onOpenDetails={() => handleJobClick(job.id)}
+                            onMarkAsTemplate={() =>
+                              handleSetTemplate(job.id, !job.is_template)
+                            }
                           >
-                            <CardContent className="p-4">
-                              <div className="space-y-3">
-                                {/* Labels at top */}
-                                {jobLabels.length > 0 && <JobLabelStrips labels={jobLabels} />}
-
-                                <div>
-                                  <h4 className="font-medium text-foreground">{job.title}</h4>
-                                  <p className="text-sm text-white">{job.client}</p>
-                                </div>
-
-                                <div className="flex items-center gap-2 text-xs text-white">
-                                  <MapPin className="h-3 w-3" />
-                                  <span>{job.location.split(',')[0]}</span>
-                                </div>
-
-                                <div className="flex items-center justify-between text-xs">
-                                  <div className="flex items-center gap-1 text-white">
-                                    <Calendar className="h-3 w-3" />
-                                    <span>{job.end_date || 'No end date'}</span>
-                                  </div>
-                                  <div className="flex items-center gap-1 text-elec-yellow">
-                                    <PoundSterling className="h-3 w-3" />
-                                    <span>£{((job.value || 0) / 1000).toFixed(0)}k</span>
-                                  </div>
-                                </div>
-
-                                {/* Checklist Progress */}
-                                {checklistData && checklistData.total > 0 && (
-                                  <div className="flex items-center gap-2 text-xs">
-                                    <CheckSquare className="h-3 w-3 text-white" />
+                            <div
+                              draggable
+                              onDragStart={() => handleDragStart(job.id)}
+                              className={cn(
+                                'group relative cursor-grab active:cursor-grabbing transition-all',
+                                draggedJob === job.id && 'opacity-50'
+                              )}
+                            >
+                              <ListRow
+                                onClick={() => handleJobClick(job.id)}
+                                lead={
+                                  <Avatar
+                                    initials={getInitials(job.client || job.title)}
+                                  />
+                                }
+                                title={job.title}
+                                subtitle={
+                                  <span className="flex items-center gap-1.5">
+                                    <span className="truncate">{job.client}</span>
+                                    <span className="text-white">·</span>
+                                    <span className="tabular-nums text-white">
+                                      £{((job.value || 0) / 1000).toFixed(0)}k
+                                    </span>
+                                  </span>
+                                }
+                                trailing={
+                                  <Pill tone={valueTone}>
+                                    {job.progress > 0 && job.progress < 100
+                                      ? `${job.progress}%`
+                                      : stage.label}
+                                  </Pill>
+                                }
+                              />
+                              {(jobLabels.length > 0 ||
+                                (checklistData && checklistData.total > 0)) && (
+                                <div className="px-4 sm:px-5 pb-3 -mt-2 space-y-2">
+                                  {jobLabels.length > 0 && (
+                                    <JobLabelStrips labels={jobLabels} />
+                                  )}
+                                  {checklistData && checklistData.total > 0 && (
                                     <JobChecklistProgress
                                       completed={checklistData.completed}
                                       total={checklistData.total}
                                     />
-                                  </div>
-                                )}
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </JobCardContextMenu>
+                        );
+                      })}
 
-                                {job.stage === 'In Progress' && job.workers_count > 0 && (
-                                  <div className="flex items-center justify-between pt-2 border-t border-border">
-                                    <div className="flex items-center gap-1 text-xs">
-                                      <Users className="h-3 w-3 text-success" />
-                                      <span className="text-success">
-                                        {job.workers_count} workers
-                                      </span>
-                                    </div>
-                                  </div>
-                                )}
-
-                                {job.progress > 0 && job.stage !== 'Complete' && (
-                                  <div className="space-y-1">
-                                    <div className="flex justify-between text-xs">
-                                      <span className="text-white">Progress</span>
-                                      <span className="text-elec-yellow">{job.progress}%</span>
-                                    </div>
-                                    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-                                      <div
-                                        className="h-full bg-elec-yellow rounded-full"
-                                        style={{ width: `${job.progress}%` }}
-                                      />
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            </CardContent>
-                          </Card>
-                        </JobCardContextMenu>
-                      );
-                    })}
-
-                    {/* Quick Add Card */}
-                    {quickAddStage === stage.id ? (
-                      <Card className="border-dashed border-2 border-elec-yellow/50 bg-elec-yellow/5">
-                        <CardContent className="p-3 space-y-2">
+                      {quickAddStage === stage.id ? (
+                        <div className="px-4 sm:px-5 py-3.5 space-y-2 bg-[hsl(0_0%_10%)]">
                           <Input
-                            placeholder="Job title..."
+                            placeholder="Job title…"
                             value={quickAddTitle}
                             onChange={(e) => setQuickAddTitle(e.target.value)}
-                            className="h-8 text-sm"
+                            className={inputClass}
                             autoFocus
                           />
                           <Input
-                            placeholder="Client name..."
+                            placeholder="Client name…"
                             value={quickAddClient}
                             onChange={(e) => setQuickAddClient(e.target.value)}
-                            className="h-8 text-sm"
+                            className={inputClass}
                             onKeyDown={(e) => {
                               if (e.key === 'Enter') handleQuickAdd(stage.id);
                               if (e.key === 'Escape') setQuickAddStage(null);
                             }}
                           />
                           <div className="flex gap-2">
-                            <Button
-                              size="sm"
-                              className="flex-1 h-7"
+                            <PrimaryButton
                               onClick={() => handleQuickAdd(stage.id)}
                               disabled={
                                 !quickAddTitle.trim() ||
                                 !quickAddClient.trim() ||
                                 createJob.isPending
                               }
+                              fullWidth
                             >
-                              Add Job
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="h-7 px-2"
+                              Add job
+                            </PrimaryButton>
+                            <button
                               onClick={() => {
                                 setQuickAddStage(null);
                                 setQuickAddTitle('');
                                 setQuickAddClient('');
                               }}
+                              aria-label="Cancel"
+                              className="h-11 w-11 rounded-full bg-white/[0.06] border border-white/[0.1] text-white inline-flex items-center justify-center hover:bg-white/[0.1] transition-colors touch-manipulation"
                             >
                               <X className="h-4 w-4" />
-                            </Button>
+                            </button>
                           </div>
-                        </CardContent>
-                      </Card>
-                    ) : (
-                      <button
-                        onClick={() => setQuickAddStage(stage.id)}
-                        className="w-full border-2 border-dashed border-border rounded-lg p-3 text-center hover:border-elec-yellow/50 hover:bg-elec-yellow/5 transition-colors group"
-                      >
-                        <div className="flex items-center justify-center gap-2 text-sm text-white group-hover:text-elec-yellow">
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => setQuickAddStage(stage.id)}
+                          className="w-full h-11 px-4 sm:px-5 flex items-center gap-2 text-[12.5px] font-medium text-white hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+                        >
                           <Plus className="h-4 w-4" />
-                          Add Job
-                        </div>
-                      </button>
-                    )}
-                  </div>
+                          <span>Add job</span>
+                        </button>
+                      )}
+                    </ListBody>
+                  </ListCard>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        ))}
-
-      {/* List View */}
-      {viewMode === 'list' && (
-        <div className="space-y-3">
-          {filteredJobs.map((job) => {
-            const jobLabels = labelsByJob.get(job.id) || [];
-
-            return (
-              <Card
-                key={job.id}
-                className="bg-elec-gray touch-feedback cursor-pointer"
-                onClick={() => handleJobClick(job.id)}
-              >
-                <CardContent className="p-3 md:p-4">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-                    <div className="flex items-start md:items-center gap-3 md:gap-4">
-                      <Badge
-                        className={cn(
-                          'text-foreground text-[10px] md:text-xs flex-shrink-0',
-                          getStageColor(job.stage)
-                        )}
-                      >
-                        {job.stage}
-                      </Badge>
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <h4 className="font-medium text-foreground text-sm md:text-base truncate">
-                            {job.title}
-                          </h4>
-                          {jobLabels.length > 0 && (
-                            <div className="flex gap-1">
-                              {jobLabels.slice(0, 2).map((label) => (
-                                <div
-                                  key={label.id}
-                                  className="w-2 h-2 rounded-full"
-                                  style={{ backgroundColor: label.colour }}
-                                />
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        <p className="text-xs md:text-sm text-white">{job.client}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between md:justify-end gap-4 md:gap-6">
-                      <div className="text-left md:text-right">
-                        <p className="text-sm font-medium text-foreground">
+        )
+      ) : (
+        <ListCard>
+          <ListCardHeader
+            tone="blue"
+            title="All jobs"
+            meta={<Pill tone="blue">{filteredJobs.length}</Pill>}
+          />
+          {filteredJobs.length === 0 ? (
+            <div className="px-6 py-10 text-center">
+              <div className="text-base font-medium text-white">No jobs match</div>
+              <p className="mt-2 text-[12.5px] text-white">
+                Try clearing the search or filters.
+              </p>
+            </div>
+          ) : (
+            <ListBody>
+              {filteredJobs.map((job) => {
+                const valueTone = getValueTone(job.value || 0);
+                const stageTone = getStageTone(job.stage);
+                return (
+                  <ListRow
+                    key={job.id}
+                    onClick={() => handleJobClick(job.id)}
+                    lead={<Avatar initials={getInitials(job.client || job.title)} />}
+                    title={job.title}
+                    subtitle={
+                      <span className="flex items-center gap-1.5">
+                        <span className="truncate">{job.client}</span>
+                        <span className="text-white">·</span>
+                        <span className="tabular-nums text-white">
                           £{(job.value || 0).toLocaleString()}
-                        </p>
-                        <p className="text-xs text-white">{job.progress}% complete</p>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+                        </span>
+                      </span>
+                    }
+                    trailing={
+                      <>
+                        <Pill tone={valueTone}>{job.progress}%</Pill>
+                        <Pill tone={stageTone}>{job.stage}</Pill>
+                      </>
+                    }
+                  />
+                );
+              })}
+            </ListBody>
+          )}
+        </ListCard>
+      )}
+
+      {totalJobs > 0 && (
+        <div className="text-[11px] text-white text-center tabular-nums">
+          {totalJobs} jobs · £{(pipelineValue / 1000).toFixed(0)}k pipeline
         </div>
       )}
 
-      {/* Job Detail Sheet */}
       <ViewJobSheet job={selectedJob} open={sheetOpen} onOpenChange={setSheetOpen} />
-
-      {/* Archived Jobs Sheet */}
       <ArchivedJobsSheet open={showArchived} onOpenChange={setShowArchived} />
-
-      {/* Templates Sheet */}
       <JobTemplatesSheet open={showTemplates} onOpenChange={setShowTemplates} />
-    </div>
+    </PageFrame>
   );
 }

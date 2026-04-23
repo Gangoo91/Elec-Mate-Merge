@@ -1,7 +1,5 @@
 import { useState, useMemo } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -9,7 +7,6 @@ import { toast } from '@/hooks/use-toast';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useCreateJobAssignment, useCheckForClashes } from '@/hooks/useJobAssignments';
 import { Job } from '@/services/jobService';
-import { Employee } from '@/services/employeeService';
 import { JobAssignmentWithDetails } from '@/services/jobAssignmentService';
 import { WorkerCard } from './WorkerCard';
 import { WorkerFilterPills } from './WorkerFilterPills';
@@ -22,10 +19,17 @@ import {
   X,
   ChevronRight,
   Building2,
-  Calendar,
   Sparkles,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  PrimaryButton,
+  SecondaryButton,
+  IconButton,
+  Eyebrow,
+  inputClass,
+  SuccessCheckmark,
+} from '@/components/employer/editorial';
 
 interface AssignWorkersSheetProps {
   job: Job;
@@ -52,17 +56,15 @@ export function AssignWorkersSheet({
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showDetailsSheet, setShowDetailsSheet] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  // Filter out already assigned workers
   const assignedEmployeeIds = existingAssignments.map((a) => a.employee_id);
 
-  // Get unique roles for filter pills
   const uniqueRoles = useMemo(() => {
     const roles = new Set(employees.map((e) => e.role));
     return ['All', ...Array.from(roles)];
   }, [employees]);
 
-  // Calculate worker counts per role
   const workerCounts = useMemo(() => {
     const counts: Record<string, number> = { All: 0 };
     employees.forEach((emp) => {
@@ -75,11 +77,8 @@ export function AssignWorkersSheet({
 
   const availableWorkers = useMemo(() => {
     return employees.filter((emp) => {
-      // Filter out already assigned
       if (assignedEmployeeIds.includes(emp.id)) return false;
-      // Filter by role
       if (selectedFilter !== 'All' && emp.role !== selectedFilter) return false;
-      // Filter by search
       if (searchQuery) {
         const search = searchQuery.toLowerCase();
         return emp.name.toLowerCase().includes(search) || emp.role.toLowerCase().includes(search);
@@ -103,7 +102,6 @@ export function AssignWorkersSheet({
     } else {
       setSelectedWorkerIds((prev) => [...prev, employeeId]);
 
-      // Check for clashes
       const startDate = job.start_date || new Date().toISOString().split('T')[0];
       const clashes = await checkClashes.mutateAsync({
         employeeId,
@@ -153,15 +151,18 @@ export function AssignWorkersSheet({
       }
 
       toast({
-        title: 'Workers Assigned',
+        title: 'Workers assigned',
         description: `${selectedWorkerIds.length} worker(s) have been assigned to ${job.title}`,
       });
 
-      // Reset and close
-      setSelectedWorkerIds([]);
-      setClashWarnings({});
-      setShowDetailsSheet(false);
-      onOpenChange(false);
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        setSelectedWorkerIds([]);
+        setClashWarnings({});
+        setShowDetailsSheet(false);
+        onOpenChange(false);
+      }, 700);
     } catch (error) {
       console.error('Error assigning workers:', error);
       toast({
@@ -181,212 +182,197 @@ export function AssignWorkersSheet({
 
   return (
     <>
+      <SuccessCheckmark show={showSuccess} />
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent className="w-full sm:max-w-lg p-0 !h-full grid grid-rows-[auto_1fr_auto]">
-          {/* Sticky Header - Compact Job Info */}
-          <div className="bg-background border-b overflow-hidden">
-            {/* Job Header */}
-            <div className="px-4 pt-4 pb-3">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="p-1.5 rounded-lg bg-elec-yellow/10">
-                      <UserPlus className="h-4 w-4 text-elec-yellow" />
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+        >
+          <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
+            <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
+              <div className="h-1 w-10 rounded-full bg-white/20" />
+            </div>
+
+            <div className="flex-shrink-0 border-b border-white/[0.06]">
+              <div className="px-5 pb-3 pt-1">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <UserPlus className="h-3.5 w-3.5 text-elec-yellow" />
+                      <Eyebrow>Assign workers</Eyebrow>
                     </div>
-                    <span className="text-xs font-medium text-white uppercase tracking-wide">
-                      Assign Workers
-                    </span>
+                    <h2 className="text-[20px] font-semibold text-white leading-tight truncate">
+                      {job.title}
+                    </h2>
+                    <div className="flex items-center gap-3 mt-1 text-[12.5px] text-white">
+                      <span className="flex items-center gap-1 truncate">
+                        <Building2 className="h-3.5 w-3.5" />
+                        {job.client}
+                      </span>
+                      <span className="flex items-center gap-1 truncate">
+                        <MapPin className="h-3.5 w-3.5" />
+                        {job.location}
+                      </span>
+                    </div>
                   </div>
-                  <h2 className="font-bold text-lg text-foreground truncate">{job.title}</h2>
-                  <div className="flex items-center gap-3 mt-1 text-sm text-white">
-                    <span className="flex items-center gap-1 truncate">
-                      <Building2 className="h-3.5 w-3.5" />
-                      {job.client}
-                    </span>
-                    <span className="flex items-center gap-1 truncate">
-                      <MapPin className="h-3.5 w-3.5" />
-                      {job.location}
-                    </span>
-                  </div>
-                </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="shrink-0 -mr-2 -mt-1"
-                  onClick={() => onOpenChange(false)}
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Sticky Search */}
-            <div className="px-4 pb-3">
-              <div className="relative">
-                {!searchQuery && (
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-                )}
-                <Input
-                  placeholder="Search by name or role..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className={cn(
-                    'h-12 text-base bg-muted/50 border-transparent focus:border-elec-yellow focus:bg-background',
-                    !searchQuery && 'pl-10'
-                  )}
-                />
-                {searchQuery && (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8"
-                    onClick={() => setSearchQuery('')}
+                  <IconButton
+                    aria-label="Close"
+                    onClick={() => onOpenChange(false)}
+                    className="shrink-0"
                   >
-                    <X className="h-4 w-4" />
-                  </Button>
-                )}
+                    <X className="h-5 w-5" />
+                  </IconButton>
+                </div>
+              </div>
+
+              <div className="px-5 pb-3">
+                <div className="relative">
+                  {!searchQuery && (
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+                  )}
+                  <input
+                    placeholder="Search by name or role…"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className={cn(inputClass, !searchQuery && 'pl-10')}
+                  />
+                  {searchQuery && (
+                    <button
+                      className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/[0.08]"
+                      onClick={() => setSearchQuery('')}
+                    >
+                      <X className="h-4 w-4 text-white" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="px-5 pb-3">
+                <WorkerFilterPills
+                  filters={uniqueRoles}
+                  selectedFilter={selectedFilter}
+                  onFilterChange={setSelectedFilter}
+                  workerCounts={workerCounts}
+                />
               </div>
             </div>
 
-            {/* Filter Pills */}
-            <div className="px-4 pb-3">
-              <WorkerFilterPills
-                filters={uniqueRoles}
-                selectedFilter={selectedFilter}
-                onFilterChange={setSelectedFilter}
-                workerCounts={workerCounts}
-              />
-            </div>
-          </div>
-
-          {/* Worker List - wrapped in container with min-h-0 for grid */}
-          <div className="overflow-hidden min-h-0">
-            <ScrollArea className="h-full">
-              <div className="p-4 space-y-2">
-                {loadingEmployees ? (
-                  // Loading Skeleton
-                  <div className="space-y-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="p-4 rounded-lg border">
-                        <div className="flex items-center gap-4">
-                          <Skeleton className="h-7 w-7 rounded-full" />
-                          <Skeleton className="h-14 w-14 rounded-full" />
-                          <div className="flex-1 space-y-2">
-                            <Skeleton className="h-4 w-32" />
-                            <Skeleton className="h-3 w-24" />
+            <div className="flex-1 overflow-hidden min-h-0">
+              <ScrollArea className="h-full">
+                <div className="p-5 space-y-2">
+                  {loadingEmployees ? (
+                    <div className="space-y-2">
+                      {[1, 2, 3, 4].map((i) => (
+                        <div
+                          key={i}
+                          className="p-4 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)]"
+                        >
+                          <div className="flex items-center gap-4">
+                            <Skeleton className="h-7 w-7 rounded-full" />
+                            <Skeleton className="h-14 w-14 rounded-full" />
+                            <div className="flex-1 space-y-2">
+                              <Skeleton className="h-4 w-32" />
+                              <Skeleton className="h-3 w-24" />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : availableWorkers.length === 0 ? (
-                  // Empty State
-                  <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <div className="p-4 rounded-full bg-muted mb-4">
-                      <Users className="h-8 w-8 text-white" />
+                      ))}
                     </div>
-                    <h3 className="font-semibold text-foreground mb-1">
-                      {searchQuery || selectedFilter !== 'All'
-                        ? 'No workers found'
-                        : 'All workers assigned'}
-                    </h3>
-                    <p className="text-sm text-white max-w-[200px]">
-                      {searchQuery
-                        ? 'Try adjusting your search or filters'
-                        : selectedFilter !== 'All'
-                          ? `No ${selectedFilter}s available`
-                          : 'Every team member is already on this job'}
-                    </p>
-                    {(searchQuery || selectedFilter !== 'All') && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="mt-3"
-                        onClick={() => {
-                          setSearchQuery('');
-                          setSelectedFilter('All');
-                        }}
-                      >
-                        Clear filters
-                      </Button>
-                    )}
-                  </div>
-                ) : (
-                  availableWorkers.map((employee) => (
-                    <WorkerCard
-                      key={employee.id}
-                      employee={employee}
-                      isSelected={selectedWorkerIds.includes(employee.id)}
-                      onToggle={() => handleWorkerToggle(employee.id)}
-                      clashWarnings={clashWarnings[employee.id]}
-                    />
-                  ))
-                )}
-              </div>
-            </ScrollArea>
-          </div>
+                  ) : availableWorkers.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <div className="p-4 rounded-full bg-white/[0.04] mb-4">
+                        <Users className="h-8 w-8 text-white" />
+                      </div>
+                      <h3 className="font-semibold text-white mb-1">
+                        {searchQuery || selectedFilter !== 'All'
+                          ? 'No workers found'
+                          : 'All workers assigned'}
+                      </h3>
+                      <p className="text-sm text-white max-w-[220px]">
+                        {searchQuery
+                          ? 'Try adjusting your search or filters'
+                          : selectedFilter !== 'All'
+                            ? `No ${selectedFilter}s available`
+                            : 'Every team member is already on this job'}
+                      </p>
+                      {(searchQuery || selectedFilter !== 'All') && (
+                        <SecondaryButton
+                          size="sm"
+                          className="mt-4"
+                          onClick={() => {
+                            setSearchQuery('');
+                            setSelectedFilter('All');
+                          }}
+                        >
+                          Clear filters
+                        </SecondaryButton>
+                      )}
+                    </div>
+                  ) : (
+                    availableWorkers.map((employee) => (
+                      <WorkerCard
+                        key={employee.id}
+                        employee={employee}
+                        isSelected={selectedWorkerIds.includes(employee.id)}
+                        onToggle={() => handleWorkerToggle(employee.id)}
+                        clashWarnings={clashWarnings[employee.id]}
+                      />
+                    ))
+                  )}
+                </div>
+              </ScrollArea>
+            </div>
 
-          {/* Floating Selection Footer - conditionally rendered */}
-          {selectedWorkerIds.length > 0 ? (
-            <div className="border-t bg-background pb-[env(safe-area-inset-bottom)]">
-              <div className="p-4">
+            {selectedWorkerIds.length > 0 && (
+              <div className="flex-shrink-0 border-t border-white/[0.06] p-4 pb-[max(env(safe-area-inset-bottom),1rem)]">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    {/* Overlapping Avatars */}
                     <div className="flex -space-x-2">
                       {selectedWorkers.slice(0, 4).map((worker, idx) => (
                         <Avatar
                           key={worker.id}
-                          className="h-8 w-8 border-2 border-background"
+                          className="h-8 w-8 border-2 border-[hsl(0_0%_8%)]"
                           style={{ zIndex: 4 - idx }}
                         >
                           {worker.photo_url ? (
                             <AvatarImage src={worker.photo_url} alt={worker.name} />
                           ) : null}
-                          <AvatarFallback className="text-xs bg-elec-yellow text-elec-yellow-foreground">
+                          <AvatarFallback className="text-xs bg-elec-yellow text-black">
                             {worker.avatar_initials}
                           </AvatarFallback>
                         </Avatar>
                       ))}
                       {selectedWorkerIds.length > 4 && (
-                        <div className="h-8 w-8 rounded-full bg-muted border-2 border-background flex items-center justify-center">
-                          <span className="text-xs font-medium">
+                        <div className="h-8 w-8 rounded-full bg-white/[0.08] border-2 border-[hsl(0_0%_8%)] flex items-center justify-center">
+                          <span className="text-[11px] font-medium text-white">
                             +{selectedWorkerIds.length - 4}
                           </span>
                         </div>
                       )}
                     </div>
-                    <span className="font-medium text-foreground">
+                    <span className="font-medium text-white">
                       {selectedWorkerIds.length} selected
                     </span>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
+                  <button
                     onClick={handleClearSelection}
-                    className="text-white"
+                    className="text-[12px] font-medium text-white hover:text-elec-yellow transition-colors"
                   >
                     Clear all
-                  </Button>
+                  </button>
                 </div>
 
-                <Button
-                  onClick={() => setShowDetailsSheet(true)}
-                  className="w-full h-14 text-base font-semibold gap-2"
-                >
-                  <Sparkles className="h-5 w-5" />
-                  Continue to Assignment
-                  <ChevronRight className="h-5 w-5" />
-                </Button>
+                <PrimaryButton onClick={() => setShowDetailsSheet(true)} fullWidth size="lg">
+                  <Sparkles className="h-4 w-4 mr-2" />
+                  Continue to assignment
+                  <ChevronRight className="h-4 w-4 ml-2" />
+                </PrimaryButton>
               </div>
-            </div>
-          ) : (
-            <div className="hidden" />
-          )}
+            )}
+          </div>
         </SheetContent>
       </Sheet>
 
-      {/* Assignment Details Bottom Sheet */}
       <AssignmentDetailsSheet
         open={showDetailsSheet}
         onOpenChange={setShowDetailsSheet}

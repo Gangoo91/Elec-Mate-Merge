@@ -1,5 +1,4 @@
 import { Menu, ArrowLeft, Briefcase, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { NotificationBell } from './NotificationBell';
 import { cn } from '@/lib/utils';
 
@@ -25,8 +24,8 @@ export function AppHeader({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b border-elec-yellow/20',
-        'bg-elec-gray/95 backdrop-blur-lg supports-[backdrop-filter]:bg-elec-gray/80',
+        'sticky top-0 z-50 border-b border-white/[0.06]',
+        'bg-[hsl(0_0%_8%)]/95 backdrop-blur-lg supports-[backdrop-filter]:bg-[hsl(0_0%_8%)]/80',
         'pt-safe',
         className
       )}
@@ -35,29 +34,25 @@ export function AppHeader({
         {/* Left side */}
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           {showBack ? (
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
               onClick={onBack}
-              className="h-10 w-10 shrink-0 text-foreground hover:text-elec-yellow hover:bg-elec-yellow/10 active:scale-95 transition-all"
+              className="h-10 w-10 shrink-0 rounded-full text-white hover:text-elec-yellow hover:bg-white/[0.08] active:scale-95 transition-all touch-manipulation flex items-center justify-center"
             >
               <ArrowLeft className="h-5 w-5" />
-            </Button>
+            </button>
           ) : (
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
               onClick={onMenuClick}
-              className="h-10 w-10 shrink-0 text-foreground hover:text-elec-yellow hover:bg-elec-yellow/10 active:scale-95 transition-all md:hidden"
+              className="h-10 w-10 shrink-0 rounded-full text-white hover:text-elec-yellow hover:bg-white/[0.08] active:scale-95 transition-all md:hidden touch-manipulation flex items-center justify-center"
             >
               <Menu className="h-5 w-5" />
-            </Button>
+            </button>
           )}
 
           {/* Logo or custom title */}
           {title ? (
             <div className="min-w-0">
-              <h1 className="text-base sm:text-lg font-bold text-foreground truncate">{title}</h1>
+              <h1 className="text-base sm:text-lg font-bold text-white truncate">{title}</h1>
               {subtitle && <p className="text-xs text-white truncate">{subtitle}</p>}
             </div>
           ) : (
@@ -67,7 +62,7 @@ export function AppHeader({
               </div>
               <div className="flex items-center min-w-0">
                 <span className="text-lg sm:text-xl font-bold text-elec-yellow">Elec</span>
-                <span className="text-lg sm:text-xl font-bold text-foreground">-Mate</span>
+                <span className="text-lg sm:text-xl font-bold text-white">-Mate</span>
                 <span className="text-xs sm:text-sm font-medium text-white ml-2 hidden sm:inline">
                   for Business
                 </span>
@@ -79,18 +74,16 @@ export function AppHeader({
         {/* Right side */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           {onSearch && (
-            <Button
-              variant="ghost"
-              size="icon"
+            <button
               onClick={onSearch}
-              className="h-10 w-10 text-white hover:text-foreground hover:bg-muted/50 active:scale-95 transition-all"
+              className="h-10 w-10 rounded-full text-white hover:text-white hover:bg-white/[0.08] active:scale-95 transition-all touch-manipulation flex items-center justify-center"
             >
               <Search className="h-5 w-5" />
-            </Button>
+            </button>
           )}
           <NotificationBell />
           <button className="h-11 w-11 rounded-full bg-elec-yellow flex items-center justify-center active:scale-95 hover:bg-elec-yellow/90 transition-all touch-manipulation">
-            <span className="text-elec-dark font-semibold text-sm">JW</span>
+            <span className="text-black font-semibold text-sm">JW</span>
           </button>
         </div>
       </div>

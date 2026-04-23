@@ -1,5 +1,4 @@
 import { Clock, Check, DollarSign, X } from 'lucide-react';
-import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { formatCompactCurrency, type ExpenseStats, type ExpenseStatus } from '@/hooks/useExpenses';
 
@@ -73,19 +72,27 @@ export function ExpenseStatsBar({
         const isClickable = !!onStatusClick;
 
         return (
-          <Card
+          <div
             key={key}
+            role={isClickable ? 'button' : undefined}
+            tabIndex={isClickable ? 0 : undefined}
             className={cn(
               'shrink-0 w-36 md:w-auto',
-              'bg-gradient-to-br border',
+              'bg-gradient-to-br border rounded-2xl overflow-hidden',
               gradient,
-              'transition-all duration-200',
-              isClickable && 'cursor-pointer hover:scale-[1.02] active:scale-[0.98]',
-              isActive ? 'ring-2 ring-elec-yellow border-elec-yellow/50' : 'border-border/50'
+              'transition-colors',
+              isClickable && 'cursor-pointer hover:bg-[hsl(0_0%_14%)] active:scale-[0.98] touch-manipulation',
+              isActive ? 'ring-2 ring-elec-yellow border-elec-yellow/50' : 'border-white/[0.06]'
             )}
             onClick={() => {
               if (onStatusClick) {
                 onStatusClick(isActive ? undefined : status);
+              }
+            }}
+            onKeyDown={(e) => {
+              if (isClickable && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                onStatusClick?.(isActive ? undefined : status);
               }
             }}
           >
@@ -97,7 +104,7 @@ export function ExpenseStatsBar({
                 <span className="text-xs font-medium text-white">{label}</span>
               </div>
               <div className="space-y-0.5">
-                <p className="text-xl md:text-2xl font-bold text-foreground">
+                <p className="text-xl md:text-2xl font-bold text-white">
                   {formatCompactCurrency(data.total)}
                 </p>
                 <p className="text-xs text-white">
@@ -105,7 +112,7 @@ export function ExpenseStatsBar({
                 </p>
               </div>
             </div>
-          </Card>
+          </div>
         );
       })}
     </div>
@@ -157,11 +164,11 @@ export function MyExpenseStatsBar({
         const data = stats[key];
 
         return (
-          <Card
+          <div
             key={key}
             className={cn(
               'shrink-0 w-32 md:w-auto',
-              'bg-gradient-to-br border border-border/50',
+              'bg-gradient-to-br border border-white/[0.06] rounded-2xl overflow-hidden',
               gradient
             )}
           >
@@ -173,7 +180,7 @@ export function MyExpenseStatsBar({
                 <span className="text-xs font-medium text-white">{label}</span>
               </div>
               <div className="space-y-0.5">
-                <p className="text-xl md:text-2xl font-bold text-foreground">
+                <p className="text-xl md:text-2xl font-bold text-white">
                   {formatCompactCurrency(data.total)}
                 </p>
                 <p className="text-xs text-white">
@@ -181,7 +188,7 @@ export function MyExpenseStatsBar({
                 </p>
               </div>
             </div>
-          </Card>
+          </div>
         );
       })}
     </div>

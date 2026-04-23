@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -26,9 +25,20 @@ import {
 } from '@/components/ui/select';
 import { useCreateJob } from '@/hooks/useJobs';
 import { toast } from '@/hooks/use-toast';
-import { Briefcase, Plus, MapPin, Calendar, Users, PoundSterling } from 'lucide-react';
+import { Briefcase, Plus } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 const JOB_STATUSES = ['Active', 'Pending', 'On Hold'];
 
@@ -146,106 +156,60 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
   };
 
   const formContent = (
-    <form id="job-form" onSubmit={handleSubmit} className="space-y-6 pt-2">
-      {/* Basic Details Section */}
-      <div className="space-y-4 p-4 rounded-xl bg-muted/30 border border-border/50">
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-          <Briefcase className="h-4 w-4 text-elec-yellow" />
-          Job Details
-        </div>
-
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label
-              htmlFor="title"
-              className="text-xs font-medium text-white uppercase tracking-wide"
-            >
-              Job Title <span className="text-destructive">*</span>
-            </Label>
+    <form id="job-form" onSubmit={handleSubmit} className="space-y-4 pt-2">
+      <FormCard eyebrow="Job details">
+        <Field label="Job title" required>
+          <Input
+            id="title"
+            value={formData.title}
+            onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+            placeholder="e.g. Commercial Rewiring"
+            className={inputClass}
+          />
+        </Field>
+        <FormGrid cols={2}>
+          <Field label="Client" required>
             <Input
-              id="title"
-              value={formData.title}
-              onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-              placeholder="e.g. Commercial Rewiring"
-              className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+              id="client"
+              value={formData.client}
+              onChange={(e) => setFormData((prev) => ({ ...prev, client: e.target.value }))}
+              placeholder="e.g. Tesco Express"
+              className={inputClass}
             />
-          </div>
+          </Field>
+          <Field label="Location" required>
+            <Input
+              id="location"
+              value={formData.location}
+              onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
+              placeholder="e.g. Manchester, M1 4BD"
+              className={inputClass}
+            />
+          </Field>
+        </FormGrid>
+      </FormCard>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label
-                htmlFor="client"
-                className="text-xs font-medium text-white uppercase tracking-wide"
-              >
-                Client <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="client"
-                value={formData.client}
-                onChange={(e) => setFormData((prev) => ({ ...prev, client: e.target.value }))}
-                placeholder="e.g. Tesco Express"
-                className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label
-                htmlFor="location"
-                className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5"
-              >
-                <MapPin className="h-3.5 w-3.5" />
-                Location <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                id="location"
-                value={formData.location}
-                onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
-                placeholder="e.g. Manchester, M1 4BD"
-                className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Value & Status Section */}
-      <div className="space-y-4 p-4 rounded-xl bg-success/5 border border-success/20">
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-          <PoundSterling className="h-4 w-4 text-success" />
-          Financial & Status
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label
-              htmlFor="value"
-              className="text-xs font-medium text-white uppercase tracking-wide"
-            >
-              Job Value (£)
-            </Label>
+      <FormCard eyebrow="Financial & status">
+        <FormGrid cols={2}>
+          <Field label="Job value (£)">
             <Input
               id="value"
               type="number"
               value={formData.value}
               onChange={(e) => setFormData((prev) => ({ ...prev, value: e.target.value }))}
               placeholder="50000"
-              className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+              className={inputClass}
             />
-          </div>
-          <div className="space-y-2">
-            <Label
-              htmlFor="status"
-              className="text-xs font-medium text-white uppercase tracking-wide"
-            >
-              Status
-            </Label>
+          </Field>
+          <Field label="Status">
             <Select
               value={formData.status}
               onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
             >
-              <SelectTrigger className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20">
+              <SelectTrigger className={selectTriggerClass}>
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className={selectContentClass}>
                 {JOB_STATUSES.map((status) => (
                   <SelectItem key={status} value={status}>
                     {status}
@@ -253,118 +217,69 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
                 ))}
               </SelectContent>
             </Select>
-          </div>
-        </div>
-      </div>
+          </Field>
+        </FormGrid>
+      </FormCard>
 
-      {/* Schedule Section */}
-      <div className="space-y-4 p-4 rounded-xl bg-info/5 border border-info/20">
-        <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-          <Calendar className="h-4 w-4 text-info" />
-          Schedule
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label
-              htmlFor="startDate"
-              className="text-xs font-medium text-white uppercase tracking-wide"
-            >
-              Start Date
-            </Label>
+      <FormCard eyebrow="Schedule">
+        <FormGrid cols={2}>
+          <Field label="Start date">
             <Input
               id="startDate"
               type="date"
               value={formData.startDate}
               onChange={(e) => setFormData((prev) => ({ ...prev, startDate: e.target.value }))}
-              className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+              className={inputClass}
             />
-          </div>
-          <div className="space-y-2">
-            <Label
-              htmlFor="endDate"
-              className="text-xs font-medium text-white uppercase tracking-wide"
-            >
-              End Date
-            </Label>
+          </Field>
+          <Field label="End date">
             <Input
               id="endDate"
               type="date"
               value={formData.endDate}
               onChange={(e) => setFormData((prev) => ({ ...prev, endDate: e.target.value }))}
-              className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+              className={inputClass}
             />
-          </div>
-        </div>
-      </div>
+          </Field>
+        </FormGrid>
+      </FormCard>
 
-      {/* Workers Section */}
-      <div className="space-y-2">
-        <Label
-          htmlFor="workers"
-          className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5"
-        >
-          <Users className="h-3.5 w-3.5" />
-          Workers Required
-        </Label>
-        <Input
-          id="workers"
-          type="number"
-          min="1"
-          value={formData.workersCount}
-          onChange={(e) => setFormData((prev) => ({ ...prev, workersCount: e.target.value }))}
-          className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
-        />
-      </div>
+      <FormCard eyebrow="Team & scope">
+        <Field label="Workers required">
+          <Input
+            id="workers"
+            type="number"
+            min="1"
+            value={formData.workersCount}
+            onChange={(e) => setFormData((prev) => ({ ...prev, workersCount: e.target.value }))}
+            className={inputClass}
+          />
+        </Field>
+        <Field label="Description">
+          <Textarea
+            id="description"
+            value={formData.description}
+            onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+            placeholder="Describe the scope of work..."
+            rows={4}
+            className={textareaClass}
+          />
+        </Field>
+      </FormCard>
 
-      {/* Description */}
-      <div className="space-y-2">
-        <Label
-          htmlFor="description"
-          className="text-xs font-medium text-white uppercase tracking-wide"
-        >
-          Description
-        </Label>
-        <Textarea
-          id="description"
-          value={formData.description}
-          onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-          placeholder="Describe the scope of work..."
-          rows={3}
-          className="bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 resize-none"
-        />
-      </div>
-
-      {/* Actions */}
-      <div className="flex gap-3 pt-6 border-t border-border/50">
-        <Button
-          type="button"
-          variant="outline"
-          className="flex-1 h-12 font-medium"
-          onClick={() => setOpen(false)}
-        >
+      <div className="flex gap-3 pt-2">
+        <SecondaryButton onClick={() => setOpen(false)} fullWidth>
           Cancel
-        </Button>
-        <Button
-          type="submit"
-          className="flex-1 h-12 font-semibold gap-2"
-          disabled={createJob.isPending}
-        >
-          {createJob.isPending ? (
-            <>Creating...</>
-          ) : (
-            <>
-              <Plus className="h-4 w-4" />
-              Create Job
-            </>
-          )}
-        </Button>
+        </SecondaryButton>
+        <PrimaryButton type="submit" disabled={createJob.isPending} fullWidth>
+          {createJob.isPending ? 'Creating...' : 'Create Job'}
+        </PrimaryButton>
       </div>
     </form>
   );
 
   const header = (
-    <div className="flex items-center gap-3 text-xl">
+    <div className="flex items-center gap-3 text-white">
       <div className="p-2 rounded-lg bg-elec-yellow/10">
         <Briefcase className="h-5 w-5 text-elec-yellow" />
       </div>
@@ -385,8 +300,8 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
             )}
           </DrawerTrigger>
         )}
-        <DrawerContent className="max-h-[90vh]">
-          <DrawerHeader className="pb-4 border-b border-border/50">
+        <DrawerContent className="max-h-[90vh] bg-[hsl(0_0%_8%)] border-white/[0.08]">
+          <DrawerHeader className="pb-4 border-b border-white/[0.06]">
             <DrawerTitle>{header}</DrawerTitle>
           </DrawerHeader>
           <div className="px-4 pb-6 overflow-y-auto">{formContent}</div>
@@ -407,8 +322,8 @@ export function AddJobDialog({ trigger, open: controlledOpen, onOpenChange }: Ad
           )}
         </DialogTrigger>
       )}
-      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="pb-4 border-b border-border/50">
+      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <DialogHeader className="pb-4 border-b border-white/[0.06]">
           <DialogTitle>{header}</DialogTitle>
         </DialogHeader>
         {formContent}

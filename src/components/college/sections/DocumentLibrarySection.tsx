@@ -94,7 +94,7 @@ export function DocumentLibrarySection() {
       <motion.div variants={itemVariants}>
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
           <div className="flex items-baseline justify-between">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Storage
             </div>
             <div className="text-[12px] tabular-nums text-white">
@@ -132,14 +132,14 @@ export function DocumentLibrarySection() {
                   toneDot[folder.tone]
                 )}
               />
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                 {String(i + 1).padStart(2, '0')} · Folder
               </div>
               <h3 className="mt-3 text-base font-semibold text-white tracking-tight">
                 {folder.name}
               </h3>
               <div className="flex-grow" />
-              <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/50 tabular-nums">
+              <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/75 tabular-nums">
                 {folder.itemCount} items
               </div>
             </button>
@@ -207,13 +207,13 @@ export function DocumentLibrarySection() {
                   )}
                 />
                 <div className="flex items-start justify-between">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                     {String(i + 1).padStart(2, '0')} · {resource.type}
                   </div>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button
-                        className="text-white/50 hover:text-white text-[16px] leading-none px-1 touch-manipulation"
+                        className="text-white/75 hover:text-white text-[16px] leading-none px-1 touch-manipulation"
                         aria-label="Options"
                       >
                         ⋯
@@ -232,7 +232,7 @@ export function DocumentLibrarySection() {
                   {resource.title}
                 </h4>
                 <div className="flex-grow" />
-                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-white/50 tabular-nums">
+                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-white/75 tabular-nums">
                   {formatFileSize(resource.fileSize)}
                 </div>
               </div>
@@ -251,7 +251,7 @@ export function DocumentLibrarySection() {
                 />
                 <div className="flex-1 min-w-0">
                   <div className="text-[14px] font-medium text-white truncate">{resource.title}</div>
-                  <div className="mt-0.5 flex items-center gap-3 text-[11.5px] text-white/50">
+                  <div className="mt-0.5 flex items-center gap-3 text-[11.5px] text-white/75">
                     <span className="tabular-nums">{formatFileSize(resource.fileSize)}</span>
                     <span>{getUploaderName(resource.uploadedBy)}</span>
                     <span className="tabular-nums">
@@ -265,7 +265,7 @@ export function DocumentLibrarySection() {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <button
-                      className="text-white/50 hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
+                      className="text-white/75 hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
                       aria-label="Options"
                     >
                       ⋯

@@ -7,9 +7,9 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
 import { X, ChevronLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { PrimaryButton, SecondaryButton, fieldLabelClass } from './editorial';
 
 interface MobileSheetProps {
   open: boolean;
@@ -52,41 +52,53 @@ export function MobileSheet({
 }: MobileSheetProps) {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className={cn('p-0 rounded-t-2xl', sizeMap[size], className)}>
+      <SheetContent
+        side="bottom"
+        className={cn(
+          'p-0 rounded-t-2xl bg-[hsl(0_0%_8%)] border-t border-white/[0.06]',
+          sizeMap[size],
+          className
+        )}
+      >
         <div className="flex flex-col h-full">
           {/* Header with drag indicator */}
           <div className="flex flex-col">
             {/* Drag indicator */}
             <div className="flex justify-center pt-2 pb-1">
-              <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+              <div className="w-10 h-1 rounded-full bg-white/20" />
             </div>
 
             {/* Title bar */}
-            <SheetHeader className="px-4 py-2 border-b border-border">
+            <SheetHeader className="px-4 py-2 border-b border-white/[0.06]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   {showBack && (
-                    <Button variant="ghost" size="icon" className="h-8 w-8 -ml-1" onClick={onBack}>
+                    <button
+                      type="button"
+                      className="h-8 w-8 -ml-1 flex items-center justify-center rounded-full hover:bg-white/[0.06] text-white touch-manipulation"
+                      onClick={onBack}
+                    >
                       <ChevronLeft className="h-5 w-5" />
-                    </Button>
+                    </button>
                   )}
                   <div>
-                    <SheetTitle className="text-base sm:text-lg text-left">{title}</SheetTitle>
+                    <SheetTitle className="text-base sm:text-lg text-left text-white">
+                      {title}
+                    </SheetTitle>
                     {description && (
-                      <SheetDescription className="text-xs text-left">
+                      <SheetDescription className="text-xs text-left text-white">
                         {description}
                       </SheetDescription>
                     )}
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8"
+                <button
+                  type="button"
+                  className="h-8 w-8 flex items-center justify-center rounded-full hover:bg-white/[0.06] text-white touch-manipulation"
                   onClick={() => onOpenChange(false)}
                 >
                   <X className="h-5 w-5" />
-                </Button>
+                </button>
               </div>
             </SheetHeader>
           </div>
@@ -98,7 +110,9 @@ export function MobileSheet({
 
           {/* Footer */}
           {footer && (
-            <div className="px-4 py-3 border-t border-border bg-background pb-safe">{footer}</div>
+            <div className="px-4 py-3 border-t border-white/[0.06] bg-[hsl(0_0%_8%)] pb-safe">
+              {footer}
+            </div>
           )}
         </div>
       </SheetContent>
@@ -130,45 +144,48 @@ export function MobileSheetFooter({
 }: MobileSheetFooterProps) {
   if (variant === 'single') {
     return (
-      <Button
+      <PrimaryButton
         onClick={onSubmit}
         disabled={isSubmitting || submitDisabled}
-        className="w-full h-12 text-base"
+        size="lg"
+        fullWidth
       >
         {isSubmitting ? 'Saving...' : submitLabel}
-      </Button>
+      </PrimaryButton>
     );
   }
 
   if (variant === 'stacked') {
     return (
       <div className="flex flex-col gap-2">
-        <Button
+        <PrimaryButton
           onClick={onSubmit}
           disabled={isSubmitting || submitDisabled}
-          className="w-full h-12 text-base"
+          size="lg"
+          fullWidth
         >
           {isSubmitting ? 'Saving...' : submitLabel}
-        </Button>
-        <Button variant="ghost" onClick={onCancel} className="w-full h-10 text-base">
+        </PrimaryButton>
+        <SecondaryButton onClick={onCancel} fullWidth>
           {cancelLabel}
-        </Button>
+        </SecondaryButton>
       </div>
     );
   }
 
   return (
     <div className="flex gap-3">
-      <Button variant="outline" onClick={onCancel} className="flex-1 h-12 text-base">
+      <SecondaryButton onClick={onCancel} size="lg" className="flex-1">
         {cancelLabel}
-      </Button>
-      <Button
+      </SecondaryButton>
+      <PrimaryButton
         onClick={onSubmit}
         disabled={isSubmitting || submitDisabled}
-        className="flex-1 h-12 text-base"
+        size="lg"
+        className="flex-1"
       >
         {isSubmitting ? 'Saving...' : submitLabel}
-      </Button>
+      </PrimaryButton>
     </div>
   );
 }
@@ -194,14 +211,14 @@ export function MobileFormField({
   className,
 }: MobileFormFieldProps) {
   return (
-    <div className={cn('space-y-2', className)}>
-      <label className="text-sm font-medium text-foreground flex items-center gap-1">
+    <div className={cn('space-y-1.5', className)}>
+      <label className={cn(fieldLabelClass, 'flex items-center gap-1 mb-0')}>
         {label}
-        {required && <span className="text-destructive">*</span>}
+        {required && <span className="text-elec-yellow">*</span>}
       </label>
       {children}
-      {hint && !error && <p className="text-xs text-white">{hint}</p>}
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {hint && !error && <p className="text-[11px] text-white">{hint}</p>}
+      {error && <p className="text-[11px] text-red-400">{error}</p>}
     </div>
   );
 }

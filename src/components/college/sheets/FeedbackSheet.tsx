@@ -12,7 +12,7 @@ interface FeedbackSheetProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function FeedbackSheet({ gradeId, open, onOpenChange }: FeedbackSheetProps) {
   const { data: grade, isLoading } = useCollegeGrade(gradeId!);
@@ -101,9 +101,9 @@ export function FeedbackSheet({ gradeId, open, onOpenChange }: FeedbackSheetProp
                     value={feedbackText}
                     onChange={(e) => setFeedbackText(e.target.value)}
                     placeholder="Write or edit feedback for this assessment. You can also use the AI generator to create a draft."
-                    className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[160px] resize-none"
+                    className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[160px] resize-none"
                   />
-                  <p className="text-[11px] text-white/40">{feedbackText.length} characters</p>
+                  <p className="text-[11px] text-white/70">{feedbackText.length} characters</p>
                 </div>
               </div>
 

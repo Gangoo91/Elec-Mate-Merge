@@ -1,10 +1,7 @@
 import { useState, useRef } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import {
   Select,
   SelectContent,
@@ -14,7 +11,6 @@ import {
 } from '@/components/ui/select';
 import {
   FileText,
-  X,
   Plus,
   Upload,
   Loader2,
@@ -33,6 +29,18 @@ import {
   type DocumentType,
 } from '@/hooks/useVehicleDocuments';
 import type { Vehicle } from '@/hooks/useFleet';
+import {
+  SheetShell,
+  Field,
+  FormCard,
+  FormGrid,
+  Pill,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface VehicleDocumentsSheetProps {
   open: boolean;
@@ -106,14 +114,14 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
     return 'valid';
   };
 
-  const getExpiryBadge = (status: string | null) => {
+  const getExpiryPill = (status: string | null) => {
     switch (status) {
       case 'expired':
-        return <Badge className="bg-red-500/20 text-red-400 border-0">Expired</Badge>;
+        return <Pill tone="red">Expired</Pill>;
       case 'expiring-soon':
-        return <Badge className="bg-orange-500/20 text-orange-400 border-0">Expiring Soon</Badge>;
+        return <Pill tone="orange">Expiring soon</Pill>;
       case 'expiring':
-        return <Badge className="bg-yellow-500/20 text-yellow-400 border-0">Expiring</Badge>;
+        return <Pill tone="amber">Expiring</Pill>;
       default:
         return null;
     }
@@ -121,36 +129,20 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-blue-500/10">
-                  <FileText className="h-5 w-5 text-blue-400" />
-                </div>
-                <div>
-                  <SheetTitle className="text-left">Vehicle Documents</SheetTitle>
-                  <p className="text-xs text-white mt-0.5">
-                    {vehicle.registration} - {vehicle.make} {vehicle.model}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onOpenChange(false)}
-                className="shrink-0 h-11 w-11 touch-manipulation"
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-          </SheetHeader>
-
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Vehicle documents"
+          title={
+            <span className="inline-flex items-center gap-2">
+              <FileText className="h-5 w-5 text-blue-400" />
+              Vehicle Documents
+            </span>
+          }
+          description={`${vehicle.registration} — ${vehicle.make} ${vehicle.model}`}
+        >
           {/* Expiry Alerts */}
           {expiring && (expiring.expired > 0 || expiring.expiringIn7Days > 0) && (
-            <div className="p-4 border-b border-border bg-red-500/5">
+            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
               <div className="flex items-center gap-2 text-sm">
                 <AlertCircle className="h-5 w-5 text-red-400" />
                 <span className="text-red-400 font-medium">
@@ -162,13 +154,10 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
             </div>
           )}
 
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto p-4">
-            {showUploadForm ? (
-              <form onSubmit={handleUpload} className="space-y-4">
-                {/* File Selection */}
-                <div>
-                  <Label className="text-sm font-medium">Document File *</Label>
+          {showUploadForm ? (
+            <form onSubmit={handleUpload} className="space-y-4">
+              <FormCard eyebrow="New document">
+                <Field label="Document file" required>
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -176,16 +165,15 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                     onChange={handleFileSelect}
                     className="hidden"
                   />
-                  <Button
+                  <button
                     type="button"
-                    variant="outline"
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full h-24 mt-1.5 flex flex-col items-center justify-center gap-2 border-dashed touch-manipulation"
+                    className="w-full h-24 flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/[0.12] bg-[hsl(0_0%_9%)] hover:bg-white/[0.04] transition-colors touch-manipulation"
                   >
                     {selectedFile ? (
                       <>
                         <FileText className="h-8 w-8 text-blue-400" />
-                        <span className="text-sm text-foreground font-medium">
+                        <span className="text-sm text-white font-medium">
                           {selectedFile.name}
                         </span>
                       </>
@@ -195,17 +183,16 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                         <span className="text-sm text-white">Tap to select file</span>
                       </>
                     )}
-                  </Button>
-                </div>
+                  </button>
+                </Field>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Label className="text-sm font-medium">Document Type *</Label>
+                <FormGrid cols={2}>
+                  <Field label="Document type" required>
                     <Select name="document_type" required>
-                      <SelectTrigger className="h-11 mt-1.5 touch-manipulation">
+                      <SelectTrigger className={selectTriggerClass}>
                         <SelectValue placeholder="Select..." />
                       </SelectTrigger>
-                      <SelectContent className="z-[100]">
+                      <SelectContent className={selectContentClass}>
                         {DOCUMENT_TYPES.map((type) => (
                           <SelectItem key={type.value} value={type.value}>
                             {type.label}
@@ -213,189 +200,164 @@ export function VehicleDocumentsSheet({ open, onOpenChange, vehicle }: VehicleDo
                         ))}
                       </SelectContent>
                     </Select>
-                  </div>
-                  <div>
-                    <Label className="text-sm font-medium">Document Name *</Label>
+                  </Field>
+                  <Field label="Document name" required>
                     <Input
                       name="name"
                       placeholder="e.g. MOT 2025"
                       required
-                      className="h-11 mt-1.5 touch-manipulation text-base"
+                      className={inputClass}
                     />
-                  </div>
-                </div>
+                  </Field>
+                </FormGrid>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Label className="text-sm font-medium">Issue Date</Label>
-                    <Input
-                      name="issue_date"
-                      type="date"
-                      className="h-11 mt-1.5 touch-manipulation text-base"
-                    />
-                  </div>
-                  <div>
-                    <Label className="text-sm font-medium">Expiry Date</Label>
-                    <Input
-                      name="expiry_date"
-                      type="date"
-                      className="h-11 mt-1.5 touch-manipulation text-base"
-                    />
-                  </div>
-                </div>
+                <FormGrid cols={2}>
+                  <Field label="Issue date">
+                    <Input name="issue_date" type="date" className={inputClass} />
+                  </Field>
+                  <Field label="Expiry date">
+                    <Input name="expiry_date" type="date" className={inputClass} />
+                  </Field>
+                </FormGrid>
 
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <Label className="text-sm font-medium">Reference Number</Label>
+                <FormGrid cols={2}>
+                  <Field label="Reference number">
                     <Input
                       name="reference_number"
-                      placeholder="Policy/Cert number"
-                      className="h-11 mt-1.5 touch-manipulation text-base"
+                      placeholder="Policy/cert number"
+                      className={inputClass}
                     />
-                  </div>
-                  <div>
-                    <Label className="text-sm font-medium">Provider</Label>
+                  </Field>
+                  <Field label="Provider">
                     <Input
                       name="provider"
                       placeholder="e.g. Admiral"
-                      className="h-11 mt-1.5 touch-manipulation text-base"
+                      className={inputClass}
                     />
-                  </div>
-                </div>
+                  </Field>
+                </FormGrid>
+              </FormCard>
 
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => {
-                      setShowUploadForm(false);
-                      setSelectedFile(null);
-                    }}
-                    className="flex-1 h-12 touch-manipulation text-base"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    disabled={!selectedFile || uploadDocument.isPending}
-                    className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 touch-manipulation text-base"
-                  >
-                    {uploadDocument.isPending ? (
-                      <Loader2 className="h-5 w-5 animate-spin" />
-                    ) : (
-                      'Upload'
-                    )}
-                  </Button>
-                </div>
-              </form>
-            ) : (
-              <>
-                {/* Upload Button */}
-                <Button
-                  onClick={() => setShowUploadForm(true)}
-                  className="w-full h-12 mb-4 bg-blue-600 hover:bg-blue-700 touch-manipulation text-base"
+              <div className="flex gap-3 pt-2">
+                <SecondaryButton
+                  fullWidth
+                  onClick={() => {
+                    setShowUploadForm(false);
+                    setSelectedFile(null);
+                  }}
                 >
-                  <Plus className="h-5 w-5 mr-2" />
-                  Upload Document
-                </Button>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  type="submit"
+                  fullWidth
+                  disabled={!selectedFile || uploadDocument.isPending}
+                >
+                  {uploadDocument.isPending ? (
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                  ) : (
+                    'Upload'
+                  )}
+                </PrimaryButton>
+              </div>
+            </form>
+          ) : (
+            <>
+              <PrimaryButton fullWidth onClick={() => setShowUploadForm(true)}>
+                <Plus className="h-5 w-5 mr-2" />
+                Upload document
+              </PrimaryButton>
 
-                {/* Document List */}
-                {isLoading ? (
-                  <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-white" />
-                  </div>
-                ) : documents.length === 0 ? (
-                  <div className="text-center py-12">
-                    <FileText className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
-                    <p className="text-sm text-white">No documents uploaded</p>
-                    <p className="text-xs text-white mt-1">
-                      Upload MOT, insurance, V5 and more
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {documents.map((doc) => {
-                      const expiryStatus = getExpiryStatus(doc.expiry_date);
-                      return (
-                        <div
-                          key={doc.id}
-                          className={cn(
-                            'p-4 rounded-xl border bg-card/50 touch-manipulation',
-                            expiryStatus === 'expired'
-                              ? 'border-red-500/30'
-                              : expiryStatus === 'expiring-soon'
-                                ? 'border-orange-500/30'
-                                : 'border-border'
-                          )}
-                        >
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex-1 min-w-0">
-                              <h4 className="font-semibold text-foreground text-base truncate">
-                                {doc.name}
-                              </h4>
-                              <p className="text-sm text-white">
-                                {DOCUMENT_TYPES.find((t) => t.value === doc.document_type)?.label}
-                              </p>
-                            </div>
-                            <div className="flex items-center gap-1 ml-2">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-11 w-11 touch-manipulation"
-                                onClick={() => openExternalUrl(doc.file_url)}
-                              >
-                                <ExternalLink className="h-5 w-5" />
-                              </Button>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-11 w-11 touch-manipulation text-red-400"
-                                onClick={() => handleDelete(doc)}
-                              >
-                                <Trash2 className="h-5 w-5" />
-                              </Button>
-                            </div>
+              {/* Document List */}
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-8 w-8 animate-spin text-white" />
+                </div>
+              ) : documents.length === 0 ? (
+                <div className="text-center py-12">
+                  <FileText className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
+                  <p className="text-sm text-white">No documents uploaded</p>
+                  <p className="text-xs text-white mt-1">
+                    Upload MOT, insurance, V5 and more
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {documents.map((doc) => {
+                    const expiryStatus = getExpiryStatus(doc.expiry_date);
+                    return (
+                      <div
+                        key={doc.id}
+                        className={cn(
+                          'p-4 rounded-2xl border bg-[hsl(0_0%_12%)] touch-manipulation',
+                          expiryStatus === 'expired'
+                            ? 'border-red-500/30'
+                            : expiryStatus === 'expiring-soon'
+                              ? 'border-orange-500/30'
+                              : 'border-white/[0.06]'
+                        )}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex-1 min-w-0">
+                            <h4 className="font-semibold text-white text-base truncate">
+                              {doc.name}
+                            </h4>
+                            <p className="text-sm text-white">
+                              {DOCUMENT_TYPES.find((t) => t.value === doc.document_type)?.label}
+                            </p>
                           </div>
-
-                          <div className="flex flex-wrap gap-2">
-                            {getExpiryBadge(expiryStatus)}
-                            {doc.reference_number && (
-                              <Badge variant="outline" className="text-xs">
-                                Ref: {doc.reference_number}
-                              </Badge>
-                            )}
-                            {doc.provider && (
-                              <Badge variant="outline" className="text-xs">
-                                {doc.provider}
-                              </Badge>
-                            )}
+                          <div className="flex items-center gap-1 ml-2">
+                            <button
+                              type="button"
+                              aria-label="Open document"
+                              className="h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] transition-colors touch-manipulation"
+                              onClick={() => openExternalUrl(doc.file_url)}
+                            >
+                              <ExternalLink className="h-5 w-5" />
+                            </button>
+                            <button
+                              type="button"
+                              aria-label="Delete document"
+                              className="h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-red-400 flex items-center justify-center hover:bg-red-500/15 transition-colors touch-manipulation"
+                              onClick={() => handleDelete(doc)}
+                            >
+                              <Trash2 className="h-5 w-5" />
+                            </button>
                           </div>
-
-                          {doc.expiry_date && (
-                            <div className="flex items-center gap-2 mt-3 text-sm">
-                              <Calendar className="h-4 w-4 text-white" />
-                              <span
-                                className={cn(
-                                  expiryStatus === 'expired'
-                                    ? 'text-red-400'
-                                    : expiryStatus === 'expiring-soon'
-                                      ? 'text-orange-400'
-                                      : 'text-white'
-                                )}
-                              >
-                                Expires: {new Date(doc.expiry_date).toLocaleDateString('en-GB')}
-                              </span>
-                            </div>
-                          )}
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        </div>
+
+                        <div className="flex flex-wrap gap-2">
+                          {getExpiryPill(expiryStatus)}
+                          {doc.reference_number && (
+                            <Pill tone="yellow">Ref: {doc.reference_number}</Pill>
+                          )}
+                          {doc.provider && <Pill tone="blue">{doc.provider}</Pill>}
+                        </div>
+
+                        {doc.expiry_date && (
+                          <div className="flex items-center gap-2 mt-3 text-sm">
+                            <Calendar className="h-4 w-4 text-white" />
+                            <span
+                              className={cn(
+                                expiryStatus === 'expired'
+                                  ? 'text-red-400'
+                                  : expiryStatus === 'expiring-soon'
+                                    ? 'text-orange-400'
+                                    : 'text-white'
+                              )}
+                            >
+                              Expires: {new Date(doc.expiry_date).toLocaleDateString('en-GB')}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </>
+          )}
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

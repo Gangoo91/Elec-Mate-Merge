@@ -79,7 +79,7 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
     <div className="space-y-4">
       {/* Header */}
       <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
           Invite Code
         </div>
         <h3 className="mt-1.5 text-[15px] font-semibold text-white">Have an invite code?</h3>

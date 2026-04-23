@@ -1,43 +1,45 @@
 import { useState, useMemo, useCallback } from 'react';
-import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Label } from '@/components/ui/label';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { BookLabourBankDialog } from '@/components/employer/dialogs/BookLabourBankDialog';
 import {
   SparkProfileSheet,
   type EnhancedElectrician,
-  type VerificationTier,
 } from '@/components/employer/SparkProfileSheet';
 import { TalentMapView } from '@/components/employer/TalentMapView';
 import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
 import { AvailabilityCalendar } from '@/components/employer/AvailabilityCalendar';
-import { PremiumTalentCard } from '@/components/employer/talent-pool/PremiumTalentCard';
-import { TalentProfileCardSkeletonGrid } from '@/components/employer/talent-pool/TalentProfileCardSkeleton';
 import { MessageDialog } from '@/components/employer/talent-pool/MessageDialog';
 import { InviteToApplyDialog } from '@/components/employer/talent-pool/InviteToApplyDialog';
 import { TalentFilterChips } from '@/components/employer/talent-pool/TalentFilterChips';
 import {
-  Search,
-  Map,
-  List,
-  CalendarDays,
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  Divider,
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  fieldLabelClass,
+  type Tone,
+} from '@/components/employer/editorial';
+import {
   SlidersHorizontal,
   Shield,
-  X,
   Check,
-  Zap,
   Award,
-  Users,
-  Sparkles,
   RefreshCw,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { useEmployer } from '@/contexts/EmployerContext';
 import { useTalentPool, type TalentPoolWorker, type ExperienceLevel } from '@/hooks/useTalentPool';
 import { addDays, format } from 'date-fns';
@@ -47,10 +49,8 @@ type ViewMode = 'list' | 'map' | 'calendar';
 type AvailabilityFilter = 'all' | 'now' | 'week';
 type TierFilter = 'all' | 'verified' | 'premium';
 
-// Common ECS card types
 const ECS_CARD_TYPES = ['Gold', 'Blue', 'Green', 'Apprentice'];
 
-// Common qualifications
 const COMMON_QUALIFICATIONS = [
   '18th Edition BS7671',
   'C&G 2391 Inspection & Testing',
@@ -60,7 +60,6 @@ const COMMON_QUALIFICATIONS = [
   'Part P Competent Person',
 ];
 
-// Simple hash function for deterministic positioning
 const hashCode = (str: string): number => {
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
@@ -71,11 +70,9 @@ const hashCode = (str: string): number => {
   return Math.abs(hash);
 };
 
-// Manchester city centre
 const BASE_LAT = 53.4808;
 const BASE_LNG = -2.2426;
 
-// Generate stable coordinates based on electrician ID and distance
 const generateStableCoordinates = (id: string, distance: number): { lat: number; lng: number } => {
   const hash = hashCode(id);
   const angle = (hash % 360) * (Math.PI / 180);
@@ -87,7 +84,6 @@ const generateStableCoordinates = (id: string, distance: number): { lat: number;
   };
 };
 
-// Generate availability slots for calendar view
 const generateAvailabilitySlots = (id: string) => {
   const slots: { date: string; slots: ('morning' | 'afternoon' | 'evening')[] }[] = [];
   const today = new Date();
@@ -118,7 +114,6 @@ const generateAvailabilitySlots = (id: string) => {
   return slots;
 };
 
-// Convert TalentPoolWorker to EnhancedElectrician for UI compatibility
 const convertToEnhancedElectrician = (
   worker: TalentPoolWorker
 ): EnhancedElectrician & {
@@ -155,7 +150,6 @@ const convertToEnhancedElectrician = (
   verifiedDocsCount: worker.verifiedDocsCount,
   elecIdNumber: worker.elecIdNumber,
   elecIdProfileId: worker.elecIdProfileId,
-  // New enhanced fields
   skills: worker.skills,
   currentRole: worker.currentRole,
   totalYearsExperience: worker.totalYearsExperience,
@@ -172,8 +166,27 @@ const specialisms = [
   'Testing',
 ];
 
+const getInitials = (name: string): string => {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+};
+
+const availabilityToneFor = (availability: string): Tone => {
+  const a = availability.toLowerCase();
+  if (a.includes('now') || a.includes('available')) return 'emerald';
+  if (a.includes('week') || a.includes('soon')) return 'amber';
+  if (a.includes('busy') || a.includes('booked')) return 'red';
+  return 'blue';
+};
+
+const tierToneFor = (tier: string | undefined): Tone => {
+  if (tier === 'premium') return 'yellow';
+  if (tier === 'verified') return 'emerald';
+  return 'blue';
+};
+
 export function TalentPoolSection() {
-  const isMobile = useIsMobile();
   const { savedCandidates, labourBank, toggleSaveCandidate, addToLabourBank } = useEmployer();
 
   const [viewMode, setViewMode] = useState<ViewMode>('list');
@@ -186,18 +199,15 @@ export function TalentPoolSection() {
   const [selectedElectrician, setSelectedElectrician] = useState<EnhancedElectrician | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Filter state
   const [availabilityFilter, setAvailabilityFilter] = useState<AvailabilityFilter>('all');
   const [tierFilter, setTierFilter] = useState<TierFilter>('all');
   const [selectedSpecialisms, setSelectedSpecialisms] = useState<string[]>([]);
   const [labourBankOnly, setLabourBankOnly] = useState(false);
-  // New enhanced filters
   const [experienceFilter, setExperienceFilter] = useState<ExperienceLevel>('all');
   const [selectedEcsCards, setSelectedEcsCards] = useState<string[]>([]);
   const [selectedQualifications, setSelectedQualifications] = useState<string[]>([]);
   const [rateRange, setRateRange] = useState<[number, number]>([150, 500]);
 
-  // Fetch real talent pool data from database
   const { workers, isLoading, error, availableNowCount, totalCount, refetch } = useTalentPool({
     searchQuery,
     tierFilter,
@@ -207,10 +217,9 @@ export function TalentPoolSection() {
     ecsCardFilter: selectedEcsCards,
     qualificationsFilter: selectedQualifications,
     minRate: rateRange[0],
-    maxRate: rateRange[1] < 500 ? rateRange[1] : undefined, // Only apply max if not at default max
+    maxRate: rateRange[1] < 500 ? rateRange[1] : undefined,
   });
 
-  // Pull to refresh handler
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true);
     await refetch();
@@ -221,13 +230,10 @@ export function TalentPoolSection() {
     });
   }, [refetch]);
 
-  // Convert workers to EnhancedElectrician format for UI components
   const enhancedElectricians = useMemo(() => workers.map(convertToEnhancedElectrician), [workers]);
 
-  // Get Labour Bank IDs
   const labourBankIds = labourBank.map((m) => m.electricianId);
 
-  // Count active filters
   const activeFilterCount = [
     availabilityFilter !== 'all',
     tierFilter !== 'all',
@@ -239,13 +245,11 @@ export function TalentPoolSection() {
     rateRange[0] > 150 || rateRange[1] < 500,
   ].filter(Boolean).length;
 
-  // Apply Labour Bank filter (client-side since it's local state)
   const filteredElectricians = useMemo(() => {
     if (!labourBankOnly) return enhancedElectricians;
     return enhancedElectricians.filter((e) => labourBankIds.includes(e.id));
   }, [enhancedElectricians, labourBankOnly, labourBankIds]);
 
-  // Get Labour Bank rate if available
   const getLabourBankRate = (electricianId: string) => {
     return labourBank.find((r) => r.electricianId === electricianId);
   };
@@ -314,345 +318,362 @@ export function TalentPoolSection() {
     });
   };
 
+  const skillTabs = useMemo(
+    () => [
+      { value: 'all', label: 'All' },
+      { value: 'available', label: 'Available now', count: availableNowCount },
+      { value: 'verified', label: 'Verified+' },
+      { value: 'premium', label: 'Premium' },
+      { value: 'ev', label: 'EV Charging' },
+      { value: 'solar', label: 'Solar PV' },
+      { value: 'senior', label: 'Senior 8+ yrs' },
+      { value: 'list', label: 'List' },
+      { value: 'map', label: 'Map' },
+      { value: 'calendar', label: 'Calendar' },
+    ],
+    [availableNowCount]
+  );
+
+  const activeQuickTab: string = useMemo(() => {
+    if (viewMode === 'map') return 'map';
+    if (viewMode === 'calendar') return 'calendar';
+    if (availabilityFilter === 'now') return 'available';
+    if (tierFilter === 'verified') return 'verified';
+    if (tierFilter === 'premium') return 'premium';
+    if (selectedSpecialisms.includes('EV Charging')) return 'ev';
+    if (selectedSpecialisms.includes('Solar PV')) return 'solar';
+    if (experienceFilter === 'senior') return 'senior';
+    return viewMode === 'list' ? 'list' : 'all';
+  }, [viewMode, availabilityFilter, tierFilter, selectedSpecialisms, experienceFilter]);
+
+  const handleQuickTab = (value: string) => {
+    switch (value) {
+      case 'all':
+        clearFilters();
+        setViewMode('list');
+        return;
+      case 'available':
+        setAvailabilityFilter(availabilityFilter === 'now' ? 'all' : 'now');
+        setViewMode('list');
+        return;
+      case 'verified':
+        setTierFilter(tierFilter === 'verified' ? 'all' : 'verified');
+        setViewMode('list');
+        return;
+      case 'premium':
+        setTierFilter(tierFilter === 'premium' ? 'all' : 'premium');
+        setViewMode('list');
+        return;
+      case 'ev':
+        toggleSpecialism('EV Charging');
+        setViewMode('list');
+        return;
+      case 'solar':
+        toggleSpecialism('Solar PV');
+        setViewMode('list');
+        return;
+      case 'senior':
+        setExperienceFilter(experienceFilter === 'senior' ? 'all' : 'senior');
+        setViewMode('list');
+        return;
+      case 'list':
+        setViewMode('list');
+        return;
+      case 'map':
+        setViewMode('map');
+        return;
+      case 'calendar':
+        setViewMode('calendar');
+        return;
+    }
+  };
+
+  const shortlistedCount = savedCandidates.length;
+  const labourBankCount = labourBank.length;
+  const signedCount = labourBankCount;
+  const invitedCount = shortlistedCount;
+
   return (
-    <div className="space-y-3 md:space-y-4 animate-fade-in -mx-4 px-4 sm:mx-0 sm:px-0">
-      {/* Stats strip */}
-      {!isLoading && (
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-white font-medium">{totalCount} electricians</span>
-          {availableNowCount > 0 && (
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-400">
-              <Sparkles className="h-3 w-3" />
-              {availableNowCount} available now
-            </span>
-          )}
-        </div>
-      )}
+    <PageFrame>
+      <PageHero
+        eyebrow="Hiring"
+        title="Talent Pool"
+        description="Browse available electricians by skill, rate and location."
+        tone="blue"
+        actions={
+          <IconButton onClick={handleRefresh} aria-label="Refresh talent pool">
+            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+          </IconButton>
+        }
+      />
 
-      {/* Error State */}
       {error && (
-        <Card className="bg-red-500/10 border-red-500/30">
-          <CardContent className="p-4 text-center">
-            <p className="text-red-400">{error}</p>
-          </CardContent>
-        </Card>
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 py-4">
+          <div className="flex items-center gap-3">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-red-400" />
+            <p className="text-[13px] text-white">{error}</p>
+          </div>
+        </div>
       )}
 
-      {/* Search Row */}
-      <div className="flex gap-2">
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search sparkies..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn(
-              'h-12 bg-white/[0.03] border-white/[0.08] touch-manipulation',
-              !searchQuery && 'pl-10'
-            )}
-          />
-        </div>
+      <StatStrip
+        columns={4}
+        stats={[
+          { label: 'Available', value: availableNowCount, tone: 'emerald' },
+          { label: 'Shortlisted', value: shortlistedCount, tone: 'yellow' },
+          { label: 'Invited', value: invitedCount, tone: 'blue' },
+          { label: 'Signed', value: signedCount, accent: true },
+        ]}
+      />
 
-        {/* Refresh Button */}
-        <Button
-          variant="outline"
-          size="icon"
-          className="h-12 w-12 shrink-0 touch-manipulation"
-          onClick={handleRefresh}
-          disabled={isRefreshing}
-        >
-          <RefreshCw className={`h-5 w-5 ${isRefreshing ? 'animate-spin' : ''}`} />
-        </Button>
-
-        {/* Filter Button */}
-        <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="outline"
-              size="icon"
-              className="h-12 w-12 shrink-0 relative touch-manipulation"
-            >
-              <SlidersHorizontal className="h-5 w-5" />
-              {activeFilterCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-5 h-5 bg-elec-yellow text-elec-yellow-foreground text-xs rounded-full flex items-center justify-center font-medium">
-                  {activeFilterCount}
-                </span>
-              )}
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="bottom" className="max-h-[85vh] rounded-t-2xl flex flex-col">
-            <SheetHeader className="pb-4 border-b border-white/[0.08] shrink-0">
-              <div className="flex items-center justify-between">
-                <SheetTitle>Filters</SheetTitle>
+      <FilterBar
+        tabs={skillTabs}
+        activeTab={activeQuickTab}
+        onTabChange={handleQuickTab}
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search sparkies by name, skill, location…"
+        actions={
+          <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
+            <SheetTrigger asChild>
+              <button
+                className="relative h-10 px-4 rounded-full bg-white/[0.06] border border-white/[0.1] text-[12.5px] font-medium text-white inline-flex items-center gap-2 hover:bg-white/[0.1] transition-colors touch-manipulation"
+                aria-label="Open filters"
+              >
+                <SlidersHorizontal className="h-4 w-4" />
+                Filters
                 {activeFilterCount > 0 && (
-                  <Button variant="ghost" size="sm" onClick={clearFilters}>
-                    Clear all
-                  </Button>
-                )}
-              </div>
-            </SheetHeader>
-
-            <div className="flex-1 overflow-y-auto py-6 space-y-6">
-              {/* Availability */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Availability</Label>
-                <div className="flex gap-2">
-                  {[
-                    { value: 'all', label: 'All' },
-                    { value: 'now', label: 'Available Now' },
-                    { value: 'week', label: 'This Week' },
-                  ].map((opt) => (
-                    <Button
-                      key={opt.value}
-                      variant={availabilityFilter === opt.value ? 'default' : 'outline'}
-                      size="sm"
-                      className="h-10"
-                      onClick={() => setAvailabilityFilter(opt.value as AvailabilityFilter)}
-                    >
-                      {opt.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Elec-ID Verification Tier */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Elec-ID Verification</Label>
-                <div className="flex gap-2">
-                  {[
-                    { value: 'all', label: 'Any', icon: null },
-                    { value: 'verified', label: 'Verified+', icon: Shield },
-                    { value: 'premium', label: 'Premium', icon: Award },
-                  ].map((opt) => {
-                    const Icon = opt.icon;
-                    return (
-                      <Button
-                        key={opt.value}
-                        variant={tierFilter === opt.value ? 'default' : 'outline'}
-                        size="sm"
-                        className="h-10"
-                        onClick={() => setTierFilter(opt.value as TierFilter)}
-                      >
-                        {Icon && <Icon className="h-4 w-4 mr-1.5" />}
-                        {opt.label}
-                      </Button>
-                    );
-                  })}
-                </div>
-                <p className="text-xs text-white">
-                  Verified = ECS + qualification. Premium = full credentials.
-                </p>
-              </div>
-
-              {/* Specialisms */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Specialisms</Label>
-                <div className="flex flex-wrap gap-2">
-                  {specialisms.map((spec) => (
-                    <Badge
-                      key={spec}
-                      variant={selectedSpecialisms.includes(spec) ? 'default' : 'outline'}
-                      className="cursor-pointer h-9 px-4 text-sm"
-                      onClick={() => toggleSpecialism(spec)}
-                    >
-                      {selectedSpecialisms.includes(spec) && <Check className="h-3 w-3 mr-1" />}
-                      {spec}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* Experience Level */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Experience Level</Label>
-                <div className="flex gap-2">
-                  {[
-                    { value: 'all', label: 'Any' },
-                    { value: 'entry', label: 'Entry (0-2yr)' },
-                    { value: 'mid', label: 'Mid (3-7yr)' },
-                    { value: 'senior', label: 'Senior (8+yr)' },
-                  ].map((opt) => (
-                    <Button
-                      key={opt.value}
-                      variant={experienceFilter === opt.value ? 'default' : 'outline'}
-                      size="sm"
-                      className="h-10 flex-1"
-                      onClick={() => setExperienceFilter(opt.value as ExperienceLevel)}
-                    >
-                      {opt.label}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* ECS Card Type */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">ECS Card Type</Label>
-                <div className="flex flex-wrap gap-2">
-                  {ECS_CARD_TYPES.map((card) => (
-                    <Badge
-                      key={card}
-                      variant={selectedEcsCards.includes(card) ? 'default' : 'outline'}
-                      className={`cursor-pointer h-9 px-4 text-sm ${
-                        selectedEcsCards.includes(card)
-                          ? card === 'Gold'
-                            ? 'bg-amber-500'
-                            : card === 'Blue'
-                              ? 'bg-blue-500'
-                              : card === 'Green'
-                                ? 'bg-emerald-500'
-                                : 'bg-purple-500'
-                          : ''
-                      }`}
-                      onClick={() =>
-                        setSelectedEcsCards((prev) =>
-                          prev.includes(card) ? prev.filter((c) => c !== card) : [...prev, card]
-                        )
-                      }
-                    >
-                      {selectedEcsCards.includes(card) && <Check className="h-3 w-3 mr-1" />}
-                      {card}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* Qualifications */}
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Qualifications</Label>
-                <div className="flex flex-wrap gap-2">
-                  {COMMON_QUALIFICATIONS.map((qual) => (
-                    <Badge
-                      key={qual}
-                      variant={selectedQualifications.includes(qual) ? 'default' : 'outline'}
-                      className="cursor-pointer h-9 px-4 text-sm"
-                      onClick={() =>
-                        setSelectedQualifications((prev) =>
-                          prev.includes(qual) ? prev.filter((q) => q !== qual) : [...prev, qual]
-                        )
-                      }
-                    >
-                      {selectedQualifications.includes(qual) && <Check className="h-3 w-3 mr-1" />}
-                      {qual}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* Day Rate Range */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <Label className="text-sm font-medium">Day Rate</Label>
-                  <span className="text-sm text-white">
-                    £{rateRange[0]} - £{rateRange[1]}
-                    {rateRange[1] >= 500 ? '+' : ''}
+                  <span className="ml-1 inline-flex items-center justify-center h-5 min-w-[20px] px-1.5 rounded-full bg-elec-yellow text-black text-[10px] font-semibold tabular-nums">
+                    {activeFilterCount}
                   </span>
+                )}
+              </button>
+            </SheetTrigger>
+            <SheetContent side="bottom" className="max-h-[85vh] rounded-t-2xl p-0 overflow-hidden">
+              <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
+                <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
+                  <div className="h-1 w-10 rounded-full bg-white/20" />
                 </div>
-                <div className="px-2">
-                  <Slider
-                    value={rateRange}
-                    min={150}
-                    max={500}
-                    step={25}
-                    onValueChange={(value) => setRateRange(value as [number, number])}
-                    className="touch-manipulation"
-                  />
-                </div>
-                <div className="flex justify-between text-xs text-white">
-                  <span>£150</span>
-                  <span>£500+</span>
-                </div>
-              </div>
-
-              {/* Labour Bank Toggle */}
-              <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
-                <div className="flex items-center gap-3">
-                  <Zap className="h-5 w-5 text-success" />
-                  <div>
-                    <p className="font-medium">Labour Bank Only</p>
-                    <p className="text-sm text-white">Pre-agreed rates</p>
+                <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+                  <div className="flex items-end justify-between gap-3">
+                    <div>
+                      <Eyebrow>Hiring</Eyebrow>
+                      <div className="mt-1 text-[20px] font-semibold text-white leading-tight">Filters</div>
+                    </div>
+                    {activeFilterCount > 0 && (
+                      <button
+                        onClick={clearFilters}
+                        className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                      >
+                        Clear all
+                      </button>
+                    )}
                   </div>
                 </div>
-                <Button
-                  variant={labourBankOnly ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setLabourBankOnly(!labourBankOnly)}
-                >
-                  {labourBankOnly ? 'On' : 'Off'}
-                </Button>
+
+                <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
+                  <div className="space-y-3">
+                    <label className={fieldLabelClass}>Availability</label>
+                    <div className="flex gap-2 flex-wrap">
+                      {[
+                        { value: 'all', label: 'All' },
+                        { value: 'now', label: 'Available now' },
+                        { value: 'week', label: 'This week' },
+                      ].map((opt) => {
+                        const isActive = availabilityFilter === opt.value;
+                        return (
+                          <button
+                            key={opt.value}
+                            onClick={() => setAvailabilityFilter(opt.value as AvailabilityFilter)}
+                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <Divider />
+
+                  <div className="space-y-3">
+                    <label className={fieldLabelClass}>Elec-ID verification</label>
+                    <div className="flex gap-2 flex-wrap">
+                      {[
+                        { value: 'all', label: 'Any', icon: null },
+                        { value: 'verified', label: 'Verified+', icon: Shield },
+                        { value: 'premium', label: 'Premium', icon: Award },
+                      ].map((opt) => {
+                        const Icon = opt.icon;
+                        const isActive = tierFilter === opt.value;
+                        return (
+                          <button
+                            key={opt.value}
+                            onClick={() => setTierFilter(opt.value as TierFilter)}
+                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
+                          >
+                            {Icon && <Icon className="h-4 w-4" />}
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <p className="text-[11.5px] text-white">Verified = ECS + qualification. Premium = full credentials.</p>
+                  </div>
+
+                  <Divider />
+
+                  <div className="space-y-3">
+                    <label className={fieldLabelClass}>Specialisms</label>
+                    <div className="flex flex-wrap gap-2">
+                      {specialisms.map((spec) => {
+                        const isActive = selectedSpecialisms.includes(spec);
+                        return (
+                          <button
+                            key={spec}
+                            onClick={() => toggleSpecialism(spec)}
+                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
+                          >
+                            {isActive && <Check className="h-3 w-3" />}
+                            {spec}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <Divider />
+
+                  <div className="space-y-3">
+                    <label className={fieldLabelClass}>Experience level</label>
+                    <div className="flex flex-wrap gap-2">
+                      {[
+                        { value: 'all', label: 'Any' },
+                        { value: 'entry', label: 'Entry (0-2 yr)' },
+                        { value: 'mid', label: 'Mid (3-7 yr)' },
+                        { value: 'senior', label: 'Senior (8+ yr)' },
+                      ].map((opt) => {
+                        const isActive = experienceFilter === opt.value;
+                        return (
+                          <button
+                            key={opt.value}
+                            onClick={() => setExperienceFilter(opt.value as ExperienceLevel)}
+                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <Divider />
+
+                  <div className="space-y-3">
+                    <label className={fieldLabelClass}>ECS card type</label>
+                    <div className="flex flex-wrap gap-2">
+                      {ECS_CARD_TYPES.map((card) => {
+                        const isActive = selectedEcsCards.includes(card);
+                        return (
+                          <button
+                            key={card}
+                            onClick={() =>
+                              setSelectedEcsCards((prev) =>
+                                prev.includes(card) ? prev.filter((c) => c !== card) : [...prev, card]
+                              )
+                            }
+                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
+                          >
+                            {isActive && <Check className="h-3 w-3" />}
+                            {card}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <Divider />
+
+                  <div className="space-y-3">
+                    <label className={fieldLabelClass}>Qualifications</label>
+                    <div className="flex flex-wrap gap-2">
+                      {COMMON_QUALIFICATIONS.map((qual) => {
+                        const isActive = selectedQualifications.includes(qual);
+                        return (
+                          <button
+                            key={qual}
+                            onClick={() =>
+                              setSelectedQualifications((prev) =>
+                                prev.includes(qual) ? prev.filter((q) => q !== qual) : [...prev, qual]
+                              )
+                            }
+                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
+                          >
+                            {isActive && <Check className="h-3 w-3" />}
+                            {qual}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <Divider />
+
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <label className={fieldLabelClass}>Day rate</label>
+                      <span className="text-[12.5px] font-semibold text-white tabular-nums">
+                        £{rateRange[0]} – £{rateRange[1]}{rateRange[1] >= 500 ? '+' : ''}
+                      </span>
+                    </div>
+                    <div className="px-2">
+                      <Slider
+                        value={rateRange}
+                        min={150}
+                        max={500}
+                        step={25}
+                        onValueChange={(value) => setRateRange(value as [number, number])}
+                        className="touch-manipulation"
+                      />
+                    </div>
+                    <div className="flex justify-between text-[11px] text-white">
+                      <span>£150</span>
+                      <span>£500+</span>
+                    </div>
+                  </div>
+
+                  <Divider />
+
+                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-4 flex items-center justify-between">
+                    <div>
+                      <p className="text-[13px] font-semibold text-white">Labour Bank only</p>
+                      <p className="text-[11.5px] text-white">Pre-agreed rates</p>
+                    </div>
+                    <button
+                      onClick={() => setLabourBankOnly(!labourBankOnly)}
+                      className={`h-10 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors ${labourBankOnly ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08]'}`}
+                    >
+                      {labourBankOnly ? 'On' : 'Off'}
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2">
+                  {activeFilterCount > 0 && (
+                    <SecondaryButton onClick={clearFilters} fullWidth>
+                      Clear
+                    </SecondaryButton>
+                  )}
+                  <PrimaryButton onClick={() => setFilterSheetOpen(false)} fullWidth size="lg">
+                    Done
+                  </PrimaryButton>
+                </div>
               </div>
-            </div>
+            </SheetContent>
+          </Sheet>
+        }
+      />
 
-            <div className="shrink-0 pt-4 border-t border-white/[0.08] bg-background pb-safe">
-              <Button
-                className="w-full h-12 touch-manipulation"
-                onClick={() => setFilterSheetOpen(false)}
-              >
-                Done
-              </Button>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </div>
-
-      {/* Quick Filter Bar - Horizontal Scrollable Chips */}
-      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-        <Badge
-          variant={availabilityFilter === 'now' ? 'default' : 'outline'}
-          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation bg-success/10 border-success/30 hover:bg-success/20"
-          onClick={() => setAvailabilityFilter(availabilityFilter === 'now' ? 'all' : 'now')}
-        >
-          {availabilityFilter === 'now' && <Check className="h-3 w-3 mr-1" />}
-          <Sparkles className="h-3 w-3 mr-1" />
-          Available Now
-        </Badge>
-        <Badge
-          variant={tierFilter === 'verified' ? 'default' : 'outline'}
-          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
-          onClick={() => setTierFilter(tierFilter === 'verified' ? 'all' : 'verified')}
-        >
-          {tierFilter === 'verified' && <Check className="h-3 w-3 mr-1" />}
-          <Shield className="h-3 w-3 mr-1" />
-          Verified+
-        </Badge>
-        <Badge
-          variant={tierFilter === 'premium' ? 'default' : 'outline'}
-          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation bg-amber-500/10 border-amber-500/30 hover:bg-amber-500/20"
-          onClick={() => setTierFilter(tierFilter === 'premium' ? 'all' : 'premium')}
-        >
-          {tierFilter === 'premium' && <Check className="h-3 w-3 mr-1" />}
-          <Award className="h-3 w-3 mr-1" />
-          Premium
-        </Badge>
-        <Badge
-          variant={selectedSpecialisms.includes('EV Charging') ? 'default' : 'outline'}
-          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
-          onClick={() => toggleSpecialism('EV Charging')}
-        >
-          {selectedSpecialisms.includes('EV Charging') && <Check className="h-3 w-3 mr-1" />}
-          EV Specialists
-        </Badge>
-        <Badge
-          variant={selectedSpecialisms.includes('Solar PV') ? 'default' : 'outline'}
-          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
-          onClick={() => toggleSpecialism('Solar PV')}
-        >
-          {selectedSpecialisms.includes('Solar PV') && <Check className="h-3 w-3 mr-1" />}
-          Solar PV
-        </Badge>
-        <Badge
-          variant={experienceFilter === 'senior' ? 'default' : 'outline'}
-          className="cursor-pointer h-9 px-4 text-sm whitespace-nowrap flex-shrink-0 touch-manipulation"
-          onClick={() => setExperienceFilter(experienceFilter === 'senior' ? 'all' : 'senior')}
-        >
-          {experienceFilter === 'senior' && <Check className="h-3 w-3 mr-1" />}
-          8+ Years Exp
-        </Badge>
-      </div>
-
-      {/* Inline Filter Chips */}
       <TalentFilterChips
         availabilityFilter={availabilityFilter}
         tierFilter={tierFilter}
@@ -678,104 +699,72 @@ export function TalentPoolSection() {
         totalResults={filteredElectricians.length}
       />
 
-      {/* View Toggle */}
-      <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as ViewMode)} className="w-full">
-        <TabsList className="w-full h-11 grid grid-cols-3">
-          <TabsTrigger value="list" className="gap-2 h-9 touch-manipulation active:scale-[0.97]">
-            <List className="h-4 w-4" />
-            <span className="hidden sm:inline">List</span>
-          </TabsTrigger>
-          <TabsTrigger value="map" className="gap-2 h-9 touch-manipulation active:scale-[0.97]">
-            <Map className="h-4 w-4" />
-            <span className="hidden sm:inline">Map</span>
-          </TabsTrigger>
-          <TabsTrigger
-            value="calendar"
-            className="gap-2 h-9 touch-manipulation active:scale-[0.97]"
-          >
-            <CalendarDays className="h-4 w-4" />
-            <span className="hidden sm:inline">Calendar</span>
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+      {isLoading && <LoadingBlocks />}
 
-      {/* Content based on view mode */}
-      {viewMode === 'list' && (
-        <div className="space-y-3">
-          {/* Skeleton Loading State */}
-          {isLoading && <TalentProfileCardSkeletonGrid count={5} />}
-
-          {/* Results */}
-          {!isLoading &&
-            filteredElectricians.map((electrician) => {
-              const isSaved = savedCandidates.includes(electrician.id);
-              const labourBankRate = getLabourBankRate(electrician.id);
-              const isInLabourBank = !!labourBankRate;
-
-              return (
-                <PremiumTalentCard
-                  key={electrician.id}
-                  id={electrician.id}
-                  elecIdProfileId={(electrician as any).elecIdProfileId}
-                  name={electrician.name}
-                  avatar={electrician.avatar}
-                  verificationTier={electrician.verificationTier}
-                  ecsCardType={electrician.ecsCardType}
-                  rating={electrician.rating}
-                  distance={electrician.distance}
-                  location={electrician.location}
-                  dayRate={electrician.dayRate}
-                  availability={electrician.availability}
-                  verifiedDocsCount={(electrician as any).verifiedDocsCount || 0}
-                  specialisms={electrician.specialisms}
-                  qualifications={electrician.qualifications}
-                  skills={(electrician as any).skills || []}
-                  currentRole={(electrician as any).currentRole}
-                  totalYearsExperience={(electrician as any).totalYearsExperience}
-                  completedJobs={electrician.completedJobs}
-                  elecIdNumber={(electrician as any).elecIdNumber}
-                  isSaved={isSaved}
-                  isInLabourBank={isInLabourBank}
-                  labourBankRate={labourBankRate?.agreedDayRate}
-                  onClick={() => handleOpenProfile(electrician)}
-                  onSave={() => handleSave(electrician)}
-                  onMessage={() => handleMessage(electrician)}
-                  onBook={() => handleBook(electrician)}
-                />
-              );
-            })}
-
-          {/* Empty State */}
-          {!isLoading && filteredElectricians.length === 0 && (
-            <Card className="bg-white/[0.03] border-white/[0.08]">
-              <CardContent className="p-8 text-center">
-                <Search className="h-12 w-12 text-white mx-auto mb-4" />
-                <h3 className="font-semibold text-white mb-2">No sparkies found</h3>
-                <p className="text-sm text-white mb-4">
-                  Try adjusting your search or filters
-                </p>
-                {activeFilterCount > 0 && (
-                  <Button variant="outline" onClick={clearFilters}>
-                    <X className="h-4 w-4 mr-2" />
-                    Clear filters
-                  </Button>
+      {!isLoading && viewMode === 'list' && (
+        <ListCard>
+          <ListCardHeader
+            tone="blue"
+            title="Available talent"
+            meta={
+              <span className="inline-flex items-center gap-2">
+                <Pill tone="blue">{filteredElectricians.length}</Pill>
+                {availableNowCount > 0 && (
+                  <Pill tone="emerald">{availableNowCount} now</Pill>
                 )}
-              </CardContent>
-            </Card>
+              </span>
+            }
+          />
+          {filteredElectricians.length === 0 ? (
+            <div className="px-5 py-10">
+              <EmptyState
+                title="No candidates match"
+                description={activeFilterCount > 0 ? 'Try removing a filter or widening the rate range.' : 'No electricians match your search.'}
+                action={activeFilterCount > 0 ? 'Clear filters' : undefined}
+                onAction={activeFilterCount > 0 ? clearFilters : undefined}
+              />
+            </div>
+          ) : (
+            <ListBody>
+              {filteredElectricians.map((electrician) => {
+                const isSaved = savedCandidates.includes(electrician.id);
+                const labourBankRate = getLabourBankRate(electrician.id);
+                const isInLabourBank = !!labourBankRate;
+                const availTone = availabilityToneFor(electrician.availability);
+                const tierTone = tierToneFor(electrician.verificationTier as string | undefined);
+                const role = (electrician as any).currentRole || 'Electrician';
+
+                return (
+                  <ListRow
+                    key={electrician.id}
+                    lead={<Avatar initials={getInitials(electrician.name)} />}
+                    title={
+                      <span className="inline-flex items-center gap-2">
+                        <span className="text-white">{electrician.name}</span>
+                        {isInLabourBank && <Pill tone="yellow">Labour Bank</Pill>}
+                        {isSaved && <Pill tone="amber">Saved</Pill>}
+                      </span>
+                    }
+                    subtitle={`${role} · ${electrician.location} · £${electrician.dayRate}/day · ${(electrician as any).totalYearsExperience ?? electrician.experience} yrs`}
+                    trailing={
+                      <>
+                        <Pill tone={tierTone}>{electrician.verificationTier ?? 'verified'}</Pill>
+                        <Pill tone={availTone}>{electrician.availability}</Pill>
+                      </>
+                    }
+                    onClick={() => handleOpenProfile(electrician)}
+                  />
+                );
+              })}
+            </ListBody>
           )}
-        </div>
+        </ListCard>
       )}
 
-      {viewMode === 'map' && (
-        <>
-          {isLoading ? (
-            <Card className="h-[400px] flex items-center justify-center">
-              <div className="text-center">
-                <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto mb-2" />
-                <p className="text-sm text-white">Loading map...</p>
-              </div>
-            </Card>
-          ) : (
+      {!isLoading && viewMode === 'map' && (
+        <ListCard>
+          <ListCardHeader tone="cyan" title="Map view" meta={<Pill tone="cyan">{filteredElectricians.length}</Pill>} />
+          <div className="p-4 sm:p-5">
             <GoogleMapsProvider>
               <TalentMapView
                 electricians={filteredElectricians}
@@ -784,20 +773,14 @@ export function TalentPoolSection() {
                 onSelectElectrician={handleOpenProfile}
               />
             </GoogleMapsProvider>
-          )}
-        </>
+          </div>
+        </ListCard>
       )}
 
-      {viewMode === 'calendar' && (
-        <>
-          {isLoading ? (
-            <Card className="h-[400px] flex items-center justify-center">
-              <div className="text-center">
-                <div className="animate-spin h-8 w-8 border-2 border-elec-yellow border-t-transparent rounded-full mx-auto mb-2" />
-                <p className="text-sm text-white">Loading calendar...</p>
-              </div>
-            </Card>
-          ) : (
+      {!isLoading && viewMode === 'calendar' && (
+        <ListCard>
+          <ListCardHeader tone="purple" title="Availability calendar" meta={<Pill tone="purple">{filteredElectricians.length}</Pill>} />
+          <div className="p-4 sm:p-5">
             <AvailabilityCalendar
               electricians={filteredElectricians}
               labourBankIds={labourBankIds}
@@ -806,11 +789,10 @@ export function TalentPoolSection() {
                 setBookingDialogOpen(true);
               }}
             />
-          )}
-        </>
+          </div>
+        </ListCard>
       )}
 
-      {/* Profile Sheet */}
       <SparkProfileSheet
         open={profileSheetOpen}
         onOpenChange={setProfileSheetOpen}
@@ -828,7 +810,6 @@ export function TalentPoolSection() {
         onAddToLabourBank={() => selectedElectrician && handleAddToLabourBank(selectedElectrician)}
       />
 
-      {/* Message Dialog - Real Messaging */}
       <MessageDialog
         open={messageDialogOpen}
         onOpenChange={setMessageDialogOpen}
@@ -847,7 +828,6 @@ export function TalentPoolSection() {
         }
       />
 
-      {/* Invite to Apply Dialog */}
       <InviteToApplyDialog
         open={inviteDialogOpen}
         onOpenChange={setInviteDialogOpen}
@@ -865,7 +845,6 @@ export function TalentPoolSection() {
         }
       />
 
-      {/* Booking Dialog */}
       <BookLabourBankDialog
         open={bookingDialogOpen}
         onOpenChange={setBookingDialogOpen}
@@ -884,6 +863,6 @@ export function TalentPoolSection() {
           selectedElectrician ? getLabourBankRate(selectedElectrician.id)?.agreedDayRate : undefined
         }
       />
-    </div>
+    </PageFrame>
   );
 }

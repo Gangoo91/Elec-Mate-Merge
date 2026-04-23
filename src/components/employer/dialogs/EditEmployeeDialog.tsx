@@ -7,9 +7,7 @@ import {
   ResponsiveFormModalBody,
   ResponsiveFormModalFooter,
 } from '@/components/ui/responsive-form-modal';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -21,16 +19,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useUpdateEmployee, useDeleteEmployee } from '@/hooks/useEmployees';
 import { uploadEmployeePhoto } from '@/services/photoUploadService';
 import { toast } from '@/hooks/use-toast';
-import {
-  UserCog,
-  Trash2,
-  Camera,
-  Loader2,
-  User,
-  Briefcase,
-  PoundSterling,
-  CreditCard,
-} from 'lucide-react';
+import { UserCog, Trash2, Camera, Loader2, CreditCard } from 'lucide-react';
 import type { Employee, PayType } from '@/services/employeeService';
 import {
   AlertDialog,
@@ -44,7 +33,19 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useElecIdProfileByEmployee } from '@/hooks/useElecId';
-import { Badge } from '@/components/ui/badge';
+import {
+  FormCard,
+  FormGrid,
+  Field,
+  Pill,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 
@@ -268,18 +269,17 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
           <ResponsiveFormModalHeader>
             <ResponsiveFormModalTitle>
               <UserCog className="h-5 w-5 text-elec-yellow" />
-              Edit Team Member
+              Edit team member
             </ResponsiveFormModalTitle>
           </ResponsiveFormModalHeader>
 
           <ResponsiveFormModalBody>
-            <form id="edit-employee-form" onSubmit={handleSubmit} className="space-y-6 py-2">
-              {/* Photo Upload Section */}
-              <div className="flex justify-center">
+            <form id="edit-employee-form" onSubmit={handleSubmit} className="space-y-4 py-2">
+              <div className="flex flex-col items-center gap-3">
                 <div className="relative">
-                  <Avatar className="h-28 w-28 border-4 border-background shadow-lg">
+                  <Avatar className="h-28 w-28 border-4 border-[hsl(0_0%_12%)] shadow-lg">
                     <AvatarImage src={photoUrl || undefined} alt={employee.name} />
-                    <AvatarFallback className="bg-muted text-white text-3xl">
+                    <AvatarFallback className="bg-white/[0.06] text-white text-3xl">
                       {employee.avatar_initials}
                     </AvatarFallback>
                   </Avatar>
@@ -287,7 +287,8 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading}
-                    className="absolute -bottom-1 -right-1 h-10 w-10 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center shadow-md hover:bg-elec-yellow/90 transition-colors disabled:opacity-50 touch-feedback"
+                    className="absolute -bottom-1 -right-1 h-10 w-10 rounded-full bg-elec-yellow text-black flex items-center justify-center shadow-md hover:bg-elec-yellow/90 transition-colors disabled:opacity-50 touch-manipulation"
+                    aria-label="Upload photo"
                   >
                     {isUploading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
@@ -303,281 +304,209 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     className="hidden"
                   />
                 </div>
-              </div>
-
-              {/* Elec-ID Status */}
-              <div className="flex items-center justify-center">
                 {elecIdProfile ? (
-                  <Badge
-                    variant="secondary"
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm"
-                  >
-                    <CreditCard className="h-3.5 w-3.5" />
+                  <Pill tone="yellow">
+                    <CreditCard className="h-3 w-3 mr-1" />
                     Elec-ID: {elecIdProfile.elec_id_number}
-                  </Badge>
+                  </Pill>
                 ) : (
-                  <Badge variant="outline" className="text-white px-3 py-1.5">
-                    No Elec-ID Profile
-                  </Badge>
+                  <Pill tone="amber">No Elec-ID profile</Pill>
                 )}
               </div>
 
-              {/* Personal Info Section */}
-              <div className="rounded-xl bg-surface/50 border border-border/50 p-4 space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <div className="h-7 w-7 rounded-lg bg-success/20 flex items-center justify-center">
-                    <User className="h-4 w-4 text-success" />
-                  </div>
-                  Personal Information
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-sm font-medium">
-                      Full Name *
-                    </Label>
+              <FormCard eyebrow="Personal information">
+                <Field label="Full name" required>
+                  <Input
+                    value={formData.name}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <FormGrid cols={2}>
+                  <Field label="Email">
                     <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                      className="h-12 text-base"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email" className="text-sm font-medium">
-                      Email
-                    </Label>
-                    <Input
-                      id="email"
                       type="email"
                       inputMode="email"
                       value={formData.email}
                       onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
-                      className="h-12 text-base"
+                      className={inputClass}
                     />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-sm font-medium">
-                      Phone
-                    </Label>
+                  </Field>
+                  <Field label="Phone">
                     <Input
-                      id="phone"
                       type="tel"
                       inputMode="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
                       placeholder="07700 900000"
-                      className="h-12 text-base"
+                      className={inputClass}
                     />
-                  </div>
-                </div>
-              </div>
+                  </Field>
+                </FormGrid>
+              </FormCard>
 
-              {/* Employment Details Section */}
-              <div className="rounded-xl bg-surface/50 border border-border/50 p-4 space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <div className="h-7 w-7 rounded-lg bg-info/20 flex items-center justify-center">
-                    <Briefcase className="h-4 w-4 text-info" />
-                  </div>
-                  Employment Details
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="role" className="text-sm font-medium">
-                      Job Role *
-                    </Label>
+              <FormCard eyebrow="Employment">
+                <Field label="Job role" required>
+                  <Select
+                    value={formData.role}
+                    onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select role..." />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {JOB_ROLES.map((role) => (
+                        <SelectItem key={role} value={role}>
+                          {role}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <FormGrid cols={2}>
+                  <Field label="Team role" required>
                     <Select
-                      value={formData.role}
-                      onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
+                      value={formData.team_role}
+                      onValueChange={(val) =>
+                        setFormData((prev) => ({ ...prev, team_role: val as TeamRole }))
+                      }
                     >
-                      <SelectTrigger className="h-12 text-base">
-                        <SelectValue placeholder="Select role..." />
+                      <SelectTrigger className={selectTriggerClass}>
+                        <SelectValue placeholder="Select..." />
                       </SelectTrigger>
-                      <SelectContent>
-                        {JOB_ROLES.map((role) => (
-                          <SelectItem key={role} value={role} className="h-12">
+                      <SelectContent className={selectContentClass}>
+                        {TEAM_ROLES.map((role) => (
+                          <SelectItem key={role} value={role}>
                             {role}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div className="space-y-2">
-                      <Label htmlFor="teamRole" className="text-sm font-medium">
-                        Team Role *
-                      </Label>
-                      <Select
-                        value={formData.team_role}
-                        onValueChange={(val) =>
-                          setFormData((prev) => ({ ...prev, team_role: val as TeamRole }))
+                  </Field>
+                  <Field label="Status">
+                    <Select
+                      value={formData.status}
+                      onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
+                    >
+                      <SelectTrigger className={selectTriggerClass}>
+                        <SelectValue placeholder="Select..." />
+                      </SelectTrigger>
+                      <SelectContent className={selectContentClass}>
+                        {STATUSES.map((status) => (
+                          <SelectItem key={status} value={status}>
+                            {status}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                </FormGrid>
+              </FormCard>
+
+              <FormCard eyebrow="Pay information">
+                <RadioGroup
+                  value={formData.payType}
+                  onValueChange={(val) =>
+                    setFormData((prev) => ({ ...prev, payType: val as PayType }))
+                  }
+                  className="grid grid-cols-3 gap-2"
+                >
+                  {[
+                    { value: 'hourly', label: 'Hourly rate' },
+                    { value: 'annual', label: 'Annual salary' },
+                    { value: 'day_rate', label: 'Day rate' },
+                  ].map((option) => (
+                    <div key={option.value}>
+                      <RadioGroupItem
+                        value={option.value}
+                        id={`edit-${option.value}`}
+                        className="peer sr-only"
+                      />
+                      <label
+                        htmlFor={`edit-${option.value}`}
+                        className="flex items-center justify-center rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] px-3 py-3 text-[12px] font-medium text-white hover:bg-[hsl(0_0%_11%)] peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/10 peer-data-[state=checked]:text-elec-yellow cursor-pointer transition-all touch-manipulation text-center"
+                      >
+                        {option.label}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+
+                <div className="space-y-1.5 animate-fade-in">
+                  {formData.payType === 'hourly' && (
+                    <>
+                      <label className={fieldLabelClass}>Hourly rate (£)</label>
+                      <Input
+                        type="number"
+                        inputMode="decimal"
+                        min="0"
+                        step="0.50"
+                        value={formData.hourlyRate}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, hourlyRate: e.target.value }))
                         }
-                      >
-                        <SelectTrigger className="h-12 text-base">
-                          <SelectValue placeholder="Select..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {TEAM_ROLES.map((role) => (
-                            <SelectItem key={role} value={role} className="h-12">
-                              {role}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="status" className="text-sm font-medium">
-                        Status
-                      </Label>
-                      <Select
-                        value={formData.status}
-                        onValueChange={(val) => setFormData((prev) => ({ ...prev, status: val }))}
-                      >
-                        <SelectTrigger className="h-12 text-base">
-                          <SelectValue placeholder="Select..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {STATUSES.map((status) => (
-                            <SelectItem key={status} value={status} className="h-12">
-                              {status}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+                        className={inputClass}
+                      />
+                    </>
+                  )}
+                  {formData.payType === 'annual' && (
+                    <>
+                      <label className={fieldLabelClass}>Annual salary (£)</label>
+                      <Input
+                        type="number"
+                        inputMode="numeric"
+                        min="0"
+                        step="1000"
+                        value={formData.annualSalary}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, annualSalary: e.target.value }))
+                        }
+                        placeholder="45000"
+                        className={inputClass}
+                      />
+                    </>
+                  )}
+                  {formData.payType === 'day_rate' && (
+                    <>
+                      <label className={fieldLabelClass}>Day rate (£)</label>
+                      <Input
+                        type="number"
+                        inputMode="decimal"
+                        min="0"
+                        step="10"
+                        value={formData.dayRate}
+                        onChange={(e) =>
+                          setFormData((prev) => ({ ...prev, dayRate: e.target.value }))
+                        }
+                        placeholder="250"
+                        className={inputClass}
+                      />
+                    </>
+                  )}
+                  {calculateEquivalent() && (
+                    <p className="text-[11px] text-white">{calculateEquivalent()}</p>
+                  )}
                 </div>
-              </div>
-
-              {/* Pay Information Section */}
-              <div className="rounded-xl bg-surface/50 border border-border/50 p-4 space-y-4">
-                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                  <div className="h-7 w-7 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-                    <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                  </div>
-                  Pay Information
-                </div>
-                <div className="space-y-4">
-                  <RadioGroup
-                    value={formData.payType}
-                    onValueChange={(val) =>
-                      setFormData((prev) => ({ ...prev, payType: val as PayType }))
-                    }
-                    className="flex flex-col gap-2"
-                  >
-                    {[
-                      { value: 'hourly', label: 'Hourly Rate' },
-                      { value: 'annual', label: 'Annual Salary' },
-                      { value: 'day_rate', label: 'Day Rate' },
-                    ].map((option) => (
-                      <div key={option.value}>
-                        <RadioGroupItem
-                          value={option.value}
-                          id={`edit-${option.value}`}
-                          className="peer sr-only"
-                        />
-                        <Label
-                          htmlFor={`edit-${option.value}`}
-                          className="flex items-center justify-center rounded-xl border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/10 cursor-pointer transition-all touch-feedback"
-                        >
-                          <span className="text-base font-medium">{option.label}</span>
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-
-                  <div className="space-y-2 animate-fade-in">
-                    {formData.payType === 'hourly' && (
-                      <>
-                        <Label htmlFor="hourlyRate" className="text-sm font-medium">
-                          Hourly Rate (£)
-                        </Label>
-                        <Input
-                          id="hourlyRate"
-                          type="number"
-                          inputMode="decimal"
-                          min="0"
-                          step="0.50"
-                          value={formData.hourlyRate}
-                          onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, hourlyRate: e.target.value }))
-                          }
-                          className="h-12 text-base"
-                        />
-                      </>
-                    )}
-                    {formData.payType === 'annual' && (
-                      <>
-                        <Label htmlFor="annualSalary" className="text-sm font-medium">
-                          Annual Salary (£)
-                        </Label>
-                        <Input
-                          id="annualSalary"
-                          type="number"
-                          inputMode="numeric"
-                          min="0"
-                          step="1000"
-                          value={formData.annualSalary}
-                          onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, annualSalary: e.target.value }))
-                          }
-                          placeholder="45000"
-                          className="h-12 text-base"
-                        />
-                      </>
-                    )}
-                    {formData.payType === 'day_rate' && (
-                      <>
-                        <Label htmlFor="dayRate" className="text-sm font-medium">
-                          Day Rate (£)
-                        </Label>
-                        <Input
-                          id="dayRate"
-                          type="number"
-                          inputMode="decimal"
-                          min="0"
-                          step="10"
-                          value={formData.dayRate}
-                          onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, dayRate: e.target.value }))
-                          }
-                          placeholder="250"
-                          className="h-12 text-base"
-                        />
-                      </>
-                    )}
-                    {calculateEquivalent() && (
-                      <p className="text-sm text-white">{calculateEquivalent()}</p>
-                    )}
-                  </div>
-                </div>
-              </div>
+              </FormCard>
             </form>
           </ResponsiveFormModalBody>
 
           <ResponsiveFormModalFooter>
-            <div className="flex gap-3">
-              <Button
-                type="button"
-                variant="destructive"
-                size="icon"
-                className="h-12 w-12 shrink-0"
-                onClick={() => setShowDeleteConfirm(true)}
-              >
-                <Trash2 className="h-5 w-5" />
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                className="flex-1 h-12 text-base"
-                onClick={() => onOpenChange(false)}
-              >
+            <div className="flex gap-2 w-full">
+              <DestructiveButton onClick={() => setShowDeleteConfirm(true)} className="shrink-0">
+                <Trash2 className="h-4 w-4" />
+              </DestructiveButton>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                 Cancel
-              </Button>
-              <Button
+              </SecondaryButton>
+              <PrimaryButton
                 type="submit"
-                form="edit-employee-form"
-                className="flex-1 h-12 text-base font-semibold"
+                onClick={() => {
+                  const form = document.getElementById('edit-employee-form') as HTMLFormElement | null;
+                  form?.requestSubmit();
+                }}
                 disabled={updateEmployee.isPending}
+                fullWidth
               >
                 {updateEmployee.isPending ? (
                   <>
@@ -585,28 +514,30 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
                     Saving...
                   </>
                 ) : (
-                  'Save Changes'
+                  'Save changes'
                 )}
-              </Button>
+              </PrimaryButton>
             </div>
           </ResponsiveFormModalFooter>
         </ResponsiveFormModalContent>
       </ResponsiveFormModal>
 
       <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.08]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Archive Employee?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Archive employee?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               This will archive {employee?.name}. They will no longer appear in active team lists
               but their records will be preserved.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1]">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
               disabled={deleteEmployee.isPending}
             >
               {deleteEmployee.isPending ? 'Archiving...' : 'Archive'}

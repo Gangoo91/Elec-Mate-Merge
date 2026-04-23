@@ -1,33 +1,7 @@
-/**
- * CVCard Component
- *
- * Displays a CV card in the My CV tab with:
- * - Template style indicator
- * - CV title and last updated
- * - Sync status badge
- * - Primary CV badge
- * - Quick actions (Download, Edit, Delete, Set Primary)
- */
-
 import React, { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import {
-  FileText,
-  Download,
-  Edit2,
-  Trash2,
-  Star,
-  StarOff,
-  MoreVertical,
-  RefreshCw,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
-} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,35 +25,28 @@ import { useCVSyncStatus } from '@/hooks/useCVSync';
 import { generateCVPDFByTemplate } from '@/components/cv-builder/pdfGenerators';
 import { toast } from '@/hooks/use-toast';
 
-// Template color configurations
 const TEMPLATE_STYLES: Record<
   string,
-  { label: string; color: string; bgColor: string; gradient: string }
+  { label: string; tone: 'blue' | 'amber' | 'purple' | 'emerald' }
 > = {
-  classic: {
-    label: 'Classic',
-    color: 'text-blue-400',
-    bgColor: 'bg-blue-500/20',
-    gradient: 'from-blue-500 to-blue-700',
-  },
-  modern: {
-    label: 'Modern',
-    color: 'text-amber-400',
-    bgColor: 'bg-amber-500/20',
-    gradient: 'from-amber-500 to-orange-600',
-  },
-  creative: {
-    label: 'Creative',
-    color: 'text-purple-400',
-    bgColor: 'bg-purple-500/20',
-    gradient: 'from-purple-500 to-pink-500',
-  },
-  technical: {
-    label: 'Technical',
-    color: 'text-emerald-400',
-    bgColor: 'bg-emerald-500/20',
-    gradient: 'from-emerald-500 to-teal-600',
-  },
+  classic: { label: 'Classic', tone: 'blue' },
+  modern: { label: 'Modern', tone: 'amber' },
+  creative: { label: 'Creative', tone: 'purple' },
+  technical: { label: 'Technical', tone: 'emerald' },
+};
+
+const toneText: Record<string, string> = {
+  blue: 'text-blue-400',
+  amber: 'text-amber-400',
+  purple: 'text-purple-400',
+  emerald: 'text-emerald-400',
+};
+
+const toneBorder: Record<string, string> = {
+  blue: 'bg-blue-500/70',
+  amber: 'bg-amber-500/70',
+  purple: 'bg-purple-500/70',
+  emerald: 'bg-emerald-500/70',
 };
 
 interface CVCardProps {
@@ -105,12 +72,12 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
     try {
       await generateCVPDFByTemplate(cv.cv_data, cv.template_id);
       toast({
-        title: 'CV Downloaded',
+        title: 'CV downloaded',
         description: 'Your CV has been downloaded as a PDF.',
       });
     } catch (error) {
       toast({
-        title: 'Download Failed',
+        title: 'Download failed',
         description: 'Failed to generate PDF. Please try again.',
         variant: 'destructive',
       });
@@ -124,12 +91,12 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
     try {
       await deleteCV.mutateAsync(cv.id);
       toast({
-        title: 'CV Deleted',
+        title: 'CV deleted',
         description: 'Your CV has been deleted.',
       });
     } catch (error) {
       toast({
-        title: 'Delete Failed',
+        title: 'Delete failed',
         description: 'Failed to delete CV. Please try again.',
         variant: 'destructive',
       });
@@ -143,7 +110,7 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
     try {
       await setPrimaryCV.mutateAsync(cv.id);
       toast({
-        title: 'Primary CV Set',
+        title: 'Primary CV set',
         description: 'This CV will be used by default for job applications.',
       });
     } catch (error) {
@@ -160,197 +127,146 @@ const CVCard = ({ cv, onEdit }: CVCardProps) => {
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{ scale: 0.99 }}
       >
-        <Card
+        <div
           className={cn(
-            'relative overflow-hidden transition-all duration-200 touch-manipulation',
-            'border-white/10 bg-white/[0.03]',
-            cv.is_primary && 'border-elec-yellow/30 ring-1 ring-elec-yellow/20'
+            'relative bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden transition-all touch-manipulation',
+            cv.is_primary && 'ring-1 ring-elec-yellow/30'
           )}
         >
-          {/* Template accent bar */}
           <div
-            className={cn(
-              'absolute top-0 left-0 right-0 h-1 bg-gradient-to-r',
-              templateStyle.gradient
-            )}
+            className={cn('absolute top-0 left-0 right-0 h-px', toneBorder[templateStyle.tone])}
           />
 
-          <CardContent className="p-4 pt-5">
-            <div className="flex items-start gap-4">
-              {/* Template icon */}
-              <div
-                className={cn(
-                  'w-12 h-12 rounded-xl flex items-center justify-center shrink-0',
-                  templateStyle.bgColor
-                )}
-              >
-                <FileText className={cn('h-6 w-6', templateStyle.color)} />
-              </div>
-
-              {/* CV info */}
+          <div className="p-5">
+            <div className="flex items-start gap-3">
               <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-2">
-                  <div className="min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-semibold text-foreground truncate">
-                        {cv.title || 'My CV'}
-                      </h3>
-                      {cv.is_primary && (
-                        <Badge
-                          variant="secondary"
-                          className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-[10px] px-1.5 py-0"
-                        >
-                          <Star className="h-2.5 w-2.5 mr-0.5 fill-current" />
-                          Primary
-                        </Badge>
-                      )}
-                    </div>
-                    <p className="text-xs text-foreground/70 mt-0.5">
-                      {templateStyle.label} template • Updated {lastUpdated}
-                    </p>
-                  </div>
-
-                  {/* Menu */}
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-10 w-10 shrink-0 text-foreground/70 hover:text-foreground touch-manipulation"
-                      >
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end" className="w-48 bg-elec-gray border-white/10">
-                      <DropdownMenuItem onClick={() => onEdit(cv)}>
-                        <Edit2 className="h-4 w-4 mr-2" />
-                        Edit CV
-                      </DropdownMenuItem>
-                      <DropdownMenuItem onClick={handleDownload} disabled={isDownloading}>
-                        {isDownloading ? (
-                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        ) : (
-                          <Download className="h-4 w-4 mr-2" />
-                        )}
-                        Download PDF
-                      </DropdownMenuItem>
-                      {!cv.is_primary && (
-                        <DropdownMenuItem
-                          onClick={handleSetPrimary}
-                          disabled={setPrimaryCV.isPending}
-                        >
-                          <Star className="h-4 w-4 mr-2" />
-                          Set as Primary
-                        </DropdownMenuItem>
-                      )}
-                      <DropdownMenuSeparator className="bg-white/10" />
-                      <DropdownMenuItem
-                        onClick={() => setShowDeleteDialog(true)}
-                        className="text-red-400 focus:text-red-400 focus:bg-red-500/10"
-                      >
-                        <Trash2 className="h-4 w-4 mr-2" />
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-
-                {/* Status row */}
-                <div className="flex items-center gap-3 mt-3">
-                  {/* Completeness */}
-                  <div className="flex items-center gap-1.5">
-                    <div
-                      className={cn(
-                        'h-2 w-2 rounded-full',
-                        completeness >= 80
-                          ? 'bg-green-500'
-                          : completeness >= 50
-                            ? 'bg-amber-500'
-                            : 'bg-red-500'
-                      )}
-                    />
-                    <span className="text-xs text-foreground/70">{completeness}% complete</span>
-                  </div>
-
-                  {/* Sync status */}
-                  {!isCheckingSync && (
-                    <div className="flex items-center gap-1.5">
-                      {needsSync ? (
-                        <>
-                          <AlertCircle className="h-3 w-3 text-amber-500" />
-                          <span className="text-xs text-amber-500">
-                            {pendingCount} updates available
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <CheckCircle2 className="h-3 w-3 text-green-500" />
-                          <span className="text-xs text-green-500">Synced</span>
-                        </>
-                      )}
-                    </div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h3 className="font-semibold text-white truncate">{cv.title || 'My CV'}</h3>
+                  {cv.is_primary && (
+                    <span className="inline-flex items-center text-[10px] font-medium px-1.5 py-0 rounded-full border bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20">
+                      Primary
+                    </span>
                   )}
                 </div>
-
-                {/* Quick actions */}
-                <div className="flex items-center gap-2 mt-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="h-11 text-xs border-white/10 bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]"
-                    onClick={() => onEdit(cv)}
-                  >
-                    <Edit2 className="h-3.5 w-3.5 mr-1.5" />
-                    Edit
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className={cn(
-                      'h-11 text-xs border-white/10 bg-white/5 hover:bg-white/10 touch-manipulation active:scale-[0.98]',
-                      templateStyle.color
-                    )}
-                    onClick={handleDownload}
-                    disabled={isDownloading}
-                  >
-                    {isDownloading ? (
-                      <Loader2 className="h-3 w-3 mr-1.5 animate-spin" />
-                    ) : (
-                      <Download className="h-3 w-3 mr-1.5" />
-                    )}
-                    Download
-                  </Button>
-                </div>
+                <p className="text-[11.5px] text-white mt-0.5">
+                  <span className={toneText[templateStyle.tone]}>{templateStyle.label}</span>{' '}
+                  template · Updated {lastUpdated}
+                </p>
               </div>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="h-11 w-11 shrink-0 text-white hover:bg-white/[0.04] touch-manipulation rounded-lg"
+                    aria-label="Actions"
+                  >
+                    <span aria-hidden>⋯</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="end"
+                  className="w-48 bg-[hsl(0_0%_12%)] border-white/[0.06]"
+                >
+                  <DropdownMenuItem onClick={() => onEdit(cv)}>Edit CV</DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleDownload} disabled={isDownloading}>
+                    {isDownloading ? 'Downloading…' : 'Download PDF'}
+                  </DropdownMenuItem>
+                  {!cv.is_primary && (
+                    <DropdownMenuItem
+                      onClick={handleSetPrimary}
+                      disabled={setPrimaryCV.isPending}
+                    >
+                      Set as primary
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator className="bg-white/[0.06]" />
+                  <DropdownMenuItem
+                    onClick={() => setShowDeleteDialog(true)}
+                    className="text-red-400 focus:text-red-400 focus:bg-red-500/10"
+                  >
+                    Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
-          </CardContent>
-        </Card>
+
+            <div className="flex items-center gap-4 mt-3">
+              <div className="flex items-center gap-1.5">
+                <span
+                  aria-hidden
+                  className={cn(
+                    'h-1.5 w-1.5 rounded-full',
+                    completeness >= 80
+                      ? 'bg-emerald-400'
+                      : completeness >= 50
+                        ? 'bg-amber-400'
+                        : 'bg-red-400'
+                  )}
+                />
+                <span className="text-xs text-white">{completeness}% complete</span>
+              </div>
+
+              {!isCheckingSync && (
+                <div className="flex items-center gap-1.5">
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'h-1.5 w-1.5 rounded-full',
+                      needsSync ? 'bg-amber-400' : 'bg-emerald-400'
+                    )}
+                  />
+                  <span className={cn('text-xs', needsSync ? 'text-amber-400' : 'text-emerald-400')}>
+                    {needsSync ? `${pendingCount} updates available` : 'Synced'}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2 mt-4">
+              <Button
+                variant="outline"
+                className="h-11 px-3 text-xs rounded-xl border-white/[0.06] bg-white/[0.04] text-white hover:bg-white/[0.08] touch-manipulation"
+                onClick={() => onEdit(cv)}
+              >
+                Edit
+              </Button>
+              <Button
+                variant="outline"
+                className={cn(
+                  'h-11 px-3 text-xs rounded-xl border-white/[0.06] bg-white/[0.04] hover:bg-white/[0.08] touch-manipulation',
+                  toneText[templateStyle.tone]
+                )}
+                onClick={handleDownload}
+                disabled={isDownloading}
+              >
+                {isDownloading ? 'Downloading…' : 'Download'}
+              </Button>
+            </div>
+          </div>
+        </div>
       </motion.div>
 
-      {/* Delete confirmation dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent className="bg-elec-gray border-white/10">
+        <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete CV?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Delete CV?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               This will permanently delete "{cv.title || 'My CV'}". This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border-white/10 bg-white/5">Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="border-white/[0.06] bg-transparent text-white rounded-xl h-11 touch-manipulation">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
-              className="bg-red-500 hover:bg-red-600 text-white"
+              className="bg-red-500 hover:bg-red-600 text-white rounded-xl h-11 touch-manipulation"
               disabled={isDeleting}
             >
-              {isDeleting ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <Trash2 className="h-4 w-4 mr-2" />
-              )}
-              Delete
+              {isDeleting ? 'Deleting…' : 'Delete'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

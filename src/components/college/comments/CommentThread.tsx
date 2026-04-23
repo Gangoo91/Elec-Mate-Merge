@@ -234,7 +234,7 @@ export function CommentThread({
           placeholder="Search users…"
           value={mentionSearch}
           onChange={(e) => setMentionSearch(e.target.value)}
-          className="w-full h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 mb-2"
+          className="w-full h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 mb-2"
         />
         <div className="max-h-[200px] overflow-y-auto space-y-0.5">
           {mentionableUsers.slice(0, 10).map((user) => (
@@ -250,7 +250,7 @@ export function CommentThread({
               </Avatar>
               <div className="flex-1 min-w-0">
                 <div className="text-white truncate">{user.name}</div>
-                <div className="text-[11px] text-white/50">{formatRole(user.role)}</div>
+                <div className="text-[11px] text-white/75">{formatRole(user.role)}</div>
               </div>
             </button>
           ))}
@@ -278,7 +278,7 @@ export function CommentThread({
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-medium text-[13px] text-white">{comment.authorName}</span>
                 <Pill tone={roleTone(comment.authorRole)}>{formatRole(comment.authorRole)}</Pill>
-                <span className="text-[11px] text-white/40 tabular-nums">
+                <span className="text-[11px] text-white/70 tabular-nums">
                   {formatDate(comment.createdAt)}
                 </span>
               </div>
@@ -292,7 +292,7 @@ export function CommentThread({
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button
-                        className="text-white/50 hover:text-white text-[16px] leading-none px-1 touch-manipulation"
+                        className="text-white/75 hover:text-white text-[16px] leading-none px-1 touch-manipulation"
                         aria-label="Options"
                       >
                         ⋯
@@ -318,7 +318,7 @@ export function CommentThread({
             </p>
 
             {comment.isResolved && comment.resolvedByName && (
-              <p className="mt-1.5 text-[11px] text-white/40 tabular-nums">
+              <p className="mt-1.5 text-[11px] text-white/70 tabular-nums">
                 Resolved by {comment.resolvedByName} on{' '}
                 {new Date(comment.resolvedAt!).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -333,7 +333,7 @@ export function CommentThread({
                   placeholder="Write a reply…"
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
-                  className="min-h-[60px] text-[13px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 resize-none"
+                  className="min-h-[60px] text-[13px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 resize-none"
                   rows={2}
                 />
                 <div className="flex flex-col gap-1.5">
@@ -365,7 +365,7 @@ export function CommentThread({
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
           Comments · {comments.length}
         </div>
         {actionCount > 0 && <Pill tone="amber">{actionCount} need action</Pill>}
@@ -385,7 +385,7 @@ export function CommentThread({
               placeholder="Add a comment… use @ to mention someone"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              className="min-h-[60px] text-[13px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 resize-none"
+              className="min-h-[60px] text-[13px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 resize-none"
               rows={2}
             />
             <div className="flex flex-col gap-1.5">
@@ -404,7 +404,7 @@ export function CommentThread({
 
       <div className="space-y-5">
         {topLevelComments.length === 0 ? (
-          <p className="text-[12.5px] text-white/40 text-center py-6">
+          <p className="text-[12.5px] text-white/70 text-center py-6">
             No comments yet. Be the first to add one.
           </p>
         ) : (

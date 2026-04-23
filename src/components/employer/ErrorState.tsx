@@ -1,6 +1,5 @@
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { PrimaryButton, SecondaryButton } from './editorial';
 
 interface ErrorStateProps {
   /** Error title */
@@ -28,33 +27,31 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <div className="flex items-center justify-center min-h-[300px] p-4">
-      <Card className="max-w-sm w-full border-destructive/20 bg-destructive/5">
-        <CardContent className="pt-6 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-destructive/10 mb-4">
-            <AlertTriangle className="h-8 w-8 text-destructive" />
-          </div>
+      <div className="max-w-sm w-full bg-[hsl(0_0%_12%)] border border-red-500/20 rounded-2xl p-6 text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-red-500/10 mb-4">
+          <AlertTriangle className="h-8 w-8 text-red-400" />
+        </div>
 
-          <h3 className="text-lg font-semibold text-foreground mb-2">{title}</h3>
+        <h3 className="text-lg font-semibold text-white mb-2">{title}</h3>
 
-          <p className="text-sm text-white mb-6">{message}</p>
+        <p className="text-sm text-white mb-6">{message}</p>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            {onRetry && (
-              <Button variant="outline" onClick={onRetry} disabled={isRetrying} className="gap-2">
-                <RefreshCw className={`h-4 w-4 ${isRetrying ? 'animate-spin' : ''}`} />
-                {isRetrying ? 'Retrying...' : 'Try Again'}
-              </Button>
-            )}
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          {onRetry && (
+            <SecondaryButton onClick={onRetry} disabled={isRetrying}>
+              <RefreshCw className={`h-4 w-4 mr-2 ${isRetrying ? 'animate-spin' : ''}`} />
+              {isRetrying ? 'Retrying...' : 'Try Again'}
+            </SecondaryButton>
+          )}
 
-            {onHome && (
-              <Button variant="ghost" onClick={onHome} className="gap-2">
-                <Home className="h-4 w-4" />
-                Go Home
-              </Button>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+          {onHome && (
+            <SecondaryButton onClick={onHome}>
+              <Home className="h-4 w-4 mr-2" />
+              Go Home
+            </SecondaryButton>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -77,14 +74,14 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
     <div className="flex flex-col items-center justify-center min-h-[200px] p-6 text-center">
       {icon && <div className="mb-4 text-white">{icon}</div>}
 
-      <h3 className="text-lg font-medium text-foreground mb-1">{title}</h3>
+      <h3 className="text-lg font-medium text-white mb-1">{title}</h3>
 
       {description && <p className="text-sm text-white mb-4 max-w-xs">{description}</p>}
 
       {action && (
-        <Button onClick={action.onClick} className="mt-2">
+        <PrimaryButton onClick={action.onClick} className="mt-2">
           {action.label}
-        </Button>
+        </PrimaryButton>
       )}
     </div>
   );

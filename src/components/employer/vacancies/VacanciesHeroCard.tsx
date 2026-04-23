@@ -1,14 +1,20 @@
 import { useState, useEffect } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
 import { Briefcase, Users, Clock, TrendingUp, Plus, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import {
+  PageHero,
+  StatStrip,
+  PrimaryButton,
+  Pill,
+  type Tone,
+} from '@/components/employer/editorial';
 
 interface StatItem {
   label: string;
   value: number;
   icon: typeof Briefcase;
-  color: 'yellow' | 'green' | 'blue' | 'purple';
+  tone: Tone;
   suffix?: string;
 }
 
@@ -39,50 +45,6 @@ function AnimatedCounter({ value, suffix = '' }: { value: number; suffix?: strin
   );
 }
 
-function StatCard({ stat, index }: { stat: StatItem; index: number }) {
-  const colorMap = {
-    yellow: 'from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow',
-    green: 'from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-500',
-    blue: 'from-blue-500/20 to-blue-500/5 border-blue-500/30 text-blue-500',
-    purple: 'from-purple-500/20 to-purple-500/5 border-purple-500/30 text-purple-500',
-  };
-
-  const iconBgMap = {
-    yellow: 'bg-elec-yellow/20 text-elec-yellow',
-    green: 'bg-emerald-500/20 text-emerald-500',
-    blue: 'bg-blue-500/20 text-blue-500',
-    purple: 'bg-purple-500/20 text-purple-500',
-  };
-
-  const Icon = stat.icon;
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1, type: 'spring', stiffness: 200 }}
-      className={cn(
-        'relative overflow-hidden rounded-xl p-4',
-        'bg-gradient-to-br border',
-        'backdrop-blur-sm',
-        colorMap[stat.color]
-      )}
-    >
-      <div className="flex items-center gap-3">
-        <div className={cn('p-2 rounded-lg', iconBgMap[stat.color])}>
-          <Icon className="h-4 w-4" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-2xl font-bold text-white leading-none">
-            <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-          </p>
-          <p className="text-xs text-white mt-1 truncate">{stat.label}</p>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
 export function VacanciesHeroCard({
   openVacancies,
   totalApplicants,
@@ -91,126 +53,42 @@ export function VacanciesHeroCard({
   onPostVacancy,
 }: VacanciesHeroCardProps) {
   const stats: StatItem[] = [
-    {
-      label: 'Open Roles',
-      value: openVacancies,
-      icon: Briefcase,
-      color: 'yellow',
-    },
-    {
-      label: 'Applicants',
-      value: totalApplicants,
-      icon: Users,
-      color: 'green',
-    },
-    {
-      label: 'New Today',
-      value: newApplicants,
-      icon: Clock,
-      color: 'blue',
-    },
-    {
-      label: 'Fill Rate',
-      value: fillRate,
-      icon: TrendingUp,
-      color: 'purple',
-      suffix: '%',
-    },
+    { label: 'Open Roles', value: openVacancies, icon: Briefcase, tone: 'yellow' },
+    { label: 'Applicants', value: totalApplicants, icon: Users, tone: 'emerald' },
+    { label: 'New Today', value: newApplicants, icon: Clock, tone: 'blue' },
+    { label: 'Fill Rate', value: fillRate, icon: TrendingUp, tone: 'purple', suffix: '%' },
   ];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className={cn(
-        'relative overflow-hidden rounded-2xl',
-        'bg-gradient-to-br from-elec-gray/90 via-elec-gray to-elec-dark',
-        'border border-white/10',
-        'p-6 md:p-8'
-      )}
-    >
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-elec-yellow/10 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-blue-500/10 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-purple-500/5 blur-3xl" />
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10 space-y-6">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-              className="p-3 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30"
-            >
-              <Briefcase className="h-8 w-8 text-elec-yellow" />
-            </motion.div>
-            <div>
-              <motion.h1
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-2xl md:text-3xl font-bold text-white"
-              >
-                Job Vacancies
-              </motion.h1>
-              <motion.p
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-white text-sm md:text-base"
-              >
-                Manage job postings & candidate applications
-              </motion.p>
-            </div>
-          </div>
-
-          {/* Desktop sparkle badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.4 }}
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/20"
-          >
-            <Sparkles className="h-4 w-4 text-elec-yellow" />
-            <span className="text-xs text-elec-yellow font-medium">AI-Powered Matching</span>
-          </motion.div>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {stats.map((stat, index) => (
-            <StatCard key={stat.label} stat={stat} index={index} />
-          ))}
-        </div>
-
-        {/* CTA Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-        >
-          <Button
-            size="lg"
-            onClick={onPostVacancy}
-            className={cn(
-              'w-full h-14 text-base font-semibold',
-              'bg-elec-yellow text-black hover:bg-elec-yellow/90',
-              'shadow-lg shadow-elec-yellow/20',
-              'transition-all duration-300',
-              'hover:shadow-xl hover:shadow-elec-yellow/30',
-              'active:scale-[0.98]'
-            )}
-          >
+    <div className="space-y-6">
+      <PageHero
+        eyebrow="Jobs"
+        title="Job Vacancies"
+        description="Manage job postings & candidate applications"
+        tone="yellow"
+        meta={
+          <Pill tone="yellow">
+            <Sparkles className="h-3 w-3 mr-1 inline" />
+            AI-Powered Matching
+          </Pill>
+        }
+        actions={
+          <PrimaryButton onClick={onPostVacancy} size="lg">
             <Plus className="h-5 w-5 mr-2" />
             Post New Vacancy
-          </Button>
-        </motion.div>
-      </div>
-    </motion.div>
+          </PrimaryButton>
+        }
+      />
+
+      <StatStrip
+        columns={4}
+        stats={stats.map((stat) => ({
+          label: stat.label,
+          value: <AnimatedCounter value={stat.value} suffix={stat.suffix} />,
+          tone: stat.tone,
+          accent: stat.tone === 'yellow',
+        }))}
+      />
+    </div>
   );
 }

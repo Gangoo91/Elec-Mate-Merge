@@ -24,7 +24,7 @@ interface CriteriaLinkerSheetProps {
   isSaving?: boolean;
 }
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function CriteriaLinkerSheet({
   open,
@@ -125,7 +125,7 @@ export function CriteriaLinkerSheet({
               placeholder="Search criteria…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="h-11 w-full mt-3 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+              className="h-11 w-full mt-3 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
             />
 
             <div className="flex items-center justify-between mt-3">
@@ -153,7 +153,7 @@ export function CriteriaLinkerSheet({
                   <div className="flex items-center gap-2 min-w-0">
                     <span
                       aria-hidden
-                      className={`text-[11px] text-white/50 w-4 shrink-0 transition-transform ${expandedLOs.has(lo.loNumber) ? 'rotate-90' : ''}`}
+                      className={`text-[11px] text-white/75 w-4 shrink-0 transition-transform ${expandedLOs.has(lo.loNumber) ? 'rotate-90' : ''}`}
                     >
                       ›
                     </span>

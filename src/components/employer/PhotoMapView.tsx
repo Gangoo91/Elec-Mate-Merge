@@ -140,7 +140,7 @@ export const PhotoMapView = ({
 
   if (!apiKey) {
     return (
-      <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-muted/20 rounded-lg border border-border/30">
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-white/[0.04] rounded-lg border border-white/[0.08]">
         <MapPin className="h-12 w-12 text-white mb-4" />
         <h3 className="text-lg font-medium mb-2">Google Maps API Key Required</h3>
         <p className="text-sm text-white text-center max-w-md px-4">
@@ -152,7 +152,7 @@ export const PhotoMapView = ({
 
   if (loadError) {
     return (
-      <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-muted/20 rounded-lg border border-border/30">
+      <div className="flex flex-col items-center justify-center h-[calc(100vh-200px)] bg-white/[0.04] rounded-lg border border-white/[0.08]">
         <MapPin className="h-12 w-12 text-destructive/50 mb-4" />
         <h3 className="text-lg font-medium mb-2">Failed to load map</h3>
         <p className="text-sm text-white">There was an error loading Google Maps.</p>
@@ -162,17 +162,17 @@ export const PhotoMapView = ({
 
   if (!isLoaded) {
     return (
-      <div className="flex items-center justify-center h-[calc(100vh-200px)] bg-muted/20 rounded-lg border border-border/30">
+      <div className="flex items-center justify-center h-[calc(100vh-200px)] bg-white/[0.04] rounded-lg border border-white/[0.08]">
         <div className="animate-pulse text-white">Loading map...</div>
       </div>
     );
   }
 
   return (
-    <div className="relative h-[calc(100vh-200px)] rounded-lg overflow-hidden border border-border/30">
+    <div className="relative h-[calc(100vh-200px)] rounded-lg overflow-hidden border border-white/[0.08]">
       {/* Photo count - subtle top overlay */}
       <div className="absolute top-3 left-3 z-10">
-        <Badge variant="secondary" className="bg-background/90 backdrop-blur-sm border-border/30">
+        <Badge variant="secondary" className="bg-[hsl(0_0%_8%)]/90 backdrop-blur-sm border-white/[0.08]">
           <Camera className="h-3 w-3 mr-1" />
           {photosWithLocation.length} on map
         </Badge>
@@ -216,7 +216,7 @@ export const PhotoMapView = ({
 
                 {/* Info */}
                 <div>
-                  <h4 className="font-medium text-sm text-foreground line-clamp-1">
+                  <h4 className="font-medium text-sm text-white line-clamp-1">
                     {selectedPhoto.jobTitle}
                   </h4>
                   <Badge
@@ -238,7 +238,7 @@ export const PhotoMapView = ({
                 </div>
 
                 {/* Actions */}
-                <div className="flex gap-1.5 pt-2 border-t border-border/30">
+                <div className="flex gap-1.5 pt-2 border-t border-white/[0.08]">
                   <Button
                     size="sm"
                     variant="default"
@@ -272,7 +272,7 @@ export const PhotoMapView = ({
 
       {/* No photos message */}
       {photosWithLocation.length === 0 && (
-        <div className="absolute inset-0 flex items-center justify-center bg-background/80">
+        <div className="absolute inset-0 flex items-center justify-center bg-[hsl(0_0%_8%)]/80">
           <div className="text-center px-4">
             <MapPin className="h-12 w-12 text-white mx-auto mb-4" />
             <h3 className="text-lg font-medium">No geotagged photos</h3>

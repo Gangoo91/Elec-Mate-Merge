@@ -21,7 +21,7 @@ export function DueDateBadge({ endDate, isCompleted, className }: DueDateBadgePr
     return (
       <Badge
         variant="outline"
-        className={cn('gap-1 text-xs bg-success/10 text-success border-success/30', className)}
+        className={cn('gap-1 text-xs bg-green-500/10 text-green-400 border-green-500/30', className)}
       >
         <CheckCircle className="h-3 w-3" />
         Done
@@ -35,7 +35,7 @@ export function DueDateBadge({ endDate, isCompleted, className }: DueDateBadgePr
       <Badge
         variant="outline"
         className={cn(
-          'gap-1 text-xs bg-destructive/10 text-destructive border-destructive/30',
+          'gap-1 text-xs bg-red-500/10 text-red-400 border-red-500/30',
           className
         )}
       >
@@ -51,7 +51,7 @@ export function DueDateBadge({ endDate, isCompleted, className }: DueDateBadgePr
       <Badge
         variant="outline"
         className={cn(
-          'gap-1 text-xs bg-destructive/10 text-destructive border-destructive/30',
+          'gap-1 text-xs bg-red-500/10 text-red-400 border-red-500/30',
           className
         )}
       >
@@ -66,7 +66,7 @@ export function DueDateBadge({ endDate, isCompleted, className }: DueDateBadgePr
     return (
       <Badge
         variant="outline"
-        className={cn('gap-1 text-xs bg-warning/10 text-warning border-warning/30', className)}
+        className={cn('gap-1 text-xs bg-amber-500/10 text-amber-400 border-amber-500/30', className)}
       >
         <Calendar className="h-3 w-3" />
         {daysUntilDue === 1 ? 'Tomorrow' : `${daysUntilDue} days`}
@@ -78,7 +78,7 @@ export function DueDateBadge({ endDate, isCompleted, className }: DueDateBadgePr
   return (
     <Badge
       variant="outline"
-      className={cn('gap-1 text-xs bg-muted text-white border-border', className)}
+      className={cn('gap-1 text-xs bg-white/[0.06] text-white border-white/[0.1]', className)}
     >
       <Calendar className="h-3 w-3" />
       {format(date, 'd MMM')}

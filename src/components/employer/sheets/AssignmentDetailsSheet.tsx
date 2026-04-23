@@ -1,34 +1,26 @@
 import { useState } from 'react';
-import {
-  Drawer,
-  DrawerContent,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerDescription,
-  DrawerFooter,
-} from '@/components/ui/drawer';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import {
-  Calendar,
-  Mail,
-  Check,
-  Loader2,
-  X,
-  ChevronDown,
-  Clock,
-  FileText,
-  AlertTriangle,
-} from 'lucide-react';
+import { Check, Loader2, X, AlertTriangle, Mail } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Employee } from '@/services/employeeService';
 import { JobAssignmentWithDetails } from '@/services/jobAssignmentService';
 import { Job } from '@/services/jobService';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  fieldLabelClass,
+  checkboxClass,
+} from '@/components/employer/editorial';
 
 interface AssignmentDetailsSheetProps {
   open: boolean;
@@ -77,170 +69,146 @@ export function AssignmentDetailsSheet({
   };
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="max-h-[90vh]">
-        <DrawerHeader className="border-b pb-4">
-          <DrawerTitle className="text-xl flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-elec-yellow" />
-            Assignment Details
-          </DrawerTitle>
-          <DrawerDescription>Configure dates and notification settings</DrawerDescription>
-        </DrawerHeader>
-
-        <ScrollArea className="flex-1 px-4">
-          <div className="py-4 space-y-6">
-            {/* Selected Workers Preview */}
-            <div className="space-y-3">
-              <Label className="text-sm font-medium text-foreground">
-                Assigning {selectedWorkers.length} worker{selectedWorkers.length > 1 ? 's' : ''}
-              </Label>
-              <div className="flex flex-wrap gap-2">
-                {selectedWorkers.map((worker) => {
-                  const hasClash = clashWarnings[worker.id]?.length > 0;
-                  return (
-                    <div
-                      key={worker.id}
-                      className={cn(
-                        'flex items-center gap-2 pl-1 pr-2 py-1 rounded-full border transition-all',
-                        hasClash ? 'bg-warning/10 border-warning/30' : 'bg-muted border-transparent'
-                      )}
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+      >
+        <SheetShell
+          eyebrow="Assignment"
+          title="Assignment details"
+          description="Configure dates and notification settings."
+          footer={
+            <>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                Back
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleSubmit}
+                disabled={isSubmitting || selectedWorkers.length === 0 || !startDate}
+                fullWidth
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    Assigning
+                  </>
+                ) : (
+                  <>
+                    <Check className="h-4 w-4 mr-2" />
+                    Assign {selectedWorkers.length} worker
+                    {selectedWorkers.length > 1 ? 's' : ''}
+                  </>
+                )}
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow={`Workers · ${selectedWorkers.length}`}>
+            <div className="flex flex-wrap gap-2">
+              {selectedWorkers.map((worker) => {
+                const hasClash = clashWarnings[worker.id]?.length > 0;
+                return (
+                  <div
+                    key={worker.id}
+                    className={cn(
+                      'flex items-center gap-2 pl-1 pr-2 py-1 rounded-full border transition-all',
+                      hasClash
+                        ? 'bg-amber-400/10 border-amber-400/30'
+                        : 'bg-white/[0.06] border-white/[0.08]'
+                    )}
+                  >
+                    <Avatar className="h-6 w-6">
+                      {worker.photo_url ? (
+                        <AvatarImage src={worker.photo_url} alt={worker.name} />
+                      ) : null}
+                      <AvatarFallback className="text-xs bg-elec-yellow/10 text-elec-yellow">
+                        {worker.avatar_initials}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-[12.5px] font-medium text-white">
+                      {worker.name.split(' ')[0]}
+                    </span>
+                    {hasClash && <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />}
+                    <button
+                      onClick={() => onRemoveWorker(worker.id)}
+                      className="h-5 w-5 rounded-full hover:bg-white/[0.08] flex items-center justify-center"
                     >
-                      <Avatar className="h-6 w-6">
-                        {worker.photo_url ? (
-                          <AvatarImage src={worker.photo_url} alt={worker.name} />
-                        ) : null}
-                        <AvatarFallback className="text-xs bg-elec-yellow/10 text-elec-yellow">
-                          {worker.avatar_initials}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm font-medium">{worker.name.split(' ')[0]}</span>
-                      {hasClash && <AlertTriangle className="h-3.5 w-3.5 text-warning" />}
-                      <button
-                        onClick={() => onRemoveWorker(worker.id)}
-                        className="h-5 w-5 rounded-full hover:bg-background flex items-center justify-center"
-                      >
-                        <X className="h-3 w-3 text-white" />
-                      </button>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Clash Warning Banner */}
-            {hasClashes && (
-              <div className="p-3 rounded-lg bg-warning/10 border border-warning/30">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-warning shrink-0" />
-                  <div>
-                    <p className="font-medium text-warning text-sm">Schedule conflicts detected</p>
-                    <p className="text-xs text-white">
-                      Some workers have overlapping job assignments
-                    </p>
+                      <X className="h-3 w-3 text-white" />
+                    </button>
                   </div>
+                );
+              })}
+            </div>
+          </FormCard>
+
+          {hasClashes && (
+            <div className="p-3 rounded-2xl bg-amber-400/10 border border-amber-400/30">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0" />
+                <div>
+                  <p className="font-medium text-amber-400 text-sm">Schedule conflicts detected</p>
+                  <p className="text-xs text-white">
+                    Some workers have overlapping job assignments
+                  </p>
                 </div>
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Date Fields */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label
-                  htmlFor="start-date"
-                  className="text-sm font-medium flex items-center gap-1.5"
-                >
-                  <Clock className="h-4 w-4 text-white" />
-                  Start Date
-                </Label>
+          <FormCard eyebrow="Schedule">
+            <FormGrid cols={2}>
+              <Field label="Start date" required>
                 <Input
-                  id="start-date"
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="h-12 text-base"
+                  className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="end-date" className="text-sm font-medium flex items-center gap-1.5">
-                  <Clock className="h-4 w-4 text-white" />
-                  End Date
-                </Label>
+              </Field>
+              <Field label="End date" hint="Optional">
                 <Input
-                  id="end-date"
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="h-12 text-base"
-                  placeholder="Optional"
+                  className={inputClass}
                 />
-              </div>
-            </div>
+              </Field>
+            </FormGrid>
+          </FormCard>
 
-            {/* Notes */}
-            <div className="space-y-2">
-              <Label htmlFor="notes" className="text-sm font-medium flex items-center gap-1.5">
-                <FileText className="h-4 w-4 text-white" />
-                Notes <span className="text-white font-normal">(Optional)</span>
-              </Label>
+          <FormCard eyebrow="Briefing notes">
+            <Field label="Notes" hint="Optional — shared with assigned workers">
               <Textarea
-                id="notes"
-                placeholder="Add any instructions or notes for the workers..."
+                placeholder="Add any instructions or notes for the workers…"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="min-h-[100px] resize-none text-base"
+                className={cn(textareaClass, 'min-h-[100px]')}
               />
-            </div>
+            </Field>
+          </FormCard>
 
-            {/* Email Notification */}
-            <div
-              className="flex items-center gap-3 p-4 rounded-xl bg-muted/50 border cursor-pointer"
-              onClick={() => setSendEmail(!sendEmail)}
-            >
-              <div
-                className={cn(
-                  'shrink-0 w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all',
-                  sendEmail ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground/30'
-                )}
-              >
-                {sendEmail && <Check className="h-4 w-4 text-elec-yellow-foreground" />}
-              </div>
-              <div className="flex-1">
-                <p className="font-medium text-foreground flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-white" />
-                  Send Email Notification
-                </p>
-                <p className="text-sm text-white">
-                  Workers will receive job details and a calendar invite
-                </p>
-              </div>
+          <div
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] cursor-pointer"
+            onClick={() => setSendEmail(!sendEmail)}
+          >
+            <Checkbox
+              checked={sendEmail}
+              onCheckedChange={(checked) => setSendEmail(checked as boolean)}
+              className={checkboxClass}
+            />
+            <div className="flex-1">
+              <p className="font-medium text-white flex items-center gap-2">
+                <Mail className="h-4 w-4 text-white" />
+                Send email notification
+              </p>
+              <p className={fieldLabelClass + ' !mb-0 mt-0.5'}>
+                Workers will receive job details and a calendar invite.
+              </p>
             </div>
           </div>
-        </ScrollArea>
-
-        <DrawerFooter className="border-t pt-4">
-          <Button
-            onClick={handleSubmit}
-            disabled={isSubmitting || selectedWorkers.length === 0 || !startDate}
-            size="lg"
-            className="w-full h-14 text-base font-semibold gap-2"
-          >
-            {isSubmitting ? (
-              <>
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Assigning Workers...
-              </>
-            ) : (
-              <>
-                <Check className="h-5 w-5" />
-                Assign {selectedWorkers.length} Worker{selectedWorkers.length > 1 ? 's' : ''}
-              </>
-            )}
-          </Button>
-          <Button variant="ghost" onClick={() => onOpenChange(false)} className="w-full">
-            Back to Selection
-          </Button>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+        </SheetShell>
+      </SheetContent>
+    </Sheet>
   );
 }

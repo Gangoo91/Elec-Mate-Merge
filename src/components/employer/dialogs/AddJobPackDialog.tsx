@@ -15,7 +15,6 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -47,6 +46,16 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  checkboxClass,
+} from '@/components/employer/editorial';
 
 const COMMON_HAZARDS = [
   'Working at height',
@@ -266,9 +275,9 @@ export function AddJobPackDialog({
               <div
                 className={cn(
                   'w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200',
-                  isComplete && 'bg-success text-success-foreground',
-                  isActive && 'bg-elec-yellow text-elec-dark ring-2 ring-elec-yellow/25',
-                  !isComplete && !isActive && 'bg-muted text-white'
+                  isComplete && 'bg-emerald-500 text-black',
+                  isActive && 'bg-elec-yellow text-black ring-2 ring-elec-yellow/25',
+                  !isComplete && !isActive && 'bg-white/[0.06] text-white'
                 )}
               >
                 {isComplete ? (
@@ -281,7 +290,7 @@ export function AddJobPackDialog({
                 className={cn(
                   'text-[10px] sm:text-xs mt-1 font-medium transition-colors',
                   isActive && 'text-elec-yellow',
-                  isComplete && 'text-success',
+                  isComplete && 'text-emerald-400',
                   !isComplete && !isActive && 'text-white'
                 )}
               >
@@ -292,7 +301,7 @@ export function AddJobPackDialog({
               <div
                 className={cn(
                   'w-3 sm:w-5 h-0.5 mx-0.5 sm:mx-1 rounded-full transition-colors',
-                  isComplete ? 'bg-success' : 'bg-muted'
+                  isComplete ? 'bg-emerald-500' : 'bg-white/[0.06]'
                 )}
               />
             )}
@@ -306,53 +315,46 @@ export function AddJobPackDialog({
   const NavigationButtons = () => (
     <div className="flex gap-3 mt-6 pt-4">
       {currentStep > 1 ? (
-        <Button
-          type="button"
-          variant="outline"
-          className="flex-1 h-14 text-base"
-          onClick={() => setCurrentStep((prev) => prev - 1)}
-        >
-          <ChevronLeft className="h-5 w-5 mr-1" />
+        <SecondaryButton onClick={() => setCurrentStep((prev) => prev - 1)} fullWidth>
+          <ChevronLeft className="h-4 w-4 mr-1" />
           Back
-        </Button>
+        </SecondaryButton>
       ) : (
-        <Button
-          type="button"
-          variant="ghost"
-          className="flex-1 h-14 text-base text-white"
+        <SecondaryButton
           onClick={() => {
             resetForm();
             setOpen(false);
           }}
+          fullWidth
         >
           Cancel
-        </Button>
+        </SecondaryButton>
       )}
 
       {currentStep < 5 ? (
-        <Button
-          className="flex-1 h-14 text-base font-semibold"
+        <PrimaryButton
           onClick={() => setCurrentStep((prev) => prev + 1)}
           disabled={!canProceed()}
+          fullWidth
         >
           Next
-          <ChevronRight className="h-5 w-5 ml-1" />
-        </Button>
+          <ChevronRight className="h-4 w-4 ml-1" />
+        </PrimaryButton>
       ) : (
-        <Button
-          className="flex-1 h-14 text-base font-semibold gap-2"
+        <PrimaryButton
           onClick={handleSubmit}
           disabled={createJobPack.isPending}
+          fullWidth
         >
           {createJobPack.isPending ? (
-            <>Creating...</>
+            'Creating...'
           ) : (
             <>
-              <Zap className="h-5 w-5" />
+              <Zap className="h-4 w-4 mr-2" />
               Create Pack
             </>
           )}
-        </Button>
+        </PrimaryButton>
       )}
     </div>
   );
@@ -365,8 +367,8 @@ export function AddJobPackDialog({
         return (
           <div className="space-y-4">
             <div className="text-center mb-5">
-              <h2 className="text-lg font-semibold text-foreground">Create Job Pack</h2>
-              <p className="text-sm text-white">
+              <h2 className="text-lg font-semibold text-white">Create Job Pack</h2>
+              <p className="text-[12.5px] text-white">
                 Start from scratch or import from an existing job
               </p>
             </div>
@@ -374,10 +376,10 @@ export function AddJobPackDialog({
             <div className="grid gap-3">
               <div
                 className={cn(
-                  'p-5 rounded-xl border-2 cursor-pointer transition-all duration-200 active:scale-[0.98]',
+                  'p-5 rounded-2xl border cursor-pointer transition-all duration-200 active:scale-[0.98]',
                   sourceType === 'new'
                     ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-border hover:border-elec-yellow/50 hover:bg-muted/30'
+                    : 'border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
                 )}
                 onClick={() => {
                   setSourceType('new');
@@ -400,14 +402,14 @@ export function AddJobPackDialog({
                   <div
                     className={cn(
                       'p-3 rounded-xl transition-colors',
-                      sourceType === 'new' ? 'bg-elec-yellow text-elec-dark' : 'bg-muted'
+                      sourceType === 'new' ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] text-white'
                     )}
                   >
                     <Plus className="h-6 w-6" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-semibold text-foreground">New Job Pack</p>
-                    <p className="text-sm text-white">Create from scratch</p>
+                    <p className="font-semibold text-white">New Job Pack</p>
+                    <p className="text-[12.5px] text-white">Create from scratch</p>
                   </div>
                   {sourceType === 'new' && <CheckCircle2 className="h-6 w-6 text-elec-yellow" />}
                 </div>
@@ -415,10 +417,10 @@ export function AddJobPackDialog({
 
               <div
                 className={cn(
-                  'p-5 rounded-xl border-2 cursor-pointer transition-all duration-200 active:scale-[0.98]',
+                  'p-5 rounded-2xl border cursor-pointer transition-all duration-200 active:scale-[0.98]',
                   sourceType === 'existing'
                     ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-border hover:border-elec-yellow/50 hover:bg-muted/30'
+                    : 'border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
                 )}
                 onClick={() => setSourceType('existing')}
               >
@@ -426,14 +428,14 @@ export function AddJobPackDialog({
                   <div
                     className={cn(
                       'p-3 rounded-xl transition-colors',
-                      sourceType === 'existing' ? 'bg-elec-yellow text-elec-dark' : 'bg-muted'
+                      sourceType === 'existing' ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] text-white'
                     )}
                   >
                     <Briefcase className="h-6 w-6" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-semibold text-foreground">From Existing Job</p>
-                    <p className="text-sm text-white">Import job details</p>
+                    <p className="font-semibold text-white">From Existing Job</p>
+                    <p className="text-[12.5px] text-white">Import job details</p>
                   </div>
                   {sourceType === 'existing' && (
                     <CheckCircle2 className="h-6 w-6 text-elec-yellow" />
@@ -444,11 +446,11 @@ export function AddJobPackDialog({
 
             {sourceType === 'existing' && (
               <div className="mt-4 space-y-2">
-                <Label className="text-sm font-medium text-white">Select Job</Label>
-                <ScrollArea className="h-48 rounded-xl border border-border">
+                <label className="text-[11.5px] text-white mb-1.5 block">Select Job</label>
+                <ScrollArea className="h-48 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)]">
                   <div className="p-2 space-y-2">
                     {activeJobs.length === 0 ? (
-                      <p className="text-center py-6 text-white text-sm">
+                      <p className="text-center py-6 text-white text-[12.5px]">
                         No active jobs found
                       </p>
                     ) : (
@@ -456,17 +458,17 @@ export function AddJobPackDialog({
                         <div
                           key={job.id}
                           className={cn(
-                            'p-3 rounded-lg cursor-pointer transition-all',
+                            'p-3 rounded-lg cursor-pointer transition-all border',
                             selectedJobId === job.id
-                              ? 'bg-elec-yellow/10 border border-elec-yellow'
-                              : 'bg-muted/30 hover:bg-muted/50'
+                              ? 'bg-elec-yellow/10 border-elec-yellow'
+                              : 'bg-white/[0.04] border-transparent hover:bg-white/[0.08]'
                           )}
                           onClick={() => setSelectedJobId(job.id)}
                         >
                           <div className="flex items-center justify-between">
                             <div className="min-w-0 flex-1">
-                              <p className="font-medium text-foreground truncate">{job.title}</p>
-                              <p className="text-xs text-white truncate">
+                              <p className="font-medium text-white truncate">{job.title}</p>
+                              <p className="text-[11px] text-white truncate">
                                 {job.client} • {job.location}
                               </p>
                             </div>
@@ -485,98 +487,82 @@ export function AddJobPackDialog({
         );
 
       case 2:
-        // Step 2: Basic Details - Improved mobile layout
+        // Step 2: Basic Details
         return (
-          <div className="space-y-5">
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">
-                Job Pack Title <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                value={formData.title}
-                onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-                placeholder="e.g. Commercial Rewiring"
-                className="h-14 text-base"
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">
-                Client <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                value={formData.client}
-                onChange={(e) => setFormData((prev) => ({ ...prev, client: e.target.value }))}
-                placeholder="e.g. Tesco"
-                className="h-14 text-base"
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-medium flex items-center gap-1.5">
-                <MapPin className="h-4 w-4" /> Location <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                value={formData.location}
-                onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
-                placeholder="e.g. Manchester"
-                className="h-14 text-base"
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Scope of Works</Label>
-              <Textarea
-                value={formData.scope}
-                onChange={(e) => setFormData((prev) => ({ ...prev, scope: e.target.value }))}
-                placeholder="Describe the scope..."
-                rows={4}
-                className="resize-none text-base min-h-[120px]"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium flex items-center gap-1.5">
-                  <Calendar className="h-4 w-4" /> Start Date
-                </Label>
+          <div className="space-y-4">
+            <FormCard eyebrow="Pack details">
+              <Field label="Job pack title" required>
                 <Input
-                  type="date"
-                  value={formData.startDate}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, startDate: e.target.value }))}
-                  className="h-14 text-base"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label className="text-sm font-medium flex items-center gap-1.5">
-                  <PoundSterling className="h-4 w-4" /> Est. Value
-                </Label>
-                <Input
-                  type="number"
-                  value={formData.estimatedValue}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, estimatedValue: e.target.value }))
-                  }
-                  placeholder="50000"
-                  className="h-14 text-base"
+                  value={formData.title}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                  placeholder="e.g. Commercial Rewiring"
+                  className={inputClass}
                   autoComplete="off"
                 />
-              </div>
-            </div>
+              </Field>
+              <FormGrid cols={2}>
+                <Field label="Client" required>
+                  <Input
+                    value={formData.client}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, client: e.target.value }))}
+                    placeholder="e.g. Tesco"
+                    className={inputClass}
+                    autoComplete="off"
+                  />
+                </Field>
+                <Field label="Location" required>
+                  <Input
+                    value={formData.location}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
+                    placeholder="e.g. Manchester"
+                    className={inputClass}
+                    autoComplete="off"
+                  />
+                </Field>
+              </FormGrid>
+              <Field label="Scope of works">
+                <Textarea
+                  value={formData.scope}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, scope: e.target.value }))}
+                  placeholder="Describe the scope..."
+                  rows={4}
+                  className={textareaClass}
+                />
+              </Field>
+              <FormGrid cols={2}>
+                <Field label="Start date">
+                  <Input
+                    type="date"
+                    value={formData.startDate}
+                    onChange={(e) => setFormData((prev) => ({ ...prev, startDate: e.target.value }))}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Estimated value (£)">
+                  <Input
+                    type="number"
+                    value={formData.estimatedValue}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, estimatedValue: e.target.value }))
+                    }
+                    placeholder="50000"
+                    className={inputClass}
+                    autoComplete="off"
+                  />
+                </Field>
+              </FormGrid>
+            </FormCard>
           </div>
         );
 
       case 3:
         // Step 3: Hazards & Certifications
         return (
-          <div className="space-y-5">
-            <div className="p-4 rounded-xl bg-warning/10 border border-warning/30">
-              <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="h-5 w-5 text-warning" />
-                <Label className="font-semibold text-foreground">Site Hazards</Label>
+          <div className="space-y-4">
+            <FormCard eyebrow="Site hazards">
+              <div className="flex items-center gap-2 -mt-1">
+                <AlertTriangle className="h-4 w-4 text-amber-400" />
+                <span className="text-[12.5px] text-white">Select applicable hazards</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {COMMON_HAZARDS.map((hazard) => (
@@ -584,10 +570,10 @@ export function AddJobPackDialog({
                     key={hazard}
                     variant={formData.hazards.includes(hazard) ? 'default' : 'outline'}
                     className={cn(
-                      'cursor-pointer py-2 px-3',
+                      'cursor-pointer py-2 px-3 border',
                       formData.hazards.includes(hazard)
-                        ? 'bg-warning text-warning-foreground'
-                        : 'text-foreground'
+                        ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                        : 'text-white border-white/[0.08] bg-white/[0.04]'
                     )}
                     onClick={() => toggleHazard(hazard)}
                   >
@@ -596,14 +582,13 @@ export function AddJobPackDialog({
                   </Badge>
                 ))}
               </div>
-            </div>
+            </FormCard>
 
-            <div className="p-4 rounded-xl bg-info/10 border border-info/30">
-              <div className="flex items-center gap-2 mb-2">
-                <Award className="h-5 w-5 text-info" />
-                <Label className="font-semibold text-foreground">Required Certifications</Label>
+            <FormCard eyebrow="Required certifications">
+              <div className="flex items-center gap-2 -mt-1">
+                <Award className="h-4 w-4 text-blue-400" />
+                <span className="text-[12.5px] text-white">Auto-suggested based on hazards</span>
               </div>
-              <p className="text-xs text-white mb-3">Auto-suggested based on hazards</p>
               <div className="flex flex-wrap gap-2">
                 {COMMON_CERTIFICATIONS.map((cert) => (
                   <Badge
@@ -612,10 +597,10 @@ export function AddJobPackDialog({
                       formData.requiredCertifications.includes(cert.name) ? 'default' : 'outline'
                     }
                     className={cn(
-                      'cursor-pointer py-2 px-3',
+                      'cursor-pointer py-2 px-3 border',
                       formData.requiredCertifications.includes(cert.name)
-                        ? 'bg-info text-info-foreground'
-                        : 'text-foreground'
+                        ? 'bg-blue-500/20 text-blue-300 border-blue-500/40'
+                        : 'text-white border-white/[0.08] bg-white/[0.04]'
                     )}
                     onClick={() => toggleCertification(cert.name)}
                   >
@@ -626,22 +611,21 @@ export function AddJobPackDialog({
                   </Badge>
                 ))}
               </div>
-            </div>
+            </FormCard>
 
-            <div className="space-y-2">
-              <Label className="text-sm font-medium flex items-center gap-1.5">
-                <FileText className="h-4 w-4" /> Briefing Notes
-              </Label>
-              <Textarea
-                value={formData.briefingContent}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, briefingContent: e.target.value }))
-                }
-                placeholder="Access arrangements, PPE requirements, site-specific notes..."
-                rows={4}
-                className="resize-none text-base min-h-[120px]"
-              />
-            </div>
+            <FormCard eyebrow="Briefing notes">
+              <Field label={undefined}>
+                <Textarea
+                  value={formData.briefingContent}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, briefingContent: e.target.value }))
+                  }
+                  placeholder="Access arrangements, PPE requirements, site-specific notes..."
+                  rows={4}
+                  className={textareaClass}
+                />
+              </Field>
+            </FormCard>
           </div>
         );
 
@@ -652,10 +636,12 @@ export function AddJobPackDialog({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Users className="h-5 w-5 text-elec-yellow" />
-                <Label className="font-semibold text-foreground">Assign Workers</Label>
+                <span className="text-[13px] font-semibold text-white">Assign Workers</span>
               </div>
               {formData.assignedWorkers.length > 0 && (
-                <Badge variant="secondary">{formData.assignedWorkers.length} selected</Badge>
+                <Badge variant="secondary" className="bg-white/[0.06] text-white border-white/[0.08]">
+                  {formData.assignedWorkers.length} selected
+                </Badge>
               )}
             </div>
 
@@ -666,24 +652,24 @@ export function AddJobPackDialog({
                   className={cn(
                     'flex items-center gap-3 p-4 rounded-xl transition-all cursor-pointer border',
                     formData.assignedWorkers.includes(employee.id)
-                      ? 'bg-elec-yellow/10 border-elec-yellow/30'
-                      : 'bg-muted/30 border-transparent hover:bg-muted/50'
+                      ? 'bg-elec-yellow/10 border-elec-yellow/40'
+                      : 'bg-[hsl(0_0%_12%)] border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
                   )}
                   onClick={() => toggleWorker(employee.id)}
                 >
                   <div className="w-11 h-11 rounded-full bg-elec-yellow/20 flex items-center justify-center shrink-0">
-                    <span className="text-sm font-bold text-elec-yellow">
+                    <span className="text-[13px] font-bold text-elec-yellow">
                       {employee.avatar_initials || employee.name.slice(0, 2).toUpperCase()}
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-foreground truncate">{employee.name}</p>
-                    <p className="text-sm text-white truncate">{employee.team_role}</p>
+                    <p className="font-medium text-white truncate">{employee.name}</p>
+                    <p className="text-[12.5px] text-white truncate">{employee.team_role}</p>
                   </div>
                   <Checkbox
                     checked={formData.assignedWorkers.includes(employee.id)}
                     onCheckedChange={() => toggleWorker(employee.id)}
-                    className="pointer-events-none h-5 w-5"
+                    className={cn(checkboxClass, 'pointer-events-none')}
                   />
                 </div>
               ))}
@@ -696,23 +682,22 @@ export function AddJobPackDialog({
         return (
           <div className="space-y-4">
             <div className="text-center mb-4">
-              <div className="w-16 h-16 rounded-full bg-success/20 flex items-center justify-center mx-auto mb-3">
-                <CheckCircle2 className="h-8 w-8 text-success" />
+              <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mx-auto mb-3">
+                <CheckCircle2 className="h-8 w-8 text-emerald-400" />
               </div>
-              <h2 className="text-lg font-semibold text-foreground">Ready to Create</h2>
-              <p className="text-sm text-white">Review the details below</p>
+              <h2 className="text-lg font-semibold text-white">Ready to Create</h2>
+              <p className="text-[12.5px] text-white">Review the details below</p>
             </div>
 
             <div className="space-y-3">
-              <div className="p-4 rounded-xl bg-muted/30 border border-border/50">
-                <p className="text-xs text-white uppercase mb-1">Job Pack</p>
-                <p className="font-semibold text-foreground text-lg">
+              <FormCard eyebrow="Job pack">
+                <p className="font-semibold text-white text-lg -mt-1">
                   {formData.title || 'Untitled'}
                 </p>
-                <p className="text-sm text-white">
+                <p className="text-[12.5px] text-white">
                   {formData.client} • {formData.location}
                 </p>
-              </div>
+              </FormCard>
 
               {formData.hazards.length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
@@ -720,7 +705,7 @@ export function AddJobPackDialog({
                     <Badge
                       key={h}
                       variant="outline"
-                      className="text-xs bg-warning/10 text-warning border-warning/30"
+                      className="text-[11px] bg-amber-500/10 text-amber-300 border-amber-500/30"
                     >
                       <AlertTriangle className="h-3 w-3 mr-1" />
                       {h}
@@ -730,23 +715,20 @@ export function AddJobPackDialog({
               )}
 
               {assignedEmployeeNames.length > 0 && (
-                <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="flex items-center gap-2 mb-1">
+                <FormCard eyebrow={`Team (${assignedEmployeeNames.length})`}>
+                  <div className="flex items-center gap-2 -mt-1">
                     <Users className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-sm font-medium text-foreground">
-                      Team ({assignedEmployeeNames.length})
+                    <span className="text-[12.5px] text-white truncate">
+                      {assignedEmployeeNames.join(', ')}
                     </span>
                   </div>
-                  <p className="text-sm text-white">
-                    {assignedEmployeeNames.join(', ')}
-                  </p>
-                </div>
+                </FormCard>
               )}
 
               {formData.estimatedValue && (
-                <div className="flex items-center justify-between p-3 rounded-lg bg-muted/30">
-                  <span className="text-sm text-white">Estimated Value</span>
-                  <span className="font-semibold text-foreground">
+                <div className="flex items-center justify-between p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                  <span className="text-[12.5px] text-white">Estimated Value</span>
+                  <span className="font-semibold text-white tabular-nums">
                     £{parseFloat(formData.estimatedValue).toLocaleString()}
                   </span>
                 </div>
@@ -774,7 +756,7 @@ export function AddJobPackDialog({
   );
 
   const header = (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 text-white">
       <div className="p-2 rounded-lg bg-elec-yellow/10">
         <Package className="h-5 w-5 text-elec-yellow" />
       </div>
@@ -799,8 +781,8 @@ export function AddJobPackDialog({
             </Button>
           )}
         </DrawerTrigger>
-        <DrawerContent className="h-[90vh] flex flex-col">
-          <DrawerHeader className="py-3 px-5 border-b border-border/50 shrink-0">
+        <DrawerContent className="h-[90vh] flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
+          <DrawerHeader className="py-3 px-5 border-b border-white/[0.06] shrink-0">
             <DrawerTitle>{header}</DrawerTitle>
           </DrawerHeader>
           <div className="flex-1 px-4 py-3 overflow-hidden">{formContent}</div>
@@ -825,8 +807,8 @@ export function AddJobPackDialog({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-lg max-h-[85vh] flex flex-col p-0">
-        <DialogHeader className="p-6 pb-4 border-b border-border/50 shrink-0">
+      <DialogContent className="max-w-lg max-h-[85vh] flex flex-col p-0 bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <DialogHeader className="p-6 pb-4 border-b border-white/[0.06] shrink-0">
           <DialogTitle>{header}</DialogTitle>
         </DialogHeader>
         <div className="flex-1 p-6 pt-4 overflow-hidden">{formContent}</div>

@@ -1,26 +1,8 @@
 import React, { useState } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  AlertTriangle,
-  Clock,
-  Calendar,
-  Bell,
-  BellOff,
-  ChevronRight,
-  RefreshCw,
-  CheckCircle2,
-  XCircle,
-  FileText,
-  CreditCard,
-  GraduationCap,
-  Shield,
-  Car,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { format, differenceInDays, addDays, isPast } from 'date-fns';
+import { format, differenceInDays, isPast } from 'date-fns';
 
 interface ExpiringDocument {
   id: string;
@@ -37,15 +19,6 @@ interface ExpiryAlertsProps {
   onToggleNotification?: (documentId: string, enabled: boolean) => void;
   className?: string;
 }
-
-const DOCUMENT_ICONS: Record<string, typeof FileText> = {
-  ecs_card: CreditCard,
-  qualification: GraduationCap,
-  training: Shield,
-  cscs: Shield,
-  driving_licence: Car,
-  insurance: Shield,
-};
 
 const DOCUMENT_LABELS: Record<string, string> = {
   ecs_card: 'ECS Card',
@@ -69,38 +42,35 @@ function getExpiryStatus(expiryDate: Date): {
     return {
       status: 'expired',
       label: 'Expired',
-      color: 'text-red-500',
-      bgColor: 'bg-red-500/20',
-      borderColor: 'border-red-500/30',
-    };
-  }
-
-  if (daysUntil <= 30) {
-    return {
-      status: 'critical',
-      label: `${daysUntil} days`,
       color: 'text-red-400',
       bgColor: 'bg-red-500/10',
       borderColor: 'border-red-500/20',
     };
   }
-
+  if (daysUntil <= 30) {
+    return {
+      status: 'critical',
+      label: `${daysUntil}d`,
+      color: 'text-red-400',
+      bgColor: 'bg-red-500/10',
+      borderColor: 'border-red-500/20',
+    };
+  }
   if (daysUntil <= 90) {
     return {
       status: 'warning',
-      label: `${daysUntil} days`,
+      label: `${daysUntil}d`,
       color: 'text-amber-400',
       bgColor: 'bg-amber-500/10',
       borderColor: 'border-amber-500/20',
     };
   }
-
   return {
     status: 'ok',
-    label: `${daysUntil} days`,
-    color: 'text-green-400',
-    bgColor: 'bg-green-500/10',
-    borderColor: 'border-green-500/20',
+    label: `${daysUntil}d`,
+    color: 'text-emerald-400',
+    bgColor: 'bg-emerald-500/10',
+    borderColor: 'border-emerald-500/20',
   };
 }
 
@@ -112,12 +82,10 @@ export function ExpiryAlerts({
 }: ExpiryAlertsProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  // Sort documents by expiry date (soonest first)
   const sortedDocuments = [...documents].sort(
     (a, b) => a.expiryDate.getTime() - b.expiryDate.getTime()
   );
 
-  // Filter to show only documents expiring within 6 months or already expired
   const alertDocuments = sortedDocuments.filter((doc) => {
     const daysUntil = differenceInDays(doc.expiryDate, new Date());
     return daysUntil <= 180 || isPast(doc.expiryDate);
@@ -129,168 +97,116 @@ export function ExpiryAlerts({
     return days > 0 && days <= 30;
   }).length;
 
-  if (alertDocuments.length === 0) {
-    return null; // Don't show card if no alerts
-  }
+  if (alertDocuments.length === 0) return null;
 
   return (
-    <Card className={cn('border-border', className)}>
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div
-              className={cn(
-                'p-2 rounded-lg',
-                expiredCount > 0
-                  ? 'bg-red-500/20'
-                  : criticalCount > 0
-                    ? 'bg-amber-500/20'
-                    : 'bg-green-500/20'
-              )}
-            >
-              {expiredCount > 0 ? (
-                <XCircle className="h-5 w-5 text-red-500" />
-              ) : criticalCount > 0 ? (
-                <AlertTriangle className="h-5 w-5 text-amber-500" />
-              ) : (
-                <Clock className="h-5 w-5 text-green-500" />
-              )}
-            </div>
-            <div>
-              <CardTitle className="text-lg">Document Renewals</CardTitle>
-              <p className="text-xs text-foreground/70">
-                {expiredCount > 0
-                  ? `${expiredCount} expired document${expiredCount > 1 ? 's' : ''}`
-                  : criticalCount > 0
-                    ? `${criticalCount} document${criticalCount > 1 ? 's' : ''} expiring soon`
-                    : 'All documents valid'}
-              </p>
-            </div>
+    <div
+      className={cn(
+        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden p-5 space-y-4',
+        className
+      )}
+    >
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            Document renewals
           </div>
-          {(expiredCount > 0 || criticalCount > 0) && (
-            <Badge
-              variant="outline"
-              className={cn(
-                'border-0',
-                expiredCount > 0 ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'
-              )}
-            >
-              Action Required
-            </Badge>
-          )}
+          <div className="mt-1 text-base font-semibold text-white">
+            {expiredCount > 0
+              ? `${expiredCount} expired`
+              : criticalCount > 0
+                ? `${criticalCount} expiring soon`
+                : 'All documents valid'}
+          </div>
         </div>
-      </CardHeader>
+        {(expiredCount > 0 || criticalCount > 0) && (
+          <span
+            className={cn(
+              'inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border',
+              expiredCount > 0
+                ? 'bg-red-500/10 text-red-400 border-red-500/20'
+                : 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+            )}
+          >
+            Action required
+          </span>
+        )}
+      </div>
 
-      <CardContent className="space-y-3">
+      <div className="space-y-2">
         {alertDocuments.map((doc) => {
-          const DocIcon = DOCUMENT_ICONS[doc.type] || FileText;
           const expiry = getExpiryStatus(doc.expiryDate);
           const isExpanded = expandedId === doc.id;
 
           return (
             <div
               key={doc.id}
-              className={cn(
-                'rounded-xl border transition-all duration-200',
-                expiry.bgColor,
-                expiry.borderColor
-              )}
+              className={cn('rounded-xl border', expiry.bgColor, expiry.borderColor)}
             >
-              {/* Main row */}
-              <div
-                className="flex items-center gap-3 p-3 cursor-pointer"
+              <button
+                className="w-full flex items-center gap-3 p-3 text-left touch-manipulation"
                 onClick={() => setExpandedId(isExpanded ? null : doc.id)}
               >
-                <div className={cn('p-2 rounded-lg bg-white/10')}>
-                  <DocIcon className={cn('h-4 w-4', expiry.color)} />
-                </div>
-
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm truncate">{doc.name}</p>
-                  <p className="text-xs text-foreground/70">{DOCUMENT_LABELS[doc.type]}</p>
+                  <p className="font-medium text-sm text-white truncate">{doc.name}</p>
+                  <p className="text-xs text-white">{DOCUMENT_LABELS[doc.type]}</p>
                 </div>
 
-                {/* Countdown */}
                 <div className="text-right">
-                  <div className="flex items-center gap-1.5">
-                    {expiry.status === 'expired' ? (
-                      <XCircle className={cn('h-4 w-4', expiry.color)} />
-                    ) : (
-                      <Clock className={cn('h-4 w-4', expiry.color)} />
-                    )}
-                    <span className={cn('font-bold text-sm', expiry.color)}>{expiry.label}</span>
-                  </div>
-                  <p className="text-xs text-foreground/70">
-                    {format(doc.expiryDate, 'dd MMM yyyy')}
-                  </p>
+                  <span className={cn('font-semibold text-sm', expiry.color)}>{expiry.label}</span>
+                  <p className="text-xs text-white">{format(doc.expiryDate, 'dd MMM yyyy')}</p>
                 </div>
 
-                <ChevronRight
+                <span
+                  aria-hidden
                   className={cn(
-                    'h-4 w-4 text-foreground/70 transition-transform',
+                    'text-sm text-white transition-transform',
                     isExpanded && 'rotate-90'
                   )}
-                />
-              </div>
+                >
+                  →
+                </span>
+              </button>
 
-              {/* Expanded actions */}
               {isExpanded && (
-                <div className="px-3 pb-3 pt-0 space-y-2 border-t border-white/10">
+                <div className="px-3 pb-3 pt-0 space-y-2 border-t border-white/[0.06]">
                   <div className="flex items-center justify-between py-2">
-                    <div className="flex items-center gap-2 text-sm text-foreground/70">
-                      <Bell className="h-4 w-4" />
-                      <span>Renewal reminders</span>
-                    </div>
+                    <span className="text-sm text-white">Renewal reminders</span>
                     <Button
                       variant="ghost"
-                      size="sm"
                       className={cn(
-                        'h-11 px-3 touch-manipulation active:scale-[0.98]',
-                        doc.notificationsEnabled ? 'text-green-500' : 'text-foreground/70'
+                        'h-11 px-3 text-sm rounded-lg touch-manipulation active:scale-[0.98]',
+                        doc.notificationsEnabled ? 'text-emerald-400' : 'text-white'
                       )}
                       onClick={(e) => {
                         e.stopPropagation();
                         onToggleNotification?.(doc.id, !doc.notificationsEnabled);
                       }}
                     >
-                      {doc.notificationsEnabled ? (
-                        <>
-                          <Bell className="h-4 w-4 mr-1" />
-                          On
-                        </>
-                      ) : (
-                        <>
-                          <BellOff className="h-4 w-4 mr-1" />
-                          Off
-                        </>
-                      )}
+                      {doc.notificationsEnabled ? 'On' : 'Off'}
                     </Button>
                   </div>
 
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
-                      size="sm"
-                      className="flex-1 h-10 border-white/10"
+                      className="flex-1 h-11 rounded-xl border-white/[0.06] bg-transparent text-white touch-manipulation"
                       onClick={(e) => {
                         e.stopPropagation();
                         onRenewClick?.(doc.id);
                       }}
                     >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Update Document
+                      Update document
                     </Button>
                     {doc.renewalUrl && (
                       <Button
-                        size="sm"
-                        className="flex-1 h-10 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90"
+                        className="flex-1 h-11 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation font-semibold"
                         onClick={(e) => {
                           e.stopPropagation();
                           openExternalUrl(doc.renewalUrl);
                         }}
                       >
-                        <Calendar className="h-4 w-4 mr-2" />
-                        Book Renewal
+                        Book renewal
                       </Button>
                     )}
                   </div>
@@ -299,19 +215,15 @@ export function ExpiryAlerts({
             </div>
           );
         })}
+      </div>
 
-        {/* Summary footer */}
-        <div className="flex items-center justify-between pt-2 text-xs text-foreground/70">
-          <span>
-            {documents.length - alertDocuments.length} document
-            {documents.length - alertDocuments.length !== 1 ? 's' : ''} up to date
-          </span>
-          <button className="text-elec-yellow hover:text-elec-yellow/80 flex items-center gap-1">
-            View all <ChevronRight className="h-3 w-3" />
-          </button>
-        </div>
-      </CardContent>
-    </Card>
+      <div className="flex items-center justify-between pt-2 text-xs text-white">
+        <span>
+          {documents.length - alertDocuments.length} up to date
+        </span>
+        <span className="text-elec-yellow font-medium">View all →</span>
+      </div>
+    </div>
   );
 }
 

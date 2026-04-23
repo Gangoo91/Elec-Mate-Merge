@@ -97,7 +97,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                     : 'inline-block h-1.5 w-1.5 rounded-full bg-purple-400'
               }
             />
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               {title}
             </div>
           </div>
@@ -133,7 +133,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
             </div>
           ))}
           {items.length === 0 && (
-            <p className="text-center text-white/45 py-4 text-[12.5px]">
+            <p className="text-center text-white/70 py-4 text-[12.5px]">
               No {title.toLowerCase()} mapped yet
             </p>
           )}
@@ -214,7 +214,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                       <div className="text-[15px] font-medium text-white truncate">
                         {entry.categoryName}
                       </div>
-                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px] text-white/50">
+                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px] text-white/75">
                         <span>
                           Evidence{' '}
                           <span className="text-white/70 tabular-nums">

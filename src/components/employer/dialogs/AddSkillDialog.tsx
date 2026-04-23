@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -13,6 +11,16 @@ import {
 import { useAddElecIdSkill } from '@/hooks/useElecId';
 import { toast } from '@/hooks/use-toast';
 import { Star } from 'lucide-react';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 const SKILL_LEVELS = [
   { value: 'beginner', label: 'Beginner' },
@@ -98,75 +106,71 @@ export const AddSkillDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-lg">
+      <DialogContent className="max-w-[95vw] sm:max-w-lg bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <Star className="h-5 w-5 text-elec-yellow" />
             Add Skill
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label>Skill Name *</Label>
-            <Input
-              value={formData.skillName}
-              onChange={(e) => setFormData((prev) => ({ ...prev, skillName: e.target.value }))}
-              placeholder="e.g. EV Charging Installation"
-              list="common-skills"
-            />
-            <datalist id="common-skills">
-              {COMMON_SKILLS.map((skill) => (
-                <option key={skill} value={skill} />
-              ))}
-            </datalist>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label>Skill Level</Label>
-              <Select
-                value={formData.skillLevel}
-                onValueChange={(val) => setFormData((prev) => ({ ...prev, skillLevel: val }))}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {SKILL_LEVELS.map((level) => (
-                    <SelectItem key={level.value} value={level.value}>
-                      {level.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Years Experience</Label>
+          <FormCard eyebrow="Skill details">
+            <Field label="Skill name" required>
               <Input
-                type="number"
-                min="0"
-                max="50"
-                value={formData.yearsExperience}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, yearsExperience: e.target.value }))
-                }
-                placeholder="e.g. 5"
+                value={formData.skillName}
+                onChange={(e) => setFormData((prev) => ({ ...prev, skillName: e.target.value }))}
+                placeholder="e.g. EV Charging Installation"
+                list="common-skills"
+                className={inputClass}
               />
-            </div>
-          </div>
+              <datalist id="common-skills">
+                {COMMON_SKILLS.map((skill) => (
+                  <option key={skill} value={skill} />
+                ))}
+              </datalist>
+            </Field>
 
-          <div className="flex gap-2 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1"
-              onClick={() => onOpenChange(false)}
-            >
+            <FormGrid cols={2}>
+              <Field label="Skill level">
+                <Select
+                  value={formData.skillLevel}
+                  onValueChange={(val) => setFormData((prev) => ({ ...prev, skillLevel: val }))}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {SKILL_LEVELS.map((level) => (
+                      <SelectItem key={level.value} value={level.value}>
+                        {level.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+              <Field label="Years experience">
+                <Input
+                  type="number"
+                  min="0"
+                  max="50"
+                  value={formData.yearsExperience}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, yearsExperience: e.target.value }))
+                  }
+                  placeholder="e.g. 5"
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+          </FormCard>
+
+          <div className="flex gap-2 pt-2">
+            <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
               Cancel
-            </Button>
-            <Button type="submit" className="flex-1" disabled={addSkill.isPending}>
+            </SecondaryButton>
+            <PrimaryButton type="submit" disabled={addSkill.isPending} fullWidth>
               {addSkill.isPending ? 'Adding...' : 'Add Skill'}
-            </Button>
+            </PrimaryButton>
           </div>
         </form>
       </DialogContent>

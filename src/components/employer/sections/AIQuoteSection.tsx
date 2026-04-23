@@ -1,30 +1,30 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { SectionHeader } from '@/components/employer/SectionHeader';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
-  Receipt,
-  Sparkles,
-  Loader2,
-  CheckCircle,
-  AlertTriangle,
-  Download,
-  FileText,
-  RefreshCw,
-  Plus,
-  Trash2,
-  PoundSterling,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  Divider,
+  PrimaryButton,
+  SecondaryButton,
+  Field,
+  inputClass,
+  textareaClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
+import { RefreshCw, Sparkles, Loader2, Download, Plus, Trash2 } from 'lucide-react';
 
 interface AIQuoteSectionProps {
   onNavigate: (section: Section) => void;
@@ -35,6 +35,14 @@ interface LineItem {
   description: string;
   quantity: number;
   unitPrice: number;
+}
+
+interface HistoryEntry {
+  id: string;
+  clientName: string;
+  total: number;
+  createdAt: number;
+  saved: boolean;
 }
 
 export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
@@ -52,23 +60,25 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
   const [progress, setProgress] = useState(0);
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<HistoryEntry[]>([]);
 
   const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
-  // Calculate totals
   const subtotal = lineItems.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
   const vat = subtotal * 0.2;
   const total = subtotal + vat;
 
+  const generatedCount = history.length;
+  const savedCount = history.filter((h) => h.saved).length;
+  const avgValue =
+    history.length > 0
+      ? Math.round(history.reduce((s, h) => s + h.total, 0) / history.length)
+      : 0;
+
   const addLineItem = () => {
     setLineItems([
       ...lineItems,
-      {
-        id: Date.now().toString(),
-        description: '',
-        quantity: 1,
-        unitPrice: 0,
-      },
+      { id: Date.now().toString(), description: '', quantity: 1, unitPrice: 0 },
     ]);
   };
 
@@ -85,7 +95,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
   const handleGenerate = async () => {
     if (!clientName.trim() || !projectDescription.trim()) {
       toast({
-        title: 'Missing Information',
+        title: 'Missing information',
         description: 'Please provide client name and project description.',
         variant: 'destructive',
       });
@@ -95,7 +105,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
     const validItems = lineItems.filter((item) => item.description.trim() && item.unitPrice > 0);
     if (validItems.length === 0) {
       toast({
-        title: 'No Line Items',
+        title: 'No line items',
         description: 'Please add at least one line item with description and price.',
         variant: 'destructive',
       });
@@ -141,9 +151,20 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
       setResult(data);
       setIsGenerating(false);
 
+      setHistory((prev) => [
+        {
+          id: Date.now().toString(),
+          clientName,
+          total,
+          createdAt: Date.now(),
+          saved: false,
+        },
+        ...prev,
+      ]);
+
       toast({
-        title: 'Quote Generated!',
-        description: 'Your professional quote has been created.',
+        title: 'Quote generated',
+        description: 'Your professional quote draft is ready.',
       });
     } catch (err: any) {
       clearInterval(progressInterval);
@@ -175,260 +196,311 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
     setProgress(0);
   };
 
+  const handleRefresh = () => {
+    handleReset();
+    setClientName('');
+    setClientAddress('');
+    setProjectDescription('');
+    setSelectedJobPackId(null);
+    setLineItems([{ id: '1', description: '', quantity: 1, unitPrice: 0 }]);
+  };
+
+  const formatTime = (ts: number) => {
+    const d = new Date(ts);
+    return d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  };
+
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
+    <PageFrame>
+      <PageHero
+        eyebrow="Smart Docs"
         title="AI Quote Generator"
-        description="Create professional quotes quickly"
-        icon={Receipt}
+        description="Photograph a job, get a priced quote draft back."
+        tone="yellow"
+        actions={
+          <IconButton onClick={handleRefresh} aria-label="Reset form">
+            <RefreshCw className="h-4 w-4" />
+          </IconButton>
+        }
+        meta={<Pill tone="purple">AI</Pill>}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column - Client & Project */}
-        <div className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">Client Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div>
-                <Label htmlFor="clientName">Client Name *</Label>
-                <Input
-                  id="clientName"
-                  value={clientName}
-                  onChange={(e) => setClientName(e.target.value)}
-                  placeholder="Company or individual name"
-                  className="mt-1 bg-elec-dark border-elec-yellow/20"
-                  disabled={isGenerating}
-                />
-              </div>
-              <div>
-                <Label htmlFor="clientAddress">Address</Label>
-                <Textarea
-                  id="clientAddress"
-                  value={clientAddress}
-                  onChange={(e) => setClientAddress(e.target.value)}
-                  placeholder="Full address..."
-                  className="mt-1 min-h-[80px] bg-elec-dark border-elec-yellow/20"
-                  disabled={isGenerating}
-                />
-              </div>
-            </CardContent>
-          </Card>
+      <StatStrip
+        columns={3}
+        stats={[
+          { label: 'Generated', value: generatedCount, tone: 'yellow' },
+          { label: 'Saved as quotes', value: savedCount, tone: 'emerald', accent: true },
+          { label: 'Avg value £', value: avgValue, tone: 'blue' },
+        ]}
+      />
 
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Link to Job Pack
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <JobPackSelector
-                selectedJobPackId={selectedJobPackId}
-                onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate('jobpacks')}
-                showStatus={false}
-              />
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Middle Column - Line Items */}
-        <div className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">Project Description</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Textarea
-                value={projectDescription}
-                onChange={(e) => setProjectDescription(e.target.value)}
-                placeholder="Describe the work to be quoted..."
-                className="min-h-[80px] bg-elec-dark border-elec-yellow/20"
+      <ListCard>
+        <ListCardHeader
+          tone="yellow"
+          title="Quote brief"
+          meta={<Pill tone="yellow">Draft</Pill>}
+        />
+        <div className="px-5 sm:px-6 py-5 sm:py-6 space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+                Client name
+              </label>
+              <input
+                type="text"
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+                placeholder="Company or individual"
                 disabled={isGenerating}
+className={inputClass}
               />
-            </CardContent>
-          </Card>
+            </div>
+            <div className="space-y-2">
+              <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+                Site address
+              </label>
+              <input
+                type="text"
+                value={clientAddress}
+                onChange={(e) => setClientAddress(e.target.value)}
+                placeholder="Where is the work?"
+                disabled={isGenerating}
+className={inputClass}
+              />
+            </div>
+          </div>
 
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-base">Line Items</CardTitle>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={addLineItem}
-                  disabled={isGenerating}
-                  className="border-elec-yellow/30"
-                >
-                  <Plus className="h-4 w-4 mr-1" />
-                  Add
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {lineItems.map((item, index) => (
-                <div
-                  key={item.id}
-                  className="p-3 rounded-lg bg-elec-dark/50 border border-elec-yellow/10 space-y-2"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-white">Item {index + 1}</span>
-                    {lineItems.length > 1 && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => removeLineItem(item.id)}
-                        className="h-6 w-6 p-0 text-white hover:text-destructive"
-                        disabled={isGenerating}
-                      >
-                        <Trash2 className="h-3 w-3" />
-                      </Button>
-                    )}
-                  </div>
-                  <Input
-                    value={item.description}
-                    onChange={(e) => updateLineItem(item.id, 'description', e.target.value)}
-                    placeholder="Description"
-                    className="bg-elec-dark border-elec-yellow/20 text-sm"
-                    disabled={isGenerating}
-                  />
-                  <div className="flex gap-2">
-                    <div className="flex-1">
-                      <Label className="text-xs">Qty</Label>
-                      <Input
-                        type="number"
-                        value={item.quantity}
-                        onChange={(e) =>
-                          updateLineItem(item.id, 'quantity', parseInt(e.target.value) || 0)
-                        }
-                        className="bg-elec-dark border-elec-yellow/20 text-sm"
-                        disabled={isGenerating}
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <Label className="text-xs">Unit Price (£)</Label>
-                      <Input
-                        type="number"
-                        step="0.01"
-                        value={item.unitPrice}
-                        onChange={(e) =>
-                          updateLineItem(item.id, 'unitPrice', parseFloat(e.target.value) || 0)
-                        }
-                        className="bg-elec-dark border-elec-yellow/20 text-sm"
-                        disabled={isGenerating}
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </div>
+          <div className="space-y-2">
+            <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+              Photograph the job
+            </label>
+            <label className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/[0.12] bg-[hsl(0_0%_10%)] px-6 py-10 cursor-pointer hover:border-elec-yellow/40 hover:bg-[hsl(0_0%_14%)] transition-colors touch-manipulation">
+              <span className="text-2xl text-white">+</span>
+              <span className="text-[13px] font-medium text-white">Upload or drop photos</span>
+              <span className="text-[11px] text-white">PNG, JPG up to 10MB</span>
+              <input type="file" accept="image/*" multiple className="hidden" disabled={isGenerating} />
+            </label>
+          </div>
 
-        {/* Right Column - Summary & Actions */}
-        <div className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                Quote Summary
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span className="text-white">Subtotal</span>
-                <span className="text-foreground">£{subtotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-white">VAT (20%)</span>
-                <span className="text-foreground">£{vat.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-lg font-bold pt-2 border-t border-elec-yellow/10">
-                <span>Total</span>
-                <span className="text-elec-yellow">£{total.toFixed(2)}</span>
-              </div>
+          <div className="space-y-2">
+            <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+              Job description
+            </label>
+            <textarea
+              value={projectDescription}
+              onChange={(e) => setProjectDescription(e.target.value)}
+              placeholder="Describe what needs doing — circuits, fittings, board changes, anything relevant."
+              disabled={isGenerating}
+              className={`${textareaClass} min-h-[120px]`}
+            />
+          </div>
 
-              <Button
-                onClick={handleGenerate}
-                disabled={isGenerating || !clientName.trim() || !projectDescription.trim()}
-                className="w-full mt-4 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          <div className="space-y-2">
+            <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+              Link to job pack (optional)
+            </label>
+            <JobPackSelector
+              selectedJobPackId={selectedJobPackId}
+              onSelect={setSelectedJobPackId}
+              onCreateNew={() => onNavigate('jobpacks')}
+              showStatus={false}
+            />
+          </div>
+
+          <Divider label="Line items" />
+
+          <div className="space-y-3">
+            {lineItems.map((item, index) => (
+              <div
+                key={item.id}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 space-y-3"
               >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Generate Quote
-                  </>
-                )}
-              </Button>
-            </CardContent>
-          </Card>
-
-          {isGenerating && (
-            <Card className="border-info/20 bg-info/5">
-              <CardContent className="p-4">
-                <Progress value={progress} className="h-2" />
-                <p className="text-xs text-white mt-2 text-center">
-                  Generating professional quote...
-                </p>
-              </CardContent>
-            </Card>
-          )}
-
-          {error && !isGenerating && (
-            <Card className="border-destructive/20 bg-destructive/5">
-              <CardContent className="p-4">
-                <div className="flex items-start gap-2">
-                  <AlertTriangle className="h-4 w-4 text-destructive mt-0.5" />
-                  <div>
-                    <p className="text-sm text-foreground">Generation Failed</p>
-                    <p className="text-xs text-white">{error}</p>
-                    <Button variant="outline" size="sm" className="mt-2" onClick={handleReset}>
-                      <RefreshCw className="h-3 w-3 mr-1" />
-                      Retry
-                    </Button>
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+                    Item {index + 1}
+                  </span>
+                  {lineItems.length > 1 && (
+                    <button
+                      onClick={() => removeLineItem(item.id)}
+                      disabled={isGenerating}
+                      aria-label="Remove item"
+                      className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:text-red-400 hover:bg-white/[0.04] transition-colors touch-manipulation"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  )}
+                </div>
+                <input
+                  type="text"
+                  value={item.description}
+                  onChange={(e) => updateLineItem(item.id, 'description', e.target.value)}
+                  placeholder="Description"
+                  disabled={isGenerating}
+  className={inputClass}
+                />
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+                      Qty
+                    </label>
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      onChange={(e) =>
+                        updateLineItem(item.id, 'quantity', parseInt(e.target.value) || 0)
+                      }
+                      disabled={isGenerating}
+className={`${inputClass} tabular-nums`}
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+                      Unit price (£)
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={item.unitPrice}
+                      onChange={(e) =>
+                        updateLineItem(item.id, 'unitPrice', parseFloat(e.target.value) || 0)
+                      }
+                      disabled={isGenerating}
+className={`${inputClass} tabular-nums`}
+                    />
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              </div>
+            ))}
 
-          {result && !isGenerating && (
-            <Card className="border-success/20 bg-success/5">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <CheckCircle className="h-4 w-4 text-success" />
-                  <span className="text-sm font-medium">Quote Ready!</span>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    onClick={handleDownload}
-                    size="sm"
-                    className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  >
-                    <Download className="h-3 w-3 mr-1" />
-                    Download
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={handleReset}
-                    className="border-elec-yellow/30"
-                  >
-                    <RefreshCw className="h-3 w-3" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
+            <SecondaryButton onClick={addLineItem} disabled={isGenerating} fullWidth>
+              <Plus className="h-4 w-4 mr-2" />
+              Add line item
+            </SecondaryButton>
+          </div>
+
+          <PrimaryButton
+            onClick={handleGenerate}
+            disabled={isGenerating || !clientName.trim() || !projectDescription.trim()}
+            fullWidth
+            size="lg"
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                Generating quote draft…
+              </>
+            ) : (
+              <>
+                <Sparkles className="h-4 w-4 mr-2" />
+                Generate quote draft
+              </>
+            )}
+          </PrimaryButton>
         </div>
-      </div>
-    </div>
+      </ListCard>
+
+      {isGenerating && <LoadingBlocks />}
+
+      {error && !isGenerating && (
+        <ListCard>
+          <ListCardHeader
+            tone="red"
+            title="Generation failed"
+            meta={<Pill tone="red">Error</Pill>}
+          />
+          <div className="px-5 sm:px-6 py-5 space-y-4">
+            <p className="text-[13px] text-white">{error}</p>
+            <PrimaryButton onClick={handleReset}>
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Retry
+            </PrimaryButton>
+          </div>
+        </ListCard>
+      )}
+
+      {result && !isGenerating && (
+        <ListCard>
+          <ListCardHeader
+            tone="yellow"
+            title="Quote draft"
+            meta={<Pill tone="emerald">Ready</Pill>}
+            action="Reset"
+            onAction={handleReset}
+          />
+          <ListBody>
+            {lineItems
+              .filter((i) => i.description.trim() && i.unitPrice > 0)
+              .map((item) => (
+                <ListRow
+                  key={item.id}
+                  title={item.description}
+                  subtitle={`${item.quantity} × £${item.unitPrice.toFixed(2)}`}
+                  trailing={
+                    <span className="text-[14px] font-semibold text-white tabular-nums">
+                      £{(item.quantity * item.unitPrice).toFixed(2)}
+                    </span>
+                  }
+                />
+              ))}
+          </ListBody>
+          <div className="px-5 sm:px-6 py-5 sm:py-6 border-t border-white/[0.06] space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-[13px] text-white">Subtotal</span>
+              <span className="text-[14px] text-white tabular-nums">£{subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-[13px] text-white">VAT (20%)</span>
+              <span className="text-[14px] text-white tabular-nums">£{vat.toFixed(2)}</span>
+            </div>
+            <div className="pt-4 border-t border-white/[0.06] flex items-baseline justify-between gap-4">
+              <span className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
+                Total
+              </span>
+              <span className="text-[40px] sm:text-5xl lg:text-[56px] font-semibold text-elec-yellow tabular-nums tracking-[-0.02em] leading-none">
+                £{total.toFixed(2)}
+              </span>
+            </div>
+            <PrimaryButton onClick={handleDownload} fullWidth size="lg">
+              <Download className="h-4 w-4 mr-2" />
+              Download quote
+            </PrimaryButton>
+          </div>
+        </ListCard>
+      )}
+
+      <ListCard>
+        <ListCardHeader
+          tone="purple"
+          title="Recent generations"
+          meta={<Pill tone="purple">{history.length}</Pill>}
+        />
+        {history.length === 0 ? (
+          <div className="p-1">
+            <EmptyState
+              title="No quotes generated yet"
+              description="Drafts you create will appear here so you can re-open or save them as quotes."
+            />
+          </div>
+        ) : (
+          <ListBody>
+            {history.map((entry) => (
+              <ListRow
+                key={entry.id}
+                title={entry.clientName || 'Untitled'}
+                subtitle={formatTime(entry.createdAt)}
+                trailing={
+                  <>
+                    <span className="text-[14px] font-semibold text-white tabular-nums">
+                      £{entry.total.toFixed(2)}
+                    </span>
+                    {entry.saved && <Pill tone="emerald">Saved</Pill>}
+                  </>
+                }
+              />
+            ))}
+          </ListBody>
+        )}
+      </ListCard>
+    </PageFrame>
   );
 }

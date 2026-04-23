@@ -115,12 +115,12 @@ export function StudentDetailSheet({
               </Avatar>
 
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                   Student
                 </div>
                 <SheetTitle className="mt-1 text-xl text-left">{student.name}</SheetTitle>
                 {student.uln && (
-                  <p className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                  <p className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                     ULN · {student.uln}
                   </p>
                 )}
@@ -193,12 +193,12 @@ export function StudentDetailSheet({
                   >
                     {/* Contact Details */}
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Contact
                       </div>
                       <div className="mt-3 space-y-2 text-[13px]">
                         <div className="flex items-center justify-between">
-                          <span className="text-white/50">Email</span>
+                          <span className="text-white/75">Email</span>
                           <a
                             href={`mailto:${student.email}`}
                             className="text-white hover:text-elec-yellow truncate ml-3 max-w-[60%]"
@@ -208,7 +208,7 @@ export function StudentDetailSheet({
                         </div>
                         {student.phone && (
                           <div className="flex items-center justify-between">
-                            <span className="text-white/50">Phone</span>
+                            <span className="text-white/75">Phone</span>
                             <a
                               href={`tel:${student.phone}`}
                               className="text-white hover:text-elec-yellow tabular-nums"
@@ -222,26 +222,26 @@ export function StudentDetailSheet({
 
                     {/* Enrolment */}
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Enrolment
                       </div>
                       <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 text-[13px]">
                         <div>
-                          <div className="text-[11px] text-white/40 uppercase tracking-[0.14em]">Cohort</div>
+                          <div className="text-[11px] text-white/55 uppercase tracking-[0.14em]">Cohort</div>
                           <div className="mt-1 text-white font-medium">{cohortName}</div>
                         </div>
                         <div>
-                          <div className="text-[11px] text-white/40 uppercase tracking-[0.14em]">Status</div>
+                          <div className="text-[11px] text-white/55 uppercase tracking-[0.14em]">Status</div>
                           <div className="mt-1 text-white font-medium">{student.status}</div>
                         </div>
                         <div>
-                          <div className="text-[11px] text-white/40 uppercase tracking-[0.14em]">Start</div>
+                          <div className="text-[11px] text-white/55 uppercase tracking-[0.14em]">Start</div>
                           <div className="mt-1 text-white font-medium tabular-nums">
                             {formatUKDateShort(student.start_date)}
                           </div>
                         </div>
                         <div>
-                          <div className="text-[11px] text-white/40 uppercase tracking-[0.14em]">Expected End</div>
+                          <div className="text-[11px] text-white/55 uppercase tracking-[0.14em]">Expected End</div>
                           <div className="mt-1 text-white font-medium tabular-nums">
                             {formatUKDateShort(student.expected_end_date)}
                           </div>
@@ -251,7 +251,7 @@ export function StudentDetailSheet({
 
                     {/* Progress */}
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Progress
                       </div>
                       <div className="mt-3 flex items-baseline justify-between">
@@ -268,7 +268,7 @@ export function StudentDetailSheet({
                       </div>
                       <div className="mt-4 pt-4 border-t border-white/[0.06] grid grid-cols-2 gap-4 text-[12px]">
                         <div>
-                          <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                          <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                             Attendance
                           </div>
                           <div className={cn('mt-1 text-2xl font-semibold tabular-nums leading-none', attendancePctTone)}>
@@ -276,7 +276,7 @@ export function StudentDetailSheet({
                           </div>
                         </div>
                         <div>
-                          <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                          <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                             Complete
                           </div>
                           <div className={cn('mt-1 text-2xl font-semibold tabular-nums leading-none', progressPctTone)}>
@@ -302,14 +302,14 @@ export function StudentDetailSheet({
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
                       <div className="flex items-baseline justify-between">
                         <div>
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                             Attendance Rate
                           </div>
                           <div className={cn('mt-1 text-4xl font-semibold tabular-nums leading-none', attendancePctTone)}>
                             {attendanceRate}%
                           </div>
                         </div>
-                        <div className="text-right text-[11px] text-white/50 tabular-nums">
+                        <div className="text-right text-[11px] text-white/75 tabular-nums">
                           <div>{studentAttendance.length} sessions</div>
                           <div>
                             {studentAttendance.filter((a) => a.status === 'Present').length}{' '}
@@ -333,7 +333,7 @@ export function StudentDetailSheet({
                     </div>
 
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
                         Attendance Pattern
                       </div>
                       <AttendanceHeatmap
@@ -346,7 +346,7 @@ export function StudentDetailSheet({
                     </div>
 
                     <div>
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
                         Recent Records
                       </div>
                       {studentAttendance.length === 0 ? (
@@ -391,7 +391,7 @@ export function StudentDetailSheet({
                       <>
                         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
                           <div className="flex items-baseline justify-between">
-                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                               Individual Learning Plan
                             </div>
                             <Pill tone={studentILP.status === 'Active' ? 'green' : 'yellow'}>
@@ -400,7 +400,7 @@ export function StudentDetailSheet({
                           </div>
                           <div className="mt-4 grid grid-cols-2 gap-4 text-[12.5px]">
                             <div>
-                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                                 Next Review
                               </div>
                               <div className="mt-1 text-white font-medium tabular-nums">
@@ -408,7 +408,7 @@ export function StudentDetailSheet({
                               </div>
                             </div>
                             <div>
-                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                                 Last Reviewed
                               </div>
                               <div className="mt-1 text-white font-medium tabular-nums">
@@ -418,7 +418,7 @@ export function StudentDetailSheet({
                           </div>
                           {studentILP.support_needs && (
                             <div className="mt-4 pt-4 border-t border-white/[0.06]">
-                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/40 mb-1.5">
+                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/55 mb-1.5">
                                 Support Needs
                               </div>
                               <p className="text-[13px] text-white/70 leading-relaxed">
@@ -429,7 +429,7 @@ export function StudentDetailSheet({
                         </div>
 
                         <div>
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
                             Targets
                           </div>
                           {!studentILP.targets || studentILP.targets.length === 0 ? (

@@ -85,7 +85,7 @@ export function Eyebrow({ children, className }: { children: ReactNode; classNam
   return (
     <div
       className={cn(
-        'text-[10px] font-medium uppercase tracking-[0.18em] text-white/40',
+        'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55',
         className
       )}
     >
@@ -182,19 +182,23 @@ export function PageHero({ eyebrow, title, description, actions, tone }: PageHer
           )}
         />
       )}
-      <div className="pt-6 sm:pt-8 lg:pt-10 pb-2 flex items-end justify-between gap-4 sm:gap-6">
+      <div className="pt-6 sm:pt-8 lg:pt-10 pb-2 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-6">
         <div className="min-w-0 flex-1">
           {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-          <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
+          <h1 className="mt-1.5 text-[22px] sm:text-[32px] lg:text-5xl font-semibold text-white tracking-tight leading-[1.15] sm:leading-[1.08] break-words hyphens-auto">
             {title}
           </h1>
           {description && (
-            <p className="mt-3 text-[13px] sm:text-sm text-white/55 max-w-2xl leading-relaxed">
+            <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
               {description}
             </p>
           )}
         </div>
-        {actions && <div className="shrink-0 flex items-center gap-2">{actions}</div>}
+        {actions && (
+          <div className="shrink-0 flex items-center gap-2 flex-wrap self-start sm:self-end">
+            {actions}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -291,7 +295,7 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
             >
               {stat.value}
             </span>
-            {stat.sub && <span className="mt-3 text-[11px] text-white/50">{stat.sub}</span>}
+            {stat.sub && <span className="mt-3 text-[11px] text-white/75">{stat.sub}</span>}
           </>
         );
 
@@ -418,7 +422,7 @@ export function HubCard({
       )}
       <div className="flex-grow" />
       <div className="mt-6 flex items-center justify-between pt-4 border-t border-white/[0.06]">
-        <span className="text-[11px] text-white/50 truncate">{meta ?? ''}</span>
+        <span className="text-[11px] text-white/75 truncate">{meta ?? ''}</span>
         <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0 ml-3">
           {cta} →
         </span>
@@ -485,7 +489,7 @@ export function ListRow({
       <div className="flex-1 min-w-0">
         <div className="text-sm sm:text-[15px] font-medium text-white truncate">{title}</div>
         {subtitle && (
-          <div className="mt-0.5 text-[11.5px] text-white/50 truncate">{subtitle}</div>
+          <div className="mt-0.5 text-[11.5px] text-white/75 truncate">{subtitle}</div>
         )}
       </div>
       {trailing && <div className="shrink-0">{trailing}</div>}
@@ -533,7 +537,7 @@ export function EmptyState({
     >
       <div className="text-base font-medium text-white">{title}</div>
       {description && (
-        <p className="mt-2 text-[12.5px] text-white/50 max-w-md mx-auto leading-relaxed">
+        <p className="mt-2 text-[12.5px] text-white/75 max-w-md mx-auto leading-relaxed">
           {description}
         </p>
       )}
@@ -656,7 +660,7 @@ export function FilterBar({
                 <span
                   className={cn(
                     'ml-1.5 tabular-nums text-[11px]',
-                    activeTab === tab.value ? 'text-black/60' : 'text-white/40'
+                    activeTab === tab.value ? 'text-black/60' : 'text-white/70'
                   )}
                 >
                   {tab.count}
@@ -673,7 +677,7 @@ export function FilterBar({
             value={search ?? ''}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder={searchPlaceholder}
-            className="h-10 px-4 w-full lg:w-72 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+            className="h-10 px-4 w-full lg:w-72 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
           />
         )}
         {actions}

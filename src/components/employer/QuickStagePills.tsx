@@ -16,11 +16,11 @@ interface QuickStagePillsProps {
 
 // Get stage-specific colours
 const getStageColor = (stageId: string, isActive: boolean): string => {
-  if (!isActive) return 'bg-elec-gray text-white hover:bg-muted border-border';
+  if (!isActive) return 'bg-[hsl(0_0%_12%)] text-white hover:bg-[hsl(0_0%_12%)] border-white/[0.08]';
 
   switch (stageId) {
     case 'Quoted':
-      return 'bg-muted-foreground text-background border-muted-foreground';
+      return 'bg-[hsl(0_0%_12%)]-foreground text-background border-white/[0.08]-foreground';
     case 'Confirmed':
       return 'bg-info text-info-foreground border-info';
     case 'Scheduled':
@@ -28,7 +28,7 @@ const getStageColor = (stageId: string, isActive: boolean): string => {
     case 'In Progress':
       return 'bg-elec-yellow text-elec-yellow-foreground border-elec-yellow';
     case 'Testing':
-      return 'bg-purple-500 text-foreground border-purple-500';
+      return 'bg-purple-500 text-white border-purple-500';
     case 'Complete':
       return 'bg-success text-success-foreground border-success';
     default:
@@ -61,7 +61,7 @@ export function QuickStagePills({
             variant="secondary"
             className={cn(
               'h-5 px-1.5 text-xs',
-              activeStage === stage.id && 'bg-background/20 text-inherit'
+              activeStage === stage.id && 'bg-[hsl(0_0%_8%)]/20 text-inherit'
             )}
           >
             {counts[stage.id] || 0}

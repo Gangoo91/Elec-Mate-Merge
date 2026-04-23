@@ -1,31 +1,29 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEmployer, type Employee } from '@/contexts/EmployerContext';
 import { toast } from '@/hooks/use-toast';
 import {
   FileText,
-  Calendar,
   Check,
   AlertTriangle,
   Shield,
   ClipboardList,
   FileCheck,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import {
+  Field,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 const DOCUMENT_TYPES = [
   { id: 'rams', label: 'RAMS', description: 'Risk Assessment & Method Statement', icon: Shield },
@@ -103,7 +101,6 @@ export function AssignDocumentDialog({ employee, open, onOpenChange }: AssignDoc
       description: `${documentName || docType?.label} has been assigned to ${employee.name}.`,
     });
 
-    // Reset and close
     setSelectedDocType(null);
     setDocumentName('');
     setNotes('');
@@ -113,124 +110,116 @@ export function AssignDocumentDialog({ employee, open, onOpenChange }: AssignDoc
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        className={isMobile ? 'max-w-[95vw] max-h-[90vh] p-4' : 'sm:max-w-lg max-h-[85vh]'}
+        className={cn(
+          'bg-[hsl(0_0%_8%)] border-white/[0.08]',
+          isMobile ? 'max-w-[95vw] max-h-[90vh] p-4' : 'sm:max-w-lg max-h-[85vh]'
+        )}
       >
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-warning via-warning to-warning/50 rounded-t-lg" />
-
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-warning" />
+          <DialogTitle className="flex items-center gap-2 text-white">
+            <FileText className="h-5 w-5 text-amber-400" />
             Assign Document
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-          <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
-            {employee.avatar}
+        <FormCard eyebrow="Worker">
+          <div className="flex items-center gap-3 -mt-1">
+            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
+              {employee.avatar}
+            </div>
+            <div className="min-w-0">
+              <p className="font-medium text-white truncate">{employee.name}</p>
+              <p className="text-[12.5px] text-white">{employee.role}</p>
+            </div>
           </div>
-          <div className="min-w-0">
-            <p className="font-medium truncate">{employee.name}</p>
-            <p className="text-sm text-white">{employee.role}</p>
-          </div>
-        </div>
+        </FormCard>
 
         <div className="space-y-4">
-          {/* Document Type Selection */}
           <div className="space-y-2">
-            <Label>Document Type *</Label>
+            <label className={fieldLabelClass}>Document type *</label>
             <ScrollArea className={isMobile ? 'h-[180px]' : 'h-[200px]'}>
               <div className="space-y-2 pr-2">
                 {DOCUMENT_TYPES.map((doc) => {
                   const IconComponent = doc.icon;
+                  const isSelected = selectedDocType === doc.id;
                   return (
-                    <Card
+                    <div
                       key={doc.id}
-                      className={`cursor-pointer transition-all ${
-                        selectedDocType === doc.id
-                          ? 'border-warning bg-warning/5 ring-1 ring-warning'
-                          : 'hover:border-border/80'
-                      }`}
                       onClick={() => setSelectedDocType(doc.id)}
+                      className={cn(
+                        'cursor-pointer transition-all rounded-xl border p-3',
+                        isSelected
+                          ? 'border-amber-500/40 bg-amber-500/10 ring-1 ring-amber-500/40'
+                          : 'border-white/[0.08] bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)]'
+                      )}
                     >
-                      <CardContent className="p-3">
-                        <div className="flex items-start gap-3">
-                          <div
-                            className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                              selectedDocType === doc.id ? 'bg-warning/20' : 'bg-muted'
-                            }`}
-                          >
-                            <IconComponent
-                              className={`h-4 w-4 ${
-                                selectedDocType === doc.id
-                                  ? 'text-warning'
-                                  : 'text-white'
-                              }`}
-                            />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
-                              <p className="font-medium text-sm">{doc.label}</p>
-                              {selectedDocType === doc.id && (
-                                <Check className="h-4 w-4 text-warning flex-shrink-0" />
-                              )}
-                            </div>
-                            <p className="text-xs text-white">{doc.description}</p>
-                          </div>
+                      <div className="flex items-start gap-3">
+                        <div
+                          className={cn(
+                            'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0',
+                            isSelected ? 'bg-amber-500/20' : 'bg-white/[0.06]'
+                          )}
+                        >
+                          <IconComponent
+                            className={cn('h-4 w-4', isSelected ? 'text-amber-400' : 'text-white')}
+                          />
                         </div>
-                      </CardContent>
-                    </Card>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <p className="font-medium text-[13px] text-white">{doc.label}</p>
+                            {isSelected && (
+                              <Check className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                            )}
+                          </div>
+                          <p className="text-[11.5px] text-white">{doc.description}</p>
+                        </div>
+                      </div>
+                    </div>
                   );
                 })}
               </div>
             </ScrollArea>
           </div>
 
-          {/* Document Name (optional) */}
-          <div className="space-y-2">
-            <Label htmlFor="docName">Document Name (optional)</Label>
+          <Field label="Document name (optional)">
             <Input
               id="docName"
               placeholder="E.g., 'Site A RAMS' or leave blank for default"
               value={documentName}
               onChange={(e) => setDocumentName(e.target.value)}
+              className={inputClass}
             />
-          </div>
+          </Field>
 
-          {/* Due Date */}
-          <div className="space-y-2">
-            <Label htmlFor="dueDate">Due Date *</Label>
-            <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-              <Input
-                id="dueDate"
-                type="date"
-                value={dueDate}
-                onChange={(e) => setDueDate(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </div>
+          <Field label="Due date" required>
+            <Input
+              id="dueDate"
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              className={inputClass}
+            />
+          </Field>
 
-          {/* Notes */}
-          <div className="space-y-2">
-            <Label htmlFor="notes">Notes (optional)</Label>
+          <Field label="Notes (optional)">
             <Textarea
               id="notes"
               placeholder="Add any notes about this document assignment..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               rows={2}
+              className={textareaClass}
             />
-          </div>
+          </Field>
         </div>
 
         <div className="flex gap-2 pt-2">
-          <Button variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
+          <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
             Cancel
-          </Button>
-          <Button className="flex-1" onClick={handleAssign} disabled={!selectedDocType}>
+          </SecondaryButton>
+          <PrimaryButton onClick={handleAssign} disabled={!selectedDocType} fullWidth>
             Assign Document
-          </Button>
+          </PrimaryButton>
         </div>
       </DialogContent>
     </Dialog>

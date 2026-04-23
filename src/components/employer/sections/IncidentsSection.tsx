@@ -1,13 +1,6 @@
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { FeatureTile } from '@/components/employer/FeatureTile';
-import { QuickStats } from '@/components/employer/QuickStats';
-import { HubSkeleton } from '@/components/employer/skeletons';
-import { ErrorState } from '@/components/employer/ErrorState';
 import {
   Sheet,
   SheetContent,
@@ -24,20 +17,30 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { RefreshCw, MapPin, Calendar } from 'lucide-react';
 import {
-  AlertTriangle,
-  Plus,
-  FileWarning,
-  ClipboardCheck,
-  Search,
-  CheckCircle2,
-  Shield,
-  Calendar,
-  MapPin,
-  User,
-  ChevronRight,
-  Filter,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/employer/editorial';
+import { ErrorState } from '@/components/employer/ErrorState';
 import {
   useIncidents,
   useIncidentStats,
@@ -48,7 +51,7 @@ import {
   type SeverityLevel,
   type IncidentStatus,
 } from '@/hooks/useIncidents';
-import { format, differenceInDays } from 'date-fns';
+import { format, differenceInDays, formatDistanceToNow } from 'date-fns';
 
 const INCIDENT_TYPES: { value: IncidentType; label: string }[] = [
   { value: 'near_miss', label: 'Near Miss' },
@@ -61,11 +64,11 @@ const INCIDENT_TYPES: { value: IncidentType; label: string }[] = [
   { value: 'other', label: 'Other' },
 ];
 
-const SEVERITY_LEVELS: { value: SeverityLevel; label: string; color: string }[] = [
-  { value: 'low', label: 'Low', color: 'bg-success/20 text-success' },
-  { value: 'medium', label: 'Medium', color: 'bg-warning/20 text-warning' },
-  { value: 'high', label: 'High', color: 'bg-orange-500/20 text-orange-500' },
-  { value: 'critical', label: 'Critical', color: 'bg-destructive/20 text-destructive' },
+const SEVERITY_LEVELS: { value: SeverityLevel; label: string }[] = [
+  { value: 'low', label: 'Low' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'high', label: 'High' },
+  { value: 'critical', label: 'Critical' },
 ];
 
 const STATUS_OPTIONS: { value: IncidentStatus; label: string }[] = [
@@ -76,6 +79,52 @@ const STATUS_OPTIONS: { value: IncidentStatus; label: string }[] = [
   { value: 'resolved', label: 'Resolved' },
   { value: 'closed', label: 'Closed' },
 ];
+
+const FILTER_TABS = [
+  { value: 'all', label: 'All' },
+  { value: 'open', label: 'Open' },
+  { value: 'investigating', label: 'Investigating' },
+  { value: 'closed', label: 'Closed' },
+];
+
+const OPEN_STATUSES: IncidentStatus[] = ['draft', 'submitted', 'under_review'];
+const CLOSED_STATUSES: IncidentStatus[] = ['resolved', 'closed'];
+
+function getInitials(name?: string | null): string {
+  if (!name) return 'NA';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function severityTone(severity: SeverityLevel): Tone {
+  switch (severity) {
+    case 'critical':
+      return 'red';
+    case 'high':
+      return 'orange';
+    case 'medium':
+      return 'amber';
+    case 'low':
+      return 'emerald';
+  }
+}
+
+function statusTone(status: IncidentStatus): Tone {
+  switch (status) {
+    case 'resolved':
+    case 'closed':
+      return 'emerald';
+    case 'investigating':
+    case 'under_review':
+      return 'cyan';
+    case 'submitted':
+      return 'amber';
+    case 'draft':
+    default:
+      return 'purple';
+  }
+}
 
 export function IncidentsSection() {
   const { data: incidents = [], isLoading, error, refetch } = useIncidents();
@@ -89,7 +138,6 @@ export function IncidentsSection() {
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Form state
   const [formData, setFormData] = useState({
     incident_type: 'near_miss' as IncidentType,
     title: '',
@@ -103,7 +151,6 @@ export function IncidentsSection() {
     supervisor_name: '',
   });
 
-  // Calculate days since last incident
   const lastIncidentDate = incidents
     .filter((i) => i.incident_type === 'injury')
     .sort(
@@ -112,17 +159,33 @@ export function IncidentsSection() {
 
   const daysSinceLastIncident = lastIncidentDate
     ? differenceInDays(new Date(), new Date(lastIncidentDate))
-    : 365; // Show 365 if no incidents
+    : 365;
 
-  // Filter incidents
+  const closedLast30 = incidents.filter((i) => {
+    if (!CLOSED_STATUSES.includes(i.status)) return false;
+    const updated = i.date_occurred;
+    if (!updated) return false;
+    return differenceInDays(new Date(), new Date(updated)) <= 30;
+  }).length;
+
+  const riddorCount = incidents.filter(
+    (i) => i.severity === 'critical' || i.incident_type === 'injury'
+  ).length;
+
   const filteredIncidents = incidents.filter((incident) => {
-    const matchesStatus = filterStatus === 'all' || incident.status === filterStatus;
+    const matchesTab =
+      filterStatus === 'all' ||
+      (filterStatus === 'open' && OPEN_STATUSES.includes(incident.status)) ||
+      (filterStatus === 'investigating' &&
+        (incident.status === 'investigating' || incident.status === 'under_review')) ||
+      (filterStatus === 'closed' && CLOSED_STATUSES.includes(incident.status));
+    const q = searchQuery.toLowerCase();
     const matchesSearch =
-      searchQuery === '' ||
-      incident.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      incident.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      incident.location.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesStatus && matchesSearch;
+      q === '' ||
+      incident.title.toLowerCase().includes(q) ||
+      incident.description.toLowerCase().includes(q) ||
+      incident.location.toLowerCase().includes(q);
+    return matchesTab && matchesSearch;
   });
 
   const handleCreateIncident = async () => {
@@ -154,248 +217,141 @@ export function IncidentsSection() {
     setShowDetailSheet(true);
   };
 
-  const getTypeColor = (type: IncidentType) => {
-    switch (type) {
-      case 'near_miss':
-        return 'bg-warning/10 text-warning';
-      case 'injury':
-        return 'bg-destructive/10 text-destructive';
-      case 'faulty_equipment':
-        return 'bg-orange-500/10 text-orange-500';
-      case 'property_damage':
-        return 'bg-purple-500/10 text-purple-500';
-      default:
-        return 'bg-info/10 text-info';
-    }
-  };
-
-  const getStatusColor = (status: IncidentStatus) => {
-    switch (status) {
-      case 'resolved':
-      case 'closed':
-        return 'bg-success/10 text-success';
-      case 'investigating':
-      case 'under_review':
-        return 'bg-info/10 text-info';
-      case 'submitted':
-        return 'bg-warning/10 text-warning';
-      default:
-        return 'bg-muted/50 text-white';
-    }
+  const reporterName = (incident: Incident): string => {
+    const anyInc = incident as unknown as Record<string, unknown>;
+    return (
+      (anyInc.reporter_name as string) ||
+      (anyInc.reported_by_name as string) ||
+      (anyInc.reporter as string) ||
+      'Unknown'
+    );
   };
 
   if (isLoading) {
-    return <HubSkeleton statCount={4} cardCount={4} />;
+    return (
+      <PageFrame>
+        <LoadingBlocks />
+      </PageFrame>
+    );
   }
 
   if (error) {
-    return <ErrorState message="Failed to load incidents" onRetry={refetch} />;
+    return (
+      <PageFrame>
+        <ErrorState message="Failed to load incidents" onRetry={refetch} />
+      </PageFrame>
+    );
   }
 
+  const openCount = stats?.open ?? incidents.filter((i) => OPEN_STATUSES.includes(i.status)).length;
+  const nearMissesCount = stats?.nearMisses ?? incidents.filter((i) => i.incident_type === 'near_miss').length;
+
   return (
-    <div className="space-y-4 md:space-y-6 pb-6">
-      {/* Quick Stats */}
-      <QuickStats
+    <PageFrame>
+      <PageHero
+        eyebrow="HR & Safety"
+        title="Incidents"
+        description="Accidents, near-misses and witness testimonies."
+        tone="red"
+        actions={
+          <>
+            <PrimaryButton onClick={() => setShowCreateSheet(true)}>Report incident</PrimaryButton>
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </>
+        }
+      />
+
+      <StatStrip
+        columns={4}
         stats={[
-          ...(stats?.open
-            ? [
-                {
-                  icon: AlertTriangle,
-                  value: stats.open,
-                  label: 'Open',
-                  color: 'orange' as const,
-                  pulse: true,
-                },
-              ]
-            : []),
-          {
-            icon: Shield,
-            value: daysSinceLastIncident,
-            label: 'Days Safe',
-            color: 'green',
-          },
-          {
-            icon: FileWarning,
-            value: stats?.nearMisses || 0,
-            label: 'Near Misses',
-            color: 'blue',
-          },
-          {
-            icon: CheckCircle2,
-            value: stats?.resolved || 0,
-            label: 'Resolved',
-            color: 'purple',
-          },
+          { label: 'Open', value: openCount, tone: 'red' },
+          { label: 'Near misses', value: nearMissesCount, tone: 'orange' },
+          { label: 'RIDDOR', value: riddorCount, tone: 'red' },
+          { label: 'Closed 30d', value: closedLast30, tone: 'emerald' },
         ]}
       />
 
-      {/* Quick Actions */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-warning rounded-full"></span>
-          Quick Actions
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <FeatureTile
-            icon={Plus}
-            title="Report Incident"
-            description="Log a new incident"
-            onClick={() => setShowCreateSheet(true)}
-            compact
-          />
-          <FeatureTile
-            icon={FileWarning}
-            title="Near Miss"
-            description="Report near miss"
-            onClick={() => {
-              setFormData((prev) => ({ ...prev, incident_type: 'near_miss' }));
-              setShowCreateSheet(true);
-            }}
-            compact
-          />
-          <FeatureTile
-            icon={ClipboardCheck}
-            title="RIDDOR"
-            description="RIDDOR assessment"
-            onClick={() => {
-              setFormData((prev) => ({ ...prev, incident_type: 'injury', severity: 'critical' }));
-              setShowCreateSheet(true);
-            }}
-            compact
-          />
-          <FeatureTile
-            icon={Search}
-            title="View All"
-            description={`${incidents.length} incidents`}
-            onClick={() => setFilterStatus('all')}
-            compact
-          />
-        </div>
-      </div>
+      <FilterBar
+        tabs={FILTER_TABS}
+        activeTab={filterStatus}
+        onTabChange={setFilterStatus}
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search incidents…"
+      />
 
-      {/* Search and Filter */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search incidents..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('h-11', !searchQuery && 'pl-9')}
-          />
-        </div>
-        <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-full sm:w-[180px] h-11">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Filter by status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            {STATUS_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Incidents List */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-info rounded-full"></span>
-          {filterStatus === 'all'
-            ? 'All Incidents'
-            : `${STATUS_OPTIONS.find((s) => s.value === filterStatus)?.label} Incidents`}
-          <Badge variant="secondary" className="ml-auto">
-            {filteredIncidents.length}
-          </Badge>
-        </h2>
-
+      <ListCard>
+        <ListCardHeader
+          tone="red"
+          title="Incidents"
+          meta={<Pill tone="red">{filteredIncidents.length}</Pill>}
+        />
         {filteredIncidents.length === 0 ? (
-          <Card className="border-dashed">
-            <CardContent className="p-8 text-center">
-              <Shield className="h-12 w-12 text-success/40 mx-auto mb-4" />
-              <p className="text-white">No incidents found</p>
-              <Button variant="outline" className="mt-4" onClick={() => setShowCreateSheet(true)}>
-                <Plus className="h-4 w-4 mr-2" />
-                Report First Incident
-              </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="space-y-2">
-            {filteredIncidents.map((incident) => (
-              <Card
-                key={incident.id}
-                className="hover:bg-muted/50 transition-colors cursor-pointer"
-                onClick={() => openIncidentDetail(incident)}
-              >
-                <CardContent className="p-3 md:p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3 min-w-0">
-                      <div
-                        className={`p-2 rounded-lg shrink-0 ${getTypeColor(incident.incident_type)}`}
-                      >
-                        <AlertTriangle className="h-4 w-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-medium text-foreground text-sm md:text-base truncate">
-                          {incident.title}
-                        </p>
-                        <p className="text-xs text-white truncate">
-                          {INCIDENT_TYPES.find((t) => t.value === incident.incident_type)?.label} •{' '}
-                          {incident.location}
-                        </p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-white">
-                          <Calendar className="h-3 w-3" />
-                          {format(new Date(incident.date_occurred), 'dd MMM yyyy')}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <Badge
-                        className={`text-xs ${SEVERITY_LEVELS.find((s) => s.value === incident.severity)?.color}`}
-                      >
-                        {incident.severity}
-                      </Badge>
-                      <Badge className={`text-xs ${getStatusColor(incident.status)}`}>
-                        {incident.status.replace('_', ' ')}
-                      </Badge>
-                      <ChevronRight className="h-4 w-4 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="p-2">
+            <EmptyState
+              title="No incidents"
+              description="Keep it that way."
+              action="Report incident"
+              onAction={() => setShowCreateSheet(true)}
+            />
           </div>
+        ) : (
+          <ListBody>
+            {filteredIncidents.map((incident) => {
+              const reporter = reporterName(incident);
+              const occurred = new Date(incident.date_occurred);
+              const timeAgo = formatDistanceToNow(occurred, { addSuffix: true });
+              return (
+                <ListRow
+                  key={incident.id}
+                  accent={incident.severity === 'critical' ? 'red' : undefined}
+                  lead={<Avatar initials={getInitials(reporter)} />}
+                  title={incident.title}
+                  subtitle={`${incident.location} · ${reporter} · ${timeAgo}`}
+                  trailing={
+                    <>
+                      <Pill tone={severityTone(incident.severity)}>{incident.severity}</Pill>
+                      <Pill tone={statusTone(incident.status)}>
+                        {incident.status.replace('_', ' ')}
+                      </Pill>
+                    </>
+                  }
+                  onClick={() => openIncidentDetail(incident)}
+                />
+              );
+            })}
+          </ListBody>
         )}
-      </div>
+      </ListCard>
 
-      {/* Create Incident Sheet */}
       <Sheet open={showCreateSheet} onOpenChange={setShowCreateSheet}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-y-auto">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
           <SheetHeader>
-            <SheetTitle>Report Incident</SheetTitle>
-            <SheetDescription>Log a safety incident or near miss</SheetDescription>
+            <SheetTitle className="text-white">Report incident</SheetTitle>
+            <SheetDescription className="text-white">
+              Log a safety incident or near-miss.
+            </SheetDescription>
           </SheetHeader>
 
           <div className="space-y-4 mt-6">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label>Incident Type</Label>
+                <Label className="text-white">Incident type</Label>
                 <Select
                   value={formData.incident_type}
                   onValueChange={(v) =>
                     setFormData((prev) => ({ ...prev, incident_type: v as IncidentType }))
                   }
                 >
-                  <SelectTrigger className="h-11">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     {INCIDENT_TYPES.map((type) => (
                       <SelectItem key={type.value} value={type.value}>
                         {type.label}
@@ -406,17 +362,17 @@ export function IncidentsSection() {
               </div>
 
               <div className="space-y-2">
-                <Label>Severity</Label>
+                <Label className="text-white">Severity</Label>
                 <Select
                   value={formData.severity}
                   onValueChange={(v) =>
                     setFormData((prev) => ({ ...prev, severity: v as SeverityLevel }))
                   }
                 >
-                  <SelectTrigger className="h-11">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     {SEVERITY_LEVELS.map((level) => (
                       <SelectItem key={level.value} value={level.value}>
                         {level.label}
@@ -428,40 +384,40 @@ export function IncidentsSection() {
             </div>
 
             <div className="space-y-2">
-              <Label>Title</Label>
+              <Label className="text-white">Title</Label>
               <Input
                 value={formData.title}
                 onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                 placeholder="Brief description of incident"
-                className="h-11"
+className={inputClass}
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Description</Label>
+              <Label className="text-white">Description</Label>
               <Textarea
                 value={formData.description}
-                onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-                placeholder="Detailed description of what happened..."
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, description: e.target.value }))
+                }
+                placeholder="Detailed description of what happened…"
                 rows={4}
+className={textareaClass}
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Location</Label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                <Input
-                  value={formData.location}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
-                  placeholder="Where did this occur?"
-                  className="pl-9 h-11"
-                />
-              </div>
+              <Label className="text-white">Location</Label>
+              <Input
+                value={formData.location}
+                onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
+                placeholder="Where did this occur?"
+className={inputClass}
+              />
             </div>
 
             <div className="space-y-2">
-              <Label>Date & Time</Label>
+              <Label className="text-white">Date and time</Label>
               <Input
                 type="datetime-local"
                 value={formData.date_occurred.slice(0, 16)}
@@ -471,45 +427,43 @@ export function IncidentsSection() {
                     date_occurred: new Date(e.target.value).toISOString(),
                   }))
                 }
-                className="h-11"
+className={inputClass}
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Immediate Action Taken</Label>
+              <Label className="text-white">Immediate action taken</Label>
               <Textarea
                 value={formData.immediate_action_taken}
                 onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, immediate_action_taken: e.target.value }))
+                  setFormData((prev) => ({
+                    ...prev,
+                    immediate_action_taken: e.target.value,
+                  }))
                 }
                 placeholder="What action was taken immediately?"
                 rows={2}
+className={textareaClass}
               />
             </div>
 
             <div className="space-y-2">
-              <Label>Witnesses</Label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                <Input
-                  value={formData.witnesses}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, witnesses: e.target.value }))}
-                  placeholder="Names of any witnesses"
-                  className="pl-9 h-11"
-                />
-              </div>
+              <Label className="text-white">Witnesses</Label>
+              <Input
+                value={formData.witnesses}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, witnesses: e.target.value }))
+                }
+                placeholder="Names of any witnesses"
+className={inputClass}
+              />
             </div>
 
             <div className="flex gap-3 pt-4">
-              <Button
-                variant="outline"
-                className="flex-1"
-                onClick={() => setShowCreateSheet(false)}
-              >
+              <SecondaryButton onClick={() => setShowCreateSheet(false)} fullWidth>
                 Cancel
-              </Button>
-              <Button
-                className="flex-1 bg-warning hover:bg-warning/90 text-black"
+              </SecondaryButton>
+              <PrimaryButton
                 onClick={handleCreateIncident}
                 disabled={
                   !formData.title ||
@@ -517,112 +471,124 @@ export function IncidentsSection() {
                   !formData.location ||
                   createIncident.isPending
                 }
+                fullWidth
               >
-                {createIncident.isPending ? 'Saving...' : 'Report Incident'}
-              </Button>
+                {createIncident.isPending ? 'Saving…' : 'Report incident'}
+              </PrimaryButton>
             </div>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Incident Detail Sheet */}
       <Sheet open={showDetailSheet} onOpenChange={setShowDetailSheet}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-y-auto">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
           {selectedIncident && (
             <>
               <SheetHeader>
-                <div className="flex items-start gap-3">
-                  <div className={`p-2 rounded-lg ${getTypeColor(selectedIncident.incident_type)}`}>
-                    <AlertTriangle className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <SheetTitle>{selectedIncident.title}</SheetTitle>
-                    <SheetDescription>
-                      {
-                        INCIDENT_TYPES.find((t) => t.value === selectedIncident.incident_type)
-                          ?.label
-                      }
-                    </SheetDescription>
-                  </div>
-                </div>
+                <SheetTitle className="text-white">{selectedIncident.title}</SheetTitle>
+                <SheetDescription className="text-white">
+                  {INCIDENT_TYPES.find((t) => t.value === selectedIncident.incident_type)?.label}
+                </SheetDescription>
               </SheetHeader>
 
               <div className="space-y-6 mt-6">
-                <div className="flex gap-2">
-                  <Badge
-                    className={
-                      SEVERITY_LEVELS.find((s) => s.value === selectedIncident.severity)?.color
-                    }
-                  >
-                    {selectedIncident.severity} severity
-                  </Badge>
-                  <Badge className={getStatusColor(selectedIncident.status)}>
-                    {selectedIncident.status.replace('_', ' ')}
-                  </Badge>
-                </div>
+                <StatStrip
+                  columns={2}
+                  stats={[
+                    {
+                      label: 'Severity',
+                      value: selectedIncident.severity,
+                      tone: severityTone(selectedIncident.severity),
+                    },
+                    {
+                      label: 'Status',
+                      value: selectedIncident.status.replace('_', ' '),
+                      tone: statusTone(selectedIncident.status),
+                    },
+                  ]}
+                />
 
-                <div className="space-y-4">
-                  <div>
-                    <Label className="text-white">Description</Label>
-                    <p className="mt-1">{selectedIncident.description}</p>
+                <ListCard>
+                  <ListCardHeader title="Description" />
+                  <div className="px-5 sm:px-6 py-4">
+                    <p className="text-[13px] text-white leading-relaxed whitespace-pre-wrap">
+                      {selectedIncident.description}
+                    </p>
                   </div>
+                </ListCard>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label className="text-white">Location</Label>
-                      <p className="mt-1 flex items-center gap-2">
-                        <MapPin className="h-4 w-4" />
-                        {selectedIncident.location}
+                <ListCard>
+                  <ListCardHeader title="Details" />
+                  <ListBody>
+                    <ListRow
+                      lead={<MapPin className="h-4 w-4 text-white" />}
+                      title="Location"
+                      subtitle={selectedIncident.location}
+                    />
+                    <ListRow
+                      lead={<Calendar className="h-4 w-4 text-white" />}
+                      title="Date occurred"
+                      subtitle={format(
+                        new Date(selectedIncident.date_occurred),
+                        'dd MMM yyyy HH:mm'
+                      )}
+                    />
+                    <ListRow
+                      lead={<Avatar initials={getInitials(reporterName(selectedIncident))} />}
+                      title="Reporter"
+                      subtitle={reporterName(selectedIncident)}
+                    />
+                  </ListBody>
+                </ListCard>
+
+                {selectedIncident.immediate_action_taken && (
+                  <ListCard>
+                    <ListCardHeader title="Immediate action taken" />
+                    <div className="px-5 sm:px-6 py-4">
+                      <p className="text-[13px] text-white leading-relaxed whitespace-pre-wrap">
+                        {selectedIncident.immediate_action_taken}
                       </p>
                     </div>
-                    <div>
-                      <Label className="text-white">Date Occurred</Label>
-                      <p className="mt-1 flex items-center gap-2">
-                        <Calendar className="h-4 w-4" />
-                        {format(new Date(selectedIncident.date_occurred), 'dd MMM yyyy HH:mm')}
+                  </ListCard>
+                )}
+
+                {selectedIncident.witnesses && (
+                  <ListCard>
+                    <ListCardHeader title="Witness testimony" />
+                    <div className="px-5 sm:px-6 py-4">
+                      <p className="text-[13px] text-white leading-relaxed whitespace-pre-wrap">
+                        {selectedIncident.witnesses}
                       </p>
                     </div>
-                  </div>
+                  </ListCard>
+                )}
 
-                  {selectedIncident.immediate_action_taken && (
-                    <div>
-                      <Label className="text-white">Immediate Action Taken</Label>
-                      <p className="mt-1">{selectedIncident.immediate_action_taken}</p>
-                    </div>
-                  )}
-
-                  {selectedIncident.witnesses && (
-                    <div>
-                      <Label className="text-white">Witnesses</Label>
-                      <p className="mt-1">{selectedIncident.witnesses}</p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Status Actions */}
-                <div className="border-t pt-4">
-                  <Label className="text-white mb-2 block">Update Status</Label>
-                  <div className="flex flex-wrap gap-2">
+                <ListCard>
+                  <ListCardHeader title="Update status" />
+                  <div className="px-5 sm:px-6 py-4 flex flex-wrap gap-2">
                     {STATUS_OPTIONS.filter((s) => s.value !== selectedIncident.status).map(
                       (option) => (
-                        <Button
+                        <SecondaryButton
                           key={option.value}
-                          variant="outline"
-                          size="sm"
-                          onClick={() => handleStatusChange(selectedIncident.id, option.value)}
+                          onClick={() =>
+                            handleStatusChange(selectedIncident.id, option.value)
+                          }
                           disabled={updateStatus.isPending}
                         >
                           {option.label}
-                        </Button>
+                        </SecondaryButton>
                       )
                     )}
                   </div>
-                </div>
+                </ListCard>
               </div>
             </>
           )}
         </SheetContent>
       </Sheet>
-    </div>
+    </PageFrame>
   );
 }

@@ -372,14 +372,27 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
       />
 
       {!isEmpty && (
-        <div className="text-xs text-muted-foreground mt-2 text-center space-y-1">
-          <div className="font-medium">BS 7671 Schedule of Test Results</div>
-          <div>
-            ⌨️ <strong>Tab Navigation:</strong> Tab/Shift+Tab to navigate • Enter moves down • Arrow
-            keys navigate cells
-          </div>
-          <div>
-            📋 <strong>Copy/Paste:</strong> Right-click for copy/paste options
+        <div className="mt-3 flex flex-col lg:flex-row items-center justify-between gap-3 px-4 py-3 rounded-lg border border-white/10 bg-white/[0.02]">
+          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/50">
+            BS 7671 Schedule of Test Results
+          </span>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 text-[11px] text-white/70">
+            <span className="flex items-center gap-1.5">
+              <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">Tab</kbd>
+              <span>navigate</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">Enter</kbd>
+              <span>next row</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">← ↑ ↓ →</kbd>
+              <span>cells</span>
+            </span>
+            <span className="flex items-center gap-1.5">
+              <kbd className="px-1.5 py-0.5 rounded border border-white/15 bg-white/[0.04] text-[10px] font-mono text-white">Right-click</kbd>
+              <span>copy / paste</span>
+            </span>
           </div>
         </div>
       )}

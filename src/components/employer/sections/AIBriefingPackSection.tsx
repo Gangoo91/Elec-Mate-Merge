@@ -1,65 +1,102 @@
-import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { useState, useRef } from 'react';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { SectionHeader } from '@/components/employer/SectionHeader';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
-  Users,
-  Sparkles,
-  Loader2,
-  CheckCircle,
-  AlertTriangle,
-  Download,
-  FileText,
-  RefreshCw,
-  Shield,
-  ClipboardList,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  IconButton,
+  Pill,
+  LoadingBlocks,
+  EmptyState,
+  Eyebrow,
+  Dot,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
+} from '@/components/employer/editorial';
+import { RefreshCw, Loader2, Download, Sparkles, ImagePlus, X } from 'lucide-react';
 
 interface AIBriefingPackSectionProps {
   onNavigate: (section: Section) => void;
 }
 
+interface AttachedPhoto {
+  id: string;
+  name: string;
+  size: number;
+  dataUrl: string;
+}
+
 export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps) {
-  const { data: jobPacks = [] } = useJobPacks();
+  const { data: jobPacks = [], isLoading } = useJobPacks();
   const updateJobPack = useUpdateJobPack();
   const { toast } = useToast();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const [selectedJobPackId, setSelectedJobPackId] = useState<string | null>(null);
   const [additionalNotes, setAdditionalNotes] = useState('');
+  const [photos, setPhotos] = useState<AttachedPhoto[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [currentStep, setCurrentStep] = useState('');
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
-
-  // Check prerequisites
   const hasRAMS = selectedJobPack?.rams_generated;
   const hasMethodStatement = selectedJobPack?.method_statement_generated;
   const canGenerate = hasRAMS && hasMethodStatement;
 
+  const briefingsGenerated = jobPacks.filter((jp) => jp.briefing_pack_generated).length;
+  const packsSent = jobPacks.filter((jp) => jp.briefing_pack_generated).length;
+
+  const handlePickPhotos = () => fileInputRef.current?.click();
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files ? Array.from(e.target.files) : [];
+    if (!files.length) return;
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = String(reader.result || '');
+        setPhotos((prev) => [
+          ...prev,
+          {
+            id: `${file.name}-${Date.now()}-${Math.random()}`,
+            name: file.name,
+            size: file.size,
+            dataUrl,
+          },
+        ]);
+      };
+      reader.readAsDataURL(file);
+    });
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
+
+  const handleRemovePhoto = (id: string) => {
+    setPhotos((prev) => prev.filter((p) => p.id !== id));
+  };
+
   const handleGenerate = async () => {
     if (!selectedJobPackId) {
       toast({
-        title: 'Select a Job Pack',
+        title: 'Select a job pack',
         description: 'Please select a job pack to generate a briefing for.',
         variant: 'destructive',
       });
       return;
     }
-
     if (!canGenerate) {
       toast({
-        title: 'Prerequisites Missing',
+        title: 'Prerequisites missing',
         description: 'RAMS and Method Statement must be generated first.',
         variant: 'destructive',
       });
@@ -67,14 +104,8 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
     }
 
     setIsGenerating(true);
-    setProgress(0);
-    setCurrentStep('Generating briefing pack...');
     setError(null);
     setResult(null);
-
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => (prev >= 90 ? prev : prev + Math.random() * 15));
-    }, 400);
 
     try {
       const { data, error: invokeError } = await supabase.functions.invoke(
@@ -88,22 +119,18 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
               scope: selectedJobPack?.scope,
             },
             additionalNotes,
+            photos: photos.map((p) => ({ name: p.name, dataUrl: p.dataUrl })),
           },
         }
       );
 
-      clearInterval(progressInterval);
+      if (invokeError) throw invokeError;
 
-      if (invokeError) {
-        throw invokeError;
-      }
-
-      setProgress(100);
       setResult(data);
       setIsGenerating(false);
 
       toast({
-        title: 'Briefing Pack Generated!',
+        title: 'Briefing pack generated',
         description: 'Worker briefing has been created successfully.',
       });
 
@@ -114,272 +141,266 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
         });
       }
     } catch (err: any) {
-      clearInterval(progressInterval);
       setIsGenerating(false);
-      setError(err.message);
+      setError(err?.message ?? 'Generation failed.');
       toast({
         title: 'Error',
-        description: err.message,
+        description: err?.message ?? 'Generation failed.',
         variant: 'destructive',
       });
     }
   };
 
-  const handleDownload = () => {
+  const handleDownloadPdf = () => {
     if (!result) return;
-    const content = JSON.stringify(result, null, 2);
-    const blob = new Blob([content], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `BriefingPack-${selectedJobPack?.title || 'document'}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    const w = window.open('', '_blank');
+    if (!w) return;
+    const title = selectedJobPack?.title || 'Briefing Pack';
+    const safe = (s: string) =>
+      String(s ?? '').replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string)
+      );
+    const body =
+      typeof result === 'string'
+        ? `<pre style="white-space:pre-wrap;font-family:inherit">${safe(result)}</pre>`
+        : `<pre style="white-space:pre-wrap;font-family:inherit">${safe(JSON.stringify(result, null, 2))}</pre>`;
+    const photoHtml = photos
+      .map(
+        (p) =>
+          `<figure style="margin:0 0 16px 0"><img src="${p.dataUrl}" style="max-width:100%;border:1px solid #ccc;border-radius:8px"/><figcaption style="font-size:12px;color:#555;margin-top:4px">${safe(p.name)}</figcaption></figure>`
+      )
+      .join('');
+    w.document.write(`<!doctype html><html><head><meta charset="utf-8"/><title>${safe(title)}</title>
+      <style>
+        body{font-family:-apple-system,Segoe UI,Roboto,sans-serif;padding:32px;color:#111;max-width:780px;margin:0 auto}
+        h1{font-size:24px;margin:0 0 4px}
+        h2{font-size:14px;text-transform:uppercase;letter-spacing:.14em;color:#666;margin:24px 0 8px;border-bottom:1px solid #eee;padding-bottom:4px}
+        @media print{ button{display:none} }
+      </style></head><body>
+      <h1>${safe(title)}</h1>
+      <div style="color:#666;font-size:12px">${safe(selectedJobPack?.location || '')}</div>
+      <h2>Briefing</h2>${body}
+      ${photos.length ? `<h2>Site photos</h2>${photoHtml}` : ''}
+      <button onclick="window.print()" style="margin-top:24px;padding:8px 14px;border:1px solid #111;background:#FFD400;cursor:pointer">Print / Save as PDF</button>
+      </body></html>`);
+    w.document.close();
   };
 
   const handleReset = () => {
     setResult(null);
     setError(null);
-    setProgress(0);
-    setCurrentStep('');
+    setPhotos([]);
+    setAdditionalNotes('');
+  };
+
+  const refresh = () => {
+    handleReset();
   };
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <SectionHeader
+    <PageFrame>
+      <PageHero
+        eyebrow="Smart Docs"
         title="AI Briefing Pack"
-        description="Generate pre-job worker briefings from RAMS & Method Statement"
-        icon={Users}
+        description="Site briefing packs with photos, instructions and sign-off."
+        tone="amber"
+        actions={
+          <IconButton onClick={refresh} aria-label="Reset">
+            <RefreshCw className="h-4 w-4" />
+          </IconButton>
+        }
+        meta={<Pill tone="purple">AI</Pill>}
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="space-y-4">
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base flex items-center gap-2">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Select Job Pack
-              </CardTitle>
-              <CardDescription>
-                Choose a job pack with RAMS and Method Statement to generate briefing
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <JobPackSelector
-                selectedJobPackId={selectedJobPackId}
-                onSelect={setSelectedJobPackId}
-                onCreateNew={() => onNavigate('jobpacks')}
-              />
-            </CardContent>
-          </Card>
+      <StatStrip
+        columns={3}
+        stats={[
+          { label: 'Generated', value: briefingsGenerated, tone: 'amber' },
+          { label: 'Photos used', value: photos.length, tone: 'blue' },
+          { label: 'Packs sent', value: packsSent, tone: 'emerald' },
+        ]}
+      />
 
-          {/* Prerequisites Status */}
-          {selectedJobPack && (
-            <Card
-              className={
-                canGenerate ? 'border-success/20 bg-success/5' : 'border-warning/20 bg-warning/5'
-              }
-            >
-              <CardContent className="p-4">
-                <h4 className="font-medium text-foreground mb-3">Prerequisites</h4>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Shield className="h-4 w-4 text-white" />
-                      <span className="text-sm">RAMS</span>
-                    </div>
-                    {hasRAMS ? (
-                      <Badge variant="secondary" className="bg-success/20 text-success">
-                        <CheckCircle className="h-3 w-3 mr-1" />
-                        Ready
-                      </Badge>
-                    ) : (
-                      <Button
-                        variant="outline"
-                        onClick={() => onNavigate('airams')}
-                        className="h-11 touch-manipulation text-xs"
-                      >
-                        Generate
-                      </Button>
-                    )}
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <ClipboardList className="h-4 w-4 text-white" />
-                      <span className="text-sm">Method Statement</span>
-                    </div>
-                    {hasMethodStatement ? (
-                      <Badge variant="secondary" className="bg-success/20 text-success">
-                        <CheckCircle className="h-3 w-3 mr-1" />
-                        Ready
-                      </Badge>
-                    ) : (
-                      <Button
-                        variant="outline"
-                        onClick={() => onNavigate('aimethodstatement')}
-                        className="h-11 touch-manipulation text-xs"
-                      >
-                        Generate
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          <Card className="border-elec-yellow/20 bg-elec-gray">
-            <CardHeader className="pb-3">
-              <CardTitle className="text-base">Additional Notes</CardTitle>
-              <CardDescription>Add any extra information for the briefing</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Textarea
-                value={additionalNotes}
-                onChange={(e) => setAdditionalNotes(e.target.value)}
-                placeholder="Site access codes, parking instructions, specific safety concerns..."
-                className="min-h-[100px] bg-elec-dark border-elec-yellow/20 touch-manipulation"
-                disabled={isGenerating}
-              />
-
-              <Button
-                onClick={handleGenerate}
-                disabled={isGenerating || !canGenerate}
-                className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 touch-manipulation"
-              >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Generating...
-                  </>
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : (
+        <>
+          <ListCard>
+            <ListCardHeader
+              tone="amber"
+              title="New briefing"
+              meta={
+                selectedJobPack ? (
+                  <span className="flex items-center gap-2">
+                    <Pill tone={hasRAMS ? 'emerald' : 'red'}>
+                      RAMS {hasRAMS ? 'ready' : 'missing'}
+                    </Pill>
+                    <Pill tone={hasMethodStatement ? 'emerald' : 'red'}>
+                      Method {hasMethodStatement ? 'ready' : 'missing'}
+                    </Pill>
+                  </span>
                 ) : (
-                  <>
-                    <Sparkles className="h-4 w-4 mr-2" />
-                    Generate Briefing Pack
-                  </>
-                )}
-              </Button>
+                  <Pill tone="amber">Select job pack</Pill>
+                )
+              }
+            />
+            <div className="px-5 sm:px-6 py-5 sm:py-6 space-y-6">
+              <div className="space-y-2">
+                <Eyebrow>Job pack</Eyebrow>
+                <JobPackSelector
+                  selectedJobPackId={selectedJobPackId}
+                  onSelect={setSelectedJobPackId}
+                  onCreateNew={() => onNavigate('jobpacks')}
+                />
+              </div>
 
-              {!canGenerate && selectedJobPack && (
-                <p className="text-xs text-warning text-center">
-                  Generate RAMS and Method Statement first
-                </p>
-              )}
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-4">
-          {isGenerating && (
-            <Card className="border-info/20 bg-info/5">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-medium text-foreground">Generating Briefing</h3>
-                    <Badge variant="secondary" className="bg-info/20 text-info">
-                      {Math.round(progress)}%
-                    </Badge>
-                  </div>
-                  <Progress value={progress} className="h-2" />
-                  <p className="text-sm text-white">{currentStep}</p>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {error && !isGenerating && (
-            <Card className="border-destructive/20 bg-destructive/5">
-              <CardContent className="p-6">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="h-5 w-5 text-destructive mt-0.5" />
-                  <div>
-                    <h3 className="font-medium text-foreground">Generation Failed</h3>
-                    <p className="text-sm text-white mt-1">{error}</p>
-                    <Button
-                      variant="outline"
-                      className="mt-3 h-11 touch-manipulation"
-                      onClick={handleReset}
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      Try Again
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {result && !isGenerating && (
-            <Card className="border-success/20 bg-success/5">
-              <CardContent className="p-6">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-success/20">
-                      <CheckCircle className="h-5 w-5 text-success" />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-foreground">Briefing Pack Ready!</h3>
-                      <p className="text-sm text-white">
-                        Worker briefing created from RAMS & Method Statement
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <Button
-                      onClick={handleDownload}
-                      className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11 touch-manipulation"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Download
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={handleReset}
-                      className="border-elec-yellow/30 h-11 touch-manipulation"
-                    >
-                      <RefreshCw className="h-4 w-4 mr-2" />
-                      New
-                    </Button>
-                  </div>
-
-                  {selectedJobPackId && (
-                    <p className="text-xs text-white text-center">
-                      ✓ Attached to Job Pack
-                    </p>
+              {selectedJobPack && !canGenerate && (
+                <div className="flex flex-col sm:flex-row gap-2">
+                  {!hasRAMS && (
+                    <SecondaryButton onClick={() => onNavigate('airams')}>
+                      Generate RAMS →
+                    </SecondaryButton>
+                  )}
+                  {!hasMethodStatement && (
+                    <SecondaryButton onClick={() => onNavigate('aimethodstatement')}>
+                      Generate Method Statement →
+                    </SecondaryButton>
                   )}
                 </div>
-              </CardContent>
-            </Card>
-          )}
+              )}
 
-          {!isGenerating && !result && !error && (
-            <Card className="border-elec-yellow/20 bg-elec-gray">
-              <CardContent className="p-6">
-                <div className="flex gap-3">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10 h-fit">
-                    <Sparkles className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-foreground mb-1">AI Briefing Pack</h3>
-                    <p className="text-sm text-white">
-                      Combines your RAMS and Method Statement into a worker-friendly briefing
-                      document.
-                    </p>
-                    <ul className="mt-3 space-y-1 text-sm text-white">
-                      <li>• Key hazards and controls summary</li>
-                      <li>• PPE requirements</li>
-                      <li>• Emergency procedures</li>
-                      <li>• Step-by-step work overview</li>
-                      <li>• Ready for digital sign-off</li>
-                    </ul>
-                  </div>
+              <div className="space-y-2">
+                <Eyebrow>Additional notes</Eyebrow>
+                <Textarea
+                  value={additionalNotes}
+                  onChange={(e) => setAdditionalNotes(e.target.value)}
+                  placeholder="Site access codes, parking instructions, specific safety concerns…"
+                  className={`${textareaClass} min-h-[120px]`}
+                  disabled={isGenerating}
+                />
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <Eyebrow>Site photos</Eyebrow>
+                  <SecondaryButton onClick={handlePickPhotos} disabled={isGenerating}>
+                    <ImagePlus className="h-4 w-4 mr-2" />
+                    Add photos
+                  </SecondaryButton>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    className="hidden"
+                    onChange={handlePhotoChange}
+                  />
                 </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      </div>
-    </div>
+                {photos.length === 0 ? (
+                  <div className="rounded-xl border border-dashed border-white/[0.08] bg-[hsl(0_0%_10%)] py-6 text-center text-[12.5px] text-white">
+                    No photos attached yet.
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {photos.map((p) => (
+                      <div
+                        key={p.id}
+                        className="relative group rounded-xl overflow-hidden border border-white/[0.08] bg-[hsl(0_0%_10%)] aspect-square"
+                      >
+                        <img
+                          src={p.dataUrl}
+                          alt={p.name}
+                          className="absolute inset-0 h-full w-full object-cover"
+                        />
+                        <button
+                          onClick={() => handleRemovePhoto(p.id)}
+                          aria-label="Remove photo"
+                          className="absolute top-1.5 right-1.5 h-7 w-7 rounded-full bg-black/70 text-white flex items-center justify-center hover:bg-black/90 touch-manipulation"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent px-2 py-1.5 text-[10px] text-white truncate">
+                          {p.name}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="pt-2 flex flex-col sm:flex-row gap-2">
+                <PrimaryButton
+                  onClick={handleGenerate}
+                  disabled={isGenerating || !canGenerate}
+                  fullWidth
+                >
+                  {isGenerating ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Generating…
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      Generate briefing pack
+                    </>
+                  )}
+                </PrimaryButton>
+                {result && (
+                  <SecondaryButton onClick={handleDownloadPdf}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Export PDF
+                  </SecondaryButton>
+                )}
+              </div>
+
+              {error && (
+                <div className="flex items-center gap-2 text-[12.5px] text-white">
+                  <Dot tone="red" />
+                  {error}
+                </div>
+              )}
+              {result && !error && (
+                <div className="flex items-center gap-2 text-[12.5px] text-white">
+                  <Dot tone="emerald" />
+                  Briefing pack ready and attached to job pack.
+                </div>
+              )}
+            </div>
+          </ListCard>
+
+          <ListCard>
+            <ListCardHeader
+              tone="emerald"
+              title="History"
+              meta={<Pill tone="emerald">{briefingsGenerated}</Pill>}
+            />
+            {jobPacks.filter((jp) => jp.briefing_pack_generated).length === 0 ? (
+              <div className="px-5 sm:px-6 py-2">
+                <EmptyState
+                  title="No briefings yet"
+                  description="Generated briefing packs will appear here, attached to their job pack."
+                />
+              </div>
+            ) : (
+              <ListBody>
+                {jobPacks
+                  .filter((jp) => jp.briefing_pack_generated)
+                  .map((jp) => (
+                    <ListRow
+                      key={jp.id}
+                      title={jp.title || 'Untitled job pack'}
+                      subtitle={jp.location || jp.scope || 'No location'}
+                      trailing={<Pill tone="amber">Briefing</Pill>}
+                      onClick={() => setSelectedJobPackId(jp.id)}
+                      accent="amber"
+                    />
+                  ))}
+              </ListBody>
+            )}
+          </ListCard>
+        </>
+      )}
+    </PageFrame>
   );
 }

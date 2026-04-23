@@ -93,9 +93,9 @@ export function TalentMapView({
 
   if (loadError) {
     return (
-      <Card className="bg-elec-gray border-border">
+      <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06]">
         <CardContent className="p-6 text-center">
-          <p className="text-destructive">Error loading Google Maps. Please check your API key.</p>
+          <p className="text-red-400">Error loading Google Maps. Please check your API key.</p>
           <Button variant="outline" className="mt-4" onClick={clearApiKey}>
             Reset API Key
           </Button>
@@ -106,7 +106,7 @@ export function TalentMapView({
 
   if (!isLoaded) {
     return (
-      <Card className="bg-elec-gray border-border">
+      <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06]">
         <CardContent className="p-6 text-center">
           <p className="text-white">Loading map...</p>
         </CardContent>
@@ -120,7 +120,7 @@ export function TalentMapView({
   return (
     <div className="space-y-4">
       {/* Radius Filter */}
-      <Card className="bg-elec-gray border-border">
+      <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06]">
         <CardContent className="p-4">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
@@ -146,7 +146,7 @@ export function TalentMapView({
       </Card>
 
       {/* Map Container */}
-      <Card className="bg-elec-gray border-border overflow-hidden">
+      <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06] overflow-hidden">
         <div className="relative h-[450px]">
           <GoogleMap
             mapContainerStyle={{ height: '100%', width: '100%' }}
@@ -287,12 +287,12 @@ export function TalentMapView({
 
       {/* Selected Marker Card */}
       {selectedMarker && (
-        <Card className="bg-elec-gray border-border animate-scale-in">
+        <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06] animate-scale-in">
           <CardContent className="p-4">
             <div className="flex items-start gap-3">
               <Avatar className="w-14 h-14">
                 <AvatarImage src={selectedMarker.avatar} alt={selectedMarker.name} />
-                <AvatarFallback className="bg-elec-yellow text-elec-dark font-bold">
+                <AvatarFallback className="bg-elec-yellow text-black font-bold">
                   {selectedMarker.name
                     .split(' ')
                     .map((n) => n[0])

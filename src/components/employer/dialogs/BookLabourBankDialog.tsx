@@ -1,8 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -13,11 +11,9 @@ import {
 } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 import {
   Calendar,
   Clock,
-  MapPin,
   Briefcase,
   Zap,
   AlertTriangle,
@@ -33,6 +29,19 @@ import {
 } from '@/contexts/EmployerContext';
 import { toast } from '@/hooks/use-toast';
 import { useHireTracking } from '@/hooks/useHireTracking';
+import { cn } from '@/lib/utils';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  Eyebrow,
+} from '@/components/employer/editorial';
 
 interface Electrician {
   id: string;
@@ -40,7 +49,7 @@ interface Electrician {
   ecsCardType: string;
   dayRate: number;
   hourlyRate: number;
-  elecIdProfileId?: string; // Elec-ID profile for hire tracking
+  elecIdProfileId?: string;
 }
 
 interface BookLabourBankDialogProps {
@@ -85,7 +94,6 @@ export function BookLabourBankDialog({
   const { data: jobs = [] } = useJobs();
   const activeJobs = jobs.filter((j) => j.status === 'Active');
 
-  // Form state
   const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
   const [endDate, setEndDate] = useState('');
   const [duration, setDuration] = useState<BookingDuration>('1 day');
@@ -96,7 +104,6 @@ export function BookLabourBankDialog({
   const [urgencyEnabled, setUrgencyEnabled] = useState(false);
   const [notes, setNotes] = useState('');
 
-  // Calculate end date based on duration
   useEffect(() => {
     if (duration === 'Custom' || duration === 'Ongoing') return;
 
@@ -105,7 +112,6 @@ export function BookLabourBankDialog({
       const start = new Date(startDate);
       let daysToAdd = durationData.days;
 
-      // Skip weekends
       let currentDate = new Date(start);
       let addedDays = 0;
       while (addedDays < daysToAdd - 1) {
@@ -118,7 +124,6 @@ export function BookLabourBankDialog({
     }
   }, [startDate, duration]);
 
-  // Auto-fill site address from job
   useEffect(() => {
     if (selectedJobId) {
       const job = activeJobs.find((j) => j.id === selectedJobId);
@@ -128,7 +133,6 @@ export function BookLabourBankDialog({
     }
   }, [selectedJobId, activeJobs]);
 
-  // Cost calculations
   const calculations = useMemo(() => {
     const baseRate = preAgreedRate || electrician?.dayRate || 0;
     const durationData = DURATION_OPTIONS.find((d) => d.value === duration);
@@ -166,7 +170,6 @@ export function BookLabourBankDialog({
     const jobId = selectedJobId && selectedJobId !== 'none' ? selectedJobId : undefined;
     const jobTitle = jobId ? activeJobs.find((j) => j.id === jobId)?.title : undefined;
 
-    // Create the local booking
     createBooking({
       electricianId: electrician.id,
       electricianName: electrician.name,
@@ -184,7 +187,6 @@ export function BookLabourBankDialog({
       notes: notes || undefined,
     });
 
-    // Record hire to database for fee tracking (if worker has Elec-ID profile)
     if (electrician.elecIdProfileId) {
       await recordHire(electrician.elecIdProfileId, jobTitle);
     }
@@ -219,72 +221,69 @@ export function BookLabourBankDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-[95vw] sm:max-w-lg max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <Calendar className="h-5 w-5 text-elec-yellow" />
             Book Worker
           </DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-5">
+        <div className="space-y-4">
           {/* Worker Info Header */}
-          <div className="flex items-center justify-between p-4 bg-muted rounded-xl">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-bold text-lg">
-                {initials}
-              </div>
-              <div>
-                <p className="font-semibold text-foreground">{electrician.name}</p>
-                <div className="flex items-center gap-2 text-sm text-white">
-                  <Award className="h-3 w-3" />
-                  <span>{electrician.ecsCardType}</span>
+          <FormCard eyebrow="Worker">
+            <div className="flex items-center justify-between -mt-1">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-bold text-lg">
+                  {initials}
                 </div>
-              </div>
-            </div>
-            <div className="text-right">
-              {preAgreedRate ? (
-                <div className="bg-success/10 px-3 py-1.5 rounded-lg border border-success/20">
-                  <p className="font-bold text-success">£{preAgreedRate}</p>
-                  <p className="text-[10px] text-success">Pre-agreed</p>
-                </div>
-              ) : (
                 <div>
-                  <p className="font-bold text-foreground">£{electrician.dayRate}</p>
-                  <p className="text-xs text-white">per day</p>
+                  <p className="font-semibold text-white">{electrician.name}</p>
+                  <div className="flex items-center gap-2 text-[12.5px] text-white">
+                    <Award className="h-3 w-3" />
+                    <span>{electrician.ecsCardType}</span>
+                  </div>
                 </div>
-              )}
+              </div>
+              <div className="text-right">
+                {preAgreedRate ? (
+                  <div className="bg-emerald-500/15 px-3 py-1.5 rounded-lg border border-emerald-500/30">
+                    <p className="font-bold text-emerald-400">£{preAgreedRate}</p>
+                    <p className="text-[10px] text-emerald-400">Pre-agreed</p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="font-bold text-white">£{electrician.dayRate}</p>
+                    <p className="text-[11px] text-white">per day</p>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-
-          <Separator />
+          </FormCard>
 
           {/* Booking Details */}
-          <div className="space-y-4">
-            <h4 className="text-sm font-medium flex items-center gap-2">
+          <FormCard eyebrow="Booking details">
+            <div className="flex items-center gap-2 -mt-1">
               <Clock className="h-4 w-4 text-elec-yellow" />
-              Booking Details
-            </h4>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="startDate">Start Date</Label>
+              <span className="text-[12.5px] text-white">Dates and shift pattern</span>
+            </div>
+            <FormGrid cols={2}>
+              <Field label="Start date">
                 <Input
                   id="startDate"
                   type="date"
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                   min={new Date().toISOString().split('T')[0]}
-                  className="h-11"
+                  className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="duration">Duration</Label>
+              </Field>
+              <Field label="Duration">
                 <Select value={duration} onValueChange={(v) => setDuration(v as BookingDuration)}>
-                  <SelectTrigger id="duration" className="h-11">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     {DURATION_OPTIONS.map((opt) => (
                       <SelectItem key={opt.value} value={opt.value}>
                         {opt.label}
@@ -292,105 +291,92 @@ export function BookLabourBankDialog({
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-            </div>
+              </Field>
+            </FormGrid>
 
             {(duration === 'Custom' || duration === 'Ongoing') && (
-              <div className="space-y-2">
-                <Label htmlFor="endDate">End Date</Label>
+              <Field label="End date">
                 <Input
                   id="endDate"
                   type="date"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                   min={startDate}
-                  className="h-11"
+                  className={inputClass}
                 />
-              </div>
+              </Field>
             )}
 
-            <div className="space-y-2">
-              <Label htmlFor="shift">Shift Pattern</Label>
+            <Field label="Shift pattern">
               <Select
                 value={shiftPattern}
                 onValueChange={(v) => setShiftPattern(v as ShiftPattern)}
               >
-                <SelectTrigger id="shift" className="h-11">
+                <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="Select shift" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={selectContentClass}>
                   {SHIFT_OPTIONS.map((opt) => (
                     <SelectItem key={opt.value} value={opt.value}>
                       <div className="flex items-center gap-2">
                         <span>{opt.label}</span>
-                        <span className="text-white text-xs">({opt.hours})</span>
+                        <span className="text-white text-[11px]">({opt.hours})</span>
                       </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-            </div>
-          </div>
-
-          <Separator />
+            </Field>
+          </FormCard>
 
           {/* Job Assignment */}
-          <div className="space-y-4">
-            <h4 className="text-sm font-medium flex items-center gap-2">
+          <FormCard eyebrow="Job assignment">
+            <div className="flex items-center gap-2 -mt-1">
               <Briefcase className="h-4 w-4 text-elec-yellow" />
-              Job Assignment
-            </h4>
-
-            <div className="space-y-2">
-              <Label htmlFor="job">Assign to Job (Optional)</Label>
+              <span className="text-[12.5px] text-white">Optional link to an active job</span>
+            </div>
+            <Field label="Assign to job (optional)">
               <Select value={selectedJobId} onValueChange={setSelectedJobId}>
-                <SelectTrigger id="job" className="h-11">
+                <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="Select a job" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={selectContentClass}>
                   <SelectItem value="none">No job assigned</SelectItem>
                   {activeJobs.map((job) => (
                     <SelectItem key={job.id} value={job.id}>
                       <div className="flex flex-col">
                         <span>{job.title}</span>
-                        <span className="text-white text-xs">{job.client}</span>
+                        <span className="text-white text-[11px]">{job.client}</span>
                       </div>
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="siteAddress">Site Address</Label>
-              <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                <Input
-                  id="siteAddress"
-                  value={siteAddress}
-                  onChange={(e) => setSiteAddress(e.target.value)}
-                  placeholder="Enter site address"
-                  className="pl-10 h-11"
-                />
-              </div>
-            </div>
-          </div>
-
-          <Separator />
+            </Field>
+            <Field label="Site address">
+              <Input
+                id="siteAddress"
+                value={siteAddress}
+                onChange={(e) => setSiteAddress(e.target.value)}
+                placeholder="Enter site address"
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
 
           {/* Pay Adjustments */}
-          <div className="space-y-4">
-            <h4 className="text-sm font-medium flex items-center gap-2">
+          <FormCard eyebrow="Pay adjustments">
+            <div className="flex items-center gap-2 -mt-1">
               <Zap className="h-4 w-4 text-elec-yellow" />
-              Pay Adjustments
-            </h4>
+              <span className="text-[12.5px] text-white">Urgency premiums and cost breakdown</span>
+            </div>
 
-            <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+            <div className="flex items-center justify-between p-3 bg-white/[0.04] border border-white/[0.08] rounded-xl">
               <div className="flex items-center gap-3">
-                <AlertTriangle className="h-4 w-4 text-warning" />
+                <AlertTriangle className="h-4 w-4 text-amber-400" />
                 <div>
-                  <p className="text-sm font-medium">Urgency Premium</p>
-                  <p className="text-xs text-white">
+                  <p className="text-[13px] font-medium text-white">Urgency Premium</p>
+                  <p className="text-[11.5px] text-white">
                     Add extra for short notice bookings
                   </p>
                 </div>
@@ -399,85 +385,91 @@ export function BookLabourBankDialog({
             </div>
 
             {urgencyEnabled && (
-              <div className="grid grid-cols-5 gap-2">
+              <div className="grid grid-cols-4 gap-2">
                 {URGENCY_OPTIONS.filter((o) => o.value !== 'none').map((opt) => (
-                  <Button
+                  <button
                     key={opt.value}
-                    variant={urgencyPremium === opt.value ? 'default' : 'outline'}
-                    size="sm"
+                    type="button"
                     onClick={() => setUrgencyPremium(opt.value)}
-                    className="h-11"
+                    className={cn(
+                      'h-11 px-3 rounded-xl text-[12.5px] font-medium border transition-colors',
+                      urgencyPremium === opt.value
+                        ? 'bg-elec-yellow text-black border-elec-yellow'
+                        : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'
+                    )}
                   >
                     {opt.label}
-                  </Button>
+                  </button>
                 ))}
               </div>
             )}
 
             {/* Cost Breakdown */}
-            <div className="p-4 bg-surface-elevated rounded-xl space-y-2">
-              <div className="flex justify-between text-sm">
+            <div className="p-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl space-y-2">
+              <div className="flex justify-between text-[13px]">
                 <span className="text-white">Base Rate</span>
-                <span>£{calculations.baseRate}/day</span>
+                <span className="text-white tabular-nums">£{calculations.baseRate}/day</span>
               </div>
               {urgencyEnabled && calculations.premiumAmount > 0 && (
-                <div className="flex justify-between text-sm text-warning">
+                <div className="flex justify-between text-[13px] text-amber-400">
                   <span>Urgency Premium ({urgencyPremium})</span>
-                  <span>+£{calculations.premiumAmount}/day</span>
+                  <span className="tabular-nums">+£{calculations.premiumAmount}/day</span>
                 </div>
               )}
-              <div className="flex justify-between text-sm">
+              <div className="flex justify-between text-[13px]">
                 <span className="text-white">Adjusted Day Rate</span>
-                <span className="font-medium">£{calculations.adjustedDayRate}/day</span>
+                <span className="font-medium text-white tabular-nums">
+                  £{calculations.adjustedDayRate}/day
+                </span>
               </div>
-              <Separator className="my-2" />
-              <div className="flex justify-between text-sm">
+              <div className="h-px bg-white/[0.06] my-2" />
+              <div className="flex justify-between text-[13px]">
                 <span className="text-white">Estimated Days</span>
-                <span>
+                <span className="text-white tabular-nums">
                   {calculations.estimatedDays} {calculations.estimatedDays === 1 ? 'day' : 'days'}
                 </span>
               </div>
               <div className="flex justify-between font-semibold text-lg pt-2">
-                <span>Total Estimate</span>
-                <span className="text-elec-yellow">£{calculations.totalCost.toLocaleString()}</span>
+                <span className="text-white">Total Estimate</span>
+                <span className="text-elec-yellow tabular-nums">
+                  £{calculations.totalCost.toLocaleString()}
+                </span>
               </div>
             </div>
-          </div>
-
-          <Separator />
+          </FormCard>
 
           {/* Notes */}
-          <div className="space-y-2">
-            <Label htmlFor="notes">Additional Notes</Label>
+          <Field label="Additional notes">
             <Textarea
               id="notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="PPE requirements, parking info, site access details..."
               rows={3}
+              className={textareaClass}
             />
-          </div>
+          </Field>
 
           {/* Summary Card */}
-          <div className="p-4 bg-elec-yellow/10 rounded-xl border border-elec-yellow/20 space-y-3">
-            <h4 className="font-medium flex items-center gap-2">
+          <div className="p-4 bg-elec-yellow/10 rounded-2xl border border-elec-yellow/30 space-y-3">
+            <div className="flex items-center gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow" />
-              Booking Summary
-            </h4>
-            <div className="grid grid-cols-2 gap-2 text-sm">
+              <Eyebrow>Booking summary</Eyebrow>
+            </div>
+            <div className="grid grid-cols-2 gap-2 text-[13px]">
               <div>
                 <span className="text-white">Worker:</span>
-                <p className="font-medium">{electrician.name}</p>
+                <p className="font-medium text-white">{electrician.name}</p>
               </div>
               <div>
                 <span className="text-white">Shift:</span>
-                <p className="font-medium">
+                <p className="font-medium text-white">
                   {SHIFT_OPTIONS.find((s) => s.value === shiftPattern)?.label}
                 </p>
               </div>
               <div>
                 <span className="text-white">Dates:</span>
-                <p className="font-medium">
+                <p className="font-medium text-white">
                   {new Date(startDate).toLocaleDateString('en-GB', {
                     day: 'numeric',
                     month: 'short',
@@ -488,13 +480,13 @@ export function BookLabourBankDialog({
               </div>
               <div>
                 <span className="text-white">Total:</span>
-                <p className="font-bold text-elec-yellow">
+                <p className="font-bold text-elec-yellow tabular-nums">
                   £{calculations.totalCost.toLocaleString()}
                 </p>
               </div>
             </div>
             {selectedJobId && (
-              <Badge variant="secondary" className="text-xs">
+              <Badge className="text-[11px] bg-white/[0.06] text-white border-white/[0.08]">
                 <Briefcase className="h-3 w-3 mr-1" />
                 {activeJobs.find((j) => j.id === selectedJobId)?.title}
               </Badge>
@@ -503,18 +495,21 @@ export function BookLabourBankDialog({
 
           {/* Actions */}
           <div className="flex gap-3 pt-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-12"
+            <SecondaryButton
               onClick={() => onOpenChange(false)}
               disabled={isRecording}
+              fullWidth
             >
               Cancel
-            </Button>
-            <Button className="flex-1 h-12" onClick={handleConfirmBooking} disabled={isRecording}>
+            </SecondaryButton>
+            <PrimaryButton
+              onClick={handleConfirmBooking}
+              disabled={isRecording}
+              fullWidth
+            >
               <Calendar className="h-4 w-4 mr-2" />
               {isRecording ? 'Recording...' : 'Confirm Booking'}
-            </Button>
+            </PrimaryButton>
           </div>
         </div>
       </DialogContent>

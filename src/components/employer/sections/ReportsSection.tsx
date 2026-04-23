@@ -1,29 +1,6 @@
-import { useState } from 'react';
-import {
-  BarChart3,
-  TrendingUp,
-  TrendingDown,
-  Users,
-  Briefcase,
-  PoundSterling,
-  Target,
-  Calendar,
-  Loader2,
-  Receipt,
-  Wallet,
-  PieChart as PieChartIcon,
-  ArrowUpRight,
-  ArrowDownRight,
-  Building2,
-  Package,
-  Truck,
-  Wrench,
-} from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { SectionHeader } from '@/components/employer/SectionHeader';
+import { useMemo, useState } from 'react';
+import { RefreshCw } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 import {
   useBusinessMetrics,
   useMonthlyRevenue,
@@ -55,31 +32,53 @@ import {
   Legend,
   AreaChart,
   Area,
+  CartesianGrid,
 } from 'recharts';
-import { cn } from '@/lib/utils';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  FilterBar,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  Pill,
+  Eyebrow,
+  PrimaryButton,
+} from '@/components/employer/editorial';
+import { useToast } from '@/hooks/use-toast';
 
-const categoryIcons: Record<string, any> = {
-  labour: Wrench,
-  materials: Package,
-  equipment: Truck,
-  overheads: Building2,
-  travel: Truck,
-  other: Receipt,
-};
+type RangeKey = '7d' | '30d' | '90d' | 'year';
 
-const categoryColors: Record<string, string> = {
-  labour: '#3b82f6',
-  materials: '#22c55e',
-  equipment: '#a855f7',
-  overheads: '#f97316',
-  travel: '#06b6d4',
-  other: '#6b7280',
+const rangeTabs: { value: RangeKey; label: string }[] = [
+  { value: '7d', label: '7d' },
+  { value: '30d', label: '30d' },
+  { value: '90d', label: '90d' },
+  { value: 'year', label: 'Year' },
+];
+
+const ELEC_YELLOW = 'hsl(var(--elec-yellow))';
+const WHITE_60 = 'rgba(255,255,255,0.6)';
+const WHITE_20 = 'rgba(255,255,255,0.2)';
+const WHITE_06 = 'rgba(255,255,255,0.06)';
+
+const tooltipStyle = {
+  backgroundColor: 'hsl(0 0% 10%)',
+  border: '1px solid rgba(255,255,255,0.08)',
+  borderRadius: '12px',
+  color: '#ffffff',
+  fontSize: '12px',
 };
 
 export function ReportsSection() {
-  const [activeTab, setActiveTab] = useState('overview');
+  const [range, setRange] = useState<RangeKey>('30d');
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
 
-  // Business metrics hooks
   const { data: metrics, isLoading: metricsLoading } = useBusinessMetrics();
   const { data: monthlyData = [], isLoading: monthlyLoading } = useMonthlyRevenue();
   const { data: jobsByStatus = [], isLoading: jobsLoading } = useJobsByStatus();
@@ -87,7 +86,6 @@ export function ReportsSection() {
   const { data: topPerformers = [], isLoading: performersLoading } = useTopPerformers();
   const { data: paymentSummary, isLoading: paymentsLoading } = usePaymentSummary();
 
-  // Finance report hooks
   const { data: profitability, isLoading: profitLoading } = useProfitabilitySummary();
   const { data: cashFlow, isLoading: cashFlowLoading } = useCashFlowSummary();
   const { data: expensesByCategory = [], isLoading: expensesLoading } = useExpensesByCategory();
@@ -101,23 +99,13 @@ export function ReportsSection() {
     jobsLoading ||
     complianceLoading ||
     performersLoading ||
-    paymentsLoading;
-
-  const isFinanceLoading =
+    paymentsLoading ||
     profitLoading ||
     cashFlowLoading ||
     expensesLoading ||
     jobProfitLoading ||
     monthlyFinLoading ||
     quickStatsLoading;
-
-  // Calculate growth percentages
-  const revenueGrowth = metrics?.revenue.previous
-    ? ((metrics.revenue.current - metrics.revenue.previous) / metrics.revenue.previous) * 100
-    : 0;
-  const profitGrowth = metrics?.profit.previous
-    ? ((metrics.profit.current - metrics.profit.previous) / metrics.profit.previous) * 100
-    : 0;
 
   const formatCurrency = (amount: number) =>
     new Intl.NumberFormat('en-GB', {
@@ -128,1022 +116,667 @@ export function ReportsSection() {
     }).format(amount);
 
   const formatCompactCurrency = (amount: number) => {
-    if (amount >= 1000000) return `£${(amount / 1000000).toFixed(1)}m`;
-    if (amount >= 1000) return `£${(amount / 1000).toFixed(0)}k`;
+    if (amount >= 1_000_000) return `£${(amount / 1_000_000).toFixed(1)}m`;
+    if (amount >= 1_000) return `£${(amount / 1_000).toFixed(0)}k`;
     return `£${amount.toFixed(0)}`;
   };
 
-  // Prepare expense category data for pie chart
-  const expensePieData = expensesByCategory.map((cat) => ({
-    name: cat.category.charAt(0).toUpperCase() + cat.category.slice(1),
-    value: cat.total,
-    color: categoryColors[cat.category.toLowerCase()] || categoryColors.other,
-    percentage: cat.percentage,
-  }));
+  const refresh = () => {
+    queryClient.invalidateQueries();
+    toast({ title: 'Refreshing reports', description: 'Pulling the latest figures.' });
+  };
 
-  if (isLoading && activeTab === 'overview') {
+  const exportCsv = () => {
+    const rows: string[] = [];
+    rows.push('Metric,Value');
+    rows.push(`Revenue,${profitability?.totalRevenue ?? 0}`);
+    rows.push(`Costs,${profitability?.totalCosts ?? 0}`);
+    rows.push(`Net profit,${profitability?.netProfit ?? 0}`);
+    rows.push(`Profit margin %,${(profitability?.profitMargin ?? 0).toFixed(2)}`);
+    rows.push(`Compliance %,${metrics?.complianceRate ?? 0}`);
+    rows.push(`Collection rate %,${(cashFlow?.collectionRate ?? 0).toFixed(2)}`);
+    rows.push('');
+    rows.push('Month,Revenue,Costs,Profit');
+    monthlyFinancials.forEach((m) => {
+      rows.push(`${m.month},${m.revenue},${m.costs},${m.profit}`);
+    });
+    rows.push('');
+    rows.push('Debtor,Bucket,Amount');
+    rows.push(`Paid 30d,Current,${paymentSummary?.paidLast30Days ?? 0}`);
+    rows.push(`Pending,1-30 days,${paymentSummary?.pending ?? 0}`);
+    rows.push(`Overdue,30+ days,${paymentSummary?.overdue ?? 0}`);
+
+    const blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `reports-${range}-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast({ title: 'CSV exported', description: 'Your report has downloaded.' });
+  };
+
+  const expensePieData = useMemo(
+    () =>
+      expensesByCategory.map((cat) => ({
+        name: cat.category.charAt(0).toUpperCase() + cat.category.slice(1),
+        value: cat.total,
+        percentage: cat.percentage,
+      })),
+    [expensesByCategory]
+  );
+
+  const expenseColours = ['#facc15', 'rgba(255,255,255,0.85)', 'rgba(255,255,255,0.55)', 'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.22)', 'rgba(255,255,255,0.12)'];
+
+  const debtorRows = useMemo(() => {
+    return [
+      {
+        label: 'Paid (last 30 days)',
+        bucket: 'Current',
+        amount: paymentSummary?.paidLast30Days ?? 0,
+        tone: 'emerald' as const,
+      },
+      {
+        label: 'Pending invoices',
+        bucket: '1-30 days',
+        amount: paymentSummary?.pending ?? 0,
+        tone: 'amber' as const,
+      },
+      {
+        label: 'Overdue invoices',
+        bucket: '30+ days',
+        amount: paymentSummary?.overdue ?? 0,
+        tone: 'red' as const,
+      },
+    ];
+  }, [paymentSummary]);
+
+  const totalRevenueK = metrics?.revenue.current
+    ? `£${(metrics.revenue.current / 1000).toFixed(0)}k`
+    : '£0';
+  const totalProfitK = metrics?.profit.current
+    ? `£${(metrics.profit.current / 1000).toFixed(0)}k`
+    : '£0';
+  const profitMarginValue = `${(profitability?.profitMargin ?? 0).toFixed(1)}%`;
+  const utilisationValue = `${metrics?.complianceRate ?? 0}%`;
+
+  if (isLoading) {
     return (
-      <div className="space-y-6 animate-fade-in">
-        <SectionHeader title="Reports & Analytics" />
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-white" />
-        </div>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="Money"
+          title="Reports"
+          description="Revenue, profitability, utilisation and debtor aging."
+          tone="blue"
+        />
+        <LoadingBlocks />
+      </PageFrame>
     );
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <SectionHeader
-        title="Reports & Analytics"
-        description="Financial insights and business performance"
+    <PageFrame>
+      <PageHero
+        eyebrow="Money"
+        title="Reports"
+        description="Revenue, profitability, utilisation and debtor aging."
+        tone="blue"
+        actions={
+          <>
+            <PrimaryButton onClick={exportCsv}>Export CSV</PrimaryButton>
+            <IconButton onClick={refresh} aria-label="Refresh reports">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </>
+        }
       />
 
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid grid-cols-4 w-full h-auto p-1 bg-muted/50">
-          <TabsTrigger
-            value="overview"
-            className="text-xs sm:text-sm py-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
-          >
-            <BarChart3 className="h-4 w-4 mr-1 hidden sm:inline" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger
-            value="profitability"
-            className="text-xs sm:text-sm py-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
-          >
-            <TrendingUp className="h-4 w-4 mr-1 hidden sm:inline" />
-            Profit
-          </TabsTrigger>
-          <TabsTrigger
-            value="cashflow"
-            className="text-xs sm:text-sm py-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
-          >
-            <Wallet className="h-4 w-4 mr-1 hidden sm:inline" />
-            Cash Flow
-          </TabsTrigger>
-          <TabsTrigger
-            value="expenses"
-            className="text-xs sm:text-sm py-2 data-[state=active]:bg-elec-yellow data-[state=active]:text-black"
-          >
-            <Receipt className="h-4 w-4 mr-1 hidden sm:inline" />
-            Expenses
-          </TabsTrigger>
-        </TabsList>
+      <FilterBar
+        tabs={rangeTabs}
+        activeTab={range}
+        onTabChange={(v) => setRange(v as RangeKey)}
+      />
 
-        {/* Overview Tab */}
-        <TabsContent value="overview" className="space-y-6 mt-6">
-          {/* Key Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <Card className="card-hover border-elec-yellow/20">
-              <CardContent className="p-4">
-                <div className="flex flex-col items-center text-center">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2">
-                    <PoundSterling className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <p className="text-xl font-bold">
-                    £{metrics?.revenue.current ? (metrics.revenue.current / 1000).toFixed(0) : 0}k
-                  </p>
-                  <p className="text-xs text-white">Revenue</p>
-                  <div className="flex items-center gap-1 mt-1">
-                    {revenueGrowth >= 0 ? (
-                      <TrendingUp className="h-3 w-3 text-success" />
-                    ) : (
-                      <TrendingDown className="h-3 w-3 text-destructive" />
-                    )}
-                    <span
-                      className={`text-xs ${revenueGrowth >= 0 ? 'text-success' : 'text-destructive'}`}
-                    >
-                      {revenueGrowth >= 0 ? '+' : ''}
-                      {revenueGrowth.toFixed(0)}%
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+      <StatStrip
+        columns={4}
+        stats={[
+          { label: 'Revenue £', value: totalRevenueK, tone: 'emerald' },
+          { label: 'Profit £', value: totalProfitK, accent: true },
+          { label: 'Margin %', value: profitMarginValue, tone: 'emerald' },
+          { label: 'Utilisation %', value: utilisationValue, tone: 'blue' },
+        ]}
+      />
 
-            <Card className="card-hover border-elec-yellow/20">
-              <CardContent className="p-4">
-                <div className="flex flex-col items-center text-center">
-                  <div className="p-2 rounded-lg bg-success/10 mb-2">
-                    <TrendingUp className="h-5 w-5 text-success" />
-                  </div>
-                  <p className="text-xl font-bold">
-                    £{metrics?.profit.current ? (metrics.profit.current / 1000).toFixed(0) : 0}k
-                  </p>
-                  <p className="text-xs text-white">Profit</p>
-                  <div className="flex items-center gap-1 mt-1">
-                    {profitGrowth >= 0 ? (
-                      <TrendingUp className="h-3 w-3 text-success" />
-                    ) : (
-                      <TrendingDown className="h-3 w-3 text-destructive" />
-                    )}
-                    <span
-                      className={`text-xs ${profitGrowth >= 0 ? 'text-success' : 'text-destructive'}`}
-                    >
-                      {profitGrowth >= 0 ? '+' : ''}
-                      {profitGrowth.toFixed(0)}%
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="card-hover border-elec-yellow/20">
-              <CardContent className="p-4">
-                <div className="flex flex-col items-center text-center">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2">
-                    <Briefcase className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <p className="text-xl font-bold">{metrics?.completedJobs || 0}</p>
-                  <p className="text-xs text-white">Jobs Done</p>
-                  <p className="text-xs text-white mt-1">
-                    {metrics?.activeJobs || 0} active
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="card-hover border-elec-yellow/20">
-              <CardContent className="p-4">
-                <div className="flex flex-col items-center text-center">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10 mb-2">
-                    <Users className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <p className="text-xl font-bold">{metrics?.complianceRate || 0}%</p>
-                  <p className="text-xs text-white">Compliance</p>
-                  <p className="text-xs text-success mt-1">{metrics?.employees || 0} staff</p>
-                </div>
-              </CardContent>
-            </Card>
+      <ListCard>
+        <ListCardHeader
+          tone="blue"
+          title="Revenue 30d"
+          meta={<Pill tone="yellow">Revenue vs Target</Pill>}
+        />
+        <div className="p-4 sm:p-5">
+          <div className="h-64 w-full">
+            {monthlyData.length > 0 ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                  <CartesianGrid stroke={WHITE_06} vertical={false} />
+                  <XAxis
+                    dataKey="month"
+                    tick={{ fill: '#ffffff', fontSize: 11 }}
+                    axisLine={{ stroke: WHITE_20 }}
+                    tickLine={false}
+                  />
+                  <YAxis
+                    tick={{ fill: '#ffffff', fontSize: 11 }}
+                    axisLine={{ stroke: WHITE_20 }}
+                    tickLine={false}
+                    tickFormatter={(value) => `£${value}k`}
+                  />
+                  <Tooltip
+                    contentStyle={tooltipStyle}
+                    cursor={{ fill: 'rgba(255,255,255,0.04)' }}
+                    formatter={(value) => [`£${value}k`, '']}
+                  />
+                  <Legend wrapperStyle={{ color: '#ffffff', fontSize: 12 }} />
+                  <Bar dataKey="revenue" name="Revenue" fill={ELEC_YELLOW} radius={[6, 6, 0, 0]} />
+                  <Bar dataKey="target" name="Target" fill={WHITE_20} radius={[6, 6, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <EmptyState
+                title="No revenue data yet"
+                description="Start tracking invoices to see monthly revenue trends."
+              />
+            )}
           </div>
+        </div>
+      </ListCard>
 
-          {/* Revenue Chart */}
-          <Card className="card-hover border-elec-yellow/20">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-elec-yellow" />
-                Revenue vs Target (6 Months)
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="h-64 w-full">
-                {monthlyData.length > 0 ? (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart
-                      data={monthlyData}
-                      margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ListCard>
+          <ListCardHeader tone="emerald" title="Revenue vs Costs" meta={<Pill tone="emerald">6 months</Pill>} />
+          <div className="p-4 sm:p-5">
+            <div className="h-64 w-full">
+              {monthlyFinancials.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart
+                    data={monthlyFinancials}
+                    margin={{ top: 10, right: 10, left: -10, bottom: 0 }}
+                  >
+                    <defs>
+                      <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor={ELEC_YELLOW} stopOpacity={0.45} />
+                        <stop offset="100%" stopColor={ELEC_YELLOW} stopOpacity={0.02} />
+                      </linearGradient>
+                      <linearGradient id="costGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#ffffff" stopOpacity={0.3} />
+                        <stop offset="100%" stopColor="#ffffff" stopOpacity={0.02} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid stroke={WHITE_06} vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      tick={{ fill: '#ffffff', fontSize: 11 }}
+                      axisLine={{ stroke: WHITE_20 }}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      tick={{ fill: '#ffffff', fontSize: 11 }}
+                      axisLine={{ stroke: WHITE_20 }}
+                      tickLine={false}
+                      tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
+                    />
+                    <Tooltip
+                      contentStyle={tooltipStyle}
+                      cursor={{ stroke: WHITE_20 }}
+                      formatter={(value: number) => [formatCurrency(value), '']}
+                    />
+                    <Legend wrapperStyle={{ color: '#ffffff', fontSize: 12 }} />
+                    <Area
+                      type="monotone"
+                      dataKey="revenue"
+                      name="Revenue"
+                      stroke={ELEC_YELLOW}
+                      strokeWidth={2}
+                      fill="url(#revGrad)"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="costs"
+                      name="Costs"
+                      stroke="#ffffff"
+                      strokeOpacity={0.7}
+                      strokeWidth={2}
+                      fill="url(#costGrad)"
+                    />
+                    <Area
+                      type="monotone"
+                      dataKey="profit"
+                      name="Profit"
+                      stroke={ELEC_YELLOW}
+                      strokeOpacity={0.6}
+                      strokeWidth={1.5}
+                      strokeDasharray="4 4"
+                      fill="none"
+                    />
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <EmptyState title="No financial data yet" />
+              )}
+            </div>
+          </div>
+        </ListCard>
+
+        <ListCard>
+          <ListCardHeader tone="blue" title="Job completion trend" />
+          <div className="p-4 sm:p-5">
+            <div className="h-64 w-full">
+              {monthlyData.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={monthlyData} margin={{ top: 10, right: 10, left: -10, bottom: 0 }}>
+                    <CartesianGrid stroke={WHITE_06} vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      tick={{ fill: '#ffffff', fontSize: 11 }}
+                      axisLine={{ stroke: WHITE_20 }}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      tick={{ fill: '#ffffff', fontSize: 11 }}
+                      axisLine={{ stroke: WHITE_20 }}
+                      tickLine={false}
+                    />
+                    <Tooltip contentStyle={tooltipStyle} cursor={{ stroke: WHITE_20 }} />
+                    <Line
+                      type="monotone"
+                      dataKey="revenue"
+                      stroke={ELEC_YELLOW}
+                      strokeWidth={2}
+                      dot={{ fill: ELEC_YELLOW, strokeWidth: 0, r: 3 }}
+                      activeDot={{ r: 5, fill: ELEC_YELLOW }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              ) : (
+                <EmptyState title="No trend data yet" />
+              )}
+            </div>
+          </div>
+        </ListCard>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ListCard>
+          <ListCardHeader tone="purple" title="Compliance status" />
+          <div className="p-4 sm:p-5">
+            <div className="h-64 w-full">
+              {complianceData.length > 0 && complianceData.some((d) => d.value > 0) ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={complianceData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={55}
+                      outerRadius={85}
+                      paddingAngle={2}
+                      dataKey="value"
+                      stroke="hsl(0 0% 12%)"
+                      strokeWidth={2}
                     >
-                      <XAxis
-                        dataKey="month"
-                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                        axisLine={{ stroke: 'hsl(var(--border))' }}
-                      />
-                      <YAxis
-                        tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                        axisLine={{ stroke: 'hsl(var(--border))' }}
-                        tickFormatter={(value) => `£${value}k`}
-                      />
-                      <Tooltip
-                        contentStyle={{
-                          backgroundColor: 'hsl(var(--card))',
-                          border: '1px solid hsl(var(--border))',
-                          borderRadius: '8px',
-                          color: 'hsl(var(--foreground))',
-                        }}
-                        formatter={(value) => [`£${value}k`, '']}
-                      />
-                      <Legend />
-                      <Bar
-                        dataKey="revenue"
-                        name="Revenue"
-                        fill="hsl(var(--primary))"
-                        radius={[4, 4, 0, 0]}
-                      />
-                      <Bar
-                        dataKey="target"
-                        name="Target"
-                        fill="hsl(var(--muted))"
-                        radius={[4, 4, 0, 0]}
-                      />
-                    </BarChart>
-                  </ResponsiveContainer>
-                ) : (
-                  <div className="flex items-center justify-center h-full text-white">
-                    No revenue data available yet. Start tracking invoices to see trends.
-                  </div>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {/* Job Completion Trend */}
-            <Card className="card-hover border-elec-yellow/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <Target className="h-5 w-5 text-elec-yellow" />
-                  Job Completion Trend
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-48 w-full">
-                  {monthlyData.length > 0 ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart
-                        data={monthlyData}
-                        margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-                      >
-                        <XAxis
-                          dataKey="month"
-                          tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                          axisLine={{ stroke: 'hsl(var(--border))' }}
+                      {complianceData.map((_entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={index === 0 ? ELEC_YELLOW : `rgba(255,255,255,${0.7 - index * 0.18})`}
                         />
-                        <YAxis
-                          tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                          axisLine={{ stroke: 'hsl(var(--border))' }}
-                        />
-                        <Tooltip
-                          contentStyle={{
-                            backgroundColor: 'hsl(var(--card))',
-                            border: '1px solid hsl(var(--border))',
-                            borderRadius: '8px',
-                            color: 'hsl(var(--foreground))',
-                          }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="revenue"
-                          stroke="hsl(var(--primary))"
-                          strokeWidth={2}
-                          dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2 }}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <div className="flex items-center justify-center h-full text-white text-sm">
-                      No trend data available yet
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Compliance Status Pie */}
-            <Card className="card-hover border-elec-yellow/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <Target className="h-5 w-5 text-elec-yellow" />
-                  Compliance Status
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-48 w-full flex items-center justify-center">
-                  {complianceData.length > 0 && complianceData.some((d) => d.value > 0) ? (
-                    <ResponsiveContainer width="100%" height="100%">
-                      <PieChart>
-                        <Pie
-                          data={complianceData}
-                          cx="50%"
-                          cy="50%"
-                          innerRadius={50}
-                          outerRadius={70}
-                          paddingAngle={2}
-                          dataKey="value"
-                        >
-                          {complianceData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry.color} />
-                          ))}
-                        </Pie>
-                        <Tooltip
-                          contentStyle={{
-                            backgroundColor: 'hsl(var(--card))',
-                            border: '1px solid hsl(var(--border))',
-                            borderRadius: '8px',
-                            color: 'hsl(var(--foreground))',
-                          }}
-                          formatter={(value) => [`${value}%`, '']}
-                        />
-                      </PieChart>
-                    </ResponsiveContainer>
-                  ) : (
-                    <div className="text-white text-sm text-center">
-                      No certifications tracked yet
-                    </div>
-                  )}
-                </div>
-                <div className="flex justify-center gap-4 mt-2">
-                  {complianceData.map((item, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <div
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                      />
-                      <span className="text-xs text-white">
-                        {item.name} {item.value}%
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Top Performers & Jobs by Status */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <Card className="card-hover border-elec-yellow/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <Users className="h-5 w-5 text-elec-yellow" />
-                  Top Performers
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {topPerformers.length > 0 ? (
-                    topPerformers.map((performer, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
-                      >
-                        <div className="flex items-center gap-3">
-                          <span className="w-6 h-6 rounded-full bg-elec-yellow/10 flex items-center justify-center text-sm font-medium text-elec-yellow">
-                            {idx + 1}
-                          </span>
-                          <div>
-                            <p className="font-medium text-sm">{performer.name}</p>
-                            <p className="text-xs text-white">{performer.jobs} jobs</p>
-                          </div>
-                        </div>
-                        <span className="font-semibold text-elec-yellow text-sm">
-                          £{(performer.revenue / 1000).toFixed(0)}k
-                        </span>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-4 text-white text-sm">
-                      No job assignments tracked yet
-                    </div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="card-hover border-elec-yellow/20">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <Briefcase className="h-5 w-5 text-elec-yellow" />
-                  Jobs by Status
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {jobsByStatus.length > 0 ? (
-                    jobsByStatus.map((item, idx) => (
-                      <div key={idx} className="space-y-1">
-                        <div className="flex justify-between text-sm">
-                          <span className="font-medium">{item.status}</span>
-                          <span className="text-white">
-                            {item.count} ({item.percentage}%)
-                          </span>
-                        </div>
-                        <Progress value={item.percentage} className="h-2" />
-                      </div>
-                    ))
-                  ) : (
-                    <div className="text-center py-4 text-white text-sm">
-                      No jobs tracked yet
-                    </div>
-                  )}
-                </div>
-                <div className="mt-4 pt-3 border-t border-border">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-white">Total Jobs</span>
-                    <span className="font-semibold">
-                      {metrics?.totalJobs || jobsByStatus.reduce((acc, j) => acc + j.count, 0)}
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Outstanding Payments */}
-          <Card className="card-hover border-elec-yellow/20">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Calendar className="h-5 w-5 text-elec-yellow" />
-                Outstanding Payments
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div className="p-4 rounded-lg bg-success/10 border border-success/20 text-center">
-                  <p className="text-xs text-white">Paid (30 days)</p>
-                  <p className="text-xl font-bold text-success">
-                    £{paymentSummary ? (paymentSummary.paidLast30Days / 1000).toFixed(0) : 0}k
-                  </p>
-                </div>
-                <div className="p-4 rounded-lg bg-warning/10 border border-warning/20 text-center">
-                  <p className="text-xs text-white">Pending</p>
-                  <p className="text-xl font-bold text-warning">
-                    £{paymentSummary ? (paymentSummary.pending / 1000).toFixed(0) : 0}k
-                  </p>
-                </div>
-                <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20 text-center">
-                  <p className="text-xs text-white">Overdue</p>
-                  <p className="text-xl font-bold text-destructive">
-                    £{paymentSummary ? (paymentSummary.overdue / 1000).toFixed(0) : 0}k
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Profitability Tab */}
-        <TabsContent value="profitability" className="space-y-6 mt-6">
-          {isFinanceLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-white" />
-            </div>
-          ) : (
-            <>
-              {/* Profitability Summary Cards */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <Card className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Total Revenue</p>
-                      <p className="text-xl font-bold text-elec-yellow">
-                        {formatCompactCurrency(profitability?.totalRevenue || 0)}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Total Costs</p>
-                      <p className="text-xl font-bold text-orange-500">
-                        {formatCompactCurrency(profitability?.totalCosts || 0)}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Net Profit</p>
-                      <p
-                        className={cn(
-                          'text-xl font-bold',
-                          (profitability?.netProfit || 0) >= 0 ? 'text-green-500' : 'text-red-500'
-                        )}
-                      >
-                        {formatCompactCurrency(profitability?.netProfit || 0)}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Profit Margin</p>
-                      <p
-                        className={cn(
-                          'text-xl font-bold flex items-center gap-1',
-                          (profitability?.profitMargin || 0) >= 0
-                            ? 'text-green-500'
-                            : 'text-red-500'
-                        )}
-                      >
-                        {(profitability?.profitMargin || 0).toFixed(1)}%
-                        {(profitability?.profitMargin || 0) >= 0 ? (
-                          <ArrowUpRight className="h-4 w-4" />
-                        ) : (
-                          <ArrowDownRight className="h-4 w-4" />
-                        )}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Monthly Profit Trend */}
-              <Card className="border-elec-yellow/20">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base font-semibold flex items-center gap-2">
-                    <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                    Revenue vs Costs (6 Months)
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="h-64 w-full">
-                    {monthlyFinancials.length > 0 ? (
-                      <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart
-                          data={monthlyFinancials}
-                          margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
-                        >
-                          <XAxis
-                            dataKey="month"
-                            tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                            axisLine={{ stroke: 'hsl(var(--border))' }}
-                          />
-                          <YAxis
-                            tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
-                            axisLine={{ stroke: 'hsl(var(--border))' }}
-                            tickFormatter={(value) => `£${(value / 1000).toFixed(0)}k`}
-                          />
-                          <Tooltip
-                            contentStyle={{
-                              backgroundColor: 'hsl(var(--card))',
-                              border: '1px solid hsl(var(--border))',
-                              borderRadius: '8px',
-                              color: 'hsl(var(--foreground))',
-                            }}
-                            formatter={(value: number) => [formatCurrency(value), '']}
-                          />
-                          <Legend />
-                          <Area
-                            type="monotone"
-                            dataKey="revenue"
-                            name="Revenue"
-                            stroke="#facc15"
-                            fill="#facc15"
-                            fillOpacity={0.2}
-                          />
-                          <Area
-                            type="monotone"
-                            dataKey="costs"
-                            name="Costs"
-                            stroke="#f97316"
-                            fill="#f97316"
-                            fillOpacity={0.2}
-                          />
-                          <Area
-                            type="monotone"
-                            dataKey="profit"
-                            name="Profit"
-                            stroke="#22c55e"
-                            fill="#22c55e"
-                            fillOpacity={0.2}
-                          />
-                        </AreaChart>
-                      </ResponsiveContainer>
-                    ) : (
-                      <div className="flex items-center justify-center h-full text-white">
-                        No financial data available yet
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Job Profitability Ranking */}
-              <Card className="border-elec-yellow/20">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base font-semibold flex items-center gap-2">
-                    <Briefcase className="h-5 w-5 text-elec-yellow" />
-                    Job Profitability Ranking
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {jobProfitability.length > 0 ? (
-                      jobProfitability.slice(0, 10).map((job, idx) => (
-                        <div
-                          key={job.jobId}
-                          className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
-                        >
-                          <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <span
-                              className={cn(
-                                'w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium shrink-0',
-                                idx < 3
-                                  ? 'bg-elec-yellow/20 text-elec-yellow'
-                                  : 'bg-muted text-white'
-                              )}
-                            >
-                              {idx + 1}
-                            </span>
-                            <div className="min-w-0 flex-1">
-                              <p className="font-medium text-sm truncate">{job.title}</p>
-                              <p className="text-xs text-white">
-                                {formatCurrency(job.revenue)} revenue
-                              </p>
-                            </div>
-                          </div>
-                          <div className="text-right shrink-0 ml-2">
-                            <p
-                              className={cn(
-                                'font-semibold text-sm',
-                                job.profit >= 0 ? 'text-green-500' : 'text-red-500'
-                              )}
-                            >
-                              {formatCurrency(job.profit)}
-                            </p>
-                            <Badge
-                              variant="outline"
-                              className={cn(
-                                'text-xs',
-                                job.margin >= 20
-                                  ? 'border-green-500/30 text-green-500'
-                                  : job.margin >= 10
-                                    ? 'border-amber-500/30 text-amber-500'
-                                    : 'border-red-500/30 text-red-500'
-                              )}
-                            >
-                              {job.margin.toFixed(1)}%
-                            </Badge>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="text-center py-4 text-white text-sm">
-                        No job profitability data available yet
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </>
-          )}
-        </TabsContent>
-
-        {/* Cash Flow Tab */}
-        <TabsContent value="cashflow" className="space-y-6 mt-6">
-          {isFinanceLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-white" />
-            </div>
-          ) : (
-            <>
-              {/* Cash Flow Summary Cards */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <Card className="border-green-500/30 bg-green-500/5">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Cash In</p>
-                      <p className="text-xl font-bold text-green-500">
-                        {formatCompactCurrency(cashFlow?.totalPaid || 0)}
-                      </p>
-                      <p className="text-xs text-white mt-1">
-                        {cashFlow?.invoicesPaid || 0} invoices
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-amber-500/30 bg-amber-500/5">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Pending</p>
-                      <p className="text-xl font-bold text-amber-500">
-                        {formatCompactCurrency(cashFlow?.totalOutstanding || 0)}
-                      </p>
-                      <p className="text-xs text-white mt-1">
-                        {cashFlow?.invoicesOutstanding || 0} invoices
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-red-500/30 bg-red-500/5">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Overdue</p>
-                      <p className="text-xl font-bold text-red-500">
-                        {formatCompactCurrency(cashFlow?.totalOverdue || 0)}
-                      </p>
-                      <p className="text-xs text-white mt-1">
-                        {cashFlow?.invoicesOverdue || 0} invoices
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-elec-yellow/30 bg-elec-yellow/5">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Collection Rate</p>
-                      <p className="text-xl font-bold text-elec-yellow">
-                        {(cashFlow?.collectionRate || 0).toFixed(0)}%
-                      </p>
-                      <p className="text-xs text-white mt-1">
-                        Avg {cashFlow?.averageDaysToPayment || 0} days
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* Cash Flow Visual */}
-              <Card className="border-elec-yellow/20">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-base font-semibold flex items-center gap-2">
-                    <Wallet className="h-5 w-5 text-elec-yellow" />
-                    Cash Flow Summary
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {/* Collection Progress */}
-                    <div className="space-y-2">
-                      <div className="flex justify-between text-sm">
-                        <span className="text-white">Invoice Collection</span>
-                        <span className="font-medium">
-                          {formatCurrency(cashFlow?.totalPaid || 0)} /{' '}
-                          {formatCurrency(
-                            (cashFlow?.totalPaid || 0) + (cashFlow?.totalOutstanding || 0)
-                          )}
-                        </span>
-                      </div>
-                      <div className="h-3 bg-muted rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-green-500 to-green-400 rounded-full transition-all"
-                          style={{ width: `${cashFlow?.collectionRate || 0}%` }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Breakdown */}
-                    <div className="grid grid-cols-3 gap-3 pt-4 border-t border-border">
-                      <div className="text-center">
-                        <p className="text-2xl font-bold text-green-500">
-                          {cashFlow?.invoicesPaid || 0}
-                        </p>
-                        <p className="text-xs text-white">Paid</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="text-2xl font-bold text-amber-500">
-                          {cashFlow?.invoicesOutstanding || 0}
-                        </p>
-                        <p className="text-xs text-white">Pending</p>
-                      </div>
-                      <div className="text-center">
-                        <p className="text-2xl font-bold text-red-500">
-                          {cashFlow?.invoicesOverdue || 0}
-                        </p>
-                        <p className="text-xs text-white">Overdue</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Quick Stats */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Card className="border-elec-yellow/20">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base font-semibold">This Month</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center py-2 border-b border-border/50">
-                        <span className="text-sm text-white">Invoiced</span>
-                        <span className="font-semibold">
-                          {formatCurrency(quickStats?.monthlyInvoiced || 0)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b border-border/50">
-                        <span className="text-sm text-white">Expenses</span>
-                        <span className="font-semibold text-orange-500">
-                          {formatCurrency(quickStats?.monthlyExpenses || 0)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-sm text-white">Net</span>
-                        <span
-                          className={cn(
-                            'font-bold',
-                            (quickStats?.monthlyInvoiced || 0) -
-                              (quickStats?.monthlyExpenses || 0) >=
-                              0
-                              ? 'text-green-500'
-                              : 'text-red-500'
-                          )}
-                        >
-                          {formatCurrency(
-                            (quickStats?.monthlyInvoiced || 0) - (quickStats?.monthlyExpenses || 0)
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-elec-yellow/20">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base font-semibold">Pending Expenses</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center py-2 border-b border-border/50">
-                        <span className="text-sm text-white">Awaiting Approval</span>
-                        <Badge variant="outline" className="border-amber-500/30 text-amber-500">
-                          {quickStats?.pendingExpenses || 0} claims
-                        </Badge>
-                      </div>
-                      <div className="flex justify-between items-center py-2 border-b border-border/50">
-                        <span className="text-sm text-white">Amount</span>
-                        <span className="font-semibold">
-                          {formatCurrency(quickStats?.pendingExpenseAmount || 0)}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center py-2">
-                        <span className="text-sm text-white">Approved Unpaid</span>
-                        <span className="font-semibold text-amber-500">
-                          {formatCurrency(quickStats?.approvedUnpaidExpenses || 0)}
-                        </span>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </>
-          )}
-        </TabsContent>
-
-        {/* Expenses Tab */}
-        <TabsContent value="expenses" className="space-y-6 mt-6">
-          {isFinanceLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Loader2 className="h-8 w-8 animate-spin text-white" />
-            </div>
-          ) : (
-            <>
-              {/* Expense Summary */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                <Card className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Total Expenses</p>
-                      <p className="text-xl font-bold">
-                        {formatCompactCurrency(
-                          expensesByCategory.reduce((sum, cat) => sum + cat.total, 0)
-                        )}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Categories</p>
-                      <p className="text-xl font-bold">{expensesByCategory.length}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">Pending Claims</p>
-                      <p className="text-xl font-bold text-amber-500">
-                        {quickStats?.pendingExpenses || 0}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-elec-yellow/20">
-                  <CardContent className="p-4">
-                    <div className="flex flex-col">
-                      <p className="text-xs text-white">This Month</p>
-                      <p className="text-xl font-bold">
-                        {formatCompactCurrency(quickStats?.monthlyExpenses || 0)}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                {/* Expense Category Pie Chart */}
-                <Card className="border-elec-yellow/20">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base font-semibold flex items-center gap-2">
-                      <PieChartIcon className="h-5 w-5 text-elec-yellow" />
-                      Expenses by Category
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="h-64 w-full flex items-center justify-center">
-                      {expensePieData.length > 0 && expensePieData.some((d) => d.value > 0) ? (
-                        <ResponsiveContainer width="100%" height="100%">
-                          <PieChart>
-                            <Pie
-                              data={expensePieData}
-                              cx="50%"
-                              cy="50%"
-                              innerRadius={60}
-                              outerRadius={85}
-                              paddingAngle={2}
-                              dataKey="value"
-                            >
-                              {expensePieData.map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.color} />
-                              ))}
-                            </Pie>
-                            <Tooltip
-                              contentStyle={{
-                                backgroundColor: 'hsl(var(--card))',
-                                border: '1px solid hsl(var(--border))',
-                                borderRadius: '8px',
-                                color: 'hsl(var(--foreground))',
-                              }}
-                              formatter={(value: number) => [formatCurrency(value), '']}
-                            />
-                          </PieChart>
-                        </ResponsiveContainer>
-                      ) : (
-                        <div className="text-white text-sm text-center">
-                          No expense data available yet
-                        </div>
-                      )}
-                    </div>
-                    {/* Legend */}
-                    <div className="flex flex-wrap justify-center gap-3 mt-2">
-                      {expensePieData.map((item, idx) => (
-                        <div key={idx} className="flex items-center gap-2">
-                          <div
-                            className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: item.color }}
-                          />
-                          <span className="text-xs text-white">{item.name}</span>
-                        </div>
                       ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Category Breakdown List */}
-                <Card className="border-elec-yellow/20">
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base font-semibold flex items-center gap-2">
-                      <Receipt className="h-5 w-5 text-elec-yellow" />
-                      Category Breakdown
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3">
-                      {expensesByCategory.length > 0 ? (
-                        expensesByCategory.map((category, idx) => {
-                          const Icon = categoryIcons[category.category.toLowerCase()] || Receipt;
-                          const color =
-                            categoryColors[category.category.toLowerCase()] || categoryColors.other;
-                          return (
-                            <div
-                              key={idx}
-                              className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
-                            >
-                              <div className="flex items-center gap-3">
-                                <div
-                                  className="p-2 rounded-lg"
-                                  style={{ backgroundColor: `${color}20` }}
-                                >
-                                  <Icon className="h-4 w-4" style={{ color }} />
-                                </div>
-                                <div>
-                                  <p className="font-medium text-sm capitalize">
-                                    {category.category}
-                                  </p>
-                                  <p className="text-xs text-white">
-                                    {category.count} expense{category.count !== 1 ? 's' : ''}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="text-right">
-                                <p className="font-semibold text-sm">
-                                  {formatCurrency(category.total)}
-                                </p>
-                                <p className="text-xs text-white">
-                                  {category.percentage.toFixed(1)}%
-                                </p>
-                              </div>
-                            </div>
-                          );
-                        })
-                      ) : (
-                        <div className="text-center py-4 text-white text-sm">
-                          No expense categories tracked yet
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
+                    </Pie>
+                    <Tooltip contentStyle={tooltipStyle} formatter={(value) => [`${value}%`, '']} />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <EmptyState title="No certifications tracked yet" />
+              )}
+            </div>
+            {complianceData.length > 0 && (
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-3 border-t border-white/[0.06]">
+                {complianceData.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2">
+                    <span
+                      className="inline-block h-1.5 w-1.5 rounded-full"
+                      style={{
+                        background: idx === 0 ? ELEC_YELLOW : `rgba(255,255,255,${0.7 - idx * 0.18})`,
+                      }}
+                    />
+                    <span className="text-[11px] text-white">
+                      {item.name} {item.value}%
+                    </span>
+                  </div>
+                ))}
               </div>
-            </>
+            )}
+          </div>
+        </ListCard>
+
+        <ListCard>
+          <ListCardHeader
+            tone="amber"
+            title="Expenses by category"
+            meta={<Pill tone="amber">{expensePieData.length}</Pill>}
+          />
+          <div className="p-4 sm:p-5">
+            <div className="h-64 w-full">
+              {expensePieData.length > 0 && expensePieData.some((d) => d.value > 0) ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={expensePieData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={55}
+                      outerRadius={85}
+                      paddingAngle={2}
+                      dataKey="value"
+                      stroke="hsl(0 0% 12%)"
+                      strokeWidth={2}
+                    >
+                      {expensePieData.map((_entry, index) => (
+                        <Cell key={`cell-${index}`} fill={expenseColours[index % expenseColours.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      contentStyle={tooltipStyle}
+                      formatter={(value: number) => [formatCurrency(value), '']}
+                    />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <EmptyState title="No expense data yet" />
+              )}
+            </div>
+            {expensePieData.length > 0 && (
+              <div className="mt-3 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 pt-3 border-t border-white/[0.06]">
+                {expensePieData.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-2">
+                    <span
+                      className="inline-block h-1.5 w-1.5 rounded-full"
+                      style={{ background: expenseColours[idx % expenseColours.length] }}
+                    />
+                    <span className="text-[11px] text-white">{item.name}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </ListCard>
+      </div>
+
+      <ListCard>
+        <ListCardHeader
+          tone="red"
+          title="Debtor aging"
+          meta={
+            <Pill tone="red">
+              {formatCompactCurrency(
+                (paymentSummary?.pending ?? 0) + (paymentSummary?.overdue ?? 0)
+              )}{' '}
+              outstanding
+            </Pill>
+          }
+        />
+        {debtorRows.every((r) => r.amount === 0) ? (
+          <div className="p-4 sm:p-5">
+            <EmptyState
+              title="No outstanding debtors"
+              description="When invoices age, their bucket and value will show here."
+            />
+          </div>
+        ) : (
+          <ListBody>
+            {debtorRows.map((row, idx) => (
+              <ListRow
+                key={idx}
+                accent={row.tone}
+                title={row.label}
+                subtitle={`Bucket · ${row.bucket}`}
+                trailing={
+                  <span className="text-[15px] font-semibold tabular-nums text-white">
+                    {formatCompactCurrency(row.amount)}
+                  </span>
+                }
+              />
+            ))}
+          </ListBody>
+        )}
+      </ListCard>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ListCard>
+          <ListCardHeader
+            tone="emerald"
+            title="Top performers"
+            meta={<Pill tone="emerald">{topPerformers.length}</Pill>}
+          />
+          {topPerformers.length > 0 ? (
+            <ListBody>
+              {topPerformers.map((performer, idx) => (
+                <ListRow
+                  key={idx}
+                  title={performer.name}
+                  subtitle={`${performer.jobs} jobs`}
+                  lead={
+                    <span className="h-9 w-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                  }
+                  trailing={
+                    <span className="text-[14px] font-semibold tabular-nums text-elec-yellow">
+                      £{(performer.revenue / 1000).toFixed(0)}k
+                    </span>
+                  }
+                />
+              ))}
+            </ListBody>
+          ) : (
+            <div className="p-4 sm:p-5">
+              <EmptyState title="No job assignments tracked yet" />
+            </div>
           )}
-        </TabsContent>
-      </Tabs>
-    </div>
+        </ListCard>
+
+        <ListCard>
+          <ListCardHeader
+            tone="blue"
+            title="Jobs by status"
+            meta={
+              <Pill tone="blue">
+                {metrics?.totalJobs ?? jobsByStatus.reduce((acc, j) => acc + j.count, 0)} total
+              </Pill>
+            }
+          />
+          {jobsByStatus.length > 0 ? (
+            <div className="p-4 sm:p-5 space-y-4">
+              {jobsByStatus.map((item, idx) => (
+                <div key={idx} className="space-y-1.5">
+                  <div className="flex items-center justify-between text-[13px]">
+                    <span className="font-medium text-white">{item.status}</span>
+                    <span className="tabular-nums text-white">
+                      {item.count} ({item.percentage}%)
+                    </span>
+                  </div>
+                  <div className="h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-elec-yellow"
+                      style={{ width: `${Math.min(item.percentage, 100)}%` }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-4 sm:p-5">
+              <EmptyState title="No jobs tracked yet" />
+            </div>
+          )}
+        </ListCard>
+      </div>
+
+      <ListCard>
+        <ListCardHeader
+          tone="yellow"
+          title="Job profitability"
+          meta={<Pill tone="yellow">Top {Math.min(jobProfitability.length, 10)}</Pill>}
+        />
+        {jobProfitability.length > 0 ? (
+          <ListBody>
+            {jobProfitability.slice(0, 10).map((job, idx) => {
+              const marginTone =
+                job.margin >= 20 ? 'emerald' : job.margin >= 10 ? 'amber' : 'red';
+              return (
+                <ListRow
+                  key={job.jobId}
+                  title={job.title}
+                  subtitle={`${formatCurrency(job.revenue)} revenue`}
+                  lead={
+                    <span className="h-9 w-9 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[12px] font-semibold tabular-nums text-white">
+                      {String(idx + 1).padStart(2, '0')}
+                    </span>
+                  }
+                  trailing={
+                    <div className="flex items-center gap-2">
+                      <span className="text-[14px] font-semibold tabular-nums text-white">
+                        {formatCurrency(job.profit)}
+                      </span>
+                      <Pill tone={marginTone}>{job.margin.toFixed(1)}%</Pill>
+                    </div>
+                  }
+                />
+              );
+            })}
+          </ListBody>
+        ) : (
+          <div className="p-4 sm:p-5">
+            <EmptyState title="No job profitability data yet" />
+          </div>
+        )}
+      </ListCard>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <ListCard>
+          <ListCardHeader tone="emerald" title="This month" />
+          <ListBody>
+            <ListRow
+              title="Invoiced"
+              trailing={
+                <span className="text-[14px] font-semibold tabular-nums text-white">
+                  {formatCurrency(quickStats?.monthlyInvoiced || 0)}
+                </span>
+              }
+            />
+            <ListRow
+              title="Expenses"
+              trailing={
+                <span className="text-[14px] font-semibold tabular-nums text-white">
+                  {formatCurrency(quickStats?.monthlyExpenses || 0)}
+                </span>
+              }
+            />
+            <ListRow
+              title="Net"
+              trailing={
+                <span
+                  className={`text-[14px] font-semibold tabular-nums ${
+                    (quickStats?.monthlyInvoiced || 0) - (quickStats?.monthlyExpenses || 0) >= 0
+                      ? 'text-elec-yellow'
+                      : 'text-white'
+                  }`}
+                >
+                  {formatCurrency(
+                    (quickStats?.monthlyInvoiced || 0) - (quickStats?.monthlyExpenses || 0)
+                  )}
+                </span>
+              }
+            />
+          </ListBody>
+        </ListCard>
+
+        <ListCard>
+          <ListCardHeader tone="amber" title="Pending expenses" />
+          <ListBody>
+            <ListRow
+              title="Awaiting approval"
+              trailing={<Pill tone="amber">{quickStats?.pendingExpenses || 0} claims</Pill>}
+            />
+            <ListRow
+              title="Pending amount"
+              trailing={
+                <span className="text-[14px] font-semibold tabular-nums text-white">
+                  {formatCurrency(quickStats?.pendingExpenseAmount || 0)}
+                </span>
+              }
+            />
+            <ListRow
+              title="Approved unpaid"
+              trailing={
+                <span className="text-[14px] font-semibold tabular-nums text-white">
+                  {formatCurrency(quickStats?.approvedUnpaidExpenses || 0)}
+                </span>
+              }
+            />
+          </ListBody>
+        </ListCard>
+      </div>
+
+      <ListCard>
+        <ListCardHeader
+          tone="cyan"
+          title="Cash flow snapshot"
+          meta={
+            <Pill tone="cyan">
+              {(cashFlow?.collectionRate || 0).toFixed(0)}% collected
+            </Pill>
+          }
+        />
+        <div className="p-4 sm:p-5 space-y-5">
+          <div>
+            <div className="flex items-center justify-between text-[12px] mb-2">
+              <Eyebrow>Invoice collection</Eyebrow>
+              <span className="tabular-nums text-white">
+                {formatCurrency(cashFlow?.totalPaid || 0)} /{' '}
+                {formatCurrency((cashFlow?.totalPaid || 0) + (cashFlow?.totalOutstanding || 0))}
+              </span>
+            </div>
+            <div className="h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full bg-elec-yellow"
+                style={{ width: `${Math.min(cashFlow?.collectionRate || 0, 100)}%` }}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-4 text-center">
+              <div className="text-[24px] font-semibold tabular-nums text-white">
+                {cashFlow?.invoicesPaid || 0}
+              </div>
+              <div className="mt-1.5 text-[10px] text-white uppercase tracking-[0.14em]">Paid</div>
+            </div>
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-4 text-center">
+              <div className="text-[24px] font-semibold tabular-nums text-white">
+                {cashFlow?.invoicesOutstanding || 0}
+              </div>
+              <div className="mt-1.5 text-[10px] text-white uppercase tracking-[0.14em]">Pending</div>
+            </div>
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-4 text-center">
+              <div className="text-[24px] font-semibold tabular-nums text-white">
+                {cashFlow?.invoicesOverdue || 0}
+              </div>
+              <div className="mt-1.5 text-[10px] text-white uppercase tracking-[0.14em]">Overdue</div>
+            </div>
+          </div>
+        </div>
+      </ListCard>
+    </PageFrame>
   );
 }

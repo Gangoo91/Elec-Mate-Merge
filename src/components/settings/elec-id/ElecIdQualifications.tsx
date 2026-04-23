@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Drawer } from 'vaul';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -17,28 +14,6 @@ import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  Plus,
-  GraduationCap,
-  Calendar,
-  Building2,
-  CheckCircle2,
-  Clock,
-  Trash2,
-  Edit2,
-  Loader2,
-  Camera,
-  ChevronRight,
-  AlertCircle,
-  ClipboardCheck,
-  BookOpen,
-  CreditCard,
-  Shield,
-  Zap,
-  Bell,
-  Network,
-  Factory,
-} from 'lucide-react';
 import { UK_QUALIFICATIONS, getQualificationLabel } from '@/data/uk-electrician-constants';
 import { getExpiryStatus, getDaysUntilExpiry } from '@/utils/elecIdGenerator';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
@@ -52,6 +27,13 @@ import {
   deleteElecIdQualification,
   ElecIdQualification,
 } from '@/services/elecIdService';
+import {
+  Eyebrow,
+  SectionHeader,
+  EmptyState,
+  toneText,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface Qualification {
   id: string;
@@ -64,19 +46,30 @@ interface Qualification {
   isVerified: boolean;
 }
 
-// Skeleton loader for qualifications
+const CATEGORY_TONE: Record<string, Tone> = {
+  core: 'purple',
+  testing: 'blue',
+  regulations: 'amber',
+  cards: 'emerald',
+  specialist: 'red',
+  renewable: 'green',
+  fire_security: 'orange',
+  data_comms: 'cyan',
+  industrial: 'indigo',
+};
+
 const QualificationSkeleton = () => (
   <div className="space-y-4">
-    <div className="bg-white/[0.04] rounded-2xl border border-white/[0.06] overflow-hidden">
+    <div className="bg-[hsl(0_0%_12%)] rounded-2xl border border-white/[0.06] overflow-hidden">
       <div className="p-4 border-b border-white/[0.06]">
-        <Skeleton className="h-5 w-32 bg-white/10" />
+        <Skeleton className="h-5 w-32 bg-white/[0.04]" />
       </div>
       <div className="p-4 space-y-3">
         {[1, 2].map((i) => (
           <div key={i} className="p-4 rounded-xl bg-white/[0.04]">
-            <Skeleton className="h-5 w-48 mb-2 bg-white/10" />
-            <Skeleton className="h-4 w-32 mb-1 bg-white/10" />
-            <Skeleton className="h-3 w-24 bg-white/10" />
+            <Skeleton className="h-5 w-48 mb-2 bg-white/[0.06]" />
+            <Skeleton className="h-4 w-32 mb-1 bg-white/[0.06]" />
+            <Skeleton className="h-3 w-24 bg-white/[0.06]" />
           </div>
         ))}
       </div>
@@ -110,7 +103,6 @@ const ElecIdQualifications = () => {
   const [qualifications, setQualifications] = useState<Qualification[]>([]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  // Fetch qualifications from database
   useEffect(() => {
     const fetchQualifications = async () => {
       if (!profile?.id) {
@@ -186,7 +178,7 @@ const ElecIdQualifications = () => {
       resetForm();
 
       addNotification({
-        title: 'Qualification Added',
+        title: 'Qualification added',
         message: `${getQualificationLabel(selectedQual)} has been added to your profile.`,
         type: 'success',
       });
@@ -233,7 +225,7 @@ const ElecIdQualifications = () => {
       resetForm();
 
       addNotification({
-        title: 'Qualification Updated',
+        title: 'Qualification updated',
         message: 'Your qualification details have been updated.',
         type: 'success',
       });
@@ -261,7 +253,7 @@ const ElecIdQualifications = () => {
       setDeleteConfirm({ open: false, id: null });
 
       addNotification({
-        title: 'Qualification Removed',
+        title: 'Qualification removed',
         message: deletedQual
           ? `${getQualificationLabel(deletedQual.qualificationValue)} has been removed.`
           : 'Qualification has been removed.',
@@ -315,52 +307,13 @@ const ElecIdQualifications = () => {
 
   const selectedQualInfo = getSelectedQualInfo();
 
-  // Get icon for category
-  const getCategoryIcon = (categoryKey: string) => {
-    const iconMap: Record<string, React.ComponentType<any>> = {
-      core: GraduationCap,
-      testing: ClipboardCheck,
-      regulations: BookOpen,
-      cards: CreditCard,
-      specialist: Shield,
-      renewable: Zap,
-      fire_security: Bell,
-      data_comms: Network,
-      industrial: Factory,
-    };
-    return iconMap[categoryKey] || GraduationCap;
-  };
-
-  // Get color for category
-  const getCategoryColor = (categoryKey: string) => {
-    const colorMap: Record<string, { bg: string; text: string; border: string }> = {
-      core: { bg: 'bg-purple-500/20', text: 'text-purple-400', border: 'border-purple-500/30' },
-      testing: { bg: 'bg-blue-500/20', text: 'text-blue-400', border: 'border-blue-500/30' },
-      regulations: { bg: 'bg-amber-500/20', text: 'text-amber-400', border: 'border-amber-500/30' },
-      cards: { bg: 'bg-emerald-500/20', text: 'text-emerald-400', border: 'border-emerald-500/30' },
-      specialist: { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' },
-      renewable: { bg: 'bg-green-500/20', text: 'text-green-400', border: 'border-green-500/30' },
-      fire_security: {
-        bg: 'bg-orange-500/20',
-        text: 'text-orange-400',
-        border: 'border-orange-500/30',
-      },
-      data_comms: { bg: 'bg-cyan-500/20', text: 'text-cyan-400', border: 'border-cyan-500/30' },
-      industrial: { bg: 'bg-slate-500/20', text: 'text-slate-400', border: 'border-slate-500/30' },
-    };
-    return colorMap[categoryKey] || colorMap.core;
-  };
-
-  // Form content - shared between sheet and dialog
   const FormContent = ({ isEdit = false }: { isEdit?: boolean }) => (
     <div className="space-y-4">
-      {/* Category Selection - Compact horizontal pills */}
       {!isEdit && (
         <div className="space-y-2">
           <Label className="text-xs text-white">Category</Label>
           <div className="flex flex-wrap gap-1.5">
             {Object.entries(UK_QUALIFICATIONS).map(([key, cat]) => {
-              const colors = getCategoryColor(key);
               const isSelected = selectedCategory === key;
               const shortLabel = cat.label
                 .replace('Core Qualifications', 'Core')
@@ -381,10 +334,10 @@ const ElecIdQualifications = () => {
                     setSelectedQual('');
                   }}
                   className={cn(
-                    'px-3 py-1.5 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.97]',
+                    'px-3 py-1.5 rounded-lg text-xs font-medium transition-all touch-manipulation',
                     isSelected
-                      ? `${colors.bg} ${colors.text} ${colors.border} border`
-                      : 'bg-white/[0.06] text-white hover:bg-white/[0.1]'
+                      ? 'bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20'
+                      : 'bg-white/[0.04] text-white hover:bg-white/[0.08] border border-white/[0.06]'
                   )}
                 >
                   {shortLabel}
@@ -395,30 +348,28 @@ const ElecIdQualifications = () => {
         </div>
       )}
 
-      {/* Edit mode - show locked category */}
       {isEdit && (
         <div className="space-y-1.5">
           <Label className="text-xs text-white">Category</Label>
-          <div className="h-10 bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 flex items-center text-sm text-white">
+          <div className="h-11 bg-white/[0.04] border border-white/[0.06] rounded-xl px-3 flex items-center text-sm text-white">
             {UK_QUALIFICATIONS[selectedCategory]?.label || selectedCategory}
           </div>
         </div>
       )}
 
-      {/* Qualification Selection */}
       {selectedCategory && (
         <div className="space-y-1.5">
           <Label className="text-xs text-white">Qualification</Label>
           {isEdit ? (
-            <div className="h-10 bg-white/[0.04] border border-white/[0.08] rounded-lg px-3 flex items-center text-sm text-white">
+            <div className="h-11 bg-white/[0.04] border border-white/[0.06] rounded-xl px-3 flex items-center text-sm text-white">
               {getQualificationLabel(selectedQual)}
             </div>
           ) : (
             <Select value={selectedQual} onValueChange={setSelectedQual}>
-              <SelectTrigger className="h-10 bg-white/[0.06] border-white/[0.1] rounded-lg touch-manipulation text-sm">
-                <SelectValue placeholder="Select qualification..." />
+              <SelectTrigger className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white">
+                <SelectValue placeholder="Select qualification…" />
               </SelectTrigger>
-              <SelectContent className="bg-elec-dark border-white/[0.1] max-h-[280px]">
+              <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] max-h-[280px]">
                 {getCategoryQualifications(selectedCategory).map((qual) => (
                   <SelectItem key={qual.value} value={qual.value} className="py-2.5 text-sm">
                     <div>
@@ -431,46 +382,44 @@ const ElecIdQualifications = () => {
             </Select>
           )}
           {selectedQualInfo?.hasExpiry && !isEdit && (
-            <p className="text-[11px] text-amber-400 flex items-center gap-1 mt-1">
-              <Clock className="h-3 w-3" />
+            <p className="text-[11px] text-amber-400 mt-1">
               Renews every {selectedQualInfo.expiryYears}yr
             </p>
           )}
         </div>
       )}
 
-      {/* Certificate Details - Compact grid */}
       {(selectedQualInfo || isEdit) && (
         <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/[0.06]">
           <div className="space-y-1.5">
-            <Label className="text-xs text-white">Date Achieved</Label>
+            <Label className="text-xs text-white">Date achieved</Label>
             <Input
               type="date"
               value={formData.dateAchieved}
               onChange={(e) => setFormData({ ...formData, dateAchieved: e.target.value })}
-              className="h-10 bg-white/[0.06] border-white/[0.1] rounded-lg touch-manipulation text-sm"
+              className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white"
             />
           </div>
           {(selectedQualInfo?.hasExpiry || formData.expiryDate || isEdit) && (
             <div className="space-y-1.5">
-              <Label className="text-xs text-white">Expiry Date</Label>
+              <Label className="text-xs text-white">Expiry date</Label>
               <Input
                 type="date"
                 value={formData.expiryDate}
                 onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
-                className="h-10 bg-white/[0.06] border-white/[0.1] rounded-lg touch-manipulation text-sm"
+                className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white"
               />
             </div>
           )}
           <div className="space-y-1.5 col-span-2">
             <Label className="text-xs text-white">
-              Certificate No. <span className="text-white">(optional)</span>
+              Certificate no. <span className="text-white">(optional)</span>
             </Label>
             <Input
               value={formData.certificateNumber}
               onChange={(e) => setFormData({ ...formData, certificateNumber: e.target.value })}
-              placeholder="e.g., CG-2382-123456"
-              className="h-10 bg-white/[0.06] border-white/[0.1] rounded-lg touch-manipulation text-sm"
+              placeholder="e.g. CG-2382-123456"
+              className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl touch-manipulation text-sm text-white placeholder:text-white"
             />
           </div>
         </div>
@@ -478,12 +427,10 @@ const ElecIdQualifications = () => {
     </div>
   );
 
-  // Form footer with buttons
   const FormFooter = ({ isEdit = false, onClose }: { isEdit?: boolean; onClose: () => void }) => (
     <div className="flex gap-3 pt-2">
-      <Button
-        variant="outline"
-        className="flex-1 h-12 rounded-xl border-white/[0.1] touch-manipulation active:scale-[0.98]"
+      <button
+        className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation active:scale-[0.98] disabled:opacity-60"
         onClick={() => {
           onClose();
           resetForm();
@@ -491,46 +438,38 @@ const ElecIdQualifications = () => {
         disabled={isLoading}
       >
         Cancel
-      </Button>
-      <Button
-        className="flex-1 h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.98]"
+      </button>
+      <button
+        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98] disabled:opacity-60"
         onClick={isEdit ? handleEditQualification : handleAddQualification}
         disabled={
           (!isEdit && (!selectedCategory || !selectedQual || !formData.dateAchieved)) || isLoading
         }
       >
-        {isLoading ? (
-          <>
-            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            {isEdit ? 'Saving...' : 'Adding...'}
-          </>
-        ) : isEdit ? (
-          'Save Changes'
-        ) : (
-          'Add Qualification'
-        )}
-      </Button>
+        {isLoading
+          ? isEdit
+            ? 'Saving…'
+            : 'Adding…'
+          : isEdit
+            ? 'Save changes'
+            : 'Add qualification'}
+      </button>
     </div>
   );
 
-  // Loading state
-  if (isFetching) {
-    return <QualificationSkeleton />;
-  }
+  if (isFetching) return <QualificationSkeleton />;
 
   return (
-    <div className="space-y-4">
-      {/* Delete Confirmation */}
+    <div className="space-y-5">
       <ConfirmDeleteDialog
         open={deleteConfirm.open}
         onOpenChange={(open) => setDeleteConfirm({ ...deleteConfirm, open })}
-        title="Delete Qualification?"
+        title="Delete qualification?"
         description="This will permanently remove this qualification from your Elec-ID profile. This action cannot be undone."
         onConfirm={handleDeleteQualification}
         isLoading={isLoading}
       />
 
-      {/* Mobile Bottom Sheet for Add */}
       {isMobile ? (
         <Drawer.Root
           open={isAddSheetOpen}
@@ -540,16 +479,16 @@ const ElecIdQualifications = () => {
         >
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/20" />
+                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
               </div>
               <div className="px-5 pb-2">
-                <h3 className="text-lg font-bold text-white">Add Qualification</h3>
+                <h3 className="text-lg font-semibold text-white">Add qualification</h3>
                 <p className="text-sm text-white">Add a new credential to your profile</p>
               </div>
               <div className="flex-1 overflow-y-auto px-5 pb-4">{FormContent({})}</div>
-              <div className="p-5 border-t border-white/[0.08] bg-background/95 backdrop-blur-sm">
+              <div className="p-5 border-t border-white/[0.06]">
                 {FormFooter({ onClose: () => setIsAddSheetOpen(false) })}
               </div>
             </Drawer.Content>
@@ -557,9 +496,9 @@ const ElecIdQualifications = () => {
         </Drawer.Root>
       ) : (
         <Dialog open={isAddSheetOpen} onOpenChange={setIsAddSheetOpen}>
-          <DialogContent className="bg-elec-gray border-white/20 max-w-md">
+          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md">
             <DialogHeader>
-              <DialogTitle className="text-white">Add Qualification</DialogTitle>
+              <DialogTitle className="text-white">Add qualification</DialogTitle>
             </DialogHeader>
             {FormContent({})}
             {FormFooter({ onClose: () => setIsAddSheetOpen(false) })}
@@ -567,7 +506,6 @@ const ElecIdQualifications = () => {
         </Dialog>
       )}
 
-      {/* Mobile Bottom Sheet for Edit */}
       {isMobile ? (
         <Drawer.Root
           open={isEditSheetOpen}
@@ -577,18 +515,18 @@ const ElecIdQualifications = () => {
         >
           <Drawer.Portal>
             <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[90vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
               <div className="flex justify-center pt-3 pb-2">
-                <div className="w-12 h-1.5 rounded-full bg-white/20" />
+                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
               </div>
               <div className="px-5 pb-2">
-                <h3 className="text-lg font-bold text-white">Edit Qualification</h3>
+                <h3 className="text-lg font-semibold text-white">Edit qualification</h3>
                 <p className="text-sm text-white">Update your credential details</p>
               </div>
               <div className="flex-1 overflow-y-auto px-5 pb-4">
                 {FormContent({ isEdit: true })}
               </div>
-              <div className="p-5 border-t border-white/[0.08] bg-background/95 backdrop-blur-sm">
+              <div className="p-5 border-t border-white/[0.06]">
                 {FormFooter({ isEdit: true, onClose: () => setIsEditSheetOpen(false) })}
               </div>
             </Drawer.Content>
@@ -596,9 +534,9 @@ const ElecIdQualifications = () => {
         </Drawer.Root>
       ) : (
         <Dialog open={isEditSheetOpen} onOpenChange={setIsEditSheetOpen}>
-          <DialogContent className="bg-elec-gray border-white/20 max-w-md">
+          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md">
             <DialogHeader>
-              <DialogTitle className="text-white">Edit Qualification</DialogTitle>
+              <DialogTitle className="text-white">Edit qualification</DialogTitle>
             </DialogHeader>
             {FormContent({ isEdit: true })}
             {FormFooter({ isEdit: true, onClose: () => setIsEditSheetOpen(false) })}
@@ -606,244 +544,207 @@ const ElecIdQualifications = () => {
         </Dialog>
       )}
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h3 className="text-lg font-semibold text-white">Qualifications</h3>
-          <p className="text-sm text-white">
-            {qualifications.length} credential{qualifications.length !== 1 ? 's' : ''} recorded
-          </p>
-        </div>
-        <Button
-          className="h-11 px-4 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold rounded-xl touch-manipulation active:scale-[0.97]"
-          onClick={() => setIsAddSheetOpen(true)}
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          Add
-        </Button>
-      </div>
+      <SectionHeader
+        eyebrow="Credentials"
+        title="Qualifications"
+        action="Add qualification"
+        onAction={() => setIsAddSheetOpen(true)}
+      />
 
-      {/* Qualifications List */}
+      <p className="text-sm text-white">
+        {qualifications.length} credential{qualifications.length !== 1 ? 's' : ''} recorded
+      </p>
+
       {qualifications.length > 0 ? (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {Object.entries(UK_QUALIFICATIONS).map(([catKey, category]) => {
             const categoryQuals = qualifications.filter((q) => q.category === catKey);
             if (categoryQuals.length === 0) return null;
+            const tone = CATEGORY_TONE[catKey] ?? 'purple';
 
             return (
               <motion.div
                 key={catKey}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
+                className="space-y-2"
               >
-                {/* Category Header — lightweight label */}
-                <div className="flex items-center gap-2 mb-1.5">
-                  {(() => {
-                    const IconComponent = getCategoryIcon(catKey);
-                    const colors = getCategoryColor(catKey);
-                    return <IconComponent className={cn('h-4 w-4', colors.text)} />;
-                  })()}
-                  <span className="font-medium text-white text-xs uppercase tracking-wide">
-                    {category.label}
+                <div className="flex items-center justify-between">
+                  <Eyebrow>{category.label}</Eyebrow>
+                  <span className="text-[11px] text-white tabular-nums">
+                    {categoryQuals.length}
                   </span>
-                  <span className="text-[10px] text-white ml-auto">{categoryQuals.length}</span>
                 </div>
 
-                {/* Qualification Cards - Collapsible Rows */}
                 <div className="space-y-1.5">
-                  {categoryQuals.map((qual, index) => {
+                  {categoryQuals.map((qual) => {
                     const expiryStatus = qual.expiryDate ? getExpiryStatus(qual.expiryDate) : null;
                     const daysUntil = qual.expiryDate ? getDaysUntilExpiry(qual.expiryDate) : null;
-                    const colors = getCategoryColor(catKey);
-                    const IconComponent = getCategoryIcon(catKey);
                     const isExpanded = expandedId === qual.id;
 
-                    // Expiry badge config
-                    const expiryBadge =
+                    const expiryBadgeTone: Tone =
                       expiryStatus?.status === 'expired'
-                        ? {
-                            text: 'Expired',
-                            className: 'bg-red-500/20 text-red-400 border-red-500/30',
-                          }
+                        ? 'red'
                         : expiryStatus?.status === 'expiring'
-                          ? {
-                              text: `${daysUntil}d`,
-                              className: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
-                            }
+                          ? 'orange'
                           : qual.expiryDate
-                            ? {
-                                text: 'Valid',
-                                className: 'bg-green-500/20 text-green-400 border-green-500/30',
-                              }
-                            : {
-                                text: 'Lifetime',
-                                className: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-                              };
+                            ? 'emerald'
+                            : 'blue';
+                    const expiryBadgeText =
+                      expiryStatus?.status === 'expired'
+                        ? 'Expired'
+                        : expiryStatus?.status === 'expiring'
+                          ? `${daysUntil}d`
+                          : qual.expiryDate
+                            ? 'Valid'
+                            : 'Lifetime';
 
                     return (
-                      <motion.div
+                      <Collapsible
                         key={qual.id}
-                        initial={{ opacity: 0, y: 8 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.03 }}
+                        open={isExpanded}
+                        onOpenChange={(open) => setExpandedId(open ? qual.id : null)}
                       >
-                        <Collapsible
-                          open={isExpanded}
-                          onOpenChange={(open) => setExpandedId(open ? qual.id : null)}
-                        >
-                          {/* Collapsed Row — always visible */}
-                          <CollapsibleTrigger asChild>
-                            <button
+                        <CollapsibleTrigger asChild>
+                          <button
+                            className={cn(
+                              'w-full flex items-center gap-4 px-5 py-4 rounded-2xl border transition-all touch-manipulation text-left',
+                              isExpanded
+                                ? 'bg-[hsl(0_0%_15%)] border-white/[0.08]'
+                                : 'bg-[hsl(0_0%_12%)] border-white/[0.06] hover:bg-[hsl(0_0%_14%)]'
+                            )}
+                          >
+                            <span
+                              aria-hidden
                               className={cn(
-                                'w-full flex items-center gap-3 p-3 rounded-xl transition-all touch-manipulation active:scale-[0.98]',
-                                isExpanded
-                                  ? 'bg-white/[0.06] border border-white/[0.1]'
-                                  : 'bg-white/[0.03] hover:bg-white/[0.05]'
+                                'w-[3px] h-10 rounded-full shrink-0',
+                                tone === 'purple'
+                                  ? 'bg-purple-400'
+                                  : tone === 'blue'
+                                    ? 'bg-blue-400'
+                                    : tone === 'amber'
+                                      ? 'bg-amber-400'
+                                      : tone === 'emerald'
+                                        ? 'bg-emerald-400'
+                                        : tone === 'red'
+                                          ? 'bg-red-400'
+                                          : tone === 'green'
+                                            ? 'bg-green-400'
+                                            : tone === 'orange'
+                                              ? 'bg-orange-400'
+                                              : tone === 'cyan'
+                                                ? 'bg-cyan-400'
+                                                : 'bg-indigo-400'
+                              )}
+                            />
+
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-sm text-white truncate">
+                                {getQualificationLabel(qual.qualificationValue)}
+                              </p>
+                              {qual.awardingBody && (
+                                <p className="text-[11.5px] text-white/65 mt-0.5 truncate">
+                                  {qual.awardingBody}
+                                </p>
+                              )}
+                            </div>
+
+                            <span
+                              className={cn(
+                                'text-[10px] font-medium uppercase tracking-[0.15em]',
+                                toneText[expiryBadgeTone]
                               )}
                             >
-                              {/* Category icon */}
-                              <div
-                                className={cn(
-                                  'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
-                                  colors.bg
-                                )}
-                              >
-                                <IconComponent className={cn('h-5 w-5', colors.text)} />
-                              </div>
+                              {expiryBadgeText}
+                            </span>
 
-                              {/* Name + awarding body */}
-                              <div className="flex-1 min-w-0 text-left">
-                                <h4 className="font-semibold text-white text-sm leading-tight truncate">
-                                  {getQualificationLabel(qual.qualificationValue)}
-                                </h4>
-                                {qual.awardingBody && (
-                                  <p className="text-xs text-white mt-0.5 truncate">
-                                    {qual.awardingBody}
-                                  </p>
-                                )}
-                              </div>
-
-                              {/* Expiry badge */}
-                              <Badge
-                                className={cn(
-                                  'text-[10px] font-medium flex-shrink-0',
-                                  expiryBadge.className
-                                )}
-                              >
-                                {expiryBadge.text}
-                              </Badge>
-
-                              {/* Chevron */}
-                              <ChevronRight
-                                className={cn(
-                                  'h-4 w-4 text-white flex-shrink-0 transition-transform',
-                                  isExpanded && 'rotate-90'
-                                )}
-                              />
-                            </button>
-                          </CollapsibleTrigger>
-
-                          {/* Expanded Details */}
-                          <CollapsibleContent>
-                            <div className="ml-14 mr-3 mt-1 mb-2 pl-3 border-l-2 border-white/[0.08] space-y-2">
-                              {/* Date Achieved */}
-                              <div className="flex items-center gap-2 text-xs">
-                                <Calendar className="h-3.5 w-3.5 text-white flex-shrink-0" />
-                                <span className="text-white">Achieved:</span>
-                                <span className="text-white font-medium">
-                                  {qual.dateAchieved
-                                    ? new Date(qual.dateAchieved).toLocaleDateString('en-GB', {
-                                        day: 'numeric',
-                                        month: 'short',
-                                        year: 'numeric',
-                                      })
-                                    : 'Not set'}
-                                </span>
-                              </div>
-
-                              {/* Expiry */}
-                              <div className="flex items-center gap-2 text-xs">
-                                <Clock
-                                  className={cn(
-                                    'h-3.5 w-3.5 flex-shrink-0',
-                                    expiryStatus?.status === 'expired'
-                                      ? 'text-red-400'
-                                      : expiryStatus?.status === 'expiring'
-                                        ? 'text-orange-400'
-                                        : 'text-white'
-                                  )}
-                                />
-                                <span className="text-white">Expires:</span>
-                                <span
-                                  className={cn(
-                                    'font-medium',
-                                    expiryStatus?.status === 'expired'
-                                      ? 'text-red-400'
-                                      : expiryStatus?.status === 'expiring'
-                                        ? 'text-orange-400'
-                                        : 'text-white'
-                                  )}
-                                >
-                                  {qual.expiryDate
-                                    ? new Date(qual.expiryDate).toLocaleDateString('en-GB', {
-                                        day: 'numeric',
-                                        month: 'short',
-                                        year: 'numeric',
-                                      })
-                                    : 'No expiry'}
-                                </span>
-                              </div>
-
-                              {/* Certificate Number */}
-                              {qual.certificateNumber && (
-                                <div className="flex items-center gap-2 text-xs">
-                                  <span className="text-[10px] font-bold text-white w-3.5 text-center flex-shrink-0">
-                                    #
-                                  </span>
-                                  <span className="text-white">Certificate:</span>
-                                  <span className="text-white font-mono font-medium">
-                                    {qual.certificateNumber}
-                                  </span>
-                                </div>
+                            <span
+                              aria-hidden
+                              className={cn(
+                                'text-sm text-elec-yellow transition-transform shrink-0',
+                                isExpanded && 'rotate-90'
                               )}
+                            >
+                              →
+                            </span>
+                          </button>
+                        </CollapsibleTrigger>
 
-                              {/* Verified badge */}
-                              {qual.isVerified && (
-                                <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-[10px] w-fit">
-                                  <CheckCircle2 className="h-3 w-3 mr-1" />
-                                  Verified
-                                </Badge>
-                              )}
-
-                              {/* Action buttons */}
-                              <div className="flex items-center gap-2 pt-1">
-                                <Button
-                                  variant="ghost"
-                                  className="h-11 px-3 text-xs rounded-lg hover:bg-white/[0.08] touch-manipulation"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    openEditSheet(qual);
-                                  }}
-                                >
-                                  <Edit2 className="h-3.5 w-3.5 mr-1.5" />
-                                  Edit
-                                </Button>
-                                <Button
-                                  variant="ghost"
-                                  className="h-11 px-3 text-xs rounded-lg hover:bg-red-500/10 text-red-400 touch-manipulation"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    setDeleteConfirm({ open: true, id: qual.id });
-                                  }}
-                                >
-                                  <Trash2 className="h-3.5 w-3.5 mr-1.5" />
-                                  Delete
-                                </Button>
-                              </div>
+                        <CollapsibleContent>
+                          <div className="mt-1 ml-7 mr-3 pl-3 border-l border-white/[0.06] space-y-2 py-3">
+                            <div className="flex items-center gap-2 text-xs">
+                              <span className="text-white/55">Achieved</span>
+                              <span className="text-white font-medium">
+                                {qual.dateAchieved
+                                  ? new Date(qual.dateAchieved).toLocaleDateString('en-GB', {
+                                      day: 'numeric',
+                                      month: 'short',
+                                      year: 'numeric',
+                                    })
+                                  : 'Not set'}
+                              </span>
                             </div>
-                          </CollapsibleContent>
-                        </Collapsible>
-                      </motion.div>
+
+                            <div className="flex items-center gap-2 text-xs">
+                              <span className="text-white/55">Expires</span>
+                              <span
+                                className={cn(
+                                  'font-medium',
+                                  expiryStatus?.status === 'expired'
+                                    ? 'text-red-400'
+                                    : expiryStatus?.status === 'expiring'
+                                      ? 'text-orange-400'
+                                      : 'text-white'
+                                )}
+                              >
+                                {qual.expiryDate
+                                  ? new Date(qual.expiryDate).toLocaleDateString('en-GB', {
+                                      day: 'numeric',
+                                      month: 'short',
+                                      year: 'numeric',
+                                    })
+                                  : 'No expiry'}
+                              </span>
+                            </div>
+
+                            {qual.certificateNumber && (
+                              <div className="flex items-center gap-2 text-xs">
+                                <span className="text-white/55">Cert no.</span>
+                                <span className="text-white font-mono font-medium">
+                                  {qual.certificateNumber}
+                                </span>
+                              </div>
+                            )}
+
+                            {qual.isVerified && (
+                              <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                                Verified
+                              </span>
+                            )}
+
+                            <div className="flex items-center gap-2 pt-1">
+                              <button
+                                className="h-11 px-3 text-xs rounded-lg border border-white/[0.06] bg-white/[0.04] text-white hover:bg-white/[0.08] touch-manipulation"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  openEditSheet(qual);
+                                }}
+                              >
+                                Edit
+                              </button>
+                              <button
+                                className="h-11 px-3 text-xs rounded-lg text-red-400 hover:bg-red-500/10 touch-manipulation"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setDeleteConfirm({ open: true, id: qual.id });
+                                }}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </CollapsibleContent>
+                      </Collapsible>
                     );
                   })}
                 </div>
@@ -852,36 +753,12 @@ const ElecIdQualifications = () => {
           })}
         </div>
       ) : (
-        /* Empty State */
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="bg-gradient-to-br from-white/[0.06] to-white/[0.02] rounded-2xl border border-white/[0.08] p-8 text-center"
-        >
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-            <GraduationCap className="h-8 w-8 text-purple-400" />
-          </div>
-          <h4 className="text-lg font-semibold text-white mb-2">No qualifications yet</h4>
-          <p className="text-sm text-white mb-6 max-w-xs mx-auto">
-            Add your electrical qualifications to build your verified professional profile.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button
-              className="h-12 px-6 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold rounded-xl touch-manipulation active:scale-[0.97]"
-              onClick={() => setIsAddSheetOpen(true)}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Qualification
-            </Button>
-            <Button
-              variant="outline"
-              className="h-12 px-6 border-white/[0.1] rounded-xl touch-manipulation active:scale-[0.97]"
-            >
-              <Camera className="h-4 w-4 mr-2" />
-              Scan Certificate
-            </Button>
-          </div>
-        </motion.div>
+        <EmptyState
+          title="No qualifications yet"
+          description="Add your electrical qualifications to build your verified professional profile."
+          action="Add qualification"
+          onAction={() => setIsAddSheetOpen(true)}
+        />
       )}
     </div>
   );

@@ -27,10 +27,10 @@ interface NewTarget {
 }
 
 const inputClass =
-  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
 
 const textareaClass =
-  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
 
 const selectTriggerClass =
   'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
@@ -38,7 +38,7 @@ const selectTriggerClass =
 const selectContentClass =
   'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
   const { data: students = [] } = useCollegeStudents();
@@ -197,7 +197,7 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
                       <button
                         type="button"
                         onClick={() => handleRemoveTarget(index)}
-                        className="h-8 w-8 rounded-full flex items-center justify-center text-white/50 hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors"
+                        className="h-8 w-8 rounded-full flex items-center justify-center text-white/75 hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors"
                         aria-label="Remove target"
                       >
                         ×
@@ -245,7 +245,7 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
                 placeholder="Enter support needs, separated by commas (e.g. Dyslexia support, Extra time in assessments, Hearing loop)"
                 className={`${textareaClass} min-h-[100px]`}
               />
-              <p className="text-[11px] text-white/40">Separate multiple needs with commas</p>
+              <p className="text-[11px] text-white/70">Separate multiple needs with commas</p>
             </div>
 
             {/* Review Schedule */}

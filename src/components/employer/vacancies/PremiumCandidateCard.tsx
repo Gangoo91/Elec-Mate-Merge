@@ -14,10 +14,13 @@ import {
   Check,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
+import {
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+} from '@/components/employer/editorial';
 
 type ApplicationStatus =
   | 'New'
@@ -63,64 +66,64 @@ const statusConfig: Record<
   New: {
     bg: 'bg-blue-500/10',
     text: 'text-blue-400',
-    border: 'border-blue-500/30',
+    border: 'border-blue-500/25',
     label: 'New',
   },
   Reviewing: {
     bg: 'bg-amber-500/10',
     text: 'text-amber-400',
-    border: 'border-amber-500/30',
+    border: 'border-amber-500/25',
     label: 'Reviewing',
   },
   Shortlisted: {
     bg: 'bg-purple-500/10',
     text: 'text-purple-400',
-    border: 'border-purple-500/30',
+    border: 'border-purple-500/25',
     label: 'Shortlisted',
   },
   Interviewed: {
     bg: 'bg-cyan-500/10',
     text: 'text-cyan-400',
-    border: 'border-cyan-500/30',
+    border: 'border-cyan-500/25',
     label: 'Interviewed',
   },
   Offered: {
     bg: 'bg-emerald-500/10',
     text: 'text-emerald-400',
-    border: 'border-emerald-500/30',
+    border: 'border-emerald-500/25',
     label: 'Offered',
   },
   Hired: {
     bg: 'bg-green-500/10',
     text: 'text-green-400',
-    border: 'border-green-500/30',
+    border: 'border-green-500/25',
     label: 'Hired',
   },
   Rejected: {
     bg: 'bg-red-500/10',
     text: 'text-red-400',
-    border: 'border-red-500/30',
+    border: 'border-red-500/25',
     label: 'Rejected',
   },
 };
 
 const tierConfig = {
   basic: {
-    bg: 'bg-gray-500/10',
+    bg: 'bg-white/[0.06]',
     text: 'text-white',
-    border: 'border-gray-500/30',
+    border: 'border-white/[0.08]',
     icon: Shield,
   },
   verified: {
     bg: 'bg-blue-500/10',
     text: 'text-blue-400',
-    border: 'border-blue-500/30',
+    border: 'border-blue-500/25',
     icon: Shield,
   },
   premium: {
     bg: 'bg-elec-yellow/10',
     text: 'text-elec-yellow',
-    border: 'border-elec-yellow/30',
+    border: 'border-elec-yellow/25',
     icon: Award,
   },
 };
@@ -196,10 +199,8 @@ export function PremiumCandidateCard({
       case 'New':
         return (
           <>
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex-1 h-11 text-xs bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20"
+            <DestructiveButton
+              fullWidth
               onClick={(e) => {
                 e.stopPropagation();
                 onReject?.();
@@ -207,10 +208,9 @@ export function PremiumCandidateCard({
             >
               <XCircle className="h-3.5 w-3.5 mr-1.5" />
               Reject
-            </Button>
-            <Button
-              size="sm"
-              className="flex-1 h-11 text-xs bg-purple-500 hover:bg-purple-500/90 text-white"
+            </DestructiveButton>
+            <PrimaryButton
+              fullWidth
               onClick={(e) => {
                 e.stopPropagation();
                 onShortlist?.();
@@ -218,16 +218,13 @@ export function PremiumCandidateCard({
             >
               <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
               Shortlist
-            </Button>
+            </PrimaryButton>
           </>
         );
       case 'Shortlisted':
         return (
           <>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-11 text-xs bg-white/5 border-white/10 text-white"
+            <SecondaryButton
               onClick={(e) => {
                 e.stopPropagation();
                 onMessage?.();
@@ -235,10 +232,9 @@ export function PremiumCandidateCard({
             >
               <MessageSquare className="h-3.5 w-3.5 mr-1.5" />
               Message
-            </Button>
-            <Button
-              size="sm"
-              className="flex-1 h-11 text-xs bg-cyan-500 hover:bg-cyan-500/90 text-white"
+            </SecondaryButton>
+            <PrimaryButton
+              fullWidth
               onClick={(e) => {
                 e.stopPropagation();
                 onInterview?.();
@@ -246,16 +242,13 @@ export function PremiumCandidateCard({
             >
               <Calendar className="h-3.5 w-3.5 mr-1.5" />
               Mark Interviewed
-            </Button>
+            </PrimaryButton>
           </>
         );
       case 'Interviewed':
         return (
           <>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-11 text-xs bg-red-500/10 border-red-500/20 text-red-400"
+            <DestructiveButton
               onClick={(e) => {
                 e.stopPropagation();
                 onReject?.();
@@ -263,10 +256,9 @@ export function PremiumCandidateCard({
             >
               <XCircle className="h-3.5 w-3.5 mr-1.5" />
               Reject
-            </Button>
-            <Button
-              size="sm"
-              className="flex-1 h-11 text-xs bg-emerald-500 hover:bg-emerald-500/90 text-white"
+            </DestructiveButton>
+            <PrimaryButton
+              fullWidth
               onClick={(e) => {
                 e.stopPropagation();
                 onOffer?.();
@@ -274,14 +266,13 @@ export function PremiumCandidateCard({
             >
               <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
               Make Offer
-            </Button>
+            </PrimaryButton>
           </>
         );
       case 'Offered':
         return (
-          <Button
-            size="sm"
-            className="w-full h-11 text-xs bg-green-500 hover:bg-green-500/90 text-white"
+          <PrimaryButton
+            fullWidth
             onClick={(e) => {
               e.stopPropagation();
               onHire?.();
@@ -289,15 +280,13 @@ export function PremiumCandidateCard({
           >
             <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
             Mark as Hired
-          </Button>
+          </PrimaryButton>
         );
       case 'Hired':
       case 'Rejected':
         return (
-          <Button
-            variant="outline"
-            size="sm"
-            className="w-full h-11 text-xs bg-white/5 border-white/10 text-white"
+          <SecondaryButton
+            fullWidth
             onClick={(e) => {
               e.stopPropagation();
               onClick?.();
@@ -305,7 +294,7 @@ export function PremiumCandidateCard({
           >
             View Details
             <ChevronRight className="h-3.5 w-3.5 ml-1.5" />
-          </Button>
+          </SecondaryButton>
         );
       default:
         return null;
@@ -326,11 +315,11 @@ export function PremiumCandidateCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       className={cn(
-        'relative overflow-hidden rounded-xl',
-        'bg-elec-gray/80 backdrop-blur-sm',
-        'border border-white/10',
-        'hover:border-white/20',
-        'transition-all duration-300',
+        'relative overflow-hidden rounded-2xl',
+        'bg-[hsl(0_0%_12%)]',
+        'border border-white/[0.06]',
+        'hover:bg-[hsl(0_0%_15%)]',
+        'transition-colors duration-200',
         'group cursor-pointer',
         isSelected && 'border-elec-yellow/50 bg-elec-yellow/5'
       )}
@@ -352,7 +341,7 @@ export function PremiumCandidateCard({
                   'w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all',
                   isSelected
                     ? 'bg-elec-yellow border-elec-yellow'
-                    : 'border-white/30 hover:border-white/50'
+                    : 'border-white/[0.15] hover:border-white/[0.3]'
                 )}
               >
                 {isSelected && <Check className="h-4 w-4 text-black" />}
@@ -361,7 +350,7 @@ export function PremiumCandidateCard({
           )}
 
           {/* Avatar */}
-          <Avatar className="w-14 h-14 shrink-0 border-2 border-white/10">
+          <Avatar className="w-14 h-14 shrink-0 border-2 border-white/[0.08]">
             {avatarUrl ? <AvatarImage src={avatarUrl} alt={name} /> : null}
             <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-lg">
               {initials}
@@ -384,7 +373,7 @@ export function PremiumCandidateCard({
                   {tier && (
                     <Badge
                       variant="outline"
-                      className={cn('text-xs', tier.bg, tier.text, tier.border)}
+                      className={cn('text-[11px]', tier.bg, tier.text, tier.border)}
                     >
                       <TierIcon className="h-3 w-3 mr-1" />
                       {elecIdTier === 'premium'
@@ -397,7 +386,7 @@ export function PremiumCandidateCard({
                   {ecsCardType && (
                     <Badge
                       variant="outline"
-                      className="text-xs bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
+                      className="text-[11px] bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25"
                     >
                       <Award className="h-3 w-3 mr-1" />
                       {ecsCardType}
@@ -410,7 +399,7 @@ export function PremiumCandidateCard({
               <Badge
                 variant="outline"
                 className={cn(
-                  'text-xs font-medium shrink-0',
+                  'text-[11px] font-medium shrink-0',
                   config.bg,
                   config.text,
                   config.border
@@ -421,13 +410,13 @@ export function PremiumCandidateCard({
             </div>
 
             {/* Job applied for */}
-            <div className="flex items-center gap-1.5 mt-3 text-sm text-white">
+            <div className="flex items-center gap-1.5 mt-3 text-[13px] text-white">
               <Briefcase className="h-3.5 w-3.5 text-elec-yellow/70" />
               <span className="truncate">Applied: {vacancyTitle}</span>
             </div>
 
             {/* Meta info */}
-            <div className="flex items-center gap-4 mt-2 text-xs text-white">
+            <div className="flex items-center gap-4 mt-2 text-[11px] text-white">
               {experience && (
                 <span className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />

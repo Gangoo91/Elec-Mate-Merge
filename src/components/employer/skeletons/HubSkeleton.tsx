@@ -20,7 +20,7 @@ export function HubSkeleton({ statCount = 4, cardCount = 4, columns = 2 }: HubSk
       {/* Quick Stats Grid */}
       <div className="grid grid-cols-4 gap-2 md:gap-3">
         {Array.from({ length: statCount }).map((_, i) => (
-          <Card key={i} className="border-2 border-border/30 bg-muted/20">
+          <Card key={i} className="border-2 border-white/[0.08] bg-white/[0.04]">
             <CardContent className="p-3 md:p-4 flex flex-col items-center text-center">
               <Skeleton className="h-10 w-10 rounded-xl mb-2" />
               <Skeleton className="h-7 w-10 mb-1" />
@@ -39,7 +39,7 @@ export function HubSkeleton({ statCount = 4, cardCount = 4, columns = 2 }: HubSk
       {/* Feature Cards Grid */}
       <div className={`grid grid-cols-2 ${columns === 3 ? 'md:grid-cols-3' : ''} gap-3`}>
         {Array.from({ length: cardCount }).map((_, i) => (
-          <Card key={i} className="border-2 border-border/30 bg-muted/10">
+          <Card key={i} className="border-2 border-white/[0.08] bg-white/[0.04]">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <Skeleton className="h-10 w-10 rounded-xl" />
@@ -60,7 +60,7 @@ export function HubSkeleton({ statCount = 4, cardCount = 4, columns = 2 }: HubSk
 
       <div className="grid grid-cols-2 gap-3">
         {Array.from({ length: 4 }).map((_, i) => (
-          <Card key={i} className="border-2 border-border/30 bg-muted/10">
+          <Card key={i} className="border-2 border-white/[0.08] bg-white/[0.04]">
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <Skeleton className="h-10 w-10 rounded-xl" />

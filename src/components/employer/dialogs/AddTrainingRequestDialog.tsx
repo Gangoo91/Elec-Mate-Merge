@@ -6,9 +6,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -18,7 +16,17 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useTrainingRequests } from '@/hooks/useTrainingRequests';
-import { GraduationCap, Building2, Calendar, FileText, Loader2, AlertCircle } from 'lucide-react';
+import { GraduationCap, Loader2, AlertCircle, FileText } from 'lucide-react';
+import {
+  Field,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 interface Worker {
   id: string;
@@ -107,13 +115,13 @@ export function AddTrainingRequestDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-md">
+      <DialogContent className="max-w-[95vw] sm:max-w-md bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <GraduationCap className="h-5 w-5 text-elec-yellow" />
             Add Training Record
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-white">
             Request to add a training record to {worker.name}'s Elec-ID profile. They will need to
             approve this addition.
           </DialogDescription>
@@ -121,121 +129,100 @@ export function AddTrainingRequestDialog({
 
         <div className="space-y-4 py-4">
           {/* Info Banner */}
-          <div className="flex items-start gap-3 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+          <div className="flex items-start gap-3 p-3 bg-blue-500/10 border border-blue-500/30 rounded-xl">
             <AlertCircle className="h-5 w-5 text-blue-400 shrink-0 mt-0.5" />
-            <p className="text-sm text-blue-400">
+            <p className="text-[12.5px] text-blue-300">
               The worker owns their Elec-ID profile. They must approve any training records you add.
             </p>
           </div>
 
-          {/* Training Name */}
-          <div className="space-y-2">
-            <Label htmlFor="training">Training Course</Label>
-            <Select value={trainingName} onValueChange={setTrainingName}>
-              <SelectTrigger id="training" className="h-11">
-                <SelectValue placeholder="Select training type" />
-              </SelectTrigger>
-              <SelectContent>
-                {COMMON_TRAINING.map((t) => (
-                  <SelectItem key={t} value={t}>
-                    {t}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <FormCard eyebrow="Training details">
+            <Field label="Training course">
+              <Select value={trainingName} onValueChange={setTrainingName}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select training type" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {COMMON_TRAINING.map((t) => (
+                    <SelectItem key={t} value={t}>
+                      {t}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
 
-          {trainingName === 'Other' && (
-            <div className="space-y-2">
-              <Label htmlFor="customTraining">Custom Training Name</Label>
-              <Input
-                id="customTraining"
-                value={customTraining}
-                onChange={(e) => setCustomTraining(e.target.value)}
-                placeholder="Enter training name"
-                className="h-11"
-              />
-            </div>
-          )}
+            {trainingName === 'Other' && (
+              <Field label="Custom training name">
+                <Input
+                  id="customTraining"
+                  value={customTraining}
+                  onChange={(e) => setCustomTraining(e.target.value)}
+                  placeholder="Enter training name"
+                  className={inputClass}
+                />
+              </Field>
+            )}
 
-          {/* Provider */}
-          <div className="space-y-2">
-            <Label htmlFor="provider">Training Provider</Label>
-            <Select value={provider} onValueChange={setProvider}>
-              <SelectTrigger id="provider" className="h-11">
-                <SelectValue placeholder="Select provider" />
-              </SelectTrigger>
-              <SelectContent>
-                {COMMON_PROVIDERS.map((p) => (
-                  <SelectItem key={p} value={p}>
-                    {p}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            <Field label="Training provider">
+              <Select value={provider} onValueChange={setProvider}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select provider" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {COMMON_PROVIDERS.map((p) => (
+                    <SelectItem key={p} value={p}>
+                      {p}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
 
-          {provider === 'Other' && (
-            <div className="space-y-2">
-              <Label htmlFor="customProvider">Custom Provider Name</Label>
-              <div className="relative">
-                <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+            {provider === 'Other' && (
+              <Field label="Custom provider name">
                 <Input
                   id="customProvider"
                   value={customProvider}
                   onChange={(e) => setCustomProvider(e.target.value)}
                   placeholder="Enter provider name"
-                  className="pl-10 h-11"
+                  className={inputClass}
                 />
-              </div>
-            </div>
-          )}
+              </Field>
+            )}
 
-          {/* Completion Date */}
-          <div className="space-y-2">
-            <Label htmlFor="completedDate">Completion Date</Label>
-            <div className="relative">
-              <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+            <Field label="Completion date">
               <Input
                 id="completedDate"
                 type="date"
                 value={completedDate}
                 onChange={(e) => setCompletedDate(e.target.value)}
                 max={new Date().toISOString().split('T')[0]}
-                className="pl-10 h-11"
+                className={inputClass}
               />
-            </div>
-          </div>
+            </Field>
 
-          {/* Notes */}
-          <div className="space-y-2">
-            <Label htmlFor="notes">Additional Notes (Optional)</Label>
-            <Textarea
-              id="notes"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Any additional details about the training..."
-              rows={2}
-            />
-          </div>
+            <Field label="Additional notes (optional)">
+              <Textarea
+                id="notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Any additional details about the training..."
+                rows={2}
+                className={textareaClass}
+              />
+            </Field>
+          </FormCard>
         </div>
 
-        {/* Actions */}
         <div className="flex gap-3">
-          <Button
-            variant="outline"
-            className="flex-1 h-11"
-            onClick={() => onOpenChange(false)}
-            disabled={isSubmitting}
-          >
+          <SecondaryButton onClick={() => onOpenChange(false)} disabled={isSubmitting} fullWidth>
             Cancel
-          </Button>
-          <Button
-            className="flex-1 h-11"
+          </SecondaryButton>
+          <PrimaryButton
             onClick={handleSubmit}
-            disabled={
-              isSubmitting || !trainingName || (trainingName === 'Other' && !customTraining)
-            }
+            disabled={isSubmitting || !trainingName || (trainingName === 'Other' && !customTraining)}
+            fullWidth
           >
             {isSubmitting ? (
               <>
@@ -248,7 +235,7 @@ export function AddTrainingRequestDialog({
                 Send Request
               </>
             )}
-          </Button>
+          </PrimaryButton>
         </div>
       </DialogContent>
     </Dialog>

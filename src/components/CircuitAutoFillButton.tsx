@@ -20,6 +20,12 @@ import RegulationWarningDialog from './RegulationWarningDialog';
 interface CircuitAutoFillButtonProps {
   result: TestResult;
   onUpdate: (id: string, updates: Partial<TestResult>) => void;
+  /**
+   * System earthing arrangement (TT, TN-S, TN-C-S) from the cert. When 'TT'
+   * the Zs validator uses RCD-based limits (Reg 411.5.3) instead of MCB tables.
+   * Without this, TT installs with legitimately high Zs were flagged unsat.
+   */
+  earthingArrangement?: string;
 }
 
 // Enhanced circuit types with more specific options
@@ -326,7 +332,11 @@ const enhancedCircuitTypes = [
   },
 ];
 
-const CircuitAutoFillButton: React.FC<CircuitAutoFillButtonProps> = ({ result, onUpdate }) => {
+const CircuitAutoFillButton: React.FC<CircuitAutoFillButtonProps> = ({
+  result,
+  onUpdate,
+  earthingArrangement,
+}) => {
   const [showWarningDialog, setShowWarningDialog] = useState(false);
   const [pendingUpdate, setPendingUpdate] = useState<Partial<TestResult> | null>(null);
   const [pendingWarnings, setPendingWarnings] = useState<any[]>([]);
@@ -339,8 +349,9 @@ const CircuitAutoFillButton: React.FC<CircuitAutoFillButtonProps> = ({ result, o
       type: circuitType,
     };
 
-    // Check for regulation compliance
-    const complianceCheck = checkRegulationCompliance(updatedResult);
+    // Check for regulation compliance — pass earthing so TT systems use the
+    // correct RCD-based Zs limits (ELE-830 follow-up).
+    const complianceCheck = checkRegulationCompliance(updatedResult, earthingArrangement);
 
     if (complianceCheck.warnings.length > 0) {
       // Show warning dialog

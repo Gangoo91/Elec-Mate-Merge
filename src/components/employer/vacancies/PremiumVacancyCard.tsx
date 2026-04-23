@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Briefcase,
   MapPin,
   Clock,
   Users,
@@ -13,15 +12,19 @@ import {
   XCircle,
   CheckCircle,
   Calendar,
-  Building2,
   Flame,
   AlertTriangle,
   Timer,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { differenceInDays } from 'date-fns';
+import {
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  IconButton,
+} from '@/components/employer/editorial';
 
 // Urgency indicator types
 type UrgencyType = 'closing' | 'noApplicants' | 'hot' | null;
@@ -51,7 +54,7 @@ const getUrgencyIndicator = (
       type: 'closing',
       label: daysToClose === 0 ? 'Closes today' : `${daysToClose}d left`,
       icon: <Timer className="h-3 w-3" />,
-      className: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+      className: 'bg-amber-500/15 text-amber-400 border-amber-500/25',
     };
   }
 
@@ -60,7 +63,7 @@ const getUrgencyIndicator = (
       type: 'noApplicants',
       label: 'No applicants',
       icon: <AlertTriangle className="h-3 w-3" />,
-      className: 'bg-red-500/20 text-red-400 border-red-500/30',
+      className: 'bg-red-500/15 text-red-400 border-red-500/25',
     };
   }
 
@@ -69,7 +72,7 @@ const getUrgencyIndicator = (
       type: 'hot',
       label: 'Hot',
       icon: <Flame className="h-3 w-3" />,
-      className: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+      className: 'bg-orange-500/15 text-orange-400 border-orange-500/25',
     };
   }
 
@@ -127,48 +130,48 @@ export function PremiumVacancyCard({
   const statusConfig: Record<string, { bg: string; text: string; border: string; dot: string }> = {
     Open: {
       bg: 'bg-emerald-500/10',
-      text: 'text-emerald-500',
-      border: 'border-emerald-500/30',
+      text: 'text-emerald-400',
+      border: 'border-emerald-500/25',
       dot: 'bg-emerald-500',
     },
     open: {
       bg: 'bg-emerald-500/10',
-      text: 'text-emerald-500',
-      border: 'border-emerald-500/30',
+      text: 'text-emerald-400',
+      border: 'border-emerald-500/25',
       dot: 'bg-emerald-500',
     },
     Closed: {
-      bg: 'bg-gray-500/10',
+      bg: 'bg-white/[0.06]',
       text: 'text-white',
-      border: 'border-gray-500/30',
-      dot: 'bg-gray-500',
+      border: 'border-white/[0.08]',
+      dot: 'bg-white/30',
     },
     closed: {
-      bg: 'bg-gray-500/10',
+      bg: 'bg-white/[0.06]',
       text: 'text-white',
-      border: 'border-gray-500/30',
-      dot: 'bg-gray-500',
+      border: 'border-white/[0.08]',
+      dot: 'bg-white/30',
     },
     Draft: {
       bg: 'bg-amber-500/10',
-      text: 'text-amber-500',
-      border: 'border-amber-500/30',
+      text: 'text-amber-400',
+      border: 'border-amber-500/25',
       dot: 'bg-amber-500',
     },
     draft: {
       bg: 'bg-amber-500/10',
-      text: 'text-amber-500',
-      border: 'border-amber-500/30',
+      text: 'text-amber-400',
+      border: 'border-amber-500/25',
       dot: 'bg-amber-500',
     },
   };
 
   // Fallback for unknown status
   const defaultConfig = {
-    bg: 'bg-gray-500/10',
+    bg: 'bg-white/[0.06]',
     text: 'text-white',
-    border: 'border-gray-500/30',
-    dot: 'bg-gray-500',
+    border: 'border-white/[0.08]',
+    dot: 'bg-white/30',
   };
 
   const config = statusConfig[status] || defaultConfig;
@@ -201,20 +204,19 @@ export function PremiumVacancyCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       className={cn(
-        'relative overflow-hidden rounded-xl',
-        'bg-elec-gray/80 backdrop-blur-sm',
-        'border border-white/10',
-        'hover:border-elec-yellow/40',
-        'transition-all duration-300',
-        'hover:shadow-lg hover:shadow-elec-yellow/5',
+        'relative overflow-hidden rounded-2xl',
+        'bg-[hsl(0_0%_12%)]',
+        'border border-white/[0.06]',
+        'hover:bg-[hsl(0_0%_15%)]',
+        'transition-colors duration-200',
         'group'
       )}
     >
       {/* Status indicator line */}
       <div
         className={cn(
-          'absolute left-0 top-0 bottom-0 w-1 rounded-l-xl',
-          status === 'Open' ? 'bg-emerald-500' : status === 'Draft' ? 'bg-amber-500' : 'bg-gray-500'
+          'absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl',
+          status === 'Open' ? 'bg-emerald-500' : status === 'Draft' ? 'bg-amber-500' : 'bg-white/20'
         )}
       />
 
@@ -228,7 +230,7 @@ export function PremiumVacancyCard({
       >
         <div className="flex items-start gap-4">
           {/* Company logo/initial */}
-          <div className="shrink-0 w-12 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+          <div className="shrink-0 w-12 h-12 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25 flex items-center justify-center">
             <span className="text-lg font-bold text-elec-yellow">{companyInitial}</span>
           </div>
 
@@ -240,14 +242,14 @@ export function PremiumVacancyCard({
                   {title}
                 </h3>
                 <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                  <span className="flex items-center gap-1.5 text-sm text-white">
+                  <span className="flex items-center gap-1.5 text-[13px] text-white">
                     <MapPin className="h-3.5 w-3.5 text-elec-yellow/70" />
                     {location}
                   </span>
                   <span className="text-white">•</span>
                   <Badge
                     variant="outline"
-                    className="text-xs bg-white/5 border-white/10 text-white"
+                    className="text-[11px] bg-white/[0.06] border-white/[0.08] text-white"
                   >
                     {type}
                   </Badge>
@@ -256,7 +258,7 @@ export function PremiumVacancyCard({
                       <span className="text-white hidden sm:inline">•</span>
                       <Badge
                         variant="outline"
-                        className="text-xs bg-white/5 border-white/10 text-white hidden sm:inline-flex"
+                        className="text-[11px] bg-white/[0.06] border-white/[0.08] text-white hidden sm:inline-flex"
                       >
                         {workArrangement}
                       </Badge>
@@ -271,7 +273,7 @@ export function PremiumVacancyCard({
                 {urgency && (
                   <Badge
                     variant="outline"
-                    className={cn('text-xs font-medium px-2 py-1 animate-pulse', urgency.className)}
+                    className={cn('text-[11px] font-medium px-2 py-1 animate-pulse', urgency.className)}
                   >
                     {urgency.icon}
                     <span className="ml-1">{urgency.label}</span>
@@ -280,13 +282,13 @@ export function PremiumVacancyCard({
                 <Badge
                   variant="outline"
                   className={cn(
-                    'text-xs font-medium px-2.5 py-1',
+                    'text-[11px] font-medium px-2.5 py-1',
                     config.bg,
                     config.text,
                     config.border
                   )}
                 >
-                  <span className={cn('w-1.5 h-1.5 rounded-full mr-1.5', config.dot)} />
+                  <span className={cn('w-1.5 h-1.5 rounded-full mr-1.5 inline-block', config.dot)} />
                   {status}
                 </Badge>
                 <ChevronRight
@@ -307,53 +309,55 @@ export function PremiumVacancyCard({
             )}
 
             {/* Metrics row + Quick Actions */}
-            <div className="flex items-center justify-between gap-4 mt-3 pt-3 border-t border-white/5">
+            <div className="flex items-center justify-between gap-4 mt-3 pt-3 border-t border-white/[0.06]">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5">
                   <div className="p-1.5 rounded-lg bg-elec-yellow/10">
                     <Users className="h-3.5 w-3.5 text-elec-yellow" />
                   </div>
-                  <span className="text-sm font-medium text-white">{applicantCount}</span>
-                  <span className="text-xs text-white">applicants</span>
+                  <span className="text-[13px] font-medium text-white tabular-nums">
+                    {applicantCount}
+                  </span>
+                  <span className="text-[11px] text-white">applicants</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="p-1.5 rounded-lg bg-white/5">
+                  <div className="p-1.5 rounded-lg bg-white/[0.06]">
                     <Eye className="h-3.5 w-3.5 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-white">{views}</span>
-                  <span className="text-xs text-white">views</span>
+                  <span className="text-[13px] font-medium text-white tabular-nums">{views}</span>
+                  <span className="text-[11px] text-white">views</span>
                 </div>
               </div>
 
               {/* Quick actions - visible in collapsed state */}
               <div className="flex items-center gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 text-white hover:text-white hover:bg-white/10"
+                <IconButton
+                  aria-label="Edit"
                   onClick={(e) => {
                     e.stopPropagation();
                     onEdit();
                   }}
+                  className="h-9 w-9"
                 >
                   <Edit2 className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 text-white hover:text-elec-yellow hover:bg-elec-yellow/10 relative"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onViewApplicants();
-                  }}
-                >
-                  <Users className="h-4 w-4" />
+                </IconButton>
+                <div className="relative">
+                  <IconButton
+                    aria-label="View applicants"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onViewApplicants();
+                    }}
+                    className="h-9 w-9"
+                  >
+                    <Users className="h-4 w-4" />
+                  </IconButton>
                   {applicantCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 bg-elec-yellow text-black text-[10px] font-bold rounded-full flex items-center justify-center">
+                    <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 bg-elec-yellow text-black text-[10px] font-bold rounded-full flex items-center justify-center pointer-events-none">
                       {applicantCount > 99 ? '99+' : applicantCount}
                     </span>
                   )}
-                </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -370,9 +374,9 @@ export function PremiumVacancyCard({
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="px-4 pb-4 pl-5 space-y-4 border-t border-white/5 pt-4">
+            <div className="px-4 pb-4 pl-5 space-y-4 border-t border-white/[0.06] pt-4">
               {/* Dates */}
-              <div className="flex items-center gap-6 text-sm">
+              <div className="flex items-center gap-6 text-[13px]">
                 <div className="flex items-center gap-2 text-white">
                   <Calendar className="h-4 w-4 text-elec-yellow/70" />
                   <span>Posted: {new Date(postedAt).toLocaleDateString()}</span>
@@ -387,67 +391,59 @@ export function PremiumVacancyCard({
 
               {/* Action buttons */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-11 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white"
+                <SecondaryButton
                   onClick={(e) => {
                     e.stopPropagation();
                     onEdit();
                   }}
+                  fullWidth
                 >
                   <Edit2 className="h-3.5 w-3.5 mr-1.5" />
                   Edit
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="h-11 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white"
+                </SecondaryButton>
+                <SecondaryButton
                   onClick={(e) => {
                     e.stopPropagation();
                     onDuplicate();
                   }}
+                  fullWidth
                 >
                   <Copy className="h-3.5 w-3.5 mr-1.5" />
                   Duplicate
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className={cn(
-                    'h-11 text-xs',
-                    status === 'Open'
-                      ? 'bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20'
-                      : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 hover:bg-emerald-500/20'
-                  )}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onToggleStatus();
-                  }}
-                >
-                  {status === 'Open' ? (
-                    <>
-                      <XCircle className="h-3.5 w-3.5 mr-1.5" />
-                      Close
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
-                      Reopen
-                    </>
-                  )}
-                </Button>
-                <Button
-                  size="sm"
-                  className="h-11 text-xs bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                </SecondaryButton>
+                {status === 'Open' ? (
+                  <DestructiveButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleStatus();
+                    }}
+                    fullWidth
+                  >
+                    <XCircle className="h-3.5 w-3.5 mr-1.5" />
+                    Close
+                  </DestructiveButton>
+                ) : (
+                  <SecondaryButton
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onToggleStatus();
+                    }}
+                    fullWidth
+                  >
+                    <CheckCircle className="h-3.5 w-3.5 mr-1.5" />
+                    Reopen
+                  </SecondaryButton>
+                )}
+                <PrimaryButton
                   onClick={(e) => {
                     e.stopPropagation();
                     onViewApplicants();
                   }}
+                  fullWidth
                 >
                   <Users className="h-3.5 w-3.5 mr-1.5" />
                   Applicants ({applicantCount})
-                </Button>
+                </PrimaryButton>
               </div>
             </div>
           </motion.div>

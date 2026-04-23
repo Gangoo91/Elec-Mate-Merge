@@ -1,8 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { SCHEMES, getSchemeInfo, type SchemeInfo } from '@/constants/schemeLogos';
+import { useCallback } from 'react';
+import { SCHEMES, getSchemeInfo } from '@/constants/schemeLogos';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Check, Calendar, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface SchemeLogoPickerProps {
@@ -62,25 +61,24 @@ export function SchemeLogoPicker({
 
   return (
     <div className="space-y-4">
-      <Label className="text-foreground font-semibold">Registration Scheme</Label>
+      <Label className="text-white font-medium text-[13px]">Registration scheme</Label>
 
-      {/* Logo grid */}
       <div className="grid grid-cols-3 gap-2.5">
         {/* None option */}
         <button
           type="button"
           onClick={() => handleSelect('none')}
           className={cn(
-            'relative flex items-center justify-center rounded-xl border-2 p-3 h-16 transition-all touch-manipulation',
+            'relative flex items-center justify-center rounded-2xl border p-3 h-16 transition-colors touch-manipulation',
             scheme === 'none' || !scheme
-              ? 'border-white/40 bg-white/10'
-              : 'border-white/10 bg-white/[0.04] hover:bg-white/[0.06]'
+              ? 'border-elec-yellow/60 bg-elec-yellow/10'
+              : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
           )}
         >
           {(scheme === 'none' || !scheme) && (
-            <div className="absolute top-1 right-1 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-              <Check className="w-3 h-3 text-white" />
-            </div>
+            <span className="absolute top-1.5 right-1.5 text-[11px] font-semibold text-elec-yellow">
+              ✓
+            </span>
           )}
           <span className="text-xs text-white font-medium">None</span>
         </button>
@@ -94,18 +92,20 @@ export function SchemeLogoPicker({
               type="button"
               onClick={() => handleSelect(s.value)}
               className={cn(
-                'relative flex items-center justify-center rounded-xl border-2 p-2 h-16 transition-all touch-manipulation',
-                isSelected ? 'bg-white/10' : 'border-white/10 bg-white/[0.04] hover:bg-white/[0.06]'
+                'relative flex items-center justify-center rounded-2xl border p-2 h-16 transition-colors touch-manipulation',
+                isSelected
+                  ? 'bg-elec-yellow/10'
+                  : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
               )}
               style={isSelected ? { borderColor: s.brandColor } : undefined}
             >
               {isSelected && (
-                <div
-                  className="absolute top-1 right-1 w-5 h-5 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: s.brandColor }}
+                <span
+                  className="absolute top-1.5 right-1.5 text-[11px] font-semibold"
+                  style={{ color: s.brandColor }}
                 >
-                  <Check className="w-3 h-3 text-white" />
-                </div>
+                  ✓
+                </span>
               )}
               <img
                 src={s.logoPath}
@@ -122,51 +122,46 @@ export function SchemeLogoPicker({
           type="button"
           onClick={() => handleSelect('other')}
           className={cn(
-            'relative flex items-center justify-center rounded-xl border-2 p-3 h-16 transition-all touch-manipulation',
+            'relative flex items-center justify-center rounded-2xl border p-3 h-16 transition-colors touch-manipulation',
             scheme === 'other'
-              ? 'border-white/40 bg-white/10'
-              : 'border-white/10 bg-white/[0.04] hover:bg-white/[0.06]'
+              ? 'border-elec-yellow/60 bg-elec-yellow/10'
+              : 'border-white/[0.08] bg-[#0a0a0a] hover:bg-[hsl(0_0%_15%)]'
           )}
         >
           {scheme === 'other' && (
-            <div className="absolute top-1 right-1 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-              <Check className="w-3 h-3 text-white" />
-            </div>
+            <span className="absolute top-1.5 right-1.5 text-[11px] font-semibold text-elec-yellow">
+              ✓
+            </span>
           )}
           <span className="text-xs text-white font-medium">Other</span>
         </button>
       </div>
 
-      {/* Registration number + expiry fields */}
       {showFields && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 border-l-2 border-elec-yellow/30">
-          <div>
-            <Label htmlFor="schemeRegNumber" className="text-foreground font-semibold">
-              Registration Number <span className="text-red-500 text-base font-bold">*</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+          <div className="space-y-1.5">
+            <Label htmlFor="schemeRegNumber" className="text-white font-medium text-[13px]">
+              Registration number <span className="text-red-400">*</span>
             </Label>
             <Input
               id="schemeRegNumber"
               value={registrationNumber}
               onChange={(e) => onNumberChange(e.target.value)}
               placeholder="Enter registration number"
-              className="mt-1.5 h-11 text-base touch-manipulation"
+              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
 
-          <div>
-            <Label
-              htmlFor="schemeExpiry"
-              className="text-foreground font-semibold flex items-center gap-2"
-            >
-              <Calendar className="h-4 w-4 text-elec-yellow" />
-              Expiry Date
+          <div className="space-y-1.5">
+            <Label htmlFor="schemeExpiry" className="text-white font-medium text-[13px]">
+              Expiry date
             </Label>
             <Input
               id="schemeExpiry"
               type="date"
               value={registrationExpiry || ''}
               onChange={(e) => onExpiryChange(e.target.value)}
-              className="mt-1.5 h-11 text-base touch-manipulation"
+              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
         </div>

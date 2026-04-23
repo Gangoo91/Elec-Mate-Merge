@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
@@ -17,6 +15,19 @@ import { useJobChecklist, useAddChecklistItem } from '@/hooks/useJobChecklists';
 import { useJobLabelAssignments, useAssignLabel } from '@/hooks/useJobLabels';
 import { toast } from 'sonner';
 import { Job } from '@/services/jobService';
+import {
+  SheetShell,
+  FormCard,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  SuccessCheckmark,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  checkboxClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 interface CopyJobSheetProps {
   job: Job | null;
@@ -40,6 +51,7 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
   const [copyChecklist, setCopyChecklist] = useState(true);
   const [copyDescription, setCopyDescription] = useState(true);
   const [isCopying, setIsCopying] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   const createJob = useCreateJob();
   const { data: checklistItems = [] } = useJobChecklist(job?.id || '');
@@ -62,7 +74,6 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
     const stage = stages.find((s) => s.id === targetStage) || stages[0];
 
     try {
-      // Create the new job
       const newJob = await createJob.mutateAsync({
         title: title.trim(),
         client: job.client,
@@ -78,7 +89,6 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
         description: copyDescription ? job.description : null,
       });
 
-      // Copy labels
       if (copyLabels && labelAssignments.length > 0) {
         for (const assignment of labelAssignments) {
           try {
@@ -92,7 +102,6 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
         }
       }
 
-      // Copy checklist items
       if (copyChecklist && checklistItems.length > 0) {
         for (const item of checklistItems) {
           try {
@@ -107,8 +116,12 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
       }
 
       toast.success('Job copied successfully');
-      onOpenChange(false);
-      setTitle('');
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        onOpenChange(false);
+        setTitle('');
+      }, 700);
     } catch (error) {
       toast.error('Failed to copy job');
     } finally {
@@ -119,103 +132,100 @@ export function CopyJobSheet({ job, open, onOpenChange }: CopyJobSheetProps) {
   if (!job) return null;
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-md">
-        <SheetHeader className="pb-4">
-          <SheetTitle className="flex items-center gap-2">
-            <Copy className="h-5 w-5" />
-            Copy Job
-          </SheetTitle>
-        </SheetHeader>
+    <>
+      <SuccessCheckmark show={showSuccess} />
+      <Sheet open={open} onOpenChange={onOpenChange}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+        >
+          <SheetShell
+            eyebrow="Duplicate job"
+            title="Copy job"
+            description={`Create a new job based on ${job.title}.`}
+            footer={
+              <>
+                <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={handleCopy}
+                  disabled={!title.trim() || isCopying}
+                  fullWidth
+                >
+                  {isCopying ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      Copying
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy job
+                    </>
+                  )}
+                </PrimaryButton>
+              </>
+            }
+          >
+            <FormCard eyebrow="New job">
+              <Field label="New job title" required>
+                <Input
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder={`Copy of ${job.title}`}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Target stage">
+                <Select value={targetStage} onValueChange={setTargetStage}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {stages.map((stage) => (
+                      <SelectItem key={stage.id} value={stage.id}>
+                        {stage.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormCard>
 
-        <div className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="title">New Job Title</Label>
-            <Input
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder={`Copy of ${job.title}`}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label>Target Stage</Label>
-            <Select value={targetStage} onValueChange={setTargetStage}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {stages.map((stage) => (
-                  <SelectItem key={stage.id} value={stage.id}>
-                    {stage.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-3">
-            <Label className="text-white">Copy Options</Label>
-
-            <div className="flex items-center gap-3">
-              <Checkbox
-                id="copy-description"
-                checked={copyDescription}
-                onCheckedChange={(checked) => setCopyDescription(checked as boolean)}
-              />
-              <label htmlFor="copy-description" className="text-sm cursor-pointer">
-                Copy description
+            <FormCard eyebrow="Copy options">
+              <label className="flex items-center gap-3 cursor-pointer">
+                <Checkbox
+                  checked={copyDescription}
+                  onCheckedChange={(checked) => setCopyDescription(checked as boolean)}
+                  className={checkboxClass}
+                />
+                <span className={fieldLabelClass + ' !mb-0'}>Copy description</span>
               </label>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Checkbox
-                id="copy-labels"
-                checked={copyLabels}
-                onCheckedChange={(checked) => setCopyLabels(checked as boolean)}
-              />
-              <label htmlFor="copy-labels" className="text-sm cursor-pointer">
-                Copy labels ({labelAssignments.length})
+              <label className="flex items-center gap-3 cursor-pointer">
+                <Checkbox
+                  checked={copyLabels}
+                  onCheckedChange={(checked) => setCopyLabels(checked as boolean)}
+                  className={checkboxClass}
+                />
+                <span className={fieldLabelClass + ' !mb-0'}>
+                  Copy labels ({labelAssignments.length})
+                </span>
               </label>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Checkbox
-                id="copy-checklist"
-                checked={copyChecklist}
-                onCheckedChange={(checked) => setCopyChecklist(checked as boolean)}
-              />
-              <label htmlFor="copy-checklist" className="text-sm cursor-pointer">
-                Copy checklist items ({checklistItems.length})
+              <label className="flex items-center gap-3 cursor-pointer">
+                <Checkbox
+                  checked={copyChecklist}
+                  onCheckedChange={(checked) => setCopyChecklist(checked as boolean)}
+                  className={checkboxClass}
+                />
+                <span className={fieldLabelClass + ' !mb-0'}>
+                  Copy checklist items ({checklistItems.length})
+                </span>
               </label>
-            </div>
-          </div>
-
-          <div className="pt-4 flex gap-2">
-            <Button
-              onClick={handleCopy}
-              disabled={!title.trim() || isCopying}
-              className="flex-1 gap-2"
-            >
-              {isCopying ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Copying...
-                </>
-              ) : (
-                <>
-                  <Copy className="h-4 w-4" />
-                  Copy Job
-                </>
-              )}
-            </Button>
-            <Button variant="outline" onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
-          </div>
-        </div>
-      </SheetContent>
-    </Sheet>
+            </FormCard>
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
+    </>
   );
 }

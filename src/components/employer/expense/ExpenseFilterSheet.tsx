@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { Filter, X, Check, RotateCcw } from 'lucide-react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Filter, Check, RotateCcw } from 'lucide-react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import {
   Select,
@@ -20,6 +18,15 @@ import {
   type ExpenseStatus,
   type ExpenseCategory,
 } from '@/hooks/useExpenses';
+import {
+  SheetShell,
+  Field,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface ExpenseFilterSheetProps {
   open: boolean;
@@ -149,149 +156,159 @@ export function ExpenseFilterSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn('flex flex-col', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[400px]')}
+        className={cn(
+          'flex flex-col p-0 overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.08]',
+          isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[400px]'
+        )}
       >
-        <SheetHeader className="pb-4 border-b border-border">
-          <div className="flex items-center justify-between">
-            <SheetTitle className="flex items-center gap-2">
+        <SheetShell
+          eyebrow="Filters"
+          title={
+            <span className="inline-flex items-center gap-2">
               <Filter className="h-5 w-5 text-elec-yellow" />
               Filters
               {activeFilterCount > 0 && (
                 <Badge className="bg-elec-yellow text-black">{activeFilterCount}</Badge>
               )}
-            </SheetTitle>
-            <Button
-              variant="ghost"
-              size="sm"
+            </span>
+          }
+          footer={
+            <>
+              <SecondaryButton fullWidth onClick={() => onOpenChange(false)}>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton fullWidth onClick={handleApply}>
+                Apply filters
+              </PrimaryButton>
+            </>
+          }
+        >
+          <div className="flex justify-end">
+            <button
+              type="button"
               onClick={handleReset}
-              className="text-white hover:text-foreground"
+              className="text-[12px] font-medium text-white hover:text-elec-yellow transition-colors inline-flex items-center gap-1 touch-manipulation"
             >
-              <RotateCcw className="h-4 w-4 mr-1" />
+              <RotateCcw className="h-4 w-4" />
               Reset
-            </Button>
+            </button>
           </div>
-        </SheetHeader>
 
-        <div className="flex-1 overflow-y-auto py-4 space-y-6">
           {/* Status Filter */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium">Status</Label>
+          <FormCard eyebrow="Status">
             <div className="flex flex-wrap gap-2">
-              {STATUS_OPTIONS.map(({ value, label }) => (
-                <Badge
-                  key={value}
-                  variant="outline"
-                  className={cn(
-                    'cursor-pointer transition-all px-3 py-1.5',
-                    isStatusSelected(value)
-                      ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
-                      : 'hover:bg-muted'
-                  )}
-                  onClick={() => handleStatusToggle(value)}
-                >
-                  {isStatusSelected(value) && <Check className="h-3 w-3 mr-1" />}
-                  {label}
-                </Badge>
-              ))}
+              {STATUS_OPTIONS.map(({ value, label }) => {
+                const selected = isStatusSelected(value);
+                return (
+                  <button
+                    key={value}
+                    type="button"
+                    className={cn(
+                      'inline-flex items-center h-8 px-3 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
+                      selected
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1]'
+                    )}
+                    onClick={() => handleStatusToggle(value)}
+                  >
+                    {selected && <Check className="h-3 w-3 mr-1" />}
+                    {label}
+                  </button>
+                );
+              })}
             </div>
-          </div>
+          </FormCard>
 
           {/* Category Filter */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium">Category</Label>
+          <FormCard eyebrow="Category">
             <div className="flex flex-wrap gap-2">
-              {EXPENSE_CATEGORIES.map(({ id, label }) => (
-                <Badge
-                  key={id}
-                  variant="outline"
-                  className={cn(
-                    'cursor-pointer transition-all px-3 py-1.5',
-                    isCategorySelected(id)
-                      ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow'
-                      : 'hover:bg-muted'
-                  )}
-                  onClick={() => handleCategoryToggle(id)}
-                >
-                  {isCategorySelected(id) && <Check className="h-3 w-3 mr-1" />}
-                  {label}
-                </Badge>
-              ))}
+              {EXPENSE_CATEGORIES.map(({ id, label }) => {
+                const selected = isCategorySelected(id);
+                return (
+                  <button
+                    key={id}
+                    type="button"
+                    className={cn(
+                      'inline-flex items-center h-8 px-3 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
+                      selected
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1]'
+                    )}
+                    onClick={() => handleCategoryToggle(id)}
+                  >
+                    {selected && <Check className="h-3 w-3 mr-1" />}
+                    {label}
+                  </button>
+                );
+              })}
             </div>
-          </div>
+          </FormCard>
 
           {/* Employee Filter */}
           {employees.length > 0 && (
-            <div className="space-y-3">
-              <Label className="text-sm font-medium">Employee</Label>
-              <Select
-                value={localFilters.employeeId || 'all'}
-                onValueChange={(value) =>
-                  setLocalFilters({
-                    ...localFilters,
-                    employeeId: value === 'all' ? undefined : value,
-                  })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="All employees" />
+            <FormCard eyebrow="Employee">
+              <Field label="Filter by employee">
+                <Select
+                  value={localFilters.employeeId || 'all'}
+                  onValueChange={(value) =>
+                    setLocalFilters({
+                      ...localFilters,
+                      employeeId: value === 'all' ? undefined : value,
+                    })
+                  }
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="All employees" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="all">All employees</SelectItem>
+                    {employees.map((emp) => (
+                      <SelectItem key={emp.id} value={emp.id}>
+                        {emp.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormCard>
+          )}
+
+          {/* Date Range Filter */}
+          <FormCard eyebrow="Date range">
+            <Field label="Period">
+              <Select value={dateRange} onValueChange={handleDateRangeChange}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All employees</SelectItem>
-                  {employees.map((emp) => (
-                    <SelectItem key={emp.id} value={emp.id}>
-                      {emp.name}
+                <SelectContent className={selectContentClass}>
+                  {DATE_RANGE_OPTIONS.map(({ value, label }) => (
+                    <SelectItem key={value} value={value}>
+                      {label}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-            </div>
-          )}
-
-          {/* Date Range Filter */}
-          <div className="space-y-3">
-            <Label className="text-sm font-medium">Date Range</Label>
-            <Select value={dateRange} onValueChange={handleDateRangeChange}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {DATE_RANGE_OPTIONS.map(({ value, label }) => (
-                  <SelectItem key={value} value={value}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+            </Field>
+          </FormCard>
 
           {/* Receipt Filter */}
-          <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50">
-            <Label className="text-sm font-medium cursor-pointer">Has receipt attached</Label>
-            <Switch
-              checked={localFilters.hasReceipt === true}
-              onCheckedChange={(checked) =>
-                setLocalFilters({
-                  ...localFilters,
-                  hasReceipt: checked ? true : undefined,
-                })
-              }
-            />
-          </div>
-        </div>
-
-        <SheetFooter className="pt-4 border-t border-border pb-safe">
-          <div className="flex gap-3 w-full">
-            <Button variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
-              Cancel
-            </Button>
-            <Button
-              className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              onClick={handleApply}
-            >
-              Apply Filters
-            </Button>
-          </div>
-        </SheetFooter>
+          <FormCard eyebrow="Receipt">
+            <div className="flex items-center justify-between">
+              <label className="text-[13px] text-white cursor-pointer">
+                Has receipt attached
+              </label>
+              <Switch
+                checked={localFilters.hasReceipt === true}
+                onCheckedChange={(checked) =>
+                  setLocalFilters({
+                    ...localFilters,
+                    hasReceipt: checked ? true : undefined,
+                  })
+                }
+              />
+            </div>
+          </FormCard>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

@@ -2,7 +2,6 @@ import { useRef, useEffect, forwardRef, useImperativeHandle, useCallback } from 
 import { MessageBubble, SystemMessage } from './MessageBubble';
 import { TypingIndicator } from './TypingIndicator';
 import { Skeleton } from '@/components/ui/skeleton';
-import { useMessageAttachments } from '@/hooks/useFileUpload';
 import type { Message, MessageReaction } from '@/services/conversationService';
 import type { ReplyToMessage } from '@/components/messaging/MessageReply';
 
@@ -49,9 +48,9 @@ export const MessageList = forwardRef<MessageListRef, MessageListProps>(
       if (messageEl) {
         messageEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
         // Highlight effect
-        messageEl.classList.add('bg-primary/10');
+        messageEl.classList.add('bg-elec-yellow/10');
         setTimeout(() => {
-          messageEl.classList.remove('bg-primary/10');
+          messageEl.classList.remove('bg-elec-yellow/10');
         }, 2000);
       }
     }, []);
@@ -87,19 +86,19 @@ export const MessageList = forwardRef<MessageListRef, MessageListProps>(
 
     if (isLoading) {
       return (
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[hsl(0_0%_8%)]">
           {/* Loading skeletons */}
           <div className="flex justify-end">
-            <Skeleton className="h-16 w-3/4 rounded-2xl" />
+            <Skeleton className="h-16 w-3/4 rounded-2xl bg-white/[0.04]" />
           </div>
           <div className="flex justify-start">
-            <Skeleton className="h-12 w-2/3 rounded-2xl" />
+            <Skeleton className="h-12 w-2/3 rounded-2xl bg-white/[0.04]" />
           </div>
           <div className="flex justify-end">
-            <Skeleton className="h-20 w-3/4 rounded-2xl" />
+            <Skeleton className="h-20 w-3/4 rounded-2xl bg-white/[0.04]" />
           </div>
           <div className="flex justify-start">
-            <Skeleton className="h-14 w-1/2 rounded-2xl" />
+            <Skeleton className="h-14 w-1/2 rounded-2xl bg-white/[0.04]" />
           </div>
         </div>
       );
@@ -107,10 +106,10 @@ export const MessageList = forwardRef<MessageListRef, MessageListProps>(
 
     if (messages.length === 0) {
       return (
-        <div className="flex-1 flex items-center justify-center p-4">
+        <div className="flex-1 flex items-center justify-center p-4 bg-[hsl(0_0%_8%)]">
           <div className="text-center">
-            <p className="text-white">No messages yet</p>
-            <p className="text-xs text-white mt-1">
+            <p className="text-white text-base font-medium">No messages yet</p>
+            <p className="text-[12px] text-white mt-1">
               Send a message to start the conversation
             </p>
           </div>
@@ -119,7 +118,10 @@ export const MessageList = forwardRef<MessageListRef, MessageListProps>(
     }
 
     return (
-      <div ref={scrollRef} className="flex-1 overflow-y-auto p-4">
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto p-4 bg-[hsl(0_0%_8%)]"
+      >
         {messages.map((message) => {
           // System messages
           if (message.message_type === 'system') {
@@ -135,7 +137,7 @@ export const MessageList = forwardRef<MessageListRef, MessageListProps>(
               ref={(el) => {
                 if (el) messageRefs.current.set(message.id, el);
               }}
-              className="transition-colors duration-500"
+              className="transition-colors duration-500 rounded-2xl"
             >
               <MessageBubble
                 message={message}

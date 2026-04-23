@@ -2,50 +2,16 @@ import { useState, useCallback, useEffect, useRef, lazy, Suspense } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
-import { NativePageWrapper } from '@/components/native/NativePageWrapper';
 import { useToast } from '@/hooks/use-toast';
 import useSEO from '@/hooks/useSEO';
-import {
-  Home,
-  Users,
-  UserSearch,
-  Briefcase,
-  CreditCard,
-  Clock,
-  MessageSquare,
-  PoundSterling,
-  FileText,
-  Receipt,
-  ShoppingCart,
-  BarChart3,
-  FileSignature,
-  Tag,
-  Truck,
-  Camera,
-  Folder,
-  MapPin,
-  ListChecks,
-  AlertCircle,
-  PlayCircle,
-  CheckCircle,
-  Users2,
-  ShieldCheck,
-  BookOpen,
-  ClipboardList,
-  GraduationCap,
-  FileCheck,
-  Sparkles,
-  Cpu,
-  Zap,
-  Settings,
-  Loader2,
-  type LucideIcon,
-} from 'lucide-react';
-// DraggableVoiceAssistant removed — not needed for employer hub
+import { ChevronLeft, RefreshCw } from 'lucide-react';
 import { EmployerProvider } from '@/contexts/EmployerContext';
-import { SectionSkeleton } from '@/components/ui/page-skeleton';
+import {
+  IconButton,
+  LoadingBlocks,
+  Eyebrow,
+} from '@/components/employer/editorial';
 
-// Lazy-loaded sections for code splitting
 const OverviewSection = lazy(() =>
   import('@/components/employer/sections/OverviewSection').then((m) => ({
     default: m.OverviewSection,
@@ -245,7 +211,6 @@ const AIQuoteSection = lazy(() =>
   }))
 );
 
-// Lazy-loaded hubs
 const PeopleHub = lazy(() =>
   import('@/components/employer/hubs/PeopleHub').then((m) => ({ default: m.PeopleHub }))
 );
@@ -262,7 +227,6 @@ const SmartDocsHub = lazy(() =>
   import('@/components/employer/hubs/SmartDocsHub').then((m) => ({ default: m.SmartDocsHub }))
 );
 
-// Lazy-loaded dialogs for voice control
 const CreateQuoteDialog = lazy(() =>
   import('@/components/employer/dialogs/CreateQuoteDialog').then((m) => ({
     default: m.CreateQuoteDialog,
@@ -312,9 +276,6 @@ const PostVacancyDialog = lazy(() =>
   }))
 );
 
-// Skeleton loader for lazy components
-const SectionLoader = SectionSkeleton;
-
 export type Section =
   | 'overview'
   | 'jobpacks'
@@ -357,7 +318,6 @@ export type Section =
   | 'briefings'
   | 'compliance'
   | 'automations'
-  // Smart Docs Hub
   | 'smartdocs'
   | 'aidesignspec'
   | 'airams'
@@ -365,17 +325,14 @@ export type Section =
   | 'aibriefingpack'
   | 'aiquote';
 
-// Section hierarchy for back navigation fallback
 const getParentSection = (section: Section): Section => {
   const hierarchy: Record<Section, Section> = {
-    // People Hub children -> peoplehub
     team: 'peoplehub',
     elecid: 'peoplehub',
     timesheets: 'peoplehub',
     comms: 'peoplehub',
     talentpool: 'peoplehub',
     vacancies: 'peoplehub',
-    // Finance Hub children -> financehub
     quotes: 'financehub',
     tenders: 'financehub',
     expenses: 'financehub',
@@ -384,7 +341,6 @@ const getParentSection = (section: Section): Section => {
     reports: 'financehub',
     signatures: 'financehub',
     pricebook: 'financehub',
-    // Jobs Hub children -> jobshub
     jobpacks: 'jobshub',
     jobs: 'jobshub',
     jobboard: 'jobshub',
@@ -397,7 +353,6 @@ const getParentSection = (section: Section): Section => {
     clientportal: 'jobshub',
     fleet: 'jobshub',
     photogallery: 'jobshub',
-    // Safety Hub children -> safetyhub
     safety: 'safetyhub',
     rams: 'safetyhub',
     incidents: 'safetyhub',
@@ -406,19 +361,16 @@ const getParentSection = (section: Section): Section => {
     training: 'safetyhub',
     briefings: 'safetyhub',
     compliance: 'safetyhub',
-    // SmartDocs children -> smartdocs
     aidesignspec: 'smartdocs',
     airams: 'smartdocs',
     aimethodstatement: 'smartdocs',
     aibriefingpack: 'smartdocs',
     aiquote: 'smartdocs',
-    // Hubs -> overview
     peoplehub: 'overview',
     financehub: 'overview',
     jobshub: 'overview',
     safetyhub: 'overview',
     smartdocs: 'overview',
-    // Default cases
     overview: 'overview',
     settings: 'overview',
     automations: 'overview',
@@ -426,14 +378,12 @@ const getParentSection = (section: Section): Section => {
   return hierarchy[section] || 'overview';
 };
 
-// Get section depth for determining navigation direction
 const getSectionDepth = (section: Section): number => {
   if (section === 'overview') return 0;
   if (['peoplehub', 'financehub', 'jobshub', 'safetyhub', 'smartdocs'].includes(section)) return 1;
   return 2;
 };
 
-// Page transition variants - iOS-style slide animations
 const slideVariants = {
   forward: {
     initial: { opacity: 0, x: 24 },
@@ -449,189 +399,79 @@ const slideVariants = {
 
 const pageTransition = {
   duration: 0.2,
-  ease: [0.32, 0.72, 0, 1], // iOS-like spring curve
+  ease: [0.32, 0.72, 0, 1],
 };
 
-// Section metadata for NativePageWrapper
 interface SectionMeta {
+  eyebrow: string;
   title: string;
-  subtitle?: string;
-  icon: LucideIcon;
-  color: 'yellow' | 'blue' | 'green' | 'purple' | 'orange';
   queryKeys?: string[];
 }
 
 const sectionMetadata: Record<Section, SectionMeta> = {
-  // Overview
   overview: {
-    title: 'Employer Hub',
-    subtitle: 'Your business command centre',
-    icon: Home,
-    color: 'yellow',
+    eyebrow: 'Hub',
+    title: 'Employer',
     queryKeys: ['employerDashboardStats'],
   },
-  // People Hub
   peoplehub: {
-    title: 'People Hub',
-    subtitle: 'Team & hiring',
-    icon: Users,
-    color: 'yellow',
+    eyebrow: 'Hub',
+    title: 'People',
     queryKeys: ['employees', 'talentPool', 'vacancies'],
   },
-  team: {
-    title: 'Your Team',
-    subtitle: 'Active employees',
-    icon: Users,
-    color: 'yellow',
-    queryKeys: ['employees'],
-  },
-  elecid: {
-    title: 'Credentials',
-    subtitle: 'Elec-ID & compliance',
-    icon: CreditCard,
-    color: 'purple',
-    queryKeys: ['employees', 'certifications'],
-  },
-  timesheets: {
-    title: 'Timesheets',
-    subtitle: 'Hours & attendance',
-    icon: Clock,
-    color: 'orange',
-    queryKeys: ['timesheets'],
-  },
-  comms: {
-    title: 'Communications',
-    subtitle: 'Messages & alerts',
-    icon: MessageSquare,
-    color: 'blue',
-    queryKeys: ['communications'],
-  },
-  talentpool: {
-    title: 'Talent Pool',
-    subtitle: 'Browse available sparkies',
-    icon: UserSearch,
-    color: 'green',
-    queryKeys: ['talentPool'],
-  },
-  vacancies: {
-    title: 'Job Vacancies',
-    subtitle: 'Post jobs & manage apps',
-    icon: Briefcase,
-    color: 'blue',
-    queryKeys: ['vacancies', 'applications'],
-  },
-  // Finance Hub
+  team: { eyebrow: 'People', title: 'Your Team', queryKeys: ['employees'] },
+  elecid: { eyebrow: 'People', title: 'Credentials', queryKeys: ['employees', 'certifications'] },
+  timesheets: { eyebrow: 'People', title: 'Timesheets', queryKeys: ['timesheets'] },
+  comms: { eyebrow: 'People', title: 'Communications', queryKeys: ['communications'] },
+  talentpool: { eyebrow: 'People', title: 'Talent Pool', queryKeys: ['talentPool'] },
+  vacancies: { eyebrow: 'People', title: 'Vacancies', queryKeys: ['vacancies', 'applications'] },
   financehub: {
-    title: 'Finance Hub',
-    subtitle: 'Quotes, invoices & costs',
-    icon: PoundSterling,
-    color: 'green',
+    eyebrow: 'Hub',
+    title: 'Finance',
     queryKeys: ['quotes', 'invoices', 'expenses'],
   },
-  quotes: {
-    title: 'Quotes & Invoices',
-    icon: FileText,
-    color: 'green',
-    queryKeys: ['quotes', 'invoices'],
-  },
-  tenders: { title: 'Tenders', icon: FileText, color: 'blue', queryKeys: ['tenders'] },
-  expenses: { title: 'Expenses', icon: Receipt, color: 'orange', queryKeys: ['expenses'] },
-  procurement: {
-    title: 'Procurement',
-    icon: ShoppingCart,
-    color: 'blue',
-    queryKeys: ['procurement', 'suppliers'],
-  },
-  financials: {
-    title: 'Job Financials',
-    icon: BarChart3,
-    color: 'green',
-    queryKeys: ['jobFinancials'],
-  },
-  reports: { title: 'Reports', icon: BarChart3, color: 'blue', queryKeys: ['reports'] },
-  signatures: { title: 'Signatures', icon: FileSignature, color: 'purple' },
-  pricebook: { title: 'Price Book', icon: Tag, color: 'yellow', queryKeys: ['priceBook'] },
-  // Jobs Hub
-  jobshub: {
-    title: 'Jobs Hub',
-    subtitle: 'Projects & tracking',
-    icon: Briefcase,
-    color: 'blue',
-    queryKeys: ['jobs', 'activeJobs'],
-  },
-  jobpacks: { title: 'Job Packs', icon: Folder, color: 'yellow', queryKeys: ['jobPacks'] },
-  jobs: { title: 'Jobs', icon: Briefcase, color: 'blue', queryKeys: ['jobs'] },
-  jobboard: { title: 'Job Board', icon: Briefcase, color: 'blue', queryKeys: ['jobs'] },
-  timeline: { title: 'Timeline', icon: Clock, color: 'blue', queryKeys: ['jobTimeline'] },
-  tracking: {
-    title: 'Worker Tracking',
-    icon: MapPin,
-    color: 'green',
-    queryKeys: ['workerTracking'],
-  },
-  progresslogs: {
-    title: 'Progress Logs',
-    icon: ListChecks,
-    color: 'blue',
-    queryKeys: ['progressLogs'],
-  },
-  issues: { title: 'Job Issues', icon: AlertCircle, color: 'orange', queryKeys: ['jobIssues'] },
-  testing: {
-    title: 'Testing Workflow',
-    icon: PlayCircle,
-    color: 'purple',
-    queryKeys: ['testingWorkflow'],
-  },
-  quality: {
-    title: 'Quality & Snags',
-    icon: CheckCircle,
-    color: 'green',
-    queryKeys: ['quality', 'snags'],
-  },
-  clientportal: { title: 'Client Portal', icon: Users2, color: 'blue' },
-  fleet: { title: 'Fleet', icon: Truck, color: 'orange', queryKeys: ['fleet', 'vehicles'] },
-  photogallery: { title: 'Photo Gallery', icon: Camera, color: 'purple', queryKeys: ['photos'] },
-  // Safety Hub
+  quotes: { eyebrow: 'Finance', title: 'Quotes & Invoices', queryKeys: ['quotes', 'invoices'] },
+  tenders: { eyebrow: 'Finance', title: 'Tenders', queryKeys: ['tenders'] },
+  expenses: { eyebrow: 'Finance', title: 'Expenses', queryKeys: ['expenses'] },
+  procurement: { eyebrow: 'Finance', title: 'Procurement', queryKeys: ['procurement', 'suppliers'] },
+  financials: { eyebrow: 'Finance', title: 'Job Financials', queryKeys: ['jobFinancials'] },
+  reports: { eyebrow: 'Finance', title: 'Reports', queryKeys: ['reports'] },
+  signatures: { eyebrow: 'Finance', title: 'Signatures' },
+  pricebook: { eyebrow: 'Finance', title: 'Price Book', queryKeys: ['priceBook'] },
+  jobshub: { eyebrow: 'Hub', title: 'Jobs', queryKeys: ['jobs', 'activeJobs'] },
+  jobpacks: { eyebrow: 'Jobs', title: 'Job Packs', queryKeys: ['jobPacks'] },
+  jobs: { eyebrow: 'Jobs', title: 'Jobs', queryKeys: ['jobs'] },
+  jobboard: { eyebrow: 'Jobs', title: 'Job Board', queryKeys: ['jobs'] },
+  timeline: { eyebrow: 'Jobs', title: 'Timeline', queryKeys: ['jobTimeline'] },
+  tracking: { eyebrow: 'Jobs', title: 'Worker Tracking', queryKeys: ['workerTracking'] },
+  progresslogs: { eyebrow: 'Jobs', title: 'Progress Logs', queryKeys: ['progressLogs'] },
+  issues: { eyebrow: 'Jobs', title: 'Job Issues', queryKeys: ['jobIssues'] },
+  testing: { eyebrow: 'Jobs', title: 'Testing Workflow', queryKeys: ['testingWorkflow'] },
+  quality: { eyebrow: 'Jobs', title: 'Quality & Snags', queryKeys: ['quality', 'snags'] },
+  clientportal: { eyebrow: 'Jobs', title: 'Client Portal' },
+  fleet: { eyebrow: 'Jobs', title: 'Fleet', queryKeys: ['fleet', 'vehicles'] },
+  photogallery: { eyebrow: 'Jobs', title: 'Photo Gallery', queryKeys: ['photos'] },
   safetyhub: {
-    title: 'Safety Hub',
-    subtitle: 'RAMS & compliance',
-    icon: ShieldCheck,
-    color: 'orange',
+    eyebrow: 'Hub',
+    title: 'Safety',
     queryKeys: ['rams', 'incidents', 'compliance'],
   },
-  safety: {
-    title: 'Health & Safety',
-    icon: ShieldCheck,
-    color: 'orange',
-    queryKeys: ['safetyRecords'],
-  },
-  rams: { title: 'RAMS', icon: FileCheck, color: 'orange', queryKeys: ['rams'] },
-  incidents: { title: 'Incidents', icon: AlertCircle, color: 'orange', queryKeys: ['incidents'] },
-  policies: { title: 'Policies', icon: BookOpen, color: 'blue', queryKeys: ['policies'] },
-  contracts: { title: 'Contracts', icon: FileSignature, color: 'purple', queryKeys: ['contracts'] },
-  training: {
-    title: 'Training Records',
-    icon: GraduationCap,
-    color: 'blue',
-    queryKeys: ['trainingRecords'],
-  },
-  briefings: { title: 'Briefings', icon: ClipboardList, color: 'yellow', queryKeys: ['briefings'] },
-  compliance: { title: 'Compliance', icon: CheckCircle, color: 'green', queryKeys: ['compliance'] },
-  // Smart Docs Hub
-  smartdocs: {
-    title: 'Smart Docs',
-    subtitle: 'AI-powered documents',
-    icon: Sparkles,
-    color: 'purple',
-  },
-  aidesignspec: { title: 'AI Design Spec', icon: Cpu, color: 'purple' },
-  airams: { title: 'AI RAMS', icon: ShieldCheck, color: 'purple' },
-  aimethodstatement: { title: 'Method Statement Generator', icon: FileText, color: 'purple' },
-  aibriefingpack: { title: 'AI Briefing Pack', icon: ClipboardList, color: 'purple' },
-  aiquote: { title: 'AI Quote', icon: PoundSterling, color: 'purple' },
-  // Other
-  automations: { title: 'Automations', icon: Zap, color: 'purple' },
-  settings: { title: 'Settings', icon: Settings, color: 'yellow' },
+  safety: { eyebrow: 'Safety', title: 'Health & Safety', queryKeys: ['safetyRecords'] },
+  rams: { eyebrow: 'Safety', title: 'RAMS', queryKeys: ['rams'] },
+  incidents: { eyebrow: 'Safety', title: 'Incidents', queryKeys: ['incidents'] },
+  policies: { eyebrow: 'Safety', title: 'Policies', queryKeys: ['policies'] },
+  contracts: { eyebrow: 'Safety', title: 'Contracts', queryKeys: ['contracts'] },
+  training: { eyebrow: 'Safety', title: 'Training Records', queryKeys: ['trainingRecords'] },
+  briefings: { eyebrow: 'Safety', title: 'Briefings', queryKeys: ['briefings'] },
+  compliance: { eyebrow: 'Safety', title: 'Compliance', queryKeys: ['compliance'] },
+  smartdocs: { eyebrow: 'Hub', title: 'Smart Docs' },
+  aidesignspec: { eyebrow: 'Smart Docs', title: 'Design Spec' },
+  airams: { eyebrow: 'Smart Docs', title: 'RAMS' },
+  aimethodstatement: { eyebrow: 'Smart Docs', title: 'Method Statement' },
+  aibriefingpack: { eyebrow: 'Smart Docs', title: 'Briefing Pack' },
+  aiquote: { eyebrow: 'Smart Docs', title: 'Quote' },
+  automations: { eyebrow: 'Tools', title: 'Automations' },
+  settings: { eyebrow: 'Account', title: 'Settings' },
 };
 
 const EmployerDashboard = () => {
@@ -648,11 +488,9 @@ const EmployerDashboard = () => {
   const activeSection = (searchParams.get('section') as Section) || 'overview';
   const setActiveSection = (section: Section) => setSearchParams({ section }, { replace: false });
 
-  // Get current section metadata
   const currentMeta = sectionMetadata[activeSection];
-  const CurrentIcon = currentMeta.icon;
+  const isOverview = activeSection === 'overview';
 
-  // Pull-to-refresh handler - invalidates React Query cache
   const handleRefresh = useCallback(async () => {
     const queryKeys = currentMeta.queryKeys || [];
     if (queryKeys.length > 0) {
@@ -664,11 +502,9 @@ const EmployerDashboard = () => {
     }
   }, [currentMeta, queryClient, toast]);
 
-  // Track navigation direction for page transitions
   const previousSectionRef = useRef<Section | null>(null);
   const [navigationDirection, setNavigationDirection] = useState<'forward' | 'backward'>('forward');
 
-  // Update navigation direction when section changes
   useEffect(() => {
     if (previousSectionRef.current && previousSectionRef.current !== activeSection) {
       const prevDepth = getSectionDepth(previousSectionRef.current);
@@ -678,7 +514,6 @@ const EmployerDashboard = () => {
     previousSectionRef.current = activeSection;
   }, [activeSection]);
 
-  // Voice-controlled dialog states
   const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);
   const [jobDialogOpen, setJobDialogOpen] = useState(false);
   const [employeeDialogOpen, setEmployeeDialogOpen] = useState(false);
@@ -690,7 +525,6 @@ const EmployerDashboard = () => {
   const [supplierDialogOpen, setSupplierDialogOpen] = useState(false);
   const [vacancyDialogOpen, setVacancyDialogOpen] = useState(false);
 
-  // Voice dialog open handler
   useEffect(() => {
     const handleOpenDialog = (e: CustomEvent<{ dialogName: string }>) => {
       const { dialogName } = e.detail;
@@ -745,14 +579,11 @@ const EmployerDashboard = () => {
   }, []);
 
   const handleNavigate = useCallback((section: Section | string) => {
-    // Complete mapping from voice command section names to internal section names
     const sectionMap: Record<string, Section> = {
-      // Main sections
       overview: 'overview',
       dashboard: 'overview',
       home: 'overview',
 
-      // Hubs
       'people-hub': 'peoplehub',
       peoplehub: 'peoplehub',
       'people hub': 'peoplehub',
@@ -767,7 +598,6 @@ const EmployerDashboard = () => {
       safetyhub: 'safetyhub',
       'safety hub': 'safetyhub',
 
-      // People Hub sections
       employees: 'team',
       team: 'team',
       workers: 'team',
@@ -796,7 +626,6 @@ const EmployerDashboard = () => {
       recruitment: 'vacancies',
       hiring: 'vacancies',
 
-      // Finance Hub sections
       'quotes-invoices': 'quotes',
       quotes: 'quotes',
       invoices: 'quotes',
@@ -823,7 +652,6 @@ const EmployerDashboard = () => {
       pricing: 'pricebook',
       rates: 'pricebook',
 
-      // Jobs Hub sections
       'job-packs': 'jobpacks',
       jobpacks: 'jobpacks',
       'job packs': 'jobpacks',
@@ -872,7 +700,6 @@ const EmployerDashboard = () => {
       gallery: 'photogallery',
       images: 'photogallery',
 
-      // Safety Hub sections
       safety: 'safetyhub',
       'health and safety': 'safetyhub',
       'h&s': 'safetyhub',
@@ -900,12 +727,10 @@ const EmployerDashboard = () => {
       regulations: 'compliance',
       audits: 'compliance',
 
-      // Settings
       settings: 'settings',
       preferences: 'settings',
       configuration: 'settings',
 
-      // Smart Docs Hub
       'smart-docs': 'smartdocs',
       smartdocs: 'smartdocs',
       'smart docs': 'smartdocs',
@@ -929,13 +754,10 @@ const EmployerDashboard = () => {
     setActiveSection(mappedSection);
   }, []);
 
-  // Use real browser history for back navigation (fixes phone back button)
   const handleBack = useCallback(() => {
-    // Check if we have browser history to go back to
     if (window.history.length > 1) {
       navigate(-1);
     } else {
-      // Fallback for direct URL access - navigate to logical parent
       const parent = getParentSection(activeSection);
       setActiveSection(parent);
     }
@@ -1025,7 +847,6 @@ const EmployerDashboard = () => {
         return <ComplianceSection />;
       case 'automations':
         return <AutomationsSection />;
-      // Smart Docs Hub
       case 'smartdocs':
         return <SmartDocsHub onNavigate={handleNavigate} />;
       case 'aidesignspec':
@@ -1043,38 +864,50 @@ const EmployerDashboard = () => {
     }
   };
 
+  const hasRefresh = !!(currentMeta.queryKeys && currentMeta.queryKeys.length > 0);
+
   return (
     <EmployerProvider>
-      <NativePageWrapper
-        title={currentMeta.title}
-        subtitle={currentMeta.subtitle}
-        icon={<CurrentIcon />}
-        headerColor={currentMeta.color}
-        showBackButton={activeSection !== 'overview'}
-        hideHeader={activeSection === 'overview'}
-        onBack={handleBack}
-        onRefresh={
-          currentMeta.queryKeys && currentMeta.queryKeys.length > 0 ? handleRefresh : undefined
-        }
-        collapsingHeader={true}
-        contentClassName="pb-20 md:pb-0"
-      >
-        {/* Animated page transitions */}
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={activeSection}
-            initial={slideVariants[navigationDirection].initial}
-            animate={slideVariants[navigationDirection].animate}
-            exit={slideVariants[navigationDirection].exit}
-            transition={pageTransition}
-            className="w-full"
-          >
-            <Suspense fallback={<SectionLoader />}>{renderSection()}</Suspense>
-          </motion.div>
-        </AnimatePresence>
-      </NativePageWrapper>
+      <div className="min-h-screen bg-[hsl(0_0%_6%)] text-white">
+        {!isOverview && (
+          <div className="sticky top-0 z-30 bg-[hsl(0_0%_6%)]/85 backdrop-blur-md border-b border-white/[0.06]">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center gap-3">
+              <IconButton aria-label="Back" onClick={handleBack}>
+                <ChevronLeft className="h-5 w-5" />
+              </IconButton>
+              <div className="min-w-0 flex-1">
+                <Eyebrow>{currentMeta.eyebrow}</Eyebrow>
+                <div className="mt-0.5 text-[14px] font-semibold text-white truncate">
+                  {currentMeta.title}
+                </div>
+              </div>
+              {hasRefresh && (
+                <IconButton aria-label="Refresh" onClick={handleRefresh}>
+                  <RefreshCw className="h-4 w-4" />
+                </IconButton>
+              )}
+            </div>
+          </div>
+        )}
 
-      {/* Voice-controlled dialogs - outside NativePageWrapper */}
+        <main className="px-4 sm:px-6 lg:px-8">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={activeSection}
+              initial={slideVariants[navigationDirection].initial}
+              animate={slideVariants[navigationDirection].animate}
+              exit={slideVariants[navigationDirection].exit}
+              transition={pageTransition}
+              className="w-full"
+            >
+              <Suspense fallback={<div className="mx-auto max-w-7xl pt-6"><LoadingBlocks /></div>}>
+                {renderSection()}
+              </Suspense>
+            </motion.div>
+          </AnimatePresence>
+        </main>
+      </div>
+
       <Suspense fallback={null}>
         {quoteDialogOpen && (
           <CreateQuoteDialog open={quoteDialogOpen} onOpenChange={setQuoteDialogOpen} />
@@ -1123,8 +956,6 @@ const EmployerDashboard = () => {
           />
         )}
       </Suspense>
-
-      {/* Voice assistant removed */}
     </EmployerProvider>
   );
 };

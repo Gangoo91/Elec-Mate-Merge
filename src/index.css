@@ -2426,19 +2426,51 @@ input::-webkit-caps-lock-indicator {
   }
 
   /* Info Section Accordion */
+  /* Board card — layered editorial surface with a subtle top-to-bottom warm wash
+     to avoid flat-grey fatigue. Top accent ribbon (applied via modifier) marks
+     Main vs Sub without a coloured left-border stripe. */
   .testing-info-section {
-    @apply rounded-xl bg-white/[0.02] border border-white/5;
-    @apply overflow-hidden;
+    @apply rounded-2xl overflow-hidden relative;
+    background:
+      radial-gradient(1200px 400px at 50% -200px, hsl(48 100% 50% / 0.03), transparent 60%),
+      linear-gradient(180deg, hsl(0 0% 13%) 0%, hsl(0 0% 10.5%) 100%);
+    border: 1px solid hsl(0 0% 100% / 0.07);
+  }
+
+  /* Top-edge identity ribbon — elec-yellow for main, silver for sub.
+     1px hairline, softly faded at the edges. */
+  .testing-info-section--main::before,
+  .testing-info-section--sub::before {
+    content: '';
+    @apply absolute inset-x-0 top-0 h-px pointer-events-none;
+  }
+  .testing-info-section--main::before {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      hsl(48 100% 50% / 0.9) 15%,
+      hsl(48 100% 50% / 0.9) 85%,
+      transparent 100%
+    );
+  }
+  .testing-info-section--sub::before {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      hsl(0 0% 100% / 0.18) 15%,
+      hsl(0 0% 100% / 0.18) 85%,
+      transparent 100%
+    );
   }
 
   .testing-info-header {
-    @apply flex items-center justify-between p-4 w-full;
-    @apply text-sm font-semibold text-white/90;
-    @apply hover:bg-white/5 cursor-pointer;
-    @apply active:scale-[0.995] touch-manipulation;
+    @apply flex items-center justify-between px-5 py-5 lg:px-7 lg:py-6 w-full;
+    @apply text-sm font-semibold text-white;
+    @apply hover:bg-white/[0.015] cursor-pointer;
+    @apply active:scale-[0.998] touch-manipulation;
     transition:
-      background-color 100ms ease-out,
-      transform 100ms ease-out;
+      background-color 140ms ease-out,
+      transform 140ms ease-out;
   }
 
   /* Table container */
@@ -2484,12 +2516,14 @@ input::-webkit-caps-lock-indicator {
   .sot-header-group {
     @apply sticky top-0 z-30;
     background: hsl(0 0% 15%);
-    border-bottom: 2px solid hsl(48 100% 50% / 0.3);
+    /* Matches body row horizontal line weight — keeps every horizontal divider level */
+    border-bottom: 1px solid hsl(0 0% 100% / 0.1);
   }
 
   .sot-header-group-cell {
-    @apply text-xs font-bold text-white/90 text-center py-2 px-2;
-    @apply border-r border-white/5 last:border-r-0;
+    @apply text-xs font-bold text-white text-center py-2 px-2;
+    /* Uniform 1px divider so group row aligns perfectly with label + body rows */
+    @apply border-r border-white/10 last:border-r-0;
     @apply transition-colors;
   }
 
@@ -2501,58 +2535,87 @@ input::-webkit-caps-lock-indicator {
   .sot-header-labels {
     @apply sticky top-[33px] z-30;
     background: hsl(0 0% 12%);
-    border-bottom: 1px solid hsl(var(--border) / 0.5);
+    /* Same 1px weight as group row / body rows for a level grid */
+    border-bottom: 1px solid hsl(0 0% 100% / 0.1);
   }
 
   .sot-header-cell {
-    @apply text-[10px] font-semibold text-white/60 text-center py-2 px-1.5;
-    @apply border-r border-white/5 last:border-r-0;
+    @apply text-[10px] font-semibold text-white text-center py-2 px-1.5;
+    /* Uniform 1px divider — matches group row + body cells for a clean grid */
+    @apply border-r border-white/10 last:border-r-0;
     @apply uppercase tracking-wider;
     @apply whitespace-nowrap;
   }
 
-  /* Color-coded header cells by group */
-  .sot-header-cell[data-group='circuit'] {
-    @apply bg-blue-500/5;
-  }
-  .sot-header-cell[data-group='conductor'] {
-    @apply bg-emerald-500/5;
-  }
-  .sot-header-cell[data-group='protection'] {
-    @apply bg-orange-500/5;
-  }
-  .sot-header-cell[data-group='rcd-details'] {
-    @apply bg-rose-500/5;
-  }
-  .sot-header-cell[data-group='continuity'] {
-    @apply bg-violet-500/5;
-  }
-  .sot-header-cell[data-group='insulation'] {
-    @apply bg-purple-500/5;
-  }
-  .sot-header-cell[data-group='zs'] {
-    @apply bg-amber-500/5;
-  }
-  .sot-header-cell[data-group='rcd-tests'] {
-    @apply bg-indigo-500/5;
-  }
-  .sot-header-cell[data-group='afdd'] {
-    @apply bg-cyan-500/5;
-  }
+  /* Unified neutral grey for all group header label cells — no coloured tints */
+  .sot-header-cell[data-group='circuit'],
+  .sot-header-cell[data-group='conductor'],
+  .sot-header-cell[data-group='protection'],
+  .sot-header-cell[data-group='rcd-details'],
+  .sot-header-cell[data-group='continuity'],
+  .sot-header-cell[data-group='insulation'],
+  .sot-header-cell[data-group='zs'],
+  .sot-header-cell[data-group='rcd-tests'],
+  .sot-header-cell[data-group='afdd'],
   .sot-header-cell[data-group='functional'] {
-    @apply bg-teal-500/5;
+    background: hsl(0 0% 10%);
   }
 
-  /* Sticky circuit number column */
+  /* Sticky circuit number column (first sticky) — ELE-830 scroll-overlap fix
+     Scrolling cells must pass BEHIND this column, not through it. z-40 plus
+     an opaque background matched to the row, plus a subtle right-edge
+     shadow so the scroll boundary is visible. */
   .sot-sticky-col {
-    @apply sticky left-0 z-20;
+    @apply sticky left-0 z-40;
     background: hsl(0 0% 13%);
-    border-right: 1px solid hsl(0 0% 0% / 0.2); /* Simple border instead of box-shadow for performance */
+    box-shadow: 6px 0 6px -4px hsl(0 0% 0% / 0.35);
+  }
+
+  /* Match sticky bg to zebra striping so odd/even rows don't betray it */
+  .sot-row:nth-child(even) .sot-sticky-col {
+    background: hsl(0 0% 14%);
+  }
+  .sot-row:hover .sot-sticky-col {
+    background: hsl(48 100% 50% / 0.05);
+  }
+
+  /* Sticky description column (second sticky) — sits right after the
+     80px-wide circuit column. Same z-index/background rules so no scroll
+     bleed between them and the scrolling area. */
+  /* Description stuck just right of the C# column. Must match C# width (72px). */
+  .sot-sticky-col-2 {
+    @apply sticky z-40;
+    left: 72px;
+    background: hsl(0 0% 13%);
+    box-shadow: 8px 0 10px -6px hsl(0 0% 0% / 0.4);
+  }
+
+  .sot-row:nth-child(even) .sot-sticky-col-2 {
+    background: hsl(0 0% 14%);
+  }
+  .sot-row:hover .sot-sticky-col-2 {
+    background: hsl(48 100% 50% / 0.05);
+  }
+
+  /* Header sticky columns — opaque bg that matches the row they sit in so the
+     left edge doesn't read as a separate band. Opacity is what stops scroll
+     bleed, not tonal contrast. */
+  .sot-header-labels .sot-sticky-col,
+  .sot-header-labels .sot-sticky-col-2 {
+    background: hsl(0 0% 12%);
+  }
+  .sot-header-group .sot-sticky-col,
+  .sot-header-group .sot-sticky-col-2 {
+    background: hsl(0 0% 15%);
   }
 
   /* Table Body Rows */
   .sot-row {
-    @apply border-b border-white/5;
+    /* Explicit bg so odd rows sit on the same surface as the sticky column,
+       not on the card gradient — keeps the table grid tonally uniform. */
+    background: hsl(0 0% 13%);
+    /* Same weight as header horizontals for a perfectly level grid */
+    @apply border-b border-white/10;
     contain: layout style;
   }
 
@@ -2561,7 +2624,8 @@ input::-webkit-caps-lock-indicator {
   }
 
   .sot-row:nth-child(even) {
-    background: hsl(0 0% 11%);
+    /* Stronger zebra — easier to track a row across a wide table */
+    background: hsl(0 0% 14%);
   }
 
   .sot-row:nth-child(even):hover {
@@ -2570,15 +2634,17 @@ input::-webkit-caps-lock-indicator {
 
   /* Table Cells */
   .sot-cell {
-    @apply py-2 px-1.5 text-sm text-white/90;
-    @apply border-r border-white/5 last:border-r-0;
+    @apply py-2 px-1.5 text-sm text-white;
+    /* Matches header row dividers — gives perfectly level vertical lines */
+    @apply border-r border-white/10 last:border-r-0;
   }
 
   .sot-cell-input {
     @apply h-9 w-full bg-transparent border-0 text-center text-sm text-white;
-    @apply focus:bg-white/5 focus:ring-1 focus:ring-elec-yellow/50 focus:outline-none;
+    /* Stronger active-cell highlight so keyboard navigation is obvious */
+    @apply focus:bg-elec-yellow/[0.06] focus:ring-2 focus:ring-elec-yellow/60 focus:outline-none;
     @apply rounded;
-    transition: background-color 150ms ease-out;
+    transition: background-color 150ms ease-out, box-shadow 150ms ease-out;
   }
 
   .sot-cell-input::placeholder {
@@ -2661,11 +2727,12 @@ input::-webkit-caps-lock-indicator {
     @apply bg-red-500/20 text-red-400 border-red-500/30;
   }
 
-  /* Group collapse button */
+  /* Group collapse button — ELE-830: elec-yellow accent for scan-ability */
   .sot-collapse-btn {
     @apply inline-flex items-center justify-center gap-1 h-6 px-2 rounded;
-    @apply text-xs font-medium text-white/70 hover:text-white;
-    @apply hover:bg-white/10 transition-all duration-150;
+    /* Toned down — group headers shouldn't visually compete with data */
+    @apply text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white;
+    @apply hover:bg-white/5 transition-all duration-150;
   }
 
   /* ============================================
@@ -2974,4 +3041,67 @@ input[type='datetime-local']::-webkit-datetime-edit {
 [data-sonner-toast][data-type='success'],
 [data-sonner-toast]:not([data-type]) {
   border-left-color: #ffc800 !important;
+}
+
+/* Lesson plan print styles — classroom-ready A4 output */
+@media print {
+  .no-print,
+  nav,
+  aside,
+  [role='banner'] {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #ffffff !important;
+    color: #111 !important;
+  }
+  body * {
+    color: #111 !important;
+    border-color: #d4d4d4 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  a {
+    color: #111 !important;
+    text-decoration: none !important;
+  }
+  .lesson-plan-print-root {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .lesson-plan-print-root h1 {
+    font-size: 22pt !important;
+  }
+  .lesson-plan-print-root h2 {
+    font-size: 14pt !important;
+    margin-top: 14pt !important;
+    page-break-after: avoid;
+  }
+  .lesson-plan-print-root h3 {
+    font-size: 11pt !important;
+  }
+  .lesson-plan-print-root p,
+  .lesson-plan-print-root li {
+    font-size: 10pt !important;
+    line-height: 1.45 !important;
+  }
+  .lesson-plan-print-root section,
+  .lesson-plan-print-root .print-break-avoid {
+    page-break-inside: avoid;
+  }
+  .lesson-plan-print-root .prose {
+    max-width: 100% !important;
+  }
+  /* Reg chips — print-friendly */
+  .lesson-plan-print-root .bg-elec-yellow\/\[0\.04\],
+  .lesson-plan-print-root [class*='bg-amber'] {
+    background: #fff8dc !important;
+    border: 1px solid #b8860b !important;
+  }
+  @page {
+    size: A4;
+    margin: 14mm 14mm 16mm 14mm;
+  }
 }

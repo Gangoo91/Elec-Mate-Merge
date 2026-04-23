@@ -31,6 +31,12 @@ interface TestResultDesktopTableRowProps {
   onRemove: (id: string) => void;
   showRegulationStatus?: boolean;
   rowNumber?: number;
+  /**
+   * System earthing arrangement (TT / TN-S / TN-C-S) from the cert. Passed to
+   * validators so TT circuits are checked against RCD-based Zs limits (Reg
+   * 411.5.3) instead of MCB tables. ELE-830 follow-up.
+   */
+  earthingArrangement?: string;
 }
 
 const TestResultDesktopTableRow: React.FC<TestResultDesktopTableRowProps> = ({
@@ -39,12 +45,13 @@ const TestResultDesktopTableRow: React.FC<TestResultDesktopTableRowProps> = ({
   onRemove,
   showRegulationStatus = false,
   rowNumber = 0,
+  earthingArrangement,
 }) => {
   const [showRegulationDialog, setShowRegulationDialog] = useState(false);
 
-  const validation = validateTestResult(result);
+  const validation = validateTestResult(result, earthingArrangement);
   const compliance = getOverallCompliance(validation);
-  const regulationCheck = checkRegulationCompliance(result);
+  const regulationCheck = checkRegulationCompliance(result, earthingArrangement);
 
   const getRowBgColor = () => {
     if (result.sourceCircuitId) return 'bg-blue-50/20 hover:bg-blue-50/40';

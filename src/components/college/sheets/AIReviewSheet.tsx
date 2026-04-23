@@ -71,7 +71,7 @@ const staggerItem = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.2 } },
 };
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function AIReviewSheet({
   open,
@@ -146,7 +146,7 @@ export function AIReviewSheet({
                   Review results
                 </SheetTitle>
                 {result.processing_time_ms && (
-                  <p className="text-[11.5px] text-white/50 mt-1 text-left">
+                  <p className="text-[11.5px] text-white/75 mt-1 text-left">
                     Completed in {(result.processing_time_ms / 1000).toFixed(1)}s
                   </p>
                 )}
@@ -255,7 +255,7 @@ export function AIReviewSheet({
                               <Pill tone={STATUS_TONE[ac.status] || 'red'}>
                                 {STATUS_LABEL[ac.status] || 'Not Met'}
                               </Pill>
-                              <span className="text-[13px] text-white/50">
+                              <span className="text-[13px] text-white/75">
                                 {expandedAC === ac.ac_ref ? '−' : '+'}
                               </span>
                             </div>
@@ -369,10 +369,10 @@ export function AIReviewSheet({
                       <textarea
                         value={editedFeedback}
                         onChange={(e) => setEditedFeedback(e.target.value)}
-                        className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[160px] resize-none"
+                        className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[160px] resize-none"
                         placeholder="AI-generated feedback will appear here…"
                       />
-                      <p className="text-[10px] text-white/40 mt-2">
+                      <p className="text-[10px] text-white/70 mt-2">
                         {editedFeedback.length} characters — edit as needed before applying
                       </p>
                     </div>

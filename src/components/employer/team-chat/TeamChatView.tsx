@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -22,6 +21,8 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import type { TeamChannel, TeamDirectMessage } from '@/services/teamChatService';
+import { IconButton, PrimaryButton, inputClass } from '@/components/employer/editorial';
+import { cn } from '@/lib/utils';
 
 interface TeamChatViewProps {
   channel?: TeamChannel | null;
@@ -134,15 +135,18 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col">
+      <SheetContent
+        side="bottom"
+        className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
+      >
         {/* Header */}
-        <div className="flex items-center gap-3 p-4 border-b border-border">
-          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)}>
+        <div className="flex items-center gap-3 p-4 border-b border-white/[0.06]">
+          <IconButton onClick={() => onOpenChange(false)} aria-label="Back">
             <ArrowLeft className="h-5 w-5" />
-          </Button>
+          </IconButton>
 
           {headerInfo.icon ? (
-            <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center">
+            <div className="h-10 w-10 rounded-lg bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
               {headerInfo.icon}
             </div>
           ) : (
@@ -155,24 +159,31 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
           )}
 
           <div className="flex-1 min-w-0">
-            <p className="font-semibold truncate">{headerInfo.name}</p>
-            <p className="text-sm text-white truncate">{headerInfo.subtitle}</p>
+            <p className="font-semibold text-white truncate">{headerInfo.name}</p>
+            <p className="text-[12px] text-white truncate mt-0.5">{headerInfo.subtitle}</p>
           </div>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <button
+                type="button"
+                aria-label="More actions"
+                className="h-10 w-10 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] transition-colors touch-manipulation"
+              >
                 <MoreVertical className="h-5 w-5" />
-              </Button>
+              </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent
+              align="end"
+              className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
+            >
               {isChannelMode && (
                 <>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="text-white focus:bg-white/[0.08] focus:text-white">
                     <Users className="h-4 w-4 mr-2" />
                     View Members
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem className="text-white focus:bg-white/[0.08] focus:text-white">
                     <Settings className="h-4 w-4 mr-2" />
                     Channel Settings
                   </DropdownMenuItem>
@@ -187,20 +198,20 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
           {isLoading ? (
             <div className="space-y-4">
               <div className="flex justify-end">
-                <Skeleton className="h-16 w-3/4 rounded-2xl" />
+                <Skeleton className="h-16 w-3/4 rounded-2xl bg-white/[0.04]" />
               </div>
               <div className="flex justify-start">
-                <Skeleton className="h-12 w-2/3 rounded-2xl" />
+                <Skeleton className="h-12 w-2/3 rounded-2xl bg-white/[0.04]" />
               </div>
               <div className="flex justify-end">
-                <Skeleton className="h-20 w-3/4 rounded-2xl" />
+                <Skeleton className="h-20 w-3/4 rounded-2xl bg-white/[0.04]" />
               </div>
             </div>
           ) : messages.length === 0 ? (
             <div className="flex-1 flex items-center justify-center h-full">
               <div className="text-center">
-                <p className="text-white">No messages yet</p>
-                <p className="text-xs text-white mt-1">Be the first to say something!</p>
+                <p className="text-white text-base font-medium">No messages yet</p>
+                <p className="text-[12px] text-white mt-1">Be the first to say something!</p>
               </div>
             </div>
           ) : (
@@ -214,22 +225,22 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
                 >
                   {!isOwn && (
                     <Avatar className="h-8 w-8 mr-2 shrink-0">
-                      <AvatarFallback className="text-xs bg-muted">
+                      <AvatarFallback className="text-[10px] bg-white/[0.06] text-white border border-white/[0.08]">
                         {msg.sender_id.slice(0, 2).toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
                   )}
                   <div
-                    className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
-                      isOwn ? 'bg-elec-yellow text-black rounded-br-md' : 'bg-muted rounded-bl-md'
+                    className={`max-w-[75%] rounded-2xl px-4 py-2.5 border ${
+                      isOwn
+                        ? 'bg-elec-yellow/20 border-elec-yellow/30 text-white rounded-br-md'
+                        : 'bg-[hsl(0_0%_12%)] border-white/[0.06] text-white rounded-bl-md'
                     }`}
                   >
-                    <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
-                    <p
-                      className={`text-[10px] mt-1 ${
-                        isOwn ? 'text-black/60' : 'text-white'
-                      }`}
-                    >
+                    <p className="text-sm whitespace-pre-wrap break-words text-white">
+                      {msg.content}
+                    </p>
+                    <p className="text-[10px] mt-1 text-white">
                       {new Date(msg.sent_at).toLocaleTimeString([], {
                         hour: '2-digit',
                         minute: '2-digit',
@@ -244,27 +255,27 @@ export function TeamChatView({ channel, dmConversation, open, onOpenChange }: Te
         </div>
 
         {/* Input */}
-        <div className="flex items-end gap-2 p-3 border-t border-border bg-background">
+        <div className="flex items-end gap-2 p-3 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]">
           <Input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type a message..."
             disabled={isSending}
-            className="flex-1 h-11 bg-muted border-border"
+            className={cn(inputClass, 'flex-1')}
           />
-          <Button
+          <PrimaryButton
             onClick={handleSend}
             disabled={!message.trim() || isSending}
-            size="icon"
-            className="h-11 w-11 shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            size="sm"
+            className="h-11 w-11 p-0 shrink-0"
           >
             {isSending ? (
               <Loader2 className="h-5 w-5 animate-spin" />
             ) : (
               <Send className="h-5 w-5" />
             )}
-          </Button>
+          </PrimaryButton>
         </div>
       </SheetContent>
     </Sheet>

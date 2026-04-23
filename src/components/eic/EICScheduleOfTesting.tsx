@@ -1249,6 +1249,30 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     toast.success(`${newBoard.name} added`);
   };
 
+  // ELE-830: Swap adjacent boards' `order` values. Desktop-only entry point
+  // via BoardSection header. Same shape as MultiboardSetup's handleMoveBoard.
+  const handleMoveBoard = (boardId: string, direction: 'up' | 'down') => {
+    const sorted = [...distributionBoards].sort((a, b) => a.order - b.order);
+    const idx = sorted.findIndex((b) => b.id === boardId);
+    if (idx < 0) return;
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= sorted.length) return;
+
+    const a = sorted[idx];
+    const b = sorted[swapIdx];
+    const updated = distributionBoards.map((board) => {
+      if (board.id === a.id) return { ...board, order: b.order };
+      if (board.id === b.id) return { ...board, order: a.order };
+      return board;
+    });
+    setDistributionBoards(updated);
+
+    const formDataUpdate = formatBoardsForFormData(updated, testResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+  };
+
   const handleRemoveBoard = (boardId: string) => {
     const boardToRemove = distributionBoards.find((b) => b.id === boardId);
     if (!boardToRemove || isMainBoardFn(boardToRemove)) {
@@ -2590,109 +2614,124 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
       ) : (
         /* DESKTOP LAYOUT - Premium Professional Dashboard */
         <div className="w-full space-y-6 py-6">
-          {/* Hero Card */}
-          <div className="testing-hero p-6">
-            <div className="relative z-10">
-              {/* Header Row */}
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex items-center gap-4">
-                  <div className="p-3 rounded-2xl bg-elec-yellow/20 border border-elec-yellow/30">
-                    <TestTube className="h-8 w-8 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold text-white">Schedule of Tests</h2>
-                    <p className="text-sm text-white">
-                      BS 7671 compliant circuit testing & verification
-                    </p>
-                  </div>
-                </div>
-
-                {/* Stats Grid */}
-                <div className="flex gap-3">
-                  <div className="testing-stat-card min-w-[80px]">
-                    <span className="text-2xl font-bold text-white">{testResults.length}</span>
-                    <span className="text-xs text-white">Circuits</span>
-                  </div>
-                  <div className="testing-stat-card min-w-[80px]">
-                    <span className="text-2xl font-bold text-green-400">{completedCount}</span>
-                    <span className="text-xs text-white">Complete</span>
-                  </div>
-                  <div className="testing-stat-card min-w-[80px]">
-                    <span className="text-2xl font-bold text-amber-400">{pendingCount}</span>
-                    <span className="text-xs text-white">Pending</span>
-                  </div>
-                  <div className="testing-stat-card min-w-[80px]">
-                    <span className="text-2xl font-bold text-elec-yellow">{progressPercent}%</span>
-                    <span className="text-xs text-white">Progress</span>
-                  </div>
-                </div>
+          {/* Hero — college editorial pattern (matches EICR) */}
+          <div className="space-y-6">
+            <div className="flex items-end justify-between gap-4 flex-wrap">
+              <div className="min-w-0 flex-1">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  Schedule of Tests
+                </p>
+                <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
+                  BS 7671 A4:2026 circuit testing
+                </h1>
+                <p className="mt-3 text-[13px] sm:text-sm text-white/55 max-w-2xl leading-relaxed">
+                  Capture verification, continuity, insulation and loop measurements for every
+                  circuit on every board — aligned with the A4:2026 model schedule of test results.
+                </p>
               </div>
-
-              {/* Single row of tools */}
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                {/* Primary tools - left */}
-                <Button
-                  onClick={() => setShowPhotoCapture(true)}
-                  variant="outline"
-                  className="h-10 sm:h-11 bg-white/5 border-white/20 hover:bg-white/10 text-white"
+              {testResults.length > 0 && (
+                <button
+                  onClick={removeAllTestResults}
+                  className="text-[12px] font-medium text-red-400/90 hover:text-red-300 transition-colors shrink-0 touch-manipulation"
                 >
-                  <Camera className="h-4 w-4 mr-2" />
-                  AI Board Scan
-                </Button>
+                  Clear all →
+                </button>
+              )}
+            </div>
 
-                <Button
-                  onClick={toggleVoice}
-                  disabled={voiceConnecting}
-                  variant="outline"
-                  className={`h-10 sm:h-11 ${
-                    voiceActive
-                      ? 'bg-green-600 hover:bg-green-700 border-green-400/30 text-white'
-                      : voiceConnecting
-                        ? 'bg-yellow-600 animate-pulse border-yellow-400/30 text-white'
-                        : 'bg-white/5 border-white/20 hover:bg-white/10 text-white'
-                  }`}
+            {/* 4-cell hairline stat strip */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+              {[
+                { value: testResults.length, label: 'Circuits', toneClass: 'text-white' },
+                { value: completedCount, label: 'Complete', toneClass: 'text-green-400' },
+                { value: pendingCount, label: 'Pending', toneClass: 'text-amber-400' },
+                { value: `${progressPercent}%`, label: 'Progress', toneClass: 'text-elec-yellow' },
+              ].map((s, i) => (
+                <div
+                  key={s.label}
+                  className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 flex flex-col items-start"
                 >
-                  <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
-                  {voiceActive
-                    ? 'Tap to Stop'
-                    : voiceConnecting
-                      ? 'Connecting...'
-                      : 'Voice Assistant'}
-                </Button>
-
-                <Button
-                  onClick={addTestResult}
-                  variant="outline"
-                  className="h-10 sm:h-11 bg-white/5 border-white/20 hover:bg-white/10 text-white"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Circuit
-                </Button>
-
-                {/* Spacer */}
-                <div className="flex-1 min-w-0" />
-
-                {/* Secondary tools - right */}
-                <Button
-                  onClick={() => setShowAnalytics(!showAnalytics)}
-                  variant="ghost"
-                  className="h-10 sm:h-11 text-white hover:text-white hover:bg-white/10"
-                >
-                  <BarChart3 className="h-4 w-4 mr-2" />
-                  Analytics
-                </Button>
-
-                {testResults.length > 0 && (
-                  <Button
-                    onClick={removeAllTestResults}
-                    variant="ghost"
-                    className="h-10 sm:h-11 text-red-400 hover:text-red-300 hover:bg-red-500/10"
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                    {String(i + 1).padStart(2, '0')} · {s.label}
+                  </span>
+                  <span
+                    className={cn(
+                      'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                      'text-4xl sm:text-5xl lg:text-6xl',
+                      s.toneClass
+                    )}
                   >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Clear All
-                  </Button>
-                )}
+                    {s.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Slim progress bar */}
+            {testResults.length > 0 && (
+              <div className="flex items-center gap-4">
+                <div className="flex-1 h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-amber-400 transition-[width] duration-500"
+                    style={{ width: `${Math.max(2, progressPercent)}%` }}
+                  />
+                </div>
+                <span className="text-[11px] font-medium text-white/70 tabular-nums shrink-0">
+                  {completedCount}/{testResults.length} tested
+                </span>
               </div>
+            )}
+
+            {/* Toolbar — keep icons on buttons since user said keep tools bar as-is */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-4 border-t border-white/[0.06]">
+              <Button
+                onClick={() => setShowPhotoCapture(true)}
+                variant="outline"
+                className="h-10 sm:h-11 bg-white/5 border-white/20 hover:bg-white/10 text-white"
+              >
+                <Camera className="h-4 w-4 mr-2" />
+                AI Board Scan
+              </Button>
+
+              <Button
+                onClick={toggleVoice}
+                disabled={voiceConnecting}
+                variant="outline"
+                className={`h-10 sm:h-11 ${
+                  voiceActive
+                    ? 'bg-green-600 hover:bg-green-700 border-green-400/30 text-white'
+                    : voiceConnecting
+                      ? 'bg-yellow-600 animate-pulse border-yellow-400/30 text-white'
+                      : 'bg-white/5 border-white/20 hover:bg-white/10 text-white'
+                }`}
+              >
+                <Mic className={`h-4 w-4 mr-2 ${voiceActive ? 'animate-pulse' : ''}`} />
+                {voiceActive
+                  ? 'Tap to Stop'
+                  : voiceConnecting
+                    ? 'Connecting...'
+                    : 'Voice Assistant'}
+              </Button>
+
+              <Button
+                onClick={addTestResult}
+                variant="outline"
+                className="h-10 sm:h-11 bg-white/5 border-white/20 hover:bg-white/10 text-white"
+              >
+                <Plus className="h-4 w-4 mr-2" />
+                Add Circuit
+              </Button>
+
+              <div className="flex-1 min-w-0" />
+
+              <Button
+                onClick={() => setShowAnalytics(!showAnalytics)}
+                variant="ghost"
+                className="h-10 sm:h-11 text-white hover:text-white hover:bg-white/10"
+              >
+                <BarChart3 className="h-4 w-4 mr-2" />
+                Analytics
+              </Button>
             </div>
           </div>
 
@@ -2712,9 +2751,9 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
           {/* Distribution Boards with Circuit Tables */}
           <div className="space-y-4" data-autofill-section>
-            {distributionBoards
-              .sort((a, b) => a.order - b.order)
-              .map((board) => {
+            {(() => {
+              const sortedBoards = [...distributionBoards].sort((a, b) => a.order - b.order);
+              return sortedBoards.map((board, boardIdx) => {
                 const boardCircuits = getCircuitsForBoard(testResults, board.id);
                 return (
                   <BoardSection
@@ -2734,6 +2773,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     }
                     showTools={true}
                     tools={createBoardTools(board.id)}
+                    onMoveUp={() => handleMoveBoard(board.id, 'up')}
+                    onMoveDown={() => handleMoveBoard(board.id, 'down')}
+                    isFirst={boardIdx === 0}
+                    isLast={boardIdx === sortedBoards.length - 1}
+                    earthingArrangement={formData.earthingArrangement as string | undefined}
+                    nominalVoltage={formData.nominalVoltage as string | undefined}
                   >
                     <EnhancedTestResultDesktopTable
                       testResults={boardCircuits}
@@ -2743,10 +2788,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                       onBulkUpdate={handleBulkUpdate}
                       onAddCircuit={() => addCircuitToBoard(board.id)}
                       onBulkFieldUpdate={handleBulkFieldUpdate}
+                      earthingArrangement={formData.earthingArrangement as string | undefined}
                     />
                   </BoardSection>
                 );
-              })}
+              });
+            })()}
           </div>
         </div>
       )}

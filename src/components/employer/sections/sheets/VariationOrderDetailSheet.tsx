@@ -20,6 +20,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  textareaClass,
+} from '@/components/employer/editorial';
+import {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -182,7 +189,7 @@ export function VariationOrderDetailSheet({
           className={cn('flex flex-col p-0', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[450px]')}
         >
           {/* Header */}
-          <SheetHeader className="p-4 border-b border-border shrink-0">
+          <SheetHeader className="p-4 border-b border-white/[0.08] shrink-0">
             <div className="flex items-center justify-between">
               <SheetTitle>Variation Order</SheetTitle>
               <Badge
@@ -214,13 +221,13 @@ export function VariationOrderDetailSheet({
                       type="number"
                       step="1"
                       min="0"
-                      className="pl-10 text-2xl font-bold text-center h-14"
+                      className={`${inputClass} pl-10 text-2xl font-bold text-center h-14`}
                       value={editValue || ''}
                       onChange={(e) => setEditValue(parseFloat(e.target.value) || 0)}
                     />
                   </div>
                 ) : (
-                  <p className="text-3xl font-bold text-foreground">
+                  <p className="text-3xl font-bold text-white">
                     {formatCurrency(Number(variationOrder.value))}
                   </p>
                 )}
@@ -234,7 +241,7 @@ export function VariationOrderDetailSheet({
                 <Label className="text-xs text-white">Description</Label>
                 {isEditing ? (
                   <Textarea
-                    className="mt-1 min-h-[100px]"
+                    className={`${textareaClass} mt-1 min-h-[100px]`}
                     value={editDescription}
                     onChange={(e) => setEditDescription(e.target.value)}
                     placeholder="Describe the variation..."
@@ -245,7 +252,7 @@ export function VariationOrderDetailSheet({
               </div>
 
               {/* Created Date */}
-              <div className="flex items-center justify-between py-2 border-t border-border/50">
+              <div className="flex items-center justify-between py-2 border-t border-white/[0.08]">
                 <span className="text-sm text-white flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   Created
@@ -256,7 +263,7 @@ export function VariationOrderDetailSheet({
               </div>
 
               {/* Job Link */}
-              <div className="flex items-center justify-between py-2 border-t border-border/50">
+              <div className="flex items-center justify-between py-2 border-t border-white/[0.08]">
                 <span className="text-sm text-white flex items-center gap-1">
                   <Building2 className="h-3 w-3" />
                   Job
@@ -265,11 +272,11 @@ export function VariationOrderDetailSheet({
               </div>
 
               {/* Notes */}
-              <div className="pt-2 border-t border-border/50">
+              <div className="pt-2 border-t border-white/[0.08]">
                 <Label className="text-xs text-white">Notes</Label>
                 {isEditing ? (
                   <Textarea
-                    className="mt-1 min-h-[80px]"
+                    className={`${textareaClass} mt-1 min-h-[80px]`}
                     value={editNotes}
                     onChange={(e) => setEditNotes(e.target.value)}
                     placeholder="Additional notes..."
@@ -334,57 +341,49 @@ export function VariationOrderDetailSheet({
           </div>
 
           {/* Footer */}
-          <SheetFooter className="p-4 border-t border-border shrink-0 pb-safe">
+          <SheetFooter className="p-4 border-t border-white/[0.08] shrink-0 pb-safe">
             {isEditing ? (
               <div className="flex gap-3 w-full">
-                <Button variant="outline" className="flex-1" onClick={() => setIsEditing(false)}>
+                <SecondaryButton fullWidth onClick={() => setIsEditing(false)}>
                   Cancel
-                </Button>
-                <Button
-                  className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                </SecondaryButton>
+                <PrimaryButton
+                  fullWidth
                   onClick={handleSaveEdit}
                   disabled={updateOrder.isPending}
                 >
                   {updateOrder.isPending ? 'Saving...' : 'Save Changes'}
-                </Button>
+                </PrimaryButton>
               </div>
             ) : isPending ? (
               <div className="flex flex-col gap-3 w-full">
                 <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    className="flex-1 border-red-500/50 text-red-500 hover:bg-red-500/10"
-                    onClick={() => setShowRejectDialog(true)}
-                  >
+                  <DestructiveButton fullWidth onClick={() => setShowRejectDialog(true)}>
                     <X className="h-4 w-4 mr-2" />
                     Reject
-                  </Button>
-                  <Button
-                    className="flex-1 bg-green-500 hover:bg-green-600 text-white"
+                  </DestructiveButton>
+                  <PrimaryButton
+                    fullWidth
                     onClick={handleApprove}
                     disabled={updateStatus.isPending}
                   >
                     <Check className="h-4 w-4 mr-2" />
                     {updateStatus.isPending ? 'Approving...' : 'Approve'}
-                  </Button>
+                  </PrimaryButton>
                 </div>
-                <Button variant="ghost" className="w-full" onClick={startEditing}>
+                <SecondaryButton fullWidth onClick={startEditing}>
                   <Edit className="h-4 w-4 mr-2" />
                   Edit Details
-                </Button>
+                </SecondaryButton>
               </div>
             ) : (
               <div className="flex gap-3 w-full">
-                <Button
-                  variant="outline"
-                  className="flex-1 border-red-500/50 text-red-500 hover:bg-red-500/10"
-                  onClick={() => setShowDeleteDialog(true)}
-                >
+                <DestructiveButton fullWidth onClick={() => setShowDeleteDialog(true)}>
                   Delete
-                </Button>
-                <Button variant="outline" className="flex-1" onClick={handleClose}>
+                </DestructiveButton>
+                <SecondaryButton fullWidth onClick={handleClose}>
                   Close
-                </Button>
+                </SecondaryButton>
               </div>
             )}
           </SheetFooter>
@@ -405,7 +404,7 @@ export function VariationOrderDetailSheet({
               placeholder="Enter rejection reason..."
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
-              className="min-h-[100px]"
+              className={`${textareaClass} min-h-[100px]`}
             />
           </div>
           <AlertDialogFooter>

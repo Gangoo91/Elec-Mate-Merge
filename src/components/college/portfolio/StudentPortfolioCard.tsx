@@ -70,13 +70,13 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
             </AvatarFallback>
           </Avatar>
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
               Portfolio
             </div>
             <div className="mt-0.5 text-[15px] font-semibold text-white truncate">
               {portfolio.studentName}
             </div>
-            <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
               {portfolio.qualificationTitle}
             </div>
           </div>
@@ -87,7 +87,7 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
       {/* Progress */}
       <div>
         <div className="flex items-baseline justify-between text-[11.5px]">
-          <span className="text-white/50 uppercase tracking-[0.12em]">Progress</span>
+          <span className="text-white/75 uppercase tracking-[0.12em]">Progress</span>
           <span className="font-medium text-white tabular-nums">
             {portfolio.completionPercentage}%
           </span>
@@ -114,7 +114,7 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
             <div className="text-lg font-semibold tabular-nums text-white leading-none">
               {stat.value}
             </div>
-            <div className="mt-1.5 text-[10px] uppercase tracking-[0.14em] text-white/40">
+            <div className="mt-1.5 text-[10px] uppercase tracking-[0.14em] text-white/55">
               {stat.label}
             </div>
           </div>

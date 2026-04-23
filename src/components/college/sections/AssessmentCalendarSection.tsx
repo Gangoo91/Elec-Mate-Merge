@@ -213,7 +213,7 @@ export function AssessmentCalendarSection({
             {WEEKDAYS.map((day) => (
               <div
                 key={day}
-                className="text-center text-[10px] font-medium text-white/40 uppercase tracking-[0.14em] py-1"
+                className="text-center text-[10px] font-medium text-white/55 uppercase tracking-[0.14em] py-1"
               >
                 {day}
               </div>
@@ -291,7 +291,7 @@ export function AssessmentCalendarSection({
           {showAddForm && (
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                   Student
                 </label>
                 <select
@@ -311,7 +311,7 @@ export function AssessmentCalendarSection({
               </div>
 
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                   Type
                 </label>
                 <div className="mt-2 grid grid-cols-2 gap-1.5">
@@ -343,7 +343,7 @@ export function AssessmentCalendarSection({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                     Time
                   </label>
                   <input
@@ -354,7 +354,7 @@ export function AssessmentCalendarSection({
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                     Location / Notes
                   </label>
                   <input
@@ -364,7 +364,7 @@ export function AssessmentCalendarSection({
                     onChange={(e) =>
                       setNewAssessment((p) => ({ ...p, location: e.target.value }))
                     }
-                    className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                    className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
                   />
                 </div>
               </div>
@@ -411,7 +411,7 @@ export function AssessmentCalendarSection({
                           <div className="text-[14px] font-medium text-white truncate">
                             {a.studentName}
                           </div>
-                          <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                          <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                             {a.time}
                             {a.location ? ` · ${a.location}` : ''}
                           </div>
@@ -457,7 +457,7 @@ export function AssessmentCalendarSection({
                         <div className="text-[14px] font-medium text-white truncate">
                           {a.studentName}
                         </div>
-                        <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                        <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                           {dateLabel} · {a.time}
                           {a.location ? ` · ${a.location}` : ''}
                         </div>

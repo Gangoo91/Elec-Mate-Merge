@@ -936,7 +936,14 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
           ) {
             const { checkAllResultsCompliance } = await import('@/utils/autoRegChecker');
             if (checkAllResultsCompliance) {
-              const complianceResult = checkAllResultsCompliance(formData.scheduleOfTests);
+              // ELE-830 follow-up: pass the cert's earthing arrangement so the
+              // Zs validator uses the correct table (TT → RCD-based limits, not
+              // MCB tables). Without this, a valid TT install with 10Ω was
+              // being flagged "unsatisfactory" against TN-style limits.
+              const complianceResult = checkAllResultsCompliance(
+                formData.scheduleOfTests,
+                formData.earthingArrangement as string | undefined
+              );
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const hasFailures = complianceResult.some((result: any) =>
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any

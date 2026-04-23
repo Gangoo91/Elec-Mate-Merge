@@ -1,38 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import {
-  AlertTriangle,
-  CheckCircle2,
-  Clock,
-  Calendar,
-  Bell,
-  RefreshCw,
-  Shield,
-  XCircle,
-  ChevronRight,
-  Sparkles,
-  Edit2,
-  Plus,
-  Zap,
-  Sun,
-  Flame,
-  Cpu,
-  Award,
-  TrendingUp,
-  Book,
-  Battery,
-  Home,
-  Network,
-  Lightbulb,
-  Rocket,
-} from 'lucide-react';
-import {
-  getExpiryStatus,
   getDaysUntilExpiry,
   isExpired,
   isExpiringWithin,
@@ -43,9 +14,6 @@ import {
   getTrainingByProfileId,
   getSkillsByProfileId,
   getWorkHistoryByProfileId,
-  ElecIdSkill,
-  ElecIdQualification,
-  ElecIdWorkHistory,
 } from '@/services/elecIdService';
 import { getECSCardType } from '@/data/uk-electrician-constants';
 import { toast } from '@/hooks/use-toast';
@@ -54,14 +22,21 @@ import {
   getSmartNextSteps,
   getCourseSearchUrl,
   isInternalUrl,
-  CareerRecommendation,
-  SkillGap,
-  BrushUpSuggestion,
-  TrendingSkill,
   AllRecommendations,
   SmartNextStep,
 } from '@/utils/careerRecommendations';
 import { useNavigate } from 'react-router-dom';
+import {
+  Eyebrow,
+  Dot,
+  ListCard,
+  ListRow,
+  SectionHeader,
+  EmptyState,
+  StatStrip,
+  toneText,
+  type Tone,
+} from '@/components/college/primitives';
 
 interface ComplianceItem {
   id: string;
@@ -70,55 +45,33 @@ interface ComplianceItem {
   expiryDate: string;
   renewalUrl?: string;
   notes?: string;
-  originalId?: string; // Original database ID for editing
+  originalId?: string;
 }
 
 interface ElecIdComplianceProps {
   onNavigateToTab?: (tab: string) => void;
 }
 
-// Skeleton loading component
 const ComplianceSkeleton = () => (
   <div className="space-y-5">
-    {/* Hero card skeleton */}
-    <Skeleton className="h-40 rounded-2xl bg-white/[0.06]" />
-
-    {/* Quick stats skeleton */}
+    <Skeleton className="h-40 rounded-2xl bg-white/[0.04]" />
     <div className="grid grid-cols-4 gap-2">
       {[1, 2, 3, 4].map((i) => (
-        <Skeleton key={i} className="h-20 rounded-xl bg-white/[0.06]" />
+        <Skeleton key={i} className="h-20 rounded-2xl bg-white/[0.04]" />
       ))}
     </div>
-
-    {/* Recommendations skeleton */}
-    <Skeleton className="h-48 rounded-2xl bg-white/[0.06]" />
-
-    {/* Items skeleton */}
-    <div className="space-y-3">
-      {[1, 2, 3].map((i) => (
-        <Skeleton key={i} className="h-20 rounded-xl bg-white/[0.06]" />
-      ))}
-    </div>
+    {[1, 2, 3].map((i) => (
+      <Skeleton key={i} className="h-20 rounded-2xl bg-white/[0.04]" />
+    ))}
   </div>
 );
 
-// Icon mapping for recommendations
-const RecommendationIcon = ({ icon, className }: { icon: string; className?: string }) => {
-  const iconMap: Record<string, React.ElementType> = {
-    zap: Zap,
-    sun: Sun,
-    flame: Flame,
-    cpu: Cpu,
-    award: Award,
-    'trending-up': TrendingUp,
-    shield: Shield,
-    book: Book,
-    battery: Battery,
-    home: Home,
-    network: Network,
-  };
-  const IconComponent = iconMap[icon] || Zap;
-  return <IconComponent className={className} />;
+const STEP_TONE: Record<SmartNextStep['colour'], Tone> = {
+  red: 'red',
+  orange: 'orange',
+  yellow: 'amber',
+  blue: 'blue',
+  purple: 'purple',
 };
 
 const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
@@ -128,11 +81,9 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Recommendation state
   const [recommendations, setRecommendations] = useState<AllRecommendations | null>(null);
   const [smartSteps, setSmartSteps] = useState<SmartNextStep[]>([]);
 
-  // Helper to navigate to course - internal routes use React Router, external use openExternalUrl
   const navigateToCourse = useCallback(
     async (searchQuery: string) => {
       const url = getCourseSearchUrl(searchQuery);
@@ -145,7 +96,6 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
     [navigate]
   );
 
-  // Load compliance items and recommendations from backend
   const loadComplianceData = useCallback(async () => {
     if (!profile?.id) {
       setIsLoading(false);
@@ -158,7 +108,6 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
     try {
       const items: ComplianceItem[] = [];
 
-      // Add ECS Card if it has an expiry date
       if (profile.ecs_expiry_date) {
         const ecsCard = getECSCardType(profile.ecs_card_type || 'gold');
         items.push({
@@ -170,7 +119,6 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
         });
       }
 
-      // Fetch all profile data in parallel
       const [qualifications, training, skills, workHistory] = await Promise.all([
         getQualificationsByProfileId(profile.id),
         getTrainingByProfileId(profile.id),
@@ -178,7 +126,6 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
         getWorkHistoryByProfileId(profile.id),
       ]);
 
-      // Add qualifications with expiry dates
       qualifications
         .filter((q) => q.expiry_date)
         .forEach((q) => {
@@ -194,7 +141,6 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
           });
         });
 
-      // Add training with expiry dates
       training
         .filter((t) => t.expiry_date)
         .forEach((t) => {
@@ -212,7 +158,6 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
 
       setComplianceItems(items);
 
-      // Generate recommendations
       const recs = getAllRecommendations(
         profile.ecs_card_type,
         qualifications,
@@ -221,7 +166,6 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
       );
       setRecommendations(recs);
 
-      // Generate smart next steps
       const steps = getSmartNextSteps(
         items,
         {
@@ -229,7 +173,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
           hasQualifications: qualifications.length > 0,
           hasSkills: skills.length > 0,
           hasWorkHistory: workHistory.length > 0,
-          hasDocuments: !!profile.ecs_card_type, // simplified check
+          hasDocuments: !!profile.ecs_card_type,
         },
         recs.careerProgression,
         recs.skillsGaps
@@ -244,12 +188,9 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
   }, [profile?.id, profile?.ecs_expiry_date, profile?.ecs_card_type]);
 
   useEffect(() => {
-    if (!profileLoading) {
-      loadComplianceData();
-    }
+    if (!profileLoading) loadComplianceData();
   }, [profileLoading, loadComplianceData]);
 
-  // Sort and categorize items
   const expiredItems = complianceItems.filter((item) => isExpired(item.expiryDate));
   const expiringIn30Days = complianceItems.filter(
     (item) => !isExpired(item.expiryDate) && isExpiringWithin(item.expiryDate, 30)
@@ -269,158 +210,106 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
   const compliancePercentage =
     totalItems > 0 ? Math.round((compliantItems / totalItems) * 100) : 100;
 
-  const getTypeConfig = (type: ComplianceItem['type']) => {
+  const getTypeConfig = (type: ComplianceItem['type']): { label: string; tone: Tone } => {
     switch (type) {
       case 'card':
-        return { label: 'Card', color: 'bg-blue-500/20 text-blue-400 border-blue-500/30' };
+        return { label: 'Card', tone: 'blue' };
       case 'qualification':
-        return { label: 'Qual', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' };
+        return { label: 'Qual', tone: 'purple' };
       case 'training':
-        return { label: 'Training', color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' };
+        return { label: 'Training', tone: 'cyan' };
       default:
-        return { label: type, color: 'bg-white/10 text-white border-white/20' };
+        return { label: String(type), tone: 'cyan' };
     }
   };
 
-  const getStatusConfig = (daysUntil: number) => {
+  const getStatusConfig = (daysUntil: number): { tone: Tone; label: string } => {
     if (daysUntil < 0) {
-      return {
-        bg: 'bg-red-500/10',
-        border: 'border-red-500/30',
-        text: 'text-red-400',
-        icon: XCircle,
-        label: `${Math.abs(daysUntil)} days overdue`,
-      };
+      return { tone: 'red', label: `${Math.abs(daysUntil)} days overdue` };
     }
     if (daysUntil <= 30) {
-      return {
-        bg: 'bg-orange-500/10',
-        border: 'border-orange-500/30',
-        text: 'text-orange-400',
-        icon: AlertTriangle,
-        label: `${daysUntil} days left`,
-      };
+      return { tone: 'orange', label: `${daysUntil} days left` };
     }
     if (daysUntil <= 90) {
-      return {
-        bg: 'bg-yellow-500/10',
-        border: 'border-yellow-500/30',
-        text: 'text-yellow-400',
-        icon: Clock,
-        label: `${daysUntil} days left`,
-      };
+      return { tone: 'amber', label: `${daysUntil} days left` };
     }
-    return {
-      bg: 'bg-green-500/10',
-      border: 'border-green-500/30',
-      text: 'text-green-400',
-      icon: CheckCircle2,
-      label: `${daysUntil} days`,
-    };
+    return { tone: 'emerald', label: `${daysUntil} days` };
   };
 
-  const renderComplianceCard = (item: ComplianceItem, index: number) => {
+  const renderComplianceRow = (item: ComplianceItem) => {
     const daysUntil = getDaysUntilExpiry(item.expiryDate);
     const status = getStatusConfig(daysUntil);
     const typeConfig = getTypeConfig(item.type);
-    const StatusIcon = status.icon;
 
     return (
-      <motion.button
+      <ListRow
         key={item.id}
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: index * 0.05 }}
-        onClick={() => item.renewalUrl && openExternalUrl(item.renewalUrl)}
-        className={cn(
-          'w-full p-4 rounded-2xl border text-left transition-all touch-manipulation',
-          status.bg,
-          status.border,
-          item.renewalUrl && 'active:scale-[0.99] hover:brightness-110'
-        )}
-      >
-        <div className="flex items-center gap-3">
-          {/* Status icon */}
-          <div
-            className={cn(
-              'w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0',
-              status.bg
-            )}
-          >
-            <StatusIcon className={cn('w-6 h-6', status.text)} />
-          </div>
-
-          {/* Content */}
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1">
-              <h4 className="font-semibold text-white truncate">{item.name}</h4>
-              <Badge variant="outline" className={cn('text-[10px] px-1.5 py-0', typeConfig.color)}>
-                {typeConfig.label}
-              </Badge>
-            </div>
-            <div className="flex items-center gap-3 text-sm">
-              <span className="text-white flex items-center gap-1">
-                <Calendar className="h-3.5 w-3.5" />
-                {new Date(item.expiryDate).toLocaleDateString('en-GB', {
-                  day: 'numeric',
-                  month: 'short',
-                  year: 'numeric',
-                })}
-              </span>
-              <span className={cn('font-medium', status.text)}>{status.label}</span>
-            </div>
-          </div>
-
-          {/* Actions */}
-          <div className="flex items-center gap-2">
-            {/* Edit button - navigate to the relevant tab */}
+        accent={status.tone}
+        title={
+          <span className="flex items-center gap-2">
+            {item.name}
+            <span
+              className={cn(
+                'text-[10px] font-medium uppercase tracking-[0.15em]',
+                toneText[typeConfig.tone]
+              )}
+            >
+              {typeConfig.label}
+            </span>
+          </span>
+        }
+        subtitle={
+          <span>
+            {new Date(item.expiryDate).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            })}{' '}
+            ·{' '}
+            <span
+              className={
+                status.tone === 'red'
+                  ? 'text-red-400'
+                  : status.tone === 'orange'
+                    ? 'text-orange-400'
+                    : status.tone === 'amber'
+                      ? 'text-amber-400'
+                      : 'text-emerald-400'
+              }
+            >
+              {status.label}
+            </span>
+          </span>
+        }
+        trailing={
+          <span className="flex items-center gap-2">
             {onNavigateToTab && (item.type === 'qualification' || item.type === 'training') && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   onNavigateToTab(item.type === 'qualification' ? 'qualifications' : 'training');
                 }}
-                className="p-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] transition-colors touch-manipulation"
-                title={`Edit in ${item.type === 'qualification' ? 'Qualifications' : 'Training'} tab`}
+                className="h-11 px-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-white text-xs font-medium touch-manipulation"
               >
-                <Edit2 className="h-4 w-4 text-white" />
+                Edit
               </button>
             )}
-            {/* Renew action */}
-            {item.renewalUrl ? (
-              <div className="flex items-center gap-1 text-white">
-                <RefreshCw className="h-4 w-4" />
-                <ChevronRight className="h-4 w-4" />
-              </div>
-            ) : (
-              <ChevronRight className="h-5 w-5 text-white" />
-            )}
-          </div>
-        </div>
-      </motion.button>
+            {item.renewalUrl && <span className="text-xs font-medium text-elec-yellow">Renew →</span>}
+          </span>
+        }
+        onClick={() => item.renewalUrl && openExternalUrl(item.renewalUrl)}
+      />
     );
   };
 
   const allClear = expiredItems.length === 0 && expiringIn30Days.length === 0;
-
-  // Smart step helpers
-  const getStepColourClasses = (colour: SmartNextStep['colour']) => {
-    const map = {
-      red: { bg: 'bg-red-500/10', border: 'border-l-red-500', text: 'text-red-400' },
-      orange: { bg: 'bg-orange-500/10', border: 'border-l-orange-500', text: 'text-orange-400' },
-      yellow: { bg: 'bg-yellow-500/10', border: 'border-l-yellow-500', text: 'text-yellow-400' },
-      blue: { bg: 'bg-blue-500/10', border: 'border-l-blue-500', text: 'text-blue-400' },
-      purple: { bg: 'bg-purple-500/10', border: 'border-l-purple-500', text: 'text-purple-400' },
-    };
-    return map[colour];
-  };
 
   const getStepActionLabel = (actionType: SmartNextStep['actionType']) => {
     const map = {
       renew: 'Renew',
       upload: 'Upload',
       add: 'Add',
-      view_course: 'View Course',
+      view_course: 'View course',
       navigate: 'View',
     };
     return map[actionType];
@@ -440,420 +329,233 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
     }
   };
 
-  // Show loading skeleton
-  if (isLoading || profileLoading) {
-    return <ComplianceSkeleton />;
-  }
+  if (isLoading || profileLoading) return <ComplianceSkeleton />;
 
-  // Show error state
   if (error) {
     return (
-      <div className="py-12 text-center">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-red-500/10 flex items-center justify-center">
-          <AlertTriangle className="h-8 w-8 text-red-400" />
-        </div>
-        <h4 className="text-lg font-medium text-white mb-2">Failed to load compliance data</h4>
-        <p className="text-white mb-4">{error}</p>
-        <Button onClick={loadComplianceData} className="gap-2">
-          <RefreshCw className="h-4 w-4" />
-          Try Again
-        </Button>
-      </div>
+      <EmptyState
+        title="Failed to load compliance data"
+        description={error}
+        action="Try again"
+        onAction={loadComplianceData}
+      />
     );
   }
 
   return (
-    <div className="space-y-5">
-      {/* Compliance Hero Card */}
+    <div className="space-y-6">
+      {/* Hero summary */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/[0.08] p-5"
+        className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6"
       >
-        {/* Background glow */}
-        <div
-          className={cn(
-            'absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-30',
-            allClear ? 'bg-green-500' : expiredItems.length > 0 ? 'bg-red-500' : 'bg-orange-500'
-          )}
-        />
-
-        <div className="relative flex items-center justify-between">
-          {/* Left side - Info */}
-          <div className="flex items-center gap-4">
-            {/* Circular Progress */}
-            <div className="relative w-20 h-20">
-              <svg className="w-20 h-20 -rotate-90" viewBox="0 0 36 36">
-                {/* Background circle */}
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="rgba(255,255,255,0.1)"
-                  strokeWidth="3"
-                />
-                {/* Progress circle */}
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke={allClear ? '#22c55e' : expiredItems.length > 0 ? '#ef4444' : '#f59e0b'}
-                  strokeWidth="3"
-                  strokeDasharray={`${compliancePercentage}, 100`}
-                  strokeLinecap="round"
-                  className="transition-all duration-1000 ease-out"
-                />
-              </svg>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span
-                  className={cn(
-                    'text-xl font-bold',
-                    allClear
-                      ? 'text-green-400'
-                      : expiredItems.length > 0
-                        ? 'text-red-400'
-                        : 'text-orange-400'
-                  )}
-                >
-                  {compliancePercentage}%
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <h3 className="text-lg font-semibold text-white">
-                {allClear
-                  ? 'All Clear'
-                  : expiredItems.length > 0
-                    ? 'Action Required'
-                    : 'Attention Needed'}
-              </h3>
-              <p className="text-sm text-white">
-                {compliantItems} of {totalItems} items valid
-              </p>
-              {!allClear && (
-                <p
-                  className={cn(
-                    'text-xs mt-1 font-medium',
-                    expiredItems.length > 0 ? 'text-red-400' : 'text-orange-400'
-                  )}
-                >
-                  {expiredItems.length > 0
-                    ? `${expiredItems.length} expired`
-                    : `${expiringIn30Days.length} expiring soon`}
-                </p>
-              )}
+        <div className="flex items-center gap-5">
+          <div className="relative w-20 h-20 shrink-0">
+            <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth="3"
+              />
+              <path
+                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                fill="none"
+                stroke={allClear ? '#22c55e' : expiredItems.length > 0 ? '#ef4444' : '#f59e0b'}
+                strokeWidth="3"
+                strokeDasharray={`${compliancePercentage}, 100`}
+                strokeLinecap="round"
+                className="transition-all duration-700 ease-out"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span
+                className={cn(
+                  'text-xl font-semibold tabular-nums',
+                  allClear
+                    ? 'text-emerald-400'
+                    : expiredItems.length > 0
+                      ? 'text-red-400'
+                      : 'text-orange-400'
+                )}
+              >
+                {compliancePercentage}%
+              </span>
             </div>
           </div>
 
-          {/* Right side - Icon */}
-          <div
-            className={cn(
-              'w-14 h-14 rounded-xl flex items-center justify-center',
-              allClear
-                ? 'bg-green-500/20'
+          <div className="flex-1 min-w-0">
+            <Eyebrow>Compliance</Eyebrow>
+            <h3 className="mt-1 text-lg font-semibold text-white">
+              {allClear
+                ? 'All clear'
                 : expiredItems.length > 0
-                  ? 'bg-red-500/20'
-                  : 'bg-orange-500/20'
-            )}
-          >
-            {allClear ? (
-              <Sparkles className="w-7 h-7 text-green-400" />
-            ) : expiredItems.length > 0 ? (
-              <XCircle className="w-7 h-7 text-red-400" />
-            ) : (
-              <AlertTriangle className="w-7 h-7 text-orange-400" />
+                  ? 'Action required'
+                  : 'Attention needed'}
+            </h3>
+            <p className="text-sm text-white mt-0.5">
+              {compliantItems} of {totalItems} items valid
+            </p>
+            {!allClear && (
+              <p
+                className={cn(
+                  'text-xs mt-1 font-medium',
+                  expiredItems.length > 0 ? 'text-red-400' : 'text-orange-400'
+                )}
+              >
+                {expiredItems.length > 0
+                  ? `${expiredItems.length} expired`
+                  : `${expiringIn30Days.length} expiring soon`}
+              </p>
             )}
           </div>
         </div>
       </motion.div>
 
-      {/* Quick Stats */}
-      <div className="grid grid-cols-4 gap-2">
-        {[
-          { count: expiredItems.length, label: 'Expired', color: 'red', icon: XCircle },
+      {/* Quick stats */}
+      <StatStrip
+        stats={[
+          { value: expiredItems.length, label: 'Expired', tone: expiredItems.length > 0 ? 'red' : undefined },
           {
-            count: expiringIn30Days.length,
+            value: expiringIn30Days.length,
             label: '30 days',
-            color: 'orange',
-            icon: AlertTriangle,
+            tone: expiringIn30Days.length > 0 ? 'orange' : undefined,
           },
-          { count: expiringIn90Days.length, label: '90 days', color: 'yellow', icon: Clock },
-          { count: validItems.length, label: 'Valid', color: 'green', icon: CheckCircle2 },
-        ].map((stat, index) => {
-          const colorClasses = {
-            red:
-              stat.count > 0
-                ? 'bg-red-500/10 border-red-500/30'
-                : 'bg-white/[0.02] border-white/[0.04]',
-            orange:
-              stat.count > 0
-                ? 'bg-orange-500/10 border-orange-500/30'
-                : 'bg-white/[0.02] border-white/[0.04]',
-            yellow:
-              stat.count > 0
-                ? 'bg-yellow-500/10 border-yellow-500/30'
-                : 'bg-white/[0.02] border-white/[0.04]',
-            green:
-              stat.count > 0
-                ? 'bg-green-500/10 border-green-500/30'
-                : 'bg-white/[0.02] border-white/[0.04]',
-          };
-          const textClasses = {
-            red: stat.count > 0 ? 'text-red-400' : 'text-white',
-            orange: stat.count > 0 ? 'text-orange-400' : 'text-white',
-            yellow: stat.count > 0 ? 'text-yellow-400' : 'text-white',
-            green: stat.count > 0 ? 'text-green-400' : 'text-white',
-          };
-          const Icon = stat.icon;
+          {
+            value: expiringIn90Days.length,
+            label: '90 days',
+            tone: expiringIn90Days.length > 0 ? 'amber' : undefined,
+          },
+          {
+            value: validItems.length,
+            label: 'Valid',
+            tone: validItems.length > 0 ? 'emerald' : undefined,
+          },
+        ]}
+      />
 
-          return (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
-              className={cn(
-                'text-center p-3 rounded-xl border transition-all',
-                colorClasses[stat.color as keyof typeof colorClasses]
-              )}
-            >
-              <Icon
-                className={cn(
-                  'h-5 w-5 mx-auto mb-1',
-                  textClasses[stat.color as keyof typeof textClasses]
-                )}
-              />
-              <div
-                className={cn(
-                  'text-lg font-bold',
-                  textClasses[stat.color as keyof typeof textClasses]
-                )}
-              >
-                {stat.count}
-              </div>
-              <div className="text-[10px] text-white uppercase tracking-wide">{stat.label}</div>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
-      {/* SMART NEXT STEPS - Context-Aware Priority List */}
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
+      {/* Smart next steps */}
       {smartSteps.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-3"
-        >
-          <div className="flex items-center gap-2 px-1">
-            <Rocket className="h-4 w-4 text-elec-yellow" />
-            <h4 className="text-sm font-medium text-elec-yellow">Your Next Steps</h4>
-          </div>
-
-          <div className="space-y-2">
-            {smartSteps.slice(0, 5).map((step, index) => {
-              const colours = getStepColourClasses(step.colour);
-              return (
-                <motion.button
+        <div>
+          <SectionHeader eyebrow="Action" title="Your next steps" />
+          <div className="mt-4">
+            <ListCard>
+              {smartSteps.slice(0, 5).map((step) => (
+                <ListRow
                   key={step.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.05 }}
+                  accent={STEP_TONE[step.colour]}
+                  title={step.title}
+                  subtitle={step.subtitle}
+                  trailing={
+                    <span className="text-xs font-semibold text-elec-yellow">
+                      {getStepActionLabel(step.actionType)} →
+                    </span>
+                  }
                   onClick={() => handleStepAction(step)}
-                  className={cn(
-                    'w-full flex items-center gap-3 p-4 rounded-xl border-l-4 transition-all touch-manipulation active:scale-[0.99]',
-                    colours.bg,
-                    colours.border,
-                    'border border-white/[0.06]'
-                  )}
-                >
-                  {/* Priority icon */}
-                  <div
-                    className={cn(
-                      'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
-                      colours.bg
-                    )}
-                  >
-                    <RecommendationIcon icon={step.icon} className={cn('h-5 w-5', colours.text)} />
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0 text-left">
-                    <h5 className="font-semibold text-white text-sm">{step.title}</h5>
-                    <p className="text-xs text-white mt-0.5 line-clamp-1">{step.subtitle}</p>
-                  </div>
-
-                  {/* Action button */}
-                  <div
-                    className={cn(
-                      'flex-shrink-0 px-3 h-11 rounded-lg flex items-center justify-center text-xs font-semibold touch-manipulation',
-                      colours.bg,
-                      colours.text
-                    )}
-                  >
-                    {getStepActionLabel(step.actionType)}
-                  </div>
-                </motion.button>
-              );
-            })}
+                />
+              ))}
+            </ListCard>
           </div>
-        </motion.div>
+        </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
-      {/* EXPIRING SOON - Existing expiry tracking */}
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
+      {/* Expired / expiring soon */}
       {(expiredItems.length > 0 || expiringIn30Days.length > 0) && (
         <div className="space-y-4">
-          {/* Expired Items */}
           {expiredItems.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 px-1">
-                <XCircle className="h-4 w-4 text-red-400" />
-                <h4 className="text-sm font-medium text-red-400">Expired - Action Required</h4>
-                <Badge className="ml-auto text-xs bg-red-500/20 text-red-400 border-red-500/30">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <Eyebrow>Expired · Action required</Eyebrow>
+                <span className="text-[11px] font-semibold text-red-400 tabular-nums">
                   {expiredItems.length}
-                </Badge>
+                </span>
               </div>
-              <div className="space-y-2">
-                {expiredItems.map((item, index) => renderComplianceCard(item, index))}
-              </div>
+              <ListCard>{expiredItems.map(renderComplianceRow)}</ListCard>
             </div>
           )}
 
-          {/* Expiring in 30 Days */}
           {expiringIn30Days.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 px-1">
-                <AlertTriangle className="h-4 w-4 text-orange-400" />
-                <h4 className="text-sm font-medium text-orange-400">Expiring Within 30 Days</h4>
-                <Badge className="ml-auto text-xs bg-orange-500/20 text-orange-400 border-orange-500/30">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <Eyebrow>Expiring within 30 days</Eyebrow>
+                <span className="text-[11px] font-semibold text-orange-400 tabular-nums">
                   {expiringIn30Days.length}
-                </Badge>
+                </span>
               </div>
-              <div className="space-y-2">
-                {expiringIn30Days.map((item, index) => renderComplianceCard(item, index))}
-              </div>
+              <ListCard>{expiringIn30Days.map(renderComplianceRow)}</ListCard>
             </div>
           )}
         </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
-      {/* SKILLS TO DEVELOP - Gap Analysis */}
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
+      {/* Skills to develop */}
       {recommendations && recommendations.skillsGaps.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-3"
-        >
-          <div className="flex items-center gap-2 px-1">
-            <Lightbulb className="h-4 w-4 text-purple-400" />
-            <h4 className="text-sm font-medium text-purple-400">Skills to Develop</h4>
-          </div>
-
-          <p className="text-xs text-white px-1">Based on your experience, consider:</p>
-
-          <div className="grid grid-cols-2 gap-2">
-            {recommendations.skillsGaps.slice(0, 4).map((gap, index) => (
-              <motion.button
+        <div>
+          <SectionHeader eyebrow="Career growth" title="Skills to develop" />
+          <p className="mt-1 text-sm text-white">Based on your experience, consider:</p>
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+            {recommendations.skillsGaps.slice(0, 4).map((gap) => (
+              <button
                 key={gap.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
                 onClick={() => navigateToCourse(gap.searchQuery)}
                 className={cn(
-                  'p-4 rounded-xl border text-left transition-all touch-manipulation active:scale-[0.98]',
+                  'p-4 rounded-2xl border text-left transition-all touch-manipulation',
                   gap.importance === 'essential'
-                    ? 'bg-purple-500/10 border-purple-500/30 hover:bg-purple-500/15'
+                    ? 'bg-purple-500/10 border-purple-500/20 hover:bg-purple-500/15'
                     : gap.importance === 'recommended'
-                      ? 'bg-blue-500/10 border-blue-500/30 hover:bg-blue-500/15'
-                      : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.08]'
+                      ? 'bg-blue-500/10 border-blue-500/20 hover:bg-blue-500/15'
+                      : 'bg-white/[0.04] border-white/[0.06] hover:bg-white/[0.08]'
                 )}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <RecommendationIcon
-                    icon={gap.icon}
-                    className={cn(
-                      'h-5 w-5',
+                  <Dot
+                    tone={
                       gap.importance === 'essential'
-                        ? 'text-purple-400'
+                        ? 'purple'
                         : gap.importance === 'recommended'
-                          ? 'text-blue-400'
-                          : 'text-white'
-                    )}
+                          ? 'blue'
+                          : 'cyan'
+                    }
                   />
+                  <span className="text-xs uppercase tracking-[0.12em] text-white font-medium">
+                    {gap.importance}
+                  </span>
                 </div>
-                <h5 className="font-medium text-white text-sm mb-1">{gap.skillName}</h5>
-                <p className="text-xs text-white line-clamp-2">{gap.reason}</p>
-              </motion.button>
+                <h5 className="font-medium text-white text-sm">{gap.skillName}</h5>
+                <p className="text-xs text-white mt-1 line-clamp-2">{gap.reason}</p>
+              </button>
             ))}
           </div>
-        </motion.div>
+        </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
-      {/* TIME FOR A REFRESHER? - Brush Up Suggestions */}
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
+      {/* Brush up suggestions */}
       {recommendations && recommendations.brushUp.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-3"
-        >
-          <div className="flex items-center gap-2 px-1">
-            <RefreshCw className="h-4 w-4 text-cyan-400" />
-            <h4 className="text-sm font-medium text-cyan-400">Time for a Refresher?</h4>
+        <div>
+          <SectionHeader eyebrow="Refresh" title="Time for a refresher?" />
+          <div className="mt-4">
+            <ListCard>
+              {recommendations.brushUp.map((item) => (
+                <ListRow
+                  key={item.id}
+                  accent="cyan"
+                  title={item.skillName}
+                  subtitle={item.suggestion}
+                  trailing={<span className="text-xs font-semibold text-elec-yellow">View →</span>}
+                  onClick={() => navigateToCourse(item.searchQuery)}
+                />
+              ))}
+            </ListCard>
           </div>
-
-          <div className="space-y-2">
-            {recommendations.brushUp.map((item, index) => (
-              <motion.button
-                key={item.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-                onClick={() => navigateToCourse(item.searchQuery)}
-                className="w-full p-4 rounded-xl bg-cyan-500/5 border border-cyan-500/20 text-left transition-all touch-manipulation active:scale-[0.99] hover:bg-cyan-500/10"
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    {item.suggestionType === 'skill_stagnant' ? (
-                      <TrendingUp className="h-5 w-5 text-cyan-400" />
-                    ) : item.suggestionType === 'ready_to_advance' ? (
-                      <Award className="h-5 w-5 text-cyan-400" />
-                    ) : (
-                      <Book className="h-5 w-5 text-cyan-400" />
-                    )}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h5 className="font-medium text-white mb-1">{item.skillName}</h5>
-                    <p className="text-sm text-white">{item.suggestion}</p>
-                  </div>
-                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
-                </div>
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
+        </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
-      {/* TRENDING IN THE INDUSTRY */}
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
+      {/* Trending skills */}
       {recommendations && recommendations.trending.length > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-3"
-        >
-          <div className="flex items-center gap-2 px-1">
-            <TrendingUp className="h-4 w-4 text-green-400" />
-            <h4 className="text-sm font-medium text-green-400">Trending in the Industry</h4>
-          </div>
-
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4">
+        <div>
+          <SectionHeader eyebrow="Market demand" title="Trending in the industry" />
+          <div className="mt-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5">
             <div className="flex flex-wrap gap-2 mb-3">
               {recommendations.trending.map((trend) => (
                 <button
@@ -862,111 +564,77 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
                   className={cn(
                     'px-3 py-1.5 rounded-full text-sm font-medium transition-all touch-manipulation',
                     trend.userHasSkill
-                      ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                      : 'bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.12] active:scale-95'
+                      ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                      : 'bg-white/[0.04] text-white border border-white/[0.06] hover:bg-white/[0.08]'
                   )}
                 >
-                  <span className="flex items-center gap-1.5">
-                    {trend.userHasSkill && <CheckCircle2 className="h-3.5 w-3.5" />}
-                    <RecommendationIcon icon={trend.icon} className="h-3.5 w-3.5" />
-                    {trend.name}
-                  </span>
+                  {trend.userHasSkill && '✓ '}
+                  {trend.name}
                 </button>
               ))}
             </div>
-            <p className="text-xs text-white">
-              Skills employers are actively seeking. Tap to find courses.
-            </p>
+            <p className="text-xs text-white">Skills employers are actively seeking. Tap to find courses.</p>
           </div>
-        </motion.div>
+        </div>
       )}
 
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
-      {/* REMAINING COMPLIANCE ITEMS (90 days & Valid) */}
-      {/* ═══════════════════════════════════════════════════════════════════════════ */}
+      {/* Remaining items (90 days + valid) */}
       {(expiringIn90Days.length > 0 || validItems.length > 0) && (
         <div className="space-y-4">
-          {/* Expiring in 90 Days */}
           {expiringIn90Days.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 px-1">
-                <Clock className="h-4 w-4 text-yellow-400" />
-                <h4 className="text-sm font-medium text-yellow-400">Expiring Within 90 Days</h4>
-                <Badge className="ml-auto text-xs bg-yellow-500/20 text-yellow-400 border-yellow-500/30">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <Eyebrow>Expiring within 90 days</Eyebrow>
+                <span className="text-[11px] font-semibold text-amber-400 tabular-nums">
                   {expiringIn90Days.length}
-                </Badge>
+                </span>
               </div>
-              <div className="space-y-2">
-                {expiringIn90Days.map((item, index) => renderComplianceCard(item, index))}
-              </div>
+              <ListCard>{expiringIn90Days.map(renderComplianceRow)}</ListCard>
             </div>
           )}
 
-          {/* Valid Items */}
           {validItems.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 px-1">
-                <CheckCircle2 className="h-4 w-4 text-green-400" />
-                <h4 className="text-sm font-medium text-green-400">All Current</h4>
-                <Badge className="ml-auto text-xs bg-green-500/20 text-green-400 border-green-500/30">
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <Eyebrow>All current</Eyebrow>
+                <span className="text-[11px] font-semibold text-emerald-400 tabular-nums">
                   {validItems.length}
-                </Badge>
+                </span>
               </div>
-              <div className="space-y-2">
-                {validItems.map((item, index) => renderComplianceCard(item, index))}
-              </div>
+              <ListCard>{validItems.map(renderComplianceRow)}</ListCard>
             </div>
           )}
         </div>
       )}
 
-      {/* Notification Settings */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+      {/* Notification settings */}
+      <button
         onClick={() => {
           toast({
-            title: 'Coming Soon',
+            title: 'Coming soon',
             description: 'Expiry reminders will be available in a future update.',
           });
         }}
-        className="w-full p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center gap-4 touch-manipulation active:bg-white/[0.06] active:scale-[0.99] transition-all"
+        className="w-full"
       >
-        <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
-          <Bell className="h-6 w-6 text-elec-yellow" />
-        </div>
-        <div className="flex-1 text-left">
-          <p className="font-medium text-white">Expiry Reminders</p>
-          <p className="text-sm text-white">Get notified before qualifications expire</p>
-        </div>
-        <ChevronRight className="h-5 w-5 text-white" />
-      </motion.button>
+        <ListCard>
+          <ListRow
+            title="Expiry reminders"
+            subtitle="Get notified before qualifications expire"
+            trailing={<span className="text-xs font-medium text-elec-yellow">Configure →</span>}
+          />
+        </ListCard>
+      </button>
 
-      {/* Empty State */}
+      {/* Empty state */}
       {complianceItems.length === 0 &&
         (!recommendations || !recommendations.hasAnyRecommendations) && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="py-12 text-center"
-          >
-            <div className="w-20 h-20 mx-auto mb-4 rounded-2xl bg-white/[0.04] flex items-center justify-center">
-              <Shield className="h-10 w-10 text-white" />
-            </div>
-            <h4 className="text-lg font-medium text-white mb-2">No compliance items yet</h4>
-            <p className="text-white max-w-xs mx-auto mb-6">
-              Add qualifications with expiry dates to track your compliance status.
-            </p>
-            {onNavigateToTab && (
-              <Button
-                onClick={() => onNavigateToTab('qualifications')}
-                className="h-12 px-6 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.97]"
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Qualifications
-              </Button>
-            )}
-          </motion.div>
+          <EmptyState
+            title="No compliance items yet"
+            description="Add qualifications with expiry dates to track your compliance status."
+            action="Add qualifications"
+            onAction={onNavigateToTab ? () => onNavigateToTab('qualifications') : undefined}
+          />
         )}
     </div>
   );

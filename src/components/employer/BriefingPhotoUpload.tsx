@@ -1,11 +1,17 @@
 import { useState, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Camera, Image, X, Upload, Loader2, Check, Trash2 } from 'lucide-react';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Camera, Image, Upload, Loader2, Check, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
+import {
+  SheetShell,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+} from './editorial';
 
 interface BriefingPhotoUploadProps {
   open: boolean;
@@ -197,159 +203,20 @@ export function BriefingPhotoUpload({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-green-500/10">
-                  <Image className="h-5 w-5 text-green-400" />
-                </div>
-                <div>
-                  <SheetTitle className="text-left">Photo Evidence</SheetTitle>
-                  <p className="text-xs text-white mt-0.5">
-                    Capture attendance or site photos
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onOpenChange(false)}
-                className="shrink-0 touch-manipulation"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </SheetHeader>
-
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto p-4">
-            {/* Upload buttons */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              <Button
-                variant="outline"
-                onClick={() => cameraInputRef.current?.click()}
-                disabled={uploading}
-                className="h-16 flex flex-col items-center justify-center gap-1 touch-manipulation"
-              >
-                {uploading ? (
-                  <Loader2 className="h-6 w-6 animate-spin" />
-                ) : (
-                  <Camera className="h-6 w-6 text-blue-400" />
-                )}
-                <span className="text-xs">Take Photo</span>
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploading}
-                className="h-16 flex flex-col items-center justify-center gap-1 touch-manipulation"
-              >
-                {uploading ? (
-                  <Loader2 className="h-6 w-6 animate-spin" />
-                ) : (
-                  <Upload className="h-6 w-6 text-purple-400" />
-                )}
-                <span className="text-xs">Upload Photo</span>
-              </Button>
-            </div>
-
-            {/* Hidden file inputs */}
-            <input
-              ref={cameraInputRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              onChange={handleFileSelect}
-              className="hidden"
-            />
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleFileSelect}
-              className="hidden"
-            />
-
-            {/* Photo grid */}
-            {photos.length > 0 ? (
-              <div className="grid grid-cols-2 gap-3">
-                {photos.map((photo, index) => (
-                  <div
-                    key={index}
-                    className="relative aspect-square rounded-lg overflow-hidden border border-border group"
-                  >
-                    <img
-                      src={photo}
-                      alt={`Photo ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                    {/* Delete overlay - desktop only */}
-                    <div
-                      className={cn(
-                        'absolute inset-0 bg-black/50 flex items-center justify-center',
-                        'sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hidden sm:flex'
-                      )}
-                    >
-                      <Button
-                        variant="destructive"
-                        onClick={() => handleRemovePhoto(index)}
-                        className="h-11"
-                      >
-                        <Trash2 className="h-4 w-4 mr-1" />
-                        Remove
-                      </Button>
-                    </div>
-                    {/* Delete button - mobile only */}
-                    <button
-                      onClick={() => handleRemovePhoto(index)}
-                      className="sm:hidden absolute bottom-1.5 right-1.5 flex items-center justify-center w-9 h-9 rounded-full bg-red-500/80 backdrop-blur-sm text-white touch-manipulation"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </button>
-                    {/* Index badge */}
-                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/50 text-white text-xs">
-                      {index + 1}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <Image className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
-                <p className="text-sm text-white">No photos added yet</p>
-                <p className="text-xs text-white mt-1">
-                  Take or upload photos to document attendance
-                </p>
-              </div>
-            )}
-
-            {/* Instructions */}
-            <div className="p-4 mt-6 rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <h4 className="font-medium text-foreground mb-2 text-sm">Photo Tips</h4>
-              <ul className="text-xs text-white space-y-1">
-                <li>• Capture the group at the start of the briefing</li>
-                <li>• Include any hazardous areas discussed</li>
-                <li>• Document site conditions or equipment</li>
-                <li>• Photos are attached to the PDF export</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="p-4 border-t border-border shrink-0">
-            <div className="flex gap-3">
-              <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1 h-12">
+      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Photo evidence"
+          title="Upload Photos"
+          description="Capture attendance or site photos"
+          footer={
+            <>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                 Cancel
-              </Button>
-              <Button
+              </SecondaryButton>
+              <PrimaryButton
                 onClick={handleSave}
                 disabled={savePhotosMutation.isPending}
-                className="flex-1 h-12 bg-green-600 hover:bg-green-700"
+                fullWidth
               >
                 {savePhotosMutation.isPending ? (
                   <>
@@ -362,10 +229,119 @@ export function BriefingPhotoUpload({
                     Save Photos ({photos.length})
                   </>
                 )}
-              </Button>
-            </div>
+              </PrimaryButton>
+            </>
+          }
+        >
+          {/* Upload buttons */}
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={() => cameraInputRef.current?.click()}
+              disabled={uploading}
+              className="h-20 flex flex-col items-center justify-center gap-1 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation text-white disabled:opacity-40"
+            >
+              {uploading ? (
+                <Loader2 className="h-6 w-6 animate-spin" />
+              ) : (
+                <Camera className="h-6 w-6 text-blue-400" />
+              )}
+              <span className="text-xs">Take Photo</span>
+            </button>
+
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="h-20 flex flex-col items-center justify-center gap-1 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation text-white disabled:opacity-40"
+            >
+              {uploading ? (
+                <Loader2 className="h-6 w-6 animate-spin" />
+              ) : (
+                <Upload className="h-6 w-6 text-purple-400" />
+              )}
+              <span className="text-xs">Upload Photo</span>
+            </button>
           </div>
-        </div>
+
+          {/* Hidden file inputs */}
+          <input
+            ref={cameraInputRef}
+            type="file"
+            accept="image/*"
+            capture="environment"
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            multiple
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+
+          {/* Photo grid */}
+          {photos.length > 0 ? (
+            <div className="grid grid-cols-2 gap-3">
+              {photos.map((photo, index) => (
+                <div
+                  key={index}
+                  className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.08] group"
+                >
+                  <img
+                    src={photo}
+                    alt={`Photo ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Delete overlay - desktop only */}
+                  <div
+                    className={cn(
+                      'absolute inset-0 bg-black/50 flex items-center justify-center',
+                      'sm:opacity-0 sm:group-hover:opacity-100 transition-opacity hidden sm:flex'
+                    )}
+                  >
+                    <DestructiveButton onClick={() => handleRemovePhoto(index)}>
+                      <Trash2 className="h-4 w-4 mr-1" />
+                      Remove
+                    </DestructiveButton>
+                  </div>
+                  {/* Delete button - mobile only */}
+                  <button
+                    onClick={() => handleRemovePhoto(index)}
+                    className="sm:hidden absolute bottom-1.5 right-1.5 flex items-center justify-center w-9 h-9 rounded-full bg-red-500/80 backdrop-blur-sm text-white touch-manipulation"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                  {/* Index badge */}
+                  <div className="absolute top-2 left-2 px-2 py-0.5 rounded-full bg-black/50 text-white text-xs">
+                    {index + 1}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <FormCard>
+              <div className="text-center py-8">
+                <Image className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
+                <p className="text-sm text-white">No photos added yet</p>
+                <p className="text-xs text-white mt-1">
+                  Take or upload photos to document attendance
+                </p>
+              </div>
+            </FormCard>
+          )}
+
+          {/* Instructions */}
+          <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <h4 className="font-medium text-white mb-2 text-sm">Photo Tips</h4>
+            <ul className="text-xs text-white space-y-1">
+              <li>• Capture the group at the start of the briefing</li>
+              <li>• Include any hazardous areas discussed</li>
+              <li>• Document site conditions or equipment</li>
+              <li>• Photos are attached to the PDF export</li>
+            </ul>
+          </div>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

@@ -187,7 +187,7 @@ export function ILPManagementSection() {
                       <div className="text-[14px] font-medium text-white truncate">
                         {student.name}
                       </div>
-                      <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                      <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                         {getCohortName(student.cohortId)}
                       </div>
                     </div>
@@ -295,7 +295,7 @@ export function ILPManagementSection() {
                             <div className="text-[15px] font-medium text-white truncate">
                               {studentInfo.name}
                             </div>
-                            <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                               {getCohortName(studentInfo.cohortId)} · Tutor · {getTutorName(ilp.reviewed_by)}
                             </div>
                           </div>
@@ -304,7 +304,7 @@ export function ILPManagementSection() {
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <button
-                                  className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                                  className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                                   aria-label="Options"
                                 >
                                   ⋯
@@ -347,7 +347,7 @@ export function ILPManagementSection() {
                         {targets.length > 0 && (
                           <div className="mt-3">
                             <div className="flex items-baseline justify-between text-[11.5px]">
-                              <span className="text-white/50 uppercase tracking-[0.12em]">
+                              <span className="text-white/75 uppercase tracking-[0.12em]">
                                 Targets
                               </span>
                               <span className="font-medium text-white tabular-nums">
@@ -373,14 +373,14 @@ export function ILPManagementSection() {
                               </Pill>
                             ))}
                             {targets.length > 4 && (
-                              <span className="text-[11px] text-white/40 px-1.5 py-0.5">
+                              <span className="text-[11px] text-white/70 px-1.5 py-0.5">
                                 +{targets.length - 4}
                               </span>
                             )}
                           </div>
                         )}
 
-                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/50">
+                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
                           {ilp.last_reviewed && (
                             <span className="tabular-nums">
                               Reviewed{' '}

@@ -118,7 +118,7 @@ export const PhotoCompareSlider = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-[95vw] h-[85vh] p-0 bg-black/95 border-border/50">
+      <DialogContent className="max-w-4xl w-[95vw] h-[85vh] p-0 bg-black/95 border-white/[0.08]">
         {/* Header */}
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 bg-gradient-to-b from-black/80 to-transparent">
           <div className="flex items-center gap-4">
@@ -135,7 +135,7 @@ export const PhotoCompareSlider = ({
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-8 text-foreground/70 hover:text-foreground"
+              className="h-8 w-8 text-white hover:text-white"
               onClick={toggleOrientation}
               title={isVertical ? 'Horizontal split' : 'Vertical split'}
             >
@@ -144,7 +144,7 @@ export const PhotoCompareSlider = ({
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-8 text-foreground/70 hover:text-foreground"
+              className="h-8 w-8 text-white hover:text-white"
               onClick={resetSlider}
               title="Reset"
             >
@@ -153,7 +153,7 @@ export const PhotoCompareSlider = ({
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-8 text-foreground/70 hover:text-foreground"
+              className="h-8 w-8 text-white hover:text-white"
               onClick={onClose}
             >
               <X className="h-4 w-4" />
@@ -230,7 +230,7 @@ export const PhotoCompareSlider = ({
           {/* Labels */}
           <div
             className={cn(
-              'absolute z-10 px-3 py-1.5 rounded-full bg-blue-500/90 text-foreground text-xs font-medium',
+              'absolute z-10 px-3 py-1.5 rounded-full bg-blue-500/90 text-white text-xs font-medium',
               isVertical ? 'top-4 left-4' : 'top-4 left-4'
             )}
           >
@@ -238,7 +238,7 @@ export const PhotoCompareSlider = ({
           </div>
           <div
             className={cn(
-              'absolute z-10 px-3 py-1.5 rounded-full bg-green-500/90 text-foreground text-xs font-medium',
+              'absolute z-10 px-3 py-1.5 rounded-full bg-green-500/90 text-white text-xs font-medium',
               isVertical ? 'bottom-4 right-4' : 'top-4 right-4'
             )}
           >
@@ -248,7 +248,7 @@ export const PhotoCompareSlider = ({
 
         {/* Footer with info */}
         <div className="absolute bottom-0 left-0 right-0 z-20 flex items-center justify-center p-4 bg-gradient-to-t from-black/80 to-transparent">
-          <p className="text-xs text-foreground/60">
+          <p className="text-xs text-white">
             Drag the slider to compare before and after photos
           </p>
         </div>

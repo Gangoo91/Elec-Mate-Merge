@@ -1,102 +1,114 @@
-import BusinessCard from '@/components/business-hub/BusinessCard';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
-  ShieldCheck,
-  AlertTriangle,
-  FileText,
-  BookOpen,
-  GraduationCap,
-  ClipboardList,
-  Handshake,
-} from 'lucide-react';
+  HubLanding,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+} from '@/components/employer/editorial';
 
 interface SafetyHubProps {
   onNavigate: (section: Section) => void;
+  openIncidentsCount?: number;
+  pendingRamsCount?: number;
+  policiesCount?: number;
 }
 
-export function SafetyHub({ onNavigate }: SafetyHubProps) {
+export function SafetyHub({
+  onNavigate,
+  openIncidentsCount = 0,
+  pendingRamsCount = 0,
+  policiesCount = 0,
+}: SafetyHubProps) {
   return (
-    <div className="space-y-5 pb-6 animate-fade-in">
-      {/* Safety & Compliance */}
-      <section className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          Safety & Compliance
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          <BusinessCard
+    <HubLanding
+      eyebrow="HR & Safety"
+      title="Safety"
+      description="RAMS, incidents, policies, training and compliance."
+      tone="red"
+      stats={[
+        { label: 'Open incidents', value: openIncidentsCount, tone: 'red' },
+        { label: 'Pending RAMS', value: pendingRamsCount, tone: 'orange' },
+        { label: 'Policies', value: policiesCount, tone: 'blue' },
+        { label: 'Compliance %', value: '100%', accent: true },
+      ]}
+    >
+      <section className="space-y-5">
+        <SectionHeader eyebrow="Stay compliant" title="Keep everyone safe" />
+        <HubGrid columns={2}>
+          <HubCard
+            number="01"
+            eyebrow="Overview"
+            title="Safety Overview"
+            description="Live snapshot of incidents, RAMS, briefings and compliance."
+            tone="red"
+            onClick={() => onNavigate('safety')}
+            meta="Dashboard"
+          />
+          <HubCard
+            number="02"
+            eyebrow="Risk"
             title="RAMS"
-            description="Risk assessments & method statements"
-            icon={ShieldCheck}
+            description="Risk assessments and method statements for every job."
+            tone="orange"
             onClick={() => onNavigate('rams')}
-            accentColor="from-emerald-500 via-emerald-400 to-green-400"
-            iconColor="text-emerald-400"
-            iconBg="bg-emerald-500/10 border border-emerald-500/20"
+            meta={pendingRamsCount > 0 ? `${pendingRamsCount} pending` : 'All up to date'}
           />
-          <BusinessCard
+          <HubCard
+            number="03"
+            eyebrow="Reporting"
             title="Incidents"
-            description="Report & investigate"
-            icon={AlertTriangle}
+            description="Log accidents, near misses and investigations."
+            tone="red"
             onClick={() => onNavigate('incidents')}
-            accentColor="from-orange-500 via-amber-400 to-red-400"
-            iconColor="text-orange-400"
-            iconBg="bg-orange-500/10 border border-orange-500/20"
+            meta={openIncidentsCount > 0 ? `${openIncidentsCount} open` : 'No open incidents'}
           />
-          <BusinessCard
-            title="Briefings"
-            description="Pre-job safety briefs"
-            icon={ClipboardList}
-            onClick={() => onNavigate('briefings')}
-            accentColor="from-blue-500 via-blue-400 to-cyan-400"
-            iconColor="text-blue-400"
-            iconBg="bg-blue-500/10 border border-blue-500/20"
-          />
-          <BusinessCard
-            title="Compliance"
-            description="Checklists & audits"
-            icon={FileText}
-            onClick={() => onNavigate('compliance')}
-            accentColor="from-elec-yellow via-amber-400 to-orange-400"
-            iconColor="text-elec-yellow"
-            iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
-          />
-        </div>
-      </section>
-
-      {/* Documentation & Training */}
-      <section className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          Documentation & Training
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          <BusinessCard
+          <HubCard
+            number="04"
+            eyebrow="Library"
             title="Policies"
-            description="Templates & library"
-            icon={BookOpen}
+            description="Company policies, procedures and rules."
+            tone="blue"
             onClick={() => onNavigate('policies')}
-            accentColor="from-purple-500 via-violet-400 to-indigo-400"
-            iconColor="text-purple-400"
-            iconBg="bg-purple-500/10 border border-purple-500/20"
+            meta={policiesCount > 0 ? `${policiesCount} live` : 'Build your library'}
           />
-          <BusinessCard
-            title="Training"
-            description="Records & courses"
-            icon={GraduationCap}
-            onClick={() => onNavigate('training')}
-            accentColor="from-cyan-500 via-blue-400 to-blue-500"
-            iconColor="text-cyan-400"
-            iconBg="bg-cyan-500/10 border border-cyan-500/20"
-          />
-          <BusinessCard
+          <HubCard
+            number="05"
+            eyebrow="Agreements"
             title="Contracts"
-            description="Manage & track"
-            icon={Handshake}
+            description="Manage and track every contract and agreement."
+            tone="indigo"
             onClick={() => onNavigate('contracts')}
-            accentColor="from-rose-500 via-pink-400 to-red-400"
-            iconColor="text-rose-400"
-            iconBg="bg-rose-500/10 border border-rose-500/20"
+            meta="Templates & live"
           />
-        </div>
+          <HubCard
+            number="06"
+            eyebrow="Skills"
+            title="Training Records"
+            description="Certifications, courses and renewals for the team."
+            tone="emerald"
+            onClick={() => onNavigate('training')}
+            meta="Records & courses"
+          />
+          <HubCard
+            number="07"
+            eyebrow="Daily"
+            title="Toolbox Briefings"
+            description="Pre-job safety briefs and sign-offs."
+            tone="amber"
+            onClick={() => onNavigate('briefings')}
+            meta="Pre-job briefs"
+          />
+          <HubCard
+            number="08"
+            eyebrow="Audit"
+            title="Compliance"
+            description="Checklists, audits and certifications across the organisation."
+            tone="cyan"
+            onClick={() => onNavigate('compliance')}
+            meta="Checklists & audits"
+          />
+        </HubGrid>
       </section>
-    </div>
+    </HubLanding>
   );
 }

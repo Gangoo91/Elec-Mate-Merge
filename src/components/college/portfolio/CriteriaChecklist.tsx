@@ -90,7 +90,7 @@ const CriteriaChecklist: React.FC<CriteriaChecklistProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between gap-3">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
             Assessment Criteria
           </div>
           <div className="mt-1 text-[13px] text-white/60 tabular-nums">
@@ -189,7 +189,7 @@ function LOGroup({
           <span
             aria-hidden
             className={cn(
-              'text-[14px] font-medium text-white/50 transition-transform shrink-0',
+              'text-[14px] font-medium text-white/75 transition-transform shrink-0',
               isExpanded && 'rotate-90'
             )}
           >

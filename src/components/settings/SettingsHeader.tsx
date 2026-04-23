@@ -1,13 +1,21 @@
 import React from 'react';
-import { SettingsIcon } from 'lucide-react';
+import { PageHero } from '@/components/college/primitives';
 
-const SettingsHeader = () => {
-  return (
-    <div className="flex items-center gap-2 mb-2">
-      <SettingsIcon className="h-6 w-6 text-elec-yellow" />
-      <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Settings</h1>
-    </div>
-  );
+/**
+ * Thin wrapper around PageHero for the Settings page.
+ * Kept as a component so consumers can override title/description
+ * without touching the shell.
+ */
+const SettingsHeader = ({
+  title = 'Settings',
+  description,
+  actions,
+}: {
+  title?: string;
+  description?: string;
+  actions?: React.ReactNode;
+}) => {
+  return <PageHero eyebrow="Account" title={title} description={description} actions={actions} />;
 };
 
 export default SettingsHeader;

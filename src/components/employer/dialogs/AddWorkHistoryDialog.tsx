@@ -7,14 +7,22 @@ import {
   DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAddElecIdWorkHistory } from '@/hooks/useElecId';
 import { toast } from '@/hooks/use-toast';
-import { Briefcase, Building, Calendar, MapPin } from 'lucide-react';
+import { Briefcase } from 'lucide-react';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  checkboxClass,
+} from '@/components/employer/editorial';
 
 interface AddWorkHistoryDialogProps {
   open: boolean;
@@ -96,108 +104,103 @@ export const AddWorkHistoryDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <Briefcase className="h-5 w-5 text-elec-yellow" />
             Add Work History
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-white">
             Add past employment to {profileName}'s Elec-ID profile
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
-          <div className="space-y-2">
-            <Label htmlFor="employer" className="flex items-center gap-2">
-              <Building className="h-4 w-4 text-white" />
-              Employer *
-            </Label>
-            <Input
-              id="employer"
-              placeholder="e.g., ABC Electrical Ltd"
-              value={formData.employer}
-              onChange={(e) => setFormData((prev) => ({ ...prev, employer: e.target.value }))}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="role">Job Title / Role *</Label>
-            <Input
-              id="role"
-              placeholder="e.g., Senior Electrician"
-              value={formData.role}
-              onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value }))}
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="startDate" className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-white" />
-                Start Date *
-              </Label>
+          <FormCard eyebrow="Employment details">
+            <Field label="Employer" required>
               <Input
-                id="startDate"
-                type="date"
-                value={formData.startDate}
-                onChange={(e) => setFormData((prev) => ({ ...prev, startDate: e.target.value }))}
+                id="employer"
+                placeholder="e.g., ABC Electrical Ltd"
+                value={formData.employer}
+                onChange={(e) => setFormData((prev) => ({ ...prev, employer: e.target.value }))}
+                className={inputClass}
               />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="endDate">End Date</Label>
+            </Field>
+
+            <Field label="Job title / role" required>
               <Input
-                id="endDate"
-                type="date"
-                value={formData.endDate}
-                onChange={(e) => setFormData((prev) => ({ ...prev, endDate: e.target.value }))}
-                disabled={formData.isCurrent}
+                id="role"
+                placeholder="e.g., Senior Electrician"
+                value={formData.role}
+                onChange={(e) => setFormData((prev) => ({ ...prev, role: e.target.value }))}
+                className={inputClass}
               />
+            </Field>
+
+            <FormGrid cols={2}>
+              <Field label="Start date" required>
+                <Input
+                  id="startDate"
+                  type="date"
+                  value={formData.startDate}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, startDate: e.target.value }))}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="End date">
+                <Input
+                  id="endDate"
+                  type="date"
+                  value={formData.endDate}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, endDate: e.target.value }))}
+                  disabled={formData.isCurrent}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="isCurrent"
+                checked={formData.isCurrent}
+                onCheckedChange={(checked) =>
+                  setFormData((prev) => ({ ...prev, isCurrent: checked as boolean, endDate: '' }))
+                }
+                className={checkboxClass}
+              />
+              <label htmlFor="isCurrent" className="text-[12.5px] text-white cursor-pointer">
+                Currently working here
+              </label>
             </div>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <Checkbox
-              id="isCurrent"
-              checked={formData.isCurrent}
-              onCheckedChange={(checked) =>
-                setFormData((prev) => ({ ...prev, isCurrent: checked as boolean, endDate: '' }))
-              }
-            />
-            <Label htmlFor="isCurrent" className="font-normal cursor-pointer">
-              Currently working here
-            </Label>
-          </div>
+            <Field label="Description">
+              <Textarea
+                id="description"
+                placeholder="Brief description of responsibilities and achievements..."
+                value={formData.description}
+                onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
+                rows={3}
+                className={textareaClass}
+              />
+            </Field>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              placeholder="Brief description of responsibilities and achievements..."
-              value={formData.description}
-              onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-              rows={3}
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="projects">Key Projects (comma separated)</Label>
-            <Input
-              id="projects"
-              placeholder="e.g., Tesco Refit, Hospital Wing, EV Network"
-              value={formData.projects}
-              onChange={(e) => setFormData((prev) => ({ ...prev, projects: e.target.value }))}
-            />
-          </div>
+            <Field label="Key projects (comma separated)">
+              <Input
+                id="projects"
+                placeholder="e.g., Tesco Refit, Hospital Wing, EV Network"
+                value={formData.projects}
+                onChange={(e) => setFormData((prev) => ({ ...prev, projects: e.target.value }))}
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
         </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} disabled={addWorkHistory.isPending}>
+        <DialogFooter className="gap-2">
+          <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
+          <PrimaryButton onClick={handleSubmit} disabled={addWorkHistory.isPending}>
             {addWorkHistory.isPending ? 'Adding...' : 'Add to Elec-ID'}
-          </Button>
+          </PrimaryButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

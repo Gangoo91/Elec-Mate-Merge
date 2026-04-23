@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { LucideIcon, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ListCard, ListCardHeader } from './editorial';
 
 interface Activity {
   id: string;
@@ -31,22 +31,13 @@ export function ActivityFeed({
   const displayActivities = activities.slice(0, maxItems);
 
   return (
-    <Card className={cn('border-elec-yellow/20 bg-elec-gray', className)}>
-      <CardHeader className="pb-2 px-4 pt-4">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base sm:text-lg font-semibold">{title}</CardTitle>
-          {onViewAll && (
-            <button
-              onClick={onViewAll}
-              className="text-xs text-elec-yellow hover:text-elec-yellow/80 font-medium flex items-center gap-0.5 transition-colors"
-            >
-              View all
-              <ChevronRight className="h-3 w-3" />
-            </button>
-          )}
-        </div>
-      </CardHeader>
-      <CardContent className="px-4 pb-4">
+    <ListCard className={className}>
+      <ListCardHeader
+        title={title}
+        action={onViewAll ? 'View all' : undefined}
+        onAction={onViewAll}
+      />
+      <div className="px-4 pb-4 pt-3">
         <div className="space-y-1">
           {displayActivities.map((activity) => {
             const Icon = activity.icon;
@@ -58,7 +49,7 @@ export function ActivityFeed({
                 className={cn(
                   'w-full flex items-center gap-3 p-2.5 rounded-xl transition-all duration-200 text-left',
                   activity.onClick
-                    ? 'hover:bg-muted/50 active:scale-[0.99] cursor-pointer'
+                    ? 'hover:bg-white/[0.08] active:scale-[0.99] cursor-pointer'
                     : 'cursor-default'
                 )}
               >
@@ -68,7 +59,7 @@ export function ActivityFeed({
                   <Icon className={cn('h-4 w-4', activity.iconColor || 'text-elec-yellow')} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground truncate">{activity.title}</p>
+                  <p className="text-sm font-medium text-white truncate">{activity.title}</p>
                   <p className="text-xs text-white truncate">{activity.description}</p>
                 </div>
                 <div className="text-right shrink-0">
@@ -76,6 +67,9 @@ export function ActivityFeed({
                     {activity.time}
                   </p>
                 </div>
+                {activity.onClick && (
+                  <ChevronRight className="h-3.5 w-3.5 text-white shrink-0" />
+                )}
               </button>
             );
           })}
@@ -86,7 +80,7 @@ export function ActivityFeed({
             <p className="text-sm text-white">No recent activity</p>
           </div>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </ListCard>
   );
 }

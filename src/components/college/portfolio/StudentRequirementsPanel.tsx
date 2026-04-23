@@ -178,7 +178,7 @@ export function StudentRequirementsPanel({
       {/* Header */}
       <div className="flex items-end justify-between gap-4">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Evidence Requirements
           </div>
           <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
@@ -241,7 +241,7 @@ export function StudentRequirementsPanel({
             <div className="space-y-5">
               {activeRequirements.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                     Active
                   </div>
                   <div className="space-y-2">
@@ -261,7 +261,7 @@ export function StudentRequirementsPanel({
 
               {completedRequirements.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                     Completed
                   </div>
                   <div className="space-y-2">
@@ -319,7 +319,7 @@ export function StudentRequirementsPanel({
                     </p>
                   )}
                   {req.guidance && (
-                    <p className="mt-1.5 text-[12px] text-white/45 italic leading-relaxed">
+                    <p className="mt-1.5 text-[12px] text-white/70 italic leading-relaxed">
                       {req.guidance}
                     </p>
                   )}
@@ -462,7 +462,7 @@ function RequirementCard({
                 </Pill>
               ))}
             </div>
-            <span className="text-[11.5px] text-white/45 tabular-nums">
+            <span className="text-[11.5px] text-white/70 tabular-nums">
               {requirement.quantity_required}× required
             </span>
             {requirement.due_date && (

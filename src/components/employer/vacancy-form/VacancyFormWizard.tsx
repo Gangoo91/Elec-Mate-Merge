@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Briefcase, X, Sparkles, Save, FileText, Cloud, CloudOff, Check } from 'lucide-react';
+import { Briefcase, X, Save, FileText, Cloud, Check } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { Button } from '@/components/ui/button';
 import { useIsMobile } from '@/hooks/use-mobile';
 import {
   ResponsiveFormModal,
@@ -30,7 +29,18 @@ import { saveVacancyAsTemplate } from '@/services/vacancyService';
 import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import { cn } from '@/lib/utils';
-import { storageGetSync, storageSetSync, storageRemoveSync, storageGetJSONSync } from '@/utils/storage';
+import {
+  storageSetSync,
+  storageRemoveSync,
+  storageGetJSONSync,
+} from '@/utils/storage';
+import {
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  IconButton,
+  TextAction,
+} from '@/components/employer/editorial';
 
 const DRAFT_STORAGE_KEY = 'vacancy-form-draft';
 
@@ -269,26 +279,27 @@ export function VacancyFormWizard({
       <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-2xl')}>
         <FormProvider {...methods}>
           {/* Header */}
-          <ResponsiveFormModalHeader className="border-b border-border/50">
+          <ResponsiveFormModalHeader className="border-b border-white/[0.06]">
             <div className="flex items-center justify-between">
               <ResponsiveFormModalTitle>
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-xl bg-elec-yellow/20">
+                  <div className="p-2 rounded-xl bg-elec-yellow/15">
                     <Briefcase className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <div>
-                    <span className="text-lg font-semibold">
+                    <Eyebrow>{isEditing ? 'Edit vacancy' : 'Post vacancy'}</Eyebrow>
+                    <span className="text-lg font-semibold text-white block mt-0.5">
                       {isEditing ? 'Edit Vacancy' : 'Post Job Vacancy'}
                     </span>
                     <div className="flex items-center gap-2">
-                      <p className="text-xs text-white font-normal">
+                      <p className="text-[11px] text-white font-normal">
                         {currentStepData.title} - {currentStepData.description}
                       </p>
                       {/* Draft save indicator */}
                       {!isEditing && (
                         <span
                           className={cn(
-                            'flex items-center gap-1 text-xs transition-all duration-300',
+                            'flex items-center gap-1 text-[11px] transition-all duration-300',
                             isSavingDraft
                               ? 'text-elec-yellow animate-pulse'
                               : lastSaved
@@ -303,7 +314,7 @@ export function VacancyFormWizard({
                             </>
                           ) : lastSaved ? (
                             <>
-                              <Check className="h-3 w-3 text-success" />
+                              <Check className="h-3 w-3 text-emerald-400" />
                               <span>
                                 Saved {formatDistanceToNow(lastSaved, { addSuffix: true })}
                               </span>
@@ -319,17 +330,13 @@ export function VacancyFormWizard({
               {/* Desktop actions */}
               {!isMobile && (
                 <div className="flex items-center gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowTemplates(!showTemplates)}
-                  >
-                    <FileText className="h-4 w-4 mr-1" />
+                  <TextAction onClick={() => setShowTemplates(!showTemplates)}>
+                    <FileText className="h-4 w-4 mr-1 inline" />
                     Templates
-                  </Button>
-                  <Button variant="ghost" size="icon" onClick={handleClose}>
+                  </TextAction>
+                  <IconButton aria-label="Close" onClick={handleClose}>
                     <X className="h-4 w-4" />
-                  </Button>
+                  </IconButton>
                 </div>
               )}
             </div>
@@ -347,11 +354,11 @@ export function VacancyFormWizard({
                     key={step.id}
                     onClick={() => handleStepClick(index)}
                     className={cn(
-                      'text-xs transition-colors',
+                      'text-[11px] transition-colors touch-manipulation',
                       index === currentStep
                         ? 'text-elec-yellow font-medium'
                         : index < currentStep
-                          ? 'text-elec-yellow/60 hover:text-elec-yellow/80'
+                          ? 'text-elec-yellow/70 hover:text-elec-yellow'
                           : 'text-white'
                     )}
                   >
@@ -364,13 +371,13 @@ export function VacancyFormWizard({
 
           {/* Template selector overlay */}
           {showTemplates && (
-            <div className="absolute inset-0 z-50 bg-background/95 backdrop-blur-sm overflow-auto">
+            <div className="absolute inset-0 z-50 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm overflow-auto">
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-semibold">Load Template</h3>
-                  <Button variant="ghost" size="icon" onClick={() => setShowTemplates(false)}>
+                  <h3 className="text-lg font-semibold text-white">Load Template</h3>
+                  <IconButton aria-label="Close" onClick={() => setShowTemplates(false)}>
                     <X className="h-4 w-4" />
-                  </Button>
+                  </IconButton>
                 </div>
                 <TemplateSelector onSelect={handleTemplateSelect} />
               </div>
@@ -386,55 +393,53 @@ export function VacancyFormWizard({
 
           {/* Footer */}
           <ResponsiveFormModalFooter>
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3 w-full">
               {/* Mobile template button */}
               {isMobile && currentStep === 0 && (
-                <Button
+                <SecondaryButton
                   type="button"
-                  variant="outline"
-                  className="w-full sm:w-auto"
                   onClick={() => setShowTemplates(true)}
+                  fullWidth
                 >
                   <FileText className="h-4 w-4 mr-2" />
                   Load Template
-                </Button>
+                </SecondaryButton>
               )}
 
               <div className="flex gap-3 flex-1">
                 {/* Back button */}
                 {currentStep > 0 && (
-                  <Button
+                  <SecondaryButton
                     type="button"
-                    variant="outline"
                     onClick={handlePrevious}
-                    className="flex-1 sm:flex-none min-h-[48px]"
+                    fullWidth
                   >
                     Back
-                  </Button>
+                  </SecondaryButton>
                 )}
 
                 {/* Save draft button */}
                 {!isLastStep && !isEditing && (
-                  <Button
+                  <SecondaryButton
                     type="button"
-                    variant="ghost"
                     onClick={handleSaveDraft}
-                    className="hidden sm:flex"
+                    className="hidden sm:inline-flex"
                   >
                     <Save className="h-4 w-4 mr-2" />
                     Save Draft
-                  </Button>
+                  </SecondaryButton>
                 )}
 
                 {/* Next/Submit button */}
                 {!isLastStep ? (
-                  <Button
+                  <PrimaryButton
                     type="button"
                     onClick={handleNext}
-                    className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    fullWidth
+                    size="lg"
                   >
                     Continue
-                  </Button>
+                  </PrimaryButton>
                 ) : null}
               </div>
             </div>

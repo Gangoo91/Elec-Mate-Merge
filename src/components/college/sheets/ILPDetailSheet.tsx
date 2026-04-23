@@ -103,7 +103,7 @@ export function ILPDetailSheet({
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                     Individual Learning Plan
                   </div>
                   <SheetTitle className="mt-1 text-xl text-left">
@@ -194,7 +194,7 @@ export function ILPDetailSheet({
                       <div className="h-20 bg-white/[0.04] animate-pulse rounded-xl" />
                     ) : ilp?.support_needs ? (
                       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                           Support Needs
                         </div>
                         <div className="mt-3 flex flex-wrap gap-1.5">
@@ -234,7 +234,7 @@ export function ILPDetailSheet({
                       </div>
                     ) : (
                       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-5">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-5">
                           Timeline
                         </div>
 
@@ -244,7 +244,7 @@ export function ILPDetailSheet({
                           <div className="relative">
                             <div className="absolute -left-6 top-1 h-2.5 w-2.5 rounded-full bg-elec-yellow" />
                             <div className="text-[13px] font-medium text-white">ILP created</div>
-                            <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                            <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                               {formatUKDateShort(ilp?.created_at)}
                             </div>
                           </div>
@@ -255,7 +255,7 @@ export function ILPDetailSheet({
                               <div className="text-[13px] font-medium text-white">
                                 Last reviewed
                               </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                              <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                                 {formatUKDateShort(ilp.last_reviewed)}
                                 {reviewer && ` · ${reviewer.name}`}
                               </div>
@@ -268,7 +268,7 @@ export function ILPDetailSheet({
                               <div className="text-[13px] font-medium text-white">
                                 Next review due
                               </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                              <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                                 {formatUKDateShort(ilp.review_date)}
                               </div>
                               {new Date(ilp.review_date) < new Date() && (

@@ -40,12 +40,12 @@ interface AddRequirementDialogProps {
 }
 
 const inputClass =
-  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
 
 const textareaClass =
-  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function AddRequirementDialog({
   open,
@@ -159,7 +159,7 @@ export function AddRequirementDialog({
 
         <form onSubmit={handleSubmit} className="space-y-5 pt-2">
           <div className="space-y-2">
-            <Label htmlFor="title" className="text-[11px] text-white/50">
+            <Label htmlFor="title" className="text-[11px] text-white/75">
               Title *
             </Label>
             <Input
@@ -176,7 +176,7 @@ export function AddRequirementDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="description" className="text-[11px] text-white/50">
+            <Label htmlFor="description" className="text-[11px] text-white/75">
               Description
             </Label>
             <Textarea
@@ -190,8 +190,8 @@ export function AddRequirementDialog({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-[11px] text-white/50">Evidence types *</Label>
-            <p className="text-[11px] text-white/50">
+            <Label className="text-[11px] text-white/75">Evidence types *</Label>
+            <p className="text-[11px] text-white/75">
               Select the types of evidence the student can upload.
             </p>
             <div className="grid grid-cols-2 gap-1.5 mt-1">
@@ -238,7 +238,7 @@ export function AddRequirementDialog({
 
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="quantity" className="text-[11px] text-white/50">
+              <Label htmlFor="quantity" className="text-[11px] text-white/75">
                 Quantity required
               </Label>
               <Input
@@ -261,7 +261,7 @@ export function AddRequirementDialog({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[11px] text-white/50">Mandatory?</Label>
+              <Label className="text-[11px] text-white/75">Mandatory?</Label>
               <div className="flex items-center gap-3 pt-2">
                 <Switch
                   checked={formData.isMandatory}
@@ -277,7 +277,7 @@ export function AddRequirementDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="dueDate" className="text-[11px] text-white/50">
+            <Label htmlFor="dueDate" className="text-[11px] text-white/75">
               Due date (optional)
             </Label>
             <Input
@@ -291,7 +291,7 @@ export function AddRequirementDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="guidance" className="text-[11px] text-white/50">
+            <Label htmlFor="guidance" className="text-[11px] text-white/75">
               Guidance for student
             </Label>
             <Textarea

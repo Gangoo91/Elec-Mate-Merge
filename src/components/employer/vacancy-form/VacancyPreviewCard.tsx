@@ -1,16 +1,13 @@
 import {
   MapPin,
   Briefcase,
-  PoundSterling,
   Clock,
   Building2,
   Laptop,
   Home,
   Calendar,
   CheckCircle,
-  Badge as BadgeIcon,
 } from 'lucide-react';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { formatSalaryRange, type VacancyFormData, type SalaryPeriod } from './schema';
@@ -57,25 +54,24 @@ export function VacancyPreviewCard({
   };
 
   return (
-    <Card
+    <div
       className={cn(
-        'bg-gradient-to-br from-elec-gray to-elec-dark',
-        'border border-white/10 overflow-hidden',
+        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden',
         className
       )}
     >
       {/* Header */}
-      <CardHeader className="pb-4">
+      <div className="p-5 pb-4">
         <div className="flex items-start justify-between gap-4">
-          <div className="space-y-2">
+          <div className="space-y-2 flex-1 min-w-0">
             {/* Company */}
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
                 <Briefcase className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>
-                <p className="text-sm text-white">{companyName}</p>
-                <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
+                <p className="text-[13px] text-white">{companyName}</p>
+                <Badge variant="outline" className="text-[11px] border-emerald-500/25 text-emerald-400">
                   Direct from Employer
                 </Badge>
               </div>
@@ -85,7 +81,7 @@ export function VacancyPreviewCard({
             <h3 className="text-xl font-semibold text-white">{title || 'Job Title'}</h3>
 
             {/* Key details */}
-            <div className="flex flex-wrap items-center gap-3 text-sm text-white">
+            <div className="flex flex-wrap items-center gap-3 text-[13px] text-white">
               {location && (
                 <span className="flex items-center gap-1">
                   <MapPin className="h-4 w-4" />
@@ -99,7 +95,10 @@ export function VacancyPreviewCard({
                 </span>
               )}
               {type && (
-                <Badge variant="secondary" className="text-xs">
+                <Badge
+                  variant="outline"
+                  className="text-[11px] bg-white/[0.06] border-white/[0.08] text-white"
+                >
                   {type}
                 </Badge>
               )}
@@ -107,34 +106,37 @@ export function VacancyPreviewCard({
           </div>
 
           {/* Salary badge */}
-          <div className="text-right">
-            <div className="px-3 py-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
-              <p className="text-lg font-bold text-elec-yellow">
+          <div className="text-right shrink-0">
+            <div className="px-3 py-2 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25">
+              <p className="text-lg font-bold text-elec-yellow tabular-nums">
                 {formatSalaryRange(salaryMin, salaryMax, salaryPeriod as SalaryPeriod)}
               </p>
             </div>
           </div>
         </div>
-      </CardHeader>
+      </div>
 
-      <CardContent className="space-y-6">
+      <div className="px-5 pb-5 space-y-6">
         {/* Requirements */}
         {requirements.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-white">Requirements</p>
+            <p className="text-[13px] font-medium text-white">Requirements</p>
             <div className="flex flex-wrap gap-2">
               {requirements.slice(0, 6).map((req) => (
                 <Badge
                   key={req}
                   variant="outline"
-                  className="text-xs border-elec-yellow/30 text-elec-yellow/80"
+                  className="text-[11px] border-elec-yellow/25 text-elec-yellow"
                 >
                   <CheckCircle className="h-3 w-3 mr-1" />
                   {req}
                 </Badge>
               ))}
               {requirements.length > 6 && (
-                <Badge variant="secondary" className="text-xs">
+                <Badge
+                  variant="outline"
+                  className="text-[11px] bg-white/[0.06] border-white/[0.08] text-white"
+                >
                   +{requirements.length - 6} more
                 </Badge>
               )}
@@ -145,19 +147,22 @@ export function VacancyPreviewCard({
         {/* Benefits */}
         {benefits.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-white">Benefits</p>
+            <p className="text-[13px] font-medium text-white">Benefits</p>
             <div className="flex flex-wrap gap-2">
               {benefits.slice(0, 5).map((benefit) => (
                 <Badge
                   key={benefit}
-                  variant="secondary"
-                  className="text-xs bg-green-500/10 text-green-400 border border-green-500/20"
+                  variant="outline"
+                  className="text-[11px] bg-emerald-500/10 text-emerald-400 border-emerald-500/25"
                 >
                   {benefit}
                 </Badge>
               ))}
               {benefits.length > 5 && (
-                <Badge variant="secondary" className="text-xs">
+                <Badge
+                  variant="outline"
+                  className="text-[11px] bg-white/[0.06] border-white/[0.08] text-white"
+                >
                   +{benefits.length - 5} more
                 </Badge>
               )}
@@ -168,9 +173,9 @@ export function VacancyPreviewCard({
         {/* Description preview */}
         {description && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-white">About the Role</p>
+            <p className="text-[13px] font-medium text-white">About the Role</p>
             <div
-              className="text-sm text-white line-clamp-4 prose prose-invert prose-sm max-w-none"
+              className="text-[13px] text-white line-clamp-4 prose prose-invert prose-sm max-w-none"
               dangerouslySetInnerHTML={{
                 __html: description.substring(0, 300) + (description.length > 300 ? '...' : ''),
               }}
@@ -179,7 +184,7 @@ export function VacancyPreviewCard({
         )}
 
         {/* Footer info */}
-        <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 text-xs text-white">
+        <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/[0.06] text-[11px] text-white">
           {schedule && (
             <span className="flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />
@@ -193,18 +198,21 @@ export function VacancyPreviewCard({
             </span>
           )}
           {experienceLevel && (
-            <Badge variant="outline" className="text-xs">
+            <Badge
+              variant="outline"
+              className="text-[11px] bg-white/[0.06] border-white/[0.08] text-white"
+            >
               {experienceLevel} Level
             </Badge>
           )}
           {closingDate && (
-            <span className="flex items-center gap-1 text-warning">
+            <span className="flex items-center gap-1 text-amber-400">
               <Clock className="h-3.5 w-3.5" />
               Closes: {new Date(closingDate).toLocaleDateString()}
             </span>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

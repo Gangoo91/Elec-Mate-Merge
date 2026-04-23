@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import {
+  inputClass,
+  fieldLabelClass,
+  PrimaryButton,
+  SecondaryButton,
+} from './editorial';
+import { cn } from '@/lib/utils';
 import {
   Mic,
   ExternalLink,
@@ -450,7 +455,7 @@ const VoiceSettingsPanel: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06]">
         <CardContent className="py-8 text-center text-white">
           Loading settings...
         </CardContent>
@@ -459,21 +464,23 @@ const VoiceSettingsPanel: React.FC = () => {
   }
 
   return (
-    <Card>
+    <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06]">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
+        <CardTitle className="flex items-center gap-2 text-white">
           <Mic className="h-5 w-5" />
           Voice Assistant Settings
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-white">
           Configure ELEC-MATE voice assistant powered by ElevenLabs -{' '}
           <strong>{totalTools} tools</strong>, {NAVIGATION_SECTIONS.length} navigation sections
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="agent-id">ElevenLabs Agent ID</Label>
+          <div className="space-y-1.5">
+            <label htmlFor="agent-id" className={fieldLabelClass}>
+              ElevenLabs Agent ID
+            </label>
             <div className="flex gap-2">
               <Input
                 id="agent-id"
@@ -483,21 +490,23 @@ const VoiceSettingsPanel: React.FC = () => {
                   setIsSaved(false);
                 }}
                 placeholder="Enter your ElevenLabs Agent ID..."
-                className="flex-1"
+                className={cn(inputClass, 'flex-1')}
               />
-              <Button onClick={saveAgentId} disabled={!agentId.trim() || isSaved}>
+              <PrimaryButton onClick={saveAgentId} disabled={!agentId.trim() || isSaved}>
                 {isSaved ? <CheckCircle2 className="h-4 w-4" /> : 'Save'}
-              </Button>
+              </PrimaryButton>
               {isSaved && (
-                <Button variant="outline" onClick={clearAgentId}>
+                <SecondaryButton onClick={clearAgentId}>
                   <XCircle className="h-4 w-4" />
-                </Button>
+                </SecondaryButton>
               )}
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="api-key">ElevenLabs API Key</Label>
+          <div className="space-y-1.5">
+            <label htmlFor="api-key" className={fieldLabelClass}>
+              ElevenLabs API Key
+            </label>
             <div className="flex gap-2">
               <Input
                 id="api-key"
@@ -508,18 +517,18 @@ const VoiceSettingsPanel: React.FC = () => {
                   setIsApiKeySaved(false);
                 }}
                 placeholder="Enter your ElevenLabs API Key..."
-                className="flex-1"
+                className={cn(inputClass, 'flex-1')}
               />
-              <Button onClick={saveApiKey} disabled={!apiKey.trim() || isApiKeySaved}>
+              <PrimaryButton onClick={saveApiKey} disabled={!apiKey.trim() || isApiKeySaved}>
                 {isApiKeySaved ? <CheckCircle2 className="h-4 w-4" /> : 'Save'}
-              </Button>
+              </PrimaryButton>
               {isApiKeySaved && (
-                <Button variant="outline" onClick={clearApiKey}>
+                <SecondaryButton onClick={clearApiKey}>
                   <XCircle className="h-4 w-4" />
-                </Button>
+                </SecondaryButton>
               )}
             </div>
-            <p className="text-xs text-white">
+            <p className="text-[11px] text-white">
               Get your API key from{' '}
               <a
                 href="https://elevenlabs.io/app/settings/api-keys"
@@ -534,10 +543,10 @@ const VoiceSettingsPanel: React.FC = () => {
         </div>
 
         {/* Automatic Sync Section */}
-        <div className="rounded-lg border-2 border-elec-yellow/50 p-4 bg-elec-yellow/5 space-y-4">
+        <div className="rounded-xl border border-elec-yellow/50 p-4 bg-elec-yellow/5 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h4 className="font-semibold flex items-center gap-2">
+              <h4 className="font-semibold flex items-center gap-2 text-white">
                 <CloudUpload className="h-5 w-5 text-elec-yellow" />
                 Automatic Tool Sync
               </h4>
@@ -545,23 +554,22 @@ const VoiceSettingsPanel: React.FC = () => {
                 Push all {totalTools} tools to ElevenLabs with one click
               </p>
             </div>
-            <Button
+            <PrimaryButton
               onClick={syncToElevenLabs}
               disabled={isSyncing || !agentId.trim() || !apiKey.trim()}
-              className="gap-2"
             >
               {isSyncing ? (
                 <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   Syncing...
                 </>
               ) : (
                 <>
-                  <RefreshCw className="h-4 w-4" />
+                  <RefreshCw className="h-4 w-4 mr-2" />
                   Sync All Tools
                 </>
               )}
-            </Button>
+            </PrimaryButton>
           </div>
 
           <div className="flex items-center gap-2">
@@ -570,11 +578,11 @@ const VoiceSettingsPanel: React.FC = () => {
               id="include-prompt"
               checked={syncIncludePrompt}
               onChange={(e) => setSyncIncludePrompt(e.target.checked)}
-              className="rounded border-gray-300"
+              className="h-4 w-4 rounded border border-white/20 bg-[hsl(0_0%_9%)] accent-elec-yellow"
             />
-            <Label htmlFor="include-prompt" className="text-sm cursor-pointer">
+            <label htmlFor="include-prompt" className={cn(fieldLabelClass, 'cursor-pointer mb-0')}>
               Also update system prompt
-            </Label>
+            </label>
           </div>
 
           {/* Sync Result */}
@@ -626,12 +634,16 @@ const VoiceSettingsPanel: React.FC = () => {
         </div>
 
         {/* Progress Tracker */}
-        <div className="rounded-lg border p-4 bg-muted/30 space-y-3">
+        <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.04] space-y-3">
           <div className="flex items-center justify-between">
-            <h4 className="font-medium">Configuration Progress</h4>
+            <h4 className="font-medium text-white">Configuration Progress</h4>
             <Badge
               variant={progressPercent === 100 ? 'default' : 'secondary'}
-              className={progressPercent === 100 ? 'bg-green-500' : ''}
+              className={
+                progressPercent === 100
+                  ? 'bg-emerald-500 text-black'
+                  : 'bg-white/[0.06] text-white'
+              }
             >
               {configuredCount} / {totalTools} tools
             </Badge>
@@ -640,66 +652,62 @@ const VoiceSettingsPanel: React.FC = () => {
           <div className="flex items-center justify-between text-sm">
             <span className="text-white">{Math.round(progressPercent)}% complete</span>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
+              <SecondaryButton
                 size="sm"
                 onClick={resetProgress}
                 disabled={configuredCount === 0}
               >
                 <RotateCcw className="h-3 w-3 mr-1" />
                 Reset
-              </Button>
-              <Button variant="default" size="sm" onClick={() => setShowWizard(true)}>
+              </SecondaryButton>
+              <PrimaryButton size="sm" onClick={() => setShowWizard(true)}>
                 <Wand2 className="h-3 w-3 mr-1" />
                 Setup Wizard
-              </Button>
+              </PrimaryButton>
             </div>
           </div>
         </div>
 
         {/* Quick Export Actions */}
-        <div className="rounded-lg border p-4 bg-elec-yellow/5 space-y-3">
-          <h4 className="font-medium flex items-center gap-2">
+        <div className="rounded-xl border border-white/[0.06] p-4 bg-elec-yellow/5 space-y-3">
+          <h4 className="font-medium flex items-center gap-2 text-white">
             <Download className="h-4 w-4" />
             Quick Export to ElevenLabs
           </h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <Button
-              variant="outline"
+            <SecondaryButton
               size="sm"
               onClick={() => copyToClipboard(ELEC_MATE_SYSTEM_PROMPT, 'System prompt')}
               className="justify-start"
             >
               <Copy className="h-4 w-4 mr-2" />
               Copy System Prompt
-            </Button>
-            <Button
-              variant="outline"
+            </SecondaryButton>
+            <SecondaryButton
               size="sm"
               onClick={() => copyToClipboard(exportAllToolsJSON(), 'Tools JSON')}
               className="justify-start"
             >
               <FileJson className="h-4 w-4 mr-2" />
               Copy All Tools (JSON)
-            </Button>
-            <Button
-              variant="outline"
+            </SecondaryButton>
+            <SecondaryButton
               size="sm"
               onClick={() => copyToClipboard(generateFullExport(), 'Full configuration')}
               className="justify-start"
             >
               <Download className="h-4 w-4 mr-2" />
               Export Everything
-            </Button>
+            </SecondaryButton>
           </div>
-          <p className="text-xs text-white">
+          <p className="text-[11px] text-white">
             Copy to ElevenLabs: System prompt → paste in System Prompt field, then use the Setup
             Wizard to add each tool
           </p>
         </div>
 
-        <div className="rounded-lg border p-4 bg-muted/30">
-          <h4 className="font-medium mb-2">Quick Setup Guide</h4>
+        <div className="rounded-xl border border-white/[0.06] p-4 bg-white/[0.04]">
+          <h4 className="font-medium mb-2 text-white">Quick Setup Guide</h4>
           <ol className="text-sm text-white space-y-1 list-decimal list-inside">
             <li>
               Create an agent at{' '}
@@ -720,16 +728,22 @@ const VoiceSettingsPanel: React.FC = () => {
         </div>
 
         {/* Tool Statistics */}
-        <div className="rounded-lg border p-4">
-          <h4 className="font-medium mb-3">Tool Categories ({categories.length})</h4>
+        <div className="rounded-xl border border-white/[0.06] p-4">
+          <h4 className="font-medium mb-3 text-white">Tool Categories ({categories.length})</h4>
           <div className="flex flex-wrap gap-2">
             {categories.map((cat) => {
               const count = getToolsByCategory(cat).length;
+              const isActive = selectedCategory === cat;
               return (
                 <Badge
                   key={cat}
-                  variant={selectedCategory === cat ? 'default' : 'outline'}
-                  className="cursor-pointer"
+                  variant={isActive ? 'default' : 'outline'}
+                  className={cn(
+                    'cursor-pointer',
+                    isActive
+                      ? 'bg-elec-yellow text-black'
+                      : 'border-white/[0.1] text-white bg-white/[0.04]'
+                  )}
                   onClick={() => setSelectedCategory(selectedCategory === cat ? null : cat)}
                 >
                   {cat} ({count})
@@ -740,28 +754,29 @@ const VoiceSettingsPanel: React.FC = () => {
         </div>
 
         {/* Navigation Reference Card */}
-        <div className="rounded-lg border p-4">
-          <h4 className="font-medium mb-2">Navigation Sections ({NAVIGATION_SECTIONS.length})</h4>
-          <p className="text-xs text-white mb-2">
+        <div className="rounded-xl border border-white/[0.06] p-4">
+          <h4 className="font-medium mb-2 text-white">
+            Navigation Sections ({NAVIGATION_SECTIONS.length})
+          </h4>
+          <p className="text-[11px] text-white mb-2">
             Voice can navigate to any of these sections using aliases:
           </p>
-          <div className="text-xs font-mono bg-muted p-2 rounded max-h-24 overflow-y-auto">
+          <div className="text-xs font-mono bg-white/[0.06] text-white p-2 rounded-lg max-h-24 overflow-y-auto">
             {NAVIGATION_SECTIONS.join(', ')}
           </div>
         </div>
 
         {/* ALL TOOLS SECTION - Shown directly, not hidden */}
-        <div className="space-y-4 rounded-lg border p-4 bg-elec-gray">
+        <div className="space-y-4 rounded-xl border border-white/[0.06] p-4 bg-[hsl(0_0%_10%)]">
           <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-lg">All {totalTools} Tools</h4>
-            <Button
-              variant="ghost"
+            <h4 className="font-semibold text-lg text-white">All {totalTools} Tools</h4>
+            <SecondaryButton
               size="sm"
               onClick={() => copyToClipboard(exportAllToolsJSON(), 'Tools JSON')}
             >
               <Copy className="h-4 w-4 mr-1" />
               Copy All JSON
-            </Button>
+            </SecondaryButton>
           </div>
 
           {/* Search and Filter */}
@@ -772,27 +787,37 @@ const VoiceSettingsPanel: React.FC = () => {
                 placeholder="Search tools..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1"
+                className={cn(inputClass, 'flex-1')}
               />
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               <Badge
                 variant={filterMode === 'all' ? 'default' : 'outline'}
-                className="cursor-pointer"
+                className={cn(
+                  'cursor-pointer',
+                  filterMode === 'all'
+                    ? 'bg-elec-yellow text-black'
+                    : 'border-white/[0.1] text-white bg-white/[0.04]'
+                )}
                 onClick={() => setFilterMode('all')}
               >
                 All ({totalTools})
               </Badge>
               <Badge
                 variant={filterMode === 'configured' ? 'default' : 'outline'}
-                className="cursor-pointer bg-green-500/20 text-green-400 border-green-500/30"
+                className="cursor-pointer bg-emerald-500/20 text-emerald-400 border-emerald-500/30"
                 onClick={() => setFilterMode('configured')}
               >
                 ✓ Done ({configuredCount})
               </Badge>
               <Badge
                 variant={filterMode === 'unconfigured' ? 'default' : 'outline'}
-                className="cursor-pointer"
+                className={cn(
+                  'cursor-pointer',
+                  filterMode === 'unconfigured'
+                    ? 'bg-elec-yellow text-black'
+                    : 'border-white/[0.1] text-white bg-white/[0.04]'
+                )}
                 onClick={() => setFilterMode('unconfigured')}
               >
                 Remaining ({totalTools - configuredCount})
@@ -801,13 +826,12 @@ const VoiceSettingsPanel: React.FC = () => {
           </div>
 
           {/* Showing X of Y indicator */}
-          <div className="flex items-center justify-between text-sm text-white border-b pb-2">
+          <div className="flex items-center justify-between text-sm text-white border-b border-white/[0.06] pb-2">
             <span>
               Showing {filteredTools.length} of {totalTools} tools
             </span>
             {(searchQuery || filterMode !== 'all') && (
-              <Button
-                variant="ghost"
+              <SecondaryButton
                 size="sm"
                 onClick={() => {
                   setSearchQuery('');
@@ -815,7 +839,7 @@ const VoiceSettingsPanel: React.FC = () => {
                 }}
               >
                 Clear filters
-              </Button>
+              </SecondaryButton>
             )}
           </div>
 

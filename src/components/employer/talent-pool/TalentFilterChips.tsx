@@ -1,5 +1,4 @@
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import {
   X,
   SlidersHorizontal,
@@ -155,7 +154,7 @@ export function TalentFilterChips({
         <Badge
           key={spec}
           variant="secondary"
-          className="h-8 px-3 gap-1.5 bg-white/5 border-white/20 hover:bg-white/10 cursor-pointer touch-manipulation"
+          className="h-8 px-3 gap-1.5 bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1] cursor-pointer touch-manipulation"
           onClick={() => onRemoveSpecialism(spec)}
         >
           {spec}
@@ -266,14 +265,13 @@ export function TalentFilterChips({
       {visibleChips}
 
       {hiddenCount > 0 && (
-        <Button
-          variant="outline"
-          size="sm"
-          className="h-8 px-3 gap-1.5 shrink-0 touch-manipulation"
+        <button
+          type="button"
+          className="h-8 px-3 gap-1.5 shrink-0 rounded-full bg-white/[0.04] border border-white/[0.08] text-[12px] font-medium text-white hover:bg-white/[0.08] transition-colors touch-manipulation inline-flex items-center"
           onClick={onOpenFilters}
         >
           <SlidersHorizontal className="h-3 w-3" />+{hiddenCount} more
-        </Button>
+        </button>
       )}
 
       <span className="text-sm text-white ml-auto shrink-0">

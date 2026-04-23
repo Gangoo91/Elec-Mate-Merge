@@ -83,7 +83,7 @@ export function AddCommentDialog({
       case 'student':
         return 'bg-elec-yellow/10 text-elec-yellow';
       default:
-        return 'bg-muted text-muted-foreground';
+        return 'bg-muted text-white/75';
     }
   };
 
@@ -172,7 +172,7 @@ export function AddCommentDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">Add Comment</DialogTitle>
           {contextTitle && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-white/75">
               On {getContextLabel()}:{' '}
               <span className="font-medium text-foreground">{contextTitle}</span>
             </p>
@@ -189,7 +189,7 @@ export function AddCommentDialog({
             </Avatar>
             <div>
               <p className="text-sm font-medium">{currentUserName}</p>
-              <p className="text-xs text-muted-foreground">{formatRole(currentUserRole)}</p>
+              <p className="text-xs text-white/75">{formatRole(currentUserRole)}</p>
             </div>
           </div>
 
@@ -236,7 +236,7 @@ export function AddCommentDialog({
                               </Avatar>
                               <div className="flex-1 min-w-0">
                                 <p className="text-sm font-medium truncate">{user.name}</p>
-                                <p className="text-xs text-muted-foreground">
+                                <p className="text-xs text-white/75">
                                   {formatRole(user.role)}
                                 </p>
                               </div>
@@ -268,7 +268,7 @@ export function AddCommentDialog({
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/75">
                 No mentions added. Use @ to notify specific people.
               </p>
             )}
@@ -282,7 +282,7 @@ export function AddCommentDialog({
                 <Label htmlFor="requires-action" className="text-sm font-medium cursor-pointer">
                   Requires Action
                 </Label>
-                <p className="text-xs text-muted-foreground">Mark if response is needed</p>
+                <p className="text-xs text-white/75">Mark if response is needed</p>
               </div>
             </div>
             <Switch

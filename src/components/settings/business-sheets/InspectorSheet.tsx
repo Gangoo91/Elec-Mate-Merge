@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -10,12 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Shield, Check, FileText, Pen, Loader2, CheckCircle } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { SchemeLogoPicker } from '@/components/settings/settings/SchemeLogoPicker';
 import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
+import { Eyebrow } from '@/components/college/primitives';
 
 const AVAILABLE_QUALIFICATIONS = [
   '18th Edition BS7671',
@@ -124,37 +123,40 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
+      >
+        <div className="flex flex-col h-full bg-[#0a0a0a]">
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <div className="px-5 pb-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
-              <Shield className="h-5 w-5 text-blue-400" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">Inspector Details</h2>
-              <p className="text-xs text-white">Credentials, qualifications and signature</p>
-            </div>
-          </div>
+          <header className="px-5 sm:px-6 pb-4">
+            <Eyebrow>Credentials</Eyebrow>
+            <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
+              Inspector details
+            </h2>
+            <p className="mt-1 text-[13px] text-white">
+              Credentials, qualifications and signature
+            </p>
+          </header>
 
-          <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5">
-            {/* Inspector Name */}
-            <div className="space-y-2">
-              <Label className="text-xs font-medium text-white uppercase tracking-wider">Inspector Name</Label>
+          <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-6">
+            {/* Inspector name */}
+            <div className="space-y-1.5">
+              <Label className="text-white font-medium text-[13px]">Inspector name</Label>
               <Input
                 value={inspectorName}
                 onChange={(e) => setInspectorName(e.target.value)}
                 placeholder="Full name"
-                className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500"
+                className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
               />
             </div>
 
             <div className="h-px bg-white/[0.06]" />
 
-            {/* Registration Scheme */}
+            {/* Registration scheme */}
             <SchemeLogoPicker
               scheme={registrationScheme}
               registrationNumber={registrationNumber}
@@ -169,7 +171,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
 
             {/* Qualifications */}
             <div className="space-y-3">
-              <Label className="text-xs font-medium text-white uppercase tracking-wider">Qualifications</Label>
+              <Eyebrow>Qualifications</Eyebrow>
               <div className="flex flex-wrap gap-2">
                 {AVAILABLE_QUALIFICATIONS.map((qual) => {
                   const isSelected = qualifications.includes(qual);
@@ -183,13 +185,14 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
                         );
                       }}
                       className={cn(
-                        'px-3 py-2 rounded-xl text-[13px] font-medium transition-all touch-manipulation',
+                        'px-3 py-2 rounded-xl text-[13px] font-medium transition-colors touch-manipulation border',
                         isSelected
-                          ? 'bg-blue-500 text-white'
-                          : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.08]'
+                          ? 'bg-elec-yellow text-black border-elec-yellow'
+                          : 'bg-[#0a0a0a] text-white border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
                       )}
+                      aria-pressed={isSelected}
                     >
-                      {isSelected && <Check className="h-3.5 w-3.5 inline mr-1.5" />}
+                      {isSelected && <span className="mr-1.5 font-semibold">✓</span>}
                       {qual}
                     </button>
                   );
@@ -201,43 +204,56 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
 
             {/* Insurance */}
             <div className="space-y-3">
-              <Label className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-                <FileText className="h-4 w-4 text-blue-400" />
-                Insurance Details
-              </Label>
-              <div className="grid grid-cols-2 gap-3">
-                <Select value={insuranceProvider} onValueChange={setInsuranceProvider}>
-                  <SelectTrigger className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white">
-                    <SelectValue placeholder="Provider" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-white/[0.1]">
-                    {INSURANCE_PROVIDERS.map((provider) => (
-                      <SelectItem key={provider} value={provider}>{provider}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Select value={insuranceCoverage} onValueChange={setInsuranceCoverage}>
-                  <SelectTrigger className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white">
-                    <SelectValue placeholder="Coverage" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-dark border-white/[0.1]">
-                    {INSURANCE_COVERAGE_OPTIONS.map((coverage) => (
-                      <SelectItem key={coverage} value={coverage}>{coverage}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Input
-                  value={insurancePolicyNumber}
-                  onChange={(e) => setInsurancePolicyNumber(e.target.value)}
-                  placeholder="Policy number"
-                  className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500"
-                />
-                <Input
-                  type="date"
-                  value={insuranceExpiry}
-                  onChange={(e) => setInsuranceExpiry(e.target.value)}
-                  className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500"
-                />
+              <Eyebrow>Insurance details</Eyebrow>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label className="text-white font-medium text-[12px]">Provider</Label>
+                  <Select value={insuranceProvider} onValueChange={setInsuranceProvider}>
+                    <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                      <SelectValue placeholder="Provider" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                      {INSURANCE_PROVIDERS.map((provider) => (
+                        <SelectItem key={provider} value={provider}>
+                          {provider}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-white font-medium text-[12px]">Coverage</Label>
+                  <Select value={insuranceCoverage} onValueChange={setInsuranceCoverage}>
+                    <SelectTrigger className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation">
+                      <SelectValue placeholder="Coverage" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+                      {INSURANCE_COVERAGE_OPTIONS.map((coverage) => (
+                        <SelectItem key={coverage} value={coverage}>
+                          {coverage}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-white font-medium text-[12px]">Policy number</Label>
+                  <Input
+                    value={insurancePolicyNumber}
+                    onChange={(e) => setInsurancePolicyNumber(e.target.value)}
+                    placeholder="Policy number"
+                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label className="text-white font-medium text-[12px]">Expiry</Label>
+                  <Input
+                    type="date"
+                    value={insuranceExpiry}
+                    onChange={(e) => setInsuranceExpiry(e.target.value)}
+                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                  />
+                </div>
               </div>
             </div>
 
@@ -245,10 +261,7 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
 
             {/* Signature */}
             <div className="space-y-3">
-              <Label className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-2">
-                <Pen className="h-4 w-4 text-blue-400" />
-                Signature
-              </Label>
+              <Eyebrow>Signature</Eyebrow>
               <SignatureInput
                 value={signatureData}
                 onChange={(signature) => setSignatureData(signature || '')}
@@ -256,14 +269,15 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
             </div>
           </div>
 
-          <div className="p-4 border-t border-white/[0.06]">
-            <Button
+          <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06]">
+            <button
+              type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-14 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-amber-500/20"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSaving ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Saving...</> : <><CheckCircle className="mr-2 h-5 w-5" /> Save</>}
-            </Button>
+              {isSaving ? 'Saving…' : 'Save'}
+            </button>
           </div>
         </div>
       </SheetContent>

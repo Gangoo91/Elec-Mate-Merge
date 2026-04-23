@@ -1,16 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Select,
@@ -30,7 +21,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Card, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { toast } from '@/hooks/use-toast';
 import {
@@ -62,9 +52,25 @@ import {
   Sparkles,
   RefreshCw,
   Eye,
-  X,
   Loader2,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  Pill,
+  Eyebrow,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  SuccessCheckmark,
+} from '@/components/employer/editorial';
 
 interface ViewJobPackSheetProps {
   jobPack: JobPack | null;
@@ -88,8 +94,8 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
   const [isEditing, setIsEditing] = useState(false);
   const [isGenerating, setIsGenerating] = useState<string | null>(null);
   const [isSendingToWorkers, setIsSendingToWorkers] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  // Reset form when job pack changes
   useEffect(() => {
     if (jobPack) {
       setTitle(jobPack.title);
@@ -99,6 +105,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       setStatus(jobPack.status);
       setBriefingContent(jobPack.briefing_content || '');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jobPack?.id]);
 
   const assignedEmployees = useMemo(
@@ -106,11 +113,9 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
     [employees, jobPack?.assigned_workers]
   );
 
-  // Get certifications for assigned workers
   const assignedWorkerIds = useMemo(() => assignedEmployees.map((e) => e.id), [assignedEmployees]);
   const { data: workerCertifications = [] } = useCertificationsByEmployees(assignedWorkerIds);
 
-  // Check worker certification compliance using real data
   const certificationCompliance = useMemo(() => {
     if (!jobPack?.required_certifications?.length || !assignedEmployees.length) {
       return { compliant: 0, total: 0, percentage: 100, details: [] };
@@ -166,10 +171,14 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       });
 
       toast({
-        title: 'Job Pack Updated',
+        title: 'Job pack updated',
         description: `${title} has been updated.`,
       });
-      setIsEditing(false);
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        setIsEditing(false);
+      }, 700);
     } catch (error) {
       toast({
         title: 'Error',
@@ -186,7 +195,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       await deleteJobPack.mutateAsync(jobPack.id);
 
       toast({
-        title: 'Job Pack Deleted',
+        title: 'Job pack deleted',
         description: `${jobPack.title} has been deleted.`,
       });
       onOpenChange(false);
@@ -207,7 +216,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
     setIsGenerating(documentType);
 
     try {
-      const { data, error } = await supabase.functions.invoke('generate-job-pack-document', {
+      const { error } = await supabase.functions.invoke('generate-job-pack-document', {
         body: {
           jobPackId: jobPack.id,
           documentType,
@@ -224,7 +233,6 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
 
       if (error) throw error;
 
-      // Update the job pack to mark document as generated
       const updateField = `${documentType}_generated` as
         | 'rams_generated'
         | 'method_statement_generated'
@@ -235,13 +243,13 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       });
 
       toast({
-        title: 'Document Generated',
+        title: 'Document generated',
         description: `${documentType.replace('_', ' ').toUpperCase()} has been generated using AI.`,
       });
     } catch (error) {
       console.error('Error generating document:', error);
       toast({
-        title: 'Generation Failed',
+        title: 'Generation failed',
         description: 'Failed to generate document. Please try again.',
         variant: 'destructive',
       });
@@ -265,9 +273,11 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       });
 
       toast({
-        title: 'Pack Sent',
+        title: 'Pack sent',
         description: `Job pack sent to ${assignedEmployees.length} worker(s).`,
       });
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 700);
     } catch (error) {
       toast({
         title: 'Error',
@@ -287,215 +297,173 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
       ? Math.round((acknowledgedCount / assignedEmployees.length) * 100)
       : 0;
 
+  const statusTone: Record<string, 'emerald' | 'amber' | 'blue' | 'yellow'> = {
+    Complete: 'emerald',
+    'In Progress': 'blue',
+    Draft: 'amber',
+  };
+
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl overflow-y-auto p-0">
-        <SheetHeader className="sticky top-0 z-10 bg-background border-b border-border p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex-1 min-w-0">
-              <SheetTitle className="text-xl truncate">
-                {isEditing ? 'Edit Job Pack' : jobPack.title}
-              </SheetTitle>
-              <SheetDescription className="truncate">
-                {jobPack.client} • {jobPack.location}
-              </SheetDescription>
-            </div>
-            <Badge
-              className={`shrink-0 ml-2 ${
-                jobPack.status === 'Complete'
-                  ? 'bg-success/20 text-success'
-                  : jobPack.status === 'In Progress'
-                    ? 'bg-info/20 text-info'
-                    : 'bg-muted text-white'
-              }`}
-            >
-              {jobPack.status}
-            </Badge>
-          </div>
-        </SheetHeader>
-
-        <Tabs defaultValue="overview" className="w-full">
-          <TabsList className="w-full justify-start gap-0 h-auto p-1 bg-muted/50 rounded-none border-b border-border">
-            <TabsTrigger
-              value="overview"
-              className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-            >
-              Overview
-            </TabsTrigger>
-            <TabsTrigger
-              value="documents"
-              className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-            >
-              Documents
-            </TabsTrigger>
-            <TabsTrigger
-              value="certs"
-              className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-            >
-              Certs
-            </TabsTrigger>
-            <TabsTrigger
-              value="briefing"
-              className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-            >
-              Briefing
-            </TabsTrigger>
-            <TabsTrigger
-              value="distribute"
-              className="flex-1 h-11 touch-manipulation data-[state=active]:bg-background text-xs sm:text-sm"
-            >
-              Send
-            </TabsTrigger>
-          </TabsList>
-
-          {/* Overview Tab */}
-          <TabsContent value="overview" className="p-4 space-y-6 mt-0">
+    <>
+      <SuccessCheckmark show={showSuccess} />
+      <Sheet open={open} onOpenChange={onOpenChange}>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+        >
+          <SheetShell
+            eyebrow={jobPack.client}
+            title={isEditing ? 'Edit job pack' : jobPack.title}
+            description={
+              <span className="flex items-center gap-2">
+                <Pill tone={statusTone[jobPack.status] ?? 'amber'}>{jobPack.status}</Pill>
+                <span className="truncate">{jobPack.location}</span>
+              </span>
+            }
+            footer={
+              isEditing ? (
+                <>
+                  <SecondaryButton onClick={() => setIsEditing(false)} fullWidth>
+                    Cancel
+                  </SecondaryButton>
+                  <PrimaryButton
+                    onClick={handleSave}
+                    disabled={updateJobPack.isPending}
+                    fullWidth
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Save changes
+                  </PrimaryButton>
+                </>
+              ) : (
+                <>
+                  <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                    Close
+                  </SecondaryButton>
+                  <PrimaryButton onClick={() => setIsEditing(true)} fullWidth>
+                    Edit
+                  </PrimaryButton>
+                </>
+              )
+            }
+          >
             {isEditing ? (
               <>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Title</Label>
+                <FormCard eyebrow="Job pack details">
+                  <Field label="Title" required>
                     <Input
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      className="h-11 touch-manipulation text-base"
+                      className={inputClass}
                     />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label>Client</Label>
+                  </Field>
+                  <FormGrid cols={2}>
+                    <Field label="Client">
                       <Input
                         value={client}
                         onChange={(e) => setClient(e.target.value)}
-                        className="h-11 touch-manipulation text-base"
+                        className={inputClass}
                       />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Location</Label>
+                    </Field>
+                    <Field label="Location">
                       <Input
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        className="h-11 touch-manipulation text-base"
+                        className={inputClass}
                       />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Scope of Works</Label>
+                    </Field>
+                  </FormGrid>
+                  <Field label="Scope of works">
                     <Textarea
                       value={scope}
                       onChange={(e) => setScope(e.target.value)}
                       rows={4}
-                      className="h-11 touch-manipulation text-base"
+                      className={cn(textareaClass, 'min-h-[120px]')}
                     />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Status</Label>
+                  </Field>
+                  <Field label="Status">
                     <Select value={status} onValueChange={(v) => setStatus(v as JobPackStatus)}>
-                      <SelectTrigger className="h-11 touch-manipulation text-base">
+                      <SelectTrigger className={selectTriggerClass}>
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="Draft" className="h-11 touch-manipulation">
-                          Draft
-                        </SelectItem>
-                        <SelectItem value="In Progress" className="h-11 touch-manipulation">
-                          In Progress
-                        </SelectItem>
-                        <SelectItem value="Complete" className="h-11 touch-manipulation">
-                          Complete
-                        </SelectItem>
+                      <SelectContent className={selectContentClass}>
+                        <SelectItem value="Draft">Draft</SelectItem>
+                        <SelectItem value="In Progress">In Progress</SelectItem>
+                        <SelectItem value="Complete">Complete</SelectItem>
                       </SelectContent>
                     </Select>
-                  </div>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    onClick={handleSave}
-                    disabled={updateJobPack.isPending}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    <Save className="h-4 w-4 mr-2" />
-                    Save
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => setIsEditing(false)}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    Cancel
-                  </Button>
-                </div>
+                  </Field>
+                </FormCard>
               </>
             ) : (
-              <>
-                <div className="flex items-center gap-3 text-white">
-                  <MapPin className="h-5 w-5 shrink-0" />
-                  <span>{jobPack.location}</span>
-                </div>
+              <Tabs defaultValue="overview" className="w-full">
+                <TabsList className="w-full justify-start gap-0 h-auto p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl">
+                  {['overview', 'documents', 'certs', 'briefing', 'distribute'].map((tab) => (
+                    <TabsTrigger
+                      key={tab}
+                      value={tab}
+                      className="flex-1 h-10 touch-manipulation data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-xs sm:text-sm rounded-lg text-white capitalize"
+                    >
+                      {tab === 'distribute' ? 'Send' : tab}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
 
-                {jobPack.scope && (
-                  <div className="space-y-2">
-                    <Label className="text-white">Scope of Works</Label>
-                    <p className="text-sm">{jobPack.scope}</p>
+                {/* Overview Tab */}
+                <TabsContent value="overview" className="space-y-3 mt-4">
+                  <div className="flex items-center gap-3 text-white">
+                    <MapPin className="h-5 w-5 shrink-0" />
+                    <span>{jobPack.location}</span>
                   </div>
-                )}
 
-                {jobPack.hazards && jobPack.hazards.length > 0 && (
-                  <div className="space-y-2">
-                    <Label className="text-white flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4 text-warning" />
-                      Identified Hazards
-                    </Label>
-                    <div className="flex flex-wrap gap-1">
-                      {jobPack.hazards.map((hazard) => (
-                        <Badge
-                          key={hazard}
-                          variant="outline"
-                          className="text-xs border-warning/50 text-warning"
-                        >
-                          {hazard}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                  {jobPack.scope && (
+                    <FormCard eyebrow="Scope of works">
+                      <p className="text-sm text-white">{jobPack.scope}</p>
+                    </FormCard>
+                  )}
 
-                {assignedEmployees.length > 0 && (
-                  <div className="space-y-2">
-                    <Label className="text-white flex items-center gap-2">
-                      <Users className="h-4 w-4" />
-                      Assigned Workers ({assignedEmployees.length})
-                    </Label>
-                    <div className="flex flex-wrap gap-1">
-                      {assignedEmployees.map((emp) => (
-                        <Badge key={emp.id} variant="secondary" className="text-xs">
-                          {emp.name}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                  {jobPack.hazards && jobPack.hazards.length > 0 && (
+                    <FormCard eyebrow="Identified hazards">
+                      <div className="flex items-center gap-2 mb-2">
+                        <AlertTriangle className="h-4 w-4 text-amber-400" />
+                        <Eyebrow>Hazards</Eyebrow>
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {jobPack.hazards.map((hazard) => (
+                          <Pill key={hazard} tone="amber">
+                            {hazard}
+                          </Pill>
+                        ))}
+                      </div>
+                    </FormCard>
+                  )}
 
-                <div className="flex gap-2 pt-4 border-t border-border">
-                  <Button
-                    onClick={() => setIsEditing(true)}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    Edit Job Pack
-                  </Button>
+                  {assignedEmployees.length > 0 && (
+                    <FormCard eyebrow={`Assigned workers · ${assignedEmployees.length}`}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Users className="h-4 w-4 text-white" />
+                        <Eyebrow>Workers</Eyebrow>
+                      </div>
+                      <div className="flex flex-wrap gap-1">
+                        {assignedEmployees.map((emp) => (
+                          <Pill key={emp.id} tone="yellow">
+                            {emp.name}
+                          </Pill>
+                        ))}
+                      </div>
+                    </FormCard>
+                  )}
+
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button
-                        variant="destructive"
-                        size="icon"
-                        className="h-11 w-11 touch-manipulation"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
+                      <DestructiveButton fullWidth>
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Delete job pack
+                      </DestructiveButton>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                       <AlertDialogHeader>
-                        <AlertDialogTitle>Delete Job Pack?</AlertDialogTitle>
+                        <AlertDialogTitle>Delete job pack?</AlertDialogTitle>
                         <AlertDialogDescription>
                           This will permanently delete "{jobPack.title}". This action cannot be
                           undone.
@@ -507,519 +475,466 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                       </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
-                </div>
-              </>
-            )}
-          </TabsContent>
+                </TabsContent>
 
-          {/* Documents Tab */}
-          <TabsContent value="documents" className="p-4 space-y-4 mt-0">
-            <div className="space-y-3">
-              {/* RAMS */}
-              <Card className={jobPack.rams_generated ? 'border-success/30 bg-success/5' : ''}>
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`p-2 rounded-lg ${jobPack.rams_generated ? 'bg-success/20' : 'bg-muted'}`}
-                      >
-                        <FileText
-                          className={`h-5 w-5 ${jobPack.rams_generated ? 'text-success' : 'text-white'}`}
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">RAMS</p>
-                        <p className="text-xs text-white">
-                          Risk Assessment & Method Statement
-                        </p>
-                      </div>
-                    </div>
-                    {jobPack.rams_generated ? (
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
-                          <Eye className="h-4 w-4 mr-1" />
-                          View
-                        </Button>
-                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ) : (
-                      <Button
-                        onClick={() => handleGenerateDocument('rams')}
-                        disabled={isGenerating !== null}
-                        className="gap-2 h-11 touch-manipulation"
-                      >
-                        {isGenerating === 'rams' ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <Sparkles className="h-4 w-4" />
-                        )}
-                        Generate
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+                {/* Documents Tab */}
+                <TabsContent value="documents" className="space-y-3 mt-4">
+                  <DocumentCard
+                    icon={<FileText className="h-5 w-5" />}
+                    title="RAMS"
+                    description="Risk Assessment & Method Statement"
+                    generated={jobPack.rams_generated}
+                    onGenerate={() => handleGenerateDocument('rams')}
+                    isGenerating={isGenerating === 'rams'}
+                    disabled={isGenerating !== null}
+                  />
 
-              {/* Method Statement */}
-              <Card
-                className={
-                  jobPack.method_statement_generated ? 'border-success/30 bg-success/5' : ''
-                }
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`p-2 rounded-lg ${jobPack.method_statement_generated ? 'bg-success/20' : 'bg-muted'}`}
-                      >
-                        <ClipboardList
-                          className={`h-5 w-5 ${jobPack.method_statement_generated ? 'text-success' : 'text-white'}`}
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">Method Statement</p>
-                        <p className="text-xs text-white">Step-by-step work procedure</p>
-                      </div>
-                    </div>
-                    {jobPack.method_statement_generated ? (
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
-                          <Eye className="h-4 w-4 mr-1" />
-                          View
-                        </Button>
-                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ) : (
-                      <Button
-                        onClick={() => handleGenerateDocument('method_statement')}
-                        disabled={isGenerating !== null}
-                        className="gap-2 h-11 touch-manipulation"
-                      >
-                        {isGenerating === 'method_statement' ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <Sparkles className="h-4 w-4" />
-                        )}
-                        Generate
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
+                  <DocumentCard
+                    icon={<ClipboardList className="h-5 w-5" />}
+                    title="Method statement"
+                    description="Step-by-step work procedure"
+                    generated={jobPack.method_statement_generated}
+                    onGenerate={() => handleGenerateDocument('method_statement')}
+                    isGenerating={isGenerating === 'method_statement'}
+                    disabled={isGenerating !== null}
+                  />
 
-              {/* Briefing Pack */}
-              <Card
-                className={jobPack.briefing_pack_generated ? 'border-success/30 bg-success/5' : ''}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`p-2 rounded-lg ${jobPack.briefing_pack_generated ? 'bg-success/20' : 'bg-muted'}`}
-                      >
-                        <BookOpen
-                          className={`h-5 w-5 ${jobPack.briefing_pack_generated ? 'text-success' : 'text-white'}`}
-                        />
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">Briefing Pack</p>
-                        <p className="text-xs text-white">
-                          Complete worker briefing document
-                        </p>
-                      </div>
-                    </div>
-                    {jobPack.briefing_pack_generated ? (
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
-                          <Eye className="h-4 w-4 mr-1" />
-                          View
-                        </Button>
-                        <Button size="sm" variant="outline" className="h-11 touch-manipulation">
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    ) : (
-                      <Button
-                        onClick={() => handleGenerateDocument('briefing_pack')}
-                        disabled={
-                          isGenerating !== null ||
-                          !jobPack.rams_generated ||
-                          !jobPack.method_statement_generated
-                        }
-                        className="gap-2 h-11 touch-manipulation"
-                      >
-                        {isGenerating === 'briefing_pack' ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <Sparkles className="h-4 w-4" />
-                        )}
-                        Generate
-                      </Button>
-                    )}
-                  </div>
-                  {!jobPack.rams_generated || !jobPack.method_statement_generated ? (
-                    <p className="text-xs text-white mt-2">
-                      Generate RAMS and Method Statement first
+                  <DocumentCard
+                    icon={<BookOpen className="h-5 w-5" />}
+                    title="Briefing pack"
+                    description="Complete worker briefing document"
+                    generated={jobPack.briefing_pack_generated}
+                    onGenerate={() => handleGenerateDocument('briefing_pack')}
+                    isGenerating={isGenerating === 'briefing_pack'}
+                    disabled={
+                      isGenerating !== null ||
+                      !jobPack.rams_generated ||
+                      !jobPack.method_statement_generated
+                    }
+                    note={
+                      !jobPack.rams_generated || !jobPack.method_statement_generated
+                        ? 'Generate RAMS and Method Statement first'
+                        : undefined
+                    }
+                  />
+
+                  <div className="rounded-2xl border border-dashed border-white/[0.1] bg-[hsl(0_0%_10%)] p-6 text-center">
+                    <Upload className="h-8 w-8 mx-auto text-white mb-2" />
+                    <p className="text-sm font-medium text-white">
+                      Upload additional documents
                     </p>
-                  ) : null}
-                </CardContent>
-              </Card>
-
-              {/* Upload Area */}
-              <Card className="border-dashed">
-                <CardContent className="p-6 text-center">
-                  <Upload className="h-8 w-8 mx-auto text-white mb-2" />
-                  <p className="text-sm font-medium text-foreground">Upload Additional Documents</p>
-                  <p className="text-xs text-white">Design drawings, specs, schedules</p>
-                  <Button variant="outline" className="mt-3 h-11 touch-manipulation">
-                    Choose Files
-                  </Button>
-                </CardContent>
-              </Card>
-
-              {documents.length > 0 && (
-                <div className="space-y-2">
-                  <Label className="text-white">Uploaded Documents</Label>
-                  {documents.map((doc) => (
-                    <Card key={doc.id}>
-                      <CardContent className="p-3 flex items-center justify-between">
-                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                          <FileText className="h-4 w-4 text-white shrink-0" />
-                          <span className="text-sm truncate">{doc.title}</span>
-                        </div>
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          className="h-11 w-11 touch-manipulation shrink-0"
-                        >
-                          <Download className="h-4 w-4" />
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              )}
-            </div>
-          </TabsContent>
-
-          {/* Certifications Tab */}
-          <TabsContent value="certs" className="p-4 space-y-4 mt-0">
-            {jobPack.required_certifications && jobPack.required_certifications.length > 0 ? (
-              <>
-                <div className="space-y-2">
-                  <Label className="text-white flex items-center gap-2">
-                    <Award className="h-4 w-4 text-info" />
-                    Required Certifications
-                  </Label>
-                  <div className="flex flex-wrap gap-1">
-                    {jobPack.required_certifications.map((cert) => (
-                      <Badge
-                        key={cert}
-                        variant="secondary"
-                        className="bg-info/10 text-info border-info/30"
-                      >
-                        {cert}
-                      </Badge>
-                    ))}
+                    <p className="text-xs text-white">Design drawings, specs, schedules</p>
+                    <SecondaryButton className="mt-3">Choose files</SecondaryButton>
                   </div>
-                </div>
 
-                <Card
-                  className={
-                    certificationCompliance.percentage === 100
-                      ? 'border-success/30 bg-success/5'
-                      : 'border-warning/30 bg-warning/5'
-                  }
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium">Team Compliance</span>
-                      <span
-                        className={`text-lg font-bold ${certificationCompliance.percentage === 100 ? 'text-success' : 'text-warning'}`}
-                      >
-                        {certificationCompliance.compliant}/{certificationCompliance.total}
-                      </span>
-                    </div>
-                    <Progress
-                      value={certificationCompliance.percentage}
-                      className={`h-2 ${certificationCompliance.percentage === 100 ? '[&>div]:bg-success' : '[&>div]:bg-warning'}`}
-                    />
-                    <p className="text-xs text-white mt-2">
-                      {certificationCompliance.percentage === 100
-                        ? 'All assigned workers have required certifications'
-                        : `${certificationCompliance.total - certificationCompliance.compliant} worker(s) may be missing certifications`}
-                    </p>
-                  </CardContent>
-                </Card>
-
-                <div className="space-y-2">
-                  <Label className="text-white">Worker Certification Status</Label>
-                  {assignedEmployees.map((emp) => {
-                    const isCompliant = Math.random() > 0.3; // Simulated
-                    return (
-                      <Card
-                        key={emp.id}
-                        className={isCompliant ? 'border-success/20' : 'border-warning/20'}
-                      >
-                        <CardContent className="p-3 flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            <div
-                              className={`p-1.5 rounded-full ${isCompliant ? 'bg-success/20' : 'bg-warning/20'}`}
-                            >
-                              {isCompliant ? (
-                                <CheckCircle2 className="h-4 w-4 text-success" />
-                              ) : (
-                                <AlertCircle className="h-4 w-4 text-warning" />
-                              )}
-                            </div>
-                            <div className="min-w-0">
-                              <p className="text-sm font-medium truncate">{emp.name}</p>
-                              <p className="text-xs text-white truncate">
-                                {emp.team_role}
-                              </p>
-                            </div>
-                          </div>
-                          <Badge
-                            variant={isCompliant ? 'secondary' : 'outline'}
-                            className={`shrink-0 ${isCompliant ? 'bg-success/20 text-success' : 'text-warning border-warning'}`}
+                  {documents.length > 0 && (
+                    <FormCard eyebrow="Uploaded documents">
+                      <div className="space-y-2">
+                        {documents.map((doc) => (
+                          <div
+                            key={doc.id}
+                            className="flex items-center justify-between p-3 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl"
                           >
-                            {isCompliant ? 'Compliant' : 'Check Required'}
-                          </Badge>
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                </div>
-              </>
-            ) : (
-              <div className="text-center py-8">
-                <Award className="h-12 w-12 mx-auto text-white mb-3" />
-                <p className="text-sm text-white">
-                  No certifications required for this job pack
-                </p>
-                <Button
-                  variant="outline"
-                  className="mt-3 h-11 touch-manipulation"
-                  onClick={() => setIsEditing(true)}
-                >
-                  Add Requirements
-                </Button>
-              </div>
-            )}
-          </TabsContent>
+                            <div className="flex items-center gap-2 min-w-0 flex-1">
+                              <FileText className="h-4 w-4 text-white shrink-0" />
+                              <span className="text-sm text-white truncate">{doc.title}</span>
+                            </div>
+                            <SecondaryButton size="sm">
+                              <Download className="h-4 w-4" />
+                            </SecondaryButton>
+                          </div>
+                        ))}
+                      </div>
+                    </FormCard>
+                  )}
+                </TabsContent>
 
-          {/* Briefing Tab */}
-          <TabsContent value="briefing" className="p-4 space-y-4 mt-0">
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-elec-yellow" />
-                Pre-Job Briefing Content
-              </Label>
-              <Textarea
-                value={briefingContent}
-                onChange={(e) => setBriefingContent(e.target.value)}
-                placeholder="Site access arrangements, emergency contacts, PPE requirements, specific safety notes..."
-                rows={8}
-                className="resize-none touch-manipulation"
-              />
-            </div>
+                {/* Certifications Tab */}
+                <TabsContent value="certs" className="space-y-3 mt-4">
+                  {jobPack.required_certifications && jobPack.required_certifications.length > 0 ? (
+                    <>
+                      <FormCard eyebrow="Required certifications">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Award className="h-4 w-4 text-blue-400" />
+                          <Eyebrow>Certifications</Eyebrow>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {jobPack.required_certifications.map((cert) => (
+                            <Pill key={cert} tone="cyan">
+                              {cert}
+                            </Pill>
+                          ))}
+                        </div>
+                      </FormCard>
 
-            {jobPack.hazards && jobPack.hazards.length > 0 && (
-              <Card className="bg-warning/5 border-warning/20">
-                <CardContent className="p-4 space-y-2">
-                  <Label className="flex items-center gap-2 text-warning">
-                    <AlertTriangle className="h-4 w-4" />
-                    Hazard Summary
-                  </Label>
-                  <ul className="text-sm space-y-1">
-                    {jobPack.hazards.map((hazard) => (
-                      <li key={hazard} className="flex items-center gap-2">
-                        <span className="w-1.5 h-1.5 rounded-full bg-warning" />
-                        {hazard}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            )}
-
-            {jobPack.required_certifications && jobPack.required_certifications.length > 0 && (
-              <Card className="bg-info/5 border-info/20">
-                <CardContent className="p-4 space-y-2">
-                  <Label className="flex items-center gap-2 text-info">
-                    <Award className="h-4 w-4" />
-                    Required Qualifications
-                  </Label>
-                  <div className="flex flex-wrap gap-1">
-                    {jobPack.required_certifications.map((cert) => (
-                      <Badge key={cert} variant="secondary" className="text-xs">
-                        {cert}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            <Button
-              onClick={handleSave}
-              disabled={updateJobPack.isPending}
-              className="w-full h-11 touch-manipulation"
-            >
-              <Save className="h-4 w-4 mr-2" />
-              Save Briefing Content
-            </Button>
-          </TabsContent>
-
-          {/* Distribution Tab */}
-          <TabsContent value="distribute" className="p-4 space-y-4 mt-0">
-            {jobPack.sent_to_workers_at ? (
-              <>
-                <Card className="bg-success/5 border-success/20">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3 mb-3">
-                      <CheckCircle2 className="h-5 w-5 text-success" />
-                      <div>
-                        <p className="font-medium text-success">Pack Sent to Workers</p>
-                        <p className="text-xs text-white truncate">
-                          {new Date(jobPack.sent_to_workers_at).toLocaleString('en-GB', {
-                            dateStyle: 'medium',
-                            timeStyle: 'short',
-                          })}
+                      <div
+                        className={cn(
+                          'rounded-2xl border p-4',
+                          certificationCompliance.percentage === 100
+                            ? 'border-emerald-500/25 bg-emerald-500/10'
+                            : 'border-amber-400/25 bg-amber-400/10'
+                        )}
+                      >
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-white">Team compliance</span>
+                          <span
+                            className={cn(
+                              'text-lg font-bold tabular-nums',
+                              certificationCompliance.percentage === 100
+                                ? 'text-emerald-400'
+                                : 'text-amber-400'
+                            )}
+                          >
+                            {certificationCompliance.compliant}/{certificationCompliance.total}
+                          </span>
+                        </div>
+                        <Progress
+                          value={certificationCompliance.percentage}
+                          className={cn(
+                            'h-2',
+                            certificationCompliance.percentage === 100
+                              ? '[&>div]:bg-emerald-400'
+                              : '[&>div]:bg-amber-400'
+                          )}
+                        />
+                        <p className="text-xs text-white mt-2">
+                          {certificationCompliance.percentage === 100
+                            ? 'All assigned workers have required certifications'
+                            : `${certificationCompliance.total - certificationCompliance.compliant} worker(s) may be missing certifications`}
                         </p>
                       </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm">Acknowledged</span>
-                      <span className="font-bold">
-                        {acknowledgedCount}/{assignedEmployees.length}
-                      </span>
-                    </div>
-                    <Progress value={acknowledgedPercent} className="h-2 mt-2 [&>div]:bg-success" />
-                  </CardContent>
-                </Card>
 
-                <div className="space-y-2">
-                  <Label className="text-white">Acknowledgement Status</Label>
-                  {assignedEmployees.map((emp) => {
-                    const ack = acknowledgements.find((a) => a.employee_id === emp.id);
-                    return (
-                      <Card key={emp.id} className={ack ? 'border-success/20' : ''}>
-                        <CardContent className="p-3 flex items-center justify-between">
-                          <div className="flex items-center gap-3">
-                            {ack ? (
-                              <CheckCircle2 className="h-4 w-4 text-success" />
-                            ) : (
-                              <Clock className="h-4 w-4 text-white" />
-                            )}
-                            <div className="min-w-0">
-                              <p className="text-sm font-medium truncate">{emp.name}</p>
-                              {ack && (
-                                <p className="text-xs text-white truncate">
-                                  Acknowledged{' '}
-                                  {new Date(ack.acknowledged_at).toLocaleString('en-GB', {
-                                    dateStyle: 'medium',
-                                    timeStyle: 'short',
-                                  })}
-                                </p>
+                      <FormCard eyebrow="Worker certification status">
+                        {assignedEmployees.map((emp) => {
+                          const detail = certificationCompliance.details.find(
+                            (d) => d.employee.id === emp.id
+                          );
+                          const isCompliant = detail?.hasCerts ?? true;
+                          return (
+                            <div
+                              key={emp.id}
+                              className={cn(
+                                'flex items-center justify-between p-3 rounded-xl border',
+                                isCompliant
+                                  ? 'border-emerald-500/20 bg-emerald-500/5'
+                                  : 'border-amber-400/20 bg-amber-400/5'
+                              )}
+                            >
+                              <div className="flex items-center gap-3">
+                                <div
+                                  className={cn(
+                                    'p-1.5 rounded-full',
+                                    isCompliant ? 'bg-emerald-500/20' : 'bg-amber-400/20'
+                                  )}
+                                >
+                                  {isCompliant ? (
+                                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                                  ) : (
+                                    <AlertCircle className="h-4 w-4 text-amber-400" />
+                                  )}
+                                </div>
+                                <div className="min-w-0">
+                                  <p className="text-sm font-medium text-white truncate">
+                                    {emp.name}
+                                  </p>
+                                  <p className="text-xs text-white truncate">{emp.team_role}</p>
+                                </div>
+                              </div>
+                              <Pill tone={isCompliant ? 'emerald' : 'amber'}>
+                                {isCompliant ? 'Compliant' : 'Check required'}
+                              </Pill>
+                            </div>
+                          );
+                        })}
+                      </FormCard>
+                    </>
+                  ) : (
+                    <div className="text-center py-8">
+                      <Award className="h-12 w-12 mx-auto text-white mb-3" />
+                      <p className="text-sm text-white">
+                        No certifications required for this job pack
+                      </p>
+                      <SecondaryButton className="mt-3" onClick={() => setIsEditing(true)}>
+                        Add requirements
+                      </SecondaryButton>
+                    </div>
+                  )}
+                </TabsContent>
+
+                {/* Briefing Tab */}
+                <TabsContent value="briefing" className="space-y-3 mt-4">
+                  <Field label="Pre-job briefing content">
+                    <Textarea
+                      value={briefingContent}
+                      onChange={(e) => setBriefingContent(e.target.value)}
+                      placeholder="Site access arrangements, emergency contacts, PPE requirements, specific safety notes…"
+                      rows={8}
+                      className={cn(textareaClass, 'min-h-[200px]')}
+                    />
+                  </Field>
+
+                  {jobPack.hazards && jobPack.hazards.length > 0 && (
+                    <FormCard eyebrow="Hazard summary">
+                      <div className="flex items-center gap-2 mb-2 text-amber-400">
+                        <AlertTriangle className="h-4 w-4" />
+                        <Eyebrow>Hazards</Eyebrow>
+                      </div>
+                      <ul className="text-sm space-y-1 text-white">
+                        {jobPack.hazards.map((hazard) => (
+                          <li key={hazard} className="flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                            {hazard}
+                          </li>
+                        ))}
+                      </ul>
+                    </FormCard>
+                  )}
+
+                  {jobPack.required_certifications &&
+                    jobPack.required_certifications.length > 0 && (
+                      <FormCard eyebrow="Required qualifications">
+                        <div className="flex items-center gap-2 mb-2 text-blue-400">
+                          <Award className="h-4 w-4" />
+                          <Eyebrow>Qualifications</Eyebrow>
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {jobPack.required_certifications.map((cert) => (
+                            <Pill key={cert} tone="cyan">
+                              {cert}
+                            </Pill>
+                          ))}
+                        </div>
+                      </FormCard>
+                    )}
+
+                  <PrimaryButton
+                    onClick={handleSave}
+                    disabled={updateJobPack.isPending}
+                    fullWidth
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Save briefing content
+                  </PrimaryButton>
+                </TabsContent>
+
+                {/* Distribution Tab */}
+                <TabsContent value="distribute" className="space-y-3 mt-4">
+                  {jobPack.sent_to_workers_at ? (
+                    <>
+                      <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/25 p-4">
+                        <div className="flex items-center gap-3 mb-3">
+                          <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                          <div>
+                            <p className="font-medium text-emerald-400">Pack sent to workers</p>
+                            <p className="text-xs text-white truncate">
+                              {new Date(jobPack.sent_to_workers_at).toLocaleString('en-GB', {
+                                dateStyle: 'medium',
+                                timeStyle: 'short',
+                              })}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm text-white">Acknowledged</span>
+                          <span className="font-bold text-white tabular-nums">
+                            {acknowledgedCount}/{assignedEmployees.length}
+                          </span>
+                        </div>
+                        <Progress
+                          value={acknowledgedPercent}
+                          className="h-2 mt-2 [&>div]:bg-emerald-400"
+                        />
+                      </div>
+
+                      <FormCard eyebrow="Acknowledgement status">
+                        {assignedEmployees.map((emp) => {
+                          const ack = acknowledgements.find((a) => a.employee_id === emp.id);
+                          return (
+                            <div
+                              key={emp.id}
+                              className={cn(
+                                'flex items-center justify-between p-3 rounded-xl border',
+                                ack
+                                  ? 'border-emerald-500/20 bg-emerald-500/5'
+                                  : 'border-white/[0.06] bg-[hsl(0_0%_9%)]'
+                              )}
+                            >
+                              <div className="flex items-center gap-3">
+                                {ack ? (
+                                  <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                                ) : (
+                                  <Clock className="h-4 w-4 text-white" />
+                                )}
+                                <div className="min-w-0">
+                                  <p className="text-sm font-medium text-white truncate">
+                                    {emp.name}
+                                  </p>
+                                  {ack && (
+                                    <p className="text-xs text-white truncate">
+                                      Acknowledged{' '}
+                                      {new Date(ack.acknowledged_at).toLocaleString('en-GB', {
+                                        dateStyle: 'medium',
+                                        timeStyle: 'short',
+                                      })}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                              {!ack && (
+                                <SecondaryButton size="sm">
+                                  <RefreshCw className="h-4 w-4" />
+                                </SecondaryButton>
                               )}
                             </div>
-                          </div>
-                          {!ack && (
-                            <Button
-                              size="sm"
-                              variant="ghost"
-                              className="h-11 w-11 touch-manipulation shrink-0"
-                            >
-                              <RefreshCw className="h-4 w-4" />
-                            </Button>
-                          )}
-                        </CardContent>
-                      </Card>
-                    );
-                  })}
-                </div>
+                          );
+                        })}
+                      </FormCard>
 
-                <Button variant="outline" className="w-full gap-2 h-11 touch-manipulation">
-                  <RefreshCw className="h-4 w-4" />
-                  Send Reminder to Pending
-                </Button>
-              </>
-            ) : (
-              <>
-                <div className="text-center py-6">
-                  <Send className="h-12 w-12 mx-auto text-elec-yellow/50 mb-3" />
-                  <h3 className="font-semibold text-foreground mb-1">Ready to Distribute</h3>
-                  <p className="text-sm text-white">
-                    Send this job pack to {assignedEmployees.length} assigned worker(s)
-                  </p>
-                </div>
-
-                <Card>
-                  <CardContent className="p-4 space-y-3">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white">Documents Ready</span>
-                      <span className="font-medium">
-                        {
-                          [
-                            jobPack.rams_generated,
-                            jobPack.method_statement_generated,
-                            jobPack.briefing_pack_generated,
-                          ].filter(Boolean).length
-                        }
-                        /3
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white">Workers Assigned</span>
-                      <span className="font-medium">{assignedEmployees.length}</span>
-                    </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white">Certifications</span>
-                      <Badge
-                        variant={
-                          certificationCompliance.percentage === 100 ? 'secondary' : 'outline'
-                        }
-                        className={
-                          certificationCompliance.percentage === 100
-                            ? 'bg-success/20 text-success'
-                            : 'text-warning'
-                        }
-                      >
-                        {certificationCompliance.percentage}% Compliant
-                      </Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Button
-                  onClick={handleSendToWorkers}
-                  disabled={isSendingToWorkers || assignedEmployees.length === 0}
-                  className="w-full gap-2 h-11 touch-manipulation"
-                  size="lg"
-                >
-                  {isSendingToWorkers ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                      <SecondaryButton fullWidth>
+                        <RefreshCw className="h-4 w-4 mr-2" />
+                        Send reminder to pending
+                      </SecondaryButton>
+                    </>
                   ) : (
-                    <Send className="h-4 w-4" />
-                  )}
-                  Send to Workers
-                </Button>
+                    <>
+                      <div className="text-center py-6">
+                        <Send className="h-12 w-12 mx-auto text-elec-yellow/50 mb-3" />
+                        <h3 className="font-semibold text-white mb-1">Ready to distribute</h3>
+                        <p className="text-sm text-white">
+                          Send this job pack to {assignedEmployees.length} assigned worker(s)
+                        </p>
+                      </div>
 
-                {assignedEmployees.length === 0 && (
-                  <p className="text-xs text-center text-white">
-                    Assign workers before sending
-                  </p>
-                )}
-              </>
+                      <FormCard eyebrow="Pre-flight check">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-white">Documents ready</span>
+                          <span className="font-medium text-white tabular-nums">
+                            {
+                              [
+                                jobPack.rams_generated,
+                                jobPack.method_statement_generated,
+                                jobPack.briefing_pack_generated,
+                              ].filter(Boolean).length
+                            }
+                            /3
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-white">Workers assigned</span>
+                          <span className="font-medium text-white tabular-nums">
+                            {assignedEmployees.length}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-white">Certifications</span>
+                          <Pill
+                            tone={
+                              certificationCompliance.percentage === 100 ? 'emerald' : 'amber'
+                            }
+                          >
+                            {certificationCompliance.percentage}% compliant
+                          </Pill>
+                        </div>
+                      </FormCard>
+
+                      <PrimaryButton
+                        onClick={handleSendToWorkers}
+                        disabled={isSendingToWorkers || assignedEmployees.length === 0}
+                        fullWidth
+                        size="lg"
+                      >
+                        {isSendingToWorkers ? (
+                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                        ) : (
+                          <Send className="h-4 w-4 mr-2" />
+                        )}
+                        Send to workers
+                      </PrimaryButton>
+
+                      {assignedEmployees.length === 0 && (
+                        <p className="text-xs text-center text-white">
+                          Assign workers before sending
+                        </p>
+                      )}
+                    </>
+                  )}
+                </TabsContent>
+              </Tabs>
             )}
-          </TabsContent>
-        </Tabs>
-      </SheetContent>
-    </Sheet>
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
+    </>
+  );
+}
+
+interface DocumentCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  generated: boolean;
+  onGenerate: () => void;
+  isGenerating: boolean;
+  disabled?: boolean;
+  note?: string;
+}
+
+function DocumentCard({
+  icon,
+  title,
+  description,
+  generated,
+  onGenerate,
+  isGenerating,
+  disabled,
+  note,
+}: DocumentCardProps) {
+  return (
+    <div
+      className={cn(
+        'rounded-2xl border p-4',
+        generated
+          ? 'border-emerald-500/25 bg-emerald-500/5'
+          : 'border-white/[0.06] bg-[hsl(0_0%_12%)]'
+      )}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div
+            className={cn(
+              'p-2 rounded-xl',
+              generated ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/[0.06] text-white'
+            )}
+          >
+            {icon}
+          </div>
+          <div>
+            <p className="font-medium text-white">{title}</p>
+            <p className="text-xs text-white">{description}</p>
+          </div>
+        </div>
+        {generated ? (
+          <div className="flex gap-2">
+            <SecondaryButton size="sm">
+              <Eye className="h-4 w-4 mr-1" />
+              View
+            </SecondaryButton>
+            <SecondaryButton size="sm">
+              <Download className="h-4 w-4" />
+            </SecondaryButton>
+          </div>
+        ) : (
+          <PrimaryButton size="sm" onClick={onGenerate} disabled={disabled}>
+            {isGenerating ? (
+              <Loader2 className="h-4 w-4 animate-spin mr-1" />
+            ) : (
+              <Sparkles className="h-4 w-4 mr-1" />
+            )}
+            Generate
+          </PrimaryButton>
+        )}
+      </div>
+      {note && <p className="text-xs text-white mt-2">{note}</p>}
+    </div>
   );
 }

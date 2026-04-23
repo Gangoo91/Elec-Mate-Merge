@@ -9,7 +9,6 @@ import {
   Trash2,
   Sparkles,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +17,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import {
   getVacancyTemplates,
@@ -27,6 +25,7 @@ import {
 } from '@/services/vacancyService';
 import { toast } from '@/hooks/use-toast';
 import type { VacancyFormData } from './schema';
+import { SecondaryButton } from '@/components/employer/editorial';
 
 interface TemplateSelectorProps {
   onSelect: (template: Partial<VacancyFormData>) => void;
@@ -77,7 +76,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
 
     toast({
       title: 'Template loaded',
-      description: `"${template.name}" template applied. Customize it for your listing.`,
+      description: `"${template.name}" template applied. Customise it for your listing.`,
     });
   };
 
@@ -128,15 +127,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          className={cn(
-            'gap-2 text-white border-white/20 hover:bg-white/10',
-            'hover:text-white'
-          )}
-        >
+        <SecondaryButton type="button" size="sm" className="gap-2">
           {isLoading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
@@ -144,19 +135,22 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
           )}
           Use Template
           <ChevronDown className="h-3 w-3" />
-        </Button>
+        </SecondaryButton>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-72 bg-elec-gray border-white/10">
-        <DropdownMenuLabel className="text-white text-xs font-normal">
+      <DropdownMenuContent
+        align="end"
+        className="w-72 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
+      >
+        <DropdownMenuLabel className="text-white text-[11px] font-normal">
           Start from a template
         </DropdownMenuLabel>
 
         {/* System Templates */}
         {systemTemplates.length > 0 && (
           <>
-            <DropdownMenuSeparator className="bg-white/10" />
-            <DropdownMenuLabel className="text-white text-xs">
+            <DropdownMenuSeparator className="bg-white/[0.06]" />
+            <DropdownMenuLabel className="text-white text-[11px]">
               <Sparkles className="h-3 w-3 inline mr-1" />
               Pre-built Templates
             </DropdownMenuLabel>
@@ -166,8 +160,8 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                 onClick={() => handleSelect(template)}
                 className={cn(
                   'cursor-pointer py-3',
-                  'text-white hover:text-white hover:bg-white/10',
-                  'focus:text-white focus:bg-white/10'
+                  'text-white hover:bg-white/[0.08]',
+                  'focus:text-white focus:bg-white/[0.08]'
                 )}
               >
                 <div className="flex items-start gap-3 w-full">
@@ -175,8 +169,8 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                     {getTemplateIcon(template)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{template.name}</p>
-                    <p className="text-xs text-white mt-0.5">
+                    <p className="font-medium truncate text-white">{template.name}</p>
+                    <p className="text-[11px] text-white mt-0.5">
                       {template.type} • {template.experience_level || 'Any'} level
                     </p>
                   </div>
@@ -189,25 +183,25 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         {/* User Templates */}
         {userTemplates.length > 0 && (
           <>
-            <DropdownMenuSeparator className="bg-white/10" />
-            <DropdownMenuLabel className="text-white text-xs">Your Templates</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-white/[0.06]" />
+            <DropdownMenuLabel className="text-white text-[11px]">Your Templates</DropdownMenuLabel>
             {userTemplates.map((template) => (
               <DropdownMenuItem
                 key={template.id}
                 onClick={() => handleSelect(template)}
                 className={cn(
                   'cursor-pointer py-3 group',
-                  'text-white hover:text-white hover:bg-white/10',
-                  'focus:text-white focus:bg-white/10'
+                  'text-white hover:bg-white/[0.08]',
+                  'focus:text-white focus:bg-white/[0.08]'
                 )}
               >
                 <div className="flex items-start gap-3 w-full">
-                  <div className="p-1.5 rounded-lg bg-white/10 text-white">
+                  <div className="p-1.5 rounded-lg bg-white/[0.08] text-white">
                     {getTemplateIcon(template)}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{template.name}</p>
-                    <p className="text-xs text-white mt-0.5">{template.type}</p>
+                    <p className="font-medium truncate text-white">{template.name}</p>
+                    <p className="text-[11px] text-white mt-0.5">{template.type}</p>
                   </div>
                   <button
                     onClick={(e) => handleDelete(e, template)}
@@ -226,7 +220,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         )}
 
         {templates.length === 0 && !isLoading && (
-          <div className="p-4 text-center text-white text-sm">No templates available</div>
+          <div className="p-4 text-center text-white text-[13px]">No templates available</div>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

@@ -3,7 +3,6 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { ChatHeader } from './ChatHeader';
 import { MessageList } from './MessageList';
 import { MessageInput } from './MessageInput';
-import { Card, CardContent } from '@/components/ui/card';
 import { Clock } from 'lucide-react';
 import {
   useMessages,
@@ -15,11 +14,11 @@ import {
   useAddReaction,
   useRemoveReaction,
 } from '@/hooks/useMessages';
-import { useFileUpload, useSaveAttachment, useMessageAttachments } from '@/hooks/useFileUpload';
+import { useFileUpload, useSaveAttachment } from '@/hooks/useFileUpload';
 import { useArchiveConversation } from '@/hooks/useConversations';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
-import type { Conversation, Message, MessageReaction } from '@/services/conversationService';
+import type { Conversation, Message } from '@/services/conversationService';
 import type { ReplyToMessage } from '@/components/messaging/MessageReply';
 import type { MentionUser } from '@/components/messaging/Mentions';
 
@@ -219,7 +218,10 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col">
+      <SheetContent
+        side="bottom"
+        className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
+      >
         {/* Header */}
         <ChatHeader
           conversation={conversation}
@@ -229,21 +231,20 @@ export function ChatView({ conversation, open, onOpenChange, onArchived }: ChatV
 
         {/* Info banner if electrician can't reply yet */}
         {!canReply && (
-          <div className="mx-4 mt-2">
-            <Card className="bg-amber-500/10 border-amber-500/30">
-              <CardContent className="p-3 flex items-start gap-2">
-                <Clock className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
-                <div className="text-sm">
-                  <p className="font-medium text-amber-600 dark:text-amber-400">
-                    Awaiting Application
-                  </p>
-                  <p className="text-white text-xs mt-0.5">
-                    {conversation.electrician_profile?.employee?.name || 'This person'} can reply
-                    once they apply to one of your vacancies.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+          <div className="mx-4 mt-3">
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-3 flex items-start gap-2.5 relative overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-amber-500/70 via-amber-400/70 to-yellow-400/70 opacity-70" />
+              <Clock className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
+              <div className="text-sm min-w-0">
+                <p className="text-[13px] font-semibold text-white">
+                  Awaiting Application
+                </p>
+                <p className="text-white text-[12px] mt-0.5">
+                  {conversation.electrician_profile?.employee?.name || 'This person'} can reply
+                  once they apply to one of your vacancies.
+                </p>
+              </div>
+            </div>
           </div>
         )}
 

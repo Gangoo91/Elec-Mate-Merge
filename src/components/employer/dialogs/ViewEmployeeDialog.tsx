@@ -7,10 +7,7 @@ import {
   ResponsiveDialogFooter,
   ResponsiveDialogBody,
 } from '@/components/ui/responsive-dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent } from '@/components/ui/card';
 import { StatusBadge } from '@/components/employer/StatusBadge';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEmployer, type Employee } from '@/contexts/EmployerContext';
@@ -20,17 +17,13 @@ import {
   Mail,
   MessageSquare,
   Calendar,
-  Shield,
-  FileCheck,
   Briefcase,
   Award,
-  Clock,
   MapPin,
   ChevronRight,
   UserCog,
   Send,
   Star,
-  TrendingUp,
   AlertTriangle,
   X,
   PoundSterling,
@@ -40,22 +33,30 @@ import {
   Zap,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
+import {
+  FormCard,
+  Pill,
+  PrimaryButton,
+  SecondaryButton,
+  Eyebrow,
+} from '@/components/employer/editorial';
 
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 
-const roleColors: Record<TeamRole, string> = {
-  QS: 'bg-elec-yellow/20 text-elec-yellow',
-  Supervisor: 'bg-info/20 text-info',
-  Operative: 'bg-success/20 text-success',
-  Apprentice: 'bg-warning/20 text-warning',
-  'Project Manager': 'bg-elec-yellow/20 text-elec-yellow',
+const roleTones: Record<TeamRole, 'yellow' | 'blue' | 'emerald' | 'amber'> = {
+  QS: 'yellow',
+  Supervisor: 'blue',
+  Operative: 'emerald',
+  Apprentice: 'amber',
+  'Project Manager': 'yellow',
 };
 
-const noteTypeColors: Record<string, string> = {
-  General: 'border-muted-foreground/30',
-  Performance: 'border-info',
-  Incident: 'border-warning',
-  Positive: 'border-success',
+const noteTypeBorders: Record<string, string> = {
+  General: 'border-l-white/20',
+  Performance: 'border-l-blue-400',
+  Incident: 'border-l-amber-400',
+  Positive: 'border-l-emerald-400',
 };
 
 interface ViewEmployeeDialogProps {
@@ -93,8 +94,6 @@ export function ViewEmployeeDialog({
   const expiringSoonCerts = employeeCerts.filter(
     (c) => c.status === 'Warning' || c.status === 'Expired'
   );
-  const employeeTimesheets = timesheets.filter((t) => t.employeeId === employee.id).slice(0, 5);
-  const hoursThisWeek = employeeTimesheets.reduce((acc, t) => acc + t.totalHours, 0);
 
   const handleCall = () => (window.location.href = `tel:${employee.phone}`);
   const handleEmail = () => (window.location.href = `mailto:${employee.email}`);
@@ -107,68 +106,49 @@ export function ViewEmployeeDialog({
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       <ResponsiveDialogContent className="sm:max-w-2xl">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary to-primary/50 rounded-t-lg" />
-
-        {/* Fixed Header */}
         <ResponsiveDialogHeader className="pr-12">
           <div className="flex items-start gap-4">
             <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-elec-yellow/10 flex items-center justify-center text-xl md:text-2xl font-bold text-elec-yellow flex-shrink-0 border border-elec-yellow/20">
               {employee.avatar}
             </div>
             <div className="flex-1 min-w-0">
-              <ResponsiveDialogTitle className="text-lg font-bold truncate pr-2">
+              <Eyebrow>Team member</Eyebrow>
+              <ResponsiveDialogTitle className="mt-1 text-[18px] font-semibold text-white truncate pr-2">
                 {employee.name}
               </ResponsiveDialogTitle>
-              <p className="text-sm text-white">{employee.role}</p>
+              <p className="text-[12.5px] text-white">{employee.role}</p>
               <div className="flex items-center gap-1.5 mt-2 flex-wrap">
                 <StatusBadge status={employee.status} />
-                <Badge className={`text-xs ${roleColors[employee.teamRole]}`}>
-                  {employee.teamRole}
-                </Badge>
+                <Pill tone={roleTones[employee.teamRole]}>{employee.teamRole}</Pill>
                 {employee.rating > 0 && (
-                  <Badge variant="outline" className="border-warning/50 text-warning text-xs">
-                    <Star className="h-3 w-3 mr-1 fill-warning" />
+                  <Pill tone="amber">
+                    <Star className="h-3 w-3 mr-1 fill-current" />
                     {employee.rating}
-                  </Badge>
+                  </Pill>
                 )}
                 {expiringSoonCerts.length > 0 && (
-                  <Badge variant="outline" className="border-warning text-warning text-xs">
+                  <Pill tone="amber">
                     <AlertTriangle className="h-3 w-3 mr-1" />
                     {expiringSoonCerts.length}
-                  </Badge>
+                  </Pill>
                 )}
               </div>
             </div>
           </div>
 
           <div className="flex gap-2 mt-3 overflow-x-auto hide-scrollbar">
-            <Button
-              size="sm"
-              variant="outline"
-              className="gap-1.5 flex-shrink-0 text-xs h-11 touch-manipulation"
-              onClick={handleCall}
-            >
-              <Phone className="h-3.5 w-3.5 text-success" />
+            <SecondaryButton onClick={handleCall} size="sm">
+              <Phone className="h-3.5 w-3.5 mr-1 text-emerald-400" />
               Call
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              className="gap-1.5 flex-shrink-0 text-xs h-11 touch-manipulation"
-              onClick={onSendMessage}
-            >
-              <MessageSquare className="h-3.5 w-3.5 text-info" />
+            </SecondaryButton>
+            <SecondaryButton onClick={onSendMessage} size="sm">
+              <MessageSquare className="h-3.5 w-3.5 mr-1 text-blue-400" />
               Message
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              className="gap-1.5 flex-shrink-0 text-xs h-11 touch-manipulation"
-              onClick={onAssignToJob}
-            >
-              <Briefcase className="h-3.5 w-3.5 text-warning" />
+            </SecondaryButton>
+            <SecondaryButton onClick={onAssignToJob} size="sm">
+              <Briefcase className="h-3.5 w-3.5 mr-1 text-amber-400" />
               Assign
-            </Button>
+            </SecondaryButton>
           </div>
         </ResponsiveDialogHeader>
 
@@ -177,29 +157,29 @@ export function ViewEmployeeDialog({
           onValueChange={setActiveTab}
           className="flex-1 flex flex-col min-h-0"
         >
-          <div className="px-4 md:px-6 border-b border-border overflow-x-auto hide-scrollbar shrink-0">
+          <div className="px-4 md:px-6 border-b border-white/[0.06] overflow-x-auto hide-scrollbar shrink-0">
             <TabsList className="w-auto justify-start gap-1 bg-transparent h-auto p-0">
               <TabsTrigger
                 value="profile"
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs h-11 touch-manipulation"
+                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow data-[state=active]:text-white rounded-none px-3 py-2 text-[12px] h-11 touch-manipulation text-white"
               >
                 Profile
               </TabsTrigger>
               <TabsTrigger
                 value="jobs"
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs h-11 touch-manipulation"
+                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow data-[state=active]:text-white rounded-none px-3 py-2 text-[12px] h-11 touch-manipulation text-white"
               >
                 Jobs
               </TabsTrigger>
               <TabsTrigger
                 value="certs"
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs h-11 touch-manipulation"
+                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow data-[state=active]:text-white rounded-none px-3 py-2 text-[12px] h-11 touch-manipulation text-white"
               >
                 Certs
               </TabsTrigger>
               <TabsTrigger
                 value="notes"
-                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3 py-2 text-xs h-11 touch-manipulation"
+                className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow data-[state=active]:text-white rounded-none px-3 py-2 text-[12px] h-11 touch-manipulation text-white"
               >
                 Notes
               </TabsTrigger>
@@ -207,274 +187,268 @@ export function ViewEmployeeDialog({
           </div>
 
           <div className="flex-1 overflow-y-auto">
-            <div className="p-4 md:p-6">
-              {/* Profile Tab */}
+            <div className="p-4 md:p-6 space-y-4">
               <TabsContent value="profile" className="mt-0 space-y-4">
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-foreground">Contact Details</h4>
-                  <Card className="border-border/50">
-                    <CardContent className="p-3 space-y-3">
-                      <button
-                        onClick={handleCall}
-                        className="flex items-center gap-3 w-full text-left hover:bg-muted/50 -mx-1 px-1 py-1 rounded-md"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
-                          <Phone className="h-4 w-4 text-success" />
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-sm font-medium">{employee.phone}</p>
-                          <p className="text-xs text-white">Mobile</p>
-                        </div>
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </button>
-                      <button
-                        onClick={handleEmail}
-                        className="flex items-center gap-3 w-full text-left hover:bg-muted/50 -mx-1 px-1 py-1 rounded-md"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
-                          <Mail className="h-4 w-4 text-elec-yellow" />
-                        </div>
-                        <div className="flex-1">
-                          <p className="text-sm font-medium truncate">{employee.email}</p>
-                          <p className="text-xs text-white">Email</p>
-                        </div>
-                        <ChevronRight className="h-4 w-4 text-white" />
-                      </button>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Emergency Contact */}
-                {employee.emergencyContact && (
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <AlertCircle className="h-4 w-4 text-destructive" />
-                      Emergency Contact
-                    </h4>
-                    <Card className="border-destructive/30 bg-destructive/5">
-                      <CardContent className="p-3">
-                        <button
-                          onClick={handleEmergencyCall}
-                          className="flex items-center gap-3 w-full text-left"
-                        >
-                          <div className="w-8 h-8 rounded-lg bg-destructive/10 flex items-center justify-center">
-                            <Phone className="h-4 w-4 text-destructive" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-sm font-medium">{employee.emergencyContact.name}</p>
-                            <p className="text-xs text-white">
-                              {employee.emergencyContact.relationship} •{' '}
-                              {employee.emergencyContact.phone}
-                            </p>
-                          </div>
-                          <ChevronRight className="h-4 w-4 text-white" />
-                        </button>
-                      </CardContent>
-                    </Card>
-                  </div>
-                )}
-
-                {/* Pay Rates */}
-                {(employee.dayRate || employee.hourlyRate) && (
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                      Pay Rates
-                    </h4>
-                    <div className="grid grid-cols-2 gap-3">
-                      <Card className="border-border/50">
-                        <CardContent className="p-3 text-center">
-                          <p className="text-2xl font-bold text-elec-yellow">£{employee.dayRate}</p>
-                          <p className="text-xs text-white">Day Rate</p>
-                        </CardContent>
-                      </Card>
-                      <Card className="border-border/50">
-                        <CardContent className="p-3 text-center">
-                          <p className="text-2xl font-bold text-elec-yellow">
-                            £{employee.hourlyRate}
-                          </p>
-                          <p className="text-xs text-white">Hourly Rate</p>
-                        </CardContent>
-                      </Card>
+                <FormCard eyebrow="Contact details">
+                  <button
+                    type="button"
+                    onClick={handleCall}
+                    className="flex items-center gap-3 w-full text-left py-2 px-1 rounded-lg hover:bg-white/[0.04] transition-colors"
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                      <Phone className="h-4 w-4 text-emerald-400" />
                     </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] font-medium text-white">{employee.phone}</p>
+                      <p className="text-[11px] text-white">Mobile</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleEmail}
+                    className="flex items-center gap-3 w-full text-left py-2 px-1 rounded-lg hover:bg-white/[0.04] transition-colors"
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
+                      <Mail className="h-4 w-4 text-elec-yellow" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] font-medium text-white truncate">{employee.email}</p>
+                      <p className="text-[11px] text-white">Email</p>
+                    </div>
+                    <ChevronRight className="h-4 w-4 text-white" />
+                  </button>
+                </FormCard>
+
+                {employee.emergencyContact && (
+                  <div className="bg-red-500/5 border border-red-500/25 rounded-2xl p-4 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <AlertCircle className="h-4 w-4 text-red-400" />
+                      <span className="text-[11px] uppercase tracking-[0.14em] font-semibold text-white">
+                        Emergency contact
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleEmergencyCall}
+                      className="flex items-center gap-3 w-full text-left"
+                    >
+                      <div className="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+                        <Phone className="h-4 w-4 text-red-400" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-medium text-white">
+                          {employee.emergencyContact.name}
+                        </p>
+                        <p className="text-[11px] text-white">
+                          {employee.emergencyContact.relationship} ·{' '}
+                          {employee.emergencyContact.phone}
+                        </p>
+                      </div>
+                      <ChevronRight className="h-4 w-4 text-white" />
+                    </button>
                   </div>
                 )}
 
-                {/* Skills */}
+                {(employee.dayRate || employee.hourlyRate) && (
+                  <FormCard eyebrow="Pay rates">
+                    <div className="flex items-center gap-2 text-[12px] text-white">
+                      <PoundSterling className="h-4 w-4 text-elec-yellow" />
+                      Day and hourly rates
+                    </div>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3 text-center">
+                        <p className="text-[22px] font-semibold text-elec-yellow tabular-nums">
+                          £{employee.dayRate ?? 0}
+                        </p>
+                        <p className="text-[11px] text-white">Day rate</p>
+                      </div>
+                      <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3 text-center">
+                        <p className="text-[22px] font-semibold text-elec-yellow tabular-nums">
+                          £{employee.hourlyRate ?? 0}
+                        </p>
+                        <p className="text-[11px] text-white">Hourly rate</p>
+                      </div>
+                    </div>
+                  </FormCard>
+                )}
+
                 {employee.skills.length > 0 && (
-                  <div className="space-y-3">
-                    <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                      <Zap className="h-4 w-4 text-warning" />
-                      Skills
-                    </h4>
+                  <FormCard eyebrow="Skills">
+                    <div className="flex items-center gap-2 text-[12px] text-white">
+                      <Zap className="h-4 w-4 text-amber-400" />
+                      Competencies and specialisms
+                    </div>
                     <div className="flex flex-wrap gap-1.5">
                       {employee.skills.map((skill) => (
-                        <Badge key={skill} variant="secondary" className="text-xs">
+                        <span
+                          key={skill}
+                          className="inline-flex items-center h-7 px-2.5 rounded-full bg-white/[0.06] border border-white/[0.08] text-[11px] text-white"
+                        >
                           {skill}
-                        </Badge>
+                        </span>
                       ))}
                     </div>
-                  </div>
+                  </FormCard>
                 )}
 
-                {/* Rating */}
-                <div className="space-y-3">
-                  <h4 className="text-sm font-semibold text-foreground">Performance Rating</h4>
+                <FormCard eyebrow="Performance rating">
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <button
                         key={star}
+                        type="button"
                         onClick={() => {
                           setEmployeeRating(employee.id, star);
                           toast({ title: 'Rating Updated' });
                         }}
+                        className="p-1 touch-manipulation"
                       >
                         <Star
-                          className={`h-6 w-6 cursor-pointer transition-all touch-manipulation ${star <= employee.rating ? 'text-warning fill-warning' : 'text-white hover:text-warning/50'}`}
+                          className={cn(
+                            'h-6 w-6 cursor-pointer transition-all',
+                            star <= employee.rating
+                              ? 'text-elec-yellow fill-elec-yellow'
+                              : 'text-white hover:text-elec-yellow/60'
+                          )}
                         />
                       </button>
                     ))}
-                    <span className="text-sm text-white ml-2">
+                    <span className="text-[12px] text-white ml-2 tabular-nums">
                       {employee.rating} / 5
                     </span>
                   </div>
-                </div>
+                </FormCard>
               </TabsContent>
 
-              {/* Jobs Tab */}
-              <TabsContent value="jobs" className="mt-0 space-y-4">
+              <TabsContent value="jobs" className="mt-0 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-semibold">
-                    Current Assignments ({employeeAssignments.length})
-                  </h4>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="gap-1 text-xs"
-                    onClick={onAssignToJob}
-                  >
-                    <Briefcase className="h-3 w-3" />
+                  <Eyebrow>Current assignments ({employeeAssignments.length})</Eyebrow>
+                  <SecondaryButton onClick={onAssignToJob} size="sm">
+                    <Briefcase className="h-3 w-3 mr-1" />
                     Assign
-                  </Button>
+                  </SecondaryButton>
                 </div>
                 {employeeAssignments.length > 0 ? (
                   <div className="space-y-2">
                     {employeeAssignments.map((a) => (
-                      <Card key={a.id} className="border-l-2 border-l-primary">
-                        <CardContent className="p-3 flex items-start justify-between gap-2">
-                          <div>
-                            <p className="font-medium text-sm">{a.jobTitle}</p>
-                            <p className="text-xs text-white flex items-center gap-1">
-                              <MapPin className="h-3 w-3" />
-                              {a.jobLocation}
-                            </p>
-                          </div>
-                          <Button
-                            size="icon"
-                            variant="ghost"
-                            className="h-9 w-9 sm:h-6 sm:w-6 text-white hover:text-destructive"
-                            onClick={() => {
-                              removeEmployeeFromJob(a.id);
-                              toast({ title: 'Removed from Job' });
-                            }}
-                          >
-                            <X className="h-3 w-3" />
-                          </Button>
-                        </CardContent>
-                      </Card>
+                      <div
+                        key={a.id}
+                        className="flex items-start justify-between gap-2 bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-2 border-l-elec-yellow rounded-xl p-3"
+                      >
+                        <div>
+                          <p className="text-[13px] font-medium text-white">{a.jobTitle}</p>
+                          <p className="text-[11px] text-white flex items-center gap-1 mt-0.5">
+                            <MapPin className="h-3 w-3" />
+                            {a.jobLocation}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            removeEmployeeFromJob(a.id);
+                            toast({ title: 'Removed from Job' });
+                          }}
+                          className="h-8 w-8 rounded-full flex items-center justify-center text-white hover:bg-red-500/15 hover:text-red-400 transition-colors"
+                          aria-label="Remove"
+                        >
+                          <X className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     ))}
                   </div>
                 ) : (
-                  <Card className="border-dashed">
-                    <CardContent className="p-6 text-center">
-                      <Briefcase className="h-8 w-8 text-white mx-auto mb-2" />
-                      <p className="text-sm text-white">No active assignments</p>
-                    </CardContent>
-                  </Card>
+                  <div className="bg-[hsl(0_0%_12%)] border border-dashed border-white/[0.12] rounded-2xl p-6 text-center">
+                    <Briefcase className="h-8 w-8 text-white/50 mx-auto mb-2" />
+                    <p className="text-[12.5px] text-white">No active assignments</p>
+                  </div>
                 )}
               </TabsContent>
 
-              {/* Certs Tab */}
-              <TabsContent value="certs" className="mt-0 space-y-4">
-                <h4 className="text-sm font-semibold">Certifications ({employeeCerts.length})</h4>
+              <TabsContent value="certs" className="mt-0 space-y-3">
+                <Eyebrow>Certifications ({employeeCerts.length})</Eyebrow>
                 {employeeCerts.length > 0 ? (
                   <div className="space-y-2">
                     {employeeCerts.map((cert) => (
-                      <Card
+                      <div
                         key={cert.id}
-                        className={`border-l-2 ${cert.status === 'Expired' ? 'border-l-destructive' : cert.status === 'Warning' ? 'border-l-warning' : 'border-l-success'}`}
+                        className={cn(
+                          'bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-2 rounded-xl p-3',
+                          cert.status === 'Expired'
+                            ? 'border-l-red-400'
+                            : cert.status === 'Warning'
+                              ? 'border-l-amber-400'
+                              : 'border-l-emerald-400'
+                        )}
                       >
-                        <CardContent className="p-3">
-                          <div className="flex items-start justify-between">
-                            <div>
-                              <p className="font-medium text-sm truncate">{cert.name}</p>
-                              <p className="text-xs text-white">{cert.issuer}</p>
-                            </div>
-                            <Badge
-                              variant="outline"
-                              className={`text-xs ${cert.status === 'Expired' ? 'border-destructive text-destructive' : cert.status === 'Warning' ? 'border-warning text-warning' : ''}`}
-                            >
-                              {cert.status === 'Expired'
-                                ? 'Expired'
-                                : cert.status === 'Warning'
-                                  ? `${cert.daysRemaining}d`
-                                  : 'Active'}
-                            </Badge>
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="min-w-0">
+                            <p className="text-[13px] font-medium text-white truncate">
+                              {cert.name}
+                            </p>
+                            <p className="text-[11px] text-white">{cert.issuer}</p>
                           </div>
-                        </CardContent>
-                      </Card>
+                          <Pill
+                            tone={
+                              cert.status === 'Expired'
+                                ? 'red'
+                                : cert.status === 'Warning'
+                                  ? 'amber'
+                                  : 'emerald'
+                            }
+                          >
+                            {cert.status === 'Expired'
+                              ? 'Expired'
+                              : cert.status === 'Warning'
+                                ? `${cert.daysRemaining}d`
+                                : 'Active'}
+                          </Pill>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 ) : (
-                  <Card className="border-dashed">
-                    <CardContent className="p-6 text-center">
-                      <Award className="h-8 w-8 text-white mx-auto mb-2" />
-                      <p className="text-sm text-white">No certifications</p>
-                    </CardContent>
-                  </Card>
+                  <div className="bg-[hsl(0_0%_12%)] border border-dashed border-white/[0.12] rounded-2xl p-6 text-center">
+                    <Award className="h-8 w-8 text-white/50 mx-auto mb-2" />
+                    <p className="text-[12.5px] text-white">No certifications</p>
+                  </div>
                 )}
               </TabsContent>
 
-              {/* Notes Tab */}
-              <TabsContent value="notes" className="mt-0 space-y-4">
+              <TabsContent value="notes" className="mt-0 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-semibold">Notes ({employee.notes.length})</h4>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="gap-1 text-xs h-11 touch-manipulation"
-                    onClick={() => setAddNoteOpen(true)}
-                  >
-                    <Plus className="h-3 w-3" />
-                    Add Note
-                  </Button>
+                  <Eyebrow>Notes ({employee.notes.length})</Eyebrow>
+                  <SecondaryButton onClick={() => setAddNoteOpen(true)} size="sm">
+                    <Plus className="h-3 w-3 mr-1" />
+                    Add note
+                  </SecondaryButton>
                 </div>
                 {employee.notes.length > 0 ? (
                   <div className="space-y-2">
                     {employee.notes.map((note) => (
-                      <Card key={note.id} className={`border-l-2 ${noteTypeColors[note.type]}`}>
-                        <CardContent className="p-3">
-                          <div className="flex items-start justify-between mb-1">
-                            <Badge variant="secondary" className="text-xs">
-                              {note.type}
-                            </Badge>
-                            <span className="text-xs text-white">
-                              {new Date(note.createdAt).toLocaleDateString('en-GB')}
-                            </span>
-                          </div>
-                          <p className="text-sm">{note.content}</p>
-                          <p className="text-xs text-white mt-1">— {note.authorName}</p>
-                        </CardContent>
-                      </Card>
+                      <div
+                        key={note.id}
+                        className={cn(
+                          'bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-2 rounded-xl p-3',
+                          noteTypeBorders[note.type]
+                        )}
+                      >
+                        <div className="flex items-start justify-between mb-1">
+                          <Pill tone="yellow">{note.type}</Pill>
+                          <span className="text-[11px] text-white">
+                            {new Date(note.createdAt).toLocaleDateString('en-GB')}
+                          </span>
+                        </div>
+                        <p className="text-[13px] text-white">{note.content}</p>
+                        <p className="mt-1 text-[11px] text-white">— {note.authorName}</p>
+                      </div>
                     ))}
                   </div>
                 ) : (
-                  <Card className="border-dashed">
-                    <CardContent className="p-6 text-center">
-                      <StickyNote className="h-8 w-8 text-white mx-auto mb-2" />
-                      <p className="text-sm text-white">No notes yet</p>
-                    </CardContent>
-                  </Card>
+                  <div className="bg-[hsl(0_0%_12%)] border border-dashed border-white/[0.12] rounded-2xl p-6 text-center">
+                    <StickyNote className="h-8 w-8 text-white/50 mx-auto mb-2" />
+                    <p className="text-[12.5px] text-white">No notes yet</p>
+                  </div>
                 )}
               </TabsContent>
             </div>
@@ -482,18 +456,14 @@ export function ViewEmployeeDialog({
         </Tabs>
 
         <ResponsiveDialogFooter className="flex gap-2">
-          <Button
-            variant="outline"
-            className="flex-1 gap-2 h-11 touch-manipulation"
-            onClick={onEdit}
-          >
-            <UserCog className="h-4 w-4" />
+          <SecondaryButton onClick={onEdit} fullWidth>
+            <UserCog className="h-4 w-4 mr-1.5" />
             Edit
-          </Button>
-          <Button className="flex-1 gap-2 h-11 touch-manipulation" onClick={onSendMessage}>
-            <Send className="h-4 w-4" />
+          </SecondaryButton>
+          <PrimaryButton onClick={onSendMessage} fullWidth>
+            <Send className="h-4 w-4 mr-1.5" />
             Message
-          </Button>
+          </PrimaryButton>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>
 

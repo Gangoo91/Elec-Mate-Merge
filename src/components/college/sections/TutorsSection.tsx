@@ -220,7 +220,7 @@ export function TutorsSection() {
                               <div className="text-[15px] font-medium text-white truncate">
                                 {tutor.name}
                               </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                              <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                                 {tutor.department ?? 'Tutor'}
                               </div>
                             </div>
@@ -255,14 +255,14 @@ export function TutorsSection() {
                                 </span>
                               ))}
                               {tutor.specialisations.length > 4 && (
-                                <span className="text-[11px] text-white/40 px-1.5 py-0.5">
+                                <span className="text-[11px] text-white/70 px-1.5 py-0.5">
                                   +{tutor.specialisations.length - 4}
                                 </span>
                               )}
                             </div>
                           )}
 
-                          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-white/50">
+                          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-white/75">
                             <span className="truncate max-w-[200px]">{tutor.email}</span>
                             {tutor.phone && <span>{tutor.phone}</span>}
                             {tutor.max_teaching_hours && (

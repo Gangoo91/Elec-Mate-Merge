@@ -1,13 +1,14 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Send, Loader2, Paperclip, X } from 'lucide-react';
+import { Send, Loader2, Paperclip } from 'lucide-react';
 import { ReplyPreview, ReplyToMessage } from '@/components/messaging/MessageReply';
 import { FilePreview, DropZone } from '@/components/messaging/FileAttachment';
 import { MentionSuggestions, MentionUser, useMentions } from '@/components/messaging/Mentions';
 import { useFileDrop } from '@/hooks/useFileUpload';
 import { validateFile } from '@/services/fileUploadService';
 import { toast } from '@/hooks/use-toast';
+import { IconButton, PrimaryButton, textareaClass } from '@/components/employer/editorial';
+import { cn } from '@/lib/utils';
 
 interface MessageInputProps {
   onSend: (content: string, attachments?: File[], replyToId?: string) => void;
@@ -149,7 +150,7 @@ export function MessageInput({
   };
 
   return (
-    <div className="relative" {...dragHandlers}>
+    <div className="relative bg-[hsl(0_0%_8%)]" {...dragHandlers}>
       {/* Drop zone overlay */}
       <DropZone isDragging={isDragging} />
 
@@ -175,7 +176,7 @@ export function MessageInput({
 
       {/* Mention suggestions */}
       {showSuggestions && filteredUsers.length > 0 && (
-        <div className="absolute bottom-full left-0 right-0 mb-1 mx-3 bg-background border border-border rounded-lg shadow-lg max-h-48 overflow-y-auto z-20">
+        <div className="absolute bottom-full left-0 right-0 mb-1 mx-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl shadow-lg max-h-48 overflow-y-auto z-20">
           <MentionSuggestions
             users={filteredUsers}
             query={mentionQuery}
@@ -186,7 +187,7 @@ export function MessageInput({
       )}
 
       {/* Input area */}
-      <div className="flex items-end gap-2 p-3 border-t border-border bg-background">
+      <div className="flex items-end gap-2 p-3 border-t border-white/[0.06]">
         {/* Attachment button */}
         <input
           ref={fileInputRef}
@@ -196,16 +197,13 @@ export function MessageInput({
           className="hidden"
           accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.txt,.csv"
         />
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="h-11 w-11 shrink-0"
+        <IconButton
           onClick={() => fileInputRef.current?.click()}
           disabled={disabled || isSending}
+          aria-label="Attach file"
         >
           <Paperclip className="h-5 w-5" />
-        </Button>
+        </IconButton>
 
         <Textarea
           ref={textareaRef}
@@ -215,17 +213,21 @@ export function MessageInput({
           placeholder={placeholder}
           disabled={disabled || isSending}
           rows={1}
-          className="min-h-[44px] max-h-[120px] resize-none bg-elec-gray border-border"
+          className={cn(textareaClass, 'min-h-[60px] max-h-[120px] py-2.5')}
         />
 
-        <Button
+        <PrimaryButton
           onClick={handleSend}
           disabled={(!message.trim() && attachments.length === 0) || disabled || isSending}
-          size="icon"
-          className="h-11 w-11 shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+          size="sm"
+          className="h-11 w-11 p-0 shrink-0"
         >
-          {isSending ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
-        </Button>
+          {isSending ? (
+            <Loader2 className="h-5 w-5 animate-spin" />
+          ) : (
+            <Send className="h-5 w-5" />
+          )}
+        </PrimaryButton>
       </div>
     </div>
   );

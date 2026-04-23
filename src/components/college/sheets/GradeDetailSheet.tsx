@@ -106,13 +106,13 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                   </Avatar>
 
                   <div className="flex-1 min-w-0">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                       Assessment
                     </div>
                     <SheetTitle className="mt-1 text-xl text-left">
                       {student?.name ?? 'Unknown Student'}
                     </SheetTitle>
-                    <p className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                    <p className="mt-0.5 text-[11.5px] text-white/75 truncate">
                       {grade.unit_name ?? 'Unassigned Unit'}
                     </p>
                     <div className="flex flex-wrap gap-1.5 mt-3">
@@ -153,24 +153,24 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                         className="p-5 space-y-5"
                       >
                         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                             Assessment
                           </div>
                           <div className="mt-3 space-y-3 text-[13px]">
                             <div className="flex items-center justify-between">
-                              <span className="text-white/50">Type</span>
+                              <span className="text-white/75">Type</span>
                               <span className="text-white">
                                 {grade.assessment_type ?? 'Not specified'}
                               </span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-white/50">Grade</span>
+                              <span className="text-white/75">Grade</span>
                               <span className="text-white">
                                 {grade.grade ?? 'Not yet graded'}
                               </span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-white/50">Score</span>
+                              <span className="text-white/75">Score</span>
                               <span className="text-white tabular-nums">
                                 {grade.score != null ? `${grade.score}%` : 'No score'}
                               </span>
@@ -179,22 +179,22 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                         </div>
 
                         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                             Assessor & Dates
                           </div>
                           <div className="mt-3 space-y-3 text-[13px]">
                             <div className="flex items-center justify-between">
-                              <span className="text-white/50">Assessor</span>
+                              <span className="text-white/75">Assessor</span>
                               <span className="text-white">{assessor?.name ?? 'Not assigned'}</span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-white/50">Assessed</span>
+                              <span className="text-white/75">Assessed</span>
                               <span className="text-white tabular-nums">
                                 {formatUKDateShort(grade.assessed_at)}
                               </span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-white/50">Created</span>
+                              <span className="text-white/75">Created</span>
                               <span className="text-white tabular-nums">
                                 {formatUKDateShort(grade.created_at)}
                               </span>
@@ -216,14 +216,14 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                       >
                         {isEditingFeedback ? (
                           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
-                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                               Edit Feedback
                             </div>
                             <Textarea
                               value={feedbackText}
                               onChange={(e) => setFeedbackText(e.target.value)}
                               placeholder="Enter assessment feedback for the student…"
-                              className="touch-manipulation text-sm min-h-[180px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60"
+                              className="touch-manipulation text-sm min-h-[180px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60"
                             />
                             <div className="flex items-center justify-end gap-3">
                               <button
@@ -244,7 +244,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                         ) : grade.feedback ? (
                           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
                             <div className="flex items-baseline justify-between mb-3">
-                              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                                 Feedback
                               </div>
                               <button
@@ -280,7 +280,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                         className="p-5"
                       >
                         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-5">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-5">
                             Timeline
                           </div>
 
@@ -292,7 +292,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                               <div className="text-[13px] font-medium text-white">
                                 Assessment created
                               </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                              <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                                 {formatUKDateShort(grade.created_at)} · Unit:{' '}
                                 {grade.unit_name ?? 'Not specified'}
                               </div>
@@ -304,7 +304,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                                 <div className="text-[13px] font-medium text-white">
                                   Status → {grade.status}
                                 </div>
-                                <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                                <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                                   {grade.assessed_at
                                     ? formatUKDateShort(grade.assessed_at)
                                     : 'Date not recorded'}
@@ -318,7 +318,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                                 <div className="text-[13px] font-medium text-white">
                                   Graded
                                 </div>
-                                <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                                <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                                   {formatUKDateShort(grade.assessed_at)}
                                   {assessor && ` · ${assessor.name}`}
                                 </div>
@@ -339,7 +339,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                                 <div className="text-[13px] font-medium text-white">
                                   Feedback recorded
                                 </div>
-                                <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                                <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                                   {grade.feedback.length} characters
                                 </div>
                               </div>

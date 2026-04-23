@@ -23,7 +23,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
           value={result.ringR1 || ''}
           onChange={(value) => onUpdate(result.id, 'ringR1', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-          placeholder="Ω"
+          placeholder="—"
         />
       </TableCell>
 
@@ -33,7 +33,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
           value={result.ringRn || ''}
           onChange={(value) => onUpdate(result.id, 'ringRn', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-          placeholder="Ω"
+          placeholder="—"
         />
       </TableCell>
 
@@ -43,7 +43,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
           value={result.ringR2 || ''}
           onChange={(value) => onUpdate(result.id, 'ringR2', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-          placeholder="Ω"
+          placeholder="—"
         />
       </TableCell>
 
@@ -54,7 +54,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
           onChange={(value) => onUpdate(result.id, 'r1r2', value)}
           validation={validation?.r1r2}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-          placeholder="Ω"
+          placeholder="—"
         />
       </TableCell>
 
@@ -65,7 +65,7 @@ const ContinuityCellsComponent: React.FC<ContinuityCellsProps> = ({
           onChange={(value) => onUpdate(result.id, 'ringContinuityLive', value)}
           validation={validation?.ringContinuityLive}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-          placeholder="Ω"
+          placeholder="—"
         />
       </TableCell>
     </>

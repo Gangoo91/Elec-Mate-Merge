@@ -192,7 +192,7 @@ export function TutorNotebookSection() {
         <motion.div variants={itemVariants}>
           <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               AI-Powered
             </div>
             <h3 className="mt-2 text-xl sm:text-2xl font-semibold text-white tracking-tight">
@@ -224,10 +224,18 @@ export function TutorNotebookSection() {
           ) : (
             <HubGrid columns={3}>
               {filteredNotebooks.map((notebook, i) => (
-                <button
+                <div
                   key={notebook.id}
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setSelectedNotebook(notebook)}
-                  className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 text-left touch-manipulation flex flex-col min-h-[180px]"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSelectedNotebook(notebook);
+                    }
+                  }}
+                  className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 text-left touch-manipulation flex flex-col min-h-[180px] cursor-pointer focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
                 >
                   <div
                     className={cn(
@@ -236,7 +244,7 @@ export function TutorNotebookSection() {
                     )}
                   />
                   <div className="flex items-start justify-between gap-2">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                       {String(i + 1).padStart(2, '0')} · Notebook
                     </div>
                     <DropdownMenu>
@@ -245,13 +253,14 @@ export function TutorNotebookSection() {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <button
-                          className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                          className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                           aria-label="Options"
+                          onClick={(e) => e.stopPropagation()}
                         >
                           ⋯
                         </button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
+                      <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
                         <DropdownMenuItem>Share</DropdownMenuItem>
                         <DropdownMenuItem
                           className="text-red-400"
@@ -271,7 +280,7 @@ export function TutorNotebookSection() {
                     </p>
                   )}
                   <div className="flex-grow" />
-                  <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px] text-white/50">
+                  <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px] text-white/75">
                     <span className="tabular-nums">{notebook.sourceCount} sources</span>
                     <span className="tabular-nums">
                       {new Date(notebook.lastUpdated).toLocaleDateString('en-GB', {
@@ -280,7 +289,7 @@ export function TutorNotebookSection() {
                       })}
                     </span>
                   </div>
-                </button>
+                </div>
               ))}
             </HubGrid>
           )}
@@ -347,7 +356,7 @@ export function TutorNotebookSection() {
           </button>
           <div className="h-4 w-px bg-white/10" aria-hidden />
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Notebook
             </div>
             <h1 className="mt-0.5 text-xl sm:text-2xl font-semibold text-white tracking-tight truncate">
@@ -364,81 +373,91 @@ export function TutorNotebookSection() {
       </motion.div>
 
       <motion.div variants={itemVariants} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* LEFT: sources + ai actions */}
+        {/* LEFT: sources + ai actions — header-inside-card pattern matches the right column */}
         <div className="lg:col-span-1 space-y-5">
-          <div>
-            <SectionHeader eyebrow="Sources" title={`${sources.length} items`} />
-            <div className="mt-4">
-              <ListCard>
-                {sources.map((source) => (
-                  <div
-                    key={source.id}
-                    className="flex items-center gap-3 px-5 sm:px-6 py-3 hover:bg-[hsl(0_0%_15%)] transition-colors"
-                  >
-                    <span
-                      aria-hidden
-                      className={cn(
-                        'h-1.5 w-1.5 rounded-full shrink-0',
-                        source.type === 'document'
-                          ? 'bg-blue-400'
-                          : source.type === 'link'
-                            ? 'bg-purple-400'
-                            : source.type === 'image'
-                              ? 'bg-emerald-400'
-                              : source.type === 'video'
-                                ? 'bg-red-400'
-                                : source.type === 'audio'
-                                  ? 'bg-amber-400'
-                                  : 'bg-white/40'
-                      )}
-                    />
-                    <div className="flex-1 min-w-0">
-                      <div className="text-[13px] font-medium text-white truncate">
-                        {source.name}
-                      </div>
-                      <div className="mt-0.5 text-[11px] text-white/50 tabular-nums">
-                        {source.size || new Date(source.addedAt).toLocaleDateString('en-GB')}
-                      </div>
+          {/* Sources card */}
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                Sources
+              </div>
+              <h3 className="mt-1 text-base font-semibold text-white">
+                {sources.length} {sources.length === 1 ? 'item' : 'items'}
+              </h3>
+            </div>
+            <div className="divide-y divide-white/[0.06]">
+              {sources.map((source) => (
+                <div
+                  key={source.id}
+                  className="flex items-center gap-3 px-5 sm:px-6 py-3 hover:bg-[hsl(0_0%_15%)] transition-colors"
+                >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      'h-1.5 w-1.5 rounded-full shrink-0',
+                      source.type === 'document'
+                        ? 'bg-blue-400'
+                        : source.type === 'link'
+                          ? 'bg-purple-400'
+                          : source.type === 'image'
+                            ? 'bg-emerald-400'
+                            : source.type === 'video'
+                              ? 'bg-red-400'
+                              : source.type === 'audio'
+                                ? 'bg-amber-400'
+                                : 'bg-white/40'
+                    )}
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-[13px] font-medium text-white truncate">
+                      {source.name}
+                    </div>
+                    <div className="mt-0.5 text-[11px] text-white/75 tabular-nums">
+                      {source.size || new Date(source.addedAt).toLocaleDateString('en-GB')}
                     </div>
                   </div>
-                ))}
-                <button
-                  onClick={() => setIsAddSourceDialogOpen(true)}
-                  className="w-full px-5 sm:px-6 py-3 text-left text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
-                >
-                  Add source →
-                </button>
-              </ListCard>
+                </div>
+              ))}
+              <button
+                onClick={() => setIsAddSourceDialogOpen(true)}
+                className="w-full px-5 sm:px-6 py-3 text-left text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+              >
+                Add source →
+              </button>
             </div>
           </div>
 
-          <div>
-            <SectionHeader eyebrow="AI Actions" title="Quick prompts" />
-            <div className="mt-4">
-              <ListCard>
-                {[
-                  { label: 'Generate summary', prompt: 'Generate a summary of all content' },
-                  { label: 'Create quiz', prompt: 'Create a 5-question quiz on this topic' },
-                  { label: 'Study guide', prompt: 'Create a study guide from these sources' },
-                  { label: 'Lesson outline', prompt: 'Create a lesson outline from these sources' },
-                ].map((action) => (
-                  <button
-                    key={action.label}
-                    onClick={() => {
-                      setChatInput(action.prompt);
-                      setTimeout(handleSendMessage, 0);
-                    }}
-                    className="group w-full px-5 sm:px-6 py-4 text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation flex items-center justify-between"
-                  >
-                    <span className="text-[13.5px] font-medium text-white group-hover:text-elec-yellow transition-colors">
-                      {action.label}
-                    </span>
-                    <span className="text-elec-yellow/70 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
-                      →
-                    </span>
-                  </button>
-                ))}
-              </ListCard>
+          {/* AI actions card */}
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                AI actions
+              </div>
+              <h3 className="mt-1 text-base font-semibold text-white">Quick prompts</h3>
+            </div>
+            <div className="divide-y divide-white/[0.06]">
+              {[
+                { label: 'Generate summary', prompt: 'Generate a summary of all content' },
+                { label: 'Create quiz', prompt: 'Create a 5-question quiz on this topic' },
+                { label: 'Study guide', prompt: 'Create a study guide from these sources' },
+                { label: 'Lesson outline', prompt: 'Create a lesson outline from these sources' },
+              ].map((action) => (
+                <button
+                  key={action.label}
+                  onClick={() => {
+                    setChatInput(action.prompt);
+                    setTimeout(handleSendMessage, 0);
+                  }}
+                  className="group w-full px-5 sm:px-6 py-4 text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation flex items-center justify-between"
+                >
+                  <span className="text-[13.5px] font-medium text-white group-hover:text-elec-yellow transition-colors">
+                    {action.label}
+                  </span>
+                  <span className="text-elec-yellow/70 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
+                    →
+                  </span>
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -447,7 +466,7 @@ export function TutorNotebookSection() {
         <div className="lg:col-span-2">
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden flex flex-col h-[600px]">
             <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                 AI Assistant
               </div>
               <h3 className="mt-1 text-base font-semibold text-white">
@@ -497,7 +516,7 @@ export function TutorNotebookSection() {
                       )}
                     >
                       {message.role === 'assistant' && (
-                        <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40 mb-1.5">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/55 mb-1.5">
                           AI Assistant
                         </div>
                       )}
@@ -516,7 +535,7 @@ export function TutorNotebookSection() {
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="flex-1 h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                  className="flex-1 h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
                 />
                 <button
                   onClick={handleSendMessage}
@@ -550,11 +569,11 @@ export function TutorNotebookSection() {
                 <span className="text-[14px] font-semibold text-white group-hover:text-elec-yellow transition-colors">
                   {opt.label}
                 </span>
-                <span className="mt-1 text-[11.5px] text-white/50">{opt.desc}</span>
+                <span className="mt-1 text-[11.5px] text-white/75">{opt.desc}</span>
               </button>
             ))}
           </div>
-          <p className="text-[11.5px] text-white/40 text-center">
+          <p className="text-[11.5px] text-white/70 text-center">
             Supported · PDF · Word · PowerPoint · Images · YouTube · Web links
           </p>
         </DialogContent>

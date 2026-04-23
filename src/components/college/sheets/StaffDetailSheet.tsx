@@ -85,11 +85,11 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
               </Avatar>
 
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                   Staff
                 </div>
                 <SheetTitle className="mt-1 text-xl text-left">{staff.name}</SheetTitle>
-                <p className="mt-0.5 text-[11.5px] text-white/50">{staff.department || 'No department'}</p>
+                <p className="mt-0.5 text-[11.5px] text-white/75">{staff.department || 'No department'}</p>
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   <Pill tone={statusTone}>{staff.status}</Pill>
                   <Pill tone="blue">{getRoleLabel(staff.role)}</Pill>
@@ -151,12 +151,12 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                   >
                     {/* Contact */}
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Contact
                       </div>
                       <div className="mt-3 space-y-2 text-[13px]">
                         <div className="flex items-center justify-between">
-                          <span className="text-white/50">Email</span>
+                          <span className="text-white/75">Email</span>
                           <a
                             href={`mailto:${staff.email}`}
                             className="text-white hover:text-elec-yellow truncate ml-3 max-w-[60%]"
@@ -166,7 +166,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                         </div>
                         {staff.phone && (
                           <div className="flex items-center justify-between">
-                            <span className="text-white/50">Phone</span>
+                            <span className="text-white/75">Phone</span>
                             <a
                               href={`tel:${staff.phone}`}
                               className="text-white hover:text-elec-yellow tabular-nums"
@@ -176,12 +176,12 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           </div>
                         )}
                         <div className="flex items-center justify-between">
-                          <span className="text-white/50">Department</span>
+                          <span className="text-white/75">Department</span>
                           <span className="text-white">{staff.department || '—'}</span>
                         </div>
                         {staff.max_teaching_hours && (
                           <div className="flex items-center justify-between">
-                            <span className="text-white/50">Max hours</span>
+                            <span className="text-white/75">Max hours</span>
                             <span className="text-white tabular-nums">
                               {staff.max_teaching_hours}h/week
                             </span>
@@ -192,11 +192,11 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
 
                     {/* Qualifications */}
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Qualifications
                       </div>
                       {!staff.teaching_qual && !staff.assessor_qual && !staff.iqa_qual ? (
-                        <p className="mt-3 text-[12.5px] text-white/50">
+                        <p className="mt-3 text-[12.5px] text-white/75">
                           No qualifications recorded.
                         </p>
                       ) : (
@@ -204,7 +204,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           {staff.teaching_qual && (
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                                   Teaching
                                 </div>
                                 <div className="mt-0.5 text-[13px] text-white">
@@ -217,7 +217,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           {staff.assessor_qual && (
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                                   Assessor
                                 </div>
                                 <div className="mt-0.5 text-[13px] text-white">
@@ -230,7 +230,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           {staff.iqa_qual && (
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                                   IQA
                                 </div>
                                 <div className="mt-0.5 text-[13px] text-white">{staff.iqa_qual}</div>
@@ -245,7 +245,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                     {/* Specialisations */}
                     {staff.specialisations && staff.specialisations.length > 0 && (
                       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
                           Specialisations
                         </div>
                         <div className="flex flex-wrap gap-1.5">
@@ -273,7 +273,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           <div className="text-2xl font-semibold tabular-nums text-white leading-none">
                             {stat.value}
                           </div>
-                          <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-white/40">
+                          <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-white/55">
                             {stat.label}
                           </div>
                         </div>
@@ -319,7 +319,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                                 </div>
                                 <div className="mt-2">
                                   <div className="flex items-baseline justify-between text-[11px]">
-                                    <span className="text-white/50 uppercase tracking-[0.12em]">
+                                    <span className="text-white/75 uppercase tracking-[0.12em]">
                                       Capacity
                                     </span>
                                     <span className="font-medium text-white tabular-nums">
@@ -333,7 +333,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                                     />
                                   </div>
                                 </div>
-                                <div className="mt-2 text-[11px] text-white/50 tabular-nums">
+                                <div className="mt-2 text-[11px] text-white/75 tabular-nums">
                                   {formatUKDateShort(cohort.start_date)} →{' '}
                                   {formatUKDateShort(cohort.end_date)}
                                 </div>

@@ -7,11 +7,8 @@ import {
   ResponsiveDialogBody,
   ResponsiveDialogFooter,
 } from '@/components/ui/responsive-dialog';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
-import { Separator } from '@/components/ui/separator';
 import {
   Phone,
   Mail,
@@ -27,6 +24,17 @@ import {
   FileText,
 } from 'lucide-react';
 import { VacancyApplication } from '@/contexts/EmployerContext';
+import { cn } from '@/lib/utils';
+import {
+  Eyebrow,
+  Pill,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  TextAction,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 interface ViewCandidateDialogProps {
   open: boolean;
@@ -64,26 +72,26 @@ export function ViewCandidateDialog({
     .join('')
     .toUpperCase();
 
-  const getStatusBadge = (status: string) => {
-    const variants: Record<string, string> = {
-      New: 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-      Reviewing: 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-      Shortlisted: 'bg-purple-500/10 text-purple-500 border-purple-500/20',
-      'Interview Scheduled': 'bg-cyan-500/10 text-cyan-500 border-cyan-500/20',
-      'Offer Made': 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
-      Rejected: 'bg-destructive/10 text-destructive border-destructive/20',
+  const getStatusTone = (status: string): 'blue' | 'amber' | 'purple' | 'cyan' | 'emerald' | 'red' | 'yellow' => {
+    const map: Record<string, 'blue' | 'amber' | 'purple' | 'cyan' | 'emerald' | 'red' | 'yellow'> = {
+      New: 'blue',
+      Reviewing: 'amber',
+      Shortlisted: 'purple',
+      'Interview Scheduled': 'cyan',
+      'Offer Made': 'emerald',
+      Rejected: 'red',
     };
-    return variants[status] || 'bg-muted text-white';
+    return map[status] || 'yellow';
   };
 
-  const getCardBadge = (cardType?: string) => {
-    if (!cardType) return null;
-    const variants: Record<string, string> = {
-      'Gold Card': 'bg-yellow-500/10 text-yellow-600 border-yellow-500/20',
-      'Blue Card': 'bg-blue-500/10 text-blue-500 border-blue-500/20',
-      Apprentice: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20',
+  const getCardTone = (cardType?: string): 'yellow' | 'blue' | 'emerald' => {
+    if (!cardType) return 'yellow';
+    const map: Record<string, 'yellow' | 'blue' | 'emerald'> = {
+      'Gold Card': 'yellow',
+      'Blue Card': 'blue',
+      Apprentice: 'emerald',
     };
-    return variants[cardType] || 'bg-muted text-white';
+    return map[cardType] || 'yellow';
   };
 
   const handleSaveNotes = () => {
@@ -99,265 +107,233 @@ export function ViewCandidateDialog({
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
       <ResponsiveDialogContent className="sm:max-w-lg">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="sr-only">Candidate Profile</ResponsiveDialogTitle>
+          <ResponsiveDialogTitle className="sr-only">Candidate profile</ResponsiveDialogTitle>
         </ResponsiveDialogHeader>
 
         <ResponsiveDialogBody className="space-y-4">
-          {/* Header with Avatar */}
           <div className="flex items-start gap-4">
-            <Avatar className="w-16 h-16 border-2 border-border">
+            <Avatar className="w-16 h-16 border border-white/[0.08]">
               <AvatarImage src={application.avatar} alt={application.name} />
               <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-lg">
                 {initials}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-semibold text-foreground">{application.name}</h2>
-              <div className="flex flex-wrap gap-2 mt-1">
+              <Eyebrow>Candidate</Eyebrow>
+              <h2 className="mt-1 text-[20px] font-semibold text-white">{application.name}</h2>
+              <div className="flex flex-wrap gap-1.5 mt-2">
                 {application.ecsCardType && (
-                  <Badge variant="outline" className={getCardBadge(application.ecsCardType)}>
+                  <Pill tone={getCardTone(application.ecsCardType)}>
                     <CreditCard className="h-3 w-3 mr-1" />
                     {application.ecsCardType}
-                  </Badge>
+                  </Pill>
                 )}
-                <Badge variant="outline" className={getStatusBadge(application.status)}>
-                  {application.status}
-                </Badge>
+                <Pill tone={getStatusTone(application.status)}>{application.status}</Pill>
               </div>
             </div>
           </div>
 
-          {/* Applied For */}
           {vacancyTitle && (
-            <div className="bg-muted/50 rounded-lg p-3">
-              <div className="flex items-center gap-2 text-sm">
-                <Briefcase className="h-4 w-4 text-white" />
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-3">
+              <div className="flex items-center gap-2 text-[12.5px]">
+                <Briefcase className="h-4 w-4 text-elec-yellow" />
                 <span className="text-white">Applied for:</span>
-                <span className="font-medium text-foreground">{vacancyTitle}</span>
+                <span className="text-white font-medium">{vacancyTitle}</span>
               </div>
             </div>
           )}
 
-          <Separator />
-
-          {/* Contact Details */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wider">
-              Contact
-            </h3>
-            <div className="space-y-2">
+          <FormCard eyebrow="Contact">
+            <div className="space-y-1.5">
               <a
                 href={`tel:${application.phone}`}
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/[0.04] transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
                   <Phone className="h-4 w-4 text-elec-yellow" />
                 </div>
-                <span className="text-foreground">{application.phone}</span>
+                <span className="text-[13px] text-white">{application.phone}</span>
               </a>
               <a
                 href={`mailto:${application.email}`}
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/[0.04] transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-elec-yellow/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
                   <Mail className="h-4 w-4 text-elec-yellow" />
                 </div>
-                <span className="text-foreground truncate">{application.email}</span>
+                <span className="text-[13px] text-white truncate">{application.email}</span>
               </a>
             </div>
-          </div>
+          </FormCard>
 
-          <Separator />
-
-          {/* Details Grid */}
-          <div className="grid grid-cols-2 gap-4">
-            {application.currentLocation && (
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-white shrink-0" />
-                <div>
-                  <p className="text-xs text-white">Location</p>
-                  <p className="text-sm font-medium">{application.currentLocation}</p>
+          <FormCard eyebrow="Details">
+            <div className="grid grid-cols-2 gap-3">
+              {application.currentLocation && (
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4 text-white shrink-0" />
+                  <div>
+                    <p className="text-[10px] text-white uppercase tracking-[0.14em]">Location</p>
+                    <p className="text-[13px] font-medium text-white">
+                      {application.currentLocation}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
-            {application.yearsExperience !== undefined && (
-              <div className="flex items-center gap-2">
-                <Briefcase className="h-4 w-4 text-white shrink-0" />
-                <div>
-                  <p className="text-xs text-white">Experience</p>
-                  <p className="text-sm font-medium">{application.yearsExperience} years</p>
+              )}
+              {application.yearsExperience !== undefined && (
+                <div className="flex items-center gap-2">
+                  <Briefcase className="h-4 w-4 text-white shrink-0" />
+                  <div>
+                    <p className="text-[10px] text-white uppercase tracking-[0.14em]">Experience</p>
+                    <p className="text-[13px] font-medium text-white">
+                      {application.yearsExperience} years
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
-            {application.noticePeriod && (
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-white shrink-0" />
-                <div>
-                  <p className="text-xs text-white">Notice Period</p>
-                  <p className="text-sm font-medium">{application.noticePeriod}</p>
+              )}
+              {application.noticePeriod && (
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-white shrink-0" />
+                  <div>
+                    <p className="text-[10px] text-white uppercase tracking-[0.14em]">Notice</p>
+                    <p className="text-[13px] font-medium text-white">{application.noticePeriod}</p>
+                  </div>
                 </div>
-              </div>
-            )}
-            {application.expectedSalary !== undefined && (
+              )}
+              {application.expectedSalary !== undefined && (
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-white shrink-0" />
+                  <div>
+                    <p className="text-[10px] text-white uppercase tracking-[0.14em]">Expected</p>
+                    <p className="text-[13px] font-medium text-white">
+                      £{application.expectedSalary.toLocaleString()}
+                      {application.expectedSalary < 1000 ? '/day' : '/yr'}
+                    </p>
+                  </div>
+                </div>
+              )}
               <div className="flex items-center gap-2">
-                <FileText className="h-4 w-4 text-white shrink-0" />
+                <Calendar className="h-4 w-4 text-white shrink-0" />
                 <div>
-                  <p className="text-xs text-white">Expected</p>
-                  <p className="text-sm font-medium">
-                    £{application.expectedSalary.toLocaleString()}
-                    {application.expectedSalary < 1000 ? '/day' : '/yr'}
+                  <p className="text-[10px] text-white uppercase tracking-[0.14em]">Applied</p>
+                  <p className="text-[13px] font-medium text-white">
+                    {new Date(application.appliedDate).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    })}
                   </p>
                 </div>
               </div>
-            )}
-            <div className="flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-white shrink-0" />
-              <div>
-                <p className="text-xs text-white">Applied</p>
-                <p className="text-sm font-medium">
-                  {new Date(application.appliedDate).toLocaleDateString('en-GB', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })}
-                </p>
+            </div>
+          </FormCard>
+
+          {application.interviewDate && (
+            <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-2xl p-4">
+              <h3 className="text-[12px] font-semibold text-cyan-400 mb-3 flex items-center gap-2 uppercase tracking-[0.14em]">
+                <Calendar className="h-4 w-4" />
+                Interview scheduled
+              </h3>
+              <div className="space-y-1.5 text-[12.5px] text-white">
+                <div className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4 text-white" />
+                  <span>
+                    {new Date(application.interviewDate).toLocaleDateString('en-GB', {
+                      weekday: 'long',
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </span>
+                </div>
+                {application.interviewTime && (
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-white" />
+                    <span>{application.interviewTime}</span>
+                  </div>
+                )}
+                {application.interviewType && (
+                  <div className="flex items-center gap-2">
+                    {application.interviewType === 'Video' ? (
+                      <Video className="h-4 w-4 text-white" />
+                    ) : application.interviewType === 'Phone' ? (
+                      <Phone className="h-4 w-4 text-white" />
+                    ) : (
+                      <Building className="h-4 w-4 text-white" />
+                    )}
+                    <span>{application.interviewType}</span>
+                  </div>
+                )}
+                {application.interviewLocation && (
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-white" />
+                    <span>{application.interviewLocation}</span>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
-
-          {/* Interview Details */}
-          {application.interviewDate && (
-            <>
-              <Separator />
-              <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-4">
-                <h3 className="text-sm font-medium text-cyan-600 mb-3 flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  Interview Scheduled
-                </h3>
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-white" />
-                    <span>
-                      {new Date(application.interviewDate).toLocaleDateString('en-GB', {
-                        weekday: 'long',
-                        day: 'numeric',
-                        month: 'long',
-                        year: 'numeric',
-                      })}
-                    </span>
-                  </div>
-                  {application.interviewTime && (
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-4 w-4 text-white" />
-                      <span>{application.interviewTime}</span>
-                    </div>
-                  )}
-                  {application.interviewType && (
-                    <div className="flex items-center gap-2">
-                      {application.interviewType === 'Video' ? (
-                        <Video className="h-4 w-4 text-white" />
-                      ) : application.interviewType === 'Phone' ? (
-                        <Phone className="h-4 w-4 text-white" />
-                      ) : (
-                        <Building className="h-4 w-4 text-white" />
-                      )}
-                      <span>{application.interviewType}</span>
-                    </div>
-                  )}
-                  {application.interviewLocation && (
-                    <div className="flex items-center gap-2">
-                      <MapPin className="h-4 w-4 text-white" />
-                      <span>{application.interviewLocation}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </>
           )}
 
-          <Separator />
-
-          {/* Rating */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wider">
-              Your Rating
-            </h3>
+          <FormCard eyebrow="Your rating">
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
                 <button
                   key={star}
+                  type="button"
                   onClick={() => handleRatingClick(star)}
-                  className="p-1 hover:scale-110 transition-transform"
+                  className="p-1 hover:scale-110 transition-transform touch-manipulation"
                 >
                   <Star
-                    className={`h-6 w-6 ${
-                      star <= rating
-                        ? 'fill-yellow-400 text-yellow-400'
-                        : 'text-white'
-                    }`}
+                    className={cn(
+                      'h-6 w-6',
+                      star <= rating ? 'fill-elec-yellow text-elec-yellow' : 'text-white'
+                    )}
                   />
                 </button>
               ))}
-              {rating > 0 && <span className="ml-2 text-sm text-white">{rating}/5</span>}
+              {rating > 0 && <span className="ml-2 text-[12px] text-white">{rating}/5</span>}
             </div>
-          </div>
+          </FormCard>
 
-          {/* Notes */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-medium text-white uppercase tracking-wider flex items-center gap-2">
-              <MessageSquare className="h-4 w-4" />
-              Notes
-            </h3>
+          <FormCard eyebrow="Notes">
+            <div className="flex items-center gap-2 text-[12px] text-white">
+              <MessageSquare className="h-4 w-4 text-elec-yellow" />
+              Private notes about this candidate
+            </div>
             <Textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Add your notes about this candidate..."
-              className="min-h-[80px] resize-none"
+              className={`${textareaClass} min-h-[90px]`}
             />
             {notes !== application.notes && (
-              <Button size="sm" onClick={handleSaveNotes}>
-                Save Notes
-              </Button>
+              <TextAction onClick={handleSaveNotes}>Save notes</TextAction>
             )}
-          </div>
+          </FormCard>
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter className="flex-col sm:flex-row gap-2">
           {application.status !== 'Interview Scheduled' &&
             application.status !== 'Offer Made' &&
             application.status !== 'Rejected' && (
-              <Button
-                onClick={onScheduleInterview}
-                variant="outline"
-                className="flex-1 h-11 touch-manipulation min-w-[140px]"
-              >
-                <Calendar className="h-4 w-4 mr-2" />
-                Schedule Interview
-              </Button>
+              <SecondaryButton onClick={onScheduleInterview} fullWidth>
+                <Calendar className="h-4 w-4 mr-1.5" />
+                Schedule interview
+              </SecondaryButton>
             )}
-          {application.status === 'New' || application.status === 'Reviewing' ? (
-            <Button
-              onClick={onShortlist}
-              variant="outline"
-              className="flex-1 h-11 touch-manipulation min-w-[100px]"
-            >
-              <Star className="h-4 w-4 mr-2" />
+          {(application.status === 'New' || application.status === 'Reviewing') && (
+            <SecondaryButton onClick={onShortlist} fullWidth>
+              <Star className="h-4 w-4 mr-1.5" />
               Shortlist
-            </Button>
-          ) : null}
-          {application.status === 'Interview Scheduled' || application.status === 'Shortlisted' ? (
-            <Button onClick={onMakeOffer} className="flex-1 h-11 touch-manipulation min-w-[100px]">
-              Make Offer
-            </Button>
-          ) : null}
+            </SecondaryButton>
+          )}
+          {(application.status === 'Interview Scheduled' ||
+            application.status === 'Shortlisted') && (
+            <PrimaryButton onClick={onMakeOffer} fullWidth>
+              Make offer
+            </PrimaryButton>
+          )}
           {application.status !== 'Rejected' && application.status !== 'Offer Made' && (
-            <Button
-              onClick={onReject}
-              variant="ghost"
-              className="h-11 touch-manipulation text-destructive hover:text-destructive hover:bg-destructive/10"
-            >
-              Reject
-            </Button>
+            <DestructiveButton onClick={onReject}>Reject</DestructiveButton>
           )}
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>

@@ -7,7 +7,6 @@ import {
   DrawerFooter,
   DrawerClose,
 } from '@/components/ui/drawer';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -15,6 +14,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Search, X, Check, Eye, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PhotoCategory } from '@/data/employerMockData';
+import {
+  inputClass,
+  checkboxClass,
+  PrimaryButton,
+  SecondaryButton,
+} from './editorial';
 
 const categories: PhotoCategory[] = ['Before', 'During', 'After', 'Completion', 'Issue'];
 
@@ -122,14 +127,19 @@ export function PhotoFilterSheet({
 
   return (
     <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent className="max-h-[85vh]">
-        <DrawerHeader className="border-b border-border/50 pb-4">
+      <DrawerContent className="max-h-[85vh] bg-[hsl(0_0%_8%)] border-t border-white/[0.06]">
+        <DrawerHeader className="border-b border-white/[0.06] pb-4">
           <div className="flex items-center justify-between">
-            <DrawerTitle className="text-lg font-semibold">Filter Photos</DrawerTitle>
+            <DrawerTitle className="text-lg font-semibold text-white">
+              Filter Photos
+            </DrawerTitle>
             <DrawerClose asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <button
+                type="button"
+                className="h-8 w-8 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
+              >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </DrawerClose>
           </div>
         </DrawerHeader>
@@ -138,7 +148,7 @@ export function PhotoFilterSheet({
           <div className="py-4 space-y-6">
             {/* Categories Section */}
             <div>
-              <h3 className="text-sm font-medium text-white mb-3 uppercase tracking-wide">
+              <h3 className="text-[11px] font-semibold text-white mb-3 uppercase tracking-[0.18em]">
                 Category
               </h3>
               <div className="flex flex-wrap gap-2">
@@ -150,17 +160,17 @@ export function PhotoFilterSheet({
                       key={category}
                       onClick={() => toggleCategory(category)}
                       className={cn(
-                        'flex items-center gap-2 px-3 py-2 rounded-lg border transition-all touch-feedback',
+                        'flex items-center gap-2 px-3 py-2 rounded-full border transition-all touch-manipulation',
                         isSelected
                           ? categoryColors[category]
-                          : 'bg-muted/30 border-border/50 text-white hover:bg-muted/50'
+                          : 'bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]'
                       )}
                     >
                       <span>{categoryEmoji[category]}</span>
                       <span className="text-sm font-medium">{category}</span>
                       <Badge
                         variant="secondary"
-                        className="h-5 px-1.5 text-[10px] bg-background/50"
+                        className="h-5 px-1.5 text-[10px] bg-black/50 text-white"
                       >
                         {count}
                       </Badge>
@@ -172,7 +182,7 @@ export function PhotoFilterSheet({
 
             {/* Status Filters */}
             <div>
-              <h3 className="text-sm font-medium text-white mb-3 uppercase tracking-wide">
+              <h3 className="text-[11px] font-semibold text-white mb-3 uppercase tracking-[0.18em]">
                 Status
               </h3>
               <div className="grid grid-cols-2 gap-2">
@@ -184,10 +194,10 @@ export function PhotoFilterSheet({
                     }))
                   }
                   className={cn(
-                    'flex items-center gap-2 px-3 py-3 rounded-lg border transition-all touch-feedback',
+                    'flex items-center gap-2 px-3 py-3 rounded-full border transition-all touch-manipulation',
                     localFilters.showApproved === true
-                      ? 'bg-success/20 border-success/30 text-success'
-                      : 'bg-muted/30 border-border/50 text-white hover:bg-muted/50'
+                      ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-400'
+                      : 'bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]'
                   )}
                 >
                   <Check className="h-4 w-4" />
@@ -201,10 +211,10 @@ export function PhotoFilterSheet({
                     }))
                   }
                   className={cn(
-                    'flex items-center gap-2 px-3 py-3 rounded-lg border transition-all touch-feedback',
+                    'flex items-center gap-2 px-3 py-3 rounded-full border transition-all touch-manipulation',
                     localFilters.showShared === true
-                      ? 'bg-info/20 border-info/30 text-info'
-                      : 'bg-muted/30 border-border/50 text-white hover:bg-muted/50'
+                      ? 'bg-blue-500/20 border-blue-500/30 text-blue-400'
+                      : 'bg-white/[0.04] border-white/[0.08] text-white hover:bg-white/[0.08]'
                   )}
                 >
                   <Eye className="h-4 w-4" />
@@ -215,20 +225,20 @@ export function PhotoFilterSheet({
 
             {/* Jobs Section */}
             <div>
-              <h3 className="text-sm font-medium text-white mb-3 uppercase tracking-wide">
+              <h3 className="text-[11px] font-semibold text-white mb-3 uppercase tracking-[0.18em]">
                 Job
               </h3>
 
               {jobOptions.length > 5 && (
                 <div className="relative mb-3">
                   {!jobSearch && (
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
                   )}
                   <Input
                     placeholder="Search jobs..."
                     value={jobSearch}
                     onChange={(e) => setJobSearch(e.target.value)}
-                    className={cn('h-10 bg-muted/30 border-border/50', !jobSearch && 'pl-9')}
+                    className={cn(inputClass, !jobSearch && 'pl-9')}
                   />
                 </div>
               )}
@@ -241,17 +251,17 @@ export function PhotoFilterSheet({
                       key={job.value}
                       onClick={() => toggleJob(job.value)}
                       className={cn(
-                        'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all touch-feedback text-left',
+                        'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all touch-manipulation text-left',
                         isSelected
                           ? 'bg-elec-yellow/10 border border-elec-yellow/30'
-                          : 'bg-muted/20 hover:bg-muted/40'
+                          : 'bg-white/[0.04] hover:bg-white/[0.08] border border-transparent'
                       )}
                     >
-                      <Checkbox checked={isSelected} className="pointer-events-none" />
-                      <span className="flex-1 text-sm font-medium text-foreground truncate">
+                      <Checkbox checked={isSelected} className={cn(checkboxClass, 'pointer-events-none')} />
+                      <span className="flex-1 text-sm font-medium text-white truncate">
                         {job.label}
                       </span>
-                      <Badge variant="secondary" className="h-5 px-1.5 text-[10px]">
+                      <Badge variant="secondary" className="h-5 px-1.5 text-[10px] bg-white/[0.06] text-white">
                         {job.count}
                       </Badge>
                     </button>
@@ -262,14 +272,14 @@ export function PhotoFilterSheet({
           </div>
         </ScrollArea>
 
-        <DrawerFooter className="border-t border-border/50 pt-4 gap-2">
-          <Button onClick={handleApply} className="w-full h-12">
+        <DrawerFooter className="border-t border-white/[0.06] pt-4 gap-2">
+          <PrimaryButton onClick={handleApply} size="lg" fullWidth>
             Apply Filters
-          </Button>
+          </PrimaryButton>
           {hasActiveFilters && (
-            <Button variant="outline" onClick={handleClear} className="w-full h-12">
+            <SecondaryButton onClick={handleClear} size="lg" fullWidth>
               Clear All
-            </Button>
+            </SecondaryButton>
           )}
         </DrawerFooter>
       </DrawerContent>

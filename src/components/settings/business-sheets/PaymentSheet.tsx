@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CreditCard, Landmark, Loader2, CheckCircle, Clock, ExternalLink } from 'lucide-react';
 import { CompanyProfile } from '@/types/company';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { Eyebrow } from '@/components/college/primitives';
 
 interface BankDetails {
   accountName: string;
@@ -66,7 +65,12 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
       try {
         const { data: session } = await supabase.auth.getSession();
         if (!session.session) {
-          setStripeStatus({ connected: false, status: 'not_connected', chargesEnabled: false, payoutsEnabled: false });
+          setStripeStatus({
+            connected: false,
+            status: 'not_connected',
+            chargesEnabled: false,
+            payoutsEnabled: false,
+          });
           setStripeLoading(false);
           return;
         }
@@ -76,7 +80,12 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
         if (response.error) throw response.error;
         setStripeStatus(response.data as StripeConnectStatus);
       } catch {
-        setStripeStatus({ connected: false, status: 'not_connected', chargesEnabled: false, payoutsEnabled: false });
+        setStripeStatus({
+          connected: false,
+          status: 'not_connected',
+          chargesEnabled: false,
+          payoutsEnabled: false,
+        });
       } finally {
         setStripeLoading(false);
       }
@@ -88,7 +97,10 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
     try {
       setConnecting(true);
       const { data: session } = await supabase.auth.getSession();
-      if (!session.session) { toast.error('Please log in to connect Stripe'); return; }
+      if (!session.session) {
+        toast.error('Please log in to connect Stripe');
+        return;
+      }
       const response = await supabase.functions.invoke('stripe-connect-oauth', {
         headers: { Authorization: `Bearer ${session.session.access_token}` },
         body: { action: 'get_oauth_url', returnUrl: window.location.href },
@@ -136,116 +148,136 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
+      >
+        <div className="flex flex-col h-full bg-[#0a0a0a]">
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <div className="px-5 pb-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-              <CreditCard className="h-5 w-5 text-green-400" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">Payment & Banking</h2>
-              <p className="text-xs text-white">Stripe Connect and bank details</p>
-            </div>
-          </div>
+          <header className="px-5 sm:px-6 pb-4">
+            <Eyebrow>Finance</Eyebrow>
+            <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
+              Payment & banking
+            </h2>
+            <p className="mt-1 text-[13px] text-white">Stripe Connect and bank details</p>
+          </header>
 
-          <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5">
+          <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-5">
             {/* Stripe Connect */}
-            <div className="rounded-xl bg-gradient-to-br from-[#635BFF]/10 to-[#635BFF]/5 border border-[#635BFF]/20 p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-[#635BFF] flex items-center justify-center overflow-hidden">
-                    <img loading="lazy" src="/logos/stripe.svg" alt="Stripe" className="h-6 w-auto brightness-0 invert" />
+            <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#635BFF] flex items-center justify-center overflow-hidden shrink-0">
+                    <img
+                      loading="lazy"
+                      src="/logos/stripe.svg"
+                      alt="Stripe"
+                      className="h-6 w-auto brightness-0 invert"
+                    />
                   </div>
-                  <div>
-                    <p className="text-[14px] font-medium text-white">Stripe Payments</p>
+                  <div className="min-w-0">
+                    <p className="text-[14px] font-semibold text-white">Stripe payments</p>
                     {stripeLoading ? (
-                      <p className="text-[13px] text-white">Checking status...</p>
+                      <p className="text-[12.5px] text-white/65">Checking status…</p>
                     ) : stripeStatus?.status === 'active' ? (
-                      <p className="text-[13px] text-green-400 flex items-center gap-1">
-                        <CheckCircle className="h-3.5 w-3.5" /> Stripe Connected
-                      </p>
+                      <div className="mt-0.5">
+                        <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                          Connected
+                        </span>
+                      </div>
                     ) : stripeStatus?.status === 'pending' ? (
-                      <p className="text-[13px] text-amber-400 flex items-center gap-1">
-                        <Clock className="h-3.5 w-3.5" /> Setup incomplete
-                      </p>
+                      <div className="mt-0.5">
+                        <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-amber-400">
+                          Setup incomplete
+                        </span>
+                      </div>
                     ) : (
-                      <p className="text-[13px] text-white">Accept card payments</p>
+                      <p className="text-[12.5px] text-white/65">Accept card payments</p>
                     )}
                   </div>
                 </div>
                 {stripeStatus?.status === 'active' ? (
-                  <Button
+                  <button
                     type="button"
-                    variant="ghost"
-                    size="sm"
                     onClick={handleOpenStripeDashboard}
                     disabled={connecting}
-                    className="text-[13px] text-[#635BFF] hover:text-[#7A73FF] hover:bg-[#635BFF]/10"
+                    className="h-11 px-4 rounded-xl border border-white/[0.08] bg-[#0a0a0a] text-white text-[13px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation disabled:opacity-50 shrink-0"
                   >
-                    <ExternalLink className="h-4 w-4 mr-1" /> Dashboard
-                  </Button>
+                    Dashboard <span aria-hidden>↗</span>
+                  </button>
                 ) : (
-                  <Button
+                  <button
                     type="button"
                     onClick={handleConnectStripe}
                     disabled={connecting || stripeLoading}
-                    className="h-10 px-5 text-[13px] bg-[#635BFF] hover:bg-[#7A73FF] text-white rounded-xl"
+                    className="h-11 px-5 rounded-xl bg-[#635BFF] hover:bg-[#7A73FF] text-white text-[13px] font-semibold transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
                   >
-                    {connecting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Connect Stripe'}
-                  </Button>
+                    {connecting ? 'Working…' : 'Connect Stripe'}
+                  </button>
                 )}
               </div>
             </div>
 
             <div className="h-px bg-white/[0.06]" />
 
-            {/* Bank Details */}
+            {/* Bank details */}
             <div className="space-y-4">
-              <div className="flex items-center gap-2">
-                <Landmark className="h-4 w-4 text-cyan-400" />
-                <Label className="text-xs font-medium text-white uppercase tracking-wider">Bank Transfer Details</Label>
+              <div>
+                <Eyebrow>Bank transfer details</Eyebrow>
+                <p className="mt-1.5 text-[12.5px] text-white">
+                  Appears on invoices for clients paying by BACS
+                </p>
               </div>
-              <p className="text-[12px] text-white -mt-2">Appears on invoices for clients paying by BACS</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium text-white uppercase tracking-wider">Account Name</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-white font-medium text-[13px]">Account name</Label>
                   <Input
                     value={bankDetails.accountName}
-                    onChange={(e) => setBankDetails({ ...bankDetails, accountName: e.target.value })}
+                    onChange={(e) =>
+                      setBankDetails({ ...bankDetails, accountName: e.target.value })
+                    }
                     placeholder="ABC Electrical Ltd"
-                    className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500"
+                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium text-white uppercase tracking-wider">Bank Name</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-white font-medium text-[13px]">Bank name</Label>
                   <Input
                     value={bankDetails.bankName}
-                    onChange={(e) => setBankDetails({ ...bankDetails, bankName: e.target.value })}
+                    onChange={(e) =>
+                      setBankDetails({ ...bankDetails, bankName: e.target.value })
+                    }
                     placeholder="e.g. Barclays"
-                    className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500"
+                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium text-white uppercase tracking-wider">Sort Code</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-white font-medium text-[13px]">Sort code</Label>
                   <Input
                     value={bankDetails.sortCode}
-                    onChange={(e) => setBankDetails({ ...bankDetails, sortCode: formatSortCode(e.target.value) })}
+                    onChange={(e) =>
+                      setBankDetails({ ...bankDetails, sortCode: formatSortCode(e.target.value) })
+                    }
                     placeholder="12-34-56"
-                    className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500"
+                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                     inputMode="numeric"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label className="text-xs font-medium text-white uppercase tracking-wider">Account Number</Label>
+                <div className="space-y-1.5">
+                  <Label className="text-white font-medium text-[13px]">Account number</Label>
                   <Input
                     value={bankDetails.accountNumber}
-                    onChange={(e) => setBankDetails({ ...bankDetails, accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8) })}
+                    onChange={(e) =>
+                      setBankDetails({
+                        ...bankDetails,
+                        accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8),
+                      })
+                    }
                     placeholder="12345678"
-                    className="h-11 rounded-xl bg-white/[0.03] border-white/[0.08] text-white focus:border-amber-500 focus:ring-amber-500"
+                    className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                     inputMode="numeric"
                   />
                 </div>
@@ -253,14 +285,15 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
             </div>
           </div>
 
-          <div className="p-4 border-t border-white/[0.06]">
-            <Button
+          <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06]">
+            <button
+              type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-14 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-amber-500/20"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSaving ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Saving...</> : <><CheckCircle className="mr-2 h-5 w-5" /> Save</>}
-            </Button>
+              {isSaving ? 'Saving…' : 'Save'}
+            </button>
           </div>
         </div>
       </SheetContent>

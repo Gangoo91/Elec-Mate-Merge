@@ -34,6 +34,7 @@ import { useUpdatePolicy, type UserPolicy } from '@/hooks/usePolicies';
 import { sanitizeHtmlSafe } from '@/utils/inputSanitization';
 import { useToast } from '@/hooks/use-toast';
 import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
+import { PrimaryButton, SecondaryButton } from './editorial';
 
 interface PolicyEditorProps {
   open: boolean;
@@ -188,7 +189,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
     <ResponsiveFormModal open={open} onOpenChange={handleClose}>
       <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-4xl')}>
         {/* Header */}
-        <ResponsiveFormModalHeader className="border-b border-border/50">
+        <ResponsiveFormModalHeader className="border-b border-white/[0.06]">
           <div className="flex items-center justify-between">
             <ResponsiveFormModalTitle>
               <div className="flex items-center gap-3">
@@ -196,7 +197,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
                   <Edit3 className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div>
-                  <span className="text-lg font-semibold">Edit Policy</span>
+                  <span className="text-lg font-semibold text-white">Edit Policy</span>
                   <p className="text-xs text-white font-normal line-clamp-1">
                     {policy.name}
                   </p>
@@ -206,14 +207,18 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
 
             <div className="flex items-center gap-2">
               {hasChanges && (
-                <Badge variant="outline" className="text-warning border-warning">
+                <Badge variant="outline" className="text-amber-400 border-amber-500/40">
                   Unsaved
                 </Badge>
               )}
               {!isMobile && (
-                <Button variant="ghost" size="icon" onClick={handleClose}>
+                <button
+                  type="button"
+                  className="h-9 w-9 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
+                  onClick={handleClose}
+                >
                   <X className="h-4 w-4" />
-                </Button>
+                </button>
               )}
             </div>
           </div>
@@ -302,12 +307,15 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
             <div className="w-px h-6 bg-white/10 mx-1" />
 
             {/* Preview toggle */}
-            <Button
+            <button
               type="button"
-              variant={isPreview ? 'secondary' : 'ghost'}
-              size="sm"
               onClick={() => setIsPreview(!isPreview)}
-              className="h-9 px-3"
+              className={cn(
+                'h-9 px-3 rounded-full text-[12.5px] font-medium flex items-center touch-manipulation transition-colors',
+                isPreview
+                  ? 'bg-white/[0.1] text-white'
+                  : 'text-white hover:bg-white/[0.06]'
+              )}
             >
               {isPreview ? (
                 <>
@@ -320,7 +328,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
                   Preview
                 </>
               )}
-            </Button>
+            </button>
           </div>
 
           {/* Editor / Preview */}
@@ -333,7 +341,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
           >
             {isPreview ? (
               <div
-                className="prose prose-sm prose-invert max-w-none p-4 min-h-[400px] [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-foreground"
+                className="prose prose-sm prose-invert max-w-none p-4 min-h-[400px] [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-white"
                 dangerouslySetInnerHTML={{ __html: editor?.getHTML() || '' }}
               />
             ) : (
@@ -392,17 +400,14 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
         {/* Footer */}
         <ResponsiveFormModalFooter>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              variant="outline"
-              onClick={handleClose}
-              className="flex-1 sm:flex-none min-h-[48px]"
-            >
+            <SecondaryButton onClick={handleClose} size="lg" className="flex-1 sm:flex-none">
               Cancel
-            </Button>
-            <Button
+            </SecondaryButton>
+            <PrimaryButton
               onClick={handleSave}
               disabled={updatePolicy.isPending || !hasChanges}
-              className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              size="lg"
+              className="flex-1"
             >
               {updatePolicy.isPending ? (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -410,7 +415,7 @@ export function PolicyEditor({ open, onOpenChange, policy, onSaved }: PolicyEdit
                 <Save className="h-4 w-4 mr-2" />
               )}
               Save Changes
-            </Button>
+            </PrimaryButton>
           </div>
         </ResponsiveFormModalFooter>
       </ResponsiveFormModalContent>

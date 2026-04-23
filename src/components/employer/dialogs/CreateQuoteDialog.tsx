@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -17,20 +9,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
-import { cn } from '@/lib/utils';
 import {
   Plus,
   Trash2,
   Package,
-  User,
-  FileCheck,
   ChevronLeft,
   ChevronRight,
   Send,
-  CheckCircle2,
   Clock,
   Sparkles,
   Loader2,
@@ -40,6 +26,18 @@ import { useCreateQuote, useNextQuoteNumber, usePriceBook } from '@/hooks/useFin
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import {
+  Eyebrow,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface LineItem {
   id: string;
@@ -64,13 +62,6 @@ interface CreateQuoteDialogProps {
   prefillClient?: string;
   prefillAmount?: number;
 }
-
-const STEPS = [
-  { id: 1, title: 'Client', icon: User },
-  { id: 2, title: 'Labour', icon: Clock },
-  { id: 3, title: 'Materials', icon: Package },
-  { id: 4, title: 'Review', icon: FileCheck },
-];
 
 const LABOUR_PRESETS = [
   { description: '1st Fix Electrician', hourlyRate: 45 },
@@ -105,7 +96,6 @@ export function CreateQuoteDialog({
   });
   const [newLabour, setNewLabour] = useState({ description: '', hours: '', hourlyRate: '' });
 
-  // String state for quantity/price inputs to allow empty values
   const [itemQuantityInputs, setItemQuantityInputs] = useState<Record<string, string>>({});
   const [labourHoursInputs, setLabourHoursInputs] = useState<Record<string, string>>({});
   const [isExpandingDescription, setIsExpandingDescription] = useState(false);
@@ -114,7 +104,6 @@ export function CreateQuoteDialog({
   const { data: priceBook = [] } = usePriceBook();
   const createQuoteMutation = useCreateQuote();
 
-  // AI expand description
   const handleExpandDescription = async () => {
     if (!description.trim()) return;
 
@@ -154,7 +143,6 @@ export function CreateQuoteDialog({
     }
   }, [prefillClient, prefillAmount]);
 
-  // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
 
   useEffect(() => {
@@ -261,7 +249,6 @@ export function CreateQuoteDialog({
   const vatAmount = subtotal * (Number(vatRate) / 100);
   const total = subtotal + vatAmount;
 
-  // Labour functions
   const addLabourItem = () => {
     if (!newLabour.description) return;
     const hours = Number(newLabour.hours) || 1;
@@ -304,7 +291,6 @@ export function CreateQuoteDialog({
     );
   };
 
-  // Materials functions
   const addLineItem = () => {
     if (!newItem.description) return;
     const qty = Number(newItem.quantity) || 1;
@@ -353,7 +339,6 @@ export function CreateQuoteDialog({
     const validUntil = new Date();
     validUntil.setDate(validUntil.getDate() + Number(validityDays));
 
-    // Combine labour and materials into line_items for storage
     const allLineItems = [
       ...labourItems.map((item) => ({
         id: item.id,
@@ -416,323 +401,300 @@ export function CreateQuoteDialog({
       case 1:
         return client.trim().length > 0;
       case 2:
-        return true; // Labour is optional
+        return true;
       case 3:
-        return true; // Materials are optional if labour exists
+        return true;
       case 4:
-        return labourItems.length > 0 || lineItems.length > 0; // Need at least one item
+        return labourItems.length > 0 || lineItems.length > 0;
       default:
         return false;
     }
   };
 
-  // Step labels for display
   const stepLabels = ['Client', 'Labour', 'Materials', 'Review'];
   const currentStepLabel = stepLabels[step - 1];
 
-  // Navigation Buttons Component
   const NavigationButtons = () => (
-    <div className="flex gap-3 mt-6 pt-4 border-t border-border">
+    <div className="flex gap-3 mt-6 pt-4 border-t border-white/[0.06]">
       {step > 1 ? (
-        <Button variant="outline" onClick={() => setStep(step - 1)} className="flex-1 h-12">
+        <SecondaryButton onClick={() => setStep(step - 1)} fullWidth size="lg">
           <ChevronLeft className="h-4 w-4 mr-1" />
           Back
-        </Button>
+        </SecondaryButton>
       ) : (
-        <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1 h-12">
+        <SecondaryButton onClick={() => onOpenChange(false)} fullWidth size="lg">
           Cancel
-        </Button>
+        </SecondaryButton>
       )}
 
       {step < 4 ? (
-        <Button onClick={() => setStep(step + 1)} disabled={!canProceed()} className="flex-1 h-12">
+        <PrimaryButton
+          onClick={() => setStep(step + 1)}
+          disabled={!canProceed()}
+          fullWidth
+          size="lg"
+        >
           Next
           <ChevronRight className="h-4 w-4 ml-1" />
-        </Button>
+        </PrimaryButton>
       ) : (
         <div className="flex gap-2 flex-1">
-          <Button
-            variant="outline"
+          <SecondaryButton
             onClick={() => handleSubmit(false)}
             disabled={createQuoteMutation.isPending || !canProceed()}
-            className="flex-1 h-12"
+            fullWidth
+            size="lg"
           >
-            Save Draft
-          </Button>
-          <Button
+            Save draft
+          </SecondaryButton>
+          <PrimaryButton
             onClick={() => handleSubmit(true)}
             disabled={createQuoteMutation.isPending || !canProceed()}
-            className="flex-1 h-12"
+            fullWidth
+            size="lg"
           >
             <Send className="h-4 w-4 mr-1" />
             Send
-          </Button>
+          </PrimaryButton>
         </div>
       )}
     </div>
   );
 
-  // Render step content inline to prevent focus loss
   const renderStepContent = () => {
     switch (step) {
       case 1:
         return (
-          <div className="space-y-5">
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">
-                Client Name <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                placeholder="Enter client name"
-                value={client}
-                onChange={(e) => setClient(e.target.value)}
-                className="h-14 text-base"
-                autoComplete="off"
-              />
-            </div>
+          <div className="space-y-4">
+            <FormCard eyebrow="Client">
+              <Field label="Client name" required>
+                <Input
+                  placeholder="Enter client name"
+                  value={client}
+                  onChange={(e) => setClient(e.target.value)}
+                  className={inputClass}
+                  autoComplete="off"
+                />
+              </Field>
+              <Field label="Client address">
+                <Textarea
+                  placeholder="123 High Street&#10;London&#10;SW1A 1AA"
+                  value={clientAddress}
+                  onChange={(e) => setClientAddress(e.target.value)}
+                  className={`${textareaClass} min-h-[80px]`}
+                />
+              </Field>
+              <FormGrid cols={2}>
+                <Field label="Client email">
+                  <Input
+                    type="email"
+                    placeholder="client@example.com"
+                    value={clientEmail}
+                    onChange={(e) => setClientEmail(e.target.value)}
+                    className={inputClass}
+                    autoComplete="off"
+                  />
+                </Field>
+                <Field label="Client phone">
+                  <Input
+                    type="tel"
+                    placeholder="+44 7700 900000"
+                    value={clientPhone}
+                    onChange={(e) => setClientPhone(e.target.value)}
+                    className={inputClass}
+                    autoComplete="off"
+                  />
+                </Field>
+              </FormGrid>
+            </FormCard>
 
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Client Address</Label>
-              <Textarea
-                placeholder="123 High Street&#10;London&#10;SW1A 1AA"
-                value={clientAddress}
-                onChange={(e) => setClientAddress(e.target.value)}
-                className="min-h-[80px] text-base"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Client Email</Label>
-              <Input
-                type="email"
-                placeholder="client@example.com"
-                value={clientEmail}
-                onChange={(e) => setClientEmail(e.target.value)}
-                className="h-14 text-base"
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Client Phone</Label>
-              <Input
-                type="tel"
-                placeholder="+44 7700 900000"
-                value={clientPhone}
-                onChange={(e) => setClientPhone(e.target.value)}
-                className="h-14 text-base"
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">
-                Job Title <span className="text-destructive">*</span>
-              </Label>
-              <Input
-                placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
-                value={jobTitle}
-                onChange={(e) => setJobTitle(e.target.value)}
-                className="h-14 text-base"
-                autoComplete="off"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label className="text-sm font-medium">Project Description</Label>
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleExpandDescription}
-                  disabled={!description.trim() || isExpandingDescription}
-                  className="h-8 text-xs gap-1"
-                >
-                  {isExpandingDescription ? (
-                    <Loader2 className="h-3 w-3 animate-spin" />
-                  ) : (
-                    <Sparkles className="h-3 w-3" />
-                  )}
-                  AI Expand
-                </Button>
+            <FormCard eyebrow="Project">
+              <Field label="Job title" required>
+                <Input
+                  placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
+                  value={jobTitle}
+                  onChange={(e) => setJobTitle(e.target.value)}
+                  className={inputClass}
+                  autoComplete="off"
+                />
+              </Field>
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="text-[11.5px] text-white block">Project description</label>
+                  <button
+                    type="button"
+                    onClick={handleExpandDescription}
+                    disabled={!description.trim() || isExpandingDescription}
+                    className="inline-flex items-center gap-1 text-[11px] font-medium text-elec-yellow/90 hover:text-elec-yellow disabled:opacity-40 transition-colors touch-manipulation"
+                  >
+                    {isExpandingDescription ? (
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                    ) : (
+                      <Sparkles className="h-3 w-3" />
+                    )}
+                    AI expand
+                  </button>
+                </div>
+                <Textarea
+                  placeholder="Brief description of the work (e.g. 'rewire kitchen')"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className={`${textareaClass} min-h-[120px]`}
+                />
               </div>
-              <Textarea
-                placeholder="Brief description of the work (e.g. 'rewire kitchen')"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="min-h-[120px] text-base"
-              />
-            </div>
-
-            <div className="space-y-5 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Valid For</Label>
-                <Select value={validityDays} onValueChange={setValidityDays}>
-                  <SelectTrigger className="h-14 text-base">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="14">14 days</SelectItem>
-                    <SelectItem value="30">30 days</SelectItem>
-                    <SelectItem value="60">60 days</SelectItem>
-                    <SelectItem value="90">90 days</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">VAT Rate</Label>
-                <Select value={vatRate} onValueChange={setVatRate}>
-                  <SelectTrigger className="h-14 text-base">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0">0% (Exempt)</SelectItem>
-                    <SelectItem value="5">5% (Reduced)</SelectItem>
-                    <SelectItem value="20">20% (Standard)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+              <FormGrid cols={2}>
+                <Field label="Valid for">
+                  <Select value={validityDays} onValueChange={setValidityDays}>
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="14">14 days</SelectItem>
+                      <SelectItem value="30">30 days</SelectItem>
+                      <SelectItem value="60">60 days</SelectItem>
+                      <SelectItem value="90">90 days</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="VAT rate">
+                  <Select value={vatRate} onValueChange={setVatRate}>
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="0">0% (Exempt)</SelectItem>
+                      <SelectItem value="5">5% (Reduced)</SelectItem>
+                      <SelectItem value="20">20% (Standard)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              </FormGrid>
+            </FormCard>
           </div>
         );
 
       case 2:
         return (
-          <div className="space-y-5">
-            {/* Labour Items */}
+          <div className="space-y-4">
             {labourItems.length > 0 && (
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Labour Added</Label>
-                {labourItems.map((item) => (
-                  <Card key={item.id} className="bg-elec-gray border-border">
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-base truncate">{item.description}</p>
-                          <div className="flex items-center gap-3 mt-2">
-                            <Input
-                              type="text"
-                              inputMode="decimal"
-                              value={labourHoursInputs[item.id] ?? String(item.hours)}
-                              onChange={(e) =>
-                                setLabourHoursInputs((prev) => ({
-                                  ...prev,
-                                  [item.id]: e.target.value,
-                                }))
-                              }
-                              onBlur={(e) => {
-                                const val = Number(e.target.value) || 1;
-                                updateLabourHours(item.id, val);
-                                setLabourHoursInputs((prev) => ({
-                                  ...prev,
-                                  [item.id]: String(val),
-                                }));
-                              }}
-                              className="w-20 h-12 text-base text-center"
-                            />
-                            <span className="text-sm text-white">hrs</span>
-                            <span className="text-sm text-white">
-                              × £{item.hourlyRate.toFixed(2)}/hr
-                            </span>
-                          </div>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <p className="text-lg font-bold text-elec-yellow">
-                            £{item.total.toFixed(2)}
-                          </p>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-10 w-10 p-0 mt-1"
-                            onClick={() => removeLabourItem(item.id)}
-                          >
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Button>
+              <FormCard eyebrow="Labour added">
+                <div className="space-y-2">
+                  {labourItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-start justify-between gap-3 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-medium text-white truncate">
+                          {item.description}
+                        </p>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <Input
+                            type="text"
+                            inputMode="decimal"
+                            value={labourHoursInputs[item.id] ?? String(item.hours)}
+                            onChange={(e) =>
+                              setLabourHoursInputs((prev) => ({
+                                ...prev,
+                                [item.id]: e.target.value,
+                              }))
+                            }
+                            onBlur={(e) => {
+                              const val = Number(e.target.value) || 1;
+                              updateLabourHours(item.id, val);
+                              setLabourHoursInputs((prev) => ({
+                                ...prev,
+                                [item.id]: String(val),
+                              }));
+                            }}
+                            className={`${inputClass} w-20 h-10 text-center`}
+                          />
+                          <span className="text-[12px] text-white">hrs</span>
+                          <span className="text-[12px] text-white">
+                            × £{item.hourlyRate.toFixed(2)}/hr
+                          </span>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+                      <div className="text-right shrink-0">
+                        <p className="text-[15px] font-semibold text-elec-yellow tabular-nums">
+                          £{item.total.toFixed(2)}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => removeLabourItem(item.id)}
+                          className="mt-1 h-8 w-8 inline-flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-red-400 hover:bg-red-500/15 transition-colors"
+                          aria-label="Remove labour"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </FormCard>
             )}
 
-            {/* Quick Add Presets */}
-            <div className="space-y-3">
-              <Label className="text-sm font-medium flex items-center gap-2">
-                <Clock className="h-4 w-4" />
-                Quick Add Labour
-              </Label>
+            <FormCard eyebrow="Quick add labour">
               <div className="grid grid-cols-2 gap-2">
                 {LABOUR_PRESETS.map((preset) => (
-                  <Card
+                  <button
                     key={preset.description}
-                    className="cursor-pointer hover:border-elec-yellow/50 active:scale-[0.98] transition-all touch-feedback"
+                    type="button"
                     onClick={() => addLabourFromPreset(preset)}
+                    className="group relative bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3 text-center hover:border-elec-yellow/40 hover:bg-[hsl(0_0%_11%)] active:scale-[0.98] transition-all touch-manipulation"
                   >
-                    <CardContent className="p-3 text-center">
-                      <Plus className="h-4 w-4 mx-auto text-elec-yellow mb-1" />
-                      <p className="text-sm font-medium truncate">{preset.description}</p>
-                      <p className="text-xs text-elec-yellow font-medium">
-                        £{preset.hourlyRate}/hr
-                      </p>
-                    </CardContent>
-                  </Card>
+                    <Plus className="h-4 w-4 mx-auto text-elec-yellow mb-1" />
+                    <p className="text-[12.5px] font-medium text-white truncate">
+                      {preset.description}
+                    </p>
+                    <p className="text-[11px] text-elec-yellow font-medium">
+                      £{preset.hourlyRate}/hr
+                    </p>
+                  </button>
                 ))}
               </div>
-            </div>
+            </FormCard>
 
-            {/* Custom Labour */}
-            <Card className="bg-muted/30 border-dashed">
-              <CardContent className="p-4 space-y-4">
-                <Label className="text-sm font-medium">Add Custom Labour</Label>
-                <div className="space-y-2">
+            <FormCard eyebrow="Custom labour">
+              <Field label="Description">
+                <Input
+                  placeholder="Labour description (e.g. Site Supervisor)"
+                  value={newLabour.description}
+                  onChange={(e) => setNewLabour({ ...newLabour, description: e.target.value })}
+                  className={inputClass}
+                  autoComplete="off"
+                />
+              </Field>
+              <FormGrid cols={2}>
+                <Field label="Hours">
                   <Input
-                    placeholder="Labour description (e.g. Site Supervisor)"
-                    value={newLabour.description}
-                    onChange={(e) => setNewLabour({ ...newLabour, description: e.target.value })}
-                    className="h-14 text-base"
-                    autoComplete="off"
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="8"
+                    value={newLabour.hours}
+                    onChange={(e) => setNewLabour({ ...newLabour, hours: e.target.value })}
+                    className={`${inputClass} text-center`}
                   />
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-2">
-                    <Label className="text-xs text-white">Hours</Label>
-                    <Input
-                      type="text"
-                      inputMode="decimal"
-                      placeholder="8"
-                      value={newLabour.hours}
-                      onChange={(e) => setNewLabour({ ...newLabour, hours: e.target.value })}
-                      className="h-12 text-base text-center"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-xs text-white">Rate £/hr</Label>
-                    <Input
-                      type="text"
-                      inputMode="decimal"
-                      placeholder="45"
-                      value={newLabour.hourlyRate}
-                      onChange={(e) => setNewLabour({ ...newLabour, hourlyRate: e.target.value })}
-                      className="h-12 text-base text-center"
-                    />
-                  </div>
-                </div>
-                <Button
-                  variant="outline"
-                  className="w-full h-12"
-                  onClick={addLabourItem}
-                  disabled={!newLabour.description}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Labour
-                </Button>
-              </CardContent>
-            </Card>
+                </Field>
+                <Field label="Rate £/hr">
+                  <Input
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="45"
+                    value={newLabour.hourlyRate}
+                    onChange={(e) => setNewLabour({ ...newLabour, hourlyRate: e.target.value })}
+                    className={`${inputClass} text-center`}
+                  />
+                </Field>
+              </FormGrid>
+              <SecondaryButton onClick={addLabourItem} disabled={!newLabour.description} fullWidth>
+                <Plus className="h-4 w-4 mr-1.5" />
+                Add labour
+              </SecondaryButton>
+            </FormCard>
 
             {labourItems.length === 0 && (
-              <p className="text-sm text-white text-center py-2">
+              <p className="text-[12px] text-white text-center py-2">
                 No labour added yet. You can skip this step if not needed.
               </p>
             )}
@@ -741,161 +703,144 @@ export function CreateQuoteDialog({
 
       case 3:
         return (
-          <div className="space-y-5">
-            {/* Line Items */}
+          <div className="space-y-4">
             {lineItems.length > 0 && (
-              <div className="space-y-3">
-                <Label className="text-sm font-medium">Materials Added</Label>
-                {lineItems.map((item) => (
-                  <Card key={item.id} className="bg-elec-gray border-border">
-                    <CardContent className="p-4">
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-base truncate">{item.description}</p>
-                          <div className="flex items-center gap-3 mt-2">
-                            <Input
-                              type="text"
-                              inputMode="decimal"
-                              value={itemQuantityInputs[item.id] ?? String(item.quantity)}
-                              onChange={(e) =>
-                                setItemQuantityInputs((prev) => ({
-                                  ...prev,
-                                  [item.id]: e.target.value,
-                                }))
-                              }
-                              onBlur={(e) => {
-                                const val = Number(e.target.value) || 1;
-                                updateQuantity(item.id, val);
-                                setItemQuantityInputs((prev) => ({
-                                  ...prev,
-                                  [item.id]: String(val),
-                                }));
-                              }}
-                              className="w-20 h-12 text-base text-center"
-                            />
-                            <span className="text-sm text-white">{item.unit}</span>
-                            <span className="text-sm text-white">
-                              × £{item.unitPrice.toFixed(2)}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <p className="text-lg font-bold text-elec-yellow">
-                            £{item.total.toFixed(2)}
-                          </p>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-10 w-10 p-0 mt-1"
-                            onClick={() => removeLineItem(item.id)}
-                          >
-                            <Trash2 className="h-4 w-4 text-destructive" />
-                          </Button>
+              <FormCard eyebrow="Materials added">
+                <div className="space-y-2">
+                  {lineItems.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex items-start justify-between gap-3 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3"
+                    >
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-medium text-white truncate">
+                          {item.description}
+                        </p>
+                        <div className="flex items-center gap-2 mt-1.5">
+                          <Input
+                            type="text"
+                            inputMode="decimal"
+                            value={itemQuantityInputs[item.id] ?? String(item.quantity)}
+                            onChange={(e) =>
+                              setItemQuantityInputs((prev) => ({
+                                ...prev,
+                                [item.id]: e.target.value,
+                              }))
+                            }
+                            onBlur={(e) => {
+                              const val = Number(e.target.value) || 1;
+                              updateQuantity(item.id, val);
+                              setItemQuantityInputs((prev) => ({
+                                ...prev,
+                                [item.id]: String(val),
+                              }));
+                            }}
+                            className={`${inputClass} w-20 h-10 text-center`}
+                          />
+                          <span className="text-[12px] text-white">{item.unit}</span>
+                          <span className="text-[12px] text-white">
+                            × £{item.unitPrice.toFixed(2)}
+                          </span>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            )}
-
-            {/* Add from Price Book */}
-            {priceBook.length > 0 && (
-              <div className="space-y-3">
-                <Label className="text-sm font-medium flex items-center gap-2">
-                  <Package className="h-4 w-4" />
-                  Quick Add from Price Book
-                </Label>
-                <div className="grid grid-cols-2 gap-2">
-                  {priceBook.slice(0, 6).map((item) => (
-                    <Card
-                      key={item.id}
-                      className="cursor-pointer hover:border-elec-yellow/50 active:scale-[0.98] transition-all touch-feedback"
-                      onClick={() => addFromPriceBook(item)}
-                    >
-                      <CardContent className="p-3 text-center">
-                        <Plus className="h-4 w-4 mx-auto text-elec-yellow mb-1" />
-                        <p className="text-sm font-medium truncate">{item.name}</p>
-                        <p className="text-xs text-elec-yellow font-medium">
-                          £{Number(item.sell_price).toFixed(2)}
+                      <div className="text-right shrink-0">
+                        <p className="text-[15px] font-semibold text-elec-yellow tabular-nums">
+                          £{item.total.toFixed(2)}
                         </p>
-                      </CardContent>
-                    </Card>
+                        <button
+                          type="button"
+                          onClick={() => removeLineItem(item.id)}
+                          className="mt-1 h-8 w-8 inline-flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-red-400 hover:bg-red-500/15 transition-colors"
+                          aria-label="Remove material"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </div>
                   ))}
                 </div>
-              </div>
+              </FormCard>
             )}
 
-            {/* Custom Item */}
-            <Card className="bg-muted/30 border-dashed">
-              <CardContent className="p-4 space-y-4">
-                <Label className="text-sm font-medium">Add Custom Material</Label>
-                <div className="space-y-2">
-                  <Input
-                    placeholder="Item description"
-                    value={newItem.description}
-                    onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-                    className="h-14 text-base"
-                    autoComplete="off"
-                  />
-                </div>
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="space-y-2">
-                    <Label className="text-xs text-white">Qty</Label>
-                    <Input
-                      type="text"
-                      inputMode="decimal"
-                      placeholder="1"
-                      value={newItem.quantity}
-                      onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
-                      className="h-12 text-base text-center"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-xs text-white">Unit</Label>
-                    <Select
-                      value={newItem.unit}
-                      onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
+            {priceBook.length > 0 && (
+              <FormCard eyebrow="Quick add from price book">
+                <div className="grid grid-cols-2 gap-2">
+                  {priceBook.slice(0, 6).map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => addFromPriceBook(item)}
+                      className="group relative bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl p-3 text-center hover:border-elec-yellow/40 hover:bg-[hsl(0_0%_11%)] active:scale-[0.98] transition-all touch-manipulation"
                     >
-                      <SelectTrigger className="h-12 text-base">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="each">each</SelectItem>
-                        <SelectItem value="m">m</SelectItem>
-                        <SelectItem value="m²">m²</SelectItem>
-                        <SelectItem value="hour">hour</SelectItem>
-                        <SelectItem value="day">day</SelectItem>
-                        <SelectItem value="job">job</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-xs text-white">Price £</Label>
-                    <Input
-                      type="text"
-                      inputMode="decimal"
-                      placeholder="0"
-                      value={newItem.unitPrice}
-                      onChange={(e) => setNewItem({ ...newItem, unitPrice: e.target.value })}
-                      className="h-12 text-base text-center"
-                    />
-                  </div>
+                      <Plus className="h-4 w-4 mx-auto text-elec-yellow mb-1" />
+                      <p className="text-[12.5px] font-medium text-white truncate">{item.name}</p>
+                      <p className="text-[11px] text-elec-yellow font-medium">
+                        £{Number(item.sell_price).toFixed(2)}
+                      </p>
+                    </button>
+                  ))}
                 </div>
-                <Button
-                  variant="outline"
-                  className="w-full h-12"
-                  onClick={addLineItem}
-                  disabled={!newItem.description}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Material
-                </Button>
-              </CardContent>
-            </Card>
+              </FormCard>
+            )}
+
+            <FormCard eyebrow="Custom material">
+              <Field label="Description">
+                <Input
+                  placeholder="Item description"
+                  value={newItem.description}
+                  onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+                  className={inputClass}
+                  autoComplete="off"
+                />
+              </Field>
+              <FormGrid cols={3}>
+                <Field label="Qty">
+                  <Input
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="1"
+                    value={newItem.quantity}
+                    onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
+                    className={`${inputClass} text-center`}
+                  />
+                </Field>
+                <Field label="Unit">
+                  <Select
+                    value={newItem.unit}
+                    onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="each">each</SelectItem>
+                      <SelectItem value="m">m</SelectItem>
+                      <SelectItem value="m²">m²</SelectItem>
+                      <SelectItem value="hour">hour</SelectItem>
+                      <SelectItem value="day">day</SelectItem>
+                      <SelectItem value="job">job</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="Price £">
+                  <Input
+                    type="text"
+                    inputMode="decimal"
+                    placeholder="0"
+                    value={newItem.unitPrice}
+                    onChange={(e) => setNewItem({ ...newItem, unitPrice: e.target.value })}
+                    className={`${inputClass} text-center`}
+                  />
+                </Field>
+              </FormGrid>
+              <SecondaryButton onClick={addLineItem} disabled={!newItem.description} fullWidth>
+                <Plus className="h-4 w-4 mr-1.5" />
+                Add material
+              </SecondaryButton>
+            </FormCard>
 
             {lineItems.length === 0 && (
-              <p className="text-sm text-white text-center py-2">
+              <p className="text-[12px] text-white text-center py-2">
                 No materials added yet. You can skip this step if not needed.
               </p>
             )}
@@ -904,126 +849,122 @@ export function CreateQuoteDialog({
 
       case 4:
         return (
-          <div className="space-y-5">
-            {/* Summary Card */}
-            <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-elec-yellow/20">
-              <CardContent className="p-4 space-y-4">
+          <div className="space-y-4">
+            <FormCard eyebrow="Summary">
+              <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-white">Client</span>
-                  <span className="font-medium">{client}</span>
+                  <span className="text-[12px] text-white">Client</span>
+                  <span className="text-[13px] font-medium text-white">{client}</span>
                 </div>
                 {clientEmail && (
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-white">Email</span>
-                    <span className="font-medium text-sm">{clientEmail}</span>
+                    <span className="text-[12px] text-white">Email</span>
+                    <span className="text-[12px] font-medium text-white">{clientEmail}</span>
                   </div>
                 )}
-                <div className="border-t border-border pt-4 space-y-2">
-                  {labourTotal > 0 && (
-                    <div className="flex justify-between">
-                      <span className="text-sm text-white">
-                        Labour ({labourItems.length} item{labourItems.length !== 1 ? 's' : ''})
-                      </span>
-                      <span className="text-sm">£{labourTotal.toFixed(2)}</span>
-                    </div>
-                  )}
-                  {materialsTotal > 0 && (
-                    <div className="flex justify-between">
-                      <span className="text-sm text-white">
-                        Materials ({lineItems.length} item{lineItems.length !== 1 ? 's' : ''})
-                      </span>
-                      <span className="text-sm">£{materialsTotal.toFixed(2)}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between pt-2 border-t border-border/50">
-                    <span className="text-sm text-white">Subtotal</span>
-                    <span className="text-sm">£{subtotal.toFixed(2)}</span>
-                  </div>
+                <div className="h-px bg-white/[0.06] my-3" />
+                {labourTotal > 0 && (
                   <div className="flex justify-between">
-                    <span className="text-sm text-white">VAT ({vatRate}%)</span>
-                    <span className="text-sm">£{vatAmount.toFixed(2)}</span>
+                    <span className="text-[12px] text-white">
+                      Labour ({labourItems.length} item{labourItems.length !== 1 ? 's' : ''})
+                    </span>
+                    <span className="text-[12px] text-white tabular-nums">
+                      £{labourTotal.toFixed(2)}
+                    </span>
                   </div>
-                  <div className="flex justify-between pt-2 border-t border-border">
-                    <span className="text-lg font-bold">Total</span>
-                    <span className="text-2xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
+                )}
+                {materialsTotal > 0 && (
+                  <div className="flex justify-between">
+                    <span className="text-[12px] text-white">
+                      Materials ({lineItems.length} item{lineItems.length !== 1 ? 's' : ''})
+                    </span>
+                    <span className="text-[12px] text-white tabular-nums">
+                      £{materialsTotal.toFixed(2)}
+                    </span>
                   </div>
+                )}
+                <div className="flex justify-between pt-2 border-t border-white/[0.06]">
+                  <span className="text-[12px] text-white">Subtotal</span>
+                  <span className="text-[12px] text-white tabular-nums">
+                    £{subtotal.toFixed(2)}
+                  </span>
                 </div>
-              </CardContent>
-            </Card>
+                <div className="flex justify-between">
+                  <span className="text-[12px] text-white">VAT ({vatRate}%)</span>
+                  <span className="text-[12px] text-white tabular-nums">
+                    £{vatAmount.toFixed(2)}
+                  </span>
+                </div>
+                <div className="flex justify-between pt-2 border-t border-white/[0.06]">
+                  <span className="text-[14px] font-semibold text-white">Total</span>
+                  <span className="text-[22px] font-semibold text-elec-yellow tabular-nums">
+                    £{total.toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            </FormCard>
 
-            {/* Notes */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium">Notes / Terms</Label>
-              <Textarea
-                placeholder="Payment terms, conditions, special instructions..."
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                className="min-h-[100px] text-base"
-              />
-            </div>
+            <FormCard eyebrow="Notes / terms">
+              <Field label="Payment terms, conditions, special instructions">
+                <Textarea
+                  placeholder="Payment terms, conditions, special instructions..."
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  className={`${textareaClass} min-h-[100px]`}
+                />
+              </Field>
+            </FormCard>
 
-            {/* Labour Items Preview */}
             {labourItems.length > 0 && (
-              <div className="space-y-3">
-                <Label className="text-sm font-medium flex items-center gap-2">
-                  <Clock className="h-4 w-4" />
-                  Labour
-                </Label>
-                <div className="space-y-2">
+              <FormCard eyebrow="Labour breakdown">
+                <div className="space-y-1.5">
                   {labourItems.map((item, idx) => (
                     <div
                       key={item.id}
-                      className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg"
+                      className="flex justify-between items-center py-1.5 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-lg"
                     >
                       <div className="flex-1 min-w-0">
-                        <span className="text-sm text-white mr-2">{idx + 1}.</span>
-                        <span className="text-sm">{item.description}</span>
-                        <span className="text-xs text-white ml-2">
-                          × {item.hours} hrs
-                        </span>
+                        <span className="text-[12px] text-white mr-2">{idx + 1}.</span>
+                        <span className="text-[12.5px] text-white">{item.description}</span>
+                        <span className="text-[11px] text-white ml-2">× {item.hours} hrs</span>
                       </div>
-                      <span className="font-medium shrink-0">£{item.total.toFixed(2)}</span>
+                      <span className="text-[13px] font-medium text-white tabular-nums shrink-0">
+                        £{item.total.toFixed(2)}
+                      </span>
                     </div>
                   ))}
                 </div>
-              </div>
+              </FormCard>
             )}
 
-            {/* Materials Preview */}
             {lineItems.length > 0 && (
-              <div className="space-y-3">
-                <Label className="text-sm font-medium flex items-center gap-2">
-                  <Package className="h-4 w-4" />
-                  Materials
-                </Label>
-                <div className="space-y-2">
+              <FormCard eyebrow="Materials breakdown">
+                <div className="space-y-1.5">
                   {lineItems.map((item, idx) => (
                     <div
                       key={item.id}
-                      className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg"
+                      className="flex justify-between items-center py-1.5 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-lg"
                     >
                       <div className="flex-1 min-w-0">
-                        <span className="text-sm text-white mr-2">{idx + 1}.</span>
-                        <span className="text-sm">{item.description}</span>
-                        <span className="text-xs text-white ml-2">
-                          × {item.quantity}
-                        </span>
+                        <span className="text-[12px] text-white mr-2">{idx + 1}.</span>
+                        <span className="text-[12.5px] text-white">{item.description}</span>
+                        <span className="text-[11px] text-white ml-2">× {item.quantity}</span>
                       </div>
-                      <span className="font-medium shrink-0">£{item.total.toFixed(2)}</span>
+                      <span className="text-[13px] font-medium text-white tabular-nums shrink-0">
+                        £{item.total.toFixed(2)}
+                      </span>
                     </div>
                   ))}
                 </div>
-              </div>
+              </FormCard>
             )}
 
             {labourItems.length === 0 && lineItems.length === 0 && (
-              <Card className="bg-warning/10 border-warning/20">
-                <CardContent className="p-4 text-center">
-                  <p className="text-sm text-warning">
-                    Please add at least one labour or material item before saving.
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-2xl px-4 py-3 text-center">
+                <p className="text-[12.5px] text-amber-300">
+                  Please add at least one labour or material item before saving.
+                </p>
+              </div>
             )}
           </div>
         );
@@ -1035,59 +976,56 @@ export function CreateQuoteDialog({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl">
-        <div className="flex flex-col h-full">
-          {/* Native Header with drag indicator */}
-          <div className="pt-2 pb-1 flex justify-center">
-            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+      <SheetContent side="bottom" className="h-[95vh] p-0 overflow-hidden">
+        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
+          <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
+            <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          <SheetHeader className="px-4 pb-4 border-b border-border">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 rounded-full"
+          <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <button
+                  type="button"
                   onClick={() => onOpenChange(false)}
+                  className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] transition-colors"
+                  aria-label="Close"
                 >
-                  <X className="h-5 w-5" />
-                </Button>
-                <div>
-                  <SheetTitle className="text-lg font-semibold">New Quote</SheetTitle>
-                  <SheetDescription className="text-xs font-mono text-white">
-                    {quoteNumber}
-                  </SheetDescription>
+                  <X className="h-4 w-4" />
+                </button>
+                <div className="min-w-0">
+                  <Eyebrow>New quote</Eyebrow>
+                  <div className="mt-1 text-[18px] font-semibold text-white leading-tight truncate">
+                    {quoteNumber ?? 'Draft quote'}
+                  </div>
                 </div>
               </div>
-              <div className="text-right">
-                <span className="text-sm font-medium text-white">
-                  {currentStepLabel}
-                </span>
+              <div className="text-right shrink-0">
+                <span className="text-[12px] font-medium text-white">{currentStepLabel}</span>
                 <IOSStepIndicator steps={4} currentStep={step - 1} className="mt-1" />
               </div>
             </div>
-          </SheetHeader>
+          </div>
 
-          {/* Content */}
-          <ScrollArea className="flex-1 px-4">
-            <div className="py-6 pb-32">
+          <div className="flex-1 overflow-y-auto overscroll-contain">
+            <div className="px-5 py-5 pb-32 space-y-4">
               {renderStepContent()}
               <NavigationButtons />
             </div>
-          </ScrollArea>
+          </div>
 
-          {/* Fixed Totals Bar */}
-          <div className="absolute bottom-0 left-0 right-0 px-4 py-4 border-t border-border bg-background/95 backdrop-blur-sm">
+          <div className="absolute bottom-0 left-0 right-0 px-5 py-4 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-xs text-white block">Quote Total</span>
-                <span className="text-sm text-white">
+                <span className="text-[10px] text-white uppercase tracking-[0.14em] font-medium block">
+                  Quote total
+                </span>
+                <span className="text-[11px] text-white">
                   {labourItems.length + lineItems.length} item
                   {labourItems.length + lineItems.length !== 1 ? 's' : ''}
                 </span>
               </div>
-              <span className="text-2xl font-bold text-elec-yellow tabular-nums">
+              <span className="text-[26px] font-semibold text-elec-yellow tabular-nums">
                 £{total.toFixed(2)}
               </span>
             </div>

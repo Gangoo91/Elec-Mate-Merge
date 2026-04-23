@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -11,13 +9,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEmployer, type Employee } from '@/contexts/EmployerContext';
 import { useJobs } from '@/hooks/useJobs';
 import { toast } from '@/hooks/use-toast';
 import { MessageSquare, Send, Paperclip } from 'lucide-react';
+import {
+  FormCard,
+  FormGrid,
+  Field,
+  Pill,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 const MESSAGE_TYPES = [
   { id: 'general', label: 'General Message' },
@@ -93,133 +102,119 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={
-          isMobile ? 'max-w-[95vw] max-h-[90vh] p-0 flex flex-col' : 'sm:max-w-lg p-0 flex flex-col'
+          isMobile
+            ? 'max-w-[95vw] max-h-[92vh] p-5 flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08] overflow-y-auto'
+            : 'sm:max-w-lg p-6 flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08] max-h-[90vh] overflow-y-auto'
         }
       >
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-info via-info to-info/50 rounded-t-lg" />
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-white">
+            <MessageSquare className="h-5 w-5 text-elec-yellow" />
+            Send message
+          </DialogTitle>
+        </DialogHeader>
 
-        {/* Fixed Header */}
-        <div className="p-4 pb-3 flex-shrink-0">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-info" />
-              Send Message
-            </DialogTitle>
-          </DialogHeader>
-
-          <div className="flex items-center gap-3 p-3 bg-muted rounded-lg mt-3">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
-              {employee.avatar}
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="font-medium truncate">{employee.name}</p>
-              <p className="text-sm text-white">{employee.phone}</p>
-            </div>
-            <Badge variant="outline" className="text-xs">
-              To
-            </Badge>
+        <div className="flex items-center gap-3 p-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+          <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[13px] font-semibold text-white flex-shrink-0">
+            {employee.avatar}
           </div>
+          <div className="min-w-0 flex-1">
+            <p className="text-[13px] font-semibold text-white truncate">{employee.name}</p>
+            <p className="text-[11.5px] text-white">{employee.phone}</p>
+          </div>
+          <Pill tone="yellow">To</Pill>
         </div>
 
-        {/* Scrollable Content */}
-        <ScrollArea className="flex-1 px-4">
-          <div className="space-y-4 pb-2">
-            {/* Message Type */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label>Message Type</Label>
-                <Select value={messageType} onValueChange={setMessageType}>
-                  <SelectTrigger>
-                    <SelectValue />
+        <FormCard eyebrow="Message">
+          <FormGrid cols={messageType === 'job' ? 2 : 1}>
+            <Field label="Message type">
+              <Select value={messageType} onValueChange={setMessageType}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {MESSAGE_TYPES.map((type) => (
+                    <SelectItem key={type.id} value={type.id}>
+                      {type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+
+            {messageType === 'job' && (
+              <Field label="Related job">
+                <Select value={selectedJobId} onValueChange={setSelectedJobId}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select job..." />
                   </SelectTrigger>
-                  <SelectContent>
-                    {MESSAGE_TYPES.map((type) => (
-                      <SelectItem key={type.id} value={type.id}>
-                        {type.label}
+                  <SelectContent className={selectContentClass}>
+                    {activeJobs.map((job) => (
+                      <SelectItem key={job.id} value={job.id}>
+                        {job.title}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
+            )}
+          </FormGrid>
 
-              {messageType === 'job' && (
-                <div className="space-y-2">
-                  <Label>Related Job</Label>
-                  <Select value={selectedJobId} onValueChange={setSelectedJobId}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select job..." />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {activeJobs.map((job) => (
-                        <SelectItem key={job.id} value={job.id}>
-                          {job.title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
-            </div>
+          <Field label="Subject (optional)">
+            <Input
+              placeholder="Enter subject..."
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+              className={inputClass}
+            />
+          </Field>
 
-            {/* Subject (optional) */}
-            <div className="space-y-2">
-              <Label htmlFor="subject">Subject (optional)</Label>
-              <Input
-                id="subject"
-                placeholder="Enter subject..."
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-              />
-            </div>
-
-            {/* Quick Messages */}
-            <div className="space-y-2">
-              <Label className="text-xs text-white">Quick Messages</Label>
-              <div className="flex flex-wrap gap-1.5">
-                {QUICK_MESSAGES.map((quickMsg, idx) => (
-                  <Badge
-                    key={idx}
-                    variant="outline"
-                    className="cursor-pointer hover:bg-muted active:bg-muted/80 transition-all touch-manipulation text-xs"
-                    onClick={() => handleQuickMessage(quickMsg)}
-                  >
-                    {quickMsg.length > 30 ? quickMsg.substring(0, 30) + '...' : quickMsg}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* Message */}
-            <div className="space-y-2">
-              <Label htmlFor="message">Message *</Label>
-              <Textarea
-                id="message"
-                placeholder="Type your message..."
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                rows={4}
-                className="resize-none"
-              />
-              <div className="flex items-center justify-between text-xs text-white">
-                <button className="flex items-center gap-1 hover:text-foreground transition-colors">
-                  <Paperclip className="h-3 w-3" />
-                  Attach file
+          <div className="space-y-1.5">
+            <label className={fieldLabelClass}>Quick messages</label>
+            <div className="flex flex-wrap gap-1.5">
+              {QUICK_MESSAGES.map((quickMsg, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => handleQuickMessage(quickMsg)}
+                  className="inline-flex items-center h-7 px-2.5 rounded-full bg-white/[0.04] border border-white/[0.1] text-[11px] text-white hover:bg-white/[0.08] transition-colors touch-manipulation"
+                >
+                  {quickMsg.length > 30 ? quickMsg.substring(0, 30) + '...' : quickMsg}
                 </button>
-                <span>{message.length} / 500</span>
-              </div>
+              ))}
             </div>
           </div>
-        </ScrollArea>
 
-        {/* Fixed Footer */}
-        <div className="flex gap-2 p-4 pt-3 border-t border-border flex-shrink-0">
-          <Button variant="outline" className="flex-1" onClick={() => onOpenChange(false)}>
+          <div className="space-y-1.5">
+            <label className={fieldLabelClass}>Message *</label>
+            <Textarea
+              placeholder="Type your message..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              rows={4}
+              className={`${textareaClass} min-h-[120px]`}
+            />
+            <div className="flex items-center justify-between text-[11px] text-white">
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 hover:text-elec-yellow transition-colors"
+              >
+                <Paperclip className="h-3 w-3" />
+                Attach file
+              </button>
+              <span>{message.length} / 500</span>
+            </div>
+          </div>
+        </FormCard>
+
+        <div className="flex gap-2 pt-1">
+          <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
             Cancel
-          </Button>
-          <Button className="flex-1 gap-2" onClick={handleSend} disabled={!message.trim()}>
-            <Send className="h-4 w-4" />
-            Send Message
-          </Button>
+          </SecondaryButton>
+          <PrimaryButton onClick={handleSend} disabled={!message.trim()} fullWidth>
+            <Send className="h-4 w-4 mr-1.5" />
+            Send message
+          </PrimaryButton>
         </div>
       </DialogContent>
     </Dialog>

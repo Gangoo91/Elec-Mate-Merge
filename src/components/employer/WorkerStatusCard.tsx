@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   Select,
@@ -9,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { PrimaryButton, selectTriggerClass, selectContentClass } from './editorial';
 import { MapPin, Building2, Navigation, Clock, Loader2, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useMyEmployeeRecord, useUpdateOwnLocation } from '@/hooks/useWorkerLocations';
@@ -42,7 +42,7 @@ export function WorkerStatusCard() {
   // If not linked to an employee record, don't show the card
   if (employeeLoading) {
     return (
-      <Card className="bg-elec-gray border-white/10">
+      <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06]">
         <CardContent className="p-6 flex items-center justify-center">
           <Loader2 className="h-5 w-5 animate-spin text-white" />
         </CardContent>
@@ -139,7 +139,7 @@ export function WorkerStatusCard() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <Card className="bg-elec-gray border-white/10 overflow-hidden">
+      <Card className="bg-[hsl(0_0%_12%)] border border-white/[0.06] overflow-hidden">
         <CardHeader className="pb-3">
           <CardTitle className="text-base flex items-center gap-2">
             <MapPin className="h-4 w-4 text-elec-yellow" />
@@ -176,22 +176,22 @@ export function WorkerStatusCard() {
 
           {/* Job selector - shown when On Site or En Route */}
           {showJobSelector && (
-            <div className="space-y-2">
-              <label className="text-xs text-white font-medium">Select Job</label>
+            <div className="space-y-1.5">
+              <label className="text-[11.5px] text-white mb-1.5 block">Select Job</label>
               <Select
                 value={selectedJobId}
                 onValueChange={setSelectedJobId}
                 disabled={isUpdating || jobsLoading}
               >
-                <SelectTrigger className="h-11 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className={selectTriggerClass}>
                   <SelectValue placeholder="Choose a job..." />
                 </SelectTrigger>
-                <SelectContent className="bg-elec-gray border-white/10">
+                <SelectContent className={selectContentClass}>
                   {jobs?.map((job) => (
                     <SelectItem
                       key={job.id}
                       value={job.id}
-                      className="text-white focus:bg-white/10 focus:text-white"
+                      className="text-white focus:bg-white/[0.08] focus:text-white"
                     >
                       <div className="flex flex-col items-start">
                         <span className="font-medium">{job.title}</span>
@@ -208,10 +208,10 @@ export function WorkerStatusCard() {
           )}
 
           {/* Update button */}
-          <Button
+          <PrimaryButton
             onClick={handleUpdateStatus}
             disabled={isUpdating || (showJobSelector && !selectedJobId)}
-            className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation"
+            fullWidth
           >
             {isUpdating ? (
               <>
@@ -224,12 +224,12 @@ export function WorkerStatusCard() {
                 Update Status
               </>
             )}
-          </Button>
+          </PrimaryButton>
 
           {/* Current employee info */}
-          <div className="pt-2 border-t border-white/10">
+          <div className="pt-2 border-t border-white/[0.06]">
             <div className="flex items-center gap-2 text-xs text-white">
-              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-medium text-white">
+              <div className="w-6 h-6 rounded-full bg-white/[0.06] flex items-center justify-center text-[10px] font-medium text-white">
                 {employee.avatar_initials}
               </div>
               <span>Logged in as {employee.name}</span>

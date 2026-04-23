@@ -35,7 +35,7 @@ function statusTone(status: string): Tone {
   return 'yellow';
 }
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function SmartSearchSheet({
   open,
@@ -144,7 +144,7 @@ export function SmartSearchSheet({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search students, staff, cohorts…"
-                className="h-12 w-full pl-4 pr-11 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl text-white text-[14px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                className="h-12 w-full pl-4 pr-11 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl text-white text-[14px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
               />
               {query && (
                 <button
@@ -191,7 +191,7 @@ export function SmartSearchSheet({
             {!query.trim() && recentSearches.length === 0 && (
               <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-14 text-center">
                 <div className="text-[14px] font-medium text-white">Search everyone</div>
-                <p className="mt-2 text-[12.5px] text-white/50 max-w-md mx-auto leading-relaxed">
+                <p className="mt-2 text-[12.5px] text-white/75 max-w-md mx-auto leading-relaxed">
                   Find students, staff, or cohorts by name, email, or ULN
                 </p>
               </div>
@@ -230,7 +230,7 @@ export function SmartSearchSheet({
                           <p className="text-[13px] font-medium text-white truncate">
                             {student.name}
                           </p>
-                          <p className="text-[11.5px] text-white/50 truncate">{student.email}</p>
+                          <p className="text-[11.5px] text-white/75 truncate">{student.email}</p>
                         </div>
                         <Pill tone={statusTone(student.status)}>{student.status}</Pill>
                       </button>
@@ -261,7 +261,7 @@ export function SmartSearchSheet({
                           <p className="text-[13px] font-medium text-white truncate">
                             {member.name}
                           </p>
-                          <p className="text-[11.5px] text-white/50 truncate">
+                          <p className="text-[11.5px] text-white/75 truncate">
                             {getRoleLabel(member.role)} — {member.department}
                           </p>
                         </div>

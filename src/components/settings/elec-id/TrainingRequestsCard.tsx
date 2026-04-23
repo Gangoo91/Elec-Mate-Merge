@@ -1,22 +1,9 @@
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useTrainingRequests, TrainingRequest } from '@/hooks/useTrainingRequests';
-import {
-  GraduationCap,
-  Building2,
-  Calendar,
-  Clock,
-  CheckCircle,
-  XCircle,
-  Loader2,
-  AlertCircle,
-  ChevronDown,
-  ChevronUp,
-} from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 interface TrainingRequestItemProps {
   request: TrainingRequest;
@@ -37,104 +24,67 @@ function TrainingRequestItem({
 
   return (
     <div
-      className={`p-4 rounded-lg border ${
+      className={cn(
+        'p-4 rounded-xl border',
         isPending
-          ? 'bg-yellow-500/5 border-yellow-500/20'
+          ? 'bg-amber-500/10 border-amber-500/20'
           : isApproved
-            ? 'bg-green-500/5 border-green-500/20'
-            : 'bg-red-500/5 border-red-500/20'
-      }`}
+            ? 'bg-emerald-500/10 border-emerald-500/20'
+            : 'bg-red-500/10 border-red-500/20'
+      )}
     >
       <div className="flex items-start justify-between gap-4">
-        <div className="flex items-start gap-3 flex-1 min-w-0">
-          <div
-            className={`p-2 rounded-lg ${
-              isPending ? 'bg-yellow-500/10' : isApproved ? 'bg-green-500/10' : 'bg-red-500/10'
-            }`}
-          >
-            <GraduationCap
-              className={`h-5 w-5 ${
-                isPending ? 'text-yellow-500' : isApproved ? 'text-green-500' : 'text-red-500'
-              }`}
-            />
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-foreground truncate">{request.training_name}</p>
-            {request.provider && (
-              <div className="flex items-center gap-1.5 text-sm text-foreground/70 mt-0.5">
-                <Building2 className="h-3 w-3" />
-                <span className="truncate">{request.provider}</span>
-              </div>
-            )}
-            {request.completed_date && (
-              <div className="flex items-center gap-1.5 text-sm text-foreground/70 mt-0.5">
-                <Calendar className="h-3 w-3" />
-                <span>{format(new Date(request.completed_date), 'd MMM yyyy')}</span>
-              </div>
-            )}
-            <div className="flex items-center gap-1.5 text-xs text-foreground/70 mt-2">
-              <Clock className="h-3 w-3" />
-              <span>
-                {isPending
-                  ? `Requested ${formatDistanceToNow(new Date(request.requested_at), { addSuffix: true })}`
-                  : `Responded ${formatDistanceToNow(new Date(request.responded_at!), { addSuffix: true })}`}
-              </span>
-            </div>
-          </div>
+        <div className="flex-1 min-w-0">
+          <p className="font-medium text-white truncate">{request.training_name}</p>
+          {request.provider && (
+            <p className="text-sm text-white mt-0.5 truncate">{request.provider}</p>
+          )}
+          {request.completed_date && (
+            <p className="text-sm text-white mt-0.5">
+              {format(new Date(request.completed_date), 'd MMM yyyy')}
+            </p>
+          )}
+          <p className="text-xs text-white mt-2">
+            {isPending
+              ? `Requested ${formatDistanceToNow(new Date(request.requested_at), { addSuffix: true })}`
+              : `Responded ${formatDistanceToNow(new Date(request.responded_at!), { addSuffix: true })}`}
+          </p>
         </div>
 
         <div className="flex flex-col items-end gap-2">
           {isPending && (
             <>
-              <Badge
-                variant="outline"
-                className="bg-yellow-500/10 text-yellow-500 border-yellow-500/30"
-              >
+              <span className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border bg-amber-500/10 text-amber-400 border-amber-500/20">
                 Pending
-              </Badge>
+              </span>
               <div className="flex gap-2">
                 <Button
-                  size="sm"
                   variant="outline"
-                  className="h-10 border-red-500/30 text-red-500 hover:bg-red-500/10 touch-manipulation"
+                  className="h-10 px-3 rounded-lg border-red-500/30 text-red-400 bg-transparent hover:bg-red-500/10 touch-manipulation"
                   onClick={() => onDecline(request.id)}
                   disabled={isProcessing}
                 >
-                  {isProcessing ? (
-                    <Loader2 className="h-3 w-3 animate-spin" />
-                  ) : (
-                    <XCircle className="h-3 w-3" />
-                  )}
+                  Decline
                 </Button>
                 <Button
-                  size="sm"
-                  className="h-10 bg-green-600 hover:bg-green-700 touch-manipulation"
+                  className="h-10 px-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white touch-manipulation"
                   onClick={() => onApprove(request.id)}
                   disabled={isProcessing}
                 >
-                  {isProcessing ? (
-                    <Loader2 className="h-3 w-3 animate-spin" />
-                  ) : (
-                    <>
-                      <CheckCircle className="h-3 w-3 mr-1" />
-                      Approve
-                    </>
-                  )}
+                  {isProcessing ? 'Saving…' : 'Approve'}
                 </Button>
               </div>
             </>
           )}
           {isApproved && (
-            <Badge className="bg-green-500/10 text-green-500 border-green-500/30">
-              <CheckCircle className="h-3 w-3 mr-1" />
+            <span className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
               Approved
-            </Badge>
+            </span>
           )}
           {isDeclined && (
-            <Badge variant="outline" className="bg-red-500/10 text-red-500 border-red-500/30">
-              <XCircle className="h-3 w-3 mr-1" />
+            <span className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border bg-red-500/10 text-red-400 border-red-500/20">
               Declined
-            </Badge>
+            </span>
           )}
         </div>
       </div>
@@ -161,52 +111,41 @@ export function TrainingRequestsCard() {
 
   if (isLoading) {
     return (
-      <Card className="bg-card border-border">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-center gap-2 text-foreground/70">
-            <Loader2 className="h-5 w-5 animate-spin" />
-            <span>Loading training requests...</span>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6">
+        <div className="flex items-center justify-center gap-2 text-white">
+          <div className="h-5 w-5 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
+          <span>Loading training requests…</span>
+        </div>
+      </div>
     );
   }
 
-  if (requests.length === 0) {
-    return null; // Don't show card if no requests
-  }
+  if (requests.length === 0) return null;
 
   return (
-    <Card className="bg-card border-border">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-elec-yellow/10">
-              <GraduationCap className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div>
-              <CardTitle className="text-lg">Training Requests</CardTitle>
-              <CardDescription>Employer-submitted training records</CardDescription>
-            </div>
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <div className="px-5 py-4 flex items-center justify-between border-b border-white/[0.06]">
+        <div>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            Training requests
           </div>
-          {pendingCount > 0 && (
-            <Badge variant="destructive" className="bg-yellow-500 text-black">
-              {pendingCount} pending
-            </Badge>
-          )}
+          <div className="mt-1 text-base font-semibold text-white">
+            Employer-submitted records
+          </div>
         </div>
-      </CardHeader>
+        {pendingCount > 0 && (
+          <span className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border bg-elec-yellow text-black border-elec-yellow">
+            {pendingCount} pending
+          </span>
+        )}
+      </div>
 
-      <CardContent className="space-y-4">
-        {/* Pending Requests */}
+      <div className="p-5 space-y-4">
         {pendingRequests.length > 0 && (
           <div className="space-y-3">
-            <div className="flex items-center gap-2">
-              <AlertCircle className="h-4 w-4 text-yellow-500" />
-              <p className="text-sm font-medium text-yellow-500">
-                {pendingCount} request{pendingCount > 1 ? 's' : ''} awaiting your approval
-              </p>
-            </div>
+            <p className="text-sm font-medium text-amber-400">
+              {pendingCount} request{pendingCount > 1 ? 's' : ''} awaiting your approval
+            </p>
             {pendingRequests.map((request) => (
               <TrainingRequestItem
                 key={request.id}
@@ -219,22 +158,16 @@ export function TrainingRequestsCard() {
           </div>
         )}
 
-        {/* History Toggle */}
         {historyRequests.length > 0 && (
           <>
-            {pendingRequests.length > 0 && <Separator />}
+            {pendingRequests.length > 0 && <Separator className="bg-white/[0.06]" />}
             <Button
               variant="ghost"
-              size="sm"
-              className="w-full justify-between text-foreground/70"
+              className="w-full h-11 justify-between text-white hover:bg-white/[0.04] touch-manipulation"
               onClick={() => setShowHistory(!showHistory)}
             >
-              <span>Past Requests ({historyRequests.length})</span>
-              {showHistory ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
+              <span>Past requests ({historyRequests.length})</span>
+              <span aria-hidden>{showHistory ? '▴' : '▾'}</span>
             </Button>
 
             {showHistory && (
@@ -252,7 +185,7 @@ export function TrainingRequestsCard() {
             )}
           </>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }

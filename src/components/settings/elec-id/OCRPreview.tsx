@@ -1,20 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import {
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
-  ScanLine,
-  CreditCard,
-  Calendar,
-  Hash,
-  User,
-  FileText,
-  Shield,
-  Sparkles,
-} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface ExtractedField {
@@ -23,7 +8,6 @@ export interface ExtractedField {
   value: string | null;
   confidence: number; // 0-1
   validated: boolean;
-  icon?: typeof FileText;
 }
 
 interface OCRPreviewProps {
@@ -34,24 +18,14 @@ interface OCRPreviewProps {
   className?: string;
 }
 
-const FIELD_ICONS: Record<string, typeof FileText> = {
-  cardNumber: Hash,
-  expiryDate: Calendar,
-  holderName: User,
-  cardType: CreditCard,
-  qualificationName: FileText,
-  issuer: Shield,
-  grade: Sparkles,
-};
-
 function getConfidenceColor(confidence: number): string {
-  if (confidence >= 0.9) return 'text-green-500';
-  if (confidence >= 0.7) return 'text-amber-500';
-  return 'text-red-500';
+  if (confidence >= 0.9) return 'text-emerald-400';
+  if (confidence >= 0.7) return 'text-amber-400';
+  return 'text-red-400';
 }
 
 function getConfidenceBg(confidence: number): string {
-  if (confidence >= 0.9) return 'bg-green-500/10 border-green-500/20';
+  if (confidence >= 0.9) return 'bg-emerald-500/10 border-emerald-500/20';
   if (confidence >= 0.7) return 'bg-amber-500/10 border-amber-500/20';
   return 'bg-red-500/10 border-red-500/20';
 }
@@ -66,7 +40,6 @@ export function OCRPreview({
   const [animatedConfidence, setAnimatedConfidence] = useState(0);
   const [visibleFields, setVisibleFields] = useState<number>(0);
 
-  // Animate confidence bar
   useEffect(() => {
     if (!isProcessing && overallConfidence > 0) {
       const timer = setTimeout(() => {
@@ -78,7 +51,6 @@ export function OCRPreview({
     }
   }, [isProcessing, overallConfidence]);
 
-  // Animate fields appearing one by one
   useEffect(() => {
     if (!isProcessing && extractedFields.length > 0) {
       let count = 0;
@@ -98,180 +70,154 @@ export function OCRPreview({
   const validatedCount = extractedFields.filter((f) => f.validated).length;
 
   return (
-    <Card className={cn('border-border overflow-hidden', className)}>
-      <CardContent className="p-4 space-y-4">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-purple-500/20">
-              <ScanLine className="h-5 w-5 text-purple-400" />
-            </div>
-            <div>
-              <p className="font-medium">Document Analysis</p>
-              <p className="text-xs text-foreground/70 capitalize">
-                {documentType.replace(/_/g, ' ')}
-              </p>
-            </div>
+    <div
+      className={cn(
+        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden p-4 space-y-4',
+        className
+      )}
+    >
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            Document analysis
           </div>
-          {isProcessing ? (
-            <Badge variant="outline" className="bg-purple-500/20 text-purple-400 border-0">
-              <Loader2 className="h-3 w-3 mr-1 animate-spin" />
-              Scanning
-            </Badge>
-          ) : overallConfidence > 0 ? (
-            <Badge
-              variant="outline"
-              className={cn(
-                'border-0',
-                overallConfidence >= 0.8
-                  ? 'bg-green-500/20 text-green-400'
-                  : overallConfidence >= 0.6
-                    ? 'bg-amber-500/20 text-amber-400'
-                    : 'bg-red-500/20 text-red-400'
-              )}
-            >
-              {Math.round(overallConfidence * 100)}% Match
-            </Badge>
-          ) : null}
+          <div className="mt-1 text-sm font-medium text-white capitalize">
+            {documentType.replace(/_/g, ' ')}
+          </div>
         </div>
+        {isProcessing ? (
+          <span className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border bg-purple-500/10 text-purple-400 border-purple-500/20">
+            Scanning
+          </span>
+        ) : overallConfidence > 0 ? (
+          <span
+            className={cn(
+              'inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border',
+              overallConfidence >= 0.8
+                ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                : overallConfidence >= 0.6
+                  ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                  : 'bg-red-500/10 text-red-400 border-red-500/20'
+            )}
+          >
+            {Math.round(overallConfidence * 100)}% match
+          </span>
+        ) : null}
+      </div>
 
-        {/* Processing animation */}
-        {isProcessing && (
-          <div className="space-y-3">
-            <div className="relative h-32 rounded-lg overflow-hidden bg-white/5 border border-white/10">
-              {/* Scanning line animation */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent animate-scan" />
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <Loader2 className="h-8 w-8 text-purple-400 mx-auto animate-spin" />
-                  <p className="text-sm text-foreground/70 mt-2">Extracting text...</p>
-                </div>
-              </div>
+      {/* Processing */}
+      {isProcessing && (
+        <div className="space-y-3">
+          <div className="relative h-32 rounded-xl overflow-hidden bg-white/[0.04] border border-white/[0.06]">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-purple-500 to-transparent animate-scan" />
             </div>
-
-            {/* Skeleton loaders for fields */}
-            <div className="space-y-2">
-              {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="h-14 rounded-lg bg-white/5 animate-pulse"
-                  style={{ animationDelay: `${i * 100}ms` }}
-                />
-              ))}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <div className="h-6 w-6 mx-auto rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
+                <p className="text-sm text-white mt-2">Extracting text…</p>
+              </div>
             </div>
           </div>
-        )}
 
-        {/* Extracted fields */}
-        {!isProcessing && extractedFields.length > 0 && (
-          <div className="space-y-3">
-            {/* Confidence bar */}
-            <div className="space-y-1">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-foreground/70">Confidence</span>
-                <span className={getConfidenceColor(overallConfidence)}>
-                  {Math.round(animatedConfidence)}%
-                </span>
-              </div>
-              <Progress
-                value={animatedConfidence}
-                className={cn(
-                  'h-2',
-                  overallConfidence >= 0.8
-                    ? '[&>div]:bg-green-500'
-                    : overallConfidence >= 0.6
-                      ? '[&>div]:bg-amber-500'
-                      : '[&>div]:bg-red-500'
-                )}
+          <div className="space-y-2">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="h-14 rounded-xl bg-white/[0.04] animate-pulse"
+                style={{ animationDelay: `${i * 100}ms` }}
               />
-            </div>
+            ))}
+          </div>
+        </div>
+      )}
 
-            {/* Validation summary */}
-            <div className="flex items-center gap-2 text-sm">
-              <CheckCircle2 className="h-4 w-4 text-green-500" />
-              <span>
-                {validatedCount} of {extractedFields.length} fields validated
+      {/* Extracted fields */}
+      {!isProcessing && extractedFields.length > 0 && (
+        <div className="space-y-3">
+          <div className="space-y-1">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-white">Confidence</span>
+              <span className={getConfidenceColor(overallConfidence)}>
+                {Math.round(animatedConfidence)}%
               </span>
             </div>
+            <Progress value={animatedConfidence} className="h-2" />
+          </div>
 
-            {/* Field list */}
-            <div className="space-y-2">
-              {extractedFields.map((field, index) => {
-                const FieldIcon = FIELD_ICONS[field.key] || field.icon || FileText;
-                const isVisible = index < visibleFields;
+          <div className="flex items-center gap-2 text-sm text-white">
+            <span
+              aria-hidden
+              className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0"
+            />
+            <span>
+              {validatedCount} of {extractedFields.length} fields validated
+            </span>
+          </div>
 
-                return (
-                  <div
-                    key={field.key}
-                    className={cn(
-                      'flex items-center gap-3 p-3 rounded-lg border transition-all duration-300',
-                      isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2',
-                      field.value ? getConfidenceBg(field.confidence) : 'bg-white/5 border-white/10'
+          <div className="space-y-2">
+            {extractedFields.map((field, index) => {
+              const isVisible = index < visibleFields;
+              return (
+                <div
+                  key={field.key}
+                  className={cn(
+                    'flex items-center gap-3 p-3 rounded-xl border transition-all duration-300',
+                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2',
+                    field.value ? getConfidenceBg(field.confidence) : 'bg-white/[0.04] border-white/[0.06]'
+                  )}
+                  style={{ transitionDelay: `${index * 50}ms` }}
+                >
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs text-white">{field.label}</p>
+                    {field.value ? (
+                      <p className="font-medium text-white truncate">{field.value}</p>
+                    ) : (
+                      <p className="text-white italic">Not detected</p>
                     )}
-                    style={{ transitionDelay: `${index * 50}ms` }}
-                  >
-                    <div className="p-1.5 rounded bg-white/10">
-                      <FieldIcon className="h-4 w-4 text-foreground/70" />
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <p className="text-xs text-foreground/70">{field.label}</p>
-                      {field.value ? (
-                        <p className="font-medium truncate">{field.value}</p>
-                      ) : (
-                        <p className="text-foreground/70 italic">Not detected</p>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                      {field.value && (
-                        <span
-                          className={cn(
-                            'text-xs font-medium',
-                            getConfidenceColor(field.confidence)
-                          )}
-                        >
-                          {Math.round(field.confidence * 100)}%
-                        </span>
-                      )}
-                      {field.validated ? (
-                        <CheckCircle2 className="h-4 w-4 text-green-500" />
-                      ) : field.value ? (
-                        <AlertCircle className="h-4 w-4 text-amber-500" />
-                      ) : null}
-                    </div>
                   </div>
-                );
-              })}
-            </div>
 
-            {/* Low confidence warning */}
-            {overallConfidence < 0.7 && (
-              <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                <AlertCircle className="h-4 w-4 text-amber-500 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium text-amber-500">Low confidence detected</p>
-                  <p className="text-xs text-foreground/70">
-                    Try retaking the photo with better lighting and ensure the document is flat and
-                    in focus.
-                  </p>
+                  <div className="flex items-center gap-2">
+                    {field.value && (
+                      <span
+                        className={cn(
+                          'text-xs font-medium',
+                          getConfidenceColor(field.confidence)
+                        )}
+                      >
+                        {Math.round(field.confidence * 100)}%
+                      </span>
+                    )}
+                    {field.validated ? (
+                      <span className="text-[11px] font-medium text-emerald-400">OK</span>
+                    ) : field.value ? (
+                      <span className="text-[11px] font-medium text-amber-400">Check</span>
+                    ) : null}
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })}
           </div>
-        )}
 
-        {/* Empty state */}
-        {!isProcessing && extractedFields.length === 0 && (
-          <div className="text-center py-8">
-            <ScanLine className="h-10 w-10 text-foreground/70 mx-auto mb-2" />
-            <p className="text-sm text-foreground/70">Capture a document to analyze</p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          {overallConfidence < 0.7 && (
+            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+              <p className="text-sm font-medium text-amber-400">Low confidence detected</p>
+              <p className="text-xs text-white mt-1">
+                Try retaking the photo with better lighting and ensure the document is flat and in
+                focus.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {!isProcessing && extractedFields.length === 0 && (
+        <div className="text-center py-8">
+          <p className="text-sm text-white">Capture a document to analyse</p>
+        </div>
+      )}
+    </div>
   );
 }
 

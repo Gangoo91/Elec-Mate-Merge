@@ -25,28 +25,28 @@ const getStatusConfig = (status: string, isOverdue: boolean) => {
     {
       Draft: {
         icon: <FileText className="h-3.5 w-3.5" />,
-        className: 'bg-muted text-white border-transparent',
-        borderClass: 'border-l-muted-foreground/50',
+        className: 'bg-white/[0.06] text-white border-white/[0.1]',
+        borderClass: 'border-l-white/20',
       },
       Pending: {
         icon: <Clock className="h-3.5 w-3.5" />,
-        className: 'bg-warning/15 text-warning border-warning/30',
-        borderClass: 'border-l-warning',
+        className: 'bg-amber-500/15 text-amber-400 border-amber-500/30',
+        borderClass: 'border-l-amber-400',
       },
       Sent: {
         icon: <Receipt className="h-3.5 w-3.5" />,
-        className: 'bg-blue-500/15 text-blue-500 border-blue-500/30',
-        borderClass: 'border-l-blue-500',
+        className: 'bg-blue-500/15 text-blue-400 border-blue-500/30',
+        borderClass: 'border-l-blue-400',
       },
       Paid: {
         icon: <CheckCircle className="h-3.5 w-3.5" />,
-        className: 'bg-success/15 text-success border-success/30',
-        borderClass: 'border-l-success',
+        className: 'bg-green-500/15 text-green-400 border-green-500/30',
+        borderClass: 'border-l-green-400',
       },
       Overdue: {
         icon: <AlertTriangle className="h-3.5 w-3.5" />,
-        className: 'bg-destructive/15 text-destructive border-destructive/30',
-        borderClass: 'border-l-destructive',
+        className: 'bg-red-500/15 text-red-400 border-red-500/30',
+        borderClass: 'border-l-red-400',
       },
     };
 
@@ -58,7 +58,7 @@ const getStatusConfig = (status: string, isOverdue: boolean) => {
   return configs[status] || configs.Pending;
 };
 
-export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: InvoiceCardProps) {
+export function InvoiceCard({ invoice, onView, onMarkPaid }: InvoiceCardProps) {
   // Calculate days overdue or until due
   const daysUntilDue = invoice.due_date
     ? Math.ceil((new Date(invoice.due_date).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
@@ -102,16 +102,16 @@ export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: Invo
     <SwipeableRow leftAction={leftAction} rightAction={rightAction}>
       <div
         className={cn(
-          'bg-card border border-l-4 rounded-2xl overflow-hidden transition-all',
-          'active:scale-[0.98] active:bg-accent/30',
+          'bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-4 rounded-2xl overflow-hidden transition-all cursor-pointer',
+          'active:scale-[0.98] hover:bg-[hsl(0_0%_15%)]',
           statusConfig.borderClass,
-          isOverdue && invoice.status !== 'Paid' && 'ring-2 ring-destructive/30'
+          isOverdue && invoice.status !== 'Paid' && 'ring-2 ring-red-500/30'
         )}
         onClick={() => onView(invoice)}
       >
         {/* Priority Banner - show for overdue or due soon */}
         {priorityBadge && priorityBadge.urgent && (
-          <div className="px-4 py-2 bg-destructive/10 text-destructive text-xs font-medium flex items-center gap-2">
+          <div className="px-4 py-2 bg-red-500/10 text-red-400 text-xs font-medium flex items-center gap-2">
             <AlertTriangle className="h-3.5 w-3.5" />
             {priorityBadge.label} - Action Required
           </div>
@@ -134,10 +134,10 @@ export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: Invo
               className={cn(
                 'text-2xl font-bold tabular-nums tracking-tight',
                 invoice.status === 'Paid'
-                  ? 'text-success'
+                  ? 'text-green-400'
                   : isOverdue
-                    ? 'text-destructive'
-                    : 'text-primary'
+                    ? 'text-red-400'
+                    : 'text-elec-yellow'
               )}
             >
               £{formattedAmount}
@@ -146,14 +146,14 @@ export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: Invo
 
           {/* Invoice Number */}
           <div className="mb-2">
-            <span className="inline-block font-mono text-[11px] text-white bg-muted/60 px-2 py-1 rounded-md">
+            <span className="inline-block font-mono text-[11px] text-white bg-white/[0.06] px-2 py-1 rounded-md">
               {invoice.invoice_number}
             </span>
           </div>
 
           {/* Client & Project */}
           <div className="space-y-1 mb-4">
-            <h3 className="text-lg font-semibold text-foreground leading-tight">
+            <h3 className="text-lg font-semibold text-white leading-tight">
               {invoice.client}
             </h3>
             {invoice.project && (
@@ -162,10 +162,10 @@ export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: Invo
           </div>
 
           {/* Footer - Due/Paid Info */}
-          <div className="flex items-center justify-between pt-3 border-t border-border/40">
+          <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
             <div className="flex items-center gap-4 text-sm text-white">
               {invoice.paid_date ? (
-                <span className="flex items-center gap-1.5 text-success font-medium">
+                <span className="flex items-center gap-1.5 text-green-400 font-medium">
                   <CheckCircle className="h-3.5 w-3.5" />
                   Paid{' '}
                   {new Date(invoice.paid_date).toLocaleDateString('en-GB', {
@@ -178,8 +178,8 @@ export function InvoiceCard({ invoice, onView, onMarkPaid, isMarkingPaid }: Invo
                   <span
                     className={cn(
                       'flex items-center gap-1.5',
-                      isOverdue && 'text-destructive font-semibold',
-                      isDueSoon && !isOverdue && 'text-warning font-medium'
+                      isOverdue && 'text-red-400 font-semibold',
+                      isDueSoon && !isOverdue && 'text-amber-400 font-medium'
                     )}
                   >
                     <Clock className="h-3.5 w-3.5" />

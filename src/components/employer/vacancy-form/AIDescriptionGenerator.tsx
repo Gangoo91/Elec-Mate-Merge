@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Sparkles, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import type { ExperienceLevel } from './schema';
+import { SecondaryButton } from '@/components/employer/editorial';
 
 interface AIDescriptionGeneratorProps {
   jobTitle: string;
@@ -47,7 +47,7 @@ export function AIDescriptionGenerator({
         onGenerated(data.description);
         toast({
           title: 'Description generated',
-          description: 'AI has created a job description for you to customize',
+          description: 'AI has created a job description for you to customise',
         });
       } else {
         throw new Error('No description returned');
@@ -65,7 +65,7 @@ export function AIDescriptionGenerator({
 
       toast({
         title: 'Template applied',
-        description: 'Using a template description. Customize it for your role.',
+        description: 'Using a template description. Customise it for your role.',
       });
     } finally {
       setIsGenerating(false);
@@ -73,13 +73,12 @@ export function AIDescriptionGenerator({
   };
 
   return (
-    <Button
+    <SecondaryButton
       type="button"
-      variant="outline"
-      size="sm"
       onClick={handleGenerate}
       disabled={isGenerating || !jobTitle}
-      className="gap-2 text-elec-yellow border-elec-yellow/30 hover:bg-elec-yellow/10"
+      size="sm"
+      className="gap-2 text-elec-yellow border-elec-yellow/25 hover:bg-elec-yellow/10"
     >
       {isGenerating ? (
         <>
@@ -92,7 +91,7 @@ export function AIDescriptionGenerator({
           Generate with AI
         </>
       )}
-    </Button>
+    </SecondaryButton>
   );
 }
 

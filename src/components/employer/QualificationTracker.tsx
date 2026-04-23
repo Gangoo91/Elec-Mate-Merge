@@ -1,7 +1,6 @@
 import { useState, useMemo } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -12,8 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Label } from '@/components/ui/label';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   Award,
   Search,
@@ -29,6 +27,18 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import {
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  Field,
+  FormCard,
+  FormGrid,
+  SheetShell,
+} from './editorial';
 import {
   useEmployeeQualifications,
   useCreateQualification,
@@ -206,20 +216,20 @@ export function QualificationTracker() {
       <div className="flex flex-col sm:flex-row gap-2">
         <div className="relative flex-1">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
           )}
           <Input
             placeholder="Search qualifications..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('h-11', !searchQuery && 'pl-9')}
+            className={cn(inputClass, !searchQuery && 'pl-9')}
           />
         </div>
         <Select value={filterType} onValueChange={setFilterType}>
-          <SelectTrigger className="w-full sm:w-40 h-11">
+          <SelectTrigger className={cn(selectTriggerClass, 'w-full sm:w-40')}>
             <SelectValue placeholder="Type" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={selectContentClass}>
             <SelectItem value="all">All Types</SelectItem>
             {QUALIFICATION_TYPES.map((type) => (
               <SelectItem key={type.value} value={type.value}>
@@ -229,242 +239,226 @@ export function QualificationTracker() {
           </SelectContent>
         </Select>
         <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-full sm:w-32 h-11">
+          <SelectTrigger className={cn(selectTriggerClass, 'w-full sm:w-32')}>
             <SelectValue placeholder="Status" />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={selectContentClass}>
             <SelectItem value="all">All</SelectItem>
             <SelectItem value="active">Active</SelectItem>
             <SelectItem value="expiring">Expiring</SelectItem>
             <SelectItem value="expired">Expired</SelectItem>
           </SelectContent>
         </Select>
-        <Button
-          onClick={() => setAddSheetOpen(true)}
-          className="h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-        >
+        <PrimaryButton onClick={() => setAddSheetOpen(true)}>
           <Plus className="h-4 w-4 mr-2" />
           Add
-        </Button>
+        </PrimaryButton>
       </div>
 
       {/* Qualifications List */}
       {Object.keys(groupedByEmployee).length === 0 ? (
-        <Card className="border-dashed">
-          <CardContent className="p-8 text-center">
-            <Award className="h-12 w-12 text-white mx-auto mb-4" />
-            <h3 className="font-medium text-foreground mb-2">No qualifications found</h3>
-            <p className="text-sm text-white mb-4">
-              {searchQuery || filterType !== 'all' || filterStatus !== 'all'
-                ? 'Try adjusting your filters'
-                : 'Add employee qualifications to track certifications and expiry dates'}
-            </p>
-            <Button
-              onClick={() => setAddSheetOpen(true)}
-              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Qualification
-            </Button>
-          </CardContent>
-        </Card>
+        <div className="bg-[hsl(0_0%_12%)] border border-dashed border-white/[0.08] rounded-2xl p-8 text-center">
+          <Award className="h-12 w-12 text-white mx-auto mb-4" />
+          <h3 className="font-medium text-white mb-2">No qualifications found</h3>
+          <p className="text-sm text-white mb-4">
+            {searchQuery || filterType !== 'all' || filterStatus !== 'all'
+              ? 'Try adjusting your filters'
+              : 'Add employee qualifications to track certifications and expiry dates'}
+          </p>
+          <PrimaryButton onClick={() => setAddSheetOpen(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            Add Qualification
+          </PrimaryButton>
+        </div>
       ) : (
         <div className="space-y-4">
           {Object.entries(groupedByEmployee).map(([employeeName, quals]) => (
-            <Card key={employeeName}>
-              <CardContent className="p-4">
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="p-2 rounded-lg bg-blue-500/10">
-                      <Award className="h-4 w-4 text-blue-400" />
-                    </div>
-                    <h3 className="font-medium text-foreground">{employeeName}</h3>
-                    <Badge variant="secondary">{quals.length}</Badge>
+            <div
+              key={employeeName}
+              className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4"
+            >
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="p-2 rounded-lg bg-blue-500/10">
+                    <Award className="h-4 w-4 text-blue-400" />
                   </div>
-                  {quals[0]?.employee_id && (
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleSyncEcs(quals[0].employee_id)}
-                      disabled={syncEcs.isPending}
-                      className="text-xs"
-                    >
-                      <RefreshCw
-                        className={cn('h-3 w-3 mr-1', syncEcs.isPending && 'animate-spin')}
-                      />
-                      Sync ECS
-                    </Button>
-                  )}
+                  <h3 className="font-medium text-white">{employeeName}</h3>
+                  <Badge variant="secondary" className="bg-white/[0.06] text-white">
+                    {quals.length}
+                  </Badge>
                 </div>
+                {quals[0]?.employee_id && (
+                  <SecondaryButton
+                    size="sm"
+                    onClick={() => handleSyncEcs(quals[0].employee_id)}
+                    disabled={syncEcs.isPending}
+                  >
+                    <RefreshCw
+                      className={cn('h-3 w-3 mr-1', syncEcs.isPending && 'animate-spin')}
+                    />
+                    Sync ECS
+                  </SecondaryButton>
+                )}
+              </div>
 
-                <div className="space-y-2">
-                  {quals.map((qual) => (
-                    <div
-                      key={qual.id}
-                      className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
-                    >
-                      <div className="flex items-center gap-3 min-w-0">
-                        <Shield className="h-4 w-4 text-white shrink-0" />
-                        <div className="min-w-0">
-                          <p className="font-medium text-sm text-foreground truncate">
-                            {qual.qualification_name}
-                          </p>
-                          <div className="flex items-center gap-2 text-xs text-white">
-                            {qual.certificate_number && <span>#{qual.certificate_number}</span>}
-                            {qual.expiry_date && (
-                              <span className="flex items-center gap-1">
-                                <Calendar className="h-3 w-3" />
-                                Expires {format(parseISO(qual.expiry_date), 'dd/MM/yyyy')}
-                              </span>
-                            )}
-                          </div>
+              <div className="space-y-2">
+                {quals.map((qual) => (
+                  <div
+                    key={qual.id}
+                    className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]"
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <Shield className="h-4 w-4 text-white shrink-0" />
+                      <div className="min-w-0">
+                        <p className="font-medium text-sm text-white truncate">
+                          {qual.qualification_name}
+                        </p>
+                        <div className="flex items-center gap-2 text-xs text-white">
+                          {qual.certificate_number && <span>#{qual.certificate_number}</span>}
+                          {qual.expiry_date && (
+                            <span className="flex items-center gap-1">
+                              <Calendar className="h-3 w-3" />
+                              Expires {format(parseISO(qual.expiry_date), 'dd/MM/yyyy')}
+                            </span>
+                          )}
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        {getStatusBadge(qual.status, qual.expiry_date)}
-                        {qual.file_url && (
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            className="h-8 w-8 p-0"
-                            onClick={() => openExternalUrl(qual.file_url)}
-                          >
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </Button>
-                        )}
-                        <Button
-                          size="sm"
-                          variant="ghost"
-                          onClick={() => deleteQualification.mutate(qual.id)}
-                          disabled={deleteQualification.isPending}
-                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" />
-                        </Button>
-                      </div>
                     </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    <div className="flex items-center gap-2">
+                      {getStatusBadge(qual.status, qual.expiry_date)}
+                      {qual.file_url && (
+                        <button
+                          type="button"
+                          className="h-8 w-8 p-0 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
+                          onClick={() => openExternalUrl(qual.file_url)}
+                        >
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => deleteQualification.mutate(qual.id)}
+                        disabled={deleteQualification.isPending}
+                        className="h-8 w-8 p-0 flex items-center justify-center rounded-full text-red-400 hover:bg-red-500/10 touch-manipulation disabled:opacity-40"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           ))}
         </div>
       )}
 
       {/* Add Qualification Sheet */}
       <Sheet open={addSheetOpen} onOpenChange={setAddSheetOpen}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl">
-          <SheetHeader className="pb-4 border-b border-border">
-            <SheetTitle className="flex items-center gap-2">
-              <Award className="h-5 w-5 text-elec-yellow" />
-              Add Qualification
-            </SheetTitle>
-          </SheetHeader>
+        <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
+          <SheetShell
+            eyebrow="Compliance"
+            title="Add Qualification"
+            footer={
+              <>
+                <SecondaryButton
+                  onClick={() => setAddSheetOpen(false)}
+                  size="lg"
+                  fullWidth
+                >
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={handleAddQualification}
+                  disabled={!selectedEmployee || createQualification.isPending}
+                  size="lg"
+                  fullWidth
+                >
+                  {createQualification.isPending ? 'Adding...' : 'Add Qualification'}
+                </PrimaryButton>
+              </>
+            }
+          >
+            <FormCard eyebrow="Assignment">
+              <Field label="Employee" required>
+                <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select employee" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {employees.map((emp) => (
+                      <SelectItem key={emp.id} value={emp.id}>
+                        {emp.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
 
-          <div className="py-4 space-y-4 overflow-y-auto max-h-[calc(85vh-140px)]">
-            <div className="space-y-2">
-              <Label>Employee *</Label>
-              <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select employee" />
-                </SelectTrigger>
-                <SelectContent>
-                  {employees.map((emp) => (
-                    <SelectItem key={emp.id} value={emp.id}>
-                      {emp.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+              <Field label="Qualification Type" required>
+                <Select value={qualType} onValueChange={(v) => setQualType(v as QualificationType)}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select type" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {QUALIFICATION_TYPES.map((type) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
 
-            <div className="space-y-2">
-              <Label>Qualification Type *</Label>
-              <Select value={qualType} onValueChange={(v) => setQualType(v as QualificationType)}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Select type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {QUALIFICATION_TYPES.map((type) => (
-                    <SelectItem key={type.value} value={type.value}>
-                      {type.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label>Qualification Name</Label>
-              <Input
-                value={qualName}
-                onChange={(e) => setQualName(e.target.value)}
-                placeholder="e.g., 18th Edition Wiring Regulations"
-                className="h-11"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Issuing Body</Label>
+              <Field label="Qualification Name">
                 <Input
-                  value={issuingBody}
-                  onChange={(e) => setIssuingBody(e.target.value)}
-                  placeholder="e.g., City & Guilds"
-                  className="h-11"
+                  value={qualName}
+                  onChange={(e) => setQualName(e.target.value)}
+                  placeholder="e.g., 18th Edition Wiring Regulations"
+                  className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label>Certificate Number</Label>
-                <Input
-                  value={certNumber}
-                  onChange={(e) => setCertNumber(e.target.value)}
-                  placeholder="e.g., 123456"
-                  className="h-11"
-                />
-              </div>
-            </div>
+              </Field>
+            </FormCard>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Issue Date</Label>
-                <Input
-                  type="date"
-                  value={issueDate}
-                  onChange={(e) => setIssueDate(e.target.value)}
-                  className="h-11"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Expiry Date</Label>
-                <Input
-                  type="date"
-                  value={expiryDate}
-                  onChange={(e) => setExpiryDate(e.target.value)}
-                  className="h-11"
-                />
-              </div>
-            </div>
-          </div>
+            <FormCard eyebrow="Certificate details">
+              <FormGrid cols={2}>
+                <Field label="Issuing Body">
+                  <Input
+                    value={issuingBody}
+                    onChange={(e) => setIssuingBody(e.target.value)}
+                    placeholder="e.g., City & Guilds"
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Certificate Number">
+                  <Input
+                    value={certNumber}
+                    onChange={(e) => setCertNumber(e.target.value)}
+                    placeholder="e.g., 123456"
+                    className={inputClass}
+                  />
+                </Field>
+              </FormGrid>
 
-          <div className="pt-4 border-t border-border">
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={() => setAddSheetOpen(false)}
-                className="flex-1 h-12"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleAddQualification}
-                disabled={!selectedEmployee || createQualification.isPending}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-              >
-                {createQualification.isPending ? 'Adding...' : 'Add Qualification'}
-              </Button>
-            </div>
-          </div>
+              <FormGrid cols={2}>
+                <Field label="Issue Date">
+                  <Input
+                    type="date"
+                    value={issueDate}
+                    onChange={(e) => setIssueDate(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Expiry Date">
+                  <Input
+                    type="date"
+                    value={expiryDate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+              </FormGrid>
+            </FormCard>
+          </SheetShell>
         </SheetContent>
       </Sheet>
     </div>

@@ -6,9 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -22,6 +20,16 @@ import { useEmployees } from '@/hooks/useEmployees';
 import { useActiveJobs } from '@/hooks/useJobs';
 import { useCreateTimesheet } from '@/hooks/useTimesheets';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import {
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface ManualTimeEntryDialogProps {
   trigger?: React.ReactNode;
@@ -65,7 +73,6 @@ export function ManualTimeEntryDialog({
       return;
     }
 
-    // Calculate total hours
     const [inHours, inMins] = formData.clockIn.split(':').map(Number);
     const [outHours, outMins] = formData.clockOut.split(':').map(Number);
     const totalMinutes =
@@ -77,7 +84,6 @@ export function ManualTimeEntryDialog({
       return;
     }
 
-    // Create ISO timestamps for clock_in and clock_out
     const clockInISO = `${formData.date}T${formData.clockIn}:00`;
     const clockOutISO = `${formData.date}T${formData.clockOut}:00`;
 
@@ -116,7 +122,6 @@ export function ManualTimeEntryDialog({
   const activeJobs = jobs.filter((j) => j.status === 'Active');
   const activeEmployees = employees.filter((e) => e.status === 'Active');
 
-  // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
 
   useEffect(() => {
@@ -174,127 +179,115 @@ export function ManualTimeEntryDialog({
       {trigger !== null && (
         <DialogTrigger asChild>
           {trigger || (
-            <Button variant="outline" size="sm" className="touch-feedback">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Entry
-            </Button>
+            <SecondaryButton size="sm">
+              <Plus className="h-4 w-4 mr-1.5" />
+              Add entry
+            </SecondaryButton>
           )}
         </DialogTrigger>
       )}
-      <DialogContent className="max-w-[95vw] sm:max-w-md">
+      <DialogContent className="max-w-[95vw] sm:max-w-md p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <Clock className="h-5 w-5 text-elec-yellow" />
-            Add Manual Time Entry
+            Add manual time entry
           </DialogTitle>
         </DialogHeader>
         <form id="time-entry-form" onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="employee">Employee *</Label>
-            <Select
-              value={formData.employeeId}
-              onValueChange={(val) => setFormData((prev) => ({ ...prev, employeeId: val }))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select employee..." />
-              </SelectTrigger>
-              <SelectContent>
-                {activeEmployees.map((emp) => (
-                  <SelectItem key={emp.id} value={emp.id}>
-                    {emp.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="job">Job *</Label>
-            <Select
-              value={formData.jobId}
-              onValueChange={(val) => setFormData((prev) => ({ ...prev, jobId: val }))}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select job..." />
-              </SelectTrigger>
-              <SelectContent>
-                {activeJobs.map((job) => (
-                  <SelectItem key={job.id} value={job.id}>
-                    {job.title}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="date">Date *</Label>
-            <Input
-              id="date"
-              type="date"
-              value={formData.date}
-              onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
-            />
-          </div>
-
-          <div className="grid grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="clockIn">Clock In *</Label>
-              <Input
-                id="clockIn"
-                type="time"
-                value={formData.clockIn}
-                onChange={(e) => setFormData((prev) => ({ ...prev, clockIn: e.target.value }))}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="clockOut">Clock Out *</Label>
-              <Input
-                id="clockOut"
-                type="time"
-                value={formData.clockOut}
-                onChange={(e) => setFormData((prev) => ({ ...prev, clockOut: e.target.value }))}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="breakMins">Break (mins)</Label>
+          <FormCard eyebrow="Entry">
+            <Field label="Employee" required>
               <Select
-                value={formData.breakMins}
-                onValueChange={(val) => setFormData((prev) => ({ ...prev, breakMins: val }))}
+                value={formData.employeeId}
+                onValueChange={(val) => setFormData((prev) => ({ ...prev, employeeId: val }))}
               >
-                <SelectTrigger>
-                  <SelectValue />
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select employee..." />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="0">0</SelectItem>
-                  <SelectItem value="15">15</SelectItem>
-                  <SelectItem value="30">30</SelectItem>
-                  <SelectItem value="45">45</SelectItem>
-                  <SelectItem value="60">60</SelectItem>
+                <SelectContent className={selectContentClass}>
+                  {activeEmployees.map((emp) => (
+                    <SelectItem key={emp.id} value={emp.id}>
+                      {emp.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
-            </div>
-          </div>
+            </Field>
+            <Field label="Job" required>
+              <Select
+                value={formData.jobId}
+                onValueChange={(val) => setFormData((prev) => ({ ...prev, jobId: val }))}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select job..." />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {activeJobs.map((job) => (
+                    <SelectItem key={job.id} value={job.id}>
+                      {job.title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field label="Date" required>
+              <Input
+                type="date"
+                value={formData.date}
+                onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
+                className={inputClass}
+              />
+            </Field>
+            <FormGrid cols={3}>
+              <Field label="Clock in" required>
+                <Input
+                  type="time"
+                  value={formData.clockIn}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, clockIn: e.target.value }))}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Clock out" required>
+                <Input
+                  type="time"
+                  value={formData.clockOut}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, clockOut: e.target.value }))}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Break (mins)">
+                <Select
+                  value={formData.breakMins}
+                  onValueChange={(val) => setFormData((prev) => ({ ...prev, breakMins: val }))}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="0">0</SelectItem>
+                    <SelectItem value="15">15</SelectItem>
+                    <SelectItem value="30">30</SelectItem>
+                    <SelectItem value="45">45</SelectItem>
+                    <SelectItem value="60">60</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormGrid>
+          </FormCard>
 
-          <div className="flex gap-2 pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1"
-              onClick={() => setOpen(false)}
-            >
+          <div className="flex gap-2 pt-1">
+            <SecondaryButton onClick={() => setOpen(false)} fullWidth>
               Cancel
-            </Button>
-            <Button type="submit" className="flex-1" disabled={createTimesheet.isPending}>
+            </SecondaryButton>
+            <PrimaryButton type="submit" disabled={createTimesheet.isPending} fullWidth>
               {createTimesheet.isPending ? (
                 <>
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   Adding...
                 </>
               ) : (
-                'Add Entry'
+                'Add entry'
               )}
-            </Button>
+            </PrimaryButton>
           </div>
         </form>
       </DialogContent>

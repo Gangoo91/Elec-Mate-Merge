@@ -175,7 +175,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
       {/* Hero */}
       <motion.div variants={itemVariants}>
         <div className="pt-6 sm:pt-8 lg:pt-10 pb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Tools · IQA Workflow
           </div>
           <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
@@ -212,7 +212,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
               key={stat.label}
               className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-8 lg:px-7 lg:py-9"
             >
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                 {String(i + 1).padStart(2, '0')} · {stat.label}
               </div>
               <div
@@ -224,7 +224,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
               >
                 {stat.value}
               </div>
-              <div className="mt-3 text-[11px] text-white/50">{stat.sub}</div>
+              <div className="mt-3 text-[11px] text-white/75">{stat.sub}</div>
             </div>
           ))}
         </div>
@@ -285,7 +285,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
                 <span
                   className={cn(
                     'ml-1.5 tabular-nums text-[11px]',
-                    findingFilter === pill ? 'text-black/60' : 'text-white/40'
+                    findingFilter === pill ? 'text-black/60' : 'text-white/70'
                   )}
                 >
                   {openActions}
@@ -297,7 +297,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
 
         {showAddFinding && (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-3">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
               New finding
             </div>
             <input
@@ -305,7 +305,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
               placeholder="Assessor name"
               value={newFinding.assessorName}
               onChange={(e) => setNewFinding((p) => ({ ...p, assessorName: e.target.value }))}
-              className="w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+              className="w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
             />
             <select
               value={newFinding.findingType}
@@ -321,7 +321,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
               value={newFinding.description}
               onChange={(e) => setNewFinding((p) => ({ ...p, description: e.target.value }))}
               rows={3}
-              className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none"
+              className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none"
             />
             <div className="flex items-center justify-end gap-3 pt-1">
               <button
@@ -385,7 +385,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
 
         {showAddMeeting && (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-3">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
               New meeting
             </div>
             <input
@@ -393,7 +393,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
               placeholder="Meeting topic"
               value={newMeeting.topic}
               onChange={(e) => setNewMeeting((p) => ({ ...p, topic: e.target.value }))}
-              className="w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+              className="w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
             />
             <input
               type="number"
@@ -402,14 +402,14 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
               onChange={(e) =>
                 setNewMeeting((p) => ({ ...p, attendeesCount: parseInt(e.target.value) || 0 }))
               }
-              className="w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+              className="w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
             />
             <textarea
               placeholder="Outcome summary…"
               value={newMeeting.outcomeSummary}
               onChange={(e) => setNewMeeting((p) => ({ ...p, outcomeSummary: e.target.value }))}
               rows={3}
-              className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none"
+              className="w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none"
             />
             <div className="flex items-center justify-end gap-3 pt-1">
               <button
@@ -439,7 +439,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
                 accent="purple"
                 title={meeting.topic}
                 subtitle={`${meeting.attendeesCount} attendees${meeting.outcomeSummary ? ' · ' + meeting.outcomeSummary : ''}`}
-                trailing={<span className="text-[11px] text-white/50 tabular-nums">{meeting.date}</span>}
+                trailing={<span className="text-[11px] text-white/75 tabular-nums">{meeting.date}</span>}
               />
             ))}
           </ListCard>
@@ -458,7 +458,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-5">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                 Next EQA Visit
               </div>
               {editingEQADate ? (
@@ -488,7 +488,7 @@ export function IQAWorkflowSection({ onNavigate }: IQAWorkflowSectionProps) {
           </div>
 
           <div className="pt-5 border-t border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-3">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
               Required Evidence
             </div>
             <div className="space-y-1.5">

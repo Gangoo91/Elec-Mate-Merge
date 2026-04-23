@@ -34,10 +34,10 @@ const GRADE_OPTIONS: { value: string; label: string; description: string; tone: 
 ];
 
 const inputClass =
-  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
 
 const textareaClass =
-  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[120px] resize-none';
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation min-h-[120px] resize-none';
 
 const selectTriggerClass =
   'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
@@ -45,7 +45,7 @@ const selectTriggerClass =
 const selectContentClass =
   'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGradeSheetProps) {
   const { data: grades = [] } = useCollegeGrades();
@@ -203,20 +203,20 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
                 </p>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <p className="text-[11px] text-white/40 uppercase tracking-wider">Student</p>
+                    <p className="text-[11px] text-white/55 uppercase tracking-wider">Student</p>
                     <p className="text-[13px] text-white font-medium mt-0.5">
                       {selectedStudent?.name || 'Unknown'}
                     </p>
                   </div>
                   <div>
-                    <p className="text-[11px] text-white/40 uppercase tracking-wider">Type</p>
+                    <p className="text-[11px] text-white/55 uppercase tracking-wider">Type</p>
                     <p className="text-[13px] text-white font-medium mt-0.5">
                       {selectedAssessment.assessment_type}
                     </p>
                   </div>
                   {selectedAssessment.assessed_at && (
                     <div className="col-span-2">
-                      <p className="text-[11px] text-white/40 uppercase tracking-wider">
+                      <p className="text-[11px] text-white/55 uppercase tracking-wider">
                         Submission Date
                       </p>
                       <p className="text-[13px] text-white font-medium mt-0.5">
@@ -247,7 +247,7 @@ export function RecordGradeSheet({ assessmentId, open, onOpenChange }: RecordGra
                     <SelectItem key={option.value} value={option.value}>
                       <div className="flex flex-col">
                         <span>{option.label}</span>
-                        <span className="text-[11px] text-white/50">{option.description}</span>
+                        <span className="text-[11px] text-white/75">{option.description}</span>
                       </div>
                     </SelectItem>
                   ))}

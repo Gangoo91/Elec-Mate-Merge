@@ -213,7 +213,7 @@ export function VoiceEvidenceCapture({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">VOICE EVIDENCE</div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">VOICE EVIDENCE</div>
             <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">Voice capture</h3>
           </div>
           <Pill tone="yellow">AI</Pill>
@@ -233,7 +233,7 @@ export function VoiceEvidenceCapture({
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
       <div className="p-5 sm:p-6 pb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">VOICE EVIDENCE</div>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">VOICE EVIDENCE</div>
           <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">Voice evidence capture</h3>
         </div>
         <Pill tone="yellow">AI Transcription</Pill>
@@ -282,7 +282,7 @@ export function VoiceEvidenceCapture({
                 {formatTime(recordingTime)}
               </span>
             </div>
-            <p className="text-[11px] uppercase tracking-[0.18em] text-white/40">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">
               {isRecording ? (isPaused ? "Paused" : "Recording") : audioBlob ? "Complete" : "Ready to record"}
             </p>
           </div>
@@ -408,7 +408,7 @@ export function VoiceEvidenceCapture({
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div>
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">TRANSCRIPTION</div>
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">TRANSCRIPTION</div>
                 <h4 className="mt-1 text-base font-semibold text-white tracking-tight">AI output</h4>
               </div>
               <Pill tone="green">Complete</Pill>
@@ -418,7 +418,7 @@ export function VoiceEvidenceCapture({
             </div>
 
             {/* Recording Info */}
-            <div className="flex items-center gap-4 text-[11.5px] text-white/50">
+            <div className="flex items-center gap-4 text-[11.5px] text-white/75">
               <div className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-white/30" aria-hidden />
                 <span>Duration: {formatTime(recordingTime)}</span>
@@ -434,7 +434,7 @@ export function VoiceEvidenceCapture({
         {/* Tips */}
         {!audioBlob && !isRecording && (
           <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">TIPS</div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">TIPS</div>
             <p className="mt-1.5 text-sm font-medium text-white">Recording tips</p>
             <ul className="mt-3 space-y-1.5 text-[12.5px] text-white/60">
               <li className="flex items-start gap-2">

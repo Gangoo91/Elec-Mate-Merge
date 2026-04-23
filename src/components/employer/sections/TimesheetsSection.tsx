@@ -1,8 +1,6 @@
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
   SelectContent,
@@ -10,20 +8,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { toast } from 'sonner';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { ManualTimeEntryDialog } from '@/components/employer/dialogs/ManualTimeEntryDialog';
 import { LeaveTabContent } from '@/components/employer/sections/LeaveTabContent';
 import { downloadExportCSV, getProviderName } from '@/services/accountingService';
@@ -39,36 +25,18 @@ import {
   isToday,
 } from 'date-fns';
 import {
-  Clock,
-  Search,
   Download,
-  Calendar,
-  User,
-  Briefcase,
-  CheckCircle2,
-  AlertCircle,
-  Play,
-  Square,
-  FileSpreadsheet,
   Plus,
   ChevronLeft,
   ChevronRight,
-  ChevronDown,
-  MapPin,
-  PoundSterling,
-  Check,
-  X,
+  Play,
+  Square,
   RefreshCw,
   Link2,
-  Settings,
-  TrendingUp,
   Zap,
-  Users,
   Coffee,
-  Filter,
-  CalendarDays,
-  FileText,
-  Palmtree,
+  X,
+  Check,
   Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -83,8 +51,31 @@ import {
 import { useEmployees } from '@/hooks/useEmployees';
 import { useActiveJobs } from '@/hooks/useJobs';
 import { useClockState } from '@/hooks/useClockState';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  Dot,
+  Eyebrow,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Divider,
+  PrimaryButton,
+  SecondaryButton,
+  selectTriggerClass,
+  selectContentClass,
+  checkboxClass,
+  type Tone,
+} from '@/components/employer/editorial';
 
-// Normalised timesheet type for display
 interface DisplayTimesheet {
   id: string;
   employeeId: string;
@@ -100,7 +91,6 @@ interface DisplayTimesheet {
   notes?: string;
 }
 
-// Helper to format time from ISO timestamp
 const formatTimeFromISO = (isoString: string | null): string => {
   if (!isoString) return '--:--';
   try {
@@ -110,13 +100,20 @@ const formatTimeFromISO = (isoString: string | null): string => {
   }
 };
 
-// Types
-interface XeroSyncState {
-  isConnected: boolean;
-  lastSync: string | null;
-  pendingEntries: number;
-  syncInProgress: boolean;
-}
+const getInitials = (name: string): string =>
+  name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+
+const statusTone = (status: string): Tone => {
+  if (status === 'Approved') return 'emerald';
+  if (status === 'Pending') return 'amber';
+  if (status === 'Rejected') return 'red';
+  return 'yellow';
+};
 
 interface AccountingConnection {
   provider: AccountingProvider;
@@ -126,52 +123,44 @@ interface AccountingConnection {
 
 const DAYS_OF_WEEK = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-const ACCOUNTING_PROVIDERS: { id: AccountingProvider; name: string; icon: string }[] = [
-  { id: 'xero', name: 'Xero', icon: '🔵' },
-  { id: 'sage', name: 'Sage', icon: '🟢' },
-  { id: 'quickbooks', name: 'QuickBooks', icon: '🟡' },
-  { id: 'intuit', name: 'Intuit', icon: '🔴' },
-  { id: 'csv', name: 'CSV Export', icon: '📄' },
+const ACCOUNTING_PROVIDERS: { id: AccountingProvider; name: string }[] = [
+  { id: 'xero', name: 'Xero' },
+  { id: 'sage', name: 'Sage' },
+  { id: 'quickbooks', name: 'QuickBooks' },
+  { id: 'intuit', name: 'Intuit' },
+  { id: 'csv', name: 'CSV Export' },
 ];
 
 export const TimesheetsSection = () => {
-  const isMobile = useIsMobile();
-
-  // Supabase data hooks
-  const { data: rawTimesheets = [], isLoading: timesheetsLoading } = useTimesheets();
+  const { data: rawTimesheets = [], isLoading: timesheetsLoading, refetch: refetchTimesheets } = useTimesheets();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
   const { data: jobs = [], isLoading: jobsLoading } = useActiveJobs();
 
-  // Clock state hook
   const { isClockedIn, clockState, duration, clockIn, clockOut, isClockingOut } = useClockState();
 
-  // Mutations
   const approveTimesheetMutation = useApproveTimesheet();
   const rejectTimesheetMutation = useRejectTimesheet();
   const batchApproveMutation = useBatchApproveTimesheets();
   const batchRejectMutation = useBatchRejectTimesheets();
 
-  // Core state
   const [searchQuery, setSearchQuery] = useState('');
   const [filterEmployee, setFilterEmployee] = useState<string>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [selectedJobId, setSelectedJobId] = useState<string>('');
   const [selectedEmployeeId, setSelectedEmployeeId] = useState<string>('');
-  const [activeTab, setActiveTab] = useState('time-entries');
+  const [activeTab, setActiveTab] = useState('week');
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
-  const [isWorkerBreakdownOpen, setIsWorkerBreakdownOpen] = useState(false);
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [isExportOpen, setIsExportOpen] = useState(false);
+  const [detailTimesheet, setDetailTimesheet] = useState<DisplayTimesheet | null>(null);
 
-  // Week navigation
   const [currentWeekStart, setCurrentWeekStart] = useState(() =>
     startOfWeek(new Date(), { weekStartsOn: 1 })
   );
 
-  // Batch selection
   const [selectedTimesheetIds, setSelectedTimesheetIds] = useState<string[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
 
-  // Accounting integrations
   const [accountingConnections, setAccountingConnections] = useState<AccountingConnection[]>([
     { provider: 'xero', isConnected: false, lastSync: null },
     { provider: 'sage', isConnected: false, lastSync: null },
@@ -181,7 +170,6 @@ export const TimesheetsSection = () => {
   ]);
   const [syncInProgress, setSyncInProgress] = useState<AccountingProvider | null>(null);
 
-  // Transform raw Supabase timesheets to display format with employee/job names
   const timesheets: DisplayTimesheet[] = useMemo(() => {
     return rawTimesheets.map((ts) => {
       const employee = employees.find((e) => e.id === ts.employee_id);
@@ -204,9 +192,8 @@ export const TimesheetsSection = () => {
     });
   }, [rawTimesheets, employees, jobs]);
 
-  // Week navigation
   const currentWeekEnd = endOfWeek(currentWeekStart, { weekStartsOn: 1 });
-  const weekLabel = `${format(currentWeekStart, 'd MMM')} - ${format(currentWeekEnd, 'd MMM')}`;
+  const weekLabel = `${format(currentWeekStart, 'd MMM')} – ${format(currentWeekEnd, 'd MMM')}`;
 
   const goToPreviousWeek = () => setCurrentWeekStart((prev) => subWeeks(prev, 1));
   const goToNextWeek = () => setCurrentWeekStart((prev) => addWeeks(prev, 1));
@@ -215,7 +202,6 @@ export const TimesheetsSection = () => {
     setSelectedDay(null);
   };
 
-  // Filter timesheets for current week
   const weekTimesheets = useMemo(() => {
     return timesheets.filter((ts) => {
       const tsDate = parseISO(ts.date);
@@ -223,7 +209,6 @@ export const TimesheetsSection = () => {
     });
   }, [timesheets, currentWeekStart, currentWeekEnd]);
 
-  // Apply search and filters (including day filter)
   const filteredTimesheets = weekTimesheets.filter((ts) => {
     const matchesSearch =
       ts.employeeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -232,10 +217,13 @@ export const TimesheetsSection = () => {
     const matchesStatus = filterStatus === 'all' || ts.status === filterStatus;
     const matchesDay =
       !selectedDay || format(parseISO(ts.date), 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
-    return matchesSearch && matchesEmployee && matchesStatus && matchesDay;
+    const matchesTab =
+      activeTab === 'week' ||
+      (activeTab === 'pending' && ts.status === 'Pending') ||
+      (activeTab === 'approved' && ts.status === 'Approved');
+    return matchesSearch && matchesEmployee && matchesStatus && matchesDay && matchesTab;
   });
 
-  // Calculate labour costs using employee hourly rates
   const getHourlyRate = (employeeId: string): number => {
     const emp = employees.find((e) => e.id === employeeId);
     return emp?.hourly_rate || 25;
@@ -245,21 +233,30 @@ export const TimesheetsSection = () => {
     return getHourlyRate(employeeId) * hours;
   };
 
-  // Calculate stats
-  const totalHours = filteredTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
-  const approvedHours = filteredTimesheets
+  const totalHours = weekTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
+  const approvedHours = weekTimesheets
     .filter((ts) => ts.status === 'Approved')
     .reduce((sum, ts) => sum + ts.totalHours, 0);
-  const pendingCount = filteredTimesheets.filter((ts) => ts.status === 'Pending').length;
-  const totalLabourCost = filteredTimesheets.reduce(
+  const pendingCount = weekTimesheets.filter((ts) => ts.status === 'Pending').length;
+  const totalLabourCost = weekTimesheets.reduce(
     (sum, ts) => sum + calculateLabourCost(ts.employeeId, ts.totalHours),
     0
   );
-  const approvedLabourCost = filteredTimesheets
+  const approvedLabourCost = weekTimesheets
     .filter((ts) => ts.status === 'Approved')
     .reduce((sum, ts) => sum + calculateLabourCost(ts.employeeId, ts.totalHours), 0);
 
-  // Weekly calendar data
+  const overtimeHours = weekTimesheets.reduce(
+    (sum, ts) => sum + Math.max(ts.totalHours - 8, 0),
+    0
+  );
+  const overtimeCost = weekTimesheets.reduce((sum, ts) => {
+    const ot = Math.max(ts.totalHours - 8, 0);
+    return sum + calculateLabourCost(ts.employeeId, ot);
+  }, 0);
+
+  const onLeaveToday = 0;
+
   const weekDays = eachDayOfInterval({ start: currentWeekStart, end: currentWeekEnd });
   const dailyBreakdown = weekDays.map((day) => {
     const dayTimesheets = weekTimesheets.filter(
@@ -280,17 +277,31 @@ export const TimesheetsSection = () => {
 
   const maxDailyHours = Math.max(...dailyBreakdown.map((d) => d.hours), 8);
 
-  // Group by employee for breakdown
   const employeeBreakdown = employees
     .map((emp) => {
       const empTimesheets = weekTimesheets.filter((ts) => ts.employeeId === emp.id);
       const hours = empTimesheets.reduce((sum, ts) => sum + ts.totalHours, 0);
       const cost = calculateLabourCost(emp.id, hours);
-      return { ...emp, totalHours: hours, entries: empTimesheets.length, cost };
+      const overtime = empTimesheets.reduce(
+        (sum, ts) => sum + Math.max(ts.totalHours - 8, 0),
+        0
+      );
+      const days = new Set(empTimesheets.map((ts) => ts.date)).size;
+      const pending = empTimesheets.filter((ts) => ts.status === 'Pending').length;
+      const approved = empTimesheets.filter((ts) => ts.status === 'Approved').length;
+      return {
+        ...emp,
+        totalHours: hours,
+        entries: empTimesheets.length,
+        cost,
+        overtime,
+        days,
+        pending,
+        approved,
+      };
     })
     .filter((e) => e.entries > 0);
 
-  // Generate payroll entries for export
   const generatePayrollEntries = (): PayrollEntry[] => {
     const approvedTimesheets = weekTimesheets.filter((ts) => ts.status === 'Approved');
     const employeeMap = new Map<string, PayrollEntry>();
@@ -340,7 +351,6 @@ export const TimesheetsSection = () => {
     return Array.from(employeeMap.values());
   };
 
-  // Handlers
   const handleClockIn = () => {
     if (!selectedEmployeeId) {
       toast.error('Please select an employee before clocking in.');
@@ -359,15 +369,17 @@ export const TimesheetsSection = () => {
   };
 
   const handleClockOut = async () => {
-    const success = await clockOut(0);
-    // Toast is shown by useClockState hook
+    await clockOut(0);
   };
 
   const handleApprove = (id: string) => {
     approveTimesheetMutation.mutate(
       { id, approvedBy: 'Admin' },
       {
-        onSuccess: () => toast.success('Timesheet approved'),
+        onSuccess: () => {
+          toast.success('Timesheet approved');
+          setDetailTimesheet(null);
+        },
         onError: () => toast.error('Failed to approve timesheet'),
       }
     );
@@ -375,12 +387,14 @@ export const TimesheetsSection = () => {
 
   const handleReject = (id: string) => {
     rejectTimesheetMutation.mutate(id, {
-      onSuccess: () => toast.success('Timesheet rejected'),
+      onSuccess: () => {
+        toast.success('Timesheet rejected');
+        setDetailTimesheet(null);
+      },
       onError: () => toast.error('Failed to reject timesheet'),
     });
   };
 
-  // Batch actions
   const handleBatchApprove = () => {
     batchApproveMutation.mutate(
       { ids: selectedTimesheetIds, approvedBy: 'Admin' },
@@ -419,7 +433,6 @@ export const TimesheetsSection = () => {
     setSelectedTimesheetIds(pendingIds);
   };
 
-  // Accounting handlers
   const handleConnectProvider = (provider: AccountingProvider) => {
     setAccountingConnections((prev) =>
       prev.map((conn) =>
@@ -459,902 +472,770 @@ export const TimesheetsSection = () => {
     toast.success(`Timesheet data exported for ${getProviderName(provider)}`);
   };
 
-  const activeJobs = jobs.filter((j) => j.status === 'Active');
-
-  // Loading state
-  const isLoading = timesheetsLoading || employeesLoading || jobsLoading;
-
-  // Render timesheet card
-  const renderTimesheetCard = (ts: (typeof filteredTimesheets)[0]) => {
-    const labourCost = calculateLabourCost(ts.employeeId, ts.totalHours);
-    const hourlyRate = getHourlyRate(ts.employeeId);
-    const isSelected = selectedTimesheetIds.includes(ts.id);
-
-    return (
-      <Card
-        key={ts.id}
-        className={cn(
-          'bg-elec-gray border-border overflow-hidden transition-all',
-          isSelected && 'ring-2 ring-elec-yellow border-elec-yellow'
-        )}
-        onClick={() => isSelectMode && toggleTimesheetSelection(ts.id)}
-      >
-        <CardContent className="p-4">
-          {/* Header with avatar and status */}
-          <div className="flex items-start gap-3 mb-4">
-            {isSelectMode && (
-              <Checkbox
-                checked={isSelected}
-                onCheckedChange={() => toggleTimesheetSelection(ts.id)}
-                className="mt-1"
-              />
-            )}
-            <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 text-elec-yellow font-semibold">
-              {ts.employeeName
-                .split(' ')
-                .map((n) => n[0])
-                .join('')
-                .slice(0, 2)}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-2">
-                <div className="min-w-0">
-                  <h4 className="font-semibold text-foreground truncate">{ts.employeeName}</h4>
-                  <p className="text-sm text-white truncate flex items-center gap-1.5">
-                    <Briefcase className="h-3.5 w-3.5 flex-shrink-0" />
-                    {ts.jobTitle}
-                  </p>
-                </div>
-                <Badge
-                  className={cn(
-                    'flex-shrink-0 text-xs',
-                    ts.status === 'Approved' && 'bg-success/20 text-success border-success/30',
-                    ts.status === 'Pending' && 'bg-warning/20 text-warning border-warning/30',
-                    ts.status === 'Rejected' &&
-                      'bg-destructive/20 text-destructive border-destructive/30'
-                  )}
-                >
-                  {ts.status}
-                </Badge>
-              </div>
-            </div>
-          </div>
-
-          {/* Time bar */}
-          <div className="mb-4 p-3 bg-surface rounded-lg">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-white" />
-                <span className="text-sm font-medium">{ts.clockIn}</span>
-              </div>
-              <div className="text-lg font-bold text-elec-yellow">{ts.totalHours}h</div>
-              <span className="text-sm font-medium">{ts.clockOut}</span>
-            </div>
-            <div className="h-2 bg-muted rounded-full overflow-hidden">
-              <div
-                className={cn(
-                  'h-full rounded-full transition-all',
-                  ts.status === 'Approved' && 'bg-success',
-                  ts.status === 'Pending' && 'bg-warning',
-                  ts.status === 'Rejected' && 'bg-destructive'
-                )}
-                style={{ width: `${Math.min((ts.totalHours / 10) * 100, 100)}%` }}
-              />
-            </div>
-          </div>
-
-          {/* Info row */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2 text-sm">
-              <Calendar className="h-4 w-4 text-white" />
-              <span className="text-foreground">{format(parseISO(ts.date), 'EEE, d MMM')}</span>
-            </div>
-            <div className="text-right">
-              <span className="text-lg font-bold text-foreground">£{labourCost.toFixed(0)}</span>
-              <span className="text-xs text-white ml-1">@ £{hourlyRate}/hr</span>
-            </div>
-          </div>
-
-          {/* Action buttons */}
-          {ts.status === 'Pending' && !isSelectMode && (
-            <div className="flex gap-2">
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleReject(ts.id);
-                }}
-                className="flex-1 h-12 touch-feedback text-destructive hover:text-destructive"
-              >
-                <X className="h-5 w-5 mr-2" />
-                Reject
-              </Button>
-              <Button
-                size="lg"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleApprove(ts.id);
-                }}
-                className="flex-1 h-12 touch-feedback"
-              >
-                <Check className="h-5 w-5 mr-2" />
-                Approve
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    );
+  const refresh = () => {
+    refetchTimesheets();
+    toast.success('Timesheets refreshed');
   };
 
-  return (
-    <div className="space-y-4 animate-fade-in">
-      {/* Compact Header */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-elec-yellow/20">
-              <Clock className="h-5 w-5 text-elec-yellow" />
-            </div>
-            <div>
-              <h1 className="text-lg font-bold text-foreground">Timesheets</h1>
-              <p className="text-xs text-white hidden sm:block">
-                Track, approve, export
-              </p>
-            </div>
-          </div>
+  const activeJobs = jobs.filter((j) => j.status === 'Active');
+  const isLoading = timesheetsLoading || employeesLoading || jobsLoading;
 
-          <div className="flex gap-2">
+  const tabs = [
+    { value: 'week', label: 'This week', count: weekTimesheets.length },
+    { value: 'pending', label: 'Pending', count: pendingCount },
+    {
+      value: 'approved',
+      label: 'Approved',
+      count: weekTimesheets.filter((t) => t.status === 'Approved').length,
+    },
+    { value: 'leave', label: 'Leave' },
+  ];
+
+  return (
+    <PageFrame>
+      <PageHero
+        eyebrow="People"
+        title="Timesheets"
+        description="Hours, leave and approvals for the whole team."
+        tone="amber"
+        actions={
+          <div className="flex items-center gap-2">
             <ManualTimeEntryDialog
               trigger={
-                <Button variant="outline" size="sm" className="gap-1.5 touch-feedback">
-                  <Plus className="h-4 w-4" />
-                  <span className="hidden sm:inline">Add</span>
-                </Button>
+                <PrimaryButton>
+                  <Plus className="h-4 w-4 mr-1.5" />
+                  Add entry
+                </PrimaryButton>
               }
             />
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-1.5 touch-feedback">
-                  <Download className="h-4 w-4" />
-                  <span className="hidden sm:inline">Export</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="bottom" className="h-auto max-h-[80vh]">
-                <SheetHeader>
-                  <SheetTitle className="flex items-center gap-2">
-                    <FileSpreadsheet className="h-5 w-5 text-elec-yellow" />
-                    Export to Accounting Software
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="mt-4 space-y-3 pb-6">
-                  {ACCOUNTING_PROVIDERS.map((provider) => {
-                    const conn = accountingConnections.find((c) => c.provider === provider.id);
-                    const isConnected = conn?.isConnected;
-                    const isSyncing = syncInProgress === provider.id;
+            <SecondaryButton onClick={() => setIsExportOpen(true)}>
+              <Download className="h-4 w-4 mr-1.5" />
+              Export
+            </SecondaryButton>
+            <IconButton onClick={refresh} aria-label="Refresh timesheets">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </div>
+        }
+      />
+
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : (
+        <>
+          <StatStrip
+            columns={4}
+            stats={[
+              {
+                label: 'Hours this week',
+                value: totalHours.toFixed(1),
+                tone: 'amber',
+                sub: `${approvedHours.toFixed(1)} approved`,
+              },
+              {
+                label: 'Pending approval',
+                value: pendingCount,
+                tone: 'orange',
+                sub: pendingCount === 1 ? '1 entry' : `${pendingCount} entries`,
+              },
+              {
+                label: 'On leave today',
+                value: onLeaveToday,
+                tone: 'blue',
+                sub: onLeaveToday === 0 ? 'Everyone in' : 'See leave tab',
+              },
+              {
+                label: 'Overtime',
+                value: `£${Math.round(overtimeCost).toLocaleString()}`,
+                tone: 'emerald',
+                accent: true,
+                sub: `${overtimeHours.toFixed(1)}h above 8h/day`,
+              },
+            ]}
+          />
+
+          <ListCard>
+            <ListCardHeader
+              tone="amber"
+              title="Week"
+              meta={
+                <span className="text-[11.5px] text-white tabular-nums">{weekLabel}</span>
+              }
+              action="Today"
+              onAction={goToThisWeek}
+            />
+            <div className="px-5 sm:px-6 py-4 flex items-center gap-3">
+              <IconButton onClick={goToPreviousWeek} aria-label="Previous week">
+                <ChevronLeft className="h-4 w-4" />
+              </IconButton>
+              <div className="flex-1 overflow-x-auto hide-scrollbar">
+                <div className="flex gap-2 min-w-max">
+                  {dailyBreakdown.map((data, idx) => {
+                    const isSelected =
+                      selectedDay &&
+                      format(data.day, 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
+                    const isTodayDate = isToday(data.day);
+                    const heightPct = Math.min((data.hours / maxDailyHours) * 100, 100);
 
                     return (
-                      <div
-                        key={provider.id}
-                        className="flex items-center justify-between p-4 bg-surface rounded-lg border border-border"
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedDay(isSelected ? null : data.day)}
+                        className={cn(
+                          'flex flex-col items-center min-w-[60px] sm:min-w-[68px] h-[112px] px-2 py-2 rounded-xl border transition-colors touch-manipulation',
+                          isSelected
+                            ? 'bg-elec-yellow border-elec-yellow text-black'
+                            : isTodayDate
+                              ? 'bg-white/[0.04] border-elec-yellow/40 text-white'
+                              : 'bg-white/[0.02] border-white/[0.06] text-white hover:bg-white/[0.05]'
+                        )}
                       >
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{provider.icon}</span>
-                          <div>
-                            <p className="font-medium text-foreground">{provider.name}</p>
-                            {isConnected && conn?.lastSync && (
-                              <p className="text-xs text-white">
-                                Last sync: {format(parseISO(conn.lastSync), 'dd/MM HH:mm')}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex gap-2">
-                          {provider.id === 'csv' ? (
-                            <Button
-                              size="sm"
-                              onClick={() => handleExport('csv')}
-                              className="gap-1.5"
-                            >
-                              <Download className="h-4 w-4" />
-                              Download
-                            </Button>
-                          ) : isConnected ? (
-                            <>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleExport(provider.id)}
-                              >
-                                <Download className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                size="sm"
-                                onClick={() => handleSyncProvider(provider.id)}
-                                disabled={isSyncing || approvedHours === 0}
-                                className="gap-1.5"
-                              >
-                                {isSyncing ? (
-                                  <RefreshCw className="h-4 w-4 animate-spin" />
-                                ) : (
-                                  <Zap className="h-4 w-4" />
-                                )}
-                                Sync
-                              </Button>
-                            </>
-                          ) : (
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleConnectProvider(provider.id)}
-                              className="gap-1.5"
-                            >
-                              <Link2 className="h-4 w-4" />
-                              Connect
-                            </Button>
+                        <span
+                          className={cn(
+                            'text-[10px] font-semibold uppercase tracking-[0.14em]',
+                            isSelected ? 'text-black' : 'text-white'
+                          )}
+                        >
+                          {DAYS_OF_WEEK[idx]}
+                        </span>
+                        <span
+                          className={cn(
+                            'mt-0.5 text-[15px] font-semibold tabular-nums',
+                            isSelected ? 'text-black' : 'text-white'
+                          )}
+                        >
+                          {format(data.day, 'd')}
+                        </span>
+                        <div
+                          className={cn(
+                            'mt-1.5 w-7 flex-1 rounded overflow-hidden flex items-end',
+                            isSelected ? 'bg-black/20' : 'bg-white/[0.06]'
+                          )}
+                        >
+                          {data.hours > 0 && (
+                            <div
+                              className={cn(
+                                'w-full',
+                                isSelected ? 'bg-black' : 'bg-elec-yellow'
+                              )}
+                              style={{ height: `${heightPct}%` }}
+                            />
                           )}
                         </div>
-                      </div>
+                        <span
+                          className={cn(
+                            'mt-1 text-[10px] font-medium tabular-nums',
+                            isSelected ? 'text-black' : 'text-white'
+                          )}
+                        >
+                          {data.hours.toFixed(1)}h
+                        </span>
+                      </button>
                     );
                   })}
-
-                  <div className="pt-3 border-t border-border">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-white">Ready to export:</span>
-                      <span className="font-medium text-foreground">
-                        {approvedHours.toFixed(1)} hrs • £{approvedLabourCost.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
-        </div>
-
-        {/* Week Navigator - Compact */}
-        <div className="flex items-center justify-between p-2 bg-surface rounded-lg">
-          <Button variant="ghost" size="icon" onClick={goToPreviousWeek} className="h-9 w-9">
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 text-white" />
-            <span className="text-sm font-medium">{weekLabel}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="sm" onClick={goToThisWeek} className="text-xs h-8 px-2">
-              Today
-            </Button>
-            <Button variant="ghost" size="icon" onClick={goToNextWeek} className="h-9 w-9">
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Clock In/Out Card - Streamlined */}
-      <Card
-        className={cn(
-          'relative overflow-hidden border transition-all',
-          isClockedIn ? 'bg-success/10 border-success/50' : 'bg-elec-gray border-border'
-        )}
-      >
-        <CardContent className="p-4">
-          {isClockedIn ? (
-            // Clocked In State - Expanded
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="relative">
-                    <div className="w-14 h-14 rounded-full bg-success/20 flex items-center justify-center">
-                      <Clock className="h-7 w-7 text-success" />
-                    </div>
-                    <div className="absolute inset-0 rounded-full border-2 border-success animate-pulse" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-white">On the Clock</p>
-                    <p className="text-3xl font-mono font-bold text-success tracking-wide">
-                      {duration}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-1.5 px-2 py-1 bg-success/20 rounded-full">
-                  <MapPin className="h-3.5 w-3.5 text-success" />
-                  <span className="text-xs text-success font-medium">GPS</span>
                 </div>
               </div>
-
-              <div className="flex items-center gap-2 p-2 bg-surface rounded-lg">
-                <Briefcase className="h-4 w-4 text-white" />
-                <span className="text-sm text-foreground truncate">
-                  {clockState?.jobTitle || 'Unknown Job'}
-                </span>
+              <IconButton onClick={goToNextWeek} aria-label="Next week">
+                <ChevronRight className="h-4 w-4" />
+              </IconButton>
+            </div>
+            <div className="px-5 sm:px-6 pb-4 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/[0.06] pt-3">
+              <div className="flex items-center gap-1.5">
+                <Dot tone="emerald" />
+                <span className="text-[11px] text-white">Approved</span>
               </div>
-
-              <div className="flex gap-2">
-                <Button variant="outline" className="flex-1 h-12 touch-feedback" disabled>
-                  <Coffee className="h-5 w-5 mr-2" />
-                  Break
-                </Button>
-                <Button
-                  onClick={handleClockOut}
-                  variant="destructive"
-                  className="flex-1 h-12 touch-feedback"
-                  disabled={isClockingOut}
-                >
-                  {isClockingOut ? (
-                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                  ) : (
-                    <Square className="h-5 w-5 mr-2" />
-                  )}
-                  Clock Out
-                </Button>
+              <div className="flex items-center gap-1.5">
+                <Dot tone="amber" />
+                <span className="text-[11px] text-white">Pending</span>
               </div>
-            </div>
-          ) : (
-            // Ready to Clock In State - Compact
-            <div className="flex flex-col sm:flex-row items-stretch gap-3">
-              <Select value={selectedEmployeeId} onValueChange={setSelectedEmployeeId}>
-                <SelectTrigger className="flex-1 bg-surface h-12">
-                  <SelectValue placeholder="Select employee..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {employees
-                    .filter((e) => e.status === 'Active' || e.status === 'active')
-                    .map((emp) => (
-                      <SelectItem key={emp.id} value={emp.id}>
-                        <div className="flex items-center gap-2">
-                          <User className="h-4 w-4 text-white" />
-                          {emp.name}
-                        </div>
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-              <Select value={selectedJobId} onValueChange={setSelectedJobId}>
-                <SelectTrigger className="flex-1 bg-surface h-12">
-                  <SelectValue placeholder="Select job..." />
-                </SelectTrigger>
-                <SelectContent>
-                  {activeJobs.map((job) => (
-                    <SelectItem key={job.id} value={job.id}>
-                      <div className="flex items-center gap-2">
-                        <Briefcase className="h-4 w-4 text-white" />
-                        {job.title}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Button onClick={handleClockIn} className="h-12 px-6 touch-feedback gap-2">
-                <Play className="h-5 w-5" />
-                Clock In
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-
-      {/* 2-Column Stats Grid */}
-      <div className="grid grid-cols-2 gap-3">
-        <Card className="bg-elec-gray border-border">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <Clock className="h-4 w-4 text-elec-yellow" />
-              <span className="text-xs text-white">Hours</span>
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-foreground">{totalHours.toFixed(1)}</span>
-              <span className="text-sm text-success">({approvedHours.toFixed(1)} approved)</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-elec-gray border-border">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <PoundSterling className="h-4 w-4 text-elec-yellow" />
-              <span className="text-xs text-white">Labour Cost</span>
-            </div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-foreground">
-                £{totalLabourCost.toLocaleString()}
-              </span>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-elec-gray border-border">
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <CheckCircle2 className="h-4 w-4 text-success" />
-              <span className="text-xs text-white">Approved</span>
-            </div>
-            <span className="text-2xl font-bold text-success">
-              {weekTimesheets.filter((t) => t.status === 'Approved').length}
-            </span>
-          </CardContent>
-        </Card>
-
-        <Card className={cn('bg-elec-gray border-border', pendingCount > 0 && 'border-warning/50')}>
-          <CardContent className="p-3">
-            <div className="flex items-center gap-2 mb-1">
-              <AlertCircle className="h-4 w-4 text-warning" />
-              <span className="text-xs text-white">Pending</span>
-            </div>
-            <span className="text-2xl font-bold text-warning">{pendingCount}</span>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Horizontal Scrollable Weekly Calendar */}
-      <div className="overflow-x-auto hide-scrollbar -mx-4 px-4">
-        <div className="flex gap-2 min-w-max pb-2">
-          {dailyBreakdown.map((data, idx) => {
-            const isSelected =
-              selectedDay && format(data.day, 'yyyy-MM-dd') === format(selectedDay, 'yyyy-MM-dd');
-            const isTodayDate = isToday(data.day);
-
-            return (
-              <button
-                key={idx}
-                onClick={() => setSelectedDay(isSelected ? null : data.day)}
-                className={cn(
-                  'flex flex-col items-center p-3 rounded-xl min-w-[72px] transition-all touch-feedback',
-                  isSelected
-                    ? 'bg-elec-yellow text-elec-dark'
-                    : isTodayDate
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/50'
-                      : 'bg-surface border border-transparent'
-                )}
-              >
-                <span
-                  className={cn(
-                    'text-xs font-medium mb-1',
-                    isSelected ? 'text-elec-dark' : 'text-white'
-                  )}
+              <div className="flex items-center gap-1.5">
+                <Dot tone="red" />
+                <span className="text-[11px] text-white">Rejected</span>
+              </div>
+              {selectedDay && (
+                <button
+                  onClick={() => setSelectedDay(null)}
+                  className="ml-auto text-[11.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
                 >
-                  {DAYS_OF_WEEK[idx]}
-                </span>
-                <span
-                  className={cn(
-                    'text-lg font-bold mb-2',
-                    isSelected ? 'text-elec-dark' : 'text-foreground'
-                  )}
-                >
-                  {format(data.day, 'd')}
-                </span>
-
-                {/* Hours bar */}
-                <div
-                  className={cn(
-                    'w-full h-12 rounded-lg overflow-hidden relative',
-                    isSelected ? 'bg-elec-dark/20' : 'bg-muted/50'
-                  )}
-                >
-                  {data.hours > 0 && (
-                    <div
-                      className="absolute bottom-0 left-0 right-0 flex flex-col"
-                      style={{ height: `${Math.min((data.hours / maxDailyHours) * 100, 100)}%` }}
-                    >
-                      {data.approved > 0 && (
-                        <div
-                          className={cn('flex-1', isSelected ? 'bg-elec-dark' : 'bg-success')}
-                          style={{ flex: data.approved / data.hours }}
-                        />
-                      )}
-                      {data.pending > 0 && (
-                        <div
-                          className={cn('flex-1', isSelected ? 'bg-elec-dark/70' : 'bg-warning')}
-                          style={{ flex: data.pending / data.hours }}
-                        />
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                <span
-                  className={cn(
-                    'text-xs font-medium mt-1.5',
-                    isSelected ? 'text-elec-dark' : 'text-foreground'
-                  )}
-                >
-                  {data.hours.toFixed(1)}h
-                </span>
-                {data.count > 0 && (
-                  <Badge
-                    variant="secondary"
-                    className={cn(
-                      'mt-1 text-[10px] px-1.5 py-0',
-                      isSelected && 'bg-elec-dark/30 text-elec-dark'
-                    )}
-                  >
-                    {data.count}
-                  </Badge>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Status Legend */}
-      <div className="flex justify-center gap-4">
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-success" />
-          <span className="text-xs text-white">Approved</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <div className="w-3 h-3 rounded bg-warning" />
-          <span className="text-xs text-white">Pending</span>
-        </div>
-      </div>
-
-      {/* Tabs: Time Entries / Leave / Export */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full grid grid-cols-3 bg-surface">
-          <TabsTrigger value="time-entries" className="gap-1.5 text-xs sm:text-sm">
-            <FileText className="h-4 w-4" />
-            <span className="hidden sm:inline">Time</span> Entries
-          </TabsTrigger>
-          <TabsTrigger value="leave" className="gap-1.5 text-xs sm:text-sm">
-            <Palmtree className="h-4 w-4" />
-            Leave
-          </TabsTrigger>
-          <TabsTrigger value="workers" className="gap-1.5 text-xs sm:text-sm">
-            <Users className="h-4 w-4" />
-            Workers
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="time-entries" className="mt-4 space-y-4">
-          {/* Filters */}
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              {!searchQuery && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+                  Clear day filter
+                </button>
               )}
-              <Input
-                placeholder="Search..."
-                className={cn('bg-surface h-10', !searchQuery && 'pl-10')}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
             </div>
-            <Sheet open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="h-10 w-10 flex-shrink-0">
-                  <Filter className="h-4 w-4" />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="bottom" className="h-auto">
-                <SheetHeader>
-                  <SheetTitle>Filters</SheetTitle>
-                </SheetHeader>
-                <div className="space-y-4 py-4">
-                  <div>
-                    <label className="text-sm text-white mb-2 block">Worker</label>
-                    <Select value={filterEmployee} onValueChange={setFilterEmployee}>
-                      <SelectTrigger className="w-full bg-surface">
-                        <SelectValue placeholder="All workers" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Workers</SelectItem>
-                        {employees.map((emp) => (
+          </ListCard>
+
+          <ListCard>
+            <ListCardHeader
+              tone={isClockedIn ? 'emerald' : 'amber'}
+              title={isClockedIn ? 'On the clock' : 'Clock in'}
+              meta={
+                isClockedIn ? (
+                  <Pill tone="emerald">{duration}</Pill>
+                ) : (
+                  <span className="text-[11.5px] text-white">Select worker and job</span>
+                )
+              }
+            />
+            <div className="px-5 sm:px-6 py-5">
+              {isClockedIn ? (
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <Eyebrow>Active job</Eyebrow>
+                      <div className="mt-2 text-[15px] font-semibold text-white truncate">
+                        {clockState?.jobTitle || 'Unknown job'}
+                      </div>
+                      <div className="mt-1 text-[12px] text-white">
+                        Started · GPS verified
+                      </div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="text-[28px] sm:text-[36px] font-semibold text-white tabular-nums leading-none">
+                        {duration}
+                      </div>
+                      <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
+                        Elapsed
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <SecondaryButton disabled fullWidth>
+                      <Coffee className="h-4 w-4 mr-2" />
+                      Break
+                    </SecondaryButton>
+                    <PrimaryButton
+                      onClick={handleClockOut}
+                      disabled={isClockingOut}
+                      fullWidth
+                    >
+                      {isClockingOut ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <Square className="h-4 w-4 mr-2" />
+                      )}
+                      Clock out
+                    </PrimaryButton>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex flex-col sm:flex-row items-stretch gap-2">
+                  <Select value={selectedEmployeeId} onValueChange={setSelectedEmployeeId}>
+                    <SelectTrigger className={`${selectTriggerClass} flex-1`}>
+                      <SelectValue placeholder="Select worker…" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {employees
+                        .filter((e) => e.status === 'Active' || e.status === 'active')
+                        .map((emp) => (
                           <SelectItem key={emp.id} value={emp.id}>
                             {emp.name}
                           </SelectItem>
                         ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <label className="text-sm text-white mb-2 block">Status</label>
-                    <Select value={filterStatus} onValueChange={setFilterStatus}>
-                      <SelectTrigger className="w-full bg-surface">
-                        <SelectValue placeholder="All statuses" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Statuses</SelectItem>
-                        <SelectItem value="Pending">Pending</SelectItem>
-                        <SelectItem value="Approved">Approved</SelectItem>
-                        <SelectItem value="Rejected">Rejected</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <Button className="w-full" onClick={() => setIsFiltersOpen(false)}>
-                    Apply Filters
-                  </Button>
+                    </SelectContent>
+                  </Select>
+                  <Select value={selectedJobId} onValueChange={setSelectedJobId}>
+                    <SelectTrigger className={`${selectTriggerClass} flex-1`}>
+                      <SelectValue placeholder="Select job…" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {activeJobs.map((job) => (
+                        <SelectItem key={job.id} value={job.id}>
+                          {job.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <PrimaryButton onClick={handleClockIn}>
+                    <Play className="h-4 w-4 mr-2" />
+                    Clock in
+                  </PrimaryButton>
                 </div>
-              </SheetContent>
-            </Sheet>
-            <Button
-              variant={isSelectMode ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => {
-                setIsSelectMode(!isSelectMode);
-                if (isSelectMode) setSelectedTimesheetIds([]);
-              }}
-              className="h-10 px-3"
-            >
-              {isSelectMode ? 'Done' : 'Select'}
-            </Button>
-          </div>
-
-          {/* Active filters / day filter */}
-          {(selectedDay || filterEmployee !== 'all' || filterStatus !== 'all') && (
-            <div className="flex flex-wrap gap-2">
-              {selectedDay && (
-                <Badge variant="secondary" className="gap-1.5 pr-1">
-                  {format(selectedDay, 'EEE, d MMM')}
-                  <button
-                    onClick={() => setSelectedDay(null)}
-                    className="ml-1 p-0.5 hover:bg-muted rounded"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </Badge>
               )}
-              {filterEmployee !== 'all' && (
-                <Badge variant="secondary" className="gap-1.5 pr-1">
-                  {employees.find((e) => e.id === filterEmployee)?.name}
-                  <button
-                    onClick={() => setFilterEmployee('all')}
-                    className="ml-1 p-0.5 hover:bg-muted rounded"
+            </div>
+          </ListCard>
+
+          <FilterBar
+            tabs={tabs}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search worker or job…"
+            actions={
+              <>
+                <SecondaryButton onClick={() => setIsFiltersOpen(true)}>Filters</SecondaryButton>
+                {isSelectMode ? (
+                  <PrimaryButton
+                    onClick={() => {
+                      setIsSelectMode(false);
+                      setSelectedTimesheetIds([]);
+                    }}
                   >
-                    <X className="h-3 w-3" />
-                  </button>
-                </Badge>
+                    Done
+                  </PrimaryButton>
+                ) : (
+                  <SecondaryButton onClick={() => setIsSelectMode(true)}>Select</SecondaryButton>
+                )}
+              </>
+            }
+          />
+
+          {(filterEmployee !== 'all' || filterStatus !== 'all') && (
+            <div className="flex flex-wrap gap-2">
+              {filterEmployee !== 'all' && (
+                <button
+                  onClick={() => setFilterEmployee('all')}
+                  className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11.5px] text-white touch-manipulation"
+                >
+                  {employees.find((e) => e.id === filterEmployee)?.name}
+                  <X className="h-3 w-3" />
+                </button>
               )}
               {filterStatus !== 'all' && (
-                <Badge variant="secondary" className="gap-1.5 pr-1">
+                <button
+                  onClick={() => setFilterStatus('all')}
+                  className="inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-[11.5px] text-white touch-manipulation"
+                >
                   {filterStatus}
-                  <button
-                    onClick={() => setFilterStatus('all')}
-                    className="ml-1 p-0.5 hover:bg-muted rounded"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
-                </Badge>
+                  <X className="h-3 w-3" />
+                </button>
               )}
             </div>
           )}
 
-          {/* Batch Action Bar */}
           {isSelectMode && selectedTimesheetIds.length > 0 && (
-            <div className="flex items-center justify-between p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-medium">{selectedTimesheetIds.length} selected</span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={selectAllPending}
-                  className="text-xs h-7"
-                >
-                  Select All Pending
-                </Button>
+            <ListCard>
+              <div className="flex items-center justify-between gap-3 px-5 sm:px-6 py-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <Pill tone="yellow">{selectedTimesheetIds.length} selected</Pill>
+                  <button
+                    onClick={selectAllPending}
+                    className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                  >
+                    Select all pending
+                  </button>
+                </div>
+                <div className="flex gap-2">
+                  <SecondaryButton onClick={handleBatchReject} size="sm">
+                    <X className="h-3.5 w-3.5 mr-1.5" />
+                    Reject
+                  </SecondaryButton>
+                  <PrimaryButton onClick={handleBatchApprove} size="sm">
+                    <Check className="h-3.5 w-3.5 mr-1.5" />
+                    Approve
+                  </PrimaryButton>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={handleBatchReject}
-                  className="gap-1 h-8"
-                >
-                  <X className="h-3.5 w-3.5" />
-                  Reject
-                </Button>
-                <Button size="sm" onClick={handleBatchApprove} className="gap-1 h-8">
-                  <Check className="h-3.5 w-3.5" />
-                  Approve
-                </Button>
-              </div>
-            </div>
+            </ListCard>
           )}
 
-          {/* Timesheet Cards */}
-          {isMobile ? (
-            <div className="space-y-3">
-              {filteredTimesheets.length === 0 ? (
-                <Card className="bg-elec-gray border-border">
-                  <CardContent className="p-8 text-center">
-                    <CalendarDays className="h-12 w-12 text-white mx-auto mb-3" />
-                    <p className="text-foreground font-medium mb-1">No timesheets found</p>
-                    <p className="text-sm text-white">
-                      {selectedDay
-                        ? `No entries for ${format(selectedDay, 'EEEE, d MMMM')}`
-                        : 'No entries for this week'}
-                    </p>
-                    <ManualTimeEntryDialog
-                      trigger={
-                        <Button className="mt-4 gap-2">
-                          <Plus className="h-4 w-4" />
-                          Add Entry
-                        </Button>
+          {activeTab === 'leave' ? (
+            <LeaveTabContent />
+          ) : (
+            <>
+              {employeeBreakdown.length === 0 ? (
+                <EmptyState
+                  title="No timesheets this week"
+                  description={
+                    selectedDay
+                      ? `No entries for ${format(selectedDay, 'EEEE, d MMMM')}.`
+                      : 'Add a manual entry or have your team clock in to populate this week.'
+                  }
+                />
+              ) : (
+                <div className="space-y-6">
+                  {employeeBreakdown.map((emp) => {
+                    const empRows = filteredTimesheets.filter((ts) => ts.employeeId === emp.id);
+                    if (empRows.length === 0) return null;
+
+                    return (
+                      <ListCard key={emp.id}>
+                        <ListCardHeader
+                          tone="amber"
+                          title={
+                            <span className="flex items-center gap-2.5">
+                              <Avatar initials={getInitials(emp.name)} size="sm" />
+                              <span className="text-[14px] font-semibold text-white">
+                                {emp.name}
+                              </span>
+                            </span>
+                          }
+                          meta={
+                            <span className="flex items-center gap-2 text-[11.5px] text-white tabular-nums">
+                              <span>{emp.totalHours.toFixed(1)}h</span>
+                              <span className="text-white/30">·</span>
+                              <span>{emp.days}d</span>
+                              {emp.overtime > 0 && (
+                                <>
+                                  <span className="text-white/30">·</span>
+                                  <Pill tone="emerald">{emp.overtime.toFixed(1)}h OT</Pill>
+                                </>
+                              )}
+                              <span className="text-white/30">·</span>
+                              <span className="font-semibold text-white">
+                                £{Math.round(emp.cost).toLocaleString()}
+                              </span>
+                            </span>
+                          }
+                        />
+                        <ListBody>
+                          {empRows.map((ts) => {
+                            const labourCost = calculateLabourCost(ts.employeeId, ts.totalHours);
+                            const isSelected = selectedTimesheetIds.includes(ts.id);
+                            return (
+                              <ListRow
+                                key={ts.id}
+                                accent={statusTone(ts.status)}
+                                lead={
+                                  isSelectMode ? (
+                                    <Checkbox
+                                      checked={isSelected}
+                                      onCheckedChange={() => toggleTimesheetSelection(ts.id)}
+                                      className={checkboxClass}
+                                    />
+                                  ) : undefined
+                                }
+                                title={
+                                  <span className="flex items-center gap-2 text-white">
+                                    <span className="font-mono tabular-nums text-[13px]">
+                                      {ts.clockIn}–{ts.clockOut}
+                                    </span>
+                                    <span className="text-white/30">·</span>
+                                    <span className="font-semibold tabular-nums">
+                                      {ts.totalHours.toFixed(1)}h
+                                    </span>
+                                  </span>
+                                }
+                                subtitle={
+                                  <span className="text-white">
+                                    {format(parseISO(ts.date), 'EEE, d MMM')} · {ts.jobTitle}
+                                  </span>
+                                }
+                                trailing={
+                                  <>
+                                    <span className="hidden sm:inline text-[12px] tabular-nums text-white">
+                                      £{Math.round(labourCost).toLocaleString()}
+                                    </span>
+                                    <Pill tone={statusTone(ts.status)}>{ts.status}</Pill>
+                                  </>
+                                }
+                                onClick={
+                                  isSelectMode
+                                    ? () => toggleTimesheetSelection(ts.id)
+                                    : () => setDetailTimesheet(ts)
+                                }
+                              />
+                            );
+                          })}
+                        </ListBody>
+                      </ListCard>
+                    );
+                  })}
+                </div>
+              )}
+            </>
+          )}
+
+          <Divider label="Week summary" />
+
+          <StatStrip
+            columns={4}
+            stats={[
+              { label: 'Entries', value: weekTimesheets.length },
+              { label: 'Workers', value: employeeBreakdown.length, tone: 'amber' },
+              {
+                label: 'Labour spend',
+                value: `£${Math.round(totalLabourCost).toLocaleString()}`,
+                tone: 'amber',
+                accent: true,
+              },
+              {
+                label: 'Approved spend',
+                value: `£${Math.round(approvedLabourCost).toLocaleString()}`,
+                tone: 'emerald',
+              },
+            ]}
+          />
+        </>
+      )}
+
+      {/* Filters sheet */}
+      <Sheet open={isFiltersOpen} onOpenChange={setIsFiltersOpen}>
+        <SheetContent
+          side="bottom"
+          className="h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06]"
+        >
+          <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-[15px] font-semibold">Filters</SheetTitle>
+          </SheetHeader>
+          <div className="p-5 space-y-5">
+            <div>
+              <Eyebrow>Worker</Eyebrow>
+              <div className="mt-2">
+                <Select value={filterEmployee} onValueChange={setFilterEmployee}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="All workers" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="all">All workers</SelectItem>
+                    {employees.map((emp) => (
+                      <SelectItem key={emp.id} value={emp.id}>
+                        {emp.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div>
+              <Eyebrow>Status</Eyebrow>
+              <div className="mt-2">
+                <Select value={filterStatus} onValueChange={setFilterStatus}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="All statuses" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="all">All statuses</SelectItem>
+                    <SelectItem value="Pending">Pending</SelectItem>
+                    <SelectItem value="Approved">Approved</SelectItem>
+                    <SelectItem value="Rejected">Rejected</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <PrimaryButton onClick={() => setIsFiltersOpen(false)} fullWidth>
+              Apply
+            </PrimaryButton>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Export sheet */}
+      <Sheet open={isExportOpen} onOpenChange={setIsExportOpen}>
+        <SheetContent
+          side="bottom"
+          className="h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] overflow-y-auto"
+        >
+          <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-[15px] font-semibold">
+              Export to payroll
+            </SheetTitle>
+          </SheetHeader>
+          <div className="p-5 space-y-4">
+            <StatStrip
+              columns={2}
+              stats={[
+                {
+                  label: 'Approved hours',
+                  value: approvedHours.toFixed(1),
+                  tone: 'emerald',
+                },
+                {
+                  label: 'Approved spend',
+                  value: `£${Math.round(approvedLabourCost).toLocaleString()}`,
+                  tone: 'amber',
+                  accent: true,
+                },
+              ]}
+            />
+
+            <ListCard>
+              <ListCardHeader tone="amber" title="Providers" />
+              <ListBody>
+                {ACCOUNTING_PROVIDERS.map((provider) => {
+                  const conn = accountingConnections.find((c) => c.provider === provider.id);
+                  const isConnected = conn?.isConnected;
+                  const isSyncing = syncInProgress === provider.id;
+
+                  return (
+                    <ListRow
+                      key={provider.id}
+                      lead={<Avatar initials={getInitials(provider.name)} size="sm" />}
+                      title={provider.name}
+                      subtitle={
+                        isConnected && conn?.lastSync
+                          ? `Last sync · ${format(parseISO(conn.lastSync), 'dd/MM HH:mm')}`
+                          : isConnected
+                            ? 'Connected'
+                            : 'Not connected'
+                      }
+                      trailing={
+                        provider.id === 'csv' ? (
+                          <button
+                            onClick={() => handleExport('csv')}
+                            className="h-9 px-3 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                          >
+                            <Download className="h-3.5 w-3.5" />
+                            Download
+                          </button>
+                        ) : isConnected ? (
+                          <div className="flex gap-1.5">
+                            <button
+                              onClick={() => handleExport(provider.id)}
+                              className="h-9 w-9 inline-flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08] transition-colors touch-manipulation"
+                              aria-label="Download CSV"
+                            >
+                              <Download className="h-3.5 w-3.5" />
+                            </button>
+                            <button
+                              onClick={() => handleSyncProvider(provider.id)}
+                              disabled={isSyncing || approvedHours === 0}
+                              className="h-9 px-3 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 disabled:opacity-50 transition-colors touch-manipulation"
+                            >
+                              {isSyncing ? (
+                                <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                              ) : (
+                                <Zap className="h-3.5 w-3.5" />
+                              )}
+                              Sync
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => handleConnectProvider(provider.id)}
+                            className="h-9 px-3 inline-flex items-center gap-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation"
+                          >
+                            <Link2 className="h-3.5 w-3.5" />
+                            Connect
+                          </button>
+                        )
                       }
                     />
-                  </CardContent>
-                </Card>
-              ) : (
-                filteredTimesheets.map(renderTimesheetCard)
-              )}
-            </div>
-          ) : (
-            // Desktop Table
-            <Card className="bg-elec-gray border-border">
-              <CardContent className="p-0">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      {isSelectMode && <TableHead className="w-10"></TableHead>}
-                      <TableHead>Worker</TableHead>
-                      <TableHead>Job</TableHead>
-                      <TableHead>Date</TableHead>
-                      <TableHead>Hours</TableHead>
-                      <TableHead>Cost</TableHead>
-                      <TableHead>Status</TableHead>
-                      <TableHead className="w-20"></TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredTimesheets.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={isSelectMode ? 8 : 7} className="text-center py-8">
-                          <p className="text-white">No timesheets found</p>
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      filteredTimesheets.map((ts) => {
-                        const labourCost = calculateLabourCost(ts.employeeId, ts.totalHours);
-                        const isSelected = selectedTimesheetIds.includes(ts.id);
+                  );
+                })}
+              </ListBody>
+            </ListCard>
+          </div>
+        </SheetContent>
+      </Sheet>
 
-                        return (
-                          <TableRow key={ts.id} className={cn(isSelected && 'bg-elec-yellow/5')}>
-                            {isSelectMode && (
-                              <TableCell>
-                                <Checkbox
-                                  checked={isSelected}
-                                  onCheckedChange={() => toggleTimesheetSelection(ts.id)}
-                                />
-                              </TableCell>
-                            )}
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-xs font-medium text-elec-yellow">
-                                  {ts.employeeName
-                                    .split(' ')
-                                    .map((n) => n[0])
-                                    .join('')
-                                    .slice(0, 2)}
-                                </div>
-                                <span className="font-medium">{ts.employeeName}</span>
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex items-center gap-2">
-                                <Briefcase className="h-4 w-4 text-white" />
-                                <span className="truncate max-w-[140px]">{ts.jobTitle}</span>
-                              </div>
-                            </TableCell>
-                            <TableCell>{format(parseISO(ts.date), 'EEE, d MMM')}</TableCell>
-                            <TableCell>
-                              <span className="font-mono">
-                                {ts.clockIn}-{ts.clockOut}
-                              </span>
-                              <span className="text-white ml-1">({ts.totalHours}h)</span>
-                            </TableCell>
-                            <TableCell>
-                              <span className="font-medium">£{labourCost.toFixed(0)}</span>
-                            </TableCell>
-                            <TableCell>
-                              <Badge
-                                className={cn(
-                                  'text-xs',
-                                  ts.status === 'Approved' && 'bg-success/20 text-success',
-                                  ts.status === 'Pending' && 'bg-warning/20 text-warning',
-                                  ts.status === 'Rejected' && 'bg-destructive/20 text-destructive'
-                                )}
-                              >
-                                {ts.status}
-                              </Badge>
-                            </TableCell>
-                            <TableCell>
-                              {ts.status === 'Pending' && !isSelectMode && (
-                                <div className="flex gap-1">
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => handleReject(ts.id)}
-                                  >
-                                    <X className="h-4 w-4 text-destructive" />
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="ghost"
-                                    onClick={() => handleApprove(ts.id)}
-                                  >
-                                    <Check className="h-4 w-4 text-success" />
-                                  </Button>
-                                </div>
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })
+      {/* Approve / reject detail sheet */}
+      <Sheet
+        open={!!detailTimesheet}
+        onOpenChange={(open) => !open && setDetailTimesheet(null)}
+      >
+        <SheetContent
+          side="bottom"
+          className="h-auto max-h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-t border-white/[0.06] overflow-y-auto"
+        >
+          {detailTimesheet && (
+            <>
+              <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
+                <SheetTitle className="text-white text-[15px] font-semibold flex items-center gap-2.5">
+                  <Avatar initials={getInitials(detailTimesheet.employeeName)} size="sm" />
+                  {detailTimesheet.employeeName}
+                </SheetTitle>
+              </SheetHeader>
+              <div className="p-5 space-y-4">
+                <StatStrip
+                  columns={3}
+                  stats={[
+                    {
+                      label: 'Hours',
+                      value: detailTimesheet.totalHours.toFixed(1),
+                      tone: 'amber',
+                    },
+                    {
+                      label: 'Cost',
+                      value: `£${Math.round(
+                        calculateLabourCost(
+                          detailTimesheet.employeeId,
+                          detailTimesheet.totalHours
+                        )
+                      ).toLocaleString()}`,
+                      tone: 'amber',
+                      accent: true,
+                    },
+                    {
+                      label: 'Status',
+                      value: detailTimesheet.status,
+                      tone: statusTone(detailTimesheet.status),
+                    },
+                  ]}
+                />
+
+                <ListCard>
+                  <ListCardHeader tone="amber" title="Entry" />
+                  <ListBody>
+                    <ListRow
+                      title="Date"
+                      trailing={
+                        <span className="text-[13px] text-white tabular-nums">
+                          {format(parseISO(detailTimesheet.date), 'EEE, d MMM yyyy')}
+                        </span>
+                      }
+                    />
+                    <ListRow
+                      title="Job"
+                      trailing={
+                        <span className="text-[13px] text-white truncate max-w-[200px]">
+                          {detailTimesheet.jobTitle}
+                        </span>
+                      }
+                    />
+                    <ListRow
+                      title="Clock in"
+                      trailing={
+                        <span className="font-mono tabular-nums text-[13px] text-white">
+                          {detailTimesheet.clockIn}
+                        </span>
+                      }
+                    />
+                    <ListRow
+                      title="Clock out"
+                      trailing={
+                        <span className="font-mono tabular-nums text-[13px] text-white">
+                          {detailTimesheet.clockOut}
+                        </span>
+                      }
+                    />
+                    <ListRow
+                      title="Break"
+                      trailing={
+                        <span className="text-[13px] text-white tabular-nums">
+                          {detailTimesheet.breakMins} mins
+                        </span>
+                      }
+                    />
+                    <ListRow
+                      title="Hourly rate"
+                      trailing={
+                        <span className="text-[13px] text-white tabular-nums">
+                          £{getHourlyRate(detailTimesheet.employeeId)}/hr
+                        </span>
+                      }
+                    />
+                    {detailTimesheet.notes && (
+                      <ListRow
+                        title="Notes"
+                        subtitle={detailTimesheet.notes}
+                      />
                     )}
-                  </TableBody>
-                </Table>
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
+                  </ListBody>
+                </ListCard>
 
-        <TabsContent value="leave" className="mt-4">
-          <LeaveTabContent />
-        </TabsContent>
-
-        <TabsContent value="workers" className="mt-4 space-y-3">
-          {employeeBreakdown.length === 0 ? (
-            <Card className="bg-elec-gray border-border">
-              <CardContent className="p-8 text-center">
-                <Users className="h-12 w-12 text-white mx-auto mb-3" />
-                <p className="text-white">No worker entries this week</p>
-              </CardContent>
-            </Card>
-          ) : (
-            employeeBreakdown.map((emp) => (
-              <Card key={emp.id} className="bg-elec-gray border-border">
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow font-semibold">
-                        {emp.avatar_initials}
-                      </div>
-                      <div>
-                        <p className="font-medium text-foreground">{emp.name}</p>
-                        <p className="text-sm text-white">
-                          {emp.entries} {emp.entries === 1 ? 'entry' : 'entries'} this week
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xl font-bold text-foreground">
-                        {emp.totalHours.toFixed(1)}h
-                      </p>
-                      <p className="text-sm text-success font-medium">£{emp.cost.toFixed(0)}</p>
-                    </div>
+                {detailTimesheet.status === 'Pending' && (
+                  <div className="flex gap-2">
+                    <SecondaryButton
+                      onClick={() => handleReject(detailTimesheet.id)}
+                      fullWidth
+                    >
+                      <X className="h-4 w-4 mr-2" />
+                      Reject
+                    </SecondaryButton>
+                    <PrimaryButton
+                      onClick={() => handleApprove(detailTimesheet.id)}
+                      fullWidth
+                    >
+                      <Check className="h-4 w-4 mr-2" />
+                      Approve
+                    </PrimaryButton>
                   </div>
-                </CardContent>
-              </Card>
-            ))
+                )}
+              </div>
+            </>
           )}
-
-          {/* Week Summary */}
-          <Card className="bg-gradient-to-br from-primary/10 via-card to-card border-elec-yellow/30">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="p-2 rounded-lg bg-elec-yellow/20">
-                  <TrendingUp className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <h3 className="font-semibold text-foreground">Week Summary</h3>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-2xl font-bold text-foreground">{weekTimesheets.length}</p>
-                  <p className="text-xs text-white">Total Entries</p>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-elec-yellow">
-                    £{totalLabourCost.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-white">Labour Spend</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+        </SheetContent>
+      </Sheet>
+    </PageFrame>
   );
 };

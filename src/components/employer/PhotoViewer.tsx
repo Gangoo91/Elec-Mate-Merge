@@ -258,7 +258,7 @@ export function PhotoViewer({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
         className={cn(
-          'max-w-5xl w-full h-[90vh] p-0 bg-background/95 backdrop-blur-xl border-border/50',
+          'max-w-5xl w-full h-[90vh] p-0 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border border-white/[0.08]',
           isMobile && 'max-w-full h-full rounded-none border-0'
         )}
         onKeyDown={handleKeyDown}
@@ -266,7 +266,7 @@ export function PhotoViewer({
         {/* Header */}
         <div
           className={cn(
-            'absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-background/90 to-transparent transition-opacity duration-200',
+            'absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/90 to-transparent transition-opacity duration-200',
             isMobile && !showControls && 'opacity-0 pointer-events-none'
           )}
         >
@@ -340,7 +340,7 @@ export function PhotoViewer({
               variant="ghost"
               size="icon"
               className={cn(
-                'absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-background/50 hover:bg-background/80 z-10 transition-opacity',
+                'absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-[hsl(0_0%_8%)]/50 hover:bg-[hsl(0_0%_8%)]/80 z-10 transition-opacity',
                 isMobile ? 'h-10 w-10' : 'h-12 w-12'
               )}
               onClick={(e) => {
@@ -357,7 +357,7 @@ export function PhotoViewer({
               variant="ghost"
               size="icon"
               className={cn(
-                'absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-background/50 hover:bg-background/80 z-10 transition-opacity',
+                'absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-[hsl(0_0%_8%)]/50 hover:bg-[hsl(0_0%_8%)]/80 z-10 transition-opacity',
                 isMobile ? 'h-10 w-10' : 'h-12 w-12'
               )}
               onClick={(e) => {
@@ -390,13 +390,13 @@ export function PhotoViewer({
               {/* Photo icon with glow effect */}
               <div className="relative mb-4">
                 <div className="absolute inset-0 bg-elec-yellow/20 blur-xl rounded-full scale-150" />
-                <div className="relative h-20 w-20 rounded-2xl bg-elec-gray/80 backdrop-blur border border-border/50 flex items-center justify-center">
+                <div className="relative h-20 w-20 rounded-2xl bg-[hsl(0_0%_12%)]/80 backdrop-blur border border-white/[0.08] flex items-center justify-center">
                   <Camera className="h-10 w-10 text-elec-yellow" />
                 </div>
               </div>
 
               {/* Photo info */}
-              <p className="text-foreground font-semibold text-lg mb-1">{photo.filename}</p>
+              <p className="text-white font-semibold text-lg mb-1">{photo.filename}</p>
               <p className="text-white text-sm">{photo.jobTitle}</p>
 
               {/* Category indicator at bottom */}
@@ -410,7 +410,7 @@ export function PhotoViewer({
 
           {/* Zoom level indicator - Mobile */}
           {isMobile && scale > 1 && (
-            <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-background/80 px-3 py-1 rounded-full text-xs text-foreground z-10">
+            <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/80 px-3 py-1 rounded-full text-xs text-white z-10">
               {Math.round(scale * 100)}%
             </div>
           )}
@@ -443,7 +443,7 @@ export function PhotoViewer({
                         'h-1.5 rounded-full transition-all',
                         actualIndex === currentIndex
                           ? 'w-4 bg-elec-yellow'
-                          : 'w-1.5 bg-muted-foreground/40'
+                          : 'w-1.5 bg-white/20'
                       )}
                     />
                   );
@@ -455,13 +455,13 @@ export function PhotoViewer({
         {/* Footer Info */}
         <div
           className={cn(
-            'absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background/95 to-transparent transition-opacity duration-200',
+            'absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/95 to-transparent transition-opacity duration-200',
             isMobile && !showControls && 'opacity-0 pointer-events-none'
           )}
         >
           <div className="max-w-3xl mx-auto space-y-3">
             {/* Notes */}
-            {photo.notes && <p className="text-sm text-foreground">{photo.notes}</p>}
+            {photo.notes && <p className="text-sm text-white">{photo.notes}</p>}
 
             {/* Metadata */}
             <div

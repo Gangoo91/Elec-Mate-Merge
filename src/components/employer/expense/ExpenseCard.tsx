@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
 import {
   Check,
@@ -19,10 +18,9 @@ import {
 } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Card } from '@/components/ui/card';
 import { SwipeableRow } from '@/components/ui/swipeable-row';
 import { cn } from '@/lib/utils';
-import { formatCurrency, getCategoryConfig } from '@/hooks/useExpenses';
+import { formatCurrency } from '@/hooks/useExpenses';
 import type { ExpenseClaim } from '@/services/financeService';
 
 interface ExpenseCardProps {
@@ -55,7 +53,7 @@ const categoryColors: Record<string, string> = {
   PPE: 'bg-red-500/10 text-red-500 border-red-500/30',
   Training: 'bg-teal-500/10 text-teal-500 border-teal-500/30',
   Meals: 'bg-pink-500/10 text-pink-500 border-pink-500/30',
-  Other: 'bg-gray-500/10 text-white border-gray-500/30',
+  Other: 'bg-white/[0.06] text-white border-white/[0.1]',
 };
 
 // Status colors
@@ -134,11 +132,11 @@ export function ExpenseCard({
         : undefined;
 
   const cardContent = (
-    <Card
+    <div
       className={cn(
-        'border-l-4 transition-all duration-200',
+        'rounded-2xl border bg-[hsl(0_0%_12%)] border-white/[0.06] border-l-[3px] transition-colors',
         status.borderColor,
-        onClick && 'cursor-pointer hover:bg-muted/50 active:scale-[0.99]'
+        onClick && 'cursor-pointer hover:bg-[hsl(0_0%_14%)] active:scale-[0.99] touch-manipulation'
       )}
       onClick={() => onClick?.(expense)}
     >
@@ -146,7 +144,7 @@ export function ExpenseCard({
         <div className="flex items-start gap-3">
           {/* Employee Avatar */}
           <Avatar className="h-10 w-10 shrink-0">
-            <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-elec-dark font-semibold text-sm">
+            <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-black font-semibold text-sm">
               {expense.employees?.avatar_initials || 'U'}
             </AvatarFallback>
           </Avatar>
@@ -156,13 +154,13 @@ export function ExpenseCard({
             {/* Top Row - Employee & Amount */}
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <p className="font-semibold text-foreground truncate">
+                <p className="font-semibold text-white truncate">
                   {expense.employees?.name || 'Unknown'}
                 </p>
                 <p className="text-sm text-white line-clamp-1">{expense.description}</p>
               </div>
               <div className="text-right shrink-0">
-                <p className="text-lg font-bold text-foreground">
+                <p className="text-lg font-bold text-white">
                   {formatCurrency(Number(expense.amount))}
                 </p>
               </div>
@@ -187,7 +185,10 @@ export function ExpenseCard({
 
               {/* Receipt Indicator */}
               {expense.receipt_url && (
-                <Badge variant="outline" className="text-xs bg-muted/50 text-white">
+                <Badge
+                  variant="outline"
+                  className="text-xs bg-white/[0.04] text-white border-white/[0.08]"
+                >
                   <Receipt className="h-3 w-3 mr-1" />
                   Receipt
                 </Badge>
@@ -195,7 +196,10 @@ export function ExpenseCard({
 
               {/* Job Link */}
               {expense.job_id && (
-                <Badge variant="outline" className="text-xs bg-muted/50 text-white">
+                <Badge
+                  variant="outline"
+                  className="text-xs bg-white/[0.04] text-white border-white/[0.08]"
+                >
                   <Briefcase className="h-3 w-3 mr-1" />
                   Linked
                 </Badge>
@@ -221,7 +225,7 @@ export function ExpenseCard({
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 
   // Wrap with SwipeableRow if actions are available

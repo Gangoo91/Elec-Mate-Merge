@@ -127,7 +127,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4 mb-5">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               EPA Gateway Checklist
             </div>
             <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
@@ -158,7 +158,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Off-the-Job Training Hours
             </div>
             <h4 className="mt-1 text-lg font-semibold text-white">OJT Progress</h4>
@@ -248,7 +248,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
               </div>
               {item.completedDate && (
                 <div className="text-right shrink-0">
-                  <div className="text-[10px] uppercase tracking-[0.16em] text-white/40">
+                  <div className="text-[10px] uppercase tracking-[0.16em] text-white/55">
                     Completed
                   </div>
                   <div className="mt-0.5 text-[12.5px] text-white/70 tabular-nums">
@@ -279,7 +279,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                 status.epaBookedDate ? 'bg-green-400' : 'bg-blue-400'
               )}
             />
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               End Point Assessment
             </div>
           </div>
@@ -349,10 +349,10 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                   value={ojtHoursInput}
                   onChange={(e) => setOjtHoursInput(e.target.value)}
                   placeholder={String(status.ojtHoursCompleted)}
-                  className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 rounded-xl touch-manipulation text-base"
+                  className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 rounded-xl touch-manipulation text-base"
                 />
               </div>
-              <p className="text-[12.5px] text-white/50">
+              <p className="text-[12.5px] text-white/75">
                 Required: {status.ojtHoursRequired} hours
               </p>
             </div>
@@ -399,7 +399,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                 value={epaDate}
                 onChange={(e) => setEpaDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 rounded-xl touch-manipulation text-base"
+                className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 rounded-xl touch-manipulation text-base"
               />
             </div>
             <SheetFooter className="border-t border-white/[0.06] p-5">

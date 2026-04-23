@@ -1,9 +1,20 @@
 import { useFormContext, Controller } from 'react-hook-form';
-import { PoundSterling, Calendar, Clock, Check } from 'lucide-react';
-import { Label } from '@/components/ui/label';
-import { IOSInput } from '@/components/ui/ios-input';
+import { Check } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { salaryPeriods, commonBenefits, type VacancyFormData, type SalaryPeriod } from '../schema';
+import {
+  inputClass,
+  FormCard,
+  FormGrid,
+  Field,
+  Eyebrow,
+} from '@/components/employer/editorial';
+import {
+  salaryPeriods,
+  commonBenefits,
+  type VacancyFormData,
+  type SalaryPeriod,
+} from '../schema';
 
 export function CompensationStep() {
   const {
@@ -38,11 +49,9 @@ export function CompensationStep() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Salary Range */}
-      <div className="space-y-4">
-        <Label className="text-white text-base">Salary Range</Label>
-
+    <div className="space-y-4">
+      {/* Salary */}
+      <FormCard eyebrow="Salary Range">
         {/* Salary Period Selector */}
         <Controller
           name="salaryPeriod"
@@ -55,11 +64,11 @@ export function CompensationStep() {
                   type="button"
                   onClick={() => field.onChange(period)}
                   className={cn(
-                    'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+                    'px-4 py-2 rounded-full text-[13px] font-medium transition-all duration-200',
                     'touch-manipulation min-h-[44px]',
                     selectedPeriod === period
                       ? 'bg-elec-yellow text-black'
-                      : 'bg-white/10 text-white hover:bg-white/15'
+                      : 'bg-white/[0.06] text-white hover:bg-white/[0.1]'
                   )}
                 >
                   {periodLabels[period]}
@@ -70,47 +79,43 @@ export function CompensationStep() {
         />
 
         {/* Min/Max Salary Inputs - Stack on mobile */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Minimum Salary */}
-          <IOSInput
-            label="Minimum Salary"
-            type="number"
-            placeholder="e.g., 35000"
-            icon={<PoundSterling className="h-5 w-5" />}
-            error={errors.salaryMin?.message}
-            className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            {...register('salaryMin', {
-              setValueAs: (v) => (v === '' ? undefined : Number(v)),
-            })}
-          />
+        <FormGrid cols={2}>
+          <Field label="Minimum Salary" hint={errors.salaryMin?.message}>
+            <Input
+              type="number"
+              placeholder="e.g., 35000"
+              className={`${inputClass} [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+              {...register('salaryMin', {
+                setValueAs: (v) => (v === '' ? undefined : Number(v)),
+              })}
+            />
+          </Field>
 
-          {/* Maximum Salary */}
-          <IOSInput
-            label="Maximum Salary"
-            type="number"
-            placeholder="e.g., 45000"
-            icon={<PoundSterling className="h-5 w-5" />}
-            error={errors.salaryMax?.message}
-            className="[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            {...register('salaryMax', {
-              setValueAs: (v) => (v === '' ? undefined : Number(v)),
-            })}
-          />
-        </div>
+          <Field label="Maximum Salary" hint={errors.salaryMax?.message}>
+            <Input
+              type="number"
+              placeholder="e.g., 45000"
+              className={`${inputClass} [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+              {...register('salaryMax', {
+                setValueAs: (v) => (v === '' ? undefined : Number(v)),
+              })}
+            />
+          </Field>
+        </FormGrid>
 
-        <p className="text-xs text-white">
+        <p className="text-[11px] text-white">
           Leave blank to show "Competitive salary" on the listing
         </p>
-      </div>
+      </FormCard>
 
       {/* Benefits */}
-      <div className="space-y-3">
+      <FormCard>
         <div className="flex items-center justify-between">
-          <Label className="text-white text-base">Benefits & Perks</Label>
-          <span className="text-xs text-white">{selectedBenefits.length} selected</span>
+          <Eyebrow>Benefits & Perks</Eyebrow>
+          <span className="text-[11px] text-white">{selectedBenefits.length} selected</span>
         </div>
 
-        {/* Benefits Grid - Scrollable on mobile */}
+        {/* Benefits Grid */}
         <div className="flex flex-wrap gap-2">
           {commonBenefits.map((benefit) => {
             const isSelected = selectedBenefits.includes(benefit);
@@ -120,12 +125,12 @@ export function CompensationStep() {
                 type="button"
                 onClick={() => toggleBenefit(benefit)}
                 className={cn(
-                  'inline-flex items-center gap-1.5 px-3 py-2 rounded-lg',
-                  'text-sm font-medium transition-all duration-200',
+                  'inline-flex items-center gap-1.5 px-3 py-2 rounded-full',
+                  'text-[13px] font-medium transition-all duration-200',
                   'touch-manipulation min-h-[44px]',
                   isSelected
-                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                    : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
+                    ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/25'
+                    : 'bg-white/[0.06] text-white border border-white/[0.08] hover:bg-white/[0.1]'
                 )}
               >
                 {isSelected && <Check className="h-3.5 w-3.5" />}
@@ -135,36 +140,35 @@ export function CompensationStep() {
           })}
         </div>
 
-        {/* Custom benefit input hint */}
-        <p className="text-xs text-white">
+        <p className="text-[11px] text-white">
           Select the benefits you offer. You can add custom benefits in the description.
         </p>
-      </div>
+      </FormCard>
 
-      {/* Schedule */}
-      <IOSInput
-        label="Working Hours"
-        placeholder="e.g., Monday - Friday, 8am - 5pm"
-        icon={<Clock className="h-5 w-5" />}
-        hint="Optional - describe typical working hours"
-        {...register('schedule')}
-      />
+      {/* Schedule + Start Date */}
+      <FormCard eyebrow="Schedule">
+        <Field label="Working Hours" hint="Optional - describe typical working hours">
+          <Input
+            className={inputClass}
+            placeholder="e.g., Monday - Friday, 8am - 5pm"
+            {...register('schedule')}
+          />
+        </Field>
 
-      {/* Start Date - Calendar picker */}
-      <IOSInput
-        label="Start Date"
-        type="date"
-        icon={<Calendar className="h-5 w-5" />}
-        hint="Optional - when do you need someone to start?"
-        className="[color-scheme:dark]"
-        {...register('startDate')}
-      />
+        <Field label="Start Date" hint="Optional - when do you need someone to start?">
+          <Input
+            type="date"
+            className={`${inputClass} [color-scheme:dark]`}
+            {...register('startDate')}
+          />
+        </Field>
+      </FormCard>
 
       {/* Helper tip */}
-      <div className="p-4 rounded-xl bg-success/10 border border-success/20">
-        <p className="text-sm text-success">
-          <strong>Tip:</strong> Jobs with clear salary ranges get 3x more applications. Be
-          transparent about compensation to attract quality candidates.
+      <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/25">
+        <p className="text-[13px] text-white">
+          <strong className="text-emerald-400">Tip:</strong> Jobs with clear salary ranges get 3x
+          more applications. Be transparent about compensation to attract quality candidates.
         </p>
       </div>
     </div>

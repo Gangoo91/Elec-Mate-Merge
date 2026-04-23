@@ -197,7 +197,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
         >
           <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                 Notifications
               </div>
               <div className="mt-0.5 text-[13px] font-semibold text-white">
@@ -257,7 +257,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
                 {filteredNotifications.length === 0 ? (
                   <div className="py-12 text-center">
                     <div className="text-[13px] font-medium text-white">All caught up</div>
-                    <div className="mt-1 text-[11.5px] text-white/50">No notifications right now</div>
+                    <div className="mt-1 text-[11.5px] text-white/75">No notifications right now</div>
                   </div>
                 ) : (
                   <div className="divide-y divide-white/[0.06]">
@@ -306,11 +306,11 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
                               <p className="text-[13px] font-medium text-white line-clamp-1">
                                 {notification.title}
                               </p>
-                              <span className="text-[11px] text-white/40 shrink-0 tabular-nums">
+                              <span className="text-[11px] text-white/70 shrink-0 tabular-nums">
                                 {formatTime(notification.timestamp)}
                               </span>
                             </div>
-                            <p className="text-[11.5px] text-white/50 line-clamp-2 mt-0.5 leading-relaxed">
+                            <p className="text-[11.5px] text-white/75 line-clamp-2 mt-0.5 leading-relaxed">
                               {notification.description}
                             </p>
                             <div className="flex items-center gap-1.5 mt-2">

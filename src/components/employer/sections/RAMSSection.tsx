@@ -1,13 +1,7 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
-import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { FeatureTile } from '@/components/employer/FeatureTile';
-import { QuickStats } from '@/components/employer/QuickStats';
-import { HubSkeleton } from '@/components/employer/skeletons';
 import { ErrorState } from '@/components/employer/ErrorState';
 import {
   Sheet,
@@ -23,24 +17,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import {
-  FileText,
-  Sparkles,
-  FolderOpen,
+  RefreshCw,
   Plus,
-  Clock,
-  CheckCircle2,
-  Search,
-  Filter,
-  ChevronRight,
   MapPin,
   Calendar,
-  User,
-  AlertTriangle,
   Download,
   Copy,
+  Sparkles,
 } from 'lucide-react';
 import {
   useRAMSDocuments,
@@ -51,19 +36,49 @@ import {
   type RAMSDocument,
   type RAMSStatus,
 } from '@/hooks/useRAMSDocuments';
-import { format } from 'date-fns';
+import { format, formatDistanceToNow } from 'date-fns';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  FormCard,
+  FormGrid,
+  Field,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/employer/editorial';
 
 interface RAMSSectionProps {
   onNavigate?: (section: Section) => void;
 }
 
-const STATUS_OPTIONS: { value: RAMSStatus; label: string; color: string }[] = [
-  { value: 'draft', label: 'Draft', color: 'bg-muted/50 text-white' },
-  { value: 'submitted', label: 'Submitted', color: 'bg-warning/20 text-warning' },
-  { value: 'approved', label: 'Approved', color: 'bg-success/20 text-success' },
-  { value: 'rejected', label: 'Rejected', color: 'bg-destructive/20 text-destructive' },
+const STATUS_OPTIONS: { value: RAMSStatus; label: string; tone: Tone }[] = [
+  { value: 'draft', label: 'Draft', tone: 'amber' },
+  { value: 'submitted', label: 'Submitted', tone: 'orange' },
+  { value: 'approved', label: 'Approved', tone: 'emerald' },
+  { value: 'rejected', label: 'Rejected', tone: 'red' },
 ];
+
+const statusToneFor = (status: RAMSStatus): Tone =>
+  STATUS_OPTIONS.find((s) => s.value === status)?.tone ?? 'amber';
+
+const statusLabelFor = (status: RAMSStatus): string =>
+  STATUS_OPTIONS.find((s) => s.value === status)?.label ?? status;
 
 export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const { data: ramsDocuments = [], isLoading, error, refetch } = useRAMSDocuments();
@@ -78,7 +93,6 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Form state
   const [formData, setFormData] = useState({
     project_name: '',
     location: '',
@@ -99,15 +113,38 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   });
   const [activityInput, setActivityInput] = useState('');
 
-  // Filter documents
+  const approvedCount = stats?.approved ?? 0;
+  const submittedCount = stats?.submitted ?? 0;
+  const totalCount = stats?.total ?? ramsDocuments.length;
+  const draftCount = ramsDocuments.filter((d) => d.status === 'draft').length;
+  const activeCount = ramsDocuments.filter(
+    (d) => d.status === 'approved' || d.status === 'submitted',
+  ).length;
+
+  const approved30dCount = useMemo(() => {
+    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    return ramsDocuments.filter(
+      (d) => d.status === 'approved' && new Date(d.updated_at).getTime() >= cutoff,
+    ).length;
+  }, [ramsDocuments]);
+
   const filteredDocuments = ramsDocuments.filter((doc) => {
-    const matchesStatus = filterStatus === 'all' || doc.status === filterStatus;
     const matchesSearch =
       searchQuery === '' ||
       doc.project_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
       doc.assessor.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesStatus && matchesSearch;
+
+    if (!matchesSearch) return false;
+
+    if (filterStatus === 'all') return true;
+    if (filterStatus === 'templates') return false;
+    if (filterStatus === 'active') {
+      return doc.status === 'approved' || doc.status === 'submitted';
+    }
+    if (filterStatus === 'draft') return doc.status === 'draft';
+    if (filterStatus === 'approved') return doc.status === 'approved';
+    return doc.status === filterStatus;
   });
 
   const handleCreateRAMS = async () => {
@@ -161,355 +198,290 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
     }));
   };
 
-  const getStatusColor = (status: RAMSStatus) => {
-    return (
-      STATUS_OPTIONS.find((s) => s.value === status)?.color || 'bg-muted/50 text-white'
-    );
-  };
-
   if (isLoading) {
-    return <HubSkeleton statCount={3} cardCount={4} />;
+    return (
+      <PageFrame>
+        <LoadingBlocks />
+      </PageFrame>
+    );
   }
 
   if (error) {
-    return <ErrorState message="Failed to load RAMS documents" onRetry={refetch} />;
+    return (
+      <PageFrame>
+        <ErrorState message="Failed to load RAMS documents" onRetry={refetch} />
+      </PageFrame>
+    );
   }
 
+  const filterTabs = [
+    { value: 'all', label: 'All', count: totalCount },
+    { value: 'active', label: 'Active', count: activeCount },
+    { value: 'draft', label: 'Draft', count: draftCount },
+    { value: 'approved', label: 'Approved', count: approvedCount },
+    { value: 'templates', label: 'Templates', count: 0 },
+  ];
+
+  const listTitle =
+    filterStatus === 'all'
+      ? 'All RAMS'
+      : filterStatus === 'active'
+        ? 'Active RAMS'
+        : filterStatus === 'draft'
+          ? 'Drafts'
+          : filterStatus === 'approved'
+            ? 'Approved'
+            : filterStatus === 'templates'
+              ? 'Templates'
+              : 'RAMS';
+
   return (
-    <div className="space-y-4 md:space-y-6 pb-6">
-      {/* Quick Stats */}
-      <QuickStats
+    <PageFrame>
+      <PageHero
+        eyebrow="HR & Safety"
+        title="RAMS"
+        description="Risk assessments and method statements — write yourself or generate with AI."
+        tone="orange"
+        actions={
+          <>
+            <PrimaryButton onClick={() => setShowCreateSheet(true)}>New RAMS</PrimaryButton>
+            <SecondaryButton onClick={() => onNavigate?.('airams')}>
+              <Sparkles className="h-3.5 w-3.5 mr-1.5" />
+              Generate AI
+            </SecondaryButton>
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </>
+        }
+      />
+
+      <StatStrip
+        columns={4}
         stats={[
-          {
-            icon: CheckCircle2,
-            value: stats?.approved || 0,
-            label: 'Approved',
-            color: 'green',
-          },
-          ...(stats?.submitted
-            ? [
-                {
-                  icon: Clock,
-                  value: stats.submitted,
-                  label: 'Pending',
-                  color: 'yellow' as const,
-                  pulse: true,
-                },
-              ]
-            : []),
-          {
-            icon: FileText,
-            value: stats?.total || 0,
-            label: 'Total RAMS',
-            color: 'blue',
-          },
+          { label: 'Active RAMS', value: activeCount, tone: 'orange' },
+          { label: 'Awaiting approval', value: submittedCount, tone: 'amber' },
+          { label: 'Approved 30d', value: approved30dCount, tone: 'emerald' },
+          { label: 'Templates', value: 0, tone: 'blue' },
         ]}
       />
 
-      {/* AI RAMS - Navigate to SmartDocs */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
-          AI-Powered
-        </h2>
-        <Card className="border-elec-yellow/30 bg-gradient-to-r from-primary/5 to-primary/10">
-          <CardContent className="p-4 md:p-6">
-            <div className="flex items-start gap-4">
-              <div className="p-3 rounded-xl bg-elec-yellow/20">
-                <Sparkles className="h-6 w-6 text-elec-yellow" />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-semibold text-foreground mb-1">AI RAMS Generator</h3>
-                <p className="text-sm text-white mb-3">
-                  Generate comprehensive risk assessments with AI. Describe your job and get a
-                  complete RAMS document in seconds.
-                </p>
-                <Button
-                  className="w-full md:w-auto bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-                  onClick={() => onNavigate?.('airams')}
-                >
-                  <Sparkles className="h-4 w-4 mr-2" />
-                  Generate with AI
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <FilterBar
+        tabs={filterTabs}
+        activeTab={filterStatus}
+        onTabChange={setFilterStatus}
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search RAMS…"
+      />
 
-      {/* Quick Actions */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-success rounded-full"></span>
-          Manage RAMS
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <FeatureTile
-            icon={Plus}
-            title="Create New"
-            description="Start from blank"
-            onClick={() => setShowCreateSheet(true)}
-            compact
+      {filteredDocuments.length === 0 ? (
+        <EmptyState
+          title={
+            filterStatus === 'templates'
+              ? 'No templates yet'
+              : 'No RAMS documents found'
+          }
+          description={
+            filterStatus === 'templates'
+              ? 'Save an existing RAMS as a template to reuse it across jobs.'
+              : 'Create your first risk assessment from scratch or generate one with AI.'
+          }
+          action="Create RAMS"
+          onAction={() => setShowCreateSheet(true)}
+        />
+      ) : (
+        <ListCard>
+          <ListCardHeader
+            tone="orange"
+            title="RAMS"
+            meta={<Pill tone="orange">{filteredDocuments.length}</Pill>}
           />
-          <FeatureTile
-            icon={FolderOpen}
-            title="All RAMS"
-            description={`${ramsDocuments.length} documents`}
-            onClick={() => setFilterStatus('all')}
-            compact
-          />
-          <FeatureTile
-            icon={Clock}
-            title="Pending"
-            description={`${stats?.submitted || 0} awaiting`}
-            onClick={() => setFilterStatus('submitted')}
-            badge={stats?.submitted ? `${stats.submitted}` : undefined}
-            badgeVariant="warning"
-            compact
-          />
-          <FeatureTile
-            icon={CheckCircle2}
-            title="Approved"
-            description={`${stats?.approved || 0} active`}
-            onClick={() => setFilterStatus('approved')}
-            compact
-          />
-        </div>
-      </div>
+          <ListBody>
+            {filteredDocuments.map((doc) => {
+              const status = doc.status as RAMSStatus;
+              const tone = statusToneFor(status);
+              const timeAgo = formatDistanceToNow(new Date(doc.updated_at), {
+                addSuffix: true,
+              });
+              return (
+                <ListRow
+                  key={doc.id}
+                  title={doc.project_name}
+                  subtitle={`${doc.location} · ${doc.assessor} · ${timeAgo}`}
+                  trailing={<Pill tone={tone}>{statusLabelFor(status)}</Pill>}
+                  onClick={() => openRAMSDetail(doc)}
+                />
+              );
+            })}
+          </ListBody>
+        </ListCard>
+      )}
 
-      {/* Search and Filter */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search RAMS..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('h-11', !searchQuery && 'pl-9')}
+      <ListCard>
+        <ListCardHeader title={listTitle} />
+        <ListBody>
+          <ListRow
+            title="Browse by status"
+            subtitle={`${approvedCount} approved · ${submittedCount} awaiting · ${draftCount} draft`}
+            trailing={<Pill tone="orange">{totalCount}</Pill>}
           />
-        </div>
-        <Select value={filterStatus} onValueChange={setFilterStatus}>
-          <SelectTrigger className="w-full sm:w-[180px] h-11">
-            <Filter className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Filter by status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            {STATUS_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+        </ListBody>
+      </ListCard>
 
-      {/* RAMS List */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-info rounded-full"></span>
-          {filterStatus === 'all'
-            ? 'All RAMS Documents'
-            : `${STATUS_OPTIONS.find((s) => s.value === filterStatus)?.label} RAMS`}
-          <Badge variant="secondary" className="ml-auto">
-            {filteredDocuments.length}
-          </Badge>
-        </h2>
-
-        {filteredDocuments.length === 0 ? (
-          <Card className="border-dashed">
-            <CardContent className="p-8 text-center">
-              <FileText className="h-12 w-12 text-white mx-auto mb-4" />
-              <p className="text-white">No RAMS documents found</p>
-              <Button variant="outline" className="mt-4" onClick={() => setShowCreateSheet(true)}>
-                <Plus className="h-4 w-4 mr-2" />
-                Create First RAMS
-              </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="space-y-2">
-            {filteredDocuments.map((doc) => (
-              <Card
-                key={doc.id}
-                className="hover:bg-muted/50 transition-colors cursor-pointer"
-                onClick={() => openRAMSDetail(doc)}
-              >
-                <CardContent className="p-3 md:p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3 min-w-0">
-                      <div className="p-2 rounded-lg bg-elec-yellow/10 shrink-0">
-                        <FileText className="h-4 w-4 text-elec-yellow" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="font-medium text-foreground text-sm md:text-base truncate">
-                          {doc.project_name}
-                        </p>
-                        <p className="text-xs text-white truncate">
-                          {doc.location} • v{doc.version}
-                        </p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-white">
-                          <Calendar className="h-3 w-3" />
-                          {format(new Date(doc.updated_at), 'dd MMM yyyy')}
-                          <span className="mx-1">•</span>
-                          <User className="h-3 w-3" />
-                          {doc.assessor}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <Badge className={`text-xs ${getStatusColor(doc.status as RAMSStatus)}`}>
-                        {doc.status}
-                      </Badge>
-                      <ChevronRight className="h-4 w-4 text-white" />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Create RAMS Sheet */}
       <Sheet open={showCreateSheet} onOpenChange={setShowCreateSheet}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-y-auto">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
           <SheetHeader>
-            <SheetTitle>Create RAMS Document</SheetTitle>
-            <SheetDescription>Create a new risk assessment and method statement</SheetDescription>
+            <SheetTitle className="text-white">Create RAMS document</SheetTitle>
+            <SheetDescription className="text-white">
+              Create a new risk assessment and method statement.
+            </SheetDescription>
           </SheetHeader>
 
           <div className="space-y-4 mt-6">
-            <div className="space-y-2">
-              <Label>Project Name</Label>
-              <Input
-                value={formData.project_name}
-                onChange={(e) => setFormData((prev) => ({ ...prev, project_name: e.target.value }))}
-                placeholder="e.g., Office Rewire - ABC Corp"
-                className="h-11"
-              />
-            </div>
+            <FormCard eyebrow="Project">
+              <Field label="Project name" required>
+                <Input
+                  value={formData.project_name}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, project_name: e.target.value }))
+                  }
+                  placeholder="e.g. Office Rewire — ABC Corp"
+                  className={inputClass}
+                />
+              </Field>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Location</Label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+              <FormGrid cols={2}>
+                <Field label="Location" required>
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+                    <Input
+                      value={formData.location}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, location: e.target.value }))
+                      }
+                      placeholder="Site address"
+                      className={`${inputClass} pl-9`}
+                    />
+                  </div>
+                </Field>
+                <Field label="Assessment date">
                   <Input
-                    value={formData.location}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
-                    placeholder="Site address"
-                    className="pl-9 h-11"
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, date: e.target.value }))
+                    }
+                    className={inputClass}
                   />
+                </Field>
+              </FormGrid>
+            </FormCard>
+
+            <FormCard eyebrow="People">
+              <FormGrid cols={2}>
+                <Field label="Assessor" required>
+                  <Input
+                    value={formData.assessor}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, assessor: e.target.value }))
+                    }
+                    placeholder="Your name"
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Job scale">
+                  <Select
+                    value={formData.job_scale}
+                    onValueChange={(v) =>
+                      setFormData((prev) => ({ ...prev, job_scale: v }))
+                    }
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select scale" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="small">Small (1-2 days)</SelectItem>
+                      <SelectItem value="medium">Medium (3-5 days)</SelectItem>
+                      <SelectItem value="large">Large (1-2 weeks)</SelectItem>
+                      <SelectItem value="major">Major (2+ weeks)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              </FormGrid>
+
+              <FormGrid cols={2}>
+                <Field label="Contractor (optional)">
+                  <Input
+                    value={formData.contractor}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, contractor: e.target.value }))
+                    }
+                    placeholder="Main contractor"
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Supervisor (optional)">
+                  <Input
+                    value={formData.supervisor}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, supervisor: e.target.value }))
+                    }
+                    placeholder="Site supervisor"
+                    className={inputClass}
+                  />
+                </Field>
+              </FormGrid>
+            </FormCard>
+
+            <FormCard eyebrow="Activities">
+              <Field label="Work activities">
+                <div className="flex gap-2">
+                  <Input
+                    value={activityInput}
+                    onChange={(e) => setActivityInput(e.target.value)}
+                    placeholder="Add activity"
+                    className={inputClass}
+                    onKeyPress={(e) =>
+                      e.key === 'Enter' && (e.preventDefault(), addActivity())
+                    }
+                  />
+                  <SecondaryButton onClick={addActivity}>
+                    <Plus className="h-4 w-4" />
+                  </SecondaryButton>
                 </div>
-              </div>
-              <div className="space-y-2">
-                <Label>Assessment Date</Label>
-                <Input
-                  type="date"
-                  value={formData.date}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
-                  className="h-11"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Assessor</Label>
-                <Input
-                  value={formData.assessor}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, assessor: e.target.value }))}
-                  placeholder="Your name"
-                  className="h-11"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Job Scale</Label>
-                <Select
-                  value={formData.job_scale}
-                  onValueChange={(v) => setFormData((prev) => ({ ...prev, job_scale: v }))}
-                >
-                  <SelectTrigger className="h-11">
-                    <SelectValue placeholder="Select scale" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="small">Small (1-2 days)</SelectItem>
-                    <SelectItem value="medium">Medium (3-5 days)</SelectItem>
-                    <SelectItem value="large">Large (1-2 weeks)</SelectItem>
-                    <SelectItem value="major">Major (2+ weeks)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label>Contractor (Optional)</Label>
-                <Input
-                  value={formData.contractor}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, contractor: e.target.value }))}
-                  placeholder="Main contractor"
-                  className="h-11"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Supervisor (Optional)</Label>
-                <Input
-                  value={formData.supervisor}
-                  onChange={(e) => setFormData((prev) => ({ ...prev, supervisor: e.target.value }))}
-                  placeholder="Site supervisor"
-                  className="h-11"
-                />
-              </div>
-            </div>
-
-            {/* Activities */}
-            <div className="space-y-2">
-              <Label>Work Activities</Label>
-              <div className="flex gap-2">
-                <Input
-                  value={activityInput}
-                  onChange={(e) => setActivityInput(e.target.value)}
-                  placeholder="Add activity"
-                  className="h-11"
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addActivity())}
-                />
-                <Button type="button" onClick={addActivity} variant="outline" className="h-11">
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
+              </Field>
               {formData.activities.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">
                   {formData.activities.map((activity, index) => (
-                    <Badge
+                    <button
                       key={index}
-                      variant="secondary"
-                      className="cursor-pointer hover:bg-destructive/20"
+                      type="button"
                       onClick={() => removeActivity(index)}
+                      className="inline-flex items-center text-[11px] font-medium px-2.5 py-1 rounded-full border border-white/[0.1] bg-white/[0.06] text-white touch-manipulation hover:bg-white/[0.1] transition-colors"
                     >
-                      {activity} ×
-                    </Badge>
+                      {activity} <span className="ml-1.5 text-white">×</span>
+                    </button>
                   ))}
                 </div>
               )}
-            </div>
+            </FormCard>
 
-            <div className="flex gap-3 pt-4">
-              <Button
-                variant="outline"
-                className="flex-1"
+            <div className="flex gap-3 pt-2">
+              <SecondaryButton
+                fullWidth
                 onClick={() => {
                   setShowCreateSheet(false);
                   resetForm();
                 }}
               >
                 Cancel
-              </Button>
-              <Button
-                className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+              </SecondaryButton>
+              <PrimaryButton
+                fullWidth
                 onClick={handleCreateRAMS}
                 disabled={
                   !formData.project_name ||
@@ -518,169 +490,216 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                   createRAMS.isPending
                 }
               >
-                {createRAMS.isPending ? 'Creating...' : 'Create RAMS'}
-              </Button>
+                {createRAMS.isPending ? 'Creating…' : 'Create RAMS'}
+              </PrimaryButton>
             </div>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* RAMS Detail Sheet */}
       <Sheet open={showDetailSheet} onOpenChange={setShowDetailSheet}>
-        <SheetContent side="bottom" className="h-[85vh] overflow-y-auto">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
           {selectedRAMS && (
             <>
               <SheetHeader>
-                <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10">
-                    <FileText className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <SheetTitle>{selectedRAMS.project_name}</SheetTitle>
-                    <SheetDescription>
-                      Version {selectedRAMS.version} • {selectedRAMS.assessor}
-                    </SheetDescription>
-                  </div>
-                </div>
+                <SheetTitle className="text-white">{selectedRAMS.project_name}</SheetTitle>
+                <SheetDescription className="text-white">
+                  Version {selectedRAMS.version} · {selectedRAMS.assessor}
+                </SheetDescription>
               </SheetHeader>
 
               <div className="space-y-6 mt-6">
-                <div className="flex gap-2">
-                  <Badge className={getStatusColor(selectedRAMS.status as RAMSStatus)}>
-                    {selectedRAMS.status}
-                  </Badge>
-                  {selectedRAMS.job_scale && (
-                    <Badge variant="outline">{selectedRAMS.job_scale} job</Badge>
-                  )}
-                </div>
+                <StatStrip
+                  columns={3}
+                  stats={[
+                    {
+                      label: 'Status',
+                      value: statusLabelFor(selectedRAMS.status as RAMSStatus),
+                      tone: statusToneFor(selectedRAMS.status as RAMSStatus),
+                    },
+                    {
+                      label: 'Hazards',
+                      value: selectedRAMS.risks?.length ?? 0,
+                      tone: 'orange',
+                    },
+                    {
+                      label: 'Activities',
+                      value: selectedRAMS.activities?.length ?? 0,
+                      tone: 'blue',
+                    },
+                  ]}
+                />
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label className="text-white">Location</Label>
-                    <p className="mt-1 flex items-center gap-2">
-                      <MapPin className="h-4 w-4" />
-                      {selectedRAMS.location}
-                    </p>
-                  </div>
-                  <div>
-                    <Label className="text-white">Assessment Date</Label>
-                    <p className="mt-1 flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      {selectedRAMS.date}
-                    </p>
-                  </div>
-                </div>
-
-                {selectedRAMS.contractor && (
-                  <div>
-                    <Label className="text-white">Contractor</Label>
-                    <p className="mt-1">{selectedRAMS.contractor}</p>
-                  </div>
-                )}
+                <ListCard>
+                  <ListCardHeader tone="orange" title="Project details" />
+                  <ListBody>
+                    <ListRow
+                      lead={<MapPin className="h-4 w-4 text-white" />}
+                      title="Location"
+                      subtitle={selectedRAMS.location}
+                    />
+                    <ListRow
+                      lead={<Calendar className="h-4 w-4 text-white" />}
+                      title="Assessment date"
+                      subtitle={format(new Date(selectedRAMS.date), 'dd MMM yyyy')}
+                    />
+                    {selectedRAMS.contractor && (
+                      <ListRow
+                        title="Contractor"
+                        subtitle={selectedRAMS.contractor}
+                      />
+                    )}
+                    {selectedRAMS.supervisor && (
+                      <ListRow
+                        title="Supervisor"
+                        subtitle={selectedRAMS.supervisor}
+                      />
+                    )}
+                    {selectedRAMS.job_scale && (
+                      <ListRow
+                        title="Job scale"
+                        subtitle={selectedRAMS.job_scale}
+                        trailing={<Pill tone="amber">{selectedRAMS.job_scale}</Pill>}
+                      />
+                    )}
+                  </ListBody>
+                </ListCard>
 
                 {selectedRAMS.activities && selectedRAMS.activities.length > 0 && (
-                  <div>
-                    <Label className="text-white">Work Activities</Label>
-                    <div className="flex flex-wrap gap-2 mt-2">
+                  <ListCard>
+                    <ListCardHeader
+                      tone="blue"
+                      title="Work activities"
+                      meta={<Pill tone="blue">{selectedRAMS.activities.length}</Pill>}
+                    />
+                    <ListBody>
                       {selectedRAMS.activities.map((activity, index) => (
-                        <Badge key={index} variant="secondary">
-                          {activity}
-                        </Badge>
+                        <ListRow key={index} title={activity} />
                       ))}
-                    </div>
-                  </div>
+                    </ListBody>
+                  </ListCard>
                 )}
 
                 {selectedRAMS.risks && selectedRAMS.risks.length > 0 && (
-                  <div>
-                    <Label className="text-white">
-                      Risk Assessment ({selectedRAMS.risks.length} hazards)
-                    </Label>
-                    <div className="mt-2 space-y-2">
-                      {selectedRAMS.risks.slice(0, 3).map((risk, index) => (
-                        <div key={index} className="p-3 rounded-lg bg-muted/50">
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{risk.hazard}</span>
-                            <Badge
-                              className={
-                                risk.risk_level === 'high'
-                                  ? 'bg-destructive/20 text-destructive'
-                                  : risk.risk_level === 'medium'
-                                    ? 'bg-warning/20 text-warning'
-                                    : 'bg-success/20 text-success'
-                              }
-                            >
-                              {risk.risk_level}
-                            </Badge>
-                          </div>
-                        </div>
-                      ))}
-                      {selectedRAMS.risks.length > 3 && (
-                        <p className="text-sm text-white">
-                          + {selectedRAMS.risks.length - 3} more hazards
-                        </p>
+                  <ListCard>
+                    <ListCardHeader
+                      tone="orange"
+                      title="Risk assessment"
+                      meta={<Pill tone="orange">{selectedRAMS.risks.length}</Pill>}
+                    />
+                    <ListBody>
+                      {selectedRAMS.risks.slice(0, 5).map((risk, index) => {
+                        const riskTone: Tone =
+                          risk.risk_level === 'high'
+                            ? 'red'
+                            : risk.risk_level === 'medium'
+                              ? 'amber'
+                              : 'emerald';
+                        return (
+                          <ListRow
+                            key={index}
+                            title={risk.hazard}
+                            subtitle={
+                              risk.control_measures?.length
+                                ? `${risk.control_measures.length} control measure${risk.control_measures.length === 1 ? '' : 's'}`
+                                : undefined
+                            }
+                            trailing={<Pill tone={riskTone}>{risk.risk_level}</Pill>}
+                          />
+                        );
+                      })}
+                      {selectedRAMS.risks.length > 5 && (
+                        <ListRow
+                          title={`+ ${selectedRAMS.risks.length - 5} more hazards`}
+                        />
                       )}
-                    </div>
-                  </div>
+                    </ListBody>
+                  </ListCard>
                 )}
 
                 {selectedRAMS.required_ppe && selectedRAMS.required_ppe.length > 0 && (
-                  <div>
-                    <Label className="text-white">Required PPE</Label>
-                    <div className="flex flex-wrap gap-2 mt-2">
+                  <ListCard>
+                    <ListCardHeader
+                      tone="emerald"
+                      title="Required PPE"
+                      meta={<Pill tone="emerald">{selectedRAMS.required_ppe.length}</Pill>}
+                    />
+                    <ListBody>
                       {selectedRAMS.required_ppe.map((ppe, index) => (
-                        <Badge key={index} variant="outline">
-                          {ppe}
-                        </Badge>
+                        <ListRow key={index} title={ppe} />
                       ))}
-                    </div>
-                  </div>
+                    </ListBody>
+                  </ListCard>
                 )}
 
-                {/* Actions */}
-                <div className="flex gap-2 pt-4 border-t">
+                <ListCard>
+                  <ListCardHeader title="Update status" />
+                  <div className="px-5 sm:px-6 py-4 flex flex-wrap gap-2">
+                    {STATUS_OPTIONS.filter(
+                      (s) => s.value !== selectedRAMS.status,
+                    ).map((option) => (
+                      <SecondaryButton
+                        key={option.value}
+                        onClick={() =>
+                          handleStatusChange(selectedRAMS.id, option.value)
+                        }
+                        disabled={updateStatus.isPending}
+                      >
+                        Mark {option.label}
+                      </SecondaryButton>
+                    ))}
+                  </div>
+                </ListCard>
+
+                <div className="flex gap-2 pt-2">
                   {selectedRAMS.pdf_url && (
-                    <Button variant="outline" className="flex-1" asChild>
-                      <a href={selectedRAMS.pdf_url} target="_blank" rel="noopener noreferrer">
-                        <Download className="h-4 w-4 mr-2" />
-                        Download PDF
-                      </a>
-                    </Button>
+                    <a
+                      href={selectedRAMS.pdf_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 h-11 inline-flex items-center justify-center gap-2 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] transition-colors"
+                    >
+                      <Download className="h-4 w-4" />
+                      Download PDF
+                    </a>
                   )}
-                  <Button
-                    variant="outline"
-                    className="flex-1"
+                  <SecondaryButton
+                    fullWidth
                     onClick={async () => {
                       await copyToClipboard(window.location.href);
                     }}
                   >
                     <Copy className="h-4 w-4 mr-2" />
-                    Copy Link
-                  </Button>
+                    Copy link
+                  </SecondaryButton>
+                  <DestructiveButton
+                    onClick={async () => {
+                      if (
+                        confirm(
+                          `Delete RAMS "${selectedRAMS.project_name}"? This cannot be undone.`,
+                        )
+                      ) {
+                        await deleteRAMS.mutateAsync(selectedRAMS.id);
+                        setShowDetailSheet(false);
+                      }
+                    }}
+                    disabled={deleteRAMS.isPending}
+                  >
+                    Delete
+                  </DestructiveButton>
                 </div>
 
-                {/* Status Actions */}
-                <div className="border-t pt-4">
-                  <Label className="text-white mb-2 block">Update Status</Label>
-                  <div className="flex flex-wrap gap-2">
-                    {STATUS_OPTIONS.filter((s) => s.value !== selectedRAMS.status).map((option) => (
-                      <Button
-                        key={option.value}
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleStatusChange(selectedRAMS.id, option.value)}
-                        disabled={updateStatus.isPending}
-                      >
-                        {option.label}
-                      </Button>
-                    ))}
-                  </div>
-                </div>
+                <PrimaryButton fullWidth onClick={() => setShowDetailSheet(false)}>
+                  Close
+                </PrimaryButton>
               </div>
             </>
           )}
         </SheetContent>
       </Sheet>
-    </div>
+    </PageFrame>
   );
 }

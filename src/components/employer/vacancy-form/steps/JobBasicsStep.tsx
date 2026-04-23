@@ -1,13 +1,17 @@
 import { useFormContext, Controller } from 'react-hook-form';
-import { Briefcase, MapPin, Building2, Home, Laptop } from 'lucide-react';
-import { IOSInput } from '@/components/ui/ios-input';
-import { Label } from '@/components/ui/label';
+import { Building2, Home, Laptop } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import {
+  inputClass,
+  FormCard,
+  FormGrid,
+  Field,
+} from '@/components/employer/editorial';
 import {
   employmentTypes,
   workArrangements,
   type VacancyFormData,
-  type EmploymentType,
   type WorkArrangement,
 } from '../schema';
 
@@ -34,21 +38,20 @@ export function JobBasicsStep() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Job Title */}
-      <div>
-        <IOSInput
-          label="Job Title"
-          placeholder="e.g., Qualified Electrician"
-          icon={<Briefcase className="h-5 w-5" />}
-          error={errors.title?.message}
-          {...register('title')}
-        />
-      </div>
+      <FormCard eyebrow="Role">
+        <Field label="Job Title" required hint={errors.title?.message}>
+          <Input
+            className={inputClass}
+            placeholder="e.g., Qualified Electrician"
+            {...register('title')}
+          />
+        </Field>
+      </FormCard>
 
       {/* Employment Type */}
-      <div className="space-y-3">
-        <Label className="text-white">Employment Type</Label>
+      <FormCard eyebrow="Employment Type">
         <Controller
           name="type"
           control={control}
@@ -60,11 +63,11 @@ export function JobBasicsStep() {
                   type="button"
                   onClick={() => field.onChange(type)}
                   className={cn(
-                    'p-3 rounded-xl border-2 text-sm font-medium transition-all duration-200',
+                    'p-3 rounded-xl border text-[13px] font-medium transition-all duration-200',
                     'touch-manipulation min-h-[48px]',
                     selectedType === type
                       ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                      : 'border-white/10 bg-white/5 text-white hover:border-white/20'
+                      : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white hover:bg-white/[0.08]'
                   )}
                 >
                   {type}
@@ -73,33 +76,34 @@ export function JobBasicsStep() {
             </div>
           )}
         />
-        {errors.type?.message && <p className="text-xs text-red-400">{errors.type.message}</p>}
-      </div>
+        {errors.type?.message && (
+          <p className="text-[11px] text-red-400 mt-2">{errors.type.message}</p>
+        )}
+      </FormCard>
 
       {/* Location */}
-      <div className="space-y-4">
-        <IOSInput
-          label="Work Location"
-          placeholder="e.g., Manchester, M1 1AA"
-          icon={<MapPin className="h-5 w-5" />}
-          error={errors.location?.message}
-          hint="Enter city, town or postcode"
-          {...register('location')}
-        />
+      <FormCard eyebrow="Location">
+        <FormGrid cols={2}>
+          <Field label="Work Location" required hint={errors.location?.message ?? 'Enter city, town or postcode'}>
+            <Input
+              className={inputClass}
+              placeholder="e.g., Manchester, M1 1AA"
+              {...register('location')}
+            />
+          </Field>
 
-        {/* Postcode - optional for more precise location */}
-        <IOSInput
-          label="Postcode (optional)"
-          placeholder="e.g., M1 1AA"
-          error={errors.postcode?.message}
-          hint="For map display and distance matching"
-          {...register('postcode')}
-        />
-      </div>
+          <Field label="Postcode (optional)" hint={errors.postcode?.message ?? 'For map display and distance matching'}>
+            <Input
+              className={inputClass}
+              placeholder="e.g., M1 1AA"
+              {...register('postcode')}
+            />
+          </Field>
+        </FormGrid>
+      </FormCard>
 
       {/* Work Arrangement */}
-      <div className="space-y-3">
-        <Label className="text-white">Work Arrangement</Label>
+      <FormCard eyebrow="Work Arrangement">
         <Controller
           name="workArrangement"
           control={control}
@@ -111,12 +115,12 @@ export function JobBasicsStep() {
                   type="button"
                   onClick={() => field.onChange(arrangement)}
                   className={cn(
-                    'flex flex-col items-center gap-2 p-4 rounded-xl border-2',
-                    'text-sm font-medium transition-all duration-200',
+                    'flex flex-col items-center gap-2 p-4 rounded-xl border',
+                    'text-[13px] font-medium transition-all duration-200',
                     'touch-manipulation min-h-[80px]',
                     selectedArrangement === arrangement
                       ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                      : 'border-white/10 bg-white/5 text-white hover:border-white/20'
+                      : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white hover:bg-white/[0.08]'
                   )}
                 >
                   {getWorkArrangementIcon(arrangement)}
@@ -127,15 +131,15 @@ export function JobBasicsStep() {
           )}
         />
         {errors.workArrangement?.message && (
-          <p className="text-xs text-red-400">{errors.workArrangement.message}</p>
+          <p className="text-[11px] text-red-400 mt-2">{errors.workArrangement.message}</p>
         )}
-      </div>
+      </FormCard>
 
       {/* Helper text */}
-      <div className="p-4 rounded-xl bg-info/10 border border-info/20">
-        <p className="text-sm text-info">
-          <strong>Tip:</strong> Be specific with your location to attract nearby candidates. Jobs
-          with postcodes get 40% more relevant applications.
+      <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25">
+        <p className="text-[13px] text-white">
+          <strong className="text-elec-yellow">Tip:</strong> Be specific with your location to
+          attract nearby candidates. Jobs with postcodes get 40% more relevant applications.
         </p>
       </div>
     </div>

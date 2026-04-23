@@ -2,9 +2,10 @@ import { useState, useEffect, useCallback } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { SheetShell, PrimaryButton, SecondaryButton } from './editorial';
 import {
   Bold,
   Italic,
@@ -183,55 +184,56 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
         ? 'text-amber-400 border-amber-500/50'
         : 'text-green-400 border-green-500/50';
 
+  const headerBadges = (
+    <div className="flex items-center gap-2 flex-wrap">
+      <Badge variant="outline" className="text-xs text-white border-white/[0.1]">
+        {briefing.briefing_type || 'Briefing'}
+      </Badge>
+      {briefing.risk_level && (
+        <Badge variant="outline" className={cn('text-xs', riskColour)}>
+          {briefing.risk_level === 'high' && <AlertTriangle className="h-3 w-3 mr-1" />}
+          {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)} Risk
+        </Badge>
+      )}
+      {hasChanges && (
+        <Badge variant="outline" className="text-amber-400 border-amber-500/50 text-xs">
+          Unsaved
+        </Badge>
+      )}
+    </div>
+  );
+
   return (
     <Sheet open={open} onOpenChange={handleClose}>
-      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-elec-yellow/20">
-                  <Edit3 className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div>
-                  <SheetTitle className="text-left">{briefing.title}</SheetTitle>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="outline" className="text-xs">
-                      {briefing.briefing_type || 'Briefing'}
-                    </Badge>
-                    {briefing.risk_level && (
-                      <Badge variant="outline" className={cn('text-xs', riskColour)}>
-                        {briefing.risk_level === 'high' && (
-                          <AlertTriangle className="h-3 w-3 mr-1" />
-                        )}
-                        {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)}{' '}
-                        Risk
-                      </Badge>
-                    )}
-                    {hasChanges && (
-                      <Badge variant="outline" className="text-warning border-warning text-xs">
-                        Unsaved
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleClose}
-                className="shrink-0 touch-manipulation"
+      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Edit briefing"
+          title={briefing.title}
+          description={headerBadges}
+          footer={
+            <>
+              <SecondaryButton onClick={handleClose} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleSave}
+                disabled={updateContent.isPending || !hasChanges}
+                fullWidth
               >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </SheetHeader>
-
+                {updateContent.isPending ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : (
+                  <Save className="h-4 w-4 mr-2" />
+                )}
+                Save Changes
+              </PrimaryButton>
+            </>
+          }
+        >
           {/* Body */}
-          <div className="flex-1 overflow-hidden flex flex-col p-4">
+          <div className="flex-1 overflow-hidden flex flex-col">
             {/* Toolbar */}
-            <div className="flex flex-wrap items-center gap-1 p-2 bg-white/5 rounded-t-xl border border-white/10 border-b-0 mb-0">
+            <div className="flex flex-wrap items-center gap-1 p-2 bg-[hsl(0_0%_9%)] rounded-t-xl border border-white/[0.08] border-b-0 mb-0">
               <ToolbarButton
                 onClick={() => editor?.chain().focus().toggleBold().run()}
                 isActive={editor?.isActive('bold')}
@@ -335,14 +337,14 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
             {/* Editor / Preview */}
             <div
               className={cn(
-                'bg-white/5 rounded-b-xl border border-white/10 border-t-0',
-                'focus-within:border-elec-yellow/30 transition-colors',
+                'bg-[hsl(0_0%_9%)] rounded-b-xl border border-white/[0.08] border-t-0',
+                'focus-within:border-elec-yellow/60 transition-colors',
                 'flex-1 overflow-y-auto'
               )}
             >
               {isPreview ? (
                 <div
-                  className="prose prose-sm prose-invert max-w-none p-4 min-h-[300px] [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-foreground [&_table]:w-full [&_td]:py-1 [&_td]:pr-4"
+                  className="prose prose-sm prose-invert max-w-none p-4 min-h-[300px] [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-white [&_table]:w-full [&_td]:py-1 [&_td]:pr-4"
                   dangerouslySetInnerHTML={{ __html: editor?.getHTML() || '' }}
                 />
               ) : (
@@ -407,32 +409,7 @@ export function BriefingEditor({ open, onOpenChange, briefing, onSaved }: Briefi
               }
             `}</style>
           </div>
-
-          {/* Footer */}
-          <div className="p-4 border-t border-border shrink-0">
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={handleClose}
-                className="flex-1 h-12 touch-manipulation"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleSave}
-                disabled={updateContent.isPending || !hasChanges}
-                className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-              >
-                {updateContent.isPending ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4 mr-2" />
-                )}
-                Save Changes
-              </Button>
-            </div>
-          </div>
-        </div>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

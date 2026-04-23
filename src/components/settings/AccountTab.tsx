@@ -14,22 +14,13 @@ import { useNotifications } from '@/components/notifications/NotificationProvide
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
 import {
-  User,
-  Mail,
-  Loader2,
-  Building2,
-  CreditCard,
-  Calendar,
-  Briefcase,
-  Target,
-  Clock,
-  Users,
-  Award,
-  UserCheck,
-  ChevronRight,
-  Check,
-  Camera,
-} from 'lucide-react';
+  Eyebrow,
+  ListCard,
+  SectionHeader,
+  TextAction,
+  containerVariants,
+  itemVariants,
+} from '@/components/college/primitives';
 
 // UK Job Titles for electricians
 const UK_JOB_TITLES = [
@@ -44,7 +35,6 @@ const UK_JOB_TITLES = [
   { value: 'project_manager', label: 'Project Manager' },
 ];
 
-// UK Specialisations
 const UK_SPECIALISATIONS = [
   { value: 'domestic', label: 'Domestic' },
   { value: 'commercial', label: 'Commercial' },
@@ -56,7 +46,6 @@ const UK_SPECIALISATIONS = [
   { value: 'hazardous', label: 'Hazardous Areas' },
 ];
 
-// UK ECS Card Types
 const UK_ECS_CARD_TYPES = [
   { value: 'gold', label: 'Gold Card (Electrician)' },
   { value: 'blue', label: 'Blue Card (Approved Electrician)' },
@@ -66,14 +55,12 @@ const UK_ECS_CARD_TYPES = [
   { value: 'red', label: 'Red Card (Trainee)' },
 ];
 
-// Apprentice Levels (City & Guilds / EAL)
 const APPRENTICE_LEVELS = [
   { value: 'level2', label: 'Level 2 - Installation (2365)' },
   { value: 'level3', label: 'Level 3 - Electrotechnical (2365)' },
   { value: 'level3_am2', label: 'Level 3 + AM2' },
 ];
 
-// Employer Positions
 const EMPLOYER_POSITIONS = [
   { value: 'director', label: 'Director' },
   { value: 'managing_director', label: 'Managing Director' },
@@ -82,7 +69,6 @@ const EMPLOYER_POSITIONS = [
   { value: 'office_manager', label: 'Office Manager' },
 ];
 
-// Company Sizes
 const COMPANY_SIZES = [
   { value: '1-5', label: '1-5 employees' },
   { value: '6-20', label: '6-20 employees' },
@@ -90,9 +76,30 @@ const COMPANY_SIZES = [
   { value: '50+', label: '50+ employees' },
 ];
 
-// Helper to get label from value
 const getLabel = (options: { value: string; label: string }[], value: string) => {
   return options.find((opt) => opt.value === value)?.label || 'Not set';
+};
+
+/* ────────────────────────────────────────────────
+   Row building block — used within ListCard
+   ──────────────────────────────────────────────── */
+interface KVRowProps {
+  label: string;
+  value: React.ReactNode;
+  trailing?: React.ReactNode;
+  onEdit?: () => void;
+}
+const KVRow: React.FC<KVRowProps> = ({ label, value, trailing, onEdit }) => {
+  return (
+    <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+      <div className="flex-1 min-w-0">
+        <Eyebrow>{label}</Eyebrow>
+        <div className="mt-1 text-[15px] text-white truncate">{value}</div>
+      </div>
+      {trailing && <div className="shrink-0">{trailing}</div>}
+      {onEdit && !trailing && <TextAction onClick={onEdit}>Edit</TextAction>}
+    </div>
+  );
 };
 
 const AccountTab = () => {
@@ -113,7 +120,7 @@ const AccountTab = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [uploading, setUploading] = useState(false);
 
-  // Profile fields state
+  // Profile fields
   const [displayName, setDisplayName] = useState(
     profile?.full_name || user?.email?.split('@')[0] || ''
   );
@@ -141,7 +148,6 @@ const AccountTab = () => {
 
   const role = profile?.role;
 
-  // Update local state when profile loads
   useEffect(() => {
     if (profile) {
       setDisplayName(profile.full_name || user?.email?.split('@')[0] || '');
@@ -159,17 +165,13 @@ const AccountTab = () => {
     }
   }, [profile, user]);
 
-  // Generic save handler
   const handleSave = async (updateData: Record<string, unknown>, closeSheet: () => void) => {
     if (!user?.id) return;
     setIsSaving(true);
 
     try {
       const { error } = await supabase.from('profiles').update(updateData).eq('id', user.id);
-
       if (error) throw error;
-
-      // CRITICAL: Refresh the profile from database to ensure AuthContext is updated
       await fetchProfile(user.id);
 
       setShowSuccess(true);
@@ -194,7 +196,6 @@ const AccountTab = () => {
     }
   };
 
-  // Photo upload handler
   const handlePhotoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file || !user) return;
@@ -203,7 +204,6 @@ const AccountTab = () => {
       addNotification({ title: 'Invalid file', message: 'Please select an image', type: 'error' });
       return;
     }
-
     if (file.size > 2 * 1024 * 1024) {
       addNotification({ title: 'File too large', message: 'Max 2MB', type: 'error' });
       return;
@@ -213,13 +213,11 @@ const AccountTab = () => {
     try {
       const fileExt = file.name.split('.').pop();
       const fileName = `${user.id}-${Date.now()}.${fileExt}`;
-      // Use user.id as folder for RLS policy compliance
       const filePath = `${user.id}/${fileName}`;
 
       const { error: uploadError } = await supabase.storage
         .from('avatars')
         .upload(filePath, file, { upsert: true });
-
       if (uploadError) throw uploadError;
 
       const {
@@ -230,7 +228,6 @@ const AccountTab = () => {
         .from('profiles')
         .update({ avatar_url: publicUrl })
         .eq('id', user.id);
-
       if (updateError) throw updateError;
 
       await fetchProfile(user.id);
@@ -285,71 +282,39 @@ const AccountTab = () => {
     );
   };
 
-  // Row renderer for cards
-  const renderRow = (
-    icon: React.ElementType,
-    iconBg: string,
-    iconColor: string,
-    label: string,
-    value: string,
-    isLast: boolean,
-    badge?: string
-  ) => {
-    const Icon = icon;
-    return (
-      <div
-        key={label}
-        className={`flex items-center gap-3 px-4 py-3 ${!isLast ? 'border-b border-white/[0.04]' : ''}`}
-      >
-        <div
-          className={`w-8 h-8 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0`}
-        >
-          <Icon className={`h-4 w-4 ${iconColor}`} />
-        </div>
-        <div className="flex-1 min-w-0 text-left">
-          <p className="text-[11px] font-medium text-white uppercase tracking-wide">{label}</p>
-          <p className="text-[15px] text-white truncate">{value}</p>
-        </div>
-        {badge && (
-          <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-500/20 text-green-400 font-medium">
-            {badge}
-          </span>
-        )}
-      </div>
-    );
-  };
-
-  // Save button renderer for sheets
   const renderSaveButton = (onClick: () => void) => (
     <button
       onClick={onClick}
       disabled={isSaving}
-      className="text-[17px] text-blue-400 font-semibold active:opacity-50 touch-manipulation disabled:opacity-50"
+      className="text-[13px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation disabled:opacity-50"
     >
-      {isSaving ? (
-        <Loader2 className="h-5 w-5 animate-spin" />
-      ) : showSuccess ? (
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 500 }}
-        >
-          <Check className="h-5 w-5 text-green-400" />
-        </motion.div>
-      ) : (
-        'Save'
-      )}
+      {isSaving ? 'Saving…' : showSuccess ? 'Saved' : 'Save'}
     </button>
   );
 
+  const ecsStatusLabel =
+    ecsCardStatus === 'not_applied'
+      ? 'Not Applied'
+      : ecsCardStatus === 'applied'
+        ? 'Applied'
+        : 'Received';
+
   return (
-    <motion.div className="space-y-4">
-      {/* Profile Card */}
-      <motion.div
-        className="bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden"
-        whileTap={{ scale: 0.98 }}
-        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-      >
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-8"
+    >
+      {/* ── PROFILE ── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="01"
+          title="Profile"
+          action="Edit"
+          onAction={() => setIsEditingProfile(true)}
+        />
+
         <input
           ref={fileInputRef}
           type="file"
@@ -357,303 +322,234 @@ const AccountTab = () => {
           className="hidden"
           onChange={handlePhotoUpload}
         />
-        <button
-          onClick={() => setIsEditingProfile(true)}
-          className="w-full flex items-center justify-between px-4 py-3.5 active:bg-white/[0.04] transition-colors touch-manipulation"
-        >
-          <div className="flex items-center gap-3">
-            {/* Avatar with camera button */}
-            <div className="relative">
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  fileInputRef.current?.click();
-                }}
-                className={`w-10 h-10 rounded-xl overflow-hidden bg-white/[0.05] border border-white/10 flex items-center justify-center cursor-pointer ${uploading ? 'animate-pulse' : ''}`}
-              >
-                {profile?.avatar_url ? (
-                  <img
-                    loading="lazy"
-                    src={profile.avatar_url}
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <User className="w-5 h-5 text-white" />
-                )}
-              </div>
-              <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center pointer-events-none">
-                <Camera className="w-2.5 h-2.5 text-white" />
-              </div>
+
+        {/* Avatar + identity row */}
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className={`relative h-16 w-16 rounded-2xl overflow-hidden bg-white/[0.04] border border-white/[0.08] flex items-center justify-center touch-manipulation ${
+              uploading ? 'animate-pulse' : ''
+            }`}
+            aria-label="Change profile photo"
+          >
+            {profile?.avatar_url ? (
+              <img
+                loading="lazy"
+                src={profile.avatar_url}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span className="text-[11px] font-medium text-white/55 uppercase tracking-wider">
+                Upload
+              </span>
+            )}
+          </button>
+          <div className="flex-1 min-w-0">
+            <Eyebrow>Display Name</Eyebrow>
+            <div className="mt-1 text-[17px] font-semibold text-white truncate">
+              {displayName || 'Not set'}
             </div>
-            <div className="flex items-center gap-2.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              <span className="font-semibold text-[15px] text-white">Profile</span>
+            <div className="mt-1 flex items-center gap-2">
+              <span className="text-[12.5px] text-white/65 truncate">
+                {user?.email || 'Not set'}
+              </span>
+              {user?.email && (
+                <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                  Verified
+                </span>
+              )}
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-white" />
-        </button>
-
-        <div className="border-t border-white/[0.06]">
-          {renderRow(
-            User,
-            'bg-blue-500/15',
-            'text-blue-400',
-            'Display Name',
-            displayName || 'Not set',
-            false
-          )}
-          {renderRow(
-            Mail,
-            'bg-green-500/15',
-            'text-green-400',
-            'Email',
-            user?.email || 'Not set',
-            true,
-            'Verified'
-          )}
         </div>
-      </motion.div>
 
-      {/* Apprentice Card */}
+      </motion.section>
+
+      {/* ── APPRENTICE ── */}
       {role === 'apprentice' && (
-        <motion.div
-          className="bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden"
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        >
-          <button
-            onClick={() => setIsEditingApprentice(true)}
-            className="w-full flex items-center justify-between px-4 py-3.5 active:bg-white/[0.04] transition-colors touch-manipulation"
-          >
-            <div className="flex items-center gap-2.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-              <span className="font-semibold text-[15px] text-white">Apprentice Details</span>
-            </div>
-            <ChevronRight className="h-5 w-5 text-white" />
-          </button>
-
-          <div className="border-t border-white/[0.06]">
-            {renderRow(
-              Award,
-              'bg-amber-500/15',
-              'text-amber-400',
-              'Course Level',
-              getLabel(APPRENTICE_LEVELS, apprenticeLevel),
-              false
-            )}
-            {renderRow(
-              Calendar,
-              'bg-blue-500/15',
-              'text-blue-400',
-              'Current Year',
-              `Year ${apprenticeYear}`,
-              false
-            )}
-            {renderRow(
-              Building2,
-              'bg-cyan-500/15',
-              'text-cyan-400',
-              'Training Provider',
-              trainingProvider || 'Not set',
-              false
-            )}
-            {renderRow(
-              CreditCard,
-              'bg-green-500/15',
-              'text-green-400',
-              'ECS Card Status',
-              ecsCardStatus === 'not_applied'
-                ? 'Not Applied'
-                : ecsCardStatus === 'applied'
-                  ? 'Applied'
-                  : 'Received',
-              false
-            )}
-            {renderRow(
-              UserCheck,
-              'bg-rose-500/15',
-              'text-rose-400',
-              'Supervisor',
-              supervisorName || 'Not set',
-              true
-            )}
-          </div>
-        </motion.div>
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="02"
+            title="Apprentice Details"
+            action="Edit"
+            onAction={() => setIsEditingApprentice(true)}
+          />
+          <ListCard>
+            <KVRow
+              label="Course Level"
+              value={getLabel(APPRENTICE_LEVELS, apprenticeLevel)}
+              onEdit={() => setIsEditingApprentice(true)}
+            />
+            <KVRow
+              label="Current Year"
+              value={`Year ${apprenticeYear}`}
+              onEdit={() => setIsEditingApprentice(true)}
+            />
+            <KVRow
+              label="Training Provider"
+              value={trainingProvider || 'Not set'}
+              onEdit={() => setIsEditingApprentice(true)}
+            />
+            <KVRow
+              label="ECS Card Status"
+              value={ecsStatusLabel}
+              trailing={
+                ecsCardStatus === 'received' ? (
+                  <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                    Received
+                  </span>
+                ) : ecsCardStatus === 'applied' ? (
+                  <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-amber-400">
+                    Applied
+                  </span>
+                ) : (
+                  <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-red-400">
+                    Not Applied
+                  </span>
+                )
+              }
+            />
+            <KVRow
+              label="Supervisor"
+              value={supervisorName || 'Not set'}
+              onEdit={() => setIsEditingApprentice(true)}
+            />
+          </ListCard>
+        </motion.section>
       )}
 
-      {/* Professional Details Card - electricians AND employers */}
+      {/* ── PROFESSIONAL (electrician + employer) ── */}
       {(role === 'electrician' || role === 'employer') && (
-        <motion.div
-          className="bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden"
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        >
-          <button
-            onClick={() => setIsEditingElectrician(true)}
-            className="w-full flex items-center justify-between px-4 py-3.5 active:bg-white/[0.04] transition-colors touch-manipulation"
-          >
-            <div className="flex items-center gap-2.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-              <span className="font-semibold text-[15px] text-white">Professional Details</span>
-            </div>
-            <ChevronRight className="h-5 w-5 text-white" />
-          </button>
-
-          <div className="border-t border-white/[0.06]">
-            {renderRow(
-              Briefcase,
-              'bg-blue-500/15',
-              'text-blue-400',
-              'Job Title',
-              getLabel(UK_JOB_TITLES, jobTitle),
-              false
-            )}
-            {renderRow(
-              Target,
-              'bg-purple-500/15',
-              'text-purple-400',
-              'Specialisation',
-              getLabel(UK_SPECIALISATIONS, specialisation),
-              false
-            )}
-            {renderRow(
-              Clock,
-              'bg-green-500/15',
-              'text-green-400',
-              'Years Experience',
-              yearsExperience ? `${yearsExperience} years` : 'Not set',
-              false
-            )}
-            {renderRow(
-              CreditCard,
-              'bg-amber-500/15',
-              'text-amber-400',
-              'ECS Card Type',
-              getLabel(UK_ECS_CARD_TYPES, ecsCardType),
-              true
-            )}
-          </div>
-        </motion.div>
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="03"
+            title="Professional Details"
+            action="Edit"
+            onAction={() => setIsEditingElectrician(true)}
+          />
+          <ListCard>
+            <KVRow
+              label="Job Title"
+              value={getLabel(UK_JOB_TITLES, jobTitle)}
+              onEdit={() => setIsEditingElectrician(true)}
+            />
+            <KVRow
+              label="Specialisation"
+              value={getLabel(UK_SPECIALISATIONS, specialisation)}
+              onEdit={() => setIsEditingElectrician(true)}
+            />
+            <KVRow
+              label="Years Experience"
+              value={yearsExperience ? `${yearsExperience} years` : 'Not set'}
+              onEdit={() => setIsEditingElectrician(true)}
+            />
+            <KVRow
+              label="ECS Card Type"
+              value={getLabel(UK_ECS_CARD_TYPES, ecsCardType)}
+              onEdit={() => setIsEditingElectrician(true)}
+            />
+          </ListCard>
+        </motion.section>
       )}
 
-      {/* Employer Card */}
+      {/* ── BUSINESS ROLE ── */}
       {role === 'employer' && (
-        <motion.div
-          className="bg-white/[0.03] border border-white/[0.06] rounded-2xl overflow-hidden"
-          whileTap={{ scale: 0.98 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        >
-          <button
-            onClick={() => setIsEditingEmployer(true)}
-            className="w-full flex items-center justify-between px-4 py-3.5 active:bg-white/[0.04] transition-colors touch-manipulation"
-          >
-            <div className="flex items-center gap-2.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-              <span className="font-semibold text-[15px] text-white">Business Role</span>
-            </div>
-            <ChevronRight className="h-5 w-5 text-white" />
-          </button>
-
-          <div className="border-t border-white/[0.06]">
-            {renderRow(
-              User,
-              'bg-purple-500/15',
-              'text-purple-400',
-              'Position',
-              getLabel(EMPLOYER_POSITIONS, businessPosition),
-              false
-            )}
-            {renderRow(
-              Users,
-              'bg-green-500/15',
-              'text-green-400',
-              'Company Size',
-              getLabel(COMPANY_SIZES, companySize),
-              true
-            )}
-          </div>
-        </motion.div>
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader
+            eyebrow="04"
+            title="Business Role"
+            action="Edit"
+            onAction={() => setIsEditingEmployer(true)}
+          />
+          <ListCard>
+            <KVRow
+              label="Position"
+              value={getLabel(EMPLOYER_POSITIONS, businessPosition)}
+              onEdit={() => setIsEditingEmployer(true)}
+            />
+            <KVRow
+              label="Company Size"
+              value={getLabel(COMPANY_SIZES, companySize)}
+              onEdit={() => setIsEditingEmployer(true)}
+            />
+          </ListCard>
+        </motion.section>
       )}
 
-      {/* Profile Edit Sheet */}
+      {/* ── PROFILE EDIT SHEET ── */}
       <Sheet open={isEditingProfile} onOpenChange={setIsEditingProfile}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+          className="h-[85vh] rounded-t-2xl p-0 border-t border-white/[0.06] bg-[hsl(0_0%_12%)] flex flex-col"
         >
-          <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
+          <div className="flex justify-center pt-3 pb-2 shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
-
-          <div className="flex items-center justify-between px-4 pb-4 border-b border-white/[0.08] flex-shrink-0">
+          <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06] shrink-0">
             <button
               onClick={() => setIsEditingProfile(false)}
-              className="text-[17px] text-blue-400 font-normal active:opacity-50 touch-manipulation"
+              className="text-[13px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>
-            <h2 className="text-[17px] font-semibold text-white">Edit Profile</h2>
+            <h2 className="text-[15px] font-semibold text-white">Edit Profile</h2>
             {renderSaveButton(handleSaveProfile)}
           </div>
-
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6 pb-10">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Display Name
               </Label>
               <Input
                 placeholder="Your name"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
+                className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
-
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Email
               </Label>
-              <div className="h-[50px] flex items-center bg-white/[0.04] rounded-xl px-4 border border-white/[0.06]">
-                <p className="text-[17px] text-white">{user?.email || ''}</p>
+              <div className="h-11 flex items-center bg-[#0a0a0a] rounded-xl px-4 border border-white/[0.06]">
+                <p className="text-[15px] text-white">{user?.email || ''}</p>
               </div>
-              <p className="text-[12px] text-white px-1">Email cannot be changed here</p>
+              <p className="text-[11.5px] text-white/55">Email cannot be changed here</p>
             </div>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Apprentice Edit Sheet */}
+      {/* ── APPRENTICE EDIT SHEET ── */}
       <Sheet open={isEditingApprentice} onOpenChange={setIsEditingApprentice}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+          className="h-[85vh] rounded-t-2xl p-0 border-t border-white/[0.06] bg-[hsl(0_0%_12%)] flex flex-col"
         >
-          <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
+          <div className="flex justify-center pt-3 pb-2 shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
-
-          <div className="flex items-center justify-between px-4 pb-4 border-b border-white/[0.08] flex-shrink-0">
+          <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06] shrink-0">
             <button
               onClick={() => setIsEditingApprentice(false)}
-              className="text-[17px] text-blue-400 font-normal active:opacity-50 touch-manipulation"
+              className="text-[13px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>
-            <h2 className="text-[17px] font-semibold text-white">Apprentice Details</h2>
+            <h2 className="text-[15px] font-semibold text-white">Apprentice Details</h2>
             {renderSaveButton(handleSaveApprentice)}
           </div>
-
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6 pb-10">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Course Level
               </Label>
               <Select value={apprenticeLevel} onValueChange={setApprenticeLevel}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select level" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                   {APPRENTICE_LEVELS.map((level) => (
                     <SelectItem key={level.value} value={level.value}>
                       {level.label}
@@ -664,14 +560,14 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Current Year
               </Label>
               <Select value={apprenticeYear} onValueChange={setApprenticeYear}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                   <SelectItem value="1">Year 1</SelectItem>
                   <SelectItem value="2">Year 2</SelectItem>
                   <SelectItem value="3">Year 3</SelectItem>
@@ -681,26 +577,26 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Training Provider
               </Label>
               <Input
                 placeholder="e.g. City College"
                 value={trainingProvider}
                 onChange={(e) => setTrainingProvider(e.target.value)}
-                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
+                className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 ECS Card Status
               </Label>
               <Select value={ecsCardStatus} onValueChange={setEcsCardStatus}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                   <SelectItem value="not_applied">Not Applied</SelectItem>
                   <SelectItem value="applied">Applied</SelectItem>
                   <SelectItem value="received">Received</SelectItem>
@@ -709,51 +605,49 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Supervisor
               </Label>
               <Input
                 placeholder="Supervisor name"
                 value={supervisorName}
                 onChange={(e) => setSupervisorName(e.target.value)}
-                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
+                className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Electrician Edit Sheet */}
+      {/* ── ELECTRICIAN EDIT SHEET ── */}
       <Sheet open={isEditingElectrician} onOpenChange={setIsEditingElectrician}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+          className="h-[85vh] rounded-t-2xl p-0 border-t border-white/[0.06] bg-[hsl(0_0%_12%)] flex flex-col"
         >
-          <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
+          <div className="flex justify-center pt-3 pb-2 shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
-
-          <div className="flex items-center justify-between px-4 pb-4 border-b border-white/[0.08] flex-shrink-0">
+          <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06] shrink-0">
             <button
               onClick={() => setIsEditingElectrician(false)}
-              className="text-[17px] text-blue-400 font-normal active:opacity-50 touch-manipulation"
+              className="text-[13px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>
-            <h2 className="text-[17px] font-semibold text-white">Professional Details</h2>
+            <h2 className="text-[15px] font-semibold text-white">Professional Details</h2>
             {renderSaveButton(handleSaveElectrician)}
           </div>
-
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6 pb-10">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Job Title
               </Label>
               <Select value={jobTitle} onValueChange={setJobTitle}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select job title" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                   {UK_JOB_TITLES.map((title) => (
                     <SelectItem key={title.value} value={title.value}>
                       {title.label}
@@ -764,14 +658,14 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Specialisation
               </Label>
               <Select value={specialisation} onValueChange={setSpecialisation}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select area" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                   {UK_SPECIALISATIONS.map((spec) => (
                     <SelectItem key={spec.value} value={spec.value}>
                       {spec.label}
@@ -782,7 +676,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Years Experience
               </Label>
               <Input
@@ -792,19 +686,19 @@ const AccountTab = () => {
                 placeholder="0"
                 value={yearsExperience}
                 onChange={(e) => setYearsExperience(e.target.value)}
-                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
+                className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 ECS Card Type
               </Label>
               <Select value={ecsCardType} onValueChange={setEcsCardType}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select card type" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                   {UK_ECS_CARD_TYPES.map((card) => (
                     <SelectItem key={card.value} value={card.value}>
                       {card.label}
@@ -817,37 +711,35 @@ const AccountTab = () => {
         </SheetContent>
       </Sheet>
 
-      {/* Employer Edit Sheet */}
+      {/* ── EMPLOYER EDIT SHEET ── */}
       <Sheet open={isEditingEmployer} onOpenChange={setIsEditingEmployer}>
         <SheetContent
           side="bottom"
-          className="h-[85vh] rounded-t-[20px] p-0 border-0 bg-[#1c1c1e] flex flex-col"
+          className="h-[85vh] rounded-t-2xl p-0 border-t border-white/[0.06] bg-[hsl(0_0%_12%)] flex flex-col"
         >
-          <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
+          <div className="flex justify-center pt-3 pb-2 shrink-0">
             <div className="w-9 h-1 rounded-full bg-white/20" />
           </div>
-
-          <div className="flex items-center justify-between px-4 pb-4 border-b border-white/[0.08] flex-shrink-0">
+          <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06] shrink-0">
             <button
               onClick={() => setIsEditingEmployer(false)}
-              className="text-[17px] text-blue-400 font-normal active:opacity-50 touch-manipulation"
+              className="text-[13px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>
-            <h2 className="text-[17px] font-semibold text-white">Business Role</h2>
+            <h2 className="text-[15px] font-semibold text-white">Business Role</h2>
             {renderSaveButton(handleSaveEmployer)}
           </div>
-
-          <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6 pb-10">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Position
               </Label>
               <Select value={businessPosition} onValueChange={setBusinessPosition}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select position" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                   {EMPLOYER_POSITIONS.map((pos) => (
                     <SelectItem key={pos.value} value={pos.value}>
                       {pos.label}
@@ -858,14 +750,14 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
                 Company Size
               </Label>
               <Select value={companySize} onValueChange={setCompanySize}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select size" />
                 </SelectTrigger>
-                <SelectContent className="bg-[#2c2c2e] border-white/10">
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
                   {COMPANY_SIZES.map((size) => (
                     <SelectItem key={size.value} value={size.value}>
                       {size.label}

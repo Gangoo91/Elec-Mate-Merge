@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -25,6 +23,18 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { Trash2, Save, Loader2 } from 'lucide-react';
 import type { PriceBookItem } from '@/services/financeService';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 const CATEGORIES = [
   'Cable',
@@ -70,7 +80,6 @@ export function EditPriceBookItemSheet({
   const [stockLevel, setStockLevel] = useState('');
   const [reorderLevel, setReorderLevel] = useState('');
 
-  // Reset form when item changes
   useEffect(() => {
     if (item) {
       setName(item.name);
@@ -114,188 +123,156 @@ export function EditPriceBookItemSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
+        className={cn('p-0 overflow-hidden', isMobile ? 'h-[90vh]' : 'w-[480px]')}
       >
-        {/* Header */}
-        <SheetHeader className="p-4 border-b border-border shrink-0">
-          <SheetTitle>Edit Material</SheetTitle>
-        </SheetHeader>
-
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Material name"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label htmlFor="buyPrice">Buy Price</Label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-                  £
-                </span>
+        <SheetShell
+          eyebrow="Price book"
+          title="Edit material"
+          description="Update pricing, stock levels, and categorisation."
+          footer={
+            <>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <DestructiveButton disabled={isDeleting}>
+                    {isDeleting ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Trash2 className="h-4 w-4" />
+                    )}
+                  </DestructiveButton>
+                </AlertDialogTrigger>
+                <AlertDialogContent className="bg-[hsl(0_0%_10%)] border-white/[0.08]">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="text-white">Delete material</AlertDialogTitle>
+                    <AlertDialogDescription className="text-white">
+                      Are you sure you want to delete "{name}"? This action cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel className="bg-white/[0.06] text-white border-white/[0.1] hover:bg-white/[0.1]">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDelete}
+                      className="bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton onClick={handleSave} disabled={isSaving || !name.trim()} fullWidth>
+                {isSaving ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Saving...
+                  </>
+                ) : (
+                  <>
+                    <Save className="h-4 w-4 mr-1.5" />
+                    Save
+                  </>
+                )}
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Item details">
+            <Field label="Name">
+              <Input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Material name"
+                className={inputClass}
+              />
+            </Field>
+            <FormGrid cols={2}>
+              <Field label="Buy price (£)">
                 <Input
-                  id="buyPrice"
                   type="number"
                   step="0.01"
                   value={buyPrice}
                   onChange={(e) => setBuyPrice(e.target.value)}
-                  className="pl-7"
+                  className={inputClass}
                 />
-              </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="sellPrice">Sell Price</Label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-                  £
-                </span>
+              </Field>
+              <Field label="Sell price (£)">
                 <Input
-                  id="sellPrice"
                   type="number"
                   step="0.01"
                   value={sellPrice}
                   onChange={(e) => setSellPrice(e.target.value)}
-                  className="pl-7"
+                  className={inputClass}
                 />
-              </div>
-            </div>
-          </div>
-
-          {buyPrice && sellPrice && (
-            <p className="text-sm text-white">Markup: {markup}%</p>
-          )}
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label>Category</Label>
-              <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {CATEGORIES.map((cat) => (
-                    <SelectItem key={cat} value={cat}>
-                      {cat}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Unit</Label>
-              <Select value={unit} onValueChange={setUnit}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {UNITS.map((u) => (
-                    <SelectItem key={u} value={u}>
-                      {u}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="sku">SKU (optional)</Label>
-            <Input
-              id="sku"
-              value={sku}
-              onChange={(e) => setSku(e.target.value)}
-              placeholder="Product code"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <Label htmlFor="stockLevel">Stock Level</Label>
-              <Input
-                id="stockLevel"
-                type="number"
-                value={stockLevel}
-                onChange={(e) => setStockLevel(e.target.value)}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="reorderLevel">Reorder Level</Label>
-              <Input
-                id="reorderLevel"
-                type="number"
-                value={reorderLevel}
-                onChange={(e) => setReorderLevel(e.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-border shrink-0 pb-safe space-y-3">
-          <Button
-            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-11"
-            onClick={handleSave}
-            disabled={isSaving || !name.trim()}
-          >
-            {isSaving ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              <>
-                <Save className="h-4 w-4 mr-2" />
-                Save Changes
-              </>
+              </Field>
+            </FormGrid>
+            {buyPrice && sellPrice && (
+              <p className="text-[11px] text-white">Markup: {markup}%</p>
             )}
-          </Button>
+            <FormGrid cols={2}>
+              <Field label="Category">
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {CATEGORIES.map((cat) => (
+                      <SelectItem key={cat} value={cat}>
+                        {cat}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+              <Field label="Unit">
+                <Select value={unit} onValueChange={setUnit}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {UNITS.map((u) => (
+                      <SelectItem key={u} value={u}>
+                        {u}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormGrid>
+            <Field label="SKU (optional)">
+              <Input
+                value={sku}
+                onChange={(e) => setSku(e.target.value)}
+                placeholder="Product code"
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
 
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full h-11 text-destructive hover:text-destructive hover:bg-destructive/10"
-                disabled={isDeleting}
-              >
-                {isDeleting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Deleting...
-                  </>
-                ) : (
-                  <>
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete Item
-                  </>
-                )}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Delete Material</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Are you sure you want to delete "{name}"? This action cannot be undone.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  onClick={handleDelete}
-                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                >
-                  Delete
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        </div>
+          <FormCard eyebrow="Stock">
+            <FormGrid cols={2}>
+              <Field label="Stock level">
+                <Input
+                  type="number"
+                  value={stockLevel}
+                  onChange={(e) => setStockLevel(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Reorder level">
+                <Input
+                  type="number"
+                  value={reorderLevel}
+                  onChange={(e) => setReorderLevel(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+          </FormCard>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

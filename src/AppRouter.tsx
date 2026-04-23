@@ -108,6 +108,7 @@ const CertificateExpiryPage = lazy(() => import('@/pages/CertificateExpiryPage')
 const EmployerDashboard = lazy(() => import('@/pages/employer/EmployerDashboard'));
 const CollegeDashboard = lazy(() => import('@/pages/college/CollegeDashboard'));
 const LtiHandoff = lazy(() => import('@/pages/LtiHandoff'));
+const LessonPlanPage = lazy(() => import('@/pages/college/LessonPlanPage'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('@/pages/legal/TermsOfService'));
@@ -1847,6 +1848,18 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <CollegeDashboard />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Curriculum Hub — dedicated lesson plan view (live-streaming or saved) */}
+          <Route
+            path="college/lessons/:id"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <LessonPlanPage />
                 </CollegeGuard>
               </LazyRoute>
             }

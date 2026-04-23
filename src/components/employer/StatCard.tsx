@@ -1,5 +1,4 @@
 import { LucideIcon } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 interface StatCardProps {
@@ -16,34 +15,34 @@ export function StatCard({
   value,
   change,
   changeType = 'neutral',
-  icon: Icon,
-  iconColor = 'text-elec-yellow',
+  icon: _Icon,
+  iconColor: _iconColor,
 }: StatCardProps) {
+  void _Icon;
+  void _iconColor;
+
+  const changeClass =
+    changeType === 'positive'
+      ? 'text-emerald-400'
+      : changeType === 'negative'
+        ? 'text-red-400'
+        : 'text-white';
+
   return (
-    <Card className="card-hover touch-feedback">
-      <CardContent className="p-4 sm:p-6">
-        <div className="flex items-center justify-between gap-2">
-          <div className="space-y-1 sm:space-y-2 min-w-0">
-            <p className="text-xs sm:text-sm text-white truncate">{title}</p>
-            <p className="text-xl sm:text-3xl font-bold text-foreground">{value}</p>
-            {change && (
-              <p
-                className={cn(
-                  'text-xs sm:text-sm font-medium',
-                  changeType === 'positive' && 'text-success',
-                  changeType === 'negative' && 'text-destructive',
-                  changeType === 'neutral' && 'text-white'
-                )}
-              >
-                {change}
-              </p>
-            )}
-          </div>
-          <div className={cn('p-2 sm:p-3 rounded-xl bg-elec-yellow/10 flex-shrink-0', iconColor)}>
-            <Icon className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-          </div>
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden touch-manipulation">
+      <div className="p-5 sm:p-6 flex flex-col items-start">
+        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white truncate">
+          {title}
         </div>
-      </CardContent>
-    </Card>
+        <div className="mt-3 sm:mt-4 text-[30px] sm:text-4xl lg:text-[44px] font-semibold tabular-nums tracking-[-0.02em] leading-none text-white">
+          {value}
+        </div>
+        {change && (
+          <div className={cn('mt-2.5 text-[11px] font-medium tabular-nums', changeClass)}>
+            {change}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

@@ -10,9 +10,10 @@ import {
   RefreshCw,
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
+import { PrimaryButton, SecondaryButton, DestructiveButton } from './editorial';
+import { cn } from '@/lib/utils';
 import {
   getStripeConnectStatus,
   createStripeConnectAccount,
@@ -151,10 +152,10 @@ export function StripeConnectCard() {
 
   if (loading) {
     return (
-      <Card className="overflow-hidden border-purple-500/20">
+      <Card className="overflow-hidden border border-purple-500/20 bg-[hsl(0_0%_12%)]">
         <CardHeader className="bg-gradient-to-r from-purple-500/10 to-transparent">
-          <CardTitle className="flex items-center gap-2">
-            <CreditCard className="h-5 w-5 text-purple-500" />
+          <CardTitle className="flex items-center gap-2 text-white">
+            <CreditCard className="h-5 w-5 text-purple-400" />
             Stripe Payments
           </CardTitle>
         </CardHeader>
@@ -172,15 +173,17 @@ export function StripeConnectCard() {
 
   return (
     <>
-      <Card className="overflow-hidden border-purple-500/20">
+      <Card className="overflow-hidden border border-purple-500/20 bg-[hsl(0_0%_12%)]">
         <CardHeader className="bg-gradient-to-r from-purple-500/10 to-transparent">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-purple-500" />
+              <CardTitle className="flex items-center gap-2 text-white">
+                <CreditCard className="h-5 w-5 text-purple-400" />
                 Stripe Payments
               </CardTitle>
-              <CardDescription>Accept card payments on invoices</CardDescription>
+              <CardDescription className="text-white">
+                Accept card payments on invoices
+              </CardDescription>
             </div>
             {isConnected && (
               <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
@@ -208,18 +211,20 @@ export function StripeConnectCard() {
           ) : !status?.connected ? (
             // Not connected - show connect button
             <div className="space-y-4">
-              <div className="bg-muted/30 rounded-xl p-4 space-y-2">
-                <p className="text-sm font-medium">Accept online payments</p>
+              <div className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-4 space-y-2">
+                <p className="text-sm font-medium text-white">Accept online payments</p>
                 <p className="text-sm text-white">
                   Connect your Stripe account to receive payments directly from clients when they
                   view invoices online.
                 </p>
               </div>
 
-              <Button
+              <PrimaryButton
                 onClick={handleConnect}
                 disabled={actionLoading}
-                className="w-full h-12 bg-purple-600 hover:bg-purple-700"
+                size="lg"
+                fullWidth
+                className="bg-purple-500 text-white hover:bg-purple-500/90"
               >
                 {actionLoading ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -227,7 +232,7 @@ export function StripeConnectCard() {
                   <CreditCard className="h-4 w-4 mr-2" />
                 )}
                 Connect Stripe Account
-              </Button>
+              </PrimaryButton>
 
               <p className="text-xs text-white text-center">
                 1% platform fee + Stripe processing fees apply to each transaction
@@ -238,7 +243,7 @@ export function StripeConnectCard() {
             <div className="space-y-4">
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-4 space-y-2">
                 <div className="flex items-center gap-2">
-                  <AlertCircle className="h-5 w-5 text-amber-500" />
+                  <AlertCircle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Complete your Stripe setup</p>
                 </div>
                 <p className="text-sm text-white">
@@ -246,10 +251,12 @@ export function StripeConnectCard() {
                 </p>
               </div>
 
-              <Button
+              <PrimaryButton
                 onClick={handleCompleteSetup}
                 disabled={actionLoading}
-                className="w-full h-12 bg-amber-600 hover:bg-amber-700"
+                size="lg"
+                fullWidth
+                className="bg-amber-500 text-black hover:bg-amber-500/90"
               >
                 {actionLoading ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -257,7 +264,7 @@ export function StripeConnectCard() {
                   <ExternalLink className="h-4 w-4 mr-2" />
                 )}
                 Complete Setup
-              </Button>
+              </PrimaryButton>
             </div>
           ) : (
             // Fully connected
@@ -265,37 +272,36 @@ export function StripeConnectCard() {
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-white">Business</span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {status.account?.businessName || 'Your Business'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-white">Status</span>
                   <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    <span className="h-2 w-2 rounded-full bg-emerald-400" />
                     <span className="text-sm font-medium text-emerald-400">Active</span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-white">Payments</span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {status.account?.chargesEnabled ? 'Enabled' : 'Disabled'}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-white">Payouts</span>
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium text-white">
                     {status.account?.payoutsEnabled ? 'Enabled' : 'Pending'}
                   </span>
                 </div>
               </div>
 
               <div className="flex gap-2">
-                <Button
+                <SecondaryButton
                   onClick={handleManageAccount}
                   disabled={actionLoading}
-                  variant="outline"
-                  className="flex-1 h-11"
+                  className="flex-1"
                 >
                   {actionLoading ? (
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -303,26 +309,24 @@ export function StripeConnectCard() {
                     <ExternalLink className="h-4 w-4 mr-2" />
                   )}
                   Manage Account
-                </Button>
-                <Button
+                </SecondaryButton>
+                <button
+                  type="button"
                   onClick={fetchStatus}
-                  variant="outline"
-                  size="icon"
-                  className="h-11 w-11"
+                  className="h-11 w-11 flex items-center justify-center rounded-full bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1] touch-manipulation disabled:opacity-40"
                   disabled={loading}
                 >
-                  <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-                </Button>
+                  <RefreshCw className={cn('h-4 w-4', loading && 'animate-spin')} />
+                </button>
               </div>
 
-              <Button
+              <DestructiveButton
                 onClick={() => setShowDisconnectDialog(true)}
-                variant="ghost"
-                className="w-full h-10 text-destructive hover:text-destructive hover:bg-destructive/10"
+                fullWidth
               >
                 <Unplug className="h-4 w-4 mr-2" />
                 Disconnect Stripe
-              </Button>
+              </DestructiveButton>
 
               <p className="text-xs text-white text-center">
                 1% platform fee + Stripe processing fees apply to each transaction
@@ -333,20 +337,24 @@ export function StripeConnectCard() {
       </Card>
 
       <AlertDialog open={showDisconnectDialog} onOpenChange={setShowDisconnectDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white">
           <AlertDialogHeader>
-            <AlertDialogTitle>Disconnect Stripe Account?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">
+              Disconnect Stripe Account?
+            </AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               This will remove the connection to your Stripe account. You won't be able to accept
               card payments on invoices until you reconnect. Your Stripe account itself will not be
               deleted.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel className="bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1]">
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDisconnect}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20"
             >
               {actionLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
               Disconnect

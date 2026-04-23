@@ -12,6 +12,8 @@ interface EnhancedValidatedInputProps {
   disabled?: boolean;
   onNavigate?: (direction: 'up' | 'down' | 'left' | 'right') => void;
   onFillDown?: () => void;
+  /** Fires on blur with the current committed value — used to e.g. format to 2dp. */
+  onCommit?: (value: string) => void;
 }
 
 export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
@@ -23,6 +25,7 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
   disabled = false,
   onNavigate,
   onFillDown,
+  onCommit,
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const previousValueRef = useRef<string>(value);
@@ -52,6 +55,7 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
     // Show validation immediately on blur
     if (typingTimeoutRef.current) clearTimeout(typingTimeoutRef.current);
     setShowValidation(true);
+    onCommit?.(previousValueRef.current);
   };
 
   const getValidationMessage = (): string | undefined => {
@@ -68,15 +72,15 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
     switch (validation.level) {
       case 'pass':
         return (
-          <CircleCheck className="h-3.5 w-3.5 text-success absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
+          <CircleCheck className="h-3.5 w-3.5 text-success absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
         );
       case 'warning':
         return (
-          <AlertTriangle className="h-3.5 w-3.5 text-warning absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
+          <AlertTriangle className="h-3.5 w-3.5 text-warning absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
         );
       case 'fail':
         return (
-          <CircleX className="h-3.5 w-3.5 text-destructive absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
+          <CircleX className="h-3.5 w-3.5 text-destructive absolute right-1.5 top-1/2 -translate-y-1/2 pointer-events-none" title={message} />
         );
       default:
         return null;
@@ -151,7 +155,7 @@ export const EnhancedValidatedInput: React.FC<EnhancedValidatedInputProps> = ({
         onBlur={handleBlur}
         placeholder={placeholder}
         disabled={disabled}
-        className={`pr-8 overflow-hidden text-ellipsis bg-transparent !text-foreground hover:bg-muted/20 focus:bg-muted/30 placeholder:!text-muted-foreground/50 border-transparent focus:border-elec-yellow/50 disabled:bg-transparent disabled:!text-muted-foreground/50 ${getValidationBorder()} ${className} focus:ring-1 focus:ring-elec-yellow/30 focus:ring-offset-0`}
+        className={`overflow-hidden text-ellipsis bg-transparent !text-foreground hover:bg-muted/20 focus:bg-muted/30 placeholder:!text-muted-foreground/50 border-transparent focus:border-elec-yellow/50 disabled:bg-transparent disabled:!text-muted-foreground/50 ${getValidationBorder()} ${className} !pr-7 focus:ring-1 focus:ring-elec-yellow/30 focus:ring-offset-0`}
       />
       {getValidationIcon()}
     </div>

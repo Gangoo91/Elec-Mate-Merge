@@ -1,29 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Eyebrow, Arrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
-import {
-  User,
-  IdCard,
-  Building2,
-  Settings2,
-  Shield,
-  CreditCard,
-  Gift,
-  ChevronRight,
-} from 'lucide-react';
+
+type BadgeTone = 'yellow' | 'green' | 'blue' | 'red' | 'amber';
+
+const badgeToneClass: Record<BadgeTone, string> = {
+  yellow: 'text-elec-yellow',
+  green: 'text-emerald-400',
+  blue: 'text-blue-400',
+  red: 'text-red-400',
+  amber: 'text-amber-400',
+};
 
 interface SettingsNavItem {
   id: string;
   label: string;
   description: string;
-  icon: React.ElementType;
-  iconBg: string;
-  iconColour: string;
   badge?: string;
-  badgeColour?: string;
+  badgeTone?: BadgeTone;
 }
 
-interface SettingsSection {
+interface SettingsNavSection {
   title: string;
   items: SettingsNavItem[];
 }
@@ -31,33 +29,20 @@ interface SettingsSection {
 interface SettingsNavGridProps {
   onSelect: (tabId: string) => void;
   isSubscribed?: boolean;
-  incompleteItems?: {
-    [key: string]: boolean;
-  };
+  incompleteItems?: Record<string, boolean>;
 }
 
-// New 6-tab grouped settings sections - iOS style
-const SETTINGS_SECTIONS: SettingsSection[] = [
+const SETTINGS_SECTIONS: SettingsNavSection[] = [
   {
     title: 'Profile',
     items: [
-      {
-        id: 'account',
-        label: 'Account',
-        description: 'Your profile & role settings',
-        icon: User,
-        iconBg: 'bg-blue-500/15',
-        iconColour: 'text-blue-400',
-      },
+      { id: 'account', label: 'Account', description: 'Your profile and role settings' },
       {
         id: 'elec-id',
         label: 'Elec-ID',
         description: 'Your digital identity card',
-        icon: IdCard,
-        iconBg: 'bg-elec-yellow/15',
-        iconColour: 'text-elec-yellow',
         badge: 'Gamified',
-        badgeColour: 'bg-elec-yellow/20 text-elec-yellow',
+        badgeTone: 'yellow',
       },
     ],
   },
@@ -68,18 +53,8 @@ const SETTINGS_SECTIONS: SettingsSection[] = [
         id: 'business',
         label: 'Business Settings',
         description: 'Company, rates, instruments, branding',
-        icon: Building2,
-        iconBg: 'bg-emerald-500/15',
-        iconColour: 'text-emerald-400',
       },
-      {
-        id: 'billing',
-        label: 'Billing',
-        description: 'Subscription & payments',
-        icon: CreditCard,
-        iconBg: 'bg-purple-500/15',
-        iconColour: 'text-purple-400',
-      },
+      { id: 'billing', label: 'Billing', description: 'Subscription and payments' },
     ],
   },
   {
@@ -89,11 +64,8 @@ const SETTINGS_SECTIONS: SettingsSection[] = [
         id: 'referrals',
         label: 'Refer a Mate',
         description: 'Free month for you and your mate',
-        icon: Gift,
-        iconBg: 'bg-green-500/15',
-        iconColour: 'text-green-400',
         badge: 'New',
-        badgeColour: 'bg-green-500/20 text-green-400',
+        badgeTone: 'green',
       },
     ],
   },
@@ -104,44 +76,11 @@ const SETTINGS_SECTIONS: SettingsSection[] = [
         id: 'preferences',
         label: 'Preferences',
         description: 'Theme, notifications, AI assistant',
-        icon: Settings2,
-        iconBg: 'bg-amber-500/15',
-        iconColour: 'text-amber-400',
       },
-      {
-        id: 'privacy',
-        label: 'Privacy',
-        description: 'Data controls & analytics',
-        icon: Shield,
-        iconBg: 'bg-rose-500/15',
-        iconColour: 'text-rose-400',
-      },
+      { id: 'privacy', label: 'Privacy', description: 'Data controls and analytics' },
     ],
   },
 ];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.03,
-      delayChildren: 0,
-    },
-  },
-};
-
-const sectionVariants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.25,
-      ease: 'easeOut',
-    },
-  },
-};
 
 const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProps) => {
   return (
@@ -149,69 +88,50 @@ const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProp
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-6"
+      className="space-y-8"
     >
       {SETTINGS_SECTIONS.map((section) => (
-        <motion.div key={section.title} variants={sectionVariants}>
-          {/* Section header */}
-          <h3 className="text-xs font-semibold text-white uppercase tracking-wider px-4 mb-2">
-            {section.title}
-          </h3>
-
-          {/* iOS-style grouped card */}
-          <div className="bg-white/[0.04] rounded-2xl border border-white/[0.06] overflow-hidden">
-            {section.items.map((item, index) => {
-              const Icon = item.icon;
-              const isIncomplete = incompleteItems[item.id] || false;
-
+        <motion.div key={section.title} variants={itemVariants} className="space-y-3">
+          <Eyebrow>{section.title}</Eyebrow>
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
+            {section.items.map((item) => {
+              const isIncomplete = !!incompleteItems[item.id];
               return (
                 <button
                   key={item.id}
                   onClick={() => onSelect(item.id)}
                   className={cn(
-                    'relative w-full flex items-center gap-3 px-4 py-4',
-                    'text-left transition-all duration-150',
-                    'hover:bg-white/[0.04] active:bg-white/[0.08]',
-                    'active:scale-[0.99] touch-manipulation',
-                    'group',
-                    index !== section.items.length - 1 && 'border-b border-white/[0.04]'
+                    'group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left',
+                    'hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation'
                   )}
                 >
-                  {/* Icon */}
-                  <div
-                    className={cn(
-                      'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0',
-                      item.iconBg
-                    )}
-                  >
-                    <Icon className={cn('h-5 w-5', item.iconColour)} />
-                  </div>
-
-                  {/* Label & Description */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <h4 className="text-[15px] font-medium text-white group-hover:text-elec-yellow transition-colors">
+                      <span className="text-[15px] font-medium text-white truncate">
                         {item.label}
-                      </h4>
+                      </span>
                       {item.badge && (
                         <span
                           className={cn(
-                            'px-1.5 py-0.5 rounded text-[10px] font-semibold',
-                            item.badgeColour
+                            'text-[10px] font-medium uppercase tracking-[0.15em]',
+                            badgeToneClass[item.badgeTone ?? 'yellow']
                           )}
                         >
                           {item.badge}
                         </span>
                       )}
                       {isIncomplete && (
-                        <span className="h-2 w-2 bg-red-500 rounded-full animate-pulse" />
+                        <span
+                          aria-hidden
+                          className="h-1.5 w-1.5 rounded-full bg-red-500 animate-pulse"
+                        />
                       )}
                     </div>
-                    <p className="text-[12px] text-white truncate">{item.description}</p>
+                    <div className="mt-0.5 text-[12px] text-white/65 truncate">
+                      {item.description}
+                    </div>
                   </div>
-
-                  {/* Chevron */}
-                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
+                  <Arrow />
                 </button>
               );
             })}

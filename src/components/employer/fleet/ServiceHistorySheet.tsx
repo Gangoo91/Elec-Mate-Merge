@@ -1,9 +1,6 @@
 import { useState } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -14,7 +11,6 @@ import {
 } from '@/components/ui/select';
 import {
   Settings,
-  X,
   Plus,
   Loader2,
   Trash2,
@@ -35,6 +31,20 @@ import {
   type ServiceType,
 } from '@/hooks/useVehicleServices';
 import type { Vehicle } from '@/hooks/useFleet';
+import {
+  SheetShell,
+  Field,
+  FormCard,
+  FormGrid,
+  Pill,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 interface ServiceHistorySheetProps {
   open: boolean;
@@ -87,61 +97,45 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-purple-500/10">
-                  <Settings className="h-5 w-5 text-purple-400" />
-                </div>
-                <div>
-                  <SheetTitle className="text-left">Service History</SheetTitle>
-                  <p className="text-xs text-white mt-0.5">
-                    {vehicle.registration} - {vehicle.make} {vehicle.model}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onOpenChange(false)}
-                className="shrink-0 h-11 w-11 touch-manipulation"
-              >
-                <X className="h-5 w-5" />
-              </Button>
-            </div>
-          </SheetHeader>
-
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Service history"
+          title={
+            <span className="inline-flex items-center gap-2">
+              <Settings className="h-5 w-5 text-purple-400" />
+              Service History
+            </span>
+          }
+          description={`${vehicle.registration} — ${vehicle.make} ${vehicle.model}`}
+        >
           {/* Stats Overview */}
           {stats && (
-            <div className="grid grid-cols-3 gap-2 p-4 border-b border-border">
-              <div className="text-center">
-                <p className="text-lg font-bold text-foreground">{stats.totalServices}</p>
+            <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+              <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
+                <p className="text-lg font-bold text-white">{stats.totalServices}</p>
                 <p className="text-xs text-white">Services</p>
               </div>
-              <div className="text-center">
-                <p className="text-lg font-bold text-foreground">
+              <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
+                <p className="text-lg font-bold text-white">
                   £{stats.yearCosts.toLocaleString()}
                 </p>
-                <p className="text-xs text-white">This Year</p>
+                <p className="text-xs text-white">This year</p>
               </div>
-              <div className="text-center">
+              <div className="bg-[hsl(0_0%_12%)] p-3 text-center">
                 {stats.nextServiceDue ? (
                   <>
-                    <p className="text-lg font-bold text-foreground">
+                    <p className="text-lg font-bold text-white">
                       {new Date(stats.nextServiceDue).toLocaleDateString('en-GB', {
                         day: 'numeric',
                         month: 'short',
                       })}
                     </p>
-                    <p className="text-xs text-white">Next Due</p>
+                    <p className="text-xs text-white">Next due</p>
                   </>
                 ) : (
                   <>
                     <p className="text-lg font-bold text-white">—</p>
-                    <p className="text-xs text-white">Next Due</p>
+                    <p className="text-xs text-white">Next due</p>
                   </>
                 )}
               </div>
@@ -149,139 +143,128 @@ export function ServiceHistorySheet({ open, onOpenChange, vehicle }: ServiceHist
           )}
 
           {/* Tab Toggle */}
-          <div className="flex border-b border-border">
+          <div className="flex gap-1 p-1 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full">
             <button
+              type="button"
               onClick={() => setViewMode('history')}
               className={cn(
-                'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
-                viewMode === 'history'
-                  ? 'text-purple-400 border-b-2 border-purple-400'
+                'flex-1 py-2 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
+                viewMode === 'history' || viewMode === 'add'
+                  ? 'bg-elec-yellow text-black'
                   : 'text-white'
               )}
             >
               History
             </button>
             <button
+              type="button"
               onClick={() => setViewMode('costs')}
               className={cn(
-                'flex-1 py-4 text-base font-medium transition-colors touch-manipulation min-h-[52px]',
-                viewMode === 'costs'
-                  ? 'text-purple-400 border-b-2 border-purple-400'
-                  : 'text-white'
+                'flex-1 py-2 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
+                viewMode === 'costs' ? 'bg-elec-yellow text-black' : 'text-white'
               )}
             >
-              Cost Analysis
+              Cost analysis
             </button>
           </div>
 
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto p-4">
-            {viewMode === 'add' ? (
-              <ServiceForm
-                onSave={handleSave}
-                onCancel={() => setViewMode('history')}
-                isPending={createService.isPending}
-                currentMileage={vehicle.mileage}
-              />
-            ) : viewMode === 'costs' ? (
-              <CostAnalysisView costs={costs} />
-            ) : (
-              <>
-                {/* Add Button */}
-                <Button
-                  onClick={() => setViewMode('add')}
-                  className="w-full h-12 mb-4 bg-purple-600 hover:bg-purple-700 touch-manipulation text-base"
-                >
-                  <Plus className="h-5 w-5 mr-2" />
-                  Log Service
-                </Button>
+          {viewMode === 'add' ? (
+            <ServiceForm
+              onSave={handleSave}
+              onCancel={() => setViewMode('history')}
+              isPending={createService.isPending}
+              currentMileage={vehicle.mileage}
+            />
+          ) : viewMode === 'costs' ? (
+            <CostAnalysisView costs={costs} />
+          ) : (
+            <>
+              <PrimaryButton fullWidth onClick={() => setViewMode('add')}>
+                <Plus className="h-5 w-5 mr-2" />
+                Log service
+              </PrimaryButton>
 
-                {/* Service List */}
-                {isLoading ? (
-                  <div className="flex items-center justify-center py-12">
-                    <Loader2 className="h-8 w-8 animate-spin text-white" />
-                  </div>
-                ) : services.length === 0 ? (
-                  <div className="text-center py-12">
-                    <Settings className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
-                    <p className="text-sm text-white">No services recorded</p>
-                    <p className="text-xs text-white mt-1">
-                      Log services, MOTs, and repairs
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {services.map((service) => (
-                      <div
-                        key={service.id}
-                        className="p-4 rounded-xl border border-border bg-card/50 touch-manipulation"
-                      >
-                        <div className="flex items-start justify-between mb-2">
-                          <div>
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <Badge variant="outline" className="text-xs">
-                                {SERVICE_TYPES.find((t) => t.value === service.service_type)?.label}
-                              </Badge>
-                              {service.cost && (
-                                <Badge className="bg-purple-500/20 text-purple-400 border-0 text-xs">
-                                  £{service.cost.toLocaleString()}
-                                </Badge>
-                              )}
-                            </div>
-                            <p className="text-base text-foreground mt-1.5 font-medium">
-                              {new Date(service.service_date).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'long',
-                                year: 'numeric',
-                              })}
-                            </p>
+              {/* Service List */}
+              {isLoading ? (
+                <div className="flex items-center justify-center py-12">
+                  <Loader2 className="h-8 w-8 animate-spin text-white" />
+                </div>
+              ) : services.length === 0 ? (
+                <div className="text-center py-12">
+                  <Settings className="h-16 w-16 text-white mx-auto mb-4 opacity-50" />
+                  <p className="text-sm text-white">No services recorded</p>
+                  <p className="text-xs text-white mt-1">
+                    Log services, MOTs, and repairs
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {services.map((service) => (
+                    <div
+                      key={service.id}
+                      className="p-4 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] touch-manipulation"
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <div>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <Pill tone="purple">
+                              {SERVICE_TYPES.find((t) => t.value === service.service_type)?.label}
+                            </Pill>
+                            {service.cost && (
+                              <Pill tone="yellow">£{service.cost.toLocaleString()}</Pill>
+                            )}
                           </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-11 w-11 text-red-400 touch-manipulation"
-                            onClick={() => handleDelete(service)}
-                          >
-                            <Trash2 className="h-5 w-5" />
-                          </Button>
+                          <p className="text-base text-white mt-1.5 font-medium">
+                            {new Date(service.service_date).toLocaleDateString('en-GB', {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric',
+                            })}
+                          </p>
                         </div>
-
-                        {service.provider && (
-                          <p className="text-sm text-white">{service.provider}</p>
-                        )}
-
-                        {service.mileage && (
-                          <p className="text-sm text-white">
-                            Mileage: {service.mileage.toLocaleString()}
-                          </p>
-                        )}
-
-                        {service.description && (
-                          <p className="text-sm text-white mt-2">
-                            {service.description}
-                          </p>
-                        )}
-
-                        {service.next_service_due && (
-                          <div className="mt-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                            <p className="text-sm text-purple-400">
-                              <Calendar className="h-4 w-4 inline mr-1.5" />
-                              Next due:{' '}
-                              {new Date(service.next_service_due).toLocaleDateString('en-GB')}
-                              {service.next_service_mileage && (
-                                <> or {service.next_service_mileage.toLocaleString()} miles</>
-                              )}
-                            </p>
-                          </div>
-                        )}
+                        <button
+                          type="button"
+                          aria-label="Delete service"
+                          className="h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-red-400 flex items-center justify-center hover:bg-red-500/15 transition-colors touch-manipulation"
+                          onClick={() => handleDelete(service)}
+                        >
+                          <Trash2 className="h-5 w-5" />
+                        </button>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        </div>
+
+                      {service.provider && (
+                        <p className="text-sm text-white">{service.provider}</p>
+                      )}
+
+                      {service.mileage && (
+                        <p className="text-sm text-white">
+                          Mileage: {service.mileage.toLocaleString()}
+                        </p>
+                      )}
+
+                      {service.description && (
+                        <p className="text-sm text-white mt-2">{service.description}</p>
+                      )}
+
+                      {service.next_service_due && (
+                        <div className="mt-3 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                          <p className="text-sm text-purple-400">
+                            <Calendar className="h-4 w-4 inline mr-1.5" />
+                            Next due:{' '}
+                            {new Date(service.next_service_due).toLocaleDateString('en-GB')}
+                            {service.next_service_mileage && (
+                              <> or {service.next_service_mileage.toLocaleString()} miles</>
+                            )}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );
@@ -306,123 +289,105 @@ function ServiceForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label className="text-sm font-medium">Service Type *</Label>
-          <Select name="service_type" required>
-            <SelectTrigger className="h-11 mt-1.5 touch-manipulation">
-              <SelectValue placeholder="Select..." />
-            </SelectTrigger>
-            <SelectContent className="z-[100]">
-              {SERVICE_TYPES.map((type) => (
-                <SelectItem key={type.value} value={type.value}>
-                  {type.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <Label className="text-sm font-medium">Date *</Label>
+      <FormCard eyebrow="Service details">
+        <FormGrid cols={2}>
+          <Field label="Service type" required>
+            <Select name="service_type" required>
+              <SelectTrigger className={selectTriggerClass}>
+                <SelectValue placeholder="Select..." />
+              </SelectTrigger>
+              <SelectContent className={selectContentClass}>
+                {SERVICE_TYPES.map((type) => (
+                  <SelectItem key={type.value} value={type.value}>
+                    {type.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </Field>
+          <Field label="Date" required>
+            <Input
+              name="service_date"
+              type="date"
+              defaultValue={new Date().toISOString().split('T')[0]}
+              required
+              className={inputClass}
+            />
+          </Field>
+        </FormGrid>
+        <FormGrid cols={2}>
+          <Field label="Provider">
+            <Input
+              name="provider"
+              placeholder="e.g. Kwik Fit"
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Cost (£)">
+            <Input
+              name="cost"
+              type="number"
+              step="0.01"
+              placeholder="0.00"
+              className={inputClass}
+            />
+          </Field>
+        </FormGrid>
+        <Field label="Mileage at service">
           <Input
-            name="service_date"
-            type="date"
-            defaultValue={new Date().toISOString().split('T')[0]}
-            required
-            className="h-11 mt-1.5 touch-manipulation text-base"
-          />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <Label className="text-sm font-medium">Provider</Label>
-          <Input
-            name="provider"
-            placeholder="e.g. Kwik Fit"
-            className="h-11 mt-1.5 touch-manipulation text-base"
-          />
-        </div>
-        <div>
-          <Label className="text-sm font-medium">Cost (£)</Label>
-          <Input
-            name="cost"
+            name="mileage"
             type="number"
-            step="0.01"
-            placeholder="0.00"
-            className="h-11 mt-1.5 touch-manipulation text-base"
+            defaultValue={currentMileage}
+            placeholder="e.g. 45000"
+            className={inputClass}
           />
-        </div>
-      </div>
+        </Field>
+        <Field label="Description">
+          <Textarea
+            name="description"
+            placeholder="What was done..."
+            className={textareaClass}
+          />
+        </Field>
+      </FormCard>
 
-      <div>
-        <Label className="text-sm font-medium">Mileage at Service</Label>
-        <Input
-          name="mileage"
-          type="number"
-          defaultValue={currentMileage}
-          placeholder="e.g. 45000"
-          className="h-11 mt-1.5 touch-manipulation text-base"
-        />
-      </div>
-
-      <div>
-        <Label className="text-sm font-medium">Description</Label>
-        <Textarea
-          name="description"
-          placeholder="What was done..."
-          className="mt-1.5 touch-manipulation text-base"
-        />
-      </div>
-
-      <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
-        <h4 className="text-sm font-medium text-foreground mb-3">Next Service</h4>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Label className="text-sm font-medium">Due Date</Label>
+      <FormCard eyebrow="Next service">
+        <FormGrid cols={2}>
+          <Field label="Due date">
             <Input
               name="next_service_due"
               type="date"
-              className="h-11 mt-1.5 touch-manipulation text-base"
+              className={inputClass}
             />
-          </div>
-          <div>
-            <Label className="text-sm font-medium">Due Mileage</Label>
+          </Field>
+          <Field label="Due mileage">
             <Input
               name="next_service_mileage"
               type="number"
               placeholder="e.g. 55000"
-              className="h-11 mt-1.5 touch-manipulation text-base"
+              className={inputClass}
             />
-          </div>
-        </div>
-      </div>
+          </Field>
+        </FormGrid>
+      </FormCard>
 
-      <div>
-        <Label className="text-sm font-medium">Notes</Label>
-        <Textarea
-          name="notes"
-          placeholder="Any additional notes..."
-          className="mt-1.5 touch-manipulation text-base"
-        />
-      </div>
+      <FormCard eyebrow="Notes">
+        <Field label="Notes">
+          <Textarea
+            name="notes"
+            placeholder="Any additional notes..."
+            className={textareaClass}
+          />
+        </Field>
+      </FormCard>
 
-      <div className="flex gap-3 pt-4">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onCancel}
-          className="flex-1 h-12 touch-manipulation text-base"
-        >
+      <div className="flex gap-3 pt-2">
+        <SecondaryButton fullWidth onClick={onCancel}>
           Cancel
-        </Button>
-        <Button
-          type="submit"
-          disabled={isPending}
-          className="flex-1 h-12 bg-purple-600 hover:bg-purple-700 touch-manipulation text-base"
-        >
-          {isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Save Service'}
-        </Button>
+        </SecondaryButton>
+        <PrimaryButton fullWidth type="submit" disabled={isPending}>
+          {isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : 'Save service'}
+        </PrimaryButton>
       </div>
     </form>
   );
@@ -439,27 +404,27 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Summary Cards */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/20">
+        <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20">
           <div className="flex items-center gap-2 mb-2">
             <PoundSterling className="h-5 w-5 text-purple-400" />
-            <span className="text-sm text-white">Total Costs</span>
+            <span className="text-sm text-white">Total costs</span>
           </div>
-          <p className="text-2xl font-bold text-foreground">£{costs.totalCost.toLocaleString()}</p>
+          <p className="text-2xl font-bold text-white">£{costs.totalCost.toLocaleString()}</p>
           <div className="flex flex-col gap-1 mt-2 text-sm text-white">
             <span>Services: £{costs.totalServiceCost.toLocaleString()}</span>
             <span>Fuel: £{costs.totalFuelCost.toLocaleString()}</span>
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+        <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20">
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="h-5 w-5 text-blue-400" />
-            <span className="text-sm text-white">Cost per Mile</span>
+            <span className="text-sm text-white">Cost per mile</span>
           </div>
-          <p className="text-2xl font-bold text-foreground">
+          <p className="text-2xl font-bold text-white">
             {costs.costPerMile > 0 ? `${costs.costPerMile.toFixed(2)}p` : '—'}
           </p>
           <p className="text-sm text-white mt-2">
@@ -469,19 +434,18 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
       </div>
 
       {/* Current Mileage */}
-      <div className="p-4 rounded-xl border border-border bg-card/50">
+      <FormCard eyebrow="Current mileage">
         <div className="flex items-center gap-2 mb-1">
           <Gauge className="h-5 w-5 text-white" />
-          <span className="text-sm text-white">Current Mileage</span>
+          <span className="text-sm text-white">Odometer</span>
         </div>
-        <p className="text-xl font-bold text-foreground">
+        <p className="text-xl font-bold text-white">
           {costs.currentMileage?.toLocaleString() || '—'} miles
         </p>
-      </div>
+      </FormCard>
 
       {/* Monthly Breakdown */}
-      <div>
-        <h3 className="text-base font-medium text-foreground mb-3">Monthly Costs (12 months)</h3>
+      <FormCard eyebrow="Monthly costs (12 months)">
         <div className="space-y-3">
           {costs.monthlyCosts.map((month, index) => {
             const maxTotal = Math.max(...costs.monthlyCosts.map((m) => m.total));
@@ -490,20 +454,20 @@ function CostAnalysisView({ costs }: { costs: ReturnType<typeof useCostAnalysis>
             return (
               <div key={index} className="flex items-center gap-3">
                 <span className="text-sm text-white w-16">{month.month}</span>
-                <div className="flex-1 h-8 bg-muted/30 rounded-lg overflow-hidden">
+                <div className="flex-1 h-8 bg-white/[0.04] border border-white/[0.06] rounded-lg overflow-hidden">
                   <div
                     className="h-full bg-purple-500/50 transition-all"
                     style={{ width: `${barWidth}%` }}
                   />
                 </div>
-                <span className="text-sm text-foreground w-16 text-right font-medium">
+                <span className="text-sm text-white w-16 text-right font-medium">
                   £{month.total.toFixed(0)}
                 </span>
               </div>
             );
           })}
         </div>
-      </div>
+      </FormCard>
     </div>
   );
 }

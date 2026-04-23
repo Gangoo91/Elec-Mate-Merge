@@ -14,10 +14,10 @@ import {
   Check,
   Camera,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { inputClass, PrimaryButton, SecondaryButton, DestructiveButton } from './editorial';
 
 type Tool = 'pen' | 'line' | 'arrow' | 'rectangle' | 'circle' | 'text';
 
@@ -342,39 +342,33 @@ export const PhotoAnnotationEditor = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-[95vw] h-[90vh] p-0 bg-black/95 border-border/50 flex flex-col">
+      <DialogContent className="max-w-4xl w-[95vw] h-[90vh] p-0 bg-black/95 border border-white/[0.08] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-border/50">
-          <h3 className="font-medium text-foreground">Annotate Photo</h3>
+        <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+          <h3 className="font-medium text-white">Annotate Photo</h3>
           <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              variant="ghost"
-              className="text-foreground/70 hover:text-foreground"
-              onClick={handleClear}
-            >
+            <DestructiveButton size="sm" onClick={handleClear}>
               <Trash2 className="h-4 w-4 mr-1" />
               Clear
-            </Button>
-            <Button size="sm" variant="default" onClick={handleSave}>
+            </DestructiveButton>
+            <PrimaryButton size="sm" onClick={handleSave}>
               <Check className="h-4 w-4 mr-1" />
               Save
-            </Button>
-            <Button
-              size="icon"
-              variant="ghost"
-              className="text-foreground/70 hover:text-foreground"
+            </PrimaryButton>
+            <button
+              type="button"
+              className="h-8 w-8 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
               onClick={onClose}
             >
               <X className="h-4 w-4" />
-            </Button>
+            </button>
           </div>
         </div>
 
         {/* Toolbar */}
-        <div className="flex flex-wrap items-center gap-4 p-4 border-b border-border/50 bg-black/50">
+        <div className="flex flex-wrap items-center gap-4 p-4 border-b border-white/[0.06] bg-black/50">
           {/* Tools */}
-          <div className="flex items-center gap-1 bg-muted/30 rounded-lg p-1">
+          <div className="flex items-center gap-1 bg-white/[0.04] rounded-lg p-1">
             {tools.map((t) => (
               <button
                 key={t.id}
@@ -382,8 +376,8 @@ export const PhotoAnnotationEditor = ({
                 className={cn(
                   'p-2 rounded-md transition-colors',
                   tool === t.id
-                    ? 'bg-elec-yellow text-elec-dark'
-                    : 'text-foreground/70 hover:text-foreground hover:bg-muted/50'
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white hover:bg-white/[0.08]'
                 )}
                 title={t.label}
               >
@@ -408,7 +402,7 @@ export const PhotoAnnotationEditor = ({
           </div>
 
           {/* Line width */}
-          <div className="flex items-center gap-1 bg-muted/30 rounded-lg p-1">
+          <div className="flex items-center gap-1 bg-white/[0.04] rounded-lg p-1">
             {LINE_WIDTHS.map((w) => (
               <button
                 key={w}
@@ -416,8 +410,8 @@ export const PhotoAnnotationEditor = ({
                 className={cn(
                   'w-8 h-8 rounded-md flex items-center justify-center transition-colors',
                   lineWidth === w
-                    ? 'bg-elec-yellow text-elec-dark'
-                    : 'text-foreground/70 hover:text-foreground hover:bg-muted/50'
+                    ? 'bg-elec-yellow text-black'
+                    : 'text-white hover:bg-white/[0.08]'
                 )}
               >
                 <div className="rounded-full bg-current" style={{ width: w * 2, height: w * 2 }} />
@@ -427,24 +421,22 @@ export const PhotoAnnotationEditor = ({
 
           {/* Undo/Redo */}
           <div className="flex items-center gap-1 ml-auto">
-            <Button
-              size="icon"
-              variant="ghost"
-              className="text-foreground/70 hover:text-foreground"
+            <button
+              type="button"
+              className="h-9 w-9 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation disabled:opacity-40"
               onClick={handleUndo}
               disabled={actions.length === 0}
             >
               <Undo2 className="h-4 w-4" />
-            </Button>
-            <Button
-              size="icon"
-              variant="ghost"
-              className="text-foreground/70 hover:text-foreground"
+            </button>
+            <button
+              type="button"
+              className="h-9 w-9 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation disabled:opacity-40"
               onClick={handleRedo}
               disabled={redoStack.length === 0}
             >
               <Redo2 className="h-4 w-4" />
-            </Button>
+            </button>
           </div>
         </div>
 
@@ -480,21 +472,21 @@ export const PhotoAnnotationEditor = ({
                   onChange={(e) => setTextInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleTextSubmit()}
                   placeholder="Enter text..."
-                  className="w-48"
+                  className={cn(inputClass, 'w-48')}
                 />
-                <Button size="sm" onClick={handleTextSubmit}>
+                <PrimaryButton size="sm" onClick={handleTextSubmit}>
                   Add
-                </Button>
-                <Button size="sm" variant="ghost" onClick={() => setTextPosition(null)}>
+                </PrimaryButton>
+                <SecondaryButton size="sm" onClick={() => setTextPosition(null)}>
                   Cancel
-                </Button>
+                </SecondaryButton>
               </div>
             </div>
           )}
         </div>
 
         {/* Footer hint */}
-        <div className="p-3 text-center text-xs text-foreground/50 border-t border-border/50">
+        <div className="p-3 text-center text-xs text-white border-t border-white/[0.06]">
           {tool === 'text'
             ? 'Click on the image to add text'
             : 'Click and drag to draw. Use touch gestures on mobile.'}

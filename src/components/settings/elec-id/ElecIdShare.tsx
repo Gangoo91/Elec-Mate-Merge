@@ -2,9 +2,6 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { shareContent } from '@/utils/share';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
@@ -21,29 +18,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Download,
-  Link2,
-  Copy,
-  Share2,
-  Clock,
-  Eye,
-  GraduationCap,
-  Briefcase,
-  Wrench,
-  User,
-  Trash2,
-  ExternalLink,
-  Plus,
-  Loader2,
-  X,
-  QrCode,
-  Shield,
-} from 'lucide-react';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { QRCodeSVG } from 'qrcode.react';
 import ConfirmDeleteDialog from './ConfirmDeleteDialog';
 import ElecIdWallet from './ElecIdWallet';
+import {
+  Eyebrow,
+  ListCard,
+  ListRow,
+  SectionHeader,
+  EmptyState,
+} from '@/components/college/primitives';
 
 interface ShareLink {
   id: string;
@@ -54,24 +39,6 @@ interface ShareLink {
   viewCount: number;
   shareToken: string;
 }
-
-// Skeleton loading component
-const ShareSkeleton = () => (
-  <div className="space-y-5">
-    {/* Hero QR skeleton */}
-    <Skeleton className="h-64 rounded-2xl bg-white/[0.06]" />
-
-    {/* Action buttons skeleton */}
-    <div className="grid grid-cols-3 gap-2">
-      {[1, 2, 3].map((i) => (
-        <Skeleton key={i} className="h-20 rounded-xl bg-white/[0.06]" />
-      ))}
-    </div>
-
-    {/* Links section skeleton */}
-    <Skeleton className="h-40 rounded-2xl bg-white/[0.06]" />
-  </div>
-);
 
 const ElecIdShare = () => {
   const { addNotification } = useNotifications();
@@ -95,24 +62,9 @@ const ElecIdShare = () => {
   const [isLoadingLinks, setIsLoadingLinks] = useState(true);
   const qrRef = useRef<HTMLDivElement>(null);
 
-  // Get actual Elec-ID number from profile
   const elecIdNumber = profile?.elec_id_number || 'EM-XXXXXX';
   const shareUrl = `https://elec-mate.com/verify/${elecIdNumber}`;
 
-  // Get user data from profile
-  const userData = {
-    name: profile?.full_name || 'Your Name',
-    jobTitle: profile?.bio || 'Electrician',
-    ecsCard: profile?.ecs_card_type ? `ECS ${profile.ecs_card_type}` : 'ECS Card',
-    ecsExpiry: profile?.ecs_expiry_date
-      ? new Date(profile.ecs_expiry_date).toLocaleDateString('en-GB', {
-          month: 'short',
-          year: 'numeric',
-        })
-      : 'N/A',
-  };
-
-  // Fetch share links from database
   const fetchShareLinks = useCallback(async () => {
     if (!profile?.id) {
       setIsLoadingLinks(false);
@@ -152,10 +104,10 @@ const ElecIdShare = () => {
   }, [fetchShareLinks]);
 
   const sectionOptions = [
-    { id: 'basics', label: 'Basic Info', icon: User },
-    { id: 'qualifications', label: 'Qualifications', icon: GraduationCap },
-    { id: 'experience', label: 'Experience', icon: Briefcase },
-    { id: 'skills', label: 'Skills', icon: Wrench },
+    { id: 'basics', label: 'Basic info' },
+    { id: 'qualifications', label: 'Qualifications' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'skills', label: 'Skills' },
   ];
 
   const expiryOptions = [
@@ -168,7 +120,7 @@ const ElecIdShare = () => {
   const handleCopyLink = async (url: string) => {
     await copyToClipboard(url);
     addNotification({
-      title: 'Link Copied',
+      title: 'Link copied',
       message: 'Share link copied to clipboard',
       type: 'success',
     });
@@ -186,11 +138,9 @@ const ElecIdShare = () => {
 
     setIsCreatingLink(true);
     try {
-      // Generate unique share token
       const shareToken = crypto.randomUUID().replace(/-/g, '').substring(0, 12);
       const url = `https://elec-mate.com/share/${shareToken}`;
 
-      // Calculate expiry date based on selection
       let expiresAt: string | null = null;
       const now = new Date();
       switch (selectedExpiry) {
@@ -223,7 +173,6 @@ const ElecIdShare = () => {
 
       if (error) throw error;
 
-      // Add the new link to state
       const newLink: ShareLink = {
         id: data.id,
         url: data.url,
@@ -237,7 +186,7 @@ const ElecIdShare = () => {
       setShareLinks((prev) => [newLink, ...prev]);
 
       addNotification({
-        title: 'Link Created',
+        title: 'Link created',
         message: 'Your shareable link has been created',
         type: 'success',
       });
@@ -295,7 +244,7 @@ const ElecIdShare = () => {
         URL.revokeObjectURL(svgUrl);
         setIsDownloadingQr(false);
         addNotification({
-          title: 'QR Downloaded',
+          title: 'QR downloaded',
           message: 'Your QR code has been downloaded',
           type: 'success',
         });
@@ -304,7 +253,7 @@ const ElecIdShare = () => {
     } catch (error) {
       setIsDownloadingQr(false);
       addNotification({
-        title: 'Download Failed',
+        title: 'Download failed',
         message: 'Could not download QR code',
         type: 'info',
       });
@@ -324,7 +273,6 @@ const ElecIdShare = () => {
     if (!deleteConfirm.id) return;
     setIsDeletingLink(true);
     try {
-      // Soft delete by setting is_active to false
       const { error } = await supabase
         .from('employer_elec_id_share_links')
         .update({ is_active: false, updated_at: new Date().toISOString() })
@@ -332,11 +280,10 @@ const ElecIdShare = () => {
 
       if (error) throw error;
 
-      // Remove from local state
       setShareLinks((prev) => prev.filter((link) => link.id !== deleteConfirm.id));
 
       addNotification({
-        title: 'Link Deleted',
+        title: 'Link deleted',
         message: 'Share link has been removed',
         type: 'info',
       });
@@ -359,27 +306,20 @@ const ElecIdShare = () => {
     );
   };
 
-  const getSectionLabel = (sectionId: string) => {
-    return sectionOptions.find((s) => s.id === sectionId)?.label || sectionId;
-  };
+  const getSectionLabel = (sectionId: string) =>
+    sectionOptions.find((s) => s.id === sectionId)?.label || sectionId;
 
-  // Create link form content
   const CreateLinkFormContent = () => (
     <div className="space-y-5">
-      {/* Expiry */}
       <div className="space-y-2">
-        <Label className="text-sm font-medium text-foreground">Link Expiry</Label>
+        <Label className="text-sm text-white">Link expiry</Label>
         <Select value={selectedExpiry} onValueChange={setSelectedExpiry}>
-          <SelectTrigger className="h-12 bg-white/[0.06] border-white/[0.1] rounded-xl touch-manipulation">
+          <SelectTrigger className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl text-white touch-manipulation">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent className="bg-background border-white/[0.1] z-[200]">
+          <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] z-[200]">
             {expiryOptions.map((option) => (
-              <SelectItem
-                key={option.value}
-                value={option.value}
-                className="py-3 touch-manipulation"
-              >
+              <SelectItem key={option.value} value={option.value} className="py-3 touch-manipulation">
                 {option.label}
               </SelectItem>
             ))}
@@ -387,12 +327,10 @@ const ElecIdShare = () => {
         </Select>
       </div>
 
-      {/* Sections to Include */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium text-foreground">Sections to Include</Label>
+        <Label className="text-sm text-white">Sections to include</Label>
         <div className="grid grid-cols-2 gap-2">
           {sectionOptions.map((section) => {
-            const Icon = section.icon;
             const isSelected = selectedSections.includes(section.id);
             return (
               <button
@@ -400,23 +338,18 @@ const ElecIdShare = () => {
                 type="button"
                 onClick={() => toggleSection(section.id)}
                 className={cn(
-                  'p-3 rounded-xl border-2 text-left transition-all touch-manipulation active:scale-[0.98]',
+                  'p-4 rounded-xl border-2 text-left transition-all touch-manipulation',
                   isSelected
-                    ? 'bg-elec-yellow/10 border-elec-yellow'
-                    : 'bg-white/[0.03] border-white/[0.06] hover:bg-white/[0.06]'
+                    ? 'bg-elec-yellow/10 border-elec-yellow/40'
+                    : 'bg-white/[0.04] border-white/[0.06] hover:bg-white/[0.08]'
                 )}
               >
-                <Icon
-                  className={cn('h-5 w-5 mb-1', isSelected ? 'text-elec-yellow' : 'text-white')}
-                />
-                <div
-                  className={cn(
-                    'text-sm font-medium',
-                    isSelected ? 'text-foreground' : 'text-white'
-                  )}
-                >
+                <div className={cn('text-sm font-medium', isSelected ? 'text-white' : 'text-white')}>
                   {section.label}
                 </div>
+                {isSelected && (
+                  <p className="text-[11px] text-elec-yellow mt-1">Included</p>
+                )}
               </button>
             );
           })}
@@ -425,109 +358,76 @@ const ElecIdShare = () => {
     </div>
   );
 
-  // Mobile bottom sheet for creating links
-  const MobileCreateLinkSheet = () => (
-    <Drawer.Root
-      open={isCreateLinkOpen}
-      onOpenChange={setIsCreateLinkOpen}
-      shouldScaleBackground={false}
-      noBodyStyles
-    >
-      <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
-        <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[85vh] bg-background rounded-t-[20px] border-t border-white/[0.08]">
-          <div className="flex justify-center pt-3 pb-2">
-            <div className="w-12 h-1.5 rounded-full bg-white/20" />
-          </div>
-          <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
-            <Drawer.Title className="text-lg font-semibold text-foreground">
-              Create Share Link
-            </Drawer.Title>
-            <button
-              onClick={() => setIsCreateLinkOpen(false)}
-              className="p-2 -mr-2 rounded-full hover:bg-white/[0.08] touch-manipulation"
-            >
-              <X className="w-5 h-5 text-white" />
-            </button>
-          </div>
-          <div className="flex-1 overflow-y-auto px-5 py-5">
-            <CreateLinkFormContent />
-          </div>
-          <div className="flex gap-3 p-5 border-t border-white/[0.06] bg-background/80 backdrop-blur-sm">
-            <Button
-              variant="outline"
-              className="flex-1 h-12 rounded-xl border-white/[0.15] touch-manipulation active:scale-[0.98]"
-              onClick={() => setIsCreateLinkOpen(false)}
-              disabled={isCreatingLink}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="flex-1 h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.98]"
-              onClick={handleCreateLink}
-              disabled={selectedSections.length === 0 || isCreatingLink}
-            >
-              {isCreatingLink ? (
-                <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Creating...
-                </>
-              ) : (
-                'Create Link'
-              )}
-            </Button>
-          </div>
-        </Drawer.Content>
-      </Drawer.Portal>
-    </Drawer.Root>
-  );
-
-  // Desktop dialog for creating links
-  const DesktopCreateLinkDialog = () => (
-    <Dialog open={isCreateLinkOpen} onOpenChange={setIsCreateLinkOpen}>
-      <DialogContent className="bg-background border-white/[0.1] max-w-md">
-        <DialogHeader>
-          <DialogTitle className="text-foreground">Create Share Link</DialogTitle>
-        </DialogHeader>
-        <CreateLinkFormContent />
-        <div className="flex gap-3 pt-4">
-          <Button
-            variant="outline"
-            className="flex-1 border-white/[0.15]"
-            onClick={() => setIsCreateLinkOpen(false)}
-            disabled={isCreatingLink}
-          >
-            Cancel
-          </Button>
-          <Button
-            className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
-            onClick={handleCreateLink}
-            disabled={selectedSections.length === 0 || isCreatingLink}
-          >
-            {isCreatingLink ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Creating...
-              </>
-            ) : (
-              'Create Link'
-            )}
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+  const linkFooter = (
+    <div className="flex gap-3">
+      <button
+        className="flex-1 h-11 rounded-xl border border-white/[0.06] text-white touch-manipulation disabled:opacity-60"
+        onClick={() => setIsCreateLinkOpen(false)}
+        disabled={isCreatingLink}
+      >
+        Cancel
+      </button>
+      <button
+        className="flex-1 h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-60"
+        onClick={handleCreateLink}
+        disabled={selectedSections.length === 0 || isCreatingLink}
+      >
+        {isCreatingLink ? 'Creating…' : 'Create link'}
+      </button>
+    </div>
   );
 
   return (
-    <div className="space-y-5">
-      {/* Create Link Sheet/Dialog */}
-      {isMobile ? <MobileCreateLinkSheet /> : <DesktopCreateLinkDialog />}
+    <div className="space-y-6">
+      {/* Create-link sheet/dialog */}
+      {isMobile ? (
+        <Drawer.Root
+          open={isCreateLinkOpen}
+          onOpenChange={setIsCreateLinkOpen}
+          shouldScaleBackground={false}
+          noBodyStyles
+        >
+          <Drawer.Portal>
+            <Drawer.Overlay className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50" />
+            <Drawer.Content className="fixed bottom-0 left-0 right-0 z-50 flex flex-col max-h-[85vh] bg-[hsl(0_0%_12%)] rounded-t-2xl border-t border-white/[0.06]">
+              <div className="flex justify-center pt-3 pb-2">
+                <div className="w-12 h-1.5 rounded-full bg-white/[0.15]" />
+              </div>
+              <div className="flex items-center justify-between px-5 pb-4 border-b border-white/[0.06]">
+                <Drawer.Title className="text-lg font-semibold text-white">
+                  Create share link
+                </Drawer.Title>
+                <button
+                  onClick={() => setIsCreateLinkOpen(false)}
+                  className="h-11 w-11 -mr-2 rounded-full text-white hover:bg-white/[0.04] touch-manipulation text-xl leading-none"
+                  aria-label="Close"
+                >
+                  ×
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto px-5 py-5">
+                <CreateLinkFormContent />
+              </div>
+              <div className="p-5 border-t border-white/[0.06]">{linkFooter}</div>
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer.Root>
+      ) : (
+        <Dialog open={isCreateLinkOpen} onOpenChange={setIsCreateLinkOpen}>
+          <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md">
+            <DialogHeader>
+              <DialogTitle className="text-white">Create share link</DialogTitle>
+            </DialogHeader>
+            <CreateLinkFormContent />
+            <div className="pt-4">{linkFooter}</div>
+          </DialogContent>
+        </Dialog>
+      )}
 
-      {/* Delete Confirmation */}
       <ConfirmDeleteDialog
         open={deleteConfirm.open}
         onOpenChange={(open) => setDeleteConfirm({ open, id: open ? deleteConfirm.id : null })}
-        title="Delete Share Link"
+        title="Delete share link"
         description="Anyone with this link will no longer be able to view your profile."
         onConfirm={handleDeleteLink}
         isLoading={isDeletingLink}
@@ -536,17 +436,14 @@ const ElecIdShare = () => {
       {/* Phone Wallet */}
       <ElecIdWallet elecIdNumber={elecIdNumber} />
 
-      {/* Hero QR Card */}
+      {/* QR hero */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
-        className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-white/[0.08] to-white/[0.02] border border-white/[0.08] p-6"
+        className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7"
       >
-        {/* Background glow */}
-        <div className="absolute -top-20 -right-20 w-40 h-40 rounded-full blur-3xl opacity-20 bg-elec-yellow" />
-
-        <div className="relative flex flex-col items-center">
-          {/* QR Code - Hero Size */}
+        <Eyebrow>Your public QR</Eyebrow>
+        <div className="mt-4 flex flex-col items-center">
           <div
             ref={qrRef}
             className="w-48 h-48 bg-white rounded-2xl p-4 shadow-xl shadow-black/30 mb-4"
@@ -561,191 +458,153 @@ const ElecIdShare = () => {
             />
           </div>
 
-          {/* ID Number */}
-          <div className="flex items-center gap-2 mb-2">
-            <QrCode className="h-5 w-5 text-elec-yellow" />
-            <span className="text-lg font-bold text-foreground">{elecIdNumber}</span>
-          </div>
-
-          <p className="text-sm text-white mb-4 text-center">
-            Scan to instantly verify your credentials
+          <p className="text-lg font-semibold text-white font-mono tracking-wider">
+            {elecIdNumber}
           </p>
+          <p className="text-sm text-white mb-5">Scan to instantly verify your credentials</p>
 
-          {/* Copy URL Button */}
           <button
             onClick={() => handleCopyLink(shareUrl)}
-            className="w-full max-w-sm flex items-center gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:bg-white/[0.08] active:scale-[0.99] transition-all mb-4"
+            className="w-full max-w-sm flex items-center gap-2 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] transition-all mb-4"
           >
-            <span className="font-mono text-xs text-foreground flex-1 truncate text-left">
+            <span className="font-mono text-xs text-white flex-1 truncate text-left">
               {shareUrl}
             </span>
-            <Copy className="h-4 w-4 text-white flex-shrink-0" />
+            <span className="text-xs font-medium text-elec-yellow shrink-0">Copy</span>
           </button>
 
-          {/* Action Buttons */}
           <div className="grid grid-cols-2 gap-3 w-full max-w-sm">
-            <Button
-              variant="outline"
+            <button
               onClick={handleDownloadQr}
               disabled={isDownloadingQr}
-              className="h-12 rounded-xl border-white/[0.15] touch-manipulation active:scale-[0.97]"
+              className="h-11 rounded-xl border border-white/[0.06] bg-white/[0.04] text-white font-medium touch-manipulation disabled:opacity-60"
             >
-              {isDownloadingQr ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-              ) : (
-                <Download className="h-4 w-4 mr-2" />
-              )}
-              Download
-            </Button>
-            <Button
+              {isDownloadingQr ? 'Downloading…' : 'Download'}
+            </button>
+            <button
               onClick={handleShareQr}
-              className="h-12 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation active:scale-[0.97]"
+              className="h-11 rounded-xl bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
             >
-              <Share2 className="h-4 w-4 mr-2" />
               Share
-            </Button>
+            </button>
           </div>
         </div>
       </motion.div>
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-3">
-        <motion.button
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.05 }}
-          onClick={() => setIsCreateLinkOpen(true)}
-          className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] active:scale-[0.97] transition-all"
-        >
-          <Link2 className="h-7 w-7 text-elec-yellow" />
-          <span className="text-sm font-medium text-foreground">Create Link</span>
-          <span className="text-xs text-white">Generate shareable URL</span>
-        </motion.button>
-        <motion.button
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          onClick={() => handleCopyLink(shareUrl)}
-          className="flex flex-col items-center gap-2 p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:bg-white/[0.08] active:scale-[0.97] transition-all"
-        >
-          <Copy className="h-7 w-7 text-elec-yellow" />
-          <span className="text-sm font-medium text-foreground">Copy URL</span>
-          <span className="text-xs text-white">Quick share link</span>
-        </motion.button>
+      {/* Quick actions */}
+      <div>
+        <SectionHeader eyebrow="Sharing tools" title="Quick actions" />
+        <div className="mt-4">
+          <ListCard>
+            <ListRow
+              accent="yellow"
+              title="Create timed link"
+              subtitle="Generate a link that expires after a set period"
+              trailing={<span className="text-xs font-medium text-elec-yellow">Create →</span>}
+              onClick={() => setIsCreateLinkOpen(true)}
+            />
+            <ListRow
+              accent="blue"
+              title="Copy public URL"
+              subtitle="Always-on profile link"
+              trailing={<span className="text-xs font-medium text-elec-yellow">Copy →</span>}
+              onClick={() => handleCopyLink(shareUrl)}
+            />
+          </ListCard>
+        </div>
       </div>
 
-      {/* Shareable Links */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-        <div className="flex items-center justify-between px-1">
-          <div className="flex items-center gap-2">
-            <Link2 className="h-4 w-4 text-elec-yellow" />
-            <h4 className="font-medium text-foreground">Active Links</h4>
-          </div>
-          <Button
-            onClick={() => setIsCreateLinkOpen(true)}
-            size="sm"
-            className="h-9 px-3 rounded-lg bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold touch-manipulation"
-          >
-            <Plus className="h-4 w-4 mr-1" />
-            New
-          </Button>
-        </div>
-
-        <AnimatePresence mode="popLayout">
-          {isLoadingLinks ? (
-            // Loading skeletons
-            <div className="space-y-3">
-              {[1, 2].map((i) => (
-                <Skeleton key={i} className="h-24 rounded-2xl bg-white/[0.06]" />
-              ))}
-            </div>
-          ) : shareLinks.length > 0 ? (
-            shareLinks.map((link, index) => (
-              <motion.div
-                key={link.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ delay: index * 0.05 }}
-                className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]"
-              >
-                <div className="flex items-center justify-between gap-3 mb-2">
-                  <span className="font-mono text-xs text-foreground truncate flex-1">
-                    {link.url.split('/').pop()}
-                  </span>
-                  <div className="flex items-center gap-1 flex-shrink-0">
-                    <button
-                      onClick={() => handleCopyLink(link.url)}
-                      className="p-2 rounded-lg hover:bg-white/[0.08] touch-manipulation active:scale-[0.95]"
-                    >
-                      <Copy className="h-4 w-4 text-white" />
-                    </button>
-                    <button
-                      onClick={() => openExternalUrl(link.url)}
-                      className="p-2 rounded-lg hover:bg-white/[0.08] touch-manipulation active:scale-[0.95]"
-                    >
-                      <ExternalLink className="h-4 w-4 text-white" />
-                    </button>
-                    <button
-                      onClick={() => setDeleteConfirm({ open: true, id: link.id })}
-                      className="p-2 rounded-lg hover:bg-red-500/10 touch-manipulation active:scale-[0.95]"
-                    >
-                      <Trash2 className="h-4 w-4 text-red-400" />
-                    </button>
+      {/* Active share links */}
+      <div>
+        <SectionHeader
+          eyebrow="Active links"
+          title="Share links"
+          action="Create new"
+          onAction={() => setIsCreateLinkOpen(true)}
+        />
+        <div className="mt-4 space-y-3">
+          <AnimatePresence mode="popLayout">
+            {isLoadingLinks ? (
+              [1, 2].map((i) => (
+                <Skeleton key={i} className="h-24 rounded-2xl bg-white/[0.04]" />
+              ))
+            ) : shareLinks.length > 0 ? (
+              shareLinks.map((link, index) => (
+                <motion.div
+                  key={link.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ delay: index * 0.04 }}
+                  className="p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+                >
+                  <div className="flex items-center justify-between gap-3 mb-2">
+                    <span className="font-mono text-xs text-white truncate flex-1">
+                      {link.url.split('/').pop()}
+                    </span>
+                    <div className="flex items-center gap-1 shrink-0">
+                      <button
+                        onClick={() => handleCopyLink(link.url)}
+                        className="h-11 px-3 rounded-lg hover:bg-white/[0.04] text-xs font-medium text-white touch-manipulation"
+                      >
+                        Copy
+                      </button>
+                      <button
+                        onClick={() => openExternalUrl(link.url)}
+                        className="h-11 px-3 rounded-lg hover:bg-white/[0.04] text-xs font-medium text-white touch-manipulation"
+                      >
+                        Open
+                      </button>
+                      <button
+                        onClick={() => setDeleteConfirm({ open: true, id: link.id })}
+                        className="h-11 px-3 rounded-lg hover:bg-red-500/10 text-xs font-medium text-red-400 touch-manipulation"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3 text-xs text-white">
-                  <span className="flex items-center gap-1">
-                    <Clock className="h-3 w-3" />
-                    {link.expiresAt
-                      ? new Date(link.expiresAt).toLocaleDateString('en-GB')
-                      : 'No expiry'}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Eye className="h-3 w-3" />
-                    {link.viewCount} views
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-1 mt-2">
-                  {link.sections.map((section) => (
-                    <Badge
-                      key={section}
-                      variant="secondary"
-                      className="text-[10px] px-1.5 py-0 bg-white/[0.06]"
-                    >
-                      {getSectionLabel(section)}
-                    </Badge>
-                  ))}
-                </div>
-              </motion.div>
-            ))
-          ) : (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="py-8 text-center"
-            >
-              <Link2 className="h-10 w-10 text-white mx-auto mb-2" />
-              <p className="text-sm text-white">No active links</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+                  <div className="flex items-center gap-4 text-xs text-white">
+                    <span>
+                      {link.expiresAt
+                        ? `Expires ${new Date(link.expiresAt).toLocaleDateString('en-GB')}`
+                        : 'No expiry'}
+                    </span>
+                    <span className="tabular-nums">{link.viewCount} views</span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {link.sections.map((section) => (
+                      <span
+                        key={section}
+                        className="text-[10px] font-medium uppercase tracking-[0.15em] text-cyan-400"
+                      >
+                        {getSectionLabel(section)}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <EmptyState
+                title="No active links"
+                description="Create a share link to give someone scoped access to your profile."
+                action="Create share link"
+                onAction={() => setIsCreateLinkOpen(true)}
+              />
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
 
-      {/* Privacy Notice */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="flex items-start gap-3 p-4 rounded-2xl bg-green-500/10 border border-green-500/20"
-      >
-        <Shield className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
+      {/* Privacy notice */}
+      <div className="flex items-start gap-3 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+        <span aria-hidden className="inline-block h-2 w-2 rounded-full bg-emerald-400 mt-2" />
         <div>
-          <p className="font-medium text-foreground text-sm">Your data is protected</p>
+          <p className="font-medium text-white text-sm">Your data is protected</p>
           <p className="text-xs text-white">
             Only sections you choose will be visible to recipients.
           </p>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 };

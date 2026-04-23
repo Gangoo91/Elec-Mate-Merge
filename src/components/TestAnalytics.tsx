@@ -1,65 +1,59 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TestResult } from '@/types/testResult';
 import {
   validateTestResult,
   getOverallCompliance,
-  TestValidationResults,
 } from '@/utils/testValidation';
-import {
-  CircleCheck,
-  AlertTriangle,
-  CircleX,
-  TrendingUp,
-  Zap,
-  Shield,
-  CheckCircle,
-  Lightbulb,
-  Plug,
-  HelpCircle,
-  Flame,
-  Droplets,
-  Car,
-} from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
-import { Button } from '@/components/ui/button';
 import { checkRegulationCompliance } from '@/utils/regulationChecker';
 import EnhancedRegulationWarningDialog from './EnhancedRegulationWarningDialog';
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface TestAnalyticsProps {
   testResults: TestResult[];
+  /**
+   * System earthing arrangement (TT / TN-S / TN-C-S) from the cert. Passed to
+   * validators so TT circuits use RCD-based Zs limits. ELE-830 follow-up.
+   */
+  earthingArrangement?: string;
 }
 
-const TestAnalytics = ({ testResults }: TestAnalyticsProps) => {
+/**
+ * Infer circuit type from description + rating. Kept as-is; the redesign is
+ * purely visual (college primitives pattern: monochrome, no icons, hairline
+ * dividers, big numerals).
+ */
+function inferCircuitType(result: TestResult): string {
+  if (result.type && result.type !== 'Unknown') return result.type;
+
+  const desc = result.circuitDescription?.toLowerCase() || '';
+  if (desc.includes('light')) return 'Lighting';
+  if (desc.includes('socket') || desc.includes('power')) return 'Sockets';
+  if (desc.includes('cooker') || desc.includes('oven')) return 'Cooker';
+  if (desc.includes('shower')) return 'Shower';
+  if (desc.includes('ev') || desc.includes('car') || desc.includes('charge')) return 'EV Charger';
+
+  const rating = parseInt(result.protectiveDeviceRating || '0');
+  if (rating === 6 || rating === 10) return 'Lighting';
+  if (rating === 32 || rating === 20) return 'Sockets';
+  if (rating >= 40 && rating <= 50) return 'Cooker/Shower';
+
+  return 'Other Circuits';
+}
+
+const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps) => {
   const [showRegulationDialog, setShowRegulationDialog] = useState(false);
   const [allRegulationWarnings, setAllRegulationWarnings] = useState<any[]>([]);
 
-  // Helper to infer circuit type from description and rating
-  const inferCircuitType = (result: TestResult): string => {
-    if (result.type && result.type !== 'Unknown') return result.type;
-
-    const desc = result.circuitDescription?.toLowerCase() || '';
-    if (desc.includes('light')) return 'Lighting';
-    if (desc.includes('socket') || desc.includes('power')) return 'Sockets';
-    if (desc.includes('cooker') || desc.includes('oven')) return 'Cooker';
-    if (desc.includes('shower')) return 'Shower';
-    if (desc.includes('ev') || desc.includes('car') || desc.includes('charge')) return 'EV Charger';
-
-    const rating = parseInt(result.protectiveDeviceRating || '0');
-    if (rating === 6 || rating === 10) return 'Lighting';
-    if (rating === 32 || rating === 20) return 'Sockets';
-    if (rating >= 40 && rating <= 50) return 'Cooker/Shower';
-
-    return 'Other Circuits';
-  };
-
-  // Calculate overall statistics
   const analytics = React.useMemo(() => {
-    const validations = testResults.map((result) => ({
-      result,
-      validation: validateTestResult(result),
-      compliance: getOverallCompliance(validateTestResult(result)),
-    }));
+    const validations = testResults.map((result) => {
+      const v = validateTestResult(result, earthingArrangement);
+      return {
+        result,
+        validation: v,
+        compliance: getOverallCompliance(v),
+      };
+    });
 
     const totalCircuits = testResults.length;
     const passCircuits = validations.filter((v) => v.compliance.status === 'pass').length;
@@ -76,7 +70,6 @@ const TestAnalytics = ({ testResults }: TestAnalyticsProps) => {
 
     const criticalIssues = validations.flatMap((v) => v.compliance.criticalIssues);
 
-    // Circuit type distribution with smart inference
     const circuitTypes = testResults.reduce(
       (acc, result) => {
         const type = inferCircuitType(result);
@@ -97,16 +90,27 @@ const TestAnalytics = ({ testResults }: TestAnalyticsProps) => {
       circuitTypes,
       validations,
     };
-  }, [testResults]);
+  }, [testResults, earthingArrangement]);
 
   const handleValidateAll = () => {
     const allWarnings = testResults.flatMap((result) => {
-      const check = checkRegulationCompliance(result);
+      const check = checkRegulationCompliance(result, earthingArrangement);
       return check.warnings;
     });
     setAllRegulationWarnings(allWarnings);
     setShowRegulationDialog(true);
   };
+
+  const stats = [
+    { label: 'Total', value: analytics.totalCircuits, toneClass: 'text-white' },
+    { label: 'Pass', value: analytics.passCircuits, toneClass: 'text-green-400' },
+    { label: 'Warn', value: analytics.warningCircuits, toneClass: 'text-amber-400' },
+    { label: 'Fail', value: analytics.failCircuits, toneClass: 'text-red-400' },
+  ];
+
+  const sortedCircuitTypes = Object.entries(analytics.circuitTypes).sort(
+    ([, a], [, b]) => b - a
+  );
 
   return (
     <>
@@ -118,227 +122,188 @@ const TestAnalytics = ({ testResults }: TestAnalyticsProps) => {
         onApprove={() => setShowRegulationDialog(false)}
         onReject={() => setShowRegulationDialog(false)}
       />
-      <div className="space-y-4">
-        <Card>
-          <CardHeader className="p-3 md:p-6">
-            <CardTitle className="flex items-center gap-2 text-sm md:text-base">
-              <TrendingUp className="h-4 w-4 md:h-5 md:w-5" />
-              Test Results Analytics
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 md:space-y-6 p-3 md:p-6">
-            {/* Overall Status Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-              <div className="flex items-center gap-2 p-2 md:p-3 bg-blue-600 text-foreground rounded-lg">
-                <div className="p-1.5 md:p-2 bg-blue-500 rounded-full">
-                  <Zap className="h-3 w-3 md:h-4 md:w-4 text-foreground" />
-                </div>
-                <div>
-                  <div className="text-xl md:text-2xl font-bold">{analytics.totalCircuits}</div>
-                  <div className="text-xs md:text-sm text-blue-100">Total</div>
-                </div>
-              </div>
 
-              <div className="flex items-center gap-2 p-2 md:p-3 bg-green-600 text-foreground rounded-lg">
-                <div className="p-1.5 md:p-2 bg-green-500 rounded-full">
-                  <CircleCheck className="h-3 w-3 md:h-4 md:w-4 text-foreground" />
-                </div>
-                <div>
-                  <div className="text-xl md:text-2xl font-bold">{analytics.passCircuits}</div>
-                  <div className="text-xs md:text-sm text-green-100">Pass</div>
-                </div>
-              </div>
+      <div className="space-y-8">
+        {/* Section header — college editorial pattern */}
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <Eyebrow>Analytics</Eyebrow>
+            <h2 className="mt-1.5 text-xl sm:text-2xl lg:text-[26px] font-semibold text-white tracking-tight leading-tight">
+              Test Results
+            </h2>
+          </div>
+          <button
+            onClick={handleValidateAll}
+            className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors shrink-0 touch-manipulation"
+          >
+            Validate all →
+          </button>
+        </div>
 
-              <div className="flex items-center gap-2 p-2 md:p-3 bg-amber-600 text-foreground rounded-lg">
-                <div className="p-1.5 md:p-2 bg-amber-500 rounded-full">
-                  <AlertTriangle className="h-3 w-3 md:h-4 md:w-4 text-foreground" />
-                </div>
-                <div>
-                  <div className="text-xl md:text-2xl font-bold">{analytics.warningCircuits}</div>
-                  <div className="text-xs md:text-sm text-amber-100">Warnings</div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2 p-2 md:p-3 bg-red-600 text-foreground rounded-lg">
-                <div className="p-1.5 md:p-2 bg-red-500 rounded-full">
-                  <CircleX className="h-3 w-3 md:h-4 md:w-4 text-foreground" />
-                </div>
-                <div>
-                  <div className="text-xl md:text-2xl font-bold">{analytics.failCircuits}</div>
-                  <div className="text-xs md:text-sm text-red-100">Failures</div>
-                </div>
-              </div>
+        {/* 4-cell hairline stat strip */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+          {stats.map((stat, i) => (
+            <div
+              key={stat.label}
+              className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 flex flex-col items-start"
+            >
+              <Eyebrow>
+                {String(i + 1).padStart(2, '0')} · {stat.label}
+              </Eyebrow>
+              <span
+                className={cn(
+                  'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
+                  'text-4xl sm:text-5xl lg:text-6xl',
+                  stat.toneClass
+                )}
+              >
+                {stat.value}
+              </span>
             </div>
+          ))}
+        </div>
 
-            {/* Progress Indicators */}
-            <div className="space-y-3 md:space-y-4">
-              <div>
-                <div className="flex items-center justify-between text-sm md:text-base font-medium mb-2">
-                  <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 text-green-400" />
-                    <span>Compliance Rate</span>
-                  </div>
-                  <span className="text-base md:text-lg font-bold text-foreground">
-                    {analytics.passPercentage.toFixed(1)}%
-                  </span>
-                </div>
-                <Progress
-                  value={analytics.passPercentage}
-                  className="h-2 md:h-3 [&>div]:bg-gradient-to-r [&>div]:from-green-500 [&>div]:to-emerald-400"
-                />
-              </div>
+        {/* Progress pair — hairline card with two stacked rows */}
+        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] divide-y divide-white/[0.06]">
+          <ProgressRow
+            eyebrow="01 · Compliance"
+            label="Regulation compliance rate"
+            percent={analytics.passPercentage}
+            barClass="bg-gradient-to-r from-green-500 to-emerald-400"
+          />
+          <ProgressRow
+            eyebrow="02 · Completion"
+            label="Circuits fully tested"
+            percent={analytics.completionPercentage}
+            barClass="bg-gradient-to-r from-elec-yellow to-amber-400"
+          />
+        </div>
 
+        {/* Critical issues — red-accent editorial panel, no icons */}
+        {analytics.criticalIssues.length > 0 && (
+          <div className="rounded-2xl border border-red-500/30 bg-red-500/[0.04] overflow-hidden">
+            <div className="flex items-end justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5 border-b border-red-500/20">
               <div>
-                <div className="flex items-center justify-between text-sm md:text-base font-medium mb-2">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-blue-400" />
-                    <span>Testing Completion</span>
-                  </div>
-                  <span className="text-base md:text-lg font-bold text-foreground">
-                    {analytics.completionPercentage.toFixed(1)}%
-                  </span>
-                </div>
-                <Progress
-                  value={analytics.completionPercentage}
-                  className="h-2 md:h-3 [&>div]:bg-gradient-to-r [&>div]:from-blue-500 [&>div]:to-cyan-400"
-                />
+                <Eyebrow className="text-red-300/70">Issues</Eyebrow>
+                <h3 className="mt-1 text-base sm:text-lg font-semibold text-white tracking-tight">
+                  {analytics.criticalIssues.length} critical{' '}
+                  {analytics.criticalIssues.length === 1 ? 'issue' : 'issues'}
+                </h3>
               </div>
+              <button
+                onClick={handleValidateAll}
+                className="text-[12px] font-medium text-red-300 hover:text-red-200 transition-colors shrink-0 touch-manipulation"
+              >
+                View all →
+              </button>
             </div>
-
-            {/* Critical Issues */}
-            {analytics.criticalIssues.length > 0 && (
-              <div className="p-4 md:p-6 bg-gradient-to-br from-red-500/20 to-rose-500/10 border-2 border-red-400/60 rounded-xl shadow-lg shadow-red-500/20">
-                <div className="flex items-center justify-between gap-2 mb-2 md:mb-3">
-                  <div className="flex items-center gap-2">
-                    <Shield className="h-4 w-4 md:h-5 md:w-5 text-red-400" />
-                    <span className="text-base md:text-lg font-semibold text-red-50">
-                      Critical Issues
-                    </span>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
+            <ul className="divide-y divide-red-500/10">
+              {analytics.criticalIssues.slice(0, 5).map((issue, index) => (
+                <li
+                  key={index}
+                  className="flex items-start gap-3 px-5 py-3 sm:px-6 text-sm text-white/90 leading-relaxed"
+                >
+                  <span className="text-[10px] font-semibold tabular-nums text-red-400/80 pt-1 tracking-wider">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span>{issue}</span>
+                </li>
+              ))}
+              {analytics.criticalIssues.length > 5 && (
+                <li className="px-5 py-3 sm:px-6">
+                  <button
                     onClick={handleValidateAll}
-                    className="h-9 px-4 text-sm md:h-10 md:px-5 md:text-base bg-red-500/20 border-red-400/40 text-red-50 hover:bg-red-500/30 hover:border-red-400/60"
+                    className="text-[12px] font-medium text-red-300 hover:text-red-200 transition-colors"
                   >
-                    <Shield className="h-4 w-4 mr-2" />
-                    View All
-                  </Button>
-                </div>
-                <ul className="text-sm md:text-base text-red-100 space-y-2 md:space-y-3 leading-relaxed">
-                  {analytics.criticalIssues.slice(0, 5).map((issue, index) => (
-                    <li
-                      key={index}
-                      className="flex items-start gap-2 hover:bg-red-500/10 -mx-2 px-2 py-1 rounded-md transition-colors"
-                    >
-                      <span className="text-red-300 mt-0.5">•</span>
-                      <span>{issue}</span>
-                    </li>
-                  ))}
-                  {analytics.criticalIssues.length > 5 && (
-                    <li>
-                      <Button
-                        variant="link"
-                        size="sm"
-                        onClick={handleValidateAll}
-                        className="h-auto p-0 text-red-300 hover:text-red-200 font-medium text-sm"
-                      >
-                        ... and {analytics.criticalIssues.length - 5} more issues (tap to view)
-                      </Button>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
+                    + {analytics.criticalIssues.length - 5} more →
+                  </button>
+                </li>
+              )}
+            </ul>
+          </div>
+        )}
 
-            {/* Validate All Button for Mobile */}
-            {analytics.criticalIssues.length === 0 && (
-              <div className="md:hidden">
-                <Button variant="outline" onClick={handleValidateAll} className="w-full">
-                  <Shield className="h-4 w-4 mr-2" />
-                  Validate All Circuits
-                </Button>
-              </div>
-            )}
-
-            {/* Circuit Type Distribution */}
-            {Object.keys(analytics.circuitTypes).length > 0 && (
-              <div>
-                <h4 className="text-base md:text-lg font-semibold text-foreground flex items-center gap-2 mb-3">
-                  <Zap className="h-4 w-4 text-elec-yellow" />
-                  Circuit Types
-                </h4>
-                <div className="grid grid-cols-1 gap-2 md:gap-3">
-                  {Object.entries(analytics.circuitTypes).map(([type, count]) => {
-                    const percentage = ((count / analytics.totalCircuits) * 100).toFixed(1);
-                    const getTypeIcon = () => {
-                      const lowerType = type.toLowerCase();
-                      if (lowerType.includes('lighting') || lowerType.includes('light'))
-                        return Lightbulb;
-                      if (lowerType.includes('socket') || lowerType.includes('power')) return Plug;
-                      if (lowerType.includes('cooker') || lowerType.includes('oven')) return Flame;
-                      if (lowerType.includes('shower')) return Droplets;
-                      if (lowerType.includes('ev') || lowerType.includes('charger')) return Car;
-                      if (lowerType.includes('other')) return Zap;
-                      return HelpCircle;
-                    };
-                    const TypeIcon = getTypeIcon();
-
-                    const getGradientClass = () => {
-                      const lowerType = type.toLowerCase();
-                      if (lowerType.includes('lighting') || lowerType.includes('light'))
-                        return 'bg-gradient-to-r from-elec-yellow to-amber-400';
-                      if (lowerType.includes('socket') || lowerType.includes('power'))
-                        return 'bg-gradient-to-r from-blue-500 to-cyan-400';
-                      if (lowerType.includes('cooker') || lowerType.includes('oven'))
-                        return 'bg-gradient-to-r from-orange-500 to-red-400';
-                      if (lowerType.includes('shower'))
-                        return 'bg-gradient-to-r from-cyan-500 to-blue-400';
-                      if (lowerType.includes('ev') || lowerType.includes('charger'))
-                        return 'bg-gradient-to-r from-green-500 to-emerald-400';
-                      if (lowerType.includes('other'))
-                        return 'bg-gradient-to-r from-purple-500 to-pink-400';
-                      return 'bg-gradient-to-r from-neutral-400 to-neutral-500';
-                    };
-
-                    return (
-                      <div
-                        key={type}
-                        className="bg-gradient-to-br from-neutral-700 to-neutral-800 border border-border rounded-lg p-3 hover:border-elec-yellow/50 hover:shadow-lg hover:shadow-elec-yellow/10 transition-all"
-                      >
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="flex items-center gap-2">
-                            <TypeIcon className="h-4 w-4 text-elec-yellow" />
-                            <span className="text-sm md:text-base font-medium text-foreground">
-                              {type}
-                            </span>
-                          </div>
-                          <div className="bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 border-2 border-elec-yellow/50 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center">
-                            <span className="text-lg md:text-xl font-bold text-elec-yellow">
-                              {count}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          <div className="w-full bg-background/50 rounded-full h-3 md:h-4 overflow-hidden">
-                            <div
-                              className={`h-full rounded-full transition-all duration-500 ${getGradientClass()}`}
-                              style={{ width: `${percentage}%` }}
-                            />
-                          </div>
-                          <div className="text-sm text-neutral-400 text-right">{percentage}%</div>
-                        </div>
+        {/* Circuit type distribution — hairline divided rows */}
+        {sortedCircuitTypes.length > 0 && (
+          <div>
+            <div className="mb-4">
+              <Eyebrow>Distribution</Eyebrow>
+              <h3 className="mt-1.5 text-lg font-semibold text-white tracking-tight">
+                Circuit types
+              </h3>
+            </div>
+            <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] divide-y divide-white/[0.06]">
+              {sortedCircuitTypes.map(([type, count], i) => {
+                const percent = (count / analytics.totalCircuits) * 100;
+                return (
+                  <div
+                    key={type}
+                    className="px-5 py-4 sm:px-6 sm:py-5 flex items-center gap-5"
+                  >
+                    <span className="text-[10px] font-medium tabular-nums text-white/50 tracking-wider shrink-0 w-5">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <div className="flex-1 min-w-0 space-y-2">
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="text-sm font-medium text-white truncate">{type}</span>
+                        <span className="text-[11px] tabular-nums text-white/50 shrink-0">
+                          {count} {count === 1 ? 'circuit' : 'circuits'} ·{' '}
+                          <span className="text-white/80 font-medium">{percent.toFixed(1)}%</span>
+                        </span>
                       </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                      <div className="h-px bg-white/5 relative overflow-hidden rounded-full">
+                        <div
+                          className="absolute inset-y-0 left-0 bg-elec-yellow/70 rounded-full"
+                          style={{ width: `${percent}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
 };
+
+/**
+ * ProgressRow — shared row for Compliance Rate + Testing Completion.
+ * College editorial style: eyebrow + label + big tabular percentage, hairline bar.
+ */
+function ProgressRow({
+  eyebrow,
+  label,
+  percent,
+  barClass,
+}: {
+  eyebrow: string;
+  label: string;
+  percent: number;
+  barClass: string;
+}) {
+  return (
+    <div className="px-5 py-5 sm:px-7 sm:py-6 space-y-3">
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <Eyebrow>{eyebrow}</Eyebrow>
+          <p className="mt-1 text-sm text-white">{label}</p>
+        </div>
+        <span className="text-2xl sm:text-3xl font-semibold tabular-nums tracking-tight leading-none text-white">
+          {percent.toFixed(1)}
+          <span className="text-sm text-white/60 ml-1">%</span>
+        </span>
+      </div>
+      <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+        <div
+          className={cn('h-full rounded-full transition-all duration-500', barClass)}
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+    </div>
+  );
+}
 
 export default TestAnalytics;

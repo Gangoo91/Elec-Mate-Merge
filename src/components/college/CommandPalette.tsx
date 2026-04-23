@@ -172,7 +172,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         <CommandEmpty>
           <div className="py-8 text-center">
             <p className="text-[13px] font-medium text-white">No results</p>
-            <p className="mt-1 text-[11.5px] text-white/50">
+            <p className="mt-1 text-[11.5px] text-white/75">
               Try searching for students, staff or courses.
             </p>
           </div>
@@ -200,7 +200,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                   </Avatar>
                   <div className="flex-1 min-w-0">
                     <p className="text-[13px] font-medium text-white">{student.full_name}</p>
-                    <p className="text-[11px] text-white/50 truncate">
+                    <p className="text-[11px] text-white/75 truncate">
                       {student.apprenticeship_standard}
                     </p>
                   </div>
@@ -255,7 +255,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                 />
                 <div className="flex-1 min-w-0">
                   <p className="text-[13px] font-medium text-white">{course.name}</p>
-                  <p className="text-[11px] text-white/50 tabular-nums">{course.code}</p>
+                  <p className="text-[11px] text-white/75 tabular-nums">{course.code}</p>
                 </div>
               </CommandItem>
             ))}
@@ -275,7 +275,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
                   <p className="text-[13px] font-medium text-white">
                     {assessment.unit_name || 'Assessment'}
                   </p>
-                  <p className="text-[11px] text-white/50">{assessment.assessment_type}</p>
+                  <p className="text-[11px] text-white/75">{assessment.assessment_type}</p>
                 </div>
                 {assessment.status && (
                   <Pill tone={assessmentStatusTone(assessment.status)}>{assessment.status}</Pill>
@@ -340,7 +340,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         )}
       </CommandList>
 
-      <div className="border-t border-white/[0.06] p-3 flex items-center justify-between text-[11px] text-white/50">
+      <div className="border-t border-white/[0.06] p-3 flex items-center justify-between text-[11px] text-white/75">
         <div className="flex items-center gap-4">
           <span className="flex items-center gap-1.5">
             <kbd className="px-1.5 py-0.5 bg-white/[0.06] rounded text-[10px]">↵</kbd>

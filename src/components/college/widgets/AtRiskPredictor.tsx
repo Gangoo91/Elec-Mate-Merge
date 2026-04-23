@@ -253,7 +253,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           {/* Header */}
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                 At-Risk · AI
               </div>
               <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">
@@ -264,7 +264,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">
                 {atRiskStudents.length}
               </div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/40">
+              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/55">
                 flagged
               </div>
             </div>
@@ -302,7 +302,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
                 >
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-medium text-white truncate">{student.name}</div>
-                    <div className="mt-0.5 text-[11px] text-white/50 truncate">
+                    <div className="mt-0.5 text-[11px] text-white/75 truncate">
                       {student.riskFactors[0]?.label}
                     </div>
                   </div>
@@ -325,7 +325,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           )}
 
           {atRiskStudents.length === 0 && (
-            <div className="mt-5 pt-4 border-t border-white/[0.06] text-[12px] text-white/50">
+            <div className="mt-5 pt-4 border-t border-white/[0.06] text-[12px] text-white/75">
               No at-risk students detected — all learners on track.
             </div>
           )}
@@ -341,7 +341,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
         {/* Header */}
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               At-Risk · AI
             </div>
             <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
@@ -352,7 +352,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
             <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-orange-400">
               {atRiskStudents.length}
             </div>
-            <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/40">
+            <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/55">
               total flagged
             </div>
           </div>
@@ -372,7 +372,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               className={`bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-3 text-center ${selectedFilter === f.key ? 'bg-[hsl(0_0%_15%)]' : ''}`}
             >
               <div className={`text-2xl font-semibold tabular-nums ${f.color}`}>{f.value}</div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/50">
+              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/75">
                 {f.label}
               </div>
             </button>
@@ -390,13 +390,13 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div className="min-w-0">
                   <h4 className="text-[15px] font-medium text-white truncate">{student.name}</h4>
-                  <p className="mt-0.5 text-[11.5px] text-white/50 truncate">{student.cohort}</p>
+                  <p className="mt-0.5 text-[11.5px] text-white/75 truncate">{student.cohort}</p>
                 </div>
                 <div className="text-right shrink-0">
                   <p className="text-xl font-semibold tabular-nums text-white leading-none">
                     {student.riskScore}%
                   </p>
-                  <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/40">Risk</p>
+                  <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/55">Risk</p>
                 </div>
               </div>
 
@@ -417,7 +417,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
               <div className="mt-3 grid grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-baseline justify-between text-[11px]">
-                    <span className="text-white/50 uppercase tracking-[0.12em]">Attendance</span>
+                    <span className="text-white/75 uppercase tracking-[0.12em]">Attendance</span>
                     <span
                       className={`font-medium tabular-nums ${student.attendance < 85 ? 'text-orange-400' : 'text-white'}`}
                     >
@@ -433,7 +433,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
                 </div>
                 <div>
                   <div className="flex items-baseline justify-between text-[11px]">
-                    <span className="text-white/50 uppercase tracking-[0.12em]">Progress</span>
+                    <span className="text-white/75 uppercase tracking-[0.12em]">Progress</span>
                     <span
                       className={`font-medium tabular-nums ${student.progressPercentage < 50 ? 'text-orange-400' : 'text-white'}`}
                     >
@@ -451,7 +451,7 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
 
               {/* Recommended Actions */}
               <div className="mt-3 pt-3 border-t border-white/[0.06]">
-                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/40 mb-2">
+                <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/55 mb-2">
                   AI Recommended Actions
                 </p>
                 <ul className="space-y-1.5">
@@ -467,9 +467,9 @@ export function AtRiskPredictor({ onNavigate, compact = false }: AtRiskPredictor
           ))}
 
           {filteredStudents.length === 0 && (
-            <div className="text-center py-10 text-white/50">
+            <div className="text-center py-10 text-white/75">
               <p className="text-[14px] font-medium text-white">No at-risk students detected</p>
-              <p className="text-[12px] mt-1 text-white/50">All learners on track.</p>
+              <p className="text-[12px] mt-1 text-white/75">All learners on track.</p>
             </div>
           )}
         </div>

@@ -22,7 +22,7 @@ const AfddCellComponent: React.FC<AfddCellProps> = ({ result, onUpdate }) => {
         onValueChange={(value) => onUpdate(result.id, 'afddTest', value)}
       >
         <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
-          <SelectValue placeholder="Manual test" />
+          <SelectValue placeholder="—" />
         </SelectTrigger>
         <SelectContent className="bg-background border border-border rounded-md z-[9999] min-w-[160px]">
           <SelectItem value="✓" className="text-xs text-green-400 font-medium hover:text-green-300">

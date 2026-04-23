@@ -186,10 +186,10 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
                     <div className="text-[15px] font-medium text-white truncate">
                       {candidate.studentName}
                     </div>
-                    <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                    <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                       {candidate.qualificationTitle} · {candidate.categoryName}
                     </div>
-                    <div className="mt-2 flex flex-wrap items-center gap-2 text-[11.5px] text-white/45">
+                    <div className="mt-2 flex flex-wrap items-center gap-2 text-[11.5px] text-white/70">
                       <span>Assessor: {candidate.assessorName}</span>
                       <span>·</span>
                       <span>Signed off {formatDate(candidate.signedOffAt)}</span>
@@ -245,7 +245,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
                     <div className="text-[15px] font-medium text-white truncate">
                       {record.studentName}
                     </div>
-                    <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                    <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                       {record.categoryName} · Sampled {formatDate(record.sampledAt)}
                     </div>
                   </div>
@@ -337,7 +337,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
                       placeholder="Add verification notes…"
                       value={iqaNotes}
                       onChange={(e) => setIqaNotes(e.target.value)}
-                      className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 touch-manipulation text-base"
+                      className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 touch-manipulation text-base"
                     />
                   </div>
 
@@ -348,7 +348,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
                         placeholder="Describe the action required…"
                         value={actionRequired}
                         onChange={(e) => setActionRequired(e.target.value)}
-                        className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 touch-manipulation text-base"
+                        className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 touch-manipulation text-base"
                       />
                     </div>
                   )}
@@ -356,7 +356,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
               ) : (
                 <div className="space-y-3">
                   <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                       Status
                     </div>
                     <div className="mt-1 text-[14px] font-medium text-white capitalize">
@@ -365,7 +365,7 @@ const IQASamplingPanel: React.FC<IQASamplingPanelProps> = ({ onViewSubmission })
                   </div>
                   {selectedRecord?.iqaNotes && (
                     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                         IQA Notes
                       </div>
                       <p className="mt-1 text-[13px] text-white/70 leading-relaxed">

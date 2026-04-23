@@ -12,6 +12,8 @@ import { motion } from 'framer-motion';
 
 interface HeaderProps {
   toggleSidebar: () => void;
+  /** Desktop-only: when sidebar is collapsed, header grows to full width and shows an expand button. */
+  sidebarCollapsed?: boolean;
 }
 
 // Live clock component - desktop only
@@ -81,7 +83,7 @@ const LiveClock = ({ className }: { className?: string }) => {
   );
 };
 
-const Header = ({ toggleSidebar }: HeaderProps) => {
+const Header = ({ toggleSidebar, sidebarCollapsed = false }: HeaderProps) => {
   const isMobile = useIsMobile();
   const headerRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -137,7 +139,9 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
     <header
       ref={headerRef}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 lg:left-64',
+        'fixed top-0 left-0 right-0 z-50',
+        sidebarCollapsed ? 'lg:left-0' : 'lg:left-64',
+        'transition-[left] duration-300 ease-in-out',
         'backdrop-blur-xl bg-elec-dark/90',
         'border-b transition-all duration-300',
         isScrolled ? 'border-white/10 shadow-2xl shadow-black/40' : 'border-white/[0.06]'
@@ -164,6 +168,22 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
                   'transition-all duration-150'
                 )}
                 aria-label="Toggle navigation menu"
+              >
+                <Menu className="h-5 w-5 text-white" />
+              </Button>
+            </motion.div>
+          )}
+
+          {/* Desktop: expand sidebar button, only when collapsed */}
+          {!isMobile && sidebarCollapsed && (
+            <motion.div whileTap={{ scale: 0.92 }}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleSidebar}
+                className="h-10 w-10 hover:bg-white/10 rounded-xl"
+                aria-label="Expand sidebar"
+                title="Expand sidebar"
               >
                 <Menu className="h-5 w-5 text-white" />
               </Button>

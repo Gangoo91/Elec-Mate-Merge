@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Palette, Loader2, CheckCircle } from 'lucide-react';
 import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
+import { Eyebrow } from '@/components/college/primitives';
 
 interface BrandSheetProps {
   open: boolean;
@@ -55,38 +54,39 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[#0a0a0a]"
+      >
+        <div className="flex flex-col h-full bg-[#0a0a0a]">
           <div className="flex justify-center pt-3 pb-1">
             <div className="w-10 h-1 rounded-full bg-white/20" />
           </div>
 
-          <div className="px-5 pb-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center">
-              <Palette className="h-5 w-5 text-pink-400" />
-            </div>
-            <div>
-              <h2 className="text-lg font-bold text-white">Brand Colours</h2>
-              <p className="text-xs text-white">Colours used on your documents</p>
-            </div>
-          </div>
+          <header className="px-5 sm:px-6 pb-4">
+            <Eyebrow>Identity</Eyebrow>
+            <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
+              Brand colours
+            </h2>
+            <p className="mt-1 text-[13px] text-white">Colours used on your documents</p>
+          </header>
 
-          <div className="flex-1 overflow-y-auto px-5 pb-6 space-y-5">
+          <div className="flex-1 overflow-y-auto px-5 sm:px-6 pb-6 space-y-5">
             <div className="grid grid-cols-3 gap-4">
               {colours.map(({ label, value, setter }) => (
                 <div key={label} className="space-y-2">
-                  <Label className="text-xs font-medium text-white uppercase tracking-wider">{label}</Label>
+                  <Label className="text-white font-medium text-[13px]">{label}</Label>
                   <div className="flex items-center gap-2">
                     <input
                       type="color"
                       value={value}
                       onChange={(e) => setter(e.target.value)}
-                      className="w-10 h-10 rounded-lg border border-white/[0.1] cursor-pointer bg-transparent"
+                      className="w-11 h-11 rounded-xl border border-white/[0.08] cursor-pointer bg-transparent touch-manipulation"
                     />
                     <Input
                       value={value}
                       onChange={(e) => setter(e.target.value)}
-                      className="flex-1 h-11 text-[13px] font-mono rounded-xl bg-white/[0.03] border-white/[0.08] text-white uppercase focus:border-amber-500 focus:ring-amber-500"
+                      className="flex-1 h-11 text-[13px] font-mono rounded-xl bg-[#0a0a0a] border-white/[0.08] text-white uppercase focus:border-elec-yellow focus:ring-0 touch-manipulation"
                       maxLength={7}
                     />
                   </div>
@@ -94,26 +94,36 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
               ))}
             </div>
 
-            {/* Preview */}
             <div className="h-px bg-white/[0.06]" />
+
             <div className="space-y-2">
-              <Label className="text-xs font-medium text-white uppercase tracking-wider">Preview</Label>
+              <Eyebrow>Preview</Eyebrow>
               <div className="flex gap-3">
-                <div className="flex-1 h-16 rounded-xl" style={{ backgroundColor: primaryColor }} />
-                <div className="flex-1 h-16 rounded-xl" style={{ backgroundColor: secondaryColor }} />
-                <div className="flex-1 h-16 rounded-xl" style={{ backgroundColor: accentColor }} />
+                <div
+                  className="flex-1 h-16 rounded-2xl"
+                  style={{ backgroundColor: primaryColor }}
+                />
+                <div
+                  className="flex-1 h-16 rounded-2xl"
+                  style={{ backgroundColor: secondaryColor }}
+                />
+                <div
+                  className="flex-1 h-16 rounded-2xl"
+                  style={{ backgroundColor: accentColor }}
+                />
               </div>
             </div>
           </div>
 
-          <div className="p-4 border-t border-white/[0.06]">
-            <Button
+          <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06]">
+            <button
+              type="button"
               onClick={handleSave}
               disabled={isSaving}
-              className="w-full h-14 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 text-white font-bold text-base touch-manipulation active:scale-[0.98] shadow-lg shadow-amber-500/20"
+              className="w-full h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isSaving ? <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Saving...</> : <><CheckCircle className="mr-2 h-5 w-5" /> Save</>}
-            </Button>
+              {isSaving ? 'Saving…' : 'Save'}
+            </button>
           </div>
         </div>
       </SheetContent>

@@ -230,13 +230,13 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-baseline justify-between gap-2">
                           <div className="min-w-0">
-                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                               {typeLabel(item.type)}
                             </div>
                             <div className="mt-1 text-[15px] font-medium text-white truncate">
                               {item.title}
                             </div>
-                            <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                               {item.studentName}
                             </div>
                           </div>
@@ -246,7 +246,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <button
-                                  className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                                  className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                                   aria-label="Options"
                                 >
                                   ⋯
@@ -289,7 +289,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                           </div>
                         </div>
 
-                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-white/50">
+                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-white/75">
                           <span className="tabular-nums">
                             Created{' '}
                             {new Date(item.createdAt).toLocaleDateString('en-GB', {

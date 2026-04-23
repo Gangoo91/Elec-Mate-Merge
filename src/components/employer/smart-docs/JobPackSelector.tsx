@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -6,22 +5,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useJobPacks } from '@/hooks/useJobPacks';
 import {
   Package,
   MapPin,
   FileText,
-  Shield,
-  ClipboardList,
-  Users,
   Plus,
   CheckCircle,
   AlertTriangle,
 } from 'lucide-react';
+import {
+  FormCard,
+  Field,
+  Pill,
+  SecondaryButton,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface JobPackSelectorProps {
   selectedJobPackId: string | null;
@@ -58,8 +59,8 @@ export function JobPackSelector({
   if (isLoading) {
     return (
       <div className="space-y-3">
-        <Skeleton className="h-10 w-full" />
-        <Skeleton className="h-24 w-full" />
+        <Skeleton className="h-11 w-full bg-white/[0.04] rounded-xl" />
+        <Skeleton className="h-24 w-full bg-white/[0.04] rounded-2xl" />
       </div>
     );
   }
@@ -67,29 +68,30 @@ export function JobPackSelector({
   return (
     <div className="space-y-3">
       {/* Job Pack Selector */}
-      <div className="space-y-2">
-        <label className="text-sm font-medium text-foreground">Select Job Pack</label>
+      <Field label="Select Job Pack">
         <Select value={selectedJobPackId || ''} onValueChange={(value) => onSelect(value || null)}>
-          <SelectTrigger className="w-full bg-elec-gray border-elec-yellow/20">
+          <SelectTrigger className={selectTriggerClass}>
             <SelectValue placeholder="Choose a job pack..." />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className={selectContentClass}>
             {jobPacks.length === 0 ? (
-              <SelectItem value="none" disabled>
+              <SelectItem value="none" disabled className="text-white">
                 No job packs available
               </SelectItem>
             ) : (
               jobPacks
                 .filter((jp) => jp.status !== 'Completed')
                 .map((jp) => (
-                  <SelectItem key={jp.id} value={jp.id}>
+                  <SelectItem
+                    key={jp.id}
+                    value={jp.id}
+                    className="text-white focus:bg-white/[0.08] focus:text-white"
+                  >
                     <div className="flex items-center gap-2">
                       <Package className="h-4 w-4 text-elec-yellow" />
-                      <span>{jp.title}</span>
+                      <span className="text-white">{jp.title}</span>
                       {jp.status === 'In Progress' && (
-                        <Badge variant="secondary" className="text-xs bg-success/20 text-success">
-                          Active
-                        </Badge>
+                        <Pill tone="emerald">Active</Pill>
                       )}
                     </div>
                   </SelectItem>
@@ -97,107 +99,107 @@ export function JobPackSelector({
             )}
           </SelectContent>
         </Select>
-      </div>
+      </Field>
 
       {/* Create New Option */}
       {onCreateNew && (
-        <Button
-          variant="outline"
-          size="sm"
-          className="w-full border-dashed border-elec-yellow/30 text-white hover:text-elec-yellow"
-          onClick={onCreateNew}
-        >
+        <SecondaryButton fullWidth onClick={onCreateNew}>
           <Plus className="h-4 w-4 mr-2" />
           Create New Job Pack
-        </Button>
+        </SecondaryButton>
       )}
 
       {/* Selected Job Pack Details */}
       {selectedJobPack && showStatus && (
-        <Card className="border-elec-yellow/20 bg-elec-gray/50">
-          <CardContent className="p-4 space-y-3">
-            <div className="flex items-start justify-between">
-              <div>
-                <h4 className="font-medium text-foreground">{selectedJobPack.title}</h4>
-                {selectedJobPack.client && (
-                  <p className="text-sm text-white">{selectedJobPack.client}</p>
+        <FormCard eyebrow="Selected job pack">
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <h4 className="text-[14px] font-semibold text-white truncate">
+                {selectedJobPack.title}
+              </h4>
+              {selectedJobPack.client && (
+                <p className="text-[12px] text-white mt-0.5">{selectedJobPack.client}</p>
+              )}
+            </div>
+            <Pill
+              tone={
+                selectedJobPack.status === 'In Progress'
+                  ? 'emerald'
+                  : selectedJobPack.status === 'Draft'
+                    ? 'amber'
+                    : 'blue'
+              }
+            >
+              {selectedJobPack.status}
+            </Pill>
+          </div>
+
+          {/* Location */}
+          {selectedJobPack.location && (
+            <div className="flex items-center gap-2 text-[12.5px] text-white">
+              <MapPin className="h-4 w-4 text-white" />
+              <span className="truncate">{selectedJobPack.location}</span>
+            </div>
+          )}
+
+          {/* Scope Preview */}
+          {selectedJobPack.scope && (
+            <div className="flex items-start gap-2 text-[12.5px] text-white">
+              <FileText className="h-4 w-4 mt-0.5 shrink-0 text-white" />
+              <span className="line-clamp-2">{selectedJobPack.scope}</span>
+            </div>
+          )}
+
+          {/* Document Status */}
+          <div className="pt-3 border-t border-white/[0.06]">
+            <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white mb-2">
+              Document Status
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {getDocumentStatus(selectedJobPack).map((status, idx) => (
+                <span
+                  key={idx}
+                  className={`inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border ${
+                    status.complete
+                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                      : 'bg-white/[0.04] text-white border-white/[0.08]'
+                  }`}
+                >
+                  {status.complete ? (
+                    <CheckCircle className="h-3 w-3 mr-1" />
+                  ) : (
+                    <AlertTriangle className="h-3 w-3 mr-1" />
+                  )}
+                  {status.label}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Hazards if available */}
+          {selectedJobPack.hazards && selectedJobPack.hazards.length > 0 && (
+            <div className="pt-3 border-t border-white/[0.06]">
+              <p className="text-[10px] font-medium uppercase tracking-[0.14em] text-white mb-2">
+                Identified Hazards
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {selectedJobPack.hazards.slice(0, 5).map((hazard, idx) => (
+                  <span
+                    key={idx}
+                    className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border bg-white/[0.04] text-white border-white/[0.08]"
+                  >
+                    {hazard}
+                  </span>
+                ))}
+                {selectedJobPack.hazards.length > 5 && (
+                  <span className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border bg-white/[0.04] text-white border-white/[0.08]">
+                    +{selectedJobPack.hazards.length - 5} more
+                  </span>
                 )}
               </div>
-              <Badge
-                variant="secondary"
-                className={
-                  selectedJobPack.status === 'In Progress'
-                    ? 'bg-success/20 text-success'
-                    : selectedJobPack.status === 'Draft'
-                      ? 'bg-warning/20 text-warning'
-                      : ''
-                }
-              >
-                {selectedJobPack.status}
-              </Badge>
             </div>
-
-            {/* Location */}
-            {selectedJobPack.location && (
-              <div className="flex items-center gap-2 text-sm text-white">
-                <MapPin className="h-4 w-4" />
-                <span className="truncate">{selectedJobPack.location}</span>
-              </div>
-            )}
-
-            {/* Scope Preview */}
-            {selectedJobPack.scope && (
-              <div className="flex items-start gap-2 text-sm text-white">
-                <FileText className="h-4 w-4 mt-0.5 shrink-0" />
-                <span className="line-clamp-2">{selectedJobPack.scope}</span>
-              </div>
-            )}
-
-            {/* Document Status */}
-            <div className="pt-2 border-t border-elec-yellow/10">
-              <p className="text-xs text-white mb-2">Document Status</p>
-              <div className="flex flex-wrap gap-2">
-                {getDocumentStatus(selectedJobPack).map((status, idx) => (
-                  <Badge
-                    key={idx}
-                    variant="secondary"
-                    className={`text-xs ${
-                      status.complete
-                        ? 'bg-success/20 text-success'
-                        : 'bg-muted text-white'
-                    }`}
-                  >
-                    {status.complete ? (
-                      <CheckCircle className="h-3 w-3 mr-1" />
-                    ) : (
-                      <AlertTriangle className="h-3 w-3 mr-1" />
-                    )}
-                    {status.label}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* Hazards if available */}
-            {selectedJobPack.hazards && selectedJobPack.hazards.length > 0 && (
-              <div className="pt-2 border-t border-elec-yellow/10">
-                <p className="text-xs text-white mb-2">Identified Hazards</p>
-                <div className="flex flex-wrap gap-1">
-                  {selectedJobPack.hazards.slice(0, 5).map((hazard, idx) => (
-                    <Badge key={idx} variant="outline" className="text-xs">
-                      {hazard}
-                    </Badge>
-                  ))}
-                  {selectedJobPack.hazards.length > 5 && (
-                    <Badge variant="outline" className="text-xs">
-                      +{selectedJobPack.hazards.length - 5} more
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+          )}
+        </FormCard>
       )}
     </div>
   );

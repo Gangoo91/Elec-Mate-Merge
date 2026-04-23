@@ -331,7 +331,7 @@ export function AIFeedbackGenerator({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">AI FEEDBACK</div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">AI FEEDBACK</div>
             <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">Feedback generator</h3>
           </div>
           <Pill tone="yellow">AI</Pill>
@@ -351,7 +351,7 @@ export function AIFeedbackGenerator({
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
       <div className="p-5 sm:p-6 pb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">AI FEEDBACK</div>
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">AI FEEDBACK</div>
           <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">Generate feedback</h3>
         </div>
         <Pill tone="yellow">AI-Powered</Pill>
@@ -444,7 +444,7 @@ export function AIFeedbackGenerator({
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div>
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">OUTPUT</div>
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">OUTPUT</div>
                 <h4 className="mt-1 text-base font-semibold text-white tracking-tight">Generated feedback</h4>
               </div>
               <div className="flex gap-2">
@@ -509,7 +509,7 @@ export function AIFeedbackGenerator({
         {/* Tips */}
         {!generatedFeedback && (
           <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">FEATURES</div>
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">FEATURES</div>
             <p className="mt-1.5 text-sm font-medium text-white">AI feedback features</p>
             <ul className="mt-3 space-y-1.5 text-[12.5px] text-white/60">
               <li className="flex items-start gap-2">

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -11,10 +9,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Store, Plus } from 'lucide-react';
 import { useCreateSupplier } from '@/hooks/useFinance';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface CreateSupplierDialogProps {
   open: boolean;
@@ -82,7 +90,6 @@ export function CreateSupplierDialog({ open, onOpenChange }: CreateSupplierDialo
     setNotes('');
   };
 
-  // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
 
   useEffect(() => {
@@ -154,175 +161,154 @@ export function CreateSupplierDialog({ open, onOpenChange }: CreateSupplierDialo
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="px-4 py-3 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                <Store className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <SheetTitle className="text-lg">Add Supplier</SheetTitle>
-            </div>
-          </SheetHeader>
-
-          {/* Content */}
-          <ScrollArea className="flex-1 px-4 py-4">
-            <div className="space-y-4">
-              {/* Basic Info */}
-              <div className="space-y-2">
-                <Label>Company Name *</Label>
-                <Input
-                  placeholder="e.g. CEF, Edmundson"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="text-base"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Category</Label>
-                  <Select value={category} onValueChange={setCategory}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {CATEGORIES.map((cat) => (
-                        <SelectItem key={cat} value={cat}>
-                          {cat}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label>Account Number</Label>
-                  <Input
-                    placeholder="Your account #"
-                    value={accountNumber}
-                    onChange={(e) => setAccountNumber(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              {/* Financial */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Credit Limit</Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-                      £
-                    </span>
-                    <Input
-                      type="number"
-                      placeholder="0"
-                      value={creditLimit}
-                      onChange={(e) => setCreditLimit(e.target.value)}
-                      className="pl-8"
-                      min={0}
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label>Discount %</Label>
-                  <div className="relative">
-                    <Input
-                      type="number"
-                      placeholder="0"
-                      value={discountPercent}
-                      onChange={(e) => setDiscountPercent(e.target.value)}
-                      min={0}
-                      max={100}
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white">
-                      %
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Contact */}
-              <div className="space-y-2">
-                <Label>Contact Name</Label>
-                <Input
-                  placeholder="Your rep's name"
-                  value={contactName}
-                  onChange={(e) => setContactName(e.target.value)}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label>Phone</Label>
-                  <Input
-                    type="tel"
-                    placeholder="Phone number"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Email</Label>
-                  <Input
-                    type="email"
-                    placeholder="Email address"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Address</Label>
-                <Textarea
-                  placeholder="Branch address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                  className="min-h-[60px]"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label>Delivery Days</Label>
-                <Select value={deliveryDays} onValueChange={setDeliveryDays}>
-                  <SelectTrigger>
+      <SheetContent side="bottom" className="h-[90vh] p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Suppliers"
+          title="Add supplier"
+          description="Register a new supplier account with contact and delivery details."
+          footer={
+            <>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleSubmit}
+                disabled={!name.trim() || createSupplierMutation.isPending}
+                fullWidth
+              >
+                Add supplier
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Company">
+            <Field label="Company name" required>
+              <Input
+                placeholder="e.g. CEF, Edmundson"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={inputClass}
+              />
+            </Field>
+            <FormGrid cols={2}>
+              <Field label="Category">
+                <Select value={category} onValueChange={setCategory}>
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0">Same day</SelectItem>
-                    <SelectItem value="1">Next day</SelectItem>
-                    <SelectItem value="2">2 days</SelectItem>
-                    <SelectItem value="3">3 days</SelectItem>
-                    <SelectItem value="5">5 days</SelectItem>
+                  <SelectContent className={selectContentClass}>
+                    {CATEGORIES.map((cat) => (
+                      <SelectItem key={cat} value={cat}>
+                        {cat}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label>Notes</Label>
-                <Textarea
-                  placeholder="Any notes about this supplier"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="min-h-[60px]"
+              </Field>
+              <Field label="Account number">
+                <Input
+                  placeholder="Your account #"
+                  value={accountNumber}
+                  onChange={(e) => setAccountNumber(e.target.value)}
+                  className={inputClass}
                 />
-              </div>
-            </div>
-          </ScrollArea>
+              </Field>
+            </FormGrid>
+          </FormCard>
 
-          {/* Footer */}
-          <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <Button
-              className="w-full"
-              onClick={handleSubmit}
-              disabled={!name.trim() || createSupplierMutation.isPending}
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Add Supplier
-            </Button>
-          </SheetFooter>
-        </div>
+          <FormCard eyebrow="Finance">
+            <FormGrid cols={2}>
+              <Field label="Credit limit (£)">
+                <Input
+                  type="number"
+                  placeholder="0"
+                  value={creditLimit}
+                  onChange={(e) => setCreditLimit(e.target.value)}
+                  min={0}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Discount %">
+                <Input
+                  type="number"
+                  placeholder="0"
+                  value={discountPercent}
+                  onChange={(e) => setDiscountPercent(e.target.value)}
+                  min={0}
+                  max={100}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+          </FormCard>
+
+          <FormCard eyebrow="Contact">
+            <Field label="Contact name">
+              <Input
+                placeholder="Your rep's name"
+                value={contactName}
+                onChange={(e) => setContactName(e.target.value)}
+                className={inputClass}
+              />
+            </Field>
+            <FormGrid cols={2}>
+              <Field label="Phone">
+                <Input
+                  type="tel"
+                  placeholder="Phone number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Email">
+                <Input
+                  type="email"
+                  placeholder="Email address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+            <Field label="Address">
+              <Textarea
+                placeholder="Branch address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                className={`${textareaClass} min-h-[70px]`}
+              />
+            </Field>
+          </FormCard>
+
+          <FormCard eyebrow="Delivery">
+            <Field label="Delivery days">
+              <Select value={deliveryDays} onValueChange={setDeliveryDays}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="0">Same day</SelectItem>
+                  <SelectItem value="1">Next day</SelectItem>
+                  <SelectItem value="2">2 days</SelectItem>
+                  <SelectItem value="3">3 days</SelectItem>
+                  <SelectItem value="5">5 days</SelectItem>
+                </SelectContent>
+              </Select>
+            </Field>
+          </FormCard>
+
+          <FormCard eyebrow="Notes">
+            <Field label="Notes">
+              <Textarea
+                placeholder="Any notes about this supplier"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                className={`${textareaClass} min-h-[70px]`}
+              />
+            </Field>
+          </FormCard>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

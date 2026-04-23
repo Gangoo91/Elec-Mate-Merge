@@ -258,7 +258,7 @@ export function GradingSection() {
                             <div className="text-[15px] font-medium text-white truncate">
                               {grade.unit_name || 'Untitled unit'}
                             </div>
-                            <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                               {getStudentName(grade.student_id)}
                             </div>
                           </div>
@@ -267,7 +267,7 @@ export function GradingSection() {
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild>
                                 <button
-                                  className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                                  className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                                   aria-label="Options"
                                 >
                                   ⋯
@@ -328,7 +328,7 @@ export function GradingSection() {
                           {grade.grade && <Pill tone={gradeTone(grade.grade)}>{grade.grade}</Pill>}
                         </div>
 
-                        <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/50">
+                        <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
                           <span>Assessor · {getAssessorName(grade.assessed_by)}</span>
                           {grade.assessed_at && (
                             <span className="tabular-nums">
@@ -342,7 +342,7 @@ export function GradingSection() {
 
                         {grade.feedback && (
                           <div className="mt-3 text-[12px] text-white/70 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2">
-                            <span className="text-white/40">Feedback · </span>
+                            <span className="text-white/70">Feedback · </span>
                             {grade.feedback.length > 120
                               ? grade.feedback.substring(0, 120) + '…'
                               : grade.feedback}

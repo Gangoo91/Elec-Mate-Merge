@@ -115,7 +115,7 @@ const CollegePortfolioHub: React.FC = () => {
             ← Back
           </button>
           <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Student Portfolio
             </div>
             <h2 className="mt-1 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-tight">
@@ -218,7 +218,7 @@ const CollegePortfolioHub: React.FC = () => {
             >
               Review Queue
               {stats.awaitingReview > 0 && (
-                <span className="ml-1.5 tabular-nums text-[11px] text-white/50 data-[state=active]:text-black/60">
+                <span className="ml-1.5 tabular-nums text-[11px] text-white/75 data-[state=active]:text-black/60">
                   {stats.awaitingReview}
                 </span>
               )}
@@ -249,7 +249,7 @@ const CollegePortfolioHub: React.FC = () => {
               placeholder="Search students or qualifications…"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 rounded-full px-4 touch-manipulation"
+              className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 rounded-full px-4 touch-manipulation"
             />
             <Select
               value={statusFilter || 'all'}
@@ -348,7 +348,7 @@ const CollegePortfolioHub: React.FC = () => {
                         <div className="text-[15px] font-semibold tabular-nums text-white">
                           {portfolio.completionPercentage}%
                         </div>
-                        <div className="text-[10px] uppercase tracking-[0.16em] text-white/40">
+                        <div className="text-[10px] uppercase tracking-[0.16em] text-white/55">
                           Complete
                         </div>
                       </div>

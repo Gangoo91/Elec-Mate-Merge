@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/responsive-form-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Select,
   SelectContent,
@@ -27,15 +26,24 @@ import {
   UserPlus,
   Camera,
   User,
-  Briefcase,
-  PoundSterling,
-  CreditCard,
   Loader2,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { supabase } from '@/integrations/supabase/client';
 import { PayType } from '@/services/employeeService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  fieldLabelClass,
+  checkboxClass,
+} from '@/components/employer/editorial';
 
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 
@@ -321,13 +329,13 @@ export function AddEmployeeDialog({
         </ResponsiveFormModalHeader>
 
         <ResponsiveFormModalBody>
-          <form id="employee-form" onSubmit={handleSubmit} className="space-y-6 py-2">
+          <form id="employee-form" onSubmit={handleSubmit} className="space-y-5 py-2">
             {/* Photo Upload Section */}
             <div className="flex justify-center">
               <div className="relative">
-                <Avatar className="h-28 w-28 border-4 border-background shadow-lg">
+                <Avatar className="h-28 w-28 border-4 border-[hsl(0_0%_8%)] shadow-lg">
                   <AvatarImage src={photoPreview || undefined} />
-                  <AvatarFallback className="bg-muted text-white text-3xl">
+                  <AvatarFallback className="bg-white/[0.06] text-white text-3xl">
                     {formData.name ? (
                       formData.name
                         .split(' ')
@@ -343,7 +351,7 @@ export function AddEmployeeDialog({
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="absolute -bottom-1 -right-1 h-10 w-10 rounded-full bg-elec-yellow text-elec-dark flex items-center justify-center shadow-md hover:bg-elec-yellow/90 transition-colors touch-feedback"
+                  className="absolute -bottom-1 -right-1 h-10 w-10 rounded-full bg-elec-yellow text-black flex items-center justify-center shadow-md hover:bg-elec-yellow/90 transition-colors touch-manipulation"
                 >
                   <Camera className="h-5 w-5" />
                 </button>
@@ -358,30 +366,18 @@ export function AddEmployeeDialog({
             </div>
 
             {/* Personal Info Section */}
-            <div className="rounded-xl bg-surface/50 border border-border/50 p-4 space-y-4">
-              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                <div className="h-7 w-7 rounded-lg bg-success/20 flex items-center justify-center">
-                  <User className="h-4 w-4 text-success" />
-                </div>
-                Personal Information
-              </div>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-sm font-medium">
-                    Full Name *
-                  </Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                    placeholder="John Smith"
-                    className="h-12 text-base"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="text-sm font-medium">
-                    Email
-                  </Label>
+            <FormCard eyebrow="Personal information">
+              <Field label="Full name" required>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                  placeholder="John Smith"
+                  className={inputClass}
+                />
+              </Field>
+              <FormGrid cols={2}>
+                <Field label="Email">
                   <Input
                     id="email"
                     type="email"
@@ -389,13 +385,10 @@ export function AddEmployeeDialog({
                     value={formData.email}
                     onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
                     placeholder="john@example.com"
-                    className="h-12 text-base"
+                    className={inputClass}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-sm font-medium">
-                    Phone
-                  </Label>
+                </Field>
+                <Field label="Phone">
                   <Input
                     id="phone"
                     type="tel"
@@ -403,230 +396,189 @@ export function AddEmployeeDialog({
                     value={formData.phone}
                     onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
                     placeholder="07700 900000"
-                    className="h-12 text-base"
+                    className={inputClass}
                   />
-                </div>
-              </div>
-            </div>
+                </Field>
+              </FormGrid>
+            </FormCard>
 
             {/* Employment Details Section */}
-            <div className="rounded-xl bg-surface/50 border border-border/50 p-4 space-y-4">
-              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                <div className="h-7 w-7 rounded-lg bg-info/20 flex items-center justify-center">
-                  <Briefcase className="h-4 w-4 text-info" />
-                </div>
-                Employment Details
-              </div>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="role" className="text-sm font-medium">
-                    Job Role *
-                  </Label>
+            <FormCard eyebrow="Employment details">
+              <FormGrid cols={2}>
+                <Field label="Job role" required>
                   <Select
                     value={formData.role}
                     onValueChange={(val) => setFormData((prev) => ({ ...prev, role: val }))}
                   >
-                    <SelectTrigger className="h-12 text-base">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue placeholder="Select role..." />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       {JOB_ROLES.map((role) => (
-                        <SelectItem key={role} value={role} className="h-12">
+                        <SelectItem key={role} value={role}>
                           {role}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="teamRole" className="text-sm font-medium">
-                    Team Role *
-                  </Label>
+                </Field>
+                <Field label="Team role" required>
                   <Select
                     value={formData.teamRole}
                     onValueChange={(val) =>
                       setFormData((prev) => ({ ...prev, teamRole: val as TeamRole }))
                     }
                   >
-                    <SelectTrigger className="h-12 text-base">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue placeholder="Select team role..." />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       {TEAM_ROLES.map((role) => (
-                        <SelectItem key={role} value={role} className="h-12">
+                        <SelectItem key={role} value={role}>
                           {role}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
-              </div>
-            </div>
+                </Field>
+              </FormGrid>
+            </FormCard>
 
             {/* Pay Information Section */}
-            <div className="rounded-xl bg-surface/50 border border-border/50 p-4 space-y-4">
-              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                <div className="h-7 w-7 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-                  <PoundSterling className="h-4 w-4 text-elec-yellow" />
-                </div>
-                Pay Information
-              </div>
-              <div className="space-y-4">
-                <RadioGroup
-                  value={formData.payType}
-                  onValueChange={(val) =>
-                    setFormData((prev) => ({ ...prev, payType: val as PayType }))
-                  }
-                  className="flex flex-col gap-2"
-                >
-                  {[
-                    { value: 'hourly', label: 'Hourly Rate' },
-                    { value: 'annual', label: 'Annual Salary' },
-                    { value: 'day_rate', label: 'Day Rate' },
-                  ].map((option) => (
-                    <div key={option.value}>
-                      <RadioGroupItem
-                        value={option.value}
-                        id={option.value}
-                        className="peer sr-only"
-                      />
-                      <Label
-                        htmlFor={option.value}
-                        className="flex items-center justify-center rounded-xl border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/10 cursor-pointer transition-all touch-feedback"
-                      >
-                        <span className="text-base font-medium">{option.label}</span>
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
+            <FormCard eyebrow="Pay information">
+              <RadioGroup
+                value={formData.payType}
+                onValueChange={(val) =>
+                  setFormData((prev) => ({ ...prev, payType: val as PayType }))
+                }
+                className="grid grid-cols-3 gap-2"
+              >
+                {[
+                  { value: 'hourly', label: 'Hourly' },
+                  { value: 'annual', label: 'Annual' },
+                  { value: 'day_rate', label: 'Day rate' },
+                ].map((option) => (
+                  <div key={option.value}>
+                    <RadioGroupItem
+                      value={option.value}
+                      id={option.value}
+                      className="peer sr-only"
+                    />
+                    <label
+                      htmlFor={option.value}
+                      className="flex items-center justify-center rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] px-3 h-11 text-[13px] text-white hover:bg-white/[0.05] peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/10 peer-data-[state=checked]:text-elec-yellow cursor-pointer transition-all touch-manipulation"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </RadioGroup>
 
-                <div className="space-y-2 animate-fade-in">
-                  {formData.payType === 'hourly' && (
-                    <>
-                      <Label htmlFor="hourlyRate" className="text-sm font-medium">
-                        Hourly Rate (£)
-                      </Label>
-                      <Input
-                        id="hourlyRate"
-                        type="number"
-                        inputMode="decimal"
-                        min="0"
-                        step="0.50"
-                        value={formData.hourlyRate}
-                        onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, hourlyRate: e.target.value }))
-                        }
-                        placeholder="25.00"
-                        className="h-12 text-base"
-                      />
-                    </>
-                  )}
-                  {formData.payType === 'annual' && (
-                    <>
-                      <Label htmlFor="annualSalary" className="text-sm font-medium">
-                        Annual Salary (£)
-                      </Label>
-                      <Input
-                        id="annualSalary"
-                        type="number"
-                        inputMode="numeric"
-                        min="0"
-                        step="1000"
-                        value={formData.annualSalary}
-                        onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, annualSalary: e.target.value }))
-                        }
-                        placeholder="45000"
-                        className="h-12 text-base"
-                      />
-                    </>
-                  )}
-                  {formData.payType === 'day_rate' && (
-                    <>
-                      <Label htmlFor="dayRate" className="text-sm font-medium">
-                        Day Rate (£)
-                      </Label>
-                      <Input
-                        id="dayRate"
-                        type="number"
-                        inputMode="decimal"
-                        min="0"
-                        step="10"
-                        value={formData.dayRate}
-                        onChange={(e) =>
-                          setFormData((prev) => ({ ...prev, dayRate: e.target.value }))
-                        }
-                        placeholder="250"
-                        className="h-12 text-base"
-                      />
-                    </>
-                  )}
-                  {calculateEquivalent() && (
-                    <p className="text-sm text-white">{calculateEquivalent()}</p>
-                  )}
-                </div>
+              <div className="animate-fade-in">
+                {formData.payType === 'hourly' && (
+                  <Field label="Hourly rate (£)">
+                    <Input
+                      id="hourlyRate"
+                      type="number"
+                      inputMode="decimal"
+                      min="0"
+                      step="0.50"
+                      value={formData.hourlyRate}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, hourlyRate: e.target.value }))
+                      }
+                      placeholder="25.00"
+                      className={inputClass}
+                    />
+                  </Field>
+                )}
+                {formData.payType === 'annual' && (
+                  <Field label="Annual salary (£)">
+                    <Input
+                      id="annualSalary"
+                      type="number"
+                      inputMode="numeric"
+                      min="0"
+                      step="1000"
+                      value={formData.annualSalary}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, annualSalary: e.target.value }))
+                      }
+                      placeholder="45000"
+                      className={inputClass}
+                    />
+                  </Field>
+                )}
+                {formData.payType === 'day_rate' && (
+                  <Field label="Day rate (£)">
+                    <Input
+                      id="dayRate"
+                      type="number"
+                      inputMode="decimal"
+                      min="0"
+                      step="10"
+                      value={formData.dayRate}
+                      onChange={(e) =>
+                        setFormData((prev) => ({ ...prev, dayRate: e.target.value }))
+                      }
+                      placeholder="250"
+                      className={inputClass}
+                    />
+                  </Field>
+                )}
+                {calculateEquivalent() && (
+                  <p className="mt-2 text-[11.5px] text-white">{calculateEquivalent()}</p>
+                )}
               </div>
-            </div>
+            </FormCard>
 
             {/* Elec-ID Section */}
-            <div className="rounded-xl bg-surface/50 border border-border/50 p-4 space-y-4">
-              <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                <div className="h-7 w-7 rounded-lg bg-warning/20 flex items-center justify-center">
-                  <CreditCard className="h-4 w-4 text-warning" />
-                </div>
-                Elec-ID Card
-              </div>
-              <div className="space-y-4">
-                <div
-                  className="flex items-center space-x-3 p-3 rounded-lg bg-muted/30 cursor-pointer touch-feedback"
-                  onClick={() =>
-                    setFormData((prev) => ({ ...prev, createElecId: !prev.createElecId }))
+            <FormCard eyebrow="Elec-ID card">
+              <div
+                className="flex items-center space-x-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] cursor-pointer touch-manipulation"
+                onClick={() =>
+                  setFormData((prev) => ({ ...prev, createElecId: !prev.createElecId }))
+                }
+              >
+                <Checkbox
+                  id="createElecId"
+                  checked={formData.createElecId}
+                  onCheckedChange={(checked) =>
+                    setFormData((prev) => ({ ...prev, createElecId: checked as boolean }))
                   }
+                  className={checkboxClass}
+                />
+                <label
+                  htmlFor="createElecId"
+                  className="text-[13px] text-white cursor-pointer flex-1"
                 >
-                  <Checkbox
-                    id="createElecId"
-                    checked={formData.createElecId}
-                    onCheckedChange={(checked) =>
-                      setFormData((prev) => ({ ...prev, createElecId: checked as boolean }))
-                    }
-                    className="h-5 w-5"
-                  />
-                  <Label
-                    htmlFor="createElecId"
-                    className="text-base font-normal cursor-pointer flex-1"
-                  >
-                    Create Elec-ID profile for this employee
-                  </Label>
-                </div>
+                  Create Elec-ID profile for this employee
+                </label>
+              </div>
 
-                {formData.createElecId && (
-                  <div className="space-y-4 pt-2 animate-fade-in">
-                    <div className="space-y-2">
-                      <Label htmlFor="ecsCardType" className="text-sm font-medium">
-                        ECS Card Type
-                      </Label>
-                      <Select
-                        value={formData.ecsCardType}
-                        onValueChange={(val) =>
-                          setFormData((prev) => ({ ...prev, ecsCardType: val }))
-                        }
-                      >
-                        <SelectTrigger className="h-12 text-base">
-                          <SelectValue placeholder="Select type..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {ECS_CARD_TYPES.map((type) => (
-                            <SelectItem key={type} value={type} className="h-12">
-                              {type}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="ecsCardNumber" className="text-sm font-medium">
-                        ECS Card Number
-                      </Label>
+              {formData.createElecId && (
+                <div className="space-y-3 pt-2 animate-fade-in">
+                  <Field label="ECS card type">
+                    <Select
+                      value={formData.ecsCardType}
+                      onValueChange={(val) =>
+                        setFormData((prev) => ({ ...prev, ecsCardType: val }))
+                      }
+                    >
+                      <SelectTrigger className={selectTriggerClass}>
+                        <SelectValue placeholder="Select type..." />
+                      </SelectTrigger>
+                      <SelectContent className={selectContentClass}>
+                        {ECS_CARD_TYPES.map((type) => (
+                          <SelectItem key={type} value={type}>
+                            {type}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                  <FormGrid cols={2}>
+                    <Field label="ECS card number">
                       <Input
                         id="ecsCardNumber"
                         value={formData.ecsCardNumber}
@@ -634,13 +586,10 @@ export function AddEmployeeDialog({
                           setFormData((prev) => ({ ...prev, ecsCardNumber: e.target.value }))
                         }
                         placeholder="ECS-12345678"
-                        className="h-12 text-base"
+                        className={inputClass}
                       />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="ecsExpiryDate" className="text-sm font-medium">
-                        ECS Expiry Date
-                      </Label>
+                    </Field>
+                    <Field label="ECS expiry date">
                       <Input
                         id="ecsExpiryDate"
                         type="date"
@@ -648,31 +597,29 @@ export function AddEmployeeDialog({
                         onChange={(e) =>
                           setFormData((prev) => ({ ...prev, ecsExpiryDate: e.target.value }))
                         }
-                        className="h-12 text-base"
+                        className={inputClass}
                       />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
+                    </Field>
+                  </FormGrid>
+                </div>
+              )}
+            </FormCard>
           </form>
         </ResponsiveFormModalBody>
 
         <ResponsiveFormModalFooter>
           <div className="flex gap-3">
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1 h-12 text-base"
-              onClick={() => setOpen(false)}
-            >
+            <SecondaryButton onClick={() => setOpen(false)} fullWidth>
               Cancel
-            </Button>
-            <Button
+            </SecondaryButton>
+            <PrimaryButton
               type="submit"
-              form="add-employee-form"
-              className="flex-1 h-12 text-base font-semibold"
+              onClick={() => {
+                const form = document.getElementById('employee-form') as HTMLFormElement;
+                if (form) form.requestSubmit();
+              }}
               disabled={isPending}
+              fullWidth
             >
               {isPending ? (
                 <>
@@ -682,7 +629,7 @@ export function AddEmployeeDialog({
               ) : (
                 'Add Employee'
               )}
-            </Button>
+            </PrimaryButton>
           </div>
         </ResponsiveFormModalFooter>
       </ResponsiveFormModalContent>

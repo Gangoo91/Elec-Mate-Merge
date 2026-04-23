@@ -3,25 +3,29 @@ import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { motion } from 'framer-motion';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import {
-  Shield,
-  ShieldCheck,
-  ShieldAlert,
-  Key,
-  Smartphone,
-  Monitor,
-  AlertTriangle,
-  Lock,
-  Unlock,
-  Eye,
-  EyeOff,
-  Mail,
-  LogOut,
-  Loader2,
-  CheckCircle2,
-  Clock,
-} from 'lucide-react';
+  ListCard,
+  ListRow,
+  SectionHeader,
+  Eyebrow,
+  TextAction,
+  containerVariants,
+  itemVariants,
+  toneText,
+  type Tone,
+} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
+
+interface SecurityDevice {
+  id: string;
+  name: string;
+  kind: 'desktop' | 'mobile';
+  location: string;
+  lastActive: string;
+  current: boolean;
+}
 
 const SecurityTab = () => {
   const { addNotification } = useNotifications();
@@ -42,11 +46,11 @@ const SecurityTab = () => {
     confirmPassword: '',
   });
 
-  const devices = [
+  const devices: SecurityDevice[] = [
     {
       id: '1',
       name: 'Windows PC',
-      icon: Monitor,
+      kind: 'desktop',
       location: 'London, UK',
       lastActive: 'Active now',
       current: true,
@@ -54,7 +58,7 @@ const SecurityTab = () => {
     {
       id: '2',
       name: 'iPhone 14',
-      icon: Smartphone,
+      kind: 'mobile',
       location: 'London, UK',
       lastActive: '2 hours ago',
       current: false,
@@ -65,7 +69,13 @@ const SecurityTab = () => {
     setSecuritySettings((prev) => ({ ...prev, [key]: value }));
     addNotification({
       title: 'Security Setting Updated',
-      message: `${key === 'twoFactorAuth' ? 'Two-factor authentication' : key === 'loginNotifications' ? 'Login notifications' : 'Security updates'} ${value ? 'enabled' : 'disabled'}`,
+      message: `${
+        key === 'twoFactorAuth'
+          ? 'Two-factor authentication'
+          : key === 'loginNotifications'
+            ? 'Login notifications'
+            : 'Security updates'
+      } ${value ? 'enabled' : 'disabled'}`,
       type: 'success',
     });
   };
@@ -79,7 +89,6 @@ const SecurityTab = () => {
       });
       return;
     }
-
     if (passwordForm.newPassword.length < 8) {
       addNotification({
         title: 'Password Too Short',
@@ -88,7 +97,6 @@ const SecurityTab = () => {
       });
       return;
     }
-
     setIsLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     setIsLoading(false);
@@ -101,7 +109,7 @@ const SecurityTab = () => {
     });
   };
 
-  const handleSignOutDevice = (deviceId: string) => {
+  const handleSignOutDevice = (_deviceId: string) => {
     addNotification({
       title: 'Device Signed Out',
       message: 'The device has been signed out of your account',
@@ -123,114 +131,97 @@ const SecurityTab = () => {
       ? 70
       : 40;
 
+  const scoreTone: Tone =
+    securityScore >= 80 ? 'green' : securityScore >= 50 ? 'amber' : 'red';
+
   return (
-    <div className="space-y-6">
-      {/* Security Overview */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
-        <div className="p-4 md:p-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div
-              className={`w-14 h-14 rounded-xl flex items-center justify-center ${
-                securityScore >= 80
-                  ? 'bg-green-500/10'
-                  : securityScore >= 50
-                    ? 'bg-amber-500/10'
-                    : 'bg-red-500/10'
-              }`}
-            >
-              {securityScore >= 80 ? (
-                <ShieldCheck className="h-7 w-7 text-green-400" />
-              ) : securityScore >= 50 ? (
-                <Shield className="h-7 w-7 text-amber-400" />
-              ) : (
-                <ShieldAlert className="h-7 w-7 text-red-400" />
-              )}
-            </div>
-            <div className="flex-1">
-              <h3 className="text-lg font-semibold text-foreground">Security Score</h3>
-              <p className="text-sm text-muted-foreground mb-2">
-                {securityScore >= 80
-                  ? 'Your account is well protected'
-                  : securityScore >= 50
-                    ? 'Your account security could be improved'
-                    : 'Your account needs better protection'}
-              </p>
-              <div className="w-full bg-white/10 rounded-full h-2">
-                <div
-                  className={`h-2 rounded-full transition-all duration-500 ${
-                    securityScore >= 80
-                      ? 'bg-green-400'
-                      : securityScore >= 50
-                        ? 'bg-amber-400'
-                        : 'bg-red-400'
-                  }`}
-                  style={{ width: `${securityScore}%` }}
-                />
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-8"
+    >
+      {/* Security overview */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="01" title="Security Score" />
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <Eyebrow>Overall</Eyebrow>
+              <div className="mt-1 flex items-center gap-2">
+                <span className="text-3xl sm:text-4xl font-semibold text-white tabular-nums">
+                  {securityScore}%
+                </span>
+                <span
+                  className={cn(
+                    'text-[11px] font-medium uppercase tracking-[0.15em]',
+                    toneText[scoreTone]
+                  )}
+                >
+                  {securityScore >= 80
+                    ? 'Strong'
+                    : securityScore >= 50
+                      ? 'Moderate'
+                      : 'Weak'}
+                </span>
               </div>
-            </div>
-            <span
-              className={`text-2xl font-bold ${
-                securityScore >= 80
-                  ? 'text-green-400'
+              <p className="mt-2 text-[13px] text-white/70 leading-relaxed max-w-md">
+                {securityScore >= 80
+                  ? 'Your account is well protected.'
                   : securityScore >= 50
-                    ? 'text-amber-400'
-                    : 'text-red-400'
+                    ? 'Your account security could be improved.'
+                    : 'Your account needs better protection.'}
+              </p>
+            </div>
+          </div>
+          <div className="mt-4 h-1.5 w-full rounded-full bg-white/[0.06] overflow-hidden">
+            <div
+              className={`h-full transition-all duration-500 ${
+                scoreTone === 'green'
+                  ? 'bg-green-400'
+                  : scoreTone === 'amber'
+                    ? 'bg-amber-400'
+                    : 'bg-red-400'
               }`}
-            >
-              {securityScore}%
-            </span>
+              style={{ width: `${securityScore}%` }}
+            />
           </div>
         </div>
 
-        {/* 2FA Alert */}
         {!securitySettings.twoFactorAuth && (
-          <div className="px-4 md:px-6 pb-4 md:pb-6">
-            <div className="p-4 bg-amber-500/10 border border-amber-500/20 rounded-lg flex items-start gap-3">
-              <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground">
-                  Enable Two-Factor Authentication
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Add an extra layer of security to your account
-                </p>
+          <div className="bg-[hsl(0_0%_12%)] border border-amber-500/20 rounded-2xl p-5 flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-400">
+                Recommended
+              </span>
+              <div className="mt-2 text-[15px] font-medium text-white">
+                Enable Two-Factor Authentication
               </div>
-              <Button
-                size="sm"
-                className="h-11 touch-manipulation active:scale-[0.98] bg-amber-500 hover:bg-amber-600 text-foreground flex-shrink-0"
-              >
-                Enable
-              </Button>
+              <p className="mt-1 text-[12.5px] text-white/70 leading-relaxed">
+                Add an extra layer of security to your account.
+              </p>
             </div>
+            <Button
+              onClick={() => handleSecurityChange('twoFactorAuth', true)}
+              className="h-11 rounded-full bg-amber-500 hover:bg-amber-600 text-black font-semibold touch-manipulation shrink-0"
+            >
+              Enable
+            </Button>
           </div>
         )}
-      </div>
+      </motion.section>
 
-      {/* Security Settings */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
-        <div className="px-4 md:px-6 py-4 border-b border-white/10">
-          <h3 className="text-base font-semibold text-foreground">Security Settings</h3>
-        </div>
-        <div className="p-4 md:p-6 space-y-3">
-          {/* 2FA */}
-          <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10">
-            <div className="flex items-center gap-3">
-              <div
-                className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  securitySettings.twoFactorAuth ? 'bg-green-500/10' : 'bg-white/10'
-                }`}
-              >
-                {securitySettings.twoFactorAuth ? (
-                  <Lock className="h-5 w-5 text-green-400" />
-                ) : (
-                  <Unlock className="h-5 w-5 text-muted-foreground" />
-                )}
+      {/* Security settings */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="02" title="Security Settings" />
+        <ListCard>
+          <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+            <div className="flex-1 min-w-0">
+              <div className="text-[15px] font-medium text-white truncate">
+                Two-Factor Authentication
               </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">Two-Factor Authentication</p>
-                <p className="text-xs text-muted-foreground">
-                  Secure your account with a verification code
-                </p>
+              <div className="mt-0.5 text-[11.5px] text-white/65 truncate">
+                Secure your account with a verification code
               </div>
             </div>
             <Switch
@@ -238,16 +229,13 @@ const SecurityTab = () => {
               onCheckedChange={(checked) => handleSecurityChange('twoFactorAuth', checked)}
             />
           </div>
-
-          {/* Login Notifications */}
-          <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                <Mail className="h-5 w-5 text-blue-400" />
+          <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+            <div className="flex-1 min-w-0">
+              <div className="text-[15px] font-medium text-white truncate">
+                Login Notifications
               </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">Login Notifications</p>
-                <p className="text-xs text-muted-foreground">Get notified of new login attempts</p>
+              <div className="mt-0.5 text-[11.5px] text-white/65 truncate">
+                Get notified of new login attempts
               </div>
             </div>
             <Switch
@@ -255,18 +243,11 @@ const SecurityTab = () => {
               onCheckedChange={(checked) => handleSecurityChange('loginNotifications', checked)}
             />
           </div>
-
-          {/* Security Updates */}
-          <div className="flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                <Shield className="h-5 w-5 text-purple-400" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">Security Updates</p>
-                <p className="text-xs text-muted-foreground">
-                  Receive emails about security enhancements
-                </p>
+          <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+            <div className="flex-1 min-w-0">
+              <div className="text-[15px] font-medium text-white truncate">Security Updates</div>
+              <div className="mt-0.5 text-[11.5px] text-white/65 truncate">
+                Receive emails about security enhancements
               </div>
             </div>
             <Switch
@@ -274,36 +255,36 @@ const SecurityTab = () => {
               onCheckedChange={(checked) => handleSecurityChange('securityUpdates', checked)}
             />
           </div>
-        </div>
-      </div>
+        </ListCard>
+      </motion.section>
 
-      {/* Password Section */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
-        <div className="px-4 md:px-6 py-4 border-b border-white/10 flex items-center justify-between">
-          <div>
-            <h3 className="text-base font-semibold text-foreground">Password</h3>
-            <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
-              <Clock className="h-3 w-3" />
-              Last changed 3 months ago
-            </p>
-          </div>
-          {!isChangingPassword && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
-              onClick={() => setIsChangingPassword(true)}
-            >
-              <Key className="h-4 w-4 mr-2" />
-              Change Password
-            </Button>
-          )}
-        </div>
-
-        {isChangingPassword && (
-          <div className="p-4 md:p-6 space-y-4 animate-in fade-in slide-in-from-top-2 duration-200">
+      {/* Password */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="03"
+          title="Password"
+          action={!isChangingPassword ? 'Change Password' : undefined}
+          onAction={() => setIsChangingPassword(true)}
+        />
+        {!isChangingPassword ? (
+          <ListCard>
+            <ListRow
+              title="Last changed"
+              subtitle="3 months ago"
+              trailing={
+                <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-amber-400">
+                  Review
+                </span>
+              }
+              accent="yellow"
+            />
+          </ListCard>
+        ) : (
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
             <div className="space-y-2">
-              <Label className="text-foreground">Current Password</Label>
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
+                Current Password
+              </Label>
               <div className="relative">
                 <Input
                   type={showCurrentPassword ? 'text' : 'password'}
@@ -311,25 +292,22 @@ const SecurityTab = () => {
                   onChange={(e) =>
                     setPasswordForm((prev) => ({ ...prev, currentPassword: e.target.value }))
                   }
-                  className="h-11 text-base touch-manipulation bg-white/5 border-white/10 pr-12"
+                  className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 pr-14 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                   placeholder="Enter current password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 touch-manipulation text-muted-foreground hover:text-foreground"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-9 px-3 text-[12px] font-medium text-white/65 hover:text-white touch-manipulation"
                 >
-                  {showCurrentPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
+                  {showCurrentPassword ? 'Hide' : 'Show'}
                 </button>
               </div>
             </div>
-
             <div className="space-y-2">
-              <Label className="text-foreground">New Password</Label>
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
+                New Password
+              </Label>
               <div className="relative">
                 <Input
                   type={showNewPassword ? 'text' : 'password'}
@@ -337,129 +315,105 @@ const SecurityTab = () => {
                   onChange={(e) =>
                     setPasswordForm((prev) => ({ ...prev, newPassword: e.target.value }))
                   }
-                  className="h-11 text-base touch-manipulation bg-white/5 border-white/10 pr-12"
+                  className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 pr-14 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                   placeholder="Enter new password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowNewPassword(!showNewPassword)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 p-2 touch-manipulation text-muted-foreground hover:text-foreground"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-9 px-3 text-[12px] font-medium text-white/65 hover:text-white touch-manipulation"
                 >
-                  {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  {showNewPassword ? 'Hide' : 'Show'}
                 </button>
               </div>
             </div>
-
             <div className="space-y-2">
-              <Label className="text-foreground">Confirm New Password</Label>
+              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
+                Confirm New Password
+              </Label>
               <Input
                 type="password"
                 value={passwordForm.confirmPassword}
                 onChange={(e) =>
                   setPasswordForm((prev) => ({ ...prev, confirmPassword: e.target.value }))
                 }
-                className="h-11 text-base touch-manipulation bg-white/5 border-white/10"
+                className="h-11 text-[15px] bg-[#0a0a0a] border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                 placeholder="Confirm new password"
               />
             </div>
-
             <div className="flex justify-end gap-3 pt-2">
               <Button
-                variant="outline"
-                className="h-11 touch-manipulation active:scale-[0.98] border-white/20"
                 onClick={() => {
                   setIsChangingPassword(false);
-                  setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
+                  setPasswordForm({
+                    currentPassword: '',
+                    newPassword: '',
+                    confirmPassword: '',
+                  });
                 }}
                 disabled={isLoading}
+                className="h-11 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-white font-medium touch-manipulation"
               >
                 Cancel
               </Button>
               <Button
                 onClick={handlePasswordChange}
-                className="h-11 touch-manipulation active:scale-[0.98] bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold"
                 disabled={isLoading || !passwordForm.currentPassword || !passwordForm.newPassword}
+                className="h-11 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation disabled:opacity-50"
               >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Updating...
-                  </>
-                ) : (
-                  'Update Password'
-                )}
+                {isLoading ? 'Updating…' : 'Update Password'}
               </Button>
             </div>
           </div>
         )}
-      </div>
+      </motion.section>
 
-      {/* Device Management */}
-      <div className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden">
-        <div className="px-4 md:px-6 py-4 border-b border-white/10 flex items-center justify-between">
-          <div>
-            <h3 className="text-base font-semibold text-foreground">Active Devices</h3>
-            <p className="text-xs text-muted-foreground">
-              {devices.length} devices currently signed in
-            </p>
-          </div>
-          <Button
-            variant="outline"
-            size="sm"
-            className="h-11 touch-manipulation active:scale-[0.98] border-red-500/30 text-red-400 hover:bg-red-500/10"
-            onClick={handleSignOutAllDevices}
-          >
-            <LogOut className="h-4 w-4 mr-2" />
-            Sign Out All
-          </Button>
-        </div>
-        <div className="p-4 md:p-6 space-y-3">
-          {devices.map((device) => {
-            const Icon = device.icon;
-            return (
-              <div
-                key={device.id}
-                className="flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                    <Icon className="h-5 w-5 text-elec-yellow" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-foreground">{device.name}</p>
-                      {device.current && (
-                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-green-500/20 text-green-400">
-                          This device
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground">{device.location}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span
-                    className={`text-xs ${device.current ? 'text-green-400' : 'text-muted-foreground'}`}
-                  >
-                    {device.lastActive}
+      {/* Devices */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="04"
+          title={`Active Devices (${devices.length})`}
+          action="Sign Out All"
+          onAction={handleSignOutAllDevices}
+        />
+        <ListCard>
+          {devices.map((device) => (
+            <div
+              key={device.id}
+              className="flex items-center gap-4 px-5 sm:px-6 py-4"
+            >
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-[15px] font-medium text-white truncate">
+                    {device.name}
                   </span>
-                  {!device.current && (
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-10 w-10 touch-manipulation active:scale-[0.98] text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                      onClick={() => handleSignOutDevice(device.id)}
-                    >
-                      <LogOut className="h-4 w-4" />
-                    </Button>
+                  {device.current && (
+                    <span className="text-[10px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                      This device
+                    </span>
                   )}
                 </div>
+                <div className="mt-0.5 text-[11.5px] text-white/65 truncate">
+                  {device.location} · {device.kind === 'desktop' ? 'Desktop' : 'Mobile'}
+                </div>
               </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
+              <span
+                className={`text-[11.5px] tabular-nums whitespace-nowrap ${
+                  device.current ? 'text-emerald-400' : 'text-white/65'
+                }`}
+              >
+                {device.lastActive}
+              </span>
+              {!device.current && (
+                <TextAction onClick={() => handleSignOutDevice(device.id)}>
+                  <span className="text-red-400">Sign out</span>
+                </TextAction>
+              )}
+            </div>
+          ))}
+        </ListCard>
+      </motion.section>
+    </motion.div>
   );
 };
 

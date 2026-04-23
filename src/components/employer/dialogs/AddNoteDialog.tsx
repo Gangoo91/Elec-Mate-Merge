@@ -7,13 +7,19 @@ import {
   ResponsiveDialogBody,
   ResponsiveDialogFooter,
 } from '@/components/ui/responsive-dialog';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useEmployer, type Employee, type WorkerNote } from '@/contexts/EmployerContext';
 import { toast } from '@/hooks/use-toast';
 import { StickyNote, MessageSquare, AlertTriangle, ThumbsUp, FileText } from 'lucide-react';
+import {
+  Field,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 interface AddNoteDialogProps {
   employee: Employee | null;
@@ -25,31 +31,26 @@ const noteTypes: {
   value: WorkerNote['type'];
   label: string;
   icon: React.ReactNode;
-  color: string;
 }[] = [
   {
     value: 'General',
-    label: 'General Note',
+    label: 'General',
     icon: <FileText className="h-4 w-4" />,
-    color: 'text-white',
   },
   {
     value: 'Performance',
     label: 'Performance',
     icon: <MessageSquare className="h-4 w-4" />,
-    color: 'text-info',
   },
   {
     value: 'Incident',
     label: 'Incident',
     icon: <AlertTriangle className="h-4 w-4" />,
-    color: 'text-warning',
   },
   {
     value: 'Positive',
-    label: 'Positive Feedback',
+    label: 'Positive',
     icon: <ThumbsUp className="h-4 w-4" />,
-    color: 'text-success',
   },
 ];
 
@@ -84,29 +85,29 @@ export function AddNoteDialog({ employee, open, onOpenChange }: AddNoteDialogPro
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-md">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary via-primary to-primary/50 rounded-t-lg" />
-
+      <ResponsiveDialogContent className="sm:max-w-md bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <ResponsiveDialogHeader>
-          <ResponsiveDialogTitle className="flex items-center gap-2">
+          <ResponsiveDialogTitle className="flex items-center gap-2 text-white">
             <StickyNote className="h-5 w-5 text-elec-yellow" />
             Add Note
           </ResponsiveDialogTitle>
         </ResponsiveDialogHeader>
 
         <ResponsiveDialogBody className="space-y-4">
-          <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-            <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
-              {employee.avatar}
+          <FormCard eyebrow="Worker">
+            <div className="flex items-center gap-3 -mt-1">
+              <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
+                {employee.avatar}
+              </div>
+              <div className="min-w-0">
+                <p className="font-medium text-white truncate">{employee.name}</p>
+                <p className="text-[12.5px] text-white">{employee.role}</p>
+              </div>
             </div>
-            <div className="min-w-0">
-              <p className="font-medium truncate">{employee.name}</p>
-              <p className="text-sm text-white">{employee.role}</p>
-            </div>
-          </div>
+          </FormCard>
 
           <div className="space-y-2">
-            <Label>Note Type</Label>
+            <label className={fieldLabelClass}>Note type</label>
             <RadioGroup
               value={noteType}
               onValueChange={(v) => setNoteType(v as WorkerNote['type'])}
@@ -115,48 +116,37 @@ export function AddNoteDialog({ employee, open, onOpenChange }: AddNoteDialogPro
               {noteTypes.map((type) => (
                 <div key={type.value}>
                   <RadioGroupItem value={type.value} id={type.value} className="peer sr-only" />
-                  <Label
+                  <label
                     htmlFor={type.value}
-                    className={`flex items-center gap-2 rounded-lg border-2 p-3 cursor-pointer transition-all touch-manipulation
-                      peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/5
-                      hover:bg-muted ${type.color}`}
+                    className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_9%)] p-3 cursor-pointer transition-all touch-manipulation text-white hover:bg-white/[0.04] peer-data-[state=checked]:border-elec-yellow peer-data-[state=checked]:bg-elec-yellow/10 peer-data-[state=checked]:text-elec-yellow"
                   >
                     {type.icon}
-                    <span className="text-sm font-medium text-foreground">{type.label}</span>
-                  </Label>
+                    <span className="text-[13px] font-medium">{type.label}</span>
+                  </label>
                 </div>
               ))}
             </RadioGroup>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="content">Note Content</Label>
+          <Field label="Note content">
             <Textarea
               id="content"
               placeholder="Enter your note..."
               value={content}
               onChange={(e) => setContent(e.target.value)}
               rows={4}
-              className="resize-none touch-manipulation"
+              className={textareaClass}
             />
-          </div>
+          </Field>
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
-          <Button
-            variant="outline"
-            className="flex-1 h-11 touch-manipulation"
-            onClick={() => onOpenChange(false)}
-          >
+          <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
             Cancel
-          </Button>
-          <Button
-            className="flex-1 h-11 touch-manipulation"
-            onClick={handleSubmit}
-            disabled={!content.trim()}
-          >
+          </SecondaryButton>
+          <PrimaryButton onClick={handleSubmit} disabled={!content.trim()} fullWidth>
             Add Note
-          </Button>
+          </PrimaryButton>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>
     </ResponsiveDialog>

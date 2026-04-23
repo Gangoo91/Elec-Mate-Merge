@@ -7,9 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -20,6 +18,17 @@ import {
 } from '@/components/ui/select';
 import { useCreateTool, CreateToolData } from '@/hooks/useCompanyTools';
 import { Loader2 } from 'lucide-react';
+import {
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface CreateToolDialogProps {
   open: boolean;
@@ -63,7 +72,6 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
       return;
     }
 
-    // Clean up empty strings to null/undefined
     const cleanedData: CreateToolData = {
       name: formData.name,
       category: formData.category,
@@ -99,7 +107,7 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
         notes: '',
       });
     } catch (error) {
-      // Error handled by mutation
+      // handled by mutation
     }
   };
 
@@ -109,38 +117,35 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[560px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle>Add Equipment</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-white">Add equipment</DialogTitle>
+          <DialogDescription className="text-white">
             Add a new tool or piece of equipment to the inventory.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Equipment Name *</Label>
+          <FormCard eyebrow="Equipment">
+            <Field label="Equipment name" required>
               <Input
-                id="name"
-                placeholder="e.g., Fluke 1664FC"
+                placeholder="e.g. Fluke 1664FC"
                 value={formData.name}
                 onChange={(e) => updateField('name', e.target.value)}
                 required
+                className={inputClass}
               />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="category">Category *</Label>
+            </Field>
+            <FormGrid cols={2}>
+              <Field label="Category" required>
                 <Select
                   value={formData.category}
                   onValueChange={(value) => updateField('category', value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     {CATEGORIES.map((cat) => (
                       <SelectItem key={cat} value={cat}>
                         {cat}
@@ -148,18 +153,16 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="status">Status</Label>
+              </Field>
+              <Field label="Status">
                 <Select
                   value={formData.status}
                   onValueChange={(value) => updateField('status', value)}
                 >
-                  <SelectTrigger>
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     {STATUSES.map((status) => (
                       <SelectItem key={status} value={status}>
                         {status}
@@ -167,131 +170,114 @@ export function CreateToolDialog({ open, onOpenChange }: CreateToolDialogProps) 
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="serial_number">Serial Number</Label>
+              </Field>
+            </FormGrid>
+            <FormGrid cols={2}>
+              <Field label="Serial number">
                 <Input
-                  id="serial_number"
-                  placeholder="e.g., FL-12345678"
+                  placeholder="e.g. FL-12345678"
                   value={formData.serial_number}
                   onChange={(e) => updateField('serial_number', e.target.value)}
+                  className={inputClass}
                 />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="assigned_to">Assigned To</Label>
+              </Field>
+              <Field label="Assigned to">
                 <Input
-                  id="assigned_to"
-                  placeholder="e.g., James Wilson"
+                  placeholder="e.g. James Wilson"
                   value={formData.assigned_to}
                   onChange={(e) => updateField('assigned_to', e.target.value)}
+                  className={inputClass}
                 />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="purchase_date">Purchase Date</Label>
+              </Field>
+            </FormGrid>
+            <FormGrid cols={2}>
+              <Field label="Purchase date">
                 <Input
-                  id="purchase_date"
                   type="date"
                   value={formData.purchase_date}
                   onChange={(e) => updateField('purchase_date', e.target.value)}
+                  className={inputClass}
                 />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="purchase_price">Purchase Price (£)</Label>
+              </Field>
+              <Field label="Purchase price (£)">
                 <Input
-                  id="purchase_price"
                   type="number"
                   min="0"
                   step="0.01"
                   placeholder="0.00"
                   value={formData.purchase_price || ''}
                   onChange={(e) => updateField('purchase_price', parseFloat(e.target.value) || 0)}
+                  className={inputClass}
                 />
-              </div>
-            </div>
+              </Field>
+            </FormGrid>
+          </FormCard>
 
-            <div className="border-t pt-4">
-              <p className="text-sm font-medium mb-3">PAT Testing</p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="pat_date">Last PAT Date</Label>
-                  <Input
-                    id="pat_date"
-                    type="date"
-                    value={formData.pat_date}
-                    onChange={(e) => updateField('pat_date', e.target.value)}
-                  />
-                </div>
+          <FormCard eyebrow="PAT testing">
+            <FormGrid cols={2}>
+              <Field label="Last PAT date">
+                <Input
+                  type="date"
+                  value={formData.pat_date}
+                  onChange={(e) => updateField('pat_date', e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="PAT due date">
+                <Input
+                  type="date"
+                  value={formData.pat_due}
+                  onChange={(e) => updateField('pat_due', e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+          </FormCard>
 
-                <div className="space-y-2">
-                  <Label htmlFor="pat_due">PAT Due Date</Label>
-                  <Input
-                    id="pat_due"
-                    type="date"
-                    value={formData.pat_due}
-                    onChange={(e) => updateField('pat_due', e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
+          <FormCard eyebrow="Calibration (if applicable)">
+            <FormGrid cols={2}>
+              <Field label="Last calibration">
+                <Input
+                  type="date"
+                  value={formData.last_calibration}
+                  onChange={(e) => updateField('last_calibration', e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Next calibration due">
+                <Input
+                  type="date"
+                  value={formData.next_calibration}
+                  onChange={(e) => updateField('next_calibration', e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+          </FormCard>
 
-            <div className="border-t pt-4">
-              <p className="text-sm font-medium mb-3">Calibration (if applicable)</p>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="last_calibration">Last Calibration</Label>
-                  <Input
-                    id="last_calibration"
-                    type="date"
-                    value={formData.last_calibration}
-                    onChange={(e) => updateField('last_calibration', e.target.value)}
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="next_calibration">Next Calibration Due</Label>
-                  <Input
-                    id="next_calibration"
-                    type="date"
-                    value={formData.next_calibration}
-                    onChange={(e) => updateField('next_calibration', e.target.value)}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="notes">Notes</Label>
+          <FormCard eyebrow="Notes">
+            <Field label="Notes">
               <Textarea
-                id="notes"
                 placeholder="Any additional notes..."
                 value={formData.notes}
                 onChange={(e) => updateField('notes', e.target.value)}
                 rows={2}
+                className={`${textareaClass} min-h-[70px]`}
               />
-            </div>
-          </div>
+            </Field>
+          </FormCard>
 
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
+          <DialogFooter className="gap-2 sm:gap-2">
+            <SecondaryButton
               onClick={() => onOpenChange(false)}
               disabled={createTool.isPending}
             >
               Cancel
-            </Button>
-            <Button type="submit" disabled={createTool.isPending}>
+            </SecondaryButton>
+            <PrimaryButton type="submit" disabled={createTool.isPending}>
               {createTool.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Add Equipment
-            </Button>
+              Add equipment
+            </PrimaryButton>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -5,7 +5,6 @@ import {
   Check,
   DollarSign,
   Clock,
-  User,
   Briefcase,
   Receipt,
   Calendar,
@@ -22,13 +21,9 @@ import {
   Package,
   ExternalLink,
 } from 'lucide-react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -43,6 +38,16 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { formatCurrency } from '@/hooks/useExpenses';
 import type { ExpenseClaim } from '@/services/financeService';
+import {
+  SheetShell,
+  FormCard,
+  Field,
+  Pill,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 interface ExpenseDetailSheetProps {
   expense: ExpenseClaim | null;
@@ -66,11 +71,16 @@ const categoryIcons: Record<string, React.ElementType> = {
   Other: Package,
 };
 
-const statusConfig: Record<string, { color: string; bgColor: string; icon: React.ElementType }> = {
-  Pending: { color: 'text-amber-500', bgColor: 'bg-amber-500/10', icon: Clock },
-  Approved: { color: 'text-green-500', bgColor: 'bg-green-500/10', icon: Check },
-  Paid: { color: 'text-blue-500', bgColor: 'bg-blue-500/10', icon: DollarSign },
-  Rejected: { color: 'text-red-500', bgColor: 'bg-red-500/10', icon: X },
+type StatusTone = 'amber' | 'green' | 'blue' | 'red';
+
+const statusConfig: Record<
+  string,
+  { tone: StatusTone; icon: React.ElementType }
+> = {
+  Pending: { tone: 'amber', icon: Clock },
+  Approved: { tone: 'green', icon: Check },
+  Paid: { tone: 'blue', icon: DollarSign },
+  Rejected: { tone: 'red', icon: X },
 };
 
 export function ExpenseDetailSheet({
@@ -115,110 +125,162 @@ export function ExpenseDetailSheet({
     }
   };
 
+  const footer = (
+    <>
+      {isPending && (
+        <>
+          <SecondaryButton fullWidth onClick={() => setShowRejectDialog(true)}>
+            <X className="h-4 w-4 mr-2" />
+            Reject
+          </SecondaryButton>
+          <PrimaryButton
+            fullWidth
+            onClick={() => {
+              onApprove?.(expense.id);
+              onOpenChange(false);
+            }}
+          >
+            <Check className="h-4 w-4 mr-2" />
+            Approve
+          </PrimaryButton>
+        </>
+      )}
+
+      {isApproved && onMarkPaid && (
+        <PrimaryButton
+          fullWidth
+          onClick={() => {
+            onMarkPaid(expense.id);
+            onOpenChange(false);
+          }}
+        >
+          <DollarSign className="h-4 w-4 mr-2" />
+          Mark as paid
+        </PrimaryButton>
+      )}
+
+      {(isRejected || expense.status === 'Paid') && (
+        <>
+          {onEdit && isPending && (
+            <SecondaryButton fullWidth onClick={() => onEdit(expense)}>
+              <Edit className="h-4 w-4 mr-2" />
+              Edit
+            </SecondaryButton>
+          )}
+          {onDelete && (
+            <DestructiveButton fullWidth onClick={() => setShowDeleteDialog(true)}>
+              <Trash2 className="h-4 w-4 mr-2" />
+              Delete
+            </DestructiveButton>
+          )}
+        </>
+      )}
+    </>
+  );
+
   return (
     <>
       <Sheet open={open} onOpenChange={onOpenChange}>
         <SheetContent
           side={isMobile ? 'bottom' : 'right'}
-          className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
+          className={cn(
+            'flex flex-col p-0 overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.08]',
+            isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]'
+          )}
         >
-          {/* Header */}
-          <SheetHeader className="p-4 border-b border-border shrink-0">
-            <div className="flex items-center justify-between">
-              <SheetTitle>Expense Details</SheetTitle>
-              <Badge
-                variant="outline"
-                className={cn('gap-1', status.bgColor, status.color, 'border-transparent')}
-              >
-                <StatusIcon className="h-3 w-3" />
-                {expense.status}
-              </Badge>
-            </div>
-          </SheetHeader>
-
-          {/* Content */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <SheetShell
+            eyebrow="Expense"
+            title="Expense details"
+            description={
+              <span className="inline-flex items-center gap-2">
+                <Pill tone={status.tone}>
+                  <StatusIcon className="h-3 w-3 mr-1" />
+                  {expense.status}
+                </Pill>
+              </span>
+            }
+            footer={footer}
+          >
             {/* Amount Card */}
-            <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
+            <div className="p-5 rounded-2xl bg-gradient-to-br from-elec-yellow/10 to-transparent border border-elec-yellow/30">
               <div className="text-center">
                 <p className="text-sm text-white mb-1">Amount</p>
-                <p className="text-3xl font-bold text-foreground">
+                <p className="text-3xl font-bold text-white">
                   {formatCurrency(Number(expense.amount))}
                 </p>
               </div>
-            </Card>
+            </div>
 
             {/* Employee Info */}
-            <Card className="p-4">
+            <FormCard eyebrow="Employee">
               <div className="flex items-center gap-3">
                 <Avatar className="h-12 w-12">
-                  <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-elec-dark font-semibold">
+                  <AvatarFallback className="bg-gradient-to-br from-elec-yellow to-amber-500 text-black font-semibold">
                     {expense.employees?.avatar_initials || 'U'}
                   </AvatarFallback>
                 </Avatar>
                 <div>
-                  <p className="font-semibold">{expense.employees?.name || 'Unknown'}</p>
+                  <p className="font-semibold text-white">
+                    {expense.employees?.name || 'Unknown'}
+                  </p>
                   <p className="text-sm text-white">Submitted expense</p>
                 </div>
               </div>
-            </Card>
+            </FormCard>
 
             {/* Details */}
-            <Card className="p-4 space-y-4">
-              {/* Description */}
+            <FormCard eyebrow="Details">
               <div>
-                <Label className="text-xs text-white">Description</Label>
-                <p className="mt-1 text-sm">{expense.description}</p>
+                <p className="text-[11.5px] text-white mb-1.5">Description</p>
+                <p className="text-sm text-white">{expense.description}</p>
               </div>
 
-              {/* Category */}
-              <div className="flex items-center justify-between py-2 border-t border-border/50">
+              <div className="flex items-center justify-between py-2 border-t border-white/[0.06]">
                 <span className="text-sm text-white">Category</span>
-                <Badge variant="outline" className="gap-1">
-                  <CategoryIcon className="h-3 w-3" />
+                <Pill tone="yellow">
+                  <CategoryIcon className="h-3 w-3 mr-1" />
                   {expense.category}
-                </Badge>
+                </Pill>
               </div>
 
-              {/* Submitted Date */}
-              <div className="flex items-center justify-between py-2 border-t border-border/50">
+              <div className="flex items-center justify-between py-2 border-t border-white/[0.06]">
                 <span className="text-sm text-white">Submitted</span>
-                <span className="text-sm font-medium flex items-center gap-1">
+                <span className="text-sm font-medium flex items-center gap-1 text-white">
                   <Calendar className="h-3 w-3" />
                   {format(new Date(expense.submitted_date), 'dd MMM yyyy')}
                 </span>
               </div>
 
-              {/* Job Link */}
               {expense.job_id && (
-                <div className="flex items-center justify-between py-2 border-t border-border/50">
-                  <span className="text-sm text-white">Linked Job</span>
-                  <Button variant="link" size="sm" className="h-auto p-0 gap-1">
+                <div className="flex items-center justify-between py-2 border-t border-white/[0.06]">
+                  <span className="text-sm text-white">Linked job</span>
+                  <button
+                    type="button"
+                    className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors inline-flex items-center gap-1"
+                  >
                     <Briefcase className="h-3 w-3" />
-                    View Job
+                    View job
                     <ExternalLink className="h-3 w-3" />
-                  </Button>
+                  </button>
                 </div>
               )}
 
-              {/* Receipt */}
-              <div className="flex items-center justify-between py-2 border-t border-border/50">
+              <div className="flex items-center justify-between py-2 border-t border-white/[0.06]">
                 <span className="text-sm text-white">Receipt</span>
                 {expense.receipt_url ? (
-                  <Button variant="outline" size="sm" className="gap-1">
-                    <Receipt className="h-3 w-3" />
-                    View Receipt
-                  </Button>
+                  <SecondaryButton size="sm">
+                    <Receipt className="h-3 w-3 mr-1" />
+                    View receipt
+                  </SecondaryButton>
                 ) : (
                   <span className="text-sm text-white">Not attached</span>
                 )}
               </div>
-            </Card>
+            </FormCard>
 
             {/* Approval Timeline */}
             {(expense.approved_by || expense.paid_date) && (
-              <Card className="p-4">
-                <Label className="text-xs text-white mb-3 block">Timeline</Label>
+              <FormCard eyebrow="Timeline">
                 <div className="space-y-3">
                   {expense.approved_date && (
                     <div className="flex items-start gap-3">
@@ -229,13 +291,13 @@ export function ExpenseDetailSheet({
                         )}
                       >
                         {isRejected ? (
-                          <X className="h-4 w-4 text-red-500" />
+                          <X className="h-4 w-4 text-red-400" />
                         ) : (
-                          <Check className="h-4 w-4 text-green-500" />
+                          <Check className="h-4 w-4 text-green-400" />
                         )}
                       </div>
                       <div>
-                        <p className="text-sm font-medium">
+                        <p className="text-sm font-medium text-white">
                           {isRejected ? 'Rejected' : 'Approved'} by {expense.approved_by}
                         </p>
                         <p className="text-xs text-white">
@@ -247,10 +309,10 @@ export function ExpenseDetailSheet({
                   {expense.paid_date && (
                     <div className="flex items-start gap-3">
                       <div className="p-1.5 rounded-full bg-blue-500/10">
-                        <DollarSign className="h-4 w-4 text-blue-500" />
+                        <DollarSign className="h-4 w-4 text-blue-400" />
                       </div>
                       <div>
-                        <p className="text-sm font-medium">Marked as paid</p>
+                        <p className="text-sm font-medium text-white">Marked as paid</p>
                         <p className="text-xs text-white">
                           {format(new Date(expense.paid_date), 'dd MMM yyyy')}
                         </p>
@@ -258,110 +320,52 @@ export function ExpenseDetailSheet({
                     </div>
                   )}
                 </div>
-              </Card>
+              </FormCard>
             )}
 
             {/* Rejection Reason */}
             {isRejected && expense.rejection_reason && (
-              <Card className="p-4 bg-red-500/5 border-red-500/20">
+              <div className="p-4 rounded-2xl bg-red-500/5 border border-red-500/20">
                 <div className="flex items-start gap-3">
-                  <AlertCircle className="h-5 w-5 text-red-500 shrink-0 mt-0.5" />
+                  <AlertCircle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
                   <div>
-                    <p className="text-sm font-medium text-red-500">Rejection Reason</p>
+                    <p className="text-sm font-medium text-red-400">Rejection reason</p>
                     <p className="text-sm text-white mt-1">{expense.rejection_reason}</p>
                   </div>
                 </div>
-              </Card>
-            )}
-          </div>
-
-          {/* Footer Actions */}
-          <SheetFooter className="p-4 border-t border-border shrink-0 pb-safe">
-            {isPending && (
-              <div className="flex gap-3 w-full">
-                <Button
-                  variant="outline"
-                  className="flex-1 border-red-500/50 text-red-500 hover:bg-red-500/10"
-                  onClick={() => setShowRejectDialog(true)}
-                >
-                  <X className="h-4 w-4 mr-2" />
-                  Reject
-                </Button>
-                <Button
-                  className="flex-1 bg-green-500 hover:bg-green-600 text-white"
-                  onClick={() => {
-                    onApprove?.(expense.id);
-                    onOpenChange(false);
-                  }}
-                >
-                  <Check className="h-4 w-4 mr-2" />
-                  Approve
-                </Button>
               </div>
             )}
-
-            {isApproved && onMarkPaid && (
-              <Button
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
-                onClick={() => {
-                  onMarkPaid(expense.id);
-                  onOpenChange(false);
-                }}
-              >
-                <DollarSign className="h-4 w-4 mr-2" />
-                Mark as Paid
-              </Button>
-            )}
-
-            {(isRejected || expense.status === 'Paid') && (
-              <div className="flex gap-3 w-full">
-                {onEdit && isPending && (
-                  <Button variant="outline" className="flex-1" onClick={() => onEdit(expense)}>
-                    <Edit className="h-4 w-4 mr-2" />
-                    Edit
-                  </Button>
-                )}
-                {onDelete && (
-                  <Button
-                    variant="outline"
-                    className="flex-1 border-red-500/50 text-red-500 hover:bg-red-500/10"
-                    onClick={() => setShowDeleteDialog(true)}
-                  >
-                    <Trash2 className="h-4 w-4 mr-2" />
-                    Delete
-                  </Button>
-                )}
-              </div>
-            )}
-          </SheetFooter>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
       {/* Reject Dialog */}
       <AlertDialog open={showRejectDialog} onOpenChange={setShowRejectDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
           <AlertDialogHeader>
-            <AlertDialogTitle>Reject Expense</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Reject expense</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               Please provide a reason for rejecting this expense claim.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <div className="py-4">
-            <Textarea
-              placeholder="Enter rejection reason..."
-              value={rejectReason}
-              onChange={(e) => setRejectReason(e.target.value)}
-              className="min-h-[100px]"
-            />
+            <Field label="Reason">
+              <Textarea
+                placeholder="Enter rejection reason..."
+                value={rejectReason}
+                onChange={(e) => setRejectReason(e.target.value)}
+                className={cn(textareaClass, 'min-h-[100px]')}
+              />
+            </Field>
           </div>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleReject}
-              disabled={!rejectReason.trim()}
-              className="bg-red-500 hover:bg-red-600"
-            >
-              Reject Expense
+            <AlertDialogCancel asChild>
+              <SecondaryButton>Cancel</SecondaryButton>
+            </AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <DestructiveButton onClick={handleReject} disabled={!rejectReason.trim()}>
+                Reject expense
+              </DestructiveButton>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -369,17 +373,19 @@ export function ExpenseDetailSheet({
 
       {/* Delete Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent>
+        <AlertDialogContent className="bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Expense</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Delete expense</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               Are you sure you want to delete this expense? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-500 hover:bg-red-600">
-              Delete
+            <AlertDialogCancel asChild>
+              <SecondaryButton>Cancel</SecondaryButton>
+            </AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <DestructiveButton onClick={handleDelete}>Delete</DestructiveButton>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

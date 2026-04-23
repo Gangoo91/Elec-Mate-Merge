@@ -12,9 +12,17 @@ import {
 } from '@/components/ui/responsive-form-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+import {
+  Field,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+} from './editorial';
 import {
   FileText,
   Download,
@@ -301,11 +309,11 @@ export function ContractViewer({
       case 'Employment':
         return 'bg-elec-yellow/10 text-elec-yellow';
       case 'Subcontractor':
-        return 'bg-info/10 text-info';
+        return 'bg-blue-500/10 text-blue-400';
       case 'HR Letters':
-        return 'bg-success/10 text-success';
+        return 'bg-green-500/10 text-green-400';
       default:
-        return 'bg-muted text-white';
+        return 'bg-white/[0.06] text-white';
     }
   };
 
@@ -356,7 +364,7 @@ export function ContractViewer({
     <ResponsiveFormModal open={open} onOpenChange={handleClose}>
       <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-4xl')}>
         {/* Header */}
-        <ResponsiveFormModalHeader className="border-b border-border/50">
+        <ResponsiveFormModalHeader className="border-b border-white/[0.08]">
           <div className="flex items-center justify-between">
             <ResponsiveFormModalTitle>
               <div className="flex items-center gap-3">
@@ -377,17 +385,17 @@ export function ContractViewer({
                         variant="secondary"
                         className={
                           userContract.status === 'Active'
-                            ? 'bg-success/10 text-success'
+                            ? 'bg-green-500/10 text-green-400'
                             : userContract.status === 'Draft'
-                              ? 'bg-muted'
-                              : 'bg-warning/10 text-warning'
+                              ? 'bg-white/[0.06] text-white'
+                              : 'bg-amber-500/10 text-amber-400'
                         }
                       >
                         {userContract.status}
                       </Badge>
                     )}
                     {isEditing && hasChanges && (
-                      <Badge variant="outline" className="text-warning border-warning">
+                      <Badge variant="outline" className="text-amber-400 border-amber-500/50">
                         Unsaved
                       </Badge>
                     )}
@@ -407,59 +415,51 @@ export function ContractViewer({
         <ResponsiveFormModalBody className="py-4">
           {showAdoptForm ? (
             <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-info/10 border border-info/20">
-                <h3 className="font-medium text-foreground mb-2">Use This Template</h3>
+              <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                <h3 className="font-medium text-white mb-2">Use This Template</h3>
                 <p className="text-sm text-white">
                   Fill in the details below to personalise this contract. Placeholders like [Company
                   Name] will be replaced with your values.
                 </p>
               </div>
 
-              <div className="space-y-3">
-                <div className="space-y-2">
-                  <Label htmlFor="companyName" className="flex items-center gap-2">
-                    <Building2 className="h-4 w-4" />
-                    Company Name
-                  </Label>
+              <FormCard eyebrow="Contract details">
+                <Field label="Company Name">
                   <Input
                     id="companyName"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="Enter your company name"
-                    className="h-11"
+                    className={inputClass}
                   />
-                </div>
+                </Field>
 
-                <div className="space-y-2">
-                  <Label htmlFor="employeeName" className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    {category === 'Subcontractor'
+                <Field
+                  label={
+                    category === 'Subcontractor'
                       ? 'Subcontractor Name'
-                      : 'Employee/Candidate Name'}
-                  </Label>
+                      : 'Employee/Candidate Name'
+                  }
+                >
                   <Input
                     id="employeeName"
                     value={employeeName}
                     onChange={(e) => setEmployeeName(e.target.value)}
                     placeholder="Enter name"
-                    className="h-11"
+                    className={inputClass}
                   />
-                </div>
+                </Field>
 
                 {category !== 'Subcontractor' && (
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2">
-                      <Users className="h-4 w-4" />
-                      Link to Employee (Optional)
-                    </Label>
+                  <Field label="Link to Employee (Optional)">
                     <Select
                       value={selectedEmployee || '__none__'}
                       onValueChange={(v) => setSelectedEmployee(v === '__none__' ? '' : v)}
                     >
-                      <SelectTrigger className="h-11">
+                      <SelectTrigger className={selectTriggerClass}>
                         <SelectValue placeholder="Select employee..." />
                       </SelectTrigger>
-                      <SelectContent className="z-[100]">
+                      <SelectContent className={selectContentClass}>
                         <SelectItem value="__none__">None</SelectItem>
                         {employees?.map((emp) => (
                           <SelectItem key={emp.id} value={emp.id}>
@@ -468,63 +468,54 @@ export function ContractViewer({
                         ))}
                       </SelectContent>
                     </Select>
-                  </div>
+                  </Field>
                 )}
 
-                <div className="space-y-2">
-                  <Label htmlFor="jobTitle" className="flex items-center gap-2">
-                    <Briefcase className="h-4 w-4" />
-                    Job Title
-                  </Label>
+                <Field label="Job Title">
                   <Input
                     id="jobTitle"
                     value={jobTitle}
                     onChange={(e) => setJobTitle(e.target.value)}
                     placeholder="e.g., Electrician, Apprentice"
-                    className="h-11"
+                    className={inputClass}
                   />
-                </div>
+                </Field>
 
-                <div className="space-y-2">
-                  <Label htmlFor="startDate" className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    Start Date
-                  </Label>
+                <Field label="Start Date">
                   <Input
                     id="startDate"
                     type="date"
                     value={startDate}
                     onChange={(e) => setStartDate(e.target.value)}
-                    className="h-11"
+                    className={inputClass}
                   />
-                </div>
+                </Field>
 
                 {category === 'Employment' && (
-                  <div className="space-y-2">
-                    <Label htmlFor="salary">Salary (Annual)</Label>
+                  <Field label="Salary (Annual)">
                     <Input
                       id="salary"
                       value={salary}
                       onChange={(e) => setSalary(e.target.value)}
                       placeholder="e.g., 35,000"
-                      className="h-11"
+                      className={inputClass}
                     />
-                  </div>
+                  </Field>
                 )}
-              </div>
+              </FormCard>
             </div>
           ) : (
             <div className="space-y-4">
               {/* Summary if available */}
               {template?.summary && !isEditing && (
-                <div className="p-4 rounded-lg bg-muted/50 border">
+                <div className="p-4 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06]">
                   <p className="text-sm text-white">{template.summary}</p>
                 </div>
               )}
 
               {/* Inline Editor Toolbar (when editing) */}
               {isEditing && editor && (
-                <div className="flex flex-wrap items-center gap-1 p-2 bg-white/5 rounded-xl border border-white/10">
+                <div className="flex flex-wrap items-center gap-1 p-2 bg-[hsl(0_0%_9%)] rounded-xl border border-white/[0.08]">
                   <ToolbarButton
                     onClick={() => editor.chain().focus().toggleBold().run()}
                     isActive={editor.isActive('bold')}
@@ -594,7 +585,7 @@ export function ContractViewer({
                 className={cn(
                   'rounded-xl transition-colors',
                   isEditing
-                    ? 'bg-white/5 border border-white/10 focus-within:border-elec-yellow/30'
+                    ? 'bg-[hsl(0_0%_9%)] border border-white/[0.08] focus-within:border-elec-yellow/60'
                     : ''
                 )}
               >
@@ -602,7 +593,7 @@ export function ContractViewer({
                   <EditorContent editor={editor} />
                 ) : (
                   <div
-                    className="prose prose-sm prose-invert max-w-none [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-foreground [&_table]:w-full [&_td]:py-1 [&_td]:pr-4"
+                    className="prose prose-sm prose-invert max-w-none [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-white [&_table]:w-full [&_td]:py-1 [&_td]:pr-4"
                     dangerouslySetInnerHTML={{ __html: sanitizeHtmlSafe(content) }}
                   />
                 )}
@@ -616,13 +607,13 @@ export function ContractViewer({
                     {userContract.party_name && (
                       <div>
                         <span className="text-white">Party:</span>
-                        <p className="font-medium">{userContract.party_name}</p>
+                        <p className="font-medium text-white">{userContract.party_name}</p>
                       </div>
                     )}
                     {userContract.adopted_at && (
                       <div>
                         <span className="text-white">Created:</span>
-                        <p className="font-medium">
+                        <p className="font-medium text-white">
                           {new Date(userContract.adopted_at).toLocaleDateString('en-GB')}
                         </p>
                       </div>
@@ -630,7 +621,7 @@ export function ContractViewer({
                     {userContract.start_date && (
                       <div>
                         <span className="text-white">Start Date:</span>
-                        <p className="font-medium">
+                        <p className="font-medium text-white">
                           {new Date(userContract.start_date).toLocaleDateString('en-GB')}
                         </p>
                       </div>
@@ -638,7 +629,7 @@ export function ContractViewer({
                     {userContract.employee?.name && (
                       <div>
                         <span className="text-white">Employee:</span>
-                        <p className="font-medium">{userContract.employee.name}</p>
+                        <p className="font-medium text-white">{userContract.employee.name}</p>
                       </div>
                     )}
                   </div>
@@ -687,17 +678,14 @@ export function ContractViewer({
           <div className="flex flex-col sm:flex-row gap-3">
             {showAdoptForm ? (
               <>
-                <Button
-                  variant="outline"
-                  onClick={() => setShowAdoptForm(false)}
-                  className="flex-1 sm:flex-none min-h-[48px]"
-                >
+                <SecondaryButton onClick={() => setShowAdoptForm(false)} fullWidth size="lg">
                   Cancel
-                </Button>
-                <Button
+                </SecondaryButton>
+                <PrimaryButton
                   onClick={handleAdopt}
                   disabled={adoptContract.isPending}
-                  className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  fullWidth
+                  size="lg"
                 >
                   {adoptContract.isPending ? (
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -705,21 +693,18 @@ export function ContractViewer({
                     <Check className="h-4 w-4 mr-2" />
                   )}
                   Create Contract
-                </Button>
+                </PrimaryButton>
               </>
             ) : isEditing ? (
               <>
-                <Button
-                  variant="outline"
-                  onClick={handleCancelEdit}
-                  className="flex-1 sm:flex-none min-h-[48px]"
-                >
+                <SecondaryButton onClick={handleCancelEdit} fullWidth size="lg">
                   Cancel
-                </Button>
-                <Button
+                </SecondaryButton>
+                <PrimaryButton
                   onClick={handleSave}
                   disabled={updateContract.isPending || !hasChanges}
-                  className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  fullWidth
+                  size="lg"
                 >
                   {updateContract.isPending ? (
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -727,54 +712,43 @@ export function ContractViewer({
                     <Save className="h-4 w-4 mr-2" />
                   )}
                   Save Changes
-                </Button>
+                </PrimaryButton>
               </>
             ) : (
               <>
-                <Button
-                  variant="outline"
-                  onClick={handleExportPdf}
-                  disabled={isExporting}
-                  className="flex-1 sm:flex-none min-h-[48px]"
-                >
+                <SecondaryButton onClick={handleExportPdf} disabled={isExporting} fullWidth size="lg">
                   {isExporting ? (
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   ) : (
                     <Download className="h-4 w-4 mr-2" />
                   )}
                   Export PDF
-                </Button>
+                </SecondaryButton>
                 {isTemplate && !isAdopted && (
-                  <Button
+                  <PrimaryButton
                     onClick={() => setShowAdoptForm(true)}
-                    className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                    fullWidth
+                    size="lg"
                   >
                     <Check className="h-4 w-4 mr-2" />
                     Use This Template
-                  </Button>
+                  </PrimaryButton>
                 )}
                 {isTemplate && isAdopted && (
-                  <div className="flex items-center gap-2 text-success text-sm">
+                  <div className="flex items-center gap-2 text-green-400 text-sm">
                     <Check className="h-4 w-4" />
                     Already adopted
                   </div>
                 )}
                 {userContract && (
                   <>
-                    <Button
-                      variant="outline"
-                      onClick={() => setIsEditing(true)}
-                      className="flex-1 sm:flex-none min-h-[48px]"
-                    >
+                    <SecondaryButton onClick={() => setIsEditing(true)} fullWidth size="lg">
                       <Edit3 className="h-4 w-4 mr-2" />
                       Edit
-                    </Button>
-                    <Button
-                      onClick={() => onOpenChange(false)}
-                      className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                    >
+                    </SecondaryButton>
+                    <PrimaryButton onClick={() => onOpenChange(false)} fullWidth size="lg">
                       Close
-                    </Button>
+                    </PrimaryButton>
                   </>
                 )}
               </>

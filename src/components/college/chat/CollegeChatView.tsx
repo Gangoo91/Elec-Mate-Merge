@@ -171,7 +171,7 @@ export function CollegeChatView({
             <div className="flex items-center gap-2">
               <p className="font-semibold truncate">{info.name}</p>
             </div>
-            <p className="text-sm text-muted-foreground truncate">{info.subtitle}</p>
+            <p className="text-sm text-white/75 truncate">{info.subtitle}</p>
           </div>
 
           {/* Student context badge */}
@@ -210,8 +210,8 @@ export function CollegeChatView({
           ) : messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
-                <p className="text-muted-foreground">No messages yet</p>
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-white/75">No messages yet</p>
+                <p className="text-xs text-white/75 mt-1">
                   Send a message to start the conversation
                 </p>
               </div>
@@ -232,7 +232,7 @@ export function CollegeChatView({
                       </div>
                       <p className="text-sm mt-1">{metadata?.title || msg.content}</p>
                       {metadata?.details && (
-                        <p className="text-xs text-muted-foreground mt-1">{metadata.details}</p>
+                        <p className="text-xs text-white/75 mt-1">{metadata.details}</p>
                       )}
                       {metadata?.score !== undefined && (
                         <Pill tone="yellow" className="mt-2">
@@ -248,7 +248,7 @@ export function CollegeChatView({
               if (msg.message_type === 'system') {
                 return (
                   <div key={msg.id} className="flex justify-center my-2">
-                    <span className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
+                    <span className="text-xs text-white/75 bg-muted px-3 py-1 rounded-full">
                       {msg.content}
                     </span>
                   </div>
@@ -277,7 +277,7 @@ export function CollegeChatView({
                     )}
                     {/* Not visible to student indicator */}
                     {!msg.visible_to_student && currentUserType !== 'student' && (
-                      <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mb-1">
+                      <div className="flex items-center gap-1.5 text-[11px] text-white/75 mb-1">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/30" />
                         Hidden from student
                       </div>
@@ -290,7 +290,7 @@ export function CollegeChatView({
                       <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
                       <p
                         className={`text-[10px] mt-1 ${
-                          isOwn ? 'text-black/60' : 'text-muted-foreground'
+                          isOwn ? 'text-black/60' : 'text-white/75'
                         }`}
                       >
                         {new Date(msg.sent_at).toLocaleTimeString([], {

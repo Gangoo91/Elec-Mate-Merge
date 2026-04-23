@@ -1,13 +1,7 @@
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
 import { Textarea } from '@/components/ui/textarea';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -15,9 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { FeatureTile } from '@/components/employer/FeatureTile';
-import { SectionHeader } from '@/components/employer/SectionHeader';
-import { QuickStats } from '@/components/employer/QuickStats';
 import { ToolboxTalkLibrary } from '@/components/employer/ToolboxTalkLibrary';
 import { BriefingEditor } from '@/components/employer/BriefingEditor';
 import { DigitalSignOff } from '@/components/employer/DigitalSignOff';
@@ -39,33 +30,33 @@ import { useEmployees } from '@/hooks/useEmployees';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useToast } from '@/hooks/use-toast';
 import {
-  Users,
-  Plus,
-  Calendar,
-  ClipboardCheck,
-  QrCode,
-  FileText,
-  Search,
-  CheckCircle2,
-  UserCheck,
-  Loader2,
-  RefreshCw,
-  AlertTriangle,
-  Trash2,
-  Clock,
-  MapPin,
-  BookOpen,
-  PenTool,
-  Eye,
-  Download,
-  Edit3,
-} from 'lucide-react';
-
-const statusColors: Record<string, string> = {
-  Scheduled: 'bg-yellow-500/20 text-yellow-400',
-  Completed: 'bg-green-500/20 text-green-400',
-  Cancelled: 'bg-red-500/20 text-red-400',
-};
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  SheetShell,
+  Eyebrow,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  type Tone,
+} from '@/components/employer/editorial';
+import { RefreshCw, BookOpen, Loader2 } from 'lucide-react';
 
 const briefingTypes: BriefingType[] = [
   'Toolbox Talk',
@@ -76,9 +67,62 @@ const briefingTypes: BriefingType[] = [
   'PPE Reminder',
 ];
 
+function getInitials(name?: string | null) {
+  if (!name) return '·';
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? '')
+    .join('') || '·';
+}
+
+function timeAgo(iso?: string | null) {
+  if (!iso) return '';
+  const then = new Date(iso).getTime();
+  if (Number.isNaN(then)) return '';
+  const diffMs = Date.now() - then;
+  const day = 86_400_000;
+  const days = Math.round(diffMs / day);
+  if (days === 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days > 0 && days < 7) return `${days}d ago`;
+  if (days < 0 && days > -7) return `in ${Math.abs(days)}d`;
+  return new Date(iso).toLocaleDateString('en-GB');
+}
+
+function statusToneFor(briefing: Briefing): Tone {
+  const status = briefing.status ?? 'Scheduled';
+  if (status === 'Completed') {
+    const total = briefing.attendee_count ?? 0;
+    const signed = briefing.acknowledged_count ?? 0;
+    if (total > 0 && signed >= total) return 'emerald';
+    if (total > 0 && signed === 0) return 'orange';
+    if (total > 0 && signed < total) return 'amber';
+    return 'emerald';
+  }
+  if (status === 'Cancelled') return 'red';
+  return 'amber';
+}
+
+function statusLabelFor(briefing: Briefing): string {
+  const status = briefing.status ?? 'Scheduled';
+  if (status === 'Scheduled') return 'Live';
+  if (status === 'Completed') {
+    const total = briefing.attendee_count ?? 0;
+    const signed = briefing.acknowledged_count ?? 0;
+    if (total > 0) return `${signed}/${total} signed`;
+    return 'Complete';
+  }
+  return status;
+}
+
+type FilterTab = 'all' | 'live' | 'draft' | 'completed';
+
 export function BriefingsSection() {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterTab, setFilterTab] = useState<FilterTab>('all');
   const [showNewBriefing, setShowNewBriefing] = useState(false);
   const [showTemplateLibrary, setShowTemplateLibrary] = useState(false);
   const [selectedBriefingId, setSelectedBriefingId] = useState<string | null>(null);
@@ -87,7 +131,6 @@ export function BriefingsSection() {
   const [showSignOff, setShowSignOff] = useState(false);
   const [selectedBriefing, setSelectedBriefing] = useState<Briefing | null>(null);
 
-  // Form state
   const [title, setTitle] = useState('');
   const [briefingType, setBriefingType] = useState<BriefingType>('Toolbox Talk');
   const [date, setDate] = useState('');
@@ -96,7 +139,6 @@ export function BriefingsSection() {
   const [presenter, setPresenter] = useState('');
   const [content, setContent] = useState('');
 
-  // Hooks
   const { data: briefings, isLoading, error, refetch } = useBriefings();
   const { data: stats } = useBriefingStats();
   const { data: employees } = useEmployees();
@@ -107,21 +149,108 @@ export function BriefingsSection() {
   const deleteBriefing = useDeleteBriefing();
   const { data: attendees } = useBriefingAttendees(selectedBriefingId || undefined);
 
-  // Filter by search
-  const filteredBriefings =
-    briefings?.filter(
-      (b) =>
-        b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.briefing_type?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        b.location?.toLowerCase().includes(searchQuery.toLowerCase())
-    ) || [];
+  const list = briefings ?? [];
 
-  const scheduledBriefings = filteredBriefings.filter((b) => b.status === 'Scheduled');
-  const completedBriefings = filteredBriefings.filter((b) => b.status === 'Completed');
+  const enriched = useMemo(
+    () =>
+      list.map((b) => {
+        const total = b.attendee_count ?? 0;
+        const signed = b.acknowledged_count ?? 0;
+        const leader = b.presenter || 'Unassigned';
+        return {
+          briefing: b,
+          leader,
+          topic: b.title,
+          signed_count: signed,
+          attendee_count: total,
+          time_ago: timeAgo(b.date ?? b.created_at),
+        };
+      }),
+    [list]
+  );
+
+  const filtered = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    return enriched.filter(({ briefing }) => {
+      if (filterTab === 'live' && briefing.status !== 'Scheduled') return false;
+      if (filterTab === 'completed' && briefing.status !== 'Completed') return false;
+      if (filterTab === 'draft' && briefing.status !== 'Draft') return false;
+      if (!q) return true;
+      return (
+        briefing.title.toLowerCase().includes(q) ||
+        briefing.briefing_type?.toLowerCase().includes(q) ||
+        briefing.location?.toLowerCase().includes(q) ||
+        briefing.presenter?.toLowerCase().includes(q)
+      );
+    });
+  }, [enriched, filterTab, searchQuery]);
+
+  const thisWeek = useMemo(() => {
+    const now = Date.now();
+    const week = 7 * 86_400_000;
+    return list.filter((b) => {
+      if (!b.date) return false;
+      const t = new Date(b.date).getTime();
+      return !Number.isNaN(t) && t >= now - week && t <= now + week;
+    }).length;
+  }, [list]);
+
+  const totalSigned = useMemo(
+    () =>
+      list.reduce(
+        (sum, b) =>
+          b.status === 'Completed' &&
+          (b.attendee_count ?? 0) > 0 &&
+          (b.acknowledged_count ?? 0) >= (b.attendee_count ?? 0)
+            ? sum + 1
+            : sum,
+        0
+      ),
+    [list]
+  );
+
+  const awaitingSig = useMemo(
+    () =>
+      list.filter(
+        (b) =>
+          b.status !== 'Cancelled' &&
+          (b.attendee_count ?? 0) > 0 &&
+          (b.acknowledged_count ?? 0) < (b.attendee_count ?? 0)
+      ).length,
+    [list]
+  );
+
+  const total30d = useMemo(() => {
+    const now = Date.now();
+    const thirty = 30 * 86_400_000;
+    return list.filter((b) => {
+      if (!b.date) return false;
+      const t = new Date(b.date).getTime();
+      return !Number.isNaN(t) && t >= now - thirty;
+    }).length;
+  }, [list]);
+
+  const tabs = useMemo(() => {
+    const counts = list.reduce(
+      (acc, b) => {
+        acc.all += 1;
+        if (b.status === 'Scheduled') acc.live += 1;
+        else if (b.status === 'Completed') acc.completed += 1;
+        else if (b.status === 'Draft') acc.draft += 1;
+        return acc;
+      },
+      { all: 0, live: 0, draft: 0, completed: 0 }
+    );
+    return [
+      { value: 'all', label: 'All', count: counts.all },
+      { value: 'live', label: 'Live', count: counts.live },
+      { value: 'draft', label: 'Draft', count: counts.draft },
+      { value: 'completed', label: 'Completed', count: counts.completed },
+    ];
+  }, [list]);
 
   const handleCreateBriefing = async () => {
     if (!title || !date) return;
-
     await createBriefing.mutateAsync({
       title,
       briefing_type: briefingType,
@@ -132,8 +261,6 @@ export function BriefingsSection() {
       content: content || undefined,
       status: 'Scheduled',
     });
-
-    // Reset form
     setTitle('');
     setBriefingType('Toolbox Talk');
     setDate('');
@@ -144,49 +271,30 @@ export function BriefingsSection() {
     setShowNewBriefing(false);
   };
 
-  const handleComplete = async (briefing: Briefing) => {
-    await completeBriefing.mutateAsync(briefing.id);
-  };
-
-  const handleDelete = async (id: string) => {
-    await deleteBriefing.mutateAsync(id);
-  };
-
-  // Handle selecting a template from the library
   const handleSelectTemplate = async (template: ToolboxTalkTemplate) => {
-    // Set today's date as default
     const today = new Date().toISOString().split('T')[0];
-
-    await createFromTemplate.mutateAsync({
-      templateId: template.id,
-      date: today,
-    });
-
+    await createFromTemplate.mutateAsync({ templateId: template.id, date: today });
     setShowTemplateLibrary(false);
   };
 
-  // Handle viewing a briefing
-  const handleViewBriefing = (briefing: Briefing) => {
+  const openDetail = (briefing: Briefing) => {
     setSelectedBriefingId(briefing.id);
     setSelectedBriefing(briefing);
     setShowViewer(true);
   };
 
-  // Handle editing a briefing
   const handleEditBriefing = (briefing: Briefing) => {
     setSelectedBriefing(briefing);
     setShowViewer(false);
     setShowEditor(true);
   };
 
-  // Handle sign-off
   const handleSignOff = (briefing: Briefing) => {
     setSelectedBriefing(briefing);
     setShowViewer(false);
     setShowSignOff(true);
   };
 
-  // Handle PDF export
   const handleExportPdf = async (briefing: Briefing) => {
     try {
       await downloadBriefingPDF({
@@ -209,510 +317,239 @@ export function BriefingsSection() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 space-y-4">
-        <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-white">Failed to load briefings</p>
-        <Button onClick={() => refetch()} variant="outline" className="gap-2">
-          <RefreshCw className="h-4 w-4" />
-          Retry
-        </Button>
-      </div>
+      <PageFrame>
+        <EmptyState
+          title="Failed to load briefings"
+          description="Something went wrong fetching the briefing list. Try again."
+          action="Retry"
+          onAction={() => refetch()}
+        />
+      </PageFrame>
     );
   }
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <SectionHeader
-          title="Safety Briefings"
-          description="Toolbox talks, inductions, and safety briefings"
-        />
+    <PageFrame>
+      <PageHero
+        eyebrow="HR & Safety"
+        title="Toolbox Briefings"
+        description="Toolbox talks, site meetings and QR sign-offs."
+        tone="amber"
+        actions={
+          <>
+            <PrimaryButton onClick={() => setShowNewBriefing(true)}>New briefing</PrimaryButton>
+            <IconButton onClick={() => refetch()} aria-label="Refresh briefings">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </>
+        }
+      />
 
-        <Sheet open={showNewBriefing} onOpenChange={setShowNewBriefing}>
-          <SheetTrigger asChild>
-            <Button className="gap-2 h-11 touch-manipulation">
-              <Plus className="h-4 w-4" />
-              New Briefing
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
-            <div className="flex flex-col h-full bg-background">
-              <SheetHeader className="p-4 border-b border-border">
-                <SheetTitle>Schedule Briefing</SheetTitle>
-              </SheetHeader>
-              <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-                <div className="space-y-2">
-                  <Label>Title *</Label>
-                  <Input
-                    placeholder="e.g. Weekly Safety Briefing..."
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="h-11 touch-manipulation"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Briefing Type</Label>
-                  <Select
-                    value={briefingType}
-                    onValueChange={(v) => setBriefingType(v as BriefingType)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100]">
-                      {briefingTypes.map((type) => (
-                        <SelectItem key={type} value={type} className="h-11 touch-manipulation">
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-2">
-                    <Label>Date *</Label>
-                    <Input
-                      type="date"
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
-                      className="h-11 touch-manipulation"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label>Time</Label>
-                    <Input
-                      type="time"
-                      value={time}
-                      onChange={(e) => setTime(e.target.value)}
-                      className="h-11 touch-manipulation"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Location</Label>
-                  <Input
-                    placeholder="Site address or meeting point..."
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    className="h-11 touch-manipulation"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Presenter</Label>
-                  <Select value={presenter} onValueChange={setPresenter}>
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Select presenter..." />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100]">
-                      {employees?.map((emp) => (
-                        <SelectItem
-                          key={emp.id}
-                          value={emp.name}
-                          className="h-11 touch-manipulation"
-                        >
-                          {emp.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Content / Agenda</Label>
-                  <Textarea
-                    placeholder="Briefing content or discussion points..."
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    className="min-h-[100px] touch-manipulation"
-                  />
-                </div>
-              </div>
-
-              <div className="p-4 border-t border-border bg-background">
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowNewBriefing(false)}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={handleCreateBriefing}
-                    disabled={!title || !date || createBriefing.isPending}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    {createBriefing.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      'Schedule'
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </div>
-
-      {/* Search */}
-      <div className="relative">
-        {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-        )}
-        <Input
-          placeholder="Search briefings..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
-        />
-      </div>
-
-      {/* Quick Stats */}
-      <QuickStats
+      <StatStrip
+        columns={4}
         stats={[
-          {
-            icon: CheckCircle2,
-            value: isLoading ? '-' : stats?.completed || 0,
-            label: 'Completed',
-            color: 'green',
-          },
-          {
-            icon: Calendar,
-            value: isLoading ? '-' : stats?.scheduled || 0,
-            label: 'Scheduled',
-            color: 'yellow',
-            pulse: (stats?.scheduled || 0) > 0,
-          },
-          {
-            icon: UserCheck,
-            value: isLoading ? '-' : stats?.avgAttendance || 100,
-            label: 'Attendance',
-            color: 'blue',
-            suffix: '%',
-          },
+          { label: 'This week', value: isLoading ? '–' : thisWeek, tone: 'amber' },
+          { label: 'Signed', value: isLoading ? '–' : (stats?.completed ?? totalSigned), tone: 'emerald' },
+          { label: 'Awaiting sig', value: isLoading ? '–' : awaitingSig, tone: 'orange' },
+          { label: 'Total 30d', value: isLoading ? '–' : total30d },
         ]}
       />
 
-      {/* Quick Actions */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-elec-yellow rounded-full"></span>
-          Quick Actions
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <FeatureTile
-            icon={Plus}
-            title="New Briefing"
-            description="Schedule a briefing"
-            onClick={() => setShowNewBriefing(true)}
-            compact
+      <FilterBar
+        tabs={tabs}
+        activeTab={filterTab}
+        onTabChange={(v) => setFilterTab(v as FilterTab)}
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search briefings…"
+        actions={
+          <SecondaryButton onClick={() => setShowTemplateLibrary(true)}>
+            <BookOpen className="h-3.5 w-3.5 mr-1.5" />
+            Templates
+          </SecondaryButton>
+        }
+      />
+
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : filtered.length === 0 ? (
+        <EmptyState
+          title={searchQuery ? 'No matching briefings' : 'No briefings yet'}
+          description={
+            searchQuery
+              ? 'Try a different search term or clear filters.'
+              : 'Schedule your first toolbox talk or pull one from the template library.'
+          }
+          action="New briefing"
+          onAction={() => setShowNewBriefing(true)}
+        />
+      ) : (
+        <ListCard>
+          <ListCardHeader
+            tone="amber"
+            title="Briefings"
+            meta={<Pill tone="amber">{filtered.length}</Pill>}
           />
-          <FeatureTile
-            icon={BookOpen}
-            title="Template Library"
-            description="50+ toolbox talks"
-            onClick={() => setShowTemplateLibrary(true)}
-            compact
-          />
-          <FeatureTile
-            icon={PenTool}
-            title="Sign-off Sheet"
-            description="Digital signatures"
-            onClick={() => {
-              if (scheduledBriefings.length > 0) {
-                handleSignOff(scheduledBriefings[0]);
-              } else {
-                toast({
-                  title: 'No scheduled briefings',
-                  description: 'Schedule a briefing first to use sign-off.',
-                });
-              }
-            }}
-            compact
-          />
-          <FeatureTile
-            icon={Download}
-            title="Export PDF"
-            description="Download reports"
-            onClick={() => {
-              if (completedBriefings.length > 0) {
-                setSelectedBriefingId(completedBriefings[0].id);
-                handleExportPdf(completedBriefings[0]);
-              } else {
-                toast({
-                  title: 'No completed briefings',
-                  description: 'Complete a briefing first to export.',
-                });
-              }
-            }}
-            compact
-          />
-        </div>
-      </div>
-
-      {/* Upcoming Briefings */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-warning rounded-full"></span>
-          Upcoming
-        </h2>
-
-        {isLoading ? (
-          <div className="space-y-2">
-            {[1, 2].map((i) => (
-              <Card key={i} className="bg-elec-gray border-border">
-                <CardContent className="p-4">
-                  <Skeleton className="h-5 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-1/2" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : scheduledBriefings.length === 0 ? (
-          <Card className="bg-elec-gray border-border">
-            <CardContent className="p-6 text-center">
-              <Calendar className="h-10 w-10 text-white mx-auto mb-3" />
-              <p className="text-white text-sm">No upcoming briefings scheduled</p>
-              <Button
-                variant="outline"
-                onClick={() => setShowNewBriefing(true)}
-                className="mt-3 gap-2 h-11 touch-manipulation"
-              >
-                <Plus className="h-4 w-4" />
-                Schedule One
-              </Button>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="space-y-2">
-            {scheduledBriefings.map((briefing) => (
-              <Card
-                key={briefing.id}
-                className="hover:bg-muted/50 transition-colors border-l-4 border-l-warning"
-              >
-                <CardContent className="p-3 md:p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-3 flex-1">
-                      <div className="p-2 rounded-lg bg-warning/10">
-                        <Calendar className="h-4 w-4 text-warning" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-foreground text-sm md:text-base truncate">
-                          {briefing.title}
-                        </p>
-                        <div className="flex flex-wrap items-center gap-2 text-xs text-white mt-1">
-                          {briefing.briefing_type && (
-                            <Badge variant="outline" className="text-xs">
-                              {briefing.briefing_type}
-                            </Badge>
-                          )}
-                          <span className="flex items-center gap-1 whitespace-nowrap shrink-0">
-                            <Clock className="h-3 w-3" />
-                            {new Date(briefing.date).toLocaleDateString('en-GB')}
-                            {briefing.time && ` at ${briefing.time.slice(0, 5)}`}
-                          </span>
-                        </div>
-                        {briefing.location && (
-                          <p className="text-xs text-white mt-1 flex items-center gap-1 truncate">
-                            <MapPin className="h-3 w-3 shrink-0" />
-                            <span className="truncate">{briefing.location}</span>
-                          </p>
-                        )}
-                        {briefing.attendee_count !== undefined && briefing.attendee_count > 0 && (
-                          <p className="text-xs text-white mt-1">
-                            {briefing.attendee_count} team members invited
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-2">
-                      <Badge className={statusColors['Scheduled']}>Scheduled</Badge>
-                      <div className="flex flex-wrap items-center gap-1">
-                        <Button
-                          variant="ghost"
-                          onClick={() => handleViewBriefing(briefing)}
-                          className="h-11 w-11 p-0 touch-manipulation"
-                          title="View"
-                        >
-                          <Eye className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          onClick={() => handleEditBriefing(briefing)}
-                          className="h-11 w-11 p-0 touch-manipulation"
-                          title="Edit"
-                        >
-                          <Edit3 className="h-3.5 w-3.5" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          onClick={() => handleSignOff(briefing)}
-                          className="h-11 text-xs touch-manipulation bg-blue-500/10 border-blue-500/30 text-blue-400"
-                        >
-                          <PenTool className="h-3 w-3 mr-1" />
-                          Sign-off
-                        </Button>
-                        <Button
-                          variant="outline"
-                          onClick={() => handleComplete(briefing)}
-                          disabled={completeBriefing.isPending}
-                          className="h-11 text-xs touch-manipulation"
-                        >
-                          {completeBriefing.isPending ? (
-                            <Loader2 className="h-3 w-3 animate-spin" />
-                          ) : (
-                            <>
-                              <CheckCircle2 className="h-3 w-3 mr-1" />
-                              Complete
-                            </>
-                          )}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          onClick={() => handleDelete(briefing.id)}
-                          disabled={deleteBriefing.isPending}
-                          className="h-11 w-11 p-0 text-destructive hover:text-destructive touch-manipulation"
-                        >
-                          <Trash2 className="h-3 w-3" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Recent Briefings */}
-      <div>
-        <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-          <span className="w-1 h-5 bg-success rounded-full"></span>
-          Recent Briefings
-        </h2>
-
-        {isLoading ? (
-          <div className="space-y-2">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="bg-elec-gray border-border">
-                <CardContent className="p-4">
-                  <Skeleton className="h-5 w-3/4 mb-2" />
-                  <Skeleton className="h-4 w-1/2" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        ) : completedBriefings.length === 0 ? (
-          <Card className="bg-elec-gray border-border">
-            <CardContent className="p-6 text-center">
-              <FileText className="h-10 w-10 text-white mx-auto mb-3" />
-              <p className="text-white text-sm">No completed briefings yet</p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="space-y-2">
-            {completedBriefings.slice(0, 10).map((briefing) => {
-              const attendancePercent =
-                briefing.attendee_count && briefing.attendee_count > 0
-                  ? Math.round(((briefing.acknowledged_count || 0) / briefing.attendee_count) * 100)
-                  : 100;
-
+          <ListBody>
+            {filtered.map(({ briefing, leader, topic, signed_count, attendee_count, time_ago }) => {
+              const tone = statusToneFor(briefing);
+              const label = statusLabelFor(briefing);
+              const subtitleParts = [
+                leader,
+                attendee_count > 0 ? `${signed_count}/${attendee_count} signed` : null,
+                time_ago,
+              ].filter(Boolean);
               return (
-                <Card key={briefing.id} className="hover:bg-muted/50 transition-colors">
-                  <CardContent className="p-3 md:p-4">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex items-start gap-3 flex-1">
-                        <div className="p-2 rounded-lg bg-success/10">
-                          <Users className="h-4 w-4 text-success" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-foreground text-sm md:text-base truncate">
-                            {briefing.title}
-                          </p>
-                          <div className="flex flex-wrap items-center gap-2 text-xs text-white mt-1">
-                            {briefing.briefing_type && (
-                              <Badge variant="outline" className="text-xs">
-                                {briefing.briefing_type}
-                              </Badge>
-                            )}
-                            <span>{new Date(briefing.date).toLocaleDateString('en-GB')}</span>
-                          </div>
-                          {briefing.attendee_count !== undefined && briefing.attendee_count > 0 && (
-                            <p className="text-xs text-white mt-1">
-                              {briefing.acknowledged_count || 0}/{briefing.attendee_count} attended
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-end gap-2">
-                        <Badge className={statusColors['Completed']}>
-                          {briefing.attendee_count && briefing.attendee_count > 0
-                            ? `${attendancePercent}%`
-                            : 'Complete'}
-                        </Badge>
-                        <div className="flex flex-wrap items-center gap-1">
-                          <Button
-                            variant="ghost"
-                            onClick={() => handleViewBriefing(briefing)}
-                            className="h-11 w-11 p-0 touch-manipulation"
-                            title="View"
-                          >
-                            <Eye className="h-3.5 w-3.5" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            onClick={() => {
-                              setSelectedBriefingId(briefing.id);
-                              handleExportPdf(briefing);
-                            }}
-                            className="h-11 w-11 p-0 touch-manipulation"
-                            title="Export PDF"
-                          >
-                            <Download className="h-3.5 w-3.5" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            onClick={() => handleDelete(briefing.id)}
-                            disabled={deleteBriefing.isPending}
-                            className="h-11 w-11 p-0 text-destructive hover:text-destructive touch-manipulation"
-                          >
-                            <Trash2 className="h-3 w-3" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <ListRow
+                  key={briefing.id}
+                  lead={<Avatar initials={getInitials(leader)} />}
+                  title={topic}
+                  subtitle={subtitleParts.join(' · ')}
+                  trailing={<Pill tone={tone}>{label}</Pill>}
+                  onClick={() => openDetail(briefing)}
+                />
               );
             })}
-          </div>
-        )}
-      </div>
+          </ListBody>
+        </ListCard>
+      )}
 
-      {/* Template Library Sheet */}
+      <Sheet open={showNewBriefing} onOpenChange={setShowNewBriefing}>
+        <SheetTrigger asChild>
+          <span className="hidden" aria-hidden />
+        </SheetTrigger>
+        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+          <SheetShell
+            eyebrow="HR & Safety"
+            title="Schedule briefing"
+            description="Create a new toolbox talk or safety briefing."
+            footer={
+              <>
+                <SecondaryButton onClick={() => setShowNewBriefing(false)} fullWidth>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={handleCreateBriefing}
+                  disabled={!title || !date || createBriefing.isPending}
+                  fullWidth
+                >
+                  {createBriefing.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    'Schedule'
+                  )}
+                </PrimaryButton>
+              </>
+            }
+          >
+            <FormCard eyebrow="Briefing">
+              <Field label="Title" required>
+                <Input
+                  placeholder="e.g. Weekly safety briefing…"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+
+              <Field label="Briefing type">
+                <Select
+                  value={briefingType}
+                  onValueChange={(v) => setBriefingType(v as BriefingType)}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {briefingTypes.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormCard>
+
+            <FormCard eyebrow="Schedule">
+              <FormGrid cols={2}>
+                <Field label="Date" required>
+                  <Input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Time">
+                  <Input
+                    type="time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+              </FormGrid>
+
+              <Field label="Location">
+                <Input
+                  placeholder="Site address or meeting point…"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+
+              <Field label="Presenter">
+                <Select value={presenter} onValueChange={setPresenter}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select presenter…" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {employees?.map((emp) => (
+                      <SelectItem key={emp.id} value={emp.name}>
+                        {emp.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormCard>
+
+            <FormCard eyebrow="Content">
+              <Field label="Content / agenda">
+                <Textarea
+                  placeholder="Briefing content or discussion points…"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  className={`${textareaClass} min-h-[120px]`}
+                />
+              </Field>
+            </FormCard>
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
+
       <Sheet open={showTemplateLibrary} onOpenChange={setShowTemplateLibrary}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
-          <div className="flex flex-col h-full">
-            <SheetHeader className="p-4 border-b border-border shrink-0">
-              <SheetTitle className="flex items-center gap-2">
+        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+          <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
+            <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
+              <div className="h-1 w-10 rounded-full bg-white/20" />
+            </div>
+            <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+              <Eyebrow>HR & Safety</Eyebrow>
+              <div className="mt-1 flex items-center gap-2 text-[20px] font-semibold text-white leading-tight">
                 <BookOpen className="h-5 w-5 text-elec-yellow" />
-                Toolbox Talk Templates
-              </SheetTitle>
-            </SheetHeader>
-            <div className="flex-1 overflow-y-auto p-4">
+                Toolbox talk templates
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto p-5">
               <ToolboxTalkLibrary onSelectTemplate={handleSelectTemplate} />
             </div>
           </div>
         </SheetContent>
       </Sheet>
 
-      {/* Briefing Viewer */}
       {selectedBriefingId && (
         <BriefingViewer
           open={showViewer}
@@ -730,15 +567,12 @@ export function BriefingsSection() {
         />
       )}
 
-      {/* Briefing Editor */}
       {selectedBriefing && (
         <BriefingEditor
           open={showEditor}
           onOpenChange={(open) => {
             setShowEditor(open);
-            if (!open) {
-              setSelectedBriefing(null);
-            }
+            if (!open) setSelectedBriefing(null);
           }}
           briefing={selectedBriefing}
           onSaved={() => {
@@ -747,15 +581,12 @@ export function BriefingsSection() {
         />
       )}
 
-      {/* Digital Sign-Off */}
       {selectedBriefing && (
         <DigitalSignOff
           open={showSignOff}
           onOpenChange={(open) => {
             setShowSignOff(open);
-            if (!open) {
-              setSelectedBriefing(null);
-            }
+            if (!open) setSelectedBriefing(null);
           }}
           briefing={selectedBriefing}
           onComplete={() => {
@@ -763,6 +594,6 @@ export function BriefingsSection() {
           }}
         />
       )}
-    </div>
+    </PageFrame>
   );
 }

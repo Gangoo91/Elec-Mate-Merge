@@ -6,9 +6,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -17,11 +15,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
 import { useEmployer } from '@/contexts/EmployerContext';
 import { toast } from '@/hooks/use-toast';
 import { Briefcase, Plus, X } from 'lucide-react';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import { cn } from '@/lib/utils';
+import {
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 const JOB_TYPES = ['Full-time', 'Part-time', 'Contract', 'Temporary'];
 const SALARY_PERIODS = ['per annum', 'per day', 'per hour'];
@@ -124,7 +133,6 @@ export function PostVacancyDialog({
     setOpen(false);
   };
 
-  // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
 
   useEffect(() => {
@@ -171,178 +179,182 @@ export function PostVacancyDialog({
       {trigger !== null && (
         <DialogTrigger asChild>
           {trigger || (
-            <Button className="w-full md:w-auto">
-              <Plus className="h-4 w-4 mr-2" />
-              Post New Vacancy
-            </Button>
+            <PrimaryButton>
+              <Plus className="h-4 w-4 mr-1.5" />
+              Post new vacancy
+            </PrimaryButton>
           )}
         </DialogTrigger>
       )}
-      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader className="pb-4 border-b border-border/50">
-          <DialogTitle className="flex items-center gap-3 text-xl">
-            <div className="p-2 rounded-lg bg-elec-yellow/10">
-              <Briefcase className="h-5 w-5 text-elec-yellow" />
-            </div>
-            Post Job Vacancy
+      <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2 text-white">
+            <Briefcase className="h-5 w-5 text-elec-yellow" />
+            Post job vacancy
           </DialogTitle>
         </DialogHeader>
-        <form id="vacancy-form" onSubmit={handleSubmit} className="space-y-5 pt-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="title">Job Title *</Label>
-              <Input
-                id="title"
-                value={formData.title}
-                onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
-                placeholder="e.g. Electrician"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="location">Location *</Label>
-              <Input
-                id="location"
-                value={formData.location}
-                onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
-                placeholder="e.g. Manchester, M1"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="type">Job Type</Label>
-              <Select
-                value={formData.type}
-                onValueChange={(val) => setFormData((prev) => ({ ...prev, type: val }))}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {JOB_TYPES.map((type) => (
-                    <SelectItem key={type} value={type}>
-                      {type}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="salaryMin">Min Salary *</Label>
-              <Input
-                id="salaryMin"
-                type="number"
-                value={formData.salaryMin}
-                onChange={(e) => setFormData((prev) => ({ ...prev, salaryMin: e.target.value }))}
-                placeholder="35000"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="salaryMax">Max Salary</Label>
-              <Input
-                id="salaryMax"
-                type="number"
-                value={formData.salaryMax}
-                onChange={(e) => setFormData((prev) => ({ ...prev, salaryMax: e.target.value }))}
-                placeholder="45000"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="salaryPeriod">Period</Label>
-              <Select
-                value={formData.salaryPeriod}
-                onValueChange={(val) => setFormData((prev) => ({ ...prev, salaryPeriod: val }))}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {SALARY_PERIODS.map((period) => (
-                    <SelectItem key={period} value={period}>
-                      {period}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="description">Job Description</Label>
-            <Textarea
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData((prev) => ({ ...prev, description: e.target.value }))}
-              placeholder="Describe the role and responsibilities..."
-              rows={3}
-            />
-          </div>
-
-          <div className="space-y-3 p-4 rounded-lg bg-surface border border-border/50">
-            <Label className="text-sm font-semibold text-foreground">Requirements</Label>
-            <div className="flex flex-wrap gap-2">
-              {COMMON_REQUIREMENTS.map((req) => (
-                <Badge
-                  key={req}
-                  variant={formData.requirements.includes(req) ? 'default' : 'outline'}
-                  className={`cursor-pointer touch-feedback transition-all ${
-                    formData.requirements.includes(req)
-                      ? 'bg-elec-yellow text-elec-dark shadow-sm'
-                      : 'bg-elec-gray hover:bg-secondary hover:border-elec-yellow/30'
-                  }`}
-                  onClick={() => toggleItem('requirements', req)}
+        <form id="vacancy-form" onSubmit={handleSubmit} className="space-y-4 pt-2">
+          <FormCard eyebrow="Role">
+            <FormGrid cols={2}>
+              <Field label="Job title" required>
+                <Input
+                  value={formData.title}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
+                  placeholder="e.g. Electrician"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Location" required>
+                <Input
+                  value={formData.location}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, location: e.target.value }))}
+                  placeholder="e.g. Manchester, M1"
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+            <FormGrid cols={2}>
+              <Field label="Job type">
+                <Select
+                  value={formData.type}
+                  onValueChange={(val) => setFormData((prev) => ({ ...prev, type: val }))}
                 >
-                  {req}
-                  {formData.requirements.includes(req) && <X className="h-3 w-3 ml-1" />}
-                </Badge>
-              ))}
-            </div>
-          </div>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {JOB_TYPES.map((type) => (
+                      <SelectItem key={type} value={type}>
+                        {type}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+              <Field label="Closing date" required>
+                <Input
+                  type="date"
+                  value={formData.closingDate}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, closingDate: e.target.value }))
+                  }
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+          </FormCard>
 
-          <div className="space-y-3 p-4 rounded-lg bg-surface border border-border/50">
-            <Label className="text-sm font-semibold text-foreground">Benefits</Label>
-            <div className="flex flex-wrap gap-2">
-              {COMMON_BENEFITS.map((ben) => (
-                <Badge
-                  key={ben}
-                  variant={formData.benefits.includes(ben) ? 'default' : 'outline'}
-                  className={`cursor-pointer touch-feedback transition-all ${
-                    formData.benefits.includes(ben)
-                      ? 'bg-success/20 text-success border-success/30 shadow-sm'
-                      : 'bg-elec-gray hover:bg-secondary hover:border-success/30'
-                  }`}
-                  onClick={() => toggleItem('benefits', ben)}
+          <FormCard eyebrow="Salary">
+            <FormGrid cols={3}>
+              <Field label="Min salary (£)" required>
+                <Input
+                  type="number"
+                  value={formData.salaryMin}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, salaryMin: e.target.value }))}
+                  placeholder="35000"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Max salary (£)">
+                <Input
+                  type="number"
+                  value={formData.salaryMax}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, salaryMax: e.target.value }))}
+                  placeholder="45000"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Period">
+                <Select
+                  value={formData.salaryPeriod}
+                  onValueChange={(val) =>
+                    setFormData((prev) => ({ ...prev, salaryPeriod: val }))
+                  }
                 >
-                  {ben}
-                  {formData.benefits.includes(ben) && <X className="h-3 w-3 ml-1" />}
-                </Badge>
-              ))}
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {SALARY_PERIODS.map((period) => (
+                      <SelectItem key={period} value={period}>
+                        {period}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormGrid>
+          </FormCard>
+
+          <FormCard eyebrow="Description">
+            <Field label="Job description">
+              <Textarea
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, description: e.target.value }))
+                }
+                placeholder="Describe the role and responsibilities..."
+                rows={3}
+                className={`${textareaClass} min-h-[100px]`}
+              />
+            </Field>
+          </FormCard>
+
+          <FormCard eyebrow="Requirements">
+            <div className="flex flex-wrap gap-2">
+              {COMMON_REQUIREMENTS.map((req) => {
+                const selected = formData.requirements.includes(req);
+                return (
+                  <button
+                    key={req}
+                    type="button"
+                    onClick={() => toggleItem('requirements', req)}
+                    className={cn(
+                      'inline-flex items-center gap-1 h-8 px-3 rounded-full text-[11.5px] font-medium transition-colors touch-manipulation border',
+                      selected
+                        ? 'bg-elec-yellow text-black border-elec-yellow'
+                        : 'bg-white/[0.04] text-white border-white/[0.1] hover:bg-white/[0.08]'
+                    )}
+                  >
+                    {req}
+                    {selected && <X className="h-3 w-3 ml-0.5" />}
+                  </button>
+                );
+              })}
             </div>
-          </div>
+          </FormCard>
 
-          <div className="space-y-2">
-            <Label htmlFor="closingDate">Closing Date *</Label>
-            <Input
-              id="closingDate"
-              type="date"
-              value={formData.closingDate}
-              onChange={(e) => setFormData((prev) => ({ ...prev, closingDate: e.target.value }))}
-            />
-          </div>
+          <FormCard eyebrow="Benefits">
+            <div className="flex flex-wrap gap-2">
+              {COMMON_BENEFITS.map((ben) => {
+                const selected = formData.benefits.includes(ben);
+                return (
+                  <button
+                    key={ben}
+                    type="button"
+                    onClick={() => toggleItem('benefits', ben)}
+                    className={cn(
+                      'inline-flex items-center gap-1 h-8 px-3 rounded-full text-[11.5px] font-medium transition-colors touch-manipulation border',
+                      selected
+                        ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30'
+                        : 'bg-white/[0.04] text-white border-white/[0.1] hover:bg-white/[0.08]'
+                    )}
+                  >
+                    {ben}
+                    {selected && <X className="h-3 w-3 ml-0.5" />}
+                  </button>
+                );
+              })}
+            </div>
+          </FormCard>
 
-          <div className="flex gap-3 pt-6 border-t border-border/50">
-            <Button
-              type="button"
-              variant="outline"
-              className="flex-1 h-11"
-              onClick={() => setOpen(false)}
-            >
+          <div className="flex gap-2 pt-1">
+            <SecondaryButton onClick={() => setOpen(false)} fullWidth>
               Cancel
-            </Button>
-            <Button type="submit" className="flex-1 h-11 font-semibold">
-              Post Vacancy
-            </Button>
+            </SecondaryButton>
+            <PrimaryButton type="submit" fullWidth>
+              Post vacancy
+            </PrimaryButton>
           </div>
         </form>
       </DialogContent>

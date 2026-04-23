@@ -9,7 +9,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Loader2 } from 'lucide-react';
 
 interface ConfirmDeleteDialogProps {
   open: boolean;
@@ -30,15 +29,18 @@ const ConfirmDeleteDialog = ({
 }: ConfirmDeleteDialogProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="bg-elec-gray border-white/20">
+      <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl">
         <AlertDialogHeader>
-          <AlertDialogTitle className="text-foreground">{title}</AlertDialogTitle>
-          <AlertDialogDescription className="text-foreground/70">
+          <AlertDialogTitle className="text-white">{title}</AlertDialogTitle>
+          <AlertDialogDescription className="text-white">
             {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="border-white/20 hover:bg-white/10" disabled={isLoading}>
+          <AlertDialogCancel
+            className="border-white/[0.06] bg-transparent text-white hover:bg-white/[0.04] rounded-xl h-11 touch-manipulation"
+            disabled={isLoading}
+          >
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
@@ -46,17 +48,10 @@ const ConfirmDeleteDialog = ({
               e.preventDefault();
               onConfirm();
             }}
-            className="bg-red-500 hover:bg-red-600 text-foreground"
+            className="bg-red-500 hover:bg-red-600 text-white rounded-xl h-11 touch-manipulation"
             disabled={isLoading}
           >
-            {isLoading ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Deleting...
-              </>
-            ) : (
-              'Delete'
-            )}
+            {isLoading ? 'Deleting…' : 'Delete'}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

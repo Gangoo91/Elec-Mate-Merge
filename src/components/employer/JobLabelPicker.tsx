@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Tag, Plus, X, Check } from 'lucide-react';
+import { Plus, X, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   useJobLabels,
@@ -12,6 +11,7 @@ import {
   useRemoveLabel,
   useCreateLabel,
 } from '@/hooks/useJobLabels';
+import { PrimaryButton, SecondaryButton, inputClass } from './editorial';
 
 interface JobLabelPickerProps {
   jobId: string;
@@ -67,7 +67,7 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
           <Badge
             key={assignment.label_id}
             variant="secondary"
-            className="gap-1 text-xs font-medium text-foreground"
+            className="gap-1 text-xs font-medium text-white"
             style={{ backgroundColor: assignment.label.colour }}
           >
             {assignment.label.name}
@@ -84,21 +84,22 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
 
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
-            <Button
-              variant="ghost"
-              size="sm"
+            <button
               className={cn(
-                'h-6 px-2 text-xs text-white hover:text-foreground',
+                'h-6 px-2 text-xs text-white hover:bg-white/[0.08] rounded-full flex items-center gap-1 transition-colors touch-manipulation',
                 compact && 'h-5 px-1.5'
               )}
             >
-              <Plus className="h-3 w-3 mr-1" />
+              <Plus className="h-3 w-3" />
               {compact ? '' : 'Add Label'}
-            </Button>
+            </button>
           </PopoverTrigger>
-          <PopoverContent className="w-64 p-2" align="start">
+          <PopoverContent
+            className="w-64 p-2 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
+            align="start"
+          >
             <div className="space-y-2">
-              <p className="text-sm font-medium text-foreground px-1">Labels</p>
+              <p className="text-sm font-medium text-white px-1">Labels</p>
 
               <div className="space-y-1 max-h-48 overflow-y-auto">
                 {labels.map((label) => (
@@ -106,12 +107,12 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
                     key={label.id}
                     onClick={() => handleToggleLabel(label.id)}
                     className={cn(
-                      'w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm hover:bg-muted transition-colors',
-                      assignedLabelIds.includes(label.id) && 'bg-muted'
+                      'w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-sm hover:bg-white/[0.08] transition-colors',
+                      assignedLabelIds.includes(label.id) && 'bg-white/[0.06]'
                     )}
                   >
                     <div className="w-4 h-4 rounded-sm" style={{ backgroundColor: label.colour }} />
-                    <span className="flex-1 text-left text-foreground">{label.name}</span>
+                    <span className="flex-1 text-left text-white">{label.name}</span>
                     {assignedLabelIds.includes(label.id) && (
                       <Check className="h-4 w-4 text-elec-yellow" />
                     )}
@@ -120,12 +121,12 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
               </div>
 
               {showCreateForm ? (
-                <div className="space-y-2 pt-2 border-t border-border">
+                <div className="space-y-2 pt-2 border-t border-white/[0.06]">
                   <Input
                     placeholder="Label name"
                     value={newLabelName}
                     onChange={(e) => setNewLabelName(e.target.value)}
-                    className="h-8 text-sm"
+                    className={inputClass}
                     autoFocus
                     onKeyDown={(e) => e.key === 'Enter' && handleCreateLabel()}
                   />
@@ -143,34 +144,27 @@ export function JobLabelPicker({ jobId, compact = false }: JobLabelPickerProps) 
                     ))}
                   </div>
                   <div className="flex gap-2">
-                    <Button
+                    <PrimaryButton
                       size="sm"
-                      className="h-7 flex-1"
+                      fullWidth
                       onClick={handleCreateLabel}
                       disabled={!newLabelName.trim() || createLabel.isPending}
                     >
                       Create
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="h-7"
-                      onClick={() => setShowCreateForm(false)}
-                    >
+                    </PrimaryButton>
+                    <SecondaryButton size="sm" onClick={() => setShowCreateForm(false)}>
                       Cancel
-                    </Button>
+                    </SecondaryButton>
                   </div>
                 </div>
               ) : (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-full justify-start h-8 text-white"
+                <button
+                  className="w-full justify-start h-8 flex items-center gap-2 text-sm text-white hover:bg-white/[0.08] rounded-md px-2 transition-colors touch-manipulation"
                   onClick={() => setShowCreateForm(true)}
                 >
-                  <Plus className="h-4 w-4 mr-2" />
+                  <Plus className="h-4 w-4" />
                   Create new label
-                </Button>
+                </button>
               )}
             </div>
           </PopoverContent>

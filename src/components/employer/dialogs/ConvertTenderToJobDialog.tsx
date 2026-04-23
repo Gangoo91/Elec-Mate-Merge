@@ -7,9 +7,7 @@ import {
   DialogFooter,
   DialogDescription,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -18,10 +16,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Briefcase, Loader2, Trophy, MapPin } from 'lucide-react';
+import { Briefcase, Loader2, Trophy } from 'lucide-react';
 import { useCreateJob } from '@/hooks/useJobs';
 import { useUpdateTender, type Tender } from '@/hooks/useTenders';
 import { toast } from 'sonner';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 interface ConvertTenderToJobDialogProps {
   open: boolean;
@@ -48,13 +57,12 @@ export function ConvertTenderToJobDialog({
     start_date: '',
   });
 
-  // Pre-fill form when tender changes
   useEffect(() => {
     if (tender) {
       setFormData({
         title: tender.title,
         client: tender.client,
-        location: '', // Tender doesn't have location, user can fill
+        location: '',
         value: tender.value || 0,
         description: tender.description || '',
         status: 'Pending',
@@ -68,7 +76,6 @@ export function ConvertTenderToJobDialog({
     if (!tender) return;
 
     try {
-      // Create the job
       await createJobMutation.mutateAsync({
         title: formData.title,
         client: formData.client,
@@ -84,7 +91,6 @@ export function ConvertTenderToJobDialog({
         description: formData.description || null,
       });
 
-      // Update tender notes to reference conversion
       await updateTenderMutation.mutateAsync({
         id: tender.id,
         data: {
@@ -112,140 +118,130 @@ export function ConvertTenderToJobDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Trophy className="h-5 w-5 text-success" />
+          <DialogTitle className="flex items-center gap-2 text-white">
+            <Trophy className="h-5 w-5 text-emerald-400" />
             Convert Won Tender to Job
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-white">
             Create a new job from the won tender. Review and adjust the details below.
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 py-4">
           {/* Source Info */}
-          <div className="p-3 bg-success/10 rounded-lg border border-success/20">
-            <p className="text-xs text-white">Converting from tender:</p>
-            <p className="font-medium text-success">{tender.title}</p>
-            <p className="text-sm text-white">
+          <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/30">
+            <p className="text-[11px] text-emerald-300">Converting from tender:</p>
+            <p className="font-medium text-emerald-400">{tender.title}</p>
+            <p className="text-[12.5px] text-white">
               {tender.client} • £{Number(tender.value).toLocaleString()}
             </p>
           </div>
 
-          {/* Job Title */}
-          <div className="space-y-2">
-            <Label htmlFor="title">Job Title *</Label>
-            <Input
-              id="title"
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Enter job title"
-            />
-          </div>
+          <FormCard eyebrow="Job details">
+            <Field label="Job title" required>
+              <Input
+                id="title"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                placeholder="Enter job title"
+                className={inputClass}
+              />
+            </Field>
 
-          {/* Client */}
-          <div className="space-y-2">
-            <Label htmlFor="client">Client *</Label>
-            <Input
-              id="client"
-              value={formData.client}
-              onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-              placeholder="Client name"
-            />
-          </div>
+            <Field label="Client" required>
+              <Input
+                id="client"
+                value={formData.client}
+                onChange={(e) => setFormData({ ...formData, client: e.target.value })}
+                placeholder="Client name"
+                className={inputClass}
+              />
+            </Field>
 
-          {/* Location */}
-          <div className="space-y-2">
-            <Label htmlFor="location">Location</Label>
-            <div className="relative">
-              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+            <Field label="Location">
               <Input
                 id="location"
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 placeholder="Site address"
-                className="pl-10"
+                className={inputClass}
               />
-            </div>
-          </div>
+            </Field>
 
-          {/* Value and Workers */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="value">Value (£)</Label>
-              <Input
-                id="value"
-                type="number"
-                value={formData.value}
-                onChange={(e) => setFormData({ ...formData, value: Number(e.target.value) })}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="workers">Workers</Label>
-              <Input
-                id="workers"
-                type="number"
-                min={1}
-                value={formData.workers_count}
-                onChange={(e) =>
-                  setFormData({ ...formData, workers_count: Number(e.target.value) })
-                }
-              />
-            </div>
-          </div>
+            <FormGrid cols={2}>
+              <Field label="Value (£)">
+                <Input
+                  id="value"
+                  type="number"
+                  value={formData.value}
+                  onChange={(e) => setFormData({ ...formData, value: Number(e.target.value) })}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Workers">
+                <Input
+                  id="workers"
+                  type="number"
+                  min={1}
+                  value={formData.workers_count}
+                  onChange={(e) =>
+                    setFormData({ ...formData, workers_count: Number(e.target.value) })
+                  }
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
 
-          {/* Status and Start Date */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="status">Initial Status</Label>
-              <Select
-                value={formData.status}
-                onValueChange={(value: 'Pending' | 'Active') =>
-                  setFormData({ ...formData, status: value })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Pending">Pending</SelectItem>
-                  <SelectItem value="Active">Active</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="start_date">Start Date</Label>
-              <Input
-                id="start_date"
-                type="date"
-                value={formData.start_date}
-                onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
-              />
-            </div>
-          </div>
+            <FormGrid cols={2}>
+              <Field label="Initial status">
+                <Select
+                  value={formData.status}
+                  onValueChange={(value: 'Pending' | 'Active') =>
+                    setFormData({ ...formData, status: value })
+                  }
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="Pending">Pending</SelectItem>
+                    <SelectItem value="Active">Active</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Field>
+              <Field label="Start date">
+                <Input
+                  id="start_date"
+                  type="date"
+                  value={formData.start_date}
+                  onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
 
-          {/* Description */}
-          <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
-            <Textarea
-              id="description"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Job description and scope of works"
-              rows={3}
-            />
-          </div>
+            <Field label="Description">
+              <Textarea
+                id="description"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                placeholder="Job description and scope of works"
+                rows={3}
+                className={textareaClass}
+              />
+            </Field>
+          </FormCard>
         </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
+        <DialogFooter className="gap-2">
+          <SecondaryButton onClick={() => onOpenChange(false)} disabled={isSubmitting}>
             Cancel
-          </Button>
-          <Button
+          </SecondaryButton>
+          <PrimaryButton
             onClick={handleSubmit}
             disabled={!formData.title || !formData.client || isSubmitting}
-            className="bg-success hover:bg-success/90"
           >
             {isSubmitting ? (
               <>
@@ -258,7 +254,7 @@ export function ConvertTenderToJobDialog({
                 Create Job
               </>
             )}
-          </Button>
+          </PrimaryButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

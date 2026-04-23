@@ -1,20 +1,19 @@
 import React, { useState, useCallback } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
-import { Upload, FileSpreadsheet, Check, AlertCircle } from 'lucide-react';
+import { Upload, Check, AlertCircle } from 'lucide-react';
 import { useBulkImportPriceBook } from '@/hooks/useFinance';
 import { toast } from 'sonner';
 import Papa from 'papaparse';
-// XLSX is dynamically imported only when needed to reduce bundle size (~7.2MB)
+import {
+  SheetShell,
+  FormCard,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+} from '@/components/employer/editorial';
 
 interface ImportPriceBookDialogProps {
   open: boolean;
@@ -68,7 +67,6 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
       const reader = new FileReader();
       reader.onload = async (e) => {
         try {
-          // Dynamic import XLSX only when needed (saves ~7.2MB from initial bundle)
           const XLSX = await import('xlsx');
           const data = e.target?.result;
           const workbook = XLSX.read(data, { type: 'array' });
@@ -93,7 +91,6 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
   const processRows = (rows: Record<string, string>[]): ParsedItem[] => {
     if (rows.length === 0) return [];
 
-    // Auto-detect columns from headers
     const headers = Object.keys(rows[0]).map((h) => h.toLowerCase().trim());
 
     const findColumn = (patterns: string[]) => {
@@ -164,7 +161,6 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
         reorder_level: 10,
       }));
 
-      // Simulate progress
       const progressInterval = setInterval(() => {
         setProgress((p) => Math.min(p + 10, 90));
       }, 200);
@@ -194,25 +190,41 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
         onOpenChange(isOpen);
       }}
     >
-      <SheetContent side="bottom" className="h-[70dvh] p-0 flex flex-col">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="shrink-0 px-4 py-3 border-b border-border">
-            <SheetTitle className="flex items-center gap-2">
-              <FileSpreadsheet className="h-5 w-5 text-elec-yellow" />
-              Import Price Book
-            </SheetTitle>
-            <SheetDescription>Upload a CSV or Excel file with your prices</SheetDescription>
-          </SheetHeader>
-
-          {/* Content */}
-          <div className="flex-1 overflow-auto overscroll-contain p-4 space-y-4">
-            {/* Drop Zone */}
+      <SheetContent side="bottom" className="h-[78dvh] p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Price book"
+          title="Import materials"
+          description="Upload a CSV or Excel file with your prices."
+          footer={
+            <>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleImport}
+                disabled={parsedData.length === 0 || isImporting || !!error}
+                fullWidth
+              >
+                {isImporting ? (
+                  'Importing...'
+                ) : parsedData.length > 0 ? (
+                  <>
+                    <Check className="h-4 w-4 mr-1.5" />
+                    Import {parsedData.length.toLocaleString()} items
+                  </>
+                ) : (
+                  'Select a file'
+                )}
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Source file">
             <div
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
-              className="border-2 border-dashed border-border rounded-xl p-8 text-center cursor-pointer hover:border-elec-yellow/50 hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
               onClick={() => document.getElementById('file-input')?.click()}
+              className="border border-dashed border-white/[0.12] rounded-xl bg-[hsl(0_0%_9%)] p-8 text-center cursor-pointer hover:border-elec-yellow/50 hover:bg-[hsl(0_0%_11%)] active:bg-[hsl(0_0%_13%)] transition-all touch-manipulation"
             >
               <input
                 id="file-input"
@@ -222,101 +234,72 @@ export function ImportPriceBookDialog({ open, onOpenChange }: ImportPriceBookDia
                 className="hidden"
               />
               <Upload className="h-10 w-10 mx-auto text-white mb-3" />
-              <p className="text-sm font-medium">{file ? file.name : 'Tap to select file'}</p>
-              <p className="text-xs text-white mt-1">
+              <p className="text-[13px] font-medium text-white">
+                {file ? file.name : 'Tap to select file'}
+              </p>
+              <p className="text-[11px] text-white mt-1">
                 CSV or Excel with name & price columns
               </p>
             </div>
 
-            {/* Error */}
             {error && (
-              <div className="flex items-start gap-2 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
-                <AlertCircle className="h-4 w-4 text-destructive shrink-0 mt-0.5" />
-                <p className="text-sm text-destructive">{error}</p>
+              <div className="flex items-start gap-2 p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
+                <AlertCircle className="h-4 w-4 text-red-400 shrink-0 mt-0.5" />
+                <p className="text-[12px] text-red-300">{error}</p>
               </div>
             )}
+          </FormCard>
 
-            {/* Results */}
-            {parsedData.length > 0 && !error && (
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
+          {parsedData.length > 0 && !error && (
+            <>
+              <FormCard eyebrow="Results">
+                <div className="flex items-center gap-2 p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl">
                   <Check className="h-4 w-4 text-elec-yellow" />
-                  <p className="text-sm font-medium">
+                  <p className="text-[13px] font-medium text-white">
                     Found {parsedData.length.toLocaleString()} items
                   </p>
                 </div>
-
-                {/* Markup */}
-                <div className="space-y-2">
-                  <Label>Markup Percentage</Label>
+                <Field label="Markup percentage" hint={`Sell price = Buy price + ${markup}%`}>
                   <div className="flex items-center gap-2">
                     <Input
                       type="number"
                       value={markup}
                       onChange={(e) => setMarkup(Number(e.target.value))}
-                      className="w-24"
+                      className={`${inputClass} w-28`}
                       min={0}
                       max={500}
                     />
-                    <span className="text-sm text-white">%</span>
+                    <span className="text-[12px] text-white">%</span>
                   </div>
-                  <p className="text-xs text-white">
-                    Sell price = Buy price + {markup}%
-                  </p>
+                </Field>
+              </FormCard>
+
+              <FormCard eyebrow="Preview (first 3)">
+                <div className="space-y-1.5">
+                  {parsedData.slice(0, 3).map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex justify-between items-center p-2.5 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-lg text-[12px]"
+                    >
+                      <span className="truncate flex-1 mr-2 text-white">{item.name}</span>
+                      <span className="text-white shrink-0 tabular-nums">
+                        £{item.buy_price.toFixed(2)} → £
+                        {(item.buy_price * (1 + markup / 100)).toFixed(2)}
+                      </span>
+                    </div>
+                  ))}
                 </div>
+              </FormCard>
+            </>
+          )}
 
-                {/* Preview */}
-                <div className="space-y-2">
-                  <Label>Preview (first 3 items)</Label>
-                  <div className="space-y-2">
-                    {parsedData.slice(0, 3).map((item, i) => (
-                      <div
-                        key={i}
-                        className="flex justify-between items-center p-2 bg-muted/50 rounded-lg text-sm"
-                      >
-                        <span className="truncate flex-1 mr-2">{item.name}</span>
-                        <span className="text-white shrink-0">
-                          £{item.buy_price.toFixed(2)} → £
-                          {(item.buy_price * (1 + markup / 100)).toFixed(2)}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Progress */}
-            {isImporting && (
-              <div className="space-y-2">
-                <Progress value={progress} className="h-2" />
-                <p className="text-xs text-center text-white">
-                  Importing... {progress}%
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Footer */}
-          <div className="shrink-0 border-t border-border px-4 py-3 pb-safe bg-elec-gray">
-            <Button
-              onClick={handleImport}
-              disabled={parsedData.length === 0 || isImporting || !!error}
-              className="w-full"
-            >
-              {isImporting ? (
-                'Importing...'
-              ) : parsedData.length > 0 ? (
-                <>
-                  <Check className="h-4 w-4 mr-2" />
-                  Import {parsedData.length.toLocaleString()} Items
-                </>
-              ) : (
-                'Select a file'
-              )}
-            </Button>
-          </div>
-        </div>
+          {isImporting && (
+            <FormCard eyebrow="Progress">
+              <Progress value={progress} className="h-2" />
+              <p className="text-[11px] text-center text-white">Importing... {progress}%</p>
+            </FormCard>
+          )}
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

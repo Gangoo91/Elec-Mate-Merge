@@ -1,25 +1,9 @@
-import { useState, useCallback } from 'react';
-import {
-  Search,
-  Filter,
-  Users,
-  Plus,
-  X,
-  CheckSquare,
-  Square,
-  MessageSquare,
-  Briefcase,
-} from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import { useState, useCallback, useMemo } from 'react';
+import { RefreshCw, MessageSquare, Briefcase, X, CheckSquare, Square } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ScrollArea } from '@/components/ui/scroll-area'; // Used in filter sheet
-import { Skeleton } from '@/components/ui/skeleton';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { useEmployees } from '@/hooks/useEmployees';
 import { AddEmployeeDialog } from '@/components/employer/dialogs/AddEmployeeDialog';
 import { EditEmployeeDialog } from '@/components/employer/dialogs/EditEmployeeDialog';
@@ -27,27 +11,32 @@ import { TeamMemberSheet } from '@/components/employer/TeamMemberSheet';
 import { AssignToJobDialog } from '@/components/employer/dialogs/AssignToJobDialog';
 import { SendMessageDialog } from '@/components/employer/dialogs/SendMessageDialog';
 import { BulkAssignDialog } from '@/components/employer/dialogs/BulkAssignDialog';
-import { TeamMemberCard } from '@/components/employer/TeamMemberCard';
 import { toast } from '@/hooks/use-toast';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  checkboxClass,
+  type Tone,
+} from '@/components/employer/editorial';
 import type { Employee } from '@/services/employeeService';
 
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
-
-const roleColors: Record<TeamRole, string> = {
-  QS: 'bg-elec-yellow/20 text-elec-yellow',
-  Supervisor: 'bg-info/20 text-info',
-  Operative: 'bg-success/20 text-success',
-  Apprentice: 'bg-warning/20 text-warning',
-  'Project Manager': 'bg-elec-yellow/20 text-elec-yellow',
-};
-
-const availabilityColors: Record<AvailabilityStatus, string> = {
-  Available: 'bg-success',
-  'On Job': 'bg-info',
-  'On Leave': 'bg-warning',
-  Unavailable: 'bg-muted-foreground',
-};
+type FilterTab = 'all' | 'active' | 'leave' | 'pending';
 
 const ALL_SKILLS = [
   '18th Edition',
@@ -63,7 +52,21 @@ const ALL_SKILLS = [
   'Basic Wiring',
 ];
 
-// Map employee status to availability
+const ROLE_TONE: Record<TeamRole, Tone> = {
+  QS: 'yellow',
+  Supervisor: 'blue',
+  Operative: 'emerald',
+  Apprentice: 'amber',
+  'Project Manager': 'purple',
+};
+
+const AVAILABILITY_TONE: Record<AvailabilityStatus, Tone> = {
+  Available: 'emerald',
+  'On Job': 'blue',
+  'On Leave': 'amber',
+  Unavailable: 'red',
+};
+
 const getAvailability = (employee: Employee): AvailabilityStatus => {
   if (employee.status === 'On Leave') return 'On Leave';
   if (employee.status === 'Archived') return 'Unavailable';
@@ -71,21 +74,30 @@ const getAvailability = (employee: Employee): AvailabilityStatus => {
   return 'Available';
 };
 
-// Map team_role string to TeamRole type
 const getTeamRole = (role: string): TeamRole => {
   const validRoles: TeamRole[] = ['QS', 'Supervisor', 'Operative', 'Apprentice', 'Project Manager'];
   return validRoles.includes(role as TeamRole) ? (role as TeamRole) : 'Operative';
 };
 
+const getInitials = (name: string): string => {
+  if (!name) return '?';
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('');
+};
+
 export function EmployeesSection() {
   const { data: employees = [], isLoading, error, refetch, isRefetching } = useEmployees();
 
-  // Pull-to-refresh handler
   const handleRefresh = useCallback(async () => {
     await refetch();
   }, [refetch]);
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<FilterTab>('all');
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [selectedRoles, setSelectedRoles] = useState<TeamRole[]>([]);
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
@@ -94,7 +106,6 @@ export function EmployeesSection() {
   const [filterOpen, setFilterOpen] = useState(false);
   const [selectedEmployeeIds, setSelectedEmployeeIds] = useState<string[]>([]);
 
-  // Dialog states
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [assignJobDialogOpen, setAssignJobDialogOpen] = useState(false);
@@ -102,23 +113,38 @@ export function EmployeesSection() {
   const [bulkAssignDialogOpen, setBulkAssignDialogOpen] = useState(false);
   const [addEmployeeDialogOpen, setAddEmployeeDialogOpen] = useState(false);
 
-  const activeEmployees = employees.filter((e) => e.status !== 'Archived');
+  const activeEmployees = useMemo(
+    () => employees.filter((e) => e.status !== 'Archived'),
+    [employees]
+  );
 
-  const filteredEmployees = activeEmployees.filter((emp) => {
-    const matchesSearch =
-      emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      emp.role.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesRole =
-      selectedRoles.length === 0 || selectedRoles.includes(getTeamRole(emp.team_role));
-    const matchesAvailability =
-      selectedAvailability.length === 0 || selectedAvailability.includes(getAvailability(emp));
-    // Skills not yet in DB - skip skill filtering for now
-    return matchesSearch && matchesRole && matchesAvailability;
-  });
+  const totalCount = employees.length;
+  const availableCount = activeEmployees.filter((e) => getAvailability(e) === 'Available').length;
+  const onJobCount = activeEmployees.filter((e) => getAvailability(e) === 'On Job').length;
+  const onLeaveCount = activeEmployees.filter((e) => getAvailability(e) === 'On Leave').length;
+  const pendingCount = employees.filter((e) => e.status === 'Archived').length;
 
-  // Group by availability for at-a-glance
-  const availableNow = activeEmployees.filter((e) => getAvailability(e) === 'Available');
-  const onJob = activeEmployees.filter((e) => getAvailability(e) === 'On Job');
+  const tabFilteredEmployees = useMemo(() => {
+    if (activeTab === 'leave')
+      return activeEmployees.filter((e) => getAvailability(e) === 'On Leave');
+    if (activeTab === 'pending') return employees.filter((e) => e.status === 'Archived');
+    if (activeTab === 'active')
+      return activeEmployees.filter((e) => getAvailability(e) !== 'On Leave');
+    return activeEmployees;
+  }, [activeTab, activeEmployees, employees]);
+
+  const filteredEmployees = useMemo(() => {
+    return tabFilteredEmployees.filter((emp) => {
+      const matchesSearch =
+        emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        emp.role.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesRole =
+        selectedRoles.length === 0 || selectedRoles.includes(getTeamRole(emp.team_role));
+      const matchesAvailability =
+        selectedAvailability.length === 0 || selectedAvailability.includes(getAvailability(emp));
+      return matchesSearch && matchesRole && matchesAvailability;
+    });
+  }, [tabFilteredEmployees, searchQuery, selectedRoles, selectedAvailability]);
 
   const handleItemClick = (employee: Employee) => {
     if (multiSelectMode) {
@@ -127,12 +153,6 @@ export function EmployeesSection() {
       setSelectedEmployee(employee);
       setProfileSheetOpen(true);
     }
-  };
-
-  const handleQuickMessage = (e: React.MouseEvent, employee: Employee) => {
-    e.stopPropagation();
-    setSelectedEmployee(employee);
-    setMessageDialogOpen(true);
   };
 
   const toggleRole = (role: TeamRole) => {
@@ -166,7 +186,7 @@ export function EmployeesSection() {
   };
 
   const selectAllEmployees = () => {
-    setSelectedEmployeeIds(activeEmployees.map((e) => e.id));
+    setSelectedEmployeeIds(filteredEmployees.map((e) => e.id));
   };
 
   const clearEmployeeSelection = () => {
@@ -175,7 +195,7 @@ export function EmployeesSection() {
 
   const handleBulkMessage = () => {
     const selectedEmps = employees.filter((e) => selectedEmployeeIds.includes(e.id));
-    toast({ title: 'Messages Sent', description: `Sent to ${selectedEmps.length} team members.` });
+    toast({ title: 'Messages sent', description: `Sent to ${selectedEmps.length} team members.` });
     clearEmployeeSelection();
     setMultiSelectMode(false);
   };
@@ -191,187 +211,254 @@ export function EmployeesSection() {
 
   if (isLoading) {
     return (
-      <div className="space-y-4 animate-fade-in">
-        <div className="flex items-center justify-between">
-          <div>
-            <Skeleton className="h-6 w-32 mb-2" />
-            <Skeleton className="h-4 w-48" />
-          </div>
-          <Skeleton className="h-9 w-20" />
-        </div>
-        <Skeleton className="h-11 w-full" />
-        <div className="space-y-2">
-          {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} className="h-20 w-full rounded-xl" />
-          ))}
-        </div>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="People"
+          title="Team"
+          description="Manage every operative, supervisor and PM on your books."
+          tone="blue"
+        />
+        <LoadingBlocks />
+      </PageFrame>
     );
   }
 
   if (error) {
     return (
-      <div className="text-center py-16">
-        <Users className="h-12 w-12 text-destructive/30 mx-auto mb-3" />
-        <h3 className="font-medium text-foreground mb-1">Failed to load team</h3>
-        <p className="text-sm text-white">Please try again later</p>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="People"
+          title="Team"
+          description="Manage every operative, supervisor and PM on your books."
+          tone="blue"
+        />
+        <EmptyState
+          title="Failed to load team"
+          description="Please try again in a moment."
+          action="Retry"
+          onAction={() => refetch()}
+        />
+      </PageFrame>
     );
   }
 
   return (
     <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
-      <div className="space-y-4 animate-fade-in">
-        {/* Clean Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-bold text-foreground">Your Team</h1>
-            <p className="text-xs text-white">
-              {activeEmployees.length} team · {availableNow.length} available · {onJob.length} on
-              job
-            </p>
-          </div>
-          <AddEmployeeDialog
-            open={addEmployeeDialogOpen}
-            onOpenChange={setAddEmployeeDialogOpen}
-            trigger={
-              <Button size="sm" className="gap-1">
-                <Plus className="h-4 w-4" />
-                <span className="hidden sm:inline">Add</span>
-              </Button>
-            }
-          />
-        </div>
-
-        {/* Multi-Select Bar */}
-        {multiSelectMode && (
-          <div className="flex items-center justify-between p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-elec-yellow">
-                {selectedEmployeeIds.length} selected
-              </span>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={selectAllEmployees}
-                className="text-sm h-11 touch-manipulation"
+      <PageFrame>
+        <PageHero
+          eyebrow="People"
+          title="Team"
+          description="Manage every operative, supervisor and PM on your books."
+          tone="blue"
+          actions={
+            <>
+              <PrimaryButton onClick={() => setAddEmployeeDialogOpen(true)}>
+                Add team member
+              </PrimaryButton>
+              <IconButton onClick={() => refetch()} aria-label="Refresh">
+                <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
+              </IconButton>
+              <IconButton
+                onClick={() => setMultiSelectMode((v) => !v)}
+                aria-label={multiSelectMode ? 'Exit multi-select' : 'Multi-select'}
               >
-                Select All
-              </Button>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                variant="outline"
+                {multiSelectMode ? (
+                  <CheckSquare className="h-4 w-4" />
+                ) : (
+                  <Square className="h-4 w-4" />
+                )}
+              </IconButton>
+            </>
+          }
+        />
+
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Total', value: totalCount },
+            { label: 'Active', value: availableCount + onJobCount, tone: 'emerald' },
+            { label: 'On leave', value: onLeaveCount, tone: 'amber' },
+            { label: 'Vacant', value: pendingCount, tone: 'red' },
+          ]}
+        />
+
+        {multiSelectMode && (
+          <ListCard>
+            <ListCardHeader
+              tone="yellow"
+              title={`${selectedEmployeeIds.length} selected`}
+              meta={
+                <button
+                  onClick={selectAllEmployees}
+                  className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                >
+                  Select all
+                </button>
+              }
+            />
+            <div className="flex items-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4">
+              <SecondaryButton
                 onClick={handleBulkMessage}
                 disabled={selectedEmployeeIds.length === 0}
-                className="h-11 touch-manipulation"
               >
-                <MessageSquare className="h-4 w-4 mr-1" />
-                <span className="hidden sm:inline">Message</span>
-              </Button>
-              <Button
-                size="sm"
+                <MessageSquare className="h-4 w-4 mr-2" />
+                Message
+              </SecondaryButton>
+              <PrimaryButton
                 onClick={() => setBulkAssignDialogOpen(true)}
                 disabled={selectedEmployeeIds.length === 0}
-                className="h-11 touch-manipulation"
               >
-                <Briefcase className="h-4 w-4 mr-1" />
-                <span className="hidden sm:inline">Assign</span>
-              </Button>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={exitMultiSelect}
-                className="h-11 w-11 touch-manipulation"
-              >
-                <X className="h-5 w-5" />
-              </Button>
+                <Briefcase className="h-4 w-4 mr-2" />
+                Assign
+              </PrimaryButton>
+              <div className="ml-auto">
+                <IconButton onClick={exitMultiSelect} aria-label="Exit multi-select">
+                  <X className="h-4 w-4" />
+                </IconButton>
+              </div>
             </div>
-          </div>
+          </ListCard>
         )}
 
-        {/* Search + Filter Row */}
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-            )}
-            <Input
-              placeholder="Search team..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn('h-11', !searchQuery && 'pl-10')}
+        <FilterBar
+          tabs={[
+            { value: 'all', label: 'All', count: activeEmployees.length },
+            { value: 'active', label: 'Active', count: availableCount + onJobCount },
+            { value: 'leave', label: 'On leave', count: onLeaveCount },
+            { value: 'pending', label: 'Archived', count: pendingCount },
+          ]}
+          activeTab={activeTab}
+          onTabChange={(value) => setActiveTab(value as FilterTab)}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search team…"
+          actions={
+            <button
+              onClick={() => setFilterOpen(true)}
+              className="h-10 px-4 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white text-[12.5px] font-medium touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors inline-flex items-center gap-2"
+            >
+              Filters
+              {filterCount > 0 && <Pill tone="yellow">{filterCount}</Pill>}
+            </button>
+          }
+        />
+
+        {filteredEmployees.length === 0 ? (
+          <EmptyState
+            title="No team members yet"
+            description={
+              hasActiveFilters
+                ? 'Try adjusting your filters or search.'
+                : 'Add your first operative, supervisor or PM to get started.'
+            }
+            action={hasActiveFilters ? 'Clear filters' : 'Add team member'}
+            onAction={hasActiveFilters ? clearFilters : () => setAddEmployeeDialogOpen(true)}
+          />
+        ) : (
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="Team"
+              meta={<Pill tone="blue">{filteredEmployees.length}</Pill>}
             />
-          </div>
+            <ListBody>
+              {filteredEmployees.map((employee) => {
+                const isSelected = selectedEmployeeIds.includes(employee.id);
+                const availability = getAvailability(employee);
+                const teamRole = getTeamRole(employee.team_role);
+                const subtitleParts: string[] = [employee.role];
+                if (employee.certifications_count > 0)
+                  subtitleParts.push(`${employee.certifications_count} certs`);
+                if (employee.active_jobs_count > 0)
+                  subtitleParts.push(`${employee.active_jobs_count} jobs`);
 
-          {/* Filter Sheet */}
-          <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
-            <SheetTrigger asChild>
-              <Button
-                variant="outline"
-                size="icon"
-                className={`h-11 w-11 relative ${hasActiveFilters ? 'border-elec-yellow text-elec-yellow' : ''}`}
-              >
-                <Filter className="h-4 w-4" />
-                {filterCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-elec-yellow text-elec-dark text-xs flex items-center justify-center">
-                    {filterCount}
-                  </span>
+                return (
+                  <ListRow
+                    key={employee.id}
+                    lead={
+                      <div className="flex items-center gap-2.5">
+                        {multiSelectMode && (
+                          <Checkbox
+                            checked={isSelected}
+                            onCheckedChange={() => toggleEmployeeSelection(employee.id)}
+                            onClick={(e) => e.stopPropagation()}
+                            className={checkboxClass}
+                          />
+                        )}
+                        <Avatar
+                          initials={
+                            employee.avatar_initials || getInitials(employee.name)
+                          }
+                          online={availability === 'Available' || availability === 'On Job'}
+                        />
+                      </div>
+                    }
+                    title={employee.name}
+                    subtitle={subtitleParts.join(' · ')}
+                    trailing={
+                      <>
+                        <Pill tone={ROLE_TONE[teamRole]}>{teamRole}</Pill>
+                        <Pill tone={AVAILABILITY_TONE[availability]}>{availability}</Pill>
+                      </>
+                    }
+                    onClick={() => handleItemClick(employee)}
+                  />
+                );
+              })}
+            </ListBody>
+          </ListCard>
+        )}
+
+        <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
+          <SheetContent
+            side="bottom"
+            className="h-[80vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_10%)] border-white/[0.06]"
+          >
+            <SheetHeader className="px-5 sm:px-6 pt-5 pb-4 border-b border-white/[0.06]">
+              <div className="flex items-center justify-between">
+                <SheetTitle className="text-white">Filter team</SheetTitle>
+                {hasActiveFilters && (
+                  <button
+                    onClick={clearFilters}
+                    className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+                  >
+                    Clear all
+                  </button>
                 )}
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl">
-              <SheetHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <SheetTitle>Filter Team</SheetTitle>
-                  {hasActiveFilters && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={clearFilters}
-                      className="text-white"
-                    >
-                      Clear all
-                    </Button>
-                  )}
-                </div>
-              </SheetHeader>
+              </div>
+            </SheetHeader>
 
-              <ScrollArea className="h-[calc(70vh-120px)]">
-                <div className="space-y-6 pb-4">
-                  {/* Availability */}
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-sm">Availability</h4>
-                    <div className="space-y-2">
+            <ScrollArea className="h-[calc(80vh-160px)]">
+              <div className="px-5 sm:px-6 py-5 space-y-6">
+                <div>
+                  <Eyebrow>Availability</Eyebrow>
+                  <ListCard className="mt-3">
+                    <ListBody>
                       {(
                         ['Available', 'On Job', 'On Leave', 'Unavailable'] as AvailabilityStatus[]
                       ).map((status) => (
-                        <div
+                        <ListRow
                           key={status}
-                          className="flex items-center gap-3 p-3 rounded-xl bg-muted/50"
-                        >
-                          <Checkbox
-                            id={`avail-${status}`}
-                            checked={selectedAvailability.includes(status)}
-                            onCheckedChange={() => toggleAvailability(status)}
-                          />
-                          <label
-                            htmlFor={`avail-${status}`}
-                            className="flex-1 flex items-center gap-2 cursor-pointer"
-                          >
-                            <div className={`w-3 h-3 rounded-full ${availabilityColors[status]}`} />
-                            {status}
-                          </label>
-                        </div>
+                          lead={
+                            <Checkbox
+                              checked={selectedAvailability.includes(status)}
+                              onCheckedChange={() => toggleAvailability(status)}
+                              className={checkboxClass}
+                            />
+                          }
+                          title={status}
+                          trailing={<Pill tone={AVAILABILITY_TONE[status]}>{status}</Pill>}
+                          onClick={() => toggleAvailability(status)}
+                        />
                       ))}
-                    </div>
-                  </div>
+                    </ListBody>
+                  </ListCard>
+                </div>
 
-                  {/* Role */}
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-sm">Role</h4>
-                    <div className="space-y-2">
+                <div>
+                  <Eyebrow>Role</Eyebrow>
+                  <ListCard className="mt-3">
+                    <ListBody>
                       {(
                         [
                           'QS',
@@ -381,110 +468,61 @@ export function EmployeesSection() {
                           'Project Manager',
                         ] as TeamRole[]
                       ).map((role) => (
-                        <div
+                        <ListRow
                           key={role}
-                          className="flex items-center gap-3 p-3 rounded-xl bg-muted/50"
-                        >
-                          <Checkbox
-                            id={`role-${role}`}
-                            checked={selectedRoles.includes(role)}
-                            onCheckedChange={() => toggleRole(role)}
-                          />
-                          <label htmlFor={`role-${role}`} className="flex-1 cursor-pointer">
-                            {role}
-                          </label>
-                        </div>
+                          lead={
+                            <Checkbox
+                              checked={selectedRoles.includes(role)}
+                              onCheckedChange={() => toggleRole(role)}
+                              className={checkboxClass}
+                            />
+                          }
+                          title={role}
+                          trailing={<Pill tone={ROLE_TONE[role]}>{role}</Pill>}
+                          onClick={() => toggleRole(role)}
+                        />
                       ))}
-                    </div>
-                  </div>
+                    </ListBody>
+                  </ListCard>
+                </div>
 
-                  {/* Skills */}
-                  <div className="space-y-3">
-                    <h4 className="font-medium text-sm">Skills</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {ALL_SKILLS.map((skill) => (
-                        <Badge
+                <div>
+                  <Eyebrow>Skills</Eyebrow>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {ALL_SKILLS.map((skill) => {
+                      const active = selectedSkills.includes(skill);
+                      return (
+                        <button
                           key={skill}
-                          variant={selectedSkills.includes(skill) ? 'default' : 'outline'}
-                          className="cursor-pointer py-2 px-3"
                           onClick={() => toggleSkill(skill)}
+                          className={`h-10 px-3.5 rounded-full text-[12.5px] font-medium touch-manipulation transition-colors ${
+                            active
+                              ? 'bg-elec-yellow text-black'
+                              : 'bg-[hsl(0_0%_14%)] border border-white/[0.08] text-white hover:bg-[hsl(0_0%_17%)]'
+                          }`}
                         >
                           {skill}
-                        </Badge>
-                      ))}
-                    </div>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-              </ScrollArea>
-
-              <div className="pt-4 border-t border-border">
-                <Button className="w-full" onClick={() => setFilterOpen(false)}>
-                  Show {filteredEmployees.length} Results
-                </Button>
               </div>
-            </SheetContent>
-          </Sheet>
+            </ScrollArea>
 
-          {/* Multi-select toggle */}
-          <Button
-            variant={multiSelectMode ? 'default' : 'outline'}
-            size="icon"
-            className="h-11 w-11"
-            onClick={() => setMultiSelectMode(!multiSelectMode)}
-          >
-            {multiSelectMode ? <CheckSquare className="h-4 w-4" /> : <Square className="h-4 w-4" />}
-          </Button>
-        </div>
+            <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06] bg-[hsl(0_0%_10%)]">
+              <PrimaryButton onClick={() => setFilterOpen(false)} fullWidth>
+                Show {filteredEmployees.length} results
+              </PrimaryButton>
+            </div>
+          </SheetContent>
+        </Sheet>
 
-        {/* Card Grid - natural scroll */}
-        <div className="pb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {filteredEmployees.map((employee) => {
-              const isSelected = selectedEmployeeIds.includes(employee.id);
-              const availability = getAvailability(employee);
-              const teamRole = getTeamRole(employee.team_role);
+        <AddEmployeeDialog
+          open={addEmployeeDialogOpen}
+          onOpenChange={setAddEmployeeDialogOpen}
+        />
 
-              return (
-                <TeamMemberCard
-                  key={employee.id}
-                  id={employee.id}
-                  name={employee.name}
-                  role={employee.role}
-                  teamRole={teamRole}
-                  avatar={employee.avatar_initials}
-                  photo={employee.photo_url}
-                  availability={availability}
-                  phone={employee.phone}
-                  email={employee.email}
-                  certificationsCount={employee.certifications_count}
-                  activeJobsCount={employee.active_jobs_count}
-                  isSelected={isSelected}
-                  multiSelectMode={multiSelectMode}
-                  onClick={() => handleItemClick(employee)}
-                  onMessage={(e) => handleQuickMessage(e, employee)}
-                />
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Empty State */}
-        {filteredEmployees.length === 0 && (
-          <div className="text-center py-16">
-            <Users className="h-12 w-12 text-white mx-auto mb-3" />
-            <h3 className="font-medium text-foreground mb-1">No team members found</h3>
-            <p className="text-sm text-white mb-4">
-              Try adjusting your filters or search
-            </p>
-            {hasActiveFilters && (
-              <Button variant="outline" size="sm" onClick={clearFilters}>
-                Clear Filters
-              </Button>
-            )}
-          </div>
-        )}
-
-        {/* Team Member Sheet (Bottom Sheet Profile) */}
         <TeamMemberSheet
           employee={
             selectedEmployee
@@ -527,14 +565,12 @@ export function EmployeesSection() {
           }}
         />
 
-        {/* Edit Employee Dialog */}
         <EditEmployeeDialog
           employee={selectedEmployee}
           open={editDialogOpen}
           onOpenChange={setEditDialogOpen}
         />
 
-        {/* Assign to Job Dialog */}
         <AssignToJobDialog
           employee={
             selectedEmployee
@@ -563,7 +599,6 @@ export function EmployeesSection() {
           onOpenChange={setAssignJobDialogOpen}
         />
 
-        {/* Send Message Dialog */}
         <SendMessageDialog
           employee={
             selectedEmployee
@@ -592,13 +627,12 @@ export function EmployeesSection() {
           onOpenChange={setMessageDialogOpen}
         />
 
-        {/* Bulk Assign Dialog */}
         <BulkAssignDialog
           open={bulkAssignDialogOpen}
           onOpenChange={setBulkAssignDialogOpen}
           onComplete={() => setMultiSelectMode(false)}
         />
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

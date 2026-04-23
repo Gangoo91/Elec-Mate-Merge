@@ -178,7 +178,7 @@ export function ProgressTrackingSection() {
                 >
                   <div className="min-w-0 flex-1">
                     <div className="text-[14px] font-medium text-white truncate">{cohort.name}</div>
-                    <div className="mt-0.5 text-[11.5px] text-white/50 tabular-nums">
+                    <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
                       {cohort.studentCount} students
                     </div>
                   </div>
@@ -205,7 +205,7 @@ export function ProgressTrackingSection() {
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-start gap-4">
               <span aria-hidden className="w-[3px] h-10 rounded-full bg-red-400 shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                   Immediate attention
                 </div>
                 <div className="mt-1 text-[15px] font-medium text-white">
@@ -218,7 +218,7 @@ export function ProgressTrackingSection() {
                     </Pill>
                   ))}
                   {studentsAtRisk.length > 8 && (
-                    <span className="text-[11px] text-white/40 px-1.5 py-1">
+                    <span className="text-[11px] text-white/70 px-1.5 py-1">
                       +{studentsAtRisk.length - 8}
                     </span>
                   )}
@@ -320,14 +320,14 @@ export function ProgressTrackingSection() {
                             </div>
                             {data.isAtRisk && <Pill tone="red">At Risk</Pill>}
                           </div>
-                          <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                          <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                             {getCohortName(data.cohort_id)}
                           </div>
                         </div>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <button
-                              className="text-white/50 hover:text-white text-[18px] leading-none px-1 touch-manipulation shrink-0"
+                              className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation shrink-0"
                               aria-label="Options"
                             >
                               ⋯
@@ -368,7 +368,7 @@ export function ProgressTrackingSection() {
                       <div className="mt-3 grid grid-cols-2 gap-4">
                         <div>
                           <div className="flex items-baseline justify-between text-[11px]">
-                            <span className="text-white/50 uppercase tracking-[0.12em]">
+                            <span className="text-white/75 uppercase tracking-[0.12em]">
                               Progress
                             </span>
                             <Pill tone={progressTone(data.overallProgress)}>{data.overallProgress}%</Pill>
@@ -382,7 +382,7 @@ export function ProgressTrackingSection() {
                         </div>
                         <div>
                           <div className="flex items-baseline justify-between text-[11px]">
-                            <span className="text-white/50 uppercase tracking-[0.12em]">
+                            <span className="text-white/75 uppercase tracking-[0.12em]">
                               Attendance
                             </span>
                             <Pill tone={progressTone(data.attendanceRate)}>{data.attendanceRate}%</Pill>
@@ -397,7 +397,7 @@ export function ProgressTrackingSection() {
                       </div>
 
                       {data.expected_end_date && (
-                        <div className="mt-3 text-[11px] text-white/50 tabular-nums">
+                        <div className="mt-3 text-[11px] text-white/75 tabular-nums">
                           Due{' '}
                           {new Date(data.expected_end_date).toLocaleDateString('en-GB', {
                             month: 'short',

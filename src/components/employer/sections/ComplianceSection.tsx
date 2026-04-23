@@ -1,506 +1,373 @@
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { SectionHeader } from '@/components/employer/SectionHeader';
-import { ComplianceDashboard } from '@/components/employer/ComplianceDashboard';
-import { QualificationTracker } from '@/components/employer/QualificationTracker';
+import { useMemo, useState } from 'react';
+import { RefreshCw, AlertTriangle } from 'lucide-react';
 import {
   useComplianceDocuments,
   useComplianceStats,
-  useCreateComplianceDocument,
-  useUpdateSignatures,
-  useDeleteComplianceDocument,
   type ComplianceDocument,
-  type DocumentType,
-  type DocumentCategory,
 } from '@/hooks/useComplianceDocuments';
 import {
-  Shield,
-  FileCheck,
-  CheckCircle2,
-  Clock,
-  Search,
-  Download,
-  Plus,
-  Loader2,
-  RefreshCw,
-  AlertTriangle,
-  Trash2,
-  FileText,
-  Award,
-  Building2,
-  Car,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  type Tone,
+} from '@/components/employer/editorial';
 
-const statusColors: Record<string, string> = {
-  Current: 'bg-green-500/20 text-green-400',
-  Pending: 'bg-yellow-500/20 text-yellow-400',
-  Expiring: 'bg-orange-500/20 text-orange-400',
-  Expired: 'bg-red-500/20 text-red-400',
-  Draft: 'bg-gray-500/20 text-white',
-};
+type FilterValue = 'all' | 'insurance' | 'pat' | 'calibration' | 'audits';
 
-const documentTypes: DocumentType[] = [
-  'RAMS Sign-off',
-  'Permit',
-  'Induction',
-  'Briefing',
-  'Method Statement',
-  'Certificate',
-  'Policy',
+const FILTER_TABS: { value: FilterValue; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'insurance', label: 'Insurance' },
+  { value: 'pat', label: 'PAT' },
+  { value: 'calibration', label: 'Calibration' },
+  { value: 'audits', label: 'Audits' },
 ];
-const categories: DocumentCategory[] = [
-  'Safety',
-  'Permits',
-  'Induction',
-  'Training',
-  'Legal',
-  'Insurance',
-];
+
+function classifyDocument(doc: ComplianceDocument): FilterValue {
+  const haystack = `${doc.title ?? ''} ${doc.category ?? ''} ${doc.document_type ?? ''}`.toLowerCase();
+  if (haystack.includes('insurance')) return 'insurance';
+  if (haystack.includes('pat') || haystack.includes('portable appliance')) return 'pat';
+  if (haystack.includes('calibration') || haystack.includes('calibrate')) return 'calibration';
+  if (haystack.includes('audit')) return 'audits';
+  return 'all';
+}
+
+function daysUntil(dateStr?: string | null): number | null {
+  if (!dateStr) return null;
+  const target = new Date(dateStr);
+  if (Number.isNaN(target.getTime())) return null;
+  const now = new Date();
+  const diffMs = target.getTime() - now.getTime();
+  return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+}
+
+function statusForDoc(doc: ComplianceDocument): {
+  label: string;
+  tone: Tone;
+  bucket: 'on-track' | 'due-soon' | 'overdue';
+} {
+  const days = daysUntil(doc.expiry_date);
+  if (days === null) {
+    return { label: doc.status || 'Active', tone: 'cyan', bucket: 'on-track' };
+  }
+  if (days < 0) return { label: `Overdue ${Math.abs(days)}d`, tone: 'red', bucket: 'overdue' };
+  if (days <= 30) return { label: `Due in ${days}d`, tone: 'amber', bucket: 'due-soon' };
+  return { label: `Renews ${days}d`, tone: 'emerald', bucket: 'on-track' };
+}
+
+function formatDate(dateStr?: string | null): string {
+  if (!dateStr) return 'no expiry';
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return dateStr;
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+function formatDateTime(dateStr?: string | null): string {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (Number.isNaN(d.getTime())) return dateStr;
+  return d.toLocaleString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
 
 export function ComplianceSection() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showNewDoc, setShowNewDoc] = useState(false);
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState<FilterValue>('all');
+  const [selected, setSelected] = useState<ComplianceDocument | null>(null);
 
-  // Form state
-  const [title, setTitle] = useState('');
-  const [documentType, setDocumentType] = useState<DocumentType>('RAMS Sign-off');
-  const [category, setCategory] = useState<DocumentCategory>('Safety');
-  const [signaturesRequired, setSignaturesRequired] = useState('');
-  const [expiryDate, setExpiryDate] = useState('');
-
-  // Handle category click from dashboard
-  const handleCategoryClick = (category: string) => {
-    setActiveCategory(category);
-    if (category === 'qualifications') {
-      setActiveTab('qualifications');
-    } else {
-      setActiveTab('documents');
-    }
-  };
-
-  // Hooks
   const { data: documents, isLoading, error, refetch } = useComplianceDocuments();
   const { data: stats } = useComplianceStats();
-  const createDocument = useCreateComplianceDocument();
-  const updateSignatures = useUpdateSignatures();
-  const deleteDocument = useDeleteComplianceDocument();
 
-  // Filter by search
-  const filteredDocuments =
-    documents?.filter(
-      (doc) =>
-        doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        doc.category?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        doc.document_type?.toLowerCase().includes(searchQuery.toLowerCase())
-    ) || [];
+  const enriched = useMemo(() => {
+    return (documents ?? []).map((doc) => ({
+      doc,
+      kind: classifyDocument(doc),
+      status: statusForDoc(doc),
+    }));
+  }, [documents]);
 
-  const handleCreateDocument = async () => {
-    if (!title) return;
-
-    await createDocument.mutateAsync({
-      title,
-      document_type: documentType,
-      category,
-      signatures_required: parseInt(signaturesRequired) || 0,
-      signatures_collected: 0,
-      status: 'Pending',
-      expiry_date: expiryDate || undefined,
-    });
-
-    // Reset form
-    setTitle('');
-    setDocumentType('RAMS Sign-off');
-    setCategory('Safety');
-    setSignaturesRequired('');
-    setExpiryDate('');
-    setShowNewDoc(false);
-  };
-
-  const handleAddSignature = async (doc: ComplianceDocument) => {
-    if (doc.signatures_collected < doc.signatures_required) {
-      await updateSignatures.mutateAsync({
-        id: doc.id,
-        signatures_collected: doc.signatures_collected + 1,
-      });
+  const counters = useMemo(() => {
+    let onTrack = 0;
+    let dueSoon = 0;
+    let overdue = 0;
+    let audits = 0;
+    for (const item of enriched) {
+      if (item.status.bucket === 'on-track') onTrack += 1;
+      if (item.status.bucket === 'due-soon') dueSoon += 1;
+      if (item.status.bucket === 'overdue') overdue += 1;
+      if (item.kind === 'audits') audits += 1;
     }
-  };
+    if (stats?.total !== undefined && enriched.length === 0) {
+      onTrack = stats.compliant ?? onTrack;
+      dueSoon = stats.expiring ?? dueSoon;
+      overdue = stats.expired ?? overdue;
+    }
+    return { onTrack, dueSoon, overdue, audits };
+  }, [enriched, stats]);
 
-  const handleDelete = async (id: string) => {
-    await deleteDocument.mutateAsync(id);
-  };
+  const filtered = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    return enriched
+      .filter((item) => {
+        if (filter !== 'all' && item.kind !== filter) return false;
+        if (!term) return true;
+        const haystack = `${item.doc.title ?? ''} ${item.doc.category ?? ''} ${item.doc.document_type ?? ''}`.toLowerCase();
+        return haystack.includes(term);
+      })
+      .sort((a, b) => {
+        const ad = a.doc.expiry_date ? new Date(a.doc.expiry_date).getTime() : Number.POSITIVE_INFINITY;
+        const bd = b.doc.expiry_date ? new Date(b.doc.expiry_date).getTime() : Number.POSITIVE_INFINITY;
+        return ad - bd;
+      });
+  }, [enriched, filter, search]);
+
+  const renewalReminders = useMemo(() => {
+    return enriched
+      .filter((item) => item.status.bucket !== 'on-track')
+      .sort((a, b) => {
+        const ad = a.doc.expiry_date ? new Date(a.doc.expiry_date).getTime() : Number.POSITIVE_INFINITY;
+        const bd = b.doc.expiry_date ? new Date(b.doc.expiry_date).getTime() : Number.POSITIVE_INFINITY;
+        return ad - bd;
+      })
+      .slice(0, 6);
+  }, [enriched]);
+
+  const auditTrail = useMemo(() => {
+    return [...(documents ?? [])]
+      .sort((a, b) => {
+        const at = new Date(a.updated_at ?? a.created_at ?? 0).getTime();
+        const bt = new Date(b.updated_at ?? b.created_at ?? 0).getTime();
+        return bt - at;
+      })
+      .slice(0, 8);
+  }, [documents]);
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 space-y-4">
-        <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-white">Failed to load compliance documents</p>
-        <Button onClick={() => refetch()} variant="outline" className="gap-2">
-          <RefreshCw className="h-4 w-4" />
-          Retry
-        </Button>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="HR & Safety"
+          title="Compliance"
+          description="Insurance renewals, PAT schedule, calibration and audit trail."
+          tone="cyan"
+          actions={
+            <IconButton onClick={() => refetch()} aria-label="Retry">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          }
+        />
+        <EmptyState
+          title="Failed to load compliance data"
+          description="We could not retrieve compliance documents. Please retry."
+          action="Retry"
+          onAction={() => refetch()}
+        />
+      </PageFrame>
     );
   }
 
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <SectionHeader
-          title="Compliance & Qualifications"
-          description="Track certifications, insurance, and compliance documents"
-        />
+    <PageFrame>
+      <PageHero
+        eyebrow="HR & Safety"
+        title="Compliance"
+        description="Insurance renewals, PAT schedule, calibration and audit trail."
+        tone="cyan"
+        actions={
+          <IconButton onClick={() => refetch()} aria-label="Refresh">
+            <RefreshCw className="h-4 w-4" />
+          </IconButton>
+        }
+      />
 
-        <Sheet open={showNewDoc} onOpenChange={setShowNewDoc}>
-          <SheetTrigger asChild>
-            <Button className="gap-2 h-11 touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90">
-              <Plus className="h-4 w-4" />
-              Add Document
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
-            <div className="flex flex-col h-full bg-background">
-              <SheetHeader className="p-4 border-b border-border">
-                <SheetTitle>Add Compliance Document</SheetTitle>
-              </SheetHeader>
-              <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-                <div className="space-y-2">
-                  <Label>Document Title *</Label>
-                  <Input
-                    placeholder="e.g. RAMS Acknowledgement Record..."
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    className="h-11 touch-manipulation"
-                  />
-                </div>
+      <StatStrip
+        columns={4}
+        stats={[
+          { label: 'On track', value: counters.onTrack, tone: 'emerald' },
+          { label: 'Due 30d', value: counters.dueSoon, tone: 'amber' },
+          { label: 'Overdue', value: counters.overdue, tone: 'red' },
+          { label: 'Audits complete', value: counters.audits, accent: true },
+        ]}
+      />
 
-                <div className="space-y-2">
-                  <Label>Document Type</Label>
-                  <Select
-                    value={documentType}
-                    onValueChange={(v) => setDocumentType(v as DocumentType)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100]">
-                      {documentTypes.map((type) => (
-                        <SelectItem key={type} value={type}>
-                          {type}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+      <FilterBar
+        tabs={FILTER_TABS}
+        activeTab={filter}
+        onTabChange={(value) => setFilter(value as FilterValue)}
+        search={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search compliance…"
+      />
 
-                <div className="space-y-2">
-                  <Label>Category</Label>
-                  <Select
-                    value={category}
-                    onValueChange={(v) => setCategory(v as DocumentCategory)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100]">
-                      {categories.map((cat) => (
-                        <SelectItem key={cat} value={cat}>
-                          {cat}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Signatures Required</Label>
-                  <Input
-                    type="number"
-                    placeholder="Number of signatures needed..."
-                    value={signaturesRequired}
-                    onChange={(e) => setSignaturesRequired(e.target.value)}
-                    className="h-11 touch-manipulation"
-                    min="0"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Expiry Date (Optional)</Label>
-                  <Input
-                    type="date"
-                    value={expiryDate}
-                    onChange={(e) => setExpiryDate(e.target.value)}
-                    className="h-11 touch-manipulation"
-                  />
-                </div>
-              </div>
-
-              <div className="p-4 border-t border-border bg-background">
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowNewDoc(false)}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={handleCreateDocument}
-                    disabled={!title || createDocument.isPending}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    {createDocument.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      'Add Document'
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </div>
-
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList className="grid grid-cols-3 h-11">
-          <TabsTrigger value="dashboard" className="text-xs">
-            <Shield className="h-4 w-4 mr-1.5" />
-            Dashboard
-          </TabsTrigger>
-          <TabsTrigger value="qualifications" className="text-xs">
-            <Award className="h-4 w-4 mr-1.5" />
-            Qualifications
-          </TabsTrigger>
-          <TabsTrigger value="documents" className="text-xs">
-            <FileText className="h-4 w-4 mr-1.5" />
-            Documents
-          </TabsTrigger>
-        </TabsList>
-
-        {/* Dashboard Tab */}
-        <TabsContent value="dashboard" className="mt-0 space-y-4">
-          <ComplianceDashboard onCategoryClick={handleCategoryClick} />
-        </TabsContent>
-
-        {/* Qualifications Tab */}
-        <TabsContent value="qualifications" className="mt-0 space-y-4">
-          <QualificationTracker />
-        </TabsContent>
-
-        {/* Documents Tab */}
-        <TabsContent value="documents" className="mt-0 space-y-4">
-          {/* Search */}
-          <div className="relative">
-            {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-            )}
-            <Input
-              placeholder="Search compliance documents..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn('h-11 touch-manipulation', !searchQuery && 'pl-9')}
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : (
+        <>
+          <ListCard>
+            <ListCardHeader
+              tone="cyan"
+              title="Compliance Calendar"
+              meta={<Pill tone="cyan">{filtered.length}</Pill>}
             />
-          </div>
+            <ListBody>
+              {filtered.length === 0 ? (
+                <div className="px-4 py-8">
+                  <EmptyState
+                    title="No matching compliance items"
+                    description="Adjust the filters or search to see scheduled renewals."
+                  />
+                </div>
+              ) : (
+                filtered.map((item) => (
+                  <ListRow
+                    key={item.doc.id}
+                    title={item.doc.title}
+                    subtitle={`${item.doc.document_type ?? item.doc.category ?? 'Document'} \u00B7 renews ${formatDate(item.doc.expiry_date)}`}
+                    trailing={<Pill tone={item.status.tone}>{item.status.label}</Pill>}
+                    onClick={() => setSelected(item.doc)}
+                  />
+                ))
+              )}
+            </ListBody>
+          </ListCard>
 
-          {/* Active Documents */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-base md:text-lg font-semibold text-foreground flex items-center gap-2">
-                <span className="w-1 h-5 bg-success rounded-full"></span>
-                Compliance Documents
-              </h2>
-              <button className="text-xs text-elec-yellow hover:underline flex items-center gap-1">
-                <Download className="h-3 w-3" />
-                Export Pack
-              </button>
-            </div>
-
-            {isLoading ? (
-              <div className="space-y-3">
-                {[1, 2, 3].map((i) => (
-                  <Card key={i} className="bg-elec-gray border-border">
-                    <CardContent className="p-4">
-                      <Skeleton className="h-6 w-3/4 mb-2" />
-                      <Skeleton className="h-4 w-1/2 mb-4" />
-                      <Skeleton className="h-2 w-full" />
-                    </CardContent>
-                  </Card>
+          {renewalReminders.length > 0 && (
+            <ListCard>
+              <ListCardHeader
+                tone="amber"
+                title="Renewal Reminders"
+                meta={<Pill tone="amber">{renewalReminders.length}</Pill>}
+              />
+              <ListBody>
+                {renewalReminders.map((item) => (
+                  <ListRow
+                    key={`reminder-${item.doc.id}`}
+                    title={item.doc.title}
+                    subtitle={`${item.doc.category ?? item.doc.document_type ?? 'Document'} \u00B7 ${formatDate(item.doc.expiry_date)}`}
+                    trailing={<Pill tone={item.status.tone}>{item.status.label}</Pill>}
+                    onClick={() => setSelected(item.doc)}
+                  />
                 ))}
-              </div>
-            ) : filteredDocuments.length === 0 ? (
-              <Card className="bg-elec-gray border-border">
-                <CardContent className="p-8 text-center">
-                  <FileText className="h-12 w-12 text-white mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-foreground mb-2">No Documents</h3>
-                  <p className="text-white mb-4">
-                    Add your first compliance document to get started.
-                  </p>
-                  <Button onClick={() => setShowNewDoc(true)} className="gap-2">
-                    <Plus className="h-4 w-4" />
-                    Add Document
-                  </Button>
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-3">
-                {filteredDocuments.map((doc) => {
-                  const isComplete =
-                    doc.signatures_required > 0 &&
-                    doc.signatures_collected >= doc.signatures_required;
-                  const progress =
-                    doc.signatures_required > 0
-                      ? (doc.signatures_collected / doc.signatures_required) * 100
-                      : 100;
+              </ListBody>
+            </ListCard>
+          )}
 
+          <ListCard>
+            <ListCardHeader
+              tone="indigo"
+              title="Audit Trail"
+              meta={<Pill tone="indigo">{auditTrail.length}</Pill>}
+            />
+            <ListBody>
+              {auditTrail.length === 0 ? (
+                <div className="px-4 py-8">
+                  <EmptyState
+                    title="No recent activity"
+                    description="Compliance updates and signatures will appear here."
+                  />
+                </div>
+              ) : (
+                auditTrail.map((doc) => {
+                  const wasUpdated = doc.updated_at && doc.updated_at !== doc.created_at;
+                  const action = wasUpdated ? 'Updated' : 'Created';
+                  const when = formatDateTime(doc.updated_at ?? doc.created_at);
+                  const tone: Tone = wasUpdated ? 'emerald' : 'cyan';
                   return (
-                    <Card
-                      key={doc.id}
-                      className={`hover:bg-muted/50 transition-colors ${
-                        !isComplete && doc.signatures_required > 0
-                          ? 'border-l-4 border-l-warning'
-                          : ''
-                      }`}
-                    >
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex items-start gap-3 flex-1">
-                            <div
-                              className={`p-2 rounded-lg ${
-                                isComplete ? 'bg-success/10' : 'bg-warning/10'
-                              }`}
-                            >
-                              <FileCheck
-                                className={`h-4 w-4 ${
-                                  isComplete ? 'text-success' : 'text-warning'
-                                }`}
-                              />
-                            </div>
-                            <div className="flex-1">
-                              <p className="font-medium text-foreground text-sm md:text-base">
-                                {doc.title}
-                              </p>
-                              <div className="flex flex-wrap items-center gap-2 text-xs text-white mt-1">
-                                {doc.category && (
-                                  <Badge variant="outline" className="text-xs">
-                                    {doc.category}
-                                  </Badge>
-                                )}
-                                {doc.document_type && <span>{doc.document_type}</span>}
-                              </div>
-                              {doc.signatures_required > 0 && (
-                                <p className="text-xs text-white mt-1">
-                                  {doc.signatures_collected}/{doc.signatures_required} signatures
-                                  collected
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex flex-col items-end gap-2">
-                            <Badge className={statusColors[doc.status] || statusColors['Pending']}>
-                              {isComplete
-                                ? 'Complete'
-                                : doc.signatures_required > 0
-                                  ? `${doc.signatures_required - doc.signatures_collected} pending`
-                                  : doc.status}
-                            </Badge>
-                            <div className="flex items-center gap-1">
-                              {!isComplete && doc.signatures_required > 0 && (
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => handleAddSignature(doc)}
-                                  disabled={updateSignatures.isPending}
-                                  className="h-8 text-xs touch-manipulation"
-                                >
-                                  {updateSignatures.isPending ? (
-                                    <Loader2 className="h-3 w-3 animate-spin" />
-                                  ) : (
-                                    <>
-                                      <CheckCircle2 className="h-3 w-3 mr-1" />
-                                      Sign
-                                    </>
-                                  )}
-                                </Button>
-                              )}
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => handleDelete(doc.id)}
-                                disabled={deleteDocument.isPending}
-                                className="h-8 text-xs text-destructive hover:text-destructive touch-manipulation"
-                              >
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Progress bar */}
-                        {doc.signatures_required > 0 && (
-                          <div className="mt-3 h-1.5 bg-muted rounded-full overflow-hidden">
-                            <div
-                              className={`h-full rounded-full ${isComplete ? 'bg-success' : 'bg-warning'}`}
-                              style={{ width: `${progress}%` }}
-                            />
-                          </div>
-                        )}
-                      </CardContent>
-                    </Card>
+                    <ListRow
+                      key={`audit-${doc.id}-${doc.updated_at ?? doc.created_at}`}
+                      title={`${action} \u00B7 ${doc.title}`}
+                      subtitle={`${doc.category ?? doc.document_type ?? 'Document'} \u00B7 ${when}`}
+                      trailing={<Pill tone={tone}>{action}</Pill>}
+                      onClick={() => setSelected(doc)}
+                    />
                   );
-                })}
-              </div>
-            )}
-          </div>
+                })
+              )}
+            </ListBody>
+          </ListCard>
+        </>
+      )}
 
-          {/* Export Options */}
-          <div>
-            <h2 className="text-base md:text-lg font-semibold text-foreground mb-3 flex items-center gap-2">
-              <span className="w-1 h-5 bg-info rounded-full"></span>
-              Evidence Packs
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <Card className="hover:bg-muted/50 transition-colors cursor-pointer touch-manipulation">
-                <CardContent className="p-4 flex items-center gap-3">
-                  <Download className="h-5 w-5 text-info" />
-                  <div>
-                    <p className="font-medium text-foreground text-sm">Export All Evidence</p>
-                    <p className="text-xs text-white">
-                      Download complete compliance pack
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-              <Card className="hover:bg-muted/50 transition-colors cursor-pointer touch-manipulation">
-                <CardContent className="p-4 flex items-center gap-3">
-                  <FileText className="h-5 w-5 text-info" />
-                  <div>
-                    <p className="font-medium text-foreground text-sm">Generate Audit Report</p>
-                    <p className="text-xs text-white">Create compliance summary</p>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </TabsContent>
-      </Tabs>
-    </div>
+      {selected && (
+        <ListCard>
+          <ListCardHeader
+            tone="yellow"
+            title={selected.title}
+            meta={<Pill tone={statusForDoc(selected).tone}>{statusForDoc(selected).label}</Pill>}
+            action="Close"
+            onAction={() => setSelected(null)}
+          />
+          <ListBody>
+            <ListRow
+              title="Type"
+              subtitle={selected.document_type ?? '—'}
+              trailing={<span className="text-[12px] text-white">{selected.category ?? '—'}</span>}
+            />
+            <ListRow
+              title="Renews"
+              subtitle={formatDate(selected.expiry_date)}
+              trailing={
+                <Pill tone={statusForDoc(selected).tone}>{statusForDoc(selected).label}</Pill>
+              }
+            />
+            {selected.signatures_required > 0 && (
+              <ListRow
+                title="Signatures"
+                subtitle={`${selected.signatures_collected}/${selected.signatures_required} collected`}
+                trailing={
+                  <Pill
+                    tone={
+                      selected.signatures_collected >= selected.signatures_required
+                        ? 'emerald'
+                        : 'amber'
+                    }
+                  >
+                    {selected.signatures_collected >= selected.signatures_required
+                      ? 'Complete'
+                      : 'Pending'}
+                  </Pill>
+                }
+              />
+            )}
+            <ListRow
+              title="Created"
+              subtitle={formatDateTime(selected.created_at)}
+              trailing={
+                selected.updated_at && selected.updated_at !== selected.created_at ? (
+                  <span className="text-[12px] text-white">
+                    Updated {formatDateTime(selected.updated_at)}
+                  </span>
+                ) : null
+              }
+            />
+          </ListBody>
+        </ListCard>
+      )}
+
+      {!isLoading && !error && (documents?.length ?? 0) === 0 && (
+        <EmptyState
+          title="No compliance records yet"
+          description="Insurance, PAT and calibration renewals will appear here once added."
+        />
+      )}
+
+      {error && (
+        <div className="hidden">
+          <AlertTriangle aria-hidden />
+        </div>
+      )}
+    </PageFrame>
   );
 }

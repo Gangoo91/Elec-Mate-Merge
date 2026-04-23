@@ -7,14 +7,23 @@ import {
   DialogDescription,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from '@/hooks/use-toast';
 import { FileText, Building, Send, Shield, AlertCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import {
+  FormCard,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  TextAction,
+  fieldLabelClass,
+  inputClass,
+  textareaClass,
+  checkboxClass,
+} from '@/components/employer/editorial';
 
 interface TrainingRecord {
   id: string;
@@ -89,118 +98,114 @@ export const RequestTrainingTransferDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[580px] max-h-[90vh] overflow-y-auto p-6 bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <FileText className="h-5 w-5 text-elec-yellow" />
-            Request Training Transfer
+            Request training transfer
           </DialogTitle>
-          <DialogDescription>
-            Request training certificates from previous employers for {profileName}'s Elec-ID
+          <DialogDescription className="text-white">
+            Request training certificates from previous employers for {profileName}'s Elec-ID.
           </DialogDescription>
         </DialogHeader>
 
-        {/* Info Banner */}
-        <Card className="bg-elec-yellow/5 border-elec-yellow/20">
-          <CardContent className="p-3 flex items-start gap-3">
+        <div className="space-y-4">
+          <div className="bg-elec-yellow/5 border border-elec-yellow/20 rounded-2xl p-4 flex items-start gap-3">
             <Shield className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-            <div className="text-sm">
-              <p className="font-medium text-foreground">Your Training, Your Records</p>
-              <p className="text-white mt-1">
+            <div>
+              <p className="text-[13px] font-semibold text-white">Your training, your records</p>
+              <p className="mt-1 text-[12px] text-white">
                 Under GDPR and data protection law, you have the right to request copies of training
                 records completed during your employment. These belong to you.
               </p>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        <div className="space-y-4 py-4">
-          {/* Training Records to Request */}
-          <div className="space-y-2">
+          <FormCard eyebrow="Records to request">
             <div className="flex items-center justify-between">
-              <Label>Select Training Records to Request</Label>
-              <Button variant="ghost" size="sm" onClick={handleSelectAll} className="text-xs h-7">
-                {selectedRecords.length === trainingRecords.length ? 'Deselect All' : 'Select All'}
-              </Button>
+              <label className={fieldLabelClass}>Select training records</label>
+              <TextAction onClick={handleSelectAll}>
+                {selectedRecords.length === trainingRecords.length ? 'Deselect all' : 'Select all'}
+              </TextAction>
             </div>
 
-            <div className="space-y-2 max-h-48 overflow-y-auto border border-border rounded-lg p-2">
+            <div className="space-y-1.5 max-h-64 overflow-y-auto">
               {trainingRecords.length === 0 ? (
-                <p className="text-sm text-white text-center py-4">
+                <p className="text-[12px] text-white text-center py-4">
                   No training records available to request
                 </p>
               ) : (
-                trainingRecords.map((record) => (
-                  <div
-                    key={record.id}
-                    className={`flex items-center gap-3 p-2 rounded-lg border transition-colors cursor-pointer ${
-                      selectedRecords.includes(record.id)
-                        ? 'border-elec-yellow bg-elec-yellow/5'
-                        : 'border-border hover:border-elec-yellow/50'
-                    }`}
-                    onClick={() => handleToggleRecord(record.id)}
-                  >
-                    <Checkbox
-                      checked={selectedRecords.includes(record.id)}
-                      onCheckedChange={() => handleToggleRecord(record.id)}
-                    />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">{record.name}</p>
-                      <p className="text-xs text-white flex items-center gap-2">
-                        <Building className="h-3 w-3" />
-                        {record.provider}
-                        <span>•</span>
-                        {new Date(record.completedDate).toLocaleDateString('en-GB', {
-                          month: 'short',
-                          year: 'numeric',
-                        })}
-                      </p>
+                trainingRecords.map((record) => {
+                  const selected = selectedRecords.includes(record.id);
+                  return (
+                    <div
+                      key={record.id}
+                      className={cn(
+                        'flex items-center gap-3 p-2.5 rounded-xl border transition-colors cursor-pointer touch-manipulation',
+                        selected
+                          ? 'border-elec-yellow/60 bg-elec-yellow/5'
+                          : 'border-white/[0.06] bg-[hsl(0_0%_9%)] hover:border-elec-yellow/30'
+                      )}
+                      onClick={() => handleToggleRecord(record.id)}
+                    >
+                      <Checkbox
+                        checked={selected}
+                        onCheckedChange={() => handleToggleRecord(record.id)}
+                        className={checkboxClass}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-medium text-white truncate">{record.name}</p>
+                        <p className="text-[11px] text-white flex items-center gap-1.5 mt-0.5">
+                          <Building className="h-3 w-3" />
+                          {record.provider}
+                          <span>·</span>
+                          {new Date(record.completedDate).toLocaleDateString('en-GB', {
+                            month: 'short',
+                            year: 'numeric',
+                          })}
+                        </p>
+                      </div>
+                      {!record.hasDocument && (
+                        <AlertCircle className="h-4 w-4 text-amber-400 flex-shrink-0" />
+                      )}
                     </div>
-                    {!record.hasDocument && (
-                      <AlertCircle className="h-4 w-4 text-warning flex-shrink-0" />
-                    )}
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
-            <p className="text-xs text-white">
+            <p className="text-[11px] text-white">
               <AlertCircle className="h-3 w-3 inline mr-1" />
               Records without certificates are marked with a warning icon
             </p>
-          </div>
+          </FormCard>
 
-          {/* Employer Email */}
-          <div className="space-y-2">
-            <Label htmlFor="employerEmail">Former Employer Email *</Label>
-            <Input
-              id="employerEmail"
-              type="email"
-              placeholder="hr@formeremployer.com"
-              value={employerEmail}
-              onChange={(e) => setEmployerEmail(e.target.value)}
-            />
-          </div>
-
-          {/* Request Message */}
-          <div className="space-y-2">
-            <Label htmlFor="message">Request Message</Label>
-            <Textarea
-              id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              rows={6}
-            />
-          </div>
+          <FormCard eyebrow="Message">
+            <Field label="Former employer email" required>
+              <Input
+                type="email"
+                placeholder="hr@formeremployer.com"
+                value={employerEmail}
+                onChange={(e) => setEmployerEmail(e.target.value)}
+                className={inputClass}
+              />
+            </Field>
+            <Field label="Request message">
+              <Textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                rows={6}
+                className={`${textareaClass} min-h-[140px]`}
+              />
+            </Field>
+          </FormCard>
         </div>
 
-        <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button onClick={handleSendRequest} className="gap-2">
-            <Send className="h-4 w-4" />
-            Send Request
-          </Button>
+        <DialogFooter className="gap-2 sm:gap-2">
+          <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
+          <PrimaryButton onClick={handleSendRequest}>
+            <Send className="h-4 w-4 mr-1.5" />
+            Send request
+          </PrimaryButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

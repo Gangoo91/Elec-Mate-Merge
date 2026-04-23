@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Briefcase, Send, Loader2, MapPin, Check, AlertCircle } from 'lucide-react';
@@ -13,6 +9,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { createInvitation } from '@/services/conversationService';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import {
+  Field,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  Pill,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 interface Vacancy {
   id: string;
@@ -142,9 +146,9 @@ export function InviteToApplyDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-lg">
+      <DialogContent className="max-w-[95vw] sm:max-w-lg bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <Briefcase className="h-5 w-5 text-elec-yellow" />
             Invite to Apply
           </DialogTitle>
@@ -152,95 +156,92 @@ export function InviteToApplyDialog({
 
         <div className="space-y-4">
           {/* Electrician Info */}
-          <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-            <Avatar className="w-10 h-10">
-              <AvatarImage src={electrician.avatar} alt={electrician.name} />
-              <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow font-bold">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
-            <div>
-              <p className="font-medium">{electrician.name}</p>
-              <p className="text-sm text-white">{electrician.location}</p>
+          <FormCard eyebrow="Sparky">
+            <div className="flex items-center gap-3">
+              <Avatar className="w-10 h-10">
+                <AvatarImage src={electrician.avatar} alt={electrician.name} />
+                <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow font-bold">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <p className="font-medium text-white">{electrician.name}</p>
+                <p className="text-sm text-white">{electrician.location}</p>
+              </div>
             </div>
-          </div>
+          </FormCard>
 
           {/* Vacancy Selection */}
-          <div className="space-y-2">
-            <Label>Select a Vacancy</Label>
-
+          <Field label="Select a vacancy">
             {isLoading ? (
               <div className="space-y-2">
                 <Skeleton className="h-16 w-full" />
                 <Skeleton className="h-16 w-full" />
               </div>
             ) : availableVacancies.length === 0 ? (
-              <Card className="border-dashed">
-                <CardContent className="p-4 text-center">
-                  <AlertCircle className="h-8 w-8 text-white mx-auto mb-2" />
-                  <p className="text-sm text-white">
-                    {vacancies.length === 0
-                      ? 'No active vacancies. Create a job posting first.'
-                      : 'This person has been invited to all your active vacancies.'}
-                  </p>
-                </CardContent>
-              </Card>
+              <div className="bg-[hsl(0_0%_9%)] border border-dashed border-white/[0.12] rounded-xl p-4 text-center">
+                <AlertCircle className="h-8 w-8 text-white mx-auto mb-2" />
+                <p className="text-sm text-white">
+                  {vacancies.length === 0
+                    ? 'No active vacancies. Create a job posting first.'
+                    : 'This person has been invited to all your active vacancies.'}
+                </p>
+              </div>
             ) : (
               <ScrollArea className="h-48">
                 <div className="space-y-2 pr-4">
-                  {availableVacancies.map((vacancy) => (
-                    <Card
-                      key={vacancy.id}
-                      className={`cursor-pointer transition-all ${
-                        selectedVacancy === vacancy.id
-                          ? 'border-elec-yellow bg-elec-yellow/5'
-                          : 'hover:border-border/80'
-                      }`}
-                      onClick={() => setSelectedVacancy(vacancy.id)}
-                    >
-                      <CardContent className="p-3 flex items-center gap-3">
+                  {availableVacancies.map((vacancy) => {
+                    const isSelected = selectedVacancy === vacancy.id;
+                    return (
+                      <button
+                        type="button"
+                        key={vacancy.id}
+                        onClick={() => setSelectedVacancy(vacancy.id)}
+                        className={`w-full text-left rounded-xl border p-3 flex items-center gap-3 touch-manipulation transition-colors ${
+                          isSelected
+                            ? 'border-elec-yellow/60 bg-elec-yellow/5'
+                            : 'border-white/[0.08] bg-[hsl(0_0%_9%)] hover:bg-white/[0.04]'
+                        }`}
+                      >
                         <div
                           className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
-                            selectedVacancy === vacancy.id
+                            isSelected
                               ? 'border-elec-yellow bg-elec-yellow'
-                              : 'border-border'
+                              : 'border-white/[0.2]'
                           }`}
                         >
-                          {selectedVacancy === vacancy.id && (
-                            <Check className="h-3 w-3 text-black" />
-                          )}
+                          {isSelected && <Check className="h-3 w-3 text-black" />}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium truncate">{vacancy.title}</p>
+                          <p className="font-medium text-white truncate">{vacancy.title}</p>
                           <div className="flex items-center gap-1 text-sm text-white">
                             <MapPin className="h-3 w-3" />
                             <span className="truncate">{vacancy.location}</span>
                           </div>
                         </div>
-                        <Badge variant="outline" className="shrink-0 capitalize">
+                        <Pill tone="yellow" className="shrink-0 capitalize">
                           {vacancy.status}
-                        </Badge>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </Pill>
+                      </button>
+                    );
+                  })}
                 </div>
               </ScrollArea>
             )}
-          </div>
+          </Field>
 
           {/* Personal Message (Optional) */}
           {selectedVacancy && (
-            <div className="space-y-2">
-              <Label htmlFor="invite-message">Personal Message (Optional)</Label>
+            <Field label="Personal message (optional)">
               <Textarea
                 id="invite-message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Add a personal note to make your invitation stand out..."
                 rows={3}
-                className="resize-none"
+                className={textareaClass}
               />
-            </div>
+            </Field>
           )}
 
           {/* Already Invited Info */}
@@ -253,16 +254,15 @@ export function InviteToApplyDialog({
 
           {/* Actions */}
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-12"
+            <SecondaryButton
+              fullWidth
               onClick={() => onOpenChange(false)}
               disabled={isSending}
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-12"
+            </SecondaryButton>
+            <PrimaryButton
+              fullWidth
               onClick={handleSendInvite}
               disabled={isSending || !selectedVacancy}
             >
@@ -277,7 +277,7 @@ export function InviteToApplyDialog({
                   Send Invitation
                 </>
               )}
-            </Button>
+            </PrimaryButton>
           </div>
         </div>
       </DialogContent>

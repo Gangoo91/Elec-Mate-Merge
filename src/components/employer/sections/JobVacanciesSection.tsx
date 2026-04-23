@@ -1,27 +1,5 @@
 import { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Briefcase,
-  Users,
-  MessageSquare,
-  Loader2,
-  Search,
-  Filter,
-  ArrowUpDown,
-  ChevronDown,
-  CheckSquare,
-  Square,
-} from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { RefreshCw } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -30,26 +8,41 @@ import {
   SheetDescription,
   SheetFooter,
 } from '@/components/ui/sheet';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
-
-// Import new premium components
-import { VacanciesHeroCard } from '@/components/employer/vacancies/VacanciesHeroCard';
-import { PremiumVacancyCard } from '@/components/employer/vacancies/PremiumVacancyCard';
-import { PremiumCandidateCard } from '@/components/employer/vacancies/PremiumCandidateCard';
 import {
-  VacancyFilterPills,
-  candidateStatusColors,
-  elecIdTierColors,
-} from '@/components/employer/vacancies/VacancyFilterPills';
-import { PremiumTabs } from '@/components/employer/vacancies/PremiumTabs';
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  Avatar,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Divider,
+  PrimaryButton,
+  SecondaryButton,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/employer/editorial';
+
 import { ConversationList } from '@/components/employer/vacancies/ConversationList';
 import { ChatView } from '@/components/employer/messaging/ChatView';
 import { VacancyFormWizard } from '@/components/employer/vacancy-form/VacancyFormWizard';
 import { BulkActionBar } from '@/components/employer/vacancies/BulkActionBar';
 
-// Hooks
 import { useVacancies, useToggleVacancyStatus } from '@/hooks/useVacancies';
 import {
   useVacancyApplications,
@@ -58,9 +51,9 @@ import {
 } from '@/hooks/useVacancyApplications';
 import { useConversations } from '@/hooks/useConversations';
 import { useEmployer } from '@/contexts/EmployerContext';
+import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 
-// Types
 import { Vacancy, VacancyApplication } from '@/services/vacancyService';
 import type { Conversation } from '@/services/conversationService';
 
@@ -75,9 +68,57 @@ type StatusFilter =
   | 'Rejected';
 type TierFilter = 'all' | 'basic' | 'verified' | 'premium';
 type SortOption = 'date-desc' | 'date-asc' | 'name';
+type TopTab = 'vacancies' | 'applications' | 'conversations';
+type VacancyTab = 'live' | 'draft' | 'closed';
+
+const vacancyStatusTone: Record<string, Tone> = {
+  Open: 'emerald',
+  Closed: 'red',
+  Draft: 'amber',
+};
+
+const candidateStatusTone: Record<string, Tone> = {
+  New: 'cyan',
+  Reviewing: 'blue',
+  Shortlisted: 'yellow',
+  Interviewed: 'purple',
+  Offered: 'amber',
+  Hired: 'emerald',
+  Rejected: 'red',
+};
+
+const tierTone: Record<string, Tone> = {
+  basic: 'blue',
+  verified: 'cyan',
+  premium: 'yellow',
+};
+
+function getInitials(name: string) {
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function formatRate(min?: number | null, max?: number | null, period?: string | null) {
+  if (!min && !max) return 'Rate negotiable';
+  const range = min && max && min !== max ? `${min.toLocaleString()}–${max.toLocaleString()}` : `${(min ?? max ?? 0).toLocaleString()}`;
+  const suffix = period ? ` / ${period.replace('per ', '')}` : '';
+  return `£${range}${suffix}`;
+}
+
+function formatDate(value: string) {
+  return new Date(value).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
+}
 
 export function JobVacanciesSection() {
-  // Data hooks
+  const queryClient = useQueryClient();
   const { data: vacancies = [], isLoading: vacanciesLoading } = useVacancies();
   const { data: applications = [], isLoading: applicationsLoading } = useVacancyApplications();
   const {
@@ -90,34 +131,59 @@ export function JobVacanciesSection() {
   const bulkUpdateStatus = useBulkUpdateApplicationStatus();
   const { employer } = useEmployer();
 
-  // UI State
-  const [activeTab, setActiveTab] = useState('vacancies');
+  const [topTab, setTopTab] = useState<TopTab>('vacancies');
+  const [vacancyTab, setVacancyTab] = useState<VacancyTab>('live');
+  const [vacancySearch, setVacancySearch] = useState('');
+
   const [isWizardOpen, setIsWizardOpen] = useState(false);
   const [editingVacancy, setEditingVacancy] = useState<Vacancy | null>(null);
   const [duplicatingVacancy, setDuplicatingVacancy] = useState<Vacancy | null>(null);
+  const [viewingVacancy, setViewingVacancy] = useState<Vacancy | null>(null);
   const [viewingApplication, setViewingApplication] = useState<VacancyApplication | null>(null);
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
 
-  // Selection mode state
   const [selectionMode, setSelectionMode] = useState(false);
   const [selectedApplicants, setSelectedApplicants] = useState<Set<string>>(new Set());
 
-  // Filter and sort state
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [tierFilter, setTierFilter] = useState<TierFilter>('all');
   const [vacancyFilter, setVacancyFilter] = useState<string>('all');
   const [sortBy, setSortBy] = useState<SortOption>('date-desc');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Calculate stats
   const totalApplicants = applications.length;
   const newApplicants = applications.filter((a) => a.status === 'New').length;
   const openVacancies = vacancies.filter((v) => v.status === 'Open').length;
+  const draftVacancies = vacancies.filter((v) => v.status === 'Draft').length;
+  const closedVacancies = vacancies.filter((v) => v.status === 'Closed').length;
   const shortlistedCount = applications.filter((a) => a.status === 'Shortlisted').length;
   const hiredCount = applications.filter((a) => a.status === 'Hired').length;
-  const fillRate = totalApplicants > 0 ? Math.round((hiredCount / totalApplicants) * 100) : 0;
 
-  // Filtered and sorted applications
+  const hiredLast30 = useMemo(() => {
+    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    return applications.filter(
+      (a) => a.status === 'Hired' && new Date(a.applied_at).getTime() >= cutoff
+    ).length;
+  }, [applications]);
+
+  const filteredVacancies = useMemo(() => {
+    const statusFor: Record<VacancyTab, string> = {
+      live: 'Open',
+      draft: 'Draft',
+      closed: 'Closed',
+    };
+    let rows = vacancies.filter((v) => v.status === statusFor[vacancyTab]);
+    if (vacancySearch) {
+      const q = vacancySearch.toLowerCase();
+      rows = rows.filter(
+        (v) =>
+          v.title.toLowerCase().includes(q) ||
+          v.location?.toLowerCase().includes(q)
+      );
+    }
+    return rows;
+  }, [vacancies, vacancyTab, vacancySearch]);
+
   const filteredApplications = useMemo(() => {
     let filtered = [...applications];
 
@@ -164,76 +230,13 @@ export function JobVacanciesSection() {
   const getApplicationsForVacancy = (vacancyId: string) =>
     applications.filter((a) => a.vacancy_id === vacancyId);
 
-  // Status filter options with colors
-  const statusFilterOptions = [
-    {
-      value: 'all' as const,
-      label: 'All',
-      count: applications.length,
-      color: candidateStatusColors.all,
-    },
-    { value: 'New' as const, label: 'New', count: newApplicants, color: candidateStatusColors.New },
-    {
-      value: 'Reviewing' as const,
-      label: 'Reviewing',
-      count: applications.filter((a) => a.status === 'Reviewing').length,
-      color: candidateStatusColors.Reviewing,
-    },
-    {
-      value: 'Shortlisted' as const,
-      label: 'Shortlisted',
-      count: shortlistedCount,
-      color: candidateStatusColors.Shortlisted,
-    },
-    {
-      value: 'Interviewed' as const,
-      label: 'Interview',
-      count: applications.filter((a) => a.status === 'Interviewed').length,
-      color: candidateStatusColors.Interviewed,
-    },
-    {
-      value: 'Offered' as const,
-      label: 'Offered',
-      count: applications.filter((a) => a.status === 'Offered').length,
-      color: candidateStatusColors.Offered,
-    },
-    {
-      value: 'Rejected' as const,
-      label: 'Rejected',
-      count: applications.filter((a) => a.status === 'Rejected').length,
-      color: candidateStatusColors.Rejected,
-    },
-  ];
+  const handleRefresh = () => {
+    queryClient.invalidateQueries({ queryKey: ['vacancies'] });
+    queryClient.invalidateQueries({ queryKey: ['vacancy-applications'] });
+    queryClient.invalidateQueries({ queryKey: ['conversations'] });
+    toast({ title: 'Refreshed', description: 'Vacancy data is up to date.' });
+  };
 
-  // Elec-ID tier filter options
-  const tierFilterOptions = [
-    {
-      value: 'all' as const,
-      label: 'All Tiers',
-      count: applications.length,
-      color: elecIdTierColors.all,
-    },
-    {
-      value: 'premium' as const,
-      label: 'Premium',
-      count: applications.filter((a) => a.elec_id_profile?.verification_tier === 'premium').length,
-      color: elecIdTierColors.premium,
-    },
-    {
-      value: 'verified' as const,
-      label: 'Verified',
-      count: applications.filter((a) => a.elec_id_profile?.verification_tier === 'verified').length,
-      color: elecIdTierColors.verified,
-    },
-    {
-      value: 'basic' as const,
-      label: 'Basic',
-      count: applications.filter((a) => a.elec_id_profile?.verification_tier === 'basic').length,
-      color: elecIdTierColors.basic,
-    },
-  ];
-
-  // Handlers
   const handleUpdateStatus = async (
     appId: string,
     status: VacancyApplication['status'],
@@ -242,10 +245,10 @@ export function JobVacanciesSection() {
     try {
       await updateApplicationStatus.mutateAsync({ id: appId, status });
       toast({
-        title: 'Status Updated',
+        title: 'Status updated',
         description: `${name} has been marked as ${status}.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update application status.',
@@ -258,10 +261,10 @@ export function JobVacanciesSection() {
     try {
       await toggleVacancyStatus.mutateAsync({ id: vacancy.id, currentStatus: vacancy.status });
       toast({
-        title: vacancy.status === 'Open' ? 'Vacancy Closed' : 'Vacancy Reopened',
+        title: vacancy.status === 'Open' ? 'Vacancy closed' : 'Vacancy reopened',
         description: `${vacancy.title} is now ${vacancy.status === 'Open' ? 'closed' : 'open'}.`,
       });
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update vacancy status.',
@@ -288,10 +291,10 @@ export function JobVacanciesSection() {
 
   const handleViewApplicants = (vacancyId: string) => {
     setVacancyFilter(vacancyId);
-    setActiveTab('applications');
+    setTopTab('applications');
+    setViewingVacancy(null);
   };
 
-  // Selection mode handlers
   const toggleSelectionMode = () => {
     setSelectionMode(!selectionMode);
     if (selectionMode) {
@@ -316,12 +319,12 @@ export function JobVacanciesSection() {
     try {
       await bulkUpdateStatus.mutateAsync({ ids, status: 'Shortlisted' });
       toast({
-        title: 'Candidates Shortlisted',
+        title: 'Candidates shortlisted',
         description: `${ids.length} candidate${ids.length !== 1 ? 's' : ''} have been shortlisted.`,
       });
       setSelectedApplicants(new Set());
       setSelectionMode(false);
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update candidate statuses.',
@@ -335,12 +338,12 @@ export function JobVacanciesSection() {
     try {
       await bulkUpdateStatus.mutateAsync({ ids, status: 'Rejected' });
       toast({
-        title: 'Candidates Rejected',
+        title: 'Candidates rejected',
         description: `${ids.length} candidate${ids.length !== 1 ? 's' : ''} have been rejected.`,
       });
       setSelectedApplicants(new Set());
       setSelectionMode(false);
-    } catch (error) {
+    } catch {
       toast({
         title: 'Error',
         description: 'Failed to update candidate statuses.',
@@ -355,280 +358,282 @@ export function JobVacanciesSection() {
 
   const isLoading = vacanciesLoading || applicationsLoading;
 
-  // Tab configuration
-  const tabs = [
+  const heroActions = (
+    <>
+      <PrimaryButton onClick={() => setIsWizardOpen(true)}>Post vacancy</PrimaryButton>
+      <IconButton onClick={handleRefresh} aria-label="Refresh">
+        <RefreshCw className="h-4 w-4" />
+      </IconButton>
+    </>
+  );
+
+  const topTabs = [
+    { value: 'vacancies', label: 'Vacancies', count: vacancies.length },
+    { value: 'applications', label: 'Candidates', count: totalApplicants },
+    { value: 'conversations', label: 'Messages', count: totalUnread },
+  ];
+
+  const vacancyTabs: { value: VacancyTab; label: string; count: number }[] = [
+    { value: 'live', label: 'Live', count: openVacancies },
+    { value: 'draft', label: 'Draft', count: draftVacancies },
+    { value: 'closed', label: 'Closed', count: closedVacancies },
+  ];
+
+  const candidateStatusTabs = [
+    { value: 'all', label: 'All', count: applications.length },
+    { value: 'New', label: 'New', count: newApplicants },
     {
-      id: 'vacancies',
-      label: 'Vacancies',
-      count: openVacancies,
-      icon: <Briefcase className="h-4 w-4" />,
+      value: 'Reviewing',
+      label: 'Reviewing',
+      count: applications.filter((a) => a.status === 'Reviewing').length,
+    },
+    { value: 'Shortlisted', label: 'Shortlisted', count: shortlistedCount },
+    {
+      value: 'Interviewed',
+      label: 'Interview',
+      count: applications.filter((a) => a.status === 'Interviewed').length,
     },
     {
-      id: 'applications',
-      label: 'Candidates',
-      count: totalApplicants,
-      icon: <Users className="h-4 w-4" />,
+      value: 'Offered',
+      label: 'Offered',
+      count: applications.filter((a) => a.status === 'Offered').length,
     },
     {
-      id: 'conversations',
-      label: 'Messages',
-      count: totalUnread,
-      icon: <MessageSquare className="h-4 w-4" />,
+      value: 'Rejected',
+      label: 'Rejected',
+      count: applications.filter((a) => a.status === 'Rejected').length,
     },
   ];
 
   return (
-    <div className="space-y-6 animate-fade-in pb-20 sm:pb-6">
-      {/* Hero Section */}
-      <VacanciesHeroCard
-        openVacancies={openVacancies}
-        totalApplicants={totalApplicants}
-        newApplicants={newApplicants}
-        fillRate={fillRate}
-        onPostVacancy={() => setIsWizardOpen(true)}
+    <PageFrame>
+      <PageHero
+        eyebrow="Hiring"
+        title="Job Vacancies"
+        description="Post roles, review applicants, send invitations."
+        tone="cyan"
+        actions={heroActions}
       />
 
-      {/* Loading State */}
-      {isLoading && (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
-        </div>
-      )}
+      <StatStrip
+        columns={4}
+        stats={[
+          { label: 'Live', value: openVacancies, tone: 'emerald' },
+          { label: 'Applications', value: totalApplicants, tone: 'cyan' },
+          { label: 'Shortlisted', value: shortlistedCount, tone: 'yellow' },
+          { label: 'Hired 30d', value: hiredLast30, accent: true },
+        ]}
+      />
 
-      {/* Content */}
-      {!isLoading && (
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : (
         <>
-          {/* Premium Tabs */}
-          <PremiumTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
+          <FilterBar
+            tabs={topTabs}
+            activeTab={topTab}
+            onTabChange={(v) => setTopTab(v as TopTab)}
+          />
 
-          {/* Tab Content */}
-          <AnimatePresence mode="wait">
-            {/* Vacancies Tab */}
-            {activeTab === 'vacancies' && (
-              <motion.div
-                key="vacancies"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-4"
-              >
-                {vacancies.length === 0 ? (
-                  <Card className="bg-elec-gray/50 border-white/10">
-                    <CardContent className="p-8 text-center">
-                      <div className="w-16 h-16 mx-auto rounded-2xl bg-elec-yellow/10 flex items-center justify-center mb-4">
-                        <Briefcase className="h-8 w-8 text-elec-yellow" />
-                      </div>
-                      <h3 className="font-semibold text-white text-lg mb-2">No Vacancies Yet</h3>
-                      <p className="text-sm text-white mb-6 max-w-sm mx-auto">
-                        Post your first job vacancy to start receiving applications from qualified
-                        electricians.
-                      </p>
-                      <Button
-                        onClick={() => setIsWizardOpen(true)}
-                        className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                      >
-                        Post Your First Vacancy
-                      </Button>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <div className="space-y-3">
-                    {vacancies.map((vacancy) => (
-                      <PremiumVacancyCard
-                        key={vacancy.id}
-                        id={vacancy.id}
-                        title={vacancy.title}
-                        location={vacancy.location}
-                        type={vacancy.type}
-                        status={vacancy.status as 'Open' | 'Closed' | 'Draft'}
-                        salaryMin={vacancy.salary_min || undefined}
-                        salaryMax={vacancy.salary_max || undefined}
-                        salaryPeriod={vacancy.salary_period || undefined}
-                        applicantCount={getApplicationsForVacancy(vacancy.id).length}
-                        views={vacancy.views || 0}
-                        postedAt={vacancy.created_at}
-                        closingDate={vacancy.closing_date || undefined}
-                        workArrangement={vacancy.work_arrangement}
-                        companyInitial={employer?.company_name?.charAt(0) || 'E'}
-                        onEdit={() => handleEditVacancy(vacancy)}
-                        onDuplicate={() => handleDuplicateVacancy(vacancy)}
-                        onToggleStatus={() => handleToggleVacancy(vacancy)}
-                        onViewApplicants={() => handleViewApplicants(vacancy.id)}
-                      />
-                    ))}
-                  </div>
-                )}
-              </motion.div>
-            )}
+          {topTab === 'vacancies' && (
+            <div className="space-y-5">
+              <FilterBar
+                tabs={vacancyTabs as { value: string; label: string; count?: number }[]}
+                activeTab={vacancyTab}
+                onTabChange={(v) => setVacancyTab(v as VacancyTab)}
+                search={vacancySearch}
+                onSearchChange={setVacancySearch}
+                searchPlaceholder="Search vacancies…"
+              />
 
-            {/* Candidates Tab */}
-            {activeTab === 'applications' && (
-              <motion.div
-                key="applications"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="space-y-4"
-              >
-                {/* Filter Pills */}
-                <div className="space-y-2">
-                  <VacancyFilterPills
-                    options={statusFilterOptions}
-                    selected={statusFilter}
-                    onSelect={setStatusFilter}
+              {filteredVacancies.length === 0 ? (
+                <EmptyState
+                  title={vacancyTab === 'live' ? 'No vacancies yet' : `No ${vacancyTab} vacancies`}
+                  description={
+                    vacancyTab === 'live'
+                      ? 'Post your first role to start receiving applications from qualified electricians.'
+                      : undefined
+                  }
+                  action={vacancyTab === 'live' ? 'Post your first' : undefined}
+                  onAction={vacancyTab === 'live' ? () => setIsWizardOpen(true) : undefined}
+                />
+              ) : (
+                <ListCard>
+                  <ListCardHeader
+                    tone="cyan"
+                    title="Vacancies"
+                    meta={<Pill tone="cyan">{filteredVacancies.length}</Pill>}
                   />
-                  <VacancyFilterPills
-                    options={tierFilterOptions}
-                    selected={tierFilter}
-                    onSelect={setTierFilter}
-                  />
-                </div>
-
-                {/* Search and additional filters */}
-                <div className="flex gap-2">
-                  <div className="relative flex-1">
-                    {!searchQuery && (
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-                    )}
-                    <Input
-                      placeholder="Search candidates..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className={cn(
-                        'h-11 bg-white/5 border-white/10 rounded-xl',
-                        'text-white placeholder:text-white',
-                        'focus:border-elec-yellow/60',
-                        !searchQuery && 'pl-10'
-                      )}
-                    />
-                  </div>
-
-                  {/* Selection mode toggle */}
-                  <Button
-                    variant="outline"
-                    size="icon"
-                    className={cn(
-                      'h-11 w-11 shrink-0 rounded-xl touch-manipulation',
-                      selectionMode
-                        ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-                        : 'bg-white/5 border-white/10 text-white hover:text-white hover:bg-white/10'
-                    )}
-                    onClick={toggleSelectionMode}
-                  >
-                    {selectionMode ? (
-                      <CheckSquare className="h-4 w-4" />
-                    ) : (
-                      <Square className="h-4 w-4" />
-                    )}
-                  </Button>
-
-                  <Select value={vacancyFilter} onValueChange={setVacancyFilter}>
-                    <SelectTrigger className="w-[140px] h-11 bg-white/5 border-white/10 rounded-xl text-white">
-                      <Filter className="h-4 w-4 mr-2 text-white" />
-                      <SelectValue placeholder="Job" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-white/10">
-                      <SelectItem value="all">All Jobs</SelectItem>
-                      {vacancies.map((v) => (
-                        <SelectItem key={v.id} value={v.id}>
-                          {v.title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-
-                  <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
-                    <SelectTrigger className="w-[130px] h-11 bg-white/5 border-white/10 rounded-xl text-white">
-                      <ArrowUpDown className="h-4 w-4 mr-2 text-white" />
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-elec-gray border-white/10">
-                      <SelectItem value="date-desc">Newest</SelectItem>
-                      <SelectItem value="date-asc">Oldest</SelectItem>
-                      <SelectItem value="name">A-Z</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Candidate Cards */}
-                {filteredApplications.length === 0 ? (
-                  <Card className="bg-elec-gray/50 border-white/10">
-                    <CardContent className="p-8 text-center">
-                      <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center mb-4">
-                        <Users className="h-8 w-8 text-white" />
-                      </div>
-                      <h3 className="font-semibold text-white text-lg mb-2">No Candidates Found</h3>
-                      <p className="text-sm text-white">
-                        {statusFilter !== 'all' ||
-                        tierFilter !== 'all' ||
-                        vacancyFilter !== 'all' ||
-                        searchQuery
-                          ? 'Try adjusting your filters or search query.'
-                          : 'Applications will appear here when candidates apply to your vacancies.'}
-                      </p>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <div className="space-y-3">
-                    {filteredApplications.map((app) => {
-                      const vacancy = vacancies.find((v) => v.id === app.vacancy_id);
-
+                  <ListBody>
+                    {filteredVacancies.map((v) => {
+                      const applicantCount = getApplicationsForVacancy(v.id).length;
+                      const tone = vacancyStatusTone[v.status] ?? 'blue';
+                      const rate = formatRate(v.salary_min, v.salary_max, v.salary_period);
                       return (
-                        <PremiumCandidateCard
-                          key={app.id}
-                          id={app.id}
-                          name={app.applicant_name}
-                          email={app.applicant_email || undefined}
-                          phone={app.applicant_phone || undefined}
-                          status={app.status as any}
-                          appliedAt={app.applied_at}
-                          vacancyTitle={vacancy?.title || 'Unknown Position'}
-                          elecIdTier={app.elec_id_profile?.verification_tier as any}
-                          ecsCardType={app.elec_id_profile?.ecs_card_type}
-                          selectionMode={selectionMode}
-                          isSelected={selectedApplicants.has(app.id)}
-                          onSelectionChange={(selected) => handleSelectionChange(app.id, selected)}
-                          onShortlist={() =>
-                            handleUpdateStatus(app.id, 'Shortlisted', app.applicant_name)
-                          }
-                          onReject={() =>
-                            handleUpdateStatus(app.id, 'Rejected', app.applicant_name)
-                          }
-                          onInterview={() =>
-                            handleUpdateStatus(app.id, 'Interviewed', app.applicant_name)
-                          }
-                          onOffer={() => handleUpdateStatus(app.id, 'Offered', app.applicant_name)}
-                          onHire={() => handleUpdateStatus(app.id, 'Hired', app.applicant_name)}
-                          onClick={() => setViewingApplication(app)}
+                        <ListRow
+                          key={v.id}
+                          title={v.title}
+                          subtitle={`${v.location || 'Location TBC'} · ${rate} · ${applicantCount} applicant${applicantCount === 1 ? '' : 's'}`}
+                          trailing={<Pill tone={tone}>{v.status}</Pill>}
+                          onClick={() => setViewingVacancy(v)}
                         />
                       );
                     })}
-                  </div>
-                )}
-              </motion.div>
-            )}
+                  </ListBody>
+                </ListCard>
+              )}
+            </div>
+          )}
 
-            {/* Conversations Tab */}
-            {activeTab === 'conversations' && (
-              <motion.div
-                key="conversations"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-              >
-                <ConversationList
-                  conversations={conversations}
-                  isLoading={conversationsLoading}
-                  onSelect={setSelectedConversation}
-                  emptyMessage="Start a conversation by messaging someone from the Talent Pool, or wait for applicants to message you."
+          {topTab === 'applications' && (
+            <div className="space-y-5">
+              <FilterBar
+                tabs={candidateStatusTabs}
+                activeTab={statusFilter}
+                onTabChange={(v) => setStatusFilter(v as StatusFilter)}
+                search={searchQuery}
+                onSearchChange={setSearchQuery}
+                searchPlaceholder="Search candidates…"
+              />
+
+              <div className="flex flex-wrap items-center gap-2">
+                <Select value={tierFilter} onValueChange={(v) => setTierFilter(v as TierFilter)}>
+                  <SelectTrigger className={`${selectTriggerClass} w-[150px]`}>
+                    <SelectValue placeholder="Tier" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="all">All tiers</SelectItem>
+                    <SelectItem value="premium">Premium</SelectItem>
+                    <SelectItem value="verified">Verified</SelectItem>
+                    <SelectItem value="basic">Basic</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select value={vacancyFilter} onValueChange={setVacancyFilter}>
+                  <SelectTrigger className={`${selectTriggerClass} w-[170px]`}>
+                    <SelectValue placeholder="Vacancy" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="all">All vacancies</SelectItem>
+                    {vacancies.map((v) => (
+                      <SelectItem key={v.id} value={v.id}>
+                        {v.title}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
+                  <SelectTrigger className={`${selectTriggerClass} w-[140px]`}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="date-desc">Newest first</SelectItem>
+                    <SelectItem value="date-asc">Oldest first</SelectItem>
+                    <SelectItem value="name">Name A–Z</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <button
+                  onClick={toggleSelectionMode}
+                  className={`h-10 px-4 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation ${
+                    selectionMode
+                      ? 'bg-elec-yellow text-black border-elec-yellow'
+                      : 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
+                  }`}
+                >
+                  {selectionMode ? 'Done' : 'Select'}
+                </button>
+              </div>
+
+              {filteredApplications.length === 0 ? (
+                <EmptyState
+                  title="No candidates found"
+                  description={
+                    statusFilter !== 'all' ||
+                    tierFilter !== 'all' ||
+                    vacancyFilter !== 'all' ||
+                    searchQuery
+                      ? 'Try adjusting your filters or search query.'
+                      : 'Applications will appear here when candidates apply to your vacancies.'
+                  }
                 />
-              </motion.div>
-            )}
-          </AnimatePresence>
+              ) : (
+                <ListCard>
+                  <ListCardHeader
+                    tone="cyan"
+                    title="Candidates"
+                    meta={<Pill tone="cyan">{filteredApplications.length}</Pill>}
+                  />
+                  <ListBody>
+                    {filteredApplications.map((app) => {
+                      const vacancy = vacancies.find((v) => v.id === app.vacancy_id);
+                      const tone = candidateStatusTone[app.status] ?? 'blue';
+                      const tier = app.elec_id_profile?.verification_tier;
+                      const isSelected = selectedApplicants.has(app.id);
+                      return (
+                        <ListRow
+                          key={app.id}
+                          lead={
+                            <Avatar
+                              initials={getInitials(app.applicant_name)}
+                              size="md"
+                            />
+                          }
+                          title={app.applicant_name}
+                          subtitle={`${vacancy?.title || 'Unknown role'} · ${formatDate(app.applied_at)}`}
+                          trailing={
+                            <>
+                              {tier && (
+                                <Pill tone={tierTone[tier] ?? 'blue'}>
+                                  {tier}
+                                </Pill>
+                              )}
+                              <Pill tone={tone}>{app.status}</Pill>
+                              {selectionMode && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleSelectionChange(app.id, !isSelected);
+                                  }}
+                                  className={`h-7 w-7 rounded-full border flex items-center justify-center text-[12px] font-semibold touch-manipulation ${
+                                    isSelected
+                                      ? 'bg-elec-yellow text-black border-elec-yellow'
+                                      : 'bg-transparent text-white border-white/[0.2]'
+                                  }`}
+                                >
+                                  {isSelected ? '✓' : ''}
+                                </button>
+                              )}
+                            </>
+                          }
+                          onClick={() => {
+                            if (selectionMode) {
+                              handleSelectionChange(app.id, !isSelected);
+                            } else {
+                              setViewingApplication(app);
+                            }
+                          }}
+                        />
+                      );
+                    })}
+                  </ListBody>
+                </ListCard>
+              )}
+            </div>
+          )}
+
+          {topTab === 'conversations' && (
+            <ConversationList
+              conversations={conversations}
+              isLoading={conversationsLoading}
+              onSelect={setSelectedConversation}
+              emptyMessage="Start a conversation by messaging someone from the talent pool, or wait for applicants to message you."
+            />
+          )}
         </>
       )}
 
-      {/* Vacancy Form Wizard */}
       <VacancyFormWizard
         open={isWizardOpen}
         onOpenChange={handleWizardClose}
@@ -692,108 +697,257 @@ export function JobVacanciesSection() {
         }
       />
 
-      {/* View Application Sheet */}
+      <Sheet
+        open={!!viewingVacancy}
+        onOpenChange={(open) => !open && setViewingVacancy(null)}
+      >
+        <SheetContent
+          side="bottom"
+          className="h-[88vh] rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06] p-0 overflow-hidden"
+        >
+          {viewingVacancy && (
+            <div className="flex flex-col h-full">
+              <SheetHeader className="px-5 sm:px-6 pt-5 pb-4 border-b border-white/[0.06] text-left">
+                <div className="flex items-center gap-2">
+                  <Pill tone={vacancyStatusTone[viewingVacancy.status] ?? 'blue'}>
+                    {viewingVacancy.status}
+                  </Pill>
+                  <span className="text-[10px] uppercase tracking-[0.18em] text-white">
+                    {viewingVacancy.type}
+                  </span>
+                </div>
+                <SheetTitle className="text-white text-xl mt-2">
+                  {viewingVacancy.title}
+                </SheetTitle>
+                <SheetDescription className="text-white">
+                  {viewingVacancy.location || 'Location TBC'}
+                </SheetDescription>
+              </SheetHeader>
+
+              <div className="flex-1 overflow-auto px-5 sm:px-6 py-5 space-y-6">
+                <StatStrip
+                  columns={3}
+                  stats={[
+                    {
+                      label: 'Applicants',
+                      value: getApplicationsForVacancy(viewingVacancy.id).length,
+                      tone: 'cyan',
+                    },
+                    { label: 'Views', value: viewingVacancy.views || 0 },
+                    {
+                      label: 'Posted',
+                      value: formatDate(viewingVacancy.created_at),
+                    },
+                  ]}
+                />
+
+                {viewingVacancy.description && (
+                  <div>
+                    <Divider label="Description" />
+                    <p className="mt-3 text-[13px] text-white whitespace-pre-wrap leading-relaxed">
+                      {viewingVacancy.description}
+                    </p>
+                  </div>
+                )}
+
+                {viewingVacancy.requirements && viewingVacancy.requirements.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader title="Requirements" />
+                    <ListBody>
+                      {viewingVacancy.requirements.map((req, i) => (
+                        <ListRow key={i} title={req} />
+                      ))}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {viewingVacancy.benefits && viewingVacancy.benefits.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader title="Benefits" tone="yellow" />
+                    <ListBody>
+                      {viewingVacancy.benefits.map((b, i) => (
+                        <ListRow key={i} title={b} />
+                      ))}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {(() => {
+                  const apps = getApplicationsForVacancy(viewingVacancy.id);
+                  if (apps.length === 0) return null;
+                  return (
+                    <ListCard>
+                      <ListCardHeader
+                        tone="cyan"
+                        title="Recent applicants"
+                        meta={<Pill tone="cyan">{apps.length}</Pill>}
+                        action="View all"
+                        onAction={() => handleViewApplicants(viewingVacancy.id)}
+                      />
+                      <ListBody>
+                        {apps.slice(0, 5).map((app) => (
+                          <ListRow
+                            key={app.id}
+                            lead={<Avatar initials={getInitials(app.applicant_name)} size="sm" />}
+                            title={app.applicant_name}
+                            subtitle={formatDate(app.applied_at)}
+                            trailing={
+                              <Pill tone={candidateStatusTone[app.status] ?? 'blue'}>
+                                {app.status}
+                              </Pill>
+                            }
+                            onClick={() => {
+                              setViewingVacancy(null);
+                              setViewingApplication(app);
+                            }}
+                          />
+                        ))}
+                      </ListBody>
+                    </ListCard>
+                  );
+                })()}
+              </div>
+
+              <SheetFooter className="px-5 sm:px-6 py-4 border-t border-white/[0.06] flex-row gap-2">
+                <SecondaryButton
+                  onClick={() => {
+                    handleDuplicateVacancy(viewingVacancy);
+                    setViewingVacancy(null);
+                  }}
+                >
+                  Duplicate
+                </SecondaryButton>
+                <SecondaryButton
+                  onClick={() => {
+                    handleToggleVacancy(viewingVacancy);
+                    setViewingVacancy(null);
+                  }}
+                >
+                  {viewingVacancy.status === 'Open' ? 'Pause' : 'Reopen'}
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={() => {
+                    handleEditVacancy(viewingVacancy);
+                    setViewingVacancy(null);
+                  }}
+                  className="ml-auto"
+                >
+                  Edit vacancy
+                </PrimaryButton>
+              </SheetFooter>
+            </div>
+          )}
+        </SheetContent>
+      </Sheet>
+
       <Sheet
         open={!!viewingApplication}
         onOpenChange={(open) => !open && setViewingApplication(null)}
       >
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl bg-elec-gray border-white/10">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06] p-0 overflow-hidden"
+        >
           {viewingApplication && (
-            <>
-              <SheetHeader className="pb-4 border-b border-white/10">
-                <SheetTitle className="text-white">{viewingApplication.applicant_name}</SheetTitle>
-                <SheetDescription className="text-white">
-                  Applied for:{' '}
-                  {vacancies.find((v) => v.id === viewingApplication.vacancy_id)?.title ||
-                    'Unknown Position'}
-                </SheetDescription>
-              </SheetHeader>
-
-              <div className="space-y-6 py-6 overflow-auto">
-                {/* Avatar and contact */}
-                <div className="flex items-center gap-4">
-                  <Avatar className="w-20 h-20 border-2 border-white/10">
-                    <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-semibold text-2xl">
-                      {viewingApplication.applicant_name
-                        .split(' ')
-                        .map((n) => n[0])
-                        .join('')
-                        .toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h3 className="font-semibold text-xl text-white">
+            <div className="flex flex-col h-full">
+              <SheetHeader className="px-5 sm:px-6 pt-5 pb-4 border-b border-white/[0.06] text-left">
+                <div className="flex items-center gap-3">
+                  <Avatar initials={getInitials(viewingApplication.applicant_name)} size="md" />
+                  <div className="min-w-0">
+                    <SheetTitle className="text-white text-lg">
                       {viewingApplication.applicant_name}
-                    </h3>
-                    {viewingApplication.applicant_email && (
-                      <p className="text-sm text-white">{viewingApplication.applicant_email}</p>
-                    )}
-                    {viewingApplication.applicant_phone && (
-                      <p className="text-sm text-white">{viewingApplication.applicant_phone}</p>
-                    )}
+                    </SheetTitle>
+                    <SheetDescription className="text-white">
+                      Applied for{' '}
+                      {vacancies.find((v) => v.id === viewingApplication.vacancy_id)?.title ||
+                        'unknown role'}
+                    </SheetDescription>
                   </div>
                 </div>
+              </SheetHeader>
 
-                {/* Elec-ID Profile */}
-                {viewingApplication.elec_id_profile && (
-                  <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-3">
-                    <h4 className="font-medium text-white flex items-center gap-2">
-                      <Badge className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
-                        Elec-ID Verified
-                      </Badge>
-                    </h4>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-white">ID Number</p>
-                        <p className="text-white font-medium">
-                          {viewingApplication.elec_id_profile.elec_id_number}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-white">ECS Card</p>
-                        <p className="text-white font-medium">
-                          {viewingApplication.elec_id_profile.ecs_card_type}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-white">Verification</p>
-                        <p className="text-white font-medium capitalize">
-                          {viewingApplication.elec_id_profile.verification_tier}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+              <div className="flex-1 overflow-auto px-5 sm:px-6 py-5 space-y-6">
+                {(viewingApplication.applicant_email || viewingApplication.applicant_phone) && (
+                  <ListCard>
+                    <ListCardHeader title="Contact" />
+                    <ListBody>
+                      {viewingApplication.applicant_email && (
+                        <ListRow
+                          title={viewingApplication.applicant_email}
+                          subtitle="Email"
+                        />
+                      )}
+                      {viewingApplication.applicant_phone && (
+                        <ListRow
+                          title={viewingApplication.applicant_phone}
+                          subtitle="Phone"
+                        />
+                      )}
+                    </ListBody>
+                  </ListCard>
                 )}
 
-                {/* Cover Letter */}
+                {viewingApplication.elec_id_profile && (
+                  <ListCard>
+                    <ListCardHeader
+                      tone="yellow"
+                      title="Elec-ID"
+                      meta={
+                        <Pill
+                          tone={
+                            tierTone[viewingApplication.elec_id_profile.verification_tier] ??
+                            'blue'
+                          }
+                        >
+                          {viewingApplication.elec_id_profile.verification_tier}
+                        </Pill>
+                      }
+                    />
+                    <ListBody>
+                      <ListRow
+                        title={viewingApplication.elec_id_profile.elec_id_number}
+                        subtitle="ID number"
+                      />
+                      {viewingApplication.elec_id_profile.ecs_card_type && (
+                        <ListRow
+                          title={viewingApplication.elec_id_profile.ecs_card_type}
+                          subtitle="ECS card"
+                        />
+                      )}
+                    </ListBody>
+                  </ListCard>
+                )}
+
                 {viewingApplication.cover_letter && (
-                  <div className="space-y-2">
-                    <h4 className="font-medium text-white">Cover Letter</h4>
-                    <p className="text-sm text-white whitespace-pre-wrap leading-relaxed">
+                  <div>
+                    <Divider label="Cover letter" />
+                    <p className="mt-3 text-[13px] text-white whitespace-pre-wrap leading-relaxed">
                       {viewingApplication.cover_letter}
                     </p>
                   </div>
                 )}
 
-                {/* Application date */}
-                <div className="flex items-center justify-between text-sm pt-4 border-t border-white/10">
-                  <span className="text-white">Applied</span>
-                  <span className="text-white">
-                    {new Date(viewingApplication.applied_at).toLocaleDateString('en-GB', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
-                  </span>
-                </div>
+                <StatStrip
+                  columns={2}
+                  stats={[
+                    {
+                      label: 'Status',
+                      value: viewingApplication.status,
+                      tone: candidateStatusTone[viewingApplication.status] ?? 'blue',
+                    },
+                    {
+                      label: 'Applied',
+                      value: formatDate(viewingApplication.applied_at),
+                    },
+                  ]}
+                />
               </div>
 
-              <SheetFooter className="pt-4 border-t border-white/10">
+              <SheetFooter className="px-5 sm:px-6 py-4 border-t border-white/[0.06] flex-row gap-2">
                 {viewingApplication.status === 'New' && (
-                  <div className="flex gap-3 w-full">
-                    <Button
-                      variant="outline"
-                      className="flex-1 h-12 bg-red-500/10 border-red-500/20 text-red-400 hover:bg-red-500/20"
+                  <>
+                    <SecondaryButton
+                      fullWidth
                       onClick={() => {
                         handleUpdateStatus(
                           viewingApplication.id,
@@ -804,9 +958,9 @@ export function JobVacanciesSection() {
                       }}
                     >
                       Reject
-                    </Button>
-                    <Button
-                      className="flex-1 h-12 bg-purple-500 hover:bg-purple-500/90"
+                    </SecondaryButton>
+                    <PrimaryButton
+                      fullWidth
                       onClick={() => {
                         handleUpdateStatus(
                           viewingApplication.id,
@@ -817,12 +971,12 @@ export function JobVacanciesSection() {
                       }}
                     >
                       Shortlist
-                    </Button>
-                  </div>
+                    </PrimaryButton>
+                  </>
                 )}
                 {viewingApplication.status === 'Shortlisted' && (
-                  <Button
-                    className="w-full h-12 bg-cyan-500 hover:bg-cyan-500/90"
+                  <PrimaryButton
+                    fullWidth
                     onClick={() => {
                       handleUpdateStatus(
                         viewingApplication.id,
@@ -832,12 +986,12 @@ export function JobVacanciesSection() {
                       setViewingApplication(null);
                     }}
                   >
-                    Mark as Interviewed
-                  </Button>
+                    Mark as interviewed
+                  </PrimaryButton>
                 )}
                 {viewingApplication.status === 'Interviewed' && (
-                  <Button
-                    className="w-full h-12 bg-emerald-500 hover:bg-emerald-500/90"
+                  <PrimaryButton
+                    fullWidth
                     onClick={() => {
                       handleUpdateStatus(
                         viewingApplication.id,
@@ -847,12 +1001,12 @@ export function JobVacanciesSection() {
                       setViewingApplication(null);
                     }}
                   >
-                    Make Offer
-                  </Button>
+                    Make offer
+                  </PrimaryButton>
                 )}
                 {viewingApplication.status === 'Offered' && (
-                  <Button
-                    className="w-full h-12 bg-green-500 hover:bg-green-500/90"
+                  <PrimaryButton
+                    fullWidth
                     onClick={() => {
                       handleUpdateStatus(
                         viewingApplication.id,
@@ -862,16 +1016,15 @@ export function JobVacanciesSection() {
                       setViewingApplication(null);
                     }}
                   >
-                    Mark as Hired
-                  </Button>
+                    Mark as hired
+                  </PrimaryButton>
                 )}
               </SheetFooter>
-            </>
+            </div>
           )}
         </SheetContent>
       </Sheet>
 
-      {/* Chat View */}
       <ChatView
         conversation={selectedConversation}
         open={!!selectedConversation}
@@ -879,7 +1032,6 @@ export function JobVacanciesSection() {
         onArchived={() => setSelectedConversation(null)}
       />
 
-      {/* Bulk Action Bar */}
       <BulkActionBar
         selectedCount={selectedApplicants.size}
         onShortlistAll={handleBulkShortlist}
@@ -887,6 +1039,6 @@ export function JobVacanciesSection() {
         onClearSelection={clearSelection}
         isProcessing={bulkUpdateStatus.isPending}
       />
-    </div>
+    </PageFrame>
   );
 }

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -15,13 +14,10 @@ import {
   User,
   AlertTriangle,
   CheckCircle2,
-  X,
   Download,
   Edit3,
   PenTool,
   Image,
-  Share2,
-  QrCode,
   Copy,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -29,6 +25,7 @@ import { useBriefingWithAttendees, type Briefing } from '@/hooks/useBriefings';
 import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
+import { SheetShell, PrimaryButton, SecondaryButton } from './editorial';
 
 interface BriefingViewerProps {
   open: boolean;
@@ -66,8 +63,8 @@ export function BriefingViewer({
   if (isLoading) {
     return (
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
-          <div className="p-4 space-y-4">
+        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+          <div className="p-4 space-y-4 bg-[hsl(0_0%_8%)] h-full">
             <Skeleton className="h-20 w-full" />
             <Skeleton className="h-40 w-full" />
             <Skeleton className="h-40 w-full" />
@@ -100,53 +97,55 @@ export function BriefingViewer({
       ? 'bg-green-500/10 text-green-400 border-green-500/30'
       : briefing.status === 'Scheduled'
         ? 'bg-blue-500/10 text-blue-400 border-blue-500/30'
-        : 'bg-muted text-white';
+        : 'bg-white/[0.06] text-white border-white/[0.1]';
+
+  const headerBadges = (
+    <div className="flex items-center gap-2 flex-wrap">
+      <Badge variant="outline" className={cn('text-xs', statusColour)}>
+        {briefing.status}
+      </Badge>
+      <Badge variant="outline" className="text-xs text-white border-white/[0.1]">
+        {briefing.briefing_type || 'Briefing'}
+      </Badge>
+      {briefing.risk_level && (
+        <Badge variant="outline" className={cn('text-xs', riskColour)}>
+          {briefing.risk_level === 'high' && <AlertTriangle className="h-3 w-3 mr-1" />}
+          {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)} Risk
+        </Badge>
+      )}
+    </div>
+  );
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className={cn('p-2 rounded-xl', riskColour)}>
-                  <FileText className="h-5 w-5" />
-                </div>
-                <div>
-                  <SheetTitle className="text-left line-clamp-1">{briefing.title}</SheetTitle>
-                  <div className="flex items-center gap-2 mt-1 flex-wrap">
-                    <Badge variant="outline" className={cn('text-xs', statusColour)}>
-                      {briefing.status}
-                    </Badge>
-                    <Badge variant="outline" className="text-xs">
-                      {briefing.briefing_type || 'Briefing'}
-                    </Badge>
-                    {briefing.risk_level && (
-                      <Badge variant="outline" className={cn('text-xs', riskColour)}>
-                        {briefing.risk_level === 'high' && (
-                          <AlertTriangle className="h-3 w-3 mr-1" />
-                        )}
-                        {briefing.risk_level.charAt(0).toUpperCase() + briefing.risk_level.slice(1)}{' '}
-                        Risk
-                      </Badge>
-                    )}
-                  </div>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onOpenChange(false)}
-                className="shrink-0 touch-manipulation"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </SheetHeader>
-
+      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Briefing"
+          title={briefing.title}
+          description={headerBadges}
+          footer={
+            <>
+              <SecondaryButton onClick={handleCopyLink} fullWidth>
+                <Copy className="h-4 w-4 mr-2" />
+                Copy Link
+              </SecondaryButton>
+              {onSignOff && briefing.status === 'Scheduled' && (
+                <PrimaryButton onClick={() => onSignOff(briefing)} fullWidth>
+                  <PenTool className="h-4 w-4 mr-2" />
+                  Sign-Off
+                </PrimaryButton>
+              )}
+              {onExportPdf && (
+                <PrimaryButton onClick={() => onExportPdf(briefing)} fullWidth>
+                  <Download className="h-4 w-4 mr-2" />
+                  Export PDF
+                </PrimaryButton>
+              )}
+            </>
+          }
+        >
           {/* Info Bar */}
-          <div className="p-4 border-b border-border bg-muted/30">
+          <div className="p-4 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06]">
             <div className="flex flex-wrap gap-4 text-sm">
               {briefing.date && (
                 <span className="flex items-center gap-1.5 text-white min-w-0">
@@ -187,16 +186,16 @@ export function BriefingViewer({
             onValueChange={setActiveTab}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <TabsList className="mx-4 mt-4 grid grid-cols-3">
-              <TabsTrigger value="content" className="text-xs h-11 touch-manipulation">
+            <TabsList className="grid grid-cols-3 bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+              <TabsTrigger value="content" className="text-xs h-11 touch-manipulation text-white">
                 <FileText className="h-3.5 w-3.5 mr-1.5" />
                 Content
               </TabsTrigger>
-              <TabsTrigger value="attendees" className="text-xs h-11 touch-manipulation">
+              <TabsTrigger value="attendees" className="text-xs h-11 touch-manipulation text-white">
                 <Users className="h-3.5 w-3.5 mr-1.5" />
                 Attendees ({total})
               </TabsTrigger>
-              <TabsTrigger value="photos" className="text-xs h-11 touch-manipulation">
+              <TabsTrigger value="photos" className="text-xs h-11 touch-manipulation text-white">
                 <Image className="h-3.5 w-3.5 mr-1.5" />
                 Photos
               </TabsTrigger>
@@ -208,7 +207,7 @@ export function BriefingViewer({
                 <div className="p-4">
                   {briefing.content ? (
                     <div
-                      className="prose prose-sm prose-invert max-w-none [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-4 [&_h2]:mb-2 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-3 [&_h3]:mb-2 [&_p]:mb-2 [&_ul]:mb-3 [&_li]:mb-1 [&_table]:w-full [&_td]:py-1 [&_td]:px-2 [&_th]:py-1 [&_th]:px-2 [&_th]:text-left [&_th]:font-medium [&_tr]:border-b [&_tr]:border-border/50"
+                      className="prose prose-sm prose-invert max-w-none [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-4 [&_h2]:mb-2 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-3 [&_h3]:mb-2 [&_p]:mb-2 [&_ul]:mb-3 [&_li]:mb-1 [&_table]:w-full [&_td]:py-1 [&_td]:px-2 [&_th]:py-1 [&_th]:px-2 [&_th]:text-left [&_th]:font-medium [&_tr]:border-b [&_tr]:border-white/[0.06]"
                       dangerouslySetInnerHTML={{ __html: briefing.content }}
                     />
                   ) : (
@@ -216,18 +215,18 @@ export function BriefingViewer({
                       <FileText className="h-12 w-12 text-white mx-auto mb-4" />
                       <p className="text-sm text-white">No content added yet</p>
                       {onEdit && (
-                        <Button variant="outline" className="mt-4" onClick={() => onEdit(briefing)}>
+                        <SecondaryButton className="mt-4" onClick={() => onEdit(briefing)}>
                           <Edit3 className="h-4 w-4 mr-2" />
                           Add Content
-                        </Button>
+                        </SecondaryButton>
                       )}
                     </div>
                   )}
 
                   {/* Presenter Signature */}
                   {briefing.presenter_signature_url && (
-                    <div className="mt-6 p-4 rounded-lg bg-muted/50 border border-border">
-                      <p className="text-sm font-medium text-foreground mb-2">
+                    <div className="mt-6 p-4 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06]">
+                      <p className="text-sm font-medium text-white mb-2">
                         Presenter Signature
                       </p>
                       <img
@@ -250,15 +249,15 @@ export function BriefingViewer({
                 <div className="p-4 space-y-4">
                   {/* Stats */}
                   <div className="grid grid-cols-3 gap-3">
-                    <div className="p-3 rounded-lg bg-muted/50 text-center">
-                      <p className="text-xl font-bold text-foreground">{total}</p>
+                    <div className="p-3 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] text-center">
+                      <p className="text-xl font-bold text-white">{total}</p>
                       <p className="text-xs text-white">Total</p>
                     </div>
-                    <div className="p-3 rounded-lg bg-green-500/10 text-center">
+                    <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
                       <p className="text-xl font-bold text-green-400">{signed}</p>
                       <p className="text-xs text-white">Signed</p>
                     </div>
-                    <div className="p-3 rounded-lg bg-amber-500/10 text-center">
+                    <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
                       <p className="text-xl font-bold text-amber-400">{total - signed}</p>
                       <p className="text-xs text-white">Pending</p>
                     </div>
@@ -268,9 +267,9 @@ export function BriefingViewer({
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-white">Completion</span>
-                      <span className="font-medium">{completionRate}%</span>
+                      <span className="font-medium text-white">{completionRate}%</span>
                     </div>
-                    <div className="h-2 bg-muted rounded-full overflow-hidden">
+                    <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
                         className="h-full bg-green-500 rounded-full transition-all"
                         style={{ width: `${completionRate}%` }}
@@ -284,10 +283,10 @@ export function BriefingViewer({
                       <div
                         key={attendee.id}
                         className={cn(
-                          'p-3 rounded-lg border',
+                          'p-3 rounded-xl border',
                           attendee.acknowledged
                             ? 'bg-green-500/5 border-green-500/20'
-                            : 'bg-muted/50 border-border'
+                            : 'bg-[hsl(0_0%_10%)] border-white/[0.06]'
                         )}
                       >
                         <div className="flex items-center justify-between">
@@ -295,7 +294,7 @@ export function BriefingViewer({
                             <div
                               className={cn(
                                 'p-2 rounded-lg',
-                                attendee.acknowledged ? 'bg-green-500/10' : 'bg-muted'
+                                attendee.acknowledged ? 'bg-green-500/10' : 'bg-white/[0.06]'
                               )}
                             >
                               {attendee.acknowledged ? (
@@ -305,7 +304,7 @@ export function BriefingViewer({
                               )}
                             </div>
                             <div>
-                              <p className="font-medium text-sm text-foreground">
+                              <p className="font-medium text-sm text-white">
                                 {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                               </p>
                               <p className="text-xs text-white">
@@ -347,7 +346,7 @@ export function BriefingViewer({
                       {briefing.photo_evidence.map((photo, index) => (
                         <div
                           key={index}
-                          className="aspect-square rounded-lg overflow-hidden border border-border"
+                          className="aspect-square rounded-xl overflow-hidden border border-white/[0.06]"
                         >
                           <img
                             src={photo}
@@ -367,51 +366,7 @@ export function BriefingViewer({
               </ScrollArea>
             </TabsContent>
           </Tabs>
-
-          {/* Footer Actions */}
-          <div className="p-4 border-t border-border shrink-0">
-            <div className="flex gap-2 mb-3">
-              <Button
-                variant="outline"
-                onClick={handleCopyLink}
-                className="flex-1 h-11 touch-manipulation"
-              >
-                <Copy className="h-4 w-4 mr-1.5" />
-                Copy Link
-              </Button>
-              {onEdit && (
-                <Button
-                  variant="outline"
-                  onClick={() => onEdit(briefing)}
-                  className="flex-1 h-11 touch-manipulation"
-                >
-                  <Edit3 className="h-4 w-4 mr-1.5" />
-                  Edit
-                </Button>
-              )}
-            </div>
-            <div className="flex gap-3">
-              {onSignOff && briefing.status === 'Scheduled' && (
-                <Button
-                  onClick={() => onSignOff(briefing)}
-                  className="flex-1 h-12 bg-blue-600 hover:bg-blue-700 touch-manipulation"
-                >
-                  <PenTool className="h-4 w-4 mr-2" />
-                  Sign-Off
-                </Button>
-              )}
-              {onExportPdf && (
-                <Button
-                  onClick={() => onExportPdf(briefing)}
-                  className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Export PDF
-                </Button>
-              )}
-            </div>
-          </div>
-        </div>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

@@ -155,7 +155,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
           />
           <div className="min-w-0 flex-1">
             <p className="text-[13px] font-medium text-white leading-snug truncate">{lp.title}</p>
-            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-white/50">
+            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-white/75">
               <span className="truncate">{getCohortName(lp.cohort_id)}</span>
               <span className="truncate">{getTutorName(lp.tutor_id)}</span>
               {lp.scheduled_date && (
@@ -188,7 +188,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
             <p
               className={cn(
                 'text-[10px] font-medium uppercase tracking-[0.18em]',
-                isToday ? 'text-elec-yellow' : 'text-white/50'
+                isToday ? 'text-elec-yellow' : 'text-white/75'
               )}
             >
               {DAY_NAMES[dayIndex]}
@@ -203,7 +203,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
             dayLessons.map(renderLessonCard)
           ) : (
             <div className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-lg p-3 text-center">
-              <p className="text-[11px] text-white/40">No lessons</p>
+              <p className="text-[11px] text-white/70">No lessons</p>
             </div>
           )}
         </div>
@@ -310,7 +310,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                 <p
                   className={cn(
                     'mt-0.5 text-[11px] tabular-nums',
-                    selected ? 'text-black/70' : 'text-white/50'
+                    selected ? 'text-black/70' : 'text-white/75'
                   )}
                 >
                   {weekDates[idx].getDate()}
@@ -324,7 +324,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
         </div>
 
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             {DAY_FULL_NAMES[selectedDayIndex]}
           </div>
           <div className="mt-1 text-base font-semibold text-white tabular-nums">

@@ -1,14 +1,6 @@
 import { useState, useEffect } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -17,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
@@ -34,6 +25,20 @@ import {
 import { useCreateInvoice, useNextInvoiceNumber, useQuotes } from '@/hooks/useFinance';
 import type { Quote } from '@/services/financeService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import { cn } from '@/lib/utils';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  fieldLabelClass,
+  Eyebrow,
+} from '@/components/employer/editorial';
 
 interface LineItem {
   id: string;
@@ -59,14 +64,12 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
   const [notes, setNotes] = useState('');
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [selectedQuoteId, setSelectedQuoteId] = useState<string | null>(null);
-  // Use strings for inputs to allow empty fields and smooth typing
   const [newItem, setNewItem] = useState({
     description: '',
     quantity: '',
     unit: 'each',
     unitPrice: '',
   });
-  // Track string values for existing line item quantities
   const [itemQuantityInputs, setItemQuantityInputs] = useState<Record<string, string>>({});
 
   const { data: invoiceNumber } = useNextInvoiceNumber();
@@ -263,140 +266,141 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
     }
   };
 
-  // Step labels for display
   const stepLabels = ['Client', 'Items', 'Review'];
   const currentStepLabel = stepLabels[step - 1];
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl">
+      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <div className="flex flex-col h-full">
-          {/* Native Header with drag indicator */}
-          <div className="pt-2 pb-1 flex justify-center">
-            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+          {/* Drag indicator */}
+          <div className="pt-2.5 pb-1 flex justify-center">
+            <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          <SheetHeader className="px-4 pb-4 border-b border-border">
+          <div className="px-4 pb-4 border-b border-white/[0.06]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 rounded-full"
+                <button
                   onClick={() => onOpenChange(false)}
+                  className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] transition-colors touch-manipulation"
                 >
                   <X className="h-5 w-5" />
-                </Button>
+                </button>
                 <div>
-                  <SheetTitle className="text-lg font-semibold">New Invoice</SheetTitle>
-                  <SheetDescription className="text-xs font-mono text-white">
+                  <Eyebrow>New invoice</Eyebrow>
+                  <div className="mt-1 text-[18px] font-semibold text-white leading-tight">
                     {invoiceNumber}
-                  </SheetDescription>
+                  </div>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-medium text-white">
-                  {currentStepLabel}
-                </span>
+                <span className="text-[13px] font-medium text-white">{currentStepLabel}</span>
                 <IOSStepIndicator steps={3} currentStep={step - 1} className="mt-1" />
               </div>
             </div>
-          </SheetHeader>
+          </div>
 
           {/* Content */}
           <ScrollArea className="flex-1 px-4">
             <div className="py-6 pb-48">
               {step === 1 && (
-                <div className="space-y-5">
-                  {/* Create from Quote */}
+                <div className="space-y-4">
                   {approvedQuotes.length > 0 && (
                     <div className="space-y-2">
-                      <Label className="flex items-center gap-2 text-sm font-medium">
+                      <label className={cn(fieldLabelClass, 'flex items-center gap-2')}>
                         <FileText className="h-4 w-4" />
                         Create from Approved Quote
-                      </Label>
+                      </label>
                       <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar -mx-1 px-1">
-                        {approvedQuotes.map((quote) => (
-                          <Badge
-                            key={quote.id}
-                            variant={selectedQuoteId === quote.id ? 'default' : 'outline'}
-                            className="shrink-0 cursor-pointer active:scale-95 transition-transform min-h-[44px] flex items-center px-4"
-                            onClick={() => loadFromQuote(quote.id)}
-                          >
-                            {quote.quote_number} - {quote.client}
-                          </Badge>
-                        ))}
+                        {approvedQuotes.map((quote) => {
+                          const isSelected = selectedQuoteId === quote.id;
+                          return (
+                            <button
+                              key={quote.id}
+                              type="button"
+                              onClick={() => loadFromQuote(quote.id)}
+                              className={cn(
+                                'shrink-0 min-h-[44px] px-4 rounded-full text-[12.5px] font-medium border transition-colors',
+                                isSelected
+                                  ? 'bg-elec-yellow text-black border-elec-yellow'
+                                  : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'
+                              )}
+                            >
+                              {quote.quote_number} - {quote.client}
+                            </button>
+                          );
+                        })}
                       </div>
                     </div>
                   )}
 
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">
-                      Client Name <span className="text-destructive">*</span>
-                    </Label>
-                    <Input
-                      placeholder="Enter client name"
-                      value={client}
-                      onChange={(e) => setClient(e.target.value)}
-                      className="h-14 text-base"
-                      autoComplete="off"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Project / Reference</Label>
-                    <Input
-                      placeholder="Project name or reference"
-                      value={project}
-                      onChange={(e) => setProject(e.target.value)}
-                      className="h-14 text-base"
-                      autoComplete="off"
-                    />
-                  </div>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">Payment Terms</Label>
-                      <Select value={paymentTerms} onValueChange={setPaymentTerms}>
-                        <SelectTrigger className="h-14 text-base">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="0">Due on Receipt</SelectItem>
-                          <SelectItem value="7">Net 7</SelectItem>
-                          <SelectItem value="14">Net 14</SelectItem>
-                          <SelectItem value="30">Net 30</SelectItem>
-                          <SelectItem value="60">Net 60</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-sm font-medium">VAT Rate</Label>
-                      <Select value={vatRate} onValueChange={setVatRate}>
-                        <SelectTrigger className="h-14 text-base">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="0">0% (Exempt)</SelectItem>
-                          <SelectItem value="5">5% (Reduced)</SelectItem>
-                          <SelectItem value="20">20% (Standard)</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
+                  <FormCard eyebrow="Client details">
+                    <Field label="Client name" required>
+                      <Input
+                        placeholder="Enter client name"
+                        value={client}
+                        onChange={(e) => setClient(e.target.value)}
+                        className={inputClass}
+                        autoComplete="off"
+                      />
+                    </Field>
+                    <Field label="Project / reference">
+                      <Input
+                        placeholder="Project name or reference"
+                        value={project}
+                        onChange={(e) => setProject(e.target.value)}
+                        className={inputClass}
+                        autoComplete="off"
+                      />
+                    </Field>
+                    <FormGrid cols={2}>
+                      <Field label="Payment terms">
+                        <Select value={paymentTerms} onValueChange={setPaymentTerms}>
+                          <SelectTrigger className={selectTriggerClass}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className={selectContentClass}>
+                            <SelectItem value="0">Due on Receipt</SelectItem>
+                            <SelectItem value="7">Net 7</SelectItem>
+                            <SelectItem value="14">Net 14</SelectItem>
+                            <SelectItem value="30">Net 30</SelectItem>
+                            <SelectItem value="60">Net 60</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                      <Field label="VAT rate">
+                        <Select value={vatRate} onValueChange={setVatRate}>
+                          <SelectTrigger className={selectTriggerClass}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className={selectContentClass}>
+                            <SelectItem value="0">0% (Exempt)</SelectItem>
+                            <SelectItem value="5">5% (Reduced)</SelectItem>
+                            <SelectItem value="20">20% (Standard)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                    </FormGrid>
+                  </FormCard>
                 </div>
               )}
 
               {step === 2 && (
-                <div className="space-y-5">
-                  {/* Line Items */}
+                <div className="space-y-4">
                   {lineItems.length > 0 && (
-                    <div className="space-y-3">
-                      <Label className="text-sm font-medium">Line Items Added</Label>
-                      {lineItems.map((item) => (
-                        <Card key={item.id} className="bg-elec-gray border-border">
-                          <CardContent className="p-4">
+                    <FormCard eyebrow="Line items added">
+                      <div className="space-y-2">
+                        {lineItems.map((item) => (
+                          <div
+                            key={item.id}
+                            className="rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.08] p-4"
+                          >
                             <div className="flex items-start justify-between gap-3">
                               <div className="flex-1 min-w-0">
-                                <p className="font-medium text-base truncate">{item.description}</p>
+                                <p className="font-medium text-[13px] text-white truncate">
+                                  {item.description}
+                                </p>
                                 <div className="flex items-center gap-3 mt-2">
                                   <Input
                                     type="text"
@@ -416,102 +420,90 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                                         [item.id]: String(val),
                                       }));
                                     }}
-                                    className="w-20 h-12 text-base text-center"
+                                    className={cn(inputClass, 'w-20 h-10 text-center')}
                                   />
-                                  <span className="text-sm text-white">{item.unit}</span>
-                                  <span className="text-sm text-white">
+                                  <span className="text-[11.5px] text-white">{item.unit}</span>
+                                  <span className="text-[11.5px] text-white">
                                     × £{item.unitPrice.toFixed(2)}
                                   </span>
                                 </div>
                               </div>
                               <div className="text-right shrink-0">
-                                <p className="text-lg font-bold text-elec-yellow">
+                                <p className="text-lg font-bold text-elec-yellow tabular-nums">
                                   £{item.total.toFixed(2)}
                                 </p>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="h-10 w-10 p-0 mt-1"
+                                <button
+                                  type="button"
                                   onClick={() => removeLineItem(item.id)}
+                                  className="h-9 w-9 rounded-full flex items-center justify-center text-red-400 hover:bg-red-500/10 transition-colors mt-1"
                                 >
-                                  <Trash2 className="h-4 w-4 text-destructive" />
-                                </Button>
+                                  <Trash2 className="h-4 w-4" />
+                                </button>
                               </div>
                             </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
+                          </div>
+                        ))}
+                      </div>
+                    </FormCard>
                   )}
 
-                  {/* Custom Item */}
-                  <Card className="bg-muted/30 border-dashed">
-                    <CardContent className="p-4 space-y-4">
-                      <Label className="text-sm font-medium">Add Line Item</Label>
-                      <Input
-                        placeholder="Item description"
-                        value={newItem.description}
-                        onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-                        className="h-14 text-base"
-                        autoComplete="off"
-                      />
-                      <div className="grid grid-cols-3 gap-3">
-                        <div className="space-y-2">
-                          <Label className="text-xs text-white">Qty</Label>
-                          <Input
-                            type="text"
-                            inputMode="decimal"
-                            placeholder="1"
-                            value={newItem.quantity}
-                            onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
-                            className="h-12 text-base text-center"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label className="text-xs text-white">Unit</Label>
-                          <Select
-                            value={newItem.unit}
-                            onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
-                          >
-                            <SelectTrigger className="h-12 text-base">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="each">each</SelectItem>
-                              <SelectItem value="m">m</SelectItem>
-                              <SelectItem value="m²">m²</SelectItem>
-                              <SelectItem value="hour">hour</SelectItem>
-                              <SelectItem value="day">day</SelectItem>
-                              <SelectItem value="job">job</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div className="space-y-2">
-                          <Label className="text-xs text-white">Price £</Label>
-                          <Input
-                            type="text"
-                            inputMode="decimal"
-                            placeholder="0"
-                            value={newItem.unitPrice}
-                            onChange={(e) => setNewItem({ ...newItem, unitPrice: e.target.value })}
-                            className="h-12 text-base text-center"
-                          />
-                        </div>
-                      </div>
-                      <Button
-                        variant="outline"
-                        className="w-full h-12"
-                        onClick={addLineItem}
-                        disabled={!newItem.description}
-                      >
-                        <Plus className="h-4 w-4 mr-2" />
-                        Add Item
-                      </Button>
-                    </CardContent>
-                  </Card>
+                  <div className="rounded-2xl border border-dashed border-white/[0.15] bg-white/[0.02] p-4 space-y-3">
+                    <label className={fieldLabelClass}>Add line item</label>
+                    <Input
+                      placeholder="Item description"
+                      value={newItem.description}
+                      onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+                      className={inputClass}
+                      autoComplete="off"
+                    />
+                    <div className="grid grid-cols-3 gap-3">
+                      <Field label="Qty">
+                        <Input
+                          type="text"
+                          inputMode="decimal"
+                          placeholder="1"
+                          value={newItem.quantity}
+                          onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
+                          className={cn(inputClass, 'text-center')}
+                        />
+                      </Field>
+                      <Field label="Unit">
+                        <Select
+                          value={newItem.unit}
+                          onValueChange={(v) => setNewItem({ ...newItem, unit: v })}
+                        >
+                          <SelectTrigger className={selectTriggerClass}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent className={selectContentClass}>
+                            <SelectItem value="each">each</SelectItem>
+                            <SelectItem value="m">m</SelectItem>
+                            <SelectItem value="m²">m²</SelectItem>
+                            <SelectItem value="hour">hour</SelectItem>
+                            <SelectItem value="day">day</SelectItem>
+                            <SelectItem value="job">job</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                      <Field label="Price £">
+                        <Input
+                          type="text"
+                          inputMode="decimal"
+                          placeholder="0"
+                          value={newItem.unitPrice}
+                          onChange={(e) => setNewItem({ ...newItem, unitPrice: e.target.value })}
+                          className={cn(inputClass, 'text-center')}
+                        />
+                      </Field>
+                    </div>
+                    <SecondaryButton onClick={addLineItem} disabled={!newItem.description} fullWidth>
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Item
+                    </SecondaryButton>
+                  </div>
 
                   {lineItems.length === 0 && (
-                    <p className="text-sm text-white text-center py-2">
+                    <p className="text-[12.5px] text-white text-center py-2">
                       Add at least one line item to continue.
                     </p>
                   )}
@@ -519,90 +511,88 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
               )}
 
               {step === 3 && (
-                <div className="space-y-5">
-                  {/* Summary */}
-                  <Card className="bg-gradient-to-br from-primary/5 to-primary/10 border-elec-yellow/20">
-                    <CardContent className="p-4 space-y-4">
+                <div className="space-y-4">
+                  <div className="rounded-2xl bg-elec-yellow/10 border border-elec-yellow/30 p-4 space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[12.5px] text-white">Client</span>
+                      <span className="font-medium text-white">{client}</span>
+                    </div>
+                    {project && (
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Client</span>
-                        <span className="font-medium">{client}</span>
+                        <span className="text-[12.5px] text-white">Project</span>
+                        <span className="font-medium text-[12.5px] text-white">{project}</span>
                       </div>
-                      {project && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-white">Project</span>
-                          <span className="font-medium text-sm">{project}</span>
-                        </div>
-                      )}
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-white">Payment Terms</span>
-                        <span className="font-medium">
-                          {paymentTerms === '0' ? 'Due on Receipt' : `Net ${paymentTerms}`}
+                    )}
+                    <div className="flex justify-between items-center">
+                      <span className="text-[12.5px] text-white">Payment Terms</span>
+                      <span className="font-medium text-white">
+                        {paymentTerms === '0' ? 'Due on Receipt' : `Net ${paymentTerms}`}
+                      </span>
+                    </div>
+                    <div className="border-t border-white/[0.1] pt-4 space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-[12.5px] text-white">Subtotal</span>
+                        <span className="text-[12.5px] text-white tabular-nums">
+                          £{subtotal.toFixed(2)}
                         </span>
                       </div>
-                      <div className="border-t border-border pt-4 space-y-2">
-                        <div className="flex justify-between">
-                          <span className="text-sm text-white">Subtotal</span>
-                          <span className="text-sm">£{subtotal.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-white">VAT ({vatRate}%)</span>
-                          <span className="text-sm">£{vatAmount.toFixed(2)}</span>
-                        </div>
-                        <div className="flex justify-between pt-2 border-t border-border">
-                          <span className="text-lg font-bold">Total Due</span>
-                          <span className="text-2xl font-bold text-elec-yellow tabular-nums">
-                            £{total.toFixed(2)}
-                          </span>
-                        </div>
+                      <div className="flex justify-between">
+                        <span className="text-[12.5px] text-white">VAT ({vatRate}%)</span>
+                        <span className="text-[12.5px] text-white tabular-nums">
+                          £{vatAmount.toFixed(2)}
+                        </span>
                       </div>
-                    </CardContent>
-                  </Card>
+                      <div className="flex justify-between pt-2 border-t border-white/[0.1]">
+                        <span className="text-lg font-bold text-white">Total Due</span>
+                        <span className="text-2xl font-bold text-elec-yellow tabular-nums">
+                          £{total.toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
 
-                  {/* Notes */}
-                  <div className="space-y-2">
-                    <Label className="text-sm font-medium">Notes / Payment Details</Label>
+                  <Field label="Notes / payment details">
                     <Textarea
                       placeholder="Bank details, payment instructions, etc."
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="min-h-[100px] text-base"
+                      className={cn(textareaClass, 'min-h-[100px]')}
                     />
-                  </div>
+                  </Field>
 
-                  {/* Line Items Preview */}
-                  <div className="space-y-3">
-                    <Label className="text-sm font-medium">Line Items</Label>
+                  <FormCard eyebrow="Line items">
                     <div className="space-y-2">
                       {lineItems.map((item, idx) => (
                         <div
                           key={item.id}
-                          className="flex justify-between items-center py-2 px-3 bg-muted/30 rounded-lg"
+                          className="flex justify-between items-center py-2 px-3 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl"
                         >
                           <div className="flex-1 min-w-0">
-                            <span className="text-sm text-white mr-2">{idx + 1}.</span>
-                            <span className="text-sm">{item.description}</span>
-                            <span className="text-xs text-white ml-2">
+                            <span className="text-[12.5px] text-white mr-2">{idx + 1}.</span>
+                            <span className="text-[12.5px] text-white">{item.description}</span>
+                            <span className="text-[11px] text-white ml-2">
                               × {item.quantity}
                             </span>
                           </div>
-                          <span className="font-medium shrink-0">£{item.total.toFixed(2)}</span>
+                          <span className="font-medium text-white shrink-0 tabular-nums">
+                            £{item.total.toFixed(2)}
+                          </span>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </FormCard>
                 </div>
               )}
             </div>
           </ScrollArea>
 
           {/* Fixed Bottom Bar with Totals and Actions */}
-          <div className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border">
-            {/* Totals Row */}
-            <div className="px-4 py-3 border-b border-border/50">
+          <div className="absolute bottom-0 left-0 right-0 bg-[hsl(0_0%_8%)] border-t border-white/[0.06]">
+            <div className="px-4 py-3 border-b border-white/[0.06]">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Calculator className="h-4 w-4 text-white" />
-                  <span className="text-sm text-white">Total Due</span>
+                  <span className="text-[12.5px] text-white">Total Due</span>
                 </div>
                 <span className="text-xl font-bold text-elec-yellow tabular-nums">
                   £{total.toFixed(2)}
@@ -610,54 +600,44 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="px-4 py-3 pb-safe">
               <div className="flex gap-3 w-full">
                 {step > 1 ? (
-                  <Button
-                    variant="outline"
-                    onClick={() => setStep(step - 1)}
-                    className="flex-1 h-12"
-                  >
+                  <SecondaryButton onClick={() => setStep(step - 1)} fullWidth>
                     <ChevronLeft className="h-4 w-4 mr-1" />
                     Back
-                  </Button>
+                  </SecondaryButton>
                 ) : (
-                  <Button
-                    variant="outline"
-                    onClick={() => onOpenChange(false)}
-                    className="flex-1 h-12"
-                  >
+                  <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                     Cancel
-                  </Button>
+                  </SecondaryButton>
                 )}
                 {step < 3 ? (
-                  <Button
+                  <PrimaryButton
                     onClick={() => setStep(step + 1)}
                     disabled={!canProceed()}
-                    className="flex-1 h-12"
+                    fullWidth
                   >
                     Next
                     <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
+                  </PrimaryButton>
                 ) : (
                   <div className="flex gap-2 flex-1">
-                    <Button
-                      variant="outline"
+                    <SecondaryButton
                       onClick={() => handleSubmit(false)}
                       disabled={createInvoiceMutation.isPending}
-                      className="flex-1 h-12"
+                      fullWidth
                     >
                       Save Draft
-                    </Button>
-                    <Button
+                    </SecondaryButton>
+                    <PrimaryButton
                       onClick={() => handleSubmit(true)}
                       disabled={createInvoiceMutation.isPending}
-                      className="flex-1 h-12"
+                      fullWidth
                     >
-                      <Send className="h-4 w-4 mr-1" />
+                      <Send className="h-4 w-4 mr-2" />
                       Send
-                    </Button>
+                    </PrimaryButton>
                   </div>
                 )}
               </div>

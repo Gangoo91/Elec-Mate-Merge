@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Archive, Copy, MoreHorizontal, ArrowRight } from 'lucide-react';
+import { Archive, Copy } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MobileCardSwipeActionsProps {
@@ -14,7 +14,6 @@ export function MobileCardSwipeActions({
   children,
   onArchive,
   onCopy,
-  onMove,
   className,
 }: MobileCardSwipeActionsProps) {
   const [translateX, setTranslateX] = useState(0);
@@ -70,7 +69,7 @@ export function MobileCardSwipeActions({
         className="absolute inset-y-0 left-0 w-24 flex items-center justify-center bg-elec-yellow"
         style={{ opacity: leftOpacity }}
       >
-        <div className="flex flex-col items-center gap-1 text-elec-dark">
+        <div className="flex flex-col items-center gap-1 text-black">
           <Copy className="h-5 w-5" />
           <span className="text-xs font-medium">Copy</span>
         </div>
@@ -78,10 +77,10 @@ export function MobileCardSwipeActions({
 
       {/* Right action (revealed on swipe left) */}
       <div
-        className="absolute inset-y-0 right-0 w-24 flex items-center justify-center bg-warning"
+        className="absolute inset-y-0 right-0 w-24 flex items-center justify-center bg-amber-500"
         style={{ opacity: rightOpacity }}
       >
-        <div className="flex flex-col items-center gap-1 text-warning-foreground">
+        <div className="flex flex-col items-center gap-1 text-black">
           <Archive className="h-5 w-5" />
           <span className="text-xs font-medium">Archive</span>
         </div>
@@ -89,7 +88,7 @@ export function MobileCardSwipeActions({
 
       {/* Main content */}
       <div
-        className={cn('relative bg-background transition-transform', !isDragging && 'duration-200')}
+        className={cn('relative bg-[hsl(0_0%_8%)] transition-transform', !isDragging && 'duration-200')}
         style={{ transform: `translateX(${translateX}px)` }}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}

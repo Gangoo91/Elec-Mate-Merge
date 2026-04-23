@@ -3,34 +3,16 @@ import { openExternalUrl } from '@/utils/open-external-url';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import {
-  Mail,
-  CheckCircle2,
-  XCircle,
-  Loader2,
-  AlertCircle,
-  Info,
-  ExternalLink,
-  Send,
-} from 'lucide-react';
 import { motion } from 'framer-motion';
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
-  },
-};
+import {
+  ListCard,
+  ListRow,
+  SectionHeader,
+  Eyebrow,
+  StatStrip,
+  containerVariants,
+  itemVariants,
+} from '@/components/college/primitives';
 
 interface EmailConfig {
   id: string;
@@ -52,15 +34,14 @@ export const EmailSettingsTab = () => {
   const fetchConfigs = async () => {
     try {
       const { data, error } = await supabase.functions.invoke('get-email-config');
-
       if (error) throw error;
-
       setConfigs(data?.configs || []);
-    } catch (error: any) {
-      console.error('Error fetching email configs:', error);
+    } catch (error) {
+      const err = error as Error;
+      console.error('Error fetching email configs:', err);
       toast({
         title: 'Error',
-        description: error.message || 'Failed to fetch email configurations',
+        description: err.message || 'Failed to fetch email configurations',
         variant: 'destructive',
       });
     } finally {
@@ -69,7 +50,6 @@ export const EmailSettingsTab = () => {
   };
 
   useEffect(() => {
-    // Check for OAuth callback parameters
     const urlParams = new URLSearchParams(window.location.search);
     const success = urlParams.get('success');
     const error = urlParams.get('error');
@@ -79,7 +59,6 @@ export const EmailSettingsTab = () => {
         title: 'Email Connected',
         description: 'Your email account has been connected successfully',
       });
-      // Clean up URL
       window.history.replaceState({}, '', '/settings?tab=email');
     }
 
@@ -89,7 +68,6 @@ export const EmailSettingsTab = () => {
         description: decodeURIComponent(error),
         variant: 'destructive',
       });
-      // Clean up URL
       window.history.replaceState({}, '', '/settings?tab=email');
     }
 
@@ -102,19 +80,18 @@ export const EmailSettingsTab = () => {
       const { data, error } = await supabase.functions.invoke('oauth-email-init', {
         body: { provider },
       });
-
       if (error) throw error;
 
-      // Open OAuth in system browser (Capacitor Browser on native, new tab on web)
       if (data?.authUrl) {
         await openExternalUrl(data.authUrl);
       }
       setLoading(false);
-    } catch (error: any) {
-      console.error('Error initiating OAuth:', error);
+    } catch (error) {
+      const err = error as Error;
+      console.error('Error initiating OAuth:', err);
       toast({
         title: 'Connection Failed',
-        description: error.message || `Failed to connect ${provider}`,
+        description: err.message || `Failed to connect ${provider}`,
         variant: 'destructive',
       });
       setLoading(false);
@@ -126,7 +103,6 @@ export const EmailSettingsTab = () => {
       const { error } = await supabase.functions.invoke('disconnect-email', {
         body: { provider },
       });
-
       if (error) throw error;
 
       toast({
@@ -135,11 +111,12 @@ export const EmailSettingsTab = () => {
       });
 
       await fetchConfigs();
-    } catch (error: any) {
-      console.error('Error disconnecting:', error);
+    } catch (error) {
+      const err = error as Error;
+      console.error('Error disconnecting:', err);
       toast({
         title: 'Error',
-        description: error.message || 'Failed to disconnect account',
+        description: err.message || 'Failed to disconnect account',
         variant: 'destructive',
       });
     }
@@ -153,276 +130,142 @@ export const EmailSettingsTab = () => {
   if (fetchingConfigs) {
     return (
       <div className="space-y-6 animate-pulse">
-        <div className="rounded-xl bg-elec-gray/50 border border-white/10 h-24" />
-        <div className="rounded-xl bg-elec-gray/50 border border-white/10 h-48" />
-        <div className="rounded-xl bg-elec-gray/50 border border-white/10 h-48" />
+        <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] h-24" />
+        <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] h-48" />
+        <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] h-48" />
       </div>
     );
   }
+
+  const renderProviderCard = (
+    eyebrow: string,
+    label: string,
+    description: string,
+    provider: 'gmail' | 'outlook',
+    config?: EmailConfig
+  ) => (
+    <motion.section variants={itemVariants} className="space-y-3">
+      <SectionHeader eyebrow={eyebrow} title={label} />
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
+        <div className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <Eyebrow>Status</Eyebrow>
+            <div className="mt-1 flex items-center gap-2">
+              <span className="text-[15px] font-medium text-white">{description}</span>
+              {config?.is_active ? (
+                <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                  Connected
+                </span>
+              ) : (
+                <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-red-400">
+                  Not Connected
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {config ? (
+          <>
+            <StatStrip
+              columns={2}
+              stats={[
+                { value: config.daily_sent_count || 0, label: 'Sent Today', sub: `of ${DAILY_LIMIT}` },
+                { value: config.total_sent_count || 0, label: 'Total Sent' },
+              ]}
+            />
+            <ListCard>
+              <ListRow title="Email Address" subtitle={config.email_address} />
+              {config.last_sent_at && (
+                <ListRow
+                  title="Last Sent"
+                  subtitle={new Date(config.last_sent_at).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
+                />
+              )}
+            </ListCard>
+            <Button
+              variant="outline"
+              onClick={() => handleDisconnect(provider)}
+              className="w-full h-11 rounded-full border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300 bg-transparent touch-manipulation"
+            >
+              Disconnect {provider === 'gmail' ? 'Gmail' : 'Outlook'}
+            </Button>
+          </>
+        ) : (
+          <>
+            <p className="text-[13px] text-white/70 leading-relaxed">
+              Connect your {provider === 'gmail' ? 'Gmail' : 'Outlook'} account to send invoices
+              and certificates directly from your email address.
+            </p>
+            <Button
+              onClick={() => handleConnect(provider)}
+              disabled={loading}
+              className="w-full h-11 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
+            >
+              {loading ? 'Connecting…' : `Connect ${provider === 'gmail' ? 'Gmail' : 'Outlook'}`}
+            </Button>
+          </>
+        )}
+      </div>
+    </motion.section>
+  );
 
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-6"
+      className="space-y-8"
     >
-      {/* Header */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="p-4 md:p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center">
-              <Mail className="h-6 w-6 text-cyan-400" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Email Integration</h3>
-              <p className="text-sm text-muted-foreground">
-                Send invoices directly from your email account
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+      {/* Overview */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="00" title="Email Integration" />
+        <p className="text-[13px] text-white/70 leading-relaxed max-w-2xl">
+          Send invoices directly from your email account. Connecting Gmail or Outlook improves
+          deliverability and keeps messages personal.
+        </p>
+        {configs.length > 0 && (
+          <ListCard>
+            <ListRow
+              title="Daily Sending Limit"
+              subtitle={`Up to ${DAILY_LIMIT} emails per day. Resets at midnight UTC.`}
+              accent="amber"
+              trailing={
+                <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-amber-400 tabular-nums">
+                  {DAILY_LIMIT}/day
+                </span>
+              }
+            />
+          </ListCard>
+        )}
+      </motion.section>
 
-      {/* Rate Limit Info */}
-      {configs.length > 0 && (
-        <motion.div
-          variants={itemVariants}
-          className="rounded-xl bg-amber-500/10 border border-amber-500/20 overflow-hidden"
-        >
-          <div className="p-4 md:p-6">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
-                <AlertCircle className="h-5 w-5 text-amber-400" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">Daily Sending Limit</p>
-                <p className="text-sm text-muted-foreground mt-1">
-                  You can send up to {DAILY_LIMIT} emails per day. Your limit resets at midnight
-                  UTC.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+      {renderProviderCard('01', 'Gmail', 'Google Mail integration', 'gmail', gmailConfig)}
+      {renderProviderCard(
+        '02',
+        'Outlook',
+        'Microsoft email integration',
+        'outlook',
+        outlookConfig
       )}
 
-      {/* Gmail Card */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="px-4 md:px-6 py-4 border-b border-white/10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
-                <Mail className="h-5 w-5 text-red-400" />
-              </div>
-              <div>
-                <h3 className="text-base font-semibold text-foreground">Gmail</h3>
-                <p className="text-xs text-muted-foreground">Google Mail integration</p>
-              </div>
-            </div>
-            {gmailConfig?.is_active ? (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">
-                <CheckCircle2 className="h-3 w-3" />
-                Connected
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/10 text-muted-foreground">
-                <XCircle className="h-3 w-3" />
-                Not Connected
-              </span>
-            )}
-          </div>
+      {/* How it works */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="03" title="How it works" />
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+          <p className="text-[13px] text-white/70 leading-relaxed">
+            When you connect your email account, invoices and certificates will be sent directly
+            from your email address, making them more personal and improving deliverability. Your
+            credentials are securely stored and never shared.
+          </p>
         </div>
-        <div className="p-4 md:p-6 space-y-4">
-          {gmailConfig ? (
-            <>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="text-sm font-medium text-foreground truncate">
-                    {gmailConfig.email_address}
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-xs text-muted-foreground">Sent Today</p>
-                  <p className="text-sm font-medium text-foreground">
-                    {gmailConfig.daily_sent_count || 0}/{DAILY_LIMIT}
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-xs text-muted-foreground">Total Sent</p>
-                  <p className="text-sm font-medium text-foreground">
-                    {gmailConfig.total_sent_count || 0}
-                  </p>
-                </div>
-                {gmailConfig.last_sent_at && (
-                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                    <p className="text-xs text-muted-foreground">Last Sent</p>
-                    <p className="text-sm font-medium text-foreground">
-                      {new Date(gmailConfig.last_sent_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                )}
-              </div>
-              <Button
-                variant="outline"
-                onClick={() => handleDisconnect('gmail')}
-                className="w-full border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
-              >
-                <XCircle className="h-4 w-4 mr-2" />
-                Disconnect Gmail
-              </Button>
-            </>
-          ) : (
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Connect your Gmail account to send invoices and certificates directly from your
-                email address.
-              </p>
-              <Button
-                onClick={() => handleConnect('gmail')}
-                disabled={loading}
-                className="w-full bg-red-500 hover:bg-red-500/90 text-white"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Connecting...
-                  </>
-                ) : (
-                  <>
-                    <Mail className="mr-2 h-4 w-4" />
-                    Connect Gmail
-                  </>
-                )}
-              </Button>
-            </div>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Outlook Card */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="px-4 md:px-6 py-4 border-b border-white/10">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                <Mail className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <h3 className="text-base font-semibold text-foreground">Outlook</h3>
-                <p className="text-xs text-muted-foreground">Microsoft email integration</p>
-              </div>
-            </div>
-            {outlookConfig?.is_active ? (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-400">
-                <CheckCircle2 className="h-3 w-3" />
-                Connected
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/10 text-muted-foreground">
-                <XCircle className="h-3 w-3" />
-                Not Connected
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="p-4 md:p-6 space-y-4">
-          {outlookConfig ? (
-            <>
-              <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="text-sm font-medium text-foreground truncate">
-                    {outlookConfig.email_address}
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-xs text-muted-foreground">Sent Today</p>
-                  <p className="text-sm font-medium text-foreground">
-                    {outlookConfig.daily_sent_count || 0}/{DAILY_LIMIT}
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <p className="text-xs text-muted-foreground">Total Sent</p>
-                  <p className="text-sm font-medium text-foreground">
-                    {outlookConfig.total_sent_count || 0}
-                  </p>
-                </div>
-                {outlookConfig.last_sent_at && (
-                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                    <p className="text-xs text-muted-foreground">Last Sent</p>
-                    <p className="text-sm font-medium text-foreground">
-                      {new Date(outlookConfig.last_sent_at).toLocaleDateString()}
-                    </p>
-                  </div>
-                )}
-              </div>
-              <Button
-                variant="outline"
-                onClick={() => handleDisconnect('outlook')}
-                className="w-full border-red-500/30 text-red-400 hover:bg-red-500/10 hover:text-red-300"
-              >
-                <XCircle className="h-4 w-4 mr-2" />
-                Disconnect Outlook
-              </Button>
-            </>
-          ) : (
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Connect your Outlook account to send invoices and certificates directly from your
-                email address.
-              </p>
-              <Button
-                onClick={() => handleConnect('outlook')}
-                disabled={loading}
-                className="w-full bg-blue-500 hover:bg-blue-500/90 text-white"
-              >
-                {loading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Connecting...
-                  </>
-                ) : (
-                  <>
-                    <Mail className="mr-2 h-4 w-4" />
-                    Connect Outlook
-                  </>
-                )}
-              </Button>
-            </div>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Info Notice */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-white/5 border border-white/10 overflow-hidden"
-      >
-        <div className="p-4 md:p-6">
-          <div className="flex items-start gap-3">
-            <Info className="h-5 w-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm font-medium text-foreground mb-1">How it works</p>
-              <p className="text-sm text-muted-foreground">
-                When you connect your email account, invoices and certificates will be sent directly
-                from your email address, making them more personal and improving deliverability.
-                Your credentials are securely stored and never shared.
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+      </motion.section>
     </motion.div>
   );
 };
+
+export default EmailSettingsTab;

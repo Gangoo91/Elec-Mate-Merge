@@ -1,83 +1,94 @@
-import BusinessCard from '@/components/business-hub/BusinessCard';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
-  FileText,
-  Sparkles,
-  Zap,
-  ShieldCheck,
-  ClipboardList,
-  Package,
-} from 'lucide-react';
+  HubLanding,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  Pill,
+} from '@/components/employer/editorial';
 
 interface SmartDocsHubProps {
   onNavigate: (section: Section) => void;
 }
 
 export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
+  const onOpenDesignSpec = () => onNavigate('aidesignspec');
+  const onOpenMethodStatement = () => onNavigate('aimethodstatement');
+  const onOpenRAMS = () => onNavigate('airams');
+  const onOpenBriefingPack = () => onNavigate('aibriefingpack');
+  const onOpenQuote = () => onNavigate('aiquote');
+
   return (
-    <div className="space-y-5 pb-6 animate-fade-in">
-      {/* AI Document Generation */}
-      <section className="space-y-3">
-        <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-          AI Document Generation
-        </h2>
-        <div className="grid grid-cols-2 gap-3">
-          <BusinessCard
-            title="AI Quotes"
-            description="Auto-generate from job scope"
-            icon={FileText}
-            onClick={() => onNavigate('aiquote')}
-            accentColor="from-emerald-500 via-emerald-400 to-green-400"
-            iconColor="text-emerald-400"
-            iconBg="bg-emerald-500/10 border border-emerald-500/20"
-          />
-          <BusinessCard
+    <HubLanding
+      eyebrow="AI Powered"
+      title="Smart Docs"
+      description="Generate RAMS, method statements, design specs, briefing packs and quotes in minutes."
+      tone="purple"
+      stats={[
+        { label: 'Generated 30d', value: '0', tone: 'purple' },
+        { label: 'Saved hours', value: '0', tone: 'emerald', accent: true },
+        { label: 'Templates', value: '5', tone: 'blue' },
+        { label: 'Export formats', value: 'PDF', tone: 'indigo' },
+      ]}
+    >
+      <section className="space-y-5">
+        <SectionHeader
+          eyebrow="AI drafts, you approve"
+          title="Documents in minutes"
+        />
+        <HubGrid columns={2}>
+          <HubCard
+            number="01"
+            eyebrow="Design"
             title="AI Design Spec"
-            description="Circuit design docs"
-            icon={Zap}
-            onClick={() => onNavigate('aidesignspec')}
-            accentColor="from-elec-yellow via-amber-400 to-orange-400"
-            iconColor="text-elec-yellow"
-            iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
+            description="Circuit design documents drafted from your job brief."
+            tone="indigo"
+            badge={<Pill tone="purple">AI</Pill>}
+            onClick={onOpenDesignSpec}
+            cta="Generate"
           />
-          <BusinessCard
-            title="AI RAMS"
-            description="Risk assessments"
-            icon={ShieldCheck}
-            onClick={() => onNavigate('airams')}
-            accentColor="from-orange-500 via-amber-400 to-red-400"
-            iconColor="text-orange-400"
-            iconBg="bg-orange-500/10 border border-orange-500/20"
-          />
-          <BusinessCard
+          <HubCard
+            number="02"
+            eyebrow="Procedure"
             title="AI Method Statement"
-            description="Work procedures"
-            icon={ClipboardList}
-            onClick={() => onNavigate('aimethodstatement')}
-            accentColor="from-blue-500 via-blue-400 to-cyan-400"
-            iconColor="text-blue-400"
-            iconBg="bg-blue-500/10 border border-blue-500/20"
+            description="Step-by-step work procedures aligned to BS 7671 practice."
+            tone="emerald"
+            badge={<Pill tone="purple">AI</Pill>}
+            onClick={onOpenMethodStatement}
+            cta="Generate"
           />
-          <BusinessCard
+          <HubCard
+            number="03"
+            eyebrow="Safety"
+            title="AI RAMS"
+            description="Risk assessments and method statements ready for site."
+            tone="orange"
+            badge={<Pill tone="purple">AI</Pill>}
+            onClick={onOpenRAMS}
+            cta="Generate"
+          />
+          <HubCard
+            number="04"
+            eyebrow="Briefing"
             title="AI Briefing Pack"
-            description="Pre-job briefings"
-            icon={Sparkles}
-            onClick={() => onNavigate('aibriefingpack')}
-            accentColor="from-purple-500 via-violet-400 to-indigo-400"
-            iconColor="text-purple-400"
-            iconBg="bg-purple-500/10 border border-purple-500/20"
+            description="Pre-job briefing packs to share with the crew before mobilisation."
+            tone="amber"
+            badge={<Pill tone="purple">AI</Pill>}
+            onClick={onOpenBriefingPack}
+            cta="Generate"
           />
-          <BusinessCard
-            title="Job Packs"
-            description="Scope, standards & safety"
-            icon={Package}
-            onClick={() => onNavigate('jobpacks')}
-            accentColor="from-cyan-500 via-blue-400 to-blue-500"
-            iconColor="text-cyan-400"
-            iconBg="bg-cyan-500/10 border border-cyan-500/20"
+          <HubCard
+            number="05"
+            eyebrow="Commercial"
+            title="AI Quote Generator"
+            description="Auto-build customer quotes from job scope and pricing data."
+            tone="yellow"
+            badge={<Pill tone="purple">AI</Pill>}
+            onClick={onOpenQuote}
+            cta="Generate"
           />
-        </div>
+        </HubGrid>
       </section>
-    </div>
+    </HubLanding>
   );
 }

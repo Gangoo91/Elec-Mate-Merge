@@ -14,7 +14,6 @@ import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/components/ui/use-toast';
-import { Loader2 } from 'lucide-react';
 
 interface ElecIdWalletProps {
   elecIdNumber: string;
@@ -193,8 +192,8 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
           >
             {isAppleLoading ? (
               <div className="h-12 flex items-center gap-2 bg-black rounded-xl px-5 border border-white/20">
-                <Loader2 className="h-4 w-4 animate-spin text-white" />
-                <span className="text-white text-sm">Generating...</span>
+                <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                <span className="text-white text-sm">Generating…</span>
               </div>
             ) : (
               <AppleWalletBadge />
@@ -211,8 +210,8 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
           >
             {isGoogleLoading ? (
               <div className="h-12 flex items-center gap-2 bg-[#1a1a2e] rounded-xl px-5 border border-white/20">
-                <Loader2 className="h-4 w-4 animate-spin text-white" />
-                <span className="text-white text-sm">Generating...</span>
+                <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                <span className="text-white text-sm">Generating…</span>
               </div>
             ) : (
               <GoogleWalletBadge />
@@ -221,7 +220,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
         )}
       </div>
 
-      <p className="text-xs text-white/50 mt-4">
+      <p className="text-xs text-white mt-4">
         Pass includes your name, verification tier, ECS card details and a QR code linking to your public profile.
       </p>
     </div>

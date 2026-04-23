@@ -1,8 +1,5 @@
 import { useState, useRef } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -13,10 +10,21 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { Camera, Upload, Loader2, MapPin, X, Image as ImageIcon } from 'lucide-react';
+import { Upload, Loader2, MapPin, X, Image as ImageIcon } from 'lucide-react';
 import { useUploadJobPhoto, type PhotoCategory } from '@/hooks/useJobPhotos';
 import { useJobs } from '@/hooks/useJobs';
 import { getCurrentPosition } from '@/utils/geolocation';
+import {
+  SheetShell,
+  FormCard,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 const CATEGORIES: { value: PhotoCategory; label: string; color: string }[] = [
   { value: 'Before', label: 'Before', color: 'bg-blue-500' },
@@ -54,19 +62,16 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
     const file = event.target.files?.[0];
     if (!file) return;
 
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       return;
     }
 
-    // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
       return;
     }
 
     setSelectedFile(file);
 
-    // Create preview
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result as string);
@@ -98,7 +103,6 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
       location: useLocation && location ? location : undefined,
     });
 
-    // Reset form
     setSelectedFile(null);
     setPreview(null);
     setCategory('Before');
@@ -121,21 +125,38 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
-        className={cn('flex flex-col p-0', isMobile ? 'h-[90vh] rounded-t-2xl' : 'w-[450px]')}
+        className={cn('p-0 overflow-hidden', isMobile ? 'h-[90vh]' : 'w-[480px]')}
       >
-        {/* Header */}
-        <SheetHeader className="p-4 border-b border-border shrink-0">
-          <SheetTitle className="flex items-center gap-2">
-            <Camera className="h-5 w-5 text-elec-yellow" />
-            Upload Photo
-          </SheetTitle>
-        </SheetHeader>
-
-        {/* Content */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {/* File Upload Area */}
-          <div className="space-y-2">
-            <Label>Photo</Label>
+        <SheetShell
+          eyebrow="Job photos"
+          title="Upload photo"
+          description="Attach a photo to a job with category, location, and notes."
+          footer={
+            <>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleUpload}
+                disabled={!selectedFile || uploadPhoto.isPending}
+                fullWidth
+              >
+                {uploadPhoto.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Uploading...
+                  </>
+                ) : (
+                  <>
+                    <Upload className="h-4 w-4 mr-1.5" />
+                    Upload photo
+                  </>
+                )}
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Photo">
             <input
               ref={fileInputRef}
               type="file"
@@ -150,32 +171,30 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
                 <img
                   src={preview}
                   alt="Preview"
-                  className="w-full aspect-video object-cover rounded-xl border border-border"
+                  className="w-full aspect-video object-cover rounded-xl border border-white/[0.06]"
                 />
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  className="absolute top-2 right-2 h-8 w-8"
+                <button
+                  type="button"
                   onClick={handleClearFile}
+                  className="absolute top-2 right-2 h-8 w-8 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 flex items-center justify-center transition-colors"
+                  aria-label="Remove photo"
                 >
                   <X className="h-4 w-4" />
-                </Button>
+                </button>
               </div>
             ) : (
               <div
-                className="border-2 border-dashed border-muted-foreground/30 rounded-xl p-8 text-center cursor-pointer hover:border-elec-yellow/50 active:bg-muted/30 transition-all touch-manipulation"
+                className="border border-dashed border-white/[0.12] rounded-xl bg-[hsl(0_0%_9%)] p-8 text-center cursor-pointer hover:border-elec-yellow/50 hover:bg-[hsl(0_0%_11%)] active:bg-[hsl(0_0%_13%)] transition-all touch-manipulation"
                 onClick={() => fileInputRef.current?.click()}
               >
                 <ImageIcon className="h-12 w-12 text-white mx-auto mb-3" />
-                <p className="text-sm text-white mb-1">Tap to select a photo</p>
-                <p className="text-xs text-white">or use your camera</p>
+                <p className="text-[13px] text-white mb-1">Tap to select a photo</p>
+                <p className="text-[11px] text-white">or use your camera</p>
               </div>
             )}
-          </div>
+          </FormCard>
 
-          {/* Category Selection */}
-          <div className="space-y-2">
-            <Label>Category</Label>
+          <FormCard eyebrow="Category">
             <div className="grid grid-cols-5 gap-2">
               {CATEGORIES.map((cat) => (
                 <button
@@ -183,114 +202,87 @@ export function UploadPhotoSheet({ open, onOpenChange }: UploadPhotoSheetProps) 
                   type="button"
                   onClick={() => setCategory(cat.value)}
                   className={cn(
-                    'flex flex-col items-center gap-1 p-2 rounded-lg border transition-all touch-manipulation',
+                    'flex flex-col items-center gap-1 p-2 rounded-xl border transition-all touch-manipulation',
                     category === cat.value
                       ? 'border-elec-yellow bg-elec-yellow/10'
-                      : 'border-border/50 hover:border-border'
+                      : 'border-white/[0.08] bg-[hsl(0_0%_9%)] hover:bg-[hsl(0_0%_11%)]'
                   )}
                 >
-                  <div className={cn('h-3 w-3 rounded-full', cat.color)} />
-                  <span className="text-[10px] font-medium">{cat.label}</span>
+                  <div className={cn('h-2.5 w-2.5 rounded-full', cat.color)} />
+                  <span className="text-[10px] font-medium text-white">{cat.label}</span>
                 </button>
               ))}
             </div>
-          </div>
+          </FormCard>
 
-          {/* Job Selection */}
-          <div className="space-y-2">
-            <Label>Job (optional)</Label>
-            <Select value={jobId || 'none'} onValueChange={(v) => setJobId(v === 'none' ? '' : v)}>
-              <SelectTrigger className="h-12 touch-manipulation">
-                <SelectValue placeholder="Select a job..." />
-              </SelectTrigger>
-              <SelectContent className="z-[100]">
-                <SelectItem value="none">No job selected</SelectItem>
-                {activeJobs.map((job) => (
-                  <SelectItem key={job.id} value={job.id}>
-                    {job.title} - {job.client}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Notes */}
-          <div className="space-y-2">
-            <Label>Notes (optional)</Label>
-            <Textarea
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              placeholder="Add any notes about this photo..."
-              className="min-h-[80px] touch-manipulation"
-            />
-          </div>
-
-          {/* Location */}
-          <div className="space-y-2">
-            <Label>Location</Label>
-            {location ? (
-              <div className="flex items-center gap-2 p-3 bg-muted/30 rounded-lg">
-                <MapPin className="h-4 w-4 text-elec-yellow" />
-                <span className="text-sm flex-1">
-                  {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
-                </span>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setLocation(null);
-                    setUseLocation(false);
-                  }}
-                >
-                  Remove
-                </Button>
-              </div>
-            ) : (
-              <Button
-                variant="outline"
-                className="w-full h-12 touch-manipulation"
-                onClick={handleGetLocation}
-                disabled={gettingLocation}
+          <FormCard eyebrow="Metadata">
+            <Field label="Job (optional)">
+              <Select
+                value={jobId || 'none'}
+                onValueChange={(v) => setJobId(v === 'none' ? '' : v)}
               >
-                {gettingLocation ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Getting location...
-                  </>
-                ) : (
-                  <>
-                    <MapPin className="h-4 w-4 mr-2" />
-                    Add Current Location
-                  </>
-                )}
-              </Button>
-            )}
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="p-4 border-t border-border shrink-0 pb-safe space-y-3">
-          <Button
-            className="w-full bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
-            onClick={handleUpload}
-            disabled={!selectedFile || uploadPhoto.isPending}
-          >
-            {uploadPhoto.isPending ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Uploading...
-              </>
-            ) : (
-              <>
-                <Upload className="h-4 w-4 mr-2" />
-                Upload Photo
-              </>
-            )}
-          </Button>
-          <Button variant="outline" className="w-full h-12" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-        </div>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select a job..." />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="none">No job selected</SelectItem>
+                  {activeJobs.map((job) => (
+                    <SelectItem key={job.id} value={job.id}>
+                      {job.title} - {job.client}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field label="Notes (optional)">
+              <Textarea
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Add any notes about this photo..."
+                className={`${textareaClass} min-h-[80px]`}
+              />
+            </Field>
+            <div className="space-y-1.5">
+              <label className={fieldLabelClass}>Location</label>
+              {location ? (
+                <div className="flex items-center gap-2 p-3 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl">
+                  <MapPin className="h-4 w-4 text-elec-yellow" />
+                  <span className="text-[12px] text-white flex-1 tabular-nums">
+                    {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLocation(null);
+                      setUseLocation(false);
+                    }}
+                    className="text-[11px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ) : (
+                <SecondaryButton
+                  onClick={handleGetLocation}
+                  disabled={gettingLocation}
+                  fullWidth
+                >
+                  {gettingLocation ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Getting location...
+                    </>
+                  ) : (
+                    <>
+                      <MapPin className="h-4 w-4 mr-1.5" />
+                      Add current location
+                    </>
+                  )}
+                </SecondaryButton>
+              )}
+            </div>
+          </FormCard>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

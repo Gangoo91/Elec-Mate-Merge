@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Pencil, Save, X, StickyNote, Clock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent } from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+import {
+  textareaClass,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  TextAction,
+} from '@/components/employer/editorial';
 
 interface CandidateNotesSectionProps {
   notes: string | null;
@@ -55,19 +59,13 @@ export function CandidateNotesSection({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <StickyNote className="h-4 w-4 text-amber-400" />
-          <h3 className="font-semibold text-foreground">Internal Notes</h3>
+          <StickyNote className="h-4 w-4 text-elec-yellow" />
+          <h3 className="font-semibold text-white">Internal Notes</h3>
         </div>
         {!isEditing && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-8 px-3 text-xs"
-            onClick={() => setIsEditing(true)}
-          >
-            <Pencil className="h-3.5 w-3.5 mr-1.5" />
-            {notes ? 'Edit' : 'Add Note'}
-          </Button>
+          <TextAction onClick={() => setIsEditing(true)}>
+            {notes ? 'Edit' : 'Add Note'} →
+          </TextAction>
         )}
       </div>
 
@@ -82,67 +80,49 @@ export function CandidateNotesSection({
             value={editedNotes}
             onChange={(e) => setEditedNotes(e.target.value)}
             placeholder="Add private notes about this candidate... (only visible to you and your team)"
-            className={cn(
-              'min-h-[150px] text-base resize-none',
-              'bg-muted/50 border-border',
-              'focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500/50',
-              'touch-manipulation'
-            )}
+            className={`${textareaClass} min-h-[150px]`}
             autoFocus
           />
           <div className="flex gap-2 justify-end">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-10 px-4"
-              onClick={handleCancel}
-              disabled={isSaving}
-            >
+            <SecondaryButton onClick={handleCancel} disabled={isSaving}>
               <X className="h-4 w-4 mr-1.5" />
               Cancel
-            </Button>
-            <Button
-              size="sm"
-              className="h-10 px-4 bg-amber-500 hover:bg-amber-500/90 text-black"
-              onClick={handleSave}
-              disabled={isSaving}
-            >
+            </SecondaryButton>
+            <PrimaryButton onClick={handleSave} disabled={isSaving}>
               <Save className="h-4 w-4 mr-1.5" />
               {isSaving ? 'Saving...' : 'Save Notes'}
-            </Button>
+            </PrimaryButton>
           </div>
         </motion.div>
       ) : notes ? (
-        <Card className="bg-amber-500/5 border-amber-500/20">
-          <CardContent className="p-4">
-            <p className="text-sm text-foreground whitespace-pre-wrap leading-relaxed">{notes}</p>
-            {updatedAt && (
-              <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-amber-500/10">
-                <Clock className="h-3 w-3 text-white" />
-                <span className="text-xs text-white">
-                  Last updated: {formatDate(updatedAt)}
-                </span>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        <FormCard>
+          <p className="text-[13px] text-white whitespace-pre-wrap leading-relaxed">
+            {notes}
+          </p>
+          {updatedAt && (
+            <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-white/[0.06]">
+              <Clock className="h-3 w-3 text-white" />
+              <span className="text-[11px] text-white">
+                Last updated: {formatDate(updatedAt)}
+              </span>
+            </div>
+          )}
+        </FormCard>
       ) : (
-        <Card className="bg-muted/30 border-dashed border-muted-foreground/20">
-          <CardContent className="p-6 text-center">
-            <StickyNote className="h-10 w-10 mx-auto text-white mb-3" />
-            <p className="text-sm text-white mb-3">
-              No notes yet. Add private notes about this candidate.
-            </p>
-            <Button variant="outline" size="sm" className="h-9" onClick={() => setIsEditing(true)}>
-              <Pencil className="h-3.5 w-3.5 mr-1.5" />
-              Add Note
-            </Button>
-          </CardContent>
-        </Card>
+        <FormCard className="text-center">
+          <StickyNote className="h-10 w-10 mx-auto text-white mb-3" />
+          <p className="text-[13px] text-white mb-3">
+            No notes yet. Add private notes about this candidate.
+          </p>
+          <SecondaryButton onClick={() => setIsEditing(true)} size="sm">
+            <Pencil className="h-3.5 w-3.5 mr-1.5" />
+            Add Note
+          </SecondaryButton>
+        </FormCard>
       )}
 
       {/* Privacy notice */}
-      <p className="text-xs text-white text-center">
+      <p className="text-[11px] text-white text-center">
         Notes are private and only visible to your organisation
       </p>
     </div>

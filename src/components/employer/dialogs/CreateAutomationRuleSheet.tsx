@@ -1,14 +1,6 @@
 import { useState } from 'react';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -17,12 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { IOSStepIndicator } from '@/components/ui/ios-step-indicator';
 import { cn } from '@/lib/utils';
-import { useIsMobile } from '@/hooks/use-mobile';
 import {
   Zap,
   Clock,
@@ -42,6 +32,19 @@ import {
   FileText,
 } from 'lucide-react';
 import { useCreateAutomation } from '@/hooks/useAutomations';
+import {
+  Field,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  fieldLabelClass,
+  Eyebrow,
+} from '@/components/employer/editorial';
 
 const CATEGORIES = [
   {
@@ -90,11 +93,9 @@ interface CreateAutomationRuleSheetProps {
 }
 
 export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomationRuleSheetProps) {
-  const isMobile = useIsMobile();
   const createAutomation = useCreateAutomation();
   const [step, setStep] = useState(1);
 
-  // Form state
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
@@ -130,7 +131,6 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
       is_system: false,
     });
 
-    // Reset and close
     resetForm();
     onOpenChange(false);
   };
@@ -160,80 +160,78 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl">
+      <SheetContent side="bottom" className="h-[95vh] p-0 rounded-t-3xl bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <div className="flex flex-col h-full">
-          {/* Drag indicator */}
-          <div className="pt-2 pb-1 flex justify-center">
-            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+          <div className="pt-2.5 pb-1 flex justify-center">
+            <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          <SheetHeader className="px-4 pb-4 border-b border-border">
+          <div className="px-4 pb-4 border-b border-white/[0.06]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-9 w-9 rounded-full"
+                <button
                   onClick={() => onOpenChange(false)}
+                  className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] transition-colors touch-manipulation"
                 >
                   <X className="h-5 w-5" />
-                </Button>
+                </button>
                 <div>
-                  <SheetTitle className="text-lg font-semibold">New Automation</SheetTitle>
-                  <SheetDescription className="text-xs">Create a workflow rule</SheetDescription>
+                  <Eyebrow>New automation</Eyebrow>
+                  <div className="mt-1 text-[18px] font-semibold text-white leading-tight">
+                    Create a workflow rule
+                  </div>
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-medium text-white">
+                <span className="text-[13px] font-medium text-white">
                   {stepLabels[step - 1]}
                 </span>
                 <IOSStepIndicator steps={3} currentStep={step - 1} className="mt-1" />
               </div>
             </div>
-          </SheetHeader>
+          </div>
 
           {/* Content */}
           <ScrollArea className="flex-1 px-4">
             <div className="py-6 pb-48">
               {step === 1 && (
-                <div className="space-y-5">
-                  <div className="space-y-2">
-                    <Label>Rule Name *</Label>
-                    <Input
-                      placeholder="e.g., MOT Expiry Reminder"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="h-14 text-base"
-                    />
-                  </div>
+                <div className="space-y-4">
+                  <FormCard eyebrow="Details">
+                    <Field label="Rule name" required>
+                      <Input
+                        placeholder="e.g., MOT Expiry Reminder"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className={inputClass}
+                      />
+                    </Field>
 
-                  <div className="space-y-2">
-                    <Label>Description</Label>
-                    <Textarea
-                      placeholder="What does this automation do?"
-                      value={description}
-                      onChange={(e) => setDescription(e.target.value)}
-                      className="min-h-[80px]"
-                    />
-                  </div>
+                    <Field label="Description">
+                      <Textarea
+                        placeholder="What does this automation do?"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className={cn(textareaClass, 'min-h-[80px]')}
+                      />
+                    </Field>
 
-                  <div className="space-y-2">
-                    <Label>Category *</Label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {CATEGORIES.map((cat) => {
-                        const Icon = cat.icon;
-                        return (
-                          <Card
-                            key={cat.value}
-                            className={cn(
-                              'cursor-pointer transition-all touch-manipulation',
-                              category === cat.value
-                                ? 'border-elec-yellow bg-elec-yellow/10'
-                                : 'hover:border-border/80'
-                            )}
-                            onClick={() => setCategory(cat.value)}
-                          >
-                            <CardContent className="p-4 flex items-center gap-3">
+                    <div className="space-y-2">
+                      <label className={fieldLabelClass}>Category *</label>
+                      <div className="grid grid-cols-2 gap-3">
+                        {CATEGORIES.map((cat) => {
+                          const Icon = cat.icon;
+                          const isSelected = category === cat.value;
+                          return (
+                            <div
+                              key={cat.value}
+                              onClick={() => setCategory(cat.value)}
+                              className={cn(
+                                'cursor-pointer transition-all touch-manipulation rounded-xl border p-4 flex items-center gap-3',
+                                isSelected
+                                  ? 'border-elec-yellow bg-elec-yellow/10'
+                                  : 'border-white/[0.08] bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)]'
+                              )}
+                            >
                               <div
                                 className={cn(
                                   'h-10 w-10 rounded-lg flex items-center justify-center',
@@ -242,185 +240,169 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                               >
                                 <Icon className="h-5 w-5" />
                               </div>
-                              <span className="font-medium">{cat.label}</span>
-                            </CardContent>
-                          </Card>
-                        );
-                      })}
+                              <span className="font-medium text-white">{cat.label}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
+                  </FormCard>
                 </div>
               )}
 
               {step === 2 && (
-                <div className="space-y-5">
-                  <div className="space-y-2">
-                    <Label>Trigger Type *</Label>
-                    <div className="space-y-3">
+                <div className="space-y-4">
+                  <FormCard eyebrow="Trigger">
+                    <label className={fieldLabelClass}>Trigger type *</label>
+                    <div className="space-y-2">
                       {TRIGGER_TYPES.map((trigger) => {
                         const Icon = trigger.icon;
+                        const isSelected = triggerType === trigger.value;
                         return (
-                          <Card
+                          <div
                             key={trigger.value}
-                            className={cn(
-                              'cursor-pointer transition-all touch-manipulation',
-                              triggerType === trigger.value
-                                ? 'border-elec-yellow bg-elec-yellow/10'
-                                : 'hover:border-border/80'
-                            )}
                             onClick={() => setTriggerType(trigger.value)}
+                            className={cn(
+                              'cursor-pointer transition-all touch-manipulation rounded-xl border p-4 flex items-center gap-3',
+                              isSelected
+                                ? 'border-elec-yellow bg-elec-yellow/10'
+                                : 'border-white/[0.08] bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)]'
+                            )}
                           >
-                            <CardContent className="p-4 flex items-center gap-3">
-                              <div className="h-10 w-10 rounded-lg bg-muted flex items-center justify-center">
-                                <Icon className="h-5 w-5" />
-                              </div>
-                              <div>
-                                <p className="font-medium">{trigger.label}</p>
-                                <p className="text-sm text-white">
-                                  {trigger.description}
-                                </p>
-                              </div>
-                            </CardContent>
-                          </Card>
+                            <div className="h-10 w-10 rounded-lg bg-white/[0.06] flex items-center justify-center">
+                              <Icon className="h-5 w-5 text-white" />
+                            </div>
+                            <div>
+                              <p className="font-medium text-white">{trigger.label}</p>
+                              <p className="text-[12.5px] text-white">{trigger.description}</p>
+                            </div>
+                          </div>
                         );
                       })}
                     </div>
-                  </div>
 
-                  {triggerType === 'schedule' && (
-                    <div className="space-y-2">
-                      <Label>Schedule *</Label>
-                      <Select value={schedule} onValueChange={setSchedule}>
-                        <SelectTrigger className="h-14">
-                          <SelectValue placeholder="Select schedule..." />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {SCHEDULE_OPTIONS.map((opt) => (
-                            <SelectItem key={opt.value} value={opt.value}>
-                              {opt.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  )}
+                    {triggerType === 'schedule' && (
+                      <Field label="Schedule" required>
+                        <Select value={schedule} onValueChange={setSchedule}>
+                          <SelectTrigger className={selectTriggerClass}>
+                            <SelectValue placeholder="Select schedule..." />
+                          </SelectTrigger>
+                          <SelectContent className={selectContentClass}>
+                            {SCHEDULE_OPTIONS.map((opt) => (
+                              <SelectItem key={opt.value} value={opt.value}>
+                                {opt.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </Field>
+                    )}
 
-                  {triggerType === 'field_change' && (
-                    <Card className="bg-muted/30 border-dashed">
-                      <CardContent className="p-4 text-center">
-                        <p className="text-sm text-white">
-                          Field change triggers require advanced configuration. Please contact
-                          support for custom setups.
+                    {(triggerType === 'field_change' || triggerType === 'record_created') && (
+                      <div className="p-4 text-center rounded-xl border border-dashed border-white/[0.15] bg-white/[0.02]">
+                        <p className="text-[12.5px] text-white">
+                          {triggerType === 'field_change' ? 'Field change' : 'Record'} triggers
+                          require advanced configuration. Please contact support for custom setups.
                         </p>
-                      </CardContent>
-                    </Card>
-                  )}
-
-                  {triggerType === 'record_created' && (
-                    <Card className="bg-muted/30 border-dashed">
-                      <CardContent className="p-4 text-center">
-                        <p className="text-sm text-white">
-                          Record triggers require advanced configuration. Please contact support for
-                          custom setups.
-                        </p>
-                      </CardContent>
-                    </Card>
-                  )}
+                      </div>
+                    )}
+                  </FormCard>
                 </div>
               )}
 
               {step === 3 && (
-                <div className="space-y-5">
-                  <div className="space-y-2">
-                    <Label>Actions *</Label>
-                    <p className="text-sm text-white">
+                <div className="space-y-4">
+                  <FormCard eyebrow="Actions">
+                    <p className="text-[12.5px] text-white -mt-1">
                       What should happen when this automation runs?
                     </p>
-                  </div>
 
-                  {/* Added Actions */}
-                  {actions.length > 0 && (
-                    <div className="space-y-2">
-                      {actions.map((action, index) => {
-                        const actionType = ACTION_TYPES.find((a) => a.value === action.type);
-                        const Icon = actionType?.icon || Zap;
-                        return (
-                          <Card key={index} className="bg-elec-gray">
-                            <CardContent className="p-4 flex items-center justify-between">
+                    {actions.length > 0 && (
+                      <div className="space-y-2">
+                        {actions.map((action, index) => {
+                          const actionType = ACTION_TYPES.find((a) => a.value === action.type);
+                          const Icon = actionType?.icon || Zap;
+                          return (
+                            <div
+                              key={index}
+                              className="rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.08] p-4 flex items-center justify-between"
+                            >
                               <div className="flex items-center gap-3">
-                                <div className="h-8 w-8 rounded-lg bg-muted flex items-center justify-center">
-                                  <Icon className="h-4 w-4" />
+                                <div className="h-8 w-8 rounded-lg bg-white/[0.06] flex items-center justify-center">
+                                  <Icon className="h-4 w-4 text-white" />
                                 </div>
-                                <span className="font-medium">{actionType?.label}</span>
+                                <span className="font-medium text-white">{actionType?.label}</span>
                               </div>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 text-destructive"
+                              <button
+                                type="button"
                                 onClick={() => handleRemoveAction(index)}
+                                className="h-8 w-8 rounded-full flex items-center justify-center text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
                               >
                                 <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </CardContent>
-                          </Card>
-                        );
-                      })}
-                    </div>
-                  )}
+                              </button>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
 
-                  {/* Add Action Buttons */}
-                  <div className="space-y-2">
-                    <Label className="text-sm text-white">Add Action</Label>
-                    <div className="grid grid-cols-1 gap-2">
-                      {ACTION_TYPES.map((actionType) => {
-                        const Icon = actionType.icon;
-                        const isAdded = actions.some((a) => a.type === actionType.value);
-                        return (
-                          <Button
-                            key={actionType.value}
-                            variant="outline"
-                            className="h-14 justify-start gap-3"
-                            onClick={() => handleAddAction(actionType.value)}
-                            disabled={isAdded}
-                          >
-                            <Icon className="h-5 w-5" />
-                            {actionType.label}
-                            {isAdded && <Badge className="ml-auto">Added</Badge>}
-                          </Button>
-                        );
-                      })}
+                    <div className="space-y-2">
+                      <label className={fieldLabelClass}>Add action</label>
+                      <div className="grid grid-cols-1 gap-2">
+                        {ACTION_TYPES.map((actionType) => {
+                          const Icon = actionType.icon;
+                          const isAdded = actions.some((a) => a.type === actionType.value);
+                          return (
+                            <button
+                              key={actionType.value}
+                              type="button"
+                              onClick={() => handleAddAction(actionType.value)}
+                              disabled={isAdded}
+                              className={cn(
+                                'h-12 px-4 rounded-xl border flex items-center gap-3 text-[13px] font-medium transition-colors disabled:opacity-50',
+                                'bg-[hsl(0_0%_10%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_12%)]'
+                              )}
+                            >
+                              <Icon className="h-5 w-5" />
+                              {actionType.label}
+                              {isAdded && (
+                                <Badge className="ml-auto bg-white/[0.08] text-white border-white/[0.08]">
+                                  Added
+                                </Badge>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
+                  </FormCard>
 
-                  {/* Summary */}
                   {actions.length > 0 && name && category && triggerType && (
-                    <Card className="bg-gradient-to-br from-primary/10 to-transparent border-elec-yellow/20">
-                      <CardContent className="p-4 space-y-3">
-                        <h4 className="font-medium">Summary</h4>
-                        <div className="text-sm space-y-1">
+                    <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-2xl p-4 space-y-3">
+                      <Eyebrow>Summary</Eyebrow>
+                      <div className="text-[13px] space-y-1 text-white">
+                        <p>
+                          <span className="text-white">Name:</span> {name}
+                        </p>
+                        <p>
+                          <span className="text-white">Category:</span>{' '}
+                          {CATEGORIES.find((c) => c.value === category)?.label}
+                        </p>
+                        <p>
+                          <span className="text-white">Trigger:</span>{' '}
+                          {TRIGGER_TYPES.find((t) => t.value === triggerType)?.label}
+                        </p>
+                        {schedule && (
                           <p>
-                            <span className="text-white">Name:</span> {name}
+                            <span className="text-white">Schedule:</span>{' '}
+                            {SCHEDULE_OPTIONS.find((s) => s.value === schedule)?.label}
                           </p>
-                          <p>
-                            <span className="text-white">Category:</span>{' '}
-                            {CATEGORIES.find((c) => c.value === category)?.label}
-                          </p>
-                          <p>
-                            <span className="text-white">Trigger:</span>{' '}
-                            {TRIGGER_TYPES.find((t) => t.value === triggerType)?.label}
-                          </p>
-                          {schedule && (
-                            <p>
-                              <span className="text-white">Schedule:</span>{' '}
-                              {SCHEDULE_OPTIONS.find((s) => s.value === schedule)?.label}
-                            </p>
-                          )}
-                          <p>
-                            <span className="text-white">Actions:</span> {actions.length}
-                          </p>
-                        </div>
-                      </CardContent>
-                    </Card>
+                        )}
+                        <p>
+                          <span className="text-white">Actions:</span> {actions.length}
+                        </p>
+                      </div>
+                    </div>
                   )}
                 </div>
               )}
@@ -428,41 +410,33 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
           </ScrollArea>
 
           {/* Fixed Bottom Bar */}
-          <div className="absolute bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border">
+          <div className="absolute bottom-0 left-0 right-0 bg-[hsl(0_0%_8%)] border-t border-white/[0.06]">
             <div className="px-4 py-3 pb-safe">
               <div className="flex gap-3 w-full">
                 {step > 1 ? (
-                  <Button
-                    variant="outline"
-                    onClick={() => setStep(step - 1)}
-                    className="flex-1 h-12"
-                  >
+                  <SecondaryButton onClick={() => setStep(step - 1)} fullWidth>
                     <ChevronLeft className="h-4 w-4 mr-1" />
                     Back
-                  </Button>
+                  </SecondaryButton>
                 ) : (
-                  <Button
-                    variant="outline"
-                    onClick={() => onOpenChange(false)}
-                    className="flex-1 h-12"
-                  >
+                  <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
                     Cancel
-                  </Button>
+                  </SecondaryButton>
                 )}
                 {step < 3 ? (
-                  <Button
+                  <PrimaryButton
                     onClick={() => setStep(step + 1)}
                     disabled={!canProceed()}
-                    className="flex-1 h-12"
+                    fullWidth
                   >
                     Next
                     <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
+                  </PrimaryButton>
                 ) : (
-                  <Button
+                  <PrimaryButton
                     onClick={handleSubmit}
                     disabled={!canProceed() || createAutomation.isPending}
-                    className="flex-1 h-12"
+                    fullWidth
                   >
                     {createAutomation.isPending ? (
                       <>
@@ -475,7 +449,7 @@ export function CreateAutomationRuleSheet({ open, onOpenChange }: CreateAutomati
                         Create Rule
                       </>
                     )}
-                  </Button>
+                  </PrimaryButton>
                 )}
               </div>
             </div>

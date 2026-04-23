@@ -69,19 +69,21 @@ export function NotificationBell() {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-0" align="end">
-        <div className="flex items-center justify-between p-4 border-b">
-          <h3 className="font-semibold">Notifications</h3>
+      <PopoverContent
+        className="w-80 p-0 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
+        align="end"
+      >
+        <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+          <h3 className="font-semibold text-white">Notifications</h3>
           {unreadCount > 0 && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-8 text-xs gap-1"
+            <button
+              type="button"
+              className="h-8 text-xs gap-1 flex items-center rounded-full px-3 text-white hover:bg-white/[0.06] touch-manipulation"
               onClick={handleMarkAllAsRead}
             >
               <CheckCheck className="h-3.5 w-3.5" />
               Mark all read
-            </Button>
+            </button>
           )}
         </div>
 
@@ -94,12 +96,12 @@ export function NotificationBell() {
               <p className="text-sm text-white">No notifications yet</p>
             </div>
           ) : (
-            <div className="divide-y">
+            <div className="divide-y divide-white/[0.06]">
               {notifications.slice(0, 20).map((notification) => (
                 <div
                   key={notification.id}
                   className={cn(
-                    'p-4 hover:bg-muted/50 transition-colors cursor-pointer',
+                    'p-4 hover:bg-white/[0.06] transition-colors cursor-pointer',
                     !notification.read_at && 'bg-elec-yellow/5'
                   )}
                   onClick={() => {
@@ -114,7 +116,7 @@ export function NotificationBell() {
                       <div className="flex items-start justify-between gap-2">
                         <p
                           className={cn(
-                            'text-sm leading-tight',
+                            'text-sm leading-tight text-white',
                             !notification.read_at && 'font-medium'
                           )}
                         >
@@ -141,10 +143,13 @@ export function NotificationBell() {
         </ScrollArea>
 
         {notifications.length > 0 && (
-          <div className="p-3 border-t">
-            <Button variant="ghost" className="w-full h-9 text-sm">
+          <div className="p-3 border-t border-white/[0.06]">
+            <button
+              type="button"
+              className="w-full h-9 text-sm flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
+            >
               View all notifications
-            </Button>
+            </button>
           </div>
         )}
       </PopoverContent>

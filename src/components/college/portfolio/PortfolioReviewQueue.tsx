@@ -137,7 +137,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
             placeholder="Search student or category…"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/35 focus:border-elec-yellow/60 rounded-full px-4 touch-manipulation flex-1"
+            className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 rounded-full px-4 touch-manipulation flex-1"
           />
           <Select value={filterPriority} onValueChange={setFilterPriority}>
             <SelectTrigger className="w-full sm:w-44 h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] rounded-full text-[13px] text-white focus:border-elec-yellow/60">
@@ -189,7 +189,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
                     {getStatusLabel(submission.status)}
                   </Pill>
                 </div>
-                <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                   {submission.categoryName} · {submission.qualificationTitle}
                 </div>
               </div>
@@ -206,7 +206,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
                 >
                   {submission.daysAwaitingReview}d wait
                 </div>
-                <div className="text-[10px] uppercase tracking-[0.16em] text-white/40">
+                <div className="text-[10px] uppercase tracking-[0.16em] text-white/55">
                   Attempt #{submission.submissionCount}
                 </div>
               </div>

@@ -24,10 +24,10 @@ export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({ result, onUpdate }
   };
 
   return (
-    <TableCell className="p-0 h-8 align-middle w-16 min-w-[60px] max-w-[60px] bg-card">
+    <TableCell className="p-0 h-8 align-middle w-16 min-w-[60px] max-w-[60px]">
       <Select value={result.phaseType || '1P'} onValueChange={handlePhaseChange}>
-        <SelectTrigger className="h-8 w-full text-sm text-white bg-transparent border border-transparent rounded-md px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
-          <SelectValue placeholder="1P" />
+        <SelectTrigger className="h-8 w-full text-sm text-white bg-transparent border-0 rounded-none px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 hover:bg-white/[0.05] focus:bg-elec-yellow/[0.08] focus:ring-1 focus:ring-elec-yellow/40 focus:ring-inset">
+          <SelectValue placeholder="—" />
         </SelectTrigger>
         <SelectContent className="bg-background border border-border rounded-md z-[9999] min-w-[160px]">
           <SelectItem value="N/A" className="text-sm">

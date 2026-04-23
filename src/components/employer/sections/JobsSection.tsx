@@ -1,22 +1,97 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
-import { cn } from '@/lib/utils';
-import { Search, Filter, Briefcase, PoundSterling, Users, RefreshCw, Plus } from 'lucide-react';
+import { RefreshCw, Plus, Filter } from 'lucide-react';
 import { useDebouncedValue } from '@/hooks/useDebouncedValue';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { JobCard, AssignedWorker } from '@/components/employer/JobCard';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
 import { AddJobDialog } from '@/components/employer/dialogs/AddJobDialog';
 import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
 import { JobFilterSheet, JobFilters } from '@/components/employer/sheets/JobFilterSheet';
 import { useJobs } from '@/hooks/useJobs';
-import { Job } from '@/services/jobService';
-import { Skeleton } from '@/components/ui/skeleton';
+import { Job, JobStatus } from '@/services/jobService';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  PrimaryButton,
+  type Tone,
+} from '@/components/employer/editorial';
+
+type AssignedWorker = {
+  id: string;
+  name: string;
+  avatar_initials?: string | null;
+  photo_url?: string | null;
+};
+
+const getInitials = (name: string): string => {
+  if (!name) return '?';
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join('');
+};
+
+const formatDate = (dateStr: string | null) => {
+  if (!dateStr) return null;
+  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+};
+
+const formatMoney = (n: number) => {
+  if (!n) return '£0';
+  if (n >= 1000) {
+    const k = n / 1000;
+    return '£' + (k % 1 === 0 ? k.toString() : k.toFixed(1)) + 'k';
+  }
+  return '£' + n.toString();
+};
+
+const statusToTone = (status: JobStatus): Tone => {
+  switch (status) {
+    case 'Active':
+      return 'amber';
+    case 'Pending':
+      return 'blue';
+    case 'On Hold':
+      return 'orange';
+    case 'Completed':
+      return 'emerald';
+    case 'Cancelled':
+      return 'red';
+    default:
+      return 'amber';
+  }
+};
+
+const TAB_VALUES = ['all', 'active', 'pending', 'on_hold', 'completed'] as const;
+type TabValue = (typeof TAB_VALUES)[number];
+
+const tabMatchesJob = (tab: TabValue, status: JobStatus) => {
+  switch (tab) {
+    case 'all':
+      return true;
+    case 'active':
+      return status === 'Active';
+    case 'pending':
+      return status === 'Pending';
+    case 'on_hold':
+      return status === 'On Hold';
+    case 'completed':
+      return status === 'Completed';
+  }
+};
 
 export function JobsSection() {
   const queryClient = useQueryClient();
@@ -26,14 +101,13 @@ export function JobsSection() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [showJobSheet, setShowJobSheet] = useState(false);
   const [showFilterSheet, setShowFilterSheet] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabValue>('all');
   const { data: jobs = [], isLoading, refetch, isRefetching } = useJobs();
 
-  // Pull-to-refresh handler
   const handleRefresh = useCallback(async () => {
     await refetch();
   }, [refetch]);
 
-  // Fetch all job assignments with employee details
   const { data: allAssignments = [] } = useQuery({
     queryKey: ['all-job-assignments'],
     queryFn: async () => {
@@ -46,7 +120,6 @@ export function JobsSection() {
     },
   });
 
-  // Group assignments by job_id for quick lookup
   const assignmentsByJob = useMemo(() => {
     const map = new Map<string, AssignedWorker[]>();
     allAssignments.forEach((a: any) => {
@@ -64,17 +137,12 @@ export function JobsSection() {
     return map;
   }, [allAssignments]);
 
-  // Subscribe to real-time updates on job_assignments and jobs
   useEffect(() => {
     const channel = supabase
       .channel('jobs-realtime-updates')
       .on(
         'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_job_assignments',
-        },
+        { event: '*', schema: 'public', table: 'employer_job_assignments' },
         () => {
           queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
           queryClient.invalidateQueries({ queryKey: ['all-job-assignments'] });
@@ -82,11 +150,7 @@ export function JobsSection() {
       )
       .on(
         'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_jobs',
-        },
+        { event: '*', schema: 'public', table: 'employer_jobs' },
         () => {
           queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
         }
@@ -98,7 +162,6 @@ export function JobsSection() {
     };
   }, [queryClient]);
 
-  // Calculate max job value for filter
   const maxJobValue = useMemo(() => {
     return Math.max(...jobs.map((j) => j.value || 0), 500000);
   }, [jobs]);
@@ -109,7 +172,6 @@ export function JobsSection() {
     maxValue: maxJobValue,
   });
 
-  // Update max value when jobs load
   useMemo(() => {
     if (filters.maxValue === 500000 && maxJobValue > 500000) {
       setFilters((f) => ({ ...f, maxValue: maxJobValue }));
@@ -120,264 +182,196 @@ export function JobsSection() {
     filters.statuses.length + (filters.minValue > 0 || filters.maxValue < maxJobValue ? 1 : 0);
 
   const filteredJobs = useMemo(() => {
+    const term = debouncedSearch.trim().toLowerCase();
     return jobs.filter((job) => {
-      // Search filter (using debounced value for performance)
       const matchesSearch =
-        job.title.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-        job.client.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-        job.location.toLowerCase().includes(debouncedSearch.toLowerCase());
-
-      // Status filter
-      const matchesStatus = filters.statuses.length === 0 || filters.statuses.includes(job.status);
-
-      // Value filter
+        !term ||
+        job.title.toLowerCase().includes(term) ||
+        job.client.toLowerCase().includes(term) ||
+        job.location.toLowerCase().includes(term);
+      const matchesStatus =
+        filters.statuses.length === 0 || filters.statuses.includes(job.status);
       const jobValue = job.value || 0;
       const matchesValue = jobValue >= filters.minValue && jobValue <= filters.maxValue;
-
-      return matchesSearch && matchesStatus && matchesValue;
+      const matchesTab = tabMatchesJob(activeTab, job.status);
+      return matchesSearch && matchesStatus && matchesValue && matchesTab;
     });
-  }, [jobs, debouncedSearch, filters]);
+  }, [jobs, debouncedSearch, filters, activeTab]);
 
-  const activeJobs = filteredJobs.filter((j) => j.status === 'Active');
-  const pendingJobs = filteredJobs.filter((j) => j.status === 'Pending');
-  const completedJobs = filteredJobs.filter((j) => j.status === 'Completed');
+  const counts = useMemo(() => {
+    const active = jobs.filter((j) => j.status === 'Active').length;
+    const pending = jobs.filter((j) => j.status === 'Pending').length;
+    const onHold = jobs.filter((j) => j.status === 'On Hold').length;
+    const cutoff = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    const completed30d = jobs.filter((j) => {
+      if (j.status !== 'Completed') return false;
+      const ts = j.updated_at ? Date.parse(j.updated_at) : 0;
+      return ts >= cutoff;
+    }).length;
+    return { active, pending, onHold, completed30d };
+  }, [jobs]);
 
-  const totalValue = jobs.reduce((acc, j) => acc + (Number(j.value) || 0), 0);
-  const activeValue = activeJobs.reduce((acc, j) => acc + (Number(j.value) || 0), 0);
-
-  const formatDate = (dateStr: string | null) => {
-    if (!dateStr) return '-';
-    return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-  };
+  const tabs = useMemo(
+    () => [
+      { value: 'all', label: 'All', count: jobs.length },
+      { value: 'active', label: 'Active', count: counts.active },
+      { value: 'pending', label: 'Pending', count: counts.pending },
+      { value: 'on_hold', label: 'On hold', count: counts.onHold },
+      { value: 'completed', label: 'Completed', count: jobs.filter((j) => j.status === 'Completed').length },
+    ],
+    [jobs, counts]
+  );
 
   const handleJobClick = (job: Job) => {
     setSelectedJob(job);
     setShowJobSheet(true);
   };
 
-  const renderJobCard = (job: Job) => (
-    <JobCard
-      key={job.id}
-      title={job.title}
-      client={job.client}
-      location={job.location}
-      status={job.status}
-      progress={job.progress}
-      startDate={formatDate(job.start_date)}
-      endDate={formatDate(job.end_date)}
-      workersCount={job.workers_count || 0}
-      value={job.value}
-      description={job.description}
-      assignedWorkers={assignmentsByJob.get(job.id) || []}
-      onClick={() => handleJobClick(job)}
-    />
-  );
-
-  const renderJobGrid = (jobList: Job[]) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {jobList.map(renderJobCard)}
-      {jobList.length === 0 && (
-        <div className="col-span-full text-center py-12 text-white">
-          <Briefcase className="h-12 w-12 mx-auto mb-4 opacity-50" />
-          <p>No jobs found</p>
-        </div>
-      )}
-    </div>
+  const heroActions = (
+    <>
+      <PrimaryButton onClick={() => setShowAddDialog(true)}>
+        <Plus className="h-4 w-4 mr-1.5" />
+        New job
+      </PrimaryButton>
+      <IconButton
+        onClick={() => setShowFilterSheet(true)}
+        aria-label="Filter jobs"
+        className="relative"
+      >
+        <Filter className="h-4 w-4" />
+        {activeFilterCount > 0 && (
+          <span className="absolute -top-1 -right-1 h-4 min-w-[16px] px-1 rounded-full bg-elec-yellow text-black text-[9px] font-bold flex items-center justify-center">
+            {activeFilterCount}
+          </span>
+        )}
+      </IconButton>
+      <IconButton
+        onClick={() => refetch()}
+        disabled={isRefetching}
+        aria-label="Refresh jobs"
+      >
+        <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
+      </IconButton>
+    </>
   );
 
   if (isLoading) {
     return (
-      <div className="space-y-6 animate-fade-in">
-        <div className="flex flex-col sm:flex-row gap-4 justify-between">
-          <Skeleton className="h-10 w-full max-w-md" />
-          <div className="flex gap-2">
-            <Skeleton className="h-10 w-24" />
-            <Skeleton className="h-10 w-24" />
-          </div>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} className="h-20" />
-          ))}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <Skeleton key={i} className="h-48" />
-          ))}
-        </div>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Jobs"
+          description="Active jobs, assignments and status."
+          tone="amber"
+        />
+        <LoadingBlocks />
+      </PageFrame>
     );
   }
 
   return (
     <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefetching}>
-      <div className="space-y-6 animate-fade-in">
-        {/* Header */}
-        <div className="flex flex-col gap-4">
-          {/* Search */}
-          <div className="relative flex-1">
-            {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-            )}
-            <Input
-              placeholder="Search jobs..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn('h-12', !searchQuery && 'pl-10')}
+      <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Jobs"
+          description="Active jobs, assignments and status."
+          tone="amber"
+          actions={heroActions}
+        />
+
+        <StatStrip
+          columns={4}
+          stats={[
+            { label: 'Active', value: counts.active, tone: 'amber' },
+            { label: 'Pending', value: counts.pending, tone: 'blue' },
+            { label: 'On hold', value: counts.onHold, tone: 'orange' },
+            {
+              label: 'Completed 30d',
+              value: counts.completed30d,
+              tone: 'emerald',
+              accent: true,
+            },
+          ]}
+        />
+
+        <FilterBar
+          tabs={tabs}
+          activeTab={activeTab}
+          onTabChange={(v) => setActiveTab(v as TabValue)}
+          search={searchQuery}
+          onSearchChange={setSearchQuery}
+          searchPlaceholder="Search title, client or location…"
+        />
+
+        {filteredJobs.length === 0 ? (
+          <EmptyState
+            title="No jobs match these filters"
+            description={
+              jobs.length === 0
+                ? 'Create your first job to start scheduling people, costs and progress.'
+                : 'Adjust the search, tab or filters to see more results.'
+            }
+            action={jobs.length === 0 ? 'New job' : 'Clear filters'}
+            onAction={() => {
+              if (jobs.length === 0) {
+                setShowAddDialog(true);
+              } else {
+                setSearchQuery('');
+                setActiveTab('all');
+                setFilters({ statuses: [], minValue: 0, maxValue: maxJobValue });
+              }
+            }}
+          />
+        ) : (
+          <ListCard>
+            <ListCardHeader
+              tone="amber"
+              title="Jobs"
+              meta={<Pill tone="amber">{filteredJobs.length}</Pill>}
             />
-          </div>
+            <ListBody>
+              {filteredJobs.map((job) => {
+                const workers = assignmentsByJob.get(job.id) || [];
+                const dates = [formatDate(job.start_date), formatDate(job.end_date)]
+                  .filter(Boolean)
+                  .join(' → ');
+                const subtitleParts = [
+                  job.client,
+                  job.location,
+                  formatMoney(Number(job.value) || 0),
+                  dates || null,
+                  workers.length > 0
+                    ? `${workers.length} ${workers.length === 1 ? 'worker' : 'workers'}`
+                    : null,
+                ].filter(Boolean) as string[];
+                return (
+                  <ListRow
+                    key={job.id}
+                    lead={<Avatar initials={getInitials(job.client || job.title)} />}
+                    title={job.title}
+                    subtitle={subtitleParts.join(' · ')}
+                    accent={statusToTone(job.status)}
+                    trailing={
+                      <>
+                        {typeof job.progress === 'number' && job.progress > 0 && (
+                          <span className="text-[11px] tabular-nums text-white">
+                            {job.progress}%
+                          </span>
+                        )}
+                        <Pill tone={statusToTone(job.status)}>{job.status}</Pill>
+                      </>
+                    }
+                    onClick={() => handleJobClick(job)}
+                  />
+                );
+              })}
+            </ListBody>
+          </ListCard>
+        )}
 
-          {/* Actions row */}
-          <div className="flex gap-2 justify-between">
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="icon"
-                className="h-12 w-12"
-                onClick={() => refetch()}
-                disabled={isRefetching}
-              >
-                <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
-              </Button>
-              <Button
-                variant="outline"
-                className="h-12 gap-2 px-4"
-                onClick={() => setShowFilterSheet(true)}
-              >
-                <Filter className="h-4 w-4" />
-                <span className="hidden sm:inline">Filter</span>
-                {activeFilterCount > 0 && (
-                  <Badge variant="default" className="h-5 w-5 p-0 justify-center text-xs">
-                    {activeFilterCount}
-                  </Badge>
-                )}
-              </Button>
-            </div>
+        <AddJobDialog open={showAddDialog} onOpenChange={setShowAddDialog} />
 
-            <AddJobDialog open={showAddDialog} onOpenChange={setShowAddDialog} />
-          </div>
-        </div>
-
-        {/* Stats - Grid on all screens */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {/* Total Jobs */}
-          <Card className="card-hover bg-gradient-to-br from-elec-yellow/10 via-elec-yellow/5 to-transparent border-elec-yellow/30 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-elec-yellow/5 to-transparent opacity-50" />
-            <CardContent className="p-4 relative">
-              <div className="flex items-center justify-between mb-2">
-                <div className="p-2.5 rounded-xl bg-elec-yellow/15 shadow-inner">
-                  <Briefcase className="h-5 w-5 text-elec-yellow" />
-                </div>
-              </div>
-              <p className="text-3xl font-bold text-foreground tracking-tight">{jobs.length}</p>
-              <p className="text-xs text-white font-medium mt-1">Total Jobs</p>
-            </CardContent>
-          </Card>
-
-          {/* Active Jobs */}
-          <Card className=" card-hover bg-gradient-to-br from-success/15 via-success/5 to-transparent border-success/30 overflow-hidden relative">
-            <div className="absolute inset-0 bg-gradient-to-br from-success/5 to-transparent opacity-50" />
-            <CardContent className="p-4 relative">
-              <div className="flex items-center justify-between mb-2">
-                <div className="p-2.5 rounded-xl bg-success/15 shadow-inner">
-                  <Users className="h-5 w-5 text-success" />
-                </div>
-                <span className="text-[10px] font-semibold text-success bg-success/10 px-2 py-0.5 rounded-full">
-                  LIVE
-                </span>
-              </div>
-              <p className="text-3xl font-bold text-success tracking-tight">{activeJobs.length}</p>
-              <p className="text-xs text-white font-medium mt-1">Active</p>
-            </CardContent>
-          </Card>
-
-          {/* Active Value - Premium Gold */}
-          <Card className=" card-hover bg-gradient-to-br from-gold/20 via-gold/10 to-gold-dark/5 border-gold/40 overflow-hidden relative shadow-lg shadow-gold/10">
-            <div className="absolute inset-0 bg-gradient-to-br from-gold/10 via-transparent to-gold-dark/10 opacity-60" />
-            <div className="absolute top-0 right-0 w-16 h-16 bg-gold/20 rounded-full blur-2xl -translate-y-4 translate-x-4" />
-            <CardContent className="p-4 relative">
-              <div className="flex items-center justify-between mb-2">
-                <div className="p-2.5 rounded-xl bg-gold/20 shadow-inner border border-gold/30">
-                  <PoundSterling className="h-5 w-5 text-gold-dark" />
-                </div>
-              </div>
-              <div className="flex items-baseline gap-0.5">
-                <span className="text-lg font-bold text-gold-dark">£</span>
-                <p className="text-3xl font-bold text-foreground tracking-tight">
-                  {activeValue >= 1000
-                    ? ((activeValue / 1000) % 1 === 0
-                        ? activeValue / 1000
-                        : (activeValue / 1000).toFixed(1)) + 'k'
-                    : activeValue}
-                </p>
-              </div>
-              <p className="text-xs text-white font-medium mt-1">Active Value</p>
-            </CardContent>
-          </Card>
-
-          {/* Total Value - Premium Dark Gold */}
-          <Card className=" card-hover bg-gradient-to-br from-surface-elevated via-surface to-gold/5 border-gold/30 overflow-hidden relative shadow-lg shadow-gold/5">
-            <div className="absolute inset-0 bg-gradient-to-br from-gold/5 via-transparent to-gold/10 opacity-40" />
-            <div className="absolute bottom-0 left-0 w-20 h-20 bg-gold/15 rounded-full blur-2xl translate-y-6 -translate-x-6" />
-            <CardContent className="p-4 relative">
-              <div className="flex items-center justify-between mb-2">
-                <div className="p-2.5 rounded-xl bg-gold/15 shadow-inner border border-gold/20">
-                  <PoundSterling className="h-5 w-5 text-gold" />
-                </div>
-                <span className="text-[10px] font-semibold text-gold bg-gold/10 px-2 py-0.5 rounded-full">
-                  TOTAL
-                </span>
-              </div>
-              <div className="flex items-baseline gap-0.5">
-                <span className="text-lg font-bold text-gold">£</span>
-                <p className="text-3xl font-bold text-foreground tracking-tight">
-                  {totalValue >= 1000
-                    ? ((totalValue / 1000) % 1 === 0
-                        ? totalValue / 1000
-                        : (totalValue / 1000).toFixed(1)) + 'k'
-                    : totalValue}
-                </p>
-              </div>
-              <p className="text-xs text-white font-medium mt-1">Total Value</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Jobs Tabs */}
-        <Tabs defaultValue="active" className="space-y-4">
-          <TabsList className="w-full md:w-auto grid grid-cols-4 md:flex h-12">
-            <TabsTrigger value="active" className="text-xs sm:text-sm">
-              Active ({activeJobs.length})
-            </TabsTrigger>
-            <TabsTrigger value="pending" className="text-xs sm:text-sm">
-              Pending ({pendingJobs.length})
-            </TabsTrigger>
-            <TabsTrigger value="completed" className="text-xs sm:text-sm">
-              Done ({completedJobs.length})
-            </TabsTrigger>
-            <TabsTrigger value="all" className="text-xs sm:text-sm">
-              All ({filteredJobs.length})
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="active" className="space-y-4 pb-24">
-            {renderJobGrid(activeJobs)}
-          </TabsContent>
-
-          <TabsContent value="pending" className="space-y-4 pb-24">
-            {renderJobGrid(pendingJobs)}
-          </TabsContent>
-
-          <TabsContent value="completed" className="space-y-4 pb-24">
-            {renderJobGrid(completedJobs)}
-          </TabsContent>
-
-          <TabsContent value="all" className="space-y-4 pb-24">
-            {renderJobGrid(filteredJobs)}
-          </TabsContent>
-        </Tabs>
-
-        {/* Filter Sheet */}
         <JobFilterSheet
           open={showFilterSheet}
           onOpenChange={setShowFilterSheet}
@@ -386,9 +380,8 @@ export function JobsSection() {
           maxJobValue={maxJobValue}
         />
 
-        {/* View/Edit Job Sheet */}
         <ViewJobSheet job={selectedJob} open={showJobSheet} onOpenChange={setShowJobSheet} />
-      </div>
+      </PageFrame>
     </PullToRefresh>
   );
 }

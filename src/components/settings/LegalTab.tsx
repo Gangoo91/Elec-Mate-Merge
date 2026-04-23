@@ -4,84 +4,62 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import {
-  FileText,
-  Shield,
-  Scale,
-  ExternalLink,
-  Cookie,
-  ScrollText,
-  CheckCircle,
-  Globe,
-  Lock,
-  Building2,
-  Mail,
-  ChevronRight,
-  Download,
-} from 'lucide-react';
+  ListCard,
+  ListRow,
+  SectionHeader,
+  Arrow,
+  Eyebrow,
+  containerVariants,
+  itemVariants,
+  toneText,
+  type Tone,
+} from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.02, delayChildren: 0 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
-  },
-};
+interface LegalDoc {
+  title: string;
+  description: string;
+  url: string;
+  lastUpdated: string;
+  accent: Tone;
+}
 
 const LegalTab = () => {
-  const legalDocuments = [
+  const legalDocuments: LegalDoc[] = [
     {
       title: 'Terms of Service',
       description: 'Our terms and conditions for using Elec-Mate',
-      icon: ScrollText,
-      iconColor: 'text-blue-400',
-      bgColor: 'bg-blue-500/10',
       url: '/terms',
       lastUpdated: '5 Jan 2026',
+      accent: 'blue',
     },
     {
       title: 'Privacy Policy',
       description: 'How we collect, use, and protect your data',
-      icon: Shield,
-      iconColor: 'text-green-400',
-      bgColor: 'bg-green-500/10',
       url: '/privacy',
       lastUpdated: '5 Jan 2026',
+      accent: 'green',
     },
     {
       title: 'Cookie Policy',
       description: 'Information about cookies we use',
-      icon: Cookie,
-      iconColor: 'text-amber-400',
-      bgColor: 'bg-amber-500/10',
       url: '/cookies',
       lastUpdated: '30 Jan 2026',
+      accent: 'amber',
     },
     {
       title: 'Acceptable Use Policy',
       description: 'Guidelines for using our platform responsibly',
-      icon: Scale,
-      iconColor: 'text-purple-400',
-      bgColor: 'bg-purple-500/10',
       url: '/acceptable-use',
       lastUpdated: '30 Jan 2026',
+      accent: 'purple',
     },
     {
       title: 'Data Processing Agreement',
       description: 'For business and enterprise customers',
-      icon: FileText,
-      iconColor: 'text-cyan-400',
-      bgColor: 'bg-cyan-500/10',
       url: '/dpa',
       lastUpdated: '30 Jan 2026',
+      accent: 'cyan',
     },
   ];
 
@@ -89,24 +67,27 @@ const LegalTab = () => {
     {
       title: 'GDPR Compliant',
       description: 'Your data is protected under EU data protection laws',
-      icon: Shield,
-      color: 'text-green-400',
-      bgColor: 'bg-green-500/10',
+      tone: 'green' as Tone,
     },
     {
       title: 'UK Data Protection',
       description: 'Compliant with UK GDPR and Data Protection Act 2018',
-      icon: Lock,
-      color: 'text-blue-400',
-      bgColor: 'bg-blue-500/10',
+      tone: 'blue' as Tone,
     },
     {
       title: 'ISO 27001',
       description: 'Information security management certified',
-      icon: CheckCircle,
-      color: 'text-purple-400',
-      bgColor: 'bg-purple-500/10',
+      tone: 'purple' as Tone,
     },
+  ];
+
+  const dataRights = [
+    'Right to access your data',
+    'Right to rectification',
+    'Right to erasure ("right to be forgotten")',
+    'Right to data portability',
+    'Right to restrict processing',
+    'Right to object to processing',
   ];
 
   return (
@@ -114,233 +95,141 @@ const LegalTab = () => {
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className="space-y-6"
+      className="space-y-8"
     >
-      {/* Header */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="p-4 md:p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
-              <Scale className="h-6 w-6 text-elec-yellow" />
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-foreground">Legal & Privacy</h3>
-              <p className="text-sm text-muted-foreground">
-                Review our policies and learn how we protect your data
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+      {/* Overview */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="00" title="Legal and Privacy" />
+        <p className="text-[13px] text-white/70 leading-relaxed max-w-2xl">
+          Review our policies and learn how we protect your data.
+        </p>
+      </motion.section>
 
       {/* Legal Documents */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="px-4 md:px-6 py-4 border-b border-white/10">
-          <h3 className="text-base font-semibold text-foreground">Legal Documents</h3>
-        </div>
-        <div className="p-4 md:p-6 space-y-2">
-          {legalDocuments.map((doc, index) => {
-            const Icon = doc.icon;
-            return (
-              <button
-                key={index}
-                onClick={() => openExternalUrl(doc.url)}
-                className="w-full flex items-center justify-between gap-4 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left group touch-manipulation active:bg-white/[0.08]"
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="01" title="Legal Documents" />
+        <ListCard>
+          {legalDocuments.map((doc) => (
+            <button
+              key={doc.url}
+              onClick={() => openExternalUrl(doc.url)}
+              className="group w-full flex items-center gap-4 px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+            >
+              <span aria-hidden className="w-[3px] h-10 rounded-full shrink-0 bg-elec-yellow/70" />
+              <div className="flex-1 min-w-0">
+                <div className="text-[15px] font-medium text-white truncate">{doc.title}</div>
+                <div className="mt-0.5 text-[11.5px] text-white/65 truncate">{doc.description}</div>
+              </div>
+              <span className="hidden sm:inline text-[11px] text-white/55 tabular-nums whitespace-nowrap">
+                Updated {doc.lastUpdated}
+              </span>
+              <Arrow />
+            </button>
+          ))}
+        </ListCard>
+      </motion.section>
+
+      {/* Compliance */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="02" title="Compliance and Certifications" />
+        <div className="grid gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden grid-cols-1 sm:grid-cols-3">
+          {complianceBadges.map((badge) => (
+            <div
+              key={badge.title}
+              className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-7 flex flex-col items-start"
+            >
+              <span
+                className={cn(
+                  'text-[10px] font-medium uppercase tracking-[0.18em]',
+                  toneText[badge.tone]
+                )}
               >
-                <div className="flex items-center gap-3 min-w-0">
-                  <div
-                    className={`w-10 h-10 rounded-lg ${doc.bgColor} flex items-center justify-center flex-shrink-0`}
-                  >
-                    <Icon className={`h-5 w-5 ${doc.iconColor}`} />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium text-foreground">{doc.title}</p>
-                    <p className="text-xs text-muted-foreground truncate">{doc.description}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <span className="text-xs text-muted-foreground hidden sm:block">
-                    Updated {doc.lastUpdated}
-                  </span>
-                  <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </motion.div>
-
-      {/* Compliance Badges */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="px-4 md:px-6 py-4 border-b border-white/10">
-          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-            <Shield className="h-4 w-4 text-elec-yellow" />
-            Compliance & Certifications
-          </h3>
-        </div>
-        <div className="p-4 md:p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {complianceBadges.map((badge, index) => {
-              const Icon = badge.icon;
-              return (
-                <div
-                  key={index}
-                  className="p-4 rounded-lg bg-white/5 border border-white/10 text-center"
-                >
-                  <div
-                    className={`w-12 h-12 rounded-xl ${badge.bgColor} flex items-center justify-center mx-auto mb-3`}
-                  >
-                    <Icon className={`h-6 w-6 ${badge.color}`} />
-                  </div>
-                  <p className="text-sm font-medium text-foreground mb-1">{badge.title}</p>
-                  <p className="text-xs text-muted-foreground">{badge.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Data Storage Info */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="px-4 md:px-6 py-4 border-b border-white/10">
-          <h3 className="text-base font-semibold text-foreground flex items-center gap-2">
-            <Globe className="h-4 w-4 text-elec-yellow" />
-            Data Storage & Security
-          </h3>
-        </div>
-        <div className="p-4 md:p-6 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10">
-              <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                <Globe className="h-5 w-5 text-blue-400" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">UK & EU Data Centers</p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Your data is stored securely in UK and EU data centers with full redundancy.
-                </p>
-              </div>
+                {badge.title}
+              </span>
+              <p className="mt-3 text-[12.5px] text-white/70 leading-relaxed">
+                {badge.description}
+              </p>
             </div>
-            <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10">
-              <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center flex-shrink-0">
-                <Lock className="h-5 w-5 text-green-400" />
-              </div>
-              <div>
-                <p className="text-sm font-medium text-foreground">End-to-End Encryption</p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  All data is encrypted in transit and at rest using AES-256 encryption.
-                </p>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
-      </motion.div>
+      </motion.section>
 
-      {/* Your Rights */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="px-4 md:px-6 py-4 border-b border-white/10">
-          <h3 className="text-base font-semibold text-foreground">Your Data Rights</h3>
-        </div>
-        <div className="p-4 md:p-6">
-          <p className="text-sm text-muted-foreground mb-4">
+      {/* Data storage */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="03" title="Data Storage and Security" />
+        <ListCard>
+          <ListRow
+            title="UK and EU Data Centers"
+            subtitle="Your data is stored securely in UK and EU data centers with full redundancy."
+            accent="blue"
+          />
+          <ListRow
+            title="End-to-End Encryption"
+            subtitle="All data is encrypted in transit and at rest using AES-256 encryption."
+            accent="green"
+          />
+        </ListCard>
+      </motion.section>
+
+      {/* Your rights */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="04" title="Your Data Rights" />
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+          <p className="text-[13px] text-white/70 mb-4 leading-relaxed">
             Under GDPR and UK data protection law, you have the following rights:
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {[
-              'Right to access your data',
-              'Right to rectification',
-              'Right to erasure ("right to be forgotten")',
-              'Right to data portability',
-              'Right to restrict processing',
-              'Right to object to processing',
-            ].map((right, index) => (
-              <div key={index} className="flex items-center gap-2 text-sm text-foreground">
-                <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                {right}
-              </div>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
+            {dataRights.map((right) => (
+              <li key={right} className="flex items-center gap-2 text-[13px] text-white/80">
+                <span
+                  aria-hidden
+                  className="inline-block h-1.5 w-1.5 rounded-full shrink-0 bg-green-400"
+                />
+                <span className="truncate">{right}</span>
+              </li>
             ))}
-          </div>
-          <div className="mt-4 pt-4 border-t border-white/10">
-            <p className="text-sm text-muted-foreground mb-3">
+          </ul>
+          <div className="mt-5 pt-5 border-t border-white/[0.06]">
+            <p className="text-[13px] text-white/70 mb-3 leading-relaxed">
               To download your data or request deletion, go to Settings &gt; Privacy.
             </p>
             <Link to="/settings">
-              <Button
-                variant="outline"
-                className="h-11 touch-manipulation active:scale-[0.98] border-white/20 hover:bg-white/5"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Go to Privacy Settings
-                <ChevronRight className="h-4 w-4 ml-2" />
+              <Button className="h-11 rounded-full bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] text-white touch-manipulation">
+                Go to Privacy Settings →
               </Button>
             </Link>
           </div>
         </div>
-      </motion.div>
+      </motion.section>
 
-      {/* Legal Contact */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-blue-500/10 border border-blue-500/20 overflow-hidden"
-      >
-        <div className="p-4 md:p-6">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-              <Mail className="h-5 w-5 text-blue-400" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-foreground mb-1">Legal Inquiries</p>
-              <p className="text-sm text-muted-foreground">
-                For any legal questions or data protection inquiries, please contact our legal team
-                at{' '}
-                <a href="mailto:legal@elec-mate.com" className="text-blue-400 hover:underline">
-                  legal@elec-mate.com
-                </a>
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
+      {/* Contact */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="05" title="Legal Inquiries" />
+        <ListCard>
+          <ListRow
+            title="Contact Legal"
+            subtitle="legal@elec-mate.com"
+            onClick={() => openExternalUrl('mailto:legal@elec-mate.com')}
+            trailing={<Arrow />}
+            accent="blue"
+          />
+        </ListCard>
+      </motion.section>
 
-      {/* Company Info */}
-      <motion.div
-        variants={itemVariants}
-        className="rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden"
-      >
-        <div className="p-4 md:p-6">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center flex-shrink-0">
-              <Building2 className="h-5 w-5 text-muted-foreground" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-foreground mb-1">Company Information</p>
-              <p className="text-sm text-muted-foreground">
-                Elec-Mate Ltd
-                <br />
-                Registered in England & Wales
-                <br />
-                Company No: 12345678
-              </p>
-            </div>
-          </div>
+      {/* Company info */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="06" title="Company Information" />
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
+          <Eyebrow>Registered</Eyebrow>
+          <p className="mt-2 text-[13px] text-white/70 leading-relaxed">
+            Elec-Mate Ltd
+            <br />
+            Registered in England &amp; Wales
+            <br />
+            Company No: 12345678
+          </p>
         </div>
-      </motion.div>
+      </motion.section>
     </motion.div>
   );
 };

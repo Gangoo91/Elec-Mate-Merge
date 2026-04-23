@@ -176,7 +176,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
                   subtitle={lesson.cohortName}
                   trailing={
                     <div className="text-right shrink-0">
-                      <div className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                      <div className="text-[10px] uppercase tracking-[0.14em] text-white/55">
                         {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', {
                           weekday: 'short',
                         })}

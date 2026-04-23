@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -24,11 +22,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { StatusBadge } from '@/components/employer/StatusBadge';
 import { AssignWorkersSheet } from '@/components/employer/sheets/AssignWorkersSheet';
 import { CopyJobSheet } from '@/components/employer/sheets/CopyJobSheet';
 import { JobLabelPicker } from '@/components/employer/JobLabelPicker';
@@ -74,29 +69,28 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  Pill,
+  Eyebrow,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  SuccessCheckmark,
+} from '@/components/employer/editorial';
 
 interface ViewJobSheetProps {
   job: Job | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
-
-const getStatusColour = (status: string) => {
-  switch (status) {
-    case 'Active':
-      return 'bg-success/10 border-success/30';
-    case 'Pending':
-      return 'bg-warning/10 border-warning/30';
-    case 'Completed':
-      return 'bg-muted border-muted-foreground/30';
-    case 'On Hold':
-      return 'bg-info/10 border-info/30';
-    case 'Cancelled':
-      return 'bg-destructive/10 border-destructive/30';
-    default:
-      return 'bg-muted border-border';
-  }
-};
 
 export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
   const updateJob = useUpdateJob();
@@ -118,18 +112,16 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [showAssignSheet, setShowAssignSheet] = useState(false);
   const [showCopySheet, setShowCopySheet] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  // Collapsible sections state
   const [checklistOpen, setChecklistOpen] = useState(true);
   const [activityOpen, setActivityOpen] = useState(false);
   const [workersOpen, setWorkersOpen] = useState(true);
 
-  // Fetch assigned workers
   const { data: assignments = [], isLoading: loadingAssignments } = useJobAssignments(
     job?.id || ''
   );
 
-  // Reset form when job changes
   useEffect(() => {
     if (job) {
       setTitle(job.title);
@@ -187,10 +179,14 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
       }
 
       toast({
-        title: 'Job Updated',
+        title: 'Job updated',
         description: `${title} has been updated.`,
       });
-      setIsEditing(false);
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        setIsEditing(false);
+      }, 700);
     } catch (error) {
       toast({
         title: 'Error',
@@ -206,7 +202,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     try {
       await deleteJob.mutateAsync(job.id);
       toast({
-        title: 'Job Deleted',
+        title: 'Job deleted',
         description: `${job.title} has been deleted.`,
       });
       onOpenChange(false);
@@ -248,7 +244,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     try {
       await removeWorker.mutateAsync({ jobId: job.id, employeeId });
       toast({
-        title: 'Worker Removed',
+        title: 'Worker removed',
         description: `${employeeName} has been removed from this job.`,
       });
     } catch (error) {
@@ -300,7 +296,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     try {
       await archiveJob.mutateAsync(job.id);
       toast({
-        title: 'Job Archived',
+        title: 'Job archived',
         description: `${job.title} has been archived.`,
       });
       onOpenChange(false);
@@ -320,7 +316,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     try {
       await setAsTemplate.mutateAsync({ id: job.id, isTemplate: newTemplateStatus });
       toast({
-        title: newTemplateStatus ? 'Saved as Template' : 'Removed from Templates',
+        title: newTemplateStatus ? 'Saved as template' : 'Removed from templates',
         description: newTemplateStatus
           ? `${job.title} is now a template.`
           : `${job.title} is no longer a template.`,
@@ -353,104 +349,207 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     return months === 1 ? '1 month' : `${months} months`;
   };
 
+  const statusTone: Record<string, 'emerald' | 'amber' | 'cyan' | 'red' | 'yellow'> = {
+    Active: 'emerald',
+    Pending: 'amber',
+    Completed: 'yellow',
+    'On Hold': 'cyan',
+    Cancelled: 'red',
+  };
+
   return (
     <>
+      <SuccessCheckmark show={showSuccess} />
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent className="w-full sm:max-w-lg overflow-y-auto p-0">
-          {/* Hero Header */}
-          <div className={cn('p-6 border-b', getStatusColour(job.status))}>
-            <SheetHeader className="text-left space-y-3">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <SheetTitle className="text-xl font-bold text-foreground leading-tight">
-                      {job.title}
-                    </SheetTitle>
-                    {job.is_template && (
-                      <Badge
-                        variant="outline"
-                        className="text-xs gap-1 bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30"
-                      >
-                        <LayoutTemplate className="h-3 w-3" />
-                        Template
-                      </Badge>
-                    )}
-                  </div>
-                  <p className="text-white mt-1">{job.client}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <DueDateBadge endDate={job.end_date} isCompleted={job.status === 'Completed'} />
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+        >
+          {isEditing ? (
+            <SheetShell
+              eyebrow="Edit job"
+              title={job.title}
+              description="Update job details."
+              footer={
+                <>
+                  <SecondaryButton onClick={() => setIsEditing(false)} fullWidth>
+                    Cancel
+                  </SecondaryButton>
+                  <PrimaryButton
+                    onClick={handleSave}
+                    disabled={updateJob.isPending}
+                    fullWidth
+                  >
+                    <Save className="h-4 w-4 mr-2" />
+                    Save changes
+                  </PrimaryButton>
+                </>
+              }
+            >
+              <FormCard eyebrow="Job details">
+                <Field label="Job title" required>
+                  <Input
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Client">
+                  <Input
+                    value={client}
+                    onChange={(e) => setClient(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Location">
+                  <Input
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Description">
+                  <Textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className={cn(textareaClass, 'min-h-[100px]')}
+                  />
+                </Field>
+              </FormCard>
+
+              <FormCard eyebrow="Status & value">
+                <FormGrid cols={2}>
+                  <Field label="Status">
+                    <Select value={status} onValueChange={(v) => setStatus(v as JobStatus)}>
+                      <SelectTrigger className={selectTriggerClass}>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent className={selectContentClass}>
+                        <SelectItem value="Active">Active</SelectItem>
+                        <SelectItem value="Pending">Pending</SelectItem>
+                        <SelectItem value="Completed">Completed</SelectItem>
+                        <SelectItem value="On Hold">On Hold</SelectItem>
+                        <SelectItem value="Cancelled">Cancelled</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                  <Field label="Value (£)">
+                    <Input
+                      type="number"
+                      value={value}
+                      onChange={(e) => setValue(e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                </FormGrid>
+              </FormCard>
+
+              <FormCard eyebrow="Contact">
+                <FormGrid cols={2}>
+                  <Field label="Client phone">
+                    <Input
+                      value={clientPhone}
+                      onChange={(e) => setClientPhone(e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                  <Field label="Client email">
+                    <Input
+                      type="email"
+                      value={clientEmail}
+                      onChange={(e) => setClientEmail(e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                </FormGrid>
+              </FormCard>
+            </SheetShell>
+          ) : (
+            <SheetShell
+              eyebrow={job.client}
+              title={
+                <span className="flex items-center gap-2">
+                  <span className="truncate">{job.title}</span>
+                  {job.is_template && (
+                    <Pill tone="yellow">
+                      <LayoutTemplate className="h-3 w-3 mr-1" />
+                      Template
+                    </Pill>
+                  )}
+                </span>
+              }
+              description={
+                <span className="flex flex-wrap items-center gap-2">
+                  <Pill tone={statusTone[job.status] ?? 'yellow'}>{job.status}</Pill>
+                  <DueDateBadge
+                    endDate={job.end_date}
+                    isCompleted={job.status === 'Completed'}
+                  />
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MoreVertical className="h-4 w-4" />
-                      </Button>
+                      <button
+                        className="h-7 w-7 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08]"
+                        aria-label="More"
+                      >
+                        <MoreVertical className="h-3.5 w-3.5" />
+                      </button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem onClick={() => setShowCopySheet(true)} className="gap-2">
                         <Copy className="h-4 w-4" />
-                        Copy Job
+                        Copy job
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={handleToggleTemplate} className="gap-2">
                         <LayoutTemplate className="h-4 w-4" />
-                        {job.is_template ? 'Remove from Templates' : 'Save as Template'}
+                        {job.is_template ? 'Remove from templates' : 'Save as template'}
                       </DropdownMenuItem>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem
                         onClick={handleArchive}
-                        className="gap-2 text-warning focus:text-warning"
+                        className="gap-2 text-amber-400 focus:text-amber-400"
                       >
                         <Archive className="h-4 w-4" />
                         Archive
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </div>
-              </div>
-
-              {/* Labels */}
+                </span>
+              }
+              footer={
+                <>
+                  <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                    Close
+                  </SecondaryButton>
+                  <PrimaryButton onClick={() => setIsEditing(true)} fullWidth>
+                    <Edit3 className="h-4 w-4 mr-2" />
+                    Edit job
+                  </PrimaryButton>
+                </>
+              }
+            >
               <JobLabelPicker jobId={job.id} />
 
-              {/* Quick Actions */}
-              <div className="flex gap-2 pt-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 h-10 gap-2"
-                  onClick={handleCall}
-                >
-                  <Phone className="h-4 w-4" />
+              <FormGrid cols={3}>
+                <SecondaryButton onClick={handleCall} fullWidth>
+                  <Phone className="h-4 w-4 mr-1" />
                   Call
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 h-10 gap-2"
-                  onClick={handleMessage}
-                >
-                  <MessageSquare className="h-4 w-4" />
+                </SecondaryButton>
+                <SecondaryButton onClick={handleMessage} fullWidth>
+                  <MessageSquare className="h-4 w-4 mr-1" />
                   Message
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 h-10 gap-2"
-                  onClick={handleNavigate}
-                >
-                  <Navigation className="h-4 w-4" />
+                </SecondaryButton>
+                <SecondaryButton onClick={handleNavigate} fullWidth>
+                  <Navigation className="h-4 w-4 mr-1" />
                   Navigate
-                </Button>
-              </div>
-            </SheetHeader>
-          </div>
+                </SecondaryButton>
+              </FormGrid>
 
-          <div className="p-6 space-y-6">
-            {/* Progress Section */}
-            <Card className="border-elec-yellow/20 bg-elec-yellow/5">
-              <CardContent className="p-4 space-y-3">
+              <FormCard eyebrow="Progress">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-white">Job Progress</span>
-                  <span className="text-2xl font-bold text-elec-yellow">{progress}%</span>
+                  <span className="text-sm font-medium text-white">Job progress</span>
+                  <span className="text-2xl font-bold text-elec-yellow tabular-nums">
+                    {progress}%
+                  </span>
                 </div>
                 <Slider
                   value={[progress]}
@@ -463,123 +562,83 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <span>Start</span>
                   <span>Complete</span>
                 </div>
-              </CardContent>
-            </Card>
+              </FormCard>
 
-            {/* Key Info Cards */}
-            <div className="grid grid-cols-2 gap-3">
-              <Card className="bg-elec-gray/50">
-                <CardContent className="p-3 flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-elec-yellow/10">
-                    <MapPin className="h-4 w-4 text-elec-yellow" />
+              <FormGrid cols={2}>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
+                  <MapPin className="h-5 w-5 text-elec-yellow" />
+                  <div className="min-w-0">
+                    <Eyebrow>Location</Eyebrow>
+                    <p className="text-sm font-medium text-white truncate">{job.location}</p>
                   </div>
-                  <div className="min-w-0 flex-1">
-                    <p className="text-xs text-white">Location</p>
-                    <p className="text-sm font-medium text-foreground truncate">{job.location}</p>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-elec-gray/50">
-                <CardContent className="p-3 flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-success/10">
-                    <PoundSterling className="h-4 w-4 text-success" />
-                  </div>
+                </div>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
+                  <PoundSterling className="h-5 w-5 text-emerald-400" />
                   <div>
-                    <p className="text-xs text-white">Value</p>
-                    <p className="text-sm font-bold text-success">
+                    <Eyebrow>Value</Eyebrow>
+                    <p className="text-sm font-bold text-emerald-400 tabular-nums">
                       £{(job.value || 0).toLocaleString()}
                     </p>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-elec-gray/50">
-                <CardContent className="p-3 flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-info/10">
-                    <Calendar className="h-4 w-4 text-info" />
-                  </div>
+                </div>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
+                  <Calendar className="h-5 w-5 text-blue-400" />
                   <div>
-                    <p className="text-xs text-white">Duration</p>
-                    <p className="text-sm font-medium text-foreground">
+                    <Eyebrow>Duration</Eyebrow>
+                    <p className="text-sm font-medium text-white">
                       {calculateDuration() || '-'}
                     </p>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-elec-gray/50">
-                <CardContent className="p-3 flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-warning/10">
-                    <Users className="h-4 w-4 text-warning" />
-                  </div>
+                </div>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
+                  <Users className="h-5 w-5 text-amber-400" />
                   <div>
-                    <p className="text-xs text-white">Workers</p>
-                    <p className="text-sm font-medium text-foreground">
+                    <Eyebrow>Workers</Eyebrow>
+                    <p className="text-sm font-medium text-white">
                       {assignments.length} assigned
                     </p>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Dates */}
-            <Card className="bg-elec-gray/50">
-              <CardContent className="p-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <Clock className="h-4 w-4 text-white" />
-                  <span className="text-sm font-medium text-white">Schedule</span>
                 </div>
+              </FormGrid>
+
+              <FormCard eyebrow="Schedule">
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="text-xs text-white">Start Date</p>
-                    <p className="text-sm font-medium text-foreground">
+                    <Eyebrow>Start date</Eyebrow>
+                    <p className="text-sm font-medium text-white mt-0.5">
                       {formatDate(job.start_date)}
                     </p>
                   </div>
-                  <div className="h-px w-8 bg-border" />
+                  <div className="h-px w-8 bg-white/[0.06]" />
                   <div className="text-right">
-                    <p className="text-xs text-white">End Date</p>
-                    <p className="text-sm font-medium text-foreground">
+                    <Eyebrow>End date</Eyebrow>
+                    <p className="text-sm font-medium text-white mt-0.5">
                       {formatDate(job.end_date)}
                     </p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </FormCard>
 
-            {/* Description */}
-            {job.description && (
-              <Card className="bg-elec-gray/50">
-                <CardContent className="p-4">
-                  <p className="text-xs text-white uppercase tracking-wide mb-2">
-                    Description
-                  </p>
-                  <p className="text-sm text-foreground leading-relaxed">{job.description}</p>
-                </CardContent>
-              </Card>
-            )}
+              {job.description && (
+                <FormCard eyebrow="Description">
+                  <p className="text-sm text-white leading-relaxed">{job.description}</p>
+                </FormCard>
+              )}
 
-            {/* Assigned Workers Section - Collapsible */}
-            <Collapsible open={workersOpen} onOpenChange={setWorkersOpen}>
-              <Card className="bg-elec-gray/50">
-                <CollapsibleTrigger asChild>
-                  <CardContent className="p-4 cursor-pointer">
-                    <div className="flex items-center justify-between">
+              <Collapsible open={workersOpen} onOpenChange={setWorkersOpen}>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full p-4 flex items-center justify-between touch-manipulation">
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-white" />
-                        <span className="text-sm font-medium text-foreground">
-                          Assigned Workers
+                        <span className="text-sm font-medium text-white">
+                          Assigned workers
                         </span>
-                        <Badge variant="secondary" className="text-xs">
-                          {assignments.length}
-                        </Badge>
+                        <Pill tone="yellow">{assignments.length}</Pill>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 gap-1.5 text-elec-yellow"
+                        <button
+                          className="text-[12px] font-medium text-elec-yellow flex items-center gap-1"
                           onClick={(e) => {
                             e.stopPropagation();
                             setShowAssignSheet(true);
@@ -587,7 +646,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                         >
                           <UserPlus className="h-3.5 w-3.5" />
                           Assign
-                        </Button>
+                        </button>
                         <ChevronDown
                           className={cn(
                             'h-4 w-4 text-white transition-transform',
@@ -595,89 +654,85 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                           )}
                         />
                       </div>
-                    </div>
-                  </CardContent>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <CardContent className="p-4 pt-0 space-y-2">
-                    {loadingAssignments ? (
-                      <div className="flex items-center justify-center py-4">
-                        <Loader2 className="h-5 w-5 animate-spin text-white" />
-                      </div>
-                    ) : assignments.length === 0 ? (
-                      <div className="text-center py-4">
-                        <p className="text-sm text-white">No workers assigned yet</p>
-                      </div>
-                    ) : (
-                      assignments.map((assignment) => (
-                        <div
-                          key={assignment.id}
-                          className="flex items-center gap-3 p-2 rounded-lg bg-background"
-                        >
-                          <Avatar className="h-8 w-8 bg-elec-yellow/10">
-                            <AvatarFallback className="text-elec-yellow text-xs font-medium">
-                              {assignment.employee?.avatar_initials || '??'}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm text-foreground truncate">
-                              {assignment.employee?.name || 'Unknown'}
-                            </p>
-                            <p className="text-xs text-white">
-                              {assignment.role_on_job || assignment.employee?.role || 'Worker'}
-                            </p>
-                          </div>
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-7 w-7 text-white hover:text-destructive"
-                              >
-                                <X className="h-3.5 w-3.5" />
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>Remove Worker?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Are you sure you want to remove {assignment.employee?.name} from
-                                  this job?
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction
-                                  onClick={() =>
-                                    handleRemoveWorker(
-                                      assignment.employee_id,
-                                      assignment.employee?.name || ''
-                                    )
-                                  }
-                                  className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                >
-                                  Remove
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="p-4 pt-0 space-y-2">
+                      {loadingAssignments ? (
+                        <div className="flex items-center justify-center py-4">
+                          <Loader2 className="h-5 w-5 animate-spin text-white" />
                         </div>
-                      ))
-                    )}
-                  </CardContent>
-                </CollapsibleContent>
-              </Card>
-            </Collapsible>
+                      ) : assignments.length === 0 ? (
+                        <div className="text-center py-4">
+                          <p className="text-sm text-white">No workers assigned yet</p>
+                        </div>
+                      ) : (
+                        assignments.map((assignment) => (
+                          <div
+                            key={assignment.id}
+                            className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]"
+                          >
+                            <Avatar className="h-8 w-8 bg-elec-yellow/10">
+                              <AvatarFallback className="text-elec-yellow text-xs font-medium">
+                                {assignment.employee?.avatar_initials || '??'}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <p className="font-medium text-sm text-white truncate">
+                                {assignment.employee?.name || 'Unknown'}
+                              </p>
+                              <p className="text-xs text-white">
+                                {assignment.role_on_job || assignment.employee?.role || 'Worker'}
+                              </p>
+                            </div>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <button
+                                  className="h-7 w-7 rounded-full bg-white/[0.04] hover:bg-red-500/15 text-white hover:text-red-400 transition-colors flex items-center justify-center"
+                                  aria-label="Remove worker"
+                                >
+                                  <X className="h-3.5 w-3.5" />
+                                </button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Remove worker?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Are you sure you want to remove {assignment.employee?.name}{' '}
+                                    from this job?
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                  <AlertDialogAction
+                                    onClick={() =>
+                                      handleRemoveWorker(
+                                        assignment.employee_id,
+                                        assignment.employee?.name || ''
+                                      )
+                                    }
+                                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                  >
+                                    Remove
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </CollapsibleContent>
+                </div>
+              </Collapsible>
 
-            {/* Checklist Section - Collapsible */}
-            <Collapsible open={checklistOpen} onOpenChange={setChecklistOpen}>
-              <Card className="bg-elec-gray/50">
-                <CollapsibleTrigger asChild>
-                  <CardContent className="p-4 cursor-pointer">
-                    <div className="flex items-center justify-between">
+              <Collapsible open={checklistOpen} onOpenChange={setChecklistOpen}>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full p-4 flex items-center justify-between touch-manipulation">
                       <div className="flex items-center gap-2">
                         <ListChecks className="h-4 w-4 text-white" />
-                        <span className="text-sm font-medium text-foreground">Checklist</span>
+                        <span className="text-sm font-medium text-white">Checklist</span>
                       </div>
                       <ChevronDown
                         className={cn(
@@ -685,26 +740,23 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                           checklistOpen && 'rotate-180'
                         )}
                       />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="p-4 pt-0">
+                      <JobChecklist jobId={job.id} />
                     </div>
-                  </CardContent>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <CardContent className="p-4 pt-0">
-                    <JobChecklist jobId={job.id} />
-                  </CardContent>
-                </CollapsibleContent>
-              </Card>
-            </Collapsible>
+                  </CollapsibleContent>
+                </div>
+              </Collapsible>
 
-            {/* Activity Section - Collapsible */}
-            <Collapsible open={activityOpen} onOpenChange={setActivityOpen}>
-              <Card className="bg-elec-gray/50">
-                <CollapsibleTrigger asChild>
-                  <CardContent className="p-4 cursor-pointer">
-                    <div className="flex items-center justify-between">
+              <Collapsible open={activityOpen} onOpenChange={setActivityOpen}>
+                <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                  <CollapsibleTrigger asChild>
+                    <button className="w-full p-4 flex items-center justify-between touch-manipulation">
                       <div className="flex items-center gap-2">
                         <Activity className="h-4 w-4 text-white" />
-                        <span className="text-sm font-medium text-foreground">Activity</span>
+                        <span className="text-sm font-medium text-white">Activity</span>
                       </div>
                       <ChevronDown
                         className={cn(
@@ -712,90 +764,76 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                           activityOpen && 'rotate-180'
                         )}
                       />
+                    </button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="p-4 pt-0">
+                      <JobActivityFeed jobId={job.id} />
                     </div>
-                  </CardContent>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <CardContent className="p-4 pt-0">
-                    <JobActivityFeed jobId={job.id} />
-                  </CardContent>
-                </CollapsibleContent>
-              </Card>
-            </Collapsible>
+                  </CollapsibleContent>
+                </div>
+              </Collapsible>
 
-            {/* Quick Links */}
-            <div className="space-y-2">
-              <p className="text-xs text-white uppercase tracking-wide px-1">
-                Quick Links
-              </p>
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  className="h-12 justify-start gap-2"
-                  onClick={() =>
-                    toast({ title: 'Job Pack', description: 'Job pack generation coming soon' })
-                  }
-                >
-                  <FileText className="h-4 w-4 text-elec-yellow" />
-                  Job Pack
-                </Button>
-                <Button
-                  variant="outline"
-                  className="h-12 justify-start gap-2"
-                  onClick={() =>
-                    toast({
-                      title: 'Timesheets',
-                      description: 'View timesheets in the Timesheets section',
-                    })
-                  }
-                >
-                  <Clock className="h-4 w-4 text-elec-yellow" />
-                  Timesheets
-                </Button>
-                <Button
-                  variant="outline"
-                  className="h-12 justify-start gap-2"
-                  onClick={() =>
-                    toast({
-                      title: 'Photos',
-                      description: 'View photos in the Photo Gallery section',
-                    })
-                  }
-                >
-                  <Camera className="h-4 w-4 text-elec-yellow" />
-                  Photos
-                </Button>
-                <Button
-                  variant="outline"
-                  className="h-12 justify-start gap-2"
-                  onClick={() =>
-                    toast({ title: 'Documents', description: 'Document management coming soon' })
-                  }
-                >
-                  <FolderOpen className="h-4 w-4 text-elec-yellow" />
-                  Documents
-                </Button>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-2 pt-4 border-t border-border">
-              <Button onClick={() => setIsEditing(true)} className="flex-1 h-12 gap-2">
-                <Edit3 className="h-4 w-4" />
-                Edit Job
-              </Button>
+              <FormCard eyebrow="Quick links">
+                <FormGrid cols={2}>
+                  <SecondaryButton
+                    onClick={() =>
+                      toast({ title: 'Job pack', description: 'Job pack generation coming soon' })
+                    }
+                    fullWidth
+                  >
+                    <FileText className="h-4 w-4 mr-1 text-elec-yellow" />
+                    Job pack
+                  </SecondaryButton>
+                  <SecondaryButton
+                    onClick={() =>
+                      toast({
+                        title: 'Timesheets',
+                        description: 'View timesheets in the Timesheets section',
+                      })
+                    }
+                    fullWidth
+                  >
+                    <Clock className="h-4 w-4 mr-1 text-elec-yellow" />
+                    Timesheets
+                  </SecondaryButton>
+                  <SecondaryButton
+                    onClick={() =>
+                      toast({
+                        title: 'Photos',
+                        description: 'View photos in the Photo Gallery section',
+                      })
+                    }
+                    fullWidth
+                  >
+                    <Camera className="h-4 w-4 mr-1 text-elec-yellow" />
+                    Photos
+                  </SecondaryButton>
+                  <SecondaryButton
+                    onClick={() =>
+                      toast({ title: 'Documents', description: 'Document management coming soon' })
+                    }
+                    fullWidth
+                  >
+                    <FolderOpen className="h-4 w-4 mr-1 text-elec-yellow" />
+                    Documents
+                  </SecondaryButton>
+                </FormGrid>
+              </FormCard>
 
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="icon" className="h-12 w-12">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  <DestructiveButton fullWidth>
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Delete job
+                  </DestructiveButton>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Delete Job?</AlertDialogTitle>
+                    <AlertDialogTitle>Delete job?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Are you sure you want to delete "{job.title}"? This action cannot be undone.
+                      Are you sure you want to delete "{job.title}"? This action cannot be
+                      undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
@@ -809,147 +847,11 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
-            </div>
-
-            {/* Edit Mode Dialog */}
-            {isEditing && (
-              <div className="fixed inset-0 bg-background z-50 overflow-y-auto">
-                <div className="p-6 space-y-5">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-bold text-foreground">Edit Job</h2>
-                    <Button variant="ghost" size="icon" onClick={() => setIsEditing(false)}>
-                      <X className="h-5 w-5" />
-                    </Button>
-                  </div>
-
-                  <div className="space-y-4 p-4 rounded-xl bg-muted/30 border border-border/50">
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="title"
-                        className="text-xs font-medium text-white uppercase tracking-wide"
-                      >
-                        Job Title
-                      </Label>
-                      <Input
-                        id="title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="client"
-                        className="text-xs font-medium text-white uppercase tracking-wide"
-                      >
-                        Client
-                      </Label>
-                      <Input
-                        id="client"
-                        value={client}
-                        onChange={(e) => setClient(e.target.value)}
-                        className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="location"
-                        className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5"
-                      >
-                        <MapPin className="h-3.5 w-3.5" />
-                        Location
-                      </Label>
-                      <Input
-                        id="location"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="description"
-                        className="text-xs font-medium text-white uppercase tracking-wide"
-                      >
-                        Description
-                      </Label>
-                      <Textarea
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="min-h-[100px] bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="status"
-                        className="text-xs font-medium text-white uppercase tracking-wide"
-                      >
-                        Status
-                      </Label>
-                      <Select value={status} onValueChange={(v) => setStatus(v as JobStatus)}>
-                        <SelectTrigger className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Active">Active</SelectItem>
-                          <SelectItem value="Pending">Pending</SelectItem>
-                          <SelectItem value="Completed">Completed</SelectItem>
-                          <SelectItem value="On Hold">On Hold</SelectItem>
-                          <SelectItem value="Cancelled">Cancelled</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label
-                        htmlFor="value"
-                        className="text-xs font-medium text-white uppercase tracking-wide flex items-center gap-1.5"
-                      >
-                        <PoundSterling className="h-3.5 w-3.5" />
-                        Value (£)
-                      </Label>
-                      <Input
-                        id="value"
-                        type="number"
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                        className="h-12 bg-background border-border/60 focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2 pt-4">
-                    <Button
-                      onClick={handleSave}
-                      disabled={updateJob.isPending}
-                      className="flex-1 h-12 font-semibold gap-2"
-                    >
-                      <Save className="h-4 w-4" />
-                      Save Changes
-                    </Button>
-                    <Button
-                      variant="outline"
-                      onClick={() => setIsEditing(false)}
-                      className="h-12 px-6"
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+            </SheetShell>
+          )}
         </SheetContent>
       </Sheet>
 
-      {/* Assign Workers Sheet */}
       {job && (
         <AssignWorkersSheet
           job={job}
@@ -959,7 +861,6 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
         />
       )}
 
-      {/* Copy Job Sheet */}
       <CopyJobSheet job={job} open={showCopySheet} onOpenChange={setShowCopySheet} />
     </>
   );

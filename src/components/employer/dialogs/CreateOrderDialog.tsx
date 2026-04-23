@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -11,10 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Plus, Trash2, Package, Calculator, Truck, ShoppingCart } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import {
   useCreateMaterialOrder,
   useNextOrderNumber,
@@ -23,6 +18,18 @@ import {
 } from '@/hooks/useFinance';
 import { useJobs } from '@/hooks/useJobs';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface OrderItem {
   id: string;
@@ -59,7 +66,6 @@ export function CreateOrderDialog({
   const activeJobs = jobs.filter((j) => j.status === 'Active');
   const total = items.reduce((sum, item) => sum + item.qty * item.price, 0);
 
-  // Voice form registration
   const voiceContext = useOptionalVoiceFormContext();
 
   useEffect(() => {
@@ -183,217 +189,189 @@ export function CreateOrderDialog({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="px-4 py-3 border-b border-border">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                  <Truck className="h-5 w-5 text-elec-yellow" />
-                </div>
-                <div>
-                  <SheetTitle className="text-lg">New Order</SheetTitle>
-                  <p className="text-xs text-white">{orderNumber}</p>
-                </div>
-              </div>
-            </div>
-          </SheetHeader>
-
-          {/* Content */}
-          <ScrollArea className="flex-1 px-4 py-4">
-            <div className="space-y-4">
-              {/* Supplier */}
-              <div className="space-y-2">
-                <Label>Supplier *</Label>
-                <Select value={supplierId} onValueChange={setSupplierId}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select supplier" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {suppliers.map((supplier) => (
-                      <SelectItem key={supplier.id} value={supplier.id}>
-                        {supplier.name}
-                        {supplier.discount_percent > 0 && (
-                          <span className="text-success ml-2">
-                            ({supplier.discount_percent}% off)
-                          </span>
-                        )}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {selectedSupplier && (
-                  <p className="text-xs text-white">
-                    {selectedSupplier.delivery_days === 0
-                      ? 'Same day delivery'
-                      : `${selectedSupplier.delivery_days} day delivery`}
-                  </p>
-                )}
-              </div>
-
-              {/* Link to Job */}
-              <div className="space-y-2">
-                <Label>Link to Job (Optional)</Label>
-                <Select
-                  value={jobId || 'none'}
-                  onValueChange={(v) => setJobId(v === 'none' ? null : v)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select job (optional)" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">No job linked</SelectItem>
-                    {activeJobs.map((job) => (
-                      <SelectItem key={job.id} value={job.id}>
-                        {job.title}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Order Items */}
-              {items.length > 0 && (
-                <div className="space-y-2">
-                  <Label>Order Items</Label>
-                  {items.map((item) => (
-                    <Card key={item.id} className="bg-elec-gray">
-                      <CardContent className="p-3">
-                        <div className="flex items-center justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <p className="font-medium text-sm truncate">{item.name}</p>
-                            <div className="flex items-center gap-2 mt-1">
-                              <Input
-                                type="number"
-                                value={item.qty}
-                                onChange={(e) => updateItemQty(item.id, Number(e.target.value))}
-                                className="w-16 h-8 text-sm"
-                                min={1}
-                              />
-                              <span className="text-xs text-white">
-                                × £{item.price.toFixed(2)}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="text-right shrink-0">
-                            <p className="font-bold">£{(item.qty * item.price).toFixed(2)}</p>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="h-6 w-6 p-0 mt-1"
-                              onClick={() => removeItem(item.id)}
-                            >
-                              <Trash2 className="h-3 w-3 text-destructive" />
-                            </Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+      <SheetContent side="bottom" className="h-[95vh] p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="New order"
+          title="Place materials order"
+          description={orderNumber ? `${orderNumber} · Draft` : 'Draft'}
+          footer={
+            <>
+              <SecondaryButton onClick={() => onOpenChange(false)} fullWidth>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleSubmit}
+                disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
+                fullWidth
+              >
+                Place order · £{total.toFixed(2)}
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Supplier & job">
+            <Field label="Supplier" required>
+              <Select value={supplierId} onValueChange={setSupplierId}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select supplier" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {suppliers.map((supplier) => (
+                    <SelectItem key={supplier.id} value={supplier.id}>
+                      {supplier.name}
+                      {supplier.discount_percent > 0 && (
+                        <span className="text-emerald-400 ml-2">
+                          ({supplier.discount_percent}% off)
+                        </span>
+                      )}
+                    </SelectItem>
                   ))}
-                </div>
+                </SelectContent>
+              </Select>
+              {selectedSupplier && (
+                <p className="mt-1.5 text-[11px] text-white">
+                  {selectedSupplier.delivery_days === 0
+                    ? 'Same day delivery'
+                    : `${selectedSupplier.delivery_days} day delivery`}
+                </p>
               )}
-
-              {/* Add from Price Book */}
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  <Package className="h-4 w-4" />
-                  Quick Add from Price Book
-                </Label>
-                <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
-                  {priceBook.slice(0, 8).map((item) => (
-                    <Badge
-                      key={item.id}
-                      variant="outline"
-                      className="shrink-0 cursor-pointer touch-feedback hover:bg-elec-yellow/10"
-                      onClick={() => addFromPriceBook(item)}
-                    >
-                      <Plus className="h-3 w-3 mr-1" />
-                      {item.name}
-                    </Badge>
+            </Field>
+            <Field label="Link to job (optional)">
+              <Select
+                value={jobId || 'none'}
+                onValueChange={(v) => setJobId(v === 'none' ? null : v)}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select job (optional)" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="none">No job linked</SelectItem>
+                  {activeJobs.map((job) => (
+                    <SelectItem key={job.id} value={job.id}>
+                      {job.title}
+                    </SelectItem>
                   ))}
-                </div>
-              </div>
+                </SelectContent>
+              </Select>
+            </Field>
+          </FormCard>
 
-              {/* Add Custom Item */}
-              <Card className="bg-muted/30">
-                <CardContent className="p-3 space-y-3">
-                  <Label className="text-sm">Add Custom Item</Label>
-                  <Input
-                    placeholder="Item name"
-                    value={newItem.name}
-                    onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                  />
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <Label className="text-xs">Quantity</Label>
-                      <Input
-                        type="number"
-                        value={newItem.qty}
-                        onChange={(e) => setNewItem({ ...newItem, qty: Number(e.target.value) })}
-                        min={1}
-                      />
+          {items.length > 0 && (
+            <FormCard eyebrow="Order items">
+              <div className="space-y-2">
+                {items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between gap-3 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-3 py-2.5"
+                  >
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] font-medium text-white truncate">{item.name}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <Input
+                          type="number"
+                          value={item.qty}
+                          onChange={(e) => updateItemQty(item.id, Number(e.target.value))}
+                          className={`${inputClass} w-16 h-8`}
+                          min={1}
+                        />
+                        <span className="text-[11px] text-white">
+                          × £{item.price.toFixed(2)}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <Label className="text-xs">Unit Price (£)</Label>
-                      <Input
-                        type="number"
-                        value={newItem.price}
-                        onChange={(e) => setNewItem({ ...newItem, price: Number(e.target.value) })}
-                        min={0}
-                        step={0.01}
-                      />
+                    <div className="text-right shrink-0">
+                      <p className="text-[13px] font-semibold text-white">
+                        £{(item.qty * item.price).toFixed(2)}
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => removeItem(item.id)}
+                        className="mt-1 h-7 w-7 inline-flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-red-400 hover:bg-red-500/15 transition-colors"
+                        aria-label="Remove item"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
                     </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full"
-                    onClick={addItem}
-                    disabled={!newItem.name}
+                ))}
+              </div>
+            </FormCard>
+          )}
+
+          {priceBook.length > 0 && (
+            <FormCard eyebrow="Quick add from price book">
+              <div className="flex gap-2 overflow-x-auto pb-1 hide-scrollbar">
+                {priceBook.slice(0, 8).map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => addFromPriceBook(item)}
+                    className="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-white/[0.04] border border-white/[0.1] text-[12px] text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40 transition-colors touch-manipulation"
                   >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Item
-                  </Button>
-                </CardContent>
-              </Card>
+                    <Plus className="h-3 w-3" />
+                    {item.name}
+                  </button>
+                ))}
+              </div>
+            </FormCard>
+          )}
 
-              {/* Notes */}
-              <div className="space-y-2">
-                <Label>Notes</Label>
-                <Textarea
-                  placeholder="Delivery instructions, special requests, etc."
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  className="min-h-[60px]"
+          <FormCard eyebrow="Add custom item">
+            <Field label="Item name">
+              <Input
+                placeholder="Item name"
+                value={newItem.name}
+                onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+                className={inputClass}
+              />
+            </Field>
+            <FormGrid cols={2}>
+              <Field label="Quantity">
+                <Input
+                  type="number"
+                  value={newItem.qty}
+                  onChange={(e) => setNewItem({ ...newItem, qty: Number(e.target.value) })}
+                  min={1}
+                  className={inputClass}
                 />
-              </div>
-            </div>
-          </ScrollArea>
+              </Field>
+              <Field label="Unit price (£)">
+                <Input
+                  type="number"
+                  value={newItem.price}
+                  onChange={(e) => setNewItem({ ...newItem, price: Number(e.target.value) })}
+                  min={0}
+                  step={0.01}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+            <SecondaryButton onClick={addItem} disabled={!newItem.name} fullWidth>
+              <Plus className="h-4 w-4 mr-1.5" />
+              Add item
+            </SecondaryButton>
+          </FormCard>
 
-          {/* Totals Bar */}
-          <div className="px-4 py-2 border-t border-border bg-muted/30">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Calculator className="h-4 w-4 text-white" />
-                <span className="text-sm text-white">Order Total</span>
-              </div>
-              <span className="text-xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
-            </div>
+          <FormCard eyebrow="Notes">
+            <Field label="Delivery instructions / special requests">
+              <Textarea
+                placeholder="Delivery instructions, special requests, etc."
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                className={`${textareaClass} min-h-[80px]`}
+              />
+            </Field>
+          </FormCard>
+
+          <div className="flex items-center justify-between px-1 pt-2">
+            <span className="text-[11px] text-white uppercase tracking-[0.14em] font-medium">
+              Order total
+            </span>
+            <span className="text-[22px] font-semibold text-elec-yellow tabular-nums">
+              £{total.toFixed(2)}
+            </span>
           </div>
-
-          {/* Footer */}
-          <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <Button
-              className="w-full"
-              onClick={handleSubmit}
-              disabled={!supplierId || items.length === 0 || createOrderMutation.isPending}
-            >
-              <ShoppingCart className="h-4 w-4 mr-2" />
-              Place Order
-            </Button>
-          </SheetFooter>
-        </div>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

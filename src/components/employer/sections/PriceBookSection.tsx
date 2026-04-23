@@ -1,13 +1,6 @@
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { SectionHeader } from '../SectionHeader';
+import { useState, useMemo } from 'react';
+import { RefreshCw, Upload, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { FloatingActionButton } from '@/components/ui/floating-action-button';
 import {
   Select,
   SelectContent,
@@ -16,16 +9,25 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  Search,
-  Plus,
-  Upload,
-  Package,
-  TrendingUp,
-  AlertTriangle,
-  PoundSterling,
-  ChevronRight,
-  X,
-} from 'lucide-react';
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Pill,
+  Divider,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 import {
   useSearchPriceBook,
   usePriceBookStats,
@@ -52,32 +54,36 @@ const CATEGORIES = [
   'Other',
 ];
 
+const TABS = [
+  { value: 'materials', label: 'Materials' },
+  { value: 'labour', label: 'Labour' },
+  { value: 'equipment', label: 'Equipment' },
+  { value: 'markup', label: 'Markup' },
+];
+
 export function PriceBookSection() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
+  const [tab, setTab] = useState('materials');
   const [showImportDialog, setShowImportDialog] = useState(false);
-  const [expandedId, setExpandedId] = useState<string | null>(null);
 
-  // Quick add form state
   const [showQuickAdd, setShowQuickAdd] = useState(false);
   const [newItemName, setNewItemName] = useState('');
   const [newItemBuyPrice, setNewItemBuyPrice] = useState('');
   const [newItemCategory, setNewItemCategory] = useState('Cable');
 
-  // Edit sheet state
   const [editItem, setEditItem] = useState<PriceBookItem | null>(null);
   const [showEditSheet, setShowEditSheet] = useState(false);
 
-  // Fetch stats for header
-  const { data: stats, isLoading: statsLoading } = usePriceBookStats();
+  const { data: stats, isLoading: statsLoading, refetch: refetchStats } = usePriceBookStats();
 
-  // Search with pagination
   const {
     data: searchResults,
     isLoading: searchLoading,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
+    refetch: refetchSearch,
   } = useSearchPriceBook(search, category === 'All' ? undefined : category);
 
   const createItem = useCreatePriceBookItem();
@@ -87,6 +93,16 @@ export function PriceBookSection() {
   const items = searchResults?.pages.flatMap((p) => p.items) || [];
   const totalFound = searchResults?.pages[0]?.total || 0;
 
+  const lastUpdatedDays = useMemo(() => {
+    return stats?.lowStock != null ? '0' : '—';
+  }, [stats]);
+
+  const refresh = () => {
+    refetchStats();
+    refetchSearch();
+    toast.success('Price book refreshed');
+  };
+
   const handleEdit = (item: PriceBookItem) => {
     setEditItem(item);
     setShowEditSheet(true);
@@ -94,12 +110,10 @@ export function PriceBookSection() {
 
   const handleSaveItem = async (id: string, updates: Partial<PriceBookItem>) => {
     await updateItem.mutateAsync({ id, updates });
-    setExpandedId(null);
   };
 
   const handleDeleteItem = async (id: string) => {
     await deleteItem.mutateAsync(id);
-    setExpandedId(null);
     toast.success('Item deleted from price book');
   };
 
@@ -110,7 +124,7 @@ export function PriceBookSection() {
     }
 
     const buyPrice = parseFloat(newItemBuyPrice) || 0;
-    const sellPrice = buyPrice * 1.3; // 30% markup default
+    const sellPrice = buyPrice * 1.3;
 
     try {
       await createItem.mutateAsync({
@@ -134,313 +148,274 @@ export function PriceBookSection() {
     }
   };
 
+  const heroActions = (
+    <>
+      <SecondaryButton onClick={() => setShowImportDialog(true)}>
+        <Upload className="h-4 w-4 mr-2" />
+        Import
+      </SecondaryButton>
+      <PrimaryButton onClick={() => setShowQuickAdd(true)}>Add item</PrimaryButton>
+      <IconButton onClick={refresh} aria-label="Refresh">
+        <RefreshCw className="h-4 w-4" />
+      </IconButton>
+    </>
+  );
+
+  if (statsLoading && !stats) {
+    return (
+      <PageFrame>
+        <PageHero
+          eyebrow="Money"
+          title="Price Book"
+          description="Labour rates, material costs and markup rules."
+          tone="amber"
+          actions={heroActions}
+        />
+        <LoadingBlocks />
+      </PageFrame>
+    );
+  }
+
   return (
-    <div className="space-y-4 pb-24">
-      <SectionHeader
+    <PageFrame>
+      <PageHero
+        eyebrow="Money"
         title="Price Book"
-        description="Search materials and prices"
-        action={
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={() => setShowImportDialog(true)}>
-              <Upload className="h-4 w-4 mr-2" />
-              Import
-            </Button>
-            <Button onClick={() => setShowQuickAdd(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Add
-            </Button>
-          </div>
-        }
+        description="Labour rates, material costs and markup rules."
+        tone="amber"
+        actions={heroActions}
       />
 
-      {/* Quick Add Form */}
+      <StatStrip
+        columns={4}
+        stats={[
+          {
+            label: 'Materials',
+            value: stats?.totalItems?.toLocaleString() ?? '0',
+            tone: 'amber',
+          },
+          {
+            label: 'Avg markup',
+            value: stats ? `${stats.avgMarkup}%` : '0%',
+            tone: 'blue',
+          },
+          {
+            label: 'Low stock',
+            value: stats?.lowStock?.toLocaleString() ?? '0',
+            tone: 'purple',
+          },
+          {
+            label: 'Stock value',
+            value: stats ? `£${stats.stockValue.toLocaleString()}` : '£0',
+            sub: `Updated ${lastUpdatedDays} days ago`,
+          },
+        ]}
+      />
+
+      <FilterBar
+        tabs={TABS}
+        activeTab={tab}
+        onTabChange={setTab}
+        search={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search materials, SKUs..."
+      />
+
       {showQuickAdd && (
-        <Card className="p-4 space-y-4 border-elec-yellow">
-          <div className="flex items-center justify-between">
-            <h3 className="font-semibold">Quick Add Material</h3>
-            <Button variant="ghost" size="icon" onClick={() => setShowQuickAdd(false)}>
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-
-          <Input
-            placeholder="Material name"
-            value={newItemName}
-            onChange={(e) => setNewItemName(e.target.value)}
-            autoFocus
+        <ListCard>
+          <ListCardHeader
+            tone="yellow"
+            title="Quick add material"
+            meta={
+              <button
+                onClick={() => setShowQuickAdd(false)}
+                className="h-8 w-8 rounded-full bg-white/[0.04] border border-white/[0.08] text-white inline-flex items-center justify-center hover:bg-white/[0.08] transition-colors touch-manipulation"
+                aria-label="Close"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+            }
           />
+          <div className="p-5 sm:p-6 space-y-4">
+            <Input
+              placeholder="Material name"
+              value={newItemName}
+              onChange={(e) => setNewItemName(e.target.value)}
+              autoFocus
+className={inputClass}
+            />
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-                £
-              </span>
-              <Input
-                type="number"
-                placeholder="Buy price"
-                value={newItemBuyPrice}
-                onChange={(e) => setNewItemBuyPrice(e.target.value)}
-                className="pl-7"
-                step="0.01"
-              />
-            </div>
-            <Select value={newItemCategory} onValueChange={setNewItemCategory}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {CATEGORIES.filter((c) => c !== 'All').map((cat) => (
-                  <SelectItem key={cat} value={cat}>
-                    {cat}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {newItemBuyPrice && (
-            <p className="text-sm text-white">
-              Sell price: £{(parseFloat(newItemBuyPrice) * 1.3).toFixed(2)} (30% markup)
-            </p>
-          )}
-
-          <Button
-            className="w-full"
-            onClick={handleQuickAdd}
-            disabled={createItem.isPending || !newItemName.trim()}
-          >
-            {createItem.isPending ? 'Adding...' : 'Add to Price Book'}
-          </Button>
-        </Card>
-      )}
-
-      {/* Stats Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <Card className="p-3">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-elec-yellow/10">
-              <Package className="h-4 w-4 text-elec-yellow" />
-            </div>
-            <div>
-              <p className="text-xs text-white">Total Items</p>
-              <p className="text-lg font-semibold">
-                {statsLoading ? (
-                  <Skeleton className="h-6 w-12" />
-                ) : (
-                  stats?.totalItems.toLocaleString()
-                )}
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="p-3">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-green-500/10">
-              <TrendingUp className="h-4 w-4 text-green-500" />
-            </div>
-            <div>
-              <p className="text-xs text-white">Avg Markup</p>
-              <p className="text-lg font-semibold">
-                {statsLoading ? <Skeleton className="h-6 w-12" /> : `${stats?.avgMarkup}%`}
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="p-3">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-amber-500/10">
-              <AlertTriangle className="h-4 w-4 text-amber-500" />
-            </div>
-            <div>
-              <p className="text-xs text-white">Low Stock</p>
-              <p className="text-lg font-semibold">
-                {statsLoading ? <Skeleton className="h-6 w-12" /> : stats?.lowStock}
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="p-3">
-          <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-blue-500/10">
-              <PoundSterling className="h-4 w-4 text-blue-500" />
-            </div>
-            <div>
-              <p className="text-xs text-white">Stock Value</p>
-              <p className="text-lg font-semibold">
-                {statsLoading ? (
-                  <Skeleton className="h-6 w-12" />
-                ) : (
-                  `£${stats?.stockValue.toLocaleString()}`
-                )}
-              </p>
-            </div>
-          </div>
-        </Card>
-      </div>
-
-      {/* Search */}
-      <div className="relative">
-        {!search && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
-        )}
-        <Input
-          placeholder="Search materials, SKUs..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className={cn('h-12 text-base', !search && 'pl-10')}
-        />
-      </div>
-
-      {/* Category Pills */}
-      <ScrollArea className="w-full">
-        <div className="flex gap-2 pb-2">
-          {CATEGORIES.map((cat) => (
-            <Badge
-              key={cat}
-              variant={category === cat ? 'default' : 'outline'}
-              className="cursor-pointer whitespace-nowrap px-3 py-1.5"
-              onClick={() => setCategory(cat)}
-            >
-              {cat}
-            </Badge>
-          ))}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
-
-      {/* Results */}
-      {search.length < 2 ? (
-        <div className="text-center py-12">
-          <Search className="h-12 w-12 mx-auto text-white mb-4" />
-          <p className="text-white">Type at least 2 characters to search</p>
-          <p className="text-sm text-white mt-1">
-            Or ask your voice assistant for a price lookup
-          </p>
-        </div>
-      ) : searchLoading ? (
-        <div className="space-y-3">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <Skeleton key={i} className="h-16 rounded-xl" />
-          ))}
-        </div>
-      ) : items.length === 0 ? (
-        <div className="text-center py-12">
-          <Package className="h-12 w-12 mx-auto text-white mb-4" />
-          <p className="text-white">No items found</p>
-          <Button variant="link" onClick={() => setShowQuickAdd(true)} className="mt-2">
-            Add new item
-          </Button>
-        </div>
-      ) : (
-        <div className="space-y-2">
-          <p className="text-sm text-white">{totalFound.toLocaleString()} results</p>
-
-          {items.map((item) => (
-            <Card
-              key={item.id}
-              className="overflow-hidden"
-              onClick={() => setExpandedId(expandedId === item.id ? null : item.id)}
-            >
-              <div className="p-3 flex items-center gap-3 cursor-pointer">
-                <div className="flex-1 min-w-0">
-                  <p className="font-medium truncate">{item.name}</p>
-                  <p className="text-sm text-white">
-                    {item.category} {item.sku && `• ${item.sku}`}
-                  </p>
-                </div>
-                <div className="text-right shrink-0">
-                  <p className="font-semibold text-elec-yellow">£{item.sell_price.toFixed(2)}</p>
-                  <p className="text-xs text-white">
-                    Cost: £{item.buy_price.toFixed(2)}
-                  </p>
-                </div>
-                <ChevronRight
-                  className={`h-4 w-4 text-white transition-transform ${expandedId === item.id ? 'rotate-90' : ''}`}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">£</span>
+                <Input
+                  type="number"
+                  placeholder="Buy price"
+                  value={newItemBuyPrice}
+                  onChange={(e) => setNewItemBuyPrice(e.target.value)}
+className={`${inputClass} pl-7`}
+                  step="0.01"
                 />
               </div>
+              <Select value={newItemCategory} onValueChange={setNewItemCategory}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {CATEGORIES.filter((c) => c !== 'All').map((cat) => (
+                    <SelectItem key={cat} value={cat} className="text-white">
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
 
-              {expandedId === item.id && (
-                <div className="px-3 pb-3 pt-0 border-t border-border mt-2 space-y-2">
-                  <div className="grid grid-cols-2 gap-4 text-sm pt-2">
-                    <div>
-                      <p className="text-white">Markup</p>
-                      <p className="font-medium">
-                        {item.markup ? `${item.markup.toFixed(0)}%` : 'N/A'}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-white">Unit</p>
-                      <p className="font-medium">{item.unit}</p>
-                    </div>
-                    <div>
-                      <p className="text-white">Stock</p>
-                      <p
-                        className={`font-medium ${item.stock_level <= item.reorder_level ? 'text-amber-500' : ''}`}
-                      >
-                        {item.stock_level}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-white">Supplier</p>
-                      <p className="font-medium">{item.suppliers?.name || 'N/A'}</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-2 pt-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="flex-1"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleEdit(item);
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="flex-1"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toast.success(`${item.name} added to quote`);
-                      }}
-                    >
-                      Add to Quote
-                    </Button>
-                  </div>
-                </div>
-              )}
-            </Card>
-          ))}
+            {newItemBuyPrice && (
+              <div className="flex items-center gap-2">
+                <Pill tone="emerald">
+                  Sell £{(parseFloat(newItemBuyPrice) * 1.3).toFixed(2)}
+                </Pill>
+                <span className="text-[12px] text-white">30% markup applied</span>
+              </div>
+            )}
 
-          {/* Load More */}
-          {hasNextPage && (
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => fetchNextPage()}
-              disabled={isFetchingNextPage}
+            <PrimaryButton
+              onClick={handleQuickAdd}
+              disabled={createItem.isPending || !newItemName.trim()}
+              fullWidth
             >
-              {isFetchingNextPage ? 'Loading...' : 'Load more'}
-            </Button>
-          )}
-        </div>
+              {createItem.isPending ? 'Adding...' : 'Add to price book'}
+            </PrimaryButton>
+          </div>
+        </ListCard>
       )}
 
-      {/* FAB */}
-      <FloatingActionButton
-        icon={<Plus className="h-6 w-6" />}
-        onClick={() => setShowQuickAdd(true)}
-        label="Add Material"
-      />
+      <ListCard>
+        <ListCardHeader
+          tone="amber"
+          title={
+            tab === 'materials'
+              ? 'Materials'
+              : tab === 'labour'
+                ? 'Labour rates'
+                : tab === 'equipment'
+                  ? 'Equipment'
+                  : 'Markup rules'
+          }
+          meta={
+            <Pill tone="amber">
+              {search.length >= 2
+                ? `${totalFound.toLocaleString()} matches`
+                : `${stats?.totalItems?.toLocaleString() ?? 0} items`}
+            </Pill>
+          }
+          action={search ? 'Clear' : undefined}
+          onAction={search ? () => setSearch('') : undefined}
+        />
 
-      {/* Import Dialog */}
+        <div className="px-5 sm:px-6 py-3 border-b border-white/[0.06] flex flex-wrap gap-2">
+          {CATEGORIES.map((cat) => {
+            const active = category === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={
+                  'h-8 px-3 rounded-full text-[12px] font-medium whitespace-nowrap touch-manipulation transition-colors ' +
+                  (active
+                    ? 'bg-elec-yellow text-black'
+                    : 'bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08]')
+                }
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+
+        {tab !== 'materials' ? (
+          <EmptyState
+            title={
+              tab === 'labour'
+                ? 'Labour rates coming soon'
+                : tab === 'equipment'
+                  ? 'Equipment coming soon'
+                  : 'Markup rules coming soon'
+            }
+            description="Switch to Materials to manage your live price book."
+            action="View materials"
+            onAction={() => setTab('materials')}
+            className="rounded-none border-0"
+          />
+        ) : search.length < 2 ? (
+          <EmptyState
+            title="Type at least 2 characters to search"
+            description="Or ask your voice assistant for a price lookup."
+            className="rounded-none border-0"
+          />
+        ) : searchLoading ? (
+          <div className="p-5 sm:p-6">
+            <LoadingBlocks />
+          </div>
+        ) : items.length === 0 ? (
+          <EmptyState
+            title="No items found"
+            description="Add a new item to your price book to get started."
+            action="Add new item"
+            onAction={() => setShowQuickAdd(true)}
+            className="rounded-none border-0"
+          />
+        ) : (
+          <>
+            <ListBody>
+              {items.map((item) => {
+                const lowStock = item.stock_level <= item.reorder_level;
+                return (
+                  <ListRow
+                    key={item.id}
+                    title={item.name}
+                    subtitle={
+                      <span>
+                        {item.category}
+                        {item.sku && ` · ${item.sku}`}
+                        {' · '}Cost £{item.buy_price.toFixed(2)}
+                        {item.markup != null && ` · ${item.markup.toFixed(0)}% markup`}
+                      </span>
+                    }
+                    trailing={
+                      <>
+                        {lowStock && <Pill tone="amber">Low stock</Pill>}
+                        <span className="text-[14px] font-semibold text-elec-yellow tabular-nums">
+                          £{item.sell_price.toFixed(2)}
+                        </span>
+                      </>
+                    }
+                    onClick={() => handleEdit(item)}
+                  />
+                );
+              })}
+            </ListBody>
+
+            {hasNextPage && (
+              <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06]">
+                <SecondaryButton
+                  onClick={() => fetchNextPage()}
+                  disabled={isFetchingNextPage}
+                  fullWidth
+                >
+                  {isFetchingNextPage ? 'Loading...' : 'Load more'}
+                </SecondaryButton>
+              </div>
+            )}
+          </>
+        )}
+      </ListCard>
+
+      <Divider />
+
       <ImportPriceBookDialog open={showImportDialog} onOpenChange={setShowImportDialog} />
 
-      {/* Edit Item Sheet */}
       <EditPriceBookItemSheet
         item={editItem}
         open={showEditSheet}
@@ -450,6 +425,6 @@ export function PriceBookSection() {
         isSaving={updateItem.isPending}
         isDeleting={deleteItem.isPending}
       />
-    </div>
+    </PageFrame>
   );
 }

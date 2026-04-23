@@ -2,7 +2,6 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
 import { Bold, Italic, List, ListOrdered, Heading2, Undo, Redo } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useEffect } from 'react';
 
@@ -60,7 +59,7 @@ export function RichTextEditor({
   }, [value, editor]);
 
   if (!editor) {
-    return <div className="h-[300px] bg-white/5 rounded-xl animate-pulse" />;
+    return <div className="h-[300px] bg-[hsl(0_0%_9%)] rounded-xl animate-pulse" />;
   }
 
   const ToolbarButton = ({
@@ -74,27 +73,25 @@ export function RichTextEditor({
     children: React.ReactNode;
     title: string;
   }) => (
-    <Button
+    <button
       type="button"
-      variant="ghost"
-      size="sm"
       onClick={onClick}
       title={title}
       className={cn(
-        'h-9 w-9 p-0 rounded-lg',
+        'h-9 w-9 p-0 rounded-lg flex items-center justify-center transition-colors touch-manipulation',
         isActive
-          ? 'bg-elec-yellow/20 text-elec-yellow'
-          : 'text-white hover:text-white hover:bg-white/10'
+          ? 'bg-elec-yellow/15 text-elec-yellow'
+          : 'text-white hover:bg-white/[0.08]'
       )}
     >
       {children}
-    </Button>
+    </button>
   );
 
   return (
     <div className={cn('space-y-2', className)}>
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-1 p-2 bg-white/5 rounded-t-xl border border-white/10 border-b-0">
+      <div className="flex flex-wrap items-center gap-1 p-2 bg-[hsl(0_0%_9%)] rounded-t-xl border border-white/[0.08] border-b-0">
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleBold().run()}
           isActive={editor.isActive('bold')}
@@ -111,7 +108,7 @@ export function RichTextEditor({
           <Italic className="h-4 w-4" />
         </ToolbarButton>
 
-        <div className="w-px h-6 bg-white/10 mx-1" />
+        <div className="w-px h-6 bg-white/[0.08] mx-1" />
 
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
@@ -121,7 +118,7 @@ export function RichTextEditor({
           <Heading2 className="h-4 w-4" />
         </ToolbarButton>
 
-        <div className="w-px h-6 bg-white/10 mx-1" />
+        <div className="w-px h-6 bg-white/[0.08] mx-1" />
 
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -153,8 +150,8 @@ export function RichTextEditor({
       {/* Editor */}
       <div
         className={cn(
-          'bg-white/5 rounded-b-xl border border-white/10 border-t-0',
-          'focus-within:border-elec-yellow/30 transition-colors',
+          'bg-[hsl(0_0%_9%)] rounded-b-xl border border-white/[0.08] border-t-0',
+          'focus-within:border-elec-yellow/60 transition-colors',
           error && 'border-red-400/60'
         )}
       >
@@ -162,10 +159,10 @@ export function RichTextEditor({
       </div>
 
       {/* Error message */}
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {error && <p className="text-[11px] text-red-400">{error}</p>}
 
       {/* Character count */}
-      <div className="flex justify-between text-xs text-white">
+      <div className="flex justify-between text-[11px] text-white">
         <span>Use headings and bullet points for better readability</span>
         <span>{editor.storage.characterCount?.characters?.() || 0} characters</span>
       </div>
@@ -178,14 +175,14 @@ export function RichTextEditor({
         .ProseMirror.is-editor-empty:first-child::before {
           content: attr(data-placeholder);
           float: left;
-          color: rgba(255, 255, 255, 0.3);
+          color: rgba(255, 255, 255, 0.65);
           pointer-events: none;
           height: 0;
         }
         .ProseMirror p.is-editor-empty:first-child::before {
           content: attr(data-placeholder);
           float: left;
-          color: rgba(255, 255, 255, 0.3);
+          color: rgba(255, 255, 255, 0.65);
           pointer-events: none;
           height: 0;
         }

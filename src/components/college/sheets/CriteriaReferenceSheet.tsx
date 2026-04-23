@@ -56,7 +56,7 @@ export function CriteriaReferenceSheet({
 
           {/* Header */}
           <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
               Criteria Reference
             </div>
             <SheetTitle className="text-[17px] font-semibold text-white mt-1">
@@ -72,7 +72,7 @@ export function CriteriaReferenceSheet({
               <>
                 {/* AC Description */}
                 <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-2">
                     Assessment Criterion
                   </div>
                   <p className="text-[13px] text-white leading-relaxed">
@@ -84,7 +84,7 @@ export function CriteriaReferenceSheet({
                 {matchingReq && (
                   <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
                     <div className="flex items-center justify-between">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                         Evidence Requirements
                       </div>
                       {matchingReq.is_mandatory && <Pill tone="red">Mandatory</Pill>}
@@ -130,7 +130,7 @@ export function CriteriaReferenceSheet({
                 {/* Example Description */}
                 {matchingReq?.example_description && (
                   <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40 mb-2">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-2">
                       Example Evidence
                     </div>
                     <p className="text-[13px] text-white leading-relaxed">
@@ -145,7 +145,7 @@ export function CriteriaReferenceSheet({
                     <div className="text-[14px] font-medium text-white">
                       No specific evidence requirements defined
                     </div>
-                    <p className="mt-2 text-[12.5px] text-white/50 max-w-md mx-auto leading-relaxed">
+                    <p className="mt-2 text-[12.5px] text-white/75 max-w-md mx-auto leading-relaxed">
                       Use your professional judgement when assessing evidence against this criterion.
                     </p>
                   </div>

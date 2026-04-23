@@ -11,28 +11,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  IdCard,
-  CheckCircle2,
-  ChevronRight,
-  ChevronLeft,
-  Upload,
-  Camera,
-  Sparkles,
-  Shield,
-  Award,
-  Crown,
-  Users,
-  Zap,
-  FileCheck,
-  GraduationCap,
-  Loader2,
-  AlertTriangle,
-} from 'lucide-react';
 import { ECS_CARD_TYPES, UK_JOB_TITLES } from '@/data/uk-electrician-constants';
 import { supabase } from '@/integrations/supabase/client';
 
-// Exported form data type for parent component
 export interface OnboardingFormData {
   jobTitle: string;
   ecsCardType: string;
@@ -43,84 +24,25 @@ export interface OnboardingFormData {
 interface ElecIdOnboardingProps {
   onComplete: (data: OnboardingFormData, preGeneratedElecId?: string) => void;
   onSkip?: () => void;
-  elecIdNumber?: string; // Pass actual Elec-ID from parent
-  needsRecovery?: boolean; // User opted in but doesn't have Elec-ID
-  userId?: string; // For generating Elec-ID
-  ecsCardType?: string; // Current ECS card type from profile
-  onRecoveryComplete?: (elecIdNumber: string) => void; // Called after successful recovery
+  elecIdNumber?: string;
+  needsRecovery?: boolean;
+  userId?: string;
+  ecsCardType?: string;
+  onRecoveryComplete?: (elecIdNumber: string) => void;
 }
 
 const STEPS = [
-  {
-    id: 'welcome',
-    title: 'Welcome to Elec-ID',
-    subtitle: 'Your portable professional identity',
-  },
-  {
-    id: 'basics',
-    title: 'Basic Information',
-    subtitle: 'Tell us about yourself',
-  },
-  {
-    id: 'ecs',
-    title: 'ECS Card Details',
-    subtitle: 'Your industry credentials',
-  },
-  {
-    id: 'verify',
-    title: 'Verify Your Credentials',
-    subtitle: 'Upload documents to unlock benefits',
-  },
-  {
-    id: 'complete',
-    title: "You're All Set!",
-    subtitle: 'Your Elec-ID is ready',
-  },
+  { id: 'welcome', title: 'Welcome to Elec-ID', subtitle: 'Your portable professional identity' },
+  { id: 'basics', title: 'Basic information', subtitle: 'Tell us about yourself' },
+  { id: 'ecs', title: 'ECS card details', subtitle: 'Your industry credentials' },
+  { id: 'verify', title: 'Verify your credentials', subtitle: 'Upload documents to unlock benefits' },
+  { id: 'complete', title: "You're all set!", subtitle: 'Your Elec-ID is ready' },
 ];
 
 const BENEFITS = [
-  {
-    icon: Shield,
-    title: 'Verified Credentials',
-    description: 'AI-powered verification of your qualifications',
-  },
-  {
-    icon: Users,
-    title: 'Talent Pool Access',
-    description: 'Get discovered by top employers',
-  },
-  {
-    icon: Zap,
-    title: 'Portable Identity',
-    description: 'Your credentials follow you, not your employer',
-  },
-];
-
-const TIER_BENEFITS = [
-  {
-    tier: 'basic',
-    icon: Shield,
-    label: 'Basic',
-    color: 'text-foreground/70',
-    bg: 'bg-white/10',
-    benefits: ['Profile creation', 'Basic visibility'],
-  },
-  {
-    tier: 'verified',
-    icon: CheckCircle2,
-    label: 'Verified',
-    color: 'text-blue-400',
-    bg: 'bg-blue-500/20',
-    benefits: ['Verified badge', 'Priority in search', 'Employer notifications'],
-  },
-  {
-    tier: 'premium',
-    icon: Crown,
-    label: 'Premium',
-    color: 'text-elec-yellow',
-    bg: 'bg-elec-yellow/20',
-    benefits: ['Premium badge', 'Top listing', 'Direct employer access', 'QR verification'],
-  },
+  { title: 'Verified credentials', description: 'AI-powered verification of your qualifications' },
+  { title: 'Talent Pool access', description: 'Get discovered by top employers' },
+  { title: 'Portable identity', description: 'Your credentials follow you, not your employer' },
 ];
 
 const ElecIdOnboarding = ({
@@ -140,16 +62,13 @@ const ElecIdOnboarding = ({
     ecsCardNumber: '',
   });
 
-  // Recovery state
   const [isGenerating, setIsGenerating] = useState(false);
   const [recoveryError, setRecoveryError] = useState<string | null>(null);
   const [generatedId, setGeneratedId] = useState<string | null>(null);
 
-  // Local Elec-ID generated during onboarding (before completion step)
   const [localElecId, setLocalElecId] = useState<string | null>(elecIdNumber || null);
   const [generationError, setGenerationError] = useState<string | null>(null);
 
-  // Handle Elec-ID generation for recovery
   const handleGenerateElecId = async () => {
     if (!userId) {
       setRecoveryError('Unable to generate Elec-ID. Please try logging out and back in.');
@@ -191,7 +110,6 @@ const ElecIdOnboarding = ({
   const step = STEPS[currentStep];
 
   const handleNext = async () => {
-    // About to move to complete step - generate Elec-ID first
     if (currentStep === STEPS.length - 2 && !localElecId && !elecIdNumber && userId) {
       setIsGenerating(true);
       setGenerationError(null);
@@ -231,7 +149,6 @@ const ElecIdOnboarding = ({
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Final step - pass the pre-generated ID to parent
       onComplete(formData, localElecId || elecIdNumber || undefined);
     }
   };
@@ -253,7 +170,6 @@ const ElecIdOnboarding = ({
     }
   };
 
-  // Group job titles by category
   const jobTitlesByCategory = UK_JOB_TITLES.reduce(
     (acc, title) => {
       if (!acc[title.category]) acc[title.category] = [];
@@ -267,39 +183,34 @@ const ElecIdOnboarding = ({
     switch (step.id) {
       case 'welcome':
         return (
-          <div className="text-center space-y-4 sm:space-y-6">
-            {/* Hero Icon */}
-            <div className="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-xl sm:rounded-2xl bg-gradient-to-br from-elec-yellow to-elec-yellow/70 flex items-center justify-center">
-              <IdCard className="h-8 w-8 sm:h-12 sm:w-12 text-elec-dark" />
+          <div className="text-center space-y-5">
+            <div className="w-20 h-20 mx-auto rounded-2xl bg-elec-yellow flex items-center justify-center">
+              <span className="text-3xl font-semibold text-black">ID</span>
             </div>
 
             <div>
-              <h2 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2">
-                Your Digital Professional Identity
+              <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">
+                Your digital professional identity
               </h2>
-              <p className="text-sm sm:text-base text-foreground/70 max-w-md mx-auto px-2">
+              <p className="text-sm text-white max-w-md mx-auto">
                 Own and control your professional credentials. Share verified qualifications with
                 employers instantly.
               </p>
             </div>
 
-            {/* Benefits */}
-            <div className="grid grid-cols-1 gap-2 sm:gap-3 max-w-sm mx-auto">
+            <div className="grid grid-cols-1 gap-2 max-w-sm mx-auto">
               {BENEFITS.map((benefit, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-3 p-2.5 sm:p-3 rounded-lg bg-white/5 border border-white/10 text-left"
+                  className="flex items-start gap-3 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] text-left"
                 >
-                  <div className="p-1.5 sm:p-2 rounded-lg bg-elec-yellow/20 flex-shrink-0">
-                    <benefit.icon className="h-4 w-4 sm:h-5 sm:w-5 text-elec-yellow" />
-                  </div>
+                  <span
+                    aria-hidden
+                    className="inline-block h-2 w-2 mt-2 rounded-full bg-elec-yellow shrink-0"
+                  />
                   <div className="min-w-0">
-                    <p className="font-medium text-foreground text-xs sm:text-sm">
-                      {benefit.title}
-                    </p>
-                    <p className="text-[10px] sm:text-xs text-foreground/70 truncate">
-                      {benefit.description}
-                    </p>
+                    <p className="font-medium text-white text-sm">{benefit.title}</p>
+                    <p className="text-xs text-white truncate">{benefit.description}</p>
                   </div>
                 </div>
               ))}
@@ -309,70 +220,65 @@ const ElecIdOnboarding = ({
 
       case 'basics':
         return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <p className="text-foreground/70">
+          <div className="space-y-5">
+            <div className="text-center">
+              <p className="text-sm text-white">
                 This helps employers understand your role and expertise.
               </p>
             </div>
 
-            <div className="space-y-4 max-w-sm mx-auto">
-              <div className="space-y-2">
-                <Label className="text-foreground">Job Title</Label>
-                <Select
-                  value={formData.jobTitle}
-                  onValueChange={(value) => setFormData({ ...formData, jobTitle: value })}
-                >
-                  <SelectTrigger className="bg-white/5 border-white/20 h-12">
-                    <SelectValue placeholder="Select your job title" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-white/20 max-h-60">
-                    {Object.entries(jobTitlesByCategory).map(([category, titles]) => (
-                      <React.Fragment key={category}>
-                        <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">
-                          {category}
-                        </div>
-                        {titles.map((title) => (
-                          <SelectItem key={title.value} value={title.value}>
-                            {title.label}
-                          </SelectItem>
-                        ))}
-                      </React.Fragment>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="space-y-3 max-w-sm mx-auto">
+              <Label className="text-white text-sm">Job title</Label>
+              <Select
+                value={formData.jobTitle}
+                onValueChange={(value) => setFormData({ ...formData, jobTitle: value })}
+              >
+                <SelectTrigger className="bg-white/[0.04] border-white/[0.06] h-11 rounded-xl text-white">
+                  <SelectValue placeholder="Select your job title" />
+                </SelectTrigger>
+                <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] max-h-60">
+                  {Object.entries(jobTitlesByCategory).map(([category, titles]) => (
+                    <React.Fragment key={category}>
+                      <div className="px-2 py-1.5 text-xs font-semibold text-elec-yellow">
+                        {category}
+                      </div>
+                      {titles.map((title) => (
+                        <SelectItem key={title.value} value={title.value}>
+                          {title.label}
+                        </SelectItem>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         );
 
       case 'ecs':
         return (
-          <div className="space-y-6">
-            <div className="text-center mb-6">
-              <p className="text-foreground/70">
+          <div className="space-y-5">
+            <div className="text-center">
+              <p className="text-sm text-white">
                 Your ECS card proves your competence to work in the electrical industry.
               </p>
             </div>
 
             <div className="space-y-4 max-w-sm mx-auto">
               <div className="space-y-2">
-                <Label className="text-foreground">ECS Card Type</Label>
+                <Label className="text-white text-sm">ECS card type</Label>
                 <Select
                   value={formData.ecsCardType}
                   onValueChange={(value) => setFormData({ ...formData, ecsCardType: value })}
                 >
-                  <SelectTrigger className="bg-white/5 border-white/20 h-12">
+                  <SelectTrigger className="bg-white/[0.04] border-white/[0.06] h-11 rounded-xl text-white">
                     <SelectValue placeholder="Select card type" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-white/20">
+                  <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
                     {ECS_CARD_TYPES.map((card) => (
                       <SelectItem key={card.value} value={card.value}>
                         <div className="flex items-center gap-2">
-                          <div
-                            className="w-4 h-4 rounded"
-                            style={{ backgroundColor: card.color }}
-                          />
+                          <div className="w-4 h-4 rounded" style={{ backgroundColor: card.color }} />
                           {card.label}
                         </div>
                       </SelectItem>
@@ -382,24 +288,24 @@ const ElecIdOnboarding = ({
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground">Card Expiry Date</Label>
+                <Label className="text-white text-sm">Card expiry date</Label>
                 <Input
                   type="date"
                   value={formData.ecsCardExpiry}
                   onChange={(e) => setFormData({ ...formData, ecsCardExpiry: e.target.value })}
-                  className="bg-white/5 border-white/20 h-12"
+                  className="bg-white/[0.04] border-white/[0.06] h-11 rounded-xl text-white"
                 />
               </div>
 
               <div className="space-y-2">
-                <Label className="text-foreground">
-                  Card Number <span className="text-foreground/70">(optional)</span>
+                <Label className="text-white text-sm">
+                  Card number <span className="text-white">(optional)</span>
                 </Label>
                 <Input
                   value={formData.ecsCardNumber}
                   onChange={(e) => setFormData({ ...formData, ecsCardNumber: e.target.value })}
                   placeholder="Enter card number"
-                  className="bg-white/5 border-white/20 h-12"
+                  className="bg-white/[0.04] border-white/[0.06] h-11 rounded-xl text-white placeholder:text-white"
                 />
               </div>
             </div>
@@ -408,121 +314,93 @@ const ElecIdOnboarding = ({
 
       case 'verify':
         return (
-          <div className="space-y-4 sm:space-y-6">
-            <div className="text-center mb-4 sm:mb-6">
-              <p className="text-sm sm:text-base text-foreground/70 px-2">
+          <div className="space-y-5">
+            <div className="text-center">
+              <p className="text-sm text-white">
                 You can verify your credentials later to unlock extra features.
               </p>
             </div>
 
-            {/* Generation error feedback */}
             {generationError && (
-              <div className="max-w-sm mx-auto p-3 rounded-xl bg-red-500/10 border border-red-500/30">
-                <div className="flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0" />
-                  <p className="text-sm text-red-400">{generationError}</p>
-                </div>
+              <div className="max-w-sm mx-auto p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+                <p className="text-sm text-red-400">{generationError}</p>
               </div>
             )}
 
-            {/* Simple verification info */}
             <div className="max-w-sm mx-auto space-y-3">
-              <div className="p-4 rounded-xl border border-elec-yellow/30 bg-elec-yellow/10">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-elec-yellow flex-shrink-0" />
-                  <div>
-                    <p className="font-semibold text-foreground">Your Elec-ID is ready!</p>
-                    <p className="text-xs text-foreground/70">Basic profile created</p>
-                  </div>
-                </div>
+              <div className="p-4 rounded-xl border border-elec-yellow/20 bg-elec-yellow/10">
+                <p className="font-semibold text-white">Your Elec-ID is ready!</p>
+                <p className="text-xs text-white mt-1">Basic profile created</p>
               </div>
 
-              <div className="p-4 rounded-xl border border-white/10 bg-white/5">
-                <p className="text-sm text-foreground/70 mb-2">Optional next steps:</p>
-                <ul className="text-xs text-foreground/70 space-y-1">
-                  <li>• Upload your ECS/CSCS card for verification</li>
-                  <li>• Add qualifications & training</li>
-                  <li>• Build your work history</li>
+              <div className="p-4 rounded-xl border border-white/[0.06] bg-white/[0.04]">
+                <p className="text-sm text-white mb-2">Optional next steps</p>
+                <ul className="text-xs text-white space-y-1">
+                  <li>· Upload your ECS / CSCS card for verification</li>
+                  <li>· Add qualifications &amp; training</li>
+                  <li>· Build your work history</li>
                 </ul>
               </div>
             </div>
           </div>
         );
 
-      case 'complete':
-        // Use local ID first, then prop, then placeholder
+      case 'complete': {
         const displayElecId = localElecId || elecIdNumber || 'EM-XXXXXX';
         return (
-          <div className="text-center space-y-4 sm:space-y-6">
-            {/* Success animation */}
-            <div className="w-16 h-16 sm:w-24 sm:h-24 mx-auto rounded-full bg-green-500/20 flex items-center justify-center">
-              <CheckCircle2 className="h-8 w-8 sm:h-12 sm:w-12 text-green-400" />
+          <div className="text-center space-y-5">
+            <div className="w-20 h-20 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
+              <span className="text-3xl font-semibold text-emerald-400">✓</span>
             </div>
 
             <div>
-              <h2 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2">
-                Your Elec-ID is Ready!
+              <h2 className="text-xl sm:text-2xl font-semibold text-white mb-2">
+                Your Elec-ID is ready!
               </h2>
-              <p className="text-sm sm:text-base text-foreground/70 max-w-md mx-auto px-2">
+              <p className="text-sm text-white max-w-md mx-auto">
                 You're now part of the UK's digital electrician verification network.
               </p>
             </div>
 
-            {/* Generated Elec-ID */}
-            <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-white/5 border border-elec-yellow/30">
-              <IdCard className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
+            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-white/[0.04] border border-elec-yellow/20">
               <div className="text-left">
-                <p className="text-[10px] sm:text-xs text-foreground/70">Your Elec-ID</p>
-                <p className="font-mono font-bold text-base sm:text-xl text-foreground">
-                  {displayElecId}
-                </p>
+                <p className="text-[10px] uppercase tracking-[0.18em] text-white">Your Elec-ID</p>
+                <p className="font-mono font-semibold text-xl text-white">{displayElecId}</p>
               </div>
             </div>
 
-            {/* Next steps */}
-            <div className="grid grid-cols-1 gap-1.5 sm:gap-2 max-w-xs mx-auto text-left px-2">
-              <p className="text-xs sm:text-sm font-medium text-foreground mb-0.5 sm:mb-1">
-                Next steps:
-              </p>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-foreground/70">
-                <FileCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow flex-shrink-0" />
-                <span>Upload your ECS card for verification</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-foreground/70">
-                <GraduationCap className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow flex-shrink-0" />
-                <span>Add your qualifications</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-foreground/70">
-                <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-elec-yellow flex-shrink-0" />
-                <span>Enable Talent Pool to get discovered</span>
-              </div>
+            <div className="grid grid-cols-1 gap-2 max-w-xs mx-auto text-left">
+              <p className="text-sm font-medium text-white">Next steps</p>
+              <p className="text-sm text-white">· Upload your ECS card for verification</p>
+              <p className="text-sm text-white">· Add your qualifications</p>
+              <p className="text-sm text-white">· Enable Talent Pool to get discovered</p>
             </div>
           </div>
         );
+      }
 
       default:
         return null;
     }
   };
 
-  // Show recovery UI if user opted in but doesn't have Elec-ID
   if (needsRecovery && !generatedId) {
     return (
-      <div className="min-h-[300px] sm:min-h-[350px] flex flex-col items-center justify-center text-center px-4">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-elec-yellow/20 flex items-center justify-center mb-4 sm:mb-6">
-          <AlertTriangle className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
+      <div className="min-h-[320px] flex flex-col items-center justify-center text-center px-4">
+        <div className="w-16 h-16 mx-auto rounded-full bg-elec-yellow/20 border border-elec-yellow/30 flex items-center justify-center mb-5">
+          <span className="text-3xl font-semibold text-elec-yellow">!</span>
         </div>
 
-        <h2 className="text-lg sm:text-xl font-bold text-foreground mb-2">
-          Your Elec-ID Wasn't Created
+        <h2 className="text-xl font-semibold text-white mb-2">
+          Your Elec-ID wasn't created
         </h2>
-        <p className="text-sm sm:text-base text-foreground/70 max-w-sm mx-auto mb-6">
+        <p className="text-sm text-white max-w-sm mx-auto mb-6">
           It looks like you opted for an Elec-ID during signup but it wasn't generated. This can
           happen if you confirmed your email on a different device.
         </p>
 
         {recoveryError && (
-          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/30 mb-4 max-w-sm">
+          <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 mb-4 max-w-sm">
             <p className="text-sm text-red-400">{recoveryError}</p>
           </div>
         )}
@@ -530,25 +408,15 @@ const ElecIdOnboarding = ({
         <Button
           onClick={handleGenerateElecId}
           disabled={isGenerating}
-          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base touch-manipulation active:scale-[0.98]"
+          className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold h-11 px-6 rounded-xl touch-manipulation active:scale-[0.98]"
         >
-          {isGenerating ? (
-            <>
-              <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 mr-2 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            <>
-              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-              Generate My Elec-ID Now
-            </>
-          )}
+          {isGenerating ? 'Generating…' : 'Generate my Elec-ID now'}
         </Button>
 
         {onSkip && (
           <button
             onClick={onSkip}
-            className="mt-4 text-sm text-foreground/70 hover:text-foreground transition-colors"
+            className="mt-4 text-sm text-white hover:text-elec-yellow transition-colors touch-manipulation"
           >
             Skip for now
           </button>
@@ -557,69 +425,59 @@ const ElecIdOnboarding = ({
     );
   }
 
-  // Show success after recovery
   if (generatedId) {
     return (
-      <div className="min-h-[300px] sm:min-h-[350px] flex flex-col items-center justify-center text-center px-4">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-green-500/20 flex items-center justify-center mb-4 sm:mb-6">
-          <CheckCircle2 className="h-8 w-8 sm:h-10 sm:w-10 text-green-400" />
+      <div className="min-h-[320px] flex flex-col items-center justify-center text-center px-4">
+        <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center mb-5">
+          <span className="text-3xl font-semibold text-emerald-400">✓</span>
         </div>
 
-        <h2 className="text-lg sm:text-xl font-bold text-foreground mb-2">
-          Your Elec-ID is Ready!
-        </h2>
-        <p className="text-sm sm:text-base text-foreground/70 max-w-sm mx-auto mb-4">
+        <h2 className="text-xl font-semibold text-white mb-2">Your Elec-ID is ready!</h2>
+        <p className="text-sm text-white max-w-sm mx-auto mb-4">
           Your digital credential has been created successfully.
         </p>
 
-        <div className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl bg-white/5 border border-elec-yellow/30 mb-6">
-          <IdCard className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
+        <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-white/[0.04] border border-elec-yellow/20 mb-6">
           <div className="text-left">
-            <p className="text-[10px] sm:text-xs text-foreground/70">Your Elec-ID</p>
-            <p className="font-mono font-bold text-base sm:text-xl text-foreground">
-              {generatedId}
-            </p>
+            <p className="text-[10px] uppercase tracking-[0.18em] text-white">Your Elec-ID</p>
+            <p className="font-mono font-semibold text-xl text-white">{generatedId}</p>
           </div>
         </div>
 
         <Button
           onClick={() => onComplete(formData)}
-          className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base touch-manipulation active:scale-[0.98]"
+          className="bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold h-11 px-6 rounded-xl touch-manipulation active:scale-[0.98]"
         >
-          <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
-          Go to My Elec-ID
+          Go to my Elec-ID →
         </Button>
       </div>
     );
   }
 
   return (
-    <div className="min-h-[400px] sm:min-h-[500px] md:min-h-[550px] flex flex-col">
-      {/* Progress bar */}
-      <div className="mb-4 sm:mb-6 md:mb-8">
+    <div className="min-h-[400px] sm:min-h-[500px] flex flex-col">
+      <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-xs md:text-sm text-foreground/70">
+          <span className="text-xs text-white">
             Step {currentStep + 1} of {STEPS.length}
           </span>
           {onSkip && currentStep < STEPS.length - 1 && (
             <button
               onClick={onSkip}
-              className="text-xs md:text-sm text-foreground/70 hover:text-foreground transition-colors"
+              className="text-xs text-white hover:text-elec-yellow transition-colors touch-manipulation"
             >
               Skip setup
             </button>
           )}
         </div>
-        <Progress value={progress} className="h-1.5 md:h-2" />
+        <Progress value={progress} className="h-1.5" />
       </div>
 
-      {/* Step header */}
-      <div className="text-center mb-4 sm:mb-6 md:mb-8">
-        <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{step.title}</h1>
-        <p className="text-xs sm:text-sm md:text-base text-foreground/70">{step.subtitle}</p>
+      <div className="text-center mb-6">
+        <h1 className="text-xl sm:text-2xl font-semibold text-white">{step.title}</h1>
+        <p className="text-sm text-white mt-1">{step.subtitle}</p>
       </div>
 
-      {/* Step content */}
       <div className="flex-1 overflow-y-auto">
         <AnimatePresence mode="wait">
           <motion.div
@@ -634,44 +492,29 @@ const ElecIdOnboarding = ({
         </AnimatePresence>
       </div>
 
-      {/* Navigation - sticky on mobile */}
-      <div className="flex gap-3 mt-6 sm:mt-8 md:mt-10 sticky bottom-0 bg-background pt-3 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:static sm:bg-transparent">
+      <div className="flex gap-3 mt-6 sticky bottom-0 bg-[hsl(0_0%_12%)] pt-3 pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:static sm:bg-transparent">
         {currentStep > 0 && currentStep < STEPS.length - 1 && (
           <Button
             variant="outline"
-            className="h-12 md:h-14 px-4 md:px-5 border-white/20 touch-manipulation active:scale-[0.97]"
+            className="h-11 px-5 border-white/[0.06] bg-transparent text-white rounded-xl touch-manipulation active:scale-[0.97]"
             onClick={handleBack}
             disabled={isGenerating}
           >
-            <ChevronLeft className="h-4 w-4 md:h-5 md:w-5" />
+            ←
           </Button>
         )}
         <Button
-          className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark font-semibold h-12 md:h-14 text-sm sm:text-base md:text-lg touch-manipulation active:scale-[0.98]"
+          className="flex-1 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold h-11 rounded-xl touch-manipulation active:scale-[0.98]"
           onClick={handleNext}
           disabled={!canProceed() || isGenerating}
         >
-          {isGenerating ? (
-            <>
-              <Loader2 className="h-4 w-4 md:h-5 md:w-5 mr-2 animate-spin" />
-              Generating ID...
-            </>
-          ) : currentStep === STEPS.length - 1 ? (
-            <>
-              <Sparkles className="h-4 w-4 md:h-5 md:w-5 mr-2" />
-              Go to My Elec-ID
-            </>
-          ) : currentStep === 0 ? (
-            <>
-              Get Started
-              <ChevronRight className="h-4 w-4 md:h-5 md:w-5 ml-1" />
-            </>
-          ) : (
-            <>
-              Continue
-              <ChevronRight className="h-4 w-4 md:h-5 md:w-5 ml-1" />
-            </>
-          )}
+          {isGenerating
+            ? 'Generating ID…'
+            : currentStep === STEPS.length - 1
+              ? 'Go to my Elec-ID →'
+              : currentStep === 0
+                ? 'Get started →'
+                : 'Continue →'}
         </Button>
       </div>
     </div>

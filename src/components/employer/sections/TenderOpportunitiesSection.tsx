@@ -7,7 +7,6 @@ import {
   Bookmark,
   BookmarkCheck,
   Clock,
-  Building2,
   Zap,
   ExternalLink,
   ChevronRight,
@@ -16,9 +15,8 @@ import {
   AlertCircle,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import {
   Select,
   SelectContent,
@@ -26,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
   useSearchOpportunities,
@@ -44,6 +42,20 @@ import {
   type SearchFilters,
 } from '@/hooks/useOpportunities';
 import { OpportunityDetailSheet } from '../sheets/OpportunityDetailSheet';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  SheetShell,
+  IconButton,
+  Eyebrow,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 interface TenderOpportunitiesSectionProps {
   onStartTender?: (opportunity: TenderOpportunity) => void;
@@ -104,54 +116,49 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Search Header */}
-      <div className="p-4 border-b border-border bg-card/50 flex-shrink-0">
+      <div className="p-4 border-b border-white/[0.06] bg-[hsl(0_0%_12%)] flex-shrink-0">
         <div className="flex gap-2 mb-3">
           <div className="relative flex-1">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
             <Input
               placeholder="Enter postcode (e.g. B15 2TT)"
               value={searchPostcode}
               onChange={(e) => setSearchPostcode(e.target.value.toUpperCase())}
               onKeyPress={handleKeyPress}
-              className="pl-10 h-11 touch-manipulation"
+              className={`${inputClass} pl-10`}
             />
           </div>
-          <Button
+          <PrimaryButton
             onClick={handleSearch}
             disabled={!searchPostcode.trim() || searchQuery.isFetching}
-            className="h-11 px-6 bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
             {searchQuery.isFetching ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <Search className="h-4 w-4" />
             )}
-          </Button>
+          </PrimaryButton>
         </div>
 
         {/* Radius Selector */}
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-sm text-white">Within:</span>
-          {[10, 25, 50, 100].map((miles) => (
-            <Button
-              key={miles}
-              variant={filters.radius_miles === miles ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setFilters({ ...filters, radius_miles: miles })}
-              className={`touch-manipulation ${filters.radius_miles === miles ? 'bg-elec-yellow text-black' : ''}`}
-            >
-              {miles} miles
-            </Button>
-          ))}
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowFilters(true)}
-            className="ml-auto touch-manipulation"
-          >
+          <span className="text-[12px] text-white">Within:</span>
+          {[10, 25, 50, 100].map((miles) => {
+            const active = filters.radius_miles === miles;
+            return (
+              <button
+                key={miles}
+                onClick={() => setFilters({ ...filters, radius_miles: miles })}
+                className={`h-9 px-3 rounded-full text-[12px] font-medium border touch-manipulation transition-colors ${active ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
+              >
+                {miles} miles
+              </button>
+            );
+          })}
+          <SecondaryButton onClick={() => setShowFilters(true)} size="sm" className="ml-auto">
             <Filter className="h-4 w-4 mr-1" />
             Filters
-          </Button>
+          </SecondaryButton>
         </div>
       </div>
 
@@ -161,32 +168,32 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
         onValueChange={setActiveTab}
         className="flex-1 flex flex-col min-h-0 overflow-hidden"
       >
-        <TabsList className="w-full justify-start rounded-none border-b bg-transparent h-auto p-0 flex-shrink-0">
+        <TabsList className="w-full justify-start rounded-none border-b border-white/[0.06] bg-transparent h-auto p-0 flex-shrink-0">
           <TabsTrigger
             value="search"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent px-4 py-3"
+            className="rounded-none border-b-2 border-transparent text-white data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent data-[state=active]:text-white px-4 py-3"
           >
-            Search Results
+            Search results
             {opportunities.length > 0 && (
-              <Badge variant="secondary" className="ml-2 bg-elec-yellow/20 text-elec-yellow">
+              <Badge variant="secondary" className="ml-2 bg-elec-yellow/20 text-elec-yellow border-0">
                 {opportunities.length}
               </Badge>
             )}
           </TabsTrigger>
           <TabsTrigger
             value="saved"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent px-4 py-3"
+            className="rounded-none border-b-2 border-transparent text-white data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent data-[state=active]:text-white px-4 py-3"
           >
             Saved
             {(savedQuery.data?.length || 0) > 0 && (
-              <Badge variant="secondary" className="ml-2">
+              <Badge variant="secondary" className="ml-2 bg-white/[0.08] text-white border-0">
                 {savedQuery.data?.length}
               </Badge>
             )}
           </TabsTrigger>
           <TabsTrigger
             value="sources"
-            className="rounded-none border-b-2 border-transparent data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent px-4 py-3"
+            className="rounded-none border-b-2 border-transparent text-white data-[state=active]:border-elec-yellow data-[state=active]:bg-transparent data-[state=active]:text-white px-4 py-3"
           >
             Sources
           </TabsTrigger>
@@ -198,7 +205,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
             {!activePostcode ? (
               <div className="text-center py-12">
                 <MapPin className="h-12 w-12 text-white mx-auto mb-4" />
-                <h3 className="text-lg font-medium mb-2">Find Electrical Contracts Near You</h3>
+                <h3 className="text-lg font-medium text-white mb-2">Find electrical contracts near you</h3>
                 <p className="text-white max-w-sm mx-auto">
                   Enter your postcode to discover live tender opportunities from councils, NHS,
                   housing associations and more.
@@ -211,13 +218,13 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
             ) : searchQuery.error ? (
               <div className="text-center py-12">
                 <AlertCircle className="h-12 w-12 text-red-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium mb-2">Search Failed</h3>
+                <h3 className="text-lg font-medium text-white mb-2">Search failed</h3>
                 <p className="text-white">{(searchQuery.error as Error).message}</p>
               </div>
             ) : opportunities.length === 0 ? (
               <div className="text-center py-12">
                 <Search className="h-12 w-12 text-white mx-auto mb-4" />
-                <h3 className="text-lg font-medium mb-2">No Opportunities Found</h3>
+                <h3 className="text-lg font-medium text-white mb-2">No opportunities found</h3>
                 <p className="text-white max-w-sm mx-auto">
                   Try expanding your search radius or adjusting filters. New opportunities are added
                   daily.
@@ -229,13 +236,13 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                 {stats && (
                   <div className="flex items-center gap-4 mb-4 text-sm">
                     <span className="text-white">
-                      <span className="font-medium text-foreground">{stats.total}</span>{' '}
+                      <span className="font-semibold text-white">{stats.total}</span>{' '}
                       opportunities
                     </span>
                     {stats.avg_value > 0 && (
                       <span className="text-white">
                         Avg:{' '}
-                        <span className="font-medium text-foreground">
+                        <span className="font-semibold text-white">
                           £{stats.avg_value.toLocaleString()}
                         </span>
                       </span>
@@ -269,7 +276,7 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
             ) : (savedQuery.data?.length || 0) === 0 ? (
               <div className="text-center py-12">
                 <Bookmark className="h-12 w-12 text-white mx-auto mb-4" />
-                <h3 className="text-lg font-medium mb-2">No Saved Opportunities</h3>
+                <h3 className="text-lg font-medium text-white mb-2">No saved opportunities</h3>
                 <p className="text-white max-w-sm mx-auto">
                   Save opportunities you're interested in to track them here.
                 </p>
@@ -293,8 +300,8 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
           {/* Sources */}
           <TabsContent value="sources" className="m-0 p-4 min-h-full">
             <div className="mb-4">
-              <h3 className="font-medium mb-1">20 Integrated Tender Sources</h3>
-              <p className="text-sm text-white">
+              <h3 className="font-semibold text-white mb-1">20 Integrated tender sources</h3>
+              <p className="text-[13px] text-white">
                 We aggregate opportunities from government, housing, NHS, education, and
                 construction platforms.
               </p>
@@ -302,12 +309,12 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
 
             <div className="space-y-3">
               {sourcesQuery.data?.map((source) => (
-                <Card key={source.id} className="bg-card/50">
+                <Card key={source.id} className="bg-[hsl(0_0%_12%)] border-white/[0.06]">
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <span className="font-medium">{source.display_name}</span>
+                          <span className="font-medium text-white">{source.display_name}</span>
                           {source.is_free ? (
                             <Badge
                               variant="outline"
@@ -327,11 +334,11 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                             <div className="w-2 h-2 rounded-full bg-green-500" title="Active" />
                           )}
                         </div>
-                        <p className="text-sm text-white line-clamp-2">
+                        <p className="text-[13px] text-white line-clamp-2">
                           {source.description}
                         </p>
                         {source.last_sync_at && (
-                          <p className="text-xs text-white mt-2">
+                          <p className="text-[11.5px] text-white mt-2">
                             Last sync: {new Date(source.last_sync_at).toLocaleDateString('en-GB')} (
                             {source.last_sync_count} opportunities)
                           </p>
@@ -339,25 +346,23 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                       </div>
                       <div className="flex items-center gap-2 ml-4">
                         {source.website_url && (
-                          <Button
-                            variant="ghost"
-                            size="sm"
+                          <IconButton
                             onClick={() => openExternalUrl(source.website_url!)}
+                            aria-label="Open source website"
                           >
                             <ExternalLink className="h-4 w-4" />
-                          </Button>
+                          </IconButton>
                         )}
                         {source.source_type === 'api' && source.name === 'contracts_finder' && (
-                          <Button
-                            variant="outline"
-                            size="sm"
+                          <IconButton
                             onClick={() => syncOpportunities.mutate(source.name)}
                             disabled={syncOpportunities.isPending}
+                            aria-label="Sync source"
                           >
                             <RefreshCw
                               className={`h-4 w-4 ${syncOpportunities.isPending ? 'animate-spin' : ''}`}
                             />
-                          </Button>
+                          </IconButton>
                         )}
                       </div>
                     </div>
@@ -371,17 +376,20 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
 
       {/* Filter Sheet */}
       <Sheet open={showFilters} onOpenChange={setShowFilters}>
-        <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl">
-          <SheetHeader>
-            <SheetTitle>Filter Opportunities</SheetTitle>
-          </SheetHeader>
-          <div className="space-y-6 mt-6">
-            {/* Value Range */}
-            <div>
-              <label className="text-sm font-medium mb-2 block">Contract Value</label>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="text-xs text-white">Min (£)</label>
+        <SheetContent side="bottom" className="h-[70vh] rounded-t-2xl p-0 overflow-hidden">
+          <SheetShell
+            eyebrow="Opportunities"
+            title="Filter opportunities"
+            description="Narrow by contract value, sector or sort order."
+            footer={
+              <PrimaryButton onClick={() => setShowFilters(false)} fullWidth size="lg">
+                Apply filters
+              </PrimaryButton>
+            }
+          >
+            <FormCard eyebrow="Contract value">
+              <FormGrid cols={2}>
+                <Field label="Min (£)">
                   <Input
                     type="number"
                     placeholder="0"
@@ -389,11 +397,10 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                     onChange={(e) =>
                       setFilters({ ...filters, min_value: Number(e.target.value) || undefined })
                     }
-                    className="h-11 touch-manipulation text-base"
+                    className={inputClass}
                   />
-                </div>
-                <div>
-                  <label className="text-xs text-white">Max (£)</label>
+                </Field>
+                <Field label="Max (£)">
                   <Input
                     type="number"
                     placeholder="No limit"
@@ -401,61 +408,52 @@ export function TenderOpportunitiesSection({ onStartTender }: TenderOpportunitie
                     onChange={(e) =>
                       setFilters({ ...filters, max_value: Number(e.target.value) || undefined })
                     }
-                    className="h-11 touch-manipulation text-base"
+                    className={inputClass}
                   />
-                </div>
-              </div>
-            </div>
+                </Field>
+              </FormGrid>
+            </FormCard>
 
-            {/* Sector */}
-            <div>
-              <label className="text-sm font-medium mb-2 block">Sector</label>
-              <Select
-                value={filters.sector || 'all'}
-                onValueChange={(v) =>
-                  setFilters({ ...filters, sector: v === 'all' ? undefined : v })
-                }
-              >
-                <SelectTrigger className="h-11 touch-manipulation">
-                  <SelectValue placeholder="All sectors" />
-                </SelectTrigger>
-                <SelectContent className="z-[100]">
-                  <SelectItem value="all">All Sectors</SelectItem>
-                  <SelectItem value="public">Public Sector</SelectItem>
-                  <SelectItem value="local_authority">Local Council</SelectItem>
-                  <SelectItem value="housing">Housing</SelectItem>
-                  <SelectItem value="healthcare">NHS / Healthcare</SelectItem>
-                  <SelectItem value="education">Education</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <FormCard eyebrow="Sector & sort">
+              <Field label="Sector">
+                <Select
+                  value={filters.sector || 'all'}
+                  onValueChange={(v) =>
+                    setFilters({ ...filters, sector: v === 'all' ? undefined : v })
+                  }
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="All sectors" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="all">All sectors</SelectItem>
+                    <SelectItem value="public">Public sector</SelectItem>
+                    <SelectItem value="local_authority">Local council</SelectItem>
+                    <SelectItem value="housing">Housing</SelectItem>
+                    <SelectItem value="healthcare">NHS / healthcare</SelectItem>
+                    <SelectItem value="education">Education</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Field>
 
-            {/* Sort By */}
-            <div>
-              <label className="text-sm font-medium mb-2 block">Sort By</label>
-              <Select
-                value={filters.sort_by || 'deadline'}
-                onValueChange={(v) => setFilters({ ...filters, sort_by: v as any })}
-              >
-                <SelectTrigger className="h-11 touch-manipulation">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent className="z-[100]">
-                  <SelectItem value="deadline">Deadline (soonest first)</SelectItem>
-                  <SelectItem value="distance">Distance (nearest first)</SelectItem>
-                  <SelectItem value="value">Value (highest first)</SelectItem>
-                  <SelectItem value="relevance">Relevance</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <Button
-              className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98] transition-transform"
-              onClick={() => setShowFilters(false)}
-            >
-              Apply Filters
-            </Button>
-          </div>
+              <Field label="Sort by">
+                <Select
+                  value={filters.sort_by || 'deadline'}
+                  onValueChange={(v) => setFilters({ ...filters, sort_by: v as any })}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="deadline">Deadline (soonest first)</SelectItem>
+                    <SelectItem value="distance">Distance (nearest first)</SelectItem>
+                    <SelectItem value="value">Value (highest first)</SelectItem>
+                    <SelectItem value="relevance">Relevance</SelectItem>
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FormCard>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
@@ -502,7 +500,7 @@ function OpportunityCard({
 
   return (
     <Card
-      className="bg-card/50 hover:bg-card/80 active:bg-card/90 transition-colors cursor-pointer touch-manipulation active:scale-[0.99]"
+      className="bg-[hsl(0_0%_12%)] border-white/[0.06] hover:bg-[hsl(0_0%_14%)] active:bg-[hsl(0_0%_15%)] transition-colors cursor-pointer touch-manipulation active:scale-[0.99]"
       onClick={onView}
     >
       <CardContent className="p-4">
@@ -512,7 +510,7 @@ function OpportunityCard({
             <div className="flex items-start gap-2 mb-2">
               <Zap className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="min-w-0">
-                <h4 className="font-medium text-sm line-clamp-2">{opportunity.title}</h4>
+                <h4 className="font-medium text-sm line-clamp-2 text-white">{opportunity.title}</h4>
                 <p className="text-xs text-white truncate">{opportunity.client_name}</p>
               </div>
             </div>
@@ -530,7 +528,7 @@ function OpportunityCard({
                   {opportunity.distance_miles} miles
                 </span>
               )}
-              <span className="font-medium text-foreground">
+              <span className="font-semibold text-white">
                 {formatOpportunityValue(opportunity)}
               </span>
               <span
@@ -543,7 +541,7 @@ function OpportunityCard({
 
             {/* Scope Preview */}
             {hasScope && (
-              <div className="mb-2 p-2 rounded bg-card/30 border border-border/50">
+              <div className="mb-2 p-2 rounded-lg bg-[hsl(0_0%_9%)] border border-white/[0.06]">
                 <p className="text-xs text-white line-clamp-2">{scopePreview}</p>
               </div>
             )}
@@ -559,7 +557,7 @@ function OpportunityCard({
                 </Badge>
               ))}
               {opportunity.sector && (
-                <Badge variant="outline" className="bg-gray-500/10 text-white">
+                <Badge variant="outline" className="bg-white/[0.06] text-white border-white/[0.08]">
                   {getSectorDisplayName(opportunity.sector)}
                 </Badge>
               )}
@@ -576,21 +574,19 @@ function OpportunityCard({
 
           {/* Actions */}
           <div className="flex flex-col items-end gap-1">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-10 w-10 touch-manipulation active:scale-95 transition-transform"
+            <IconButton
               onClick={(e) => {
                 e.stopPropagation();
                 onToggleSave();
               }}
+              aria-label={isSaved ? 'Remove from saved' : 'Save opportunity'}
             >
               {isSaved ? (
                 <BookmarkCheck className="h-5 w-5 text-elec-yellow" />
               ) : (
                 <Bookmark className="h-5 w-5" />
               )}
-            </Button>
+            </IconButton>
             <ChevronRight className="h-4 w-4 text-white mr-2" />
           </div>
         </div>

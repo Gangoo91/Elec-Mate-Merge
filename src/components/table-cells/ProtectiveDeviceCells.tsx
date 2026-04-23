@@ -130,12 +130,12 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
   return (
     <>
       {/* Column 8: BS (EN) */}
-      <TableCell className="p-0 h-8 align-middle w-36 min-w-[140px] max-w-[140px]">
+      <TableCell className="p-0 h-8 align-middle w-40 min-w-[160px] max-w-[160px]">
         <ComboboxCell
           value={result.bsStandard || ''}
           onChange={handleBsStandardChange}
           options={bsStandardOptions}
-          placeholder="BS EN"
+          placeholder="—"
           compact
         />
       </TableCell>
@@ -149,7 +149,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           disabled={!showCurveSelector}
         >
           <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 disabled:opacity-50">
-            <SelectValue placeholder="Type" className="truncate" />
+            <SelectValue placeholder="—" className="truncate" />
           </SelectTrigger>
           <SelectContent
             key={`protectiveDeviceCurve-content-${result.id}`}
@@ -176,7 +176,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           value={result.protectiveDeviceRating || ''}
           onChange={handleRatingChange}
           options={protectiveDeviceRatingOptions}
-          placeholder="A"
+          placeholder="—"
           compact
         />
       </TableCell>
@@ -187,7 +187,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           value={result.protectiveDeviceKaRating}
           onChange={(value) => onUpdate(result.id, 'protectiveDeviceKaRating', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-          placeholder="kA"
+          placeholder="—"
         />
       </TableCell>
 
@@ -198,7 +198,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
             value={result.maxZs || ''}
             onChange={(value) => onUpdate(result.id, 'maxZs', value)}
             className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-            placeholder="Ω"
+            placeholder="—"
           />
           <FieldTooltip
             content="Maximum Zs values from BS 7671 Tables 41.2, 41.3, 41.4. These are the maximum permitted values - the tables already account for Cmin (0.95)."

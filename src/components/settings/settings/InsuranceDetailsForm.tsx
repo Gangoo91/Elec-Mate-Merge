@@ -7,7 +7,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { Calendar, Shield } from 'lucide-react';
 
 interface InsuranceDetailsFormProps {
   provider: string;
@@ -47,18 +46,18 @@ export function InsuranceDetailsForm({
 
   return (
     <div className="space-y-4">
-      <div>
-        <Label htmlFor="insuranceProvider" className="text-foreground font-semibold">
-          Insurance Provider <span className="text-red-500 text-base font-bold">*</span>
+      <div className="space-y-1.5">
+        <Label htmlFor="insuranceProvider" className="text-white font-medium text-[13px]">
+          Insurance provider <span className="text-red-400">*</span>
         </Label>
         <Select value={provider} onValueChange={onProviderChange}>
           <SelectTrigger
             id="insuranceProvider"
-            className="mt-1.5 h-12 min-h-[48px] bg-background border-elec-gray-light"
+            className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
           >
             <SelectValue placeholder="Select a provider" />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-elec-gray-light">
+          <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
             {UK_INSURANCE_PROVIDERS.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
@@ -69,27 +68,23 @@ export function InsuranceDetailsForm({
       </div>
 
       {showFields && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 border-l-2 border-elec-yellow/30">
-          <div>
-            <Label htmlFor="insurancePolicyNumber" className="text-foreground font-semibold">
-              Policy Number <span className="text-red-500 text-base font-bold">*</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+          <div className="space-y-1.5">
+            <Label htmlFor="insurancePolicyNumber" className="text-white font-medium text-[13px]">
+              Policy number <span className="text-red-400">*</span>
             </Label>
             <Input
               id="insurancePolicyNumber"
               value={policyNumber}
               onChange={(e) => onPolicyNumberChange(e.target.value)}
               placeholder="Enter policy number"
-              className="mt-1.5 min-h-[48px]"
+              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
 
-          <div>
-            <Label
-              htmlFor="insuranceCoverage"
-              className="text-foreground font-semibold flex items-center gap-2"
-            >
-              <Shield className="h-4 w-4 text-elec-yellow" />
-              Coverage Amount (£)
+          <div className="space-y-1.5">
+            <Label htmlFor="insuranceCoverage" className="text-white font-medium text-[13px]">
+              Coverage amount (£)
             </Label>
             <Input
               id="insuranceCoverage"
@@ -97,24 +92,20 @@ export function InsuranceDetailsForm({
               onChange={(e) => onCoverageChange(e.target.value)}
               placeholder="e.g., 1000000"
               inputMode="numeric"
-              className="mt-1.5 min-h-[48px]"
+              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
 
-          <div className="md:col-span-2">
-            <Label
-              htmlFor="insuranceExpiry"
-              className="text-foreground font-semibold flex items-center gap-2"
-            >
-              <Calendar className="h-4 w-4 text-elec-yellow" />
-              Expiry Date
+          <div className="md:col-span-2 space-y-1.5">
+            <Label htmlFor="insuranceExpiry" className="text-white font-medium text-[13px]">
+              Expiry date
             </Label>
             <Input
               id="insuranceExpiry"
               type="date"
               value={expiry || ''}
               onChange={(e) => onExpiryChange(e.target.value)}
-              className="mt-1.5 h-12 min-h-[48px]"
+              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
         </div>

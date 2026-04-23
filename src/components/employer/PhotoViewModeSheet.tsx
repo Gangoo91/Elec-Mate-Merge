@@ -5,7 +5,6 @@ import {
   DrawerTitle,
   DrawerClose,
 } from '@/components/ui/drawer';
-import { Button } from '@/components/ui/button';
 import { Grid3X3, List, Calendar, MapPin, GitCompare, X, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -77,14 +76,17 @@ export function PhotoViewModeSheet({
 
   return (
     <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent>
-        <DrawerHeader className="border-b border-border/50 pb-4">
+      <DrawerContent className="bg-[hsl(0_0%_8%)] border-t border-white/[0.06]">
+        <DrawerHeader className="border-b border-white/[0.06] pb-4">
           <div className="flex items-center justify-between">
-            <DrawerTitle className="text-lg font-semibold">View Options</DrawerTitle>
+            <DrawerTitle className="text-lg font-semibold text-white">View Options</DrawerTitle>
             <DrawerClose asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
+              <button
+                type="button"
+                className="h-8 w-8 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
+              >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </DrawerClose>
           </div>
         </DrawerHeader>
@@ -99,29 +101,29 @@ export function PhotoViewModeSheet({
                 key={option.value}
                 onClick={() => handleSelect(option.value)}
                 className={cn(
-                  'w-full flex items-center gap-4 p-4 rounded-xl transition-all touch-feedback text-left',
+                  'w-full flex items-center gap-4 p-4 rounded-xl transition-all touch-manipulation text-left',
                   isActive && !isCompare
-                    ? 'bg-elec-yellow/10 border-2 border-elec-yellow'
-                    : 'bg-muted/30 border-2 border-transparent hover:bg-muted/50'
+                    ? 'bg-elec-yellow/10 border border-elec-yellow'
+                    : 'bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08]'
                 )}
               >
                 <div
                   className={cn(
                     'h-12 w-12 rounded-lg flex items-center justify-center',
                     isActive && !isCompare
-                      ? 'bg-elec-yellow text-elec-dark'
-                      : 'bg-muted text-white'
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/[0.06] text-white'
                   )}
                 >
                   {option.icon}
                 </div>
                 <div className="flex-1">
-                  <div className="font-medium text-foreground">{option.label}</div>
+                  <div className="font-medium text-white">{option.label}</div>
                   <div className="text-sm text-white">{option.description}</div>
                 </div>
                 {isActive && !isCompare && (
                   <div className="h-6 w-6 rounded-full bg-elec-yellow flex items-center justify-center">
-                    <Check className="h-4 w-4 text-elec-dark" />
+                    <Check className="h-4 w-4 text-black" />
                   </div>
                 )}
               </button>

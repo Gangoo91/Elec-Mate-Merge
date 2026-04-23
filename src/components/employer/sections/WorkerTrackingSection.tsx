@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Sheet,
   SheetContent,
@@ -15,33 +14,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  Clock,
-  Search,
-  CheckCircle,
-  Car,
-  Building,
-  AlertTriangle,
-  Phone,
   RefreshCw,
-  MessageSquare,
   MapPin,
-  Radio,
-  Users,
-  Map as MapIcon,
   List,
-  Navigation,
-  Signal,
+  Map as MapIcon,
   LogIn,
   LogOut,
   UserPlus,
+  Phone,
+  MessageSquare,
 } from 'lucide-react';
 import { useEmployees } from '@/hooks/useEmployees';
-import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { LiveWorkerMap } from '../LiveWorkerMap';
 import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
@@ -54,26 +38,48 @@ import { useJobs } from '@/hooks/useJobs';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useQuery } from '@tanstack/react-query';
 import { getOfficeLocation } from '@/services/settingsService';
-import { SwipeableRow } from '@/components/ui/swipeable-row';
-import { MobileBottomSheet } from '@/components/mobile/MobileBottomSheet';
 import { toast } from '@/hooks/use-toast';
 import { getCurrentPosition } from '@/utils/geolocation';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  FilterBar,
+  EmptyState,
+  LoadingBlocks,
+  PrimaryButton,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/employer/editorial';
+
+const STATUS_TONE: Record<string, Tone> = {
+  'On Site': 'emerald',
+  'En Route': 'blue',
+  Office: 'amber',
+  'On Leave': 'red',
+};
 
 export function WorkerTrackingSection() {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState('all');
   const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
   const [isCheckInOpen, setIsCheckInOpen] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<string>('');
   const [selectedJob, setSelectedJob] = useState<string>('');
 
-  // Check-in/out mutations
   const checkInMutation = useCheckInWorker();
   const checkOutMutation = useCheckOutWorker();
 
-  // Fetch real data from Supabase
   const {
     data: workerLocations = [],
     isLoading: locationsLoading,
@@ -82,14 +88,12 @@ export function WorkerTrackingSection() {
   const { data: jobsData = [], isLoading: jobsLoading } = useJobs();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
 
-  // Fetch office location for the map
   const { data: officeLocation } = useQuery({
     queryKey: ['office-location'],
     queryFn: getOfficeLocation,
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    staleTime: 5 * 60 * 1000,
   });
 
-  // Auto-refresh every 30 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       refetchLocations();
@@ -105,7 +109,7 @@ export function WorkerTrackingSection() {
   }, [refetchLocations]);
 
   const handleCall = (employeeName: string) => {
-    toast({ title: `Calling ${employeeName}...`, description: 'Opening phone dialer' });
+    toast({ title: `Calling ${employeeName}...`, description: 'Opening phone dialler' });
   };
 
   const handleMessage = (employeeName: string) => {
@@ -119,18 +123,15 @@ export function WorkerTrackingSection() {
     }
 
     try {
-      // Try to get GPS location, fallback to job location or default
-      let lat = 53.4808; // Default Manchester
+      let lat = 53.4808;
       let lng = -2.2426;
 
-      // Get selected job's location if available
       const selectedJobData = jobsData.find((j) => j.id === selectedJob);
       if (selectedJobData?.lat && selectedJobData?.lng) {
         lat = selectedJobData.lat;
         lng = selectedJobData.lng;
       }
 
-      // Try GPS location (async, don't block if unavailable)
       try {
         const position = await getCurrentPosition({
           enableHighAccuracy: true,
@@ -140,7 +141,7 @@ export function WorkerTrackingSection() {
         lat = position.latitude;
         lng = position.longitude;
       } catch {
-        // GPS unavailable, use job location or default
+        // GPS unavailable, fall back to job location or default
       }
 
       await checkInMutation.mutateAsync({
@@ -168,25 +169,19 @@ export function WorkerTrackingSection() {
     }
   };
 
-  // Merge location data with employee data for display
   const workerCheckIns = useMemo(() => {
-    // Create map of employees with their latest location data
     const locationMap = new Map(workerLocations.map((loc) => [loc.employee_id, loc]));
 
     return employees.map((emp) => {
       const location = locationMap.get(emp.id);
-      // Get job title from location's related job data
       const jobData = location?.jobs as { title?: string } | null | undefined;
 
       return {
         id: emp.id,
         employeeId: emp.id,
         employeeName: emp.name,
-        // Use real status from location, fall back to employee status
         status: location?.status || (emp.status === 'On Leave' ? 'On Leave' : 'Office'),
-        // Get job title from the location's job relation
         jobTitle: jobData?.title || null,
-        // Format real check-in time
         checkInTime: location?.checked_in_at
           ? new Date(location.checked_in_at).toLocaleTimeString('en-GB', {
               hour: '2-digit',
@@ -196,25 +191,12 @@ export function WorkerTrackingSection() {
         avatar: emp.avatar_initials,
         role: emp.team_role,
         phone: emp.phone || null,
-        // Include location data for map
         lat: location?.lat,
         lng: location?.lng,
         locationId: location?.id,
       };
     });
   }, [employees, workerLocations]);
-
-  const filteredCheckIns = useMemo(
-    () =>
-      workerCheckIns.filter((c) => {
-        const matchesSearch =
-          c.employeeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (c.jobTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
-        const matchesStatus = selectedStatuses.length === 0 || selectedStatuses.includes(c.status);
-        return matchesSearch && matchesStatus;
-      }),
-    [workerCheckIns, searchQuery, selectedStatuses]
-  );
 
   const statusCounts = useMemo(
     () => ({
@@ -226,49 +208,22 @@ export function WorkerTrackingSection() {
     [workerCheckIns]
   );
 
+  const filteredCheckIns = useMemo(() => {
+    return workerCheckIns.filter((c) => {
+      const matchesSearch =
+        c.employeeName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (c.jobTitle?.toLowerCase().includes(searchQuery.toLowerCase()) ?? false);
+      const matchesTab =
+        activeTab === 'all' ||
+        (activeTab === 'onsite' && c.status === 'On Site') ||
+        (activeTab === 'enroute' && c.status === 'En Route') ||
+        (activeTab === 'office' && c.status === 'Office') ||
+        (activeTab === 'onleave' && c.status === 'On Leave');
+      return matchesSearch && matchesTab;
+    });
+  }, [workerCheckIns, searchQuery, activeTab]);
+
   const totalWorkers = workerCheckIns.length;
-
-  const statusOptions = [
-    { value: 'On Site', label: 'On Site', count: statusCounts.onSite },
-    { value: 'En Route', label: 'En Route', count: statusCounts.enRoute },
-    { value: 'Office', label: 'Office', count: statusCounts.office },
-    { value: 'On Leave', label: 'On Leave', count: statusCounts.onLeave },
-  ];
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'On Site':
-        return <CheckCircle className="h-4 w-4 text-success" />;
-      case 'En Route':
-        return <Car className="h-4 w-4 text-warning" />;
-      case 'Office':
-        return <Building className="h-4 w-4 text-info" />;
-      case 'On Leave':
-        return <Clock className="h-4 w-4 text-white" />;
-      default:
-        return <AlertTriangle className="h-4 w-4 text-destructive" />;
-    }
-  };
-
-  const getStatusBadgeVariant = (status: string) => {
-    switch (status) {
-      case 'On Site':
-        return 'default';
-      case 'En Route':
-        return 'secondary';
-      case 'Office':
-        return 'outline';
-      case 'On Leave':
-        return 'secondary';
-      default:
-        return 'destructive';
-    }
-  };
-
-  const formatTime = (time: string | null) => {
-    if (!time) return '—';
-    return time;
-  };
 
   const formatLastUpdated = () => {
     const now = new Date();
@@ -278,597 +233,277 @@ export function WorkerTrackingSection() {
     return lastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  const toggleStatusFilter = (status: string) => {
-    setSelectedStatuses((prev) =>
-      prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
-    );
+  const getInitials = (name: string, fallback?: string) => {
+    if (fallback) return fallback;
+    return name
+      .split(' ')
+      .map((p) => p[0])
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
   };
 
-  // Skeleton loading component
-  const WorkerSkeleton = () => (
-    <Card className="bg-elec-gray">
-      <CardContent className="p-3 md:p-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-muted animate-pulse" />
-          <div className="flex-1 space-y-2">
-            <div className="h-4 w-32 bg-muted rounded animate-pulse" />
-            <div className="h-3 w-24 bg-muted rounded animate-pulse" />
-          </div>
-          <div className="h-8 w-8 bg-muted rounded animate-pulse" />
-        </div>
-      </CardContent>
-    </Card>
-  );
+  const isLoading = employeesLoading || locationsLoading;
 
   const content = (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      {/* Header with Live Indicator */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-start justify-between">
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-xl md:text-2xl font-bold text-foreground">Worker Tracking</h1>
-              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-success/10 border border-success/20">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
-                </span>
-                <span className="text-[10px] font-medium text-success uppercase tracking-wide">
-                  Live
-                </span>
-              </div>
-            </div>
-            <p className="text-sm text-white mt-0.5">
-              {totalWorkers} workers • Updated {formatLastUpdated()}
-            </p>
-          </div>
-
-          {/* View Toggle for Mobile */}
-          {isMobile && (
-            <div className="flex items-center gap-1 bg-muted rounded-lg p-1">
-              <Button
-                variant={viewMode === 'list' ? 'default' : 'ghost'}
-                size="sm"
-                className="h-8 w-8 p-0"
-                onClick={() => setViewMode('list')}
-              >
-                <List className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={viewMode === 'map' ? 'default' : 'ghost'}
-                size="sm"
-                className="h-8 w-8 p-0"
-                onClick={() => setViewMode('map')}
-              >
-                <MapIcon className="h-4 w-4" />
-              </Button>
-            </div>
-          )}
-        </div>
-
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1">
-            {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+    <PageFrame>
+      <PageHero
+        eyebrow="Operations"
+        title="Worker Tracking"
+        description="Live GPS, check-ins and location history."
+        tone="cyan"
+        live={{ label: `Updated ${formatLastUpdated()}`, tone: 'green' }}
+        actions={
+          <>
+            {isMobile && (
+              <>
+                <IconButton
+                  onClick={() => setViewMode('list')}
+                  aria-label="List view"
+                  className={viewMode === 'list' ? 'bg-elec-yellow text-black border-elec-yellow' : ''}
+                >
+                  <List className="h-4 w-4" />
+                </IconButton>
+                <IconButton
+                  onClick={() => setViewMode('map')}
+                  aria-label="Map view"
+                  className={viewMode === 'map' ? 'bg-elec-yellow text-black border-elec-yellow' : ''}
+                >
+                  <MapIcon className="h-4 w-4" />
+                </IconButton>
+              </>
             )}
-            <Input
-              placeholder="Search workers..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn('w-full bg-elec-gray h-11', !searchQuery && 'pl-9')}
-            />
-          </div>
-
-          {isMobile ? (
-            <MobileBottomSheet
-              trigger={
-                <Button variant="outline" size="icon" className="h-11 w-11 relative">
-                  <Building className="h-4 w-4" />
-                  {selectedStatuses.length > 0 && (
-                    <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 text-[10px]">
-                      {selectedStatuses.length}
-                    </Badge>
-                  )}
-                </Button>
-              }
-              title="Filter by Status"
-              options={statusOptions}
-              selected={selectedStatuses}
-              onSelectionChange={setSelectedStatuses}
-              multiSelect
-            />
-          ) : (
-            <Button
-              variant="outline"
+            <IconButton
+              onClick={() => setIsCheckInOpen(true)}
+              aria-label="Check in worker"
+            >
+              <UserPlus className="h-4 w-4" />
+            </IconButton>
+            <IconButton
               onClick={handleRefresh}
               disabled={locationsLoading}
-              className="touch-feedback"
+              aria-label="Refresh"
             >
-              <RefreshCw className={cn('h-4 w-4 mr-2', locationsLoading && 'animate-spin')} />
-              Refresh
-            </Button>
-          )}
-        </div>
-      </div>
+              <RefreshCw className={locationsLoading ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
+            </IconButton>
+          </>
+        }
+      />
 
-      {/* Status Summary Cards - Clickable to filter */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <Card
-          className={cn(
-            'cursor-pointer transition-all duration-200 hover:scale-[1.02]',
-            'bg-success/10 border-success/30',
-            selectedStatuses.includes('On Site') &&
-              'ring-2 ring-success ring-offset-2 ring-offset-background'
-          )}
-          onClick={() => toggleStatusFilter('On Site')}
-        >
-          <CardContent className="p-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-success">{statusCounts.onSite}</p>
-                <p className="text-xs text-white">On Site</p>
-              </div>
-              <CheckCircle className="h-6 w-6 md:h-8 md:w-8 text-success opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card
-          className={cn(
-            'cursor-pointer transition-all duration-200 hover:scale-[1.02]',
-            'bg-warning/10 border-warning/30',
-            selectedStatuses.includes('En Route') &&
-              'ring-2 ring-warning ring-offset-2 ring-offset-background'
-          )}
-          onClick={() => toggleStatusFilter('En Route')}
-        >
-          <CardContent className="p-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-warning">{statusCounts.enRoute}</p>
-                <p className="text-xs text-white">En Route</p>
-              </div>
-              <Car className="h-6 w-6 md:h-8 md:w-8 text-warning opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card
-          className={cn(
-            'cursor-pointer transition-all duration-200 hover:scale-[1.02]',
-            'bg-info/10 border-info/30',
-            selectedStatuses.includes('Office') &&
-              'ring-2 ring-info ring-offset-2 ring-offset-background'
-          )}
-          onClick={() => toggleStatusFilter('Office')}
-        >
-          <CardContent className="p-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-info">{statusCounts.office}</p>
-                <p className="text-xs text-white">Office</p>
-              </div>
-              <Building className="h-6 w-6 md:h-8 md:w-8 text-info opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card
-          className={cn(
-            'cursor-pointer transition-all duration-200 hover:scale-[1.02]',
-            'bg-muted border-border',
-            selectedStatuses.includes('On Leave') &&
-              'ring-2 ring-muted-foreground ring-offset-2 ring-offset-background'
-          )}
-          onClick={() => toggleStatusFilter('On Leave')}
-        >
-          <CardContent className="p-3">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-white">
-                  {statusCounts.onLeave}
-                </p>
-                <p className="text-xs text-white">On Leave</p>
-              </div>
-              <Clock className="h-6 w-6 md:h-8 md:w-8 text-white opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <StatStrip
+        columns={4}
+        stats={[
+          { label: 'On site', value: statusCounts.onSite, tone: 'emerald' },
+          { label: 'Travelling', value: statusCounts.enRoute, tone: 'blue' },
+          { label: 'Off-duty', value: statusCounts.office + statusCounts.onLeave, tone: 'amber' },
+          { label: 'Alerts', value: 0, tone: 'red' },
+        ]}
+      />
 
-      {/* Active Filters Display */}
-      {selectedStatuses.length > 0 && (
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs text-white">Filtering:</span>
-          {selectedStatuses.map((status) => (
-            <Badge
-              key={status}
-              variant="secondary"
-              className="cursor-pointer hover:bg-destructive/20"
-              onClick={() => toggleStatusFilter(status)}
-            >
-              {status}
-              <span className="ml-1 text-white">×</span>
-            </Badge>
-          ))}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="h-6 text-xs"
-            onClick={() => setSelectedStatuses([])}
-          >
-            Clear all
-          </Button>
-        </div>
-      )}
-
-      {/* Mobile Map View */}
-      {isMobile && viewMode === 'map' && (
-        <GoogleMapsProvider>
-          <LiveWorkerMap
-            workerLocations={workerLocations}
-            jobs={jobsData}
-            officeLocation={officeLocation}
-            onRefresh={handleRefresh}
-            isLoading={locationsLoading || jobsLoading}
-            className="h-[60vh]"
-          />
-        </GoogleMapsProvider>
-      )}
-
-      {/* Desktop Map */}
-      {!isMobile && (
-        <GoogleMapsProvider>
-          <LiveWorkerMap
-            workerLocations={workerLocations}
-            jobs={jobsData}
-            officeLocation={officeLocation}
-            onRefresh={handleRefresh}
-            isLoading={locationsLoading || jobsLoading}
-          />
-        </GoogleMapsProvider>
-      )}
-
-      {/* Worker List - Hidden on mobile map view */}
-      {(!isMobile || viewMode === 'list') && (
-        <Tabs defaultValue="all" className="space-y-4">
-          {!isMobile && (
-            <div className="flex items-center justify-between">
-              <div className="overflow-x-auto hide-scrollbar">
-                <TabsList className="bg-muted inline-flex w-auto">
-                  <TabsTrigger value="all" className="text-sm">
-                    <Users className="h-4 w-4 mr-1.5" />
-                    All ({workerCheckIns.length})
-                  </TabsTrigger>
-                  <TabsTrigger value="onsite" className="text-sm">
-                    <CheckCircle className="h-4 w-4 mr-1.5" />
-                    On Site ({statusCounts.onSite})
-                  </TabsTrigger>
-                  <TabsTrigger value="enroute" className="text-sm">
-                    <Navigation className="h-4 w-4 mr-1.5" />
-                    En Route ({statusCounts.enRoute})
-                  </TabsTrigger>
-                </TabsList>
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : (
+        <>
+          {(!isMobile || viewMode === 'map') && (
+            <ListCard>
+              <ListCardHeader
+                tone="cyan"
+                title="Live map"
+                meta={
+                  <Pill tone="cyan">
+                    {totalWorkers} {totalWorkers === 1 ? 'worker' : 'workers'}
+                  </Pill>
+                }
+              />
+              <div className="p-4 sm:p-5">
+                <GoogleMapsProvider>
+                  <LiveWorkerMap
+                    workerLocations={workerLocations}
+                    jobs={jobsData}
+                    officeLocation={officeLocation}
+                    onRefresh={handleRefresh}
+                    isLoading={locationsLoading || jobsLoading}
+                    className={isMobile ? 'h-[60vh]' : undefined}
+                  />
+                </GoogleMapsProvider>
               </div>
-
-              <div className="flex items-center gap-1 text-xs text-white">
-                <Signal className="h-3 w-3" />
-                <span>Auto-refresh: 30s</span>
-              </div>
-            </div>
+            </ListCard>
           )}
 
-          <TabsContent value="all" className="space-y-3 mt-0">
-            {employeesLoading ? (
-              <div className="space-y-3">
-                <WorkerSkeleton />
-                <WorkerSkeleton />
-                <WorkerSkeleton />
-              </div>
-            ) : filteredCheckIns.length === 0 ? (
-              <Card className="bg-elec-gray border-dashed">
-                <CardContent className="p-12 text-center">
-                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-                    <Users className="h-8 w-8 text-white" />
+          {(!isMobile || viewMode === 'list') && (
+            <>
+              <FilterBar
+                tabs={[
+                  { value: 'all', label: 'All', count: totalWorkers },
+                  { value: 'onsite', label: 'On site', count: statusCounts.onSite },
+                  { value: 'enroute', label: 'Travelling', count: statusCounts.enRoute },
+                  { value: 'office', label: 'Office', count: statusCounts.office },
+                  { value: 'onleave', label: 'On leave', count: statusCounts.onLeave },
+                ]}
+                activeTab={activeTab}
+                onTabChange={setActiveTab}
+                search={searchQuery}
+                onSearchChange={setSearchQuery}
+                searchPlaceholder="Search workers or jobs…"
+              />
+
+              <ListCard>
+                <ListCardHeader
+                  tone="cyan"
+                  title="Workers"
+                  meta={<Pill tone="cyan">{filteredCheckIns.length}</Pill>}
+                />
+                {filteredCheckIns.length === 0 ? (
+                  <div className="p-5">
+                    <EmptyState
+                      title="No workers found"
+                      description={
+                        searchQuery || activeTab !== 'all'
+                          ? 'Try clearing filters to see all workers.'
+                          : 'Add employees to start tracking their locations.'
+                      }
+                      action={
+                        searchQuery || activeTab !== 'all' ? 'Clear filters' : undefined
+                      }
+                      onAction={
+                        searchQuery || activeTab !== 'all'
+                          ? () => {
+                              setSearchQuery('');
+                              setActiveTab('all');
+                            }
+                          : undefined
+                      }
+                    />
                   </div>
-                  <h3 className="font-medium text-foreground mb-1">No workers found</h3>
-                  <p className="text-sm text-white mb-4">
-                    {selectedStatuses.length > 0
-                      ? 'Try clearing your filters to see all workers'
-                      : 'Add employees to start tracking their locations'}
-                  </p>
-                  {selectedStatuses.length > 0 && (
-                    <Button variant="outline" size="sm" onClick={() => setSelectedStatuses([])}>
-                      Clear filters
-                    </Button>
-                  )}
-                </CardContent>
-              </Card>
-            ) : (
-              <div className="space-y-2">
-                {filteredCheckIns.map((checkIn, index) => {
-                  const workerCard = (
-                    <Card
-                      className={cn(
-                        'bg-elec-gray hover:bg-elec-gray/80 transition-all duration-200',
-                        'animate-fade-in'
-                      )}
-                      style={{ animationDelay: `${index * 50}ms` }}
-                    >
-                      <CardContent className="p-3 md:p-4">
-                        <div className="flex items-center gap-3">
-                          <div className="relative">
-                            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
-                              <span className="text-sm md:text-lg font-bold text-elec-yellow">
-                                {checkIn.avatar}
-                              </span>
-                            </div>
-                            {/* Status dot */}
-                            <div
-                              className={cn(
-                                'absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border-2 border-elec-gray flex items-center justify-center',
-                                checkIn.status === 'On Site' && 'bg-success',
-                                checkIn.status === 'En Route' && 'bg-warning',
-                                checkIn.status === 'Office' && 'bg-info',
-                                checkIn.status === 'On Leave' && 'bg-muted-foreground'
-                              )}
-                            >
-                              {checkIn.status === 'On Site' && (
-                                <CheckCircle className="h-2.5 w-2.5 text-white" />
-                              )}
-                              {checkIn.status === 'En Route' && (
-                                <Car className="h-2.5 w-2.5 text-white" />
-                              )}
-                              {checkIn.status === 'Office' && (
-                                <Building className="h-2.5 w-2.5 text-white" />
-                              )}
-                              {checkIn.status === 'On Leave' && (
-                                <Clock className="h-2.5 w-2.5 text-white" />
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <h4 className="font-semibold text-foreground text-sm">
-                                {checkIn.employeeName}
-                              </h4>
-                              <Badge
-                                variant={getStatusBadgeVariant(checkIn.status) as any}
-                                className="text-[10px]"
-                              >
-                                {checkIn.status}
-                              </Badge>
-                            </div>
-                            <p className="text-xs text-white">{checkIn.role}</p>
-                            <div className="flex items-center gap-3 mt-1">
-                              <div className="flex items-center gap-1 text-[10px] text-white">
-                                <Clock className="h-3 w-3" />
-                                <span>{formatTime(checkIn.checkInTime)}</span>
-                              </div>
-                              {checkIn.jobTitle && (
-                                <div className="flex items-center gap-1 text-[10px] text-white">
-                                  <MapPin className="h-3 w-3" />
-                                  <span className="truncate max-w-[120px]">{checkIn.jobTitle}</span>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                          {!isMobile && (
-                            <div className="flex items-center gap-2">
-                              {checkIn.locationId && checkIn.status === 'On Site' && (
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="h-9 px-3 text-destructive border-destructive/30 hover:bg-destructive/10"
-                                  onClick={() =>
-                                    handleCheckOut(checkIn.locationId!, checkIn.employeeName)
-                                  }
-                                  disabled={checkOutMutation.isPending}
-                                >
-                                  <LogOut className="h-4 w-4 mr-1" />
-                                  Out
-                                </Button>
-                              )}
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="h-9 w-9 p-0"
-                                onClick={() => handleMessage(checkIn.employeeName)}
-                              >
-                                <MessageSquare className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                variant="outline"
-                                size="sm"
-                                className="h-9 w-9 p-0"
-                                onClick={() => handleCall(checkIn.employeeName)}
-                              >
-                                <Phone className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  );
+                ) : (
+                  <ListBody>
+                    {filteredCheckIns.map((checkIn) => {
+                      const tone = STATUS_TONE[checkIn.status] ?? 'amber';
+                      const lastSeen = checkIn.checkInTime ?? '—';
+                      const subtitleParts = [
+                        checkIn.role,
+                        checkIn.jobTitle,
+                        checkIn.checkInTime
+                          ? `Checked in ${checkIn.checkInTime}`
+                          : 'No check-in today',
+                      ].filter(Boolean);
 
-                  // Wrap with swipeable on mobile
-                  if (isMobile) {
-                    // Show check-out action for workers on site, message for others
-                    const rightAction =
-                      checkIn.locationId && checkIn.status === 'On Site'
-                        ? {
-                            icon: <LogOut className="h-5 w-5" />,
-                            label: 'Check Out',
-                            onClick: () =>
-                              handleCheckOut(checkIn.locationId!, checkIn.employeeName),
-                            variant: 'destructive' as const,
+                      return (
+                        <ListRow
+                          key={checkIn.id}
+                          accent={tone}
+                          lead={
+                            <Avatar
+                              initials={getInitials(checkIn.employeeName, checkIn.avatar)}
+                              online={checkIn.status === 'On Site' || checkIn.status === 'En Route'}
+                            />
                           }
-                        : {
-                            icon: <MessageSquare className="h-5 w-5" />,
-                            label: 'Message',
-                            onClick: () => handleMessage(checkIn.employeeName),
-                            variant: 'default' as const,
-                          };
-
-                    return (
-                      <SwipeableRow
-                        key={checkIn.id}
-                        leftAction={{
-                          icon: <Phone className="h-5 w-5" />,
-                          label: 'Call',
-                          onClick: () => handleCall(checkIn.employeeName),
-                          variant: 'success',
-                        }}
-                        rightAction={rightAction}
-                      >
-                        {workerCard}
-                      </SwipeableRow>
-                    );
-                  }
-
-                  return <div key={checkIn.id}>{workerCard}</div>;
-                })}
-              </div>
-            )}
-          </TabsContent>
-
-          <TabsContent value="onsite" className="space-y-3">
-            {filteredCheckIns.filter((c) => c.status === 'On Site').length === 0 ? (
-              <Card className="bg-elec-gray border-dashed">
-                <CardContent className="p-8 text-center">
-                  <CheckCircle className="h-10 w-10 mx-auto text-success/30 mb-3" />
-                  <p className="text-white">No workers currently on site</p>
-                </CardContent>
-              </Card>
-            ) : (
-              filteredCheckIns
-                .filter((c) => c.status === 'On Site')
-                .map((checkIn) => (
-                  <Card key={checkIn.id} className="bg-elec-gray border-success/30">
-                    <CardContent className="p-3 md:p-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center flex-shrink-0">
-                            <span className="text-sm font-bold text-success">{checkIn.avatar}</span>
-                          </div>
-                          <div className="min-w-0">
-                            <h4 className="font-medium text-foreground text-sm">
-                              {checkIn.employeeName}
-                            </h4>
-                            <p className="text-xs text-white truncate">
-                              {checkIn.role} • Checked in {checkIn.checkInTime}
-                            </p>
-                          </div>
-                        </div>
-                        <Badge variant="default" className="bg-success flex-shrink-0 text-xs">
-                          On Site
-                        </Badge>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-            )}
-          </TabsContent>
-
-          <TabsContent value="enroute" className="space-y-3">
-            {filteredCheckIns.filter((c) => c.status === 'En Route').length === 0 ? (
-              <Card className="bg-elec-gray border-dashed">
-                <CardContent className="p-8 text-center">
-                  <Car className="h-10 w-10 mx-auto text-warning/30 mb-3" />
-                  <p className="text-white">No workers currently en route</p>
-                </CardContent>
-              </Card>
-            ) : (
-              filteredCheckIns
-                .filter((c) => c.status === 'En Route')
-                .map((checkIn) => (
-                  <Card key={checkIn.id} className="bg-elec-gray border-warning/30">
-                    <CardContent className="p-3 md:p-4">
-                      <div className="flex items-center justify-between gap-3">
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-10 h-10 rounded-full bg-warning/20 flex items-center justify-center flex-shrink-0">
-                            <Car className="h-5 w-5 text-warning" />
-                          </div>
-                          <div className="min-w-0">
-                            <h4 className="font-medium text-foreground text-sm">
-                              {checkIn.employeeName}
-                            </h4>
-                            <p className="text-xs text-white truncate">
-                              Heading to {checkIn.jobTitle || 'assignment'}
-                            </p>
-                          </div>
-                        </div>
-                        <Badge variant="secondary" className="flex-shrink-0 text-xs">
-                          En Route
-                        </Badge>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))
-            )}
-          </TabsContent>
-        </Tabs>
+                          title={checkIn.employeeName}
+                          subtitle={subtitleParts.join(' · ')}
+                          trailing={
+                            <>
+                              <Pill tone={tone}>{checkIn.status}</Pill>
+                              <span className="hidden sm:inline text-[11px] text-white tabular-nums">
+                                {lastSeen}
+                              </span>
+                              {!isMobile && checkIn.phone && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleCall(checkIn.employeeName);
+                                  }}
+                                  className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
+                                  aria-label={`Call ${checkIn.employeeName}`}
+                                >
+                                  <Phone className="h-4 w-4" />
+                                </button>
+                              )}
+                              {!isMobile && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleMessage(checkIn.employeeName);
+                                  }}
+                                  className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
+                                  aria-label={`Message ${checkIn.employeeName}`}
+                                >
+                                  <MessageSquare className="h-4 w-4" />
+                                </button>
+                              )}
+                              {!isMobile && checkIn.locationId && checkIn.status === 'On Site' && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleCheckOut(checkIn.locationId!, checkIn.employeeName);
+                                  }}
+                                  disabled={checkOutMutation.isPending}
+                                  className="h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium flex items-center gap-1.5 hover:bg-white/[0.08] touch-manipulation disabled:opacity-50"
+                                >
+                                  <LogOut className="h-3.5 w-3.5" />
+                                  Check out
+                                </button>
+                              )}
+                            </>
+                          }
+                        />
+                      );
+                    })}
+                  </ListBody>
+                )}
+              </ListCard>
+            </>
+          )}
+        </>
       )}
 
-      {/* Mobile Quick Actions FABs */}
       {isMobile && viewMode === 'list' && (
         <div className="fixed bottom-24 right-4 z-40 flex flex-col gap-3">
-          {/* Check-in FAB */}
-          <Button
-            size="lg"
-            className="h-14 w-14 rounded-full shadow-lg bg-success text-white hover:bg-success/90"
+          <button
             onClick={() => setIsCheckInOpen(true)}
+            className="h-14 w-14 rounded-full shadow-lg bg-elec-yellow text-black flex items-center justify-center touch-manipulation"
+            aria-label="Check in worker"
           >
             <UserPlus className="h-6 w-6" />
-          </Button>
-          {/* Map view FAB */}
+          </button>
           {filteredCheckIns.length > 0 && (
-            <Button
-              size="lg"
-              className="h-14 w-14 rounded-full shadow-lg bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            <button
               onClick={() => setViewMode('map')}
+              className="h-14 w-14 rounded-full shadow-lg bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white flex items-center justify-center touch-manipulation"
+              aria-label="Open map"
             >
               <MapPin className="h-6 w-6" />
-            </Button>
+            </button>
           )}
         </div>
       )}
 
-      {/* Desktop Check-in Button */}
-      {!isMobile && (
-        <div className="fixed bottom-8 right-8 z-40">
-          <Button
-            size="lg"
-            className="h-12 px-6 shadow-lg bg-success text-white hover:bg-success/90"
-            onClick={() => setIsCheckInOpen(true)}
-          >
-            <UserPlus className="h-5 w-5 mr-2" />
-            Check In Worker
-          </Button>
-        </div>
-      )}
-
-      {/* Check-in Sheet */}
       <Sheet open={isCheckInOpen} onOpenChange={setIsCheckInOpen}>
         <SheetContent
           side={isMobile ? 'bottom' : 'right'}
-          className={isMobile ? 'h-[70vh] rounded-t-2xl' : ''}
+          className={
+            isMobile
+              ? 'h-[70vh] rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06]'
+              : 'bg-[hsl(0_0%_10%)] border-white/[0.06]'
+          }
         >
           <SheetHeader>
-            <SheetTitle className="flex items-center gap-2">
-              <LogIn className="h-5 w-5 text-success" />
-              Check In Worker
+            <SheetTitle className="flex items-center gap-2 text-white">
+              <LogIn className="h-5 w-5 text-elec-yellow" />
+              Check in worker
             </SheetTitle>
-            <SheetDescription>Record a worker's arrival at a job site</SheetDescription>
+            <SheetDescription className="text-white">
+              Record a worker's arrival at a job site.
+            </SheetDescription>
           </SheetHeader>
 
           <div className="space-y-6 mt-6">
-            {/* Employee Selection */}
             <div className="space-y-2">
-              <Label>Select Worker</Label>
+              <Label className="text-white">Select worker</Label>
               <Select value={selectedEmployee} onValueChange={setSelectedEmployee}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Choose a worker..." />
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Choose a worker…" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={selectContentClass}>
                   {employees
                     .filter((emp) => emp.status === 'active' || emp.status === 'Active')
                     .map((emp) => (
@@ -880,14 +515,13 @@ export function WorkerTrackingSection() {
               </Select>
             </div>
 
-            {/* Job Selection */}
             <div className="space-y-2">
-              <Label>Select Job Site</Label>
+              <Label className="text-white">Select job site</Label>
               <Select value={selectedJob} onValueChange={setSelectedJob}>
-                <SelectTrigger className="h-11">
-                  <SelectValue placeholder="Choose a job..." />
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Choose a job…" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={selectContentClass}>
                   {jobsData
                     .filter((job) => job.status === 'In Progress' || job.status === 'Scheduled')
                     .map((job) => (
@@ -899,23 +533,23 @@ export function WorkerTrackingSection() {
               </Select>
             </div>
 
-            {/* Check-in Button */}
-            <Button
-              className="w-full h-12 bg-success hover:bg-success/90"
+            <PrimaryButton
               onClick={handleCheckIn}
               disabled={!selectedEmployee || !selectedJob || checkInMutation.isPending}
+              fullWidth
+              size="lg"
             >
               {checkInMutation.isPending ? (
                 <RefreshCw className="h-4 w-4 animate-spin mr-2" />
               ) : (
                 <LogIn className="h-4 w-4 mr-2" />
               )}
-              Check In to Site
-            </Button>
+              Check in to site
+            </PrimaryButton>
           </div>
         </SheetContent>
       </Sheet>
-    </div>
+    </PageFrame>
   );
 
   return isMobile ? (

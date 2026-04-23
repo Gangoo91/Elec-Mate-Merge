@@ -1,53 +1,63 @@
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { Shield, AlertTriangle, FileText, Users, Search, RefreshCw, Loader2 } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Badge } from '@/components/ui/badge';
-import { Skeleton } from '@/components/ui/skeleton';
+import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RefreshCw } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  AlertRow,
+  HubCard,
+  HubGrid,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  SectionHeader,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+} from '@/components/employer/editorial';
 import { useIncidents, useIncidentStats, type Incident } from '@/hooks/useIncidents';
 import {
   useRAMSDocuments,
   useRAMSDocumentStats,
   type RAMSDocument,
 } from '@/hooks/useRAMSDocuments';
+import type { Tone } from '@/components/employer/editorial';
 
 const incidentTypeLabels: Record<string, string> = {
-  near_miss: 'Near Miss',
-  unsafe_practice: 'Unsafe Practice',
-  faulty_equipment: 'Faulty Equipment',
+  near_miss: 'Near miss',
+  unsafe_practice: 'Unsafe practice',
+  faulty_equipment: 'Faulty equipment',
   injury: 'Injury',
-  property_damage: 'Property Damage',
+  property_damage: 'Property damage',
   environmental: 'Environmental',
   security: 'Security',
   other: 'Other',
 };
 
-const severityColors: Record<string, string> = {
-  low: 'bg-blue-500/20 text-blue-400',
-  medium: 'bg-yellow-500/20 text-yellow-400',
-  high: 'bg-orange-500/20 text-orange-400',
-  critical: 'bg-red-500/20 text-red-400',
+const severityTone: Record<string, Tone> = {
+  low: 'blue',
+  medium: 'amber',
+  high: 'orange',
+  critical: 'red',
 };
 
-const statusColors: Record<string, string> = {
-  draft: 'bg-gray-500/20 text-white',
-  submitted: 'bg-blue-500/20 text-blue-400',
-  under_review: 'bg-yellow-500/20 text-yellow-400',
-  investigating: 'bg-orange-500/20 text-orange-400',
-  resolved: 'bg-green-500/20 text-green-400',
-  closed: 'bg-green-500/20 text-green-400',
-  approved: 'bg-green-500/20 text-green-400',
-  rejected: 'bg-red-500/20 text-red-400',
-  pending: 'bg-yellow-500/20 text-yellow-400',
+const statusTone: Record<string, Tone> = {
+  draft: 'amber',
+  submitted: 'blue',
+  under_review: 'amber',
+  investigating: 'orange',
+  resolved: 'emerald',
+  closed: 'emerald',
+  approved: 'emerald',
+  rejected: 'red',
+  pending: 'amber',
 };
 
 export function SafetyHRSection() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
-  // Use real hooks
   const {
     data: incidents,
     isLoading: incidentsLoading,
@@ -63,23 +73,21 @@ export function SafetyHRSection() {
   } = useRAMSDocuments();
   const { data: ramsStats } = useRAMSDocumentStats();
 
-  // Filter data by search
-  const filteredIncidents =
-    incidents?.filter(
-      (incident) =>
-        incident.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        incident.description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        incident.location?.toLowerCase().includes(searchQuery.toLowerCase())
-    ) || [];
+  const isLoading = incidentsLoading || ramsLoading;
+  const hasError = incidentsError || ramsError;
 
-  const filteredRams =
-    ramsDocuments?.filter(
-      (rams) =>
-        rams.project_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        rams.location?.toLowerCase().includes(searchQuery.toLowerCase())
-    ) || [];
+  const refresh = () => {
+    refetchIncidents();
+    refetchRams();
+  };
 
-  // Calculate safety score (simplified)
+  const openIncidents = incidentStats?.open ?? 0;
+  const pendingRams = ramsStats
+    ? Math.max(0, (ramsStats.total ?? 0) - (ramsStats.approved ?? 0))
+    : 0;
+
+  const trainingDue30d = 0;
+
   const safetyScore = incidentStats
     ? Math.max(
         0,
@@ -87,249 +95,268 @@ export function SafetyHRSection() {
       )
     : 100;
 
-  const isLoading = incidentsLoading || ramsLoading;
-  const hasError = incidentsError || ramsError;
+  const recentIncidents = useMemo(() => {
+    return (incidents ?? [])
+      .slice()
+      .sort(
+        (a, b) =>
+          new Date(b.date_occurred).getTime() - new Date(a.date_occurred).getTime()
+      )
+      .slice(0, 4);
+  }, [incidents]);
+
+  const pendingRamsList = useMemo(() => {
+    return (ramsDocuments ?? [])
+      .filter((r) => r.status !== 'approved' && r.status !== 'closed')
+      .slice(0, 3);
+  }, [ramsDocuments]);
+
+  const alertRows: {
+    title: string;
+    subtitle: string;
+    tone: Tone;
+    pillTone: Tone;
+    pillLabel: string;
+    onClick?: () => void;
+  }[] = [
+    ...recentIncidents.map((incident: Incident) => ({
+      title: incident.title,
+      subtitle: `${incidentTypeLabels[incident.incident_type] || incident.incident_type} · ${
+        incident.location || 'No location'
+      } · ${new Date(incident.date_occurred).toLocaleDateString('en-GB')}`,
+      tone: severityTone[incident.severity] ?? 'orange',
+      pillTone: statusTone[incident.status] ?? 'amber',
+      pillLabel: incident.status.replace('_', ' '),
+      onClick: () => navigate('/employer/safety/incidents'),
+    })),
+    ...pendingRamsList.map((rams: RAMSDocument) => ({
+      title: `RAMS: ${rams.project_name}`,
+      subtitle: `${rams.location || 'No location'} · v${rams.version} · ${
+        rams.assessor || 'Unassigned'
+      }`,
+      tone: 'amber' as Tone,
+      pillTone: statusTone[rams.status] ?? 'amber',
+      pillLabel: rams.status.replace('_', ' '),
+      onClick: () => navigate('/employer/safety/rams'),
+    })),
+  ].slice(0, 6);
+
+  const hubItems: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    meta: string;
+    tone: Tone;
+    path: string;
+  }[] = [
+    {
+      eyebrow: 'Method statements',
+      title: 'RAMS',
+      description: 'Risk assessments and method statements per project.',
+      meta: `${ramsStats?.total ?? 0} documents`,
+      tone: 'amber',
+      path: '/employer/safety/rams',
+    },
+    {
+      eyebrow: 'Reporting',
+      title: 'Incidents',
+      description: 'Near-misses, injuries and investigations.',
+      meta: `${incidentStats?.open ?? 0} open`,
+      tone: 'red',
+      path: '/employer/safety/incidents',
+    },
+    {
+      eyebrow: 'Governance',
+      title: 'Policies',
+      description: 'Health, safety and HR policy library.',
+      meta: 'Manage policies',
+      tone: 'blue',
+      path: '/employer/safety/policies',
+    },
+    {
+      eyebrow: 'People',
+      title: 'Training',
+      description: 'Tickets, certifications and renewals.',
+      meta: `${trainingDue30d} due in 30 days`,
+      tone: 'cyan',
+      path: '/employer/safety/training',
+    },
+    {
+      eyebrow: 'Communications',
+      title: 'Briefings',
+      description: 'Toolbox talks and signed acknowledgements.',
+      meta: 'Issue a briefing',
+      tone: 'purple',
+      path: '/employer/safety/briefings',
+    },
+    {
+      eyebrow: 'Audits',
+      title: 'Compliance',
+      description: 'CDM, CHAS and regulatory checks.',
+      meta: 'View status',
+      tone: 'emerald',
+      path: '/employer/safety/compliance',
+    },
+    {
+      eyebrow: 'Workforce',
+      title: 'Contracts',
+      description: 'Employment contracts and right-to-work.',
+      meta: 'Manage contracts',
+      tone: 'indigo',
+      path: '/employer/safety/contracts',
+    },
+  ];
 
   if (hasError) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 space-y-4">
-        <AlertTriangle className="h-12 w-12 text-destructive" />
-        <p className="text-white">Failed to load safety data</p>
-        <Button
-          onClick={() => {
-            refetchIncidents();
-            refetchRams();
-          }}
-          variant="outline"
-          className="gap-2"
-        >
-          <RefreshCw className="h-4 w-4" />
-          Retry
-        </Button>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="HR & Safety"
+          title="Safety Overview"
+          description="Your company's safety snapshot — incidents, RAMS, training, compliance."
+          tone="red"
+          actions={
+            <IconButton onClick={refresh} aria-label="Refresh safety data">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          }
+        />
+        <EmptyState
+          title="Failed to load safety data"
+          description="We could not reach incidents or RAMS. Try again in a moment."
+          action="Retry"
+          onAction={refresh}
+        />
+      </PageFrame>
     );
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between">
-        <div className="relative flex-1 max-w-md">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search incidents and RAMS..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('h-11 touch-manipulation', !searchQuery && 'pl-10')}
+    <PageFrame>
+      <PageHero
+        eyebrow="HR & Safety"
+        title="Safety Overview"
+        description="Your company's safety snapshot — incidents, RAMS, training, compliance."
+        tone="red"
+        actions={
+          <IconButton onClick={refresh} aria-label="Refresh safety data">
+            <RefreshCw className="h-4 w-4" />
+          </IconButton>
+        }
+      />
+
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : (
+        <>
+          <StatStrip
+            columns={4}
+            stats={[
+              { label: 'Open incidents', value: openIncidents, tone: 'red' },
+              { label: 'Pending RAMS', value: pendingRams, tone: 'orange' },
+              { label: 'Training due 30d', value: trainingDue30d, tone: 'amber' },
+              { label: 'Compliance', value: `${safetyScore}%`, accent: true },
+            ]}
           />
-        </div>
-      </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="card-hover">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-success/10">
-                <Shield className="h-5 w-5 text-success" />
+          <div className="space-y-4">
+            <SectionHeader
+              eyebrow="Live"
+              title="Recent alerts"
+              meta={
+                alertRows.length > 0 ? (
+                  <Pill tone="red">{alertRows.length}</Pill>
+                ) : undefined
+              }
+            />
+            {alertRows.length === 0 ? (
+              <EmptyState
+                title="All clear"
+                description="No open incidents or pending RAMS. Keep up the safe work."
+              />
+            ) : (
+              <div className="space-y-3">
+                {alertRows.map((alert, i) => (
+                  <AlertRow
+                    key={`${alert.title}-${i}`}
+                    tone={alert.tone}
+                    title={alert.title}
+                    subtitle={alert.subtitle}
+                    trailing={<Pill tone={alert.pillTone}>{alert.pillLabel}</Pill>}
+                    onClick={alert.onClick}
+                  />
+                ))}
               </div>
-              <div>
-                {isLoading ? (
-                  <Skeleton className="h-8 w-12 mb-1" />
-                ) : (
-                  <p className="text-2xl font-bold text-success">{safetyScore}%</p>
-                )}
-                <p className="text-sm text-white">Safety Score</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="card-hover">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-warning/10">
-                <AlertTriangle className="h-5 w-5 text-warning" />
-              </div>
-              <div>
-                {isLoading ? (
-                  <Skeleton className="h-8 w-12 mb-1" />
-                ) : (
-                  <p className="text-2xl font-bold text-warning">{incidentStats?.total || 0}</p>
-                )}
-                <p className="text-sm text-white">Total Incidents</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="card-hover">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-elec-yellow/10">
-                <FileText className="h-5 w-5 text-elec-yellow" />
-              </div>
-              <div>
-                {isLoading ? (
-                  <Skeleton className="h-8 w-12 mb-1" />
-                ) : (
-                  <p className="text-2xl font-bold text-elec-yellow">{ramsStats?.total || 0}</p>
-                )}
-                <p className="text-sm text-white">Total RAMS</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="card-hover">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-success/10">
-                <Users className="h-5 w-5 text-success" />
-              </div>
-              <div>
-                {isLoading ? (
-                  <Skeleton className="h-8 w-12 mb-1" />
-                ) : (
-                  <p className="text-2xl font-bold text-foreground">{ramsStats?.approved || 0}</p>
-                )}
-                <p className="text-sm text-white">Approved RAMS</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            )}
+          </div>
 
-      {/* Tabs */}
-      <Tabs defaultValue="incidents" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="incidents" className="touch-manipulation">
-            Incidents ({filteredIncidents.length})
-          </TabsTrigger>
-          <TabsTrigger value="rams" className="touch-manipulation">
-            RAMS ({filteredRams.length})
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="incidents" className="space-y-4">
-          {isLoading ? (
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="bg-elec-gray border-border">
-                  <CardContent className="p-4">
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-1/2 mb-4" />
-                    <Skeleton className="h-4 w-1/4" />
-                  </CardContent>
-                </Card>
+          <div className="space-y-4">
+            <SectionHeader
+              eyebrow="Sub-sections"
+              title="Safety hub"
+              meta={<Pill tone="yellow">{hubItems.length}</Pill>}
+            />
+            <HubGrid columns={2}>
+              {hubItems.map((item, i) => (
+                <HubCard
+                  key={item.title}
+                  number={String(i + 1).padStart(2, '0')}
+                  eyebrow={item.eyebrow}
+                  title={item.title}
+                  description={item.description}
+                  meta={item.meta}
+                  tone={item.tone}
+                  onClick={() => navigate(item.path)}
+                />
               ))}
-            </div>
-          ) : filteredIncidents.length === 0 ? (
-            <Card className="bg-elec-gray border-border">
-              <CardContent className="p-8 text-center">
-                <Shield className="h-12 w-12 text-success mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">No Incidents</h3>
-                <p className="text-white">
-                  No incidents recorded. Keep up the safe work!
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            filteredIncidents.map((incident: Incident) => (
-              <Card key={incident.id} className="bg-elec-gray border-border">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-foreground">{incident.title}</h3>
-                        <Badge className={severityColors[incident.severity] || ''}>
-                          {incident.severity}
-                        </Badge>
-                      </div>
-                      <p className="text-sm text-white">
-                        {incidentTypeLabels[incident.incident_type] || incident.incident_type}
-                      </p>
-                    </div>
-                    <Badge className={statusColors[incident.status] || ''}>
-                      {incident.status.replace('_', ' ')}
-                    </Badge>
+            </HubGrid>
+          </div>
+
+          <ListCard>
+            <ListCardHeader
+              tone="amber"
+              title="Snapshot"
+              meta={<Pill tone="yellow">Live</Pill>}
+            />
+            <ListBody>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06]">
+                <div className="bg-[hsl(0_0%_12%)] px-5 py-5">
+                  <div className="text-[10px] uppercase tracking-[0.18em] text-white font-medium">
+                    Total incidents
                   </div>
-
-                  {incident.description && (
-                    <p className="text-sm text-white bg-surface p-3 rounded-lg mb-3">
-                      {incident.description}
-                    </p>
-                  )}
-
-                  <div className="flex items-center justify-between text-xs text-white">
-                    <span>{incident.location}</span>
-                    <span>{new Date(incident.date_occurred).toLocaleDateString('en-GB')}</span>
+                  <div className="mt-3 text-3xl font-semibold tabular-nums text-white">
+                    {incidentStats?.total ?? 0}
                   </div>
-                </CardContent>
-              </Card>
-            ))
-          )}
-        </TabsContent>
-
-        <TabsContent value="rams" className="space-y-4">
-          {isLoading ? (
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="bg-elec-gray border-border">
-                  <CardContent className="p-4">
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-1/2 mb-4" />
-                    <Skeleton className="h-4 w-1/4" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : filteredRams.length === 0 ? (
-            <Card className="bg-elec-gray border-border">
-              <CardContent className="p-8 text-center">
-                <FileText className="h-12 w-12 text-white mx-auto mb-4" />
-                <p className="text-white">No RAMS documents found.</p>
-              </CardContent>
-            </Card>
-          ) : (
-            filteredRams.map((rams: RAMSDocument) => (
-              <Card key={rams.id} className="bg-elec-gray border-border">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-foreground mb-1">{rams.project_name}</h3>
-                      <p className="text-sm text-white">{rams.location}</p>
-                    </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <Badge className={statusColors[rams.status] || ''}>{rams.status}</Badge>
-                      <span className="text-xs text-white">v{rams.version}</span>
-                    </div>
+                </div>
+                <div className="bg-[hsl(0_0%_12%)] px-5 py-5">
+                  <div className="text-[10px] uppercase tracking-[0.18em] text-white font-medium">
+                    Critical
                   </div>
-
-                  <div className="flex items-center justify-between text-xs text-white">
-                    <span>Assessor: {rams.assessor}</span>
-                    <span>Updated: {new Date(rams.updated_at).toLocaleDateString('en-GB')}</span>
+                  <div className="mt-3 text-3xl font-semibold tabular-nums text-red-400">
+                    {incidentStats?.critical ?? 0}
                   </div>
-
-                  {rams.risks && rams.risks.length > 0 && (
-                    <div className="mt-3 flex items-center gap-2">
-                      <span className="text-xs text-white">Risks:</span>
-                      <Badge variant="outline" className="text-xs">
-                        {rams.risks.filter((r) => r.risk_level === 'high').length} High
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        {rams.risks.filter((r) => r.risk_level === 'medium').length} Medium
-                      </Badge>
-                      <Badge variant="outline" className="text-xs">
-                        {rams.risks.filter((r) => r.risk_level === 'low').length} Low
-                      </Badge>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            ))
-          )}
-        </TabsContent>
-      </Tabs>
-    </div>
+                </div>
+                <div className="bg-[hsl(0_0%_12%)] px-5 py-5">
+                  <div className="text-[10px] uppercase tracking-[0.18em] text-white font-medium">
+                    Total RAMS
+                  </div>
+                  <div className="mt-3 text-3xl font-semibold tabular-nums text-white">
+                    {ramsStats?.total ?? 0}
+                  </div>
+                </div>
+                <div className="bg-[hsl(0_0%_12%)] px-5 py-5">
+                  <div className="text-[10px] uppercase tracking-[0.18em] text-white font-medium">
+                    Approved RAMS
+                  </div>
+                  <div className="mt-3 text-3xl font-semibold tabular-nums text-emerald-400">
+                    {ramsStats?.approved ?? 0}
+                  </div>
+                </div>
+              </div>
+            </ListBody>
+          </ListCard>
+        </>
+      )}
+    </PageFrame>
   );
 }

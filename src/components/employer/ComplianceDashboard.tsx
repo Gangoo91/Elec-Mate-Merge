@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -9,7 +8,6 @@ import {
   CheckCircle2,
   Clock,
   Users,
-  Building2,
   Car,
   Award,
   ChevronRight,
@@ -40,7 +38,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
   }, [scoreData]);
 
   const scoreGradient = useMemo(() => {
-    if (!scoreData) return 'from-muted to-muted';
+    if (!scoreData) return 'from-white/[0.04] to-white/[0.04]';
     if (scoreData.score >= 90) return 'from-green-500/20 to-green-600/20';
     if (scoreData.score >= 70) return 'from-amber-500/20 to-amber-600/20';
     return 'from-red-500/20 to-red-600/20';
@@ -67,8 +65,13 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
   return (
     <div className="space-y-4">
       {/* Main Compliance Score Card */}
-      <Card className={cn('border-0 bg-gradient-to-br', scoreGradient)}>
-        <CardContent className="p-4 md:p-6">
+      <div
+        className={cn(
+          'relative bg-gradient-to-br rounded-2xl border border-white/[0.06] overflow-hidden',
+          scoreGradient
+        )}
+      >
+        <div className="p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="relative">
@@ -109,7 +112,7 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
                 </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-foreground">Compliance Score</h3>
+                <h3 className="text-lg font-semibold text-white">Compliance Score</h3>
                 <p className="text-sm text-white">
                   {scoreData?.message || 'Loading...'}
                 </p>
@@ -147,89 +150,81 @@ export function ComplianceDashboard({ onCategoryClick }: ComplianceDashboardProp
               )}
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Category Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {/* Employee Qualifications */}
-        <Card
-          className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
+        <button
+          className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 text-left cursor-pointer hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-all touch-manipulation"
           onClick={() => onCategoryClick?.('qualifications')}
         >
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-blue-500/10">
-                <Users className="h-4 w-4 text-blue-400" />
-              </div>
-              <ChevronRight className="h-4 w-4 text-white" />
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2 rounded-lg bg-blue-500/10">
+              <Users className="h-4 w-4 text-blue-400" />
             </div>
-            <p className="text-2xl font-bold text-foreground">{qualificationStats?.total || 0}</p>
-            <p className="text-xs text-white">Employee Qualifications</p>
-            {(qualificationStats?.expiring || 0) > 0 && (
-              <Badge variant="outline" className="mt-2 text-xs border-amber-500/50 text-amber-400">
-                {qualificationStats?.expiring} expiring
-              </Badge>
-            )}
-          </CardContent>
-        </Card>
+            <ChevronRight className="h-4 w-4 text-white" />
+          </div>
+          <p className="text-2xl font-bold text-white">{qualificationStats?.total || 0}</p>
+          <p className="text-xs text-white">Employee Qualifications</p>
+          {(qualificationStats?.expiring || 0) > 0 && (
+            <Badge variant="outline" className="mt-2 text-xs border-amber-500/50 text-amber-400">
+              {qualificationStats?.expiring} expiring
+            </Badge>
+          )}
+        </button>
 
         {/* Insurance */}
-        <Card
-          className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
+        <button
+          className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 text-left cursor-pointer hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-all touch-manipulation"
           onClick={() => onCategoryClick?.('Insurance')}
         >
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-green-500/10">
-                <Shield className="h-4 w-4 text-green-400" />
-              </div>
-              <ChevronRight className="h-4 w-4 text-white" />
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2 rounded-lg bg-green-500/10">
+              <Shield className="h-4 w-4 text-green-400" />
             </div>
-            <p className="text-2xl font-bold text-foreground">
-              {businessStats?.byCategory?.insurance || 0}
-            </p>
-            <p className="text-xs text-white">Insurance Policies</p>
-          </CardContent>
-        </Card>
+            <ChevronRight className="h-4 w-4 text-white" />
+          </div>
+          <p className="text-2xl font-bold text-white">
+            {businessStats?.byCategory?.insurance || 0}
+          </p>
+          <p className="text-xs text-white">Insurance Policies</p>
+        </button>
 
         {/* Memberships */}
-        <Card
-          className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
+        <button
+          className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 text-left cursor-pointer hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-all touch-manipulation"
           onClick={() => onCategoryClick?.('Memberships')}
         >
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-purple-500/10">
-                <Award className="h-4 w-4 text-purple-400" />
-              </div>
-              <ChevronRight className="h-4 w-4 text-white" />
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2 rounded-lg bg-purple-500/10">
+              <Award className="h-4 w-4 text-purple-400" />
             </div>
-            <p className="text-2xl font-bold text-foreground">
-              {businessStats?.byCategory?.memberships || 0}
-            </p>
-            <p className="text-xs text-white">Memberships</p>
-          </CardContent>
-        </Card>
+            <ChevronRight className="h-4 w-4 text-white" />
+          </div>
+          <p className="text-2xl font-bold text-white">
+            {businessStats?.byCategory?.memberships || 0}
+          </p>
+          <p className="text-xs text-white">Memberships</p>
+        </button>
 
         {/* Vehicles */}
-        <Card
-          className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
+        <button
+          className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 text-left cursor-pointer hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-all touch-manipulation"
           onClick={() => onCategoryClick?.('Vehicles')}
         >
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div className="p-2 rounded-lg bg-cyan-500/10">
-                <Car className="h-4 w-4 text-cyan-400" />
-              </div>
-              <ChevronRight className="h-4 w-4 text-white" />
+          <div className="flex items-center justify-between mb-3">
+            <div className="p-2 rounded-lg bg-cyan-500/10">
+              <Car className="h-4 w-4 text-cyan-400" />
             </div>
-            <p className="text-2xl font-bold text-foreground">
-              {businessStats?.byCategory?.vehicles || 0}
-            </p>
-            <p className="text-xs text-white">Vehicle Documents</p>
-          </CardContent>
-        </Card>
+            <ChevronRight className="h-4 w-4 text-white" />
+          </div>
+          <p className="text-2xl font-bold text-white">
+            {businessStats?.byCategory?.vehicles || 0}
+          </p>
+          <p className="text-xs text-white">Vehicle Documents</p>
+        </button>
       </div>
     </div>
   );

@@ -225,7 +225,7 @@ export function AttendanceSection() {
                       <div className="text-[14px] font-medium text-white truncate">
                         {studentInfo.name}
                       </div>
-                      <div className="mt-0.5 text-[11.5px] text-white/50 truncate">
+                      <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
                         {getCohortName(studentInfo.cohortId)}
                       </div>
                       {record.notes && (
@@ -235,7 +235,7 @@ export function AttendanceSection() {
                       )}
                     </div>
                     <div className="hidden sm:block text-right shrink-0">
-                      <div className="text-[10px] uppercase tracking-[0.12em] text-white/40">
+                      <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
                         {new Date(record.date).toLocaleDateString('en-GB', { weekday: 'short' })}
                       </div>
                       <div className="text-[11.5px] font-medium text-white tabular-nums">
@@ -249,7 +249,7 @@ export function AttendanceSection() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button
-                          className="text-white/50 hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
+                          className="text-white/75 hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
                           aria-label="Options"
                         >
                           ⋯

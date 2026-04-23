@@ -1,38 +1,133 @@
-import { useState } from 'react';
-import {
-  FileText,
-  Send,
-  Plus,
-  Search,
-  Eye,
-  Check,
-  TrendingUp,
-  AlertTriangle,
-  Receipt,
-  PoundSterling,
-  Mic,
-} from 'lucide-react';
-import { useInlineVoice } from '@/hooks/useInlineVoice';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { DataTable } from '@/components/employer/DataTable';
-import { StatusBadge } from '@/components/employer/StatusBadge';
-import { Skeleton } from '@/components/ui/skeleton';
+import { useMemo, useState } from 'react';
+import { RefreshCw } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
-import { QuoteCard } from '@/components/employer/QuoteCard';
-import { InvoiceCard } from '@/components/employer/InvoiceCard';
-import { useQuotes, useInvoices, useSendQuote, useMarkInvoicePaid } from '@/hooks/useFinance';
+import {
+  useQuotes,
+  useInvoices,
+  useSendQuote,
+  useMarkInvoicePaid,
+} from '@/hooks/useFinance';
 import { CreateQuoteDialog } from '@/components/employer/dialogs/CreateQuoteDialog';
 import { CreateInvoiceDialog } from '@/components/employer/dialogs/CreateInvoiceDialog';
 import { ViewQuoteSheet } from '@/components/employer/sheets/ViewQuoteSheet';
 import { ViewInvoiceSheet } from '@/components/employer/sheets/ViewInvoiceSheet';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useQueryClient } from '@tanstack/react-query';
-import { cn } from '@/lib/utils';
 import { sortQuotes, sortInvoices } from '@/utils/financeSorting';
 import type { Quote, Invoice } from '@/services/financeService';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  PrimaryButton,
+  SecondaryButton,
+  type Tone,
+} from '@/components/employer/editorial';
+
+type RowKind = 'quote' | 'invoice';
+
+interface CombinedRow {
+  id: string;
+  kind: RowKind;
+  number: string;
+  client: string;
+  jobTitle: string | null;
+  total: number;
+  status: string;
+  statusTone: Tone;
+  timestamp: number;
+  timeAgo: string;
+  raw: Quote | Invoice;
+}
+
+function getInitials(name?: string | null) {
+  if (!name) return '??';
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '??';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function formatMoney(n: number) {
+  return Number(n || 0).toLocaleString('en-GB', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+}
+
+function formatHero(n: number) {
+  if (n >= 1_000_000) return `£${(n / 1_000_000).toFixed(1)}m`;
+  if (n >= 1000) return `£${(n / 1000).toFixed(n >= 10_000 ? 0 : 1)}k`;
+  return `£${formatMoney(n)}`;
+}
+
+function timeAgo(iso: string | null | undefined) {
+  if (!iso) return '—';
+  const then = new Date(iso).getTime();
+  if (Number.isNaN(then)) return '—';
+  const diff = Date.now() - then;
+  const mins = Math.floor(diff / 60_000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months}mo ago`;
+  return `${Math.floor(months / 12)}y ago`;
+}
+
+function quoteStatusTone(status: string): Tone {
+  switch (status) {
+    case 'Approved':
+      return 'emerald';
+    case 'Sent':
+      return 'blue';
+    case 'Rejected':
+      return 'red';
+    case 'Draft':
+    default:
+      return 'amber';
+  }
+}
+
+function invoiceStatusTone(status: string): Tone {
+  switch (status) {
+    case 'Paid':
+      return 'emerald';
+    case 'Overdue':
+      return 'red';
+    case 'Pending':
+    default:
+      return 'amber';
+  }
+}
+
+function isWithin30Days(iso: string | null | undefined) {
+  if (!iso) return false;
+  const then = new Date(iso).getTime();
+  if (Number.isNaN(then)) return false;
+  return Date.now() - then <= 30 * 24 * 60 * 60 * 1000;
+}
+
+function isThisMonth(iso: string | null | undefined) {
+  if (!iso) return false;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return false;
+  const now = new Date();
+  return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+}
 
 export function QuotesInvoicesSection() {
   const [showCreateQuote, setShowCreateQuote] = useState(false);
@@ -41,27 +136,14 @@ export function QuotesInvoicesSection() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
   const [convertQuote, setConvertQuote] = useState<Quote | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('quotes');
+  const [activeTab, setActiveTab] = useState<'all' | 'quotes' | 'invoices' | 'overdue'>('all');
 
-  const { data: quotes = [], isLoading: quotesLoading, refetch: refetchQuotes } = useQuotes();
-  const {
-    data: invoices = [],
-    isLoading: invoicesLoading,
-    refetch: refetchInvoices,
-  } = useInvoices();
+  const { data: quotes = [], isLoading: quotesLoading } = useQuotes();
+  const { data: invoices = [], isLoading: invoicesLoading } = useInvoices();
   const sendQuoteMutation = useSendQuote();
   const markPaidMutation = useMarkInvoicePaid();
   const isMobile = useIsMobile();
   const queryClient = useQueryClient();
-
-  // Voice assistant for quotes/invoices - uses employer agent
-  const {
-    isConnecting: voiceConnecting,
-    isActive: voiceActive,
-    toggleVoice,
-  } = useInlineVoice({
-    agentId: 'agent_7301kdxbnshce7vv8mtah970y3g1', // Employer agent
-  });
 
   const handleRefresh = async () => {
     await Promise.all([
@@ -70,43 +152,87 @@ export function QuotesInvoicesSection() {
     ]);
   };
 
-  // Filter and sort quotes by business priority
-  const filteredQuotes = sortQuotes(
-    quotes.filter(
-      (q) =>
-        (q.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-        (q.description?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-        (q.quote_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
-    )
+  const outstanding = useMemo(
+    () =>
+      invoices
+        .filter((inv) => inv.status !== 'Paid')
+        .reduce((acc, inv) => acc + Number(inv.amount || 0), 0),
+    [invoices]
   );
 
-  // Filter and sort invoices by business priority
-  const filteredInvoices = sortInvoices(
-    invoices.filter(
-      (inv) =>
-        (inv.client?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-        (inv.project?.toLowerCase() || '').includes(searchQuery.toLowerCase()) ||
-        (inv.invoice_number?.toLowerCase() || '').includes(searchQuery.toLowerCase())
-    )
+  const paid30 = useMemo(
+    () =>
+      invoices
+        .filter((inv) => inv.status === 'Paid' && isWithin30Days(inv.paid_date))
+        .reduce((acc, inv) => acc + Number(inv.amount || 0), 0),
+    [invoices]
   );
 
-  // Stats calculations
-  const totalQuoteValue = quotes
-    .filter((q) => q.status !== 'Rejected')
-    .reduce((acc, q) => acc + Number(q.value), 0);
-  const approvedQuoteValue = quotes
-    .filter((q) => q.status === 'Approved')
-    .reduce((acc, q) => acc + Number(q.value), 0);
-  const approvedCount = quotes.filter((q) => q.status === 'Approved').length;
-  const totalInvoiced = invoices.reduce((acc, inv) => acc + Number(inv.amount), 0);
-  const paidAmount = invoices
-    .filter((inv) => inv.status === 'Paid')
-    .reduce((acc, inv) => acc + Number(inv.amount), 0);
-  const overdueAmount = invoices
-    .filter((inv) => inv.status === 'Overdue')
-    .reduce((acc, inv) => acc + Number(inv.amount), 0);
-  const overdueCount = invoices.filter((inv) => inv.status === 'Overdue').length;
-  const paidPercentage = totalInvoiced > 0 ? Math.round((paidAmount / totalInvoiced) * 100) : 0;
+  const openQuotesValue = useMemo(
+    () =>
+      quotes
+        .filter((q) => q.status === 'Draft' || q.status === 'Sent')
+        .reduce((acc, q) => acc + Number(q.value || 0), 0),
+    [quotes]
+  );
+
+  const wonThisMonth = useMemo(
+    () => quotes.filter((q) => q.status === 'Approved' && isThisMonth(q.updated_at)).length,
+    [quotes]
+  );
+
+  const overdueCount = useMemo(
+    () => invoices.filter((inv) => inv.status === 'Overdue').length,
+    [invoices]
+  );
+
+  const sortedQuotes = useMemo(() => sortQuotes(quotes), [quotes]);
+  const sortedInvoices = useMemo(() => sortInvoices(invoices), [invoices]);
+
+  const combined: CombinedRow[] = useMemo(() => {
+    const qRows: CombinedRow[] = sortedQuotes.map((q) => ({
+      id: `q-${q.id}`,
+      kind: 'quote',
+      number: q.quote_number || '—',
+      client: q.client || 'Unknown client',
+      jobTitle: q.job_title || q.description || null,
+      total: Number(q.value || 0),
+      status: q.status,
+      statusTone: quoteStatusTone(q.status),
+      timestamp: new Date(q.updated_at || q.created_at || 0).getTime() || 0,
+      timeAgo: timeAgo(q.updated_at || q.created_at),
+      raw: q,
+    }));
+    const iRows: CombinedRow[] = sortedInvoices.map((inv) => ({
+      id: `i-${inv.id}`,
+      kind: 'invoice',
+      number: inv.invoice_number || '—',
+      client: inv.client || 'Unknown client',
+      jobTitle: inv.project || null,
+      total: Number(inv.amount || 0),
+      status: inv.status,
+      statusTone: invoiceStatusTone(inv.status),
+      timestamp: new Date(inv.updated_at || inv.created_at || 0).getTime() || 0,
+      timeAgo: timeAgo(inv.updated_at || inv.created_at),
+      raw: inv,
+    }));
+    return [...qRows, ...iRows].sort((a, b) => b.timestamp - a.timestamp);
+  }, [sortedQuotes, sortedInvoices]);
+
+  const filteredRows = useMemo(() => {
+    const needle = searchQuery.trim().toLowerCase();
+    return combined.filter((row) => {
+      if (activeTab === 'quotes' && row.kind !== 'quote') return false;
+      if (activeTab === 'invoices' && row.kind !== 'invoice') return false;
+      if (activeTab === 'overdue' && row.status !== 'Overdue') return false;
+      if (!needle) return true;
+      return (
+        row.client.toLowerCase().includes(needle) ||
+        row.number.toLowerCase().includes(needle) ||
+        (row.jobTitle?.toLowerCase().includes(needle) ?? false)
+      );
+    });
+  }, [combined, activeTab, searchQuery]);
 
   const isLoading = quotesLoading || invoicesLoading;
 
@@ -115,452 +241,107 @@ export function QuotesInvoicesSection() {
     setShowCreateInvoice(true);
   };
 
-  // Desktop table columns
-  const quoteColumns = [
-    { key: 'quote_number', label: 'Quote #' },
-    { key: 'client', label: 'Client' },
-    {
-      key: 'description',
-      label: 'Description',
-      render: (item: Quote) => {
-        const lineItems = Array.isArray(item.line_items) ? item.line_items : [];
-        const itemCount = lineItems.length;
-        return (
-          <div className="min-w-0">
-            <p className="truncate max-w-[200px]">{item.description || '-'}</p>
-            {itemCount > 0 && (
-              <p className="text-xs text-white">
-                {itemCount} line item{itemCount > 1 ? 's' : ''}
-              </p>
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      key: 'value',
-      label: 'Value',
-      render: (item: Quote) => (
-        <span className="font-semibold text-elec-yellow">
-          £{Number(item.value).toLocaleString()}
-        </span>
-      ),
-    },
-    {
-      key: 'sent_date',
-      label: 'Sent',
-      render: (item: Quote) => (
-        <span>{item.sent_date ? new Date(item.sent_date).toLocaleDateString('en-GB') : '-'}</span>
-      ),
-    },
-    {
-      key: 'valid_until',
-      label: 'Expires',
-      render: (item: Quote) => {
-        if (!item.valid_until) return <span>-</span>;
-        const validDate = new Date(item.valid_until);
-        const now = new Date();
-        const daysLeft = Math.ceil((validDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-        const isExpired = daysLeft < 0;
-        const isExpiringSoon = daysLeft >= 0 && daysLeft <= 7;
+  const openRow = (row: CombinedRow) => {
+    if (row.kind === 'quote') setSelectedQuote(row.raw as Quote);
+    else setSelectedInvoice(row.raw as Invoice);
+  };
 
-        return (
-          <div>
-            <span>{validDate.toLocaleDateString('en-GB')}</span>
-            {isExpired && <p className="text-xs text-destructive">Expired</p>}
-            {isExpiringSoon && <p className="text-xs text-warning">{daysLeft} days left</p>}
-          </div>
-        );
-      },
-    },
-    {
-      key: 'status',
-      label: 'Status',
-      render: (item: Quote) => {
-        const statusMap: Record<string, string> = {
-          Draft: 'pending',
-          Sent: 'warning',
-          Approved: 'approved',
-          Rejected: 'rejected',
-        };
-        return <StatusBadge status={statusMap[item.status] || item.status} />;
-      },
-    },
-    {
-      key: 'actions',
-      label: '',
-      render: (item: Quote) => (
-        <div className="flex gap-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedQuote(item);
-            }}
-          >
-            <Eye className="h-4 w-4" />
-          </Button>
-          {item.status === 'Draft' && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                sendQuoteMutation.mutate(item.id);
-              }}
-              disabled={sendQuoteMutation.isPending}
-            >
-              <Send className="h-4 w-4" />
-            </Button>
-          )}
-        </div>
-      ),
-    },
+  const tabs = [
+    { value: 'all', label: 'All', count: combined.length },
+    { value: 'quotes', label: 'Quotes', count: quotes.length },
+    { value: 'invoices', label: 'Invoices', count: invoices.length },
+    { value: 'overdue', label: 'Overdue', count: overdueCount },
   ];
 
-  const invoiceColumns = [
-    { key: 'invoice_number', label: 'Invoice #' },
-    { key: 'client', label: 'Client' },
-    { key: 'project', label: 'Project' },
-    {
-      key: 'amount',
-      label: 'Amount',
-      render: (item: Invoice) => (
-        <span className="font-semibold">£{Number(item.amount).toLocaleString()}</span>
-      ),
-    },
-    {
-      key: 'due_date',
-      label: 'Due Date',
-      render: (item: Invoice) => (
-        <span>{item.due_date ? new Date(item.due_date).toLocaleDateString('en-GB') : '-'}</span>
-      ),
-    },
-    {
-      key: 'paid_date',
-      label: 'Paid Date',
-      render: (item: Invoice) => (
-        <span>{item.paid_date ? new Date(item.paid_date).toLocaleDateString('en-GB') : '-'}</span>
-      ),
-    },
-    {
-      key: 'status',
-      label: 'Status',
-      render: (item: Invoice) => {
-        const statusMap: Record<string, string> = {
-          Paid: 'completed',
-          Pending: 'pending',
-          Overdue: 'expired',
-        };
-        return <StatusBadge status={statusMap[item.status] || item.status} />;
-      },
-    },
-    {
-      key: 'actions',
-      label: '',
-      render: (item: Invoice) => (
-        <div className="flex gap-1">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedInvoice(item);
-            }}
-          >
-            <Eye className="h-4 w-4" />
-          </Button>
-          {item.status === 'Pending' && (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                markPaidMutation.mutate(item.id);
-              }}
-              disabled={markPaidMutation.isPending}
-            >
-              <Check className="h-4 w-4" />
-            </Button>
-          )}
-        </div>
-      ),
-    },
-  ];
+  const heroActions = (
+    <>
+      <PrimaryButton onClick={() => setShowCreateQuote(true)}>New quote</PrimaryButton>
+      <SecondaryButton onClick={() => setShowCreateInvoice(true)}>New invoice</SecondaryButton>
+      <IconButton onClick={handleRefresh} aria-label="Refresh">
+        <RefreshCw className="h-4 w-4" />
+      </IconButton>
+    </>
+  );
 
-  if (isLoading) {
-    return (
-      <div className="space-y-4 animate-fade-in px-4 md:px-0">
-        <div className="flex flex-col gap-3">
-          <Skeleton className="h-11 w-full" />
-          <div className="flex gap-2">
-            <Skeleton className="h-10 flex-1" />
-            <Skeleton className="h-10 flex-1" />
-          </div>
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          {[...Array(4)].map((_, i) => (
-            <Skeleton key={i} className="h-24 rounded-xl" />
-          ))}
-        </div>
-        <Skeleton className="h-12 w-full rounded-xl" />
-        <div className="space-y-3">
-          {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-32 rounded-xl" />
-          ))}
-        </div>
-      </div>
-    );
-  }
+  const body = (
+    <PageFrame>
+      <PageHero
+        eyebrow="Money"
+        title="Quotes & Invoices"
+        description="Create, send, track and get paid."
+        tone="yellow"
+        actions={heroActions}
+      />
 
-  const content = (
-    <div className="space-y-4 animate-fade-in">
-      {/* Sticky Search Header */}
-      <div className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm pb-3 -mx-4 px-4 md:mx-0 md:px-0 pt-1">
-        <div className="relative">
-          {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-          )}
-          <Input
-            placeholder="Search quotes & invoices..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('h-11 bg-elec-gray border-border', !searchQuery && 'pl-10')}
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : (
+        <>
+          <StatStrip
+            columns={4}
+            stats={[
+              { label: 'Outstanding £', value: formatHero(outstanding), tone: 'amber' },
+              { label: 'Paid 30d', value: formatHero(paid30), tone: 'emerald' },
+              { label: 'Open quotes £', value: formatHero(openQuotesValue), tone: 'blue' },
+              { label: 'Won this month', value: wonThisMonth, accent: true },
+            ]}
           />
-        </div>
-      </div>
 
-      {/* Action Buttons */}
-      <div className="flex gap-3">
-        <Button
-          variant="outline"
-          className="flex-1 h-12 gap-2 active:scale-[0.98] transition-transform"
-          onClick={() => setShowCreateQuote(true)}
-        >
-          <FileText className="h-4 w-4" />
-          New Quote
-        </Button>
-        <Button
-          className="flex-1 h-12 gap-2 active:scale-[0.98] transition-transform"
-          onClick={() => setShowCreateInvoice(true)}
-        >
-          <Plus className="h-4 w-4" />
-          Create Invoice
-        </Button>
-        <Button
-          variant="outline"
-          className={cn(
-            'h-12 w-12 p-0 shrink-0 active:scale-[0.98] transition-all',
-            voiceActive && 'bg-green-500/20 border-green-500 ring-2 ring-green-500/30',
-            voiceConnecting && 'bg-yellow-500/20 border-yellow-500 animate-pulse'
-          )}
-          onClick={toggleVoice}
-          disabled={voiceConnecting}
-          title={voiceActive ? 'Voice active - click to stop' : 'Create quote/invoice by voice'}
-        >
-          <Mic
-            className={cn(
-              'h-5 w-5',
-              voiceActive
-                ? 'text-green-500 animate-pulse'
-                : voiceConnecting
-                  ? 'text-yellow-500'
-                  : 'text-primary'
-            )}
+          <FilterBar
+            tabs={tabs}
+            activeTab={activeTab}
+            onTabChange={(v) => setActiveTab(v as typeof activeTab)}
+            search={searchQuery}
+            onSearchChange={setSearchQuery}
+            searchPlaceholder="Search quotes & invoices…"
           />
-        </Button>
-      </div>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 gap-3">
-        <Card className="overflow-hidden">
-          <CardContent className="p-4">
-            <div className="flex items-start justify-between">
-              <div className="space-y-1">
-                <p className="text-xs text-white font-medium uppercase tracking-wide">
-                  Total Quoted
-                </p>
-                <p className="text-2xl font-bold text-elec-yellow">
-                  £{(totalQuoteValue / 1000).toFixed(0)}k
-                </p>
-                <p className="text-xs text-success font-medium">{approvedCount} approved</p>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-elec-yellow/10 flex items-center justify-center">
-                <FileText className="h-5 w-5 text-elec-yellow" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="overflow-hidden">
-          <CardContent className="p-4">
-            <div className="flex items-start justify-between">
-              <div className="space-y-1">
-                <p className="text-xs text-white font-medium uppercase tracking-wide">
-                  Total Invoiced
-                </p>
-                <p className="text-2xl font-bold text-foreground">
-                  £{(totalInvoiced / 1000).toFixed(0)}k
-                </p>
-                <p className="text-xs text-white">{invoices.length} invoices</p>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
-                <Receipt className="h-5 w-5 text-white" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="overflow-hidden">
-          <CardContent className="p-4">
-            <div className="flex items-start justify-between">
-              <div className="space-y-1">
-                <p className="text-xs text-white font-medium uppercase tracking-wide">
-                  Paid
-                </p>
-                <p className="text-2xl font-bold text-success">
-                  £{(paidAmount / 1000).toFixed(0)}k
-                </p>
-                <p className="text-xs text-success font-medium">{paidPercentage}% collected</p>
-              </div>
-              <div className="h-10 w-10 rounded-full bg-success/10 flex items-center justify-center">
-                <TrendingUp className="h-5 w-5 text-success" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card
-          className={cn(
-            'overflow-hidden transition-all',
-            overdueAmount > 0 && 'border-destructive/50 bg-destructive/5'
-          )}
-        >
-          <CardContent className="p-4">
-            <div className="flex items-start justify-between">
-              <div className="space-y-1">
-                <p className="text-xs text-white font-medium uppercase tracking-wide">
-                  Overdue
-                </p>
-                <p
-                  className={cn(
-                    'text-2xl font-bold',
-                    overdueAmount > 0 ? 'text-destructive' : 'text-white'
-                  )}
-                >
-                  £{(overdueAmount / 1000).toFixed(0)}k
-                </p>
-                {overdueCount > 0 && (
-                  <p className="text-xs text-destructive font-medium">{overdueCount} overdue</p>
-                )}
-              </div>
-              <div
-                className={cn(
-                  'h-10 w-10 rounded-full flex items-center justify-center',
-                  overdueAmount > 0 ? 'bg-destructive/10' : 'bg-muted'
-                )}
-              >
-                <AlertTriangle
-                  className={cn(
-                    'h-5 w-5',
-                    overdueAmount > 0 ? 'text-destructive' : 'text-white'
-                  )}
+          <ListCard>
+            <ListCardHeader
+              tone="yellow"
+              title="Quotes & Invoices"
+              meta={<Pill tone="yellow">{filteredRows.length}</Pill>}
+            />
+            {filteredRows.length === 0 ? (
+              <div className="p-2">
+                <EmptyState
+                  title={searchQuery ? 'No matches' : 'Nothing here yet'}
+                  description={
+                    searchQuery
+                      ? 'Try a different client name, number or project.'
+                      : 'Create your first quote or invoice to start tracking the money.'
+                  }
+                  action={searchQuery ? undefined : 'New quote'}
+                  onAction={searchQuery ? undefined : () => setShowCreateQuote(true)}
                 />
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-3">
-        <TabsList className="w-full h-12 p-1 bg-muted/50">
-          <TabsTrigger
-            value="quotes"
-            className="flex-1 h-full gap-2 data-[state=active]:bg-background"
-          >
-            <FileText className="h-4 w-4" />
-            Quotes ({quotes.length})
-          </TabsTrigger>
-          <TabsTrigger
-            value="invoices"
-            className="flex-1 h-full gap-2 data-[state=active]:bg-background"
-          >
-            <Receipt className="h-4 w-4" />
-            Invoices ({invoices.length})
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="quotes" className="mt-0 space-y-3">
-          {isMobile ? (
-            filteredQuotes.length > 0 ? (
-              <div className="space-y-3">
-                {filteredQuotes.map((quote) => (
-                  <QuoteCard
-                    key={quote.id}
-                    quote={quote}
-                    onView={setSelectedQuote}
-                    onSend={(id) => sendQuoteMutation.mutate(id)}
-                    isSending={sendQuoteMutation.isPending}
+            ) : (
+              <ListBody>
+                {filteredRows.map((row) => (
+                  <ListRow
+                    key={row.id}
+                    lead={<Avatar initials={getInitials(row.client)} />}
+                    title={`${row.kind.toUpperCase()} #${row.number} — ${row.client}`}
+                    subtitle={`${row.jobTitle ? `${row.jobTitle} · ` : ''}£${formatMoney(
+                      row.total
+                    )} · ${row.timeAgo}`}
+                    trailing={<Pill tone={row.statusTone}>{row.status}</Pill>}
+                    onClick={() => openRow(row)}
                   />
                 ))}
-              </div>
-            ) : (
-              <Card className="p-8 text-center">
-                <FileText className="h-12 w-12 mx-auto text-white mb-3" />
-                <p className="text-white font-medium">No quotes found</p>
-                <p className="text-sm text-white mt-1">
-                  Create your first quote to get started
-                </p>
-                <Button className="mt-4 h-12 px-6" onClick={() => setShowCreateQuote(true)}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  New Quote
-                </Button>
-              </Card>
-            )
-          ) : (
-            <DataTable title="All Quotes" data={filteredQuotes} columns={quoteColumns} />
-          )}
-        </TabsContent>
-
-        <TabsContent value="invoices" className="mt-0 space-y-3">
-          {isMobile ? (
-            filteredInvoices.length > 0 ? (
-              <div className="space-y-3">
-                {filteredInvoices.map((invoice) => (
-                  <InvoiceCard
-                    key={invoice.id}
-                    invoice={invoice}
-                    onView={setSelectedInvoice}
-                    onMarkPaid={(id) => markPaidMutation.mutate(id)}
-                    isMarkingPaid={markPaidMutation.isPending}
-                  />
-                ))}
-              </div>
-            ) : (
-              <Card className="p-8 text-center">
-                <Receipt className="h-12 w-12 mx-auto text-white mb-3" />
-                <p className="text-white font-medium">No invoices found</p>
-                <p className="text-sm text-white mt-1">
-                  Create your first invoice to get started
-                </p>
-                <Button className="mt-4 h-12 px-6" onClick={() => setShowCreateInvoice(true)}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  Create Invoice
-                </Button>
-              </Card>
-            )
-          ) : (
-            <DataTable title="All Invoices" data={filteredInvoices} columns={invoiceColumns} />
-          )}
-        </TabsContent>
-      </Tabs>
+              </ListBody>
+            )}
+          </ListCard>
+        </>
+      )}
 
       <CreateQuoteDialog open={showCreateQuote} onOpenChange={setShowCreateQuote} />
       <CreateInvoiceDialog
         open={showCreateInvoice}
-        onOpenChange={setShowCreateInvoice}
+        onOpenChange={(open) => {
+          setShowCreateInvoice(open);
+          if (!open) setConvertQuote(null);
+        }}
         fromQuote={convertQuote || undefined}
       />
       <ViewQuoteSheet
@@ -574,16 +355,16 @@ export function QuotesInvoicesSection() {
         onOpenChange={(open) => !open && setSelectedInvoice(null)}
         invoice={selectedInvoice}
       />
-    </div>
+    </PageFrame>
   );
 
   if (isMobile) {
     return (
       <PullToRefresh onRefresh={handleRefresh} className="px-4 pb-20">
-        {content}
+        {body}
       </PullToRefresh>
     );
   }
 
-  return content;
+  return body;
 }

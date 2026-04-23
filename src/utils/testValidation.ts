@@ -103,7 +103,7 @@ export const validateTestResult = (result: TestResult, earthingArrangement?: str
     insulationLiveEarth: validateInsulationResistance(result.insulationLiveEarth),
     insulationNeutralEarth: validateInsulationResistance(result.insulationNeutralEarth),
     polarity: validatePolarity(result.polarity),
-    zs: validateZs(result.zs, result.protectiveDevice, earthingArrangement),
+    zs: validateZs(result.zs, result.protectiveDevice, earthingArrangement, result.rcdRating),
     rcdTiming: validateRCDTiming(result.rcdRating, result.rcdOneX),
     pfcLiveNeutral: validatePFC(result.pfcLiveNeutral),
     pfcLiveEarth: validatePFC(result.pfcLiveEarth),
@@ -222,7 +222,35 @@ const validatePolarity = (value: string): ValidationResult => {
   return { isValid: false, level: 'warning', message: 'Polarity result unclear - use ✓ or ✗' };
 };
 
-const validateZs = (value: string, protectiveDevice: string, earthingArrangement?: string): ValidationResult => {
+// Map RCD rating → maximum Zs per BS 7671 Reg 411.5.3 (Uo / IΔn, using 50V Lt)
+// These are the strict 50V touch-voltage limits; RCDs that operate <= 300ms are
+// allowed the higher Uo-based ceilings, but we use the safer 50V values here.
+const TT_ZS_LIMITS_BY_RCD_MA: Record<number, number> = {
+  30: 1667,   // 50 / 0.030
+  100: 500,   // 50 / 0.100
+  300: 167,   // 50 / 0.300
+  500: 100,   // 50 / 0.500
+};
+
+const parseRcdRatingMa = (rcd: string | undefined | null): number | null => {
+  if (!rcd) return null;
+  const match = String(rcd).replace(/[^\d]/g, '');
+  const n = parseInt(match, 10);
+  return Number.isFinite(n) && n > 0 ? n : null;
+};
+
+const isTTArrangement = (arr?: string): boolean => {
+  if (!arr) return false;
+  const s = arr.toLowerCase().replace(/[^a-z]/g, '');
+  return s === 'tt';
+};
+
+const validateZs = (
+  value: string,
+  protectiveDevice: string,
+  earthingArrangement?: string,
+  rcdRating?: string
+): ValidationResult => {
   if (!value || value.trim() === '') {
     return { isValid: false, level: 'warning', message: 'Zs measurement required' };
   }
@@ -232,21 +260,32 @@ const validateZs = (value: string, protectiveDevice: string, earthingArrangement
     return { isValid: false, level: 'fail', message: 'Invalid Zs value format' };
   }
 
-  // TT systems: Zs limit is based on RCD, not MCB (BS 7671 Table 41.5)
-  // 30mA RCD → max Zs = 1667Ω, 100mA → 500Ω, 300mA → 167Ω
-  if (earthingArrangement === 'TT' || earthingArrangement === 'tt') {
-    const ttMaxZs = 1667; // Default for 30mA RCD (most common)
+  // TT systems: Zs limit is RCD-derived (Reg 411.5.3), NOT fuse/MCB tables.
+  // Use the actual circuit's RCD rating if we have it; fall back to 30mA
+  // (the most common domestic RCD) with a gentler "advisory" rather than hard
+  // fail — we don't want to mark a cert unsatisfactory because the engineer
+  // hasn't entered the RCD rating yet on a TT install.
+  if (isTTArrangement(earthingArrangement)) {
+    const rcdMa = parseRcdRatingMa(rcdRating);
+    const ttMaxZs = rcdMa && TT_ZS_LIMITS_BY_RCD_MA[rcdMa]
+      ? TT_ZS_LIMITS_BY_RCD_MA[rcdMa]
+      : TT_ZS_LIMITS_BY_RCD_MA[30];
+
     if (numValue <= ttMaxZs) {
       return {
         isValid: true,
         level: 'pass',
-        message: `Zs compliant for TT system with RCD protection (limit: ${ttMaxZs}Ω)`,
+        message: rcdMa
+          ? `Zs OK — TT system, ${rcdMa}mA RCD (limit ${ttMaxZs}Ω, Reg 411.5.3)`
+          : `Zs OK — TT system (assuming 30mA RCD, limit ${ttMaxZs}Ω). Confirm RCD rating.`,
       };
     }
     return {
       isValid: false,
       level: 'fail',
-      message: `Zs exceeds TT system limit of ${ttMaxZs}Ω — check earth electrode`,
+      message: rcdMa
+        ? `Zs ${numValue}Ω exceeds TT limit for ${rcdMa}mA RCD (${ttMaxZs}Ω) — check earth electrode`
+        : `Zs ${numValue}Ω exceeds TT limit (${ttMaxZs}Ω for assumed 30mA RCD) — check earth electrode or confirm RCD rating`,
     };
   }
 

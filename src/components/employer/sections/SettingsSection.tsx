@@ -1,25 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import {
-  Building2,
-  User,
-  Bell,
-  Shield,
-  Palette,
-  Users,
-  Save,
-  Plus,
-  Trash2,
-  Key,
-  Link2,
-  CheckCircle2,
-  Mail,
-  Loader2,
-  Upload,
-  Image as ImageIcon,
-  CreditCard,
-  Mic,
-  RotateCw,
-} from 'lucide-react';
+import { RefreshCw, Loader2, Upload, Image as ImageIcon, Trash2, RotateCw, Plus } from 'lucide-react';
 import {
   getSetting,
   setSetting,
@@ -39,14 +19,10 @@ import {
   type TeamMemberRole,
 } from '@/hooks/useTeamMembers';
 import { InviteTeamMemberDialog } from '../dialogs/InviteTeamMemberDialog';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Select,
@@ -60,11 +36,32 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { permissionsList, rolePermissions, type TeamRole } from '@/data/employerMockData';
 import { StripeConnectCard } from '../StripeConnectCard';
 import VoiceSettingsPanel from '../VoiceSettingsPanel';
+import {
+  PageFrame,
+  PageHero,
+  IconButton,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Pill,
+  Avatar as EditorialAvatar,
+  LoadingBlocks,
+  EmptyState,
+  Eyebrow,
+  Divider,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  checkboxClass,
+} from '@/components/employer/editorial';
 
 export function SettingsSection() {
   const isMobile = useIsMobile();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [activeTab, setActiveTab] = useState('company');
   const [notifications, setNotifications] = useState({
     emailAlerts: true,
     certificationReminders: true,
@@ -79,7 +76,6 @@ export function SettingsSection() {
   const [notificationEmail, setNotificationEmail] = useState('');
   const [savingEmail, setSavingEmail] = useState(false);
 
-  // Company settings state
   const [companySettings, setCompanySettings] = useState<CompanySettings>({
     company_name: '',
     company_address: '',
@@ -95,7 +91,6 @@ export function SettingsSection() {
   const [loadingCompany, setLoadingCompany] = useState(true);
   const [savingCompany, setSavingCompany] = useState(false);
 
-  // Branding settings state
   const [brandingSettings, setBrandingSettings] = useState<BrandingSettings>({
     company_logo_url: null,
     brand_primary_color: '#f59e0b',
@@ -104,40 +99,58 @@ export function SettingsSection() {
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [savingBranding, setSavingBranding] = useState(false);
 
-  // Team member state
   const [showInviteDialog, setShowInviteDialog] = useState(false);
   const { data: teamMembers = [], isLoading: teamLoading } = useTeamMembers();
   const inviteTeamMember = useInviteTeamMember();
   const removeTeamMember = useRemoveTeamMember();
   const resendInvitation = useResendInvitation();
 
+  const [dirty, setDirty] = useState(false);
+
   useEffect(() => {
-    // Load notification email
     getSetting('business_notification_email').then((value) => {
       if (value) setNotificationEmail(value);
     });
-
-    // Load company settings
     getCompanySettings().then((settings) => {
       setCompanySettings(settings);
       setLoadingCompany(false);
     });
-
-    // Load branding settings
     getBrandingSettings().then((settings) => {
       setBrandingSettings(settings);
     });
   }, []);
+
+  const refresh = async () => {
+    setLoadingCompany(true);
+    const [emailVal, company, branding] = await Promise.all([
+      getSetting('business_notification_email'),
+      getCompanySettings(),
+      getBrandingSettings(),
+    ]);
+    if (emailVal) setNotificationEmail(emailVal);
+    setCompanySettings(company);
+    setBrandingSettings(branding);
+    setLoadingCompany(false);
+    setDirty(false);
+    toast({ title: 'Refreshed', description: 'Settings reloaded.' });
+  };
+
+  const updateCompany = (patch: Partial<CompanySettings>) => {
+    setCompanySettings((prev) => ({ ...prev, ...patch }));
+    setDirty(true);
+  };
+
+  const updateBranding = (patch: Partial<BrandingSettings>) => {
+    setBrandingSettings((prev) => ({ ...prev, ...patch }));
+    setDirty(true);
+  };
 
   const handleSaveNotificationEmail = async () => {
     setSavingEmail(true);
     const success = await setSetting('business_notification_email', notificationEmail);
     setSavingEmail(false);
     if (success) {
-      toast({
-        title: 'Saved',
-        description: 'Notification email updated successfully.',
-      });
+      toast({ title: 'Saved', description: 'Notification email updated successfully.' });
     } else {
       toast({
         title: 'Error',
@@ -150,8 +163,6 @@ export function SettingsSection() {
   const handleLogoUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
-    // Validate file type
     if (!file.type.startsWith('image/')) {
       toast({
         title: 'Invalid file',
@@ -160,8 +171,6 @@ export function SettingsSection() {
       });
       return;
     }
-
-    // Validate file size (max 20MB)
     if (file.size > 20 * 1024 * 1024) {
       toast({
         title: 'File too large',
@@ -170,13 +179,12 @@ export function SettingsSection() {
       });
       return;
     }
-
     setUploadingLogo(true);
     const logoUrl = await uploadCompanyLogo(file);
     setUploadingLogo(false);
-
     if (logoUrl) {
       setBrandingSettings((prev) => ({ ...prev, company_logo_url: logoUrl }));
+      setDirty(true);
       toast({ title: 'Logo uploaded', description: 'Your company logo has been updated.' });
     } else {
       toast({
@@ -193,10 +201,48 @@ export function SettingsSection() {
     setSavingBranding(false);
     if (success) {
       toast({ title: 'Saved', description: 'Branding settings updated successfully.' });
+      setDirty(false);
     } else {
       toast({
         title: 'Error',
         description: 'Failed to save branding settings.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleSaveCompany = async () => {
+    setSavingCompany(true);
+    const success = await saveCompanySettings(companySettings);
+    setSavingCompany(false);
+    if (success) {
+      toast({ title: 'Saved', description: 'Company details updated successfully.' });
+      setDirty(false);
+    } else {
+      toast({
+        title: 'Error',
+        description: 'Failed to save company details.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const handleSaveAll = async () => {
+    setSavingCompany(true);
+    setSavingBranding(true);
+    const [companyOk, brandingOk] = await Promise.all([
+      saveCompanySettings(companySettings),
+      saveBrandingSettings(brandingSettings),
+    ]);
+    setSavingCompany(false);
+    setSavingBranding(false);
+    if (companyOk && brandingOk) {
+      toast({ title: 'Saved', description: 'All changes saved.' });
+      setDirty(false);
+    } else {
+      toast({
+        title: 'Some changes failed',
+        description: 'Review and try again.',
         variant: 'destructive',
       });
     }
@@ -212,38 +258,40 @@ export function SettingsSection() {
 
   const integrations = [
     {
+      name: 'Stripe Connect',
+      description: 'Accept card payments directly into your account',
+      connected: false,
+      tone: 'purple' as const,
+    },
+    {
       name: 'Xero',
       description: 'Accounting & payroll integration',
       connected: true,
-      icon: 'X',
-      color: 'bg-[#13B5EA]',
+      tone: 'cyan' as const,
+    },
+    {
+      name: 'Sage',
+      description: 'Accounting software sync',
+      connected: false,
+      tone: 'green' as const,
     },
     {
       name: 'Google Workspace',
       description: 'Calendar and email sync',
       connected: false,
-      icon: 'G',
-      color: 'bg-[#4285F4]',
+      tone: 'blue' as const,
     },
     {
       name: 'Dropbox',
       description: 'Document storage',
       connected: true,
-      icon: 'D',
-      color: 'bg-[#0061FF]',
-    },
-    {
-      name: 'Sage',
-      description: 'Accounting software',
-      connected: false,
-      icon: 'S',
-      color: 'bg-[#00D632]',
+      tone: 'indigo' as const,
     },
   ];
 
   const handleSavePermissions = () => {
     toast({
-      title: 'Permissions Saved',
+      title: 'Permissions saved',
       description: `Permissions for ${selectedRole} role have been updated.`,
     });
   };
@@ -253,881 +301,708 @@ export function SettingsSection() {
       const currentPerms = prev[selectedRole] || [];
       if (currentPerms.includes(permId)) {
         return { ...prev, [selectedRole]: currentPerms.filter((p) => p !== permId) };
-      } else {
-        return { ...prev, [selectedRole]: [...currentPerms, permId] };
       }
+      return { ...prev, [selectedRole]: [...currentPerms, permId] };
     });
   };
 
-  const tabOptions = [
-    { value: 'company', label: 'Company' },
-    { value: 'voice', label: 'Voice Assistant' },
-    { value: 'permissions', label: 'Permissions' },
-    { value: 'integrations', label: 'Integrations' },
-    { value: 'notifications', label: 'Notifications' },
-    { value: 'preferences', label: 'Preferences' },
-  ];
+  const getInitials = (member: { name?: string; email: string }) =>
+    (member.name || member.email)
+      .split(/[ @]/)
+      .map((n) => n[0]?.toUpperCase() || '')
+      .filter(Boolean)
+      .slice(0, 2)
+      .join('');
+
+  const notificationItems = [
+    { key: 'emailAlerts', label: 'Email alerts', description: 'Receive important updates via email' },
+    { key: 'certificationReminders', label: 'Certification reminders', description: 'Get notified when certifications are expiring' },
+    { key: 'jobUpdates', label: 'Job updates', description: 'Notifications about job progress and completions' },
+    { key: 'invoiceAlerts', label: 'Invoice alerts', description: 'Payment reminders and overdue notices' },
+    { key: 'tenderDeadlines', label: 'Tender deadlines', description: 'Reminders for upcoming tender deadlines' },
+    { key: 'safetyAlerts', label: 'Safety alerts', description: 'Immediate notifications for safety incidents' },
+  ] as const;
+
+  if (loadingCompany) {
+    return (
+      <PageFrame>
+        <PageHero
+          eyebrow="Admin"
+          title="Settings"
+          description="Company profile, branding, integrations and team permissions."
+          tone="yellow"
+        />
+        <LoadingBlocks />
+      </PageFrame>
+    );
+  }
 
   return (
-    <div className="space-y-6 animate-fade-in pb-safe">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Settings</h1>
-        <p className="text-white text-sm">
-          Company settings, permissions, and integrations
-        </p>
-      </div>
+    <>
+      <PageFrame>
+        <PageHero
+          eyebrow="Admin"
+          title="Settings"
+          description="Company profile, branding, integrations and team permissions."
+          tone="yellow"
+          actions={
+            <IconButton onClick={refresh} aria-label="Refresh settings">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          }
+        />
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        {isMobile ? (
-          <Select value={activeTab} onValueChange={setActiveTab}>
-            <SelectTrigger className="w-full h-12">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {tabOptions.map((tab) => (
-                <SelectItem key={tab.value} value={tab.value}>
-                  {tab.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        ) : (
-          <TabsList className="inline-flex">
-            {tabOptions.map((tab) => (
-              <TabsTrigger key={tab.value} value={tab.value}>
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        )}
-
-        {/* Company Settings */}
-        <TabsContent value="company" className="space-y-6">
-          {/* Logo & Branding Card */}
-          <Card className="overflow-hidden border-elec-yellow/20">
-            <CardHeader className="bg-gradient-to-r from-primary/10 to-transparent">
-              <CardTitle className="flex items-center gap-2">
-                <Palette className="h-5 w-5 text-elec-yellow" />
-                Logo & Branding
-              </CardTitle>
-              <CardDescription>
-                Your logo and colours appear on quotes, invoices, and emails
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-6 space-y-6">
-              {/* Logo Upload */}
-              <div className="space-y-4">
-                <Label className="text-base font-medium">Company Logo</Label>
-                <div className={`flex ${isMobile ? 'flex-col' : 'flex-row'} items-start gap-6`}>
-                  {/* Logo Preview */}
-                  <div
-                    className="relative group cursor-pointer"
-                    onClick={() => fileInputRef.current?.click()}
-                  >
-                    <div
-                      className={`${isMobile ? 'w-full h-32' : 'w-40 h-24'} rounded-xl border-2 border-dashed border-muted-foreground/30 flex items-center justify-center bg-muted/30 overflow-hidden transition-all hover:border-elec-yellow/50 hover:bg-muted/50`}
-                    >
-                      {brandingSettings.company_logo_url ? (
-                        <img
-                          src={brandingSettings.company_logo_url}
-                          alt="Company logo"
-                          className="max-w-full max-h-full object-contain p-2"
-                        />
-                      ) : (
-                        <div className="flex flex-col items-center gap-2 text-white">
-                          <ImageIcon className="h-8 w-8" />
-                          <span className="text-xs">No logo</span>
-                        </div>
-                      )}
-                    </div>
-                    {uploadingLogo && (
-                      <div className="absolute inset-0 bg-background/80 rounded-xl flex items-center justify-center">
-                        <Loader2 className="h-6 w-6 animate-spin text-elec-yellow" />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex-1 space-y-3">
-                    <input
-                      ref={fileInputRef}
-                      type="file"
-                      accept="image/*"
-                      onChange={handleLogoUpload}
-                      className="hidden"
-                    />
-                    <Button
-                      variant="outline"
-                      onClick={() => fileInputRef.current?.click()}
-                      disabled={uploadingLogo}
-                      className="w-full sm:w-auto h-12"
-                    >
-                      <Upload className="h-4 w-4 mr-2" />
-                      {uploadingLogo ? 'Uploading...' : 'Upload Logo'}
-                    </Button>
-                    <p className="text-xs text-white">
-                      PNG, JPG or SVG. Max 20MB. Recommended: 400x200px
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Brand Colours */}
-              <div className="space-y-4 pt-4 border-t border-border/50">
-                <Label className="text-base font-medium">Brand Colours</Label>
-                <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-4`}>
-                  {/* Primary Colour */}
-                  <div className="space-y-2">
-                    <Label className="text-sm text-white">Primary Colour</Label>
-                    <div className="flex items-center gap-3">
-                      <div className="relative">
-                        <input
-                          type="color"
-                          value={brandingSettings.brand_primary_color}
-                          onChange={(e) =>
-                            setBrandingSettings((prev) => ({
-                              ...prev,
-                              brand_primary_color: e.target.value,
-                            }))
-                          }
-                          className="w-14 h-14 rounded-xl border-2 border-border cursor-pointer appearance-none bg-transparent"
-                          style={{ padding: 0 }}
-                        />
-                      </div>
-                      <Input
-                        value={brandingSettings.brand_primary_color}
-                        onChange={(e) =>
-                          setBrandingSettings((prev) => ({
-                            ...prev,
-                            brand_primary_color: e.target.value,
-                          }))
-                        }
-                        placeholder="#f59e0b"
-                        className="font-mono uppercase h-12"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Secondary Colour */}
-                  <div className="space-y-2">
-                    <Label className="text-sm text-white">Secondary Colour</Label>
-                    <div className="flex items-center gap-3">
-                      <div className="relative">
-                        <input
-                          type="color"
-                          value={brandingSettings.brand_secondary_color}
-                          onChange={(e) =>
-                            setBrandingSettings((prev) => ({
-                              ...prev,
-                              brand_secondary_color: e.target.value,
-                            }))
-                          }
-                          className="w-14 h-14 rounded-xl border-2 border-border cursor-pointer appearance-none bg-transparent"
-                          style={{ padding: 0 }}
-                        />
-                      </div>
-                      <Input
-                        value={brandingSettings.brand_secondary_color}
-                        onChange={(e) =>
-                          setBrandingSettings((prev) => ({
-                            ...prev,
-                            brand_secondary_color: e.target.value,
-                          }))
-                        }
-                        placeholder="#0f172a"
-                        className="font-mono uppercase h-12"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Live Preview */}
-                <div className="mt-4 p-4 rounded-xl border border-border/50 bg-muted/20">
-                  <Label className="text-xs text-white mb-3 block">Preview</Label>
-                  <div className="flex items-center gap-3">
-                    <div
-                      className="h-10 flex-1 rounded-lg flex items-center justify-center text-sm font-medium"
-                      style={{
-                        backgroundColor: brandingSettings.brand_secondary_color,
-                        color: '#fff',
-                      }}
-                    >
-                      Header
-                    </div>
-                    <div
-                      className="h-10 px-6 rounded-lg flex items-center justify-center text-sm font-medium"
-                      style={{
-                        backgroundColor: brandingSettings.brand_primary_color,
-                        color: '#fff',
-                      }}
-                    >
-                      Button
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <Button
-                onClick={handleSaveBranding}
-                disabled={savingBranding}
-                className="w-full sm:w-auto h-12"
-              >
-                {savingBranding ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4 mr-2" />
-                )}
-                {savingBranding ? 'Saving...' : 'Save Branding'}
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Company Profile Card */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Building2 className="h-5 w-5 text-elec-yellow" />
-                Company Profile
-              </CardTitle>
-              <CardDescription>Your company details for quotes and invoices</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {loadingCompany ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin text-white" />
-                </div>
-              ) : (
-                <>
-                  <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-4`}>
-                    <div className="space-y-2">
-                      <Label>Company Name</Label>
-                      <Input
-                        value={companySettings.company_name}
-                        onChange={(e) =>
-                          setCompanySettings((prev) => ({ ...prev, company_name: e.target.value }))
-                        }
-                        placeholder="Your Company Ltd"
-                        className="h-12"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Company Number</Label>
-                      <Input
-                        value={companySettings.company_number}
-                        onChange={(e) =>
-                          setCompanySettings((prev) => ({
-                            ...prev,
-                            company_number: e.target.value,
-                          }))
-                        }
-                        placeholder="12345678"
-                        className="h-12"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>VAT Number</Label>
-                      <Input
-                        value={companySettings.company_vat_number}
-                        onChange={(e) =>
-                          setCompanySettings((prev) => ({
-                            ...prev,
-                            company_vat_number: e.target.value,
-                          }))
-                        }
-                        placeholder="GB123456789"
-                        className="h-12"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Phone</Label>
-                      <Input
-                        value={companySettings.company_phone}
-                        onChange={(e) =>
-                          setCompanySettings((prev) => ({ ...prev, company_phone: e.target.value }))
-                        }
-                        placeholder="+44 123 456 7890"
-                        className="h-12"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Email</Label>
-                      <Input
-                        type="email"
-                        value={companySettings.company_email}
-                        onChange={(e) =>
-                          setCompanySettings((prev) => ({ ...prev, company_email: e.target.value }))
-                        }
-                        placeholder="info@yourcompany.com"
-                        className="h-12"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Website</Label>
-                      <Input
-                        value={companySettings.company_website}
-                        onChange={(e) =>
-                          setCompanySettings((prev) => ({
-                            ...prev,
-                            company_website: e.target.value,
-                          }))
-                        }
-                        placeholder="https://yourcompany.com"
-                        className="h-12"
-                      />
-                    </div>
-                    <div className={`space-y-2 ${isMobile ? '' : 'col-span-2'}`}>
-                      <Label>Address</Label>
-                      <Input
-                        value={companySettings.company_address}
-                        onChange={(e) =>
-                          setCompanySettings((prev) => ({
-                            ...prev,
-                            company_address: e.target.value,
-                          }))
-                        }
-                        placeholder="123 Business Park, City, Postcode"
-                        className="h-12"
-                      />
-                    </div>
-                  </div>
-                  <Button
-                    onClick={async () => {
-                      setSavingCompany(true);
-                      const success = await saveCompanySettings(companySettings);
-                      setSavingCompany(false);
-                      if (success) {
-                        toast({
-                          title: 'Saved',
-                          description: 'Company details updated successfully.',
-                        });
-                      } else {
-                        toast({
-                          title: 'Error',
-                          description: 'Failed to save company details.',
-                          variant: 'destructive',
-                        });
-                      }
-                    }}
-                    disabled={savingCompany}
-                    className="w-full sm:w-auto h-12"
-                  >
-                    {savingCompany ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <Save className="h-4 w-4 mr-2" />
-                    )}
-                    {savingCompany ? 'Saving...' : 'Save Changes'}
-                  </Button>
-                </>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Payment Details Card */}
-          <Card className="overflow-hidden border-green-500/20">
-            <CardHeader className="bg-gradient-to-r from-green-500/10 to-transparent">
-              <CardTitle className="flex items-center gap-2">
-                <CreditCard className="h-5 w-5 text-green-500" />
-                Payment Details
-              </CardTitle>
-              <CardDescription>Bank details shown on invoices for client payments</CardDescription>
-            </CardHeader>
-            <CardContent className="p-6 space-y-4">
-              <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-3'} gap-4`}>
-                <div className="space-y-2">
-                  <Label>Account Name</Label>
-                  <Input
-                    value={companySettings.bank_account_name}
-                    onChange={(e) =>
-                      setCompanySettings((prev) => ({ ...prev, bank_account_name: e.target.value }))
-                    }
-                    placeholder="Your Company Ltd"
-                    className="h-12"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Sort Code</Label>
-                  <Input
-                    value={companySettings.bank_sort_code}
-                    onChange={(e) =>
-                      setCompanySettings((prev) => ({ ...prev, bank_sort_code: e.target.value }))
-                    }
-                    placeholder="00-00-00"
-                    className="h-12 font-mono"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Account Number</Label>
-                  <Input
-                    value={companySettings.bank_account_number}
-                    onChange={(e) =>
-                      setCompanySettings((prev) => ({
-                        ...prev,
-                        bank_account_number: e.target.value,
-                      }))
-                    }
-                    placeholder="12345678"
-                    className="h-12 font-mono"
-                  />
-                </div>
-              </div>
-              <p className="text-sm text-white">
-                These details will appear on invoices sent to clients. The invoice number will be
-                suggested as the payment reference.
-              </p>
-              <Button
-                onClick={async () => {
-                  setSavingCompany(true);
-                  const success = await saveCompanySettings(companySettings);
-                  setSavingCompany(false);
-                  if (success) {
-                    toast({ title: 'Saved', description: 'Payment details updated successfully.' });
-                  } else {
-                    toast({
-                      title: 'Error',
-                      description: 'Failed to save payment details.',
-                      variant: 'destructive',
-                    });
-                  }
-                }}
-                disabled={savingCompany}
-                className="w-full sm:w-auto h-12"
-              >
-                {savingCompany ? (
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4 mr-2" />
-                )}
-                {savingCompany ? 'Saving...' : 'Save Payment Details'}
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Notification Email */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Mail className="h-5 w-5 text-elec-yellow" />
-                Notification Email
-              </CardTitle>
-              <CardDescription>Where quote and invoice notifications are sent</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label>Email Address</Label>
+        {/* General */}
+        <ListCard>
+          <ListCardHeader
+            tone="yellow"
+            title="General"
+            meta={<Pill tone="yellow">Company</Pill>}
+          />
+          <ListBody>
+            <ListRow
+              title="Company name"
+              subtitle="Shown on quotes, invoices and emails"
+              trailing={
+                <Input
+                  value={companySettings.company_name}
+                  onChange={(e) => updateCompany({ company_name: e.target.value })}
+                  placeholder="Your Company Ltd"
+                  className={`${inputClass} w-56`}
+                />
+              }
+            />
+            <ListRow
+              title="Company number"
+              subtitle="Companies House registration"
+              trailing={
+                <Input
+                  value={companySettings.company_number}
+                  onChange={(e) => updateCompany({ company_number: e.target.value })}
+                  placeholder="12345678"
+                  className={`${inputClass} w-40`}
+                />
+              }
+            />
+            <ListRow
+              title="VAT number"
+              subtitle="Used on invoices where applicable"
+              trailing={
+                <Input
+                  value={companySettings.company_vat_number}
+                  onChange={(e) => updateCompany({ company_vat_number: e.target.value })}
+                  placeholder="GB123456789"
+                  className={`${inputClass} w-40`}
+                />
+              }
+            />
+            <ListRow
+              title="Phone"
+              subtitle="Primary contact number"
+              trailing={
+                <Input
+                  value={companySettings.company_phone}
+                  onChange={(e) => updateCompany({ company_phone: e.target.value })}
+                  placeholder="+44 123 456 7890"
+                  className={`${inputClass} w-56`}
+                />
+              }
+            />
+            <ListRow
+              title="Email"
+              subtitle="Public contact address"
+              trailing={
                 <Input
                   type="email"
-                  placeholder="e.g. accounts@yourcompany.com"
-                  value={notificationEmail}
-                  onChange={(e) => setNotificationEmail(e.target.value)}
-                  className="h-12"
+                  value={companySettings.company_email}
+                  onChange={(e) => updateCompany({ company_email: e.target.value })}
+                  placeholder="info@yourcompany.com"
+                  className={`${inputClass} w-64`}
                 />
-                <p className="text-xs text-white">
-                  You'll receive notifications here when clients accept or decline quotes
-                </p>
-              </div>
-              <Button
-                onClick={handleSaveNotificationEmail}
-                disabled={savingEmail}
-                className="w-full sm:w-auto h-12"
-              >
-                <Save className="h-4 w-4 mr-2" />
-                {savingEmail ? 'Saving...' : 'Save Email'}
-              </Button>
-            </CardContent>
-          </Card>
+              }
+            />
+            <ListRow
+              title="Website"
+              subtitle="Linked from quote PDFs"
+              trailing={
+                <Input
+                  value={companySettings.company_website}
+                  onChange={(e) => updateCompany({ company_website: e.target.value })}
+                  placeholder="https://yourcompany.com"
+                  className={`${inputClass} w-64`}
+                />
+              }
+            />
+            <ListRow
+              title="Registered address"
+              subtitle="Used on letterhead and invoices"
+              trailing={
+                <Input
+                  value={companySettings.company_address}
+                  onChange={(e) => updateCompany({ company_address: e.target.value })}
+                  placeholder="123 Business Park, City, Postcode"
+                  className={`${inputClass} w-72`}
+                />
+              }
+            />
+          </ListBody>
+        </ListCard>
 
-          {/* Team Members */}
-          <Card>
-            <CardHeader>
-              <div
-                className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'}`}
-              >
-                <div>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5 text-elec-yellow" />
-                    Dashboard Users
-                  </CardTitle>
-                  <CardDescription>Manage who has access to the employer dashboard</CardDescription>
-                </div>
-                <Button
-                  size="sm"
-                  className={isMobile ? 'w-full h-12' : ''}
-                  onClick={() => setShowInviteDialog(true)}
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add User
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
-              {teamLoading ? (
-                <div className="flex items-center justify-center py-8">
-                  <Loader2 className="h-6 w-6 animate-spin text-white" />
-                </div>
-              ) : teamMembers.length === 0 ? (
-                <div className="text-center py-8">
-                  <Users className="h-12 w-12 text-white mx-auto mb-3" />
-                  <p className="text-white mb-4">No team members yet</p>
-                  <Button onClick={() => setShowInviteDialog(true)}>
-                    <Plus className="h-4 w-4 mr-2" />
-                    Invite Team Member
-                  </Button>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  {teamMembers.map((member) => (
-                    <div
-                      key={member.id}
-                      className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'} p-4 rounded-xl bg-muted/30 border border-border/50`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <Avatar className="h-12 w-12 border-2 border-elec-yellow/20">
-                          <AvatarFallback className="bg-elec-yellow/10 text-elec-yellow font-medium">
-                            {(member.name || member.email)
-                              .split(/[ @]/)
-                              .map((n) => n[0]?.toUpperCase())
-                              .slice(0, 2)
-                              .join('')}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="font-medium">{member.name || member.email}</p>
-                          <p className="text-sm text-white">{member.email}</p>
-                        </div>
-                      </div>
-                      <div className={`flex items-center gap-3 ${isMobile ? 'ml-16' : ''}`}>
-                        <Badge
-                          variant={member.status === 'Pending' ? 'outline' : 'secondary'}
-                          className={`h-7 ${member.status === 'Pending' ? 'border-warning text-warning' : ''}`}
-                        >
-                          {member.status === 'Pending' ? 'Pending' : member.role}
-                        </Badge>
-                        {member.status === 'Pending' && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-9 w-9"
-                            onClick={() => resendInvitation.mutate(member.id)}
-                            disabled={resendInvitation.isPending}
-                          >
-                            <RotateCw
-                              className={`h-4 w-4 ${resendInvitation.isPending ? 'animate-spin' : ''}`}
-                            />
-                          </Button>
-                        )}
-                        {member.role !== 'Owner' && (
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="text-destructive h-9 w-9"
-                            onClick={() => removeTeamMember.mutate(member.id)}
-                            disabled={removeTeamMember.isPending}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Invite Dialog */}
-          <InviteTeamMemberDialog
-            open={showInviteDialog}
-            onOpenChange={setShowInviteDialog}
-            onInvite={handleInviteTeamMember}
-            isInviting={inviteTeamMember.isPending}
+        {/* Branding */}
+        <ListCard>
+          <ListCardHeader
+            tone="purple"
+            title="Branding"
+            meta={<Pill tone="purple">Identity</Pill>}
           />
-        </TabsContent>
-
-        {/* Voice Assistant Settings */}
-        <TabsContent value="voice" className="space-y-6">
-          <VoiceSettingsPanel />
-        </TabsContent>
-
-        {/* Permissions */}
-        <TabsContent value="permissions" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Key className="h-5 w-5 text-elec-yellow" />
-                Role Permissions
-              </CardTitle>
-              <CardDescription>Configure what each role can access</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Role Selector */}
-              <div className={`flex gap-2 ${isMobile ? 'flex-wrap' : ''}`}>
-                {(['QS', 'Supervisor', 'Operative', 'Apprentice'] as TeamRole[]).map((role) => (
-                  <Button
-                    key={role}
-                    variant={selectedRole === role ? 'default' : 'outline'}
-                    size={isMobile ? 'default' : 'sm'}
-                    onClick={() => setSelectedRole(role)}
-                    className={isMobile ? 'flex-1 h-12' : ''}
+          <ListBody>
+            <ListRow
+              title="Company logo"
+              subtitle="PNG, JPG or SVG. Max 20MB. Recommended 400x200px"
+              lead={
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="relative h-14 w-20 rounded-lg border border-white/[0.08] bg-[hsl(0_0%_10%)] flex items-center justify-center overflow-hidden touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
+                >
+                  {brandingSettings.company_logo_url ? (
+                    <img
+                      src={brandingSettings.company_logo_url}
+                      alt="Company logo"
+                      className="max-w-full max-h-full object-contain p-1.5"
+                    />
+                  ) : (
+                    <ImageIcon className="h-5 w-5 text-white" />
+                  )}
+                  {uploadingLogo && (
+                    <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
+                      <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+                    </div>
+                  )}
+                </button>
+              }
+              trailing={
+                <>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="hidden"
+                  />
+                  <SecondaryButton
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploadingLogo}
                   >
-                    {role}
-                  </Button>
-                ))}
-              </div>
-
-              {/* Permissions Matrix */}
-              <div className="space-y-2">
-                {permissionsList.map((perm) => (
+                    <Upload className="h-4 w-4 mr-2" />
+                    {uploadingLogo ? 'Uploading…' : 'Upload'}
+                  </SecondaryButton>
+                </>
+              }
+            />
+            <ListRow
+              title="Primary colour"
+              subtitle="Buttons, accents and CTAs"
+              trailing={
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    value={brandingSettings.brand_primary_color}
+                    onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
+                    className="h-11 w-11 rounded-lg border border-white/10 cursor-pointer appearance-none bg-transparent touch-manipulation"
+                    style={{ padding: 0 }}
+                  />
+                  <Input
+                    value={brandingSettings.brand_primary_color}
+                    onChange={(e) => updateBranding({ brand_primary_color: e.target.value })}
+                    placeholder="#f59e0b"
+                    className={`${inputClass} w-32 font-mono uppercase`}
+                  />
+                </div>
+              }
+            />
+            <ListRow
+              title="Secondary colour"
+              subtitle="Headers and panel backgrounds"
+              trailing={
+                <div className="flex items-center gap-2">
+                  <input
+                    type="color"
+                    value={brandingSettings.brand_secondary_color}
+                    onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
+                    className="h-11 w-11 rounded-lg border border-white/10 cursor-pointer appearance-none bg-transparent touch-manipulation"
+                    style={{ padding: 0 }}
+                  />
+                  <Input
+                    value={brandingSettings.brand_secondary_color}
+                    onChange={(e) => updateBranding({ brand_secondary_color: e.target.value })}
+                    placeholder="#0f172a"
+                    className={`${inputClass} w-32 font-mono uppercase`}
+                  />
+                </div>
+              }
+            />
+            <ListRow
+              title="Live preview"
+              subtitle="How your brand looks together"
+              trailing={
+                <div className="flex items-center gap-2">
                   <div
-                    key={perm.id}
-                    className="flex items-center justify-between p-4 bg-muted/30 rounded-xl border border-border/50"
+                    className="h-9 px-3 rounded-md flex items-center text-[12px] font-medium text-white border border-white/10"
+                    style={{ backgroundColor: brandingSettings.brand_secondary_color }}
                   >
-                    <div className="flex items-center gap-3 flex-1">
-                      <Checkbox
-                        id={perm.id}
-                        checked={rolePerms[selectedRole]?.includes(perm.id) || false}
-                        onCheckedChange={() => togglePermission(perm.id)}
-                        className="h-5 w-5"
-                      />
-                      <div className="flex-1">
-                        <label htmlFor={perm.id} className="font-medium text-sm cursor-pointer">
-                          {perm.name}
-                        </label>
-                        <p className="text-xs text-white">{perm.description}</p>
-                      </div>
-                    </div>
+                    Header
                   </div>
-                ))}
-              </div>
-
-              <Button onClick={handleSavePermissions} className="w-full sm:w-auto h-12">
-                <Save className="h-4 w-4 mr-2" />
-                Save {selectedRole} Permissions
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Integrations - Redesigned */}
-        <TabsContent value="integrations" className="space-y-6">
-          {/* Stripe Connect Card */}
-          <StripeConnectCard />
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Link2 className="h-5 w-5 text-elec-yellow" />
-                Other Integrations
-              </CardTitle>
-              <CardDescription>
-                Connect third-party services to enhance your workflow
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {integrations.map((integration, idx) => (
-                <div
-                  key={idx}
-                  className={`flex ${isMobile ? 'flex-col' : 'items-center'} gap-4 p-4 rounded-xl border border-border/50 bg-muted/20 transition-all hover:bg-muted/40`}
-                >
-                  <div className={`flex items-center gap-4 ${isMobile ? 'w-full' : 'flex-1'}`}>
-                    <div
-                      className={`w-14 h-14 rounded-xl ${integration.color} flex items-center justify-center text-foreground font-bold text-xl shrink-0`}
-                    >
-                      {integration.icon}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className="font-semibold">{integration.name}</h4>
-                        {integration.connected && (
-                          <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 h-6">
-                            <CheckCircle2 className="h-3 w-3 mr-1" />
-                            Connected
-                          </Badge>
-                        )}
-                      </div>
-                      <p className="text-sm text-white mt-0.5">
-                        {integration.description}
-                      </p>
-                    </div>
-                  </div>
-                  <Button
-                    variant={integration.connected ? 'outline' : 'default'}
-                    className={`${isMobile ? 'w-full' : ''} h-11 shrink-0`}
+                  <div
+                    className="h-9 px-4 rounded-md flex items-center text-[12px] font-medium text-white border border-white/10"
+                    style={{ backgroundColor: brandingSettings.brand_primary_color }}
                   >
-                    {integration.connected ? 'Manage' : 'Connect'}
-                  </Button>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-
-          {/* Document Templates */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-elec-yellow" />
-                Document Templates
-              </CardTitle>
-              <CardDescription>
-                Manage your RAMS, method statement, and briefing pack templates
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {[
-                'RAMS Template',
-                'Method Statement Template',
-                'Briefing Pack Template',
-                'Closeout Report Template',
-              ].map((template, idx) => (
-                <div
-                  key={idx}
-                  className={`flex ${isMobile ? 'flex-col gap-3' : 'items-center justify-between'} p-4 bg-muted/30 rounded-xl border border-border/50`}
-                >
-                  <span className="font-medium">{template}</span>
-                  <div className={`flex gap-2 ${isMobile ? 'w-full' : ''}`}>
-                    <Button variant="outline" size="sm" className={isMobile ? 'flex-1 h-11' : ''}>
-                      Edit
-                    </Button>
-                    <Button variant="outline" size="sm" className={isMobile ? 'flex-1 h-11' : ''}>
-                      Download
-                    </Button>
+                    Button
                   </div>
                 </div>
-              ))}
-            </CardContent>
-          </Card>
-        </TabsContent>
+              }
+            />
+            <ListRow
+              title="Save branding"
+              subtitle="Apply colour and logo changes"
+              trailing={
+                <PrimaryButton onClick={handleSaveBranding} disabled={savingBranding}>
+                  {savingBranding ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : null}
+                  {savingBranding ? 'Saving…' : 'Save branding'}
+                </PrimaryButton>
+              }
+            />
+          </ListBody>
+        </ListCard>
+
+        {/* Voice Assistant */}
+        <ListCard>
+          <ListCardHeader
+            tone="indigo"
+            title="Voice assistant"
+            meta={<Pill tone="indigo">Mate</Pill>}
+          />
+          <div className="p-5 sm:p-6">
+            <VoiceSettingsPanel />
+          </div>
+        </ListCard>
 
         {/* Notifications */}
-        <TabsContent value="notifications" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Bell className="h-5 w-5 text-elec-yellow" />
-                Notification Preferences
-              </CardTitle>
-              <CardDescription>Control what notifications you receive</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {[
-                  {
-                    key: 'emailAlerts',
-                    label: 'Email Alerts',
-                    description: 'Receive important updates via email',
-                  },
-                  {
-                    key: 'certificationReminders',
-                    label: 'Certification Reminders',
-                    description: 'Get notified when certifications are expiring',
-                  },
-                  {
-                    key: 'jobUpdates',
-                    label: 'Job Updates',
-                    description: 'Notifications about job progress and completions',
-                  },
-                  {
-                    key: 'invoiceAlerts',
-                    label: 'Invoice Alerts',
-                    description: 'Payment reminders and overdue notices',
-                  },
-                  {
-                    key: 'tenderDeadlines',
-                    label: 'Tender Deadlines',
-                    description: 'Reminders for upcoming tender deadlines',
-                  },
-                  {
-                    key: 'safetyAlerts',
-                    label: 'Safety Alerts',
-                    description: 'Immediate notifications for safety incidents',
-                  },
-                ].map((item) => (
-                  <div
-                    key={item.key}
-                    className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/50"
-                  >
-                    <div className="flex-1 pr-4">
-                      <p className="font-medium">{item.label}</p>
-                      <p className="text-sm text-white">{item.description}</p>
-                    </div>
-                    <Switch
-                      checked={notifications[item.key as keyof typeof notifications]}
-                      onCheckedChange={(checked) =>
-                        setNotifications((prev) => ({ ...prev, [item.key]: checked }))
-                      }
-                    />
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+        <ListCard>
+          <ListCardHeader
+            tone="blue"
+            title="Notifications"
+            meta={<Pill tone="blue">Alerts</Pill>}
+          />
+          <ListBody>
+            <ListRow
+              title="Notification email"
+              subtitle="Where quote and invoice alerts are sent"
+              trailing={
+                <div className="flex items-center gap-2">
+                  <Input
+                    type="email"
+                    placeholder="accounts@yourcompany.com"
+                    value={notificationEmail}
+                    onChange={(e) => setNotificationEmail(e.target.value)}
+                    className={`${inputClass} w-64`}
+                  />
+                  <PrimaryButton onClick={handleSaveNotificationEmail} disabled={savingEmail}>
+                    {savingEmail ? 'Saving…' : 'Save'}
+                  </PrimaryButton>
+                </div>
+              }
+            />
+            {notificationItems.map((item) => (
+              <ListRow
+                key={item.key}
+                title={item.label}
+                subtitle={item.description}
+                trailing={
+                  <Switch
+                    checked={notifications[item.key as keyof typeof notifications]}
+                    onCheckedChange={(checked) =>
+                      setNotifications((prev) => ({ ...prev, [item.key]: checked }))
+                    }
+                  />
+                }
+              />
+            ))}
+          </ListBody>
+        </ListCard>
 
-        {/* Preferences */}
-        <TabsContent value="preferences" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Palette className="h-5 w-5 text-elec-yellow" />
-                Display Preferences
-              </CardTitle>
-              <CardDescription>Customise your dashboard experience</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                {[
-                  {
-                    label: 'Dark Mode',
-                    description: 'Use dark theme throughout the app',
-                    defaultChecked: true,
-                  },
-                  {
-                    label: 'Compact View',
-                    description: 'Show more information in less space',
-                    defaultChecked: false,
-                  },
-                  {
-                    label: 'Animations',
-                    description: 'Enable smooth transitions and animations',
-                    defaultChecked: true,
-                  },
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-4 rounded-xl bg-muted/30 border border-border/50"
-                  >
-                    <div className="flex-1 pr-4">
-                      <p className="font-medium">{item.label}</p>
-                      <p className="text-sm text-white">{item.description}</p>
-                    </div>
-                    <Switch defaultChecked={item.defaultChecked} />
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        {/* Security */}
+        <ListCard>
+          <ListCardHeader
+            tone="orange"
+            title="Security"
+            meta={<Pill tone="orange">Account</Pill>}
+          />
+          <ListBody>
+            <ListRow
+              title="Change password"
+              subtitle="Update your sign-in credentials"
+              trailing={
+                <SecondaryButton>Change</SecondaryButton>
+              }
+            />
+            <ListRow
+              title="Two-factor authentication"
+              subtitle="Add an extra step at sign-in"
+              trailing={
+                <SecondaryButton>Enable</SecondaryButton>
+              }
+            />
+            <ListRow
+              title="Session timeout"
+              subtitle="Auto sign-out after inactivity"
+              trailing={
+                <Select defaultValue="60">
+                  <SelectTrigger className={`${selectTriggerClass} w-40`}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="15">15 minutes</SelectItem>
+                    <SelectItem value="30">30 minutes</SelectItem>
+                    <SelectItem value="60">1 hour</SelectItem>
+                    <SelectItem value="240">4 hours</SelectItem>
+                    <SelectItem value="never">Never</SelectItem>
+                  </SelectContent>
+                </Select>
+              }
+            />
+            <ListRow
+              title="Password policy"
+              subtitle="Minimum strength requirements"
+              trailing={
+                <Select defaultValue="strong">
+                  <SelectTrigger className={`${selectTriggerClass} w-40`}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="basic">Basic</SelectItem>
+                    <SelectItem value="strong">Strong</SelectItem>
+                    <SelectItem value="enterprise">Enterprise</SelectItem>
+                  </SelectContent>
+                </Select>
+              }
+            />
+            <ListRow
+              title="API keys"
+              subtitle="Manage developer access tokens"
+              trailing={
+                <SecondaryButton>Manage</SecondaryButton>
+              }
+            />
+          </ListBody>
+        </ListCard>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5 text-elec-yellow" />
-                Security
-              </CardTitle>
-              <CardDescription>Manage your account security settings</CardDescription>
-            </CardHeader>
-            <CardContent className={`flex ${isMobile ? 'flex-col' : 'flex-wrap'} gap-3`}>
-              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>
-                Change Password
-              </Button>
-              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>
-                Enable Two-Factor Authentication
-              </Button>
-              <Button variant="outline" className={isMobile ? 'w-full h-12' : ''}>
-                Manage API Keys
-              </Button>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+        {/* Integrations */}
+        <ListCard>
+          <ListCardHeader
+            tone="emerald"
+            title="Integrations"
+            meta={<Pill tone="emerald">{integrations.length}</Pill>}
+          />
+          <ListBody>
+            {integrations.map((integration) => (
+              <ListRow
+                key={integration.name}
+                accent={integration.tone}
+                title={
+                  <span className="inline-flex items-center gap-2">
+                    {integration.name}
+                    {integration.connected && (
+                      <Pill tone="emerald">Connected</Pill>
+                    )}
+                  </span>
+                }
+                subtitle={integration.description}
+                trailing={
+                  <SecondaryButton>
+                    {integration.connected ? 'Manage' : 'Connect'}
+                  </SecondaryButton>
+                }
+              />
+            ))}
+          </ListBody>
+        </ListCard>
+
+        <div className="hidden">
+          <StripeConnectCard />
+        </div>
+
+        {/* Document templates */}
+        <ListCard>
+          <ListCardHeader
+            tone="amber"
+            title="Document templates"
+            meta={<Pill tone="amber">RAMS</Pill>}
+          />
+          <ListBody>
+            {[
+              'RAMS template',
+              'Method statement template',
+              'Briefing pack template',
+              'Closeout report template',
+            ].map((template) => (
+              <ListRow
+                key={template}
+                title={template}
+                subtitle="Branded with your colours and logo"
+                trailing={
+                  <div className="flex items-center gap-2">
+                    <SecondaryButton>Edit</SecondaryButton>
+                    <SecondaryButton>Download</SecondaryButton>
+                  </div>
+                }
+              />
+            ))}
+          </ListBody>
+        </ListCard>
+
+        {/* Team — Members */}
+        <ListCard>
+          <ListCardHeader
+            tone="cyan"
+            title="Team members"
+            meta={<Pill tone="cyan">{teamMembers.length}</Pill>}
+            action="Invite"
+            onAction={() => setShowInviteDialog(true)}
+          />
+          {teamLoading ? (
+            <div className="p-6">
+              <LoadingBlocks />
+            </div>
+          ) : teamMembers.length === 0 ? (
+            <EmptyState
+              title="No team members yet"
+              description="Invite operatives, supervisors and PMs to access the dashboard."
+              action="Invite team member"
+              onAction={() => setShowInviteDialog(true)}
+            />
+          ) : (
+            <ListBody>
+              {teamMembers.map((member) => (
+                <ListRow
+                  key={member.id}
+                  lead={<EditorialAvatar initials={getInitials(member)} />}
+                  title={member.name || member.email}
+                  subtitle={member.email}
+                  trailing={
+                    <>
+                      <Pill tone={member.status === 'Pending' ? 'amber' : 'emerald'}>
+                        {member.status === 'Pending' ? 'Pending' : member.role}
+                      </Pill>
+                      {member.status === 'Pending' && (
+                        <IconButton
+                          aria-label="Resend invitation"
+                          onClick={() => resendInvitation.mutate(member.id)}
+                          disabled={resendInvitation.isPending}
+                        >
+                          <RotateCw
+                            className={`h-4 w-4 ${resendInvitation.isPending ? 'animate-spin' : ''}`}
+                          />
+                        </IconButton>
+                      )}
+                      {member.role !== 'Owner' && (
+                        <IconButton
+                          aria-label="Remove member"
+                          onClick={() => removeTeamMember.mutate(member.id)}
+                          disabled={removeTeamMember.isPending}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </IconButton>
+                      )}
+                    </>
+                  }
+                />
+              ))}
+            </ListBody>
+          )}
+        </ListCard>
+
+        {/* Team — Roles & permissions */}
+        <ListCard>
+          <ListCardHeader
+            tone="cyan"
+            title="Roles & permissions"
+            meta={<Pill tone="cyan">{selectedRole}</Pill>}
+            action="Save"
+            onAction={handleSavePermissions}
+          />
+          <div className="px-5 sm:px-6 pt-4 pb-2">
+            <Eyebrow>Select role</Eyebrow>
+            <div className={`mt-3 flex gap-2 ${isMobile ? 'flex-wrap' : ''}`}>
+              {(['QS', 'Supervisor', 'Operative', 'Apprentice'] as TeamRole[]).map((role) => {
+                const active = selectedRole === role;
+                return (
+                  <button
+                    key={role}
+                    onClick={() => setSelectedRole(role)}
+                    className={`h-11 px-4 rounded-full text-[12.5px] font-medium touch-manipulation transition-colors ${
+                      active
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-[hsl(0_0%_10%)] text-white border border-white/10 hover:bg-white/[0.06]'
+                    } ${isMobile ? 'flex-1' : ''}`}
+                  >
+                    {role}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          <Divider />
+          <ListBody>
+            {permissionsList.map((perm) => (
+              <ListRow
+                key={perm.id}
+                lead={
+                  <Checkbox
+                    id={perm.id}
+                    checked={rolePerms[selectedRole]?.includes(perm.id) || false}
+                    onCheckedChange={() => togglePermission(perm.id)}
+                    className={checkboxClass}
+                  />
+                }
+                title={perm.name}
+                subtitle={perm.description}
+              />
+            ))}
+          </ListBody>
+        </ListCard>
+
+        {/* Billing — payment details */}
+        <ListCard>
+          <ListCardHeader
+            tone="amber"
+            title="Billing & payments"
+            meta={<Pill tone="amber">Bank</Pill>}
+          />
+          <ListBody>
+            <ListRow
+              title="Account name"
+              subtitle="Appears on invoice payment instructions"
+              trailing={
+                <Input
+                  value={companySettings.bank_account_name}
+                  onChange={(e) => updateCompany({ bank_account_name: e.target.value })}
+                  placeholder="Your Company Ltd"
+                  className={`${inputClass} w-64`}
+                />
+              }
+            />
+            <ListRow
+              title="Sort code"
+              subtitle="UK bank sort code"
+              trailing={
+                <Input
+                  value={companySettings.bank_sort_code}
+                  onChange={(e) => updateCompany({ bank_sort_code: e.target.value })}
+                  placeholder="00-00-00"
+                  className={`${inputClass} w-32 font-mono`}
+                />
+              }
+            />
+            <ListRow
+              title="Account number"
+              subtitle="8-digit account number"
+              trailing={
+                <Input
+                  value={companySettings.bank_account_number}
+                  onChange={(e) => updateCompany({ bank_account_number: e.target.value })}
+                  placeholder="12345678"
+                  className={`${inputClass} w-40 font-mono`}
+                />
+              }
+            />
+            <ListRow
+              title="Subscription"
+              subtitle="Manage plan and payment methods"
+              trailing={
+                <SecondaryButton>Manage</SecondaryButton>
+              }
+            />
+            <ListRow
+              title="Invoices"
+              subtitle="View and download past invoices"
+              trailing={
+                <SecondaryButton>View</SecondaryButton>
+              }
+            />
+            <ListRow
+              title="Save payment details"
+              subtitle="Update bank info shown on invoices"
+              trailing={
+                <PrimaryButton onClick={handleSaveCompany} disabled={savingCompany}>
+                  {savingCompany ? 'Saving…' : 'Save'}
+                </PrimaryButton>
+              }
+            />
+          </ListBody>
+        </ListCard>
+
+        {/* Danger zone */}
+        <ListCard className="border-red-500/30">
+          <ListCardHeader
+            tone="red"
+            title="Danger zone"
+            meta={<Pill tone="red">Irreversible</Pill>}
+          />
+          <ListBody>
+            <ListRow
+              title="Export all data"
+              subtitle="Download a JSON archive of every record"
+              trailing={
+                <SecondaryButton>Export</SecondaryButton>
+              }
+            />
+            <ListRow
+              title="Delete account"
+              subtitle="Permanently remove your organisation and all data"
+              trailing={
+                <DestructiveButton>
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Delete
+                </DestructiveButton>
+              }
+            />
+          </ListBody>
+        </ListCard>
+
+        <InviteTeamMemberDialog
+          open={showInviteDialog}
+          onOpenChange={setShowInviteDialog}
+          onInvite={handleInviteTeamMember}
+          isInviting={inviteTeamMember.isPending}
+        />
+      </PageFrame>
+
+      {/* Sticky save bar */}
+      {dirty && (
+        <div className="fixed bottom-0 inset-x-0 z-40 border-t border-white/[0.06] bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl pb-safe">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-[13px] font-semibold text-white truncate">Unsaved changes</div>
+              <div className="text-[11.5px] text-white truncate">
+                Save to apply company and branding updates.
+              </div>
+            </div>
+            <div className="shrink-0 flex items-center gap-2">
+              <SecondaryButton onClick={refresh}>Discard</SecondaryButton>
+              <PrimaryButton
+                onClick={handleSaveAll}
+                disabled={savingCompany || savingBranding}
+              >
+                {savingCompany || savingBranding ? (
+                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                ) : null}
+                {savingCompany || savingBranding ? 'Saving…' : 'Save all'}
+              </PrimaryButton>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

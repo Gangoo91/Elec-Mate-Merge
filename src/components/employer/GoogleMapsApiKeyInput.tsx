@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { MapPin, ExternalLink, Loader2 } from 'lucide-react';
 import { useGoogleMaps } from '@/contexts/GoogleMapsContext';
 import { useToast } from '@/hooks/use-toast';
+import { Field, PrimaryButton, inputClass } from './editorial';
 
 interface GoogleMapsApiKeyInputProps {
   title?: string;
@@ -29,7 +28,7 @@ export function GoogleMapsApiKeyInput({
           title: 'Saved',
           description: 'Google Maps API key has been saved',
         });
-      } catch (error) {
+      } catch {
         toast({
           variant: 'destructive',
           title: 'Error',
@@ -42,49 +41,50 @@ export function GoogleMapsApiKeyInput({
   };
 
   return (
-    <Card className="bg-elec-gray border-border">
-      <CardContent className="p-6 space-y-4">
-        <div className="text-center space-y-2">
-          <div className="w-12 h-12 bg-elec-yellow/10 rounded-full flex items-center justify-center mx-auto">
-            <MapPin className="h-6 w-6 text-elec-yellow" />
-          </div>
-          <h3 className="font-semibold text-lg">{title}</h3>
-          <p className="text-sm text-white">{description}</p>
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 space-y-4">
+      <div className="text-center space-y-2">
+        <div className="w-12 h-12 bg-elec-yellow/10 rounded-full flex items-center justify-center mx-auto">
+          <MapPin className="h-6 w-6 text-elec-yellow" />
         </div>
+        <h3 className="font-semibold text-lg text-white">{title}</h3>
+        <p className="text-sm text-white">{description}</p>
+      </div>
 
-        <div className="space-y-3">
+      <div className="space-y-3">
+        <Field label="Google Maps API Key">
           <Input
             placeholder="AIza..."
             value={tokenInput}
             onChange={(e) => setTokenInput(e.target.value)}
-            className="h-12"
+            className={inputClass}
           />
-          <Button
-            className="w-full h-12"
-            onClick={handleSave}
-            disabled={!tokenInput.trim() || isSaving}
-          >
-            {isSaving ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                Saving...
-              </>
-            ) : (
-              'Save API Key'
-            )}
-          </Button>
-        </div>
-
-        <a
-          href="https://console.cloud.google.com/google/maps-apis"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 text-sm text-elec-yellow hover:underline"
+        </Field>
+        <PrimaryButton
+          fullWidth
+          size="lg"
+          onClick={handleSave}
+          disabled={!tokenInput.trim() || isSaving}
         >
-          Get a Google Maps API key
-          <ExternalLink className="h-3 w-3" />
-        </a>
-      </CardContent>
-    </Card>
+          {isSaving ? (
+            <>
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              Saving...
+            </>
+          ) : (
+            'Save API Key'
+          )}
+        </PrimaryButton>
+      </div>
+
+      <a
+        href="https://console.cloud.google.com/google/maps-apis"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-2 text-sm text-elec-yellow hover:underline"
+      >
+        Get a Google Maps API key
+        <ExternalLink className="h-3 w-3" />
+      </a>
+    </div>
   );
 }

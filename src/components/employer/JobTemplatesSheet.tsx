@@ -1,15 +1,14 @@
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { LayoutTemplate, Plus, MapPin, Loader2 } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useCreateJob } from '@/hooks/useJobs';
-import { useJobChecklist, useAddChecklistItem } from '@/hooks/useJobChecklists';
-import { useJobLabelAssignments, useAssignLabel } from '@/hooks/useJobLabels';
+import { useAddChecklistItem } from '@/hooks/useJobChecklists';
+import { useAssignLabel } from '@/hooks/useJobLabels';
 import { toast } from 'sonner';
 import { useState } from 'react';
+import { SheetShell, PrimaryButton } from './editorial';
 
 interface JobTemplatesSheetProps {
   open: boolean;
@@ -96,7 +95,7 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
 
       toast.success('Job created from template');
       onOpenChange(false);
-    } catch (error) {
+    } catch {
       toast.error('Failed to create job from template');
     } finally {
       setCreatingFromId(null);
@@ -105,34 +104,37 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-full sm:max-w-lg overflow-y-auto">
-        <SheetHeader className="pb-4">
-          <SheetTitle className="flex items-center gap-2">
-            <LayoutTemplate className="h-5 w-5" />
-            Job Templates
-          </SheetTitle>
-        </SheetHeader>
-
-        {isLoading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-6 w-6 animate-spin text-white" />
-          </div>
-        ) : templates.length === 0 ? (
-          <div className="text-center py-12">
-            <LayoutTemplate className="h-12 w-12 mx-auto mb-3 text-white" />
-            <p className="text-white">No templates yet</p>
-            <p className="text-sm text-white mt-1">
-              Right-click a job and select "Save as Template"
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {templates.map((template) => (
-              <Card key={template.id} className="bg-elec-gray hover:bg-muted/50 transition-colors">
-                <CardContent className="p-4">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
+      >
+        <SheetShell
+          eyebrow="Templates"
+          title="Job Templates"
+          description="Pick a template to scaffold a new job"
+        >
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="h-6 w-6 animate-spin text-white" />
+            </div>
+          ) : templates.length === 0 ? (
+            <div className="text-center py-12">
+              <LayoutTemplate className="h-12 w-12 mx-auto mb-3 text-white" />
+              <p className="text-white">No templates yet</p>
+              <p className="text-sm text-white mt-1">
+                Right-click a job and select "Save as Template"
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {templates.map((template) => (
+                <div
+                  key={template.id}
+                  className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 hover:bg-[hsl(0_0%_15%)] transition-colors"
+                >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1">
-                      <h4 className="font-medium text-foreground truncate">{template.title}</h4>
+                      <h4 className="font-medium text-white truncate">{template.title}</h4>
                       <p className="text-sm text-white">{template.client}</p>
                       <div className="flex items-center gap-1.5 mt-1 text-xs text-white">
                         <MapPin className="h-3 w-3" />
@@ -141,13 +143,12 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
                     </div>
                     <div className="flex flex-col items-end gap-2">
                       {template.value && (
-                        <Badge variant="secondary" className="text-xs">
+                        <Badge variant="secondary" className="text-xs bg-white/[0.06] text-white">
                           £{(template.value / 1000).toFixed(0)}k
                         </Badge>
                       )}
-                      <Button
+                      <PrimaryButton
                         size="sm"
-                        className="gap-1.5"
                         onClick={() => handleCreateFromTemplate(template)}
                         disabled={creatingFromId === template.id}
                       >
@@ -155,18 +156,18 @@ export function JobTemplatesSheet({ open, onOpenChange }: JobTemplatesSheetProps
                           <Loader2 className="h-4 w-4 animate-spin" />
                         ) : (
                           <>
-                            <Plus className="h-4 w-4" />
+                            <Plus className="h-4 w-4 mr-1.5" />
                             Use
                           </>
                         )}
-                      </Button>
+                      </PrimaryButton>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
+                </div>
+              ))}
+            </div>
+          )}
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

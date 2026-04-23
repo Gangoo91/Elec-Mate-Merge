@@ -53,7 +53,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           value={result.rcdBsStandard || ''}
           onChange={handleRcdBsStandardChange}
           options={rcdBsStandardOptions}
-          placeholder="BS EN"
+          placeholder="—"
           compact
         />
       </TableCell>
@@ -64,7 +64,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           value={result.rcdType || ''}
           onChange={handleRcdTypeChange}
           options={rcdTypeOptions}
-          placeholder="Type"
+          placeholder="—"
           compact
         />
       </TableCell>
@@ -77,7 +77,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           onValueChange={handleRcdRatingChange}
         >
           <SelectTrigger className="h-8 text-sm px-1.5 gap-1 [&_svg]:h-3 [&_svg]:w-3 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
-            <SelectValue placeholder="mA" />
+            <SelectValue placeholder="—" />
           </SelectTrigger>
           <SelectContent
             key={`rcdRating-content-${result.id}`}
@@ -113,7 +113,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           value={result.rcdRatingA || ''}
           onChange={(value) => onUpdate(result.id, 'rcdRatingA', value)}
           className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
-          placeholder="A"
+          placeholder="—"
         />
       </TableCell>
     </>

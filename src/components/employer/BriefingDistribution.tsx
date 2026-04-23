@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import {
   Share2,
   Copy,
-  X,
   QrCode,
   ExternalLink,
   MessageSquare,
@@ -17,7 +14,6 @@ import {
   Settings,
   AlertCircle,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { type Briefing } from '@/hooks/useBriefings';
 import { generateBriefingQRData } from '@/hooks/useBriefingSignatures';
 import {
@@ -27,6 +23,14 @@ import {
   useSaveTeamsWebhook,
   useTeamsWebhook,
 } from '@/hooks/useBriefingDistribution';
+import {
+  SheetShell,
+  FormCard,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+} from './editorial';
 
 interface BriefingDistributionProps {
   open: boolean;
@@ -77,206 +81,171 @@ export function BriefingDistribution({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl p-0">
-        <div className="flex flex-col">
-          {/* Header */}
-          <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-blue-500/10">
-                  <Share2 className="h-5 w-5 text-blue-400" />
-                </div>
-                <div>
-                  <SheetTitle className="text-left">Share Briefing</SheetTitle>
-                  <p className="text-xs text-white mt-0.5 line-clamp-1">
-                    {briefing.title}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onOpenChange(false)}
-                className="shrink-0 touch-manipulation"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </SheetHeader>
+      <SheetContent side="bottom" className="h-auto max-h-[85vh] rounded-t-2xl p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Distribute"
+          title="Share Briefing"
+          description={briefing.title}
+        >
+          {/* Link Display */}
+          <FormCard eyebrow="Sign-off link">
+            <p className="text-sm text-white font-mono break-all">{signOffUrl}</p>
+          </FormCard>
 
-          {/* Content */}
-          <div className="p-4 space-y-4">
-            {/* Link Display */}
-            <div className="p-3 rounded-lg bg-muted/50 border border-border">
-              <p className="text-xs text-white mb-1">Sign-off Link</p>
-              <p className="text-sm text-foreground font-mono break-all">{signOffUrl}</p>
-            </div>
-
-            {/* Quick Actions */}
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                variant="outline"
-                onClick={handleCopy}
-                className="h-14 flex flex-col items-center justify-center gap-1 touch-manipulation"
-              >
-                {copied ? (
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                ) : (
-                  <Copy className="h-5 w-5" />
-                )}
-                <span className="text-xs">{copied ? 'Copied!' : 'Copy Link'}</span>
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={onShowQR}
-                className="h-14 flex flex-col items-center justify-center gap-1 touch-manipulation"
-              >
-                <QrCode className="h-5 w-5" />
-                <span className="text-xs">QR Code</span>
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={handleShare}
-                className="h-14 flex flex-col items-center justify-center gap-1 touch-manipulation"
-              >
-                <Share2 className="h-5 w-5" />
-                <span className="text-xs">Share</span>
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={handleOpenLink}
-                className="h-14 flex flex-col items-center justify-center gap-1 touch-manipulation"
-              >
-                <ExternalLink className="h-5 w-5" />
-                <span className="text-xs">Open Page</span>
-              </Button>
-            </div>
-
-            {/* Microsoft Teams */}
-            <div className="p-4 rounded-xl bg-muted/30 border border-border">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-purple-400" />
-                  <span className="font-medium">Microsoft Teams</span>
-                </div>
-                {savedWebhook && (
-                  <Badge variant="outline" className="text-xs text-green-400 border-green-500/30">
-                    Connected
-                  </Badge>
-                )}
-              </div>
-
-              {showWebhookConfig ? (
-                <div className="space-y-3">
-                  <div>
-                    <Label className="text-xs text-white">
-                      Teams Incoming Webhook URL
-                    </Label>
-                    <Input
-                      value={webhookInput}
-                      onChange={(e) => setWebhookInput(e.target.value)}
-                      placeholder="https://outlook.office.com/webhook/..."
-                      className="h-11 mt-1 text-sm touch-manipulation"
-                    />
-                    <p className="text-xs text-white mt-1">
-                      Create an Incoming Webhook connector in your Teams channel
-                    </p>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      onClick={() => setShowWebhookConfig(false)}
-                      className="flex-1 h-11 touch-manipulation"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      onClick={handleSaveWebhook}
-                      disabled={!webhookInput.trim() || saveWebhook.isPending}
-                      className="flex-1 h-11 touch-manipulation"
-                    >
-                      {saveWebhook.isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        'Save'
-                      )}
-                    </Button>
-                  </div>
-                </div>
+          {/* Quick Actions */}
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={handleCopy}
+              className="h-16 flex flex-col items-center justify-center gap-1 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation text-white"
+            >
+              {copied ? (
+                <CheckCircle className="h-5 w-5 text-emerald-400" />
               ) : (
-                <div className="space-y-2">
-                  {savedWebhook ? (
-                    <Button
-                      onClick={handleSendToTeams}
-                      disabled={sendToTeams.isPending}
-                      className="w-full h-11 bg-purple-600 hover:bg-purple-700"
-                    >
-                      {sendToTeams.isPending ? (
-                        <>
-                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          <MessageSquare className="h-4 w-4 mr-2" />
-                          Send to Teams Channel
-                        </>
-                      )}
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="outline"
-                      onClick={() => setShowWebhookConfig(true)}
-                      className="w-full h-11"
-                    >
-                      <Settings className="h-4 w-4 mr-2" />
-                      Configure Teams Webhook
-                    </Button>
-                  )}
+                <Copy className="h-5 w-5" />
+              )}
+              <span className="text-xs">{copied ? 'Copied!' : 'Copy Link'}</span>
+            </button>
 
-                  {sendToTeams.isError && (
-                    <div className="flex items-center gap-2 p-2 rounded bg-red-500/10 border border-red-500/20">
-                      <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
-                      <p className="text-xs text-red-400">{sendToTeams.error.message}</p>
-                    </div>
-                  )}
+            <button
+              onClick={onShowQR}
+              className="h-16 flex flex-col items-center justify-center gap-1 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation text-white"
+            >
+              <QrCode className="h-5 w-5" />
+              <span className="text-xs">QR Code</span>
+            </button>
 
-                  {sendToTeams.isSuccess && (
-                    <div className="flex items-center gap-2 p-2 rounded bg-green-500/10 border border-green-500/20">
-                      <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
-                      <p className="text-xs text-green-400">
-                        Notification sent to Teams successfully!
-                      </p>
-                    </div>
-                  )}
+            <button
+              onClick={handleShare}
+              className="h-16 flex flex-col items-center justify-center gap-1 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation text-white"
+            >
+              <Share2 className="h-5 w-5" />
+              <span className="text-xs">Share</span>
+            </button>
 
-                  {savedWebhook && (
-                    <Button
-                      variant="ghost"
-                      onClick={() => setShowWebhookConfig(true)}
-                      className="w-full h-11 text-xs text-white touch-manipulation"
-                    >
-                      <Settings className="h-3 w-3 mr-1" />
-                      Update Webhook URL
-                    </Button>
-                  )}
-                </div>
+            <button
+              onClick={handleOpenLink}
+              className="h-16 flex flex-col items-center justify-center gap-1 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation text-white"
+            >
+              <ExternalLink className="h-5 w-5" />
+              <span className="text-xs">Open Page</span>
+            </button>
+          </div>
+
+          {/* Microsoft Teams */}
+          <FormCard eyebrow="Microsoft Teams">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="h-5 w-5 text-purple-400" />
+                <span className="font-medium text-white">Teams integration</span>
+              </div>
+              {savedWebhook && (
+                <Badge variant="outline" className="text-xs text-emerald-400 border-emerald-500/30">
+                  Connected
+                </Badge>
               )}
             </div>
 
-            {/* Instructions */}
-            <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-              <p className="text-xs text-white">
-                <strong className="text-foreground">How to distribute:</strong> Share the link or QR
-                code with your team. They can scan it with their phone camera to sign off on the
-                briefing instantly.
-              </p>
-            </div>
+            {showWebhookConfig ? (
+              <div className="space-y-3 mt-3">
+                <Field
+                  label="Teams Incoming Webhook URL"
+                  hint="Create an Incoming Webhook connector in your Teams channel"
+                >
+                  <Input
+                    value={webhookInput}
+                    onChange={(e) => setWebhookInput(e.target.value)}
+                    placeholder="https://outlook.office.com/webhook/..."
+                    className={inputClass}
+                  />
+                </Field>
+                <div className="flex gap-2">
+                  <SecondaryButton
+                    onClick={() => setShowWebhookConfig(false)}
+                    fullWidth
+                  >
+                    Cancel
+                  </SecondaryButton>
+                  <PrimaryButton
+                    onClick={handleSaveWebhook}
+                    disabled={!webhookInput.trim() || saveWebhook.isPending}
+                    fullWidth
+                  >
+                    {saveWebhook.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      'Save'
+                    )}
+                  </PrimaryButton>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-2 mt-3">
+                {savedWebhook ? (
+                  <PrimaryButton
+                    onClick={handleSendToTeams}
+                    disabled={sendToTeams.isPending}
+                    fullWidth
+                  >
+                    {sendToTeams.isPending ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <MessageSquare className="h-4 w-4 mr-2" />
+                        Send to Teams Channel
+                      </>
+                    )}
+                  </PrimaryButton>
+                ) : (
+                  <SecondaryButton
+                    onClick={() => setShowWebhookConfig(true)}
+                    fullWidth
+                  >
+                    <Settings className="h-4 w-4 mr-2" />
+                    Configure Teams Webhook
+                  </SecondaryButton>
+                )}
+
+                {sendToTeams.isError && (
+                  <div className="flex items-center gap-2 p-2 rounded bg-red-500/10 border border-red-500/20">
+                    <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
+                    <p className="text-xs text-red-400">{sendToTeams.error.message}</p>
+                  </div>
+                )}
+
+                {sendToTeams.isSuccess && (
+                  <div className="flex items-center gap-2 p-2 rounded bg-emerald-500/10 border border-emerald-500/20">
+                    <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0" />
+                    <p className="text-xs text-emerald-400">
+                      Notification sent to Teams successfully!
+                    </p>
+                  </div>
+                )}
+
+                {savedWebhook && (
+                  <button
+                    onClick={() => setShowWebhookConfig(true)}
+                    className="w-full h-10 text-xs text-white touch-manipulation flex items-center justify-center gap-1 hover:bg-white/[0.04] rounded-full"
+                  >
+                    <Settings className="h-3 w-3" />
+                    Update Webhook URL
+                  </button>
+                )}
+              </div>
+            )}
+          </FormCard>
+
+          {/* Instructions */}
+          <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
+            <p className="text-xs text-white">
+              <strong className="text-white">How to distribute:</strong> Share the link or QR
+              code with your team. They can scan it with their phone camera to sign off on the
+              briefing instantly.
+            </p>
           </div>
-        </div>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

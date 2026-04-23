@@ -1,4 +1,3 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 
 interface DataTableProps<T> {
@@ -19,44 +18,47 @@ export function DataTable<T extends Record<string, any>>({
   className,
 }: DataTableProps<T>) {
   return (
-    <Card className={cn('card-hover', className)}>
-      {title && (
-        <CardHeader className="pb-3">
-          <CardTitle className="text-lg font-semibold">{title}</CardTitle>
-        </CardHeader>
+    <div
+      className={cn(
+        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden',
+        className
       )}
-      <CardContent className={cn(!title && 'pt-6')}>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border">
+    >
+      {title && (
+        <div className="px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
+          <div className="text-[13px] font-semibold text-white">{title}</div>
+        </div>
+      )}
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-white/[0.06]">
+              {columns.map((col) => (
+                <th
+                  key={String(col.key)}
+                  className="text-left py-3 px-5 text-[10px] font-medium uppercase tracking-[0.18em] text-white"
+                >
+                  {col.label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-white/[0.06]">
+            {data.map((item, idx) => (
+              <tr
+                key={idx}
+                className="hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+              >
                 {columns.map((col) => (
-                  <th
-                    key={String(col.key)}
-                    className="text-left py-3 px-4 text-sm font-medium text-white"
-                  >
-                    {col.label}
-                  </th>
+                  <td key={String(col.key)} className="py-3.5 px-5 text-[13px] text-white">
+                    {col.render ? col.render(item) : (item[col.key as keyof T] as React.ReactNode)}
+                  </td>
                 ))}
               </tr>
-            </thead>
-            <tbody>
-              {data.map((item, idx) => (
-                <tr
-                  key={idx}
-                  className="border-b border-border/50 last:border-0 hover:bg-secondary/50 transition-colors"
-                >
-                  {columns.map((col) => (
-                    <td key={String(col.key)} className="py-3 px-4 text-sm">
-                      {col.render ? col.render(item) : item[col.key as keyof T]}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </CardContent>
-    </Card>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }

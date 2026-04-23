@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import React, { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
-import { CheckCircle, AlertTriangle, Settings, Eye, TestTube, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { pdfMonkeyService } from '@/components/pdf/PdfMonkeyService';
+import { Eyebrow } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface PdfMonkeySettingsProps {
   onSave?: () => void;
@@ -25,20 +21,13 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
   const { toast } = useToast();
 
   useEffect(() => {
-    // Load saved configuration from IndexedDB
     const loadConfig = async () => {
       const { offlineStorage } = await import('@/utils/offlineStorage');
       const credentials = await offlineStorage.getApiCredentials('pdfMonkey');
 
-      if (credentials.apiKey) {
-        setApiKey(credentials.apiKey);
-      }
+      if (credentials.apiKey) setApiKey(credentials.apiKey);
+      if (credentials.templateId) setTemplateId(credentials.templateId);
 
-      if (credentials.templateId) {
-        setTemplateId(credentials.templateId);
-      }
-
-      // Load EIC and EICR template IDs
       const eicId = credentials.eicTemplateId;
       const eicrId = credentials.eicrTemplateId;
 
@@ -63,7 +52,6 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
       return;
     }
 
-    // Save to IndexedDB
     const { offlineStorage } = await import('@/utils/offlineStorage');
     await offlineStorage.saveApiCredential('pdfMonkey', 'apiKey', apiKey);
 
@@ -72,7 +60,6 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
       pdfMonkeyService.setConfig(apiKey, templateId);
     }
 
-    // Save EIC and EICR template IDs
     if (eicTemplateId.trim()) {
       await offlineStorage.saveApiCredential('pdfMonkey', 'eicTemplateId', eicTemplateId);
     }
@@ -103,7 +90,6 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
     setIsTesting(true);
     setTestResult(null);
 
-    // Temporarily set config for testing
     pdfMonkeyService.setConfig(apiKey, templateId);
 
     const result = await pdfMonkeyService.testConnection();
@@ -143,168 +129,175 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
     });
   };
 
+  const fields: { id: string; label: string; placeholder: string; value: string; setter: (v: string) => void; description: string; type?: string }[] = [
+    {
+      id: 'apiKey',
+      label: 'PDF Monkey API key',
+      placeholder: 'Enter your PDF Monkey API key',
+      value: apiKey,
+      setter: setApiKey,
+      description: 'Available in your PDF Monkey dashboard under API settings.',
+      type: 'password',
+    },
+    {
+      id: 'templateId',
+      label: 'Minor Works template ID',
+      placeholder: 'Enter your Minor Works template ID',
+      value: templateId,
+      setter: setTemplateId,
+      description: 'Template ID for your Minor Works Certificate.',
+    },
+    {
+      id: 'eicTemplateId',
+      label: 'EIC template ID',
+      placeholder: 'Enter your EIC template ID (UUID format)',
+      value: eicTemplateId,
+      setter: setEicTemplateId,
+      description: 'Template ID for your Electrical Installation Certificate.',
+    },
+    {
+      id: 'eicrTemplateId',
+      label: 'EICR template ID',
+      placeholder: 'Enter your EICR template ID (UUID format)',
+      value: eicrTemplateId,
+      setter: setEicrTemplateId,
+      description: 'Template ID for your Electrical Installation Condition Report.',
+    },
+  ];
+
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5" />
-            PDF Monkey Integration
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">Status:</span>
-              {isConfigured ? (
-                <Badge variant="default" className="bg-green-500">
-                  <CheckCircle className="h-3 w-3 mr-1" />
-                  Configured
-                </Badge>
-              ) : (
-                <Badge variant="secondary">
-                  <Settings className="h-3 w-3 mr-1" />
-                  Not Configured
-                </Badge>
-              )}
+    <div className="space-y-5">
+      {/* Config card */}
+      <section className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+        <header className="px-5 sm:px-6 py-5 border-b border-white/[0.06]">
+          <div className="flex items-center justify-between gap-3">
+            <div>
+              <Eyebrow>Integration</Eyebrow>
+              <h3 className="mt-1.5 text-lg font-semibold text-white tracking-tight">
+                PDF Monkey
+              </h3>
             </div>
-
-            {testResult && (
-              <Badge variant={testResult.success ? 'default' : 'destructive'}>
-                {testResult.success ? (
-                  <CheckCircle className="h-3 w-3 mr-1" />
+            <div className="flex items-center gap-2">
+              {isConfigured ? (
+                <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                  Configured
+                </span>
+              ) : (
+                <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-amber-400">
+                  Not configured
+                </span>
+              )}
+              {testResult &&
+                (testResult.success ? (
+                  <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                    Connected
+                  </span>
                 ) : (
-                  <AlertTriangle className="h-3 w-3 mr-1" />
-                )}
-                {testResult.success ? 'Connected' : 'Connection Failed'}
-              </Badge>
-            )}
+                  <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-red-400">
+                    Failed
+                  </span>
+                ))}
+            </div>
           </div>
+        </header>
 
-          <Alert>
-            <Eye className="h-4 w-4" />
-            <AlertDescription>
-              PDF Monkey allows you to use custom certificate templates. Configure your API
-              credentials to generate certificates using your own branded templates instead of the
-              built-in template.
-            </AlertDescription>
-          </Alert>
+        <div className="px-5 sm:px-6 py-5 space-y-5">
+          <div className="rounded-2xl border border-white/[0.06] bg-[#0a0a0a] p-4">
+            <p className="text-[12.5px] text-white/70 leading-relaxed">
+              PDF Monkey lets you use custom branded certificate templates. Configure your API
+              credentials to generate certificates using your own templates instead of the
+              built-in ones.
+            </p>
+          </div>
 
           <div className="space-y-4">
-            <div>
-              <Label htmlFor="apiKey">PDF Monkey API Key</Label>
-              <Input
-                id="apiKey"
-                type="password"
-                placeholder="Enter your PDF Monkey API key"
-                value={apiKey}
-                onChange={(e) => setApiKey(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                Available in your PDF Monkey dashboard under API settings
-              </p>
-            </div>
-
-            <div>
-              <Label htmlFor="templateId">Minor Works Template ID</Label>
-              <Input
-                id="templateId"
-                placeholder="Enter your Minor Works template ID"
-                value={templateId}
-                onChange={(e) => setTemplateId(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                The template ID for your Minor Works Certificate template
-              </p>
-            </div>
-
-            <div>
-              <Label htmlFor="eicTemplateId">EIC Template ID</Label>
-              <Input
-                id="eicTemplateId"
-                placeholder="Enter your EIC template ID (UUID format)"
-                value={eicTemplateId}
-                onChange={(e) => setEicTemplateId(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                The template ID for your Electrical Installation Certificate template
-              </p>
-            </div>
-
-            <div>
-              <Label htmlFor="eicrTemplateId">EICR Template ID</Label>
-              <Input
-                id="eicrTemplateId"
-                placeholder="Enter your EICR template ID (UUID format)"
-                value={eicrTemplateId}
-                onChange={(e) => setEicrTemplateId(e.target.value)}
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                The template ID for your Electrical Installation Condition Report template
-              </p>
-            </div>
+            {fields.map((field) => (
+              <div key={field.id} className="space-y-1.5">
+                <Label htmlFor={field.id} className="text-white font-medium text-[13px]">
+                  {field.label}
+                </Label>
+                <Input
+                  id={field.id}
+                  type={field.type ?? 'text'}
+                  placeholder={field.placeholder}
+                  value={field.value}
+                  onChange={(e) => field.setter(e.target.value)}
+                  className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
+                />
+                <p className="text-[11.5px] text-white/55">{field.description}</p>
+              </div>
+            ))}
           </div>
 
-          <Separator />
+          <div className="h-px bg-white/[0.06]" />
 
           <div className="flex flex-wrap gap-2">
-            <Button onClick={handleSave} disabled={!apiKey.trim()}>
-              <Settings className="h-4 w-4 mr-2" />
-              Save Configuration
-            </Button>
-
-            <Button
-              variant="outline"
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={!apiKey.trim()}
+              className="h-11 px-5 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Save configuration
+            </button>
+            <button
+              type="button"
               onClick={handleTestConnection}
               disabled={!apiKey.trim() || !templateId.trim() || isTesting}
+              className="h-11 px-5 rounded-xl border border-white/[0.08] bg-[#0a0a0a] text-white text-[13px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <TestTube className="h-4 w-4 mr-2" />
-              {isTesting ? 'Testing...' : 'Test Connection'}
-            </Button>
-
+              {isTesting ? 'Testing…' : 'Test connection'}
+            </button>
             {isConfigured && (
-              <Button variant="destructive" onClick={handleClear}>
-                Clear Configuration
-              </Button>
+              <button
+                type="button"
+                onClick={handleClear}
+                className="h-11 px-5 rounded-xl border border-red-500/30 bg-red-500/10 text-red-400 text-[13px] font-medium hover:bg-red-500/20 transition-colors touch-manipulation"
+              >
+                Clear configuration
+              </button>
             )}
           </div>
 
           {testResult && !testResult.success && (
-            <Alert variant="destructive">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertDescription>
-                <strong>Connection Error:</strong> {testResult.error}
-              </AlertDescription>
-            </Alert>
+            <div
+              className={cn(
+                'rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-3'
+              )}
+            >
+              <p className="text-[12.5px] text-red-300 leading-relaxed">
+                <span className="font-semibold">Connection error:</span> {testResult.error}
+              </p>
+            </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Template Requirements</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p>
-              <strong>Your PDF template should include fields for:</strong>
-            </p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>Certificate details (certificateNumber, workDate)</li>
-              <li>Client information (clientName, propertyAddress)</li>
-              <li>Work description (workDescription, workType)</li>
-              <li>Supply characteristics (supplyVoltage, earthingArrangement)</li>
-              <li>Circuit details (circuitDesignation, protectiveDevice)</li>
-              <li>Test results (continuity, insulation, Zs values)</li>
-              <li>Declaration (electricianName, position, signatureDate)</li>
-            </ul>
-            <p className="mt-3">
-              <strong>Note:</strong> Field names in your template should match the form field names
-              for automatic mapping.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Template requirements */}
+      <section className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+        <header className="px-5 sm:px-6 py-5 border-b border-white/[0.06]">
+          <Eyebrow>Template</Eyebrow>
+          <h3 className="mt-1.5 text-lg font-semibold text-white tracking-tight">
+            Template requirements
+          </h3>
+        </header>
+        <div className="px-5 sm:px-6 py-5 space-y-3 text-[12.5px] text-white/70 leading-relaxed">
+          <p className="font-semibold">Your PDF template should include fields for:</p>
+          <ul className="list-disc pl-6 space-y-1">
+            <li>Certificate details (certificateNumber, workDate)</li>
+            <li>Client information (clientName, propertyAddress)</li>
+            <li>Work description (workDescription, workType)</li>
+            <li>Supply characteristics (supplyVoltage, earthingArrangement)</li>
+            <li>Circuit details (circuitDesignation, protectiveDevice)</li>
+            <li>Test results (continuity, insulation, Zs values)</li>
+            <li>Declaration (electricianName, position, signatureDate)</li>
+          </ul>
+          <p className="mt-3">
+            <span className="font-semibold">Note:</span> Field names in your template should
+            match the form field names for automatic mapping.
+          </p>
+        </div>
+      </section>
     </div>
   );
 };

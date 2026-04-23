@@ -19,13 +19,20 @@ import {
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { motion } from 'framer-motion';
-import { Loader2, Lock, Eye, EyeOff } from 'lucide-react';
 import { useBiometricAuth } from '@/hooks/useBiometricAuth';
 import { useDashboardPreferences } from '@/hooks/useDashboardPreferences';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import {
+  ListCard,
+  SectionHeader,
+  TextAction,
+  Dot,
+  Eyebrow,
+  containerVariants,
+  itemVariants,
+} from '@/components/college/primitives';
 
-// Certificate types for default selection
 const CERTIFICATE_TYPES = [
   { value: 'eicr', label: 'EICR' },
   { value: 'eic', label: 'EIC' },
@@ -33,65 +40,58 @@ const CERTIFICATE_TYPES = [
   { value: 'domestic_eic', label: 'Domestic EIC' },
 ];
 
-const sectionVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.04, delayChildren: 0 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.2, ease: 'easeOut' },
-  },
-};
-
-/* ─── Inline sub-components ─── */
-
-const SectionLabel = ({ children }: { children: React.ReactNode }) => (
-  <p className="text-[11px] font-semibold text-white uppercase tracking-[0.08em] mb-1 mt-6 px-4">
-    {children}
-  </p>
-);
-
-const Divider = () => <div className="border-t border-white/[0.06] ml-16" />;
-
+/* ── Row primitive — toggle inside a ListCard ── */
 interface ToggleRowProps {
-  icon: string;
-  iconBg: string;
   label: string;
+  subtitle?: string;
   checked: boolean;
   onCheckedChange: (v: boolean) => void;
   disabled?: boolean;
-  switchClassName?: string;
+  trailing?: React.ReactNode;
 }
-
 const ToggleRow = ({
-  icon,
-  iconBg,
   label,
+  subtitle,
   checked,
   onCheckedChange,
   disabled,
-  switchClassName,
+  trailing,
 }: ToggleRowProps) => (
-  <div className="flex items-center min-h-[48px] px-4 touch-manipulation">
-    <div
-      className={`w-8 h-8 rounded-lg ${iconBg} flex items-center justify-center flex-shrink-0 text-base`}
-    >
-      {icon}
+  <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+    <div className="flex-1 min-w-0">
+      <div className="text-[15px] font-medium text-white truncate">{label}</div>
+      {subtitle && <div className="mt-0.5 text-[11.5px] text-white/65 truncate">{subtitle}</div>}
     </div>
-    <span className="text-[15px] font-medium text-white ml-3 flex-1">{label}</span>
-    <Switch
-      checked={checked}
-      onCheckedChange={onCheckedChange}
-      disabled={disabled}
-      className={switchClassName}
-    />
+    {trailing && <div className="shrink-0">{trailing}</div>}
+    <Switch checked={checked} onCheckedChange={onCheckedChange} disabled={disabled} />
+  </div>
+);
+
+/* ── Row primitive — select inside a ListCard ── */
+interface SelectRowProps {
+  label: string;
+  value: string;
+  onValueChange: (v: string) => void;
+  options: { value: string; label: string }[];
+  placeholder?: string;
+}
+const SelectRow = ({ label, value, onValueChange, options, placeholder }: SelectRowProps) => (
+  <div className="flex items-center gap-4 px-5 sm:px-6 py-4">
+    <div className="flex-1 min-w-0">
+      <div className="text-[15px] font-medium text-white truncate">{label}</div>
+    </div>
+    <Select value={value} onValueChange={onValueChange}>
+      <SelectTrigger className="w-auto min-w-[110px] h-10 bg-white/[0.04] border-white/[0.08] rounded-full px-4 text-[13px] text-white touch-manipulation">
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
+        {options.map((opt) => (
+          <SelectItem key={opt.value} value={opt.value}>
+            {opt.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   </div>
 );
 
@@ -109,7 +109,7 @@ const PreferencesTab = () => {
     unsubscribe: unsubscribeFromPush,
   } = usePushNotifications();
 
-  // Notification category preferences (Supabase-backed)
+  // Notification category preferences
   const {
     preferences: notifPrefs,
     updatePreference,
@@ -118,24 +118,18 @@ const PreferencesTab = () => {
   const { quietHours, updateQuietHours } = useQuietHours();
   const [allMuted, setAllMuted] = useState(false);
 
-  // Dashboard hub preferences
+  // Dashboard hubs
   const { isHubVisible, toggleHub } = useDashboardPreferences();
   const userRole = profile?.role || '';
 
   const dashboardHubs = [
-    { id: 'apprentice', label: 'Apprentice Hub', icon: '🎓', iconBg: 'bg-blue-500/20' },
-    {
-      id: 'electrician',
-      label: 'Electrical Hub',
-      icon: '⚡',
-      iconBg: 'bg-yellow-500/20',
-      locked: true,
-    },
-    { id: 'study-centre', label: 'Study Centre', icon: '📚', iconBg: 'bg-purple-500/20' },
+    { id: 'apprentice', label: 'Apprentice Hub', locked: false },
+    { id: 'electrician', label: 'Electrical Hub', locked: true },
+    { id: 'study-centre', label: 'Study Centre', locked: false },
     ...(userRole === 'admin' || userRole === 'college'
-      ? [{ id: 'college', label: 'College Hub', icon: '🏫', iconBg: 'bg-emerald-500/20' }]
+      ? [{ id: 'college', label: 'College Hub', locked: false }]
       : []),
-    { id: 'wellbeing', label: 'Wellbeing Hub', icon: '💗', iconBg: 'bg-pink-500/20' },
+    { id: 'wellbeing', label: 'Wellbeing Hub', locked: false },
   ];
 
   // Certificate preferences
@@ -158,7 +152,6 @@ const PreferencesTab = () => {
       await biometric.disableBiometric();
       toast.success(`${biometric.biometricType} login disabled`);
     } else {
-      // Need to verify password before storing credentials
       setBiometricPassword('');
       setBiometricError(null);
       setShowPasswordSheet(true);
@@ -171,7 +164,6 @@ const PreferencesTab = () => {
     setBiometricError(null);
 
     try {
-      // Verify the password by signing in (session already exists, this just validates)
       const { error } = await supabase.auth.signInWithPassword({
         email: user.email,
         password: biometricPassword,
@@ -183,7 +175,6 @@ const PreferencesTab = () => {
         return;
       }
 
-      // Password valid — store credentials and enable biometric
       await biometric.enableBiometric(user.email, biometricPassword);
       setShowPasswordSheet(false);
       setBiometricPassword('');
@@ -195,12 +186,10 @@ const PreferencesTab = () => {
     }
   };
 
-  // Derived
   const categoryKeys = Object.keys(notifPrefs) as NotificationCategory[];
   const activeCount = categoryKeys.filter((k) => notifPrefs[k]).length;
   const totalCount = categoryKeys.length;
 
-  // Send test notification
   const handleTestNotification = async () => {
     if (!user?.id) return;
     setIsTestingSend(true);
@@ -221,14 +210,13 @@ const PreferencesTab = () => {
           type: 'error',
         });
       } else {
-        console.log('[Push Test] Response:', data);
         let title = 'Test Sent';
         let message = '';
         let notificationType: 'success' | 'error' | 'info' = 'success';
 
         if (data?.sent > 0) {
           title = 'Test Sent';
-          message = `Notification sent to ${data.sent} device(s)!`;
+          message = `Notification sent to ${data.sent} device(s).`;
           notificationType = 'success';
         } else if (data?.foundSubscriptions === false) {
           title = 'No Subscriptions';
@@ -259,7 +247,6 @@ const PreferencesTab = () => {
   };
 
   const handlePushToggle = async () => {
-    console.log('[Push Toggle] Starting...', { isPushSubscribed, isPushSupported, isPushLoading });
     try {
       if (isPushSubscribed) {
         const success = await unsubscribeFromPush();
@@ -271,9 +258,7 @@ const PreferencesTab = () => {
           });
         }
       } else {
-        console.log('[Push Toggle] Calling subscribeToPush...');
         const success = await subscribeToPush();
-        console.log('[Push Toggle] subscribeToPush returned:', success);
         if (success) {
           addNotification({
             title: 'Push Notifications Enabled',
@@ -307,340 +292,228 @@ const PreferencesTab = () => {
     });
   };
 
+  const notificationCategories: { key: NotificationCategory; label: string }[] = [
+    { key: 'daily_briefing', label: 'Daily Briefing' },
+    { key: 'tasks_projects', label: 'Tasks and Projects' },
+    { key: 'invoices_quotes', label: 'Invoices and Quotes' },
+    { key: 'certificates_compliance', label: 'Certificates and Compliance' },
+    { key: 'study_centre', label: 'Study Centre' },
+    { key: 'mental_health', label: 'Mental Health' },
+    { key: 'apprentice', label: 'Apprentice' },
+    { key: 'messages', label: 'Messages' },
+  ];
+
+  const muteToneClass = allMuted
+    ? 'red'
+    : activeCount === totalCount
+      ? 'green'
+      : 'amber';
+
   return (
-    <motion.div variants={sectionVariants} initial="hidden" animate="visible" className="pb-8">
-      {/* ─── Dashboard Hubs ─── */}
-      <SectionLabel>Dashboard</SectionLabel>
-      <motion.div
-        variants={itemVariants}
-        className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden mb-6"
-      >
-        <div className="px-4 py-4 border-b border-white/[0.06]">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
-              <span className="text-base">🏠</span>
-            </div>
-            <div>
-              <p className="text-[14px] font-semibold text-white">Your Dashboard</p>
-              <p className="text-[12px] text-white">Show or hide hubs on your home screen</p>
-            </div>
-          </div>
-        </div>
-        {dashboardHubs.map((hub, index) => (
-          <React.Fragment key={hub.id}>
-            {index > 0 && <Divider />}
-            <div className="flex items-center min-h-[52px] px-4 touch-manipulation">
-              <div
-                className={`w-8 h-8 rounded-lg ${hub.iconBg} flex items-center justify-center flex-shrink-0 text-base`}
-              >
-                {hub.icon}
-              </div>
-              <div className="ml-3 flex-1">
-                <span className="text-[15px] font-medium text-white">{hub.label}</span>
-                {hub.locked && <p className="text-[11px] text-white">Always visible</p>}
-              </div>
-              <Switch
-                checked={hub.locked || isHubVisible(hub.id)}
-                onCheckedChange={(v) => {
-                  toggleHub({ hubId: hub.id, visible: v });
-                  toast(
-                    v ? `${hub.label} added to dashboard` : `${hub.label} hidden from dashboard`
-                  );
-                }}
-                disabled={hub.locked}
-              />
-            </div>
-          </React.Fragment>
-        ))}
-      </motion.div>
-
-      {/* ─── Notification summary row ─── */}
-      <motion.div variants={itemVariants} className="flex items-center justify-between px-4 pb-4">
-        <div className="flex items-center gap-2">
-          <div
-            className={`w-2 h-2 rounded-full ${
-              allMuted ? 'bg-red-400' : activeCount === totalCount ? 'bg-green-400' : 'bg-amber-400'
-            }`}
-          />
-          <span className="text-[14px] font-medium text-white">
-            {allMuted ? 'All muted' : `${activeCount} of ${totalCount} active`}
-          </span>
-        </div>
-        <button
-          onClick={handleMuteAll}
-          className={`text-[13px] font-medium px-3 py-1 rounded-full border touch-manipulation transition-colors ${
-            allMuted ? 'border-red-400/40 text-red-400' : 'border-white/20 text-white'
-          }`}
-        >
-          {allMuted ? 'Unmute All' : 'Mute All'}
-        </button>
-      </motion.div>
-
-      {/* ─── Push Notifications hero row ─── */}
-      {isPushSupported && (
-        <motion.div variants={itemVariants}>
-          <div className="flex items-center min-h-[56px] px-4 touch-manipulation">
-            <div className="relative w-10 h-10 rounded-xl bg-green-500/15 flex items-center justify-center flex-shrink-0">
-              <span className="text-xl">{isPushSubscribed ? '🔔' : '📱'}</span>
-              {isPushSubscribed && (
-                <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse" />
-              )}
-            </div>
-            <div className="ml-3 flex-1 min-w-0">
-              <span className="text-[15px] font-medium text-white block">Push Notifications</span>
-              {isPushSubscribed && (
-                <span className="text-[10px] font-semibold text-green-400 uppercase tracking-wider">
-                  Active
-                </span>
-              )}
-            </div>
-            {isPushLoading ? (
-              <Loader2 className="h-5 w-5 text-white animate-spin" />
-            ) : (
-              <Switch
-                checked={isPushSubscribed}
-                onCheckedChange={handlePushToggle}
-                disabled={isPushLoading}
-                className="data-[state=checked]:bg-green-500"
-              />
-            )}
-          </div>
-          {isPushSubscribed && (
-            <div className="pl-[68px] pb-2">
-              <button
-                onClick={handleTestNotification}
-                disabled={isTestingSend}
-                className="text-[13px] text-white underline underline-offset-2 touch-manipulation disabled:opacity-50"
-              >
-                {isTestingSend ? 'Sending...' : 'Send Test Notification'}
-              </button>
-            </div>
-          )}
-        </motion.div>
-      )}
-
-      {/* ─── NOTIFICATION CATEGORIES ─── */}
-      <motion.div variants={itemVariants}>
-        <SectionLabel>Notification Categories</SectionLabel>
-        <div className={allMuted || isPrefsLoading ? 'opacity-40' : undefined}>
-          <ToggleRow
-            icon="🌅"
-            iconBg="bg-blue-500/15"
-            label="Daily Briefing"
-            checked={notifPrefs.daily_briefing}
-            onCheckedChange={(v) => updatePreference('daily_briefing', v)}
-            disabled={allMuted || isPrefsLoading}
-          />
-          <Divider />
-          <ToggleRow
-            icon="📋"
-            iconBg="bg-amber-500/15"
-            label="Tasks & Projects"
-            checked={notifPrefs.tasks_projects}
-            onCheckedChange={(v) => updatePreference('tasks_projects', v)}
-            disabled={allMuted || isPrefsLoading}
-          />
-          <Divider />
-          <ToggleRow
-            icon="💷"
-            iconBg="bg-emerald-500/15"
-            label="Invoices & Quotes"
-            checked={notifPrefs.invoices_quotes}
-            onCheckedChange={(v) => updatePreference('invoices_quotes', v)}
-            disabled={allMuted || isPrefsLoading}
-          />
-          <Divider />
-          <ToggleRow
-            icon="📜"
-            iconBg="bg-green-500/15"
-            label="Certificates & Compliance"
-            checked={notifPrefs.certificates_compliance}
-            onCheckedChange={(v) => updatePreference('certificates_compliance', v)}
-            disabled={allMuted || isPrefsLoading}
-          />
-          <Divider />
-          <ToggleRow
-            icon="📚"
-            iconBg="bg-purple-500/15"
-            label="Study Centre"
-            checked={notifPrefs.study_centre}
-            onCheckedChange={(v) => updatePreference('study_centre', v)}
-            disabled={allMuted || isPrefsLoading}
-          />
-          <Divider />
-          <ToggleRow
-            icon="💙"
-            iconBg="bg-pink-500/15"
-            label="Mental Health"
-            checked={notifPrefs.mental_health}
-            onCheckedChange={(v) => updatePreference('mental_health', v)}
-            disabled={allMuted || isPrefsLoading}
-          />
-          <Divider />
-          <ToggleRow
-            icon="🎓"
-            iconBg="bg-amber-500/15"
-            label="Apprentice"
-            checked={notifPrefs.apprentice}
-            onCheckedChange={(v) => updatePreference('apprentice', v)}
-            disabled={allMuted || isPrefsLoading}
-          />
-          <Divider />
-          <ToggleRow
-            icon="💬"
-            iconBg="bg-blue-500/15"
-            label="Messages"
-            checked={notifPrefs.messages}
-            onCheckedChange={(v) => updatePreference('messages', v)}
-            disabled={allMuted || isPrefsLoading}
-          />
-        </div>
-      </motion.div>
-
-      {/* ─── QUIET HOURS ─── */}
-      <motion.div variants={itemVariants}>
-        <SectionLabel>Quiet Hours</SectionLabel>
-        <ToggleRow
-          icon="🌙"
-          iconBg="bg-indigo-500/15"
-          label="Quiet Hours"
-          checked={quietHours.enabled}
-          onCheckedChange={(v) => updateQuietHours({ enabled: v })}
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-8"
+    >
+      {/* ── DASHBOARD HUBS ── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="01"
+          title="Dashboard"
         />
-        {quietHours.enabled && (
-          <>
-            <Divider />
-            <div className="flex items-center min-h-[48px] px-4 touch-manipulation">
-              <div className="w-8 h-8 rounded-lg bg-indigo-500/15 flex items-center justify-center flex-shrink-0 text-base">
-                🕘
+        <div className="text-[12.5px] text-white/70 leading-relaxed">
+          Show or hide hubs on your home screen.
+        </div>
+        <ListCard>
+          {dashboardHubs.map((hub) => (
+            <ToggleRow
+              key={hub.id}
+              label={hub.label}
+              subtitle={hub.locked ? 'Always visible' : undefined}
+              checked={hub.locked || isHubVisible(hub.id)}
+              onCheckedChange={(v) => {
+                toggleHub({ hubId: hub.id, visible: v });
+                toast(
+                  v
+                    ? `${hub.label} added to dashboard`
+                    : `${hub.label} hidden from dashboard`
+                );
+              }}
+              disabled={hub.locked}
+            />
+          ))}
+        </ListCard>
+      </motion.section>
+
+      {/* ── NOTIFICATIONS ── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="02" title="Notifications" />
+
+        {/* Summary row */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Dot tone={muteToneClass as 'red' | 'green' | 'amber'} />
+            <span className="text-[13px] font-medium text-white">
+              {allMuted ? 'All muted' : `${activeCount} of ${totalCount} active`}
+            </span>
+          </div>
+          <TextAction onClick={handleMuteAll}>
+            {allMuted ? 'Unmute all' : 'Mute all'}
+          </TextAction>
+        </div>
+
+        {/* Push notifications hero */}
+        {isPushSupported && (
+          <ListCard>
+            <ToggleRow
+              label="Push Notifications"
+              subtitle={
+                isPushSubscribed
+                  ? 'Active — delivered when the app is closed'
+                  : 'Off — enable to receive alerts'
+              }
+              checked={isPushSubscribed}
+              onCheckedChange={handlePushToggle}
+              disabled={isPushLoading}
+              trailing={
+                isPushSubscribed ? (
+                  <span className="text-[11px] font-medium uppercase tracking-[0.15em] text-emerald-400">
+                    Active
+                  </span>
+                ) : null
+              }
+            />
+            {isPushSubscribed && (
+              <div className="flex items-center justify-between gap-4 px-5 sm:px-6 py-3">
+                <span className="text-[12.5px] text-white/65">Delivery test</span>
+                <TextAction onClick={handleTestNotification}>
+                  {isTestingSend ? 'Sending…' : 'Send Test Notification'}
+                </TextAction>
               </div>
-              <span className="text-[15px] font-medium text-white ml-3 flex-1">Start</span>
-              <Select
+            )}
+          </ListCard>
+        )}
+
+        {/* Categories */}
+        <div className="space-y-3">
+          <Eyebrow>Categories</Eyebrow>
+          <ListCard className={cn(allMuted || isPrefsLoading ? 'opacity-40' : '')}>
+            {notificationCategories.map((cat) => (
+              <ToggleRow
+                key={cat.key}
+                label={cat.label}
+                checked={notifPrefs[cat.key]}
+                onCheckedChange={(v) => updatePreference(cat.key, v)}
+                disabled={allMuted || isPrefsLoading}
+              />
+            ))}
+          </ListCard>
+        </div>
+      </motion.section>
+
+      {/* ── QUIET HOURS ── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="03" title="Quiet Hours" />
+        <ListCard>
+          <ToggleRow
+            label="Quiet Hours"
+            subtitle="Pause alerts overnight"
+            checked={quietHours.enabled}
+            onCheckedChange={(v) => updateQuietHours({ enabled: v })}
+          />
+          {quietHours.enabled && (
+            <>
+              <SelectRow
+                label="Start"
                 value={String(quietHours.startHour)}
                 onValueChange={(v) => updateQuietHours({ startHour: parseInt(v) })}
-              >
-                <SelectTrigger className="w-auto min-w-[80px] h-9 border-0 bg-white/[0.06] text-white text-[14px] focus:ring-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[20, 21, 22, 23].map((h) => (
-                    <SelectItem key={h} value={String(h)}>
-                      {`${h}:00`}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <Divider />
-            <div className="flex items-center min-h-[48px] px-4 touch-manipulation">
-              <div className="w-8 h-8 rounded-lg bg-indigo-500/15 flex items-center justify-center flex-shrink-0 text-base">
-                🕖
-              </div>
-              <span className="text-[15px] font-medium text-white ml-3 flex-1">End</span>
-              <Select
+                options={[20, 21, 22, 23].map((h) => ({ value: String(h), label: `${h}:00` }))}
+              />
+              <SelectRow
+                label="End"
                 value={String(quietHours.endHour)}
                 onValueChange={(v) => updateQuietHours({ endHour: parseInt(v) })}
-              >
-                <SelectTrigger className="w-auto min-w-[80px] h-9 border-0 bg-white/[0.06] text-white text-[14px] focus:ring-0">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[6, 7, 8, 9].map((h) => (
-                    <SelectItem key={h} value={String(h)}>
-                      {`${h}:00`}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="px-4 pb-2">
-              <p className="text-[12px] text-white/50 ml-11">
-                Notifications will be held and delivered with your morning briefing
-              </p>
-            </div>
-          </>
-        )}
-      </motion.div>
+                options={[6, 7, 8, 9].map((h) => ({ value: String(h), label: `${h}:00` }))}
+              />
+              <div className="px-5 sm:px-6 pb-4 text-[11.5px] text-white/65 leading-relaxed">
+                Notifications will be held and delivered with your morning briefing.
+              </div>
+            </>
+          )}
+        </ListCard>
+      </motion.section>
 
-      {/* ─── CERTIFICATES ─── */}
-      <motion.div variants={itemVariants}>
-        <SectionLabel>Certificates</SectionLabel>
-        <div className="flex items-center min-h-[48px] px-4 touch-manipulation">
-          <div className="w-8 h-8 rounded-lg bg-blue-500/15 flex items-center justify-center flex-shrink-0 text-base">
-            📄
-          </div>
-          <span className="text-[15px] font-medium text-white ml-3 flex-1">Default Type</span>
-          <Select value={defaultCertType} onValueChange={setDefaultCertType}>
-            <SelectTrigger className="w-auto min-w-[100px] h-9 border-0 bg-white/[0.06] text-white text-[14px] focus:ring-0">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {CERTIFICATE_TYPES.map((cert) => (
-                <SelectItem key={cert.value} value={cert.value}>
-                  {cert.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <Divider />
-        <ToggleRow
-          icon="💾"
-          iconBg="bg-purple-500/15"
-          label="Auto-Save Drafts"
-          checked={autoSaveEnabled}
-          onCheckedChange={setAutoSaveEnabled}
-        />
-      </motion.div>
-
-      {/* ─── ASSISTANT ─── */}
-      <motion.div variants={itemVariants}>
-        <SectionLabel>Assistant</SectionLabel>
-        <ToggleRow
-          icon="✨"
-          iconBg="bg-pink-500/15"
-          label="Smart Suggestions"
-          checked={aiSuggestionsEnabled}
-          onCheckedChange={setAiSuggestionsEnabled}
-        />
-      </motion.div>
-
-      {/* ─── SECURITY (native only, biometric available) ─── */}
-      {biometric.isAvailable && (
-        <motion.div variants={itemVariants}>
-          <SectionLabel>Security</SectionLabel>
-          <ToggleRow
-            icon="🔒"
-            iconBg="bg-blue-500/15"
-            label={`${biometric.biometricType} Login`}
-            checked={biometric.isEnabled}
-            onCheckedChange={handleBiometricToggle}
-            disabled={biometric.isChecking}
+      {/* ── CERTIFICATES ── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="04" title="Certificates" />
+        <ListCard>
+          <SelectRow
+            label="Default Type"
+            value={defaultCertType}
+            onValueChange={setDefaultCertType}
+            options={CERTIFICATE_TYPES}
           />
-        </motion.div>
+          <ToggleRow
+            label="Auto-Save Drafts"
+            checked={autoSaveEnabled}
+            onCheckedChange={setAutoSaveEnabled}
+          />
+        </ListCard>
+      </motion.section>
+
+      {/* ── ASSISTANT ── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader eyebrow="05" title="Assistant" />
+        <ListCard>
+          <ToggleRow
+            label="Smart Suggestions"
+            subtitle="AI-powered inline tips"
+            checked={aiSuggestionsEnabled}
+            onCheckedChange={setAiSuggestionsEnabled}
+          />
+        </ListCard>
+      </motion.section>
+
+      {/* ── SECURITY (biometric) ── */}
+      {biometric.isAvailable && (
+        <motion.section variants={itemVariants} className="space-y-3">
+          <SectionHeader eyebrow="06" title="Security" />
+          <ListCard>
+            <ToggleRow
+              label={`${biometric.biometricType} Login`}
+              subtitle="Unlock with biometrics"
+              checked={biometric.isEnabled}
+              onCheckedChange={handleBiometricToggle}
+              disabled={biometric.isChecking}
+            />
+          </ListCard>
+        </motion.section>
       )}
 
-      {/* Password verification sheet for enabling biometric */}
+      {/* ── BIOMETRIC PASSWORD CONFIRM SHEET ── */}
       <Sheet open={showPasswordSheet} onOpenChange={(v) => !v && setShowPasswordSheet(false)}>
-        <SheetContent side="bottom" className="rounded-t-2xl p-0 border-t border-white/10">
+        <SheetContent
+          side="bottom"
+          className="rounded-t-2xl p-0 border-t border-white/[0.06] bg-[hsl(0_0%_12%)]"
+        >
           <div className="flex flex-col px-6 pt-8 pb-10 gap-5">
             <div className="text-center space-y-2">
-              <h2 className="text-xl font-bold text-white">Confirm your password</h2>
-              <p className="text-[15px] text-white leading-relaxed">
+              <h2 className="text-xl font-semibold text-white tracking-tight">
+                Confirm your password
+              </h2>
+              <p className="text-[13px] text-white/70 leading-relaxed">
                 Enter your password to enable {biometric.biometricType} login.
               </p>
             </div>
 
             {biometricError && (
               <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-                <p className="text-[14px] text-red-400 text-center">{biometricError}</p>
+                <p className="text-[13px] text-red-400 text-center">{biometricError}</p>
               </div>
             )}
 
             <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white">
-                <Lock className="h-5 w-5" />
-              </div>
               <input
                 type={showBioPassword ? 'text' : 'password'}
                 value={biometricPassword}
@@ -649,34 +522,27 @@ const PreferencesTab = () => {
                 autoComplete="current-password"
                 onKeyDown={(e) => e.key === 'Enter' && handleBiometricPasswordSubmit()}
                 className={cn(
-                  'w-full h-14 pl-12 pr-12 rounded-2xl',
-                  'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
-                  'text-[16px] outline-none transition-all duration-200',
-                  'border-white/20 focus:border-elec-yellow/50 focus:shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                  'w-full h-12 px-4 pr-14 rounded-xl',
+                  'bg-[#0a0a0a] border text-white placeholder:text-white/40 [color-scheme:dark]',
+                  'text-[15px] outline-none transition-all',
+                  'border-white/[0.08] focus:border-elec-yellow/50'
                 )}
               />
               <button
                 type="button"
                 onClick={() => setShowBioPassword(!showBioPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-white h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-11 px-3 flex items-center justify-center text-[12px] font-medium text-white/70 hover:text-white touch-manipulation rounded-lg"
               >
-                {showBioPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                {showBioPassword ? 'Hide' : 'Show'}
               </button>
             </div>
 
             <Button
               onClick={handleBiometricPasswordSubmit}
               disabled={biometricVerifying || !biometricPassword}
-              className="w-full h-13 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation disabled:opacity-50"
+              className="w-full h-12 rounded-full text-[14px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation disabled:opacity-50"
             >
-              {biometricVerifying ? (
-                <span className="flex items-center gap-2">
-                  <Loader2 className="h-5 w-5 animate-spin" />
-                  Verifying...
-                </span>
-              ) : (
-                `Enable ${biometric.biometricType}`
-              )}
+              {biometricVerifying ? 'Verifying…' : `Enable ${biometric.biometricType}`}
             </Button>
           </div>
         </SheetContent>

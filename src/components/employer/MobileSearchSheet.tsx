@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import { Search, X, Clock, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { inputClass, SecondaryButton } from './editorial';
 
 interface SearchResult {
   id: string;
@@ -71,13 +71,13 @@ export function MobileSearchSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="top" className="h-full w-full p-0 border-0 bg-background">
+      <SheetContent side="top" className="h-full w-full p-0 border-0 bg-[hsl(0_0%_8%)]">
         <div className="flex flex-col h-full">
           {/* Search Header */}
-          <div className="flex items-center gap-2 p-3 border-b border-border bg-elec-gray pt-safe">
+          <div className="flex items-center gap-2 p-3 border-b border-white/[0.06] bg-[hsl(0_0%_12%)] pt-safe">
             <div className="relative flex-1">
               {!query && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
               )}
               <Input
                 ref={inputRef}
@@ -85,10 +85,7 @@ export function MobileSearchSheet({
                 placeholder={placeholder}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                className={cn(
-                  'pr-10 h-12 text-base bg-background border-border',
-                  !query && 'pl-10'
-                )}
+                className={cn(inputClass, 'pr-10 h-12 text-base', !query && 'pl-10')}
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="off"
@@ -96,19 +93,15 @@ export function MobileSearchSheet({
               {query && (
                 <button
                   onClick={() => setQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white hover:text-foreground"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-white hover:text-white z-10"
                 >
                   <X className="h-4 w-4" />
                 </button>
               )}
             </div>
-            <Button
-              variant="ghost"
-              onClick={handleClose}
-              className="shrink-0 text-white"
-            >
+            <SecondaryButton onClick={handleClose} className="shrink-0">
               Cancel
-            </Button>
+            </SecondaryButton>
           </div>
 
           {/* Content */}
@@ -136,12 +129,12 @@ export function MobileSearchSheet({
                       }}
                       className={cn(
                         'w-full flex items-center gap-3 px-4 py-3',
-                        'hover:bg-muted/50 active:bg-muted transition-colors text-left'
+                        'hover:bg-white/[0.06] active:bg-white/[0.08] transition-colors text-left'
                       )}
                     >
                       {result.icon && <div className="shrink-0">{result.icon}</div>}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-foreground truncate">
+                        <p className="text-sm font-medium text-white truncate">
                           {result.title}
                         </p>
                         {result.subtitle && (
@@ -166,7 +159,7 @@ export function MobileSearchSheet({
             {!isLoading && query && results.length === 0 && (
               <div className="flex flex-col items-center justify-center py-12 px-4">
                 <Search className="h-12 w-12 text-white mb-4" />
-                <p className="text-sm font-medium text-foreground">No results found</p>
+                <p className="text-sm font-medium text-white">No results found</p>
                 <p className="text-xs text-white mt-1">
                   Try searching for something else
                 </p>
@@ -196,11 +189,11 @@ export function MobileSearchSheet({
                       onClick={() => handleRecentClick(term)}
                       className={cn(
                         'w-full flex items-center gap-3 px-4 py-3',
-                        'hover:bg-muted/50 active:bg-muted transition-colors text-left'
+                        'hover:bg-white/[0.06] active:bg-white/[0.08] transition-colors text-left'
                       )}
                     >
                       <Clock className="h-4 w-4 text-white shrink-0" />
-                      <span className="text-sm text-foreground flex-1 truncate">{term}</span>
+                      <span className="text-sm text-white flex-1 truncate">{term}</span>
                     </button>
                   ))}
                 </div>

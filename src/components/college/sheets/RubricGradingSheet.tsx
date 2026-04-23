@@ -22,7 +22,7 @@ const RUBRIC_CATEGORIES: { name: string; criteriaCount: number; codes: string[];
 
 const TOTAL_CRITERIA = RUBRIC_CATEGORIES.reduce((sum, cat) => sum + cat.criteriaCount, 0);
 
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/40';
+const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function RubricGradingSheet({
   assessmentId,
@@ -80,7 +80,7 @@ export function RubricGradingSheet({
               ) : !grade ? (
                 <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 text-center">
                   <div className="text-[14px] font-medium text-white">No Assessment Selected</div>
-                  <p className="mt-2 text-[12.5px] text-white/50 max-w-md mx-auto leading-relaxed">
+                  <p className="mt-2 text-[12.5px] text-white/75 max-w-md mx-auto leading-relaxed">
                     Please select an assessment from the grades list to begin rubric grading.
                   </p>
                 </div>
@@ -92,13 +92,13 @@ export function RubricGradingSheet({
                     <p className="text-[15px] font-medium text-white">{grade.unit_name}</p>
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <p className="text-[11px] text-white/40 uppercase tracking-wider">Student</p>
+                        <p className="text-[11px] text-white/55 uppercase tracking-wider">Student</p>
                         <p className="text-[13px] text-white font-medium mt-0.5">
                           {student?.name || 'Unknown'}
                         </p>
                       </div>
                       <div>
-                        <p className="text-[11px] text-white/40 uppercase tracking-wider">Type</p>
+                        <p className="text-[11px] text-white/55 uppercase tracking-wider">Type</p>
                         <p className="text-[13px] text-white font-medium mt-0.5">
                           {grade.assessment_type}
                         </p>
@@ -140,7 +140,7 @@ export function RubricGradingSheet({
                           />
                           <div className="flex-1 min-w-0">
                             <p className="text-[13px] font-medium text-white">{category.name}</p>
-                            <p className="text-[11.5px] text-white/50">
+                            <p className="text-[11.5px] text-white/75">
                               {category.codes.join(', ')}
                             </p>
                           </div>

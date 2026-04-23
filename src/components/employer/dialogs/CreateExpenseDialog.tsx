@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -11,13 +9,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/card';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Receipt, Wrench, Car, ParkingCircle, Hammer, HardHat, Package, Send } from 'lucide-react';
 import { useCreateExpenseClaim } from '@/hooks/useFinance';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useJobs } from '@/hooks/useJobs';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
+import { cn } from '@/lib/utils';
+import {
+  SheetShell,
+  Field,
+  FormCard,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  fieldLabelClass,
+} from '@/components/employer/editorial';
 
 interface CreateExpenseDialogProps {
   open: boolean;
@@ -127,136 +136,128 @@ export function CreateExpenseDialog({ open, onOpenChange }: CreateExpenseDialogP
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="px-4 py-3 border-b border-border">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center text-xl">
-                {selectedCategory?.emoji}
-              </div>
-              <SheetTitle className="text-lg">Submit Expense</SheetTitle>
-            </div>
-          </SheetHeader>
-
-          {/* Content */}
-          <ScrollArea className="flex-1 px-4 py-4">
-            <div className="space-y-4">
-              {/* Employee */}
-              <div className="space-y-2">
-                <Label>Employee *</Label>
-                <Select value={employeeId} onValueChange={setEmployeeId}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select employee" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {employees.map((emp) => (
-                      <SelectItem key={emp.id} value={emp.id}>
-                        {emp.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Category Pills */}
-              <div className="space-y-2">
-                <Label>Category *</Label>
-                <div className="grid grid-cols-3 gap-2">
-                  {CATEGORIES.map((cat) => (
-                    <Card
-                      key={cat.value}
-                      className={`cursor-pointer active:scale-[0.98] transition-all touch-manipulation ${
-                        category === cat.value
-                          ? 'bg-elec-yellow/20 border-elec-yellow'
-                          : 'bg-elec-gray hover:bg-muted'
-                      }`}
-                      onClick={() => setCategory(cat.value)}
-                    >
-                      <CardContent className="p-3 flex flex-col items-center gap-1">
-                        <span className="text-2xl">{cat.emoji}</span>
-                        <span className="text-xs font-medium">{cat.value}</span>
-                      </CardContent>
-                    </Card>
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Submit expense"
+          title={`${selectedCategory?.emoji ?? ''} ${category}`}
+          description="Log an expense claim for approval."
+          footer={
+            <>
+              <SecondaryButton
+                onClick={() => {
+                  resetForm();
+                  onOpenChange(false);
+                }}
+                fullWidth
+              >
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleSubmit}
+                disabled={
+                  !employeeId || !amount || !description || createExpenseMutation.isPending
+                }
+                fullWidth
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Submit
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Expense details">
+            <Field label="Employee" required>
+              <Select value={employeeId} onValueChange={setEmployeeId}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select employee" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {employees.map((emp) => (
+                    <SelectItem key={emp.id} value={emp.id}>
+                      {emp.name}
+                    </SelectItem>
                   ))}
-                </div>
-              </div>
+                </SelectContent>
+              </Select>
+            </Field>
 
-              {/* Amount */}
-              <div className="space-y-2">
-                <Label>Amount *</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-                    £
-                  </span>
-                  <Input
-                    type="number"
-                    placeholder="0.00"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    className="pl-8 text-lg font-medium"
-                    step={0.01}
-                    min={0}
-                  />
-                </div>
+            <div className="space-y-2">
+              <label className={fieldLabelClass}>Category *</label>
+              <div className="grid grid-cols-3 gap-2">
+                {CATEGORIES.map((cat) => {
+                  const isSelected = category === cat.value;
+                  return (
+                    <button
+                      key={cat.value}
+                      type="button"
+                      onClick={() => setCategory(cat.value)}
+                      className={cn(
+                        'cursor-pointer active:scale-[0.98] transition-all touch-manipulation rounded-xl border p-3 flex flex-col items-center gap-1',
+                        isSelected
+                          ? 'bg-elec-yellow/10 border-elec-yellow'
+                          : 'bg-[hsl(0_0%_10%)] border-white/[0.08] hover:bg-[hsl(0_0%_12%)]'
+                      )}
+                    >
+                      <span className="text-2xl">{cat.emoji}</span>
+                      <span className="text-[11px] font-medium text-white">{cat.value}</span>
+                    </button>
+                  );
+                })}
               </div>
+            </div>
 
-              {/* Description */}
-              <div className="space-y-2">
-                <Label>Description *</Label>
-                <Textarea
-                  placeholder="What was this expense for?"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="min-h-[80px]"
+            <Field label="Amount (£)" required>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white z-10 text-[13px]">
+                  £
+                </span>
+                <Input
+                  type="number"
+                  placeholder="0.00"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  className={cn(inputClass, 'pl-8 text-base font-medium')}
+                  step={0.01}
+                  min={0}
                 />
               </div>
+            </Field>
 
-              {/* Link to Job */}
-              <div className="space-y-2">
-                <Label>Link to Job (Optional)</Label>
-                <Select
-                  value={jobId || 'none'}
-                  onValueChange={(v) => setJobId(v === 'none' ? null : v)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select job (optional)" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="none">No job linked</SelectItem>
-                    {activeJobs.map((job) => (
-                      <SelectItem key={job.id} value={job.id}>
-                        {job.title} - {job.client}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <Field label="Description" required>
+              <Textarea
+                placeholder="What was this expense for?"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className={cn(textareaClass, 'min-h-[80px]')}
+              />
+            </Field>
 
-              {/* Receipt Upload Placeholder */}
-              <Card className="bg-muted/30 border-dashed">
-                <CardContent className="p-4 flex flex-col items-center gap-2">
-                  <Receipt className="h-8 w-8 text-white" />
-                  <p className="text-sm text-white text-center">
-                    Receipt upload coming soon
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          </ScrollArea>
+            <Field label="Link to job (optional)">
+              <Select
+                value={jobId || 'none'}
+                onValueChange={(v) => setJobId(v === 'none' ? null : v)}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select job (optional)" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  <SelectItem value="none">No job linked</SelectItem>
+                  {activeJobs.map((job) => (
+                    <SelectItem key={job.id} value={job.id}>
+                      {job.title} - {job.client}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+          </FormCard>
 
-          {/* Footer */}
-          <SheetFooter className="px-4 py-3 border-t border-border pb-safe">
-            <Button
-              className="w-full"
-              onClick={handleSubmit}
-              disabled={!employeeId || !amount || !description || createExpenseMutation.isPending}
-            >
-              <Send className="h-4 w-4 mr-2" />
-              Submit Expense
-            </Button>
-          </SheetFooter>
-        </div>
+          {/* Receipt Upload Placeholder */}
+          <div className="rounded-xl border border-dashed border-white/[0.12] bg-white/[0.02] p-4 flex flex-col items-center gap-2">
+            <Receipt className="h-8 w-8 text-white" />
+            <p className="text-[12.5px] text-white text-center">Receipt upload coming soon</p>
+          </div>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

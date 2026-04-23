@@ -18,12 +18,12 @@ const TypeOfWiringCellComponent: React.FC<TypeOfWiringCellProps> = ({ result, on
   );
 
   return (
-    <TableCell className="p-0 h-8 align-middle min-w-[120px] max-w-[120px]">
+    <TableCell className="p-0 h-8 align-middle min-w-[140px] max-w-[140px]">
       <ComboboxCell
         value={result.typeOfWiring || ''}
         onChange={handleChange}
         options={wiringTypeOptions}
-        placeholder="Type"
+        placeholder="—"
         compact
       />
     </TableCell>

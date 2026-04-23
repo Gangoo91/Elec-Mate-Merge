@@ -601,6 +601,30 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     toast.success(`${newBoard.name} added`);
   };
 
+  // ELE-830: Swap adjacent boards' `order` values. Desktop-only entry point
+  // via BoardSection header. Same shape as MultiboardSetup's handleMoveBoard.
+  const handleMoveBoard = (boardId: string, direction: 'up' | 'down') => {
+    const sorted = [...distributionBoards].sort((a, b) => a.order - b.order);
+    const idx = sorted.findIndex((b) => b.id === boardId);
+    if (idx < 0) return;
+    const swapIdx = direction === 'up' ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= sorted.length) return;
+
+    const a = sorted[idx];
+    const b = sorted[swapIdx];
+    const updated = distributionBoards.map((board) => {
+      if (board.id === a.id) return { ...board, order: b.order };
+      if (board.id === b.id) return { ...board, order: a.order };
+      return board;
+    });
+    setDistributionBoards(updated);
+
+    const formDataUpdate = formatBoardsForFormData(updated, testResults);
+    Object.entries(formDataUpdate).forEach(([key, value]) => {
+      onUpdate(key, value);
+    });
+  };
+
   const handleRemoveBoard = (boardId: string) => {
     const boardToRemove = distributionBoards.find((b) => b.id === boardId);
     if (!boardToRemove || isMainBoardFn(boardToRemove)) {
@@ -1825,7 +1849,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
           {/* Distribution Boards with Circuit Tables */}
           <div className="space-y-4" data-autofill-section>
-            {sortedBoards.map((board) => {
+            {sortedBoards.map((board, boardIdx) => {
               const { circuits: boardCircuits, completedCount: boardCompleted } = boardStats[
                 board.id
               ] || {
@@ -1845,6 +1869,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   onAddCircuit={() => addCircuitToBoard(board.id)}
                   circuitCount={boardCircuits.length}
                   completedCount={boardCompleted}
+                  onMoveUp={() => handleMoveBoard(board.id, 'up')}
+                  onMoveDown={() => handleMoveBoard(board.id, 'down')}
+                  isFirst={boardIdx === 0}
+                  isLast={boardIdx === sortedBoards.length - 1}
+                  earthingArrangement={formData.earthingArrangement as string | undefined}
+                  nominalVoltage={formData.nominalVoltage as string | undefined}
                 >
                   <EnhancedTestResultDesktopTable
                     testResults={boardCircuits}
@@ -1854,6 +1884,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     onBulkUpdate={handleBulkUpdate}
                     onAddCircuit={() => addCircuitToBoard(board.id)}
                     onBulkFieldUpdate={handleBulkFieldUpdate}
+                    earthingArrangement={formData.earthingArrangement as string | undefined}
                   />
                 </BoardSection>
               );

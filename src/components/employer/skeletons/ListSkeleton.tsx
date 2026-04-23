@@ -39,7 +39,7 @@ export function ListSkeleton({
       {/* List Items */}
       <div className="space-y-3">
         {Array.from({ length: itemCount }).map((_, i) => (
-          <Card key={i} className="border-border/30 bg-muted/10">
+          <Card key={i} className="border-white/[0.08] bg-white/[0.04]">
             <CardContent className="p-4">
               <div className="flex items-start gap-3">
                 {/* Avatar/Icon */}
@@ -73,7 +73,7 @@ export function CompactListSkeleton({ itemCount = 6 }: { itemCount?: number }) {
   return (
     <div className="space-y-2 animate-pulse">
       {Array.from({ length: itemCount }).map((_, i) => (
-        <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-muted/10">
+        <div key={i} className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.04]">
           <Skeleton className="h-10 w-10 rounded-lg shrink-0" />
           <div className="flex-1 space-y-1.5">
             <Skeleton className="h-4 w-3/4" />

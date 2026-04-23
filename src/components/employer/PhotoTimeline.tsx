@@ -122,14 +122,14 @@ export const PhotoTimeline = ({
               {/* Sticky date header - more compact */}
               <button
                 onClick={() => toggleDate(dateKey)}
-                className="sticky top-0 z-10 w-full flex items-center justify-between py-2.5 px-3 bg-background/95 backdrop-blur-sm border-b border-border/30 hover:bg-muted/30 transition-colors touch-feedback"
+                className="sticky top-0 z-10 w-full flex items-center justify-between py-2.5 px-3 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm border-b border-white/[0.08] hover:bg-white/[0.04] transition-colors touch-feedback"
               >
                 <div className="flex items-center gap-2.5">
                   <div className="h-2 w-2 rounded-full bg-elec-yellow/70" />
-                  <span className="font-semibold text-foreground text-sm">
+                  <span className="font-semibold text-white text-sm">
                     {formatDateHeader(datePhotos[0].timestamp)}
                   </span>
-                  <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-5 bg-muted/50">
+                  <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-5 bg-white/[0.04]">
                     {datePhotos.length}
                   </Badge>
                 </div>
@@ -142,7 +142,7 @@ export const PhotoTimeline = ({
 
               {/* Timeline entries - tighter spacing */}
               {expanded && (
-                <div className="relative pl-5 border-l-2 border-border/30 ml-4 mt-1 mb-3 space-y-2">
+                <div className="relative pl-5 border-l-2 border-white/[0.08] ml-4 mt-1 mb-3 space-y-2">
                   {datePhotos.map((photo, idx) => {
                     const globalIndex = photos.findIndex((p) => p.id === photo.id);
 
@@ -158,7 +158,7 @@ export const PhotoTimeline = ({
 
                         {/* Photo card - more compact */}
                         <div
-                          className="bg-elec-gray/50 border border-border/30 rounded-lg overflow-hidden touch-feedback"
+                          className="bg-[hsl(0_0%_12%)]/50 border border-white/[0.08] rounded-lg overflow-hidden touch-feedback"
                           onClick={() => onPhotoClick(photo, globalIndex)}
                         >
                           <div className="flex gap-3 p-3">
@@ -171,10 +171,10 @@ export const PhotoTimeline = ({
                             <div className="flex-1 min-w-0">
                               <div className="flex items-start justify-between gap-2">
                                 <div className="min-w-0">
-                                  <h4 className="font-medium text-foreground text-sm truncate">
+                                  <h4 className="font-medium text-white text-sm truncate">
                                     {photo.jobTitle}
                                   </h4>
-                                  <span className="inline-block text-[10px] px-1.5 py-0.5 rounded capitalize mt-0.5 bg-muted/50 text-white">
+                                  <span className="inline-block text-[10px] px-1.5 py-0.5 rounded capitalize mt-0.5 bg-white/[0.04] text-white">
                                     {photo.category}
                                   </span>
                                 </div>
@@ -218,7 +218,7 @@ export const PhotoTimeline = ({
                           </div>
 
                           {/* Quick actions - only on desktop */}
-                          <div className="hidden md:flex items-center justify-end gap-2 px-3 py-2 bg-muted/20 border-t border-border/20">
+                          <div className="hidden md:flex items-center justify-end gap-2 px-3 py-2 bg-white/[0.04] border-t border-white/[0.08]">
                             <Button
                               size="sm"
                               variant={photo.isApproved ? 'default' : 'ghost'}

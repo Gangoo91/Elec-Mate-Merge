@@ -397,17 +397,20 @@ export const EICWizard: React.FC<EICWizardProps> = ({
         )}
       </main>
 
-      {/* Navigation footer - ultra-compact for full-page steps */}
+      {/* Navigation footer — inline on desktop (no sticky/fixed), mobile keeps
+          the thumb-reach sticky/floating treatment. */}
       {currentStepConfig?.id !== 'review' && (
         <footer
           className={cn(
             'z-30 pb-safe shrink-0',
-            isFullPageStep
-              ? 'fixed bottom-2 left-2 right-2'
-              : 'sticky bottom-0 border-t border-border bg-background/95 backdrop-blur'
+            !isMobile
+              ? 'border-t border-border bg-background'
+              : isFullPageStep
+                ? 'fixed bottom-2 left-2 right-2'
+                : 'sticky bottom-0 border-t border-border bg-background/95 backdrop-blur'
           )}
         >
-          {isFullPageStep ? (
+          {isFullPageStep && isMobile ? (
             /* Floating pill navigation for full-page steps */
             <div className="flex items-center justify-between gap-2 max-w-md mx-auto bg-background/95 backdrop-blur border border-border rounded-full px-2 py-1.5 shadow-lg">
               <Button

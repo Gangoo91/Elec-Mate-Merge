@@ -1,9 +1,7 @@
 import { useState, useCallback } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SignatureCapture } from '@/components/ui/signature-capture';
@@ -12,7 +10,6 @@ import {
   Users,
   CheckCircle2,
   Clock,
-  X,
   ChevronRight,
   UserPlus,
   Building2,
@@ -33,6 +30,14 @@ import {
 import { type Briefing } from '@/hooks/useBriefings';
 import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
+import {
+  SheetShell,
+  FormCard,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+} from './editorial';
 
 interface DigitalSignOffProps {
   open: boolean;
@@ -49,7 +54,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
   const [selectedAttendee, setSelectedAttendee] = useState<BriefingAttendee | null>(null);
   const [guestName, setGuestName] = useState('');
   const [guestCompany, setGuestCompany] = useState('');
-  const [captureLocation, setCaptureLocation] = useState(true);
+  const [captureLocation] = useState(true);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
 
   const { data: attendees = [], isLoading } = useBriefingAttendees(briefing.id);
@@ -167,8 +172,8 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
   if (isLoading) {
     return (
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
-          <div className="p-4 space-y-4">
+        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+          <div className="p-4 space-y-4 bg-[hsl(0_0%_8%)] h-full">
             <Skeleton className="h-20 w-full" />
             <Skeleton className="h-12 w-full" />
             <Skeleton className="h-12 w-full" />
@@ -179,69 +184,77 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
     );
   }
 
+  const sheetTitle =
+    viewMode === 'sign'
+      ? 'Sign Attendance'
+      : viewMode === 'add-guest'
+        ? 'Add Guest'
+        : 'Attendance Sign-Off';
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
-            <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-blue-500/10">
-                  <PenTool className="h-5 w-5 text-blue-400" />
-                </div>
-                <div>
-                  <SheetTitle className="text-left">
-                    {viewMode === 'sign'
-                      ? 'Sign Attendance'
-                      : viewMode === 'add-guest'
-                        ? 'Add Guest'
-                        : 'Attendance Sign-Off'}
-                  </SheetTitle>
-                  <p className="text-xs text-white mt-0.5 line-clamp-1">
-                    {briefing.title}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => {
-                  if (viewMode !== 'list') {
+      <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0 overflow-hidden">
+        <SheetShell
+          eyebrow="Sign-off"
+          title={sheetTitle}
+          description={briefing.title}
+          footer={
+            viewMode === 'list' ? (
+              <PrimaryButton onClick={() => setViewMode('add-guest')} fullWidth size="lg">
+                <UserPlus className="h-4 w-4 mr-2" />
+                Add Guest / Visitor
+              </PrimaryButton>
+            ) : viewMode === 'add-guest' ? (
+              <>
+                <SecondaryButton
+                  onClick={() => {
                     setViewMode('list');
-                    setSelectedAttendee(null);
-                  } else {
-                    onOpenChange(false);
-                  }
-                }}
-                className="shrink-0 touch-manipulation"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </SheetHeader>
-
+                    setGuestName('');
+                    setGuestCompany('');
+                  }}
+                  fullWidth
+                  size="lg"
+                >
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={handleAddGuest}
+                  disabled={!guestName.trim() || addAttendee.isPending}
+                  fullWidth
+                  size="lg"
+                >
+                  {addAttendee.isPending ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <PenTool className="h-4 w-4 mr-2" />
+                  )}
+                  Add & Sign
+                </PrimaryButton>
+              </>
+            ) : undefined
+          }
+        >
           {/* Content */}
           {viewMode === 'list' && (
             <>
               {/* Stats Card */}
-              <div className="p-4 border-b border-border">
-                <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-cyan-500/10">
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-500/10 to-cyan-500/10 border border-white/[0.06]">
+                <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-2xl font-bold text-foreground">
+                    <p className="text-2xl font-bold text-white">
                       {signed}/{attendees.length}
                     </p>
                     <p className="text-sm text-white">Signed</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-2xl font-bold text-foreground">{completionRate}%</p>
+                    <p className="text-2xl font-bold text-white">{completionRate}%</p>
                     <p className="text-sm text-white">Complete</p>
                   </div>
                 </div>
 
                 {/* Briefing Info */}
                 <div className="flex items-center gap-2 mt-3 flex-wrap">
-                  <Badge variant="outline" className="text-xs">
+                  <Badge variant="outline" className="text-xs text-white border-white/[0.1]">
                     {briefing.briefing_type || 'Briefing'}
                   </Badge>
                   {briefing.risk_level && (
@@ -253,7 +266,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                     </Badge>
                   )}
                   {briefing.date && (
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs text-white border-white/[0.1]">
                       {format(new Date(briefing.date), 'dd MMM yyyy')}
                     </Badge>
                   )}
@@ -262,7 +275,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
 
               {/* Attendees List */}
               <ScrollArea className="flex-1">
-                <div className="p-4 space-y-2">
+                <div className="space-y-2">
                   {/* Pending Section */}
                   {pending > 0 && (
                     <div className="mb-4">
@@ -274,10 +287,9 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                         {attendees
                           .filter((a) => !a.acknowledged)
                           .map((attendee) => (
-                            <Button
+                            <button
                               key={attendee.id}
-                              variant="outline"
-                              className="w-full justify-between h-14 px-4"
+                              className="w-full flex items-center justify-between p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
                               onClick={() => handleSelectAttendee(attendee)}
                             >
                               <div className="flex items-center gap-3">
@@ -285,7 +297,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                                   <Users className="h-4 w-4 text-amber-400" />
                                 </div>
                                 <div className="text-left">
-                                  <p className="font-medium text-sm">
+                                  <p className="font-medium text-sm text-white">
                                     {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                                   </p>
                                   {attendee.guest_company && (
@@ -296,7 +308,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                                 </div>
                               </div>
                               <ChevronRight className="h-4 w-4 text-white" />
-                            </Button>
+                            </button>
                           ))}
                       </div>
                     </div>
@@ -315,14 +327,14 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                           .map((attendee) => (
                             <div
                               key={attendee.id}
-                              className="flex items-center justify-between p-4 rounded-lg bg-green-500/5 border border-green-500/20"
+                              className="flex items-center justify-between p-4 rounded-xl bg-green-500/5 border border-green-500/20"
                             >
                               <div className="flex items-center gap-3">
                                 <div className="p-2 rounded-lg bg-green-500/10">
                                   <CheckCircle2 className="h-4 w-4 text-green-400" />
                                 </div>
                                 <div>
-                                  <p className="font-medium text-sm text-foreground">
+                                  <p className="font-medium text-sm text-white">
                                     {attendee.employee?.name || attendee.guest_name || 'Unknown'}
                                   </p>
                                   <p className="text-xs text-white">
@@ -351,7 +363,7 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                   {attendees.length === 0 && (
                     <div className="text-center py-8">
                       <Users className="h-12 w-12 text-white mx-auto mb-4" />
-                      <h3 className="font-medium text-foreground mb-2">No Attendees</h3>
+                      <h3 className="font-medium text-white mb-2">No Attendees</h3>
                       <p className="text-sm text-white mb-4">
                         Add team members or guests to begin sign-off
                       </p>
@@ -359,36 +371,22 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                   )}
                 </div>
               </ScrollArea>
-
-              {/* Footer */}
-              <div className="p-4 border-t border-border shrink-0">
-                <Button
-                  onClick={() => setViewMode('add-guest')}
-                  className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-                >
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  Add Guest / Visitor
-                </Button>
-              </div>
             </>
           )}
 
           {viewMode === 'sign' && selectedAttendee && (
             <>
               {/* Signing For */}
-              <div className="p-4 border-b border-border">
-                <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-xs text-white mb-1">Signing for</p>
-                  <p className="text-lg font-semibold text-foreground">
-                    {selectedAttendee.employee?.name || selectedAttendee.guest_name || 'Unknown'}
+              <FormCard eyebrow="Signing for">
+                <p className="text-lg font-semibold text-white">
+                  {selectedAttendee.employee?.name || selectedAttendee.guest_name || 'Unknown'}
+                </p>
+                {selectedAttendee.guest_company && (
+                  <p className="text-sm text-white flex items-center gap-1 mt-1">
+                    <Building2 className="h-3 w-3" />
+                    {selectedAttendee.guest_company}
                   </p>
-                  {selectedAttendee.guest_company && (
-                    <p className="text-sm text-white flex items-center gap-1 mt-1">
-                      <Building2 className="h-3 w-3" />
-                      {selectedAttendee.guest_company}
-                    </p>
-                  )}
-                </div>
+                )}
 
                 {/* Location & Device Info */}
                 <div className="flex items-center gap-3 mt-3 text-xs text-white">
@@ -403,10 +401,10 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
                     {navigator.platform}
                   </span>
                 </div>
-              </div>
+              </FormCard>
 
               {/* Signature Canvas */}
-              <div className="flex-1 p-4">
+              <div className="flex-1">
                 <SignatureCapture
                   onCapture={handleSignatureCapture}
                   onCancel={() => {
@@ -429,68 +427,36 @@ export function DigitalSignOff({ open, onOpenChange, briefing, onComplete }: Dig
 
           {viewMode === 'add-guest' && (
             <>
-              {/* Guest Form */}
-              <div className="flex-1 p-4 space-y-4">
-                <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 mb-4">
-                  <p className="text-sm text-foreground flex items-center gap-2">
-                    <UserPlus className="h-4 w-4 text-amber-400" />
-                    Add visitors, subcontractors, or guests who need to sign off
-                  </p>
-                </div>
+              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <p className="text-sm text-white flex items-center gap-2">
+                  <UserPlus className="h-4 w-4 text-amber-400" />
+                  Add visitors, subcontractors, or guests who need to sign off
+                </p>
+              </div>
 
-                <div className="space-y-2">
-                  <Label>Name *</Label>
+              <FormCard eyebrow="Guest details">
+                <Field label="Name" required>
                   <Input
                     placeholder="Enter guest name"
                     value={guestName}
                     onChange={(e) => setGuestName(e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                     autoFocus
                   />
-                </div>
+                </Field>
 
-                <div className="space-y-2">
-                  <Label>Company (Optional)</Label>
+                <Field label="Company (Optional)">
                   <Input
                     placeholder="Enter company name"
                     value={guestCompany}
                     onChange={(e) => setGuestCompany(e.target.value)}
-                    className="h-11 touch-manipulation"
+                    className={inputClass}
                   />
-                </div>
-              </div>
-
-              {/* Footer */}
-              <div className="p-4 border-t border-border shrink-0">
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setViewMode('list');
-                      setGuestName('');
-                      setGuestCompany('');
-                    }}
-                    className="flex-1 h-12"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={handleAddGuest}
-                    disabled={!guestName.trim() || addAttendee.isPending}
-                    className="flex-1 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
-                  >
-                    {addAttendee.isPending ? (
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    ) : (
-                      <PenTool className="h-4 w-4 mr-2" />
-                    )}
-                    Add & Sign
-                  </Button>
-                </div>
-              </div>
+                </Field>
+              </FormCard>
             </>
           )}
-        </div>
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

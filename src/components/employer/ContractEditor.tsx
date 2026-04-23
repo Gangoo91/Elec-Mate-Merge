@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/responsive-form-modal';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { PrimaryButton, SecondaryButton } from './editorial';
 import {
   Bold,
   Italic,
@@ -188,7 +189,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
     <ResponsiveFormModal open={open} onOpenChange={handleClose}>
       <ResponsiveFormModalContent className={cn(isMobile ? '' : 'max-w-4xl')}>
         {/* Header */}
-        <ResponsiveFormModalHeader className="border-b border-border/50">
+        <ResponsiveFormModalHeader className="border-b border-white/[0.08]">
           <div className="flex items-center justify-between">
             <ResponsiveFormModalTitle>
               <div className="flex items-center gap-3">
@@ -206,7 +207,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
 
             <div className="flex items-center gap-2">
               {hasChanges && (
-                <Badge variant="outline" className="text-warning border-warning">
+                <Badge variant="outline" className="text-amber-400 border-amber-500/50">
                   Unsaved
                 </Badge>
               )}
@@ -222,7 +223,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
         {/* Body */}
         <ResponsiveFormModalBody className="py-4">
           {/* Toolbar */}
-          <div className="flex flex-wrap items-center gap-1 p-2 bg-white/5 rounded-t-xl border border-white/10 border-b-0 mb-0">
+          <div className="flex flex-wrap items-center gap-1 p-2 bg-[hsl(0_0%_9%)] rounded-t-xl border border-white/[0.08] border-b-0 mb-0">
             <ToolbarButton
               onClick={() => editor?.chain().focus().toggleBold().run()}
               isActive={editor?.isActive('bold')}
@@ -326,14 +327,14 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
           {/* Editor / Preview */}
           <div
             className={cn(
-              'bg-white/5 rounded-b-xl border border-white/10 border-t-0',
-              'focus-within:border-elec-yellow/30 transition-colors',
+              'bg-[hsl(0_0%_9%)] rounded-b-xl border border-white/[0.08] border-t-0',
+              'focus-within:border-elec-yellow/60 transition-colors',
               'min-h-[400px] max-h-[60vh] overflow-y-auto'
             )}
           >
             {isPreview ? (
               <div
-                className="prose prose-sm prose-invert max-w-none p-4 min-h-[400px] [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-foreground [&_table]:w-full [&_td]:py-1 [&_td]:pr-4"
+                className="prose prose-sm prose-invert max-w-none p-4 min-h-[400px] [&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4 [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-4 [&_h3]:mb-2 [&_p]:mb-3 [&_ul]:mb-4 [&_li]:mb-1 [&_strong]:text-white [&_table]:w-full [&_td]:py-1 [&_td]:pr-4"
                 dangerouslySetInnerHTML={{ __html: editor?.getHTML() || '' }}
               />
             ) : (
@@ -400,17 +401,14 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
         {/* Footer */}
         <ResponsiveFormModalFooter>
           <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              variant="outline"
-              onClick={handleClose}
-              className="flex-1 sm:flex-none min-h-[48px]"
-            >
+            <SecondaryButton onClick={handleClose} fullWidth size="lg">
               Cancel
-            </Button>
-            <Button
+            </SecondaryButton>
+            <PrimaryButton
               onClick={handleSave}
               disabled={updateContract.isPending || !hasChanges}
-              className="flex-1 min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90"
+              fullWidth
+              size="lg"
             >
               {updateContract.isPending ? (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -418,7 +416,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
                 <Save className="h-4 w-4 mr-2" />
               )}
               Save Changes
-            </Button>
+            </PrimaryButton>
           </div>
         </ResponsiveFormModalFooter>
       </ResponsiveFormModalContent>

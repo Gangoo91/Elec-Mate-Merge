@@ -1,57 +1,47 @@
 import React from 'react';
-import { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Eyebrow } from '@/components/college/primitives';
 
 interface SettingsSectionProps {
   title: string;
-  icon?: LucideIcon;
-  iconBg?: string;
-  iconColour?: string;
   description?: string;
+  eyebrow?: string;
   children: React.ReactNode;
   className?: string;
-  headerClassName?: string;
-  collapsible?: boolean;
-  defaultOpen?: boolean;
+  action?: React.ReactNode;
 }
 
+/**
+ * Editorial section wrapper — replaces the old iconed card header.
+ * Title + optional description sit above the children, which should
+ * be a college-primitive ListCard or grid.
+ */
 const SettingsSection: React.FC<SettingsSectionProps> = ({
   title,
-  icon: Icon,
-  iconBg = 'bg-elec-yellow/10',
-  iconColour = 'text-elec-yellow',
   description,
+  eyebrow,
   children,
   className,
-  headerClassName,
+  action,
 }) => {
   return (
-    <div
-      className={cn('rounded-xl bg-elec-gray/50 border border-white/10 overflow-hidden', className)}
-    >
-      {/* Section Header */}
-      <div className={cn('px-4 md:px-6 py-4 border-b border-white/10', headerClassName)}>
-        <div className="flex items-center gap-3">
-          {Icon && (
-            <div
-              className={cn(
-                'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
-                iconBg
-              )}
-            >
-              <Icon className={cn('h-5 w-5', iconColour)} />
-            </div>
+    <section className={cn('space-y-3', className)}>
+      <div className="flex items-end justify-between gap-4">
+        <div className="min-w-0">
+          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+          <h3 className="mt-1 text-base sm:text-lg font-semibold text-white tracking-tight">
+            {title}
+          </h3>
+          {description && (
+            <p className="mt-1 text-[12.5px] text-white/70 leading-relaxed max-w-2xl">
+              {description}
+            </p>
           )}
-          <div className="min-w-0">
-            <h3 className="text-base font-semibold text-foreground">{title}</h3>
-            {description && <p className="text-sm text-muted-foreground">{description}</p>}
-          </div>
         </div>
+        {action && <div className="shrink-0">{action}</div>}
       </div>
-
-      {/* Section Content */}
-      <div className="p-4 md:p-6 space-y-3">{children}</div>
-    </div>
+      {children}
+    </section>
   );
 };
 

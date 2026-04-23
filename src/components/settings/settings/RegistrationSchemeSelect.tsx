@@ -7,7 +7,6 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { Calendar } from 'lucide-react';
 
 interface RegistrationSchemeSelectProps {
   scheme: string;
@@ -41,18 +40,18 @@ export function RegistrationSchemeSelect({
 
   return (
     <div className="space-y-4">
-      <div>
-        <Label htmlFor="registrationScheme" className="text-foreground font-semibold">
-          Registration Scheme
+      <div className="space-y-1.5">
+        <Label htmlFor="registrationScheme" className="text-white font-medium text-[13px]">
+          Registration scheme
         </Label>
         <Select value={scheme} onValueChange={onSchemeChange}>
           <SelectTrigger
             id="registrationScheme"
-            className="mt-1.5 h-12 min-h-[48px] bg-background border-elec-gray-light"
+            className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
           >
             <SelectValue placeholder="Select a scheme" />
           </SelectTrigger>
-          <SelectContent className="bg-elec-gray border-elec-gray-light">
+          <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] text-white">
             {UK_REGISTRATION_SCHEMES.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
@@ -63,34 +62,30 @@ export function RegistrationSchemeSelect({
       </div>
 
       {showFields && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-4 border-l-2 border-elec-yellow/30">
-          <div>
-            <Label htmlFor="registrationNumber" className="text-foreground font-semibold">
-              Registration Number <span className="text-red-500 text-base font-bold">*</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+          <div className="space-y-1.5">
+            <Label htmlFor="registrationNumber" className="text-white font-medium text-[13px]">
+              Registration number <span className="text-red-400">*</span>
             </Label>
             <Input
               id="registrationNumber"
               value={registrationNumber}
               onChange={(e) => onNumberChange(e.target.value)}
               placeholder="Enter registration number"
-              className="mt-1.5 min-h-[48px]"
+              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
 
-          <div>
-            <Label
-              htmlFor="registrationExpiry"
-              className="text-foreground font-semibold flex items-center gap-2"
-            >
-              <Calendar className="h-4 w-4 text-elec-yellow" />
-              Expiry Date
+          <div className="space-y-1.5">
+            <Label htmlFor="registrationExpiry" className="text-white font-medium text-[13px]">
+              Expiry date
             </Label>
             <Input
               id="registrationExpiry"
               type="date"
               value={registrationExpiry || ''}
               onChange={(e) => onExpiryChange(e.target.value)}
-              className="mt-1.5 h-12 min-h-[48px]"
+              className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
             />
           </div>
         </div>

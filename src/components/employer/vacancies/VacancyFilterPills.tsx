@@ -19,47 +19,47 @@ interface VacancyFilterPillsProps<T extends string> {
 const colorConfig = {
   yellow: {
     active: 'bg-elec-yellow text-black border-elec-yellow',
-    inactive: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 hover:bg-elec-yellow/20',
+    inactive: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25 hover:bg-elec-yellow/15',
     count: 'bg-black/20',
   },
   blue: {
     active: 'bg-blue-500 text-white border-blue-500',
-    inactive: 'bg-blue-500/10 text-blue-400 border-blue-500/30 hover:bg-blue-500/20',
-    count: 'bg-white/20',
+    inactive: 'bg-blue-500/10 text-blue-400 border-blue-500/25 hover:bg-blue-500/15',
+    count: 'bg-white/[0.08]',
   },
   purple: {
     active: 'bg-purple-500 text-white border-purple-500',
-    inactive: 'bg-purple-500/10 text-purple-400 border-purple-500/30 hover:bg-purple-500/20',
-    count: 'bg-white/20',
+    inactive: 'bg-purple-500/10 text-purple-400 border-purple-500/25 hover:bg-purple-500/15',
+    count: 'bg-white/[0.08]',
   },
   cyan: {
     active: 'bg-cyan-500 text-white border-cyan-500',
-    inactive: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/20',
-    count: 'bg-white/20',
+    inactive: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25 hover:bg-cyan-500/15',
+    count: 'bg-white/[0.08]',
   },
   emerald: {
     active: 'bg-emerald-500 text-white border-emerald-500',
-    inactive: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30 hover:bg-emerald-500/20',
-    count: 'bg-white/20',
+    inactive: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25 hover:bg-emerald-500/15',
+    count: 'bg-white/[0.08]',
   },
   green: {
     active: 'bg-green-500 text-white border-green-500',
-    inactive: 'bg-green-500/10 text-green-400 border-green-500/30 hover:bg-green-500/20',
-    count: 'bg-white/20',
+    inactive: 'bg-green-500/10 text-green-400 border-green-500/25 hover:bg-green-500/15',
+    count: 'bg-white/[0.08]',
   },
   red: {
     active: 'bg-red-500 text-white border-red-500',
-    inactive: 'bg-red-500/10 text-red-400 border-red-500/30 hover:bg-red-500/20',
-    count: 'bg-white/20',
+    inactive: 'bg-red-500/10 text-red-400 border-red-500/25 hover:bg-red-500/15',
+    count: 'bg-white/[0.08]',
   },
   gray: {
-    active: 'bg-gray-500 text-white border-gray-500',
-    inactive: 'bg-gray-500/10 text-white border-gray-500/30 hover:bg-gray-500/20',
-    count: 'bg-white/20',
+    active: 'bg-white/[0.15] text-white border-white/[0.15]',
+    inactive: 'bg-white/[0.06] text-white border-white/[0.08] hover:bg-white/[0.1]',
+    count: 'bg-white/[0.08]',
   },
   amber: {
     active: 'bg-amber-500 text-black border-amber-500',
-    inactive: 'bg-amber-500/10 text-amber-400 border-amber-500/30 hover:bg-amber-500/20',
+    inactive: 'bg-amber-500/10 text-amber-400 border-amber-500/25 hover:bg-amber-500/15',
     count: 'bg-black/20',
   },
 };
@@ -87,7 +87,7 @@ export function VacancyFilterPills<T extends string>({
               onClick={() => onSelect(option.value)}
               className={cn(
                 'relative flex items-center gap-2 px-4 py-2.5',
-                'rounded-full border text-sm font-medium',
+                'rounded-full border text-[13px] font-medium',
                 'transition-all duration-200',
                 'shrink-0 min-h-[44px]',
                 'touch-manipulation',
@@ -98,8 +98,8 @@ export function VacancyFilterPills<T extends string>({
               {option.count > 0 && (
                 <span
                   className={cn(
-                    'px-2 py-0.5 rounded-full text-xs font-semibold',
-                    isActive ? config.count : 'bg-white/10'
+                    'px-2 py-0.5 rounded-full text-[11px] font-semibold tabular-nums',
+                    isActive ? config.count : 'bg-white/[0.08]'
                   )}
                 >
                   {option.count}

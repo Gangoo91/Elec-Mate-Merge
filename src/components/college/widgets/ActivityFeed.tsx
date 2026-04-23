@@ -140,7 +140,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, iconless = false,
   if (iconless) {
     if (activities.length === 0) {
       return (
-        <div className="py-10 text-center text-[12px] text-white/40 border-y border-white/[0.06]">
+        <div className="py-10 text-center text-[12px] text-white/70 border-y border-white/[0.06]">
           No recent activity
         </div>
       );
@@ -195,7 +195,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, iconless = false,
                   </span>
                 )}
               </div>
-              <span className="text-[11px] tabular-nums text-white/40 shrink-0 mt-1">
+              <span className="text-[11px] tabular-nums text-white/70 shrink-0 mt-1">
                 {formatTime(activity.timestamp)}
               </span>
             </div>
@@ -218,7 +218,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, iconless = false,
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-baseline justify-between mb-4">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
               Activity
             </div>
             <h3 className="mt-1 text-base font-semibold text-white tracking-tight">
@@ -247,7 +247,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, iconless = false,
                     <span className="text-white/60">{activity.action}</span>{' '}
                     <span className="font-medium text-white">{activity.subject}</span>
                   </p>
-                  <span className="text-[10px] text-white/40 shrink-0 tabular-nums">
+                  <span className="text-[10px] text-white/70 shrink-0 tabular-nums">
                     {formatTime(activity.timestamp)}
                   </span>
                 </div>
@@ -272,7 +272,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, iconless = false,
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-elec-yellow/80" />
       <div className="p-5 sm:p-6 pb-4 flex items-baseline justify-between">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Activity
           </div>
           <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
@@ -331,7 +331,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, iconless = false,
                         </div>
                       )}
                     </div>
-                    <span className="text-[11px] text-white/40 shrink-0 tabular-nums">
+                    <span className="text-[11px] text-white/70 shrink-0 tabular-nums">
                       {formatTime(activity.timestamp)}
                     </span>
                   </div>

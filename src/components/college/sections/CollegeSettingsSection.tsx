@@ -53,11 +53,11 @@ export function CollegeSettingsSection() {
               className="flex items-center gap-4 px-5 sm:px-6 py-5"
             >
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
                   {feature.eyebrow}
                 </div>
                 <div className="mt-1 text-[15px] font-medium text-white">{feature.title}</div>
-                <div className="mt-0.5 text-[12px] text-white/50">{feature.description}</div>
+                <div className="mt-0.5 text-[12px] text-white/75">{feature.description}</div>
               </div>
               <Pill tone="yellow">Soon</Pill>
             </div>

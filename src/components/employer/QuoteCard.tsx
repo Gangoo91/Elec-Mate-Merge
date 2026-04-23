@@ -1,17 +1,7 @@
-import {
-  FileText,
-  Send,
-  Clock,
-  CheckCircle,
-  XCircle,
-  Mail,
-  ChevronRight,
-  UserCheck,
-  AlertTriangle,
-} from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { cn } from '@/lib/utils';
 import { SwipeableRow } from '@/components/ui/swipeable-row';
+import { ChevronRight, Send } from 'lucide-react';
+import { Pill, type Tone } from './editorial';
+import { cn } from '@/lib/utils';
 import { getQuotePriorityBadge } from '@/utils/financeSorting';
 import type { Quote } from '@/services/financeService';
 
@@ -22,57 +12,29 @@ interface QuoteCardProps {
   isSending?: boolean;
 }
 
-const getStatusConfig = (status: string) => {
-  const configs: Record<string, { icon: React.ReactNode; className: string; borderClass: string }> =
-    {
-      Draft: {
-        icon: <FileText className="h-3.5 w-3.5" />,
-        className: 'bg-muted text-white border-transparent',
-        borderClass: 'border-l-muted-foreground/50',
-      },
-      Sent: {
-        icon: <Mail className="h-3.5 w-3.5" />,
-        className: 'bg-warning/15 text-warning border-warning/30',
-        borderClass: 'border-l-warning',
-      },
-      Approved: {
-        icon: <CheckCircle className="h-3.5 w-3.5" />,
-        className: 'bg-success/15 text-success border-success/30',
-        borderClass: 'border-l-success',
-      },
-      'Client Accepted': {
-        icon: <UserCheck className="h-3.5 w-3.5" />,
-        className: 'bg-success/15 text-success border-success/30',
-        borderClass: 'border-l-success',
-      },
-      'Client Declined': {
-        icon: <XCircle className="h-3.5 w-3.5" />,
-        className: 'bg-destructive/15 text-destructive border-destructive/30',
-        borderClass: 'border-l-destructive',
-      },
-      Rejected: {
-        icon: <XCircle className="h-3.5 w-3.5" />,
-        className: 'bg-destructive/15 text-destructive border-destructive/30',
-        borderClass: 'border-l-destructive',
-      },
-    };
-  return configs[status] || configs.Draft;
+const statusToneMap: Record<string, Tone> = {
+  Draft: 'amber',
+  Sent: 'amber',
+  Approved: 'emerald',
+  'Client Accepted': 'emerald',
+  'Client Declined': 'red',
+  Rejected: 'red',
 };
 
-export function QuoteCard({ quote, onView, onSend, isSending }: QuoteCardProps) {
-  const statusConfig = getStatusConfig(quote.status);
+export function QuoteCard({ quote, onView, onSend, isSending: _isSending }: QuoteCardProps) {
+  void _isSending;
+
   const lineItems = Array.isArray(quote.line_items) ? quote.line_items : [];
   const itemCount = lineItems.length;
   const priorityBadge = getQuotePriorityBadge(quote);
+  const tone = statusToneMap[quote.status] ?? 'amber';
 
-  // Calculate days until expiry
   const daysLeft = quote.valid_until
     ? Math.ceil((new Date(quote.valid_until).getTime() - Date.now()) / (1000 * 60 * 60 * 24))
     : null;
   const isExpired = daysLeft !== null && daysLeft < 0;
   const isExpiringSoon = daysLeft !== null && daysLeft >= 0 && daysLeft <= 7;
 
-  // Swipe actions
   const leftAction = {
     icon: <ChevronRight className="h-5 w-5" />,
     label: 'View',
@@ -89,89 +51,69 @@ export function QuoteCard({ quote, onView, onSend, isSending }: QuoteCardProps) 
         }
       : undefined;
 
-  // Format value
   const formattedValue = Number(quote.value).toLocaleString('en-GB', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  // Check if needs attention
-  const needsAttention =
-    quote.status === 'Client Declined' || (isExpiringSoon && quote.status === 'Sent');
+  const showPriority =
+    priorityBadge &&
+    (priorityBadge.variant === 'destructive' || priorityBadge.variant === 'warning');
+
+  const expiryTone: Tone = isExpired ? 'red' : isExpiringSoon ? 'amber' : 'cyan';
 
   return (
     <SwipeableRow leftAction={leftAction} rightAction={rightAction}>
-      <div
-        className={cn(
-          'bg-card border border-l-4 rounded-2xl overflow-hidden transition-all',
-          'active:scale-[0.98] active:bg-accent/30',
-          statusConfig.borderClass,
-          needsAttention && 'ring-2 ring-warning/30'
-        )}
+      <button
+        type="button"
         onClick={() => onView(quote)}
+        className={cn(
+          'group block w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden touch-manipulation',
+          'hover:bg-[hsl(0_0%_15%)] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60'
+        )}
       >
-        {/* Priority Banner - only show for actionable items */}
-        {priorityBadge &&
-          (priorityBadge.variant === 'destructive' || priorityBadge.variant === 'warning') && (
-            <div
-              className={cn(
-                'px-4 py-2 text-xs font-medium flex items-center gap-2',
-                priorityBadge.variant === 'destructive' && 'bg-destructive/10 text-destructive',
-                priorityBadge.variant === 'warning' && 'bg-warning/10 text-warning'
-              )}
-            >
-              <AlertTriangle className="h-3.5 w-3.5" />
+        {showPriority && (
+          <div className="px-5 py-2.5 border-b border-white/[0.06] flex items-center gap-2">
+            <Pill tone={priorityBadge.variant === 'destructive' ? 'red' : 'amber'}>
               {priorityBadge.label}
-            </div>
-          )}
+            </Pill>
+          </div>
+        )}
 
-        <div className="p-4">
-          {/* Top Row - Status & Value */}
-          <div className="flex items-start justify-between gap-4 mb-3">
-            <Badge
-              variant="outline"
-              className={cn(
-                'gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg',
-                statusConfig.className
+        <div className="p-5 space-y-4">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                {quote.quote_number}
+              </div>
+              <h3 className="mt-1.5 text-[15px] font-medium text-white truncate leading-tight">
+                {quote.client}
+              </h3>
+              {(quote.job_title || quote.description) && (
+                <p className="mt-0.5 text-[12px] text-white truncate">
+                  {quote.job_title || quote.description}
+                </p>
               )}
-            >
-              {statusConfig.icon}
-              {quote.status}
-            </Badge>
-            <span className="text-2xl font-bold text-primary tabular-nums tracking-tight">
-              £{formattedValue}
-            </span>
+            </div>
+            <div className="text-right shrink-0">
+              <Pill tone={tone}>{quote.status}</Pill>
+              <div className="mt-2 text-[22px] font-semibold tabular-nums tracking-[-0.01em] text-elec-yellow leading-none">
+                £{formattedValue}
+              </div>
+            </div>
           </div>
 
-          {/* Quote Number */}
-          <div className="mb-2">
-            <span className="inline-block font-mono text-[11px] text-white bg-muted/60 px-2 py-1 rounded-md">
-              {quote.quote_number}
-            </span>
-          </div>
-
-          {/* Client & Description */}
-          <div className="space-y-1 mb-4">
-            <h3 className="text-lg font-semibold text-foreground leading-tight">{quote.client}</h3>
-            {(quote.job_title || quote.description) && (
-              <p className="text-sm text-white line-clamp-1">
-                {quote.job_title || quote.description}
-              </p>
-            )}
-          </div>
-
-          {/* Footer - Meta Info */}
-          <div className="flex items-center justify-between pt-3 border-t border-border/40">
-            <div className="flex items-center gap-4 text-sm text-white">
+          <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between gap-3 text-[11px] text-white">
+            <div className="flex items-center gap-3 min-w-0">
               {itemCount > 0 && (
-                <span className="flex items-center gap-1">
-                  <span className="font-medium text-foreground">{itemCount}</span>
+                <span className="tabular-nums">
+                  <span className="font-medium text-white">{itemCount}</span>{' '}
                   {itemCount === 1 ? 'item' : 'items'}
                 </span>
               )}
               {quote.sent_date && (
-                <span className="flex items-center gap-1.5">
-                  <Send className="h-3.5 w-3.5" />
+                <span className="tabular-nums truncate">
+                  Sent{' '}
                   {new Date(quote.sent_date).toLocaleDateString('en-GB', {
                     day: 'numeric',
                     month: 'short',
@@ -179,14 +121,7 @@ export function QuoteCard({ quote, onView, onSend, isSending }: QuoteCardProps) 
                 </span>
               )}
               {quote.valid_until && (
-                <span
-                  className={cn(
-                    'flex items-center gap-1.5',
-                    isExpired && 'text-destructive font-medium',
-                    isExpiringSoon && !isExpired && 'text-warning font-medium'
-                  )}
-                >
-                  <Clock className="h-3.5 w-3.5" />
+                <Pill tone={expiryTone}>
                   {isExpired
                     ? 'Expired'
                     : isExpiringSoon
@@ -195,16 +130,18 @@ export function QuoteCard({ quote, onView, onSend, isSending }: QuoteCardProps) 
                           day: 'numeric',
                           month: 'short',
                         })}
-                </span>
+                </Pill>
               )}
             </div>
-            <div className="flex items-center gap-1 text-white">
-              <span className="text-xs">View</span>
-              <ChevronRight className="h-4 w-4" />
-            </div>
+            <span
+              aria-hidden
+              className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow transition-colors shrink-0"
+            >
+              View →
+            </span>
           </div>
         </div>
-      </div>
+      </button>
     </SwipeableRow>
   );
 }

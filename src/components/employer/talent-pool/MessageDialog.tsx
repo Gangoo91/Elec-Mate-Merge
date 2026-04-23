@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { MessageSquare, Send, Loader2, Award, Shield, Info } from 'lucide-react';
 import { useStartConversation } from '@/hooks/useConversations';
 import { useSendMessage } from '@/hooks/useMessages';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
+import {
+  Field,
+  FormCard,
+  Pill,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
+} from '@/components/employer/editorial';
 
 interface MessageDialogProps {
   open: boolean;
@@ -26,14 +31,22 @@ interface MessageDialogProps {
   onSuccess?: (conversationId: string) => void;
 }
 
-const tierConfig: Record<VerificationTier, { label: string; color: string; bg: string }> = {
-  basic: { label: 'Basic', color: 'text-white', bg: 'bg-muted' },
-  verified: { label: 'Verified', color: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-900/30' },
-  premium: {
-    label: 'Premium',
-    color: 'text-elec-yellow',
-    bg: 'bg-yellow-100 dark:bg-yellow-900/30',
-  },
+const tierIconMap: Record<VerificationTier, typeof Award | null> = {
+  basic: null,
+  verified: Shield,
+  premium: Award,
+};
+
+const tierLabelMap: Record<VerificationTier, string> = {
+  basic: 'Basic',
+  verified: 'Verified',
+  premium: 'Premium',
+};
+
+const tierToneMap: Record<VerificationTier, 'amber' | 'blue' | 'yellow'> = {
+  basic: 'amber',
+  verified: 'blue',
+  premium: 'yellow',
 };
 
 export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: MessageDialogProps) {
@@ -95,7 +108,7 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
 
   if (!electrician) return null;
 
-  const tier = tierConfig[electrician.verificationTier];
+  const TierIcon = tierIconMap[electrician.verificationTier];
   const initials = electrician.name
     .split(' ')
     .map((n) => n[0])
@@ -103,9 +116,9 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-[95vw] sm:max-w-md">
+      <DialogContent className="max-w-[95vw] sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-white">
             <MessageSquare className="h-5 w-5 text-elec-yellow" />
             Message {electrician.name}
           </DialogTitle>
@@ -113,64 +126,60 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
 
         <div className="space-y-4">
           {/* Electrician Info */}
-          <div className="flex items-center gap-3 p-3 bg-muted rounded-lg">
-            <Avatar className="w-12 h-12">
-              <AvatarImage src={electrician.avatar} alt={electrician.name} />
-              <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow font-bold">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-              <p className="font-medium">{electrician.name}</p>
-              <p className="text-sm text-white">{electrician.location}</p>
+          <FormCard eyebrow="Sparky">
+            <div className="flex items-center gap-3">
+              <Avatar className="w-12 h-12">
+                <AvatarImage src={electrician.avatar} alt={electrician.name} />
+                <AvatarFallback className="bg-elec-yellow/20 text-elec-yellow font-bold">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1">
+                <p className="font-medium text-white">{electrician.name}</p>
+                <p className="text-sm text-white">{electrician.location}</p>
+              </div>
+              <Pill tone={tierToneMap[electrician.verificationTier]}>
+                {TierIcon && <TierIcon className="h-3 w-3 mr-1" />}
+                {tierLabelMap[electrician.verificationTier]}
+              </Pill>
             </div>
-            <Badge variant="outline" className={`${tier.bg} ${tier.color} border-0`}>
-              {electrician.verificationTier === 'premium' ? (
-                <Award className="h-3 w-3 mr-1" />
-              ) : electrician.verificationTier === 'verified' ? (
-                <Shield className="h-3 w-3 mr-1" />
-              ) : null}
-              {tier.label}
-            </Badge>
-          </div>
+          </FormCard>
 
           {/* Info Notice */}
-          <div className="flex gap-2 p-3 bg-blue-500/10 rounded-lg text-sm">
-            <Info className="h-4 w-4 text-blue-500 shrink-0 mt-0.5" />
+          <div className="flex gap-2 p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl text-sm">
+            <Info className="h-4 w-4 text-blue-400 shrink-0 mt-0.5" />
             <p className="text-white">
-              <span className="font-medium text-foreground">How it works:</span> You can message any
+              <span className="font-medium">How it works:</span> You can message any
               electrician. They'll be able to reply once they apply to one of your job vacancies.
             </p>
           </div>
 
           {/* Message Input */}
-          <div className="space-y-2">
-            <Label htmlFor="message">Your Message</Label>
+          <Field
+            label="Your message"
+            hint="Be specific about the role or project you're hiring for."
+          >
             <Textarea
               id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Hi, I came across your profile and would like to discuss a potential opportunity..."
               rows={4}
-              className="resize-none"
+              className={textareaClass}
             />
-            <p className="text-xs text-white">
-              Be specific about the role or project you're hiring for.
-            </p>
-          </div>
+          </Field>
 
           {/* Actions */}
           <div className="flex gap-2">
-            <Button
-              variant="outline"
-              className="flex-1 h-12"
+            <SecondaryButton
+              fullWidth
               onClick={() => onOpenChange(false)}
               disabled={isSending}
             >
               Cancel
-            </Button>
-            <Button
-              className="flex-1 h-12"
+            </SecondaryButton>
+            <PrimaryButton
+              fullWidth
               onClick={handleSend}
               disabled={isSending || !message.trim()}
             >
@@ -185,7 +194,7 @@ export function MessageDialog({ open, onOpenChange, electrician, onSuccess }: Me
                   Send Message
                 </>
               )}
-            </Button>
+            </PrimaryButton>
           </div>
         </div>
       </DialogContent>

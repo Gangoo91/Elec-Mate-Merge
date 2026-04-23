@@ -4,11 +4,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Wrench, Package, Truck, Building2, TrendingUp, Calculator } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import {
+  PrimaryButton,
+  SecondaryButton,
+  Field,
+  inputClass,
+} from '@/components/employer/editorial';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useJobFinancial, useUpdateBudgetValues } from '@/hooks/useJobFinancials';
 
@@ -129,7 +133,7 @@ export function EditJobBudgetSheet({
         className={cn('flex flex-col p-0', isMobile ? 'h-[85vh] rounded-t-2xl' : 'w-[450px]')}
       >
         {/* Header */}
-        <SheetHeader className="p-4 border-b border-border shrink-0">
+        <SheetHeader className="p-4 border-b border-white/[0.08] shrink-0">
           <SheetTitle>Edit Job Budget</SheetTitle>
           {jobTitle && <p className="text-sm text-white">{jobTitle}</p>}
         </SheetHeader>
@@ -139,7 +143,7 @@ export function EditJobBudgetSheet({
           {isLoading ? (
             <div className="space-y-3">
               {[...Array(5)].map((_, i) => (
-                <div key={i} className="h-16 bg-muted animate-pulse rounded-lg" />
+                <div key={i} className="h-16 bg-[hsl(0_0%_12%)] animate-pulse rounded-lg" />
               ))}
             </div>
           ) : (
@@ -148,12 +152,12 @@ export function EditJobBudgetSheet({
               <div className="space-y-3">
                 {budgetFields.map(({ id, label, icon: Icon }) => (
                   <div key={id} className="space-y-1.5">
-                    <Label className="text-sm flex items-center gap-2">
+                    <label className="text-[11.5px] text-white mb-1.5 flex items-center gap-2">
                       <Icon className="h-4 w-4 text-white" />
                       {label}
-                    </Label>
+                    </label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white font-medium">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white font-medium pointer-events-none">
                         £
                       </span>
                       <Input
@@ -162,7 +166,7 @@ export function EditJobBudgetSheet({
                         min="0"
                         placeholder="0"
                         className={cn(
-                          'pl-8 h-11',
+                          `${inputClass} pl-8`,
                           errors[id as keyof FormData] && 'border-red-500'
                         )}
                         value={values[id as keyof FormData] || ''}
@@ -174,7 +178,7 @@ export function EditJobBudgetSheet({
                       />
                     </div>
                     {errors[id as keyof FormData] && (
-                      <p className="text-xs text-red-500">
+                      <p className="text-xs text-red-500 mt-1">
                         {errors[id as keyof FormData]?.message}
                       </p>
                     )}
@@ -190,11 +194,11 @@ export function EditJobBudgetSheet({
                 </div>
 
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between py-1.5 border-b border-border/50">
+                  <div className="flex justify-between py-1.5 border-b border-white/[0.08]">
                     <span className="text-white">Costs Subtotal</span>
                     <span className="font-medium">{formatCurrency(subtotal)}</span>
                   </div>
-                  <div className="flex justify-between py-1.5 border-b border-border/50">
+                  <div className="flex justify-between py-1.5 border-b border-white/[0.08]">
                     <span className="text-white">
                       Profit ({profitPercent.toFixed(1)}%)
                     </span>
@@ -249,18 +253,18 @@ export function EditJobBudgetSheet({
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-border shrink-0 pb-safe">
+        <div className="p-4 border-t border-white/[0.08] shrink-0 pb-safe">
           <div className="flex gap-3">
-            <Button variant="outline" className="flex-1 h-12" onClick={handleClose}>
+            <SecondaryButton fullWidth onClick={handleClose}>
               Cancel
-            </Button>
-            <Button
-              className="flex-1 bg-elec-yellow text-black hover:bg-elec-yellow/90 h-12"
+            </SecondaryButton>
+            <PrimaryButton
+              fullWidth
               onClick={handleSubmit(handleFormSubmit)}
               disabled={!isDirty || updateBudget.isPending}
             >
               {updateBudget.isPending ? 'Saving...' : 'Save Budget'}
-            </Button>
+            </PrimaryButton>
           </div>
         </div>
       </SheetContent>

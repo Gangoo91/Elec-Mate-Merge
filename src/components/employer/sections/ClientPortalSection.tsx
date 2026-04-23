@@ -1,17 +1,38 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Progress } from '@/components/ui/progress';
 import { Switch } from '@/components/ui/switch';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { SectionHeader } from '@/components/employer/SectionHeader';
-import { QuickStats } from '@/components/employer/QuickStats';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  Eyebrow,
+  Divider,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  Dot,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  inputClass,
+  type Tone,
+} from '@/components/employer/editorial';
 import {
   useClientPortalLinks,
   usePortalLinkByJob,
@@ -22,7 +43,6 @@ import {
   useTogglePortalActive,
   useDeletePortalLink,
   type PortalPermissions,
-  type ClientPortalLink,
 } from '@/hooks/useClientPortal';
 import { useJobs } from '@/hooks/useJobs';
 import { useProgressLogs } from '@/hooks/useProgressLogs';
@@ -32,31 +52,35 @@ import {
   Eye,
   Calendar,
   Clock,
-  Users,
-  CheckCircle,
-  FileText,
-  Link2,
-  Mail,
   RefreshCw,
-  Settings,
-  ChevronRight,
   Camera,
-  Plus,
   Loader2,
-  AlertTriangle,
   Trash2,
   Power,
+  Mail,
+  Plus,
 } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
+
+function getInitials(name?: string | null): string {
+  if (!name) return 'CL';
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .map((p) => p[0]?.toUpperCase() ?? '')
+    .slice(0, 2)
+    .join('') || 'CL';
+}
 
 export function ClientPortalSection() {
   const isMobile = useIsMobile();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [filter, setFilter] = useState<'all' | 'active' | 'paused'>('all');
+  const [search, setSearch] = useState('');
 
-  // Hooks
   const { data: jobs, isLoading: jobsLoading } = useJobs();
   const { data: portalLinks, isLoading: linksLoading } = useClientPortalLinks();
   const { data: stats } = usePortalStats();
@@ -71,10 +95,13 @@ export function ClientPortalSection() {
   const toggleActive = useTogglePortalActive();
   const deleteLink = useDeletePortalLink();
 
-  // Filter for active and completed jobs
-  const activeJobs = jobs?.filter((j) => j.status === 'Active' || j.status === 'Completed') || [];
+  const activeJobs = useMemo(
+    () =>
+      jobs?.filter((j) => j.status === 'Active' || j.status === 'Completed') ||
+      [],
+    [jobs]
+  );
 
-  // Select first job by default
   useEffect(() => {
     if (!selectedJobId && activeJobs.length > 0) {
       setSelectedJobId(activeJobs[0].id);
@@ -84,7 +111,6 @@ export function ClientPortalSection() {
   const selectedJob = activeJobs.find((j) => j.id === selectedJobId);
   const jobLogs = progressLogs?.filter((l) => l.job_id === selectedJobId) || [];
 
-  // Portal settings from the current link
   const portalSettings: PortalPermissions = portalLink?.permissions || {
     showProgress: true,
     showPhotos: true,
@@ -107,22 +133,20 @@ export function ClientPortalSection() {
     if (portalLink) {
       await copyToClipboard(getPortalUrl());
       toast({
-        title: 'Link Copied',
+        title: 'Link copied',
         description: 'Client portal link copied to clipboard.',
       });
     }
   };
 
   const handleOpenPortal = () => {
-    if (portalLink) {
-      openExternalUrl(getPortalUrl());
-    }
+    if (portalLink) openExternalUrl(getPortalUrl());
   };
 
   const handleSendEmail = () => {
     if (selectedJob) {
       toast({
-        title: 'Email Sent',
+        title: 'Email sent',
         description: `Portal link sent to ${portalLink?.client_name || selectedJob.client}.`,
       });
     }
@@ -131,13 +155,15 @@ export function ClientPortalSection() {
   const handleRefreshLink = async () => {
     if (portalLink) {
       await regenerateToken.mutateAsync(portalLink.id);
-      toast({ title: 'Link refreshed', description: 'A new portal link has been generated' });
+      toast({
+        title: 'Link refreshed',
+        description: 'A new portal link has been generated.',
+      });
     }
   };
 
   const handleCreateLink = async () => {
     if (!selectedJob) return;
-
     await createPortalLink.mutateAsync({
       job_id: selectedJob.id,
       client_name: selectedJob.client || 'Client',
@@ -145,7 +171,10 @@ export function ClientPortalSection() {
     });
   };
 
-  const handleToggleSetting = async (key: keyof PortalPermissions, value: boolean) => {
+  const handleToggleSetting = async (
+    key: keyof PortalPermissions,
+    value: boolean
+  ) => {
     if (!portalLink) return;
     await updatePermissions.mutateAsync({
       id: portalLink.id,
@@ -166,90 +195,183 @@ export function ClientPortalSection() {
     await deleteLink.mutateAsync(portalLink.id);
   };
 
+  const handleInviteClient = () => {
+    if (activeJobs.length === 0) {
+      toast({
+        title: 'No active jobs',
+        description: 'Create or activate a job before inviting a client.',
+      });
+      return;
+    }
+    toast({
+      title: 'Invite client',
+      description: 'Pick a job below and create a portal link to invite them.',
+    });
+  };
+
+  const filteredJobs = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return activeJobs.filter((job) => {
+      const link = portalLinks?.find((l) => l.job_id === job.id);
+      const isActiveLink = link?.is_active === true;
+      const isPausedLink = !!link && link.is_active === false;
+
+      if (filter === 'active' && !isActiveLink) return false;
+      if (filter === 'paused' && !isPausedLink) return false;
+
+      if (!q) return true;
+      const hay = [job.title, job.client].filter(Boolean).join(' ').toLowerCase();
+      return hay.includes(q);
+    });
+  }, [activeJobs, portalLinks, filter, search]);
+
+  const tabs = useMemo(() => {
+    const all = activeJobs.length;
+    const active = (portalLinks || []).filter((l) => l.is_active).length;
+    const paused = (portalLinks || []).filter((l) => l.is_active === false).length;
+    return [
+      { value: 'all', label: 'All', count: all },
+      { value: 'active', label: 'Active', count: active },
+      { value: 'paused', label: 'Paused', count: paused },
+    ];
+  }, [activeJobs, portalLinks]);
+
+  const heroActions = (
+    <>
+      <PrimaryButton onClick={handleInviteClient}>Invite client</PrimaryButton>
+      <IconButton onClick={handleRefreshLink} aria-label="Refresh">
+        <RefreshCw className="h-4 w-4" />
+      </IconButton>
+    </>
+  );
+
+  const isLoading = jobsLoading || linksLoading;
+
+  if (isLoading) {
+    return (
+      <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Client Portal"
+          description="White-label portal — clients see their jobs, photos, certs and pay links."
+          tone="purple"
+          actions={heroActions}
+        />
+        <LoadingBlocks />
+      </PageFrame>
+    );
+  }
+
+  const activeClientsCount =
+    (portalLinks || []).filter((l) => l.is_active).length;
+  const portalViews = stats?.totalViews || 0;
+  const unpaidJobs = activeJobs.filter(
+    (j) => j.status === 'Active' || j.status === 'Completed'
+  ).length;
+  const paidViaPortal = stats?.recentlyViewed || 0;
+
+  const openPortalDetail = (jobId: string) => {
+    setSelectedJobId(jobId);
+    setDetailOpen(true);
+  };
+
   const PortalPreview = () => {
     if (!selectedJob) return null;
-
     return (
-      <div className="space-y-4">
-        {/* Client Header */}
-        <div className="border-b border-border pb-3">
-          <h2 className="text-lg font-bold text-foreground">{selectedJob.title}</h2>
-          <p className="text-sm text-white">{selectedJob.client}</p>
+      <div className="space-y-5">
+        <div>
+          <Eyebrow>Job</Eyebrow>
+          <div className="mt-2 text-xl font-semibold text-white tracking-tight">
+            {selectedJob.title}
+          </div>
+          <div className="mt-1 text-[13px] text-white">{selectedJob.client}</div>
         </div>
 
-        {/* Progress */}
         {portalSettings.showProgress && (
-          <div className="space-y-2">
+          <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-foreground">Project Progress</span>
-              <span className="text-xl font-bold text-elec-yellow">
+              <Eyebrow>Project progress</Eyebrow>
+              <span className="text-xl font-semibold text-elec-yellow tabular-nums">
                 {selectedJob.progress || 0}%
               </span>
             </div>
-            <Progress value={selectedJob.progress || 0} className="h-3" />
+            <div className="mt-3 h-2 rounded-full bg-white/[0.06] overflow-hidden">
+              <div
+                className="h-full bg-elec-yellow"
+                style={{ width: `${selectedJob.progress || 0}%` }}
+              />
+            </div>
           </div>
         )}
 
-        {/* Timeline */}
         {portalSettings.showTimeline && (
-          <div className="grid grid-cols-2 gap-3">
-            <div className="p-3 bg-muted/50 rounded-lg">
-              <p className="text-xs text-white flex items-center gap-1">
-                <Calendar className="h-3 w-3" /> Start
-              </p>
-              <p className="text-sm font-semibold text-foreground">
+          <div className="grid grid-cols-2 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
+              <Eyebrow>
+                <span className="inline-flex items-center gap-1.5">
+                  <Calendar className="h-3 w-3" /> Start
+                </span>
+              </Eyebrow>
+              <div className="mt-2 text-sm font-semibold text-white">
                 {selectedJob.start_date
                   ? new Date(selectedJob.start_date).toLocaleDateString('en-GB')
                   : 'TBC'}
-              </p>
+              </div>
             </div>
-            <div className="p-3 bg-muted/50 rounded-lg">
-              <p className="text-xs text-white flex items-center gap-1">
-                <Calendar className="h-3 w-3" /> Expected
-              </p>
-              <p className="text-sm font-semibold text-foreground">
+            <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
+              <Eyebrow>
+                <span className="inline-flex items-center gap-1.5">
+                  <Calendar className="h-3 w-3" /> Expected
+                </span>
+              </Eyebrow>
+              <div className="mt-2 text-sm font-semibold text-white">
                 {selectedJob.end_date
                   ? new Date(selectedJob.end_date).toLocaleDateString('en-GB')
                   : 'TBC'}
-              </p>
+              </div>
             </div>
           </div>
         )}
 
-        {/* Latest Updates */}
         {jobLogs.length > 0 && (
-          <div>
-            <h3 className="text-sm font-semibold text-foreground mb-2">Latest Updates</h3>
-            <div className="space-y-2">
-              {jobLogs.slice(0, 2).map((log) => (
-                <div key={log.id} className="p-2 bg-muted/50 rounded-lg">
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-xs font-medium text-foreground">
+          <ListCard>
+            <ListCardHeader
+              tone="blue"
+              title="Latest updates"
+              meta={<Pill tone="blue">{jobLogs.length}</Pill>}
+            />
+            <ListBody>
+              {jobLogs.slice(0, 3).map((log) => (
+                <ListRow
+                  key={log.id}
+                  title={
+                    <span className="text-white">
                       {new Date(log.date).toLocaleDateString('en-GB')}
                     </span>
-                    {log.hours_worked && (
-                      <Badge variant="secondary" className="text-[10px]">
-                        <Clock className="h-2 w-2 mr-1" />
+                  }
+                  subtitle={log.summary}
+                  trailing={
+                    log.hours_worked ? (
+                      <Pill tone="amber">
+                        <Clock className="h-2.5 w-2.5 mr-1" />
                         {log.hours_worked}h
-                      </Badge>
-                    )}
-                  </div>
-                  <p className="text-xs text-white line-clamp-2">{log.summary}</p>
-                </div>
+                      </Pill>
+                    ) : undefined
+                  }
+                />
               ))}
-            </div>
-          </div>
+            </ListBody>
+          </ListCard>
         )}
 
-        {/* Photos placeholder */}
         {portalSettings.showPhotos && (
           <div>
-            <h3 className="text-sm font-semibold text-foreground mb-2">Progress Photos</h3>
-            <div className="flex gap-2 flex-wrap">
-              {[1, 2, 3].map((i) => (
+            <Eyebrow>Progress photos</Eyebrow>
+            <div className="mt-3 flex gap-2 flex-wrap">
+              {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="w-16 h-16 bg-muted/50 rounded-lg flex items-center justify-center"
+                  className="w-16 h-16 rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] flex items-center justify-center"
                 >
                   <Camera className="h-5 w-5 text-white" />
                 </div>
@@ -258,436 +380,417 @@ export function ClientPortalSection() {
           </div>
         )}
 
-        {/* Upcoming Visits */}
-        <div className="p-3 bg-info/10 rounded-lg border border-info/30">
-          <h3 className="text-sm font-semibold text-foreground flex items-center gap-2 mb-1">
-            <Users className="h-4 w-4 text-info" />
-            Upcoming Visit
-          </h3>
-          <p className="text-xs text-white">
-            Next visit: <strong className="text-foreground">To be scheduled</strong>
-          </p>
-        </div>
-
-        {/* Contact */}
         {portalSettings.allowMessages && (
-          <Button
-            className="w-full touch-manipulation"
+          <PrimaryButton
             onClick={() =>
               toast({
-                title: 'Preview Mode',
-                description: 'Clients can message you from their portal link',
+                title: 'Preview mode',
+                description: 'Clients can message you from their portal link.',
               })
             }
+            fullWidth
           >
             <Mail className="h-4 w-4 mr-2" />
-            Send Message
-          </Button>
+            Send message
+          </PrimaryButton>
         )}
       </div>
     );
   };
 
-  const isLoading = jobsLoading || linksLoading;
-
-  if (isLoading) {
-    return (
-      <div className="space-y-4 md:space-y-6 animate-fade-in">
-        <SectionHeader
-          title="Client Portal"
-          description="Share progress with clients - no login required"
-        />
-        <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-          <div className="space-y-3">
-            <Skeleton className="h-5 w-24" />
-            {[1, 2, 3].map((i) => (
-              <Skeleton key={i} className="h-20 w-full" />
-            ))}
-          </div>
-          <div className="md:col-span-2 space-y-4">
-            <Skeleton className="h-40 w-full" />
-            <Skeleton className="h-60 w-full" />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      {/* Header */}
-      <SectionHeader
+    <PageFrame>
+      <PageHero
+        eyebrow="Operations"
         title="Client Portal"
-        description="Share progress with clients - no login required"
+        description="White-label portal — clients see their jobs, photos, certs and pay links."
+        tone="purple"
+        actions={heroActions}
       />
 
-      {/* Stats */}
-      <QuickStats
+      <StatStrip
+        columns={4}
         stats={[
+          { label: 'Active clients', value: activeClientsCount, tone: 'purple' },
+          { label: 'Portal views 30d', value: portalViews, tone: 'blue' },
+          { label: 'Unpaid jobs', value: unpaidJobs, tone: 'amber' },
           {
-            icon: Link2,
-            value: stats?.active || 0,
-            label: 'Active Links',
-            color: 'green',
-          },
-          {
-            icon: Eye,
-            value: stats?.totalViews || 0,
-            label: 'Total Views',
-            color: 'blue',
-          },
-          {
-            icon: Users,
-            value: stats?.recentlyViewed || 0,
-            label: 'Recent Views',
-            color: 'yellow',
+            label: 'Paid via portal',
+            value: paidViaPortal,
+            tone: 'emerald',
+            accent: true,
           },
         ]}
       />
 
-      <div className="grid md:grid-cols-3 gap-4 md:gap-6">
-        {/* Job Selector */}
-        <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-foreground">Select Job</h3>
-          {activeJobs.length === 0 ? (
-            <Card className="bg-elec-gray border-border">
-              <CardContent className="p-6 text-center">
-                <FileText className="h-10 w-10 text-white mx-auto mb-3" />
-                <p className="text-white text-sm">No active jobs</p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="space-y-2">
-              {activeJobs.map((job) => {
-                const hasLink = portalLinks?.some((l) => l.job_id === job.id);
+      <FilterBar
+        tabs={tabs}
+        activeTab={filter}
+        onTabChange={(v) => setFilter(v as 'all' | 'active' | 'paused')}
+        search={search}
+        onSearchChange={setSearch}
+        searchPlaceholder="Search jobs or clients…"
+      />
 
-                return (
-                  <Card
-                    key={job.id}
-                    className={cn(
-                      'cursor-pointer transition-all touch-manipulation',
-                      selectedJobId === job.id
-                        ? 'ring-2 ring-elec-yellow bg-elec-yellow/5'
-                        : 'hover:bg-muted/50'
-                    )}
-                    onClick={() => setSelectedJobId(job.id)}
-                  >
-                    <CardContent className="p-3">
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="min-w-0">
-                          <h4 className="font-medium text-foreground text-sm truncate">
-                            {job.title}
-                          </h4>
-                          <p className="text-xs text-white truncate">{job.client}</p>
-                        </div>
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                          {hasLink && (
-                            <Badge variant="secondary" className="text-[10px]">
-                              <Link2 className="h-2 w-2 mr-1" />
-                              Linked
-                            </Badge>
-                          )}
-                          <Badge
-                            variant={job.status === 'Active' ? 'default' : 'secondary'}
-                            className="text-[10px]"
-                          >
-                            {job.progress || 0}%
-                          </Badge>
-                          {isMobile && <ChevronRight className="h-4 w-4 text-white" />}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-          )}
-        </div>
+      {filteredJobs.length === 0 ? (
+        <EmptyState
+          title="No matching jobs"
+          description={
+            activeJobs.length === 0
+              ? 'Create an active job to start sharing portal links with clients.'
+              : 'Adjust your filter or search to find a job.'
+          }
+          action={activeJobs.length === 0 ? undefined : 'Clear filters'}
+          onAction={
+            activeJobs.length === 0
+              ? undefined
+              : () => {
+                  setFilter('all');
+                  setSearch('');
+                }
+          }
+        />
+      ) : (
+        <ListCard>
+          <ListCardHeader
+            tone="purple"
+            title="Clients"
+            meta={<Pill tone="purple">{filteredJobs.length}</Pill>}
+          />
+          <ListBody>
+            {filteredJobs.map((job) => {
+              const link = portalLinks?.find((l) => l.job_id === job.id);
+              const status: 'Active' | 'Paused' | 'No link' = link
+                ? link.is_active
+                  ? 'Active'
+                  : 'Paused'
+                : 'No link';
+              const statusTone: Tone =
+                status === 'Active'
+                  ? 'emerald'
+                  : status === 'Paused'
+                    ? 'amber'
+                    : 'red';
+              const clientName = job.client || link?.client_name || 'Client';
+              const subtitle = `${job.title} · ${job.progress || 0}%`;
 
-        {/* Portal Configuration */}
-        <div className="md:col-span-2 space-y-4">
-          {selectedJob && (
-            <>
-              {/* Portal Link */}
-              <Card className="bg-elec-gray">
-                <CardHeader className="pb-2 p-3 md:p-4">
-                  <CardTitle className="text-sm md:text-base flex items-center justify-between">
-                    <span className="flex items-center gap-2">
-                      <Link2 className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
-                      Portal Link
-                    </span>
-                    {portalLink && (
-                      <Badge
-                        className={
-                          portalLink.is_active
-                            ? 'bg-green-500/20 text-green-400'
-                            : 'bg-gray-500/20 text-white'
-                        }
-                      >
-                        {portalLink.is_active ? 'Active' : 'Inactive'}
-                      </Badge>
-                    )}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 p-3 md:p-4 pt-0">
-                  {linkLoading ? (
-                    <Skeleton className="h-10 w-full" />
-                  ) : portalLink ? (
+              return (
+                <ListRow
+                  key={job.id}
+                  lead={<Avatar initials={getInitials(clientName)} />}
+                  title={clientName}
+                  subtitle={subtitle}
+                  trailing={
                     <>
-                      <div className="flex gap-2">
-                        <Input value={getPortalUrl()} readOnly className="bg-muted text-xs h-10" />
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          onClick={handleCopyLink}
-                          className="flex-shrink-0 touch-manipulation h-10 w-10"
-                        >
-                          <Copy className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          onClick={handleRefreshLink}
-                          disabled={regenerateToken.isPending}
-                          className="flex-shrink-0 touch-manipulation h-10 w-10"
-                        >
-                          {regenerateToken.isPending ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <RefreshCw className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                      <div className="flex flex-col sm:flex-row gap-2">
-                        <Button
-                          onClick={handleSendEmail}
-                          className="flex-1 h-11 touch-manipulation"
-                        >
-                          <Mail className="h-4 w-4 mr-2" />
-                          Email to Client
-                        </Button>
-                        <Button
-                          variant="outline"
-                          onClick={handleToggleActive}
-                          disabled={toggleActive.isPending}
-                          className="h-11 touch-manipulation"
-                        >
-                          {toggleActive.isPending ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <>
-                              <Power className="h-4 w-4 mr-2" />
-                              {portalLink.is_active ? 'Disable' : 'Enable'}
-                            </>
-                          )}
-                        </Button>
-                        {isMobile ? (
-                          <Sheet open={previewOpen} onOpenChange={setPreviewOpen}>
-                            <SheetTrigger asChild>
-                              <Button variant="outline" className="h-11 touch-manipulation">
-                                <Eye className="h-4 w-4 mr-2" />
-                                Preview
-                              </Button>
-                            </SheetTrigger>
-                            <SheetContent
-                              side="bottom"
-                              className="h-[85vh] p-0 rounded-t-2xl flex flex-col"
-                            >
-                              <SheetHeader className="p-4 border-b border-border">
-                                <SheetTitle>Client View Preview</SheetTitle>
-                              </SheetHeader>
-                              <ScrollArea className="h-[calc(85vh-60px)] p-4 overscroll-contain">
-                                <PortalPreview />
-                              </ScrollArea>
-                            </SheetContent>
-                          </Sheet>
-                        ) : (
-                          <Button
-                            variant="outline"
-                            className="h-11 touch-manipulation"
-                            onClick={handleOpenPortal}
-                          >
-                            <ExternalLink className="h-4 w-4 mr-2" />
-                            Open Portal
-                          </Button>
-                        )}
-                      </div>
-                      {portalLink.views_count > 0 && (
-                        <div className="flex items-center gap-4 text-xs text-white pt-2 border-t border-border">
-                          <span className="flex items-center gap-1">
-                            <Eye className="h-3 w-3" />
-                            {portalLink.views_count} views
-                          </span>
-                          {portalLink.last_accessed_at && (
-                            <span>
-                              Last viewed:{' '}
-                              {new Date(portalLink.last_accessed_at).toLocaleDateString('en-GB')}
-                            </span>
-                          )}
-                        </div>
+                      {link && link.views_count > 0 && (
+                        <Pill tone="blue">
+                          <Eye className="h-2.5 w-2.5 mr-1" />
+                          {link.views_count}
+                        </Pill>
                       )}
+                      <Pill tone={statusTone}>{status}</Pill>
                     </>
-                  ) : (
-                    <div className="text-center py-4">
-                      <p className="text-sm text-white mb-3">
-                        No portal link for this job
-                      </p>
-                      <Button
-                        onClick={handleCreateLink}
-                        disabled={createPortalLink.isPending}
-                        className="gap-2"
-                      >
-                        {createPortalLink.isPending ? (
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                        ) : (
-                          <>
-                            <Plus className="h-4 w-4" />
-                            Create Portal Link
-                          </>
-                        )}
-                      </Button>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
+                  }
+                  onClick={() => openPortalDetail(job.id)}
+                />
+              );
+            })}
+          </ListBody>
+        </ListCard>
+      )}
 
-              {/* Portal Settings */}
-              {portalLink && (
-                <Card className="bg-elec-gray">
-                  <CardHeader className="pb-2 p-3 md:p-4">
-                    <CardTitle className="text-sm md:text-base flex items-center gap-2">
-                      <Settings className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
-                      Portal Settings
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3 md:p-4 pt-0">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {[
-                        { key: 'showProgress', label: 'Show Progress' },
-                        { key: 'showPhotos', label: 'Show Photos' },
-                        { key: 'showTimeline', label: 'Show Timeline' },
-                        { key: 'showIssues', label: 'Show Issues' },
-                        { key: 'allowMessages', label: 'Allow Messages' },
-                      ].map(({ key, label }) => (
-                        <div
-                          key={key}
-                          className="flex items-center justify-between p-2 bg-muted/50 rounded-lg"
-                        >
-                          <span className="text-xs md:text-sm text-foreground">{label}</span>
-                          <Switch
-                            checked={portalSettings[key as keyof PortalPermissions]}
-                            onCheckedChange={(checked) =>
-                              handleToggleSetting(key as keyof PortalPermissions, checked)
-                            }
-                            disabled={updatePermissions.isPending}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+      <Sheet open={detailOpen} onOpenChange={setDetailOpen}>
+        <SheetContent
+          side={isMobile ? 'bottom' : 'right'}
+          className={
+            isMobile
+              ? 'h-[92vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]'
+              : 'w-full sm:max-w-2xl p-0 flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]'
+          }
+        >
+          <SheetHeader className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-base sm:text-lg font-semibold tracking-tight">
+              {selectedJob?.client || portalLink?.client_name || 'Client portal'}
+            </SheetTitle>
+            <div className="mt-1 text-[12px] text-white">
+              {selectedJob?.title}
+            </div>
+          </SheetHeader>
+          <ScrollArea className="flex-1 overscroll-contain">
+            <div className="p-5 sm:p-6 space-y-6">
+              {linkLoading ? (
+                <LoadingBlocks />
+              ) : portalLink ? (
+                <>
+                  <div className="flex items-center justify-between">
+                    <Eyebrow>Portal link</Eyebrow>
+                    <Pill tone={portalLink.is_active ? 'emerald' : 'amber'}>
+                      <Dot
+                        tone={portalLink.is_active ? 'emerald' : 'amber'}
+                        className="mr-1.5"
+                      />
+                      {portalLink.is_active ? 'Active' : 'Paused'}
+                    </Pill>
+                  </div>
 
-              {/* Photo Category Controls */}
-              {portalLink && portalSettings.showPhotos && (
-                <Card className="bg-elec-gray">
-                  <CardHeader className="pb-2 p-3 md:p-4">
-                    <CardTitle className="text-sm md:text-base flex items-center gap-2">
-                      <Camera className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
-                      Photo Sharing by Category
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-3 md:p-4 pt-0">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {[
-                        {
-                          key: 'showBeforePhotos',
-                          label: 'Before',
-                          color: 'bg-blue-500/20 text-blue-400',
-                        },
-                        {
-                          key: 'showDuringPhotos',
-                          label: 'During',
-                          color: 'bg-amber-500/20 text-amber-400',
-                        },
-                        {
-                          key: 'showAfterPhotos',
-                          label: 'After',
-                          color: 'bg-emerald-500/20 text-emerald-400',
-                        },
-                        {
-                          key: 'showCompletionPhotos',
-                          label: 'Completion',
-                          color: 'bg-purple-500/20 text-purple-400',
-                        },
-                        {
-                          key: 'showIssuePhotos',
-                          label: 'Issue',
-                          color: 'bg-red-500/20 text-red-400',
-                        },
-                      ].map(({ key, label, color }) => (
-                        <div
-                          key={key}
-                          className="flex items-center justify-between p-2 bg-muted/50 rounded-lg"
-                        >
-                          <Badge className={`text-[10px] ${color}`}>{label}</Badge>
-                          <Switch
-                            checked={portalSettings[key as keyof PortalPermissions]}
-                            onCheckedChange={(checked) =>
-                              handleToggleSetting(key as keyof PortalPermissions, checked)
-                            }
-                            disabled={updatePermissions.isPending}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              )}
+                  <div className="flex gap-2">
+                    <Input
+                      value={getPortalUrl()}
+                      readOnly
+                      className={inputClass}
+                    />
+                    <IconButton onClick={handleCopyLink} aria-label="Copy link">
+                      <Copy className="h-4 w-4" />
+                    </IconButton>
+                    <IconButton
+                      onClick={handleRefreshLink}
+                      disabled={regenerateToken.isPending}
+                      aria-label="Regenerate link"
+                    >
+                      {regenerateToken.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <RefreshCw className="h-4 w-4" />
+                      )}
+                    </IconButton>
+                  </div>
 
-              {/* Delete Link */}
-              {portalLink && (
-                <div className="flex justify-end">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleDelete}
-                    disabled={deleteLink.isPending}
-                    className="text-destructive hover:text-destructive"
-                  >
-                    {deleteLink.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <PrimaryButton onClick={handleSendEmail} fullWidth>
+                      <Mail className="h-4 w-4 mr-2" />
+                      Email to client
+                    </PrimaryButton>
+                    <SecondaryButton
+                      onClick={handleToggleActive}
+                      disabled={toggleActive.isPending}
+                      fullWidth
+                    >
+                      {toggleActive.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <>
+                          <Power className="h-4 w-4 mr-2" />
+                          {portalLink.is_active ? 'Pause' : 'Resume'}
+                        </>
+                      )}
+                    </SecondaryButton>
+                    {isMobile ? (
+                      <SecondaryButton onClick={() => setPreviewOpen(true)} fullWidth>
+                        <Eye className="h-4 w-4 mr-2" />
+                        Preview
+                      </SecondaryButton>
                     ) : (
-                      <Trash2 className="h-4 w-4 mr-2" />
+                      <SecondaryButton onClick={handleOpenPortal} fullWidth>
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Open portal
+                      </SecondaryButton>
                     )}
-                    Delete Portal Link
-                  </Button>
-                </div>
-              )}
+                  </div>
 
-              {/* Preview - Desktop only */}
-              {!isMobile && portalLink && (
-                <Card className="bg-elec-gray overflow-hidden">
-                  <CardHeader className="bg-elec-yellow/10 pb-2 p-3 md:p-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Eye className="h-4 w-4 md:h-5 md:w-5 text-elec-yellow" />
-                        <CardTitle className="text-sm md:text-base">Client View Preview</CardTitle>
-                      </div>
-                      <Badge variant="outline" className="text-[10px]">
-                        Live Preview
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="p-4 md:p-6">
-                    <PortalPreview />
-                  </CardContent>
-                </Card>
+                  {portalLink.views_count > 0 && (
+                    <StatStrip
+                      columns={2}
+                      stats={[
+                        {
+                          label: 'Total views',
+                          value: portalLink.views_count,
+                          tone: 'blue',
+                        },
+                        {
+                          label: 'Last viewed',
+                          value: portalLink.last_accessed_at
+                            ? new Date(
+                                portalLink.last_accessed_at
+                              ).toLocaleDateString('en-GB')
+                            : '—',
+                        },
+                      ]}
+                    />
+                  )}
+
+                  <Divider label="Visibility" />
+
+                  <ListCard>
+                    <ListCardHeader
+                      tone="purple"
+                      title="What clients see"
+                      meta={<Pill tone="purple">Toggles</Pill>}
+                    />
+                    <ListBody>
+                      {[
+                        { key: 'showProgress', label: 'Show progress' },
+                        { key: 'showPhotos', label: 'Show photos' },
+                        { key: 'showTimeline', label: 'Show timeline' },
+                        { key: 'showIssues', label: 'Show issues' },
+                        { key: 'allowMessages', label: 'Allow messages' },
+                      ].map(({ key, label }) => (
+                        <ListRow
+                          key={key}
+                          title={label}
+                          trailing={
+                            <Switch
+                              checked={
+                                portalSettings[key as keyof PortalPermissions]
+                              }
+                              onCheckedChange={(checked) =>
+                                handleToggleSetting(
+                                  key as keyof PortalPermissions,
+                                  checked
+                                )
+                              }
+                              disabled={updatePermissions.isPending}
+                            />
+                          }
+                        />
+                      ))}
+                    </ListBody>
+                  </ListCard>
+
+                  {portalSettings.showPhotos && (
+                    <ListCard>
+                      <ListCardHeader
+                        tone="amber"
+                        title="Photo categories"
+                        meta={<Pill tone="amber">Per-stage</Pill>}
+                      />
+                      <ListBody>
+                        {[
+                          {
+                            key: 'showBeforePhotos',
+                            label: 'Before',
+                            tone: 'blue' as Tone,
+                          },
+                          {
+                            key: 'showDuringPhotos',
+                            label: 'During',
+                            tone: 'amber' as Tone,
+                          },
+                          {
+                            key: 'showAfterPhotos',
+                            label: 'After',
+                            tone: 'emerald' as Tone,
+                          },
+                          {
+                            key: 'showCompletionPhotos',
+                            label: 'Completion',
+                            tone: 'purple' as Tone,
+                          },
+                          {
+                            key: 'showIssuePhotos',
+                            label: 'Issue',
+                            tone: 'red' as Tone,
+                          },
+                        ].map(({ key, label, tone }) => (
+                          <ListRow
+                            key={key}
+                            lead={<Dot tone={tone} className="ml-1" />}
+                            title={label}
+                            trailing={
+                              <Switch
+                                checked={
+                                  portalSettings[key as keyof PortalPermissions]
+                                }
+                                onCheckedChange={(checked) =>
+                                  handleToggleSetting(
+                                    key as keyof PortalPermissions,
+                                    checked
+                                  )
+                                }
+                                disabled={updatePermissions.isPending}
+                              />
+                            }
+                          />
+                        ))}
+                      </ListBody>
+                    </ListCard>
+                  )}
+
+                  {!isMobile && (
+                    <>
+                      <Divider label="Preview" />
+                      <ListCard>
+                        <ListCardHeader
+                          tone="yellow"
+                          title="Client view preview"
+                          meta={<Pill tone="yellow">Live</Pill>}
+                        />
+                        <div className="p-5 sm:p-6">
+                          <PortalPreview />
+                        </div>
+                      </ListCard>
+                    </>
+                  )}
+
+                  <Divider />
+
+                  <div className="flex justify-end">
+                    <DestructiveButton
+                      onClick={handleDelete}
+                      disabled={deleteLink.isPending}
+                    >
+                      {deleteLink.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Trash2 className="h-4 w-4 mr-2" />
+                      )}
+                      Delete portal link
+                    </DestructiveButton>
+                  </div>
+                </>
+              ) : (
+                <EmptyState
+                  title="No portal link for this job"
+                  description="Generate a unique link so this client can view progress, photos, certs and invoices."
+                  action={
+                    createPortalLink.isPending
+                      ? 'Creating…'
+                      : 'Create portal link'
+                  }
+                  onAction={
+                    createPortalLink.isPending ? undefined : handleCreateLink
+                  }
+                />
               )}
-            </>
-          )}
+            </div>
+          </ScrollArea>
+        </SheetContent>
+      </Sheet>
+
+      <Sheet open={previewOpen} onOpenChange={setPreviewOpen}>
+        <SheetContent
+          side="bottom"
+          className="h-[88vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
+          <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
+            <SheetTitle className="text-white text-base font-semibold tracking-tight">
+              Client view preview
+            </SheetTitle>
+          </SheetHeader>
+          <ScrollArea className="flex-1 overscroll-contain">
+            <div className="p-5">
+              <PortalPreview />
+            </div>
+          </ScrollArea>
+        </SheetContent>
+      </Sheet>
+
+      {!portalLink && selectedJob && !detailOpen && (
+        <div className="fixed bottom-6 right-6 z-30">
+          <PrimaryButton
+            onClick={handleCreateLink}
+            disabled={createPortalLink.isPending}
+            size="lg"
+            className="shadow-lg"
+          >
+            {createPortalLink.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin mr-2" />
+            ) : (
+              <Plus className="h-4 w-4 mr-2" />
+            )}
+            Create portal link
+          </PrimaryButton>
         </div>
-      </div>
-    </div>
+      )}
+    </PageFrame>
   );
 }

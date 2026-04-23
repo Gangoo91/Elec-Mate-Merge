@@ -1,11 +1,11 @@
 import { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { inputClass, PrimaryButton, SecondaryButton } from './editorial';
 import {
   Search,
   Zap,
@@ -123,47 +123,51 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
       {/* Search */}
       <div className="relative">
         {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
         )}
         <Input
           placeholder="Search toolbox talks..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={cn('h-11', !searchQuery && 'pl-9')}
+          className={cn(inputClass, !searchQuery && 'pl-9')}
         />
       </div>
 
       {/* Category Tabs */}
       <ScrollArea className="w-full">
         <div className="flex gap-2 pb-2">
-          <Button
-            variant={selectedCategory === 'all' ? 'default' : 'outline'}
-            size="sm"
-            onClick={() => setSelectedCategory('all')}
-            className={cn(
-              'shrink-0',
-              selectedCategory === 'all' && 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-            )}
-          >
-            All ({templates.length})
-          </Button>
+          {selectedCategory === 'all' ? (
+            <PrimaryButton size="sm" onClick={() => setSelectedCategory('all')} className="shrink-0">
+              All ({templates.length})
+            </PrimaryButton>
+          ) : (
+            <SecondaryButton size="sm" onClick={() => setSelectedCategory('all')} className="shrink-0">
+              All ({templates.length})
+            </SecondaryButton>
+          )}
           {categories.map((cat) => {
             const Icon = CATEGORY_ICONS[cat.category];
-            return (
-              <Button
+            const isActive = selectedCategory === cat.category;
+            return isActive ? (
+              <PrimaryButton
                 key={cat.category}
-                variant={selectedCategory === cat.category ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setSelectedCategory(cat.category)}
-                className={cn(
-                  'shrink-0 gap-1.5',
-                  selectedCategory === cat.category &&
-                    'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                )}
+                className="shrink-0"
               >
-                <Icon className="h-3.5 w-3.5" />
+                <Icon className="h-3.5 w-3.5 mr-1.5" />
                 {cat.label} ({cat.count})
-              </Button>
+              </PrimaryButton>
+            ) : (
+              <SecondaryButton
+                key={cat.category}
+                size="sm"
+                onClick={() => setSelectedCategory(cat.category)}
+                className="shrink-0"
+              >
+                <Icon className="h-3.5 w-3.5 mr-1.5" />
+                {cat.label} ({cat.count})
+              </SecondaryButton>
             );
           })}
         </div>
@@ -171,15 +175,13 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
 
       {/* Templates List */}
       {filteredTemplates.length === 0 ? (
-        <Card className="border-dashed">
-          <CardContent className="p-8 text-center">
-            <FileText className="h-12 w-12 text-white mx-auto mb-4" />
-            <h3 className="font-medium text-foreground mb-2">No templates found</h3>
-            <p className="text-sm text-white">
-              Try adjusting your search or category filter
-            </p>
-          </CardContent>
-        </Card>
+        <div className="bg-[hsl(0_0%_12%)] border border-dashed border-white/[0.08] rounded-2xl p-8 text-center">
+          <FileText className="h-12 w-12 text-white mx-auto mb-4" />
+          <h3 className="font-medium text-white mb-2">No templates found</h3>
+          <p className="text-sm text-white">
+            Try adjusting your search or category filter
+          </p>
+        </div>
       ) : (
         <div className="space-y-6">
           {Object.entries(groupedTemplates).map(([category, categoryTemplates]) => {
@@ -201,23 +203,25 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                         )}
                       />
                     </div>
-                    <h3 className="font-medium text-foreground">
+                    <h3 className="font-medium text-white">
                       {getCategoryLabel(category as ToolboxTalkCategory)}
                     </h3>
-                    <Badge variant="secondary">{categoryTemplates?.length}</Badge>
+                    <Badge variant="secondary" className="bg-white/[0.06] text-white">
+                      {categoryTemplates?.length}
+                    </Badge>
                   </div>
                 )}
                 <div className="grid gap-2">
                   {categoryTemplates?.map((template) => (
                     <Card
                       key={template.id}
-                      className="cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation"
+                      className="cursor-pointer bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_17%)] transition-all touch-manipulation"
                       onClick={() => setPreviewTemplate(template)}
                     >
                       <CardContent className="p-3 md:p-4">
                         <div className="flex items-center justify-between gap-3">
                           <div className="min-w-0 flex-1">
-                            <p className="font-medium text-sm text-foreground truncate">
+                            <p className="font-medium text-sm text-white truncate">
                               {template.name}
                             </p>
                             {template.summary && (
@@ -257,11 +261,14 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
 
       {/* Template Preview Sheet */}
       <Sheet open={!!previewTemplate} onOpenChange={() => setPreviewTemplate(null)}>
-        <SheetContent side="bottom" className="h-[90vh] rounded-t-2xl p-0">
+        <SheetContent
+          side="bottom"
+          className="h-[90vh] rounded-t-2xl p-0 bg-[hsl(0_0%_8%)] border-t border-white/[0.06]"
+        >
           {previewTemplate && (
             <div className="flex flex-col h-full">
               {/* Header */}
-              <SheetHeader className="p-4 pb-3 border-b border-border shrink-0">
+              <SheetHeader className="p-4 pb-3 border-b border-white/[0.06] shrink-0">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div
@@ -271,7 +278,7 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                           ? 'bg-red-500/10'
                           : previewTemplate.risk_level === 'medium'
                             ? 'bg-amber-500/10'
-                            : 'bg-green-500/10'
+                            : 'bg-emerald-500/10'
                       )}
                     >
                       {(() => {
@@ -284,9 +291,11 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                       })()}
                     </div>
                     <div>
-                      <SheetTitle className="text-left">{previewTemplate.name}</SheetTitle>
+                      <SheetTitle className="text-left text-white">
+                        {previewTemplate.name}
+                      </SheetTitle>
                       <div className="flex items-center gap-2 mt-1">
-                        <Badge variant="outline" className="text-xs">
+                        <Badge variant="outline" className="text-xs border-white/20 text-white">
                           {getCategoryLabel(previewTemplate.category)}
                         </Badge>
                         <Badge
@@ -304,29 +313,28 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                       </div>
                     </div>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="icon"
+                  <button
+                    type="button"
                     onClick={() => setPreviewTemplate(null)}
-                    className="shrink-0"
+                    className="shrink-0 h-9 w-9 flex items-center justify-center rounded-full text-white hover:bg-white/[0.06] touch-manipulation"
                   >
                     <X className="h-4 w-4" />
-                  </Button>
+                  </button>
                 </div>
               </SheetHeader>
 
               {/* Content */}
               <ScrollArea className="flex-1 p-4">
                 <div
-                  className="prose prose-sm prose-invert max-w-none [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-4 [&_h2]:mb-2 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-3 [&_h3]:mb-2 [&_p]:mb-2 [&_ul]:mb-3 [&_li]:mb-1 [&_table]:w-full [&_td]:py-1 [&_td]:px-2 [&_th]:py-1 [&_th]:px-2 [&_th]:text-left [&_th]:font-medium [&_tr]:border-b [&_tr]:border-border/50"
+                  className="prose prose-sm prose-invert max-w-none [&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-4 [&_h2]:mb-2 [&_h3]:text-base [&_h3]:font-medium [&_h3]:mt-3 [&_h3]:mb-2 [&_p]:mb-2 [&_ul]:mb-3 [&_li]:mb-1 [&_table]:w-full [&_td]:py-1 [&_td]:px-2 [&_th]:py-1 [&_th]:px-2 [&_th]:text-left [&_th]:font-medium [&_tr]:border-b [&_tr]:border-white/[0.06]"
                   dangerouslySetInnerHTML={{ __html: previewTemplate.content }}
                 />
 
                 {/* Discussion Points */}
                 {previewTemplate.discussion_points &&
                   previewTemplate.discussion_points.length > 0 && (
-                    <div className="mt-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                      <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                    <div className="mt-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                      <h4 className="font-medium text-white mb-2 flex items-center gap-2">
                         <FileText className="h-4 w-4 text-blue-400" />
                         Discussion Points
                       </h4>
@@ -346,14 +354,14 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
 
                 {/* Key Hazards */}
                 {previewTemplate.key_hazards && previewTemplate.key_hazards.length > 0 && (
-                  <div className="mt-4 p-4 rounded-lg bg-red-500/10 border border-red-500/20">
-                    <h4 className="font-medium text-foreground mb-2 flex items-center gap-2">
+                  <div className="mt-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+                    <h4 className="font-medium text-white mb-2 flex items-center gap-2">
                       <AlertTriangle className="h-4 w-4 text-red-400" />
                       Key Hazards
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {previewTemplate.key_hazards.map((hazard, i) => (
-                        <Badge key={i} variant="outline" className="border-red-500/30 text-red-300">
+                        <Badge key={i} variant="outline" className="border-red-500/30 text-red-400">
                           {hazard}
                         </Badge>
                       ))}
@@ -364,8 +372,8 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
                 {/* Legal References */}
                 {previewTemplate.legal_references &&
                   previewTemplate.legal_references.length > 0 && (
-                    <div className="mt-4 p-4 rounded-lg bg-muted/50">
-                      <h4 className="font-medium text-foreground mb-2">Legal References</h4>
+                    <div className="mt-4 p-4 rounded-xl bg-white/[0.04] border border-white/[0.06]">
+                      <h4 className="font-medium text-white mb-2">Legal References</h4>
                       <ul className="text-sm text-white space-y-1">
                         {previewTemplate.legal_references.map((ref, i) => (
                           <li key={i}>• {ref}</li>
@@ -376,14 +384,15 @@ export function ToolboxTalkLibrary({ onSelectTemplate }: ToolboxTalkLibraryProps
               </ScrollArea>
 
               {/* Footer */}
-              <div className="p-4 border-t border-border shrink-0">
-                <Button
+              <div className="p-4 border-t border-white/[0.06] shrink-0">
+                <PrimaryButton
                   onClick={() => handleUseTemplate(previewTemplate)}
-                  className="w-full h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90"
+                  size="lg"
+                  fullWidth
                 >
                   <Play className="h-4 w-4 mr-2" />
                   Use This Template
-                </Button>
+                </PrimaryButton>
               </div>
             </div>
           )}

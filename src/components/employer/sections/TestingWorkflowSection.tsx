@@ -1,28 +1,15 @@
-import { useState, useCallback } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { useState, useCallback, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  Search,
+  RefreshCw,
   CheckCircle,
-  Clock,
-  AlertCircle,
-  FileCheck,
-  User,
-  Calendar,
-  Zap,
-  ClipboardCheck,
-  Award,
-  Plus,
   Loader2,
-  Eye,
+  Plus,
   Trash2,
   XCircle,
-  AlertTriangle,
-  Filter,
+  ClipboardCheck,
+  Award,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from '@/hooks/use-toast';
@@ -46,8 +33,7 @@ import { useEmployees } from '@/hooks/useEmployees';
 
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { SwipeableRow } from '@/components/ui/swipeable-row';
-import { MobileBottomSheet } from '@/components/mobile/MobileBottomSheet';
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -55,7 +41,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -66,53 +51,59 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  IconButton,
+  EmptyState,
+  LoadingBlocks,
+  GroupHeader,
+  Divider,
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  SheetShell,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  type Tone,
+} from '@/components/employer/editorial';
 
-const testTypeIcons: Record<TestType, React.ElementType> = {
-  Continuity: Zap,
-  'Insulation Resistance': Zap,
-  Polarity: CheckCircle,
-  'Earth Fault Loop Impedance': Zap,
-  RCD: ClipboardCheck,
-  'Prospective Fault Current': AlertTriangle,
-  'Ring Final Circuit': Zap,
-  'Functional Test': ClipboardCheck,
-  'Visual Inspection': Eye,
-  Other: FileCheck,
+const resultTone: Record<TestResult, Tone> = {
+  Pending: 'amber',
+  Pass: 'emerald',
+  Fail: 'red',
+  'N/A': 'blue',
+  Limited: 'orange',
 };
 
-const resultColors: Record<TestResult, string> = {
-  Pending: 'bg-warning/20 text-warning',
-  Pass: 'bg-success/20 text-success',
-  Fail: 'bg-destructive/20 text-destructive',
-  'N/A': 'bg-muted text-white',
-  Limited: 'bg-orange-500/20 text-orange-400',
-};
-
-function TestingWorkflowSkeleton() {
-  return (
-    <div className="space-y-4 animate-fade-in">
-      <div className="flex flex-col gap-3">
-        <Skeleton className="h-8 w-48" />
-        <Skeleton className="h-12 w-full" />
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {[1, 2, 3, 4].map((i) => (
-          <Skeleton key={i} className="h-24" />
-        ))}
-      </div>
-      <div className="space-y-3">
-        {[1, 2, 3].map((i) => (
-          <Skeleton key={i} className="h-32" />
-        ))}
-      </div>
-    </div>
-  );
+function getInitials(name?: string | null) {
+  if (!name) return 'JT';
+  return name
+    .split(' ')
+    .map((p) => p[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join('')
+    .toUpperCase();
 }
 
 export function TestingWorkflowSection() {
   const isMobile = useIsMobile();
   const [searchQuery, setSearchQuery] = useState('');
-  const [resultFilter, setResultFilter] = useState<TestResult | null>(null);
+  const [resultFilter, setResultFilter] = useState<TestResult | 'all'>('all');
   const [selectedTest, setSelectedTest] = useState<JobTest | null>(null);
   const [showCreateSheet, setShowCreateSheet] = useState(false);
   const [showRecordSheet, setShowRecordSheet] = useState(false);
@@ -121,8 +112,8 @@ export function TestingWorkflowSection() {
   const [recordResult, setRecordResult] = useState<TestResult>('Pass');
   const [recordNotes, setRecordNotes] = useState('');
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [openJobs, setOpenJobs] = useState<Record<string, boolean>>({});
 
-  // Form state
   const [formData, setFormData] = useState<Partial<CreateJobTestInput>>({
     job_id: '',
     test_type: 'Continuity',
@@ -132,7 +123,6 @@ export function TestingWorkflowSection() {
     photos: [],
   });
 
-  // Data fetching
   const { data: tests = [], isLoading, error, refetch } = useJobTests();
   const { data: stats } = useJobTestStats();
   const { data: jobs = [] } = useJobs();
@@ -192,7 +182,7 @@ export function TestingWorkflowSection() {
       setShowCreateSheet(false);
       resetForm();
     } catch (error) {
-      // Error handled by hook
+      // handled by hook
     }
   };
 
@@ -214,380 +204,318 @@ export function TestingWorkflowSection() {
     });
   };
 
-  const filteredTests = tests.filter((test) => {
-    const matchesSearch =
-      test.circuit_ref?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      test.circuit_description?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      test.job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      test.test_type.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesResult = resultFilter ? test.result === resultFilter : true;
-    return matchesSearch && matchesResult;
-  });
+  const filteredTests = useMemo(
+    () =>
+      tests.filter((test) => {
+        const q = searchQuery.toLowerCase();
+        const matchesSearch =
+          !q ||
+          test.circuit_ref?.toLowerCase().includes(q) ||
+          test.circuit_description?.toLowerCase().includes(q) ||
+          test.job?.title?.toLowerCase().includes(q) ||
+          test.test_type.toLowerCase().includes(q);
+        const matchesResult = resultFilter === 'all' ? true : test.result === resultFilter;
+        return matchesSearch && matchesResult;
+      }),
+    [tests, searchQuery, resultFilter]
+  );
 
-  // Group tests by job for better organisation
-  const testsByJob = filteredTests.reduce(
-    (acc, test) => {
-      const jobId = test.job_id;
-      if (!acc[jobId]) {
-        acc[jobId] = {
-          job: test.job,
-          tests: [],
-        };
-      }
-      acc[jobId].tests.push(test);
-      return acc;
-    },
-    {} as Record<string, { job: JobTest['job']; tests: JobTest[] }>
+  const testsByJob = useMemo(
+    () =>
+      filteredTests.reduce(
+        (acc, test) => {
+          const jobId = test.job_id;
+          if (!acc[jobId]) {
+            acc[jobId] = { job: test.job, tests: [] };
+          }
+          acc[jobId].tests.push(test);
+          return acc;
+        },
+        {} as Record<string, { job: JobTest['job']; tests: JobTest[] }>
+      ),
+    [filteredTests]
   );
 
   if (isLoading) {
-    return <TestingWorkflowSkeleton />;
+    return (
+      <PageFrame>
+        <LoadingBlocks />
+      </PageFrame>
+    );
   }
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center">
-        <AlertCircle className="h-12 w-12 text-destructive mb-4" />
-        <h3 className="text-lg font-semibold text-foreground mb-2">Failed to load tests</h3>
-        <p className="text-sm text-foreground/70 mb-4">{error.message}</p>
-        <Button onClick={() => refetch()}>Try Again</Button>
-      </div>
+      <PageFrame>
+        <PageHero
+          eyebrow="Operations"
+          title="Testing Workflow"
+          description="Drive EICR and EIC test sequences job-by-job."
+          tone="orange"
+        />
+        <EmptyState
+          title="Failed to load tests"
+          description={error.message}
+          action="Try again"
+          onAction={() => refetch()}
+        />
+      </PageFrame>
     );
   }
 
+  const passCount = stats?.pass || 0;
+  const failCount = stats?.fail || 0;
+  const pendingCount = stats?.pending || 0;
+  const passRate = stats?.passRate || 0;
+
   const content = (
-    <div className="space-y-4 md:space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col gap-3">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold text-foreground">Testing & Sign-off</h1>
-            <p className="text-sm text-white">
-              Electrical test results and verification
-            </p>
+    <PageFrame>
+      <PageHero
+        eyebrow="Operations"
+        title="Testing Workflow"
+        description="Drive EICR and EIC test sequences job-by-job."
+        tone="orange"
+        actions={
+          <div className="flex items-center gap-2">
+            <IconButton onClick={handleRefresh} aria-label="Refresh tests">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+            <PrimaryButton onClick={() => setShowCreateSheet(true)}>
+              <Plus className="h-4 w-4 mr-1.5" />
+              New test
+            </PrimaryButton>
           </div>
-          <Button onClick={() => setShowCreateSheet(true)} className="touch-feedback">
-            <Plus className="h-4 w-4 mr-2" />
-            New Test
-          </Button>
-        </div>
+        }
+      />
 
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1">
-            {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-            )}
-            <Input
-              placeholder="Search tests..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={cn('w-full bg-elec-gray h-12', !searchQuery && 'pl-9')}
-            />
-          </div>
-          {isMobile && (
-            <MobileBottomSheet
-              trigger={
-                <Button variant="outline" size="icon" className="h-12 w-12 flex-shrink-0 relative">
-                  <Filter className="h-5 w-5" />
-                  {resultFilter && (
-                    <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 text-[10px]">1</Badge>
-                  )}
-                </Button>
-              }
-              title="Filter by Result"
-              options={[
-                { value: 'Pending', label: 'Pending', count: stats?.pending || 0 },
-                { value: 'Pass', label: 'Pass', count: stats?.pass || 0 },
-                { value: 'Fail', label: 'Fail', count: stats?.fail || 0 },
-              ]}
-              selected={resultFilter ? [resultFilter] : []}
-              onSelectionChange={(vals) => setResultFilter((vals[0] as TestResult) || null)}
-            />
-          )}
-        </div>
-      </div>
+      <StatStrip
+        columns={4}
+        stats={[
+          {
+            label: 'Pending',
+            value: pendingCount,
+            tone: 'orange',
+            onClick: () => setResultFilter(resultFilter === 'Pending' ? 'all' : 'Pending'),
+          },
+          {
+            label: 'In progress',
+            value: failCount,
+            tone: 'blue',
+            sub: 'Failed — needs rework',
+            onClick: () => setResultFilter(resultFilter === 'Fail' ? 'all' : 'Fail'),
+          },
+          {
+            label: 'Awaiting sign-off',
+            value: passCount,
+            tone: 'amber',
+            sub: 'Verify to close',
+            onClick: () => setResultFilter(resultFilter === 'Pass' ? 'all' : 'Pass'),
+          },
+          {
+            label: 'Pass rate 30d',
+            value: `${passRate}%`,
+            tone: 'emerald',
+            accent: true,
+          },
+        ]}
+      />
 
-      {/* Summary Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        <Card
-          className={cn(
-            'bg-elec-gray cursor-pointer transition-all touch-feedback',
-            resultFilter === 'Pending' && 'ring-2 ring-warning'
-          )}
-          onClick={() => setResultFilter(resultFilter === 'Pending' ? null : 'Pending')}
-        >
-          <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-warning">{stats?.pending || 0}</p>
-                <p className="text-xs md:text-sm text-white">Pending</p>
-              </div>
-              <Clock className="h-6 w-6 md:h-8 md:w-8 text-warning opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card
-          className={cn(
-            'bg-elec-gray cursor-pointer transition-all touch-feedback',
-            resultFilter === 'Pass' && 'ring-2 ring-success'
-          )}
-          onClick={() => setResultFilter(resultFilter === 'Pass' ? null : 'Pass')}
-        >
-          <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-success">{stats?.pass || 0}</p>
-                <p className="text-xs md:text-sm text-white">Passed</p>
-              </div>
-              <CheckCircle className="h-6 w-6 md:h-8 md:w-8 text-success opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card
-          className={cn(
-            'bg-elec-gray cursor-pointer transition-all touch-feedback',
-            resultFilter === 'Fail' && 'ring-2 ring-destructive'
-          )}
-          onClick={() => setResultFilter(resultFilter === 'Fail' ? null : 'Fail')}
-        >
-          <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-destructive">{stats?.fail || 0}</p>
-                <p className="text-xs md:text-sm text-white">Failed</p>
-              </div>
-              <XCircle className="h-6 w-6 md:h-8 md:w-8 text-destructive opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-gray touch-feedback">
-          <CardContent className="p-3 md:p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-xl md:text-2xl font-bold text-elec-yellow">
-                  {stats?.passRate || 0}%
-                </p>
-                <p className="text-xs md:text-sm text-white">Pass Rate</p>
-              </div>
-              <Award className="h-6 w-6 md:h-8 md:w-8 text-elec-yellow opacity-70" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+      <FilterBar
+        tabs={[
+          { value: 'all', label: 'All', count: tests.length },
+          { value: 'Pending', label: 'Pending', count: pendingCount },
+          { value: 'Pass', label: 'Passed', count: passCount },
+          { value: 'Fail', label: 'Failed', count: failCount },
+        ]}
+        activeTab={resultFilter}
+        onTabChange={(v) => setResultFilter(v as TestResult | 'all')}
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search circuits, jobs, types…"
+      />
 
-      {/* Empty State */}
-      {filteredTests.length === 0 && (
-        <Card className="bg-elec-gray">
-          <CardContent className="p-6 md:p-8 text-center">
-            <FileCheck className="h-10 w-10 md:h-12 md:w-12 text-foreground/30 mx-auto mb-4" />
-            <h3 className="text-base md:text-lg font-semibold text-foreground">
-              No test results yet
-            </h3>
-            <p className="text-sm text-white mt-1 mb-4">
-              {resultFilter
-                ? `No ${resultFilter.toLowerCase()} tests`
-                : 'Start recording electrical test results'}
-            </p>
-            <Button onClick={() => setShowCreateSheet(true)}>
-              <Plus className="h-4 w-4 mr-2" />
-              Record First Test
-            </Button>
-          </CardContent>
-        </Card>
-      )}
+      {filteredTests.length === 0 ? (
+        <EmptyState
+          title="No test results yet"
+          description={
+            resultFilter === 'all'
+              ? 'Start recording electrical test results for your live jobs.'
+              : `No ${String(resultFilter).toLowerCase()} tests right now.`
+          }
+          action="Record first test"
+          onAction={() => setShowCreateSheet(true)}
+        />
+      ) : (
+        <div className="space-y-6">
+          {Object.entries(testsByJob).map(([jobId, { job, tests: jobTests }]) => {
+            const jobPass = jobTests.filter((t) => t.result === 'Pass').length;
+            const jobFail = jobTests.filter((t) => t.result === 'Fail').length;
+            const jobPending = jobTests.filter((t) => t.result === 'Pending').length;
+            const isOpen = openJobs[jobId] !== false;
 
-      {/* Tests grouped by job */}
-      <div className="space-y-4">
-        {Object.entries(testsByJob).map(([jobId, { job, tests: jobTests }]) => (
-          <Card key={jobId} className="bg-elec-gray overflow-hidden">
-            <CardHeader className="p-3 md:p-4 pb-2">
-              <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-sm md:text-base">
-                    {job?.title || 'Unknown Job'}
-                  </CardTitle>
-                  <p className="text-xs text-white">{job?.client}</p>
-                </div>
-                <div className="flex gap-1">
-                  <Badge className="bg-success/20 text-success text-[10px]">
-                    {jobTests.filter((t) => t.result === 'Pass').length} Pass
-                  </Badge>
-                  {jobTests.filter((t) => t.result === 'Fail').length > 0 && (
-                    <Badge className="bg-destructive/20 text-destructive text-[10px]">
-                      {jobTests.filter((t) => t.result === 'Fail').length} Fail
-                    </Badge>
-                  )}
-                  {jobTests.filter((t) => t.result === 'Pending').length > 0 && (
-                    <Badge className="bg-warning/20 text-warning text-[10px]">
-                      {jobTests.filter((t) => t.result === 'Pending').length} Pending
-                    </Badge>
-                  )}
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent className="p-3 md:p-4 pt-0 space-y-2">
-              {jobTests.map((test) => {
-                const TestIcon = testTypeIcons[test.test_type] || FileCheck;
-                const config = TEST_TYPE_CONFIG[test.test_type];
-
-                const testRow = (
-                  <div
-                    key={test.id}
-                    className={cn(
-                      'p-3 rounded-lg border cursor-pointer transition-all',
-                      test.result === 'Fail' && 'border-destructive/30 bg-destructive/5',
-                      test.result === 'Pass' && 'border-success/30 bg-success/5',
-                      test.result === 'Pending' && 'border-warning/30 bg-warning/5',
-                      (test.result === 'N/A' || test.result === 'Limited') &&
-                        'border-border bg-muted/30'
-                    )}
-                    onClick={() => setSelectedTest(test)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={cn(
-                          'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0',
-                          test.result === 'Pass' && 'bg-success/20',
-                          test.result === 'Fail' && 'bg-destructive/20',
-                          test.result === 'Pending' && 'bg-warning/20',
-                          (test.result === 'N/A' || test.result === 'Limited') && 'bg-muted'
-                        )}
-                      >
-                        <TestIcon
-                          className={cn(
-                            'h-4 w-4',
-                            test.result === 'Pass' && 'text-success',
-                            test.result === 'Fail' && 'text-destructive',
-                            test.result === 'Pending' && 'text-warning',
-                            (test.result === 'N/A' || test.result === 'Limited') &&
-                              'text-white'
-                          )}
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-medium text-sm text-foreground">
-                            {test.test_type}
-                          </span>
-                          <Badge className={resultColors[test.result] + ' text-[10px]'}>
-                            {test.result}
-                          </Badge>
-                          {test.verified_at && (
-                            <Badge
-                              variant="outline"
-                              className="text-[10px] border-success/30 text-success"
-                            >
-                              Verified
-                            </Badge>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-3 mt-1 text-[10px] text-white flex-wrap">
-                          {test.circuit_ref && <span>Circuit: {test.circuit_ref}</span>}
-                          {test.reading && (
-                            <span className="font-medium text-foreground">
-                              {test.reading}
-                              {config?.unit}
-                            </span>
-                          )}
-                          {test.test_date && (
-                            <span className="flex items-center gap-1">
-                              <Calendar className="h-3 w-3" />
-                              {format(new Date(test.test_date), 'dd MMM')}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      {test.result === 'Pending' && (
-                        <Button
-                          size="sm"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleRecord(test.id);
-                          }}
-                          className="flex-shrink-0 touch-feedback"
-                        >
-                          Record
-                        </Button>
+            return (
+              <ListCard key={jobId}>
+                <ListCardHeader
+                  tone="orange"
+                  title={
+                    <span className="flex items-center gap-2">
+                      <span className="truncate">{job?.title || 'Unknown job'}</span>
+                      {job?.client && (
+                        <span className="text-white font-normal text-[12px] truncate">
+                          · {job.client}
+                        </span>
                       )}
+                    </span>
+                  }
+                  meta={
+                    <div className="flex items-center gap-1.5">
+                      {jobPending > 0 && <Pill tone="amber">{jobPending} pending</Pill>}
+                      <Pill tone="emerald">{jobPass} pass</Pill>
+                      {jobFail > 0 && <Pill tone="red">{jobFail} fail</Pill>}
                     </div>
-                  </div>
-                );
+                  }
+                />
+                <GroupHeader
+                  tone="orange"
+                  label="Test sequence"
+                  count={jobTests.length}
+                  open={isOpen}
+                  onClick={() => setOpenJobs((s) => ({ ...s, [jobId]: !isOpen }))}
+                />
+                {isOpen && (
+                  <ListBody>
+                    {jobTests.map((test) => {
+                      const config = TEST_TYPE_CONFIG[test.test_type];
+                      const inspectorName = test.tester?.name || 'Unassigned';
+                      const subtitleParts = [
+                        inspectorName,
+                        test.circuit_ref ? `Circuit ${test.circuit_ref}` : null,
+                        test.reading ? `${test.reading}${config?.unit ?? ''}` : null,
+                        test.test_date ? format(new Date(test.test_date), 'dd MMM') : null,
+                      ].filter(Boolean) as string[];
 
-                // Wrap with swipeable on mobile for pending tests
-                if (isMobile && test.result === 'Pending') {
-                  return (
-                    <SwipeableRow
-                      key={test.id}
-                      rightAction={{
-                        icon: <CheckCircle className="h-6 w-6" />,
-                        label: 'Pass',
-                        onClick: () => recordTestResult.mutate({ id: test.id, result: 'Pass' }),
-                        variant: 'success',
-                      }}
-                      leftAction={{
-                        icon: <XCircle className="h-6 w-6" />,
-                        label: 'Fail',
-                        onClick: () => recordTestResult.mutate({ id: test.id, result: 'Fail' }),
-                        variant: 'destructive',
-                      }}
-                    >
-                      {testRow}
-                    </SwipeableRow>
-                  );
-                }
+                      const row = (
+                        <ListRow
+                          key={test.id}
+                          accent={resultTone[test.result]}
+                          lead={<Avatar initials={getInitials(inspectorName)} />}
+                          title={
+                            <span className="flex items-center gap-2 flex-wrap">
+                              <span className="truncate">
+                                {test.test_type} — {test.circuit_description || 'Untitled circuit'}
+                              </span>
+                              {test.verified_at && (
+                                <Pill tone="emerald" className="shrink-0">
+                                  Verified
+                                </Pill>
+                              )}
+                            </span>
+                          }
+                          subtitle={subtitleParts.join(' · ')}
+                          trailing={
+                            <div className="flex items-center gap-2">
+                              <Pill tone={resultTone[test.result]}>{test.result}</Pill>
+                              {test.result === 'Pending' && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleRecord(test.id);
+                                  }}
+                                  className="hidden sm:inline-flex h-8 px-3 rounded-full bg-elec-yellow text-black text-[11.5px] font-semibold items-center touch-manipulation hover:bg-elec-yellow/90 transition-colors"
+                                >
+                                  Record
+                                </button>
+                              )}
+                            </div>
+                          }
+                          onClick={() => setSelectedTest(test)}
+                        />
+                      );
 
-                return testRow;
-              })}
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                      if (isMobile && test.result === 'Pending') {
+                        return (
+                          <SwipeableRow
+                            key={test.id}
+                            rightAction={{
+                              icon: <CheckCircle className="h-6 w-6" />,
+                              label: 'Pass',
+                              onClick: () =>
+                                recordTestResult.mutate({ id: test.id, result: 'Pass' }),
+                              variant: 'success',
+                            }}
+                            leftAction={{
+                              icon: <XCircle className="h-6 w-6" />,
+                              label: 'Fail',
+                              onClick: () =>
+                                recordTestResult.mutate({ id: test.id, result: 'Fail' }),
+                              variant: 'destructive',
+                            }}
+                          >
+                            {row}
+                          </SwipeableRow>
+                        );
+                      }
+                      return row;
+                    })}
+                  </ListBody>
+                )}
+              </ListCard>
+            );
+          })}
+        </div>
+      )}
 
       {/* Create Test Sheet */}
       <Sheet open={showCreateSheet} onOpenChange={setShowCreateSheet}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
-          <div className="flex flex-col h-full bg-background">
-            <SheetHeader className="p-4 border-b border-border">
-              <SheetTitle className="flex items-center gap-2">
-                <Zap className="h-5 w-5 text-elec-yellow" />
-                New Test Record
-              </SheetTitle>
-            </SheetHeader>
-
-            <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-              {/* Job Selection */}
-              <div className="space-y-2">
-                <Label>Job *</Label>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
+        >
+          <SheetShell
+            eyebrow="Operations"
+            title="New test record"
+            description="Capture a fresh electrical test for a live job."
+            footer={
+              <PrimaryButton onClick={handleCreate} disabled={createJobTest.isPending} fullWidth size="lg">
+                {createJobTest.isPending ? (
+                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                ) : (
+                  <Plus className="h-5 w-5 mr-2" />
+                )}
+                Create test record
+              </PrimaryButton>
+            }
+          >
+            <FormCard eyebrow="Context">
+              <Field label="Job" required>
                 <Select
                   value={formData.job_id}
                   onValueChange={(v) => setFormData((prev) => ({ ...prev, job_id: v }))}
                 >
-                  <SelectTrigger className="h-12 bg-elec-gray">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select a job" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray">
+                  <SelectContent className={selectContentClass}>
                     {jobs.map((job) => (
                       <SelectItem key={job.id} value={job.id}>
-                        {job.title} - {job.client}
+                        {job.title} — {job.client}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
 
-              {/* Test Type */}
-              <div className="space-y-2">
-                <Label>Test Type *</Label>
+              <Field label="Test type" required>
                 <Select
                   value={formData.test_type}
                   onValueChange={(v) =>
                     setFormData((prev) => ({ ...prev, test_type: v as TestType }))
                   }
                 >
-                  <SelectTrigger className="h-12 bg-elec-gray">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray">
+                  <SelectContent className={selectContentClass}>
                     {Object.keys(TEST_TYPE_CONFIG).map((type) => (
                       <SelectItem key={type} value={type}>
                         {type}
@@ -595,60 +523,55 @@ export function TestingWorkflowSection() {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
+            </FormCard>
 
-              {/* Circuit Details */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label>Circuit Ref</Label>
+            <FormCard eyebrow="Circuit">
+              <FormGrid cols={2}>
+                <Field label="Circuit ref">
                   <Input
                     value={formData.circuit_ref || ''}
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, circuit_ref: e.target.value }))
                     }
-                    placeholder="e.g., C1, DB1-1"
-                    className="h-12 bg-elec-gray"
+                    placeholder="C1, DB1-1"
+                    className={inputClass}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label>Test Date</Label>
+                </Field>
+                <Field label="Test date">
                   <Input
                     type="date"
                     value={formData.test_date || ''}
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, test_date: e.target.value }))
                     }
-                    className="h-12 bg-elec-gray"
+                    className={inputClass}
                   />
-                </div>
-              </div>
+                </Field>
+              </FormGrid>
 
-              {/* Circuit Description */}
-              <div className="space-y-2">
-                <Label>Circuit Description</Label>
+              <Field label="Circuit description">
                 <Input
                   value={formData.circuit_description || ''}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, circuit_description: e.target.value }))
                   }
-                  placeholder="e.g., Kitchen ring, Lighting circuit"
-                  className="h-12 bg-elec-gray"
+                  placeholder="Kitchen ring, Lighting circuit"
+                  className={inputClass}
                 />
-              </div>
+              </Field>
 
-              {/* Tester */}
-              <div className="space-y-2">
-                <Label>Tested By</Label>
+              <Field label="Tested by">
                 <Select
                   value={formData.tested_by || ''}
                   onValueChange={(v) =>
                     setFormData((prev) => ({ ...prev, tested_by: v || undefined }))
                   }
                 >
-                  <SelectTrigger className="h-12 bg-elec-gray">
-                    <SelectValue placeholder="Select tester" />
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select inspector" />
                   </SelectTrigger>
-                  <SelectContent className="bg-elec-gray border-elec-gray">
+                  <SelectContent className={selectContentClass}>
                     {employees.map((emp) => (
                       <SelectItem key={emp.id} value={emp.id}>
                         {emp.name}
@@ -656,140 +579,64 @@ export function TestingWorkflowSection() {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
+            </FormCard>
 
-              {/* Instrument */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label>Instrument Used</Label>
+            <FormCard eyebrow="Instrument">
+              <FormGrid cols={2}>
+                <Field label="Instrument used">
                   <Input
                     value={formData.instrument_used || ''}
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, instrument_used: e.target.value }))
                     }
-                    placeholder="e.g., Megger MFT1741"
-                    className="h-12 bg-elec-gray"
+                    placeholder="Megger MFT1741"
+                    className={inputClass}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label>Serial Number</Label>
+                </Field>
+                <Field label="Serial number">
                   <Input
                     value={formData.instrument_serial || ''}
                     onChange={(e) =>
                       setFormData((prev) => ({ ...prev, instrument_serial: e.target.value }))
                     }
                     placeholder="Serial #"
-                    className="h-12 bg-elec-gray"
+                    className={inputClass}
                   />
-                </div>
-              </div>
+                </Field>
+              </FormGrid>
+            </FormCard>
 
-              {/* Notes */}
-              <div className="space-y-2">
-                <Label>Notes</Label>
+            <FormCard eyebrow="Notes">
+              <Field label="Notes">
                 <Textarea
                   value={formData.notes || ''}
                   onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
-                  placeholder="Any additional notes..."
-                  className="min-h-[80px] bg-elec-gray"
+                  placeholder="Additional notes…"
+                  className={`${textareaClass} min-h-[120px]`}
                 />
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="p-4 border-t border-border bg-background">
-              <Button
-                onClick={handleCreate}
-                className="w-full h-14 text-base font-semibold"
-                disabled={createJobTest.isPending}
-              >
-                {createJobTest.isPending ? (
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                ) : (
-                  <Plus className="h-5 w-5 mr-2" />
-                )}
-                Create Test Record
-              </Button>
-            </div>
-          </div>
+              </Field>
+            </FormCard>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
       {/* Record Result Sheet */}
       <Sheet open={showRecordSheet} onOpenChange={setShowRecordSheet}>
-        <SheetContent side="bottom" className="h-[60vh] p-0 rounded-t-2xl flex flex-col">
-          <div className="flex flex-col h-full bg-background">
-            <SheetHeader className="p-4 border-b border-border">
-              <SheetTitle className="flex items-center gap-2">
-                <ClipboardCheck className="h-5 w-5 text-elec-yellow" />
-                Record Test Result
-              </SheetTitle>
-            </SheetHeader>
-
-            <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-              {/* Result Selection */}
-              <div className="space-y-2">
-                <Label>Result *</Label>
-                <div className="grid grid-cols-2 gap-2">
-                  {(['Pass', 'Fail', 'N/A', 'Limited'] as TestResult[]).map((result) => (
-                    <Button
-                      key={result}
-                      variant={recordResult === result ? 'default' : 'outline'}
-                      onClick={() => setRecordResult(result)}
-                      className={cn(
-                        'h-14 text-base font-semibold',
-                        recordResult === result &&
-                          result === 'Pass' &&
-                          'bg-success hover:bg-success/90',
-                        recordResult === result &&
-                          result === 'Fail' &&
-                          'bg-destructive hover:bg-destructive/90',
-                        recordResult === result &&
-                          (result === 'N/A' || result === 'Limited') &&
-                          'bg-muted'
-                      )}
-                    >
-                      {result === 'Pass' && <CheckCircle className="h-5 w-5 mr-2" />}
-                      {result === 'Fail' && <XCircle className="h-5 w-5 mr-2" />}
-                      {result}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Reading */}
-              <div className="space-y-2">
-                <Label>Reading</Label>
-                <Input
-                  value={recordReading}
-                  onChange={(e) => setRecordReading(e.target.value)}
-                  placeholder="Enter test reading..."
-                  className="h-12 bg-elec-gray"
-                />
-              </div>
-
-              {/* Notes */}
-              <div className="space-y-2">
-                <Label>Notes</Label>
-                <Textarea
-                  value={recordNotes}
-                  onChange={(e) => setRecordNotes(e.target.value)}
-                  placeholder="Any observations..."
-                  className="min-h-[80px] bg-elec-gray"
-                />
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="p-4 border-t border-border bg-background">
-              <Button
+        <SheetContent
+          side="bottom"
+          className="h-[60vh] p-0 rounded-t-2xl overflow-hidden"
+        >
+          <SheetShell
+            eyebrow="Operations"
+            title="Record test result"
+            description="Log the outcome of this test."
+            footer={
+              <PrimaryButton
                 onClick={handleConfirmRecord}
-                className={cn(
-                  'w-full h-14 text-base font-semibold',
-                  recordResult === 'Pass' && 'bg-success hover:bg-success/90',
-                  recordResult === 'Fail' && 'bg-destructive hover:bg-destructive/90'
-                )}
                 disabled={recordTestResult.isPending}
+                fullWidth
+                size="lg"
               >
                 {recordTestResult.isPending ? (
                   <Loader2 className="h-5 w-5 mr-2 animate-spin" />
@@ -797,188 +644,230 @@ export function TestingWorkflowSection() {
                   <CheckCircle className="h-5 w-5 mr-2" />
                 )}
                 Record as {recordResult}
-              </Button>
-            </div>
-          </div>
+              </PrimaryButton>
+            }
+          >
+            <FormCard eyebrow="Result">
+              <Field label="Result" required>
+                <div className="grid grid-cols-2 gap-2">
+                  {(['Pass', 'Fail', 'N/A', 'Limited'] as TestResult[]).map((result) => {
+                    const active = recordResult === result;
+                    return (
+                      <button
+                        key={result}
+                        onClick={() => setRecordResult(result)}
+                        className={cn(
+                          'h-12 rounded-xl text-[13px] font-semibold border touch-manipulation transition-colors flex items-center justify-center gap-2',
+                          active
+                            ? 'bg-elec-yellow text-black border-elec-yellow'
+                            : 'bg-[hsl(0_0%_9%)] border-white/[0.08] text-white hover:bg-white/[0.08]'
+                        )}
+                      >
+                        {result === 'Pass' && <CheckCircle className="h-4 w-4" />}
+                        {result === 'Fail' && <XCircle className="h-4 w-4" />}
+                        {result}
+                      </button>
+                    );
+                  })}
+                </div>
+              </Field>
+            </FormCard>
+
+            <FormCard eyebrow="Reading & notes">
+              <Field label="Reading">
+                <Input
+                  value={recordReading}
+                  onChange={(e) => setRecordReading(e.target.value)}
+                  placeholder="Enter test reading…"
+                  className={inputClass}
+                />
+              </Field>
+
+              <Field label="Notes">
+                <Textarea
+                  value={recordNotes}
+                  onChange={(e) => setRecordNotes(e.target.value)}
+                  placeholder="Observations…"
+                  className={`${textareaClass} min-h-[120px]`}
+                />
+              </Field>
+            </FormCard>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
       {/* View Test Details Sheet */}
       <Sheet open={!!selectedTest} onOpenChange={() => setSelectedTest(null)}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl overflow-hidden"
+        >
           {selectedTest && (
-            <div className="flex flex-col h-full bg-background">
-              <SheetHeader className="p-4 border-b border-border">
-                <div className="flex items-center justify-between">
-                  <SheetTitle className="flex items-center gap-2">
-                    <Zap className="h-5 w-5 text-elec-yellow" />
-                    Test Details
-                  </SheetTitle>
-                  <Badge className={resultColors[selectedTest.result]}>{selectedTest.result}</Badge>
-                </div>
-              </SheetHeader>
-
-              <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-                {/* Test Info */}
-                <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-foreground">
-                    {selectedTest.test_type}
-                  </h3>
-                  {selectedTest.circuit_description && (
-                    <p className="text-sm text-foreground/70">{selectedTest.circuit_description}</p>
+            <SheetShell
+              eyebrow="Operations"
+              title={
+                <span className="flex items-center justify-between gap-3">
+                  <span className="truncate">{selectedTest.test_type}</span>
+                  <Pill tone={resultTone[selectedTest.result]}>{selectedTest.result}</Pill>
+                </span>
+              }
+              description={selectedTest.circuit_description || undefined}
+              footer={
+                <div className="flex flex-col gap-2 w-full">
+                  {selectedTest.result === 'Pending' && (
+                    <PrimaryButton
+                      onClick={() => {
+                        const id = selectedTest.id;
+                        setSelectedTest(null);
+                        handleRecord(id);
+                      }}
+                      fullWidth
+                      size="lg"
+                    >
+                      <ClipboardCheck className="h-5 w-5 mr-2" />
+                      Record result
+                    </PrimaryButton>
                   )}
-                </div>
-
-                {/* Job Info */}
-                <Card className="bg-elec-gray">
-                  <CardContent className="p-4">
-                    <h4 className="font-semibold text-foreground mb-2">
-                      {selectedTest.job?.title}
-                    </h4>
-                    <p className="text-sm text-foreground/70">{selectedTest.job?.client}</p>
-                  </CardContent>
-                </Card>
-
-                {/* Details Grid */}
-                <div className="grid grid-cols-2 gap-3">
-                  {selectedTest.circuit_ref && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Circuit Ref</p>
-                      <p className="font-semibold text-foreground">{selectedTest.circuit_ref}</p>
-                    </div>
+                  {selectedTest.result !== 'Pending' && !selectedTest.verified_at && (
+                    <PrimaryButton
+                      onClick={() => handleVerify(selectedTest.id)}
+                      disabled={verifyJobTest.isPending}
+                      fullWidth
+                      size="lg"
+                    >
+                      {verifyJobTest.isPending ? (
+                        <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                      ) : (
+                        <Award className="h-5 w-5 mr-2" />
+                      )}
+                      Verify result
+                    </PrimaryButton>
                   )}
-                  {selectedTest.reading && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Reading</p>
-                      <p className="font-semibold text-foreground">
-                        {selectedTest.reading}
-                        {TEST_TYPE_CONFIG[selectedTest.test_type]?.unit}
-                      </p>
-                    </div>
-                  )}
-                  {selectedTest.test_date && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Test Date</p>
-                      <p className="font-semibold text-foreground">
-                        {format(new Date(selectedTest.test_date), 'dd MMM yyyy')}
-                      </p>
-                    </div>
-                  )}
-                  {selectedTest.tester && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Tested By</p>
-                      <p className="font-semibold text-foreground">{selectedTest.tester.name}</p>
-                    </div>
-                  )}
-                  {selectedTest.instrument_used && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Instrument</p>
-                      <p className="font-semibold text-foreground">
-                        {selectedTest.instrument_used}
-                      </p>
-                    </div>
-                  )}
-                  {selectedTest.instrument_serial && (
-                    <div className="bg-elec-gray p-3 rounded-lg">
-                      <p className="text-xs text-foreground/70 mb-1">Serial #</p>
-                      <p className="font-semibold text-foreground">
-                        {selectedTest.instrument_serial}
-                      </p>
-                    </div>
-                  )}
-                </div>
-
-                {/* Notes */}
-                {selectedTest.notes && (
-                  <div className="space-y-2">
-                    <h4 className="font-semibold text-foreground">Notes</h4>
-                    <p className="text-sm text-foreground/80 bg-elec-gray p-3 rounded-lg">
-                      {selectedTest.notes}
-                    </p>
-                  </div>
-                )}
-
-                {/* Verification Status */}
-                {selectedTest.verified_at && (
-                  <div className="p-3 bg-success/10 rounded-lg border border-success/20">
-                    <div className="flex items-center gap-2 text-success">
-                      <CheckCircle className="h-4 w-4" />
-                      <span className="font-semibold">Verified</span>
-                    </div>
-                    <p className="text-xs text-foreground/70 mt-1">
-                      {format(new Date(selectedTest.verified_at), "dd MMM yyyy 'at' HH:mm")}
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Footer */}
-              <div className="p-4 border-t border-border bg-background space-y-2">
-                {selectedTest.result === 'Pending' && (
-                  <Button
+                  <DestructiveButton
                     onClick={() => {
+                      setDeleteConfirmId(selectedTest.id);
                       setSelectedTest(null);
-                      handleRecord(selectedTest.id);
                     }}
-                    className="w-full h-14 text-base font-semibold"
+                    fullWidth
                   >
-                    <ClipboardCheck className="h-5 w-5 mr-2" />
-                    Record Result
-                  </Button>
-                )}
-                {selectedTest.result !== 'Pending' && !selectedTest.verified_at && (
-                  <Button
-                    onClick={() => handleVerify(selectedTest.id)}
-                    className="w-full h-14 text-base font-semibold bg-success hover:bg-success/90"
-                    disabled={verifyJobTest.isPending}
-                  >
-                    {verifyJobTest.isPending ? (
-                      <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                    ) : (
-                      <Award className="h-5 w-5 mr-2" />
+                    <Trash2 className="h-4 w-4 mr-1.5" />
+                    Delete test
+                  </DestructiveButton>
+                </div>
+              }
+            >
+              <ListCard>
+                <ListCardHeader
+                  tone="orange"
+                  title="Job"
+                  meta={
+                    selectedTest.job?.client ? (
+                      <Pill tone="blue">{selectedTest.job.client}</Pill>
+                    ) : undefined
+                  }
+                />
+                <ListBody>
+                  <ListRow
+                    lead={<Avatar initials={getInitials(selectedTest.job?.title)} />}
+                    title={selectedTest.job?.title || 'Unknown job'}
+                    subtitle={selectedTest.job?.client}
+                  />
+                </ListBody>
+              </ListCard>
+
+              <StatStrip
+                columns={2}
+                stats={[
+                  {
+                    label: 'Reading',
+                    value: selectedTest.reading
+                      ? `${selectedTest.reading}${TEST_TYPE_CONFIG[selectedTest.test_type]?.unit ?? ''}`
+                      : '—',
+                  },
+                  {
+                    label: 'Circuit ref',
+                    value: selectedTest.circuit_ref || '—',
+                  },
+                  {
+                    label: 'Test date',
+                    value: selectedTest.test_date
+                      ? format(new Date(selectedTest.test_date), 'dd MMM yy')
+                      : '—',
+                  },
+                  {
+                    label: 'Inspector',
+                    value: selectedTest.tester?.name || '—',
+                  },
+                ]}
+              />
+
+              {(selectedTest.instrument_used || selectedTest.instrument_serial) && (
+                <ListCard>
+                  <ListCardHeader tone="orange" title="Instrument" />
+                  <ListBody>
+                    {selectedTest.instrument_used && (
+                      <ListRow
+                        title="Instrument used"
+                        subtitle={selectedTest.instrument_used}
+                      />
                     )}
-                    Verify Result
-                  </Button>
-                )}
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    setDeleteConfirmId(selectedTest.id);
-                    setSelectedTest(null);
-                  }}
-                  className="w-full h-12 text-destructive hover:text-destructive"
-                >
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete Test
-                </Button>
-              </div>
-            </div>
+                    {selectedTest.instrument_serial && (
+                      <ListRow
+                        title="Serial number"
+                        subtitle={selectedTest.instrument_serial}
+                      />
+                    )}
+                  </ListBody>
+                </ListCard>
+              )}
+
+              {selectedTest.notes && (
+                <div>
+                  <Divider label="Notes" />
+                  <p className="mt-3 text-[13px] text-white leading-relaxed bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
+                    {selectedTest.notes}
+                  </p>
+                </div>
+              )}
+
+              {selectedTest.verified_at && (
+                <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4 flex items-center gap-3">
+                  <Award className="h-5 w-5 text-emerald-400 shrink-0" />
+                  <div className="min-w-0">
+                    <div className="text-[13px] font-semibold text-white">Verified</div>
+                    <div className="text-[11.5px] text-white">
+                      {format(new Date(selectedTest.verified_at), "dd MMM yyyy 'at' HH:mm")}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </SheetShell>
           )}
         </SheetContent>
       </Sheet>
 
-      {/* Delete Confirmation */}
       <AlertDialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
-        <AlertDialogContent className="bg-background border-border">
+        <AlertDialogContent className="bg-[hsl(0_0%_12%)] border border-white/[0.06]">
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Test Record?</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogTitle className="text-white">Delete test record?</AlertDialogTitle>
+            <AlertDialogDescription className="text-white">
               This action cannot be undone. This will permanently delete the test record.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-            >
-              {deleteJobTest.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-              Delete
+            <AlertDialogCancel asChild>
+              <SecondaryButton>Cancel</SecondaryButton>
+            </AlertDialogCancel>
+            <AlertDialogAction asChild>
+              <DestructiveButton onClick={handleDelete}>
+                {deleteJobTest.isPending ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                Delete
+              </DestructiveButton>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+    </PageFrame>
   );
 
   return isMobile ? (

@@ -25,6 +25,7 @@ import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
+import { inputClass } from './editorial';
 
 interface VoiceCommand {
   name: string;
@@ -586,14 +587,14 @@ export function VoiceCommandCheatSheet() {
   const totalCommands = COMMAND_DATA.reduce((acc, cat) => acc + cat.commands.length, 0);
 
   return (
-    <Card className="border-border/50 bg-elec-gray/50 backdrop-blur-sm">
+    <Card className="border border-white/[0.06] bg-[hsl(0_0%_12%)]">
       <CardHeader className="pb-4">
         <div className="flex items-center gap-3">
           <div className="p-2 rounded-lg bg-elec-yellow/10">
             <Mic className="h-5 w-5 text-elec-yellow" />
           </div>
           <div>
-            <CardTitle className="text-lg">Voice Command Reference</CardTitle>
+            <CardTitle className="text-lg text-white">Voice Command Reference</CardTitle>
             <p className="text-sm text-white mt-1">
               {totalCommands} commands across {COMMAND_DATA.length} categories
             </p>
@@ -604,13 +605,13 @@ export function VoiceCommandCheatSheet() {
         {/* Search */}
         <div className="relative">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none z-10" />
           )}
           <Input
             placeholder="Search commands or phrases..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={cn('bg-background/50', !searchQuery && 'pl-9')}
+            className={cn(inputClass, !searchQuery && 'pl-9')}
           />
         </div>
 
@@ -627,13 +628,13 @@ export function VoiceCommandCheatSheet() {
                   open={isOpen || searchQuery.length > 0}
                   onOpenChange={() => toggleCategory(category.category)}
                 >
-                  <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors group">
+                  <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-lg bg-white/[0.04] hover:bg-white/[0.08] transition-colors group">
                     <div className="flex items-center gap-3">
                       <div className={`p-1.5 rounded-md ${category.colour}`}>
                         <Icon className="h-4 w-4" />
                       </div>
-                      <span className="font-medium text-sm">{category.category}</span>
-                      <Badge variant="secondary" className="text-xs">
+                      <span className="font-medium text-sm text-white">{category.category}</span>
+                      <Badge variant="secondary" className="text-xs bg-white/[0.06] text-white">
                         {category.commands.length}
                       </Badge>
                     </div>
@@ -645,11 +646,11 @@ export function VoiceCommandCheatSheet() {
                   </CollapsibleTrigger>
 
                   <CollapsibleContent className="pt-2 pl-4">
-                    <div className="space-y-3 border-l-2 border-border/50 pl-4">
+                    <div className="space-y-3 border-l-2 border-white/[0.06] pl-4">
                       {category.commands.map((cmd) => (
                         <div key={cmd.name} className="space-y-1.5 py-2">
                           <div className="flex items-center gap-2">
-                            <code className="text-xs font-mono bg-muted px-1.5 py-0.5 rounded text-elec-yellow">
+                            <code className="text-xs font-mono bg-white/[0.06] px-1.5 py-0.5 rounded text-elec-yellow">
                               {cmd.name}
                             </code>
                             <span className="text-sm text-white">{cmd.description}</span>
@@ -658,7 +659,7 @@ export function VoiceCommandCheatSheet() {
                             {cmd.examples.map((example, idx) => (
                               <span
                                 key={idx}
-                                className="text-xs bg-background border border-border/50 rounded-full px-2.5 py-1 text-foreground/80"
+                                className="text-xs bg-white/[0.04] border border-white/[0.06] rounded-full px-2.5 py-1 text-white"
                               >
                                 "{example}"
                               </span>

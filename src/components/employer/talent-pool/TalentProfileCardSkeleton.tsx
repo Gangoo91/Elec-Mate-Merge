@@ -1,10 +1,9 @@
-import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function TalentProfileCardSkeleton() {
   return (
-    <Card className="bg-gradient-to-br from-elec-gray/50 via-background to-elec-yellow/5 border-2 border-border/50">
-      <CardContent className="p-4">
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      <div className="p-4">
         <div className="flex items-start gap-3">
           {/* Avatar skeleton */}
           <Skeleton className="w-12 h-12 rounded-full shrink-0" />
@@ -27,13 +26,13 @@ export function TalentProfileCardSkeleton() {
         </div>
 
         {/* Actions skeleton */}
-        <div className="flex gap-2 mt-3 pt-3 border-t border-border">
+        <div className="flex gap-2 mt-3 pt-3 border-t border-white/[0.06]">
           <Skeleton className="h-9 flex-1" />
           <Skeleton className="h-9 flex-1" />
           <Skeleton className="h-9 flex-1" />
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
 

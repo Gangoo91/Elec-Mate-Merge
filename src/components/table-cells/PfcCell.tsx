@@ -22,7 +22,7 @@ const PfcCellComponent: React.FC<PfcCellProps> = ({ result, onUpdate }) => {
           onUpdate(result.id, 'pfcLiveNeutral', value);
         }}
         className="h-8 text-sm text-center px-0 border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30 bg-transparent"
-        placeholder="kA"
+        placeholder="—"
       />
     </TableCell>
   );

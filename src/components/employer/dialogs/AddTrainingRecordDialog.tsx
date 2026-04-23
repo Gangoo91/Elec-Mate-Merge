@@ -9,7 +9,6 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
@@ -56,6 +55,19 @@ import {
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useAddElecIdTraining } from '@/hooks/useElecId';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+  fieldLabelClass,
+  Eyebrow,
+} from '@/components/employer/editorial';
 
 const EXPIRY_OPTIONS = [
   { value: 1, label: '1 year' },
@@ -472,18 +484,18 @@ export const AddTrainingRecordDialog = ({
         if (!isOpen) resetForm();
       }}
     >
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-[hsl(0_0%_8%)] border-white/[0.08]">
         {/* Premium Header */}
-        <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-b border-border p-6">
+        <div className="border-b border-white/[0.06] p-6">
           <DialogHeader className="space-y-3">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center shadow-lg shadow-primary/20">
-                <GraduationCap className="h-6 w-6 text-elec-yellow-foreground" />
+              <div className="w-12 h-12 rounded-xl bg-elec-yellow/15 border border-elec-yellow/30 flex items-center justify-center">
+                <GraduationCap className="h-6 w-6 text-elec-yellow" />
               </div>
               <div>
-                <DialogTitle className="text-xl">Add Training Record</DialogTitle>
+                <DialogTitle className="text-xl text-white">Add Training Record</DialogTitle>
                 <DialogDescription className="text-white">
-                  Adding to <span className="font-medium text-foreground">{workerName}</span>'s
+                  Adding to <span className="font-medium text-white">{workerName}</span>'s
                   Elec-ID
                 </DialogDescription>
               </div>
@@ -496,620 +508,523 @@ export const AddTrainingRecordDialog = ({
                   <div
                     key={step}
                     className={`h-1.5 w-8 rounded-full transition-colors ${
-                      step <= completedFields ? 'bg-elec-yellow' : 'bg-muted'
+                      step <= completedFields ? 'bg-elec-yellow' : 'bg-white/[0.08]'
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-xs text-white">
+              <span className="text-[11px] text-white">
                 {completedFields}/4 fields completed
               </span>
             </div>
           </DialogHeader>
         </div>
 
-        <div className="p-6 space-y-6">
+        <div className="p-6 space-y-5">
           {/* Mode Toggle */}
-          <div className="flex items-center gap-2 p-1 bg-muted/50 rounded-lg w-fit">
-            <Button
+          <div className="flex items-center gap-1 p-1 bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-full w-fit">
+            <button
               type="button"
-              variant={!isManualMode ? 'default' : 'ghost'}
-              size="sm"
               onClick={() => setIsManualMode(false)}
-              className="h-9 gap-2"
+              className={cn(
+                'h-9 px-4 rounded-full text-[12.5px] font-medium gap-2 inline-flex items-center transition-colors',
+                !isManualMode ? 'bg-elec-yellow text-black' : 'text-white hover:bg-white/[0.06]'
+              )}
             >
               <Search className="h-4 w-4" />
               Quick Select
-            </Button>
-            <Button
+            </button>
+            <button
               type="button"
-              variant={isManualMode ? 'default' : 'ghost'}
-              size="sm"
               onClick={() => setIsManualMode(true)}
-              className="h-9 gap-2"
+              className={cn(
+                'h-9 px-4 rounded-full text-[12.5px] font-medium gap-2 inline-flex items-center transition-colors',
+                isManualMode ? 'bg-elec-yellow text-black' : 'text-white hover:bg-white/[0.06]'
+              )}
             >
               <PenLine className="h-4 w-4" />
               Manual Entry
-            </Button>
+            </button>
           </div>
 
-          {/* Category Quick Filter - only show in quick select mode */}
+          {/* Category Quick Filter */}
           {!isManualMode && (
-            <div className="space-y-3">
-              <Label className="text-sm font-medium text-white">
-                Quick Filter by Category
-              </Label>
+            <div className="space-y-2">
+              <label className={fieldLabelClass}>Quick filter by category</label>
               <div className="flex flex-wrap gap-2">
-                <Button
+                <button
                   type="button"
-                  variant={selectedCategory === null ? 'default' : 'outline'}
-                  size="sm"
                   onClick={() => setSelectedCategory(null)}
-                  className="h-8"
+                  className={cn(
+                    'h-8 px-3 rounded-full text-[12px] font-medium border transition-colors',
+                    selectedCategory === null
+                      ? 'bg-elec-yellow text-black border-elec-yellow'
+                      : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'
+                  )}
                 >
                   All
-                </Button>
+                </button>
                 {Object.keys(TRAINING_COURSES).map((category) => (
-                  <Button
+                  <button
                     key={category}
                     type="button"
-                    variant={selectedCategory === category ? 'default' : 'outline'}
-                    size="sm"
                     onClick={() => setSelectedCategory(category)}
-                    className="h-8 gap-1.5"
+                    className={cn(
+                      'h-8 px-3 rounded-full text-[12px] font-medium border transition-colors inline-flex items-center gap-1.5',
+                      selectedCategory === category
+                        ? 'bg-elec-yellow text-black border-elec-yellow'
+                        : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'
+                    )}
                   >
                     {CATEGORY_ICONS[category]}
                     <span className="hidden sm:inline">{category}</span>
                     <span className="sm:hidden">{category.split(' ')[0]}</span>
-                  </Button>
+                  </button>
                 ))}
               </div>
             </div>
           )}
 
           {/* Section 1: Course Details */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 pb-2 border-b border-border/50">
+          <FormCard eyebrow="Course details">
+            <div className="flex items-center gap-2 -mt-1">
               <Award className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
-                Course Details
-              </h3>
+              <span className="text-[12.5px] text-white">Select the course / qualification</span>
             </div>
 
-            <div className="grid gap-4">
-              {/* Manual Mode - Simple Text Inputs */}
-              {isManualMode ? (
-                <>
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2 text-sm font-medium">
-                      Course / Qualification Name
-                      <span className="text-destructive">*</span>
-                    </Label>
-                    <div className="relative">
-                      <GraduationCap className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                      <Input
-                        placeholder="e.g. Manual Handling, Fire Warden, SMSTS"
-                        value={formData.courseName}
-                        onChange={(e) => setFormData({ ...formData, courseName: e.target.value })}
-                        className="pl-10 h-11 bg-background border-border/50 focus:border-elec-yellow/50"
-                      />
-                    </div>
-                  </div>
+            {isManualMode ? (
+              <>
+                <Field label="Course / qualification name" required>
+                  <Input
+                    placeholder="e.g. Manual Handling, Fire Warden, SMSTS"
+                    value={formData.courseName}
+                    onChange={(e) => setFormData({ ...formData, courseName: e.target.value })}
+                    className={inputClass}
+                  />
+                </Field>
 
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2 text-sm font-medium">
-                      Training Provider
-                    </Label>
-                    <div className="relative">
-                      <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                      <Input
-                        placeholder="e.g. CITB, City & Guilds, In-house"
-                        value={formData.provider}
-                        onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
-                        className="pl-10 h-11 bg-background border-border/50 focus:border-elec-yellow/50"
-                        list="common-providers"
-                      />
-                      <datalist id="common-providers">
-                        {COMMON_PROVIDERS.map((provider) => (
-                          <option key={provider} value={provider} />
-                        ))}
-                      </datalist>
-                    </div>
-                  </div>
+                <Field label="Training provider">
+                  <Input
+                    placeholder="e.g. CITB, City & Guilds, In-house"
+                    value={formData.provider}
+                    onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
+                    className={inputClass}
+                    list="common-providers"
+                  />
+                  <datalist id="common-providers">
+                    {COMMON_PROVIDERS.map((provider) => (
+                      <option key={provider} value={provider} />
+                    ))}
+                  </datalist>
+                </Field>
 
-                  {/* Expiry Duration Selector for Manual Mode */}
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2 text-sm font-medium">
-                      Expires After
-                    </Label>
-                    <div className="flex flex-wrap gap-2">
-                      {EXPIRY_OPTIONS.map((option) => (
-                        <Button
-                          key={option.label}
-                          type="button"
-                          variant={customExpiryYears === option.value ? 'default' : 'outline'}
-                          size="sm"
-                          onClick={() => handleCustomExpiryChange(option.value)}
-                          className="h-9"
-                        >
-                          {option.label}
-                        </Button>
-                      ))}
-                    </div>
+                <div className="space-y-2">
+                  <label className={fieldLabelClass}>Expires after</label>
+                  <div className="flex flex-wrap gap-2">
+                    {EXPIRY_OPTIONS.map((option) => (
+                      <button
+                        key={option.label}
+                        type="button"
+                        onClick={() => handleCustomExpiryChange(option.value)}
+                        className={cn(
+                          'h-9 px-3 rounded-full text-[12px] font-medium border transition-colors',
+                          customExpiryYears === option.value
+                            ? 'bg-elec-yellow text-black border-elec-yellow'
+                            : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'
+                        )}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
                   </div>
-                </>
-              ) : (
-                <>
-                  {/* Quick Select Mode - Searchable Combobox */}
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2 text-sm font-medium">
-                      Course / Qualification Name
-                      <span className="text-destructive">*</span>
-                    </Label>
-                    <Popover open={courseOpen} onOpenChange={setCourseOpen}>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          aria-expanded={courseOpen}
-                          className="w-full h-11 justify-between bg-background border-border/50 hover:bg-muted/50 font-normal"
-                        >
-                          {formData.courseName ? (
-                            <div className="flex items-center gap-2 truncate">
-                              <GraduationCap className="h-4 w-4 text-white flex-shrink-0" />
-                              <span className="truncate">{formData.courseName}</span>
-                              {selectedCourse?.mandatory && (
-                                <Badge variant="destructive" className="text-[10px] px-1.5 py-0">
-                                  Required
-                                </Badge>
-                              )}
-                              {selectedCourse?.expiryYears && (
-                                <Badge
-                                  variant="outline"
-                                  className="text-[10px] px-1.5 py-0 border-warning text-warning"
-                                >
-                                  {selectedCourse.expiryYears}yr
-                                </Badge>
-                              )}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="space-y-1.5">
+                  <label className={fieldLabelClass}>
+                    Course / qualification name
+                    <span className="ml-1 text-elec-yellow">*</span>
+                  </label>
+                  <Popover open={courseOpen} onOpenChange={setCourseOpen}>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        aria-expanded={courseOpen}
+                        className={cn(inputClass, 'flex items-center justify-between font-normal text-left')}
+                      >
+                        {formData.courseName ? (
+                          <div className="flex items-center gap-2 truncate">
+                            <GraduationCap className="h-4 w-4 text-white flex-shrink-0" />
+                            <span className="truncate">{formData.courseName}</span>
+                            {selectedCourse?.mandatory && (
+                              <Badge className="text-[10px] px-1.5 py-0 bg-red-500/15 text-red-400 border-red-500/30">
+                                Required
+                              </Badge>
+                            )}
+                            {selectedCourse?.expiryYears && (
+                              <Badge
+                                variant="outline"
+                                className="text-[10px] px-1.5 py-0 border-amber-500/40 text-amber-400"
+                              >
+                                {selectedCourse.expiryYears}yr
+                              </Badge>
+                            )}
+                          </div>
+                        ) : (
+                          <span className="text-white flex items-center gap-2">
+                            <GraduationCap className="h-4 w-4" />
+                            Search or select a course...
+                          </span>
+                        )}
+                        <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-[var(--radix-popover-trigger-width)] p-0 bg-[hsl(0_0%_12%)] border-white/[0.08]"
+                      align="start"
+                    >
+                      <Command className="bg-transparent">
+                        <CommandInput
+                          placeholder="Search courses..."
+                          className="h-10"
+                          value={searchQuery}
+                          onValueChange={setSearchQuery}
+                        />
+                        <CommandList className="max-h-[300px]">
+                          <CommandEmpty>
+                            <div className="p-4 text-center">
+                              <p className="text-[12.5px] text-white mb-2">
+                                No course found for "{searchQuery}"
+                              </p>
+                              <SecondaryButton onClick={handleAddCustomCourse} size="sm">
+                                <PenLine className="h-3 w-3 mr-1" />
+                                Add "{searchQuery}" as custom course
+                              </SecondaryButton>
                             </div>
+                          </CommandEmpty>
+                          {Object.entries(filteredCourses).map(([category, courses]) => (
+                            <CommandGroup
+                              key={category}
+                              heading={
+                                <span className="flex items-center gap-2">
+                                  {CATEGORY_ICONS[category]}
+                                  {category}
+                                </span>
+                              }
+                            >
+                              {courses.map((course) => (
+                                <CommandItem
+                                  key={course.name}
+                                  value={course.name}
+                                  onSelect={() => handleCourseSelect({ ...course, category })}
+                                  className="cursor-pointer"
+                                >
+                                  <Check
+                                    className={cn(
+                                      'mr-2 h-4 w-4',
+                                      formData.courseName === course.name
+                                        ? 'opacity-100'
+                                        : 'opacity-0'
+                                    )}
+                                  />
+                                  <div className="flex-1 flex items-center justify-between gap-2">
+                                    <span>{course.name}</span>
+                                    <div className="flex items-center gap-1">
+                                      {course.mandatory && (
+                                        <Badge className="text-[10px] px-1 py-0 bg-red-500/15 text-red-400 border-red-500/30">
+                                          Required
+                                        </Badge>
+                                      )}
+                                      {course.expiryYears !== null ? (
+                                        <Badge
+                                          variant="outline"
+                                          className="text-[10px] px-1 py-0 border-white/[0.15] text-white"
+                                        >
+                                          {course.expiryYears}yr
+                                        </Badge>
+                                      ) : (
+                                        <Badge
+                                          variant="secondary"
+                                          className="text-[10px] px-1 py-0 bg-white/[0.06] text-white border-white/[0.08]"
+                                        >
+                                          No expiry
+                                        </Badge>
+                                      )}
+                                    </div>
+                                  </div>
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          ))}
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+
+                  {/* Custom course indicator with expiry selector */}
+                  {formData.courseName && !selectedCourse && (
+                    <div className="space-y-3 p-3 bg-white/[0.04] rounded-xl border border-white/[0.08] mt-2">
+                      <div className="flex items-center gap-2 text-[11px] text-white">
+                        <span>Custom course:</span>
+                        <Badge variant="outline" className="text-[10px] border-white/[0.15] text-white">
+                          {formData.courseName}
+                        </Badge>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-5 w-5 p-0 ml-auto text-white hover:bg-white/[0.08]"
+                          onClick={() => setFormData((prev) => ({ ...prev, courseName: '' }))}
+                        >
+                          <X className="h-3 w-3" />
+                        </Button>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-[11px] font-medium text-white">Expires after:</label>
+                        <div className="flex flex-wrap gap-1.5">
+                          {EXPIRY_OPTIONS.map((option) => (
+                            <button
+                              key={option.label}
+                              type="button"
+                              onClick={() => handleCustomExpiryChange(option.value)}
+                              className={cn(
+                                'h-7 px-2.5 rounded-full text-[11px] font-medium border transition-colors',
+                                customExpiryYears === option.value
+                                  ? 'bg-elec-yellow text-black border-elec-yellow'
+                                  : 'bg-white/[0.04] text-white border-white/[0.08] hover:bg-white/[0.08]'
+                              )}
+                            >
+                              {option.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Provider Selection */}
+                <div className="space-y-1.5">
+                  <label className={fieldLabelClass}>Training provider</label>
+                  {selectedCourse ? (
+                    <Popover open={providerOpen} onOpenChange={setProviderOpen}>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className={cn(inputClass, 'flex items-center justify-between font-normal text-left')}
+                        >
+                          {formData.provider ? (
+                            <span className="flex items-center gap-2">
+                              <Building2 className="h-4 w-4 text-white" />
+                              {formData.provider}
+                            </span>
                           ) : (
                             <span className="text-white flex items-center gap-2">
-                              <GraduationCap className="h-4 w-4" />
-                              Search or select a course...
+                              <Building2 className="h-4 w-4" />
+                              Select provider...
                             </span>
                           )}
                           <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
+                        </button>
                       </PopoverTrigger>
                       <PopoverContent
-                        className="w-[var(--radix-popover-trigger-width)] p-0"
+                        className="w-[var(--radix-popover-trigger-width)] p-0 bg-[hsl(0_0%_12%)] border-white/[0.08]"
                         align="start"
                       >
-                        <Command>
-                          <CommandInput
-                            placeholder="Search courses..."
-                            className="h-10"
-                            value={searchQuery}
-                            onValueChange={setSearchQuery}
-                          />
-                          <CommandList className="max-h-[300px]">
-                            <CommandEmpty>
-                              <div className="p-4 text-center">
-                                <p className="text-sm text-white mb-2">
-                                  No course found for "{searchQuery}"
-                                </p>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={handleAddCustomCourse}
-                                  className="gap-2"
+                        <Command className="bg-transparent">
+                          <CommandInput placeholder="Search providers..." className="h-10" />
+                          <CommandList>
+                            <CommandEmpty>No provider found.</CommandEmpty>
+                            <CommandGroup heading="Suggested Providers">
+                              {selectedCourse.providers.map((provider) => (
+                                <CommandItem
+                                  key={provider}
+                                  value={provider}
+                                  onSelect={() => {
+                                    setFormData((prev) => ({ ...prev, provider }));
+                                    setProviderOpen(false);
+                                  }}
+                                  className="cursor-pointer"
                                 >
-                                  <PenLine className="h-3 w-3" />
-                                  Add "{searchQuery}" as custom course
-                                </Button>
-                              </div>
-                            </CommandEmpty>
-                            {Object.entries(filteredCourses).map(([category, courses]) => (
-                              <CommandGroup
-                                key={category}
-                                heading={
-                                  <span className="flex items-center gap-2">
-                                    {CATEGORY_ICONS[category]}
-                                    {category}
-                                  </span>
-                                }
+                                  <Check
+                                    className={cn(
+                                      'mr-2 h-4 w-4',
+                                      formData.provider === provider ? 'opacity-100' : 'opacity-0'
+                                    )}
+                                  />
+                                  {provider}
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                            <CommandGroup heading="Other">
+                              <CommandItem
+                                value="Other"
+                                onSelect={() => {
+                                  setFormData((prev) => ({ ...prev, provider: '' }));
+                                  setProviderOpen(false);
+                                }}
+                                className="cursor-pointer text-white"
                               >
-                                {courses.map((course) => (
-                                  <CommandItem
-                                    key={course.name}
-                                    value={course.name}
-                                    onSelect={() => handleCourseSelect({ ...course, category })}
-                                    className="cursor-pointer"
-                                  >
-                                    <Check
-                                      className={cn(
-                                        'mr-2 h-4 w-4',
-                                        formData.courseName === course.name
-                                          ? 'opacity-100'
-                                          : 'opacity-0'
-                                      )}
-                                    />
-                                    <div className="flex-1 flex items-center justify-between gap-2">
-                                      <span>{course.name}</span>
-                                      <div className="flex items-center gap-1">
-                                        {course.mandatory && (
-                                          <Badge
-                                            variant="destructive"
-                                            className="text-[10px] px-1 py-0"
-                                          >
-                                            Required
-                                          </Badge>
-                                        )}
-                                        {course.expiryYears !== null ? (
-                                          <Badge
-                                            variant="outline"
-                                            className="text-[10px] px-1 py-0"
-                                          >
-                                            {course.expiryYears}yr
-                                          </Badge>
-                                        ) : (
-                                          <Badge
-                                            variant="secondary"
-                                            className="text-[10px] px-1 py-0"
-                                          >
-                                            No expiry
-                                          </Badge>
-                                        )}
-                                      </div>
-                                    </div>
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                            ))}
+                                <Building2 className="mr-2 h-4 w-4" />
+                                Enter custom provider...
+                              </CommandItem>
+                            </CommandGroup>
                           </CommandList>
                         </Command>
                       </PopoverContent>
                     </Popover>
-
-                    {/* Custom course indicator with expiry selector */}
-                    {formData.courseName && !selectedCourse && (
-                      <div className="space-y-3 p-3 bg-muted/30 rounded-lg border border-border/50">
-                        <div className="flex items-center gap-2 text-xs text-white">
-                          <span>Custom course:</span>
-                          <Badge variant="outline" className="text-[10px]">
-                            {formData.courseName}
-                          </Badge>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            className="h-5 w-5 p-0 ml-auto"
-                            onClick={() => setFormData((prev) => ({ ...prev, courseName: '' }))}
-                          >
-                            <X className="h-3 w-3" />
-                          </Button>
-                        </div>
-
-                        {/* Expiry selector for custom courses */}
-                        <div className="space-y-2">
-                          <Label className="text-xs font-medium text-white">
-                            Expires after:
-                          </Label>
-                          <div className="flex flex-wrap gap-1.5">
-                            {EXPIRY_OPTIONS.map((option) => (
-                              <Button
-                                key={option.label}
-                                type="button"
-                                variant={customExpiryYears === option.value ? 'default' : 'outline'}
-                                size="sm"
-                                onClick={() => handleCustomExpiryChange(option.value)}
-                                className="h-7 text-xs"
-                              >
-                                {option.label}
-                              </Button>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Provider Selection */}
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2 text-sm font-medium">
-                      Training Provider
-                    </Label>
-                    {selectedCourse ? (
-                      <Popover open={providerOpen} onOpenChange={setProviderOpen}>
-                        <PopoverTrigger asChild>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className="w-full h-11 justify-between bg-background border-border/50 hover:bg-muted/50 font-normal"
-                          >
-                            {formData.provider ? (
-                              <span className="flex items-center gap-2">
-                                <Building2 className="h-4 w-4 text-white" />
-                                {formData.provider}
-                              </span>
-                            ) : (
-                              <span className="text-white flex items-center gap-2">
-                                <Building2 className="h-4 w-4" />
-                                Select provider...
-                              </span>
-                            )}
-                            <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent
-                          className="w-[var(--radix-popover-trigger-width)] p-0"
-                          align="start"
-                        >
-                          <Command>
-                            <CommandInput placeholder="Search providers..." className="h-10" />
-                            <CommandList>
-                              <CommandEmpty>No provider found.</CommandEmpty>
-                              <CommandGroup heading="Suggested Providers">
-                                {selectedCourse.providers.map((provider) => (
-                                  <CommandItem
-                                    key={provider}
-                                    value={provider}
-                                    onSelect={() => {
-                                      setFormData((prev) => ({ ...prev, provider }));
-                                      setProviderOpen(false);
-                                    }}
-                                    className="cursor-pointer"
-                                  >
-                                    <Check
-                                      className={cn(
-                                        'mr-2 h-4 w-4',
-                                        formData.provider === provider ? 'opacity-100' : 'opacity-0'
-                                      )}
-                                    />
-                                    {provider}
-                                  </CommandItem>
-                                ))}
-                              </CommandGroup>
-                              <CommandGroup heading="Other">
-                                <CommandItem
-                                  value="Other"
-                                  onSelect={() => {
-                                    setFormData((prev) => ({ ...prev, provider: '' }));
-                                    setProviderOpen(false);
-                                  }}
-                                  className="cursor-pointer text-white"
-                                >
-                                  <Building2 className="mr-2 h-4 w-4" />
-                                  Enter custom provider...
-                                </CommandItem>
-                              </CommandGroup>
-                            </CommandList>
-                          </Command>
-                        </PopoverContent>
-                      </Popover>
-                    ) : (
-                      <div className="relative">
-                        <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                        <Input
-                          placeholder="e.g. City & Guilds, CITB, IOSH"
-                          value={formData.provider}
-                          onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
-                          className="pl-10 h-11 bg-background border-border/50 focus:border-elec-yellow/50"
-                          list="common-providers-quickselect"
-                        />
-                        <datalist id="common-providers-quickselect">
-                          {COMMON_PROVIDERS.map((provider) => (
-                            <option key={provider} value={provider} />
-                          ))}
-                        </datalist>
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
+                  ) : (
+                    <Input
+                      placeholder="e.g. City & Guilds, CITB, IOSH"
+                      value={formData.provider}
+                      onChange={(e) => setFormData({ ...formData, provider: e.target.value })}
+                      className={inputClass}
+                      list="common-providers-quickselect"
+                    />
+                  )}
+                  <datalist id="common-providers-quickselect">
+                    {COMMON_PROVIDERS.map((provider) => (
+                      <option key={provider} value={provider} />
+                    ))}
+                  </datalist>
+                </div>
+              </>
+            )}
+          </FormCard>
 
           {/* Section 2: Dates & Certificate */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 pb-2 border-b border-border/50">
+          <FormCard eyebrow="Dates & certificate">
+            <div className="flex items-center gap-2 -mt-1">
               <Clock className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
-                Dates & Certificate
-              </h3>
+              <span className="text-[12.5px] text-white">Record when completed and when it expires</span>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label
-                  htmlFor="completionDate"
-                  className="flex items-center gap-2 text-sm font-medium"
-                >
-                  Completion Date
-                  <span className="text-destructive">*</span>
-                </Label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                  <Input
-                    id="completionDate"
-                    type="date"
-                    value={formData.completionDate}
-                    onChange={(e) => handleCompletionDateChange(e.target.value)}
-                    className="pl-10 h-11 bg-background border-border/50 focus:border-elec-yellow/50"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="expiryDate" className="flex items-center gap-2 text-sm font-medium">
-                  Expiry Date
-                  {(selectedCourse?.expiryYears === null ||
-                    (isManualMode && customExpiryYears === null) ||
-                    (!selectedCourse && !isManualMode && customExpiryYears === null)) && (
-                    <Badge variant="secondary" className="text-[10px]">
-                      No expiry
-                    </Badge>
-                  )}
-                  {(selectedCourse?.expiryYears ||
-                    (isManualMode && customExpiryYears !== null) ||
-                    (!selectedCourse && formData.courseName && customExpiryYears !== null)) && (
-                    <Badge variant="outline" className="text-[10px] border-success text-success">
-                      Auto-calculated
-                    </Badge>
-                  )}
-                </Label>
-                <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                  <Input
-                    id="expiryDate"
-                    type="date"
-                    value={formData.expiryDate}
-                    onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
-                    className="pl-10 h-11 bg-background border-border/50 focus:border-elec-yellow/50"
-                    disabled={
-                      selectedCourse?.expiryYears === null ||
-                      (isManualMode && customExpiryYears === null) ||
-                      (!selectedCourse && !isManualMode && customExpiryYears === null)
-                    }
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="certificateNumber" className="text-sm font-medium">
-                Certificate Number
-              </Label>
-              <div className="relative">
-                <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+            <FormGrid cols={2}>
+              <Field label="Completion date" required>
                 <Input
-                  id="certificateNumber"
-                  placeholder="e.g. CERT-2024-12345"
-                  value={formData.certificateNumber}
-                  onChange={(e) => setFormData({ ...formData, certificateNumber: e.target.value })}
-                  className="pl-10 h-11 bg-background border-border/50 focus:border-elec-yellow/50"
+                  id="completionDate"
+                  type="date"
+                  value={formData.completionDate}
+                  onChange={(e) => handleCompletionDateChange(e.target.value)}
+                  className={inputClass}
                 />
-              </div>
-            </div>
-          </div>
+              </Field>
+              <Field label="Expiry date">
+                <Input
+                  id="expiryDate"
+                  type="date"
+                  value={formData.expiryDate}
+                  onChange={(e) => setFormData({ ...formData, expiryDate: e.target.value })}
+                  className={inputClass}
+                  disabled={
+                    selectedCourse?.expiryYears === null ||
+                    (isManualMode && customExpiryYears === null) ||
+                    (!selectedCourse && !isManualMode && customExpiryYears === null)
+                  }
+                />
+              </Field>
+            </FormGrid>
+            <Field label="Certificate number">
+              <Input
+                id="certificateNumber"
+                placeholder="e.g. CERT-2024-12345"
+                value={formData.certificateNumber}
+                onChange={(e) => setFormData({ ...formData, certificateNumber: e.target.value })}
+                className={inputClass}
+              />
+            </Field>
+          </FormCard>
 
           {/* Section 3: Documentation */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 pb-2 border-b border-border/50">
+          <FormCard eyebrow="Documentation">
+            <div className="flex items-center gap-2 -mt-1">
               <FileCheck className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
-                Documentation
-              </h3>
+              <span className="text-[12.5px] text-white">Upload supporting certificate</span>
             </div>
-
-            {/* Premium Upload Area */}
-            <div className="group relative border-2 border-dashed border-border/50 hover:border-elec-yellow/50 rounded-xl p-8 text-center transition-all duration-300 hover:bg-elec-yellow/5 cursor-pointer">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-xl" />
-              <div className="relative">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center mx-auto mb-4 group-hover:from-primary/20 group-hover:to-primary/10 transition-colors">
-                  <Upload className="h-7 w-7 text-white group-hover:text-elec-yellow transition-colors" />
-                </div>
-                <p className="font-medium text-foreground mb-1">Upload Certificate</p>
-                <p className="text-sm text-white">Drag and drop or click to browse</p>
-                <p className="text-xs text-white mt-2">PDF, JPG, PNG up to 10MB</p>
+            <div className="group relative border-2 border-dashed border-white/[0.12] hover:border-elec-yellow/50 rounded-xl p-8 text-center transition-all duration-300 hover:bg-elec-yellow/5 cursor-pointer">
+              <div className="w-16 h-16 rounded-2xl bg-white/[0.06] flex items-center justify-center mx-auto mb-4 group-hover:bg-elec-yellow/20 transition-colors">
+                <Upload className="h-7 w-7 text-white group-hover:text-elec-yellow transition-colors" />
               </div>
+              <p className="font-medium text-white mb-1">Upload Certificate</p>
+              <p className="text-[12.5px] text-white">Drag and drop or click to browse</p>
+              <p className="text-[11px] text-white mt-2">PDF, JPG, PNG up to 10MB</p>
             </div>
-          </div>
+          </FormCard>
 
-          {/* Funding Info - Collapsible Style */}
-          <div className="bg-gradient-to-br from-muted/50 to-muted/20 rounded-xl p-5 border border-border/30">
-            <div className="flex items-center gap-2 mb-4">
+          {/* Funding Info */}
+          <FormCard eyebrow="Funding information">
+            <div className="flex items-center gap-2 -mt-1">
               <PoundSterling className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
-                Funding Information
-              </h3>
-              <Badge variant="outline" className="ml-auto text-[10px]">
-                Optional
-              </Badge>
+              <span className="text-[12.5px] text-white">Optional</span>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label className="text-sm font-medium">Funding Source</Label>
+            <FormGrid cols={2}>
+              <Field label="Funding source">
                 <Select
                   value={formData.fundingSource}
                   onValueChange={(value) => setFormData({ ...formData, fundingSource: value })}
                 >
-                  <SelectTrigger className="h-11 bg-background border-border/50">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className={selectContentClass}>
                     <SelectItem value="employer">Employer Funded</SelectItem>
                     <SelectItem value="worker">Worker Self-Funded</SelectItem>
                     <SelectItem value="grant">Grant / Subsidy</SelectItem>
                     <SelectItem value="apprenticeship">Apprenticeship Levy</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="cost" className="text-sm font-medium">
-                  Cost (£)
-                </Label>
-                <div className="relative">
-                  <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                  <Input
-                    id="cost"
-                    type="number"
-                    placeholder="0.00"
-                    value={formData.cost}
-                    onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
-                    className="pl-10 h-11 bg-background border-border/50 focus:border-elec-yellow/50"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2 mt-4">
-              <Label htmlFor="notes" className="text-sm font-medium">
-                Notes
-              </Label>
+              </Field>
+              <Field label="Cost (£)">
+                <Input
+                  id="cost"
+                  type="number"
+                  placeholder="0.00"
+                  value={formData.cost}
+                  onChange={(e) => setFormData({ ...formData, cost: e.target.value })}
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+            <Field label="Notes">
               <Textarea
                 id="notes"
                 placeholder="Any additional notes about this training..."
                 value={formData.notes}
                 onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                className="min-h-[80px] bg-background border-border/50 focus:border-elec-yellow/50 resize-none"
+                className={cn(textareaClass, 'min-h-[80px]')}
               />
-            </div>
-          </div>
+            </Field>
+          </FormCard>
 
-          {/* Notification Preview - Mobile Style */}
+          {/* Notification Preview */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Bell className="h-4 w-4 text-elec-yellow" />
-              <h3 className="font-semibold text-sm uppercase tracking-wider text-white">
-                Worker Notification Preview
-              </h3>
+              <Eyebrow>Worker notification preview</Eyebrow>
             </div>
 
-            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-4 shadow-xl">
-              {/* Mock phone notification */}
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/10">
+            <div className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl p-4">
+              <div className="bg-white/[0.04] rounded-xl p-4 border border-white/[0.06]">
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="h-5 w-5 text-foreground" />
+                  <div className="w-10 h-10 rounded-xl bg-elec-yellow/20 border border-elec-yellow/30 flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="h-5 w-5 text-elec-yellow" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <p className="font-semibold text-foreground text-sm">Elec-ID Updated</p>
-                      <span className="text-[10px] text-foreground/50">now</span>
+                      <p className="font-semibold text-white text-[13px]">Elec-ID Updated</p>
+                      <span className="text-[10px] text-white">now</span>
                     </div>
-                    <p className="text-foreground/80 text-sm mt-1">
+                    <p className="text-white text-[12.5px] mt-1">
                       {formData.courseName || 'New training'} has been added to your profile
                     </p>
                     <div className="flex items-center gap-2 mt-3">
-                      <Badge className="bg-success/20 text-success border-success/30 text-[10px]">
+                      <Badge className="bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-[10px]">
                         <CheckCircle2 className="h-3 w-3 mr-1" />
                         Verified
                       </Badge>
                       {formData.provider && (
-                        <span className="text-[10px] text-foreground/50">
+                        <span className="text-[10px] text-white">
                           via {formData.provider}
                         </span>
                       )}
@@ -1117,25 +1032,16 @@ export const AddTrainingRecordDialog = ({
                   </div>
                 </div>
               </div>
-
-              {/* Home indicator */}
-              <div className="w-24 h-1 bg-white/30 rounded-full mx-auto mt-4" />
             </div>
           </div>
         </div>
 
         <DialogFooter className="p-6 pt-0 gap-3">
-          <Button variant="outline" onClick={() => onOpenChange(false)} className="h-11">
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            disabled={addTraining.isPending}
-            className="h-11 px-8 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg shadow-primary/20 gap-2"
-          >
-            <CheckCircle2 className="h-4 w-4" />
+          <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
+          <PrimaryButton onClick={handleSubmit} disabled={addTraining.isPending}>
+            <CheckCircle2 className="h-4 w-4 mr-2" />
             {addTraining.isPending ? 'Adding...' : 'Add Training Record'}
-          </Button>
+          </PrimaryButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

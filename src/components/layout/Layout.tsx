@@ -12,13 +12,27 @@ import { AchievementListener } from '@/components/study-centre/AchievementListen
 const Layout = () => {
   const isMobile = useIsMobile();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Desktop-only: persisted collapsed state, lets users reclaim the 256px for content
+  const [desktopCollapsed, setDesktopCollapsed] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return window.localStorage.getItem('sidebar-collapsed') === '1';
+  });
   const location = useLocation();
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem('sidebar-collapsed', desktopCollapsed ? '1' : '0');
+  }, [desktopCollapsed]);
+
   const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+    if (isMobile) {
+      setSidebarOpen(!sidebarOpen);
+    } else {
+      setDesktopCollapsed((c) => !c);
+    }
   };
 
-  // Close sidebar when switching from mobile to desktop
+  // Close mobile sidebar when switching from mobile to desktop
   useEffect(() => {
     if (!isMobile && sidebarOpen) {
       setSidebarOpen(false);
@@ -31,11 +45,16 @@ const Layout = () => {
       <AchievementListener />
 
       {/* Sidebar navigation - mobile-ready with glass morphism */}
-      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} />
+      <Sidebar
+        open={sidebarOpen}
+        setOpen={setSidebarOpen}
+        desktopCollapsed={desktopCollapsed}
+        onToggleDesktopCollapsed={() => setDesktopCollapsed((c) => !c)}
+      />
 
       <div className="flex flex-col flex-1 relative min-w-0">
         {/* Header with glass morphism */}
-        <Header toggleSidebar={toggleSidebar} />
+        <Header toggleSidebar={toggleSidebar} sidebarCollapsed={desktopCollapsed} />
 
         {/* Main content area with proper spacing for fixed header */}
         <main

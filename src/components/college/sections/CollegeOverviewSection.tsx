@@ -42,7 +42,7 @@ function SectionHeader({
   return (
     <div className="flex items-end justify-between gap-4">
       <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
           {eyebrow}
         </div>
         <h2 className="mt-1.5 text-xl sm:text-2xl lg:text-[28px] font-semibold text-white tracking-tight leading-tight">
@@ -192,7 +192,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
               onClick={stat.onClick}
               className="group flex flex-col items-start bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors px-5 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10 text-left touch-manipulation"
             >
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                 {String(i + 1).padStart(2, '0')} · {stat.label}
               </span>
               <span
@@ -204,7 +204,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
               >
                 {stat.value}
               </span>
-              <span className="mt-3 text-[11px] text-white/50">{stat.sub}</span>
+              <span className="mt-3 text-[11px] text-white/75">{stat.sub}</span>
             </button>
           ))}
         </div>
@@ -226,7 +226,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                   hub.accent
                 )}
               />
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                 {hub.number} · {hub.eyebrow}
               </span>
               <h3 className="mt-4 sm:mt-5 text-2xl sm:text-[28px] lg:text-[32px] font-semibold text-white tracking-tight leading-[1.05]">
@@ -237,7 +237,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
               </p>
               <div className="flex-grow" />
               <div className="mt-6 flex items-center justify-between pt-4 border-t border-white/[0.06]">
-                <span className="text-[11px] text-white/50">{hub.meta}</span>
+                <span className="text-[11px] text-white/75">{hub.meta}</span>
                 <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
                   Open →
                 </span>
@@ -250,7 +250,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
       {/* ──────────────── PRIORITY ──────────────── */}
       {(overdueILPReviews > 0 || submissionStats.total > 0) && (
         <motion.section variants={itemVariants} className="space-y-5">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Priority
           </div>
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
@@ -262,7 +262,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                 <span className="w-[3px] h-10 sm:h-12 rounded-full bg-amber-400/70 group-hover:bg-amber-400 transition-colors shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="text-sm sm:text-base font-medium text-white">Overdue ILP reviews</div>
-                  <div className="mt-0.5 text-[12px] text-white/50">
+                  <div className="mt-0.5 text-[12px] text-white/75">
                     {overdueILPReviews} review{overdueILPReviews > 1 ? 's' : ''} awaiting completion
                   </div>
                 </div>
@@ -270,7 +270,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                   <span className="text-3xl sm:text-4xl lg:text-5xl font-semibold tabular-nums text-amber-400 leading-none">
                     {overdueILPReviews}
                   </span>
-                  <span className="text-white/40 text-lg group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
+                  <span className="text-white/70 text-lg group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
                     →
                   </span>
                 </div>
@@ -284,7 +284,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                 <span className="w-[3px] h-10 sm:h-12 rounded-full bg-purple-400/70 group-hover:bg-purple-400 transition-colors shrink-0" />
                 <div className="flex-1 min-w-0">
                   <div className="text-sm sm:text-base font-medium text-white">Portfolio reviews</div>
-                  <div className="mt-0.5 text-[12px] text-white/50">
+                  <div className="mt-0.5 text-[12px] text-white/75">
                     {submissionStats.highPriority > 0 ? `${submissionStats.highPriority} high priority · ` : ''}
                     {submissionStats.total} awaiting review
                   </div>
@@ -293,7 +293,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                   <span className="text-3xl sm:text-4xl lg:text-5xl font-semibold tabular-nums text-purple-400 leading-none">
                     {submissionStats.total}
                   </span>
-                  <span className="text-white/40 text-lg group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
+                  <span className="text-white/70 text-lg group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
                     →
                   </span>
                 </div>
@@ -327,7 +327,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                   <div className="text-sm sm:text-base font-semibold text-white group-hover:text-elec-yellow transition-colors">
                     {action.title}
                   </div>
-                  <div className="mt-1 text-[12px] text-white/50">{action.desc}</div>
+                  <div className="mt-1 text-[12px] text-white/75">{action.desc}</div>
                 </div>
                 {action.badge !== undefined && action.badge > 0 && (
                   <span className="text-[11px] font-semibold tabular-nums text-amber-400 bg-amber-400/10 border border-amber-400/20 rounded px-1.5 py-0.5 leading-none shrink-0">
@@ -367,10 +367,10 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                 >
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-medium text-white truncate">{lesson.title}</div>
-                    <div className="mt-0.5 text-[11px] text-white/50 truncate">{lesson.cohortName}</div>
+                    <div className="mt-0.5 text-[11px] text-white/75 truncate">{lesson.cohortName}</div>
                   </div>
                   <div className="text-right shrink-0">
-                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/40">
+                    <div className="text-[10px] uppercase tracking-[0.14em] text-white/55">
                       {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', { weekday: 'short' })}
                     </div>
                     <div className="mt-0.5 text-[13px] font-medium tabular-nums text-white">
@@ -384,7 +384,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
               ))}
             </div>
           ) : (
-            <div className="py-10 text-center text-[12px] text-white/40 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
+            <div className="py-10 text-center text-[12px] text-white/70 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
               No upcoming lessons this week
             </div>
           )}
@@ -411,7 +411,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
               >
                 <div>
                   <div className="text-sm font-medium text-white">{row.label}</div>
-                  <div className="mt-0.5 text-[11px] text-white/50">{row.sub}</div>
+                  <div className="mt-0.5 text-[11px] text-white/75">{row.sub}</div>
                 </div>
                 <span
                   className={cn(
@@ -443,13 +443,13 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                   tool.accent
                 )}
               />
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                 {tool.eyebrow}
               </div>
               <div className="mt-3 text-base sm:text-lg font-semibold text-white tracking-tight leading-snug">
                 {tool.title}
               </div>
-              <div className="mt-1.5 text-[12px] leading-relaxed text-white/50">{tool.desc}</div>
+              <div className="mt-1.5 text-[12px] leading-relaxed text-white/75">{tool.desc}</div>
               <div className="flex-grow" />
               <div className="mt-4 text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
                 Open →

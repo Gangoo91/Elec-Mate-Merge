@@ -1,10 +1,6 @@
-import { useState, useRef } from 'react';
-import { cn } from '@/lib/utils';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useState, useRef, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -15,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import {
@@ -29,43 +24,75 @@ import {
 } from '@/hooks/useJobIssues';
 import { useJobs } from '@/hooks/useJobs';
 import {
-  ClipboardCheck,
-  Search,
   Plus,
   Camera,
   CheckCircle2,
-  AlertCircle,
-  FileText,
-  Download,
-  User,
-  Calendar,
-  Briefcase,
   Loader2,
   RefreshCw,
   X,
-  Image,
 } from 'lucide-react';
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  FilterBar,
+  ListCard,
+  ListCardHeader,
+  ListBody,
+  ListRow,
+  Avatar,
+  Pill,
+  EmptyState,
+  LoadingBlocks,
+  IconButton,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+  type Tone,
+} from '@/components/employer/editorial';
 
-const statusColors: Record<string, string> = {
-  Open: 'bg-warning/20 text-warning',
-  'In Progress': 'bg-info/20 text-info',
-  Resolved: 'bg-success/20 text-success',
-  Closed: 'bg-success/20 text-success',
+const severityTone: Record<string, Tone> = {
+  Low: 'blue',
+  Medium: 'yellow',
+  High: 'orange',
+  Critical: 'red',
 };
 
-const severityColors: Record<string, string> = {
-  Low: 'bg-blue-500/20 text-blue-400',
-  Medium: 'bg-yellow-500/20 text-yellow-400',
-  High: 'bg-orange-500/20 text-orange-400',
-  Critical: 'bg-red-500/20 text-red-400',
+const statusTone: Record<string, Tone> = {
+  Open: 'amber',
+  'In Progress': 'cyan',
+  Resolved: 'emerald',
+  Closed: 'emerald',
 };
+
+function getInitials(name?: string | null): string {
+  if (!name) return 'NA';
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function timeAgo(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  if (days < 7) return `${days}d ago`;
+  return new Date(iso).toLocaleDateString('en-GB');
+}
 
 export const QualitySection = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showNewSnag, setShowNewSnag] = useState(false);
-  const [activeTab, setActiveTab] = useState('snags');
+  const [activeTab, setActiveTab] = useState('all');
+  const [selectedIssue, setSelectedIssue] = useState<JobIssue | null>(null);
 
-  // Form state
   const [selectedJobId, setSelectedJobId] = useState('');
   const [snagTitle, setSnagTitle] = useState('');
   const [snagDescription, setSnagDescription] = useState('');
@@ -76,27 +103,52 @@ export const QualitySection = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
-  // Fetch snags and defects using the real hook
   const { data: snagIssues, isLoading, error, refetch } = useJobIssuesByType(['Snag', 'Defect']);
   const { data: stats } = useJobIssueStats();
   const { data: jobs } = useJobs();
   const createIssue = useCreateJobIssue();
   const updateStatus = useUpdateJobIssueStatus();
 
-  // Filter by search
-  const filteredSnags =
-    snagIssues?.filter(
-      (issue) =>
-        issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        issue.job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        issue.description?.toLowerCase().includes(searchQuery.toLowerCase())
-    ) || [];
+  const filteredSnags = useMemo(
+    () =>
+      snagIssues?.filter(
+        (issue) =>
+          issue.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          issue.job?.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          issue.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      ) || [],
+    [snagIssues, searchQuery]
+  );
 
-  // Group by status for tabs
-  const openSnags = filteredSnags.filter((s) => s.status === 'Open' || s.status === 'In Progress');
+  const openSnags = filteredSnags.filter(
+    (s) => s.status === 'Open' || s.status === 'In Progress'
+  );
+  const reviewSnags = filteredSnags.filter((s) => s.status === 'In Progress');
   const resolvedSnags = filteredSnags.filter(
     (s) => s.status === 'Resolved' || s.status === 'Closed'
   );
+
+  const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const resolvedLast7d = filteredSnags.filter(
+    (s) =>
+      (s.status === 'Resolved' || s.status === 'Closed') &&
+      s.resolved_at &&
+      new Date(s.resolved_at).getTime() >= sevenDaysAgo
+  ).length;
+
+  const visibleSnags = useMemo(() => {
+    switch (activeTab) {
+      case 'open':
+        return openSnags;
+      case 'review':
+        return reviewSnags;
+      case 'signed':
+        return resolvedSnags;
+      case 'all':
+      default:
+        return filteredSnags;
+    }
+  }, [activeTab, filteredSnags, openSnags, reviewSnags, resolvedSnags]);
 
   const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -130,8 +182,8 @@ export const QualitySection = () => {
 
       setSnagPhotos((prev) => [...prev, ...uploadedUrls]);
       toast({ title: 'Photo uploaded', description: `${uploadedUrls.length} photo(s) added` });
-    } catch (error) {
-      console.error('Photo upload error:', error);
+    } catch (err) {
+      console.error('Photo upload error:', err);
       toast({
         title: 'Upload failed',
         description: 'Could not upload photo',
@@ -161,7 +213,6 @@ export const QualitySection = () => {
       photos: snagPhotos,
     });
 
-    // Reset form
     setSelectedJobId('');
     setSnagTitle('');
     setSnagDescription('');
@@ -176,318 +227,350 @@ export const QualitySection = () => {
       id: issue.id,
       status: 'Resolved',
     });
+    setSelectedIssue(null);
   };
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 space-y-4">
-        <AlertCircle className="h-12 w-12 text-destructive" />
-        <p className="text-white">Failed to load quality data</p>
-        <Button onClick={() => refetch()} variant="outline" className="gap-2">
-          <RefreshCw className="h-4 w-4" />
-          Retry
-        </Button>
-      </div>
+      <PageFrame>
+        <EmptyState
+          title="Failed to load quality data"
+          description="There was a problem fetching snags and defects."
+          action="Retry"
+          onAction={() => refetch()}
+        />
+      </PageFrame>
     );
   }
 
-  return (
-    <div className="space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
-            <ClipboardCheck className="h-6 w-6 text-elec-yellow" />
-            Quality Assurance
-          </h1>
-          <p className="text-white text-sm mt-1">
-            Snag lists, defect tracking, and quality management
-          </p>
-        </div>
+  const heroActions = (
+    <>
+      <Sheet open={showNewSnag} onOpenChange={setShowNewSnag}>
+        <SheetTrigger asChild>
+          <PrimaryButton>
+            <Plus className="h-4 w-4 mr-1.5" />
+            Log snag
+          </PrimaryButton>
+        </SheetTrigger>
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
+          <div className="flex flex-col h-full">
+            <SheetHeader className="p-4 border-b border-white/[0.06]">
+              <SheetTitle className="text-white">Log new snag</SheetTitle>
+            </SheetHeader>
+            <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
+              <div className="space-y-2">
+                <Label className="text-white">Select job *</Label>
+                <Select value={selectedJobId} onValueChange={setSelectedJobId}>
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Choose a job…" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {jobs?.map((job) => (
+                      <SelectItem key={job.id} value={job.id}>
+                        {job.title} - {job.client}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
 
-        <Sheet open={showNewSnag} onOpenChange={setShowNewSnag}>
-          <SheetTrigger asChild>
-            <Button className="gap-2 h-11 touch-manipulation">
-              <Plus className="h-4 w-4" />
-              New Snag
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
-            <div className="flex flex-col h-full bg-background">
-              <SheetHeader className="p-4 border-b border-border">
-                <SheetTitle>Log New Snag</SheetTitle>
+              <div className="space-y-2">
+                <Label className="text-white">Snag title *</Label>
+                <Input
+                  placeholder="Brief description of the issue…"
+                  value={snagTitle}
+                  onChange={(e) => setSnagTitle(e.target.value)}
+className={inputClass}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-white">Location</Label>
+                <Input
+                  placeholder="Where is this issue?"
+                  value={snagLocation}
+                  onChange={(e) => setSnagLocation(e.target.value)}
+className={inputClass}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-white">Severity</Label>
+                <Select
+                  value={snagSeverity}
+                  onValueChange={(v) => setSnagSeverity(v as IssueSeverity)}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="Low">Low</SelectItem>
+                    <SelectItem value="Medium">Medium</SelectItem>
+                    <SelectItem value="High">High</SelectItem>
+                    <SelectItem value="Critical">Critical</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-white">Detailed description</Label>
+                <Textarea
+                  placeholder="Describe the defect or issue in detail…"
+                  value={snagDescription}
+                  onChange={(e) => setSnagDescription(e.target.value)}
+                  className={`${textareaClass} min-h-[100px]`}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label className="text-white">Photos</Label>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={handlePhotoUpload}
+                />
+                <SecondaryButton
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploadingPhoto}
+                  fullWidth
+                >
+                  {uploadingPhoto ? (
+                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                  ) : (
+                    <Camera className="h-4 w-4 mr-2" />
+                  )}
+                  {uploadingPhoto ? 'Uploading…' : 'Add photos'}
+                </SecondaryButton>
+
+                {snagPhotos.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {snagPhotos.map((url, index) => (
+                      <div
+                        key={index}
+                        className="relative w-20 h-20 rounded-lg overflow-hidden border border-white/[0.08]"
+                      >
+                        <img
+                          src={url}
+                          alt={`Snag photo ${index + 1}`}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removePhoto(index)}
+                          className="absolute top-1 right-1 bg-black/60 rounded-full p-0.5 touch-manipulation"
+                        >
+                          <X className="h-3 w-3 text-white" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="p-4 border-t border-white/[0.06]">
+              <div className="flex gap-3">
+                <SecondaryButton onClick={() => setShowNewSnag(false)} fullWidth>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  onClick={handleCreateSnag}
+                  disabled={!selectedJobId || !snagTitle || createIssue.isPending}
+                  fullWidth
+                >
+                  {createIssue.isPending ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    'Create snag'
+                  )}
+                </PrimaryButton>
+              </div>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+      <IconButton onClick={() => refetch()} aria-label="Refresh">
+        <RefreshCw className="h-4 w-4" />
+      </IconButton>
+    </>
+  );
+
+  return (
+    <PageFrame>
+      <PageHero
+        eyebrow="Operations"
+        title="Quality & Snags"
+        description="Defect tracking with photo evidence and sign-off."
+        tone="amber"
+        actions={heroActions}
+      />
+
+      <StatStrip
+        columns={4}
+        stats={[
+          { label: 'Open', value: openSnags.length, tone: 'amber' },
+          { label: 'Resolved 7d', value: resolvedLast7d, tone: 'emerald' },
+          { label: 'Awaiting sign', value: reviewSnags.length, tone: 'orange' },
+          {
+            label: 'Signed off',
+            value: resolvedSnags.length,
+            tone: 'emerald',
+            accent: true,
+          },
+        ]}
+      />
+
+      <FilterBar
+        tabs={[
+          { value: 'all', label: 'All', count: filteredSnags.length },
+          { value: 'open', label: 'Open', count: openSnags.length },
+          { value: 'review', label: 'Review', count: reviewSnags.length },
+          { value: 'signed', label: 'Signed', count: resolvedSnags.length },
+        ]}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        search={searchQuery}
+        onSearchChange={setSearchQuery}
+        searchPlaceholder="Search snags by title, job, or description…"
+      />
+
+      {isLoading ? (
+        <LoadingBlocks />
+      ) : visibleSnags.length === 0 ? (
+        <EmptyState
+          title="All clear"
+          description="No snags match the current filter. Defect tracking with photo evidence keeps every site sign-off ready."
+          action="Log first snag"
+          onAction={() => setShowNewSnag(true)}
+        />
+      ) : (
+        <ListCard>
+          <ListCardHeader
+            tone="amber"
+            title="Snags"
+            meta={<Pill tone="amber">{visibleSnags.length}</Pill>}
+          />
+          <ListBody>
+            {visibleSnags.map((s) => {
+              const reporter = s.job?.client ?? s.job?.title ?? 'Site';
+              const room = s.location ?? 'Unspecified location';
+              const jobTitle = s.job?.title ?? 'No job linked';
+              return (
+                <ListRow
+                  key={s.id}
+                  lead={<Avatar initials={getInitials(reporter)} />}
+                  title={s.title}
+                  subtitle={`${jobTitle} · ${room} · ${timeAgo(s.created_at)}`}
+                  trailing={
+                    <>
+                      <Pill tone={severityTone[s.severity] ?? 'yellow'}>{s.severity}</Pill>
+                      <Pill tone={statusTone[s.status] ?? 'amber'}>{s.status}</Pill>
+                    </>
+                  }
+                  onClick={() => setSelectedIssue(s)}
+                />
+              );
+            })}
+          </ListBody>
+        </ListCard>
+      )}
+
+      <Sheet open={!!selectedIssue} onOpenChange={(open) => !open && setSelectedIssue(null)}>
+        <SheetContent
+          side="bottom"
+          className="h-[88vh] p-0 rounded-t-2xl flex flex-col bg-[hsl(0_0%_10%)] border-white/[0.06]"
+        >
+          {selectedIssue && (
+            <div className="flex flex-col h-full">
+              <SheetHeader className="p-4 border-b border-white/[0.06]">
+                <SheetTitle className="text-white text-left">{selectedIssue.title}</SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto overscroll-contain p-4 space-y-4">
-                <div className="space-y-2">
-                  <Label>Select Job *</Label>
-                  <Select value={selectedJobId} onValueChange={setSelectedJobId}>
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue placeholder="Choose a job..." />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)]">
-                      {jobs?.map((job) => (
-                        <SelectItem key={job.id} value={job.id}>
-                          {job.title} - {job.client}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                <StatStrip
+                  columns={3}
+                  stats={[
+                    {
+                      label: 'Severity',
+                      value: selectedIssue.severity,
+                      tone: severityTone[selectedIssue.severity] ?? 'yellow',
+                    },
+                    {
+                      label: 'Status',
+                      value: selectedIssue.status,
+                      tone: statusTone[selectedIssue.status] ?? 'amber',
+                    },
+                    {
+                      label: 'Logged',
+                      value: timeAgo(selectedIssue.created_at),
+                    },
+                  ]}
+                />
 
-                <div className="space-y-2">
-                  <Label>Snag Title *</Label>
-                  <Input
-                    placeholder="Brief description of the issue..."
-                    value={snagTitle}
-                    onChange={(e) => setSnagTitle(e.target.value)}
-                    className="h-11 touch-manipulation"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Location</Label>
-                  <Input
-                    placeholder="Where is this issue?"
-                    value={snagLocation}
-                    onChange={(e) => setSnagLocation(e.target.value)}
-                    className="h-11 touch-manipulation"
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Severity</Label>
-                  <Select
-                    value={snagSeverity}
-                    onValueChange={(v) => setSnagSeverity(v as IssueSeverity)}
-                  >
-                    <SelectTrigger className="h-11 touch-manipulation">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="z-[100]">
-                      <SelectItem value="Low">Low</SelectItem>
-                      <SelectItem value="Medium">Medium</SelectItem>
-                      <SelectItem value="High">High</SelectItem>
-                      <SelectItem value="Critical">Critical</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label>Detailed Description</Label>
-                  <Textarea
-                    placeholder="Describe the defect or issue in detail..."
-                    value={snagDescription}
-                    onChange={(e) => setSnagDescription(e.target.value)}
-                    className="min-h-[100px] touch-manipulation"
-                  />
-                </div>
-
-                {/* Photo Upload */}
-                <div className="space-y-2">
-                  <Label>Photos</Label>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    className="hidden"
-                    onChange={handlePhotoUpload}
-                  />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full gap-2 h-11 touch-manipulation"
-                    onClick={() => fileInputRef.current?.click()}
-                    disabled={uploadingPhoto}
-                  >
-                    {uploadingPhoto ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      <Camera className="h-4 w-4" />
-                    )}
-                    {uploadingPhoto ? 'Uploading...' : 'Add Photos'}
-                  </Button>
-
-                  {/* Photo Previews */}
-                  {snagPhotos.length > 0 && (
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {snagPhotos.map((url, index) => (
-                        <div
-                          key={index}
-                          className="relative w-20 h-20 rounded-lg overflow-hidden border border-border"
-                        >
-                          <img
-                            src={url}
-                            alt={`Snag photo ${index + 1}`}
-                            className="w-full h-full object-cover"
-                            loading="lazy"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => removePhoto(index)}
-                            className="absolute top-1 right-1 bg-black/60 rounded-full p-0.5"
-                          >
-                            <X className="h-3 w-3 text-white" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="p-4 border-t border-border bg-background">
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    onClick={() => setShowNewSnag(false)}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={handleCreateSnag}
-                    disabled={!selectedJobId || !snagTitle || createIssue.isPending}
-                    className="flex-1 h-11 touch-manipulation"
-                  >
-                    {createIssue.isPending ? (
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                    ) : (
-                      'Create Snag'
-                    )}
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </SheetContent>
-        </Sheet>
-      </div>
-
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="bg-elec-gray border-border">
-          <CardContent className="p-4 text-center">
-            {isLoading ? (
-              <Skeleton className="h-8 w-12 mx-auto mb-2" />
-            ) : (
-              <p className="text-2xl font-bold text-foreground">{stats?.snags || 0}</p>
-            )}
-            <p className="text-sm text-white">Total Snags</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-gray border-border">
-          <CardContent className="p-4 text-center">
-            {isLoading ? (
-              <Skeleton className="h-8 w-12 mx-auto mb-2" />
-            ) : (
-              <p className="text-2xl font-bold text-warning">{openSnags.length}</p>
-            )}
-            <p className="text-sm text-white">Open</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-gray border-border">
-          <CardContent className="p-4 text-center">
-            {isLoading ? (
-              <Skeleton className="h-8 w-12 mx-auto mb-2" />
-            ) : (
-              <p className="text-2xl font-bold text-success">{resolvedSnags.length}</p>
-            )}
-            <p className="text-sm text-white">Resolved</p>
-          </CardContent>
-        </Card>
-        <Card className="bg-elec-gray border-border">
-          <CardContent className="p-4 text-center">
-            {isLoading ? (
-              <Skeleton className="h-8 w-12 mx-auto mb-2" />
-            ) : (
-              <p className="text-2xl font-bold text-elec-yellow">{stats?.defects || 0}</p>
-            )}
-            <p className="text-sm text-white">Defects</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Search */}
-      <div className="relative">
-        {!searchQuery && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-        )}
-        <Input
-          placeholder="Search snags by title, job, or description..."
-          className={cn('h-11 touch-manipulation', !searchQuery && 'pl-10')}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-      </div>
-
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList>
-          <TabsTrigger value="snags" className="gap-2 touch-manipulation">
-            <AlertCircle className="h-4 w-4" />
-            Open ({openSnags.length})
-          </TabsTrigger>
-          <TabsTrigger value="resolved" className="gap-2 touch-manipulation">
-            <CheckCircle2 className="h-4 w-4" />
-            Resolved ({resolvedSnags.length})
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="snags" className="mt-4 space-y-4">
-          {isLoading ? (
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="bg-elec-gray border-border">
-                  <CardContent className="p-4">
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-1/2 mb-4" />
-                    <Skeleton className="h-10 w-full" />
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : openSnags.length === 0 ? (
-            <Card className="bg-elec-gray border-border">
-              <CardContent className="p-8 text-center">
-                <CheckCircle2 className="h-12 w-12 text-success mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">All Clear!</h3>
-                <p className="text-white">No open snags or defects to resolve.</p>
-              </CardContent>
-            </Card>
-          ) : (
-            openSnags.map((issue) => (
-              <Card key={issue.id} className="bg-elec-gray border-border">
-                <CardContent className="p-4 space-y-3">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-foreground">{issue.title}</h3>
-                        <Badge className={severityColors[issue.severity] || ''}>
-                          {issue.severity}
-                        </Badge>
+                <ListCard>
+                  <ListCardHeader tone="amber" title="Detail" />
+                  <div className="p-5 space-y-4">
+                    <div>
+                      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                        Job
                       </div>
-                      <p className="text-sm text-white flex items-center gap-2">
-                        <Briefcase className="h-3.5 w-3.5" />
-                        {issue.job?.title || 'No job linked'}
-                        {issue.job?.client && ` - ${issue.job.client}`}
-                      </p>
+                      <div className="mt-1.5 text-[14px] text-white">
+                        {selectedIssue.job?.title ?? 'No job linked'}
+                        {selectedIssue.job?.client && ` · ${selectedIssue.job.client}`}
+                      </div>
                     </div>
-                    <Badge className={statusColors[issue.status] || ''}>{issue.status}</Badge>
+                    {selectedIssue.location && (
+                      <div>
+                        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          Location
+                        </div>
+                        <div className="mt-1.5 text-[14px] text-white">{selectedIssue.location}</div>
+                      </div>
+                    )}
+                    {selectedIssue.description && (
+                      <div>
+                        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          Description
+                        </div>
+                        <div className="mt-1.5 text-[14px] text-white leading-relaxed">
+                          {selectedIssue.description}
+                        </div>
+                      </div>
+                    )}
+                    {selectedIssue.resolution_notes && (
+                      <div>
+                        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+                          Resolution notes
+                        </div>
+                        <div className="mt-1.5 text-[14px] text-white leading-relaxed">
+                          {selectedIssue.resolution_notes}
+                        </div>
+                      </div>
+                    )}
                   </div>
+                </ListCard>
 
-                  {issue.description && (
-                    <p className="text-sm text-white bg-surface p-3 rounded-lg">
-                      {issue.description}
-                    </p>
-                  )}
-
-                  {/* Display photos if any */}
-                  {issue.photos && issue.photos.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {issue.photos.map((url, idx) => (
-                        <div
+                {selectedIssue.photos && selectedIssue.photos.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader
+                      tone="amber"
+                      title="Photo evidence"
+                      meta={<Pill tone="amber">{selectedIssue.photos.length}</Pill>}
+                    />
+                    <div className="p-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      {selectedIssue.photos.map((url, idx) => (
+                        <a
                           key={idx}
-                          className="w-16 h-16 rounded-lg overflow-hidden border border-border"
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="relative aspect-square rounded-xl overflow-hidden border border-white/[0.08] touch-manipulation"
                         >
                           <img
                             src={url}
@@ -495,101 +578,36 @@ export const QualitySection = () => {
                             className="w-full h-full object-cover"
                             loading="lazy"
                           />
-                        </div>
+                        </a>
                       ))}
                     </div>
-                  )}
+                  </ListCard>
+                )}
+              </div>
 
-                  <div className="flex items-center justify-between text-xs text-white">
-                    <div className="flex items-center gap-4">
-                      {issue.location && (
-                        <span className="flex items-center gap-1">
-                          <FileText className="h-3.5 w-3.5" />
-                          {issue.location}
-                        </span>
-                      )}
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5" />
-                        {new Date(issue.created_at).toLocaleDateString('en-GB')}
-                      </span>
-                    </div>
-
-                    <Button
-                      size="sm"
-                      onClick={() => handleResolve(issue)}
-                      disabled={updateStatus.isPending}
-                      className="gap-2 h-9 touch-manipulation"
-                    >
-                      {updateStatus.isPending ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        <>
-                          <CheckCircle2 className="h-4 w-4" />
-                          Resolve
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
-          )}
-        </TabsContent>
-
-        <TabsContent value="resolved" className="mt-4 space-y-4">
-          {isLoading ? (
-            <div className="space-y-4">
-              {[1, 2].map((i) => (
-                <Card key={i} className="bg-elec-gray border-border">
-                  <CardContent className="p-4">
-                    <Skeleton className="h-6 w-3/4 mb-2" />
-                    <Skeleton className="h-4 w-1/2" />
-                  </CardContent>
-                </Card>
-              ))}
+              {(selectedIssue.status === 'Open' ||
+                selectedIssue.status === 'In Progress') && (
+                <div className="p-4 border-t border-white/[0.06]">
+                  <PrimaryButton
+                    onClick={() => handleResolve(selectedIssue)}
+                    disabled={updateStatus.isPending}
+                    fullWidth
+                  >
+                    {updateStatus.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <>
+                        <CheckCircle2 className="h-4 w-4 mr-2" />
+                        Mark resolved · sign off
+                      </>
+                    )}
+                  </PrimaryButton>
+                </div>
+              )}
             </div>
-          ) : resolvedSnags.length === 0 ? (
-            <Card className="bg-elec-gray border-border">
-              <CardContent className="p-8 text-center">
-                <FileText className="h-12 w-12 text-white mx-auto mb-4" />
-                <p className="text-white">No resolved snags yet.</p>
-              </CardContent>
-            </Card>
-          ) : (
-            resolvedSnags.map((issue) => (
-              <Card key={issue.id} className="bg-elec-gray border-border">
-                <CardContent className="p-4">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <CheckCircle2 className="h-4 w-4 text-success" />
-                        <h3 className="font-semibold text-foreground">{issue.title}</h3>
-                      </div>
-                      <p className="text-sm text-white flex items-center gap-2">
-                        <Briefcase className="h-3.5 w-3.5" />
-                        {issue.job?.title || 'No job linked'}
-                      </p>
-                      {issue.resolution_notes && (
-                        <p className="text-sm text-white mt-2 bg-surface p-2 rounded">
-                          {issue.resolution_notes}
-                        </p>
-                      )}
-                    </div>
-                    <div className="text-right text-xs text-white">
-                      <p>Resolved</p>
-                      <p>
-                        {issue.resolved_at
-                          ? new Date(issue.resolved_at).toLocaleDateString('en-GB')
-                          : '-'}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))
           )}
-        </TabsContent>
-      </Tabs>
-    </div>
+        </SheetContent>
+      </Sheet>
+    </PageFrame>
   );
 };
