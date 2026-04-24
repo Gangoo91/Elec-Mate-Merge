@@ -109,19 +109,10 @@ export const rowVariants = {
    Atoms
    ──────────────────────────────────────────────────────── */
 
-export function Eyebrow({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={cn(
-        'text-[10px] font-medium uppercase tracking-[0.18em] text-white',
-        className
-      )}
+      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}
     >
       {children}
     </div>
@@ -159,17 +150,15 @@ export function Dot({ tone = 'yellow', className }: { tone?: Tone; className?: s
   );
 }
 
-export function PulseDot({
-  tone = 'green',
-  className,
-}: {
-  tone?: Tone;
-  className?: string;
-}) {
+export function PulseDot({ tone = 'green', className }: { tone?: Tone; className?: string }) {
   return (
     <span
       aria-hidden
-      className={cn('inline-block h-2 w-2 rounded-full shrink-0 animate-pulse', toneDot[tone], className)}
+      className={cn(
+        'inline-block h-2 w-2 rounded-full shrink-0 animate-pulse',
+        toneDot[tone],
+        className
+      )}
     />
   );
 }
@@ -263,9 +252,7 @@ export function PageHero({
           )}
           {meta && <div className="mt-3">{meta}</div>}
         </div>
-        {actions && (
-          <div className="shrink-0 flex items-center gap-2 flex-wrap">{actions}</div>
-        )}
+        {actions && <div className="shrink-0 flex items-center gap-2 flex-wrap">{actions}</div>}
       </div>
     </motion.div>
   );
@@ -355,9 +342,7 @@ export function HeroNumber({
           <div className="text-[40px] sm:text-6xl lg:text-7xl font-semibold text-white tracking-tight leading-none tabular-nums">
             {value}
           </div>
-          {caption && (
-            <div className="mt-2 text-[13px] text-white">{caption}</div>
-          )}
+          {caption && <div className="mt-2 text-[13px] text-white">{caption}</div>}
         </div>
         {columns && columns.length > 0 && (
           <div
@@ -452,12 +437,7 @@ interface StatStripProps {
   className?: string;
 }
 
-export function StatStrip({
-  stats,
-  columns = 4,
-  numbered = false,
-  className,
-}: StatStripProps) {
+export function StatStrip({ stats, columns = 4, numbered = false, className }: StatStripProps) {
   const colClass =
     columns === 5
       ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
@@ -525,11 +505,7 @@ export function StatStrip({
             {content}
           </motion.button>
         ) : (
-          <motion.div
-            key={`${stat.label}-${i}`}
-            variants={itemVariants}
-            className={baseClass}
-          >
+          <motion.div key={`${stat.label}-${i}`} variants={itemVariants} className={baseClass}>
             {content}
           </motion.div>
         );
@@ -550,13 +526,7 @@ interface AlertRowProps {
   onClick?: () => void;
 }
 
-export function AlertRow({
-  title,
-  subtitle,
-  trailing,
-  tone = 'orange',
-  onClick,
-}: AlertRowProps) {
+export function AlertRow({ title, subtitle, trailing, tone = 'orange', onClick }: AlertRowProps) {
   const base =
     'group relative w-full flex items-center gap-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation transition-colors';
   const inner = (
@@ -570,9 +540,7 @@ export function AlertRow({
       <Dot tone={tone} />
       <div className="flex-1 min-w-0">
         <div className="text-sm sm:text-[15px] font-semibold text-white truncate">{title}</div>
-        {subtitle && (
-          <div className="mt-0.5 text-[12px] text-white truncate">{subtitle}</div>
-        )}
+        {subtitle && <div className="mt-0.5 text-[12px] text-white truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0">{trailing}</div>}
       <Arrow className="shrink-0" />
@@ -605,13 +573,7 @@ export function AlertRow({
    List card + list row
    ──────────────────────────────────────────────────────── */
 
-export function ListCard({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
+export function ListCard({ className, children }: { className?: string; children: ReactNode }) {
   return (
     <div
       className={cn(
@@ -700,17 +662,12 @@ export function ListRow({
   const Inner = (
     <>
       {accent && (
-        <span
-          aria-hidden
-          className={cn('w-[3px] h-10 rounded-full shrink-0', toneDot[accent])}
-        />
+        <span aria-hidden className={cn('w-[3px] h-10 rounded-full shrink-0', toneDot[accent])} />
       )}
       {lead && <div className="shrink-0">{lead}</div>}
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-medium text-white truncate">{title}</div>
-        {subtitle && (
-          <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>
-        )}
+        {subtitle && <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0 flex items-center gap-2">{trailing}</div>}
       {onClick && (
@@ -821,8 +778,7 @@ export function HubCard({
   badge,
   cta = 'Open',
 }: HubCardProps) {
-  const minH =
-    size === 'sm' ? 'min-h-[140px] sm:min-h-[160px]' : 'min-h-[180px] sm:min-h-[220px]';
+  const minH = size === 'sm' ? 'min-h-[140px] sm:min-h-[160px]' : 'min-h-[180px] sm:min-h-[220px]';
   const titleClass =
     size === 'sm'
       ? 'text-lg sm:text-xl font-semibold'
@@ -849,13 +805,9 @@ export function HubCard({
         </Eyebrow>
         {badge && <span className="shrink-0">{badge}</span>}
       </div>
-      <h3 className={cn('mt-3 text-white tracking-tight leading-[1.1]', titleClass)}>
-        {title}
-      </h3>
+      <h3 className={cn('mt-3 text-white tracking-tight leading-[1.1]', titleClass)}>{title}</h3>
       {description && (
-        <p className="mt-2 text-[12.5px] leading-relaxed text-white max-w-[34ch]">
-          {description}
-        </p>
+        <p className="mt-2 text-[12.5px] leading-relaxed text-white max-w-[34ch]">{description}</p>
       )}
       <div className="flex-grow" />
       <div className="mt-5 flex items-center justify-between pt-3.5 border-t border-white/[0.06]">
@@ -999,10 +951,7 @@ export function LoadingBlocks({ className }: { className?: string }) {
       <div className="h-24 bg-white/[0.03] rounded-2xl border border-white/[0.06]" />
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] rounded-2xl overflow-hidden">
         {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className="h-24 bg-[hsl(0_0%_12%)] border-white/[0.06]"
-          />
+          <div key={i} className="h-24 bg-[hsl(0_0%_12%)] border-white/[0.06]" />
         ))}
       </div>
       <div className="h-80 bg-white/[0.03] rounded-2xl border border-white/[0.06]" />
@@ -1068,22 +1017,13 @@ export function IconButton({
    Page frame
    ──────────────────────────────────────────────────────── */
 
-export function PageFrame({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function PageFrame({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className={cn(
-        'mx-auto max-w-7xl space-y-8 sm:space-y-10 lg:space-y-14 pb-24',
-        className
-      )}
+      className={cn('mx-auto max-w-7xl space-y-8 sm:space-y-10 lg:space-y-14 pb-24', className)}
     >
       {children}
     </motion.div>
@@ -1154,12 +1094,7 @@ export function FilterBar({
                     className="absolute inset-0 bg-elec-yellow rounded-full"
                   />
                 )}
-                <span
-                  className={cn(
-                    'relative z-10',
-                    isActive ? 'text-black' : 'text-white'
-                  )}
-                >
+                <span className={cn('relative z-10', isActive ? 'text-black' : 'text-white')}>
                   {tab.label}
                   {typeof tab.count === 'number' && (
                     <span
@@ -1201,13 +1136,7 @@ export function FilterBar({
    Keyboard shortcut hint
    ──────────────────────────────────────────────────────── */
 
-export function Kbd({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function Kbd({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <span
       className={cn(
@@ -1263,22 +1192,11 @@ interface MetricTileProps {
   onClick?: () => void;
 }
 
-export function MetricTile({
-  label,
-  value,
-  sub,
-  tone,
-  accent,
-  trend,
-  onClick,
-}: MetricTileProps) {
-  const valueClass = accent
-    ? 'text-elec-yellow'
-    : tone
-      ? toneText[tone]
-      : 'text-white';
+export function MetricTile({ label, value, sub, tone, accent, trend, onClick }: MetricTileProps) {
+  const valueClass = accent ? 'text-elec-yellow' : tone ? toneText[tone] : 'text-white';
 
-  const trendTone: Tone = trend?.direction === 'up' ? 'emerald' : trend?.direction === 'down' ? 'red' : 'amber';
+  const trendTone: Tone =
+    trend?.direction === 'up' ? 'emerald' : trend?.direction === 'down' ? 'red' : 'amber';
   const trendArrow = trend?.direction === 'up' ? '↑' : trend?.direction === 'down' ? '↓' : '→';
 
   const content = (
@@ -1295,12 +1213,7 @@ export function MetricTile({
           {value}
         </span>
         {trend && (
-          <span
-            className={cn(
-              'text-[11px] font-semibold tabular-nums',
-              toneText[trendTone]
-            )}
-          >
+          <span className={cn('text-[11px] font-semibold tabular-nums', toneText[trendTone])}>
             {trendArrow} {trend.label}
           </span>
         )}
@@ -1339,12 +1252,7 @@ interface QuickActionTileProps {
   onClick: () => void;
 }
 
-export function QuickActionTile({
-  label,
-  sub,
-  tone = 'yellow',
-  onClick,
-}: QuickActionTileProps) {
+export function QuickActionTile({ label, sub, tone = 'yellow', onClick }: QuickActionTileProps) {
   return (
     <motion.button
       variants={itemVariants}
@@ -1364,12 +1272,7 @@ export function QuickActionTile({
         <div className="text-[14px] font-semibold text-white">{label}</div>
         {sub && <div className="mt-0.5 text-[11.5px] text-white">{sub}</div>}
       </div>
-      <span
-        className={cn(
-          'mt-3 text-[12px] font-medium transition-colors',
-          toneText[tone]
-        )}
-      >
+      <span className={cn('mt-3 text-[12px] font-medium transition-colors', toneText[tone])}>
         Open →
       </span>
     </motion.button>
@@ -1437,8 +1340,7 @@ export const selectContentClass =
 export const textareaClass =
   'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
 
-export const fieldLabelClass =
-  'text-[11.5px] text-white mb-1.5 block';
+export const fieldLabelClass = 'text-[11.5px] text-white mb-1.5 block';
 
 export const checkboxClass =
   'h-5 w-5 rounded border border-white/[0.15] bg-[hsl(0_0%_9%)] data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black touch-manipulation';
@@ -1519,9 +1421,7 @@ export function FormGrid({
       : cols === 2
         ? 'grid-cols-1 sm:grid-cols-2'
         : 'grid-cols-1';
-  return (
-    <div className={cn('grid gap-3', gridClass, className)}>{children}</div>
-  );
+  return <div className={cn('grid gap-3', gridClass, className)}>{children}</div>;
 }
 
 /* ────────────────────────────────────────────────────────
@@ -1649,16 +1549,10 @@ export function SheetShell({
       </div>
       <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-        <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
-          {title}
-        </div>
-        {description && (
-          <div className="mt-1.5 text-[12.5px] text-white">{description}</div>
-        )}
+        <div className="mt-1 text-[20px] font-semibold text-white leading-tight">{title}</div>
+        {description && <div className="mt-1.5 text-[12.5px] text-white">{description}</div>}
       </div>
-      <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
-        {children}
-      </div>
+      <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">{children}</div>
       {footer && (
         <div className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2">
           {footer}
@@ -1703,6 +1597,91 @@ export function SuccessCheckmark({ show }: { show: boolean }) {
       )}
     </AnimatePresence>
   );
+}
+
+/* ────────────────────────────────────────────────────────
+   Compliance ring — small circular % indicator
+   ──────────────────────────────────────────────────────── */
+
+export function ComplianceRing({
+  score,
+  size = 48,
+  label = 'Compliance',
+  onClick,
+}: {
+  score: number;
+  size?: number;
+  label?: string;
+  onClick?: () => void;
+}) {
+  const clamped = Math.max(0, Math.min(100, Math.round(score)));
+  const stroke =
+    clamped >= 90
+      ? 'hsl(var(--elec-yellow))'
+      : clamped >= 70
+        ? '#34d399'
+        : clamped >= 40
+          ? '#fbbf24'
+          : '#f87171';
+  const r = (size - 5) / 2;
+  const circ = 2 * Math.PI * r;
+  const offset = circ - (clamped / 100) * circ;
+
+  const inner = (
+    <div className="flex items-center gap-2.5">
+      <svg width={size} height={size} className="shrink-0">
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke="rgba(255,255,255,0.08)"
+          strokeWidth={3}
+        />
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          fill="none"
+          stroke={stroke}
+          strokeWidth={3}
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        />
+        <text
+          x="50%"
+          y="50%"
+          dominantBaseline="central"
+          textAnchor="middle"
+          fill={stroke}
+          fontSize={size * 0.32}
+          fontWeight="700"
+        >
+          {clamped}
+        </text>
+      </svg>
+      <div className="flex flex-col items-start">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+          {label}
+        </span>
+        <span className="text-[12px] text-white">{clamped}% healthy</span>
+      </div>
+    </div>
+  );
+
+  if (onClick) {
+    return (
+      <button
+        onClick={onClick}
+        className="rounded-full px-2 py-1 -mx-2 -my-1 hover:bg-white/[0.06] transition-colors touch-manipulation"
+      >
+        {inner}
+      </button>
+    );
+  }
+  return inner;
 }
 
 /* ────────────────────────────────────────────────────────
