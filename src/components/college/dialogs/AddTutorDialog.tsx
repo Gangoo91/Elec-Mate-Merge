@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -20,6 +18,18 @@ import {
 } from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { StaffRole } from '@/contexts/CollegeSupabaseContext';
+import { cn } from '@/lib/utils';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  fieldLabelClass,
+  inputClass,
+  selectContentClass,
+  selectTriggerClass,
+} from '@/components/college/primitives';
 
 interface AddTutorDialogProps {
   open: boolean;
@@ -133,20 +143,19 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
 
         <ResponsiveDialogBody>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-3">
-              <div>
-                <Label htmlFor="name">Full Name *</Label>
+            <FormCard eyebrow="Contact">
+              <Field label="Full name" required>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => handleChange('name', e.target.value)}
                   placeholder="John Smith"
                   required
+                  className={inputClass}
                 />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="email">Email *</Label>
+              </Field>
+              <FormGrid cols={2}>
+                <Field label="Email" required>
                   <Input
                     id="email"
                     type="email"
@@ -154,10 +163,10 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
                     onChange={(e) => handleChange('email', e.target.value)}
                     placeholder="john.smith@college.ac.uk"
                     required
+                    className={inputClass}
                   />
-                </div>
-                <div>
-                  <Label htmlFor="phone">Phone *</Label>
+                </Field>
+                <Field label="Phone" required>
                   <Input
                     id="phone"
                     type="tel"
@@ -165,120 +174,125 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
                     onChange={(e) => handleChange('phone', e.target.value)}
                     placeholder="07XXX XXXXXX"
                     required
+                    className={inputClass}
                   />
+                </Field>
+              </FormGrid>
+            </FormCard>
+
+            <FormCard eyebrow="Role & department">
+              <FormGrid cols={2}>
+                <Field label="Role" required>
+                  <Select
+                    value={formData.role}
+                    onValueChange={(value) => handleChange('role', value)}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="tutor">Tutor</SelectItem>
+                      <SelectItem value="head_of_department">Head of Department</SelectItem>
+                      <SelectItem value="support">Support Staff</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="Department" required>
+                  <Select
+                    value={formData.department}
+                    onValueChange={(value) => handleChange('department', value)}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select department" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {DEPARTMENTS.map((dept) => (
+                        <SelectItem key={dept} value={dept}>
+                          {dept}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+              </FormGrid>
+            </FormCard>
+
+            <FormCard eyebrow="Qualifications">
+              <FormGrid cols={3}>
+                <Field label="Max hours/week">
+                  <Input
+                    id="max_teaching_hours"
+                    type="number"
+                    min="0"
+                    max="40"
+                    value={formData.max_teaching_hours}
+                    onChange={(e) => handleChange('max_teaching_hours', e.target.value)}
+                    placeholder="35"
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Teaching qual">
+                  <Input
+                    id="teaching_qual"
+                    value={formData.teaching_qual}
+                    onChange={(e) => handleChange('teaching_qual', e.target.value)}
+                    placeholder="PGCE, AET"
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="Assessor qual">
+                  <Input
+                    id="assessor_qual"
+                    value={formData.assessor_qual}
+                    onChange={(e) => handleChange('assessor_qual', e.target.value)}
+                    placeholder="L3 TAQA"
+                    className={inputClass}
+                  />
+                </Field>
+              </FormGrid>
+
+              <div>
+                <label className={fieldLabelClass}>Specialisations</label>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {SPECIALIZATIONS.map((spec) => {
+                    const active = formData.specialisations.includes(spec);
+                    return (
+                      <button
+                        key={spec}
+                        type="button"
+                        className={cn(
+                          'h-9 px-3 rounded-full text-[12.5px] border transition-colors touch-manipulation',
+                          active
+                            ? 'bg-elec-yellow border-elec-yellow text-black font-medium'
+                            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
+                        )}
+                        onClick={() => toggleSpecialisation(spec)}
+                      >
+                        {spec}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="role">Role *</Label>
-                <Select
-                  value={formData.role}
-                  onValueChange={(value) => handleChange('role', value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="tutor">Tutor</SelectItem>
-                    <SelectItem value="head_of_department">Head of Department</SelectItem>
-                    <SelectItem value="support">Support Staff</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="department">Department *</Label>
-                <Select
-                  value={formData.department}
-                  onValueChange={(value) => handleChange('department', value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select department" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {DEPARTMENTS.map((dept) => (
-                      <SelectItem key={dept} value={dept}>
-                        {dept}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-3">
-              <div>
-                <Label htmlFor="max_teaching_hours">Max Hours/Week</Label>
-                <Input
-                  id="max_teaching_hours"
-                  type="number"
-                  min="0"
-                  max="40"
-                  value={formData.max_teaching_hours}
-                  onChange={(e) => handleChange('max_teaching_hours', e.target.value)}
-                  placeholder="35"
-                />
-              </div>
-              <div>
-                <Label htmlFor="teaching_qual">Teaching Qual</Label>
-                <Input
-                  id="teaching_qual"
-                  value={formData.teaching_qual}
-                  onChange={(e) => handleChange('teaching_qual', e.target.value)}
-                  placeholder="PGCE, AET"
-                />
-              </div>
-              <div>
-                <Label htmlFor="assessor_qual">Assessor Qual</Label>
-                <Input
-                  id="assessor_qual"
-                  value={formData.assessor_qual}
-                  onChange={(e) => handleChange('assessor_qual', e.target.value)}
-                  placeholder="L3 TAQA"
-                />
-              </div>
-            </div>
-
-            <div>
-              <Label>Specialisations</Label>
-              <div className="flex flex-wrap gap-2 mt-2">
-                {SPECIALIZATIONS.map((spec) => (
-                  <Button
-                    key={spec}
-                    type="button"
-                    variant={formData.specialisations.includes(spec) ? 'default' : 'outline'}
-                    size="sm"
-                    className={`h-11 touch-manipulation ${formData.specialisations.includes(spec) ? 'bg-elec-yellow hover:bg-elec-yellow/90 text-black' : ''}`}
-                    onClick={() => toggleSpecialisation(spec)}
-                  >
-                    {spec}
-                  </Button>
-                ))}
-              </div>
-            </div>
+            </FormCard>
           </form>
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
-          <Button
-            type="button"
-            variant="outline"
+          <SecondaryButton
             onClick={() => onOpenChange(false)}
             disabled={isSubmitting}
-            className="h-11 touch-manipulation"
           >
             Cancel
-          </Button>
-          <Button
+          </SecondaryButton>
+          <PrimaryButton
             type="submit"
             disabled={isSubmitting || !formData.name || !formData.email || !formData.department}
-            className="h-11 touch-manipulation"
             onClick={handleSubmit}
           >
-            {isSubmitting ? 'Adding…' : 'Add Tutor'}
-          </Button>
+            {isSubmitting ? 'Adding…' : 'Add tutor'}
+          </PrimaryButton>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>
     </ResponsiveDialog>

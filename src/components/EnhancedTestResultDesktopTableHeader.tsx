@@ -1033,8 +1033,8 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           <TableHead className="sot-header-cell min-w-[80px]">BS 7671</TableHead>
         )}
 
-        {/* Actions Column */}
-        <TableHead className="sot-header-cell min-w-[60px] w-[60px]">Del</TableHead>
+        {/* Actions Column — ELE-857 widened from 60→210 to fit ↑ ↓ Spare Del */}
+        <TableHead className="sot-header-cell min-w-[210px] w-[210px] text-center">Actions</TableHead>
       </TableRow>
     </TableHeader>
   );

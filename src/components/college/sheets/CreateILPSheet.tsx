@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -10,8 +10,21 @@ import {
 import { useCreateILP } from '@/hooks/college/useCollegeILP';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
-import { useHapticFeedback, SuccessCheckmark } from '@/components/college/ui/HapticFeedback';
+import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
 import { useToast } from '@/hooks/use-toast';
+import {
+  SheetShell,
+  FormCard,
+  FormGrid,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  SuccessCheckmark,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/college/primitives';
 import type { ILPTarget } from '@/services/college';
 
 interface CreateILPSheetProps {
@@ -25,20 +38,6 @@ interface NewTarget {
   description: string;
   target_date: string;
 }
-
-const inputClass =
-  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
-
-const textareaClass =
-  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
-
-const selectTriggerClass =
-  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
-
-const selectContentClass =
-  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
-
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
   const { data: students = [] } = useCollegeStudents();
@@ -124,7 +123,7 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
         setShowSuccess(false);
         resetForm();
         onOpenChange(false);
-      }, 1200);
+      }, 700);
     } catch (error) {
       console.error('Failed to create ILP:', error);
       toast({
@@ -138,132 +137,125 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
   };
 
   const hasValidTarget = targets.some((t) => t.description.trim() && t.target_date);
-  const canSubmit = !isSubmitting && studentId && hasValidTarget;
+  const canSubmit = !isSubmitting && !!studentId && hasValidTarget;
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
-        <div className="flex flex-col h-full">
-          {/* Drag Handle */}
-          <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
-            <div className="h-1 w-10 rounded-full bg-white/20" />
-          </div>
-
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
-            <div className={eyebrow}>Individual Learning Plan</div>
-            <SheetTitle className="text-[20px] font-semibold text-white mt-1 text-left">
-              Create new ILP
-            </SheetTitle>
-            <p className="text-[12.5px] text-white/55 mt-1 text-left">
-              Set up an Individual Learning Plan for a student
-            </p>
-          </SheetHeader>
-
-          {/* Scrollable Form */}
-          <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
-            {/* Student Selection */}
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
-              <div className={eyebrow}>Student</div>
-              <Select value={studentId} onValueChange={setStudentId}>
-                <SelectTrigger className={selectTriggerClass}>
-                  <SelectValue placeholder="Choose a student" />
-                </SelectTrigger>
-                <SelectContent className={selectContentClass}>
-                  {activeStudents.map((student) => (
-                    <SelectItem key={student.id} value={student.id}>
-                      {student.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Initial Targets */}
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
-              <div className={eyebrow}>Initial Targets</div>
-
-              {targets.map((target, index) => (
-                <div
-                  key={index}
-                  className="rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06] p-4 space-y-3"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow" />
-                      <span className="text-[13px] font-medium text-white">Target {index + 1}</span>
-                    </div>
-                    {targets.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveTarget(index)}
-                        className="h-8 w-8 rounded-full flex items-center justify-center text-white/75 hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors"
-                        aria-label="Remove target"
-                      >
-                        ×
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <div className="text-[11.5px] text-white/60">Description *</div>
-                    <textarea
-                      value={target.description}
-                      onChange={(e) => handleTargetChange(index, 'description', e.target.value)}
-                      placeholder="Describe the learning target…"
-                      className={`${textareaClass} min-h-[80px]`}
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <div className="text-[11.5px] text-white/60">Due Date *</div>
-                    <input
-                      type="date"
-                      value={target.target_date}
-                      onChange={(e) => handleTargetChange(index, 'target_date', e.target.value)}
-                      className={inputClass}
-                    />
-                  </div>
-                </div>
-              ))}
-
-              <button
-                type="button"
-                onClick={handleAddTarget}
-                className="w-full h-11 text-[12.5px] font-medium text-white/70 hover:text-elec-yellow border border-dashed border-white/[0.12] hover:border-elec-yellow/40 rounded-xl touch-manipulation transition-colors"
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+      >
+        <SheetShell
+          eyebrow="Individual Learning Plan"
+          title="Create new ILP"
+          description="Set up an Individual Learning Plan for a student"
+          footer={
+            <>
+              <SecondaryButton
+                fullWidth
+                onClick={() => {
+                  resetForm();
+                  onOpenChange(false);
+                }}
+                disabled={isSubmitting}
               >
-                + Add Another Target
-              </button>
-            </div>
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton fullWidth onClick={handleSubmit} disabled={!canSubmit}>
+                {isSubmitting ? 'Creating…' : 'Create ILP →'}
+              </PrimaryButton>
+            </>
+          }
+        >
+          <FormCard eyebrow="Student">
+            <Select value={studentId} onValueChange={setStudentId}>
+              <SelectTrigger className={selectTriggerClass}>
+                <SelectValue placeholder="Choose a student" />
+              </SelectTrigger>
+              <SelectContent className={selectContentClass}>
+                {activeStudents.map((student) => (
+                  <SelectItem key={student.id} value={student.id}>
+                    {student.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormCard>
 
-            {/* Support Needs */}
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
-              <div className={eyebrow}>Support Needs</div>
-              <textarea
-                value={supportNeeds}
-                onChange={(e) => setSupportNeeds(e.target.value)}
-                placeholder="Enter support needs, separated by commas (e.g. Dyslexia support, Extra time in assessments, Hearing loop)"
-                className={`${textareaClass} min-h-[100px]`}
-              />
-              <p className="text-[11px] text-white/70">Separate multiple needs with commas</p>
-            </div>
+          <FormCard eyebrow="Initial Targets">
+            {targets.map((target, index) => (
+              <div
+                key={index}
+                className="rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08] p-4 space-y-3"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow" />
+                    <span className="text-[13px] font-medium text-white">Target {index + 1}</span>
+                  </div>
+                  {targets.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveTarget(index)}
+                      className="h-8 w-8 rounded-full flex items-center justify-center text-white hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors"
+                      aria-label="Remove target"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
 
-            {/* Review Schedule */}
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3">
-              <div className={eyebrow}>Review Schedule</div>
+                <Field label="Description" required>
+                  <textarea
+                    value={target.description}
+                    onChange={(e) => handleTargetChange(index, 'description', e.target.value)}
+                    placeholder="Describe the learning target…"
+                    className={`${textareaClass} min-h-[80px]`}
+                  />
+                </Field>
 
-              <div className="space-y-1.5">
-                <div className="text-[11.5px] text-white/60">First Review Date</div>
+                <Field label="Due Date" required>
+                  <input
+                    type="date"
+                    value={target.target_date}
+                    onChange={(e) => handleTargetChange(index, 'target_date', e.target.value)}
+                    className={inputClass}
+                  />
+                </Field>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={handleAddTarget}
+              className="w-full h-11 text-[12.5px] font-medium text-white hover:text-elec-yellow border border-dashed border-white/[0.12] hover:border-elec-yellow/40 rounded-xl touch-manipulation transition-colors"
+            >
+              + Add Another Target
+            </button>
+          </FormCard>
+
+          <FormCard eyebrow="Support Needs">
+            <textarea
+              value={supportNeeds}
+              onChange={(e) => setSupportNeeds(e.target.value)}
+              placeholder="Enter support needs, separated by commas (e.g. Dyslexia support, Extra time in assessments, Hearing loop)"
+              className={`${textareaClass} min-h-[100px]`}
+            />
+            <p className="text-[11px] text-white">Separate multiple needs with commas</p>
+          </FormCard>
+
+          <FormCard eyebrow="Review Schedule">
+            <FormGrid cols={2}>
+              <Field label="First Review Date">
                 <input
                   type="date"
                   value={reviewDate}
                   onChange={(e) => setReviewDate(e.target.value)}
                   className={inputClass}
                 />
-              </div>
+              </Field>
 
-              <div className="space-y-1.5">
-                <div className="text-[11.5px] text-white/60">Assigned Reviewer</div>
+              <Field label="Assigned Reviewer">
                 <Select value={reviewerId} onValueChange={setReviewerId}>
                   <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select tutor" />
@@ -276,34 +268,10 @@ export function CreateILPSheet({ open, onOpenChange }: CreateILPSheetProps) {
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-            </div>
-          </div>
-
-          {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-4 flex-row gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                resetForm();
-                onOpenChange(false);
-              }}
-              disabled={isSubmitting}
-              className="flex-1 h-11 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation border border-white/[0.08] rounded-full"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={!canSubmit}
-              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
-            >
-              {isSubmitting ? 'Creating…' : 'Create ILP →'}
-            </button>
-          </SheetFooter>
-        </div>
-
+              </Field>
+            </FormGrid>
+          </FormCard>
+        </SheetShell>
         <SuccessCheckmark show={showSuccess} />
       </SheetContent>
     </Sheet>

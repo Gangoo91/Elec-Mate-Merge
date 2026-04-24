@@ -11,32 +11,20 @@ interface ChatContainerProps {
 }
 
 /**
- * ChatContainer - Premium Full-height Chat Interface
+ * ChatContainer — Editorial full-height chat shell.
  *
- * Features:
- * - Full viewport height with safe area padding
- * - Premium ambient gradient background
- * - Native momentum scrolling on mobile
- * - Fixed input area at bottom (via children)
+ * Flat `bg-[#0a0a0a]` background. No ambient gradients, no glow.
+ * Safe-area aware. Fills the viewport region provided by its parent.
  */
 export function ChatContainer({ children, className }: ChatContainerProps) {
   return (
     <div
       className={cn(
-        // Fill parent container (not 100dvh - parent handles that)
-        'flex flex-col h-full w-full',
-        // Premium ambient background
-        'bg-gradient-to-br from-background via-background to-background/98',
-        'overflow-hidden relative',
+        'flex flex-col h-full w-full min-w-0 bg-[#0a0a0a] overflow-hidden relative',
         className
       )}
     >
-      {/* Subtle ambient glow effect */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-1/4 -left-1/4 w-1/2 h-1/2 bg-elec-yellow/[0.03] rounded-full blur-3xl" />
-        <div className="absolute -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-elec-blue/[0.03] rounded-full blur-3xl" />
-      </div>
-      <div className="relative flex flex-col h-full z-10">{children}</div>
+      <div className="relative flex flex-col h-full min-w-0 z-10">{children}</div>
     </div>
   );
 }
@@ -46,7 +34,7 @@ interface ChatMessagesAreaProps {
   className?: string;
   /** Called when user scrolls to top (for loading more messages) */
   onScrollTop?: () => void;
-  /** Called on any scroll event - for tracking scroll position */
+  /** Called on any scroll event — for tracking scroll position */
   onScroll?: (e: React.UIEvent<HTMLDivElement>) => void;
   /** Auto-scroll to bottom when new messages arrive */
   autoScrollToBottom?: boolean;
@@ -55,14 +43,16 @@ interface ChatMessagesAreaProps {
 }
 
 /**
- * ChatMessagesArea - Premium Scrollable Message Container
+ * ChatMessagesArea — Scrollable message container.
+ *
+ * Native momentum scrolling on iOS. Content pins to bottom of viewport
+ * when list is short, so the welcome hero sits above the input bar.
  */
 export function ChatMessagesArea({
   children,
   className,
   onScrollTop,
   onScroll,
-  autoScrollToBottom = true,
   messagesEndRef,
 }: ChatMessagesAreaProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -72,12 +62,10 @@ export function ChatMessagesArea({
       const el = e.currentTarget;
       const { scrollTop } = el;
 
-      // Load more messages when scrolled to top
       if (scrollTop < 50 && onScrollTop) {
         onScrollTop();
       }
 
-      // Pass scroll event to parent for position tracking
       onScroll?.(e);
     },
     [onScrollTop, onScroll]
@@ -88,19 +76,15 @@ export function ChatMessagesArea({
       ref={containerRef}
       onScroll={handleScroll}
       className={cn(
-        'flex-1 overflow-y-auto overscroll-none',
-        // Native momentum scrolling on iOS
-        'scroll-smooth webkit-overflow-scrolling-touch',
-        // Custom scrollbar styling
-        'scrollbar-thin scrollbar-thumb-border/40 scrollbar-track-transparent',
-        'hover:scrollbar-thumb-border/60',
+        'flex-1 min-w-0 overflow-y-auto overflow-x-hidden overscroll-none scroll-smooth',
+        'scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent',
         className
       )}
       style={{
         WebkitOverflowScrolling: 'touch',
       }}
     >
-      <div className="min-h-full flex flex-col justify-end">
+      <div className="min-h-full min-w-0 flex flex-col justify-end">
         {children}
         {messagesEndRef && <div ref={messagesEndRef} className="h-4" />}
       </div>
@@ -114,24 +98,20 @@ interface ChatInputAreaProps {
 }
 
 /**
- * ChatInputArea - Fixed Bottom Input Container (ChatGPT-style)
+ * ChatInputArea — Sticky bottom input container.
+ *
+ * Solid `bg-[#0a0a0a]` surface with a single hairline on top.
+ * Safe-area padding for iOS home indicator.
  */
 export function ChatInputArea({ children, className }: ChatInputAreaProps) {
   return (
     <div
       className={cn(
-        // Fixed at bottom, not sticky
-        'shrink-0 z-20',
-        // Premium gradient backdrop
-        'bg-gradient-to-t from-background via-background to-background/95',
-        'backdrop-blur-xl',
-        // Safe area padding for mobile
-        'pb-safe pt-1.5 px-2 sm:px-3',
+        'shrink-0 z-20 relative bg-[#0a0a0a] border-t border-white/[0.08]',
+        'pb-safe pt-2 px-3 sm:px-4',
         className
       )}
     >
-      {/* Top border with gradient fade */}
-      <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-border/30 to-transparent" />
       {children}
     </div>
   );

@@ -24,6 +24,12 @@ export interface StudentCore {
   status: string | null;
   progress_percent: number | null;
   risk_level: string | null;
+  send_flags: string[];
+  eal: boolean;
+  ehcp_ref: string | null;
+  first_language: string | null;
+  pronouns: string | null;
+  accessibility_notes: string | null;
 }
 
 export interface AttendanceRow {
@@ -138,7 +144,7 @@ export function useStudent360(studentId: string | null): Student360 {
     const corePromise = supabase
       .from('college_students')
       .select(
-        'id, name, email, phone, uln, photo_url, cohort_id, course_id, employer_id, start_date, expected_end_date, status, progress_percent, risk_level, college_cohorts(name), college_courses(title)'
+        'id, name, email, phone, uln, photo_url, cohort_id, course_id, employer_id, start_date, expected_end_date, status, progress_percent, risk_level, send_flags, eal, ehcp_ref, first_language, pronouns, accessibility_notes, college_cohorts(name), college_courses(title)'
       )
       .eq('id', studentId)
       .maybeSingle()
@@ -148,6 +154,14 @@ export function useStudent360(studentId: string | null): Student360 {
           setCore(null);
           return;
         }
+        const d = data as typeof data & {
+          send_flags?: string[] | null;
+          eal?: boolean | null;
+          ehcp_ref?: string | null;
+          first_language?: string | null;
+          pronouns?: string | null;
+          accessibility_notes?: string | null;
+        };
         setCore({
           id: data.id,
           name: data.name,
@@ -167,6 +181,12 @@ export function useStudent360(studentId: string | null): Student360 {
           status: data.status,
           progress_percent: data.progress_percent,
           risk_level: data.risk_level,
+          send_flags: Array.isArray(d.send_flags) ? d.send_flags : [],
+          eal: Boolean(d.eal),
+          ehcp_ref: d.ehcp_ref ?? null,
+          first_language: d.first_language ?? null,
+          pronouns: d.pronouns ?? null,
+          accessibility_notes: d.accessibility_notes ?? null,
         });
       })
       .catch((e) => setError((e as Error).message))

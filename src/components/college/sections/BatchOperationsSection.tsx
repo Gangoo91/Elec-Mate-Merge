@@ -19,6 +19,12 @@ import {
   Pill,
   EmptyState,
   itemVariants,
+  FormCard,
+  Field,
+  fieldLabelClass,
+  inputClass,
+  textareaClass,
+  PrimaryButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -226,7 +232,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
                     selected && 'bg-elec-yellow/[0.05] ring-1 ring-inset ring-elec-yellow/30'
                   )}
                 >
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                     {String(i + 1).padStart(2, '0')} · Cohort
                   </div>
                   <div className="mt-2 flex items-center justify-between gap-3">
@@ -234,7 +240,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
                       <div className="text-[15px] font-medium text-white truncate">
                         {cohort.name}
                       </div>
-                      <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                      <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                         {count} active student{count !== 1 ? 's' : ''}
                       </div>
                     </div>
@@ -256,24 +262,19 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
           onAction={handleToggleAllGrade}
         />
 
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
-          <div>
-            <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-              Unit / Assessment
-            </label>
+        <FormCard>
+          <Field label="Unit / Assessment">
             <input
               type="text"
               placeholder="e.g. Unit 201 — Health and Safety"
               value={unitName}
               onChange={(e) => setUnitName(e.target.value)}
-              className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+              className={inputClass}
             />
-          </div>
+          </Field>
 
           <div>
-            <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-              Grade
-            </label>
+            <label className={fieldLabelClass}>Grade</label>
             <div className="mt-2 flex gap-1.5 flex-wrap">
               {(['Distinction', 'Merit', 'Pass', 'Refer'] as const).map((grade) => (
                 <button
@@ -283,7 +284,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
                     'h-10 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
                     selectedGrade === grade
                       ? 'bg-elec-yellow text-black'
-                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white/70 hover:text-white'
+                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white hover:bg-white/[0.04]'
                   )}
                 >
                   {grade}
@@ -294,12 +295,12 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
 
           <div>
             <div className="flex items-baseline justify-between mb-2">
-              <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <label className={fieldLabelClass}>
                 Students ({selectedStudentIds.size}/{cohortStudents.length})
               </label>
             </div>
             {cohortStudents.length === 0 ? (
-              <div className="py-6 text-center text-[12px] text-white/70 bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl">
+              <div className="py-6 text-center text-[12px] text-white bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl">
                 No students in this cohort.
               </div>
             ) : (
@@ -332,21 +333,18 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
             )}
           </div>
 
-          <div>
-            <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-              Feedback (applied to all)
-            </label>
+          <Field label="Feedback (applied to all)">
             <textarea
               placeholder="Shared feedback for all selected students…"
               value={batchFeedback}
               onChange={(e) => setBatchFeedback(e.target.value)}
               rows={3}
-              className="mt-2 w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none"
+              className={textareaClass}
             />
-          </div>
+          </Field>
 
           <div className="flex items-center justify-between gap-3 pt-1">
-            <div className="text-[11px] text-white/75">
+            <div className="text-[11px] text-white">
               {selectedGrade && (
                 <span className="inline-flex items-center gap-2">
                   Grade ·
@@ -354,17 +352,16 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
                 </span>
               )}
             </div>
-            <button
+            <PrimaryButton
               onClick={handleSubmitGrades}
               disabled={gradeSubmitting || selectedStudentIds.size === 0 || !unitName.trim()}
-              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
               {gradeSubmitting
                 ? 'Submitting…'
                 : `Submit grades (${selectedStudentIds.size}) →`}
-            </button>
+            </PrimaryButton>
           </div>
-        </div>
+        </FormCard>
       </motion.section>
 
       {/* BATCH ILP REVIEW */}
@@ -380,7 +377,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
             <span aria-hidden className="w-[3px] h-10 rounded-full bg-emerald-400 shrink-0" />
             <div>
               <div className="text-[15px] font-medium text-white">All caught up</div>
-              <div className="mt-0.5 text-[12px] text-white/75">
+              <div className="mt-0.5 text-[12px] text-white">
                 All ILPs are up to date for this cohort.
               </div>
             </div>
@@ -394,17 +391,17 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
                   {overdueILPs.length} overdue ILP review
                   {overdueILPs.length !== 1 ? 's' : ''}
                 </div>
-                <div className="mt-0.5 text-[12px] text-white/75">
+                <div className="mt-0.5 text-[12px] text-white">
                   Mark all as reviewed today, or action individually below.
                 </div>
               </div>
-              <button
+              <PrimaryButton
                 onClick={handleBatchILPReview}
                 disabled={ilpSubmitting}
-                className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation whitespace-nowrap"
+                className="whitespace-nowrap"
               >
                 {ilpSubmitting ? 'Updating…' : 'Mark all →'}
-              </button>
+              </PrimaryButton>
             </div>
 
             <ListCard>
@@ -432,24 +429,19 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
       <motion.section variants={itemVariants} className="space-y-5">
         <SectionHeader eyebrow="Communications" title="Batch notifications" />
 
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
-          <div>
-            <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-              Message
-            </label>
+        <FormCard>
+          <Field label="Message">
             <textarea
               placeholder="Type your notification…"
               value={notifMessage}
               onChange={(e) => setNotifMessage(e.target.value)}
               rows={4}
-              className="mt-2 w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none"
+              className={textareaClass}
             />
-          </div>
+          </Field>
 
           <div>
-            <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-              Recipients
-            </label>
+            <label className={fieldLabelClass}>Recipients</label>
             <div className="mt-2 flex gap-1.5">
               {(['all', 'selected'] as const).map((opt) => (
                 <button
@@ -459,7 +451,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
                     'h-10 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
                     notifRecipients === opt
                       ? 'bg-elec-yellow text-black'
-                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white/70 hover:text-white'
+                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white hover:bg-white/[0.04]'
                   )}
                 >
                   {opt === 'all' ? 'All in cohort' : 'Selected students'}
@@ -471,7 +463,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
           {notifRecipients === 'selected' && (
             <div>
               <div className="flex items-baseline justify-between mb-2">
-                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <label className={fieldLabelClass}>
                   Selected ({notifSelectedIds.size}/{cohortStudents.length})
                 </label>
                 <button
@@ -513,7 +505,7 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
           )}
 
           <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl px-4 py-3">
-            <p className="text-[12px] text-white/60">
+            <p className="text-[12px] text-white">
               Sending to{' '}
               <span className="font-semibold text-elec-yellow tabular-nums">
                 {notifRecipientCount}
@@ -524,17 +516,16 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
           </div>
 
           <div className="flex items-center justify-end gap-3 pt-1">
-            <button
+            <PrimaryButton
               onClick={handleSendNotification}
               disabled={notifSending || !notifMessage.trim() || notifRecipientCount === 0}
-              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
               {notifSending
                 ? 'Sending…'
                 : `Send notification (${notifRecipientCount}) →`}
-            </button>
+            </PrimaryButton>
           </div>
-        </div>
+        </FormCard>
       </motion.section>
     </PageFrame>
   );

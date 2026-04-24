@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -10,7 +8,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { copyToClipboard } from '@/utils/clipboard';
-import { Pill } from "@/components/college/primitives";
+import {
+  Pill,
+  Field,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  Eyebrow,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
+} from "@/components/college/primitives";
 
 interface AIFeedbackGeneratorProps {
   studentName?: string;
@@ -331,16 +339,16 @@ export function AIFeedbackGenerator({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">AI FEEDBACK</div>
+            <Eyebrow>AI FEEDBACK</Eyebrow>
             <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">Feedback generator</h3>
           </div>
           <Pill tone="yellow">AI</Pill>
         </div>
-        <p className="mt-3 text-[13px] text-white/55 leading-relaxed">
+        <p className="mt-3 text-[13px] text-white leading-relaxed">
           Generate constructive, professional feedback for student assessments
         </p>
         <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/[0.06]">
-          <span className="text-sm text-white/70">Create personalised feedback</span>
+          <span className="text-sm text-white">Create personalised feedback</span>
           <span className="text-[13px] font-medium text-elec-yellow/90">→</span>
         </div>
       </div>
@@ -351,7 +359,7 @@ export function AIFeedbackGenerator({
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
       <div className="p-5 sm:p-6 pb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">AI FEEDBACK</div>
+          <Eyebrow>AI FEEDBACK</Eyebrow>
           <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">Generate feedback</h3>
         </div>
         <Pill tone="yellow">AI-Powered</Pill>
@@ -359,14 +367,13 @@ export function AIFeedbackGenerator({
 
       <div className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-4">
         {/* Configuration */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <Label htmlFor="grade">Assessment Grade</Label>
+        <FormGrid cols={2}>
+          <Field label="Assessment Grade">
             <Select value={selectedGrade} onValueChange={setSelectedGrade}>
-              <SelectTrigger id="grade" className="mt-1">
+              <SelectTrigger id="grade" className={selectTriggerClass}>
                 <SelectValue placeholder="Select grade" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className={selectContentClass}>
                 <SelectItem value="Distinction">Distinction</SelectItem>
                 <SelectItem value="Merit">Merit</SelectItem>
                 <SelectItem value="Pass">Pass</SelectItem>
@@ -374,15 +381,14 @@ export function AIFeedbackGenerator({
                 <SelectItem value="Not Yet Competent">Not Yet Competent</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </Field>
 
-          <div>
-            <Label htmlFor="type">Assessment Type</Label>
+          <Field label="Assessment Type">
             <Select value={selectedType} onValueChange={setSelectedType}>
-              <SelectTrigger id="type" className="mt-1">
+              <SelectTrigger id="type" className={selectTriggerClass}>
                 <SelectValue placeholder="Select type" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className={selectContentClass}>
                 {assessmentTypes.map(type => (
                   <SelectItem key={type.value} value={type.value}>
                     {type.label}
@@ -390,16 +396,15 @@ export function AIFeedbackGenerator({
                 ))}
               </SelectContent>
             </Select>
-          </div>
-        </div>
+          </Field>
+        </FormGrid>
 
-        <div>
-          <Label htmlFor="style">Feedback Style</Label>
+        <Field label="Feedback Style">
           <Select value={feedbackStyle} onValueChange={setFeedbackStyle}>
-            <SelectTrigger id="style" className="mt-1">
+            <SelectTrigger id="style" className={selectTriggerClass}>
               <SelectValue placeholder="Select style" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className={selectContentClass}>
               {feedbackStyles.map(style => (
                 <SelectItem key={style.value} value={style.value}>
                   {style.label}
@@ -407,79 +412,68 @@ export function AIFeedbackGenerator({
               ))}
             </SelectContent>
           </Select>
-        </div>
+        </Field>
 
-        <div>
-          <Label htmlFor="notes">Additional Notes (Optional)</Label>
+        <Field label="Additional Notes (Optional)">
           <Textarea
             id="notes"
             placeholder="Add any specific points you want to include..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            className="mt-1 min-h-[60px]"
+            className={`${textareaClass} min-h-[60px]`}
           />
-        </div>
+        </Field>
 
         {/* Generate Button */}
-        <Button
+        <PrimaryButton
+          fullWidth
           onClick={generateFeedback}
           disabled={isGenerating || !selectedGrade}
-          className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-full px-6 font-medium gap-2"
         >
           {isGenerating ? (
             <>
-              <span className="h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow animate-spin" aria-hidden />
+              <span className="h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow animate-spin mr-2" aria-hidden />
               Generating feedback...
             </>
           ) : (
             <>
               Generate Feedback
-              <span aria-hidden>→</span>
+              <span aria-hidden className="ml-2">→</span>
             </>
           )}
-        </Button>
+        </PrimaryButton>
 
         {/* Generated Feedback */}
         {generatedFeedback && (
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div>
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">OUTPUT</div>
+                <Eyebrow>OUTPUT</Eyebrow>
                 <h4 className="mt-1 text-base font-semibold text-white tracking-tight">Generated feedback</h4>
               </div>
               <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={regenerate}
-                  className="rounded-full gap-1"
-                >
-                  <span aria-hidden>⟳</span>
+                <SecondaryButton size="sm" onClick={regenerate}>
+                  <span aria-hidden className="mr-1">⟳</span>
                   Regenerate
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={handleCopyToClipboard}
-                  className="rounded-full gap-1"
-                >
+                </SecondaryButton>
+                <SecondaryButton size="sm" onClick={handleCopyToClipboard}>
                   {copied ? (
                     <>
-                      <span className="text-green-400" aria-hidden>✓</span>
+                      <span className="text-green-400 mr-1" aria-hidden>✓</span>
                       Copied
                     </>
                   ) : (
                     <>
-                      <span aria-hidden>⧉</span>
+                      <span aria-hidden className="mr-1">⧉</span>
                       Copy
                     </>
                   )}
-                </Button>
+                </SecondaryButton>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
-              <pre className="whitespace-pre-wrap text-sm font-sans text-white/85">
+            <div className="p-4 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+              <pre className="whitespace-pre-wrap text-sm font-sans text-white">
                 {generatedFeedback}
               </pre>
             </div>
@@ -508,24 +502,24 @@ export function AIFeedbackGenerator({
 
         {/* Tips */}
         {!generatedFeedback && (
-          <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">FEATURES</div>
+          <div className="p-4 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+            <Eyebrow>FEATURES</Eyebrow>
             <p className="mt-1.5 text-sm font-medium text-white">AI feedback features</p>
-            <ul className="mt-3 space-y-1.5 text-[12.5px] text-white/60">
+            <ul className="mt-3 space-y-1.5 text-[12.5px] text-white">
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Grade-appropriate language and tone
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Constructive improvement suggestions
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Clear action points for development
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Professional formatting ready to use
               </li>
             </ul>

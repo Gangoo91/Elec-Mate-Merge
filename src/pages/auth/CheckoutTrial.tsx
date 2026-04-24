@@ -421,7 +421,7 @@ const CheckoutTrial = () => {
                       Retry
                     </button>
                     <a
-                      href="mailto:support@elec-mate.com"
+                      href="mailto:info@elec-mate.com"
                       className="flex h-11 flex-1 touch-manipulation items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.06] text-[13px] font-semibold text-white transition-colors hover:bg-white/[0.10]"
                     >
                       <Mail className="h-3.5 w-3.5" />

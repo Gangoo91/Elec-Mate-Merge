@@ -9,7 +9,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Pill, type Tone } from '@/components/college/primitives';
+import {
+  Pill,
+  PrimaryButton,
+  textareaClass,
+  inputClass,
+  type Tone,
+} from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 
 interface CommentThreadProps {
@@ -163,7 +169,7 @@ export function CommentThread({
             ? 'bg-purple-500/10 text-purple-400'
             : role === 'student'
               ? 'bg-elec-yellow/10 text-elec-yellow'
-              : 'bg-white/[0.06] text-white/70';
+              : 'bg-white/[0.06] text-white';
 
   const formatRole = (role: string) => {
     switch (role) {
@@ -219,7 +225,7 @@ export function CommentThread({
     <Popover open={showMentionPopover} onOpenChange={setShowMentionPopover}>
       <PopoverTrigger asChild>
         <button
-          className="h-11 px-3 text-[12px] font-medium text-white/70 hover:text-white bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl transition-colors touch-manipulation"
+          className="h-11 px-3 text-[12px] font-medium text-white hover:text-white bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-xl transition-colors touch-manipulation"
           aria-label="Mention"
         >
           @
@@ -234,7 +240,7 @@ export function CommentThread({
           placeholder="Search users…"
           value={mentionSearch}
           onChange={(e) => setMentionSearch(e.target.value)}
-          className="w-full h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 mb-2"
+          className={cn(inputClass, 'mb-2 h-10')}
         />
         <div className="max-h-[200px] overflow-y-auto space-y-0.5">
           {mentionableUsers.slice(0, 10).map((user) => (
@@ -250,7 +256,7 @@ export function CommentThread({
               </Avatar>
               <div className="flex-1 min-w-0">
                 <div className="text-white truncate">{user.name}</div>
-                <div className="text-[11px] text-white/75">{formatRole(user.role)}</div>
+                <div className="text-[11px] text-white">{formatRole(user.role)}</div>
               </div>
             </button>
           ))}
@@ -278,7 +284,7 @@ export function CommentThread({
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="font-medium text-[13px] text-white">{comment.authorName}</span>
                 <Pill tone={roleTone(comment.authorRole)}>{formatRole(comment.authorRole)}</Pill>
-                <span className="text-[11px] text-white/70 tabular-nums">
+                <span className="text-[11px] text-white tabular-nums">
                   {formatDate(comment.createdAt)}
                 </span>
               </div>
@@ -292,13 +298,16 @@ export function CommentThread({
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button
-                        className="text-white/75 hover:text-white text-[16px] leading-none px-1 touch-manipulation"
+                        className="text-white hover:text-white text-[16px] leading-none px-1 touch-manipulation"
                         aria-label="Options"
                       >
                         ⋯
                       </button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
+                    <DropdownMenuContent
+                      align="end"
+                      className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
+                    >
                       <DropdownMenuItem onClick={() => setReplyingTo(comment.id)}>
                         Reply
                       </DropdownMenuItem>
@@ -313,12 +322,12 @@ export function CommentThread({
               </div>
             </div>
 
-            <p className="text-[13px] text-white/80 mt-1.5 whitespace-pre-wrap leading-relaxed">
+            <p className="text-[13px] text-white mt-1.5 whitespace-pre-wrap leading-relaxed">
               {highlightMentions(comment.content)}
             </p>
 
             {comment.isResolved && comment.resolvedByName && (
-              <p className="mt-1.5 text-[11px] text-white/70 tabular-nums">
+              <p className="mt-1.5 text-[11px] text-white tabular-nums">
                 Resolved by {comment.resolvedByName} on{' '}
                 {new Date(comment.resolvedAt!).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -333,18 +342,17 @@ export function CommentThread({
                   placeholder="Write a reply…"
                   value={replyContent}
                   onChange={(e) => setReplyContent(e.target.value)}
-                  className="min-h-[60px] text-[13px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 resize-none"
+                  className={cn(textareaClass, 'min-h-[60px] text-[13px]')}
                   rows={2}
                 />
                 <div className="flex flex-col gap-1.5">
                   {renderMentionPopover()}
-                  <button
+                  <PrimaryButton
                     onClick={() => handleSubmitReply(comment.id)}
                     disabled={!replyContent.trim()}
-                    className="h-11 px-4 bg-elec-yellow text-black rounded-xl text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                   >
                     Send
-                  </button>
+                  </PrimaryButton>
                 </div>
               </div>
             )}
@@ -365,7 +373,7 @@ export function CommentThread({
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
-        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
           Comments · {comments.length}
         </div>
         {actionCount > 0 && <Pill tone="amber">{actionCount} need action</Pill>}
@@ -385,18 +393,14 @@ export function CommentThread({
               placeholder="Add a comment… use @ to mention someone"
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              className="min-h-[60px] text-[13px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 resize-none"
+              className={cn(textareaClass, 'min-h-[60px] text-[13px]')}
               rows={2}
             />
             <div className="flex flex-col gap-1.5">
               {renderMentionPopover()}
-              <button
-                onClick={handleSubmitComment}
-                disabled={!newComment.trim()}
-                className="h-11 px-4 bg-elec-yellow text-black rounded-xl text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
-              >
+              <PrimaryButton onClick={handleSubmitComment} disabled={!newComment.trim()}>
                 Send
-              </button>
+              </PrimaryButton>
             </div>
           </div>
         </div>
@@ -404,7 +408,7 @@ export function CommentThread({
 
       <div className="space-y-5">
         {topLevelComments.length === 0 ? (
-          <p className="text-[12.5px] text-white/70 text-center py-6">
+          <p className="text-[12.5px] text-white text-center py-6">
             No comments yet. Be the first to add one.
           </p>
         ) : (

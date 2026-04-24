@@ -1,7 +1,7 @@
 import React from 'react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { StudentPortfolio } from '@/hooks/college/useCollegePortfolios';
-import { Pill, type Tone } from '@/components/college/primitives';
+import { Pill, Eyebrow, PrimaryButton, SecondaryButton, type Tone } from '@/components/college/primitives';
 
 interface StudentPortfolioCardProps {
   portfolio: StudentPortfolio;
@@ -70,13 +70,11 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
             </AvatarFallback>
           </Avatar>
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-              Portfolio
-            </div>
+            <Eyebrow>Portfolio</Eyebrow>
             <div className="mt-0.5 text-[15px] font-semibold text-white truncate">
               {portfolio.studentName}
             </div>
-            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
+            <div className="mt-0.5 text-[11.5px] text-white truncate">
               {portfolio.qualificationTitle}
             </div>
           </div>
@@ -87,7 +85,7 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
       {/* Progress */}
       <div>
         <div className="flex items-baseline justify-between text-[11.5px]">
-          <span className="text-white/75 uppercase tracking-[0.12em]">Progress</span>
+          <span className="text-white uppercase tracking-[0.12em]">Progress</span>
           <span className="font-medium text-white tabular-nums">
             {portfolio.completionPercentage}%
           </span>
@@ -114,9 +112,7 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
             <div className="text-lg font-semibold tabular-nums text-white leading-none">
               {stat.value}
             </div>
-            <div className="mt-1.5 text-[10px] uppercase tracking-[0.14em] text-white/55">
-              {stat.label}
-            </div>
+            <Eyebrow className="mt-1.5">{stat.label}</Eyebrow>
           </div>
         ))}
       </div>
@@ -142,7 +138,7 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
       )}
 
       {/* Meta */}
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[11.5px] text-white/60 tabular-nums pt-2 border-t border-white/[0.06]">
+      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[11.5px] text-white tabular-nums pt-2 border-t border-white/[0.06]">
         <div>
           Units · {portfolio.categoriesComplete}/{portfolio.categoriesTotal}
         </div>
@@ -158,19 +154,13 @@ const StudentPortfolioCard: React.FC<StudentPortfolioCardProps> = ({
       {/* Actions */}
       {showActions && (
         <div className="flex items-center justify-end gap-4 pt-1">
-          <button
-            onClick={() => onViewDetails(portfolio.studentId, portfolio.qualificationId)}
-            className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-          >
+          <SecondaryButton onClick={() => onViewDetails(portfolio.studentId, portfolio.qualificationId)}>
             View details
-          </button>
+          </SecondaryButton>
           {portfolio.submissionsAwaitingReview > 0 && onReviewSubmissions && (
-            <button
-              onClick={() => onReviewSubmissions(portfolio.studentId)}
-              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-            >
+            <PrimaryButton onClick={() => onReviewSubmissions(portfolio.studentId)}>
               Review →
-            </button>
+            </PrimaryButton>
           )}
         </div>
       )}

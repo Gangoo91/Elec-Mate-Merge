@@ -175,7 +175,7 @@ export function SwipeableCard({
         {...handlers}
         className={cn(
           'relative z-10 transition-transform duration-200 ease-out',
-          selected && 'ring-2 ring-elec-yellow ring-offset-2 ring-offset-background rounded-lg'
+          selected && 'ring-2 ring-elec-yellow ring-offset-2 ring-offset-[hsl(0_0%_8%)] rounded-lg'
         )}
         style={{
           transform: `translateX(${offset}px)`,

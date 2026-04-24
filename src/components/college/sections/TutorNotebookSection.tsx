@@ -26,6 +26,11 @@ import {
   EmptyState,
   FilterBar,
   Pill,
+  PrimaryButton,
+  SecondaryButton,
+  Field,
+  inputClass,
+  textareaClass,
   itemVariants,
   toneDot,
   type Tone,
@@ -192,13 +197,13 @@ export function TutorNotebookSection() {
         <motion.div variants={itemVariants}>
           <div className="relative overflow-hidden bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               AI-Powered
             </div>
             <h3 className="mt-2 text-xl sm:text-2xl font-semibold text-white tracking-tight">
               Teaching assistant
             </h3>
-            <p className="mt-2 text-[13px] text-white/55 max-w-2xl leading-relaxed">
+            <p className="mt-2 text-[13px] text-white max-w-2xl leading-relaxed">
               Upload lesson notes, plans and resources. Ask questions, generate summaries, create
               quizzes and get insights from your own materials.
             </p>
@@ -244,7 +249,7 @@ export function TutorNotebookSection() {
                     )}
                   />
                   <div className="flex items-start justify-between gap-2">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       {String(i + 1).padStart(2, '0')} · Notebook
                     </div>
                     <DropdownMenu>
@@ -253,7 +258,7 @@ export function TutorNotebookSection() {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <button
-                          className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                          className="text-white hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                           aria-label="Options"
                           onClick={(e) => e.stopPropagation()}
                         >
@@ -275,12 +280,12 @@ export function TutorNotebookSection() {
                     {notebook.name}
                   </h3>
                   {notebook.description && (
-                    <p className="mt-2 text-[12.5px] leading-relaxed text-white/55 line-clamp-2">
+                    <p className="mt-2 text-[12.5px] leading-relaxed text-white line-clamp-2">
                       {notebook.description}
                     </p>
                   )}
                   <div className="flex-grow" />
-                  <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px] text-white/75">
+                  <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px] text-white">
                     <span className="tabular-nums">{notebook.sourceCount} sources</span>
                     <span className="tabular-nums">
                       {new Date(notebook.lastUpdated).toLocaleDateString('en-GB', {
@@ -301,41 +306,35 @@ export function TutorNotebookSection() {
               <DialogTitle>New notebook</DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-2">
-              <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+              <Field label="Name">
                 <Input
                   id="name"
                   placeholder="e.g. Electrical theory notes"
                   value={newNotebookName}
                   onChange={(e) => setNewNotebookName(e.target.value)}
-                  className="h-11 touch-manipulation bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow focus:ring-elec-yellow"
+                  className={inputClass}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="description">Description (optional)</Label>
+              </Field>
+              <Field label="Description (optional)">
                 <Textarea
                   id="description"
                   placeholder="What's this notebook about?"
                   value={newNotebookDesc}
                   onChange={(e) => setNewNotebookDesc(e.target.value)}
-                  className="touch-manipulation bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow"
+                  className={textareaClass}
                 />
-              </div>
+              </Field>
             </div>
             <DialogFooter className="flex items-center justify-end gap-3">
-              <button
-                onClick={() => setIsCreateDialogOpen(false)}
-                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-              >
+              <SecondaryButton onClick={() => setIsCreateDialogOpen(false)}>
                 Cancel
-              </button>
-              <button
+              </SecondaryButton>
+              <PrimaryButton
                 onClick={handleCreateNotebook}
                 disabled={!newNotebookName.trim()}
-                className="text-[12.5px] font-medium text-elec-yellow hover:opacity-90 disabled:opacity-40 transition-colors touch-manipulation"
               >
                 Create notebook →
-              </button>
+              </PrimaryButton>
             </DialogFooter>
           </DialogContent>
         </Dialog>
@@ -350,13 +349,13 @@ export function TutorNotebookSection() {
         <div className="flex items-center gap-4 min-w-0 flex-1">
           <button
             onClick={() => setSelectedNotebook(null)}
-            className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+            className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
           >
             ← Back
           </button>
           <div className="h-4 w-px bg-white/10" aria-hidden />
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Notebook
             </div>
             <h1 className="mt-0.5 text-xl sm:text-2xl font-semibold text-white tracking-tight truncate">
@@ -378,7 +377,7 @@ export function TutorNotebookSection() {
           {/* Sources card */}
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
             <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Sources
               </div>
               <h3 className="mt-1 text-base font-semibold text-white">
@@ -412,7 +411,7 @@ export function TutorNotebookSection() {
                     <div className="text-[13px] font-medium text-white truncate">
                       {source.name}
                     </div>
-                    <div className="mt-0.5 text-[11px] text-white/75 tabular-nums">
+                    <div className="mt-0.5 text-[11px] text-white tabular-nums">
                       {source.size || new Date(source.addedAt).toLocaleDateString('en-GB')}
                     </div>
                   </div>
@@ -430,7 +429,7 @@ export function TutorNotebookSection() {
           {/* AI actions card */}
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
             <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 AI actions
               </div>
               <h3 className="mt-1 text-base font-semibold text-white">Quick prompts</h3>
@@ -466,7 +465,7 @@ export function TutorNotebookSection() {
         <div className="lg:col-span-2">
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden flex flex-col h-[600px]">
             <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 AI Assistant
               </div>
               <h3 className="mt-1 text-base font-semibold text-white">
@@ -478,7 +477,7 @@ export function TutorNotebookSection() {
               {chatMessages.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center">
                   <h3 className="text-base font-semibold text-white">Start a conversation</h3>
-                  <p className="mt-2 text-[13px] text-white/55 max-w-md leading-relaxed">
+                  <p className="mt-2 text-[13px] text-white max-w-md leading-relaxed">
                     The AI has read all your sources. Ask questions, request summaries, generate
                     quizzes.
                   </p>
@@ -491,7 +490,7 @@ export function TutorNotebookSection() {
                       <button
                         key={prompt}
                         onClick={() => setChatInput(prompt)}
-                        className="text-[11.5px] font-medium text-white/70 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] rounded-full px-3 py-1.5 transition-colors touch-manipulation"
+                        className="text-[11.5px] font-medium text-white hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] rounded-full px-3 py-1.5 transition-colors touch-manipulation"
                       >
                         {prompt}
                       </button>
@@ -516,7 +515,7 @@ export function TutorNotebookSection() {
                       )}
                     >
                       {message.role === 'assistant' && (
-                        <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/55 mb-1.5">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.14em] text-white mb-1.5">
                           AI Assistant
                         </div>
                       )}
@@ -535,15 +534,15 @@ export function TutorNotebookSection() {
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                  className="flex-1 h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                  className={`${inputClass} flex-1 rounded-full`}
                 />
-                <button
+                <PrimaryButton
                   onClick={handleSendMessage}
                   disabled={!chatInput.trim()}
-                  className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+                  size="sm"
                 >
                   Send
-                </button>
+                </PrimaryButton>
               </div>
             </div>
           </div>
@@ -569,11 +568,11 @@ export function TutorNotebookSection() {
                 <span className="text-[14px] font-semibold text-white group-hover:text-elec-yellow transition-colors">
                   {opt.label}
                 </span>
-                <span className="mt-1 text-[11.5px] text-white/75">{opt.desc}</span>
+                <span className="mt-1 text-[11.5px] text-white">{opt.desc}</span>
               </button>
             ))}
           </div>
-          <p className="text-[11.5px] text-white/70 text-center">
+          <p className="text-[11.5px] text-white text-center">
             Supported · PDF · Word · PowerPoint · Images · YouTube · Web links
           </p>
         </DialogContent>

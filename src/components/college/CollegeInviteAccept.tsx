@@ -11,6 +11,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Input } from '@/components/ui/input';
 import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
+import { PrimaryButton } from '@/components/college/primitives';
 
 interface CollegeInviteAcceptProps {
   onSuccess?: (collegeName: string, inviteType: string) => void;
@@ -79,11 +80,11 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
     <div className="space-y-4">
       {/* Header */}
       <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
           Invite Code
         </div>
         <h3 className="mt-1.5 text-[15px] font-semibold text-white">Have an invite code?</h3>
-        <p className="text-[12.5px] text-white/55">
+        <p className="text-[12.5px] text-white">
           Your college will have provided this to you
         </p>
       </div>
@@ -98,18 +99,17 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             maxLength={12}
             disabled={isSubmitting}
-            className="h-12 text-base font-mono tracking-[0.25em] text-center uppercase touch-manipulation bg-white/5 border-white/15 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400/30 rounded-xl placeholder:tracking-normal placeholder:font-sans placeholder:text-white"
+            className="h-12 text-base font-mono tracking-[0.25em] text-center uppercase touch-manipulation bg-[hsl(0_0%_9%)] border border-white/[0.08] focus:border-elec-yellow/60 rounded-xl text-white placeholder:tracking-normal placeholder:font-sans placeholder:text-white/65"
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
         </div>
-        <button
-          type="button"
+        <PrimaryButton
           onClick={handleSubmit}
           disabled={isSubmitting || code.trim().length < 4}
-          className="h-12 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+          size="lg"
         >
           {isSubmitting ? 'Linking…' : 'Join →'}
-        </button>
+        </PrimaryButton>
       </div>
 
       {/* Result feedback */}

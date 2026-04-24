@@ -155,7 +155,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
           />
           <div className="min-w-0 flex-1">
             <p className="text-[13px] font-medium text-white leading-snug truncate">{lp.title}</p>
-            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-white/75">
+            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-white">
               <span className="truncate">{getCohortName(lp.cohort_id)}</span>
               <span className="truncate">{getTutorName(lp.tutor_id)}</span>
               {lp.scheduled_date && (
@@ -188,7 +188,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
             <p
               className={cn(
                 'text-[10px] font-medium uppercase tracking-[0.18em]',
-                isToday ? 'text-elec-yellow' : 'text-white/75'
+                isToday ? 'text-elec-yellow' : 'text-white'
               )}
             >
               {DAY_NAMES[dayIndex]}
@@ -203,7 +203,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
             dayLessons.map(renderLessonCard)
           ) : (
             <div className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-lg p-3 text-center">
-              <p className="text-[11px] text-white/70">No lessons</p>
+              <p className="text-[11px] text-white">No lessons</p>
             </div>
           )}
         </div>
@@ -235,7 +235,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-2 flex items-center justify-between">
           <button
             onClick={() => navigateWeek(-1)}
-            className="h-10 px-4 text-[12.5px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
+            className="h-10 px-4 text-[12.5px] font-medium text-white hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
             ← Previous
           </button>
@@ -244,7 +244,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
           </div>
           <button
             onClick={() => navigateWeek(1)}
-            className="h-10 px-4 text-[12.5px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
+            className="h-10 px-4 text-[12.5px] font-medium text-white hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
             Next →
           </button>
@@ -260,7 +260,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
               'shrink-0 h-9 px-3.5 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
               !selectedTutorId
                 ? 'bg-elec-yellow text-black'
-                : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white/70 hover:text-white'
+                : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white hover:text-white'
             )}
           >
             All Tutors
@@ -273,7 +273,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                 'shrink-0 h-9 px-3.5 rounded-full text-[12px] font-medium transition-colors touch-manipulation inline-flex items-center gap-1.5',
                 selectedTutorId === tutor.id
                   ? 'bg-elec-yellow text-black'
-                  : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white/70 hover:text-white'
+                  : 'bg-[hsl(0_0%_12%)] border border-white/[0.06] text-white hover:text-white'
               )}
             >
               <span
@@ -303,14 +303,14 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
                     ? 'bg-elec-yellow text-black'
                     : isToday
                       ? 'text-elec-yellow'
-                      : 'text-white/70 hover:text-white'
+                      : 'text-white hover:text-white'
                 )}
               >
                 <p className="text-[10px] font-semibold uppercase tracking-wider">{day}</p>
                 <p
                   className={cn(
                     'mt-0.5 text-[11px] tabular-nums',
-                    selected ? 'text-black/70' : 'text-white/75'
+                    selected ? 'text-black/70' : 'text-white'
                   )}
                 >
                   {weekDates[idx].getDate()}
@@ -324,7 +324,7 @@ export function TimetableSection({ onNavigate }: TimetableSectionProps) {
         </div>
 
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             {DAY_FULL_NAMES[selectedDayIndex]}
           </div>
           <div className="mt-1 text-base font-semibold text-white tabular-nums">

@@ -199,7 +199,7 @@ export function StudentsSection() {
             <select
               value={filterCohort}
               onChange={(e) => setFilterCohort(e.target.value)}
-              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+              className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
             >
               <option value="all">All Cohorts</option>
               {cohorts
@@ -343,7 +343,7 @@ export function StudentsSection() {
                             </Pill>
                           )}
                         </div>
-                        <div className="mt-0.5 text-[11.5px] text-white/60 truncate tabular-nums">
+                        <div className="mt-0.5 text-[11.5px] text-white truncate tabular-nums">
                           {student.uln
                             ? `ULN · ${student.uln}`
                             : getCohortName(student.cohort_id)}
@@ -370,11 +370,11 @@ export function StudentsSection() {
                           <span className={cn('text-[11px] tabular-nums shrink-0', attendanceTone)}>
                             {attendanceRate}% att
                           </span>
-                          <span className="hidden sm:inline text-[11px] text-white/55 truncate">
+                          <span className="hidden sm:inline text-[11px] text-white truncate">
                             {getCohortName(student.cohort_id)}
                           </span>
                           {student.expected_end_date && (
-                            <span className="hidden lg:inline text-[11px] text-white/55 tabular-nums">
+                            <span className="hidden lg:inline text-[11px] text-white tabular-nums">
                               Due {formatUKDateShort(student.expected_end_date)}
                             </span>
                           )}
@@ -407,7 +407,7 @@ export function StudentsSection() {
                               type="button"
                               aria-label="More actions"
                               onClick={(e) => e.stopPropagation()}
-                              className="h-9 w-9 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+                              className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
                             >
                               <span className="text-[15px] font-semibold tracking-[0.12em]">
                                 ⋯
@@ -481,7 +481,7 @@ export function StudentsSection() {
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
-          className="fixed bottom-0 inset-x-0 z-50 p-4 bg-background/95 backdrop-blur-sm border-t border-white/[0.06]"
+          className="fixed bottom-0 inset-x-0 z-50 p-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm border-t border-white/[0.06]"
         >
           <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
             <p className="text-sm text-white font-medium tabular-nums">
@@ -490,7 +490,7 @@ export function StudentsSection() {
             <div className="flex items-center gap-4">
               <button
                 onClick={exitBatchMode}
-                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
               >
                 Cancel
               </button>

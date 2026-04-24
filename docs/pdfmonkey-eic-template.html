@@ -1404,6 +1404,12 @@
             <span class="checkbox-box {% if supply_characteristics.other_sources_of_supply %}checked{% endif %}">{% if supply_characteristics.other_sources_of_supply %}&#10003;{% endif %}</span>
             <span class="checkbox-label">Other sources of supply (as detailed on attached schedule)</span>
         </div>
+        {% if supply_characteristics.supply_pme and supply_characteristics.supply_pme != "" %}
+        <div class="inline-group" style="margin-left: 8px">
+            <span class="inline-label">Supply PME:</span>
+            <span class="inline-value">{{ supply_characteristics.supply_pme }}</span>
+        </div>
+        {% endif %}
     </div>
     {% if supply_characteristics.other_sources_details != blank %}
     <div class="form-grid" style="margin-top: 2px">
@@ -1551,6 +1557,12 @@
             <span class="checkbox-box {% if earthing_bonding.main_bonding_verified %}checked{% endif %}">{% if earthing_bonding.main_bonding_verified %}&#10003;{% endif %}</span>
             <span class="checkbox-label">Connection/continuity verified</span>
         </div>
+        {% if earthing_bonding.bonding_compliance and earthing_bonding.bonding_compliance != "" %}
+        <div class="inline-group">
+            <span class="inline-label">Compliance:</span>
+            <span class="inline-value">{{ earthing_bonding.bonding_compliance }}</span>
+        </div>
+        {% endif %}
     </div>
 
     <!-- Bonding Connections -->
@@ -1607,6 +1619,14 @@
 
     <!-- Main Switch -->
     <div class="section-subtitle" style="margin-top: 4px">Main Switch / Switch-fuse / Circuit-breaker / RCD</div>
+    {% if rcd_details.rcd_main_switch == "yes" or rcd_details.rcd_main_switch == true %}
+    <div class="inline-form" style="background: #fffbeb; padding: 4px 6px; border-left: 3px solid #fbbf24; margin-bottom: 2px">
+        <div class="checkbox-item">
+            <span class="checkbox-box checked">&#10003;</span>
+            <span class="checkbox-label">Main switch is an RCD (see RCD details below)</span>
+        </div>
+    </div>
+    {% endif %}
     <div class="inline-form">
         <div class="inline-group">
             <span class="inline-label">Type:</span>
@@ -1691,62 +1711,62 @@
             </tr>
             <tr>
                 <td class="item-num">3</td>
-                <td class="item-desc">Presence of adequate arrangements for other sources such as microgenerators</td>
+                <td class="item-desc">Protective measure: Automatic Disconnection of Supply (ADS)</td>
                 <td class="outcome">{% if insp_3 == 'Acceptable' %}Y{% elsif insp_3 == 'N/A' %}N/A{% elsif insp_3 == 'LIM' %}LIM{% else %}{{ insp_3 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">4</td>
-                <td class="item-desc">Presence and condition of earthing and bonding arrangements</td>
+                <td class="item-desc">Basic protection</td>
                 <td class="outcome">{% if insp_4 == 'Acceptable' %}Y{% elsif insp_4 == 'N/A' %}N/A{% elsif insp_4 == 'LIM' %}LIM{% else %}{{ insp_4 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">5</td>
-                <td class="item-desc">Compatibility of protective devices, bases and other components with the circuit protective conductors</td>
+                <td class="item-desc">Protective measures other than ADS</td>
                 <td class="outcome">{% if insp_5 == 'Acceptable' %}Y{% elsif insp_5 == 'N/A' %}N/A{% elsif insp_5 == 'LIM' %}LIM{% else %}{{ insp_5 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">6</td>
-                <td class="item-desc">Provision of RCDs for fault protection and/or additional protection</td>
+                <td class="item-desc">Additional protection</td>
                 <td class="outcome">{% if insp_6 == 'Acceptable' %}Y{% elsif insp_6 == 'N/A' %}N/A{% elsif insp_6 == 'LIM' %}LIM{% else %}{{ insp_6 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">7</td>
-                <td class="item-desc">Confirmation of indication that SPD is functional</td>
+                <td class="item-desc">Distribution equipment</td>
                 <td class="outcome">{% if insp_7 == 'Acceptable' %}Y{% elsif insp_7 == 'N/A' %}N/A{% elsif insp_7 == 'LIM' %}LIM{% else %}{{ insp_7 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">8</td>
-                <td class="item-desc">Presence of fire barriers, sealing arrangements and protection against thermal effects</td>
+                <td class="item-desc">Circuits (Distribution and Final)</td>
                 <td class="outcome">{% if insp_8 == 'Acceptable' %}Y{% elsif insp_8 == 'N/A' %}N/A{% elsif insp_8 == 'LIM' %}LIM{% else %}{{ insp_8 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">9</td>
-                <td class="item-desc">Cables correctly supported and not subject to premature collapse in the event of a fire</td>
+                <td class="item-desc">Isolation and switching</td>
                 <td class="outcome">{% if insp_9 == 'Acceptable' %}Y{% elsif insp_9 == 'N/A' %}N/A{% elsif insp_9 == 'LIM' %}LIM{% else %}{{ insp_9 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">10</td>
-                <td class="item-desc">Verification of electrical separation</td>
+                <td class="item-desc">Current-using equipment (permanently connected)</td>
                 <td class="outcome">{% if insp_10 == 'Acceptable' %}Y{% elsif insp_10 == 'N/A' %}N/A{% elsif insp_10 == 'LIM' %}LIM{% else %}{{ insp_10 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">11</td>
-                <td class="item-desc">Connection of single-pole devices in line conductors only</td>
+                <td class="item-desc">Identification and notices</td>
                 <td class="outcome">{% if insp_11 == 'Acceptable' %}Y{% elsif insp_11 == 'N/A' %}N/A{% elsif insp_11 == 'LIM' %}LIM{% else %}{{ insp_11 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">12</td>
-                <td class="item-desc">Adequacy of accessories, switches, and isolators for the intended use</td>
+                <td class="item-desc">Location(s) containing a bath or shower</td>
                 <td class="outcome">{% if insp_12 == 'Acceptable' %}Y{% elsif insp_12 == 'N/A' %}N/A{% elsif insp_12 == 'LIM' %}LIM{% else %}{{ insp_12 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">13</td>
-                <td class="item-desc">Suitability of equipment and protective measures for external influences</td>
+                <td class="item-desc">Other special installations or locations</td>
                 <td class="outcome">{% if insp_13 == 'Acceptable' %}Y{% elsif insp_13 == 'N/A' %}N/A{% elsif insp_13 == 'LIM' %}LIM{% else %}{{ insp_13 }}{% endif %}</td>
             </tr>
             <tr>
                 <td class="item-num">14</td>
-                <td class="item-desc">Particular protective measures for special installations and locations</td>
+                <td class="item-desc">Prosumer's low voltage electrical installation(s)</td>
                 <td class="outcome">{% if insp_14 == 'Acceptable' %}Y{% elsif insp_14 == 'N/A' %}N/A{% elsif insp_14 == 'LIM' %}LIM{% else %}{{ insp_14 }}{% endif %}</td>
             </tr>
         </tbody>

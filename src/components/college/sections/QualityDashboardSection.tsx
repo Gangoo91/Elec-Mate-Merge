@@ -181,13 +181,13 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
       {/* Hero */}
       <motion.div variants={itemVariants}>
         <div className="pt-6 sm:pt-8 lg:pt-10 pb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             Tools · Quality Dashboard
           </div>
           <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
             Ofsted-ready metrics
           </h1>
-          <p className="mt-3 text-[13px] sm:text-sm text-white/55 max-w-2xl leading-relaxed">
+          <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
             Auto-generated KPIs from students, attendance, ILPs, EPA and grades. Updated in real time.
           </p>
         </div>
@@ -206,7 +206,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
               key={kpi.label}
               className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-8 lg:px-7 lg:py-9"
             >
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {String(i + 1).padStart(2, '0')} · {kpi.label}
               </div>
               <div
@@ -259,14 +259,14 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
         if (alerts.length === 0) {
           return (
             <motion.section variants={itemVariants} className="space-y-5">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Compliance
               </div>
               <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
                 <span aria-hidden className="w-[3px] h-10 rounded-full bg-green-400 shrink-0" />
                 <div className="min-w-0">
                   <div className="text-[15px] font-medium text-white">All clear</div>
-                  <div className="mt-0.5 text-[12px] text-white/75">
+                  <div className="mt-0.5 text-[12px] text-white">
                     No outstanding compliance alerts.
                   </div>
                 </div>
@@ -277,7 +277,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
 
         return (
           <motion.section variants={itemVariants} className="space-y-5">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Compliance Alerts
             </div>
             <ListCard>
@@ -334,7 +334,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
               key={metric.title}
               className="bg-[hsl(0_0%_12%)] px-5 py-5 sm:px-6 sm:py-6"
             >
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {metric.title}
               </div>
               <div
@@ -345,7 +345,7 @@ export function QualityDashboardSection({ onNavigate }: QualityDashboardSectionP
               >
                 {metric.value}
               </div>
-              <div className="mt-2 text-[11px] text-white/75">{metric.sub}</div>
+              <div className="mt-2 text-[11px] text-white">{metric.sub}</div>
             </div>
           ))}
         </div>

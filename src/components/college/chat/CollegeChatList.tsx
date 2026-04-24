@@ -91,7 +91,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
   return (
     <div className="space-y-3">
       {totalUnread > 0 && (
-        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 px-1">
+        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white px-1">
           {totalUnread} unread message{totalUnread > 1 ? 's' : ''}
         </div>
       )}
@@ -129,7 +129,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
                       <p
                         className={cn(
                           'text-[14px] font-medium truncate',
-                          display.unreadCount > 0 ? 'text-white' : 'text-white/80'
+                          display.unreadCount > 0 ? 'text-white' : 'text-white'
                         )}
                       >
                         {display.name}
@@ -137,7 +137,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
                       {display.badgeLabel && <Pill tone={display.badgeTone}>{display.badgeLabel}</Pill>}
                     </div>
                     {display.lastMessageAt && (
-                      <span className="text-[11px] text-white/70 shrink-0 tabular-nums">
+                      <span className="text-[11px] text-white shrink-0 tabular-nums">
                         {formatDistanceToNow(new Date(display.lastMessageAt), {
                           addSuffix: false,
                         })}
@@ -146,7 +146,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
                   </div>
 
                   {(display.role || display.student) && (
-                    <p className="mt-0.5 text-[11px] text-white/75 truncate">
+                    <p className="mt-0.5 text-[11px] text-white truncate">
                       {display.role}
                       {display.student && (
                         <span className="ml-1">
@@ -160,7 +160,7 @@ export function CollegeChatList({ onSelectConversation, currentUserType }: Colle
                     <p
                       className={cn(
                         'text-[12.5px] truncate',
-                        display.unreadCount > 0 ? 'text-white/80 font-medium' : 'text-white/75'
+                        display.unreadCount > 0 ? 'text-white font-medium' : 'text-white'
                       )}
                     >
                       {display.lastMessage || 'No messages yet'}

@@ -17,6 +17,12 @@ export interface CollegeStudent {
   progress_percent: number | null;
   risk_level: string | null;
   photo_url: string | null;
+  send_flags: string[] | null;
+  eal: boolean | null;
+  ehcp_ref: string | null;
+  first_language: string | null;
+  pronouns: string | null;
+  accessibility_notes: string | null;
   created_at: string | null;
   updated_at: string | null;
 }

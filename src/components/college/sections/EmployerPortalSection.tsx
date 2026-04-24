@@ -15,6 +15,7 @@ import {
   Pill,
   EmptyState,
   LoadingState,
+  inputClass,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -242,13 +243,13 @@ export function EmployerPortalSection() {
       {/* Hero */}
       <motion.div variants={itemVariants}>
         <div className="pt-6 sm:pt-8 lg:pt-10 pb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             People · Employer Portal
           </div>
           <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
             Employer engagement
           </h1>
-          <p className="mt-3 text-[13px] sm:text-sm text-white/55 max-w-2xl leading-relaxed">
+          <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
             {totalEmployers} employer{totalEmployers !== 1 ? 's' : ''} with {totalPlaced} active apprentice
             {totalPlaced !== 1 ? 's' : ''}. Workplace engagement, reviews and OTJ compliance.
           </p>
@@ -283,7 +284,7 @@ export function EmployerPortalSection() {
               key={kpi.label}
               className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-8 lg:px-7 lg:py-9"
             >
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {String(i + 1).padStart(2, '0')} · {kpi.label}
               </div>
               <div
@@ -295,7 +296,7 @@ export function EmployerPortalSection() {
               >
                 {kpi.value}
               </div>
-              <div className="mt-3 text-[11px] text-white/75">{kpi.sub}</div>
+              <div className="mt-3 text-[11px] text-white">{kpi.sub}</div>
             </div>
           ))}
         </div>
@@ -308,7 +309,7 @@ export function EmployerPortalSection() {
           placeholder="Search employers or apprentices…"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full h-11 px-4 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+          className={cn(inputClass, 'rounded-full')}
         />
       </motion.div>
 
@@ -336,13 +337,13 @@ export function EmployerPortalSection() {
                     <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-blue-400/60 via-cyan-400/60 to-blue-400/60 opacity-70" />
                     <div className="relative z-10 p-5 flex items-center gap-4">
                       <div className="flex-1 min-w-0">
-                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                           Employer
                         </div>
                         <h3 className="mt-1 text-[15px] font-semibold text-white truncate">
                           {employer.label}
                         </h3>
-                        <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-[11.5px] text-white/75 tabular-nums">
+                        <div className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-[11.5px] text-white tabular-nums">
                           <span>
                             {employer.apprentices.length} apprentice
                             {employer.apprentices.length !== 1 ? 's' : ''}
@@ -355,7 +356,7 @@ export function EmployerPortalSection() {
                       <span
                         aria-hidden
                         className={cn(
-                          'text-[18px] leading-none text-white/75 transition-transform',
+                          'text-[18px] leading-none text-white transition-transform',
                           isExpanded && 'rotate-90'
                         )}
                       >
@@ -401,13 +402,13 @@ export function EmployerPortalSection() {
                                         <div className="text-[14px] font-medium text-white truncate">
                                           {a.name}
                                         </div>
-                                        <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
+                                        <div className="mt-0.5 text-[11.5px] text-white truncate">
                                           {a.courseName}
                                         </div>
                                       </div>
                                       <Pill tone={epaTone}>{a.epaStatus}</Pill>
                                     </div>
-                                    <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75 tabular-nums">
+                                    <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white tabular-nums">
                                       <span>Attendance {a.attendancePercent}%</span>
                                       <span>Progress {a.progressPercent}%</span>
                                       <span className={a.otjOnTrack ? 'text-emerald-400' : 'text-amber-400'}>
@@ -439,7 +440,7 @@ export function EmployerPortalSection() {
             <span aria-hidden className="w-[3px] h-10 rounded-full bg-emerald-400 shrink-0" />
             <div>
               <div className="text-[15px] font-medium text-white">All reviews up to date</div>
-              <div className="mt-0.5 text-[12px] text-white/75">
+              <div className="mt-0.5 text-[12px] text-white">
                 No apprentices are overdue for a tri-partite review.
               </div>
             </div>
@@ -469,7 +470,7 @@ export function EmployerPortalSection() {
               );
             })}
             {reviewsDue.length > 10 && (
-              <div className="px-5 sm:px-6 py-3 text-center text-[11px] text-white/70">
+              <div className="px-5 sm:px-6 py-3 text-center text-[11px] text-white">
                 + {reviewsDue.length - 10} more reviews due
               </div>
             )}
@@ -516,7 +517,7 @@ export function EmployerPortalSection() {
                 >
                   <div className="flex items-baseline justify-between gap-3">
                     <div className="min-w-0">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                         Employer
                       </div>
                       <div className="mt-1 text-[14px] font-medium text-white truncate">
@@ -528,7 +529,7 @@ export function EmployerPortalSection() {
 
                   <div className="mt-4">
                     <div className="flex items-baseline justify-between text-[11px]">
-                      <span className="text-white/75 uppercase tracking-[0.12em]">Hours</span>
+                      <span className="text-white uppercase tracking-[0.12em]">Hours</span>
                       <span className="font-medium text-white tabular-nums">
                         {employer.totalOtjCompleted}h / {employer.totalOtjRequired}h
                       </span>
@@ -548,7 +549,7 @@ export function EmployerPortalSection() {
                     </div>
                   </div>
 
-                  <div className="mt-3 text-[11px] text-white/75 tabular-nums">
+                  <div className="mt-3 text-[11px] text-white tabular-nums">
                     {employer.apprentices.length} apprentice
                     {employer.apprentices.length !== 1 ? 's' : ''}
                   </div>

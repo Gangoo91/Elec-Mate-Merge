@@ -7,6 +7,8 @@ import {
   Trash2,
   Zap,
   ChevronRight,
+  ChevronUp,
+  ChevronDown,
   AlertTriangle,
   CheckCircle,
   AlertCircle,
@@ -21,6 +23,10 @@ interface CircuitCardProps {
   onDelete: (id: string) => void;
   onAddPhoto?: () => void;
   onQuickEdit?: (field: string) => void;
+  onMoveUp?: (id: string) => void;
+  onMoveDown?: (id: string) => void;
+  canMoveUp?: boolean;
+  canMoveDown?: boolean;
   compact?: boolean;
   enableSwipe?: boolean;
   className?: string;
@@ -37,6 +43,10 @@ const CircuitCardInner = ({
   onDelete,
   onAddPhoto,
   onQuickEdit,
+  onMoveUp,
+  onMoveDown,
+  canMoveUp = false,
+  canMoveDown = false,
   compact = false,
   enableSwipe = true,
   className = '',
@@ -53,6 +63,26 @@ const CircuitCardInner = ({
     haptic.heavy();
     onDelete(circuit.id);
   }, [haptic, onDelete, circuit.id]);
+
+  const handleMoveUp = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (!canMoveUp || !onMoveUp) return;
+      haptic.light();
+      onMoveUp(circuit.id);
+    },
+    [haptic, onMoveUp, canMoveUp, circuit.id]
+  );
+
+  const handleMoveDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (!canMoveDown || !onMoveDown) return;
+      haptic.light();
+      onMoveDown(circuit.id);
+    },
+    [haptic, onMoveDown, canMoveDown, circuit.id]
+  );
   // Calculate circuit status and validation
   const { status, hasRcd, rcdOk, validations } = useMemo(() => {
     const hasZs = circuit.zs && circuit.maxZs;
@@ -168,6 +198,39 @@ const CircuitCardInner = ({
       {/* Header Section */}
       <div className="px-4 pt-3 pb-2">
         <div className="flex items-start justify-between gap-3">
+          {/* Move Up/Down arrows — ELE-857 */}
+          {(onMoveUp || onMoveDown) && (
+            <div className="flex flex-col gap-0.5 shrink-0 pt-0.5">
+              <button
+                type="button"
+                onClick={handleMoveUp}
+                disabled={!canMoveUp}
+                aria-label="Move circuit up"
+                className={cn(
+                  'h-7 w-7 flex items-center justify-center rounded-md border touch-manipulation',
+                  canMoveUp
+                    ? 'bg-white/[0.04] border-white/15 text-white hover:bg-white/10 active:scale-95'
+                    : 'bg-white/[0.02] border-white/5 text-white/20 cursor-not-allowed'
+                )}
+              >
+                <ChevronUp className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                onClick={handleMoveDown}
+                disabled={!canMoveDown}
+                aria-label="Move circuit down"
+                className={cn(
+                  'h-7 w-7 flex items-center justify-center rounded-md border touch-manipulation',
+                  canMoveDown
+                    ? 'bg-white/[0.04] border-white/15 text-white hover:bg-white/10 active:scale-95'
+                    : 'bg-white/[0.02] border-white/5 text-white/20 cursor-not-allowed'
+                )}
+              >
+                <ChevronDown className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          )}
           {/* Circuit Badge - Large, status-colored */}
           <div
             className={cn(

@@ -18,6 +18,9 @@ import {
   EmptyState,
   LoadingState,
   itemVariants,
+  inputClass,
+  PrimaryButton,
+  SecondaryButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -478,11 +481,11 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name, email or ULN…"
-            className="w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-[13px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+            className={inputClass}
           />
 
           {filteredStudents.length === 0 ? (
-            <p className="text-[12px] text-white/70 py-4 text-center">No students found.</p>
+            <p className="text-[12px] text-white py-4 text-center">No students found.</p>
           ) : (
             <div className="bg-[hsl(0_0%_9%)] border border-white/[0.06] rounded-xl max-h-[280px] overflow-y-auto divide-y divide-white/[0.04]">
               {filteredStudents.map((s) => {
@@ -515,7 +518,7 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
                       <div className="text-[13.5px] font-medium text-white truncate">
                         {s.name}
                       </div>
-                      <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
+                      <div className="mt-0.5 text-[11.5px] text-white truncate">
                         {sCourse?.name ?? 'No course'}
                         {sCohort ? ` · ${sCohort.name}` : ''}
                       </div>
@@ -553,13 +556,13 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-5">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   Student
                 </div>
                 <div className="mt-1 text-lg sm:text-xl font-semibold text-white tracking-tight truncate">
                   {student.name}
                 </div>
-                <div className="mt-0.5 text-[12px] text-white/75 truncate">
+                <div className="mt-0.5 text-[12px] text-white truncate">
                   {course?.name ?? 'No course assigned'}
                   {cohort ? ` · ${cohort.name}` : ''}
                 </div>
@@ -583,18 +586,18 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-xl overflow-hidden">
               <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   Attendance
                 </div>
                 <div className="mt-2 text-2xl font-semibold tabular-nums text-white leading-none">
                   {attendanceRate !== null ? `${attendanceRate}%` : '—'}
                 </div>
-                <div className="mt-2 text-[11px] text-white/75 tabular-nums">
+                <div className="mt-2 text-[11px] text-white tabular-nums">
                   {studentAttendance.length} sessions
                 </div>
               </div>
               <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   Grades
                 </div>
                 <div className="mt-2 text-2xl font-semibold tabular-nums text-white leading-none">
@@ -602,21 +605,21 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
                     ? `${studentGrades.filter((g) => g.score !== null && g.score >= 50).length}/${studentGrades.length}`
                     : '—'}
                 </div>
-                <div className="mt-2 text-[11px] text-white/75">units passed</div>
+                <div className="mt-2 text-[11px] text-white">units passed</div>
               </div>
               <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   EPA
                 </div>
                 <div className="mt-2 text-base font-semibold text-white leading-tight">
                   {studentEPA?.status ?? 'Not Started'}
                 </div>
                 {studentEPA?.result && (
-                  <div className="mt-2 text-[11px] text-white/75">{studentEPA.result}</div>
+                  <div className="mt-2 text-[11px] text-white">{studentEPA.result}</div>
                 )}
               </div>
               <div className="bg-[hsl(0_0%_10%)] px-4 py-4">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   ILP Targets
                 </div>
                 <div className="mt-2 text-2xl font-semibold tabular-nums text-white leading-none">
@@ -624,17 +627,18 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
                     ? `${ilpTargets.achieved}/${ilpTargets.total}`
                     : '—'}
                 </div>
-                <div className="mt-2 text-[11px] text-white/75">achieved</div>
+                <div className="mt-2 text-[11px] text-white">achieved</div>
               </div>
             </div>
 
-            <button
+            <PrimaryButton
               onClick={handleGenerate}
               disabled={generating}
-              className="w-full h-12 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+              size="lg"
+              fullWidth
             >
               {generating ? 'Generating review…' : 'Generate ILP review with AI →'}
-            </button>
+            </PrimaryButton>
           </div>
         </motion.section>
       )}
@@ -659,23 +663,23 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70" />
               <div className="p-5 sm:p-6 space-y-5">
                 <div className="flex items-baseline justify-between">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                     Review
                   </div>
-                  <div className="text-[11px] text-white/75 tabular-nums">
+                  <div className="text-[11px] text-white tabular-nums">
                     {fmtDate(new Date(review.reviewDate))}
                   </div>
                 </div>
 
                 <div>
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-2">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-2">
                     Overall Progress
                   </div>
                   <p className="text-[13.5px] text-white leading-relaxed">{review.overallComment}</p>
                 </div>
 
                 <div className="pt-5 border-t border-white/[0.06]">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-2">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-2">
                     Strengths
                   </div>
                   <ul className="space-y-1.5">
@@ -685,14 +689,14 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
                           aria-hidden
                           className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 shrink-0"
                         />
-                        <span className="text-[13px] text-white/80 leading-relaxed">{s}</span>
+                        <span className="text-[13px] text-white leading-relaxed">{s}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 <div className="pt-5 border-t border-white/[0.06]">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-2">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-2">
                     Areas for development
                   </div>
                   <ul className="space-y-1.5">
@@ -702,7 +706,7 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
                           aria-hidden
                           className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5 shrink-0"
                         />
-                        <span className="text-[13px] text-white/80 leading-relaxed">{a}</span>
+                        <span className="text-[13px] text-white leading-relaxed">{a}</span>
                       </li>
                     ))}
                   </ul>
@@ -712,7 +716,7 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
 
             {/* SMART Targets */}
             <div className="space-y-3">
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 SMART targets
               </div>
               <ListCard>
@@ -738,14 +742,14 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
                       />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                             Target {i + 1}
                           </div>
                           <div className="flex items-center gap-2">
                             <Pill tone={tTone}>
                               {t.category.charAt(0).toUpperCase() + t.category.slice(1)}
                             </Pill>
-                            <span className="text-[11px] text-white/75 tabular-nums">
+                            <span className="text-[11px] text-white tabular-nums">
                               {fmtDate(new Date(t.targetDate))}
                             </span>
                           </div>
@@ -754,10 +758,10 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
                           {t.description}
                         </p>
                         <div className="mt-3 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-white/55">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.12em] text-white">
                             Success criteria
                           </div>
-                          <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                          <p className="mt-1 text-[12px] text-white leading-relaxed">
                             {t.successCriteria}
                           </p>
                         </div>
@@ -770,25 +774,15 @@ export function AIILPGeneratorSection({ onNavigate }: AIILPGeneratorSectionProps
 
             {/* Action buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3">
-              <button
-                onClick={handleRegenerate}
-                disabled={generating}
-                className="h-11 px-5 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white rounded-full text-[12.5px] font-medium hover:bg-[hsl(0_0%_15%)] disabled:opacity-40 transition-colors touch-manipulation"
-              >
+              <SecondaryButton onClick={handleRegenerate} disabled={generating}>
                 {generating ? 'Regenerating…' : 'Regenerate'}
-              </button>
-              <button
-                onClick={handleCopy}
-                className="h-11 px-5 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white rounded-full text-[12.5px] font-medium hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
-              >
+              </SecondaryButton>
+              <SecondaryButton onClick={handleCopy}>
                 {copied ? 'Copied ✓' : 'Copy review'}
-              </button>
-              <button
-                onClick={() => onNavigate('ilpmanagement')}
-                className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-              >
+              </SecondaryButton>
+              <PrimaryButton onClick={() => onNavigate('ilpmanagement')}>
                 Save to ILP →
-              </button>
+              </PrimaryButton>
             </div>
           </motion.section>
         )}

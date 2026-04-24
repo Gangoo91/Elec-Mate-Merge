@@ -18,10 +18,12 @@ import {
   ListCard,
   Pill,
   EmptyState,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
-import { cn } from '@/lib/utils';
 
 interface LiveLessonSectionProps {
   lessonId?: string;
@@ -166,12 +168,9 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
           description="In-lesson register with built-in timer and notes."
           tone="yellow"
           actions={
-            <button
-              onClick={onBack}
-              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-            >
+            <SecondaryButton onClick={onBack} size="sm">
               ← Back
-            </button>
+            </SecondaryButton>
           }
         />
       </motion.div>
@@ -221,7 +220,7 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
                   {a.name}
                 </span>
                 <Pill tone={STATUS_TONE[a.status]}>{a.status}</Pill>
-                <span className="text-white/60 text-[12px]" aria-hidden>
+                <span className="text-white text-[12px]" aria-hidden>
                   ↻
                 </span>
               </button>
@@ -236,27 +235,18 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="Key observations, differentiation notes, student engagement…"
-          className="min-h-[120px] text-sm touch-manipulation bg-[hsl(0_0%_12%)] border-white/[0.06] text-white placeholder:text-white/65 focus:border-elec-yellow"
+          className={`${textareaClass} min-h-[120px]`}
         />
       </motion.section>
 
       <motion.div variants={itemVariants} className="flex items-center justify-end gap-4">
-        <button
-          onClick={onBack}
-          className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-        >
-          Cancel
-        </button>
-        <button
+        <SecondaryButton onClick={onBack}>Cancel</SecondaryButton>
+        <PrimaryButton
           onClick={handleSave}
           disabled={saving || attendance.length === 0}
-          className={cn(
-            'h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold transition-opacity touch-manipulation',
-            (saving || attendance.length === 0) && 'opacity-40'
-          )}
         >
           {saving ? 'Saving…' : 'Save & mark delivered →'}
-        </button>
+        </PrimaryButton>
       </motion.div>
     </PageFrame>
   );

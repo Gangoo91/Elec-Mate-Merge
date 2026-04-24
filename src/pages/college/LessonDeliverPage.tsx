@@ -122,7 +122,7 @@ export default function LessonDeliverPage() {
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-red-300">
             Couldn't load plan
           </div>
-          <p className="text-white/80 text-sm leading-relaxed">
+          <p className="text-white text-sm leading-relaxed">
             {error ?? 'Lesson plan not found.'}
           </p>
           <button
@@ -159,7 +159,7 @@ export default function LessonDeliverPage() {
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={toggleFullscreen}
-            className="h-9 px-3.5 rounded-full border border-white/[0.1] text-[12px] text-white/85 hover:bg-white/[0.06] transition-colors"
+            className="h-9 px-3.5 rounded-full border border-white/[0.1] text-[12px] text-white hover:bg-white/[0.06] transition-colors"
           >
             Fullscreen
           </button>
@@ -169,10 +169,10 @@ export default function LessonDeliverPage() {
       {/* Session progress bar */}
       <div className="px-5 sm:px-8 pt-4">
         <div className="flex items-baseline justify-between gap-3 mb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             Session progress
           </div>
-          <div className="text-[11px] font-mono tabular-nums text-white/70">
+          <div className="text-[11px] font-mono tabular-nums text-white">
             {formatClock(elapsedSeconds)} / {formatClock(totalSeconds)}
           </div>
         </div>
@@ -191,7 +191,7 @@ export default function LessonDeliverPage() {
           {/* Activity header */}
           {current && (
             <div>
-              <div className="flex items-center gap-3 mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+              <div className="flex items-center gap-3 mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                 <span className="text-elec-yellow tabular-nums">
                   {String(index + 1).padStart(2, '0')} / {String(activities.length).padStart(2, '0')}
                 </span>
@@ -207,13 +207,13 @@ export default function LessonDeliverPage() {
           {/* Activity body */}
           {current && (
             <div className="overflow-y-auto pr-1">
-              <p className="text-[16px] sm:text-[18px] leading-relaxed text-white/85 max-w-[62ch]">
+              <p className="text-[16px] sm:text-[18px] leading-relaxed text-white max-w-[62ch]">
                 {current.description}
               </p>
 
               {current.teacher_moves && current.teacher_moves.length > 0 && (
                 <div className="mt-8">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55 mb-3">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-3">
                     Teacher moves
                   </div>
                   <ul className="space-y-3 max-w-[62ch]">
@@ -223,7 +223,7 @@ export default function LessonDeliverPage() {
                           className="mt-[12px] h-1.5 w-1.5 rounded-full bg-elec-yellow shrink-0"
                           aria-hidden
                         />
-                        <span className="text-[15px] sm:text-[16px] text-white/90 leading-relaxed">
+                        <span className="text-[15px] sm:text-[16px] text-white leading-relaxed">
                           {m}
                         </span>
                       </li>
@@ -245,7 +245,7 @@ export default function LessonDeliverPage() {
 
               {current.resources_needed && current.resources_needed.length > 0 && (
                 <div className="mt-8 text-[12.5px] text-white/65 leading-relaxed">
-                  <span className="text-white/85 font-medium">Resources · </span>
+                  <span className="text-white font-medium">Resources · </span>
                   {current.resources_needed.join(' · ')}
                 </div>
               )}
@@ -279,7 +279,7 @@ export default function LessonDeliverPage() {
       </main>
 
       {/* Bottom hint strip */}
-      <footer className="border-t border-white/[0.06] px-5 sm:px-8 py-2.5 flex items-center justify-center gap-5 text-[10.5px] text-white/45 font-mono tracking-wide flex-wrap">
+      <footer className="border-t border-white/[0.06] px-5 sm:px-8 py-2.5 flex items-center justify-center gap-5 text-[10.5px] text-white font-mono tracking-wide flex-wrap">
         <span>space play/pause</span>
         <span>← → nav</span>
         <span>r reset</span>
@@ -431,7 +431,7 @@ function TransportBtn({
         primary
           ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
           : subtle
-            ? 'text-white/70 hover:text-white hover:bg-white/[0.06]'
+            ? 'text-white hover:text-white hover:bg-white/[0.06]'
             : 'border border-white/[0.12] text-white hover:bg-white/[0.06]'
       )}
     >

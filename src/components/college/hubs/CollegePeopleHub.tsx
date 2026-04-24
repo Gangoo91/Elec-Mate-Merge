@@ -218,7 +218,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
                     accent={tone}
                     lead={
                       <div className="h-9 w-9 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
-                        <span className="text-[11px] font-semibold text-white/80 tabular-nums">
+                        <span className="text-[11px] font-semibold text-white tabular-nums">
                           {initials}
                         </span>
                       </div>
@@ -228,7 +228,7 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
                     trailing={
                       <div className="flex items-center gap-2 shrink-0">
                         {risk && risk.factors.length > 1 && (
-                          <span className="text-[10.5px] text-white/55 font-mono tabular-nums">
+                          <span className="text-[10.5px] text-white font-mono tabular-nums">
                             +{risk.factors.length - 1}
                           </span>
                         )}

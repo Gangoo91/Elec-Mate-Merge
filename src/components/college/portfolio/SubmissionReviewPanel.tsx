@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Select,
@@ -19,9 +18,6 @@ import {
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
 } from '@/components/ui/sheet';
 import { useAIPortfolioReview } from '@/hooks/college/useAIPortfolioReview';
 import type { CriterionAnalysis } from '@/hooks/college/useAIPortfolioReview';
@@ -39,17 +35,29 @@ import CriteriaChecklist, {
 import { CriteriaLinkerSheet } from '@/components/college/sheets/CriteriaLinkerSheet';
 import { CriteriaReferenceSheet } from '@/components/college/sheets/CriteriaReferenceSheet';
 import {
-  SuccessCheckmark,
   useHapticFeedback,
 } from '@/components/college/ui/HapticFeedback';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 import {
   PageFrame,
   SectionHeader,
   Pill,
   EmptyState,
   LoadingState,
+  Eyebrow,
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  SheetShell,
+  SuccessCheckmark,
+  selectTriggerClass,
+  selectContentClass,
+  textareaClass,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -364,7 +372,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <div className="text-[15px] font-medium text-white">{item.title}</div>
-            <div className="mt-1 text-[11.5px] text-white/75">
+            <div className="mt-1 text-[11.5px] text-white">
               Created {formatDate(item.createdAt)} · {Math.floor(item.timeSpent / 60)}h logged
             </div>
           </div>
@@ -374,7 +382,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         </div>
 
         {item.description && (
-          <p className="text-[13px] text-white/70 leading-relaxed">{item.description}</p>
+          <p className="text-[13px] text-white leading-relaxed">{item.description}</p>
         )}
 
         {item.skillsDemonstrated.length > 0 && (
@@ -392,15 +400,13 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-blue-400">
               Student Reflection
             </div>
-            <p className="mt-2 text-[13px] text-white/70 leading-relaxed">{item.reflectionNotes}</p>
+            <p className="mt-2 text-[13px] text-white leading-relaxed">{item.reflectionNotes}</p>
           </div>
         )}
 
         {itemACs.length > 0 && (
           <div className="space-y-2">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Linked Criteria ({itemACs.length})
-            </div>
+            <Eyebrow>Linked Criteria ({itemACs.length})</Eyebrow>
             <div className="flex flex-wrap gap-1.5">
               {itemACs.map((ac) => (
                 <button
@@ -424,9 +430,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
 
         {item.evidenceFiles.length > 0 && (
           <div className="space-y-2">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Evidence Files ({item.evidenceFiles.length})
-            </div>
+            <Eyebrow>Evidence Files ({item.evidenceFiles.length})</Eyebrow>
             <div className="space-y-2">
               {item.evidenceFiles.map((file) => (
                 <div
@@ -435,7 +439,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 >
                   <div className="flex-1 min-w-0">
                     <div className="text-[13px] text-white truncate">{file.fileName}</div>
-                    <div className="mt-0.5 text-[11px] text-white/70">
+                    <div className="mt-0.5 text-[11px] text-white">
                       {formatFileSize(file.fileSize)}
                     </div>
                   </div>
@@ -474,9 +478,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             ← Back
           </button>
           <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Review Submission
-            </div>
+            <Eyebrow>Review Submission</Eyebrow>
             <h1 className="mt-1 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-tight truncate">
               {submission.categoryName}
             </h1>
@@ -484,13 +486,9 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
         </div>
         <div className="shrink-0 flex items-center gap-2">
           {['submitted', 'under_review', 'resubmitted'].includes(submission.status) && (
-            <button
-              onClick={handleAIReview}
-              disabled={isReviewing}
-              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
-            >
+            <PrimaryButton onClick={handleAIReview} disabled={isReviewing}>
               {isReviewing ? 'Reviewing…' : 'AI Review'}
-            </button>
+            </PrimaryButton>
           )}
           <Pill tone={getStatusTone(submission.status)} className="capitalize">
             {submission.status.replace('_', ' ')}
@@ -515,18 +513,16 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             <div className="text-[15px] font-medium text-white truncate">
               {submission.studentName}
             </div>
-            <div className="mt-0.5 text-[12.5px] text-white/55 truncate">
+            <div className="mt-0.5 text-[12.5px] text-white truncate">
               {submission.qualificationTitle}
             </div>
           </div>
           <div className="text-right shrink-0 hidden sm:block">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Submitted
-            </div>
+            <Eyebrow>Submitted</Eyebrow>
             <div className="mt-0.5 text-[12.5px] text-white tabular-nums">
               {formatDate(submission.submittedAt)}
             </div>
-            <div className="mt-1.5 text-[11px] text-white/70">
+            <div className="mt-1.5 text-[11px] text-white">
               Attempt #{submission.submissionCount}
             </div>
           </div>
@@ -542,7 +538,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
               Previous Feedback
             </div>
           </div>
-          <p className="text-[13px] text-white/70 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             {submission.previousFeedback}
           </p>
           {submission.previousGrade && (
@@ -590,7 +586,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 >
                   <AccordionTrigger className="hover:no-underline px-5 py-4 min-h-[56px] touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors">
                     <div className="flex items-center gap-3 text-left flex-1 min-w-0">
-                      <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-white/55 tabular-nums shrink-0">
+                      <span className="text-[11px] font-medium uppercase tracking-[0.16em] text-white tabular-nums shrink-0">
                         {String(index + 1).padStart(2, '0')}
                       </span>
                       <span className="text-[14px] font-medium text-white truncate">
@@ -614,63 +610,51 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
       {/* Start Review */}
       {submission.status === 'submitted' && (
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-          <button
-            onClick={handleStartReview}
-            className="w-full h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-          >
+          <PrimaryButton fullWidth onClick={handleStartReview}>
             Start Review
-          </button>
+          </PrimaryButton>
         </div>
       )}
 
       {/* Feedback Form */}
       {(submission.status === 'under_review' || submission.status === 'resubmitted') && (
-        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-5">
-          <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Assessor Feedback
-            </div>
-            <h3 className="mt-1 text-lg font-semibold text-white">Provide detailed feedback</h3>
-          </div>
+        <FormCard eyebrow="Assessor Feedback">
+          <h3 className="text-lg font-semibold text-white">Provide detailed feedback</h3>
 
-          <div className="space-y-2">
-            <Label className="text-[12.5px] text-white/70">Overall Feedback *</Label>
+          <Field label="Overall Feedback" required>
             <Textarea
               placeholder="Provide comprehensive feedback on the submission…"
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
-              className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 min-h-[120px] touch-manipulation text-base"
+              className={cn(textareaClass, 'min-h-[120px]')}
             />
-          </div>
+          </Field>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="text-[12.5px] text-white/70">Strengths Noted</Label>
+          <FormGrid cols={2}>
+            <Field label="Strengths Noted">
               <Textarea
                 placeholder="What did the student do well?"
                 value={strengths}
                 onChange={(e) => setStrengths(e.target.value)}
-                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 touch-manipulation text-base"
+                className={textareaClass}
               />
-            </div>
-            <div className="space-y-2">
-              <Label className="text-[12.5px] text-white/70">Areas for Improvement</Label>
+            </Field>
+            <Field label="Areas for Improvement">
               <Textarea
                 placeholder="What could be improved?"
                 value={improvements}
                 onChange={(e) => setImprovements(e.target.value)}
-                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 touch-manipulation text-base"
+                className={textareaClass}
               />
-            </div>
-          </div>
+            </Field>
+          </FormGrid>
 
-          <div className="space-y-2">
-            <Label className="text-[12.5px] text-white/70">Grade *</Label>
+          <Field label="Grade" required>
             <Select value={grade} onValueChange={setGrade}>
-              <SelectTrigger className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white focus:border-elec-yellow/60 touch-manipulation rounded-xl">
+              <SelectTrigger className={selectTriggerClass}>
                 <SelectValue placeholder="Select grade" />
               </SelectTrigger>
-              <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+              <SelectContent className={selectContentClass}>
                 <SelectItem value="distinction">Distinction</SelectItem>
                 <SelectItem value="merit">Merit</SelectItem>
                 <SelectItem value="pass">Pass</SelectItem>
@@ -678,24 +662,21 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                 <SelectItem value="not_yet_competent">Not Yet Competent</SelectItem>
               </SelectContent>
             </Select>
-          </div>
+          </Field>
 
           <div className="flex flex-col sm:flex-row gap-3 pt-2">
-            <button
-              onClick={() => setShowRejectSheet(true)}
-              className="h-11 px-5 rounded-full text-[13px] font-medium text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-colors touch-manipulation"
-            >
+            <DestructiveButton onClick={() => setShowRejectSheet(true)}>
               Request more evidence
-            </button>
-            <button
-              onClick={handleSubmitFeedback}
+            </DestructiveButton>
+            <PrimaryButton
+              className="flex-1"
               disabled={!feedback || !grade || isSubmitting}
-              className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+              onClick={handleSubmitFeedback}
             >
               {isSubmitting ? 'Submitting…' : 'Submit Feedback'}
-            </button>
+            </PrimaryButton>
           </div>
-        </div>
+        </FormCard>
       )}
 
       {/* Sign-off Section */}
@@ -708,15 +689,14 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
             </div>
           </div>
           <h3 className="text-lg font-semibold text-white">Sign off submission</h3>
-          <p className="mt-1 text-[13px] text-white/55">
+          <p className="mt-1 text-[13px] text-white">
             This submission has been approved. Sign off to complete the assessment.
           </p>
-          <button
-            onClick={() => setShowSignOffSheet(true)}
-            className="mt-5 w-full h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-          >
-            Sign Off Submission
-          </button>
+          <div className="mt-5">
+            <PrimaryButton fullWidth onClick={() => setShowSignOffSheet(true)}>
+              Sign Off Submission
+            </PrimaryButton>
+          </div>
         </div>
       )}
 
@@ -724,37 +704,25 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
       <Sheet open={showSignOffSheet} onOpenChange={setShowSignOffSheet}>
         <SheetContent
           side="bottom"
-          className="h-auto max-h-[50vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >
-          <div className="flex flex-col">
-            <div className="flex justify-center pt-2.5 pb-1">
-              <div className="h-1 w-10 rounded-full bg-white/20" />
-            </div>
-            <SheetHeader className="px-5 pb-4">
-              <SheetTitle className="text-base text-white">Confirm Sign-off</SheetTitle>
-              <p className="text-[13px] text-white/55 mt-1">
-                By signing off this submission, you confirm that all evidence has been reviewed
-                and meets the required standard for this qualification unit.
-              </p>
-            </SheetHeader>
-            <SheetFooter className="border-t border-white/[0.06] p-5">
-              <div className="flex gap-3 w-full">
-                <button
-                  onClick={() => setShowSignOffSheet(false)}
-                  className="flex-1 h-11 px-5 rounded-full text-[13px] font-medium text-white/70 border border-white/[0.08] hover:bg-white/5 transition-colors touch-manipulation"
-                >
+          <SheetShell
+            eyebrow="Sign-off"
+            title="Confirm Sign-off"
+            description="By signing off this submission, you confirm that all evidence has been reviewed and meets the required standard for this qualification unit."
+            footer={
+              <>
+                <SecondaryButton fullWidth onClick={() => setShowSignOffSheet(false)}>
                   Cancel
-                </button>
-                <button
-                  onClick={handleSignOff}
-                  disabled={isSubmitting}
-                  className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
-                >
+                </SecondaryButton>
+                <PrimaryButton fullWidth disabled={isSubmitting} onClick={handleSignOff}>
                   {isSubmitting ? 'Confirming…' : 'Confirm Sign-off'}
-                </button>
-              </div>
-            </SheetFooter>
-          </div>
+                </PrimaryButton>
+              </>
+            }
+          >
+            <div />
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
@@ -762,44 +730,36 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
       <Sheet open={showRejectSheet} onOpenChange={setShowRejectSheet}>
         <SheetContent
           side="bottom"
-          className="h-auto max-h-[60vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >
-          <div className="flex flex-col">
-            <div className="flex justify-center pt-2.5 pb-1">
-              <div className="h-1 w-10 rounded-full bg-white/20" />
-            </div>
-            <SheetHeader className="px-5 pb-4">
-              <SheetTitle className="text-base text-white">Request Additional Evidence</SheetTitle>
-              <p className="text-[13px] text-white/55 mt-1">
-                Explain what additional evidence the student needs to provide.
-              </p>
-            </SheetHeader>
-            <div className="px-5 pb-4">
+          <SheetShell
+            eyebrow="Evidence"
+            title="Request Additional Evidence"
+            description="Explain what additional evidence the student needs to provide."
+            footer={
+              <>
+                <SecondaryButton fullWidth onClick={() => setShowRejectSheet(false)}>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton
+                  fullWidth
+                  disabled={!rejectionReason || isSubmitting}
+                  onClick={handleRequestMoreEvidence}
+                >
+                  {isSubmitting ? 'Sending…' : 'Send Request'}
+                </PrimaryButton>
+              </>
+            }
+          >
+            <Field label="Additional evidence required">
               <Textarea
                 placeholder="Describe the additional evidence required…"
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
-                className="bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 min-h-[100px] touch-manipulation text-base"
+                className={cn(textareaClass, 'min-h-[100px]')}
               />
-            </div>
-            <SheetFooter className="border-t border-white/[0.06] p-5">
-              <div className="flex gap-3 w-full">
-                <button
-                  onClick={() => setShowRejectSheet(false)}
-                  className="flex-1 h-11 px-5 rounded-full text-[13px] font-medium text-white/70 border border-white/[0.08] hover:bg-white/5 transition-colors touch-manipulation"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleRequestMoreEvidence}
-                  disabled={!rejectionReason || isSubmitting}
-                  className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
-                >
-                  {isSubmitting ? 'Sending…' : 'Send Request'}
-                </button>
-              </div>
-            </SheetFooter>
-          </div>
+            </Field>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 

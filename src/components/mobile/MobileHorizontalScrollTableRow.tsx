@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Trash2 } from 'lucide-react';
+import { Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { Input } from '@/components/ui/input';
 import {
@@ -34,12 +34,20 @@ interface MobileHorizontalScrollTableRowProps {
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
+  onMoveUp?: (id: string) => void;
+  onMoveDown?: (id: string) => void;
+  canMoveUp?: boolean;
+  canMoveDown?: boolean;
 }
 
 const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTableRowProps> = ({
   result,
   onUpdate,
   onRemove,
+  onMoveUp,
+  onMoveDown,
+  canMoveUp = false,
+  canMoveDown = false,
 }) => {
   const { toast } = useToast();
 
@@ -523,15 +531,41 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
       </TableCell>
 
       {/* Actions Column */}
-      <TableCell className="border-l border-border p-0.5 whitespace-nowrap bg-card w-[83px] min-w-[83px] max-w-[83px]">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => onRemove(result.id)}
-          className="h-11 w-11 text-destructive hover:bg-destructive/10 touch-manipulation"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+      <TableCell className="border-l border-border p-0.5 whitespace-nowrap bg-card w-[140px] min-w-[140px] max-w-[140px]">
+        <div className="flex items-center gap-0.5">
+          {onMoveUp && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onMoveUp(result.id)}
+              disabled={!canMoveUp}
+              className="h-11 w-9 text-muted-foreground hover:bg-muted/40 touch-manipulation disabled:opacity-25"
+              title="Move up"
+            >
+              <ChevronUp className="h-4 w-4" />
+            </Button>
+          )}
+          {onMoveDown && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onMoveDown(result.id)}
+              disabled={!canMoveDown}
+              className="h-11 w-9 text-muted-foreground hover:bg-muted/40 touch-manipulation disabled:opacity-25"
+              title="Move down"
+            >
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+          )}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onRemove(result.id)}
+            className="h-11 w-11 text-destructive hover:bg-destructive/10 touch-manipulation"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       </TableCell>
     </TableRow>
   );

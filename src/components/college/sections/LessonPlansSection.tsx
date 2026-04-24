@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
@@ -20,31 +21,76 @@ import {
 } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 
-function parseObjectives(objectives: string | null): string[] {
+interface ParsedObjective {
+  text: string;
+  acCodes: string[];
+}
+
+/**
+ * Parse the `objectives` column on college_lesson_plans. The AI generator
+ * writes a JSON array of { text, ac_codes[] } objects; legacy seed rows
+ * contain plain strings split by newlines or commas. Handle both.
+ */
+function parseObjectives(objectives: string | null): ParsedObjective[] {
   if (!objectives) return [];
-  const byNewline = objectives
+  const trimmed = objectives.trim();
+
+  // Try JSON first
+  if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+    try {
+      const parsed = JSON.parse(trimmed);
+      if (Array.isArray(parsed)) {
+        return parsed
+          .map((o: unknown): ParsedObjective | null => {
+            if (typeof o === 'string') return { text: o, acCodes: [] };
+            if (o && typeof o === 'object') {
+              const obj = o as { text?: unknown; ac_codes?: unknown };
+              const text = typeof obj.text === 'string' ? obj.text : null;
+              const acCodes = Array.isArray(obj.ac_codes)
+                ? (obj.ac_codes as unknown[]).filter(
+                    (v): v is string => typeof v === 'string'
+                  )
+                : [];
+              return text ? { text, acCodes } : null;
+            }
+            return null;
+          })
+          .filter((o): o is ParsedObjective => o !== null);
+      }
+    } catch {
+      /* fall through to legacy parsing */
+    }
+  }
+
+  // Legacy: newline-separated
+  const byNewline = trimmed
     .split('\n')
     .map((s) => s.trim())
     .filter(Boolean);
-  if (byNewline.length > 1) return byNewline;
-  return objectives
+  if (byNewline.length > 1) return byNewline.map((t) => ({ text: t, acCodes: [] }));
+
+  // Legacy: comma-separated
+  return trimmed
     .split(',')
     .map((s) => s.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .map((t) => ({ text: t, acCodes: [] }));
 }
 
 export function LessonPlansSection() {
   const { lessonPlans, cohorts, staff, updateLessonPlan } = useCollegeSupabase();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
 
   const filteredLessons = lessonPlans.filter((lesson) => {
     const query = searchQuery.toLowerCase();
-    const objectivesStr = lesson.objectives ?? '';
+    const objectives = parseObjectives(lesson.objectives);
+    const objectivesText = objectives.map((o) => o.text).join(' ');
     const matchesSearch =
-      lesson.title.toLowerCase().includes(query) || objectivesStr.toLowerCase().includes(query);
+      lesson.title.toLowerCase().includes(query) || objectivesText.toLowerCase().includes(query);
     const matchesStatus =
       filterStatus === 'all' ||
       lesson.status === filterStatus ||
@@ -75,10 +121,14 @@ export function LessonPlansSection() {
   };
   const statusLabel = (status: string | null) => (status === 'Approved' ? 'Published' : status ?? 'Unknown');
 
-  const getCohortName = (cohortId: string | null) =>
-    !cohortId ? 'Unknown' : cohorts.find((c) => c.id === cohortId)?.name || 'Unknown';
-  const getTutorName = (tutorId: string | null) =>
-    !tutorId ? 'Unknown' : staff.find((s) => s.id === tutorId)?.name || 'Unknown';
+  const getCohortName = (cohortId: string | null) => {
+    if (!cohortId) return 'No cohort';
+    return cohorts.find((c) => c.id === cohortId)?.name || 'Cohort missing';
+  };
+  const getTutorName = (tutorId: string | null) => {
+    if (!tutorId) return null;
+    return staff.find((s) => s.id === tutorId)?.name || null;
+  };
 
   const isUpcoming = (date?: string | null) => {
     if (!date) return false;
@@ -105,13 +155,9 @@ export function LessonPlansSection() {
           tone="blue"
           actions={
             <button
-              onClick={() =>
-                toast({
-                  title: 'New Lesson Plan',
-                  description: 'Lesson plan creation is coming soon.',
-                })
-              }
+              onClick={() => navigate('/college?section=courses')}
               className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              title="Pick a qualification and unit to generate a new lesson plan"
             >
               New plan →
             </button>
@@ -136,7 +182,7 @@ export function LessonPlansSection() {
             <select
               value={filterCohort}
               onChange={(e) => setFilterCohort(e.target.value)}
-              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60"
             >
               <option value="all">All Cohorts</option>
               {cohorts
@@ -165,6 +211,11 @@ export function LessonPlansSection() {
               const past = isPastUndelivered(lesson);
               const tone = statusTone(lesson.status);
 
+              const cohortName = getCohortName(lesson.cohort_id);
+              const tutorName = getTutorName(lesson.tutor_id);
+              const subtitleParts = [cohortName, tutorName].filter(Boolean) as string[];
+              const openPlan = () => navigate(`/college/lessons/${lesson.id}`);
+
               return (
                 <div
                   key={lesson.id}
@@ -181,7 +232,11 @@ export function LessonPlansSection() {
                           : toneDot[tone]
                     )}
                   />
-                  <div className="flex-1 min-w-0">
+                  <button
+                    type="button"
+                    onClick={openPlan}
+                    className="flex-1 min-w-0 text-left touch-manipulation"
+                  >
                     <div className="flex items-baseline justify-between gap-2">
                       <div className="min-w-0">
                         <div className="flex items-center gap-2 flex-wrap">
@@ -191,82 +246,49 @@ export function LessonPlansSection() {
                           {upcoming && <Pill tone="blue">Upcoming</Pill>}
                           {past && <Pill tone="amber">Overdue</Pill>}
                         </div>
-                        <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
-                          {getCohortName(lesson.cohort_id)} · {getTutorName(lesson.tutor_id)}
+                        <div className="mt-0.5 text-[11.5px] text-white/70 truncate">
+                          {subtitleParts.length > 0
+                            ? subtitleParts.join(' · ')
+                            : 'Unscheduled'}
                         </div>
-                      </div>
-                      <div className="flex items-center gap-1.5 shrink-0">
-                        <Pill tone={tone}>{statusLabel(lesson.status)}</Pill>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <button
-                              className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
-                              aria-label="Options"
-                            >
-                              ⋯
-                            </button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() =>
-                                toast({
-                                  title: lesson.title,
-                                  description:
-                                    objectives.length > 0
-                                      ? `Objectives: ${objectives.join(', ')}`
-                                      : 'No objectives set.',
-                                })
-                              }
-                            >
-                              View plan
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => toast({ title: 'Edit Plan', description: 'Coming soon.' })}
-                            >
-                              Edit plan
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={() => toast({ title: 'Duplicate', description: 'Coming soon.' })}
-                            >
-                              Duplicate
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11 touch-manipulation"
-                              onClick={async () => {
-                                await updateLessonPlan(lesson.id, { status: 'Delivered' });
-                                toast({ title: 'Marked as Delivered', description: lesson.title });
-                              }}
-                            >
-                              Mark as delivered
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
                       </div>
                     </div>
 
                     {objectives.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-1">
-                        {objectives.slice(0, 3).map((obj, i) => (
-                          <span
+                      <ul className="mt-3 space-y-1">
+                        {objectives.slice(0, 3).map((o, i) => (
+                          <li
                             key={i}
-                            className="text-[11px] text-white/60 bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
+                            className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
                           >
-                            {obj.length > 40 ? obj.substring(0, 40) + '…' : obj}
-                          </span>
+                            <span
+                              className="mt-[7px] h-1 w-1 rounded-full bg-elec-yellow/70 shrink-0"
+                              aria-hidden
+                            />
+                            <span className="flex-1">
+                              {o.text.length > 90
+                                ? o.text.slice(0, 90) + '…'
+                                : o.text}
+                              {o.acCodes.length > 0 && (
+                                <span className="ml-2 text-[10.5px] font-mono tabular-nums text-elec-yellow/80">
+                                  AC {o.acCodes.join(' · ')}
+                                </span>
+                              )}
+                            </span>
+                          </li>
                         ))}
                         {objectives.length > 3 && (
-                          <span className="text-[11px] text-white/70 px-1.5 py-0.5">
-                            +{objectives.length - 3}
-                          </span>
+                          <li className="ml-3 text-[11px] text-white/55">
+                            +{objectives.length - 3} more
+                          </li>
                         )}
-                      </div>
+                      </ul>
                     )}
 
-                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
-                      <span className="tabular-nums">{lesson.duration_minutes ?? 0} mins</span>
+                    <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/65">
+                      <span className="tabular-nums">
+                        {lesson.duration_minutes ?? 0} min
+                      </span>
                       {lesson.scheduled_date && (
                         <span className="tabular-nums">
                           {new Date(lesson.scheduled_date).toLocaleDateString('en-GB', {
@@ -280,6 +302,53 @@ export function LessonPlansSection() {
                         {lesson.resources?.length || 0} resources
                       </span>
                     </div>
+                  </button>
+
+                  <div className="flex items-center gap-1.5 shrink-0">
+                    <Pill tone={tone}>
+                      <span className="hidden sm:inline">{statusLabel(lesson.status)}</span>
+                      <span className="sm:hidden">
+                        {(statusLabel(lesson.status) ?? '?').charAt(0)}
+                      </span>
+                    </Pill>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          className="h-9 w-9 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+                          aria-label="Options"
+                        >
+                          <span className="text-[15px] font-semibold tracking-[0.12em]">
+                            ⋯
+                          </span>
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        align="end"
+                        className="bg-[hsl(0_0%_11%)] border border-white/[0.08] text-white min-w-[180px]"
+                      >
+                        <DropdownMenuItem
+                          className="h-11 touch-manipulation text-[13px]"
+                          onClick={openPlan}
+                        >
+                          Open plan
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11 touch-manipulation text-[13px]"
+                          onClick={() => toast({ title: 'Duplicate', description: 'Coming soon.' })}
+                        >
+                          Duplicate
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          className="h-11 touch-manipulation text-[13px]"
+                          onClick={async () => {
+                            await updateLessonPlan(lesson.id, { status: 'Delivered' });
+                            toast({ title: 'Marked as delivered', description: lesson.title });
+                          }}
+                        >
+                          Mark as delivered
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
                 </div>
               );

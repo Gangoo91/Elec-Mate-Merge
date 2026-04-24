@@ -17,6 +17,11 @@ import {
   ListRow,
   Pill,
   EmptyState,
+  FormCard,
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -97,15 +102,16 @@ export function StudentDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
-          {/* Drag Handle */}
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+      >
+        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Header */}
-          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-5">
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.08] px-5 pb-5">
             <div className="flex items-start gap-4">
               <Avatar className="h-16 w-16 shrink-0 ring-1 ring-white/[0.08]">
                 <AvatarImage src={student.photo_url ?? undefined} />
@@ -115,12 +121,10 @@ export function StudentDetailSheet({
               </Avatar>
 
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                  Student
-                </div>
-                <SheetTitle className="mt-1 text-xl text-left">{student.name}</SheetTitle>
+                <Eyebrow>Student</Eyebrow>
+                <SheetTitle className="mt-1 text-xl text-left text-white">{student.name}</SheetTitle>
                 {student.uln && (
-                  <p className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                  <p className="mt-0.5 text-[11.5px] text-white tabular-nums">
                     ULN · {student.uln}
                   </p>
                 )}
@@ -136,19 +140,18 @@ export function StudentDetailSheet({
               </div>
             </div>
 
-            {/* Quick Actions */}
             <div className="flex items-center gap-4 mt-5">
               {student.phone && (
                 <a
                   href={`tel:${student.phone}`}
-                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                  className="text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
                 >
                   Call
                 </a>
               )}
               <a
                 href={`mailto:${student.email}`}
-                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                className="text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
               >
                 Email
               </a>
@@ -160,18 +163,17 @@ export function StudentDetailSheet({
             </div>
           </SheetHeader>
 
-          {/* Tabs */}
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06] flex-shrink-0">
+            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.08] flex-shrink-0">
               {['overview', 'attendance', 'ilp', 'notes'].map((tab) => (
                 <TabsTrigger
                   key={tab}
                   value={tab}
-                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--elec-yellow))] rounded-none capitalize"
+                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent data-[state=active]:shadow-[inset_0_-2px_0_0_hsl(var(--elec-yellow))] rounded-none capitalize"
                 >
                   {tab}
                 </TabsTrigger>
@@ -180,7 +182,6 @@ export function StudentDetailSheet({
 
             <div className="flex-1 overflow-y-auto overscroll-contain">
               <AnimatePresence mode="wait">
-                {/* Overview */}
                 {activeTab === 'overview' && (
                   <motion.div
                     key="overview"
@@ -191,14 +192,10 @@ export function StudentDetailSheet({
                     transition={{ duration: 0.2 }}
                     className="p-5 space-y-5"
                   >
-                    {/* Contact Details */}
-                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                        Contact
-                      </div>
-                      <div className="mt-3 space-y-2 text-[13px]">
+                    <FormCard eyebrow="Contact">
+                      <div className="space-y-2 text-[13px]">
                         <div className="flex items-center justify-between">
-                          <span className="text-white/75">Email</span>
+                          <span className="text-white">Email</span>
                           <a
                             href={`mailto:${student.email}`}
                             className="text-white hover:text-elec-yellow truncate ml-3 max-w-[60%]"
@@ -208,7 +205,7 @@ export function StudentDetailSheet({
                         </div>
                         {student.phone && (
                           <div className="flex items-center justify-between">
-                            <span className="text-white/75">Phone</span>
+                            <span className="text-white">Phone</span>
                             <a
                               href={`tel:${student.phone}`}
                               className="text-white hover:text-elec-yellow tabular-nums"
@@ -218,77 +215,64 @@ export function StudentDetailSheet({
                           </div>
                         )}
                       </div>
-                    </div>
+                    </FormCard>
 
-                    {/* Enrolment */}
-                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                        Enrolment
-                      </div>
-                      <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 text-[13px]">
+                    <FormCard eyebrow="Enrolment">
+                      <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-[13px]">
                         <div>
-                          <div className="text-[11px] text-white/55 uppercase tracking-[0.14em]">Cohort</div>
+                          <Eyebrow>Cohort</Eyebrow>
                           <div className="mt-1 text-white font-medium">{cohortName}</div>
                         </div>
                         <div>
-                          <div className="text-[11px] text-white/55 uppercase tracking-[0.14em]">Status</div>
+                          <Eyebrow>Status</Eyebrow>
                           <div className="mt-1 text-white font-medium">{student.status}</div>
                         </div>
                         <div>
-                          <div className="text-[11px] text-white/55 uppercase tracking-[0.14em]">Start</div>
+                          <Eyebrow>Start</Eyebrow>
                           <div className="mt-1 text-white font-medium tabular-nums">
                             {formatUKDateShort(student.start_date)}
                           </div>
                         </div>
                         <div>
-                          <div className="text-[11px] text-white/55 uppercase tracking-[0.14em]">Expected End</div>
+                          <Eyebrow>Expected End</Eyebrow>
                           <div className="mt-1 text-white font-medium tabular-nums">
                             {formatUKDateShort(student.expected_end_date)}
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </FormCard>
 
-                    {/* Progress */}
-                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                        Progress
-                      </div>
-                      <div className="mt-3 flex items-baseline justify-between">
-                        <span className="text-[13px] text-white/60">Overall</span>
+                    <FormCard eyebrow="Progress">
+                      <div className="flex items-baseline justify-between">
+                        <span className="text-[13px] text-white">Overall</span>
                         <span className={cn('text-3xl font-semibold tabular-nums', progressPctTone)}>
                           {progressPercent}%
                         </span>
                       </div>
-                      <div className="mt-2 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                      <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
                         <div
                           className="h-full bg-elec-yellow/80 rounded-full transition-all"
                           style={{ width: `${progressPercent}%` }}
                         />
                       </div>
-                      <div className="mt-4 pt-4 border-t border-white/[0.06] grid grid-cols-2 gap-4 text-[12px]">
+                      <div className="pt-4 border-t border-white/[0.08] grid grid-cols-2 gap-4 text-[12px]">
                         <div>
-                          <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
-                            Attendance
-                          </div>
+                          <Eyebrow>Attendance</Eyebrow>
                           <div className={cn('mt-1 text-2xl font-semibold tabular-nums leading-none', attendancePctTone)}>
                             {attendanceRate}%
                           </div>
                         </div>
                         <div>
-                          <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
-                            Complete
-                          </div>
+                          <Eyebrow>Complete</Eyebrow>
                           <div className={cn('mt-1 text-2xl font-semibold tabular-nums leading-none', progressPctTone)}>
                             {progressPercent}%
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </FormCard>
                   </motion.div>
                 )}
 
-                {/* Attendance */}
                 {activeTab === 'attendance' && (
                   <motion.div
                     key="attendance"
@@ -299,17 +283,15 @@ export function StudentDetailSheet({
                     transition={{ duration: 0.2 }}
                     className="p-5 space-y-5"
                   >
-                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+                    <FormCard>
                       <div className="flex items-baseline justify-between">
                         <div>
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                            Attendance Rate
-                          </div>
+                          <Eyebrow>Attendance Rate</Eyebrow>
                           <div className={cn('mt-1 text-4xl font-semibold tabular-nums leading-none', attendancePctTone)}>
                             {attendanceRate}%
                           </div>
                         </div>
-                        <div className="text-right text-[11px] text-white/75 tabular-nums">
+                        <div className="text-right text-[11px] text-white tabular-nums">
                           <div>{studentAttendance.length} sessions</div>
                           <div>
                             {studentAttendance.filter((a) => a.status === 'Present').length}{' '}
@@ -317,7 +299,7 @@ export function StudentDetailSheet({
                           </div>
                         </div>
                       </div>
-                      <div className="mt-4 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                      <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
                         <div
                           className={cn(
                             'h-full rounded-full transition-all',
@@ -330,12 +312,9 @@ export function StudentDetailSheet({
                           style={{ width: `${attendanceRate}%` }}
                         />
                       </div>
-                    </div>
+                    </FormCard>
 
-                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
-                        Attendance Pattern
-                      </div>
+                    <FormCard eyebrow="Attendance Pattern">
                       <AttendanceHeatmap
                         records={studentAttendance.map((a) => ({
                           date: a.date,
@@ -343,12 +322,10 @@ export function StudentDetailSheet({
                         }))}
                         weeks={8}
                       />
-                    </div>
+                    </FormCard>
 
                     <div>
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
-                        Recent Records
-                      </div>
+                      <Eyebrow className="mb-3">Recent Records</Eyebrow>
                       {studentAttendance.length === 0 ? (
                         <EmptyState title="No attendance records yet" />
                       ) : (
@@ -376,7 +353,6 @@ export function StudentDetailSheet({
                   </motion.div>
                 )}
 
-                {/* ILP */}
                 {activeTab === 'ilp' && (
                   <motion.div
                     key="ilp"
@@ -389,49 +365,38 @@ export function StudentDetailSheet({
                   >
                     {studentILP ? (
                       <>
-                        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                          <div className="flex items-baseline justify-between">
-                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                              Individual Learning Plan
-                            </div>
+                        <FormCard eyebrow="Individual Learning Plan">
+                          <div className="flex items-center justify-end -mt-1">
                             <Pill tone={studentILP.status === 'Active' ? 'green' : 'yellow'}>
                               {studentILP.status}
                             </Pill>
                           </div>
-                          <div className="mt-4 grid grid-cols-2 gap-4 text-[12.5px]">
+                          <div className="grid grid-cols-2 gap-4 text-[12.5px]">
                             <div>
-                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
-                                Next Review
-                              </div>
+                              <Eyebrow>Next Review</Eyebrow>
                               <div className="mt-1 text-white font-medium tabular-nums">
                                 {formatUKDateShort(studentILP.review_date)}
                               </div>
                             </div>
                             <div>
-                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
-                                Last Reviewed
-                              </div>
+                              <Eyebrow>Last Reviewed</Eyebrow>
                               <div className="mt-1 text-white font-medium tabular-nums">
                                 {formatUKDateShort(studentILP.last_reviewed)}
                               </div>
                             </div>
                           </div>
                           {studentILP.support_needs && (
-                            <div className="mt-4 pt-4 border-t border-white/[0.06]">
-                              <div className="text-[10px] uppercase tracking-[0.12em] text-white/55 mb-1.5">
-                                Support Needs
-                              </div>
-                              <p className="text-[13px] text-white/70 leading-relaxed">
+                            <div className="pt-4 border-t border-white/[0.08]">
+                              <Eyebrow>Support Needs</Eyebrow>
+                              <p className="mt-1.5 text-[13px] text-white leading-relaxed">
                                 {studentILP.support_needs}
                               </p>
                             </div>
                           )}
-                        </div>
+                        </FormCard>
 
                         <div>
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
-                            Targets
-                          </div>
+                          <Eyebrow className="mb-3">Targets</Eyebrow>
                           {!studentILP.targets || studentILP.targets.length === 0 ? (
                             <EmptyState title="No targets set yet" />
                           ) : (
@@ -462,7 +427,6 @@ export function StudentDetailSheet({
                   </motion.div>
                 )}
 
-                {/* Notes */}
                 {activeTab === 'notes' && (
                   <motion.div
                     key="notes"
@@ -483,28 +447,18 @@ export function StudentDetailSheet({
             </div>
           </Tabs>
 
-          {/* Footer */}
-          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-5 flex-row items-center justify-end gap-4">
-            <button
-              onClick={() => onOpenChange(false)}
-              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-            >
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.08] p-5 flex-row items-center justify-end gap-4">
+            <SecondaryButton onClick={() => onOpenChange(false)}>
               Close
-            </button>
+            </SecondaryButton>
             {student.status === 'Active' && (
-              <button
-                onClick={() => onWithdraw?.(student)}
-                className="text-[12.5px] font-medium text-red-400 hover:text-red-300 transition-colors touch-manipulation"
-              >
+              <DestructiveButton onClick={() => onWithdraw?.(student)}>
                 Withdraw
-              </button>
+              </DestructiveButton>
             )}
-            <button
-              onClick={() => onEdit?.(student)}
-              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-            >
+            <PrimaryButton onClick={() => onEdit?.(student)}>
               Edit →
-            </button>
+            </PrimaryButton>
           </SheetFooter>
         </div>
       </SheetContent>

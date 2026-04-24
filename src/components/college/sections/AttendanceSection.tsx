@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { TakeAttendanceDialog } from '@/components/college/dialogs/TakeAttendanceDialog';
@@ -29,6 +30,11 @@ import {
   EmptyState,
   SectionHeader,
   itemVariants,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  PrimaryButton,
+  SecondaryButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -188,7 +194,7 @@ export function AttendanceSection() {
             <select
               value={filterCohort}
               onChange={(e) => setFilterCohort(e.target.value)}
-              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+              className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60"
             >
               <option value="all">All Cohorts</option>
               {cohorts
@@ -225,17 +231,17 @@ export function AttendanceSection() {
                       <div className="text-[14px] font-medium text-white truncate">
                         {studentInfo.name}
                       </div>
-                      <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
+                      <div className="mt-0.5 text-[11.5px] text-white truncate">
                         {getCohortName(studentInfo.cohortId)}
                       </div>
                       {record.notes && (
-                        <div className="mt-1 text-[11.5px] text-white/60 truncate">
+                        <div className="mt-1 text-[11.5px] text-white truncate">
                           Note · {record.notes}
                         </div>
                       )}
                     </div>
                     <div className="hidden sm:block text-right shrink-0">
-                      <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
+                      <div className="text-[10px] uppercase tracking-[0.12em] text-white">
                         {new Date(record.date).toLocaleDateString('en-GB', { weekday: 'short' })}
                       </div>
                       <div className="text-[11.5px] font-medium text-white tabular-nums">
@@ -249,7 +255,7 @@ export function AttendanceSection() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button
-                          className="text-white/75 hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
+                          className="text-white hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
                           aria-label="Options"
                         >
                           ⋯
@@ -281,32 +287,28 @@ export function AttendanceSection() {
                   {editingRecordId === record.id && (
                     <div className="flex items-center gap-2 px-5 sm:px-6 pb-4 bg-[hsl(0_0%_9%)]">
                       <Select value={editStatus} onValueChange={setEditStatus}>
-                        <SelectTrigger className="h-11 touch-manipulation flex-1 bg-[hsl(0_0%_12%)] border-white/[0.08]">
+                        <SelectTrigger className={cn(selectTriggerClass, 'flex-1')}>
                           <SelectValue />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent className={selectContentClass}>
                           <SelectItem value="Present">Present</SelectItem>
                           <SelectItem value="Absent">Absent</SelectItem>
                           <SelectItem value="Late">Late</SelectItem>
                           <SelectItem value="Authorised">Authorised</SelectItem>
                         </SelectContent>
                       </Select>
-                      <button
+                      <PrimaryButton
                         onClick={async () => {
                           await updateAttendance(record.id, { status: editStatus });
                           setEditingRecordId(null);
                           toast({ title: 'Record updated', description: `Set to ${editStatus}` });
                         }}
-                        className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
                       >
                         Save
-                      </button>
-                      <button
-                        onClick={() => setEditingRecordId(null)}
-                        className="h-11 px-4 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-                      >
+                      </PrimaryButton>
+                      <SecondaryButton onClick={() => setEditingRecordId(null)}>
                         Cancel
-                      </button>
+                      </SecondaryButton>
                     </div>
                   )}
 
@@ -316,24 +318,20 @@ export function AttendanceSection() {
                         placeholder="Add a note…"
                         value={noteText}
                         onChange={(e) => setNoteText(e.target.value)}
-                        className="h-11 touch-manipulation flex-1 bg-[hsl(0_0%_12%)] border-white/[0.08] focus:border-elec-yellow"
+                        className={cn(inputClass, 'flex-1')}
                       />
-                      <button
+                      <PrimaryButton
                         onClick={async () => {
                           await updateAttendance(record.id, { notes: noteText });
                           setNoteRecordId(null);
                           toast({ title: 'Note saved' });
                         }}
-                        className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
                       >
                         Save
-                      </button>
-                      <button
-                        onClick={() => setNoteRecordId(null)}
-                        className="h-11 px-4 text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-                      >
+                      </PrimaryButton>
+                      <SecondaryButton onClick={() => setNoteRecordId(null)}>
                         Cancel
-                      </button>
+                      </SecondaryButton>
                     </div>
                   )}
                 </div>

@@ -3,7 +3,7 @@
  */
 export function StaffCardSkeleton() {
   return (
-    <div className="relative overflow-hidden rounded-lg border border-info/10 bg-elec-gray animate-pulse">
+    <div className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-[hsl(0_0%_12%)] animate-pulse">
       {/* Gradient accent line */}
       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-info/30 via-blue-400/20 to-info/10" />
 

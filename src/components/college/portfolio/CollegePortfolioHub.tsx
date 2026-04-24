@@ -31,6 +31,10 @@ import {
   EmptyState,
   LoadingState,
   itemVariants,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  Eyebrow,
 } from '@/components/college/primitives';
 
 type ViewMode = 'list' | 'student-detail' | 'submission-review';
@@ -115,14 +119,12 @@ const CollegePortfolioHub: React.FC = () => {
             ← Back
           </button>
           <div className="min-w-0 flex-1">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Student Portfolio
-            </div>
+            <Eyebrow>Student Portfolio</Eyebrow>
             <h2 className="mt-1 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-tight">
               {portfolioDetail?.studentName || 'Loading…'}
             </h2>
             {portfolioDetail?.qualificationTitle && (
-              <p className="mt-1 text-[13px] text-white/55">{portfolioDetail.qualificationTitle}</p>
+              <p className="mt-1 text-[13px] text-white">{portfolioDetail.qualificationTitle}</p>
             )}
           </div>
         </div>
@@ -134,19 +136,19 @@ const CollegePortfolioHub: React.FC = () => {
             <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
               <TabsTrigger
                 value="coverage"
-                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
               >
                 Coverage Matrix
               </TabsTrigger>
               <TabsTrigger
                 value="requirements"
-                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
               >
                 Requirements
               </TabsTrigger>
               <TabsTrigger
                 value="gateway"
-                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+                className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
               >
                 EPA Gateway
               </TabsTrigger>
@@ -208,24 +210,24 @@ const CollegePortfolioHub: React.FC = () => {
           <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
             <TabsTrigger
               value="overview"
-              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
             >
               All Students
             </TabsTrigger>
             <TabsTrigger
               value="review"
-              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
             >
               Review Queue
               {stats.awaitingReview > 0 && (
-                <span className="ml-1.5 tabular-nums text-[11px] text-white/75 data-[state=active]:text-black/60">
+                <span className="ml-1.5 tabular-nums text-[11px] text-white data-[state=active]:text-black/60">
                   {stats.awaitingReview}
                 </span>
               )}
             </TabsTrigger>
             <TabsTrigger
               value="iqa"
-              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+              className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
             >
               IQA Sampling
             </TabsTrigger>
@@ -249,16 +251,16 @@ const CollegePortfolioHub: React.FC = () => {
               placeholder="Search students or qualifications…"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 rounded-full px-4 touch-manipulation"
+              className={inputClass}
             />
             <Select
               value={statusFilter || 'all'}
               onValueChange={(v) => setStatusFilter(v === 'all' ? null : v)}
             >
-              <SelectTrigger className="w-full sm:w-44 h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] rounded-full text-[13px] text-white focus:border-elec-yellow/60">
+              <SelectTrigger className={cn(selectTriggerClass, 'w-full sm:w-44')}>
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
-              <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+              <SelectContent className={selectContentClass}>
                 <SelectItem value="all">All Status</SelectItem>
                 <SelectItem value="active">Active</SelectItem>
                 <SelectItem value="at_risk">At Risk</SelectItem>
@@ -273,7 +275,7 @@ const CollegePortfolioHub: React.FC = () => {
                   'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
                   displayMode === 'grid'
                     ? 'bg-elec-yellow text-black'
-                    : 'text-white/70 hover:text-white'
+                    : 'text-white hover:text-white'
                 )}
               >
                 Grid
@@ -284,7 +286,7 @@ const CollegePortfolioHub: React.FC = () => {
                   'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
                   displayMode === 'list'
                     ? 'bg-elec-yellow text-black'
-                    : 'text-white/70 hover:text-white'
+                    : 'text-white hover:text-white'
                 )}
               >
                 List
@@ -300,7 +302,7 @@ const CollegePortfolioHub: React.FC = () => {
                 <p className="text-sm font-medium text-white">
                   {atRiskStudents.length} student{atRiskStudents.length > 1 ? 's' : ''} at risk
                 </p>
-                <p className="text-[12.5px] text-white/55 mt-0.5">
+                <p className="text-[12.5px] text-white mt-0.5">
                   These students may need additional support
                 </p>
               </div>
@@ -348,9 +350,7 @@ const CollegePortfolioHub: React.FC = () => {
                         <div className="text-[15px] font-semibold tabular-nums text-white">
                           {portfolio.completionPercentage}%
                         </div>
-                        <div className="text-[10px] uppercase tracking-[0.16em] text-white/55">
-                          Complete
-                        </div>
+                        <Eyebrow>Complete</Eyebrow>
                       </div>
                       {portfolio.submissionsAwaitingReview > 0 && (
                         <Pill tone="amber">{portfolio.submissionsAwaitingReview} to review</Pill>

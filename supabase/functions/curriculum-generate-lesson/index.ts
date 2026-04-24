@@ -289,6 +289,11 @@ Hard rules:
 5. Flag A4:2026 changes (AFDD, TN-C-S/PNB, Schedule of Tests, model forms) wherever relevant.
 6. Respect the document hierarchy: BS 7671 is authoritative; GN3 and OSG are supporting.
 
+Ofsted / DfE expectations — include these whenever the flags in the user prompt say so:
+- British Values: the five fundamental British values are Democracy, The rule of law, Individual liberty, Mutual respect, Tolerance of those of different faiths and beliefs. Embed them naturally in the lesson — at least two should appear, each tied to a specific activity and shown in practice (e.g. "Rule of law → pair discussion of BS 7671 as the legal framework electricians work within; apprentices justify a decision using the regulation"). Never tick-box.
+- Stretch & challenge: explicit extension tasks aimed at the higher-attaining learners. Target the top Bloom levels (analyse / evaluate / create). Each task names who it's for and what success looks like.
+- Inclusive practice: concrete, specific moves (not platitudes). Call out at least one strategy per common need profile — SEND, EAL, EHCP, neurodivergence, prior-attainment spread. Reference the activity and say what the tutor actually does.
+
 Size & density rules — be concrete but COMPACT (your JSON must fit the token budget):
 - learning_objectives: 3–5 items.
 - analogies: 2–3 items, each 1–2 sentences per field.
@@ -300,6 +305,9 @@ Size & density rules — be concrete but COMPACT (your JSON must fit the token b
 - vocabulary: 8–10 items. definition ≤ 15 words each.
 - activities: 4–6 items. teacher_moves 3–4 bullets each. description 2–3 sentences.
 - assessment_for_learning: 3–5 bullets.
+- british_values: 2–3 items when requested. Each ties to a specific activity.
+- stretch_challenge: 2–4 items when requested. Concrete extension tasks with Bloom level.
+- inclusive_practice: 3–5 items when requested. One per need profile.
 - cited_facets: every facet used; citation_note ≤ 1 sentence.
 - Keep every string tight — avoid filler. Prefer plain-English verbs over bureaucratic adjectives.`;
 
@@ -315,6 +323,10 @@ function buildPlanUserPrompt(args: {
   include_homework: boolean;
   include_differentiation: boolean;
   include_hs: boolean;
+  include_british_values: boolean;
+  include_stretch_challenge: boolean;
+  include_inclusive_practice: boolean;
+  college_context?: string;
 }): string {
   return `QUALIFICATION: ${args.qualification_title} (${args.qualification_code})
 UNIT ${args.unit_code}: ${args.unit_title}
@@ -324,13 +336,16 @@ ${acsBlock(args.acs)}
 
 CONTEXT — cite ONLY these facets using their facet_id:
 ${facetsContextBlock(args.facets)}
-
+${args.college_context ? `\nCOLLEGE CONTEXT:\n${args.college_context}\n` : ''}
 PARAMETERS:
 - Session length: ${args.session_length_mins} minutes (activities time_mins MUST sum to this)
 - Delivery mode: ${args.delivery_mode}
 - Include homework: ${args.include_homework}
 - Include differentiation: ${args.include_differentiation}
 - Include health & safety: ${args.include_hs}
+- Include British Values (Ofsted/DfE): ${args.include_british_values}
+- Include Stretch & Challenge: ${args.include_stretch_challenge}
+- Include Inclusive Practice: ${args.include_inclusive_practice}
 
 Call submit_lesson_plan now.`;
 }
@@ -468,6 +483,70 @@ const PLAN_TOOL_SCHEMA = {
             properties: {
               term: { type: 'string' },
               definition: { type: 'string' },
+            },
+          },
+        },
+        british_values: {
+          type: 'array',
+          items: {
+            type: 'object',
+            additionalProperties: false,
+            required: ['value', 'how_embedded', 'activity_ref'],
+            properties: {
+              value: {
+                type: 'string',
+                enum: [
+                  'democracy',
+                  'rule_of_law',
+                  'individual_liberty',
+                  'mutual_respect',
+                  'tolerance_of_faiths_beliefs',
+                ],
+              },
+              how_embedded: { type: 'string' },
+              activity_ref: { type: 'string' },
+            },
+          },
+        },
+        stretch_challenge: {
+          type: 'array',
+          items: {
+            type: 'object',
+            additionalProperties: false,
+            required: ['title', 'task', 'target_learner', 'bloom_level'],
+            properties: {
+              title: { type: 'string' },
+              task: { type: 'string' },
+              target_learner: { type: 'string' },
+              bloom_level: {
+                type: 'string',
+                enum: ['apply', 'analyse', 'evaluate', 'create'],
+              },
+            },
+          },
+        },
+        inclusive_practice: {
+          type: 'array',
+          items: {
+            type: 'object',
+            additionalProperties: false,
+            required: ['need', 'strategy', 'activity_ref'],
+            properties: {
+              need: {
+                type: 'string',
+                enum: [
+                  'send',
+                  'eal',
+                  'ehcp',
+                  'neurodivergent',
+                  'prior_attainment_low',
+                  'prior_attainment_high',
+                  'physical_access',
+                  'other',
+                ],
+              },
+              strategy: { type: 'string' },
+              activity_ref: { type: 'string' },
             },
           },
         },
@@ -855,6 +934,172 @@ Deno.serve(async (req: Request) => {
         const ctrl = new AbortController();
         const timer = setTimeout(() => ctrl.abort(), STREAM_TIMEOUT_MS);
 
+        // Per-college curriculum settings shape what the AI must include
+        // (British Values, Stretch & Challenge, Inclusive Practice + college
+        // context like DSL / Prevent lead names for safeguarding wording).
+        const { data: settingsRow } = await sb
+          .from('college_curriculum_settings')
+          .select(
+            'include_british_values, include_stretch_challenge, include_inclusive_practice, prevent_lead_name, dsl_name, safeguarding_notes, additional_frameworks'
+          )
+          .eq('college_id', profile!.college_id)
+          .maybeSingle();
+        const include_british_values = settingsRow?.include_british_values ?? true;
+        const include_stretch_challenge =
+          settingsRow?.include_stretch_challenge ?? true;
+        const include_inclusive_practice =
+          settingsRow?.include_inclusive_practice ?? true;
+        const collegeContextLines = [
+          settingsRow?.prevent_lead_name
+            ? `Prevent lead: ${settingsRow.prevent_lead_name}`
+            : null,
+          settingsRow?.dsl_name
+            ? `Designated safeguarding lead: ${settingsRow.dsl_name}`
+            : null,
+          settingsRow?.safeguarding_notes
+            ? `Safeguarding notes: ${settingsRow.safeguarding_notes}`
+            : null,
+          settingsRow?.additional_frameworks
+            ? `Additional frameworks to reference: ${settingsRow.additional_frameworks}`
+            : null,
+        ].filter(Boolean);
+
+        // ─────────────── Cohort-aware context (the big lift) ───────────────
+        // When the lesson is tied to a cohort, read each learner's inclusion
+        // data + ILP support needs so the AI can produce NAMED inclusive
+        // strategies (first-name only — never surname / ULN).
+        let cohortContext = '';
+        if (cohort_id) {
+          const { data: cohortRow } = await sb
+            .from('college_cohorts')
+            .select('id, name, start_date, end_date')
+            .eq('id', cohort_id)
+            .maybeSingle();
+
+          const { data: students } = await sb
+            .from('college_students')
+            .select(
+              'id, name, send_flags, eal, ehcp_ref, first_language, pronouns, accessibility_notes, progress_percent'
+            )
+            .eq('cohort_id', cohort_id)
+            .neq('status', 'withdrawn')
+            .neq('status', 'completed');
+
+          const studentIds = (students ?? []).map((s) => s.id as string);
+
+          // Pull ILP support_needs for this cohort
+          const { data: ilps } =
+            studentIds.length > 0
+              ? await sb
+                  .from('college_ilps')
+                  .select('student_id, support_needs, targets')
+                  .in('student_id', studentIds)
+              : { data: [] };
+          const ilpByStudent = new Map<string, { support_needs: string | null }>();
+          for (const ilp of (ilps ?? []) as {
+            student_id: string;
+            support_needs: string | null;
+          }[]) {
+            if (!ilpByStudent.has(ilp.student_id)) {
+              ilpByStudent.set(ilp.student_id, { support_needs: ilp.support_needs });
+            }
+          }
+
+          // Recent grade distribution — prior attainment signal
+          const { data: grades } =
+            studentIds.length > 0
+              ? await sb
+                  .from('college_grades')
+                  .select('student_id, score, grade, assessed_at')
+                  .in('student_id', studentIds)
+                  .not('score', 'is', null)
+                  .order('assessed_at', { ascending: false })
+              : { data: [] };
+          const latestGradeByStudent = new Map<string, number>();
+          for (const g of (grades ?? []) as { student_id: string; score: number }[]) {
+            if (!latestGradeByStudent.has(g.student_id)) {
+              latestGradeByStudent.set(g.student_id, Number(g.score));
+            }
+          }
+
+          const count = (students ?? []).length;
+          const withSend = (students ?? []).filter(
+            (s) => Array.isArray(s.send_flags) && (s.send_flags as string[]).length > 0
+          );
+          const withEal = (students ?? []).filter((s) => s.eal);
+          const withEhcp = (students ?? []).filter((s) => s.ehcp_ref);
+          const withNotes = (students ?? []).filter(
+            (s) => s.accessibility_notes && (s.accessibility_notes as string).trim()
+          );
+
+          const scores = Array.from(latestGradeByStudent.values());
+          const avgScore = scores.length
+            ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length)
+            : null;
+
+          const firstName = (full: string) => (full ?? '').split(/\s+/)[0] ?? '?';
+
+          const perLearnerLines = (students ?? [])
+            .filter((s) => {
+              const sf = Array.isArray(s.send_flags) ? (s.send_flags as string[]) : [];
+              return (
+                sf.length > 0 ||
+                s.eal ||
+                s.ehcp_ref ||
+                (s.accessibility_notes && (s.accessibility_notes as string).trim()) ||
+                ilpByStudent.get(s.id as string)?.support_needs
+              );
+            })
+            .slice(0, 12)
+            .map((s) => {
+              const sf = Array.isArray(s.send_flags) ? (s.send_flags as string[]) : [];
+              const bits: string[] = [];
+              if (sf.length) bits.push(`SEND: ${sf.join('/')}`);
+              if (s.eal) {
+                const fl = (s.first_language as string | null) ?? '';
+                bits.push(`EAL${fl ? ` (first language: ${fl})` : ''}`);
+              }
+              if (s.ehcp_ref) bits.push('EHCP');
+              if (s.pronouns) bits.push(`pronouns ${s.pronouns}`);
+              if (s.accessibility_notes)
+                bits.push(
+                  `notes: ${(s.accessibility_notes as string).slice(0, 140)}`
+                );
+              const ilp = ilpByStudent.get(s.id as string);
+              if (ilp?.support_needs)
+                bits.push(`ILP: ${ilp.support_needs.slice(0, 140)}`);
+              return `  - ${firstName(s.name as string)}: ${bits.join(' · ')}`;
+            });
+
+          cohortContext = [
+            cohortRow ? `COHORT: ${cohortRow.name} (${count} active learners)` : null,
+            avgScore !== null
+              ? `Prior-attainment average (most recent graded assessment): ${avgScore}`
+              : null,
+            withSend.length > 0 ? `SEND learners: ${withSend.length}` : null,
+            withEal.length > 0 ? `EAL learners: ${withEal.length}` : null,
+            withEhcp.length > 0 ? `Learners with EHCP: ${withEhcp.length}` : null,
+            withNotes.length > 0
+              ? `Learners with accessibility notes: ${withNotes.length}`
+              : null,
+            perLearnerLines.length > 0
+              ? `\nIndividual needs (first-name only — DO NOT use surnames, ULNs, or identifiers):\n${perLearnerLines.join(
+                  '\n'
+                )}`
+              : null,
+            '\nWhen you produce inclusive_practice entries, name the specific learners (first name only) whose needs your strategy addresses — e.g. "For Jamie (dyslexia): pre-print AC 2.1 on buff paper with serif font." Do not generate strategies for needs that are not present in this cohort.',
+          ]
+            .filter(Boolean)
+            .join('\n');
+        }
+
+        const collegeContext = [
+          collegeContextLines.join('\n'),
+          cohortContext,
+        ]
+          .filter((s) => s && s.length > 0)
+          .join('\n\n');
+
         const briefPrompt = buildBriefUserPrompt({
           qualification_title: qualRow.title as string,
           qualification_code,
@@ -877,6 +1122,10 @@ Deno.serve(async (req: Request) => {
           include_homework,
           include_differentiation,
           include_hs,
+          include_british_values,
+          include_stretch_challenge,
+          include_inclusive_practice,
+          college_context: collegeContext || undefined,
         });
 
         // Run both streams in parallel — brief (prose) and plan (tool-calling JSON)

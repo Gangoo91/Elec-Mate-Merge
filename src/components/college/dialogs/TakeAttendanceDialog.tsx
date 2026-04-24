@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Pill } from '@/components/college/primitives';
 import {
@@ -21,6 +19,18 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import { cn } from '@/lib/utils';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  fieldLabelClass,
+  inputClass,
+  selectContentClass,
+  selectTriggerClass,
+} from '@/components/college/primitives';
 
 type AttendanceStatus = 'Present' | 'Absent' | 'Late' | 'Authorised';
 
@@ -156,86 +166,84 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
 
         <ResponsiveDialogBody>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Session Details */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="cohort">Cohort *</Label>
-                <Select value={selectedCohort} onValueChange={setSelectedCohort}>
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select cohort" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {activeCohorts.map((cohort) => (
-                      <SelectItem key={cohort.id} value={cohort.id}>
-                        {cohort.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="sessionDate">Date *</Label>
-                <Input
-                  id="sessionDate"
-                  type="date"
-                  value={sessionDate}
-                  onChange={(e) => setSessionDate(e.target.value)}
-                  required
-                />
-              </div>
-            </div>
+            <FormCard eyebrow="Session">
+              <FormGrid cols={2}>
+                <Field label="Cohort" required>
+                  <Select value={selectedCohort} onValueChange={setSelectedCohort}>
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select cohort" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {activeCohorts.map((cohort) => (
+                        <SelectItem key={cohort.id} value={cohort.id}>
+                          {cohort.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="Date" required>
+                  <Input
+                    id="sessionDate"
+                    type="date"
+                    value={sessionDate}
+                    onChange={(e) => setSessionDate(e.target.value)}
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+              </FormGrid>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="sessionType">Session Type *</Label>
-                <Select
-                  value={sessionType}
-                  onValueChange={(value) => setSessionType(value as (typeof SESSION_TYPES)[number])}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {SESSION_TYPES.map((type) => (
-                      <SelectItem key={type} value={type}>
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="tutorId">Tutor *</Label>
-                <Select value={tutorId} onValueChange={setTutorId}>
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select tutor" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {tutors.map((tutor) => (
-                      <SelectItem key={tutor.id} value={tutor.id}>
-                        {tutor.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+              <FormGrid cols={2}>
+                <Field label="Session type" required>
+                  <Select
+                    value={sessionType}
+                    onValueChange={(value) => setSessionType(value as (typeof SESSION_TYPES)[number])}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {SESSION_TYPES.map((type) => (
+                        <SelectItem key={type} value={type}>
+                          {type}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="Tutor" required>
+                  <Select value={tutorId} onValueChange={setTutorId}>
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select tutor" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {tutors.map((tutor) => (
+                        <SelectItem key={tutor.id} value={tutor.id}>
+                          {tutor.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+              </FormGrid>
+            </FormCard>
 
             {/* Students List */}
             {selectedCohort && studentAttendance.length > 0 && (
-              <div className="space-y-3">
+              <FormCard eyebrow="Register">
                 <div className="flex items-center justify-between">
-                  <Label>Students ({studentAttendance.length})</Label>
+                  <label className={fieldLabelClass}>Students ({studentAttendance.length})</label>
                   <div className="flex items-center gap-2">
                     <Pill tone="green">{presentCount} Present</Pill>
                     {absentCount > 0 && <Pill tone="red">{absentCount} Absent</Pill>}
-                    <Button type="button" variant="outline" size="sm" onClick={markAllPresent}>
-                      Mark All Present
-                    </Button>
+                    <SecondaryButton size="sm" onClick={markAllPresent}>
+                      Mark all present
+                    </SecondaryButton>
                   </div>
                 </div>
 
-                <div className="border rounded-lg divide-y max-h-[300px] overflow-y-auto">
+                <div className="border border-white/[0.08] rounded-xl divide-y divide-white/[0.06] max-h-[300px] overflow-y-auto">
                   {studentAttendance.map((sa) => {
                     const student = students.find((s) => s.id === sa.studentId);
                     return (
@@ -250,38 +258,40 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
                           </AvatarFallback>
                         </Avatar>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm truncate">{sa.studentName}</p>
+                          <p className="font-medium text-sm truncate text-white">{sa.studentName}</p>
                         </div>
                         <div className="flex items-center gap-1">
-                          {ATTENDANCE_STATUSES.map((status) => (
-                            <Button
-                              key={status.value}
-                              type="button"
-                              variant={sa.status === status.value ? 'default' : 'ghost'}
-                              size="sm"
-                              className={`h-8 px-2 ${
-                                sa.status === status.value
-                                  ? status.value === 'Present'
-                                    ? 'bg-success hover:bg-success/90'
-                                    : status.value === 'Absent'
-                                      ? 'bg-destructive hover:bg-destructive/90'
-                                      : status.value === 'Late'
-                                        ? 'bg-warning hover:bg-warning/90 text-warning-foreground'
-                                        : 'bg-info hover:bg-info/90'
-                                  : ''
-                              }`}
-                              onClick={() => updateStudentStatus(sa.studentId, status.value)}
-                              title={status.label}
-                            >
-                              {status.short}
-                            </Button>
-                          ))}
+                          {ATTENDANCE_STATUSES.map((status) => {
+                            const isActive = sa.status === status.value;
+                            return (
+                              <button
+                                key={status.value}
+                                type="button"
+                                className={cn(
+                                  'h-8 px-2 rounded-full text-xs font-medium transition-colors touch-manipulation border',
+                                  isActive
+                                    ? status.value === 'Present'
+                                      ? 'bg-emerald-500 border-emerald-500 text-black'
+                                      : status.value === 'Absent'
+                                        ? 'bg-red-500 border-red-500 text-white'
+                                        : status.value === 'Late'
+                                          ? 'bg-amber-500 border-amber-500 text-black'
+                                          : 'bg-blue-500 border-blue-500 text-white'
+                                    : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
+                                )}
+                                onClick={() => updateStudentStatus(sa.studentId, status.value)}
+                                title={status.label}
+                              >
+                                {status.short}
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     );
                   })}
                 </div>
-              </div>
+              </FormCard>
             )}
 
             {selectedCohort && studentAttendance.length === 0 && (
@@ -293,23 +303,19 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
-          <Button
-            type="button"
-            variant="outline"
+          <SecondaryButton
             onClick={() => onOpenChange(false)}
             disabled={isSubmitting}
-            className="h-11 touch-manipulation"
           >
             Cancel
-          </Button>
-          <Button
+          </SecondaryButton>
+          <PrimaryButton
             type="submit"
             disabled={isSubmitting || !selectedCohort || !tutorId || studentAttendance.length === 0}
-            className="h-11 touch-manipulation"
             onClick={handleSubmit}
           >
-            {isSubmitting ? 'Saving…' : 'Save Register'}
-          </Button>
+            {isSubmitting ? 'Saving…' : 'Save register'}
+          </PrimaryButton>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>
     </ResponsiveDialog>

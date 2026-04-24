@@ -10,6 +10,7 @@ import {
   EmptyState,
   LoadingState,
   itemVariants,
+  PrimaryButton,
 } from '@/components/college/primitives';
 import {
   useQualifications,
@@ -49,7 +50,7 @@ export function CoursesSection() {
           }}
           className={cn(
             'transition-colors',
-            selectedQual ? 'text-white/60 hover:text-white' : 'text-white'
+            selectedQual ? 'text-white hover:text-white' : 'text-white'
           )}
         >
           All qualifications
@@ -64,7 +65,7 @@ export function CoursesSection() {
               }}
               className={cn(
                 'transition-colors truncate max-w-[240px]',
-                selectedUnit ? 'text-white/60 hover:text-white' : 'text-white'
+                selectedUnit ? 'text-white hover:text-white' : 'text-white'
               )}
             >
               {selectedQual.code}
@@ -188,7 +189,7 @@ function QualificationsGrid({ onSelect }: { onSelect: (q: QualificationRow) => v
               onClick={() => onSelect(q)}
               className="group text-left bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] hover:border-white/[0.1] rounded-2xl p-6 sm:p-7 transition-colors touch-manipulation focus:outline-none focus:border-elec-yellow/40 flex flex-col min-h-[200px]"
             >
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 {q.awarding_body}
                 <span className="mx-2 text-white/25">·</span>
                 <span className="font-mono">{q.code}</span>
@@ -196,12 +197,12 @@ function QualificationsGrid({ onSelect }: { onSelect: (q: QualificationRow) => v
               <h3 className="mt-3 text-[17px] font-semibold text-white tracking-tight leading-snug line-clamp-2">
                 {q.title}
               </h3>
-              <p className="mt-2 text-[12.5px] text-white/70 leading-relaxed line-clamp-3">
+              <p className="mt-2 text-[12.5px] text-white leading-relaxed line-clamp-3">
                 {q.description || '\u00A0'}
               </p>
               <div className="flex-grow" />
               <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px]">
-                <span className="text-white/60">
+                <span className="text-white">
                   {q.level}
                   {q.requires_portfolio && (
                     <>
@@ -210,7 +211,7 @@ function QualificationsGrid({ onSelect }: { onSelect: (q: QualificationRow) => v
                     </>
                   )}
                 </span>
-                <span className="text-white/60 group-hover:text-elec-yellow transition-colors">
+                <span className="text-white group-hover:text-elec-yellow transition-colors">
                   Open →
                 </span>
               </div>
@@ -259,14 +260,14 @@ function QualificationDetail({
             key={k.label}
             className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4"
           >
-            <div className="text-[10px] uppercase tracking-[0.18em] text-white/55">{k.label}</div>
+            <div className="text-[10px] uppercase tracking-[0.18em] text-white">{k.label}</div>
             <div className="mt-1 text-lg font-semibold text-white tabular-nums">{k.value}</div>
           </div>
         ))}
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85 mb-3">
+        <h3 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white mb-3">
           Units
         </h3>
         {loading ? (
@@ -284,18 +285,18 @@ function QualificationDetail({
                 onClick={() => onSelectUnit(u)}
                 className="group w-full text-left px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation flex items-center gap-4"
               >
-                <div className="w-12 text-[11px] font-mono text-white/60 tabular-nums shrink-0">
+                <div className="w-12 text-[11px] font-mono text-white tabular-nums shrink-0">
                   {u.unit_code}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="text-[13.5px] font-medium text-white truncate">
                     {u.unit_title || `Unit ${u.unit_code}`}
                   </div>
-                  <div className="mt-0.5 text-[11px] text-white/70 tabular-nums">
+                  <div className="mt-0.5 text-[11px] text-white tabular-nums">
                     {u.lo_count} learning outcome{u.lo_count === 1 ? '' : 's'} · {u.ac_count} criteria
                   </div>
                 </div>
-                <span className="text-white/60 group-hover:text-elec-yellow transition-colors shrink-0">
+                <span className="text-white group-hover:text-elec-yellow transition-colors shrink-0">
                   →
                 </span>
               </button>
@@ -376,7 +377,7 @@ function UnitDetail({
                 className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden"
               >
                 <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06]">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     Learning outcome {lo.lo_number}
                   </div>
                   <h3 className="mt-1 text-[15px] font-semibold text-white tracking-tight leading-snug">
@@ -403,7 +404,7 @@ function UnitDetail({
                         <span
                           className={cn(
                             'mt-0.5 text-[11px] font-mono tabular-nums shrink-0 w-8',
-                            isActive ? 'text-elec-yellow' : 'text-white/60'
+                            isActive ? 'text-elec-yellow' : 'text-white'
                           )}
                         >
                           {ac.ac_code}
@@ -416,7 +417,7 @@ function UnitDetail({
                             'text-[11px] shrink-0 self-center transition-colors',
                             isActive
                               ? 'text-elec-yellow'
-                              : 'text-white/25 group-hover:text-white/60'
+                              : 'text-white/25 group-hover:text-white'
                           )}
                         >
                           →
@@ -463,9 +464,9 @@ function AcSheet({
       <SheetContent
         side={isMobile ? 'bottom' : 'right'}
         className={cn(
-          'p-0 bg-[hsl(0_0%_10%)] border-white/[0.08]',
+          'p-0 bg-[hsl(0_0%_8%)] border-white/[0.08] overflow-hidden',
           isMobile
-            ? 'h-[90vh] rounded-t-2xl'
+            ? 'h-[85vh] rounded-t-2xl'
             : 'w-full sm:max-w-[560px] border-l'
         )}
       >
@@ -534,14 +535,14 @@ function AcSidePanel({
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
       <div className="px-5 py-4 border-b border-white/[0.06] flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             AC {ac.ac_code}
           </div>
           <p className="mt-1 text-[13px] text-white leading-relaxed">{ac.ac_text}</p>
         </div>
         <button
           onClick={onClose}
-          className="text-[16px] text-white/60 hover:text-white leading-none shrink-0"
+          className="text-[16px] text-white hover:text-white leading-none shrink-0"
           aria-label="Close"
         >
           ×
@@ -558,14 +559,14 @@ function AcSidePanel({
                 'shrink-0 px-3 py-1.5 rounded-full text-[11.5px] font-medium whitespace-nowrap touch-manipulation transition-colors flex items-center gap-1.5',
                 docType === t.value
                   ? 'bg-elec-yellow text-black'
-                  : 'text-white/70 hover:text-white hover:bg-white/[0.06]'
+                  : 'text-white hover:text-white hover:bg-white/[0.06]'
               )}
             >
               <span>{t.label}</span>
               <span
                 className={cn(
                   'text-[10px] tabular-nums',
-                  docType === t.value ? 'text-black/55' : 'text-white/45'
+                  docType === t.value ? 'text-black/55' : 'text-white'
                 )}
               >
                 {t.count}
@@ -579,12 +580,9 @@ function AcSidePanel({
           </div>
         )}
         {onGenerate && (
-          <button
-            onClick={onGenerate}
-            className="w-full h-11 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[12.5px] font-medium touch-manipulation"
-          >
+          <PrimaryButton onClick={onGenerate} fullWidth>
             AI generate lesson for this AC →
-          </button>
+          </PrimaryButton>
         )}
       </div>
 
@@ -595,7 +593,7 @@ function AcSidePanel({
           </div>
         ) : matches.length === 0 ? (
           <div className="px-5 py-8 text-center">
-            <p className="text-[12.5px] text-white/70">
+            <p className="text-[12.5px] text-white">
               No matches in{' '}
               {docType === 'all' ? 'the RAG' : docType.toUpperCase()} for this criterion.
             </p>
@@ -623,7 +621,7 @@ function AcSidePanel({
                           : 'bg-emerald-400/60'
                     )}
                   />
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     {m.document_type === 'bs7671'
                       ? 'BS 7671'
                       : m.document_type === 'gn3'
@@ -649,11 +647,11 @@ function AcSidePanel({
                       {m.reg_title}
                     </div>
                   )}
-                  <p className="mt-1.5 text-[11.5px] text-white/80 leading-relaxed line-clamp-4">
+                  <p className="mt-1.5 text-[11.5px] text-white leading-relaxed line-clamp-4">
                     {m.content}
                   </p>
                   {(metaBits.length > 0 || m.primary_topic) && (
-                    <div className="mt-2 text-[10.5px] text-white/55">
+                    <div className="mt-2 text-[10.5px] text-white">
                       {[m.primary_topic, ...metaBits].filter(Boolean).join(' · ')}
                     </div>
                   )}
@@ -689,7 +687,7 @@ function FilterPillGroup({
 }) {
   return (
     <div className="flex items-center gap-1.5 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 max-w-full overflow-x-auto hide-scrollbar">
-      <span className="text-[10.5px] uppercase tracking-wider text-white/55 px-2 shrink-0">
+      <span className="text-[10.5px] uppercase tracking-wider text-white px-2 shrink-0">
         {label}
       </span>
       {options.map((o) => (
@@ -700,7 +698,7 @@ function FilterPillGroup({
             'shrink-0 px-2.5 py-1 rounded-full text-[11.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
             value === o.value
               ? 'bg-elec-yellow text-black'
-              : 'text-white/75 hover:text-white hover:bg-white/[0.06]'
+              : 'text-white hover:text-white hover:bg-white/[0.06]'
           )}
         >
           {o.label}

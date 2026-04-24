@@ -1,11 +1,17 @@
 import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { useCollege } from "@/contexts/CollegeContext";
-import { Pill, type Tone } from "@/components/college/primitives";
+import {
+  Pill,
+  Field,
+  PrimaryButton,
+  Eyebrow,
+  inputClass,
+  textareaClass,
+  type Tone,
+} from "@/components/college/primitives";
 
 interface SuggestedTag {
   criterionCode: string;
@@ -171,16 +177,16 @@ export function SmartEvidenceTagger({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">SMART TAGGING</div>
+            <Eyebrow>SMART TAGGING</Eyebrow>
             <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">Evidence tagger</h3>
           </div>
           <Pill tone="yellow">AI</Pill>
         </div>
-        <p className="mt-3 text-[13px] text-white/55 leading-relaxed">
+        <p className="mt-3 text-[13px] text-white leading-relaxed">
           Automatically map evidence to assessment criteria using AI analysis
         </p>
         <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/[0.06]">
-          <span className="text-sm text-white/70">Auto-tag uploaded evidence</span>
+          <span className="text-sm text-white">Auto-tag uploaded evidence</span>
           <span className="text-[13px] font-medium text-elec-yellow/90">→</span>
         </div>
       </div>
@@ -191,7 +197,7 @@ export function SmartEvidenceTagger({
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
       <div className="p-5 sm:p-6 pb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">SMART TAGGING</div>
+          <Eyebrow>SMART TAGGING</Eyebrow>
           <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">Smart evidence tagger</h3>
         </div>
         <Pill tone="yellow">AI-Powered</Pill>
@@ -200,64 +206,62 @@ export function SmartEvidenceTagger({
       <div className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-4">
         {/* Evidence Input */}
         <div className="space-y-3">
-          <div>
-            <Label htmlFor="evidence-title">Evidence Title</Label>
+          <Field label="Evidence Title">
             <Input
               id="evidence-title"
               placeholder="e.g., Consumer unit installation at site visit"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="mt-1"
+              className={inputClass}
             />
-          </div>
-          <div>
-            <Label htmlFor="evidence-desc">Description</Label>
+          </Field>
+          <Field label="Description">
             <Textarea
               id="evidence-desc"
               placeholder="Describe what this evidence demonstrates..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="mt-1 min-h-[80px]"
+              className={`${textareaClass} min-h-[80px]`}
             />
-          </div>
+          </Field>
 
           {/* Evidence Type Indicator */}
-          <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-black/30 border border-white/[0.06]">
-            <span className="h-1.5 w-1.5 rounded-full bg-white/40" aria-hidden />
-            <span className="text-[11px] uppercase tracking-[0.18em] text-white/55">{getEvidenceTypeLabel()}</span>
+          <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+            <span className="h-1.5 w-1.5 rounded-full bg-white/30" aria-hidden />
+            <span className="text-[11px] uppercase tracking-[0.18em] text-white">{getEvidenceTypeLabel()}</span>
             {fileName && (
               <>
-                <span className="text-white/60">·</span>
-                <span className="text-sm truncate text-white/70">{fileName}</span>
+                <span className="text-white/30">·</span>
+                <span className="text-sm truncate text-white">{fileName}</span>
               </>
             )}
           </div>
         </div>
 
         {/* Analyze Button */}
-        <Button
+        <PrimaryButton
+          fullWidth
           onClick={analyzeEvidence}
           disabled={isAnalyzing || (!title && !description)}
-          className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-full px-6 font-medium gap-2"
         >
           {isAnalyzing ? (
             <>
-              <span className="h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow animate-spin" aria-hidden />
+              <span className="h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow animate-spin mr-2" aria-hidden />
               Analysing with AI...
             </>
           ) : (
             <>
               Analyse &amp; Suggest Tags
-              <span aria-hidden>→</span>
+              <span aria-hidden className="ml-2">→</span>
             </>
           )}
-        </Button>
+        </PrimaryButton>
 
         {/* Suggestions */}
         {hasAnalyzed && (
           <div className="space-y-3 pt-2">
             <div className="border-b border-white/[0.06] pb-3">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">AI SUGGESTIONS</div>
+              <Eyebrow>AI SUGGESTIONS</Eyebrow>
               <h4 className="mt-1 text-base font-semibold text-white tracking-tight">Suggested criteria</h4>
             </div>
 
@@ -271,7 +275,7 @@ export function SmartEvidenceTagger({
                       className={`p-4 rounded-xl border transition-all cursor-pointer touch-manipulation ${
                         isSelected
                           ? "border-elec-yellow/60 bg-elec-yellow/[0.06]"
-                          : "border-white/[0.06] bg-black/30 hover:border-elec-yellow/40"
+                          : "border-white/[0.08] bg-[hsl(0_0%_9%)] hover:border-elec-yellow/40"
                       }`}
                       onClick={() => toggleTag(tag.criterionCode)}
                     >
@@ -282,7 +286,7 @@ export function SmartEvidenceTagger({
                             className={`mt-1 inline-flex items-center justify-center h-5 w-5 rounded-full border shrink-0 text-[11px] font-medium ${
                               isSelected
                                 ? "bg-elec-yellow text-black border-elec-yellow"
-                                : "border-white/30 text-white/75"
+                                : "border-white/[0.08] text-white"
                             }`}
                           >
                             {isSelected ? "✓" : "+"}
@@ -295,14 +299,14 @@ export function SmartEvidenceTagger({
                               <Pill tone="blue">{tag.unit}</Pill>
                             </div>
                             <p className="text-sm mt-2 text-white">{tag.criterionText}</p>
-                            <p className="text-[11.5px] text-white/75 mt-1">{tag.reason}</p>
+                            <p className="text-[11.5px] text-white mt-1">{tag.reason}</p>
                           </div>
                         </div>
                         <div className="text-right shrink-0">
                           <Pill tone={getConfidenceTone(tag.confidence)}>
                             {tag.confidence}%
                           </Pill>
-                          <p className="text-[10px] text-white/55 mt-1 uppercase tracking-[0.18em]">confidence</p>
+                          <p className="text-[10px] text-white mt-1 uppercase tracking-[0.18em]">confidence</p>
                         </div>
                       </div>
                       <Progress value={tag.confidence} className="h-1 mt-3" />
@@ -311,12 +315,12 @@ export function SmartEvidenceTagger({
                 })}
               </div>
             ) : (
-              <div className="text-center py-8 px-6 rounded-xl bg-black/30 border border-white/[0.06]">
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/70 text-lg">
+              <div className="text-center py-8 px-6 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+                <div className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] text-white text-lg">
                   ⋯
                 </div>
                 <p className="text-sm text-white mt-3 font-medium">No matching criteria found</p>
-                <p className="text-[12.5px] text-white/75 mt-1">Try adding more detail to the description</p>
+                <p className="text-[12.5px] text-white mt-1">Try adding more detail to the description</p>
               </div>
             )}
 
@@ -324,8 +328,8 @@ export function SmartEvidenceTagger({
             {selectedTags.length > 0 && (
               <div className="border-t border-white/[0.06] pt-4">
                 <div className="flex items-center justify-between mb-3">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">SELECTED</div>
-                  <span className="text-[11.5px] text-white/75 tabular-nums">{selectedTags.length} selected</span>
+                  <Eyebrow>SELECTED</Eyebrow>
+                  <span className="text-[11.5px] text-white tabular-nums">{selectedTags.length} selected</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {selectedTags.map((code) => (
@@ -346,20 +350,20 @@ export function SmartEvidenceTagger({
 
         {/* Tips */}
         {!hasAnalyzed && (
-          <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">TIPS</div>
+          <div className="p-4 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+            <Eyebrow>TIPS</Eyebrow>
             <p className="mt-1.5 text-sm font-medium text-white">Tips for better results</p>
-            <ul className="mt-3 space-y-1.5 text-[12.5px] text-white/60">
+            <ul className="mt-3 space-y-1.5 text-[12.5px] text-white">
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Include specific technical terms
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Mention the type of work performed
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Reference any testing or inspections
               </li>
             </ul>

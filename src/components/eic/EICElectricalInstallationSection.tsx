@@ -692,24 +692,42 @@ const EICElectricalInstallationSection = ({
               placeholder="Reason (e.g. tails not accessible)"
             />
           </FormField>
-          <FormField label="Tails Length">
-            <div className="grid grid-cols-3 gap-1">
-              {['1m', '2m', '3m'].map((len) => (
-                <button
-                  key={len}
-                  type="button"
-                  onClick={() => onUpdate('tailsLength', formData.tailsLength === len ? '' : len)}
-                  className={cn(
-                    'h-10 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    formData.tailsLength === len
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                  )}
-                >
-                  {len}
-                </button>
-              ))}
-            </div>
+          <FormField
+            label="Tails Length"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={(formData.tailsLength as string) || ''}
+                markers={['LIM']}
+                onChange={(v) => onUpdate('tailsLength', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.tailsLength as string) ? (
+              <Input
+                value={formData.tailsLength as string}
+                disabled
+                className={cn(inputClasses, 'opacity-60')}
+              />
+            ) : (
+              <div className="grid grid-cols-3 gap-1">
+                {['1m', '2m', '3m'].map((len) => (
+                  <button
+                    key={len}
+                    type="button"
+                    onClick={() => onUpdate('tailsLength', formData.tailsLength === len ? '' : len)}
+                    className={cn(
+                      'h-10 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98]',
+                      formData.tailsLength === len
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
+                  >
+                    {len}
+                  </button>
+                ))}
+              </div>
+            )}
           </FormField>
         </div>
       </div>

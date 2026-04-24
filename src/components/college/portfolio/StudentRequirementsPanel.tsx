@@ -36,6 +36,8 @@ import {
   Pill,
   EmptyState,
   LoadingState,
+  Eyebrow,
+  PrimaryButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -178,22 +180,17 @@ export function StudentRequirementsPanel({
       {/* Header */}
       <div className="flex items-end justify-between gap-4">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-            Evidence Requirements
-          </div>
+          <Eyebrow>Evidence Requirements</Eyebrow>
           <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
             Requirements
           </h3>
-          <p className="mt-1 text-[13px] text-white/55">
+          <p className="mt-1 text-[13px] text-white">
             Manage custom requirements for this student
           </p>
         </div>
-        <button
-          onClick={() => setIsAddDialogOpen(true)}
-          className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation shrink-0"
-        >
+        <PrimaryButton className="shrink-0" onClick={() => setIsAddDialogOpen(true)}>
           Add Requirement
-        </button>
+        </PrimaryButton>
       </div>
 
       {/* Stats */}
@@ -211,7 +208,7 @@ export function StudentRequirementsPanel({
         <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
           <TabsTrigger
             value="tutor"
-            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
           >
             Your Requirements
             {activeCount > 0 && (
@@ -220,7 +217,7 @@ export function StudentRequirementsPanel({
           </TabsTrigger>
           <TabsTrigger
             value="unit"
-            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
           >
             Unit Requirements
           </TabsTrigger>
@@ -241,9 +238,7 @@ export function StudentRequirementsPanel({
             <div className="space-y-5">
               {activeRequirements.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                    Active
-                  </div>
+                  <Eyebrow>Active</Eyebrow>
                   <div className="space-y-2">
                     {activeRequirements.map((req) => (
                       <RequirementCard
@@ -261,9 +256,7 @@ export function StudentRequirementsPanel({
 
               {completedRequirements.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-                    Completed
-                  </div>
+                  <Eyebrow>Completed</Eyebrow>
                   <div className="space-y-2">
                     {completedRequirements.map((req) => (
                       <RequirementCard
@@ -308,18 +301,18 @@ export function StudentRequirementsPanel({
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
                       {req.is_mandatory && <Pill tone="amber">Required</Pill>}
-                      <span className="text-[13px] text-white/70 tabular-nums">
+                      <span className="text-[13px] text-white tabular-nums">
                         {req.quantity_required}×
                       </span>
                     </div>
                   </div>
                   {req.assessment_criterion_text && (
-                    <p className="mt-2 text-[13px] text-white/70 leading-relaxed">
+                    <p className="mt-2 text-[13px] text-white leading-relaxed">
                       {req.assessment_criterion_text}
                     </p>
                   )}
                   {req.guidance && (
-                    <p className="mt-1.5 text-[12px] text-white/70 italic leading-relaxed">
+                    <p className="mt-1.5 text-[12px] text-white italic leading-relaxed">
                       {req.guidance}
                     </p>
                   )}
@@ -364,18 +357,18 @@ export function StudentRequirementsPanel({
         <AlertDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete Requirement</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60">
+            <AlertDialogDescription className="text-white">
               Are you sure you want to delete "{deletingRequirement?.title}"? This action cannot be
               undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="bg-transparent border-white/[0.08] text-white/70 hover:bg-white/5 hover:text-white rounded-full">
+            <AlertDialogCancel className="bg-white/[0.06] border-white/[0.1] text-white hover:bg-white/[0.1] rounded-full">
               Cancel
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteRequirement}
-              className="bg-red-600 hover:bg-red-700 text-white rounded-full"
+              className="bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20 rounded-full"
             >
               Delete
             </AlertDialogAction>
@@ -432,7 +425,7 @@ function RequirementCard({
                 'shrink-0 h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors touch-manipulation',
                 isCompleted
                   ? 'bg-green-500/20 border-green-500'
-                  : 'bg-transparent border-white/30 hover:border-elec-yellow'
+                  : 'bg-transparent border-white/[0.08] hover:border-elec-yellow'
               )}
             >
               {isCompleted && <span className="text-green-400 text-[11px] font-bold">✓</span>}
@@ -440,7 +433,7 @@ function RequirementCard({
             <h4
               className={cn(
                 'text-[15px] font-medium truncate',
-                isCompleted ? 'line-through text-white/55' : 'text-white'
+                isCompleted ? 'line-through text-white' : 'text-white'
               )}
             >
               {requirement.title}
@@ -449,7 +442,7 @@ function RequirementCard({
           </div>
 
           {requirement.description && (
-            <p className="mt-2 text-[13px] text-white/60 line-clamp-2 leading-relaxed pl-8">
+            <p className="mt-2 text-[13px] text-white line-clamp-2 leading-relaxed pl-8">
               {requirement.description}
             </p>
           )}
@@ -462,7 +455,7 @@ function RequirementCard({
                 </Pill>
               ))}
             </div>
-            <span className="text-[11.5px] text-white/70 tabular-nums">
+            <span className="text-[11.5px] text-white tabular-nums">
               {requirement.quantity_required}× required
             </span>
             {requirement.due_date && (
@@ -475,7 +468,7 @@ function RequirementCard({
           <DropdownMenuTrigger asChild>
             <button
               aria-label="Options"
-              className="shrink-0 h-9 w-9 rounded-full flex items-center justify-center text-white/60 hover:bg-white/5 hover:text-white transition-colors touch-manipulation"
+              className="shrink-0 h-9 w-9 rounded-full flex items-center justify-center text-white hover:bg-white/[0.04] transition-colors touch-manipulation"
             >
               <span className="text-lg leading-none">⋯</span>
             </button>
@@ -484,12 +477,12 @@ function RequirementCard({
             align="end"
             className="bg-[hsl(0_0%_12%)] border-white/[0.08] min-w-[180px]"
           >
-            <DropdownMenuItem onClick={onEdit} className="text-white/80 focus:bg-white/5">
+            <DropdownMenuItem onClick={onEdit} className="text-white focus:bg-white/[0.04]">
               Edit
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={onToggleComplete}
-              className="text-white/80 focus:bg-white/5"
+              className="text-white focus:bg-white/[0.04]"
             >
               {isCompleted ? 'Mark as active' : 'Mark as complete'}
             </DropdownMenuItem>

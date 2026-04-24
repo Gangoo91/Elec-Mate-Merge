@@ -122,7 +122,7 @@ export function CohortsSection({ onNavigate }: CohortsSectionProps) {
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                         Cohort
                       </div>
                       <h3 className="mt-1.5 text-lg font-semibold text-white tracking-tight truncate">
@@ -134,7 +134,7 @@ export function CohortsSection({ onNavigate }: CohortsSectionProps) {
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <button
-                            className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                            className="text-white hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                             aria-label="Options"
                           >
                             ⋯
@@ -172,7 +172,7 @@ export function CohortsSection({ onNavigate }: CohortsSectionProps) {
                   {/* Capacity */}
                   <div className="mt-4">
                     <div className="flex items-baseline justify-between text-[11px]">
-                      <span className="text-white/75 uppercase tracking-[0.12em]">Capacity</span>
+                      <span className="text-white uppercase tracking-[0.12em]">Capacity</span>
                       <span className="font-medium text-white tabular-nums">
                         {currentStudents}/{maxStudents}
                       </span>
@@ -188,10 +188,10 @@ export function CohortsSection({ onNavigate }: CohortsSectionProps) {
                   <div className="flex-grow" />
 
                   <div className="mt-5 pt-4 border-t border-white/[0.06] flex items-center justify-between text-[11.5px]">
-                    <span className="text-white/60 truncate">
+                    <span className="text-white truncate">
                       Tutor · {getTutorName(cohort.tutor_id)}
                     </span>
-                    <span className="text-white/75 tabular-nums shrink-0 ml-3">
+                    <span className="text-white tabular-nums shrink-0 ml-3">
                       {formatUKDateShort(cohort.start_date)} → {formatUKDateShort(cohort.end_date)}
                     </span>
                   </div>

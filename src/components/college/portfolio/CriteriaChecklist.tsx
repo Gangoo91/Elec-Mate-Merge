@@ -16,7 +16,7 @@ import type {
   CriterionItem,
 } from '@/hooks/college/useSubmissionCriteria';
 import { useHapticFeedback } from '@/components/college/ui/HapticFeedback';
-import { Pill, EmptyState } from '@/components/college/primitives';
+import { Pill, EmptyState, Eyebrow, checkboxClass } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 
 // ── Skeleton ───────────────────────────────────────────────────
@@ -90,10 +90,8 @@ const CriteriaChecklist: React.FC<CriteriaChecklistProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between gap-3">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-            Assessment Criteria
-          </div>
-          <div className="mt-1 text-[13px] text-white/60 tabular-nums">
+          <Eyebrow>Assessment Criteria</Eyebrow>
+          <div className="mt-1 text-[13px] text-white tabular-nums">
             {data.verifiedCriteria}/{data.totalCriteria} verified · {data.evidencedCriteria}{' '}
             evidenced
           </div>
@@ -189,7 +187,7 @@ function LOGroup({
           <span
             aria-hidden
             className={cn(
-              'text-[14px] font-medium text-white/75 transition-transform shrink-0',
+              'text-[14px] font-medium text-white transition-transform shrink-0',
               isExpanded && 'rotate-90'
             )}
           >
@@ -264,7 +262,7 @@ function CriterionRow({
         checked={criterion.verified}
         onCheckedChange={(checked) => onToggle(criterion.acRef, checked === true)}
         disabled={isToggling}
-        className="mt-0.5 h-5 w-5 shrink-0 touch-manipulation border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+        className={cn(checkboxClass, 'mt-0.5 shrink-0')}
       />
 
       <div className="flex-1 min-w-0">
@@ -290,7 +288,7 @@ function CriterionRow({
           {onLinkCriteria && (
             <button
               onClick={() => onLinkCriteria(criterion.acRef)}
-              className="text-[11.5px] font-medium text-white/70 hover:text-elec-yellow transition-colors touch-manipulation"
+              className="text-[11.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
             >
               Link
             </button>
@@ -299,7 +297,7 @@ function CriterionRow({
           {onOpenReference && (
             <button
               onClick={() => onOpenReference(criterion.acRef)}
-              className="text-[11.5px] font-medium text-white/70 hover:text-elec-yellow transition-colors touch-manipulation"
+              className="text-[11.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
             >
               Ref
             </button>

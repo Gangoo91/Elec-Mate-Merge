@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from '@/components/ui/sheet';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Textarea } from '@/components/ui/textarea';
 import { useCollegeGrade, useUpdateGrade } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
@@ -12,6 +11,11 @@ import {
   Pill,
   EmptyState,
   LoadingState,
+  FormCard,
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -87,8 +91,11 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+      >
+        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
@@ -97,7 +104,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
 
           {!isLoading && grade && (
             <>
-              <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-5">
+              <SheetHeader className="flex-shrink-0 border-b border-white/[0.08] px-5 pb-5">
                 <div className="flex items-start gap-4">
                   <Avatar className="h-16 w-16 shrink-0 ring-1 ring-white/[0.08]">
                     <AvatarFallback className="bg-amber-500/10 text-amber-400 text-lg font-semibold">
@@ -106,13 +113,11 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                   </Avatar>
 
                   <div className="flex-1 min-w-0">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                      Assessment
-                    </div>
-                    <SheetTitle className="mt-1 text-xl text-left">
+                    <Eyebrow>Assessment</Eyebrow>
+                    <SheetTitle className="mt-1 text-xl text-left text-white">
                       {student?.name ?? 'Unknown Student'}
                     </SheetTitle>
-                    <p className="mt-0.5 text-[11.5px] text-white/75 truncate">
+                    <p className="mt-0.5 text-[11.5px] text-white truncate">
                       {grade.unit_name ?? 'Unassigned Unit'}
                     </p>
                     <div className="flex flex-wrap gap-1.5 mt-3">
@@ -128,12 +133,12 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                 onValueChange={setActiveTab}
                 className="flex-1 flex flex-col overflow-hidden"
               >
-                <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06] flex-shrink-0">
+                <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.08] flex-shrink-0">
                   {['details', 'feedback', 'history'].map((tab) => (
                     <TabsTrigger
                       key={tab}
                       value={tab}
-                      className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
+                      className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
                     >
                       {tab}
                     </TabsTrigger>
@@ -152,55 +157,49 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                         transition={{ duration: 0.2 }}
                         className="p-5 space-y-5"
                       >
-                        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                            Assessment
-                          </div>
-                          <div className="mt-3 space-y-3 text-[13px]">
+                        <FormCard eyebrow="Assessment">
+                          <div className="space-y-3 text-[13px]">
                             <div className="flex items-center justify-between">
-                              <span className="text-white/75">Type</span>
+                              <span className="text-white">Type</span>
                               <span className="text-white">
                                 {grade.assessment_type ?? 'Not specified'}
                               </span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-white/75">Grade</span>
+                              <span className="text-white">Grade</span>
                               <span className="text-white">
                                 {grade.grade ?? 'Not yet graded'}
                               </span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-white/75">Score</span>
+                              <span className="text-white">Score</span>
                               <span className="text-white tabular-nums">
                                 {grade.score != null ? `${grade.score}%` : 'No score'}
                               </span>
                             </div>
                           </div>
-                        </div>
+                        </FormCard>
 
-                        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                            Assessor & Dates
-                          </div>
-                          <div className="mt-3 space-y-3 text-[13px]">
+                        <FormCard eyebrow="Assessor & Dates">
+                          <div className="space-y-3 text-[13px]">
                             <div className="flex items-center justify-between">
-                              <span className="text-white/75">Assessor</span>
+                              <span className="text-white">Assessor</span>
                               <span className="text-white">{assessor?.name ?? 'Not assigned'}</span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-white/75">Assessed</span>
+                              <span className="text-white">Assessed</span>
                               <span className="text-white tabular-nums">
                                 {formatUKDateShort(grade.assessed_at)}
                               </span>
                             </div>
                             <div className="flex items-center justify-between">
-                              <span className="text-white/75">Created</span>
+                              <span className="text-white">Created</span>
                               <span className="text-white tabular-nums">
                                 {formatUKDateShort(grade.created_at)}
                               </span>
                             </div>
                           </div>
-                        </div>
+                        </FormCard>
                       </motion.div>
                     )}
 
@@ -215,38 +214,30 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                         className="p-5 space-y-5"
                       >
                         {isEditingFeedback ? (
-                          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-4">
-                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                              Edit Feedback
-                            </div>
-                            <Textarea
+                          <FormCard eyebrow="Edit Feedback">
+                            <textarea
                               value={feedbackText}
                               onChange={(e) => setFeedbackText(e.target.value)}
                               placeholder="Enter assessment feedback for the student…"
-                              className="touch-manipulation text-sm min-h-[180px] bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60"
+                              className={`${textareaClass} min-h-[180px]`}
                             />
                             <div className="flex items-center justify-end gap-3">
-                              <button
+                              <SecondaryButton
                                 onClick={() => setIsEditingFeedback(false)}
-                                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
                               >
                                 Cancel
-                              </button>
-                              <button
+                              </SecondaryButton>
+                              <PrimaryButton
                                 onClick={handleSaveFeedback}
                                 disabled={updateGrade.isPending}
-                                className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                               >
                                 {updateGrade.isPending ? 'Saving…' : 'Save feedback →'}
-                              </button>
+                              </PrimaryButton>
                             </div>
-                          </div>
+                          </FormCard>
                         ) : grade.feedback ? (
-                          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                            <div className="flex items-baseline justify-between mb-3">
-                              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                                Feedback
-                              </div>
+                          <FormCard eyebrow="Feedback">
+                            <div className="flex items-center justify-end -mt-1">
                               <button
                                 onClick={handleStartFeedback}
                                 className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
@@ -254,10 +245,10 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                                 Edit →
                               </button>
                             </div>
-                            <pre className="whitespace-pre-wrap text-[13.5px] font-sans text-white/80 leading-relaxed">
+                            <pre className="whitespace-pre-wrap text-[13.5px] font-sans text-white leading-relaxed">
                               {grade.feedback}
                             </pre>
-                          </div>
+                          </FormCard>
                         ) : (
                           <EmptyState
                             title="No feedback yet"
@@ -279,11 +270,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                         transition={{ duration: 0.2 }}
                         className="p-5"
                       >
-                        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-5">
-                            Timeline
-                          </div>
-
+                        <FormCard eyebrow="Timeline">
                           <div className="relative pl-6 space-y-5">
                             <div className="absolute left-[5px] top-1 bottom-1 w-px bg-white/[0.08]" />
 
@@ -292,7 +279,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                               <div className="text-[13px] font-medium text-white">
                                 Assessment created
                               </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                              <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                                 {formatUKDateShort(grade.created_at)} · Unit:{' '}
                                 {grade.unit_name ?? 'Not specified'}
                               </div>
@@ -304,7 +291,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                                 <div className="text-[13px] font-medium text-white">
                                   Status → {grade.status}
                                 </div>
-                                <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                                <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                                   {grade.assessed_at
                                     ? formatUKDateShort(grade.assessed_at)
                                     : 'Date not recorded'}
@@ -318,7 +305,7 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                                 <div className="text-[13px] font-medium text-white">
                                   Graded
                                 </div>
-                                <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                                <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                                   {formatUKDateShort(grade.assessed_at)}
                                   {assessor && ` · ${assessor.name}`}
                                 </div>
@@ -339,38 +326,29 @@ export function GradeDetailSheet({ gradeId, open, onOpenChange }: GradeDetailShe
                                 <div className="text-[13px] font-medium text-white">
                                   Feedback recorded
                                 </div>
-                                <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                                <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                                   {grade.feedback.length} characters
                                 </div>
                               </div>
                             )}
                           </div>
-                        </div>
+                        </FormCard>
                       </motion.div>
                     )}
                   </AnimatePresence>
                 </div>
               </Tabs>
 
-              <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-5 flex-row items-center justify-end gap-4">
-                <button
-                  onClick={() => onOpenChange(false)}
-                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-                >
+              <SheetFooter className="flex-shrink-0 border-t border-white/[0.08] p-5 flex-row items-center justify-end gap-4">
+                <SecondaryButton onClick={() => onOpenChange(false)}>
                   Close
-                </button>
-                <button
-                  onClick={() => onOpenChange(false)}
-                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-                >
+                </SecondaryButton>
+                <SecondaryButton onClick={() => onOpenChange(false)}>
                   Rubric grade
-                </button>
-                <button
-                  onClick={() => onOpenChange(false)}
-                  className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-                >
+                </SecondaryButton>
+                <PrimaryButton onClick={() => onOpenChange(false)}>
                   Quick grade →
-                </button>
+                </PrimaryButton>
               </SheetFooter>
             </>
           )}

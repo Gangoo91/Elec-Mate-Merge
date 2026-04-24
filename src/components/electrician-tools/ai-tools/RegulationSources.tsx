@@ -1,7 +1,5 @@
-import { Book, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface Regulation {
   id: string;
@@ -15,137 +13,145 @@ interface Regulation {
 interface RegulationSourcesProps {
   regulations: Regulation[];
   searchMethod?: string;
+  /**
+   * Optional callback fired when a regulation chip is clicked. When supplied
+   * the parent is expected to open a RegulationDetailSheet (or similar) and
+   * the inline expand-on-tap behaviour is suppressed.
+   */
+  onRegulationClick?: (regulationNumber: string) => void;
 }
 
-const RegulationSources = ({ regulations, searchMethod }: RegulationSourcesProps) => {
-  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+/**
+ * RegulationSources — Editorial "Sources" card rendered below an assistant
+ * message. Chips in a horizontal scroll row; clicking a chip expands that
+ * regulation inline. Similarity rendered as plain tone-coloured text, not
+ * a pill.
+ *
+ * Pass `onRegulationClick` to delegate to a modal/sheet viewer instead of the
+ * inline expand behaviour.
+ */
+const RegulationSources = ({
+  regulations,
+  searchMethod,
+  onRegulationClick,
+}: RegulationSourcesProps) => {
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   if (!regulations || regulations.length === 0) {
     return null;
   }
 
   const toggleExpand = (id: string) => {
-    setExpandedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
+    setExpandedId((prev) => (prev === id ? null : id));
   };
 
+  const methodLabel =
+    searchMethod === 'direct'
+      ? 'Direct match'
+      : searchMethod === 'vector'
+        ? 'AI match'
+        : searchMethod === 'keyword'
+          ? 'Keyword match'
+          : null;
+
   return (
-    <Card className="bg-gradient-to-r from-neutral-800/50 to-neutral-700/50 border border-purple-500/30">
-      <CardHeader className="p-4">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base sm:text-lg flex items-center gap-2 text-foreground">
-            <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center">
-              <Book className="h-4 w-4 text-purple-400" />
-            </div>
-            BS 7671 Sources
-          </CardTitle>
-          {searchMethod && (
-            <Badge
-              variant="outline"
-              className="bg-purple-500/20 text-purple-300 border-purple-500/30"
-            >
-              {searchMethod === 'direct'
-                ? 'Direct match'
-                : searchMethod === 'vector'
-                  ? 'AI Match'
-                  : 'Keyword'}
-            </Badge>
-          )}
+    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
+      {/* Header row */}
+      <div className="px-5 pt-4 pb-3 flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+            Sources · {regulations.length}{' '}
+            {regulations.length === 1 ? 'regulation' : 'regulations'}
+          </div>
+          <div className="mt-0.5 text-[12px] text-white/70">
+            BS 7671 A4:2026 cited in this answer
+          </div>
         </div>
-      </CardHeader>
-      <CardContent className="p-4 pt-0 space-y-3">
+        {methodLabel && (
+          <span className="shrink-0 text-[11px] font-medium text-purple-400">{methodLabel}</span>
+        )}
+      </div>
+
+      {/* Horizontal chip row */}
+      <div className="px-5 pb-3 flex items-center gap-2 overflow-x-auto hide-scrollbar">
         {regulations.map((reg, index) => {
-          const isExpanded = expandedIds.has(reg.id || index.toString());
-          const contentLength = reg.content?.length || 0;
-          const showExpandButton = contentLength > 150;
-
+          const id = reg.id || index.toString();
+          const isExpanded = expandedId === id;
+          const handleClick = () => {
+            if (onRegulationClick) {
+              onRegulationClick(reg.regulation_number);
+              return;
+            }
+            toggleExpand(id);
+          };
           return (
-            <div
-              key={reg.id || index}
-              className="p-3 sm:p-4 bg-card/40 rounded-lg border-l-4 border-purple-500/50 hover:bg-card/60 transition-colors"
+            <button
+              key={id}
+              onClick={handleClick}
+              className={cn(
+                'shrink-0 rounded-full px-3 py-1 text-[12px] font-medium transition-colors touch-manipulation',
+                'border',
+                isExpanded
+                  ? 'bg-elec-yellow/15 border-elec-yellow/40 text-elec-yellow'
+                  : 'bg-white/[0.02] border-white/[0.08] text-elec-yellow hover:bg-white/[0.06]'
+              )}
             >
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-purple-400 font-bold text-sm sm:text-base">
-                    {reg.regulation_number}
-                  </span>
-                  {reg.amendment && (
-                    <Badge
-                      variant="outline"
-                      className="text-xs bg-purple-500/10 text-purple-300 border-purple-500/20"
-                    >
-                      {reg.amendment}
-                    </Badge>
-                  )}
-                </div>
-                <Badge
-                  variant="outline"
-                  className={`text-xs shrink-0 ${
-                    searchMethod === 'direct' || reg.similarity >= 0.95
-                      ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                      : reg.similarity > 0.8
-                        ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                        : reg.similarity > 0.6
-                          ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
-                          : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
-                  }`}
-                >
-                  {searchMethod === 'direct' || reg.similarity >= 0.95
-                    ? '95%'
-                    : `${Math.round(reg.similarity * 100)}%`}{' '}
-                  match
-                </Badge>
-              </div>
-
-              <h4 className="text-foreground font-medium text-sm sm:text-base mb-2">
-                {reg.section}
-              </h4>
-
-              {isExpanded ? (
-                <p className="text-gray-300 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap">
-                  {reg.content}
-                </p>
-              ) : (
-                <p className="text-gray-300 text-xs sm:text-sm leading-relaxed">
-                  {showExpandButton ? `${reg.content.slice(0, 150)}...` : reg.content}
-                </p>
-              )}
-
-              {showExpandButton && (
-                <button
-                  onClick={() => toggleExpand(reg.id || index.toString())}
-                  className="mt-2 text-purple-400 text-xs flex items-center gap-1 hover:text-purple-300 transition-colors"
-                >
-                  {isExpanded ? (
-                    <>
-                      <ChevronUp className="h-3 w-3" />
-                      Show less
-                    </>
-                  ) : (
-                    <>
-                      <ChevronDown className="h-3 w-3" />
-                      Show full regulation ({contentLength} chars)
-                    </>
-                  )}
-                </button>
-              )}
-            </div>
+              Reg {reg.regulation_number}
+            </button>
           );
         })}
+      </div>
 
-        <div className="pt-2 text-xs text-gray-500 flex items-center gap-1">
-          <ExternalLink className="h-3 w-3" />
-          <span>Sourced from BS 7671:2018 database</span>
+      {/* Expanded regulation */}
+      {expandedId !== null && (
+        <div className="border-t border-white/[0.06] px-5 py-4 space-y-2">
+          {(() => {
+            const reg = regulations.find(
+              (r, i) => (r.id || i.toString()) === expandedId
+            );
+            if (!reg) return null;
+            const similarityPct =
+              searchMethod === 'direct' || reg.similarity >= 0.95
+                ? 95
+                : Math.round(reg.similarity * 100);
+            const similarityTone =
+              similarityPct >= 80
+                ? 'text-emerald-400'
+                : similarityPct >= 60
+                  ? 'text-elec-yellow'
+                  : 'text-white/55';
+            return (
+              <>
+                <div className="flex items-baseline justify-between gap-3">
+                  <div className="min-w-0">
+                    <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                      Reg {reg.regulation_number}
+                      {reg.amendment && (
+                        <span className="ml-2 text-white/55">· {reg.amendment}</span>
+                      )}
+                    </div>
+                    <div className="mt-1 text-[15px] font-semibold text-white tracking-tight">
+                      {reg.section}
+                    </div>
+                  </div>
+                  <div className={cn('shrink-0 text-[11px] font-medium', similarityTone)}>
+                    {similarityPct}% match
+                  </div>
+                </div>
+                <p className="text-[13px] leading-relaxed text-white/70 whitespace-pre-wrap">
+                  {reg.content}
+                </p>
+              </>
+            );
+          })()}
         </div>
-      </CardContent>
-    </Card>
+      )}
+
+      {/* Footer line */}
+      <div className="border-t border-white/[0.06] px-5 py-3 text-[11px] text-white/55">
+        Sourced from BS 7671:2018 + A4:2026 database
+      </div>
+    </div>
   );
 };
 

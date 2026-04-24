@@ -172,14 +172,14 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-center gap-4">
               <span aria-hidden className="w-[3px] h-10 rounded-full bg-blue-400 shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Action required
                 </div>
                 <div className="mt-1 text-[15px] font-medium text-white">
                   {statusCounts.gatewayReady} apprentice
                   {statusCounts.gatewayReady !== 1 ? 's' : ''} gateway ready
                 </div>
-                <div className="mt-0.5 text-[12px] text-white/75">
+                <div className="mt-0.5 text-[12px] text-white">
                   Review and schedule EPA assessments.
                 </div>
               </div>
@@ -216,7 +216,7 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
               <select
                 value={filterCohort}
                 onChange={(e) => setFilterCohort(e.target.value)}
-                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60"
               >
                 <option value="all">All Cohorts</option>
                 {cohorts
@@ -268,7 +268,7 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                       <div className="space-y-2.5">
                         <div>
                           <div className="flex items-baseline justify-between text-[10.5px]">
-                            <span className="text-white/55 uppercase tracking-[0.12em]">
+                            <span className="text-white uppercase tracking-[0.12em]">
                               EPA progress
                             </span>
                             <span className="font-medium text-white tabular-nums">
@@ -289,7 +289,7 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                             ))}
                           </div>
                         </div>
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white">
                           {epa.gateway_date && (
                             <span className="tabular-nums">
                               Gateway{' '}

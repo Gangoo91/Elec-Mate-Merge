@@ -361,7 +361,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 <FieldLimitationBadge
                   compact
                   value={formData.mainEarthingConductorType || ''}
-                  markers={['LIM']}
+                  markers={['LIM', 'N/V']}
                   onChange={(v) => onUpdate('mainEarthingConductorType', v)}
                 />
               }
@@ -411,7 +411,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 <FieldLimitationBadge
                   compact
                   value={formData.mainEarthingConductorSize || ''}
-                  markers={['LIM']}
+                  markers={['LIM', 'N/V']}
                   onChange={(v) => onUpdate('mainEarthingConductorSize', v)}
                 />
               }
@@ -509,7 +509,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 <FieldLimitationBadge
                   compact
                   value={formData.mainBondingConductorType || ''}
-                  markers={['LIM']}
+                  markers={['LIM', 'N/A']}
                   onChange={(v) => onUpdate('mainBondingConductorType', v)}
                 />
               }
@@ -684,24 +684,49 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
           </FormField>
 
           {/* Row 3: Bonding Locations — 3x2 grid */}
-          <FormField label="Bonding Locations">
-            <div className="grid grid-cols-3 gap-2">
-              {bondingServices.map((service) => (
-                <button
-                  key={service.id}
-                  type="button"
-                  onClick={() => handleBondingLocationChange(service.id, !bondingLocations.has(service.id))}
-                  className={cn(
-                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs flex items-center justify-center gap-1.5 active:scale-[0.98]',
-                    bondingLocations.has(service.id)
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                  )}
-                >
-                  {service.label}
-                </button>
-              ))}
-            </div>
+          <FormField
+            label="Bonding Locations"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.mainBondingLocations === 'N/A' ? 'N/A' : ''}
+                markers={['N/A']}
+                onChange={(v) => {
+                  if (v === 'N/A') {
+                    onUpdate('mainBondingLocations', 'N/A');
+                    setBondingLocations(new Set());
+                  } else {
+                    onUpdate('mainBondingLocations', '');
+                  }
+                }}
+              />
+            }
+          >
+            {formData.mainBondingLocations === 'N/A' ? (
+              <Input
+                value="N/A — no services to bond"
+                disabled
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+              />
+            ) : (
+              <div className="grid grid-cols-3 gap-2">
+                {bondingServices.map((service) => (
+                  <button
+                    key={service.id}
+                    type="button"
+                    onClick={() => handleBondingLocationChange(service.id, !bondingLocations.has(service.id))}
+                    className={cn(
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs flex items-center justify-center gap-1.5 active:scale-[0.98]',
+                      bondingLocations.has(service.id)
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {service.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </FormField>
 
           <FormField label="Other Services">

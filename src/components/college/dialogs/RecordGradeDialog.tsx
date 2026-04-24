@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import {
   Dialog,
@@ -21,6 +19,17 @@ import {
 import { useCollegeGrades, useGradeAssessment } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectContentClass,
+  selectTriggerClass,
+  textareaClass,
+} from '@/components/college/primitives';
 
 interface RecordGradeDialogProps {
   open: boolean;
@@ -112,155 +121,150 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle>Record grade</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-white">Record grade</DialogTitle>
+          <DialogDescription className="text-white">
             Grade an assessment submission. All fields marked with * are required.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Assessment Selection */}
-          <div>
-            <Label htmlFor="assessmentId">Assessment *</Label>
-            <Select
-              value={formData.assessmentId}
-              onValueChange={(value) => handleChange('assessmentId', value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select assessment to grade" />
-              </SelectTrigger>
-              <SelectContent>
-                {pendingAssessments.map((grade) => {
-                  const student = students.find((s) => s.id === grade.student_id);
-                  return (
-                    <SelectItem key={grade.id} value={grade.id}>
-                      {grade.unit_name} - {student?.name || 'Unknown'}
+          <FormCard eyebrow="Assessment">
+            <Field label="Assessment" required>
+              <Select
+                value={formData.assessmentId}
+                onValueChange={(value) => handleChange('assessmentId', value)}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select assessment to grade" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {pendingAssessments.map((grade) => {
+                    const student = students.find((s) => s.id === grade.student_id);
+                    return (
+                      <SelectItem key={grade.id} value={grade.id}>
+                        {grade.unit_name} - {student?.name || 'Unknown'}
+                      </SelectItem>
+                    );
+                  })}
+                  {pendingAssessments.length === 0 && (
+                    <SelectItem value="no-assessments" disabled>
+                      No assessments pending
                     </SelectItem>
-                  );
-                })}
-                {pendingAssessments.length === 0 && (
-                  <SelectItem value="no-assessments" disabled>
-                    No assessments pending
-                  </SelectItem>
-                )}
-              </SelectContent>
-            </Select>
-          </div>
+                  )}
+                </SelectContent>
+              </Select>
+            </Field>
 
-          {/* Show selected assessment details */}
-          {selectedAssessment && (
-            <div className="p-3 bg-muted/50 rounded-lg space-y-1">
-              <p className="text-sm font-medium">{selectedAssessment.unit_name}</p>
-              <p className="text-xs text-white">
-                Student: {selectedStudent?.name} | Type: {selectedAssessment.assessment_type}
-              </p>
-              {selectedAssessment.assessed_at && (
+            {/* Show selected assessment details */}
+            {selectedAssessment && (
+              <div className="p-3 bg-white/[0.04] border border-white/[0.06] rounded-xl space-y-1">
+                <p className="text-sm font-medium text-white">{selectedAssessment.unit_name}</p>
                 <p className="text-xs text-white">
-                  Submitted:{' '}
-                  {new Date(selectedAssessment.assessed_at).toLocaleDateString('en-GB')}
+                  Student: {selectedStudent?.name} | Type: {selectedAssessment.assessment_type}
                 </p>
-              )}
-            </div>
-          )}
+                {selectedAssessment.assessed_at && (
+                  <p className="text-xs text-white">
+                    Submitted:{' '}
+                    {new Date(selectedAssessment.assessed_at).toLocaleDateString('en-GB')}
+                  </p>
+                )}
+              </div>
+            )}
+          </FormCard>
 
-          {/* Grade Selection */}
-          <div>
-            <Label htmlFor="grade">Grade *</Label>
-            <Select value={formData.grade} onValueChange={(value) => handleChange('grade', value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select grade" />
-              </SelectTrigger>
-              <SelectContent>
-                {GRADE_OPTIONS.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    <div className="flex flex-col">
-                      <span>{option.label}</span>
-                      <span className="text-xs text-white">{option.description}</span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          <FormCard eyebrow="Grade & score">
+            <Field label="Grade" required>
+              <Select value={formData.grade} onValueChange={(value) => handleChange('grade', value)}>
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select grade" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {GRADE_OPTIONS.map((option) => (
+                    <SelectItem key={option.value} value={option.value}>
+                      <div className="flex flex-col">
+                        <span>{option.label}</span>
+                        <span className="text-xs text-white">{option.description}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
 
-          {/* Score */}
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <Label htmlFor="score">Score</Label>
-              <Input
-                id="score"
-                type="number"
-                min="0"
-                max={formData.maxScore || 100}
-                value={formData.score}
-                onChange={(e) => handleChange('score', e.target.value)}
-                placeholder="0"
+            <FormGrid cols={2}>
+              <Field label="Score">
+                <Input
+                  id="score"
+                  type="number"
+                  min="0"
+                  max={formData.maxScore || 100}
+                  value={formData.score}
+                  onChange={(e) => handleChange('score', e.target.value)}
+                  placeholder="0"
+                  className={inputClass}
+                />
+              </Field>
+              <Field label="Max score">
+                <Input
+                  id="maxScore"
+                  type="number"
+                  min="1"
+                  value={formData.maxScore}
+                  onChange={(e) => handleChange('maxScore', e.target.value)}
+                  placeholder="100"
+                  className={inputClass}
+                />
+              </Field>
+            </FormGrid>
+
+            <Field label="Assessed by" required>
+              <Select
+                value={formData.assessorId}
+                onValueChange={(value) => handleChange('assessorId', value)}
+              >
+                <SelectTrigger className={selectTriggerClass}>
+                  <SelectValue placeholder="Select assessor" />
+                </SelectTrigger>
+                <SelectContent className={selectContentClass}>
+                  {assessors.map((assessor) => (
+                    <SelectItem key={assessor.id} value={assessor.id}>
+                      {assessor.name} ({assessor.role})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+
+            <Field label="Feedback">
+              <Textarea
+                id="feedback"
+                value={formData.feedback}
+                onChange={(e) => handleChange('feedback', e.target.value)}
+                placeholder="Provide feedback for the student..."
+                rows={4}
+                className={textareaClass}
               />
-            </div>
-            <div>
-              <Label htmlFor="maxScore">Max Score</Label>
-              <Input
-                id="maxScore"
-                type="number"
-                min="1"
-                value={formData.maxScore}
-                onChange={(e) => handleChange('maxScore', e.target.value)}
-                placeholder="100"
-              />
-            </div>
-          </div>
-
-          {/* Assessor */}
-          <div>
-            <Label htmlFor="assessorId">Assessed By *</Label>
-            <Select
-              value={formData.assessorId}
-              onValueChange={(value) => handleChange('assessorId', value)}
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Select assessor" />
-              </SelectTrigger>
-              <SelectContent>
-                {assessors.map((assessor) => (
-                  <SelectItem key={assessor.id} value={assessor.id}>
-                    {assessor.name} ({assessor.role})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Feedback */}
-          <div>
-            <Label htmlFor="feedback">Feedback</Label>
-            <Textarea
-              id="feedback"
-              value={formData.feedback}
-              onChange={(e) => handleChange('feedback', e.target.value)}
-              placeholder="Provide feedback for the student..."
-              rows={4}
-            />
-          </div>
+            </Field>
+          </FormCard>
 
           <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
+            <SecondaryButton
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
             >
               Cancel
-            </Button>
-            <Button
+            </SecondaryButton>
+            <PrimaryButton
               type="submit"
               disabled={
                 isSubmitting || !formData.assessmentId || !formData.grade || !formData.assessorId
               }
+              onClick={handleSubmit}
             >
-              {isSubmitting ? 'Saving…' : 'Record Grade'}
-            </Button>
+              {isSubmitting ? 'Saving…' : 'Record grade'}
+            </PrimaryButton>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -187,7 +187,7 @@ export function ILPManagementSection() {
                       <div className="text-[14px] font-medium text-white truncate">
                         {student.name}
                       </div>
-                      <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
+                      <div className="mt-0.5 text-[11.5px] text-white truncate">
                         {getCohortName(student.cohortId)}
                       </div>
                     </div>
@@ -224,7 +224,7 @@ export function ILPManagementSection() {
               <select
                 value={filterCohort}
                 onChange={(e) => setFilterCohort(e.target.value)}
-                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60"
               >
                 <option value="all">All Cohorts</option>
                 {cohorts
@@ -281,7 +281,7 @@ export function ILPManagementSection() {
                         {targets.length > 0 && (
                           <div>
                             <div className="flex items-baseline justify-between text-[10.5px]">
-                              <span className="text-white/55 uppercase tracking-[0.12em]">
+                              <span className="text-white uppercase tracking-[0.12em]">
                                 Targets
                               </span>
                               <span className="font-medium text-white tabular-nums">
@@ -307,13 +307,13 @@ export function ILPManagementSection() {
                               </Pill>
                             ))}
                             {targets.length > 3 && (
-                              <span className="text-[11px] text-white/55 px-1.5 py-0.5">
+                              <span className="text-[11px] text-white px-1.5 py-0.5">
                                 +{targets.length - 3}
                               </span>
                             )}
                           </div>
                         )}
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white">
                           {ilp.last_reviewed && (
                             <span className="tabular-nums">
                               Reviewed{' '}

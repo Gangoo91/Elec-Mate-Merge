@@ -17,6 +17,14 @@ import {
   EmptyState,
   itemVariants,
   toneDot,
+  FormCard,
+  FormGrid,
+  Field,
+  fieldLabelClass,
+  inputClass,
+  selectTriggerClass,
+  PrimaryButton,
+  SecondaryButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -192,14 +200,14 @@ export function AssessmentCalendarSection({
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-2 flex items-center justify-between">
           <button
             onClick={handlePrevMonth}
-            className="h-10 px-4 text-[12.5px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
+            className="h-10 px-4 text-[12.5px] font-medium text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
             ← Previous
           </button>
           <h2 className="text-[13px] font-semibold text-white tracking-tight">{monthName}</h2>
           <button
             onClick={handleNextMonth}
-            className="h-10 px-4 text-[12.5px] font-medium text-white/70 hover:text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
+            className="h-10 px-4 text-[12.5px] font-medium text-white rounded-full hover:bg-white/[0.04] transition-colors touch-manipulation"
           >
             Next →
           </button>
@@ -213,7 +221,7 @@ export function AssessmentCalendarSection({
             {WEEKDAYS.map((day) => (
               <div
                 key={day}
-                className="text-center text-[10px] font-medium text-white/55 uppercase tracking-[0.14em] py-1"
+                className="text-center text-[10px] font-medium text-white uppercase tracking-[0.14em] py-1"
               >
                 {day}
               </div>
@@ -249,7 +257,7 @@ export function AssessmentCalendarSection({
                   <span
                     className={cn(
                       'text-[13px] font-medium tabular-nums',
-                      isSelected ? 'text-elec-yellow' : isToday ? 'text-white' : 'text-white/70'
+                      isSelected ? 'text-elec-yellow' : 'text-white'
                     )}
                   >
                     {day}
@@ -289,17 +297,14 @@ export function AssessmentCalendarSection({
           />
 
           {showAddForm && (
-            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
-              <div>
-                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                  Student
-                </label>
+            <FormCard eyebrow="New assessment">
+              <Field label="Student">
                 <select
                   value={newAssessment.studentId}
                   onChange={(e) =>
                     setNewAssessment((p) => ({ ...p, studentId: e.target.value }))
                   }
-                  className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                  className={cn(selectTriggerClass, 'w-full')}
                 >
                   <option value="">Select a student…</option>
                   {activeStudents.map((s) => (
@@ -308,12 +313,10 @@ export function AssessmentCalendarSection({
                     </option>
                   ))}
                 </select>
-              </div>
+              </Field>
 
               <div>
-                <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                  Type
-                </label>
+                <label className={fieldLabelClass}>Type</label>
                 <div className="mt-2 grid grid-cols-2 gap-1.5">
                   {ASSESSMENT_TYPES.map((type) => {
                     const selected = newAssessment.assessmentType === type;
@@ -327,7 +330,7 @@ export function AssessmentCalendarSection({
                           'h-11 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation flex items-center justify-center gap-1.5',
                           selected
                             ? 'bg-elec-yellow text-black'
-                            : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white/70 hover:text-white'
+                            : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white hover:bg-white/[0.04]'
                         )}
                       >
                         <span
@@ -341,22 +344,16 @@ export function AssessmentCalendarSection({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                    Time
-                  </label>
+              <FormGrid cols={2}>
+                <Field label="Time">
                   <input
                     type="time"
                     value={newAssessment.time}
                     onChange={(e) => setNewAssessment((p) => ({ ...p, time: e.target.value }))}
-                    className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] tabular-nums focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                    className={cn(inputClass, 'tabular-nums')}
                   />
-                </div>
-                <div>
-                  <label className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                    Location / Notes
-                  </label>
+                </Field>
+                <Field label="Location / Notes">
                   <input
                     type="text"
                     placeholder="e.g. Site visit — 42 Oak Lane"
@@ -364,27 +361,23 @@ export function AssessmentCalendarSection({
                     onChange={(e) =>
                       setNewAssessment((p) => ({ ...p, location: e.target.value }))
                     }
-                    className="mt-2 w-full h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                    className={inputClass}
                   />
-                </div>
-              </div>
+                </Field>
+              </FormGrid>
 
               <div className="flex items-center justify-end gap-3 pt-1">
-                <button
-                  onClick={() => setShowAddForm(false)}
-                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-                >
+                <SecondaryButton onClick={() => setShowAddForm(false)}>
                   Cancel
-                </button>
-                <button
+                </SecondaryButton>
+                <PrimaryButton
                   onClick={handleAddAssessment}
                   disabled={!newAssessment.studentId}
-                  className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
                 >
                   Schedule →
-                </button>
+                </PrimaryButton>
               </div>
-            </div>
+            </FormCard>
           )}
 
           {selectedDayAssessments.length === 0 ? (
@@ -411,7 +404,7 @@ export function AssessmentCalendarSection({
                           <div className="text-[14px] font-medium text-white truncate">
                             {a.studentName}
                           </div>
-                          <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                          <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                             {a.time}
                             {a.location ? ` · ${a.location}` : ''}
                           </div>
@@ -457,7 +450,7 @@ export function AssessmentCalendarSection({
                         <div className="text-[14px] font-medium text-white truncate">
                           {a.studentName}
                         </div>
-                        <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                        <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                           {dateLabel} · {a.time}
                           {a.location ? ` · ${a.location}` : ''}
                         </div>

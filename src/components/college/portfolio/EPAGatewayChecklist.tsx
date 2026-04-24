@@ -1,13 +1,9 @@
 import React, { useState } from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetFooter,
 } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useEPAGateway, GatewayStatus } from '@/hooks/college/useEPAGateway';
@@ -17,6 +13,13 @@ import {
   Pill,
   EmptyState,
   LoadingState,
+  Eyebrow,
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  SheetShell,
+  inputClass,
+  checkboxClass,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -127,13 +130,11 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4 mb-5">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              EPA Gateway Checklist
-            </div>
+            <Eyebrow>EPA Gateway Checklist</Eyebrow>
             <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
               Gateway Progress
             </h3>
-            <p className="mt-1 text-[12.5px] text-white/55">
+            <p className="mt-1 text-[12.5px] text-white">
               {status.studentName} · {status.qualificationTitle}
             </p>
           </div>
@@ -143,7 +144,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
         </div>
 
         <div className="flex items-center justify-between text-[12.5px] mb-2">
-          <span className="text-white/55">Gateway Progress</span>
+          <span className="text-white">Gateway Progress</span>
           <span className="font-semibold text-white tabular-nums">{status.overallProgress}%</span>
         </div>
         <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
@@ -158,26 +159,21 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Off-the-Job Training Hours
-            </div>
+            <Eyebrow>Off-the-Job Training Hours</Eyebrow>
             <h4 className="mt-1 text-lg font-semibold text-white">OJT Progress</h4>
           </div>
           {!readOnly && (
-            <button
-              onClick={() => setShowOJTSheet(true)}
-              className="h-10 px-4 rounded-full text-[12.5px] font-medium text-white/70 border border-white/[0.08] hover:bg-white/5 hover:text-white transition-colors touch-manipulation"
-            >
+            <SecondaryButton size="sm" onClick={() => setShowOJTSheet(true)}>
               Update hours
-            </button>
+            </SecondaryButton>
           )}
         </div>
 
         <div className="flex items-center justify-between text-[13px] mb-2">
-          <span className="text-white/70 tabular-nums">
+          <span className="text-white tabular-nums">
             {status.ojtHoursCompleted} / {status.ojtHoursRequired} hours
           </span>
-          <span className="text-white/55 tabular-nums">{ojtProgress}%</span>
+          <span className="text-white tabular-nums">{ojtProgress}%</span>
         </div>
         <div className="h-1 bg-white/[0.06] rounded-full overflow-hidden">
           <div
@@ -197,7 +193,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       {/* Checklist */}
       <div className="space-y-3">
         <SectionHeader eyebrow="Requirements" title="Gateway Requirements" />
-        <p className="text-[13px] text-white/55">All items must be completed before EPA</p>
+        <p className="text-[13px] text-white">All items must be completed before EPA</p>
 
         <ListCard>
           {checklistItems.map((item) => (
@@ -227,7 +223,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                   onCheckedChange={(checked) =>
                     handleChecklistUpdate(item.key, checked as boolean)
                   }
-                  className="h-5 w-5 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black shrink-0"
+                  className={cn(checkboxClass, 'shrink-0')}
                 />
               )}
               <div className="flex-1 min-w-0">
@@ -242,16 +238,14 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                   </span>
                   {item.required && <Pill tone="amber">Required</Pill>}
                 </div>
-                <p className="mt-0.5 text-[12.5px] text-white/55 leading-relaxed">
+                <p className="mt-0.5 text-[12.5px] text-white leading-relaxed">
                   {item.description}
                 </p>
               </div>
               {item.completedDate && (
                 <div className="text-right shrink-0">
-                  <div className="text-[10px] uppercase tracking-[0.16em] text-white/55">
-                    Completed
-                  </div>
-                  <div className="mt-0.5 text-[12.5px] text-white/70 tabular-nums">
+                  <Eyebrow>Completed</Eyebrow>
+                  <div className="mt-0.5 text-[12.5px] text-white tabular-nums">
                     {new Date(item.completedDate).toLocaleDateString('en-GB', {
                       day: 'numeric',
                       month: 'short',
@@ -279,16 +273,14 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
                 status.epaBookedDate ? 'bg-green-400' : 'bg-blue-400'
               )}
             />
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              End Point Assessment
-            </div>
+            <Eyebrow>End Point Assessment</Eyebrow>
           </div>
 
           {status.epaBookedDate ? (
             <div className="flex items-center justify-between gap-4">
               <div>
                 <div className="text-[15px] font-medium text-white">EPA Scheduled</div>
-                <div className="mt-1 text-[12.5px] text-white/55">
+                <div className="mt-1 text-[12.5px] text-white">
                   {new Date(status.epaBookedDate).toLocaleDateString('en-GB', {
                     weekday: 'long',
                     day: 'numeric',
@@ -300,12 +292,9 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
               <Pill tone="green">Confirmed</Pill>
             </div>
           ) : (
-            <button
-              onClick={() => setShowBookEPA(true)}
-              className="w-full h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-            >
+            <PrimaryButton fullWidth onClick={() => setShowBookEPA(true)}>
               Book EPA
-            </button>
+            </PrimaryButton>
           )}
         </div>
       )}
@@ -318,7 +307,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
             <p className="text-[14px] font-medium text-amber-300">
               Gateway Requirements Incomplete
             </p>
-            <p className="mt-1 text-[12.5px] text-white/55 leading-relaxed">
+            <p className="mt-1 text-[12.5px] text-white leading-relaxed">
               Complete all required checklist items before the apprentice can progress to EPA.
             </p>
           </div>
@@ -329,50 +318,36 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <Sheet open={showOJTSheet} onOpenChange={setShowOJTSheet}>
         <SheetContent
           side="bottom"
-          className="h-auto max-h-[50vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >
-          <div className="flex flex-col">
-            <div className="flex justify-center pt-2.5 pb-1">
-              <div className="h-1 w-10 rounded-full bg-white/20" />
-            </div>
-            <SheetHeader className="px-5 pb-4">
-              <SheetTitle className="text-base text-white">Update OJT Hours</SheetTitle>
-              <p className="text-[12.5px] text-white/55 mt-1">
-                Enter the total verified off-the-job training hours
-              </p>
-            </SheetHeader>
-            <div className="px-5 pb-4 space-y-3">
-              <div className="space-y-2">
-                <Label className="text-[12.5px] text-white/70">Hours Completed</Label>
-                <Input
-                  type="number"
-                  value={ojtHoursInput}
-                  onChange={(e) => setOjtHoursInput(e.target.value)}
-                  placeholder={String(status.ojtHoursCompleted)}
-                  className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 rounded-xl touch-manipulation text-base"
-                />
-              </div>
-              <p className="text-[12.5px] text-white/75">
-                Required: {status.ojtHoursRequired} hours
-              </p>
-            </div>
-            <SheetFooter className="border-t border-white/[0.06] p-5">
-              <div className="flex gap-3 w-full">
-                <button
-                  onClick={() => setShowOJTSheet(false)}
-                  className="flex-1 h-11 px-5 rounded-full text-[13px] font-medium text-white/70 border border-white/[0.08] hover:bg-white/5 transition-colors touch-manipulation"
-                >
+          <SheetShell
+            eyebrow="OJT Hours"
+            title="Update OJT Hours"
+            description="Enter the total verified off-the-job training hours"
+            footer={
+              <>
+                <SecondaryButton fullWidth onClick={() => setShowOJTSheet(false)}>
                   Cancel
-                </button>
-                <button
-                  onClick={handleOJTUpdate}
-                  className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-                >
+                </SecondaryButton>
+                <PrimaryButton fullWidth onClick={handleOJTUpdate}>
                   Update
-                </button>
-              </div>
-            </SheetFooter>
-          </div>
+                </PrimaryButton>
+              </>
+            }
+          >
+            <Field label="Hours Completed">
+              <Input
+                type="number"
+                value={ojtHoursInput}
+                onChange={(e) => setOjtHoursInput(e.target.value)}
+                placeholder={String(status.ojtHoursCompleted)}
+                className={inputClass}
+              />
+            </Field>
+            <p className="text-[12.5px] text-white">
+              Required: {status.ojtHoursRequired} hours
+            </p>
+          </SheetShell>
         </SheetContent>
       </Sheet>
 
@@ -380,46 +355,33 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
       <Sheet open={showBookEPA} onOpenChange={setShowBookEPA}>
         <SheetContent
           side="bottom"
-          className="h-auto max-h-[50vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
+          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >
-          <div className="flex flex-col">
-            <div className="flex justify-center pt-2.5 pb-1">
-              <div className="h-1 w-10 rounded-full bg-white/20" />
-            </div>
-            <SheetHeader className="px-5 pb-4">
-              <SheetTitle className="text-base text-white">Book End Point Assessment</SheetTitle>
-              <p className="text-[12.5px] text-white/55 mt-1">
-                Schedule the EPA date for this apprentice
-              </p>
-            </SheetHeader>
-            <div className="px-5 pb-4 space-y-2">
-              <Label className="text-[12.5px] text-white/70">EPA Date</Label>
+          <SheetShell
+            eyebrow="EPA"
+            title="Book End Point Assessment"
+            description="Schedule the EPA date for this apprentice"
+            footer={
+              <>
+                <SecondaryButton fullWidth onClick={() => setShowBookEPA(false)}>
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton fullWidth disabled={!epaDate} onClick={handleBookEPA}>
+                  Confirm Booking
+                </PrimaryButton>
+              </>
+            }
+          >
+            <Field label="EPA Date">
               <Input
                 type="date"
                 value={epaDate}
                 onChange={(e) => setEpaDate(e.target.value)}
                 min={new Date().toISOString().split('T')[0]}
-                className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 rounded-xl touch-manipulation text-base"
+                className={inputClass}
               />
-            </div>
-            <SheetFooter className="border-t border-white/[0.06] p-5">
-              <div className="flex gap-3 w-full">
-                <button
-                  onClick={() => setShowBookEPA(false)}
-                  className="flex-1 h-11 px-5 rounded-full text-[13px] font-medium text-white/70 border border-white/[0.08] hover:bg-white/5 transition-colors touch-manipulation"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleBookEPA}
-                  disabled={!epaDate}
-                  className="flex-1 h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
-                >
-                  Confirm Booking
-                </button>
-              </div>
-            </SheetFooter>
-          </div>
+            </Field>
+          </SheetShell>
         </SheetContent>
       </Sheet>
     </div>

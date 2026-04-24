@@ -1,6 +1,5 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
 
@@ -11,24 +10,25 @@ interface FollowUpChipsProps {
   onSelect: (question: string) => void;
   /** Custom className */
   className?: string;
-  /** Whether to show scroll arrows on desktop */
-  showScrollArrows?: boolean;
+  /** Max chips to render on mobile (desktop shows all up to the hard cap of 4) */
+  mobileCap?: number;
+  /** Hard cap applied on all breakpoints */
+  cap?: number;
 }
 
 /**
- * FollowUpChips - Clickable follow-up suggestions
+ * FollowUpChips — Small pill row rendered beneath an assistant message.
  *
- * Features:
- * - Vertical stack layout for readability
- * - Subtle border with yellow accent on hover
- * - Haptic feedback on tap
- * - Smooth staggered entrance animation
- * - Arrow indicator for clickability
+ * Editorial, text-only. Max 3 chips on mobile, 4 on desktop.
+ * Chips match the college primitive tone (`bg-white/[0.04]`,
+ * `border-white/[0.08]`, rounded-full).
  */
 export const FollowUpChips = memo(function FollowUpChips({
   questions,
   onSelect,
   className,
+  mobileCap = 3,
+  cap = 4,
 }: FollowUpChipsProps) {
   const haptic = useHaptic();
 
@@ -42,47 +42,47 @@ export const FollowUpChips = memo(function FollowUpChips({
 
   if (!questions || questions.length === 0) return null;
 
+  const capped = questions.slice(0, cap);
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3, duration: 0.3 }}
-      className={cn('space-y-2.5', className)}
+      transition={{ delay: 0.2, duration: 0.25 }}
+      className={cn('space-y-2 min-w-0', className)}
     >
-      {/* Label */}
-      <div className="flex items-center gap-2 text-xs text-muted-foreground/80 px-0.5">
-        <Sparkles className="w-3 h-3 text-elec-yellow/70" />
-        <span>You might also ask</span>
+      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+        You might also ask
       </div>
-
-      {/* Stacked chips */}
-      <div className="flex flex-col gap-2">
-        {questions.map((question, idx) => (
-          <motion.button
-            key={idx}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 + idx * 0.08 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => handleSelect(question)}
-            className={cn(
-              'group relative w-full text-left',
-              'px-4 py-3 rounded-xl',
-              'bg-card/60 backdrop-blur-sm',
-              'border border-border/40',
-              'hover:border-elec-yellow/40 hover:bg-card/80',
-              'active:bg-elec-yellow/5',
-              'transition-all duration-200',
-              'touch-manipulation',
-              'flex items-start gap-3'
-            )}
-          >
-            <ArrowRight className="w-3.5 h-3.5 mt-0.5 shrink-0 text-elec-yellow/50 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
-            <span className="text-sm text-foreground/80 group-hover:text-foreground leading-snug transition-colors">
-              {question}
-            </span>
-          </motion.button>
-        ))}
+      {/* Stacked rows on mobile (chip pills on desktop). Each row wraps text,
+          clamps to the container width, and can't push the page sideways. */}
+      <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:gap-2 min-w-0">
+        {capped.map((question, idx) => {
+          const isMobileHidden = idx >= mobileCap;
+          return (
+            <motion.button
+              key={idx}
+              initial={{ opacity: 0, x: -4 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.25 + idx * 0.05 }}
+              onClick={() => handleSelect(question)}
+              className={cn(
+                'group w-full sm:w-auto max-w-full min-w-0 text-left',
+                'text-[13px] leading-snug text-white/90 hover:text-white',
+                'bg-transparent sm:bg-white/[0.04] sm:hover:bg-white/[0.08]',
+                'border-0 sm:border sm:border-white/[0.08] sm:rounded-full',
+                'border-t border-white/[0.06] sm:border-t-0',
+                'px-0 py-2.5 sm:px-3.5 sm:py-1.5 transition-colors touch-manipulation',
+                'flex items-start gap-2 sm:gap-0',
+                isMobileHidden && 'hidden sm:inline-flex'
+              )}
+              style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
+            >
+              <span className="sm:hidden text-elec-yellow/70 mt-[2px]">→</span>
+              <span className="flex-1 min-w-0">{question}</span>
+            </motion.button>
+          );
+        })}
       </div>
     </motion.div>
   );

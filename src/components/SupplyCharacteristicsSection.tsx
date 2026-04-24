@@ -361,7 +361,7 @@ const SupplyCharacteristicsSectionInner = ({
                 <FieldLimitationBadge
                   compact
                   value={formData.mpan || ''}
-                  markers={['N/A']}
+                  markers={['LIM', 'N/A']}
                   onChange={(v) => onUpdate('mpan', v)}
                 />
               }
@@ -415,7 +415,17 @@ const SupplyCharacteristicsSectionInner = ({
                 placeholder="Reason (e.g. locked meter room)"
               />
             </FormField>
-            <FormField label="Service Entry">
+            <FormField
+              label="Service Entry"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.serviceEntry || ''}
+                  markers={['N/A']}
+                  onChange={(v) => onUpdate('serviceEntry', v)}
+                />
+              }
+            >
               <div className="grid grid-cols-2 gap-1.5">
                 {[
                   { value: 'overhead', label: 'Over' },
@@ -428,11 +438,13 @@ const SupplyCharacteristicsSectionInner = ({
                       haptic.light();
                       onUpdate('serviceEntry', formData.serviceEntry === option.value ? '' : option.value);
                     }}
+                    disabled={isFieldMarker(formData.serviceEntry)}
                     className={cn(
                       'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
                       formData.serviceEntry === option.value
                         ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]',
+                      isFieldMarker(formData.serviceEntry) && 'opacity-40 cursor-not-allowed'
                     )}
                   >
                     {option.label}
@@ -561,7 +573,7 @@ const SupplyCharacteristicsSectionInner = ({
                 <FieldLimitationBadge
                   compact
                   value={formData.supplyFrequency || ''}
-                  markers={['LIM']}
+                  markers={['LIM', 'N/A']}
                   onChange={(v) => onUpdate('supplyFrequency', v)}
                 />
               }
@@ -767,33 +779,59 @@ const SupplyCharacteristicsSectionInner = ({
             <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
             <h2 className="text-xs font-medium text-white uppercase tracking-wider">Main Protective Device</h2>
           </div>
-          <button
-            type="button"
-            onClick={() => {
-              haptic.light();
-              if (formData.mainSwitchRating === 'LIM') {
-                // Toggle OFF — just clear mainSwitchRating
-                onUpdate('mainSwitchRating', '');
-              } else {
-                // Toggle ON — set LIM and clear all device fields
-                onUpdate('mainSwitchRating', 'LIM');
-                onUpdate('mainProtectiveDevice', '');
-                onUpdate('mainProtectiveDeviceCustom', 'false');
-                onUpdate('breakingCapacity', '');
-                onUpdate('fuseDeviceRating', '');
-                onUpdate('mainSwitchPoles', '');
-                onUpdate('mainSwitchVoltageRating', '');
-              }
-            }}
-            className={cn(
-              'h-8 px-3 rounded-lg text-[10px] font-semibold touch-manipulation transition-colors shrink-0 active:scale-[0.98]',
-              formData.mainSwitchRating === 'LIM'
-                ? 'bg-orange-500/20 border border-orange-500/40 text-orange-400'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
-            )}
-          >
-            LIM
-          </button>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                if (formData.mainSwitchRating === 'LIM') {
+                  onUpdate('mainSwitchRating', '');
+                } else {
+                  onUpdate('mainSwitchRating', 'LIM');
+                  onUpdate('mainProtectiveDevice', '');
+                  onUpdate('mainProtectiveDeviceCustom', 'false');
+                  onUpdate('breakingCapacity', '');
+                  onUpdate('fuseDeviceRating', '');
+                  onUpdate('mainSwitchPoles', '');
+                  onUpdate('mainSwitchVoltageRating', '');
+                }
+              }}
+              className={cn(
+                'h-8 px-3 rounded-lg text-[10px] font-semibold touch-manipulation transition-colors active:scale-[0.98]',
+                formData.mainSwitchRating === 'LIM'
+                  ? 'bg-orange-500/20 border border-orange-500/40 text-orange-400'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              LIM
+            </button>
+            {/* ELE-855 — N/A when no main switch exists */}
+            <button
+              type="button"
+              onClick={() => {
+                haptic.light();
+                if (formData.mainSwitchRating === 'N/A') {
+                  onUpdate('mainSwitchRating', '');
+                } else {
+                  onUpdate('mainSwitchRating', 'N/A');
+                  onUpdate('mainProtectiveDevice', 'N/A');
+                  onUpdate('mainProtectiveDeviceCustom', 'false');
+                  onUpdate('breakingCapacity', 'N/A');
+                  onUpdate('fuseDeviceRating', 'N/A');
+                  onUpdate('mainSwitchPoles', 'N/A');
+                  onUpdate('mainSwitchVoltageRating', 'N/A');
+                }
+              }}
+              className={cn(
+                'h-8 px-3 rounded-lg text-[10px] font-semibold touch-manipulation transition-colors active:scale-[0.98]',
+                formData.mainSwitchRating === 'N/A'
+                  ? 'bg-zinc-500/20 border border-zinc-500/40 text-zinc-300'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+              )}
+            >
+              N/A
+            </button>
+          </div>
         </div>
         <div className="space-y-3 py-3">
           <div className="grid grid-cols-2 gap-3 items-end">
@@ -894,8 +932,24 @@ const SupplyCharacteristicsSectionInner = ({
           )}
 
           <div className="grid grid-cols-4 gap-2">
-            <FormField label="kA">
-              {currentBreakingCapacities.length > 0 ? (
+            <FormField
+              label="kA"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.breakingCapacity || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('breakingCapacity', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.breakingCapacity) ? (
+                <Input
+                  value={formData.breakingCapacity}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : currentBreakingCapacities.length > 0 ? (
                 <FormSelectSheet
                   value={formData.breakingCapacity || ''}
                   onValueChange={(value) => {
@@ -928,46 +982,80 @@ const SupplyCharacteristicsSectionInner = ({
                 />
               )}
             </FormField>
-            <FormField label="Poles">
-              <FormSelectSheet
-                value={formData.mainSwitchPoles || ''}
-                onValueChange={(value) => {
-                  haptic.light();
-                  onUpdate('mainSwitchPoles', value);
-                }}
-                disabled={formData.mainSwitchRating === 'LIM'}
-                label="Poles"
-                placeholder="—"
-                options={[
-                  { value: '1', label: '1P' },
-                  { value: '2', label: '2P' },
-                  { value: '3', label: '3P' },
-                  { value: '4', label: '4P' },
-                ]}
-                className={cn(formData.mainSwitchRating === 'LIM' && 'opacity-40')}
-              />
+            <FormField
+              label="Poles"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.mainSwitchPoles || ''}
+                  markers={['N/A']}
+                  onChange={(v) => onUpdate('mainSwitchPoles', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.mainSwitchPoles) ? (
+                <Input value={formData.mainSwitchPoles} disabled className="h-11 bg-white/[0.06] border-white/[0.08] opacity-60" />
+              ) : (
+                <FormSelectSheet
+                  value={formData.mainSwitchPoles || ''}
+                  onValueChange={(value) => {
+                    haptic.light();
+                    onUpdate('mainSwitchPoles', value);
+                  }}
+                  disabled={formData.mainSwitchRating === 'LIM'}
+                  label="Poles"
+                  placeholder="—"
+                  options={[
+                    { value: '1', label: '1P' },
+                    { value: '2', label: '2P' },
+                    { value: '3', label: '3P' },
+                    { value: '4', label: '4P' },
+                  ]}
+                  className={cn(formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+                />
+              )}
             </FormField>
-            <FormField label="Fuse (A)">
+            <FormField
+              label="Fuse (A)"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.fuseDeviceRating || ''}
+                  markers={['N/A']}
+                  onChange={(v) => onUpdate('fuseDeviceRating', v)}
+                />
+              }
+            >
               <Input
-                type="number"
+                type={isFieldMarker(formData.fuseDeviceRating) ? 'text' : 'number'}
                 min="0"
                 value={formData.fuseDeviceRating || ''}
                 onChange={(e) => onUpdate('fuseDeviceRating', e.target.value)}
                 placeholder="100"
-                disabled={formData.mainSwitchRating === 'LIM'}
-                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+                disabled={formData.mainSwitchRating === 'LIM' || isFieldMarker(formData.fuseDeviceRating)}
+                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', (formData.mainSwitchRating === 'LIM' || isFieldMarker(formData.fuseDeviceRating)) && 'opacity-40')}
                 inputMode="numeric"
               />
             </FormField>
-            <FormField label="Volts (V)">
+            <FormField
+              label="Volts (V)"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.mainSwitchVoltageRating || ''}
+                  markers={['N/A']}
+                  onChange={(v) => onUpdate('mainSwitchVoltageRating', v)}
+                />
+              }
+            >
               <Input
-                type="number"
+                type={isFieldMarker(formData.mainSwitchVoltageRating) ? 'text' : 'number'}
                 min="0"
                 value={formData.mainSwitchVoltageRating || ''}
                 onChange={(e) => onUpdate('mainSwitchVoltageRating', e.target.value)}
                 placeholder="230"
-                disabled={formData.mainSwitchRating === 'LIM'}
-                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', formData.mainSwitchRating === 'LIM' && 'opacity-40')}
+                disabled={formData.mainSwitchRating === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)}
+                className={cn('h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]', (formData.mainSwitchRating === 'LIM' || isFieldMarker(formData.mainSwitchVoltageRating)) && 'opacity-40')}
                 inputMode="numeric"
               />
             </FormField>
@@ -1001,7 +1089,7 @@ const SupplyCharacteristicsSectionInner = ({
               <FieldLimitationBadge
                 compact
                 value={formData.earthingArrangement || ''}
-                markers={['LIM']}
+                markers={['LIM', 'N/A']}
                 onChange={(v) => onUpdate('earthingArrangement', v)}
               />
             }

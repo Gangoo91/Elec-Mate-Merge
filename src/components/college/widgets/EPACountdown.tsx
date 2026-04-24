@@ -305,7 +305,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
           {/* Header */}
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 EPA Gateway
               </div>
               <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">
@@ -316,7 +316,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
               <div className="text-3xl sm:text-4xl font-semibold tabular-nums leading-none text-elec-yellow">
                 {epaStudents.length}
               </div>
-              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/55">
+              <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
                 tracking
               </div>
             </div>
@@ -346,7 +346,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
           {/* Nearest student */}
           {nearestEPA && (
             <div className="mt-5 pt-4 border-t border-white/[0.06]">
-              <div className="text-[10px] uppercase tracking-[0.14em] text-white/55 mb-2">
+              <div className="text-[10px] uppercase tracking-[0.14em] text-white mb-2">
                 Nearest EPA
               </div>
               <button
@@ -355,7 +355,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
               >
                 <div className="min-w-0 flex-1">
                   <div className="text-sm font-medium text-white truncate">{nearestEPA.name}</div>
-                  <div className="mt-0.5 text-[11px] text-white/75 tabular-nums">
+                  <div className="mt-0.5 text-[11px] text-white tabular-nums">
                     {nearestEPA.daysRemaining} days remaining
                   </div>
                 </div>
@@ -363,7 +363,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
                   <div className="text-lg font-semibold tabular-nums text-white">
                     {nearestEPA.overallReadiness}%
                   </div>
-                  <div className="text-[10px] text-white/55 uppercase tracking-wider">ready</div>
+                  <div className="text-[10px] text-white uppercase tracking-wider">ready</div>
                 </div>
               </button>
             </div>
@@ -386,7 +386,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
       <div className="p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               EPA Gateway · Gap analysis
             </div>
             <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
@@ -408,11 +408,11 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
                   className={`shrink-0 h-11 px-3.5 rounded-full text-[12px] font-medium transition-colors touch-manipulation inline-flex items-center gap-2 ${
                     selected
                       ? 'bg-elec-yellow text-black'
-                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white/70 hover:text-white'
+                      : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white hover:text-white'
                   }`}
                 >
                   {student.name.split(' ')[0]}
-                  <span className={selected ? 'text-black/60' : 'text-white/70'}>
+                  <span className={selected ? 'text-black/60' : 'text-white'}>
                     {student.daysRemaining}d
                   </span>
                 </button>
@@ -427,7 +427,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
             <div className="mt-5 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-5 flex items-center justify-between">
               <div>
                 <div className="text-[15px] font-medium text-white">{selectedStudentData.name}</div>
-                <div className="mt-0.5 text-[11.5px] text-white/75">
+                <div className="mt-0.5 text-[11.5px] text-white">
                   {selectedStudentData.cohort}
                 </div>
               </div>
@@ -435,7 +435,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
                 <div className="text-3xl font-semibold tabular-nums text-elec-yellow leading-none">
                   {selectedStudentData.daysRemaining}
                 </div>
-                <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white/55">
+                <div className="mt-1 text-[10px] uppercase tracking-[0.14em] text-white">
                   days to EPA
                 </div>
               </div>
@@ -444,7 +444,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
             {/* Overall Readiness */}
             <div className="mt-4">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   Gateway Readiness
                 </div>
                 <div className="flex items-center gap-2">
@@ -468,7 +468,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
 
             {/* Requirements */}
             <div className="mt-5">
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-3">
                 Gateway Requirements
               </div>
               <div className="space-y-2">
@@ -483,7 +483,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
                         {Math.round(req.progress)}%
                       </span>
                     </div>
-                    <div className="mt-0.5 text-[11px] text-white/75 truncate">
+                    <div className="mt-0.5 text-[11px] text-white truncate">
                       {req.description}
                     </div>
                     <div className="mt-2 h-1 bg-white/[0.06] rounded-full overflow-hidden">
@@ -500,7 +500,7 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
             {/* Gaps */}
             {selectedStudentData.gaps.length > 0 && (
               <div className="mt-5">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-2">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-2">
                   Gaps to address
                 </div>
                 <ul className="space-y-1.5">
@@ -522,12 +522,12 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
             {/* AI Recommendations */}
             {selectedStudentData.recommendations.length > 0 && (
               <div className="mt-5 pt-5 border-t border-white/[0.06]">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-2">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white mb-2">
                   AI Recommendations
                 </div>
                 <ul className="space-y-1.5">
                   {selectedStudentData.recommendations.map((rec, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-[13px] text-white/80">
+                    <li key={idx} className="flex items-start gap-2 text-[13px] text-white">
                       <span aria-hidden className="text-elec-yellow mt-0.5 shrink-0">
                         →
                       </span>
@@ -541,9 +541,9 @@ export function EPACountdown({ onNavigate, studentId, compact = false }: EPACoun
         )}
 
         {epaStudents.length === 0 && (
-          <div className="text-center py-10 text-white/75">
+          <div className="text-center py-10 text-white">
             <div className="text-[14px] font-medium text-white">No students approaching EPA</div>
-            <p className="mt-1 text-[12px] text-white/75 max-w-xs mx-auto">
+            <p className="mt-1 text-[12px] text-white max-w-xs mx-auto">
               Students will appear here within 6 months of their planned EPA date.
             </p>
           </div>

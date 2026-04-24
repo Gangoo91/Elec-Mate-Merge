@@ -154,8 +154,27 @@ const Subscriptions = () => {
         });
         return;
       }
-      if (data?.url) openExternalUrl(data.url);
-      else throw new Error('No portal URL returned');
+      if (data?.url) {
+        // Same-tab navigation — window.open(_blank) after an async gap is
+        // silently blocked by most popup blockers, which was making the
+        // button appear to do nothing. The Stripe portal sets a return_url
+        // that brings the user back to /subscriptions when they're done.
+        window.location.href = data.url;
+        return;
+      }
+      if (data?.directManagement && data?.subscriptionId) {
+        // Fallback when the Stripe Customer Portal isn't configured for this
+        // account: surface a clear message telling them how to cancel until
+        // we build the direct cancel UI. Better than a silent failure.
+        toast({
+          title: 'Billing portal unavailable',
+          description:
+            'We could not open the Stripe portal. Please email info@elec-mate.com and we will cancel or update your subscription for you.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      throw new Error('No portal URL returned');
     } catch (err) {
       console.error('Customer portal error:', err);
       toast({

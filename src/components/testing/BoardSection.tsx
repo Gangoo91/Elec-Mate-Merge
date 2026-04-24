@@ -25,6 +25,10 @@ import {
   SPD_LOCATIONS,
   SPD_RATED_KA,
 } from '@/constants/spdData';
+import {
+  FieldLimitationBadge,
+  isFieldMarker,
+} from '@/components/field-limitations';
 
 export interface BoardToolCallbacks {
   onScanBoard?: () => void;
@@ -550,53 +554,89 @@ const BoardSection: React.FC<BoardSectionProps> = ({
 
               {/* Zdb */}
               <div className="space-y-2">
-                <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
-                  Z<sub className="text-[9px]">DB</sub> (Ω)
-                </Label>
-                <div className="relative">
-                  <DebouncedInput
-                    type="number"
-                    step="0.01"
-                    value={board.zdb}
-                    onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
-                    placeholder="0.00"
-                    className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
+                <div className="flex items-center justify-between gap-2">
+                  <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                    Z<sub className="text-[9px]">DB</sub> (Ω)
+                  </Label>
+                  <FieldLimitationBadge
+                    compact
+                    value={(board.zdb as string) || ''}
+                    markers={['LIM']}
+                    onChange={(v) => onUpdateBoard(board.id, 'zdb', v)}
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-                    {zdbStatus === 'valid' && (
-                      <Check className="h-3.5 w-3.5 text-green-400" strokeWidth={3} />
-                    )}
-                    {zdbStatus === 'warn' && (
-                      <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
-                    )}
-                    <span className="text-white text-sm font-medium">Ω</span>
-                  </span>
+                </div>
+                <div className="relative">
+                  {isFieldMarker(board.zdb as string) ? (
+                    <Input
+                      value={board.zdb as string}
+                      disabled
+                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white rounded-lg opacity-60"
+                    />
+                  ) : (
+                    <DebouncedInput
+                      type="number"
+                      step="0.01"
+                      value={board.zdb}
+                      onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
+                      placeholder="0.00"
+                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
+                    />
+                  )}
+                  {!isFieldMarker(board.zdb as string) && (
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                      {zdbStatus === 'valid' && (
+                        <Check className="h-3.5 w-3.5 text-green-400" strokeWidth={3} />
+                      )}
+                      {zdbStatus === 'warn' && (
+                        <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
+                      )}
+                      <span className="text-white text-sm font-medium">Ω</span>
+                    </span>
+                  )}
                 </div>
               </div>
 
               {/* Ipf */}
               <div className="space-y-2">
-                <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
-                  I<sub className="text-[9px]">PF</sub> (kA)
-                </Label>
-                <div className="relative">
-                  <DebouncedInput
-                    type="number"
-                    step="0.1"
-                    value={board.ipf}
-                    onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
-                    placeholder="0.0"
-                    className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
+                <div className="flex items-center justify-between gap-2">
+                  <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
+                    I<sub className="text-[9px]">PF</sub> (kA)
+                  </Label>
+                  <FieldLimitationBadge
+                    compact
+                    value={(board.ipf as string) || ''}
+                    markers={['LIM']}
+                    onChange={(v) => onUpdateBoard(board.id, 'ipf', v)}
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
-                    {ipfStatus === 'valid' && (
-                      <Check className="h-3.5 w-3.5 text-green-400" strokeWidth={3} />
-                    )}
-                    {ipfStatus === 'warn' && (
-                      <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
-                    )}
-                    <span className="text-white text-sm font-medium">kA</span>
-                  </span>
+                </div>
+                <div className="relative">
+                  {isFieldMarker(board.ipf as string) ? (
+                    <Input
+                      value={board.ipf as string}
+                      disabled
+                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white rounded-lg opacity-60"
+                    />
+                  ) : (
+                    <DebouncedInput
+                      type="number"
+                      step="0.1"
+                      value={board.ipf}
+                      onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
+                      placeholder="0.0"
+                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
+                    />
+                  )}
+                  {!isFieldMarker(board.ipf as string) && (
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                      {ipfStatus === 'valid' && (
+                        <Check className="h-3.5 w-3.5 text-green-400" strokeWidth={3} />
+                      )}
+                      {ipfStatus === 'warn' && (
+                        <AlertCircle className="h-3.5 w-3.5 text-amber-400" />
+                      )}
+                      <span className="text-white text-sm font-medium">kA</span>
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

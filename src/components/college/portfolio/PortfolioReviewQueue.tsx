@@ -17,6 +17,10 @@ import {
   Pill,
   EmptyState,
   LoadingState,
+  Eyebrow,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -130,20 +134,20 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
           action="Refresh"
           onAction={() => refetch()}
         />
-        <p className="text-[13px] text-white/55">Submissions awaiting assessor review</p>
+        <p className="text-[13px] text-white">Submissions awaiting assessor review</p>
 
         <div className="flex flex-col sm:flex-row gap-3">
           <Input
             placeholder="Search student or category…"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] text-white placeholder:text-white/65 focus:border-elec-yellow/60 rounded-full px-4 touch-manipulation flex-1"
+            className={cn(inputClass, 'flex-1')}
           />
           <Select value={filterPriority} onValueChange={setFilterPriority}>
-            <SelectTrigger className="w-full sm:w-44 h-11 bg-[hsl(0_0%_9%)] border-white/[0.08] rounded-full text-[13px] text-white focus:border-elec-yellow/60">
+            <SelectTrigger className={cn(selectTriggerClass, 'w-full sm:w-44')}>
               <SelectValue placeholder="All priorities" />
             </SelectTrigger>
-            <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+            <SelectContent className={selectContentClass}>
               <SelectItem value="all">All priorities</SelectItem>
               <SelectItem value="high">High priority</SelectItem>
               <SelectItem value="medium">Medium priority</SelectItem>
@@ -189,7 +193,7 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
                     {getStatusLabel(submission.status)}
                   </Pill>
                 </div>
-                <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
+                <div className="mt-0.5 text-[11.5px] text-white truncate">
                   {submission.categoryName} · {submission.qualificationTitle}
                 </div>
               </div>
@@ -201,14 +205,12 @@ const PortfolioReviewQueue: React.FC<PortfolioReviewQueueProps> = ({
                       ? 'text-red-400'
                       : submission.daysAwaitingReview > 3
                         ? 'text-amber-400'
-                        : 'text-white/70'
+                        : 'text-white'
                   )}
                 >
                   {submission.daysAwaitingReview}d wait
                 </div>
-                <div className="text-[10px] uppercase tracking-[0.16em] text-white/55">
-                  Attempt #{submission.submissionCount}
-                </div>
+                <Eyebrow>Attempt #{submission.submissionCount}</Eyebrow>
               </div>
               <div className="shrink-0 flex items-center gap-2">
                 <Pill tone={getPriorityTone(submission.priority)}>

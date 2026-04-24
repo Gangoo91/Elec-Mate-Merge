@@ -549,20 +549,20 @@ const CollegeDashboard = () => {
 
   return (
     <CollegeSupabaseProvider collegeId={profile?.college_id ?? undefined}>
-      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
+      <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-[hsl(0_0%_8%)] pb-24">
         {/* Sticky Header — editorial text-only nav */}
-        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="sticky top-0 z-50 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm border-b border-white/[0.06]">
           <div className="mx-auto max-w-7xl px-4">
             <div className="flex items-center h-12 gap-4 sm:gap-6">
               <button
                 onClick={activeSection === 'overview' ? handleGoHome : handleBack}
                 aria-label="Go back"
-                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+                className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
               >
                 ← Back
               </button>
               <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
-                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 hidden sm:inline">
+                <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
                   College
                 </span>
                 <span className="hidden sm:inline h-3 w-px bg-white/10" aria-hidden />
@@ -573,14 +573,14 @@ const CollegeDashboard = () => {
               <div className="flex items-center gap-3 sm:gap-4 shrink-0">
                 <button
                   onClick={() => setCommandPaletteOpen(true)}
-                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                  className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   Search
                 </button>
                 <NotificationCenter onNavigate={handleNavigate} />
                 <button
                   onClick={() => setActiveSection('collegesettings')}
-                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                  className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   Settings
                 </button>

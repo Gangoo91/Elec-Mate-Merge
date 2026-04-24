@@ -9,6 +9,12 @@ import {
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  PrimaryButton,
+  SecondaryButton,
+  fieldLabelClass,
+  inputClass,
+} from '@/components/college/primitives';
 
 interface Cohort {
   id: string;
@@ -176,7 +182,7 @@ export function ScheduleLessonDialog({
           <DialogTitle className="text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
             {planTitle}
           </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white/70 leading-relaxed">
+          <DialogDescription className="text-[12.5px] text-white leading-relaxed">
             Pick when and where this lesson will run. You can always move it later.
           </DialogDescription>
         </DialogHeader>
@@ -192,9 +198,9 @@ export function ScheduleLessonDialog({
                 subtle
               />
               {loadingCohorts ? (
-                <span className="text-[12px] text-white/50 py-1.5">Loading cohorts…</span>
+                <span className="text-[12px] text-white py-1.5">Loading cohorts…</span>
               ) : cohorts.length === 0 ? (
-                <span className="text-[12px] text-white/50 py-1.5">
+                <span className="text-[12px] text-white py-1.5">
                   No cohorts yet — the lesson will be scheduled without a class.
                 </span>
               ) : (
@@ -227,7 +233,7 @@ export function ScheduleLessonDialog({
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white focus:outline-none focus:border-elec-yellow/60 transition-colors"
+              className={inputClass}
             />
           </Field>
 
@@ -249,7 +255,7 @@ export function ScheduleLessonDialog({
               type="time"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white focus:outline-none focus:border-elec-yellow/60 transition-colors"
+              className={inputClass}
             />
           </Field>
 
@@ -276,13 +282,13 @@ export function ScheduleLessonDialog({
               value={room}
               onChange={(e) => setRoom(e.target.value)}
               placeholder="e.g. Workshop 3, Room W12"
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 transition-colors"
+              className={inputClass}
             />
           </Field>
 
           {/* Summary */}
           <div className="bg-[hsl(0_0%_13%)] border border-white/[0.06] rounded-xl px-4 py-4">
-            <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55 mb-2">
+            <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white mb-2">
               Scheduling summary
             </div>
             <div className="text-[13.5px] text-white leading-relaxed">
@@ -292,19 +298,19 @@ export function ScheduleLessonDialog({
                 month: 'long',
                 year: 'numeric',
               })}
-              <span className="mx-2 text-white/25">·</span>
+              <span className="mx-2 text-white/30">·</span>
               <span className="font-mono tabular-nums">
                 {startTime} → {endTime}
               </span>
               {room && (
                 <>
-                  <span className="mx-2 text-white/25">·</span>
+                  <span className="mx-2 text-white/30">·</span>
                   <span>{room}</span>
                 </>
               )}
               {cohortId && (
                 <>
-                  <span className="mx-2 text-white/25">·</span>
+                  <span className="mx-2 text-white/30">·</span>
                   <span className="text-elec-yellow">
                     {cohorts.find((c) => c.id === cohortId)?.name}
                   </span>
@@ -316,22 +322,22 @@ export function ScheduleLessonDialog({
 
         {/* Footer */}
         <div className="shrink-0 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] px-6 py-4 sm:px-7 sm:py-5 flex items-center justify-end gap-2 flex-col-reverse sm:flex-row">
-          <button
-            type="button"
+          <SecondaryButton
             onClick={() => onOpenChange(false)}
             disabled={saving}
-            className="h-11 w-full sm:w-auto px-5 rounded-full border border-white/[0.12] text-[13px] font-medium text-white hover:bg-white/[0.06] transition-colors disabled:opacity-40"
+            fullWidth
+            className="sm:w-auto"
           >
             Cancel
-          </button>
-          <button
-            type="button"
+          </SecondaryButton>
+          <PrimaryButton
             onClick={handleSchedule}
             disabled={!canSave || saving}
-            className="h-11 w-full sm:w-auto px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            fullWidth
+            className="sm:w-auto"
           >
             {saving ? 'Scheduling…' : 'Schedule lesson'}
-          </button>
+          </PrimaryButton>
         </div>
       </DialogContent>
     </Dialog>
@@ -341,9 +347,7 @@ export function ScheduleLessonDialog({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="space-y-2.5">
-      <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65">
-        {label}
-      </div>
+      <label className={fieldLabelClass}>{label}</label>
       {children}
     </div>
   );
@@ -372,8 +376,8 @@ function Chip({
         active
           ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow font-medium'
           : subtle
-            ? 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/80 hover:text-white hover:border-white/[0.18]'
-            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/85 hover:text-white hover:border-white/[0.18] font-medium'
+            ? 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
+            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18] font-medium'
       )}
     >
       {label}

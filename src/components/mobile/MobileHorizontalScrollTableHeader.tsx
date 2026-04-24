@@ -322,9 +322,9 @@ export const MobileHorizontalScrollTableHeader: React.FC<
           Notes
         </TableHead>
 
-        {/* Actions Column */}
-        <TableHead className="border-l border-white/[0.08] font-semibold text-xs p-0.5 text-center whitespace-nowrap bg-white/[0.06] text-white w-[83px] min-w-[83px] max-w-[83px]">
-          Del
+        {/* Actions Column — ELE-857 widened from 83→140 to fit ↑ ↓ Del */}
+        <TableHead className="border-l border-white/[0.08] font-semibold text-xs p-0.5 text-center whitespace-nowrap bg-white/[0.06] text-white w-[140px] min-w-[140px] max-w-[140px]">
+          Actions
         </TableHead>
       </TableRow>
     </TableHeader>

@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   PageFrame,
@@ -32,6 +33,7 @@ const upcomingFeatures = [
 ];
 
 export function CollegeSettingsSection() {
+  const navigate = useNavigate();
   return (
     <PageFrame>
       <motion.div variants={itemVariants}>
@@ -40,9 +42,36 @@ export function CollegeSettingsSection() {
           title="Institution configuration"
           description="Manage your institution-wide settings, preferences and policies."
           tone="indigo"
-          actions={<Pill tone="yellow">Coming soon</Pill>}
         />
       </motion.div>
+
+      {/* Live settings */}
+      <motion.section variants={itemVariants} className="space-y-5">
+        <SectionHeader eyebrow="Live" title="Available now" />
+        <ListCard>
+          <button
+            type="button"
+            onClick={() => navigate('/college/settings/curriculum')}
+            className="group w-full flex items-center gap-4 px-5 sm:px-6 py-5 text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+          >
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                Curriculum
+              </div>
+              <div className="mt-1 text-[15px] font-medium text-white">
+                Lesson plan settings
+              </div>
+              <div className="mt-0.5 text-[12px] text-white/70">
+                British Values · Stretch & challenge · Inclusive practice · Safeguarding
+                context for the AI.
+              </div>
+            </div>
+            <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow shrink-0">
+              Open →
+            </span>
+          </button>
+        </ListCard>
+      </motion.section>
 
       <motion.section variants={itemVariants} className="space-y-5">
         <SectionHeader eyebrow="Planned Features" title="What's coming" />
@@ -57,7 +86,7 @@ export function CollegeSettingsSection() {
                   {feature.eyebrow}
                 </div>
                 <div className="mt-1 text-[15px] font-medium text-white">{feature.title}</div>
-                <div className="mt-0.5 text-[12px] text-white/75">{feature.description}</div>
+                <div className="mt-0.5 text-[12px] text-white/70">{feature.description}</div>
               </div>
               <Pill tone="yellow">Soon</Pill>
             </div>

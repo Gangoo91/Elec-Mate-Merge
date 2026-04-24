@@ -1,6 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -8,7 +6,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Pill } from "@/components/college/primitives";
+import {
+  Pill,
+  Field,
+  PrimaryButton,
+  IconButton,
+  Eyebrow,
+  selectTriggerClass,
+  selectContentClass,
+} from "@/components/college/primitives";
 
 interface VoiceEvidenceCaptureProps {
   studentName?: string;
@@ -213,16 +219,16 @@ export function VoiceEvidenceCapture({
       <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">VOICE EVIDENCE</div>
+            <Eyebrow>VOICE EVIDENCE</Eyebrow>
             <h3 className="mt-1.5 text-base sm:text-lg font-semibold text-white tracking-tight">Voice capture</h3>
           </div>
           <Pill tone="yellow">AI</Pill>
         </div>
-        <p className="mt-3 text-[13px] text-white/55 leading-relaxed">
+        <p className="mt-3 text-[13px] text-white leading-relaxed">
           Record observations and discussions with automatic transcription
         </p>
         <div className="mt-4 flex items-center justify-between pt-4 border-t border-white/[0.06]">
-          <span className="text-sm text-white/70">Record &amp; transcribe</span>
+          <span className="text-sm text-white">Record &amp; transcribe</span>
           <span className="text-[13px] font-medium text-elec-yellow/90">→</span>
         </div>
       </div>
@@ -233,7 +239,7 @@ export function VoiceEvidenceCapture({
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
       <div className="p-5 sm:p-6 pb-4 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">VOICE EVIDENCE</div>
+          <Eyebrow>VOICE EVIDENCE</Eyebrow>
           <h3 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">Voice evidence capture</h3>
         </div>
         <Pill tone="yellow">AI Transcription</Pill>
@@ -254,13 +260,12 @@ export function VoiceEvidenceCapture({
         )}
 
         {/* Context Selection */}
-        <div>
-          <Label htmlFor="context">Evidence Type</Label>
+        <Field label="Evidence Type">
           <Select value={selectedContext} onValueChange={setSelectedContext}>
-            <SelectTrigger id="context" className="mt-1">
+            <SelectTrigger id="context" className={selectTriggerClass}>
               <SelectValue placeholder="Select evidence type" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className={selectContentClass}>
               {contextOptions.map(opt => (
                 <SelectItem key={opt.value} value={opt.value}>
                   {opt.label}
@@ -268,10 +273,10 @@ export function VoiceEvidenceCapture({
               ))}
             </SelectContent>
           </Select>
-        </div>
+        </Field>
 
         {/* Recording Interface */}
-        <div className="p-5 rounded-xl bg-black/30 border border-white/[0.06]">
+        <div className="p-5 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
           {/* Timer Display */}
           <div className="text-center mb-4">
             <div className="flex items-center justify-center gap-2 mb-2">
@@ -282,7 +287,7 @@ export function VoiceEvidenceCapture({
                 {formatTime(recordingTime)}
               </span>
             </div>
-            <p className="text-[11px] uppercase tracking-[0.18em] text-white/55">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-white">
               {isRecording ? (isPaused ? "Paused" : "Recording") : audioBlob ? "Complete" : "Ready to record"}
             </p>
           </div>
@@ -290,60 +295,40 @@ export function VoiceEvidenceCapture({
           {/* Recording Controls */}
           <div className="flex items-center justify-center gap-3">
             {!isRecording && !audioBlob && (
-              <Button
-                onClick={startRecording}
-                disabled={hasPermission === false}
-                className="h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-full px-6 font-medium gap-2"
-              >
-                <span className="h-2 w-2 rounded-full bg-black" aria-hidden />
+              <PrimaryButton onClick={startRecording} disabled={hasPermission === false}>
+                <span className="h-2 w-2 rounded-full bg-black mr-2" aria-hidden />
                 Start Recording
-                <span aria-hidden>→</span>
-              </Button>
+                <span aria-hidden className="ml-2">→</span>
+              </PrimaryButton>
             )}
 
             {isRecording && (
               <>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={pauseRecording}
-                  className="h-11 w-11 rounded-full"
-                  aria-label={isPaused ? "Resume" : "Pause"}
-                >
+                <IconButton onClick={pauseRecording} aria-label={isPaused ? "Resume" : "Pause"}>
                   <span aria-hidden className="text-base">{isPaused ? "▶" : "‖"}</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
+                </IconButton>
+                <IconButton
                   onClick={stopRecording}
-                  className="h-11 w-11 rounded-full border-red-500/40 text-red-400 hover:text-red-300 hover:border-red-400"
                   aria-label="Stop"
+                  className="border-red-500/40 text-red-400 hover:text-red-300 hover:border-red-400"
                 >
                   <span aria-hidden className="text-base">■</span>
-                </Button>
+                </IconButton>
               </>
             )}
 
             {audioBlob && !isRecording && (
               <>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={togglePlayback}
-                  className="h-11 w-11 rounded-full"
-                  aria-label={isPlaying ? "Pause" : "Play"}
-                >
+                <IconButton onClick={togglePlayback} aria-label={isPlaying ? "Pause" : "Play"}>
                   <span aria-hidden className="text-base">{isPlaying ? "‖" : "▶"}</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
+                </IconButton>
+                <IconButton
                   onClick={clearRecording}
-                  className="h-11 w-11 rounded-full text-red-400 hover:text-red-300"
                   aria-label="Delete"
+                  className="text-red-400 hover:text-red-300"
                 >
                   <span aria-hidden className="text-base">×</span>
-                </Button>
+                </IconButton>
               </>
             )}
           </div>
@@ -361,7 +346,7 @@ export function VoiceEvidenceCapture({
 
         {/* Audio Visualization (placeholder) */}
         {isRecording && (
-          <div className="h-16 rounded-xl bg-black/30 border border-white/[0.06] flex items-center justify-center px-4">
+          <div className="h-16 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06] flex items-center justify-center px-4">
             <div className="flex items-end gap-1 h-10">
               {[...Array(20)].map((_, i) => (
                 <div
@@ -379,28 +364,24 @@ export function VoiceEvidenceCapture({
 
         {/* Transcribe Button */}
         {audioBlob && !isRecording && (
-          <Button
-            onClick={transcribeAudio}
-            disabled={isTranscribing}
-            className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-full px-6 font-medium gap-2"
-          >
+          <PrimaryButton fullWidth onClick={transcribeAudio} disabled={isTranscribing}>
             {isTranscribing ? (
               <>
-                <span className="h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow animate-spin" aria-hidden />
+                <span className="h-4 w-4 rounded-full border-2 border-elec-yellow/30 border-t-elec-yellow animate-spin mr-2" aria-hidden />
                 Transcribing with AI...
               </>
             ) : transcription ? (
               <>
-                <span aria-hidden>⟳</span>
+                <span aria-hidden className="mr-2">⟳</span>
                 Re-transcribe
               </>
             ) : (
               <>
                 Transcribe with AI
-                <span aria-hidden>→</span>
+                <span aria-hidden className="ml-2">→</span>
               </>
             )}
-          </Button>
+          </PrimaryButton>
         )}
 
         {/* Transcription Result */}
@@ -408,17 +389,17 @@ export function VoiceEvidenceCapture({
           <div className="space-y-3 pt-2">
             <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
               <div>
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">TRANSCRIPTION</div>
+                <Eyebrow>TRANSCRIPTION</Eyebrow>
                 <h4 className="mt-1 text-base font-semibold text-white tracking-tight">AI output</h4>
               </div>
               <Pill tone="green">Complete</Pill>
             </div>
-            <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
-              <p className="text-sm whitespace-pre-wrap text-white/85 leading-relaxed">{transcription}</p>
+            <div className="p-4 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+              <p className="text-sm whitespace-pre-wrap text-white leading-relaxed">{transcription}</p>
             </div>
 
             {/* Recording Info */}
-            <div className="flex items-center gap-4 text-[11.5px] text-white/75">
+            <div className="flex items-center gap-4 text-[11.5px] text-white">
               <div className="flex items-center gap-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-white/30" aria-hidden />
                 <span>Duration: {formatTime(recordingTime)}</span>
@@ -433,24 +414,24 @@ export function VoiceEvidenceCapture({
 
         {/* Tips */}
         {!audioBlob && !isRecording && (
-          <div className="p-4 rounded-xl bg-black/30 border border-white/[0.06]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">TIPS</div>
+          <div className="p-4 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.06]">
+            <Eyebrow>TIPS</Eyebrow>
             <p className="mt-1.5 text-sm font-medium text-white">Recording tips</p>
-            <ul className="mt-3 space-y-1.5 text-[12.5px] text-white/60">
+            <ul className="mt-3 space-y-1.5 text-[12.5px] text-white">
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Find a quiet environment with minimal background noise
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Speak clearly and at a moderate pace
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Include specific details about the work being observed
               </li>
               <li className="flex items-start gap-2">
-                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/40 shrink-0" aria-hidden />
+                <span className="mt-1.5 h-1 w-1 rounded-full bg-white/30 shrink-0" aria-hidden />
                 Reference assessment criteria where relevant
               </li>
             </ul>

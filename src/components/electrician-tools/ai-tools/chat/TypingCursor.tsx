@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -9,17 +9,12 @@ interface TypingCursorProps {
   className?: string;
   /** Cursor style variant */
   variant?: 'block' | 'line' | 'underscore';
-  /** Color variant */
+  /** Colour variant */
   color?: 'primary' | 'muted';
 }
 
 /**
- * TypingCursor - Animated cursor for streaming text
- *
- * Features:
- * - Smooth blinking animation
- * - Multiple style variants
- * - Syncs with text rendering
+ * TypingCursor — Blinking cursor appended to streaming text.
  */
 export const TypingCursor = memo(function TypingCursor({
   visible = true,
@@ -31,7 +26,7 @@ export const TypingCursor = memo(function TypingCursor({
 
   const colorClasses = {
     primary: 'bg-elec-yellow',
-    muted: 'bg-muted-foreground',
+    muted: 'bg-white/40',
   };
 
   const variantClasses = {
@@ -70,18 +65,22 @@ interface TypingIndicatorProps {
 }
 
 /**
- * TypingIndicator - Three-dot typing animation
+ * TypingIndicator — Three-dot "Composing" placeholder.
+ *
+ * Editorial eyebrow label + three pulsing dots. No icons.
  */
 export const TypingIndicator = memo(function TypingIndicator({
   visible = true,
   className,
-  label = 'Thinking',
+  label = 'Composing',
 }: TypingIndicatorProps) {
   if (!visible) return null;
 
   return (
-    <div className={cn('flex items-center gap-2', className)}>
-      <span className="text-sm text-muted-foreground">{label}</span>
+    <div className={cn('flex items-center gap-3', className)}>
+      <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+        {label}
+      </span>
       <div className="flex gap-1">
         {[0, 1, 2].map((i) => (
           <motion.span

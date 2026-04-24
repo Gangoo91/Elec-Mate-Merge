@@ -47,7 +47,7 @@ export default function Student360Page() {
   if (!id) {
     return (
       <PageFrame>
-        <div className="text-white/70">No student id.</div>
+        <div className="text-white">No student id.</div>
       </PageFrame>
     );
   }
@@ -88,7 +88,7 @@ export default function Student360Page() {
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-red-300 mb-2">
             Not found
           </div>
-          <p className="text-[13.5px] text-white/85">This learner couldn't be loaded.</p>
+          <p className="text-[13.5px] text-white">This learner couldn't be loaded.</p>
         </div>
       )}
 
@@ -98,8 +98,8 @@ export default function Student360Page() {
           <motion.div variants={itemVariants} className="no-print hidden lg:block">
             <div className="sticky top-0 z-20 -mx-4 sm:-mx-6 mb-4 bg-[hsl(0_0%_8%)]/90 backdrop-blur-md border-b border-white/[0.06]">
               <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 flex-wrap">
-                <div className="mr-auto text-[11.5px] text-white/70 truncate">
-                  <span className="uppercase tracking-[0.18em] font-medium text-white/55">
+                <div className="mr-auto text-[11.5px] text-white truncate">
+                  <span className="uppercase tracking-[0.18em] font-medium text-white">
                     Actions
                   </span>
                   <span className="mx-2 text-white/25">·</span>
@@ -156,7 +156,7 @@ export default function Student360Page() {
             {/* Section nav — sticky on desktop, hidden on mobile */}
             <aside className="hidden lg:block no-print">
               <div className="sticky top-6 space-y-1 pr-4 border-r border-white/[0.06]">
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-3">
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-3">
                   On this learner
                 </div>
                 <NavLink href="#risk">Risk</NavLink>
@@ -272,7 +272,7 @@ function DesktopActionBtn({
             ? 'text-amber-300 border-amber-500/25 hover:bg-amber-500/[0.08] hover:text-amber-200'
             : tone === 'red'
               ? 'text-red-300 border-red-500/25 hover:bg-red-500/[0.08] hover:text-red-200'
-              : 'text-white/85 border-white/[0.12] hover:bg-white/[0.06] hover:text-white'
+              : 'text-white border-white/[0.12] hover:bg-white/[0.06] hover:text-white'
       )}
     >
       {label}
@@ -301,7 +301,7 @@ function IdentityHero({ core, risk }: { core: StudentCore; risk: RiskSnapshot | 
           riskTone.gradient
         )}
       />
-      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
         Learner · Student 360
       </div>
       <div className="mt-2 flex items-start gap-5 flex-wrap">
@@ -320,7 +320,7 @@ function IdentityHero({ core, risk }: { core: StudentCore; risk: RiskSnapshot | 
                 riskTone.ringBorder
               )}
             >
-              <span className="text-[18px] sm:text-[22px] font-semibold text-white/90 tabular-nums">
+              <span className="text-[18px] sm:text-[22px] font-semibold text-white tabular-nums">
                 {initials}
               </span>
             </div>
@@ -330,10 +330,10 @@ function IdentityHero({ core, risk }: { core: StudentCore; risk: RiskSnapshot | 
           <h1 className="text-[26px] sm:text-4xl lg:text-[40px] font-semibold text-white tracking-tight leading-[1.05] break-words">
             {core.name}
           </h1>
-          <div className="mt-2 flex items-center flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] text-white/70">
+          <div className="mt-2 flex items-center flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] text-white">
             {core.cohort_name && (
               <span>
-                <span className="text-white/90 font-medium">{core.cohort_name}</span>
+                <span className="text-white font-medium">{core.cohort_name}</span>
               </span>
             )}
             {core.course_name && (
@@ -345,7 +345,7 @@ function IdentityHero({ core, risk }: { core: StudentCore; risk: RiskSnapshot | 
             {core.uln && (
               <>
                 <span className="text-white/25">·</span>
-                <span className="font-mono tabular-nums text-white/85">ULN {core.uln}</span>
+                <span className="font-mono tabular-nums text-white">ULN {core.uln}</span>
               </>
             )}
           </div>
@@ -360,15 +360,101 @@ function IdentityHero({ core, risk }: { core: StudentCore; risk: RiskSnapshot | 
             {core.status && (
               <>
                 <span className="text-white/25">·</span>
-                <span className="uppercase tracking-wide font-medium text-white/75">
+                <span className="uppercase tracking-wide font-medium text-white">
                   {core.status}
                 </span>
               </>
             )}
           </div>
+          <InclusionChips core={core} />
         </div>
       </div>
     </div>
+  );
+}
+
+const SEND_LABELS: Record<string, string> = {
+  dyslexia: 'Dyslexia',
+  dyscalculia: 'Dyscalculia',
+  dyspraxia: 'Dyspraxia',
+  autism: 'Autism',
+  adhd: 'ADHD',
+  hearing: 'Hearing',
+  visual: 'Visual',
+  physical: 'Physical',
+  mental_health: 'Mental health',
+  other: 'Other SEND',
+};
+
+function InclusionChips({ core }: { core: StudentCore }) {
+  const hasSend = Array.isArray(core.send_flags) && core.send_flags.length > 0;
+  const hasAny =
+    hasSend ||
+    core.eal ||
+    !!core.ehcp_ref ||
+    !!core.pronouns ||
+    !!core.accessibility_notes;
+
+  if (!hasAny) return null;
+
+  return (
+    <div className="mt-3 space-y-2">
+      <div className="flex flex-wrap gap-1.5">
+        {hasSend &&
+          core.send_flags.map((key) => (
+            <InclusionPill key={key} tone="amber">
+              {SEND_LABELS[key] ?? key}
+            </InclusionPill>
+          ))}
+        {core.eal && (
+          <InclusionPill tone="emerald">
+            EAL
+            {core.first_language ? ` · ${core.first_language}` : ''}
+          </InclusionPill>
+        )}
+        {core.ehcp_ref && (
+          <InclusionPill tone="red">EHCP · {core.ehcp_ref}</InclusionPill>
+        )}
+        {core.pronouns && (
+          <InclusionPill tone="neutral">{core.pronouns}</InclusionPill>
+        )}
+      </div>
+      {core.accessibility_notes && (
+        <div className="text-[11.5px] text-white/70 leading-relaxed max-w-2xl">
+          <span className="uppercase tracking-[0.18em] text-[10px] font-medium text-white/55 mr-2">
+            Adjustments
+          </span>
+          {core.accessibility_notes}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function InclusionPill({
+  tone,
+  children,
+}: {
+  tone: 'amber' | 'emerald' | 'red' | 'neutral';
+  children: React.ReactNode;
+}) {
+  const toneClass =
+    tone === 'amber'
+      ? 'bg-amber-500/[0.08] border-amber-500/25 text-amber-200'
+      : tone === 'emerald'
+        ? 'bg-emerald-500/[0.08] border-emerald-500/25 text-emerald-200'
+        : tone === 'red'
+          ? 'bg-red-500/[0.08] border-red-500/30 text-red-200'
+          : 'bg-white/[0.04] border-white/[0.1] text-white/80';
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center h-6 px-2.5 rounded-full border text-[11px] font-medium tracking-tight',
+        toneClass
+      )}
+    >
+      {children}
+    </span>
   );
 }
 
@@ -453,7 +539,7 @@ function StatCell({
 }) {
   const content = (
     <>
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {label}
       </div>
       <div
@@ -464,7 +550,7 @@ function StatCell({
       >
         {value}
       </div>
-      {sub && <div className="mt-3 text-[11px] text-white/70">{sub}</div>}
+      {sub && <div className="mt-3 text-[11px] text-white">{sub}</div>}
     </>
   );
   const base =
@@ -530,7 +616,7 @@ function SectionRiskPanel({
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
           <div className="px-5 sm:px-6 py-5 flex items-start gap-5 flex-wrap">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Current
               </div>
               <div
@@ -541,7 +627,7 @@ function SectionRiskPanel({
               >
                 {risk.level.toUpperCase()}
               </div>
-              <div className="mt-2 text-[11.5px] text-white/55 tabular-nums">
+              <div className="mt-2 text-[11.5px] text-white tabular-nums">
                 Score {risk.score.toFixed(1)} · updated{' '}
                 {new Date(risk.computed_at).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -550,7 +636,7 @@ function SectionRiskPanel({
               </div>
             </div>
             <div className="flex-1 min-w-[220px]">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-2">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
                 Trend · last {history.length} checks
               </div>
               <TrendSparkline history={history} />
@@ -574,7 +660,7 @@ function SectionRiskPanel({
                   <div className="flex-1 min-w-0">
                     <div className="text-[13px] text-white leading-relaxed">{f.label}</div>
                     {f.detail && (
-                      <div className="mt-0.5 text-[11.5px] text-white/60 leading-relaxed">
+                      <div className="mt-0.5 text-[11.5px] text-white leading-relaxed">
                         {f.detail}
                       </div>
                     )}
@@ -595,7 +681,7 @@ function TrendSparkline({
   history: { computed_at: string; score: number }[];
 }) {
   if (history.length < 2) {
-    return <div className="text-[11.5px] text-white/45">Not enough history yet.</div>;
+    return <div className="text-[11.5px] text-white">Not enough history yet.</div>;
   }
   const w = 240;
   const h = 48;
@@ -708,13 +794,13 @@ function SectionCoverage({
               >
                 <div className="px-5 sm:px-6 py-4 border-b border-white/[0.06] flex items-center justify-between gap-3 flex-wrap">
                   <div className="min-w-0">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       {qual} · Unit {unit}
                     </div>
                   </div>
-                  <div className="text-[12px] text-white/75 tabular-nums">
+                  <div className="text-[12px] text-white tabular-nums">
                     <span className="text-white font-medium">{done}</span>
-                    <span className="text-white/40"> / {items.length}</span>
+                    <span className="text-white"> / {items.length}</span>
                   </div>
                 </div>
                 <div className="px-4 sm:px-5 py-4 flex flex-wrap gap-1.5">
@@ -747,7 +833,7 @@ function AcCell({ row }: { row: AcCoverageRow }) {
         {row.ac_code}
       </span>
       {row.evidence_count > 0 && (
-        <span className="text-[10px] font-mono text-white/45 tabular-nums">
+        <span className="text-[10px] font-mono text-white tabular-nums">
           ×{row.evidence_count}
         </span>
       )}
@@ -816,7 +902,7 @@ function SectionAttendance({
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 sm:px-6 py-5 sm:py-6 flex items-start gap-6 flex-wrap">
           <RingStat value={rate} label="28-day rate" size={88} />
           <div className="flex-1 min-w-[240px]">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-2">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
               Last {last28.length} sessions
             </div>
             <div className="flex flex-wrap gap-[3px]">
@@ -839,7 +925,7 @@ function SectionAttendance({
                   />
                 ))}
             </div>
-            <div className="mt-3 flex items-center gap-4 text-[10.5px] text-white/55">
+            <div className="mt-3 flex items-center gap-4 text-[10.5px] text-white">
               <Legend colour="bg-emerald-400/80" label="Present" />
               <Legend colour="bg-amber-400/80" label="Late" />
               <Legend colour="bg-red-400/70" label="Absent" />
@@ -904,7 +990,7 @@ function RingStat({
           </div>
         </div>
       </div>
-      <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 text-center">
+      <div className="mt-2 text-[10px] font-medium uppercase tracking-[0.18em] text-white text-center">
         {label}
       </div>
     </div>
@@ -935,7 +1021,7 @@ function SectionGrades({
           {rows.map((g) => (
             <div key={g.id} className="px-5 sm:px-6 py-4 flex items-start gap-4 flex-wrap">
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   {g.assessment_type ?? 'Assessment'}
                   {g.assessed_at && (
                     <>
@@ -952,7 +1038,7 @@ function SectionGrades({
                 </div>
                 <div className="mt-1 text-[14px] text-white">{g.unit_name ?? '—'}</div>
                 {g.feedback && (
-                  <div className="mt-2 text-[12px] text-white/70 leading-relaxed line-clamp-2">
+                  <div className="mt-2 text-[12px] text-white leading-relaxed line-clamp-2">
                     {g.feedback}
                   </div>
                 )}
@@ -1010,7 +1096,7 @@ function SectionNotes({
               onClick={() => setFilter(f)}
               className={cn(
                 'px-3 py-1 rounded-full text-[11.5px] font-medium transition-colors capitalize',
-                filter === f ? 'bg-elec-yellow text-black' : 'text-white/70 hover:text-white'
+                filter === f ? 'bg-elec-yellow text-black' : 'text-white hover:text-white'
               )}
             >
               {f}
@@ -1050,7 +1136,7 @@ function NoteRow({ note }: { note: PastoralNote }) {
         ? 'text-amber-300 border-amber-500/25 bg-amber-500/[0.04]'
         : note.kind === 'praise'
           ? 'text-emerald-300 border-emerald-500/25 bg-emerald-500/[0.04]'
-          : 'text-white/80 border-white/[0.08] bg-[hsl(0_0%_12%)]';
+          : 'text-white border-white/[0.08] bg-[hsl(0_0%_12%)]';
   return (
     <div className={cn('border rounded-xl px-5 py-4', kindTone)}>
       <div className="flex items-center gap-2 text-[10px] font-medium uppercase tracking-[0.18em] mb-2">
@@ -1066,7 +1152,7 @@ function NoteRow({ note }: { note: PastoralNote }) {
         {note.author_name && (
           <>
             <span className="text-white/25">·</span>
-            <span className="normal-case tracking-normal text-white/60">{note.author_name}</span>
+            <span className="normal-case tracking-normal text-white">{note.author_name}</span>
           </>
         )}
         {note.visibility === 'safeguarding' && (
@@ -1077,15 +1163,15 @@ function NoteRow({ note }: { note: PastoralNote }) {
         )}
       </div>
       {note.title && <div className="text-[14px] font-semibold text-white">{note.title}</div>}
-      <p className="mt-1 text-[13px] text-white/85 leading-relaxed whitespace-pre-line">
+      <p className="mt-1 text-[13px] text-white leading-relaxed whitespace-pre-line">
         {note.body}
       </p>
       {note.action_required && (
-        <div className="mt-3 pt-3 border-t border-white/[0.06] text-[12px] text-white/80 leading-relaxed">
+        <div className="mt-3 pt-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
           <span className="text-elec-yellow/90 font-medium mr-2">Action</span>
           {note.action_required}
           {note.action_by_date && (
-            <span className="text-white/55 ml-2">
+            <span className="text-white ml-2">
               · by{' '}
               {new Date(note.action_by_date).toLocaleDateString('en-GB', {
                 day: 'numeric',
@@ -1123,7 +1209,7 @@ function Section({
     <section id={id} className="scroll-mt-6">
       <div className="flex items-end justify-between gap-4 flex-wrap">
         <div>
-          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
             {eyebrow}
           </div>
           <h2 className="mt-1.5 text-xl sm:text-[26px] font-semibold text-white tracking-tight leading-tight">
@@ -1141,7 +1227,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   return (
     <a
       href={href}
-      className="block text-[12.5px] text-white/70 hover:text-white py-1.5 transition-colors"
+      className="block text-[12.5px] text-white hover:text-white py-1.5 transition-colors"
     >
       {children}
     </a>
@@ -1304,7 +1390,7 @@ function EmptyCard({
 }) {
   return (
     <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-      <p className="text-[12.5px] text-white/60 max-w-md mx-auto leading-relaxed">{text}</p>
+      <p className="text-[12.5px] text-white max-w-md mx-auto leading-relaxed">{text}</p>
       {action && (
         <button
           onClick={action.onClick}

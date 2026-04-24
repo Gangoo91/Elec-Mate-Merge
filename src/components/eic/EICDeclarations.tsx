@@ -282,6 +282,24 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               />
             </FormField>
           </div>
+          <div className="grid grid-cols-2 gap-2 items-end">
+            <FormField label="Date">
+              <Input
+                type="date"
+                value={formData.designer2Date || ''}
+                onChange={(e) => onUpdate('designer2Date', e.target.value)}
+                className={inputClass}
+              />
+            </FormField>
+            <FormField label="BS 7671:2018 amended to (date)">
+              <Input
+                type="date"
+                value={formData.designer2Bs7671Date || ''}
+                onChange={(e) => onUpdate('designer2Bs7671Date', e.target.value)}
+                className={inputClass}
+              />
+            </FormField>
+          </div>
           {formData.designer2Name && (
             <SignatureInput
               value={formData.designer2Signature}

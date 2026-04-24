@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -19,6 +17,16 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectContentClass,
+  selectTriggerClass,
+} from '@/components/college/primitives';
 
 interface NewCohortDialogProps {
   open: boolean;
@@ -75,9 +83,6 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
 
   // Get selected course details
   const selectedCourse = courses.find((c) => c.id === formData.courseId);
-
-  // Get selected tutor details
-  const selectedTutor = staff.find((s) => s.id === formData.leadTutorId);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,232 +154,217 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
 
         <ResponsiveDialogBody>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Course Selection */}
-            <div>
-              <Label htmlFor="courseId">Course *</Label>
-              <Select
-                value={formData.courseId}
-                onValueChange={(value) => handleChange('courseId', value)}
-              >
-                <SelectTrigger className="h-11 touch-manipulation">
-                  <SelectValue placeholder="Select course" />
-                </SelectTrigger>
-                <SelectContent>
-                  {activeCourses.map((course) => (
-                    <SelectItem key={course.id} value={course.id}>
-                      {course.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            <FormCard eyebrow="Course">
+              <Field label="Course" required>
+                <Select
+                  value={formData.courseId}
+                  onValueChange={(value) => handleChange('courseId', value)}
+                >
+                  <SelectTrigger className={selectTriggerClass}>
+                    <SelectValue placeholder="Select course" />
+                  </SelectTrigger>
+                  <SelectContent className={selectContentClass}>
+                    {activeCourses.map((course) => (
+                      <SelectItem key={course.id} value={course.id}>
+                        {course.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </Field>
 
-            {/* Name and Code */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="name">Cohort Name *</Label>
-                <Input
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => handleChange('name', e.target.value)}
-                  placeholder="e.g., Level 3 Sept 2024"
-                  required
-                  className="h-11 touch-manipulation"
-                />
-              </div>
-              <div>
-                <Label htmlFor="code">Cohort Code *</Label>
-                <div className="flex gap-2">
+              <FormGrid cols={2}>
+                <Field label="Cohort name" required>
                   <Input
-                    id="code"
-                    value={formData.code}
-                    onChange={(e) => handleChange('code', e.target.value)}
-                    placeholder="AUTO-GEN"
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => handleChange('name', e.target.value)}
+                    placeholder="e.g., Level 3 Sept 2024"
                     required
-                    className="flex-1 h-11 touch-manipulation"
+                    className={inputClass}
                   />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleChange('code', generateCode())}
-                    disabled={!formData.courseId}
+                </Field>
+                <Field label="Cohort code" required>
+                  <div className="flex gap-2">
+                    <Input
+                      id="code"
+                      value={formData.code}
+                      onChange={(e) => handleChange('code', e.target.value)}
+                      placeholder="AUTO-GEN"
+                      required
+                      className={`${inputClass} flex-1`}
+                    />
+                    <SecondaryButton
+                      size="sm"
+                      onClick={() => handleChange('code', generateCode())}
+                      disabled={!formData.courseId}
+                    >
+                      Generate
+                    </SecondaryButton>
+                  </div>
+                </Field>
+              </FormGrid>
+            </FormCard>
+
+            <FormCard eyebrow="Lead & status">
+              <FormGrid cols={2}>
+                <Field label="Lead tutor" required>
+                  <Select
+                    value={formData.leadTutorId}
+                    onValueChange={(value) => handleChange('leadTutorId', value)}
                   >
-                    Generate
-                  </Button>
-                </div>
-              </div>
-            </div>
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select tutor" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {tutors.map((tutor) => (
+                        <SelectItem key={tutor.id} value={tutor.id}>
+                          {tutor.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="Status" required>
+                  <Select
+                    value={formData.status}
+                    onValueChange={(value) => handleChange('status', value)}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="Planning">Planning</SelectItem>
+                      <SelectItem value="Active">Active</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              </FormGrid>
+            </FormCard>
 
-            {/* Lead Tutor and Status */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="leadTutorId">Lead Tutor *</Label>
-                <Select
-                  value={formData.leadTutorId}
-                  onValueChange={(value) => handleChange('leadTutorId', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select tutor" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {tutors.map((tutor) => (
-                      <SelectItem key={tutor.id} value={tutor.id}>
-                        {tutor.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="status">Status *</Label>
-                <Select
-                  value={formData.status}
-                  onValueChange={(value) => handleChange('status', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Planning">Planning</SelectItem>
-                    <SelectItem value="Active">Active</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+            <FormCard eyebrow="Dates & capacity">
+              <FormGrid cols={2}>
+                <Field label="Start date" required>
+                  <Input
+                    id="startDate"
+                    type="date"
+                    value={formData.startDate}
+                    onChange={(e) => handleChange('startDate', e.target.value)}
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label="End date" required>
+                  <Input
+                    id="endDate"
+                    type="date"
+                    value={formData.endDate}
+                    onChange={(e) => handleChange('endDate', e.target.value)}
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+              </FormGrid>
 
-            {/* Dates */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="startDate">Start Date *</Label>
-                <Input
-                  id="startDate"
-                  type="date"
-                  value={formData.startDate}
-                  onChange={(e) => handleChange('startDate', e.target.value)}
-                  required
-                  className="h-11 touch-manipulation"
-                />
-              </div>
-              <div>
-                <Label htmlFor="endDate">End Date *</Label>
-                <Input
-                  id="endDate"
-                  type="date"
-                  value={formData.endDate}
-                  onChange={(e) => handleChange('endDate', e.target.value)}
-                  required
-                  className="h-11 touch-manipulation"
-                />
-              </div>
-            </div>
+              <FormGrid cols={2}>
+                <Field label="Delivery mode" required>
+                  <Select
+                    value={formData.deliveryMode}
+                    onValueChange={(value) => handleChange('deliveryMode', value)}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      <SelectItem value="Day Release">Day Release</SelectItem>
+                      <SelectItem value="Block Release">Block Release</SelectItem>
+                      <SelectItem value="In-person">In-person (Full-time)</SelectItem>
+                      <SelectItem value="Online">Online</SelectItem>
+                      <SelectItem value="Hybrid">Hybrid</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="Max students" required>
+                  <Input
+                    id="maxStudents"
+                    type="number"
+                    min="1"
+                    max="30"
+                    value={formData.maxStudents}
+                    onChange={(e) => handleChange('maxStudents', e.target.value)}
+                    required
+                    className={inputClass}
+                  />
+                </Field>
+              </FormGrid>
+            </FormCard>
 
-            {/* Delivery Details */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="deliveryMode">Delivery Mode *</Label>
-                <Select
-                  value={formData.deliveryMode}
-                  onValueChange={(value) => handleChange('deliveryMode', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Day Release">Day Release</SelectItem>
-                    <SelectItem value="Block Release">Block Release</SelectItem>
-                    <SelectItem value="In-person">In-person (Full-time)</SelectItem>
-                    <SelectItem value="Online">Online</SelectItem>
-                    <SelectItem value="Hybrid">Hybrid</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="maxStudents">Max Students *</Label>
-                <Input
-                  id="maxStudents"
-                  type="number"
-                  min="1"
-                  max="30"
-                  value={formData.maxStudents}
-                  onChange={(e) => handleChange('maxStudents', e.target.value)}
-                  required
-                  className="h-11 touch-manipulation"
-                />
-              </div>
-            </div>
-
-            {/* Schedule */}
-            <div className="grid grid-cols-3 gap-3">
-              <div>
-                <Label htmlFor="meetingDay">Meeting Day</Label>
-                <Select
-                  value={formData.meetingDay}
-                  onValueChange={(value) => handleChange('meetingDay', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select day" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {MEETING_DAYS.map((day) => (
-                      <SelectItem key={day} value={day}>
-                        {day}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="meetingTime">Meeting Time</Label>
-                <Select
-                  value={formData.meetingTime}
-                  onValueChange={(value) => handleChange('meetingTime', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {MEETING_TIMES.map((time) => (
-                      <SelectItem key={time} value={time}>
-                        {time}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="room">Room</Label>
-                <Select
-                  value={formData.room}
-                  onValueChange={(value) => handleChange('room', value)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation">
-                    <SelectValue placeholder="Select room" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {ROOMS.map((room) => (
-                      <SelectItem key={room} value={room}>
-                        {room}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+            <FormCard eyebrow="Schedule">
+              <FormGrid cols={3}>
+                <Field label="Meeting day">
+                  <Select
+                    value={formData.meetingDay}
+                    onValueChange={(value) => handleChange('meetingDay', value)}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select day" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {MEETING_DAYS.map((day) => (
+                        <SelectItem key={day} value={day}>
+                          {day}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="Meeting time">
+                  <Select
+                    value={formData.meetingTime}
+                    onValueChange={(value) => handleChange('meetingTime', value)}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select time" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {MEETING_TIMES.map((time) => (
+                        <SelectItem key={time} value={time}>
+                          {time}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+                <Field label="Room">
+                  <Select
+                    value={formData.room}
+                    onValueChange={(value) => handleChange('room', value)}
+                  >
+                    <SelectTrigger className={selectTriggerClass}>
+                      <SelectValue placeholder="Select room" />
+                    </SelectTrigger>
+                    <SelectContent className={selectContentClass}>
+                      {ROOMS.map((room) => (
+                        <SelectItem key={room} value={room}>
+                          {room}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
+              </FormGrid>
+            </FormCard>
           </form>
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
-          <Button
-            type="button"
-            variant="outline"
+          <SecondaryButton
             onClick={() => onOpenChange(false)}
             disabled={isSubmitting}
-            className="h-11 touch-manipulation"
           >
             Cancel
-          </Button>
-          <Button
+          </SecondaryButton>
+          <PrimaryButton
             type="submit"
             disabled={
               isSubmitting ||
@@ -383,11 +373,10 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
               !formData.courseId ||
               !formData.leadTutorId
             }
-            className="h-11 touch-manipulation"
             onClick={handleSubmit}
           >
-            {isSubmitting ? 'Creating…' : 'Create Cohort'}
-          </Button>
+            {isSubmitting ? 'Creating…' : 'Create cohort'}
+          </PrimaryButton>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>
     </ResponsiveDialog>

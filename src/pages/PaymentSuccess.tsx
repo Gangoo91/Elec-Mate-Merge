@@ -347,8 +347,8 @@ const PaymentSuccess = () => {
                 )}
                 <p className="text-[11px] text-white/58">
                   Cancel anytime in Settings. Need help?{' '}
-                  <a href="mailto:support@elec-mate.com" className="underline">
-                    support@elec-mate.com
+                  <a href="mailto:info@elec-mate.com" className="underline">
+                    info@elec-mate.com
                   </a>
                 </p>
               </div>

@@ -6,7 +6,6 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Switch } from '@/components/ui/switch';
@@ -21,6 +20,13 @@ import {
   CommandList,
 } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import {
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
+  fieldLabelClass,
+} from '@/components/college/primitives';
 
 interface AddCommentDialogProps {
   open: boolean;
@@ -73,17 +79,17 @@ export function AddCommentDialog({
   const getRoleColor = (role: string) => {
     switch (role) {
       case 'tutor':
-        return 'bg-info/10 text-info';
+        return 'bg-blue-500/10 text-blue-400';
       case 'assessor':
-        return 'bg-success/10 text-success';
+        return 'bg-emerald-500/10 text-emerald-400';
       case 'iqa':
-        return 'bg-warning/10 text-warning';
+        return 'bg-amber-500/10 text-amber-400';
       case 'head_of_department':
-        return 'bg-purple-500/10 text-purple-500';
+        return 'bg-purple-500/10 text-purple-400';
       case 'student':
         return 'bg-elec-yellow/10 text-elec-yellow';
       default:
-        return 'bg-muted text-white/75';
+        return 'bg-[hsl(0_0%_12%)] text-white';
     }
   };
 
@@ -168,13 +174,13 @@ export function AddCommentDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">Add Comment</DialogTitle>
+          <DialogTitle className="flex items-center gap-2 text-white">Add Comment</DialogTitle>
           {contextTitle && (
-            <p className="text-sm text-white/75">
+            <p className="text-sm text-white">
               On {getContextLabel()}:{' '}
-              <span className="font-medium text-foreground">{contextTitle}</span>
+              <span className="font-medium text-white">{contextTitle}</span>
             </p>
           )}
         </DialogHeader>
@@ -188,32 +194,35 @@ export function AddCommentDialog({
               </AvatarFallback>
             </Avatar>
             <div>
-              <p className="text-sm font-medium">{currentUserName}</p>
-              <p className="text-xs text-white/75">{formatRole(currentUserRole)}</p>
+              <p className="text-sm font-medium text-white">{currentUserName}</p>
+              <p className="text-xs text-white">{formatRole(currentUserRole)}</p>
             </div>
           </div>
 
           {/* Comment content */}
-          <Textarea
-            placeholder="Write your comment..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="min-h-[120px]"
-            rows={4}
-          />
+          <Field label="Comment">
+            <Textarea
+              placeholder="Write your comment..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className={`min-h-[120px] ${textareaClass}`}
+              rows={4}
+            />
+          </Field>
 
           {/* Mentions */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label className="text-sm font-medium">Mentions</Label>
+              <Label className={fieldLabelClass}>Mentions</Label>
               <Popover open={mentionPopoverOpen} onOpenChange={setMentionPopoverOpen}>
                 <PopoverTrigger asChild>
-                  <Button variant="outline" size="sm" className="h-7 text-xs">
-                    @ Add Mention
-                  </Button>
+                  <SecondaryButton size="sm">@ Add Mention</SecondaryButton>
                 </PopoverTrigger>
-                <PopoverContent className="w-64 p-0" align="end">
-                  <Command>
+                <PopoverContent
+                  className="w-64 p-0 bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white"
+                  align="end"
+                >
+                  <Command className="bg-[hsl(0_0%_12%)] text-white">
                     <CommandInput placeholder="Search users..." />
                     <CommandList>
                       <CommandEmpty>No users found.</CommandEmpty>
@@ -235,10 +244,10 @@ export function AddCommentDialog({
                                 </AvatarFallback>
                               </Avatar>
                               <div className="flex-1 min-w-0">
-                                <p className="text-sm font-medium truncate">{user.name}</p>
-                                <p className="text-xs text-white/75">
-                                  {formatRole(user.role)}
+                                <p className="text-sm font-medium text-white truncate">
+                                  {user.name}
                                 </p>
+                                <p className="text-xs text-white">{formatRole(user.role)}</p>
                               </div>
                             </CommandItem>
                           ))}
@@ -268,21 +277,21 @@ export function AddCommentDialog({
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-white/75">
+              <p className="text-xs text-white">
                 No mentions added. Use @ to notify specific people.
               </p>
             )}
           </div>
 
           {/* Requires action toggle */}
-          <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+          <div className="flex items-center justify-between p-3 bg-white/[0.04] border border-white/[0.08] rounded-lg">
             <div className="flex items-center gap-2">
               <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
               <div>
-                <Label htmlFor="requires-action" className="text-sm font-medium cursor-pointer">
+                <Label htmlFor="requires-action" className="text-sm font-medium text-white cursor-pointer">
                   Requires Action
                 </Label>
-                <p className="text-xs text-white/75">Mark if response is needed</p>
+                <p className="text-xs text-white">Mark if response is needed</p>
               </div>
             </div>
             <Switch
@@ -294,16 +303,10 @@ export function AddCommentDialog({
         </div>
 
         <DialogFooter className="gap-2 sm:gap-0">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Cancel
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            disabled={!content.trim()}
-            className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
-          >
+          <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
+          <PrimaryButton onClick={handleSubmit} disabled={!content.trim()}>
             Post Comment
-          </Button>
+          </PrimaryButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

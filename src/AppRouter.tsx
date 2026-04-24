@@ -112,6 +112,7 @@ const LessonPlanPage = lazy(() => import('@/pages/college/LessonPlanPage'));
 const LessonDeliverPage = lazy(() => import('@/pages/college/LessonDeliverPage'));
 const LessonPrintPage = lazy(() => import('@/pages/college/LessonPrintPage'));
 const Student360Page = lazy(() => import('@/pages/college/Student360Page'));
+const CurriculumSettingsPage = lazy(() => import('@/pages/college/CurriculumSettingsPage'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('@/pages/legal/TermsOfService'));
@@ -1899,6 +1900,18 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <Student360Page />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* College curriculum settings — British Values / Stretch / Inclusion toggles */}
+          <Route
+            path="college/settings/curriculum"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <CurriculumSettingsPage />
                 </CollegeGuard>
               </LazyRoute>
             }

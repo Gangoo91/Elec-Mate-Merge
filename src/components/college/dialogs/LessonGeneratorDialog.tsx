@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Dialog,
@@ -10,7 +10,24 @@ import {
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 import type { AcRow, GenerateLessonInput } from '@/hooks/useCurriculum';
+import {
+  PrimaryButton,
+  SecondaryButton,
+  checkboxClass,
+  inputClass,
+} from '@/components/college/primitives';
+
+interface CohortOption {
+  id: string;
+  name: string;
+  learner_count: number;
+  send_count: number;
+  eal_count: number;
+  ehcp_count: number;
+  first_names: string[];
+}
 
 interface Props {
   open: boolean;
@@ -112,6 +129,110 @@ export function LessonGeneratorDialog({
   const [hs, setHs] = useState(true);
   const [activePreset, setActivePreset] = useState<string>('standard');
 
+  const [cohorts, setCohorts] = useState<CohortOption[]>([]);
+  const [selectedCohortId, setSelectedCohortId] = useState<string | null>(
+    cohortId ?? null
+  );
+  const [loadingCohorts, setLoadingCohorts] = useState(false);
+
+  // Load cohorts for this college once the dialog opens, with learner
+  // inclusion aggregates so the tutor sees who they're planning for.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    setLoadingCohorts(true);
+    (async () => {
+      const { data: userRes } = await supabase.auth.getUser();
+      if (!userRes?.user) {
+        if (!cancelled) setLoadingCohorts(false);
+        return;
+      }
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('college_id')
+        .eq('id', userRes.user.id)
+        .maybeSingle();
+      if (!profile?.college_id) {
+        if (!cancelled) setLoadingCohorts(false);
+        return;
+      }
+      const { data: rows } = await supabase
+        .from('college_cohorts')
+        .select('id, name, status')
+        .eq('college_id', profile.college_id)
+        .order('name');
+      if (cancelled) return;
+      const active = (rows ?? []).filter(
+        (r) => r.status !== 'archived' && r.status !== 'Archived'
+      );
+      if (active.length === 0) {
+        setCohorts([]);
+        setLoadingCohorts(false);
+        return;
+      }
+      const ids = active.map((r) => r.id as string);
+      const { data: students } = await supabase
+        .from('college_students')
+        .select('id, name, cohort_id, send_flags, eal, ehcp_ref')
+        .in('cohort_id', ids)
+        .neq('status', 'withdrawn')
+        .neq('status', 'completed');
+      const byCohort = new Map<
+        string,
+        { names: string[]; send: number; eal: number; ehcp: number }
+      >();
+      for (const s of (students ?? []) as {
+        name: string;
+        cohort_id: string;
+        send_flags: string[] | null;
+        eal: boolean | null;
+        ehcp_ref: string | null;
+      }[]) {
+        if (!s.cohort_id) continue;
+        const entry = byCohort.get(s.cohort_id) ?? {
+          names: [],
+          send: 0,
+          eal: 0,
+          ehcp: 0,
+        };
+        entry.names.push((s.name ?? '').split(/\s+/)[0] ?? '');
+        if (Array.isArray(s.send_flags) && s.send_flags.length > 0) entry.send++;
+        if (s.eal) entry.eal++;
+        if (s.ehcp_ref) entry.ehcp++;
+        byCohort.set(s.cohort_id, entry);
+      }
+      if (cancelled) return;
+      setCohorts(
+        active.map((r) => {
+          const e = byCohort.get(r.id as string) ?? {
+            names: [],
+            send: 0,
+            eal: 0,
+            ehcp: 0,
+          };
+          return {
+            id: r.id as string,
+            name: r.name as string,
+            learner_count: e.names.length,
+            send_count: e.send,
+            eal_count: e.eal,
+            ehcp_count: e.ehcp,
+            first_names: e.names,
+          };
+        })
+      );
+      setLoadingCohorts(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
+
+  const selectedCohort = useMemo(
+    () => cohorts.find((c) => c.id === selectedCohortId) ?? null,
+    [cohorts, selectedCohortId]
+  );
+
   // Group flat AC rows into LOs
   const grouped = useMemo(() => {
     const map = new Map<number, { lo_text: string; acs: AcRow[] }>();
@@ -193,7 +314,7 @@ export function LessonGeneratorDialog({
       diff: diff ? '1' : '0',
       hs: hs ? '1' : '0',
     });
-    if (cohortId) params.set('cohort', cohortId);
+    if (selectedCohortId) params.set('cohort', selectedCohortId);
     onOpenChange(false);
     navigate(`/college/lessons/new?${params.toString()}`);
   };
@@ -219,17 +340,17 @@ export function LessonGeneratorDialog({
           <DialogTitle className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-tight">
             Build a lesson plan
           </DialogTitle>
-          <DialogDescription className="text-[12.5px] sm:text-[13px] text-white/70 leading-relaxed">
-            <span className="font-mono tabular-nums text-white/85">
+          <DialogDescription className="text-[12.5px] sm:text-[13px] text-white leading-relaxed">
+            <span className="font-mono tabular-nums text-white">
               {qualificationCode}
             </span>
-            <span className="mx-2 text-white/25">·</span>
+            <span className="mx-2 text-white/30">·</span>
             <span>
               Unit <span className="font-mono tabular-nums">{unitCode}</span>
             </span>
             {unitTitle && (
               <>
-                <span className="mx-2 text-white/25">·</span>
+                <span className="mx-2 text-white/30">·</span>
                 <span>{unitTitle}</span>
               </>
             )}
@@ -238,6 +359,100 @@ export function LessonGeneratorDialog({
 
         {/* ─── Body ──────────────────────────────────────────────── */}
         <div className="flex-1 overflow-y-auto">
+          {/* ── Section 0: Cohort ── */}
+          <section className="px-6 sm:px-8 pt-6 sm:pt-7">
+            <SectionHeader eyebrow="Planning for" title="Who's in the room" />
+            <div className="mt-4">
+              {loadingCohorts && cohorts.length === 0 ? (
+                <div className="h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/[0.08] flex items-center px-4 text-[12.5px] text-white/55">
+                  Loading cohorts…
+                </div>
+              ) : cohorts.length === 0 ? (
+                <div className="rounded-xl bg-[hsl(0_0%_13%)] border border-white/[0.08] px-4 py-3 text-[12.5px] text-white/60">
+                  No active cohorts. You can still generate a generic plan.
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  <div className="flex flex-wrap gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCohortId(null)}
+                      className={cn(
+                        'h-9 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation',
+                        selectedCohortId === null
+                          ? 'bg-white/[0.06] border-white/[0.2] text-white'
+                          : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/70 hover:text-white'
+                      )}
+                    >
+                      No cohort
+                    </button>
+                    {cohorts.map((c) => (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => setSelectedCohortId(c.id)}
+                        className={cn(
+                          'h-9 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation',
+                          selectedCohortId === c.id
+                            ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow'
+                            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/80 hover:text-white hover:border-white/[0.18]'
+                        )}
+                      >
+                        {c.name}
+                        {c.learner_count > 0 && (
+                          <span className="ml-2 text-white/45 tabular-nums">
+                            {c.learner_count}
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+
+                  {selectedCohort && (
+                    <div className="mt-3 rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] px-4 py-3.5">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/90 mb-1.5">
+                        Planning for
+                      </div>
+                      <div className="text-[13.5px] text-white leading-snug">
+                        <span className="font-semibold">
+                          {selectedCohort.learner_count}
+                        </span>{' '}
+                        learner{selectedCohort.learner_count === 1 ? '' : 's'}
+                        {selectedCohort.first_names.length > 0 && (
+                          <span className="text-white/70">
+                            {' — '}
+                            {selectedCohort.first_names.slice(0, 4).join(', ')}
+                            {selectedCohort.first_names.length > 4 &&
+                              ` + ${selectedCohort.first_names.length - 4} more`}
+                          </span>
+                        )}
+                      </div>
+                      <div className="mt-1.5 text-[11.5px] text-white/70 tabular-nums flex flex-wrap gap-x-3 gap-y-1">
+                        {selectedCohort.send_count > 0 && (
+                          <span>{selectedCohort.send_count} SEND</span>
+                        )}
+                        {selectedCohort.eal_count > 0 && (
+                          <span>{selectedCohort.eal_count} EAL</span>
+                        )}
+                        {selectedCohort.ehcp_count > 0 && (
+                          <span>{selectedCohort.ehcp_count} EHCP</span>
+                        )}
+                        {selectedCohort.send_count === 0 &&
+                          selectedCohort.eal_count === 0 &&
+                          selectedCohort.ehcp_count === 0 && (
+                            <span className="text-white/50">
+                              No inclusion flags recorded — the AI will use
+                              generic differentiation.
+                            </span>
+                          )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
+
           {/* ── Section 1: Starting point ── */}
           <section className="px-6 sm:px-8 pt-6 sm:pt-7">
             <SectionHeader eyebrow="Starting point" title="Choose a shape" />
@@ -261,16 +476,16 @@ export function LessonGeneratorDialog({
                 eyebrow="Coverage"
                 title="Assessment criteria"
               />
-              <div className="flex items-center gap-3 text-[12px] text-white/70 shrink-0">
+              <div className="flex items-center gap-3 text-[12px] text-white shrink-0">
                 <span className="tabular-nums">
                   <span className="text-white font-medium">{selected.size}</span>
-                  <span className="text-white/40"> / {totalAcs}</span>
+                  <span className="text-white/30"> / {totalAcs}</span>
                 </span>
                 {selected.size > 0 && (
                   <button
                     type="button"
                     onClick={() => setSelected(new Set())}
-                    className="text-white/65 hover:text-white transition-colors"
+                    className="text-white hover:text-elec-yellow transition-colors"
                   >
                     Clear
                   </button>
@@ -284,13 +499,13 @@ export function LessonGeneratorDialog({
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search by code or keyword…"
-                className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 transition-colors"
+                className={inputClass}
               />
             </div>
 
             <div className="mt-3 space-y-2">
               {filteredGrouped.length === 0 ? (
-                <div className="bg-[hsl(0_0%_13%)] border border-white/[0.06] rounded-xl px-5 py-8 text-center text-[12.5px] text-white/55">
+                <div className="bg-[hsl(0_0%_13%)] border border-white/[0.06] rounded-xl px-5 py-8 text-center text-[12.5px] text-white">
                   No criteria match "{search}"
                 </div>
               ) : (
@@ -317,12 +532,12 @@ export function LessonGeneratorDialog({
               {/* Length slider */}
               <div>
                 <div className="flex items-baseline justify-between mb-3">
-                  <label className="text-[12px] font-medium text-white/85">
+                  <label className="text-[12px] font-medium text-white">
                     Length
                   </label>
                   <div className="text-[14px] text-white font-semibold tabular-nums">
                     {length}{' '}
-                    <span className="text-[11px] text-white/55 font-normal">min</span>
+                    <span className="text-[11px] text-white font-normal">min</span>
                   </div>
                 </div>
                 <Slider
@@ -336,7 +551,7 @@ export function LessonGeneratorDialog({
                   }}
                   className="w-full"
                 />
-                <div className="mt-2 flex justify-between text-[10px] font-mono tabular-nums text-white/40">
+                <div className="mt-2 flex justify-between text-[10px] font-mono tabular-nums text-white/30">
                   {LENGTH_TICKS.map((t) => (
                     <span key={t}>{t}</span>
                   ))}
@@ -345,7 +560,7 @@ export function LessonGeneratorDialog({
 
               {/* Delivery mode tabs */}
               <div>
-                <label className="text-[12px] font-medium text-white/85 mb-2 block">
+                <label className="text-[12px] font-medium text-white mb-2 block">
                   Delivery mode
                 </label>
                 <div className="grid grid-cols-4 gap-1.5 p-1 bg-[hsl(0_0%_13%)] border border-white/[0.06] rounded-full">
@@ -361,7 +576,7 @@ export function LessonGeneratorDialog({
                         'h-9 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
                         mode === opt.value
                           ? 'bg-elec-yellow text-black'
-                          : 'text-white/75 hover:text-white hover:bg-white/[0.04]'
+                          : 'text-white hover:bg-white/[0.04]'
                       )}
                     >
                       {opt.label}
@@ -372,7 +587,7 @@ export function LessonGeneratorDialog({
 
               {/* Include toggle chips */}
               <div>
-                <label className="text-[12px] font-medium text-white/85 mb-2 block">
+                <label className="text-[12px] font-medium text-white mb-2 block">
                   Include
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -413,23 +628,23 @@ export function LessonGeneratorDialog({
         <div className="shrink-0 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] px-6 py-4 sm:px-8 sm:py-5">
           <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-3">
             {/* Live summary */}
-            <div className="text-[12.5px] text-white/70 text-center sm:text-left">
+            <div className="text-[12.5px] text-white text-center sm:text-left">
               {selected.size === 0 ? (
-                <span className="text-white/45">Pick at least one criterion to begin</span>
+                <span className="text-white">Pick at least one criterion to begin</span>
               ) : (
                 <span>
                   <span className="text-white font-medium tabular-nums">
                     {selected.size}
                   </span>{' '}
                   criter{selected.size === 1 ? 'ion' : 'ia'}
-                  <span className="mx-2 text-white/25">·</span>
+                  <span className="mx-2 text-white/30">·</span>
                   <span className="text-white tabular-nums">{length}</span> min
-                  <span className="mx-2 text-white/25">·</span>
+                  <span className="mx-2 text-white/30">·</span>
                   <span>{modeLabel}</span>
                   {(diff || hs || hw) && (
                     <>
-                      <span className="mx-2 text-white/25">·</span>
-                      <span className="text-white/65">
+                      <span className="mx-2 text-white/30">·</span>
+                      <span className="text-white">
                         {[diff && 'Diff', hs && 'H&S', hw && 'HW']
                           .filter(Boolean)
                           .join(' · ')}
@@ -442,21 +657,21 @@ export function LessonGeneratorDialog({
 
             {/* Actions */}
             <div className="flex items-center gap-2 flex-col-reverse sm:flex-row">
-              <button
-                type="button"
+              <SecondaryButton
                 onClick={() => onOpenChange(false)}
-                className="h-11 w-full sm:w-auto px-5 rounded-full border border-white/[0.12] text-[13px] font-medium text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+                fullWidth
+                className="sm:w-auto"
               >
                 Cancel
-              </button>
-              <button
-                type="button"
+              </SecondaryButton>
+              <PrimaryButton
                 onClick={handleGenerate}
                 disabled={!canGenerate}
-                className="h-11 w-full sm:w-auto px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed touch-manipulation"
+                fullWidth
+                className="sm:w-auto"
               >
                 Build lesson plan →
-              </button>
+              </PrimaryButton>
             </div>
           </div>
         </div>
@@ -470,7 +685,7 @@ export function LessonGeneratorDialog({
 function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div>
-      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
         {eyebrow}
       </div>
       <h3 className="mt-1 text-[15px] sm:text-[16px] font-semibold text-white tracking-tight">
@@ -522,13 +737,13 @@ function PresetCard({
       <div className={cn('text-[14px] font-semibold', active ? 'text-elec-yellow' : 'text-white')}>
         {preset.label}
       </div>
-      <div className="text-[11.5px] text-white/65 flex items-center gap-2 tabular-nums">
-        <span className="text-white/90 font-medium">{timeLabel}</span>
-        <span className="text-white/25">·</span>
+      <div className="text-[11.5px] text-white flex items-center gap-2 tabular-nums">
+        <span className="text-white font-medium">{timeLabel}</span>
+        <span className="text-white/30">·</span>
         <span className="capitalize">{preset.mode}</span>
       </div>
       <div className="flex-1" />
-      <div className="text-[11px] text-white/55 leading-snug line-clamp-2">
+      <div className="text-[11px] text-white leading-snug line-clamp-2">
         {preset.description}
       </div>
       {includes.length > 0 && (
@@ -536,7 +751,7 @@ function PresetCard({
           {includes.map((i) => (
             <span
               key={i}
-              className="text-[9.5px] font-medium uppercase tracking-[0.12em] text-white/60 bg-white/[0.04] border border-white/[0.06] rounded-full px-1.5 py-[1px]"
+              className="text-[9.5px] font-medium uppercase tracking-[0.12em] text-white bg-white/[0.04] border border-white/[0.06] rounded-full px-1.5 py-[1px]"
             >
               {i}
             </span>
@@ -571,19 +786,19 @@ function LoGroup({
       {/* LO header */}
       <div className="px-4 sm:px-5 py-3 sm:py-3.5 flex items-start justify-between gap-3 border-b border-white/[0.05]">
         <div className="flex items-start gap-3 min-w-0 flex-1">
-          <span className="text-[10px] font-mono tabular-nums text-white/45 mt-0.5 shrink-0 w-8">
+          <span className="text-[10px] font-mono tabular-nums text-white/30 mt-0.5 shrink-0 w-8">
             LO&nbsp;{loNum}
           </span>
-          <div className="text-[12.5px] text-white/90 leading-snug flex-1">{loText}</div>
+          <div className="text-[12.5px] text-white leading-snug flex-1">{loText}</div>
         </div>
         <button
           type="button"
           onClick={onToggleAll}
-          className="shrink-0 flex items-center gap-2.5 text-[11px] text-white/65 hover:text-white transition-colors"
+          className="shrink-0 flex items-center gap-2.5 text-[11px] text-white hover:text-elec-yellow transition-colors"
         >
           <span className="tabular-nums">
             <span className={count > 0 ? 'text-elec-yellow font-medium' : ''}>{count}</span>
-            <span className="text-white/35"> / {total}</span>
+            <span className="text-white/30"> / {total}</span>
           </span>
           <span className="font-medium">{allSelected ? 'Clear' : 'All'}</span>
         </button>
@@ -625,23 +840,20 @@ function AcRowItem({
       >
         <Checkbox
           checked={checked}
-          className="mt-0.5 shrink-0 border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+          className={cn(checkboxClass, 'mt-0.5')}
           // Pointer-events off so only the row receives the click
           tabIndex={-1}
         />
         <span
           className={cn(
             'font-mono tabular-nums text-[11.5px] shrink-0 mt-[3px] w-10',
-            checked ? 'text-elec-yellow' : 'text-white/55'
+            checked ? 'text-elec-yellow' : 'text-white'
           )}
         >
           {ac.ac_code}
         </span>
         <span
-          className={cn(
-            'text-[12.5px] leading-relaxed flex-1 min-w-0',
-            checked ? 'text-white' : 'text-white/80'
-          )}
+          className="text-[12.5px] leading-relaxed flex-1 min-w-0 text-white"
         >
           {ac.ac_text}
         </span>
@@ -684,7 +896,7 @@ function ToggleChip({
         <span
           className={cn(
             'text-[12.5px] font-medium transition-colors',
-            on ? 'text-elec-yellow' : 'text-white/80'
+            on ? 'text-elec-yellow' : 'text-white'
           )}
         >
           {label}

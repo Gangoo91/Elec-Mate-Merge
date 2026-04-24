@@ -114,6 +114,8 @@ interface MobileOptimizedTestTableProps {
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
+  onMoveUp?: (id: string) => void;
+  onMoveDown?: (id: string) => void;
 }
 
 const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
@@ -121,7 +123,33 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
   onUpdate,
   onRemove,
   onBulkUpdate,
+  onMoveUp,
+  onMoveDown,
 }) => {
+  // ELE-857 — per-board boundaries so arrows disable correctly at edges
+  const firstOfBoardIds = React.useMemo(() => {
+    const s = new Set<string>();
+    const seen = new Set<string>();
+    testResults.forEach((c) => {
+      const b = (c as any).boardId || '__main__';
+      if (!seen.has(b)) {
+        seen.add(b);
+        s.add(c.id);
+      }
+    });
+    return s;
+  }, [testResults]);
+
+  const lastOfBoardIds = React.useMemo(() => {
+    const s = new Set<string>();
+    const lastByBoard = new Map<string, string>();
+    testResults.forEach((c) => {
+      const b = (c as any).boardId || '__main__';
+      lastByBoard.set(b, c.id);
+    });
+    lastByBoard.forEach((id) => s.add(id));
+    return s;
+  }, [testResults]);
   const [expandedCircuits, setExpandedCircuits] = useState<Set<string>>(
     new Set([testResults[0]?.id])
   );
@@ -695,6 +723,28 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                       placeholder="Additional notes..."
                     />
                     <div className="flex gap-2">
+                      {onMoveUp && (
+                        <Button
+                          variant="outline"
+                          className="h-12 w-12 touch-manipulation border-white/20 text-white hover:bg-white/10 disabled:opacity-30"
+                          onClick={() => onMoveUp(result.id)}
+                          disabled={firstOfBoardIds.has(result.id)}
+                          aria-label="Move circuit up"
+                        >
+                          <ChevronUp className="h-5 w-5" />
+                        </Button>
+                      )}
+                      {onMoveDown && (
+                        <Button
+                          variant="outline"
+                          className="h-12 w-12 touch-manipulation border-white/20 text-white hover:bg-white/10 disabled:opacity-30"
+                          onClick={() => onMoveDown(result.id)}
+                          disabled={lastOfBoardIds.has(result.id)}
+                          aria-label="Move circuit down"
+                        >
+                          <ChevronDown className="h-5 w-5" />
+                        </Button>
+                      )}
                       {onBulkUpdate && (
                         <Button
                           variant="outline"

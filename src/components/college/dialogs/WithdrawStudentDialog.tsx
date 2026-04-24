@@ -8,10 +8,10 @@ import {
   ResponsiveDialogTitle,
   ResponsiveDialogBody,
 } from '@/components/ui/responsive-dialog';
-import { Button } from '@/components/ui/button';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
+import { DestructiveButton, SecondaryButton } from '@/components/college/primitives';
 
 interface WithdrawStudentDialogProps {
   student: CollegeStudent | null;
@@ -71,8 +71,8 @@ export function WithdrawStudentDialog({
             <p className="text-sm text-white">
               Are you sure you want to withdraw <strong>{student.name}</strong>?
             </p>
-            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 space-y-1">
-              <p className="text-sm font-medium text-destructive">This action will:</p>
+            <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-3 space-y-1">
+              <p className="text-sm font-medium text-red-400">This action will:</p>
               <ul className="text-sm text-white space-y-1 list-disc pl-4">
                 <li>Change the student's status to "Withdrawn"</li>
                 <li>Remove them from active cohort registers</li>
@@ -87,21 +87,18 @@ export function WithdrawStudentDialog({
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
-          <Button
-            variant="outline"
-            className="h-11 touch-manipulation"
+          <SecondaryButton
             onClick={() => onOpenChange(false)}
             disabled={isWithdrawing}
           >
             Cancel
-          </Button>
-          <Button
-            className="h-11 touch-manipulation bg-destructive hover:bg-destructive/90 text-white gap-2"
+          </SecondaryButton>
+          <DestructiveButton
             onClick={handleWithdraw}
             disabled={isWithdrawing}
           >
-            {isWithdrawing ? 'Withdrawing…' : 'Withdraw Student'}
-          </Button>
+            {isWithdrawing ? 'Withdrawing…' : 'Withdraw student'}
+          </DestructiveButton>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>
     </ResponsiveDialog>

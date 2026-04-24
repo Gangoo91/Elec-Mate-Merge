@@ -38,6 +38,7 @@ const ELECTRICAL_SECTION_FIELDS = [
   'intakeCableSizeNotes',
   'intakeCableTypeNotes',
   'tailsSizeNotes',
+  'tailsLengthNotes',
 ] as const;
 
 interface ElectricalInstallationSectionProps {
@@ -361,18 +362,32 @@ const ElectricalInstallationSectionInner = ({
                 placeholder="Reason (e.g. tails not accessible)"
               />
             </FormField>
-            <FormField label="Length (m)">
+            <FormField
+              label="Length (m)"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.tailsLength || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('tailsLength', v)}
+                />
+              }
+            >
               <Input
                 value={formData.tailsLength || ''}
                 onChange={(e) => onUpdate('tailsLength', e.target.value)}
                 placeholder="3"
-                type="number"
+                type={isFieldMarker(formData.tailsLength) ? 'text' : 'number'}
                 min="0"
                 step="0.1"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                disabled={isFieldMarker(formData.tailsLength)}
+                className={cn(
+                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
+                  isFieldMarker(formData.tailsLength) && 'opacity-60'
+                )}
                 inputMode="decimal"
-            />
-          </FormField>
+              />
+            </FormField>
           </div>
         </div>
       </div>

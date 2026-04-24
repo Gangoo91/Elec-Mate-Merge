@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 import {
   ResponsiveDialog,
@@ -20,6 +18,16 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
+import {
+  Field,
+  FormCard,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectContentClass,
+  selectTriggerClass,
+} from '@/components/college/primitives';
 
 interface AddStudentDialogProps {
   open: boolean;
@@ -100,40 +108,36 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
 
         <ResponsiveDialogBody>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-3">
-              <div className="col-span-2">
-                <Label htmlFor="name">Full Name *</Label>
+            <FormCard eyebrow="Learner details">
+              <Field label="Full name" required>
                 <Input
                   id="name"
                   value={formData.name}
                   onChange={(e) => handleChange('name', e.target.value)}
                   placeholder="John Smith"
                   required
+                  className={inputClass}
                 />
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="uln">ULN</Label>
+              </Field>
+              <FormGrid cols={2}>
+                <Field label="ULN">
                   <div className="flex gap-2">
                     <Input
                       id="uln"
                       value={formData.uln}
                       onChange={(e) => handleChange('uln', e.target.value)}
                       placeholder="10 digit ULN"
-                      className="flex-1"
+                      className={`${inputClass} flex-1`}
                     />
-                    <Button
-                      type="button"
-                      variant="outline"
+                    <SecondaryButton
                       size="sm"
                       onClick={() => handleChange('uln', generateULN())}
                     >
                       Generate
-                    </Button>
+                    </SecondaryButton>
                   </div>
-                </div>
-                <div>
-                  <Label htmlFor="email">Email *</Label>
+                </Field>
+                <Field label="Email" required>
                   <Input
                     id="email"
                     type="email"
@@ -141,30 +145,30 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
                     onChange={(e) => handleChange('email', e.target.value)}
                     placeholder="john.smith@email.com"
                     required
+                    className={inputClass}
                   />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <Label htmlFor="phone">Phone</Label>
+                </Field>
+              </FormGrid>
+              <FormGrid cols={2}>
+                <Field label="Phone">
                   <Input
                     id="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleChange('phone', e.target.value)}
                     placeholder="07XXX XXXXXX"
+                    className={inputClass}
                   />
-                </div>
-                <div>
-                  <Label htmlFor="cohort_id">Cohort</Label>
+                </Field>
+                <Field label="Cohort">
                   <Select
                     value={formData.cohort_id}
                     onValueChange={(value) => handleChange('cohort_id', value)}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue placeholder="Select cohort" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       {activeCohorts.map((cohort) => (
                         <SelectItem key={cohort.id} value={cohort.id}>
                           {cohort.name}
@@ -172,39 +176,35 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
-              </div>
-              <div>
-                <Label htmlFor="expected_end_date">Expected Completion</Label>
+                </Field>
+              </FormGrid>
+              <Field label="Expected completion">
                 <Input
                   id="expected_end_date"
                   type="date"
                   value={formData.expected_end_date}
                   onChange={(e) => handleChange('expected_end_date', e.target.value)}
+                  className={inputClass}
                 />
-              </div>
-            </div>
+              </Field>
+            </FormCard>
           </form>
         </ResponsiveDialogBody>
 
         <ResponsiveDialogFooter>
-          <Button
-            type="button"
-            variant="outline"
+          <SecondaryButton
             onClick={() => onOpenChange(false)}
             disabled={isSubmitting}
-            className="h-11 touch-manipulation"
           >
             Cancel
-          </Button>
-          <Button
+          </SecondaryButton>
+          <PrimaryButton
             type="submit"
             disabled={isSubmitting}
-            className="h-11 touch-manipulation"
             onClick={handleSubmit}
           >
             {isSubmitting ? 'Enrolling…' : 'Enrol student'}
-          </Button>
+          </PrimaryButton>
         </ResponsiveDialogFooter>
       </ResponsiveDialogContent>
     </ResponsiveDialog>

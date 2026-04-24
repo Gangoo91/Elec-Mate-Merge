@@ -209,6 +209,20 @@ export const EICFormProvider: React.FC<EICFormProviderProps> = ({
     designerBs7671Date: '',
     designerDate: new Date().toISOString().split('T')[0],
     designerSignature: '',
+    // ELE — BS 7671 A4:2026 model form supports TWO designers (mutual responsibility).
+    // Designer No 2 fields below mirror the Designer No 1 set.
+    designer2Name: '',
+    designer2Qualifications: '',
+    designer2Company: '',
+    designer2Address: '',
+    designer2Postcode: '',
+    designer2Phone: '',
+    designer2Departures: '',
+    designer2Bs7671Date: '',
+    designer2Date: '',
+    designer2Signature: '',
+    // Permitted exceptions (Reg 411.3.3) — required when risk assessment is attached
+    permittedExceptions: '',
     constructorName: '',
     constructorQualifications: '',
     constructorCompany: '',

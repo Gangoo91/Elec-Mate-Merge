@@ -157,7 +157,7 @@ function leadBgTone(tone?: AccentTone): string {
     case 'yellow':
       return 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25';
     default:
-      return 'bg-white/[0.04] text-white/85 border-white/[0.08]';
+      return 'bg-white/[0.04] text-white border-white/[0.08]';
   }
 }
 
@@ -319,7 +319,7 @@ export function PeopleListRow({
           {titleChips}
         </div>
         {subtitle && (
-          <div className="mt-0.5 text-[11.5px] text-white/60 truncate">{subtitle}</div>
+          <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>
         )}
         {meta && <div className="mt-2.5">{meta}</div>}
       </button>
@@ -341,7 +341,7 @@ export function PeopleListRow({
                 type="button"
                 aria-label="More actions"
                 onClick={(e) => e.stopPropagation()}
-                className="h-9 w-9 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+                className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
               >
                 <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
               </button>

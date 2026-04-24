@@ -1,27 +1,30 @@
 import { memo, useCallback, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Plus, Trash2, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer';
+import { Drawer, DrawerContent } from '@/components/ui/drawer';
 import type { AIChatSession } from '@/hooks/useAIChatHistory';
+import { cn } from '@/lib/utils';
 
-function formatRelativeTime(dateStr: string): string {
-  const now = Date.now();
-  const then = new Date(dateStr).getTime();
-  const diffMs = now - then;
-  const diffMins = Math.floor(diffMs / 60000);
+function formatDayEyebrow(dateStr: string): string {
+  const date = new Date(dateStr);
+  const now = new Date();
+  const isSameDay =
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate();
 
-  if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins}m ago`;
+  if (isSameDay) return 'TODAY';
 
-  const diffHours = Math.floor(diffMins / 60);
-  if (diffHours < 24) return `${diffHours}h ago`;
+  const yesterday = new Date();
+  yesterday.setDate(now.getDate() - 1);
+  const isYesterday =
+    date.getFullYear() === yesterday.getFullYear() &&
+    date.getMonth() === yesterday.getMonth() &&
+    date.getDate() === yesterday.getDate();
+  if (isYesterday) return 'YESTERDAY';
 
-  const diffDays = Math.floor(diffHours / 24);
-  if (diffDays === 1) return 'Yesterday';
-  if (diffDays < 7) return `${diffDays}d ago`;
-
-  return new Date(dateStr).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  return date
+    .toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
+    .toUpperCase();
 }
 
 interface ChatHistoryDrawerProps {
@@ -68,7 +71,6 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
         setConfirmDeleteId(null);
       } else {
         setConfirmDeleteId(id);
-        // Reset confirmation after 3s
         setTimeout(() => setConfirmDeleteId(null), 3000);
       }
     },
@@ -77,91 +79,118 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
 
   return (
     <Drawer open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DrawerContent className="max-h-[80vh]">
-        <DrawerHeader className="flex flex-row items-center justify-between pb-2">
-          <DrawerTitle className="text-white">Chat History</DrawerTitle>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            className="h-10 w-10 touch-manipulation"
-          >
-            <X className="h-5 w-5" />
-          </Button>
-        </DrawerHeader>
-
-        <div className="px-4 pb-4">
-          {/* New Chat button */}
-          <button
-            onClick={handleNewChat}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30 text-white hover:bg-elec-yellow/20 transition-colors touch-manipulation active:scale-[0.98] mb-3"
-          >
-            <div className="w-8 h-8 rounded-lg bg-elec-yellow flex items-center justify-center">
-              <Plus className="w-4 h-4 text-black" />
+      <DrawerContent className="max-h-[85vh] bg-[hsl(0_0%_8%)] border-white/[0.06]">
+        {/* Header */}
+        <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pt-4 pb-4">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+                Previous chats
+              </div>
+              <h2 className="mt-1 text-xl font-semibold text-white tracking-tight">History</h2>
             </div>
-            <span className="font-medium">New Chat</span>
-          </button>
-
-          {/* Sessions list */}
-          <div className="overflow-y-auto max-h-[55vh] space-y-1">
-            {isLoading && sessions.length === 0 && (
-              <div className="flex items-center justify-center py-8 text-white">
-                <div className="animate-pulse">Loading chats...</div>
-              </div>
-            )}
-
-            {!isLoading && sessions.length === 0 && (
-              <div className="flex flex-col items-center justify-center py-8 text-white">
-                <Brain className="w-10 h-10 mb-3 opacity-40" />
-                <p className="font-medium">No previous chats</p>
-                <p className="text-sm mt-1 opacity-70">Start a conversation above</p>
-              </div>
-            )}
-
-            <AnimatePresence mode="popLayout">
-              {sessions.map((session) => (
-                <motion.button
-                  key={session.id}
-                  layout
-                  initial={{ opacity: 0, y: 5 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.2 }}
-                  onClick={() => handleSelect(session.id)}
-                  className={`w-full flex items-center gap-3 px-3 py-3 rounded-xl text-left transition-colors touch-manipulation active:scale-[0.98] ${
-                    session.id === currentSessionId
-                      ? 'bg-elec-yellow/10 border-l-2 border-elec-yellow'
-                      : 'hover:bg-white/5'
-                  }`}
-                >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white truncate">{session.title}</p>
-                    {session.last_message_preview && (
-                      <p className="text-xs text-white opacity-60 truncate mt-0.5">
-                        {session.last_message_preview}
-                      </p>
-                    )}
-                    <p className="text-[10px] text-white opacity-40 mt-1">
-                      {formatRelativeTime(session.updated_at)} · {session.message_count} messages
-                    </p>
-                  </div>
-
-                  {/* Delete button */}
-                  <button
-                    onClick={(e) => handleDelete(e, session.id)}
-                    className={`shrink-0 p-2 rounded-lg transition-colors touch-manipulation ${
-                      confirmDeleteId === session.id
-                        ? 'bg-red-500/20 text-red-400'
-                        : 'text-white opacity-30 hover:opacity-70 hover:bg-white/5'
-                    }`}
-                    aria-label={confirmDeleteId === session.id ? 'Confirm delete' : 'Delete chat'}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </motion.button>
-              ))}
-            </AnimatePresence>
+            <div className="flex items-center gap-4 text-[12px] font-medium shrink-0">
+              <button
+                onClick={handleNewChat}
+                className="text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
+              >
+                New chat
+              </button>
+              <button
+                onClick={onClose}
+                className="text-white/55 hover:text-white transition-colors touch-manipulation"
+                aria-label="Close history"
+              >
+                Close
+              </button>
+            </div>
           </div>
+        </div>
+
+        {/* Sessions list */}
+        <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-4">
+          {isLoading && sessions.length === 0 && (
+            <div className="flex items-center justify-center py-10">
+              <div className="h-5 w-5 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
+            </div>
+          )}
+
+          {!isLoading && sessions.length === 0 && (
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 text-center">
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+                Nothing here yet
+              </div>
+              <div className="mt-2 text-base font-medium text-white">No previous chats</div>
+              <p className="mt-2 text-[12.5px] text-white/70 max-w-md mx-auto leading-relaxed">
+                Start a conversation to build your chat history. Every session is saved for later
+                reference.
+              </p>
+            </div>
+          )}
+
+          {sessions.length > 0 && (
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
+              <AnimatePresence mode="popLayout">
+                {sessions.map((session) => {
+                  const isActive = session.id === currentSessionId;
+                  return (
+                    <motion.div
+                      key={session.id}
+                      layout
+                      initial={{ opacity: 0, y: 4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, x: -40 }}
+                      transition={{ duration: 0.18 }}
+                      className={cn(
+                        'group relative flex items-start gap-4 px-5 py-4',
+                        'hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation'
+                      )}
+                    >
+                      <button
+                        onClick={() => handleSelect(session.id)}
+                        className="flex-1 min-w-0 text-left"
+                      >
+                        <div
+                          className={cn(
+                            'text-[10px] font-medium uppercase tracking-[0.22em]',
+                            isActive ? 'text-elec-yellow' : 'text-white/55'
+                          )}
+                        >
+                          {formatDayEyebrow(session.updated_at)}
+                          <span className="ml-2 text-white/40 tabular-nums normal-case tracking-normal">
+                            · {session.message_count} messages
+                          </span>
+                        </div>
+                        <div className="mt-1.5 text-[15px] font-semibold text-white tracking-tight truncate">
+                          {session.title}
+                        </div>
+                        {session.last_message_preview && (
+                          <div className="mt-1 text-[12.5px] text-white/70 truncate leading-relaxed">
+                            {session.last_message_preview}
+                          </div>
+                        )}
+                      </button>
+
+                      <button
+                        onClick={(e) => handleDelete(e, session.id)}
+                        className={cn(
+                          'shrink-0 text-[11px] font-medium uppercase tracking-[0.18em] px-2 py-1 rounded-md transition-colors touch-manipulation',
+                          confirmDeleteId === session.id
+                            ? 'text-red-400 bg-red-500/10 border border-red-500/20'
+                            : 'text-white/40 hover:text-white'
+                        )}
+                        aria-label={
+                          confirmDeleteId === session.id ? 'Confirm delete' : 'Delete chat'
+                        }
+                      >
+                        {confirmDeleteId === session.id ? 'Confirm' : 'Delete'}
+                      </button>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+          )}
         </div>
       </DrawerContent>
     </Drawer>

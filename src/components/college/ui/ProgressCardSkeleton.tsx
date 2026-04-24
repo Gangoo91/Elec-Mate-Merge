@@ -4,7 +4,7 @@
  */
 export function ProgressCardSkeleton() {
   return (
-    <div className="relative overflow-hidden rounded-lg border border-elec-yellow/10 bg-elec-gray animate-pulse">
+    <div className="relative overflow-hidden rounded-lg border border-white/[0.08] bg-[hsl(0_0%_12%)] animate-pulse">
       {/* Gradient accent line */}
       <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-elec-yellow/30 via-amber-400/20 to-elec-yellow/10" />
 

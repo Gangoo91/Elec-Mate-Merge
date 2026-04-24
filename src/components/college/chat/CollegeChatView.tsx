@@ -1,12 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { Pill } from '@/components/college/primitives';
+import {
+  Pill,
+  IconButton,
+  inputClass,
+  checkboxClass,
+} from '@/components/college/primitives';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -153,12 +157,12 @@ export function CollegeChatView({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col">
+      <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)]">
         {/* Header */}
-        <div className="flex items-center gap-3 p-4 border-b border-border">
-          <Button variant="ghost" size="icon" onClick={() => onOpenChange(false)} aria-label="Back">
+        <div className="flex items-center gap-3 p-4 border-b border-white/[0.08]">
+          <IconButton onClick={() => onOpenChange(false)} aria-label="Back">
             <span className="text-[18px]">‹</span>
-          </Button>
+          </IconButton>
 
           <Avatar className="h-10 w-10">
             <AvatarImage src={conversation.other_participant?.avatar_url || undefined} />
@@ -169,9 +173,9 @@ export function CollegeChatView({
 
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
-              <p className="font-semibold truncate">{info.name}</p>
+              <p className="font-semibold text-white truncate">{info.name}</p>
             </div>
-            <p className="text-sm text-white/75 truncate">{info.subtitle}</p>
+            <p className="text-sm text-white truncate">{info.subtitle}</p>
           </div>
 
           {/* Student context badge */}
@@ -183,15 +187,15 @@ export function CollegeChatView({
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" aria-label="More options">
+              <IconButton aria-label="More options">
                 <span className="text-[18px] leading-none">⋯</span>
-              </Button>
+              </IconButton>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white">
               <DropdownMenuItem>View Profile</DropdownMenuItem>
               {conversation.student && <DropdownMenuItem>View Student Progress</DropdownMenuItem>}
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive">Archive Conversation</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-400">Archive Conversation</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -210,8 +214,8 @@ export function CollegeChatView({
           ) : messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
-                <p className="text-white/75">No messages yet</p>
-                <p className="text-xs text-white/75 mt-1">
+                <p className="text-white">No messages yet</p>
+                <p className="text-xs text-white mt-1">
                   Send a message to start the conversation
                 </p>
               </div>
@@ -225,14 +229,14 @@ export function CollegeChatView({
                 const metadata = msg.metadata as any;
                 return (
                   <div key={msg.id} className="flex justify-center my-4">
-                    <div className="bg-muted rounded-lg px-4 py-3 max-w-[80%]">
-                      <div className="flex items-center gap-2 text-sm font-medium">
+                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-lg px-4 py-3 max-w-[80%]">
+                      <div className="flex items-center gap-2 text-sm font-medium text-white">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-elec-yellow" />
                         Progress Update
                       </div>
-                      <p className="text-sm mt-1">{metadata?.title || msg.content}</p>
+                      <p className="text-sm text-white mt-1">{metadata?.title || msg.content}</p>
                       {metadata?.details && (
-                        <p className="text-xs text-white/75 mt-1">{metadata.details}</p>
+                        <p className="text-xs text-white mt-1">{metadata.details}</p>
                       )}
                       {metadata?.score !== undefined && (
                         <Pill tone="yellow" className="mt-2">
@@ -248,7 +252,7 @@ export function CollegeChatView({
               if (msg.message_type === 'system') {
                 return (
                   <div key={msg.id} className="flex justify-center my-2">
-                    <span className="text-xs text-white/75 bg-muted px-3 py-1 rounded-full">
+                    <span className="text-xs text-white bg-[hsl(0_0%_12%)] border border-white/[0.08] px-3 py-1 rounded-full">
                       {msg.content}
                     </span>
                   </div>
@@ -262,7 +266,7 @@ export function CollegeChatView({
                 >
                   {!isOwn && (
                     <Avatar className="h-8 w-8 mr-2 shrink-0">
-                      <AvatarFallback className="text-xs bg-muted">
+                      <AvatarFallback className="text-xs bg-[hsl(0_0%_12%)] text-white">
                         {msg.sender?.name?.slice(0, 2).toUpperCase() || '??'}
                       </AvatarFallback>
                     </Avatar>
@@ -270,27 +274,29 @@ export function CollegeChatView({
                   <div className="max-w-[75%]">
                     {/* Confidential indicator */}
                     {msg.is_confidential && (
-                      <div className="flex items-center gap-1.5 text-[11px] text-amber-500 mb-1">
+                      <div className="flex items-center gap-1.5 text-[11px] text-amber-400 mb-1">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-amber-400" />
                         Confidential
                       </div>
                     )}
                     {/* Not visible to student indicator */}
                     {!msg.visible_to_student && currentUserType !== 'student' && (
-                      <div className="flex items-center gap-1.5 text-[11px] text-white/75 mb-1">
+                      <div className="flex items-center gap-1.5 text-[11px] text-white mb-1">
                         <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/30" />
                         Hidden from student
                       </div>
                     )}
                     <div
                       className={`rounded-2xl px-4 py-2.5 ${
-                        isOwn ? 'bg-elec-yellow text-black rounded-br-md' : 'bg-muted rounded-bl-md'
+                        isOwn
+                          ? 'bg-elec-yellow text-black rounded-br-md'
+                          : 'bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white rounded-bl-md'
                       } ${msg.is_confidential ? 'border-2 border-amber-500/50' : ''}`}
                     >
                       <p className="text-sm whitespace-pre-wrap break-words">{msg.content}</p>
                       <p
                         className={`text-[10px] mt-1 ${
-                          isOwn ? 'text-black/60' : 'text-white/75'
+                          isOwn ? 'text-black/60' : 'text-white'
                         }`}
                       >
                         {new Date(msg.sent_at).toLocaleTimeString([], {
@@ -309,15 +315,16 @@ export function CollegeChatView({
 
         {/* Message Options (for staff) */}
         {(canSendConfidential || showStudentVisibility) && (
-          <div className="px-4 py-2 border-t border-border bg-muted/30 flex items-center gap-4 flex-wrap">
+          <div className="px-4 py-2 border-t border-white/[0.08] bg-white/[0.04] flex items-center gap-4 flex-wrap">
             {canSendConfidential && (
               <div className="flex items-center gap-2">
                 <Checkbox
                   id="confidential"
                   checked={isConfidential}
                   onCheckedChange={(checked) => setIsConfidential(checked as boolean)}
+                  className={checkboxClass}
                 />
-                <Label htmlFor="confidential" className="text-xs cursor-pointer">
+                <Label htmlFor="confidential" className="text-xs text-white cursor-pointer">
                   Confidential
                 </Label>
               </div>
@@ -328,8 +335,9 @@ export function CollegeChatView({
                   id="visible-student"
                   checked={visibleToStudent}
                   onCheckedChange={(checked) => setVisibleToStudent(checked as boolean)}
+                  className={checkboxClass}
                 />
-                <Label htmlFor="visible-student" className="text-xs cursor-pointer">
+                <Label htmlFor="visible-student" className="text-xs text-white cursor-pointer">
                   Visible to student
                 </Label>
               </div>
@@ -338,24 +346,24 @@ export function CollegeChatView({
         )}
 
         {/* Input */}
-        <div className="flex items-end gap-2 p-3 border-t border-border bg-background">
+        <div className="flex items-end gap-2 p-3 border-t border-white/[0.08] bg-[hsl(0_0%_8%)]">
           <Input
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Type a message..."
             disabled={isSending}
-            className="flex-1 h-11 bg-muted border-border"
+            className={`flex-1 ${inputClass}`}
           />
-          <Button
+          <button
+            type="button"
             onClick={handleSend}
             disabled={!message.trim() || isSending}
-            size="icon"
-            className="h-11 w-11 shrink-0 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
             aria-label="Send message"
+            className="h-11 w-11 shrink-0 inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation"
           >
             <span className="text-[16px] font-semibold">→</span>
-          </Button>
+          </button>
         </div>
       </SheetContent>
     </Sheet>

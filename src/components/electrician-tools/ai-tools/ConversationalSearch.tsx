@@ -1,13 +1,13 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Camera, ImageIcon, X, ArrowLeft, Loader2, SquarePen, Clock } from 'lucide-react';
+import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
 import { InspectorMessage } from './InspectorMessage';
 import { useSmoothedStreaming } from '@/hooks/useSmoothedStreaming';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useAIChatHistory } from '@/hooks/useAIChatHistory';
+import { useOfflineAICache } from '@/hooks/useOfflineAICache';
 import { supabase } from '@/integrations/supabase/client';
 import { isImageFile, validateImageSize, compressImageForUpload } from '@/utils/imageUploadUtils';
 import {
@@ -19,6 +19,8 @@ import {
   MobileChatInput,
   WelcomeScreen,
   ChatHistoryDrawer,
+  RegulationDetailSheet,
+  SaveToJobSheet,
 } from './chat';
 
 interface Message {
@@ -27,7 +29,15 @@ interface Message {
   timestamp?: Date;
   followUpQuestions?: string[];
   imageUrl?: string;
+  /** Regulation numbers cited in this answer (populated post-stream). */
+  citedRegulations?: string[];
 }
+
+const STREAM_STAGES = [
+  'Understanding…',
+  'Retrieving regulations…',
+  'Answering…',
+] as const;
 
 import {
   SUPABASE_URL,
@@ -39,10 +49,39 @@ function formatRelativeTime(date: Date): string {
   const diffMs = now.getTime() - date.getTime();
   const diffMins = Math.floor(diffMs / 60000);
   if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins}m ago`;
-  const diffHours = Math.floor(diffMins / 60);
-  if (diffHours < 24) return `${diffHours}h ago`;
+  // Under 1h → use date-fns for natural phrasing ("2 minutes ago").
+  if (diffMins < 60) {
+    return formatDistanceToNow(date, { addSuffix: true });
+  }
+  // Under 24h → absolute HH:MM in UK format.
+  if (diffMs < 24 * 60 * 60 * 1000) {
+    return date.toLocaleTimeString('en-GB', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
   return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}
+
+/**
+ * Parse `---REGULATIONS---(...)---END_REGULATIONS---` block for cited reg
+ * numbers. Tolerant to absence — returns empty array when missing.
+ */
+function extractCitedRegulations(text: string): string[] {
+  const match = text.match(/---REGULATIONS---([\s\S]*?)(?:---END_REGULATIONS---|$)/);
+  if (!match) {
+    // Fallback: scrape "Reg 411.4.1" / "Regulation 411.4.1" style tokens.
+    const inline = text.match(/(?:Reg(?:ulation)?\s+)(\d{3}(?:\.\d+)*)/g);
+    if (!inline) return [];
+    return Array.from(
+      new Set(inline.map((s) => s.replace(/^Reg(?:ulation)?\s+/i, '').trim()))
+    ).slice(0, 10);
+  }
+  return match[1]
+    .split(/[\n,]/)
+    .map((x) => x.replace(/[^\d.]/g, '').trim())
+    .filter(Boolean)
+    .slice(0, 10);
 }
 
 export default function ConversationalSearch() {
@@ -64,10 +103,26 @@ export default function ConversationalSearch() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
   const haptic = useHaptic();
+  const offlineCache = useOfflineAICache();
 
-  // Batched token streaming — flush every 80ms (~12fps).
-  // ReactMarkdown re-parses the full content on every update, so we need to
-  // throttle aggressively. 12fps is still smooth for reading streaming text.
+  // Sheets + regeneration state.
+  const [regulationSheet, setRegulationSheet] = useState<{
+    open: boolean;
+    regulationNumber: string | null;
+  }>({ open: false, regulationNumber: null });
+  const [saveSheet, setSaveSheet] = useState<{
+    open: boolean;
+    answer: string;
+    question: string;
+    cited: string[];
+  }>({ open: false, answer: '', question: '', cited: [] });
+
+  // Streaming-status chip. `stage` is either a value emitted from the
+  // backend (future-friendly) or an index into STREAM_STAGES.
+  const [streamStatus, setStreamStatus] = useState<string | null>(null);
+  const stageTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Batched token streaming — flush every 80ms.
   const streaming = useSmoothedStreaming({ flushInterval: 80 });
 
   // Auto-focus input on load (desktop only)
@@ -78,11 +133,9 @@ export default function ConversationalSearch() {
     }
   }, []);
 
-  // Show toast when conversation is restored from localStorage
   useEffect(() => {
     if (messages.length > 0 && !hasRestoredSession) {
       setHasRestoredSession(true);
-      // Small delay to ensure component is mounted
       const timeoutId = setTimeout(() => {
         toast.success('Previous conversation restored', {
           description: 'Your chat history has been recovered',
@@ -91,87 +144,79 @@ export default function ConversationalSearch() {
       }, 500);
       return () => clearTimeout(timeoutId);
     }
-  }, []); // Only run on mount
+  }, []); // mount only
 
-  // Persist messages to Supabase + localStorage when they change
   useEffect(() => {
     if (!isStreaming && messages.length > 0) {
       chatHistory.saveSession(messages);
     }
   }, [messages, isStreaming, chatHistory.saveSession]);
 
-  const SCROLL_THRESHOLD = 150;
-
-  const handleScrollPosition = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    const el = e.currentTarget;
-    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-    isNearBottomRef.current = distanceFromBottom < SCROLL_THRESHOLD;
+  // No auto-scroll to bottom. Users want to read the answer from the top of
+  // their question, with streaming content growing below the fold. We pin the
+  // new user message to the top of the viewport and leave scroll alone
+  // thereafter — the reader sets the pace.
+  const handleScrollPosition = useCallback((_e: React.UIEvent<HTMLDivElement>) => {
+    // Retained for API compatibility with ChatMessagesArea onScroll; intentionally no-op.
   }, []);
 
-  const scrollToBottomIfNeeded = useCallback((instant?: boolean) => {
-    if (isNearBottomRef.current) {
-      messagesEndRef.current?.scrollIntoView({
-        behavior: instant ? 'instant' : 'smooth',
-        block: 'end',
-      });
-    }
-  }, []);
-
+  // When a new user message is appended, scroll it to the top of the chat area
+  // so the reader starts at the question and reads down naturally. No scroll
+  // during or after streaming — the stream fills below the fold.
+  const lastAnchoredUserIdxRef = useRef<number>(-1);
   useEffect(() => {
-    if (!isStreaming && messages.length > 0) {
-      const timeoutId = setTimeout(() => {
-        scrollToBottomIfNeeded();
-      }, 50);
-      return () => clearTimeout(timeoutId);
-    }
-  }, [messages.length, isStreaming, scrollToBottomIfNeeded]);
+    if (messages.length === 0) return;
+    const lastIdx = messages.length - 1;
+    const lastMsg = messages[lastIdx];
+    if (lastMsg.role !== 'user') return;
+    if (lastIdx === lastAnchoredUserIdxRef.current) return;
+    lastAnchoredUserIdxRef.current = lastIdx;
 
-  // Pin-to-bottom during streaming — 150ms interval keeps scroll tracking content growth
+    // Defer one frame so the DOM has the new user bubble mounted.
+    const t = window.setTimeout(() => {
+      const el = document.querySelector<HTMLElement>(
+        `[data-msg-anchor="user-${lastIdx}"]`
+      );
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 40);
+    return () => window.clearTimeout(t);
+  }, [messages]);
+
+  // Tear down stage timer on unmount — otherwise setInterval leaks.
   useEffect(() => {
-    if (!isStreaming) return;
-
-    const intervalId = setInterval(() => {
-      if (isNearBottomRef.current) {
-        messagesEndRef.current?.scrollIntoView({
-          behavior: 'instant',
-          block: 'end',
-        });
+    return () => {
+      if (stageTimerRef.current) {
+        clearInterval(stageTimerRef.current);
+        stageTimerRef.current = null;
       }
-    }, 150);
+    };
+  }, []);
 
-    return () => clearInterval(intervalId);
-  }, [isStreaming]);
-
-  // Image handling - supports large files with compression
+  // Image handling
   const handleImageSelect = useCallback(
     async (file: File) => {
-      // Check for image types including HEIC
       if (!isImageFile(file)) {
         toast.error('Please select an image');
         return;
       }
 
-      // Validate size (allow up to 50MB, will be compressed)
       const validation = validateImageSize(file);
       if (!validation.valid) {
         toast.error(validation.error);
         return;
       }
 
-      // Show compression indicator for large files
       const needsCompression = file.size > 2 * 1024 * 1024;
       if (needsCompression) {
         setIsCompressing(true);
       }
 
       try {
-        // Compress image for upload (target ~2MB)
         const compressed = await compressImageForUpload(file);
         setSelectedImage(compressed);
         setImagePreview(URL.createObjectURL(compressed));
         haptic.selection();
 
-        // Show compression result for large files
         if (needsCompression) {
           const savedMB = ((file.size - compressed.size) / 1024 / 1024).toFixed(1);
           toast.success(`Image optimised (saved ${savedMB}MB)`);
@@ -214,23 +259,40 @@ export default function ConversationalSearch() {
   }, []);
 
   const handleSend = useCallback(
-    async (queryText?: string) => {
+    async (queryText?: string, options?: { replaceLastAssistant?: boolean }) => {
       const messageText = queryText || input.trim();
 
       if (!messageText && !selectedImage) return;
 
       haptic.medium();
 
-      // Upload image if present
       let imageUrl: string | undefined;
       if (selectedImage) {
         try {
           imageUrl = await uploadImage(selectedImage);
           clearImage();
-        } catch (err) {
+        } catch {
           toast.error('Failed to upload image');
           return;
         }
+      }
+
+      const isRegenerate = !!options?.replaceLastAssistant;
+
+      // Regenerate path: drop the trailing assistant message (the user
+      // message that precedes it stays in place and is reused verbatim).
+      // baseMessages is what gets sent to the backend alongside the
+      // user-question. For a fresh send we append a new user message.
+      let baseMessages: Message[] = messages;
+      if (isRegenerate) {
+        const trimmed =
+          messages.length > 0 && messages[messages.length - 1].role === 'assistant'
+            ? messages.slice(0, -1)
+            : messages;
+        setMessages(trimmed);
+        // For regenerate, the prior user message is already inside
+        // `trimmed`, so we do NOT add another user message to the fetch.
+        baseMessages = trimmed.slice(0, -1);
       }
 
       const userMessage: Message = {
@@ -239,11 +301,23 @@ export default function ConversationalSearch() {
         timestamp: new Date(),
         imageUrl,
       };
-      setMessages((prev) => [...prev, userMessage]);
+
+      if (!isRegenerate) {
+        setMessages((prev) => [...prev, userMessage]);
+      }
       setInput('');
       setIsSearching(true);
       setIsStreaming(true);
       streaming.reset();
+
+      // Kick off stage-cycle fallback; cleared below if server emits status.
+      setStreamStatus(STREAM_STAGES[0]);
+      if (stageTimerRef.current) clearInterval(stageTimerRef.current);
+      let stageIdx = 0;
+      stageTimerRef.current = setInterval(() => {
+        stageIdx = Math.min(stageIdx + 1, STREAM_STAGES.length - 1);
+        setStreamStatus(STREAM_STAGES[stageIdx]);
+      }, 1400);
 
       try {
         abortControllerRef.current = new AbortController();
@@ -255,7 +329,10 @@ export default function ConversationalSearch() {
             Authorization: `Bearer ${SUPABASE_KEY}`,
           },
           body: JSON.stringify({
-            messages: [...messages, userMessage].map((m) => ({ role: m.role, content: m.content })),
+            messages: [...baseMessages, userMessage].map((m) => ({
+              role: m.role,
+              content: m.content,
+            })),
             imageUrl,
           }),
           signal: abortControllerRef.current.signal,
@@ -293,7 +370,6 @@ export default function ConversationalSearch() {
           if (done) {
             const finalContent = streaming.flush();
 
-            // Match ---FOLLOWUP--- with optional ---END_FOLLOWUP--- (may run to end of content)
             const followUpMatch = finalContent.match(
               /---FOLLOWUP---([\s\S]*?)(?:---END_FOLLOWUP---|$)/
             );
@@ -312,6 +388,14 @@ export default function ConversationalSearch() {
                 .trim();
             }
 
+            // Strip optional regulations marker block if the backend starts
+            // emitting one; we keep the cited numbers for offline cache
+            // metadata.
+            const citedRegs = extractCitedRegulations(cleanedContent);
+            cleanedContent = cleanedContent
+              .replace(/---REGULATIONS---[\s\S]*?(?:---END_REGULATIONS---|$)/g, '')
+              .trim();
+
             setMessages((prev) => {
               const newMessages = [...prev];
               const lastMessage = newMessages[newMessages.length - 1];
@@ -320,8 +404,18 @@ export default function ConversationalSearch() {
                 if (questions.length > 0) {
                   lastMessage.followUpQuestions = questions;
                 }
+                if (citedRegs.length > 0) {
+                  lastMessage.citedRegulations = citedRegs;
+                }
               }
               return newMessages;
+            });
+
+            // Persist to offline cache — fire-and-forget.
+            void offlineCache.save({
+              question: userMessage.content,
+              answer: cleanedContent,
+              sources: citedRegs.map((n) => ({ regulation_number: n })),
             });
             break;
           }
@@ -338,6 +432,17 @@ export default function ConversationalSearch() {
 
               try {
                 const parsed = JSON.parse(data);
+
+                // Optional status event, eg `{ type: 'status', stage: '…' }`.
+                if (parsed?.type === 'status' && typeof parsed.stage === 'string') {
+                  if (stageTimerRef.current) {
+                    clearInterval(stageTimerRef.current);
+                    stageTimerRef.current = null;
+                  }
+                  setStreamStatus(parsed.stage);
+                  continue;
+                }
+
                 const token = parsed.choices?.[0]?.delta?.content;
 
                 if (token) {
@@ -372,9 +477,14 @@ export default function ConversationalSearch() {
         setIsStreaming(false);
         setIsSearching(false);
         abortControllerRef.current = null;
+        if (stageTimerRef.current) {
+          clearInterval(stageTimerRef.current);
+          stageTimerRef.current = null;
+        }
+        setStreamStatus(null);
       }
     },
-    [input, messages, streaming, haptic, selectedImage, uploadImage, clearImage]
+    [input, messages, streaming, haptic, selectedImage, uploadImage, clearImage, offlineCache]
   );
 
   const handleNewChat = useCallback(() => {
@@ -402,68 +512,181 @@ export default function ConversationalSearch() {
     [haptic]
   );
 
+  // Regenerate the last assistant message by resubmitting the preceding
+  // user question. Needs at least one user+assistant pair.
+  const handleRegenerate = useCallback(() => {
+    const lastUser = [...messages].reverse().find((m) => m.role === 'user');
+    if (!lastUser) return;
+    haptic.medium();
+    toast.message('Regenerating answer…');
+    void handleSend(lastUser.content, { replaceLastAssistant: true });
+  }, [messages, haptic, handleSend]);
+
+  const handleOpenSaveSheet = useCallback((message: Message) => {
+    // Find the user question that produced this answer.
+    const idx = messages.indexOf(message);
+    const question =
+      idx > 0 && messages[idx - 1].role === 'user' ? messages[idx - 1].content : undefined;
+    setSaveSheet({
+      open: true,
+      answer: message.content,
+      question: question || '',
+      cited: message.citedRegulations ?? [],
+    });
+  }, [messages]);
+
+  const handleOpenSources = useCallback((message: Message) => {
+    const first = message.citedRegulations?.[0];
+    if (!first) {
+      toast.message('No regulations cited in this answer');
+      return;
+    }
+    setRegulationSheet({ open: true, regulationNumber: first });
+  }, []);
+
+  const handleInlineRegClick = useCallback((regNumber: string) => {
+    if (!regNumber) return;
+    setRegulationSheet({ open: true, regulationNumber: regNumber });
+    haptic.selection();
+  }, [haptic]);
+
+  // Called by RegulationDetailSheet when the user wants to ask a follow-up.
+  const handleRegFollowUp = useCallback(
+    (seed: string) => {
+      setInput(seed);
+      setRegulationSheet({ open: false, regulationNumber: null });
+      // Focus after the sheet has animated out.
+      setTimeout(() => inputRef.current?.focus(), 250);
+      haptic.selection();
+    },
+    [haptic]
+  );
+
+  // Voice transcription → append to existing input text.
+  const handleVoiceTranscript = useCallback(
+    (transcript: string) => {
+      setInput((prev) => {
+        const trimmed = prev.trim();
+        return trimmed ? `${trimmed} ${transcript.trim()}` : transcript.trim();
+      });
+      inputRef.current?.focus();
+      haptic.selection();
+    },
+    [haptic]
+  );
+
+  // Guarded follow-up / suggestion handler — confirms discard when the
+  // user has typed a substantial draft.
+  const handleGuardedSelectQuery = useCallback(
+    (question: string) => {
+      const DRAFT_THRESHOLD = 100;
+      if (input.trim().length >= DRAFT_THRESHOLD) {
+        const keep = window.confirm(
+          'Discard your current draft and use this suggestion instead?'
+        );
+        if (!keep) return;
+      }
+      void handleSend(question);
+    },
+    [input, handleSend]
+  );
+
+  const offlineBannerVisible = useMemo(
+    () => !offlineCache.isOnline && messages.length === 0,
+    [offlineCache.isOnline, messages.length]
+  );
+
   return (
     <ChatContainer>
-      {/* Header - iOS style with back button */}
-      <header className="shrink-0 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
-        <div className="flex items-center gap-3 px-4 h-14">
-          <Button
-            variant="ghost"
-            size="icon"
+      {/* Editorial header — no icons */}
+      <header className="shrink-0 bg-[#0a0a0a] border-b border-white/[0.06]">
+        <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-6 h-14">
+          <button
             onClick={() => navigate('/electrician')}
-            className="h-10 w-10 -ml-2 touch-manipulation active:scale-95 hover:bg-white/5"
+            className="shrink-0 text-[13px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation -ml-1"
           >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-elec-yellow to-amber-500 flex items-center justify-center shadow-lg shadow-elec-yellow/20">
-            <Brain className="w-5 h-5 text-white" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <h1 className="text-base font-semibold text-white truncate">Elec-AI</h1>
-            <p className="text-[11px] text-white">Your electrical advisor</p>
+            ← Back
+          </button>
+          <div className="flex-1 min-w-0 text-center sm:text-left">
+            <h1 className="text-[15px] font-semibold text-white tracking-tight leading-none truncate">
+              Elec-AI
+            </h1>
+            {/* Subtitle hidden on narrow screens to stop truncation (ASSISTA...) */}
+            <p className="hidden sm:block mt-0.5 text-[10px] font-medium uppercase tracking-[0.22em] text-white/55 truncate">
+              BS 7671 A4:2026 assistant
+            </p>
           </div>
           {!isStreaming && (
-            <>
-              <Button
-                variant="ghost"
-                size="icon"
+            <div className="shrink-0 flex items-center gap-3 sm:gap-4 text-[13px] font-medium">
+              <button
                 onClick={() => setHistoryOpen(true)}
-                className="h-10 w-10 touch-manipulation active:scale-95 hover:bg-white/5"
+                className="text-white/70 hover:text-white transition-colors touch-manipulation"
                 aria-label="Chat history"
               >
-                <Clock className="h-5 w-5 text-white" />
-              </Button>
+                History
+              </button>
               {messages.length > 0 && (
-                <Button
-                  variant="ghost"
-                  size="icon"
+                <button
                   onClick={handleNewChat}
-                  className="h-10 w-10 -mr-2 touch-manipulation active:scale-95 hover:bg-white/5"
+                  className="text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
                   aria-label="New chat"
                 >
-                  <SquarePen className="h-5 w-5 text-white" />
-                </Button>
+                  New
+                </button>
               )}
-            </>
+            </div>
           )}
         </div>
       </header>
 
-      {/* Empty State - Welcome Screen */}
+      {/* Empty state */}
       {messages.length === 0 && (
-        <ChatMessagesArea className="px-4 md:px-6">
-          <WelcomeScreen onSelectQuery={(q) => handleSend(q)} />
+        <ChatMessagesArea className="px-3 sm:px-6">
+          {offlineBannerVisible && (
+            <div className="mx-auto max-w-3xl pt-4">
+              <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
+                <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+                  Offline · showing your last {offlineCache.limit} saved answers
+                </div>
+                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                  You’re offline. Elec-AI can’t stream new answers, but your
+                  recent cached answers are below.
+                </p>
+              </div>
+              {offlineCache.entries.length > 0 && (
+                <div className="mt-3 space-y-2">
+                  {offlineCache.entries.map((entry) => (
+                    <div
+                      key={entry.id}
+                      className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3"
+                    >
+                      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
+                        {formatRelativeTime(new Date(entry.timestamp))}
+                      </div>
+                      <div className="mt-1 text-[13px] font-semibold text-white">
+                        {entry.question}
+                      </div>
+                      <p className="mt-1 text-[13px] text-white/70 leading-relaxed line-clamp-4 whitespace-pre-wrap">
+                        {entry.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+          <WelcomeScreen onSelectQuery={handleGuardedSelectQuery} />
         </ChatMessagesArea>
       )}
 
-      {/* Active State - Messages Container */}
+      {/* Active state */}
       {messages.length > 0 && (
         <ChatMessagesArea
           messagesEndRef={messagesEndRef}
           onScroll={handleScrollPosition}
-          className="px-4 md:px-6"
+          className="px-3 sm:px-6"
         >
-          <div className="py-6 space-y-6">
+          <div className="mx-auto max-w-3xl py-4 sm:py-6 space-y-6 sm:space-y-8">
             <AnimatePresence mode="popLayout">
               {messages.map((message, idx) => {
                 const isCurrentlyStreaming =
@@ -471,19 +694,21 @@ export default function ConversationalSearch() {
                 return (
                   <motion.div
                     key={`${idx}-${message.role}`}
-                    initial={isCurrentlyStreaming ? false : { opacity: 0, y: 10 }}
+                    initial={isCurrentlyStreaming ? false : { opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.18 }}
                     layout={!isCurrentlyStreaming}
                     className="transform-gpu"
                   >
                     {message.role === 'user' ? (
-                      <div className="flex flex-col items-end">
-                        <div className="max-w-[85%] sm:max-w-[75%] space-y-2">
-                          {/* User's attached image */}
+                      <div
+                        className="flex flex-col items-end min-w-0 scroll-mt-3"
+                        data-msg-anchor={`user-${idx}`}
+                      >
+                        <div className="max-w-[92%] sm:max-w-[75%] min-w-0 space-y-2">
                           {message.imageUrl && (
-                            <div className="rounded-xl overflow-hidden shadow-lg ml-auto max-w-[200px]">
+                            <div className="rounded-2xl overflow-hidden ml-auto max-w-[220px] border border-white/[0.06]">
                               <img
                                 src={message.imageUrl}
                                 alt="Attached"
@@ -491,21 +716,24 @@ export default function ConversationalSearch() {
                               />
                             </div>
                           )}
-                          <div className="rounded-2xl rounded-tr-sm px-4 py-3 bg-gradient-to-br from-elec-yellow to-amber-500 text-black shadow-lg shadow-elec-yellow/20">
-                            <div className="whitespace-pre-wrap break-words font-medium">
+                          <div className="rounded-2xl px-3.5 py-3 sm:px-4 bg-elec-yellow/10 border border-elec-yellow/20 text-white">
+                            <div
+                              className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
+                              style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
+                            >
                               {message.content}
                             </div>
                           </div>
                         </div>
                         {message.timestamp && (
-                          <p className="text-[10px] text-white mt-1 text-right">
+                          <p className="mt-1 text-[11px] text-white/40 text-right">
                             {formatRelativeTime(message.timestamp)}
                           </p>
                         )}
                       </div>
                     ) : (
                       <div className="flex flex-col items-start">
-                        <div className="max-w-[95%] sm:max-w-[90%] space-y-3">
+                        <div className="w-full space-y-3">
                           <InspectorMessage
                             message={{
                               role: 'assistant',
@@ -515,24 +743,48 @@ export default function ConversationalSearch() {
                               agentName: 'Elec-AI',
                             }}
                             isStreaming={isCurrentlyStreaming}
+                            onSaveToJob={
+                              !isCurrentlyStreaming
+                                ? () => handleOpenSaveSheet(message)
+                                : undefined
+                            }
+                            onOpenSources={
+                              !isCurrentlyStreaming && message.citedRegulations?.length
+                                ? () => handleOpenSources(message)
+                                : undefined
+                            }
+                            onRegenerate={
+                              !isCurrentlyStreaming &&
+                              idx === messages.length - 1 &&
+                              messages.some((m) => m.role === 'user')
+                                ? handleRegenerate
+                                : undefined
+                            }
+                            onRegClick={handleInlineRegClick}
                           />
 
-                          {/* Follow-up Question Chips */}
+                          {/* Streaming status chip */}
+                          {isCurrentlyStreaming && streamStatus && (
+                            <div className="text-[11px] uppercase tracking-[0.22em] text-white/55">
+                              {streamStatus}
+                            </div>
+                          )}
+
                           {!isCurrentlyStreaming &&
                             message.followUpQuestions &&
                             message.followUpQuestions.length > 0 && (
                               <FollowUpChips
                                 questions={message.followUpQuestions}
                                 onSelect={handleFollowUpSelect}
-                                className="ml-11"
                               />
                             )}
+
+                          {message.timestamp && !isCurrentlyStreaming && (
+                            <p className="text-[11px] text-white/40">
+                              {formatRelativeTime(message.timestamp)}
+                            </p>
+                          )}
                         </div>
-                        {message.timestamp && !isCurrentlyStreaming && (
-                          <p className="text-[10px] text-white mt-1 ml-11">
-                            {formatRelativeTime(message.timestamp)}
-                          </p>
-                        )}
                       </div>
                     )}
                   </motion.div>
@@ -540,107 +792,110 @@ export default function ConversationalSearch() {
               })}
             </AnimatePresence>
 
-            {/* Searching Skeleton */}
             <AnimatePresence>{isSearching && <SearchingSkeleton />}</AnimatePresence>
           </div>
         </ChatMessagesArea>
       )}
 
-      {/* Input Area */}
+      {/* Input area */}
       <ChatInputArea>
-        {/* Compression Indicator */}
-        <AnimatePresence>
-          {isCompressing && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="px-4 pb-2"
-            >
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                <span>Optimising image...</span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="mx-auto w-full max-w-3xl">
+          {/* Compression indicator */}
+          <AnimatePresence>
+            {isCompressing && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="pb-2"
+              >
+                <div className="flex items-center gap-2 text-[12px] text-white/55">
+                  <span className="h-3 w-3 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
+                  <span>Optimising image…</span>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-        {/* Image Preview */}
-        <AnimatePresence>
-          {imagePreview && !isCompressing && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="px-4 pb-2"
-            >
-              <div className="relative inline-block">
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="h-16 rounded-xl object-cover border border-border/50"
-                />
-                <button
-                  onClick={clearImage}
-                  className="absolute -top-2 -right-2 p-1.5 bg-red-500 rounded-full shadow-lg touch-manipulation active:scale-95"
-                >
-                  <X className="h-3 w-3 text-white" />
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+          {/* Image preview */}
+          <AnimatePresence>
+            {imagePreview && !isCompressing && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="pb-2"
+              >
+                <div className="relative inline-block">
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="h-16 rounded-xl object-cover border border-white/[0.08]"
+                  />
+                  <button
+                    onClick={clearImage}
+                    className="absolute -top-2 -right-2 h-6 px-2 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.1] text-[11px] font-medium text-white hover:bg-[hsl(0_0%_15%)] touch-manipulation"
+                    aria-label="Remove image"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-        {/* Camera/Upload buttons */}
-        <div className="flex items-center gap-2 px-4 pb-2">
-          <button
-            onClick={() => cameraInputRef.current?.click()}
-            disabled={isCompressing}
-            className="p-2.5 rounded-xl bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors touch-manipulation active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Take photo"
-          >
-            <Camera className="h-5 w-5" />
-          </button>
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isCompressing}
-            className="p-2.5 rounded-xl bg-muted/50 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors touch-manipulation active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-            aria-label="Upload image"
-          >
-            <ImageIcon className="h-5 w-5" />
-          </button>
+          {/* Attachment pills — text-only */}
+          <div className="flex items-center gap-2 pb-2">
+            <button
+              onClick={() => cameraInputRef.current?.click()}
+              disabled={isCompressing}
+              className="text-[12px] font-medium text-white px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Take photo with camera"
+            >
+              Camera
+            </button>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isCompressing}
+              className="text-[12px] font-medium text-white px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Attach photo from library"
+            >
+              Photo
+            </button>
+          </div>
+
+          {/* Hidden file inputs */}
+          <input
+            ref={cameraInputRef}
+            type="file"
+            accept="image/*,.heic,.heif"
+            capture="environment"
+            onChange={(e) => e.target.files?.[0] && handleImageSelect(e.target.files[0])}
+            className="hidden"
+          />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*,.heic,.heif"
+            onChange={(e) => e.target.files?.[0] && handleImageSelect(e.target.files[0])}
+            className="hidden"
+          />
+
+          <MobileChatInput
+            value={input}
+            onChange={setInput}
+            onSubmit={() => handleSend()}
+            onClear={handleNewChat}
+            isStreaming={isStreaming}
+            placeholder="Ask Elec-AI…"
+            messageCount={messages.length}
+            showClearButton={messages.length > 0}
+            voiceEnabled
+            onTranscript={handleVoiceTranscript}
+          />
         </div>
-
-        {/* Hidden file inputs - accept HEIC for iPhone */}
-        <input
-          ref={cameraInputRef}
-          type="file"
-          accept="image/*,.heic,.heif"
-          capture="environment"
-          onChange={(e) => e.target.files?.[0] && handleImageSelect(e.target.files[0])}
-          className="hidden"
-        />
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*,.heic,.heif"
-          onChange={(e) => e.target.files?.[0] && handleImageSelect(e.target.files[0])}
-          className="hidden"
-        />
-
-        <MobileChatInput
-          value={input}
-          onChange={setInput}
-          onSubmit={() => handleSend()}
-          onClear={handleNewChat}
-          isStreaming={isStreaming}
-          placeholder="Ask Elec-AI anything..."
-          messageCount={messages.length}
-          showClearButton={messages.length > 0}
-        />
       </ChatInputArea>
 
-      {/* Chat History Drawer */}
       <ChatHistoryDrawer
         isOpen={historyOpen}
         onClose={() => setHistoryOpen(false)}
@@ -650,6 +905,21 @@ export default function ConversationalSearch() {
         onSelectSession={handleLoadSession}
         onDeleteSession={chatHistory.deleteSession}
         onNewChat={handleNewChat}
+      />
+
+      <RegulationDetailSheet
+        isOpen={regulationSheet.open}
+        regulationNumber={regulationSheet.regulationNumber}
+        onClose={() => setRegulationSheet({ open: false, regulationNumber: null })}
+        onAskFollowUp={handleRegFollowUp}
+      />
+
+      <SaveToJobSheet
+        isOpen={saveSheet.open}
+        onClose={() => setSaveSheet((prev) => ({ ...prev, open: false }))}
+        answer={saveSheet.answer}
+        question={saveSheet.question}
+        citedRegulations={saveSheet.cited}
       />
     </ChatContainer>
   );

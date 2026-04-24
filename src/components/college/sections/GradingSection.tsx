@@ -189,7 +189,7 @@ export function GradingSection() {
               <select
                 value={filterCohort}
                 onChange={(e) => setFilterCohort(e.target.value)}
-                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60"
               >
                 <option value="all">All Cohorts</option>
                 {cohorts
@@ -239,7 +239,7 @@ export function GradingSection() {
                             <Pill tone={gradeTone(grade.grade)}>{grade.grade}</Pill>
                           )}
                         </div>
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white">
                           <span>Assessor · {getAssessorName(grade.assessed_by)}</span>
                           {grade.assessed_at && (
                             <span className="tabular-nums">
@@ -251,8 +251,8 @@ export function GradingSection() {
                           )}
                         </div>
                         {grade.feedback && (
-                          <div className="text-[12px] text-white/70 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2">
-                            <span className="text-white/55">Feedback · </span>
+                          <div className="text-[12px] text-white bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2">
+                            <span className="text-white">Feedback · </span>
                             {grade.feedback.length > 120
                               ? grade.feedback.substring(0, 120) + '…'
                               : grade.feedback}

@@ -4,6 +4,11 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import {
+  Eyebrow,
+  PrimaryButton,
+  inputClass,
+} from '@/components/college/primitives';
 
 /* ==========================================================================
    StudentMessageSheet — threaded tutor ↔ apprentice messages for one student.
@@ -237,19 +242,17 @@ export function StudentMessageSheet({
 
   const side = isMobile ? 'bottom' : 'right';
   const sheetClasses = cn(
-    'bg-[hsl(0_0%_10%)] border-white/[0.08]',
+    'bg-[hsl(0_0%_8%)] border-white/[0.08]',
     isMobile
-      ? 'h-[88vh] rounded-t-2xl p-0 flex flex-col'
+      ? 'h-[85vh] p-0 overflow-hidden flex flex-col'
       : 'w-[min(100vw,480px)] p-0 flex flex-col h-full'
   );
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side={side} className={sheetClasses}>
-        <SheetHeader className="px-5 sm:px-6 py-4 border-b border-white/[0.06] shrink-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
-            Messages
-          </div>
+        <SheetHeader className="px-5 sm:px-6 py-4 border-b border-white/[0.08] shrink-0">
+          <Eyebrow className="text-elec-yellow/85">Messages</Eyebrow>
           <SheetTitle className="text-[18px] font-semibold text-white leading-tight tracking-tight">
             {studentName}
           </SheetTitle>
@@ -260,7 +263,7 @@ export function StudentMessageSheet({
                 setActiveThreadId(null);
                 setMessages([]);
               }}
-              className="text-left text-[12px] text-white/65 hover:text-white transition-colors"
+              className="text-left text-[12px] text-white hover:text-elec-yellow transition-colors"
             >
               ← All threads
             </button>
@@ -271,13 +274,13 @@ export function StudentMessageSheet({
         {mode === 'list' ? (
           <div className="flex-1 overflow-y-auto">
             {loadingThreads && threads.length === 0 ? (
-              <div className="p-6 text-[12.5px] text-white/55">Loading threads…</div>
+              <div className="p-6 text-[12.5px] text-white">Loading threads…</div>
             ) : threads.length === 0 ? (
-              <div className="p-6 text-[12.5px] text-white/55">
+              <div className="p-6 text-[12.5px] text-white">
                 No messages yet. Start the first thread.
               </div>
             ) : (
-              <ul className="divide-y divide-white/[0.06]">
+              <ul className="divide-y divide-white/[0.08]">
                 {threads.map((t) => (
                   <li key={t.id}>
                     <button
@@ -285,14 +288,14 @@ export function StudentMessageSheet({
                         setActiveThreadId(t.id);
                         setMode('thread');
                       }}
-                      className="w-full text-left px-5 sm:px-6 py-4 hover:bg-white/[0.02] transition-colors"
+                      className="w-full text-left px-5 sm:px-6 py-4 hover:bg-white/[0.04] transition-colors"
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div className="min-w-0 flex-1">
                           <div className="text-[13.5px] font-medium text-white truncate">
                             {t.subject || 'Conversation'}
                           </div>
-                          <div className="mt-0.5 text-[11px] text-white/55 tabular-nums">
+                          <div className="mt-0.5 text-[11px] text-white tabular-nums">
                             {new Date(t.last_message_at).toLocaleString('en-GB', {
                               day: 'numeric',
                               month: 'short',
@@ -312,17 +315,17 @@ export function StudentMessageSheet({
                 ))}
               </ul>
             )}
-            <div className="p-5 sm:p-6 border-t border-white/[0.06]">
-              <button
+            <div className="p-5 sm:p-6 border-t border-white/[0.08]">
+              <PrimaryButton
+                fullWidth
                 onClick={() => {
                   setActiveThreadId(null);
                   setMessages([]);
                   setMode('new');
                 }}
-                className="w-full h-11 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors"
               >
                 + New thread
-              </button>
+              </PrimaryButton>
             </div>
           </div>
         ) : (
@@ -330,27 +333,25 @@ export function StudentMessageSheet({
             <div ref={scrollRef} className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-3">
               {mode === 'new' && (
                 <div>
-                  <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65 mb-2">
-                    Subject (optional)
-                  </div>
+                  <Eyebrow className="mb-2">Subject (optional)</Eyebrow>
                   <input
                     type="text"
                     value={newSubject}
                     onChange={(e) => setNewSubject(e.target.value)}
                     placeholder="e.g. Catching up on Unit 302 evidence"
-                    className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60"
+                    className={inputClass}
                   />
                 </div>
               )}
               {mode === 'thread' && activeThread?.subject && (
-                <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/55 pb-2">
-                  {activeThread.subject}
+                <div className="pb-2">
+                  <Eyebrow>{activeThread.subject}</Eyebrow>
                 </div>
               )}
               {loadingMessages && messages.length === 0 ? (
-                <div className="text-[12.5px] text-white/55">Loading messages…</div>
+                <div className="text-[12.5px] text-white">Loading messages…</div>
               ) : messages.length === 0 && mode === 'thread' ? (
-                <div className="text-[12.5px] text-white/55">No messages yet.</div>
+                <div className="text-[12.5px] text-white">No messages yet.</div>
               ) : (
                 messages.map((m) => {
                   const fromTutor = m.sender_kind === 'tutor';
@@ -368,14 +369,14 @@ export function StudentMessageSheet({
                           'max-w-[82%] rounded-2xl px-4 py-2.5 transition-opacity',
                           fromTutor
                             ? 'bg-elec-yellow/[0.1] border border-elec-yellow/25 text-white'
-                            : 'bg-[hsl(0_0%_13%)] border border-white/[0.06] text-white',
+                            : 'bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white',
                           isOptimistic && 'opacity-60'
                         )}
                       >
                         <div className="text-[13px] leading-relaxed whitespace-pre-wrap">
                           {m.body}
                         </div>
-                        <div className="mt-1 text-[10px] text-white/40 tabular-nums flex items-center gap-1.5">
+                        <div className="mt-1 text-[10px] text-white/30 tabular-nums flex items-center gap-1.5">
                           <span>
                             {new Date(m.created_at).toLocaleString('en-GB', {
                               day: 'numeric',
@@ -386,7 +387,7 @@ export function StudentMessageSheet({
                           </span>
                           {isOptimistic && (
                             <>
-                              <span className="text-white/20">·</span>
+                              <span className="text-white/30">·</span>
                               <span>sending…</span>
                             </>
                           )}
@@ -399,7 +400,7 @@ export function StudentMessageSheet({
             </div>
 
             {/* Composer */}
-            <div className="shrink-0 border-t border-white/[0.06] p-3 sm:p-4">
+            <div className="shrink-0 border-t border-white/[0.08] p-3 sm:p-4">
               <div className="flex items-end gap-2">
                 <textarea
                   value={draft}
@@ -412,15 +413,15 @@ export function StudentMessageSheet({
                   }}
                   rows={2}
                   placeholder="Write a message… ⌘↵ to send"
-                  className="flex-1 min-h-[44px] max-h-[160px] bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-3 py-2.5 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 transition-colors resize-none"
+                  className="flex-1 min-h-[44px] max-h-[160px] bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl px-3 py-2.5 text-[13.5px] text-white placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 transition-colors resize-none"
                 />
-                <button
+                <PrimaryButton
                   onClick={sendMessage}
                   disabled={!draft.trim() || sending}
-                  className="h-11 px-5 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:opacity-40 shrink-0"
+                  className="shrink-0"
                 >
                   {sending ? '…' : 'Send'}
-                </button>
+                </PrimaryButton>
               </div>
             </div>
           </>

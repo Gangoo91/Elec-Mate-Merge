@@ -36,6 +36,9 @@ type SectionKey =
   | 'vocabulary'
   | 'learning_objectives'
   | 'assessment_for_learning'
+  | 'british_values'
+  | 'stretch_challenge'
+  | 'inclusive_practice'
   | 'next_lesson_hint';
 
 interface RefineRequest {
@@ -177,6 +180,70 @@ const SECTION_SCHEMAS: Record<Exclude<SectionKey, 'tutor_brief_markdown' | 'next
     },
   },
   assessment_for_learning: { type: 'array', items: { type: 'string' } },
+  british_values: {
+    type: 'array',
+    items: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['value', 'how_embedded', 'activity_ref'],
+      properties: {
+        value: {
+          type: 'string',
+          enum: [
+            'democracy',
+            'rule_of_law',
+            'individual_liberty',
+            'mutual_respect',
+            'tolerance_of_faiths_beliefs',
+          ],
+        },
+        how_embedded: { type: 'string' },
+        activity_ref: { type: 'string' },
+      },
+    },
+  },
+  stretch_challenge: {
+    type: 'array',
+    items: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['title', 'task', 'target_learner', 'bloom_level'],
+      properties: {
+        title: { type: 'string' },
+        task: { type: 'string' },
+        target_learner: { type: 'string' },
+        bloom_level: {
+          type: 'string',
+          enum: ['apply', 'analyse', 'evaluate', 'create'],
+        },
+      },
+    },
+  },
+  inclusive_practice: {
+    type: 'array',
+    items: {
+      type: 'object',
+      additionalProperties: false,
+      required: ['need', 'strategy', 'activity_ref'],
+      properties: {
+        need: {
+          type: 'string',
+          enum: [
+            'send',
+            'eal',
+            'ehcp',
+            'neurodivergent',
+            'prior_attainment_low',
+            'prior_attainment_high',
+            'physical_access',
+            'other',
+          ],
+        },
+        strategy: { type: 'string' },
+        activity_ref: { type: 'string' },
+      },
+    },
+  },
 };
 
 const SECTION_LABELS: Record<SectionKey, string> = {
@@ -190,6 +257,9 @@ const SECTION_LABELS: Record<SectionKey, string> = {
   vocabulary: 'the key vocabulary list',
   learning_objectives: 'the learning objectives',
   assessment_for_learning: 'the assessment-for-learning bullets',
+  british_values: 'the British Values embedding (Ofsted/DfE)',
+  stretch_challenge: 'the stretch & challenge tasks',
+  inclusive_practice: 'the inclusive practice strategies',
   next_lesson_hint: 'the suggested next lesson',
 };
 

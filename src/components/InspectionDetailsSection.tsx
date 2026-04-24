@@ -10,6 +10,10 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useMultiFieldSync } from '@/hooks/useFieldSync';
+import {
+  FieldLimitationBadge,
+  isFieldMarker,
+} from '@/components/field-limitations';
 
 // Fields managed by this section (for memoization comparison)
 const INSPECTION_SECTION_FIELDS = [
@@ -43,18 +47,23 @@ const FormField = ({
   label,
   required,
   hint,
+  trailing,
   children,
 }: {
   label: string;
   required?: boolean;
   hint?: string;
+  trailing?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
-      {label}
-      {required && <span className="text-elec-yellow ml-1">*</span>}
-    </Label>
+    <div className="flex items-center justify-between gap-2 mb-1.5">
+      <Label className="text-white text-xs">
+        {label}
+        {required && <span className="text-elec-yellow ml-1">*</span>}
+      </Label>
+      {trailing}
+    </div>
     {children}
     {hint && <span className="text-xs text-white block mt-1">{hint}</span>}
   </div>
@@ -251,13 +260,31 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             )}
           </FormField>
 
-          <FormField label="Reasons for Interval">
-            <Textarea
-              value={formData.intervalReasons || ''}
-              onChange={(e) => onUpdate('intervalReasons', e.target.value)}
-              placeholder="e.g., Age of installation, type of premises, environmental conditions"
-              className="min-h-[80px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
-            />
+          <FormField
+            label="Reasons for Interval"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.intervalReasons || ''}
+                markers={['N/A']}
+                onChange={(v) => onUpdate('intervalReasons', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.intervalReasons) ? (
+              <Input
+                value={formData.intervalReasons}
+                disabled
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+              />
+            ) : (
+              <Textarea
+                value={formData.intervalReasons || ''}
+                onChange={(e) => onUpdate('intervalReasons', e.target.value)}
+                placeholder="e.g., Age of installation, type of premises, environmental conditions"
+                className="min-h-[80px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+              />
+            )}
           </FormField>
         </div>
       </div>
@@ -267,12 +294,26 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
         <SectionTitle icon={Telescope} title="Inspection Scope" isMobile={isMobile} />
         <div className="space-y-3 py-3">
           <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField label="Agreed With">
+            <FormField
+              label="Agreed With"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.agreedWith || ''}
+                  markers={['N/A']}
+                  onChange={(v) => onUpdate('agreedWith', v)}
+                />
+              }
+            >
               <Input
                 value={formData.agreedWith || ''}
                 onChange={(e) => onUpdate('agreedWith', e.target.value)}
                 placeholder="Name of person"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                disabled={isFieldMarker(formData.agreedWith)}
+                className={cn(
+                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
+                  isFieldMarker(formData.agreedWith) && 'opacity-60'
+                )}
               />
             </FormField>
             <FormField label="BS 7671 Edition">
@@ -291,31 +332,86 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             </FormField>
           </div>
 
-          <FormField label="Extent of Inspection" required>
-            <Textarea
-              value={formData.extentOfInspection || ''}
-              onChange={(e) => onUpdate('extentOfInspection', e.target.value)}
-              placeholder="Areas, circuits, and systems inspected"
-              className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
-            />
+          <FormField
+            label="Extent of Inspection"
+            required
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.extentOfInspection || ''}
+                markers={['LIM']}
+                onChange={(v) => onUpdate('extentOfInspection', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.extentOfInspection) ? (
+              <Input
+                value={formData.extentOfInspection}
+                disabled
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+              />
+            ) : (
+              <Textarea
+                value={formData.extentOfInspection || ''}
+                onChange={(e) => onUpdate('extentOfInspection', e.target.value)}
+                placeholder="Areas, circuits, and systems inspected"
+                className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+              />
+            )}
           </FormField>
 
           <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField label="Limitations">
-              <Textarea
-                value={formData.limitationsOfInspection || ''}
-                onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
-                placeholder="Areas not inspected"
-                className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
-              />
+            <FormField
+              label="Limitations"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.limitationsOfInspection || ''}
+                  markers={['N/A']}
+                  onChange={(v) => onUpdate('limitationsOfInspection', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.limitationsOfInspection) ? (
+                <Input
+                  value={formData.limitationsOfInspection}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <Textarea
+                  value={formData.limitationsOfInspection || ''}
+                  onChange={(e) => onUpdate('limitationsOfInspection', e.target.value)}
+                  placeholder="Areas not inspected"
+                  className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+                />
+              )}
             </FormField>
-            <FormField label="Operational Limitations">
-              <Textarea
-                value={formData.operationalLimitations || ''}
-                onChange={(e) => onUpdate('operationalLimitations', e.target.value)}
-                placeholder="Circuits not isolated, etc."
-                className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
-              />
+            <FormField
+              label="Operational Limitations"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.operationalLimitations || ''}
+                  markers={['N/A']}
+                  onChange={(v) => onUpdate('operationalLimitations', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.operationalLimitations) ? (
+                <Input
+                  value={formData.operationalLimitations}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <Textarea
+                  value={formData.operationalLimitations || ''}
+                  onChange={(e) => onUpdate('operationalLimitations', e.target.value)}
+                  placeholder="Circuits not isolated, etc."
+                  className="min-h-[70px] text-base touch-manipulation resize-none bg-white/[0.06] border-white/[0.08] placeholder:text-white/30"
+                />
+              )}
             </FormField>
           </div>
 

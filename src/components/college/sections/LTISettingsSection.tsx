@@ -20,6 +20,14 @@ import {
   PageHero,
   StatStrip,
   Pill,
+  Field,
+  FormGrid,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  selectTriggerClass,
+  selectContentClass,
+  fieldLabelClass,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
@@ -375,7 +383,7 @@ export function LTISettingsSection() {
       case 'Pending':
         return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
       default:
-        return 'bg-muted text-white';
+        return 'bg-[hsl(0_0%_12%)] text-white';
     }
   };
 
@@ -440,13 +448,13 @@ export function LTISettingsSection() {
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
           <div className="flex items-baseline justify-between gap-3 flex-wrap">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Tool URLs
               </div>
               <h3 className="mt-1 text-lg sm:text-xl font-semibold text-white tracking-tight">
                 Give these four URLs to your LMS admin
               </h3>
-              <p className="mt-1 text-[12.5px] text-white/55">
+              <p className="mt-1 text-[12.5px] text-white">
                 These are fixed for your Elec-Mate instance. Paste them into your LMS's LTI tool
                 configuration. Each URL has a copy button.
               </p>
@@ -465,10 +473,10 @@ export function LTISettingsSection() {
                 className="flex items-center gap-3 bg-[hsl(0_0%_10%)] border border-white/[0.05] rounded-lg px-3 py-2"
               >
                 <div className="min-w-0 flex-1">
-                  <div className="text-[10px] uppercase tracking-wider text-white/55">
+                  <div className="text-[10px] uppercase tracking-wider text-white">
                     {row.label}
                   </div>
-                  <div className="mt-0.5 text-[11.5px] font-mono text-white/80 truncate">
+                  <div className="mt-0.5 text-[11.5px] font-mono text-white truncate">
                     {row.value}
                   </div>
                 </div>
@@ -488,25 +496,25 @@ export function LTISettingsSection() {
         <TabsList className="inline-flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full h-auto w-auto">
           <TabsTrigger
             value="platforms"
-            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
           >
             Platforms
           </TabsTrigger>
           <TabsTrigger
             value="config"
-            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
           >
             Configuration
           </TabsTrigger>
           <TabsTrigger
             value="dynamic"
-            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
           >
             Dynamic registration
           </TabsTrigger>
           <TabsTrigger
             value="guides"
-            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            className="px-4 py-1.5 rounded-full text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
           >
             Setup guides
           </TabsTrigger>
@@ -515,13 +523,13 @@ export function LTISettingsSection() {
         <TabsContent value="platforms" className="space-y-5 mt-6">
           {platforms.length === 0 ? (
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-8 sm:p-12 text-center">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 No platforms connected
               </div>
               <h3 className="mt-2 text-xl sm:text-2xl font-semibold text-white tracking-tight">
                 Connect your first VLE
               </h3>
-              <p className="mt-3 text-[13px] text-white/55 max-w-md mx-auto leading-relaxed">
+              <p className="mt-3 text-[13px] text-white max-w-md mx-auto leading-relaxed">
                 Link Canvas, Moodle or Blackboard via LTI 1.3 for single sign-on, grade sync and
                 roster import.
               </p>
@@ -534,7 +542,7 @@ export function LTISettingsSection() {
                 </button>
                 <button
                   onClick={() => openSetupGuide('canvas')}
-                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                  className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   View guide
                 </button>
@@ -574,13 +582,13 @@ export function LTISettingsSection() {
                     <div className="p-5 sm:p-6">
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0">
-                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                          <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                             {platform.type}
                           </div>
                           <h3 className="mt-1 text-lg sm:text-xl font-semibold text-white tracking-tight">
                             {platform.name}
                           </h3>
-                          <p className="mt-0.5 text-[12px] text-white/75 truncate">
+                          <p className="mt-0.5 text-[12px] text-white truncate">
                             {platform.url}
                           </p>
                         </div>
@@ -589,7 +597,7 @@ export function LTISettingsSection() {
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                               <button
-                                className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
+                                className="text-white hover:text-white text-[18px] leading-none px-1 touch-manipulation"
                                 aria-label="Options"
                               >
                                 ⋯
@@ -646,7 +654,7 @@ export function LTISettingsSection() {
                               : 'border-red-500/30 bg-red-500/5'
                           )}
                         >
-                          <div className="font-medium text-white/80">
+                          <div className="font-medium text-white">
                             {verifyResult[platform.id].ok
                               ? '✓ All checks passed'
                               : `${verifyResult[platform.id].checks.filter((c) => !c.ok).length} check(s) failed`}
@@ -662,8 +670,8 @@ export function LTISettingsSection() {
                                 {c.ok ? '✓' : '✗'}
                               </span>
                               <div className="flex-1">
-                                <span className="text-white/70">{c.name}:</span>{' '}
-                                <span className="text-white/75">{c.message}</span>
+                                <span className="text-white">{c.name}:</span>{' '}
+                                <span className="text-white">{c.message}</span>
                               </div>
                             </div>
                           ))}
@@ -684,7 +692,7 @@ export function LTISettingsSection() {
                               onClick={() => handleToggleFeature(platform.id, feat.key)}
                               className="flex items-center justify-between px-4 py-3 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl hover:bg-[hsl(0_0%_13%)] transition-colors touch-manipulation text-left"
                             >
-                              <span className="text-[12px] text-white/70">{feat.label}</span>
+                              <span className="text-[12px] text-white">{feat.label}</span>
                               <Pill tone={enabled ? 'green' : 'yellow'}>
                                 {enabled ? 'On' : 'Off'}
                               </Pill>
@@ -694,7 +702,7 @@ export function LTISettingsSection() {
                       </div>
 
                       {/* Stats */}
-                      <div className="mt-5 pt-5 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white/75">
+                      <div className="mt-5 pt-5 border-t border-white/[0.06] flex flex-wrap items-center gap-x-5 gap-y-1 text-[11.5px] text-white">
                         <span className="tabular-nums">
                           {platform.stats.launches.toLocaleString()} launches
                         </span>
@@ -723,10 +731,10 @@ export function LTISettingsSection() {
         <TabsContent value="config" className="space-y-6 mt-6">
           {/* LTI Tool Configuration */}
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
               LTI 1.3 Tool Configuration
             </div>
-            <p className="mt-2 text-[12.5px] text-white/55 leading-relaxed">
+            <p className="mt-2 text-[12.5px] text-white leading-relaxed">
               Copy these values when registering Elec-Mate as an LTI tool in your LMS.
             </p>
 
@@ -747,21 +755,18 @@ export function LTISettingsSection() {
                 },
               ].map((item) => (
                 <div key={item.key}>
-                  <Label className="text-[10px] font-medium uppercase tracking-[0.14em] text-white/55">
-                    {item.label}
-                  </Label>
+                  <Label className={fieldLabelClass}>{item.label}</Label>
                   <div className="mt-1.5 flex gap-2">
                     <input
                       value={item.value}
                       readOnly
-                      className="flex-1 h-11 px-4 font-mono text-[12.5px] bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                      className={`${inputClass} flex-1 font-mono`}
                     />
-                    <button
+                    <SecondaryButton
                       onClick={() => handleCopyToClipboard(item.value, item.key)}
-                      className="h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] text-white rounded-xl text-[12.5px] font-medium hover:bg-[hsl(0_0%_13%)] transition-colors touch-manipulation whitespace-nowrap"
                     >
                       {copiedField === item.key ? 'Copied ✓' : 'Copy'}
-                    </button>
+                    </SecondaryButton>
                   </div>
                 </div>
               ))}
@@ -770,7 +775,7 @@ export function LTISettingsSection() {
 
           {/* Security Settings */}
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
               Security Settings
             </div>
             <div className="mt-4 divide-y divide-white/[0.06]">
@@ -799,7 +804,7 @@ export function LTISettingsSection() {
                 <div key={idx} className="flex items-center justify-between gap-4 py-4">
                   <div className="min-w-0">
                     <div className="text-[13.5px] font-medium text-white">{setting.label}</div>
-                    <div className="mt-0.5 text-[11.5px] text-white/75">{setting.desc}</div>
+                    <div className="mt-0.5 text-[11.5px] text-white">{setting.desc}</div>
                   </div>
                   <Switch defaultChecked={setting.default} />
                 </div>
@@ -811,13 +816,13 @@ export function LTISettingsSection() {
         {/* Dynamic Registration tab — Sprint 3 / ELE-832 */}
         <TabsContent value="dynamic" className="space-y-6 mt-6">
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Recommended · 30-second install
             </div>
             <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
               Install with one URL
             </h3>
-            <p className="mt-2 text-[13px] text-white/60 leading-relaxed">
+            <p className="mt-2 text-[13px] text-white leading-relaxed">
               Modern LMSes (Canvas, Moodle 4+, D2L, Schoology) support the 1EdTech LTI Dynamic
               Registration flow. Paste the URL below into your LMS's "Register external tool" field —
               your LMS then handshakes with Elec-Mate automatically, no 8-field form required.
@@ -831,10 +836,10 @@ export function LTISettingsSection() {
               <>
                 <div className="mt-5 flex items-center gap-3 bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-lg px-3 py-3">
                   <div className="min-w-0 flex-1">
-                    <div className="text-[10px] uppercase tracking-wider text-white/55">
+                    <div className="text-[10px] uppercase tracking-wider text-white">
                       Dynamic registration URL
                     </div>
-                    <div className="mt-0.5 text-[12px] font-mono text-white/85 break-all">
+                    <div className="mt-0.5 text-[12px] font-mono text-white break-all">
                       {`${LTI_BASE}/lti-dynamic-register?college_id=${collegeId}`}
                     </div>
                   </div>
@@ -873,17 +878,17 @@ export function LTISettingsSection() {
                       key={s.step}
                       className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-4"
                     >
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                         Step {s.step}
                       </div>
                       <h4 className="mt-2 text-[14px] font-semibold text-white">{s.title}</h4>
-                      <p className="mt-1 text-[11.5px] text-white/75 leading-relaxed">{s.desc}</p>
+                      <p className="mt-1 text-[11.5px] text-white leading-relaxed">{s.desc}</p>
                     </div>
                   ))}
                 </div>
 
-                <div className="mt-4 text-[11.5px] text-white/70">
-                  LMS doesn't support Dynamic Registration? Switch to the <b className="text-white/60">Platforms</b> tab and use the manual 8-field form.
+                <div className="mt-4 text-[11.5px] text-white">
+                  LMS doesn't support Dynamic Registration? Switch to the <b className="text-white">Platforms</b> tab and use the manual 8-field form.
                 </div>
               </>
             )}
@@ -910,13 +915,13 @@ export function LTISettingsSection() {
                     guide.tone === 'indigo' && 'bg-indigo-400'
                   )}
                 />
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   Setup Guide
                 </div>
                 <h3 className="mt-2 text-lg sm:text-xl font-semibold text-white tracking-tight">
                   {guide.name}
                 </h3>
-                <p className="mt-1 text-[12.5px] text-white/75">{guide.desc}</p>
+                <p className="mt-1 text-[12.5px] text-white">{guide.desc}</p>
                 <div className="flex-grow" />
                 <div className="mt-4 text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all">
                   View guide →
@@ -927,7 +932,7 @@ export function LTISettingsSection() {
 
           {/* Quick Start */}
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
               Quick Start
             </div>
             <h3 className="mt-2 text-lg sm:text-xl font-semibold text-white tracking-tight">
@@ -960,11 +965,11 @@ export function LTISettingsSection() {
                   key={item.step}
                   className="bg-[hsl(0_0%_10%)] border border-white/[0.06] rounded-xl p-4"
                 >
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                     Step {item.step}
                   </div>
                   <h4 className="mt-2 text-[14px] font-semibold text-white">{item.title}</h4>
-                  <p className="mt-1 text-[11.5px] text-white/75 leading-relaxed">{item.desc}</p>
+                  <p className="mt-1 text-[11.5px] text-white leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -976,7 +981,7 @@ export function LTISettingsSection() {
       <motion.div variants={itemVariants} className="mt-10">
         <div className="flex items-baseline justify-between gap-3 flex-wrap mb-4">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Observability
             </div>
             <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
@@ -991,7 +996,7 @@ export function LTISettingsSection() {
                   ? 'text-emerald-400'
                   : health.status === 'degraded'
                     ? 'text-red-400'
-                    : 'text-white/70'
+                    : 'text-white'
               )}
             >
               <span
@@ -1014,7 +1019,7 @@ export function LTISettingsSection() {
             </span>
             <button
               onClick={refreshHealth}
-              className="text-[11px] text-white/75 hover:text-white/80 transition-colors"
+              className="text-[11px] text-white hover:text-white transition-colors"
             >
               ↻
             </button>
@@ -1056,7 +1061,7 @@ export function LTISettingsSection() {
               key={k.label}
               className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4"
             >
-              <div className="text-[10px] uppercase tracking-wider text-white/55">{k.label}</div>
+              <div className="text-[10px] uppercase tracking-wider text-white">{k.label}</div>
               <div className={cn('mt-1 text-xl font-semibold tabular-nums', `text-${k.tone}`)}>
                 {k.value}
               </div>
@@ -1066,7 +1071,7 @@ export function LTISettingsSection() {
 
         {/* 7-day sparkline */}
         <div className="mt-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
-          <div className="text-[10px] uppercase tracking-wider text-white/55 mb-3">
+          <div className="text-[10px] uppercase tracking-wider text-white mb-3">
             Last 7 days · launches per day
           </div>
           <div className="flex items-end gap-2 h-20">
@@ -1102,7 +1107,7 @@ export function LTISettingsSection() {
         {/* Top errors */}
         {globalStats.topErrors.length > 0 && (
           <div className="mt-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
-            <div className="text-[10px] uppercase tracking-wider text-white/55 mb-3">
+            <div className="text-[10px] uppercase tracking-wider text-white mb-3">
               Top errors
             </div>
             <div className="space-y-1.5">
@@ -1112,7 +1117,7 @@ export function LTISettingsSection() {
                   className="flex items-center justify-between gap-3 text-[12px]"
                 >
                   <span className="font-mono text-red-300/90 truncate">{e.code}</span>
-                  <span className="text-white/70 tabular-nums">{e.count}</span>
+                  <span className="text-white tabular-nums">{e.count}</span>
                 </div>
               ))}
             </div>
@@ -1124,14 +1129,14 @@ export function LTISettingsSection() {
       <motion.div variants={itemVariants} className="mt-10">
         <div className="flex items-baseline justify-between mb-4">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Diagnostic
             </div>
             <h3 className="mt-1 text-xl sm:text-2xl font-semibold text-white tracking-tight">
               Recent launches
             </h3>
           </div>
-          <div className="text-[11px] text-white/70 tabular-nums">
+          <div className="text-[11px] text-white tabular-nums">
             {loading ? 'loading…' : `${launches.length} in last 50`}
           </div>
         </div>
@@ -1142,7 +1147,7 @@ export function LTISettingsSection() {
         )}
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
           {launches.length === 0 ? (
-            <div className="p-8 text-center text-[12px] text-white/70">
+            <div className="p-8 text-center text-[12px] text-white">
               No launches recorded yet. Register a platform and click test-launch to see entries here.
             </div>
           ) : (
@@ -1171,16 +1176,16 @@ export function LTISettingsSection() {
                       <div className="flex items-center justify-between gap-3 flex-wrap">
                         <div className="text-[13px] text-white">
                           <span className="font-medium">{platform?.name ?? 'Unknown platform'}</span>
-                          <span className="text-white/75 mx-1.5">·</span>
-                          <span className="text-white/70 font-mono text-[11px]">{l.lti_user_id}</span>
+                          <span className="text-white mx-1.5">·</span>
+                          <span className="text-white font-mono text-[11px]">{l.lti_user_id}</span>
                           {l.context_title && (
                             <>
-                              <span className="text-white/75 mx-1.5">·</span>
-                              <span className="text-white/70">{l.context_title}</span>
+                              <span className="text-white mx-1.5">·</span>
+                              <span className="text-white">{l.context_title}</span>
                             </>
                           )}
                         </div>
-                        <span className="text-[11px] tabular-nums text-white/70 shrink-0">
+                        <span className="text-[11px] tabular-nums text-white shrink-0">
                           {new Date(l.created_at).toLocaleString('en-GB', {
                             day: '2-digit',
                             month: 'short',
@@ -1199,7 +1204,7 @@ export function LTISettingsSection() {
                           </span>
                         )}
                         {l.roles && l.roles.length > 0 && (
-                          <span className="text-[11px] text-white/75">
+                          <span className="text-[11px] text-white">
                             {l.roles
                               .map((r) => r.split('#').pop() ?? r)
                               .slice(0, 2)
@@ -1207,7 +1212,7 @@ export function LTISettingsSection() {
                           </span>
                         )}
                         {cid && (
-                          <span className="text-[10px] font-mono text-white/60 ml-auto">
+                          <span className="text-[10px] font-mono text-white ml-auto">
                             {cid}
                           </span>
                         )}
@@ -1244,13 +1249,13 @@ export function LTISettingsSection() {
         <DialogContent className="w-[min(100vw-2rem,640px)] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.08] p-0">
           {/* Sticky header */}
           <div className="sticky top-0 z-10 bg-[hsl(0_0%_10%)] border-b border-white/[0.06] px-6 py-5">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               LMS integration
             </div>
             <DialogTitle className="mt-1 text-xl font-semibold text-white tracking-tight">
               {editingPlatformId ? 'Edit LTI platform' : 'Add LTI platform'}
             </DialogTitle>
-            <DialogDescription className="mt-1 text-[13px] text-white/75 leading-relaxed">
+            <DialogDescription className="mt-1 text-[13px] text-white leading-relaxed">
               {editingPlatformId
                 ? 'Update the LMS configuration. Changes take effect on the next launch.'
                 : 'Manually register an LMS using LTI 1.3. If your LMS supports Dynamic Registration, switch to that tab — it only needs one URL.'}
@@ -1262,37 +1267,31 @@ export function LTISettingsSection() {
             <div className="space-y-4">
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" aria-hidden />
-                <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
                   Platform identity
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-2 sm:col-span-1">
-                  <Label className="text-[12.5px] font-medium text-white">
-                    Display name <span className="text-elec-yellow">*</span>
-                  </Label>
+              <FormGrid cols={2}>
+                <Field label="Display name" required>
                   <Input
                     placeholder="Canvas — Production"
                     value={newPlatform.name}
                     onChange={(e) => setNewPlatform({ ...newPlatform, name: e.target.value })}
-                    className="h-11 bg-[hsl(0_0%_13%)] border-white/[0.08] text-white placeholder:text-white/60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow"
+                    className={inputClass}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-[12.5px] font-medium text-white">
-                    LMS type <span className="text-elec-yellow">*</span>
-                  </Label>
+                </Field>
+                <Field label="LMS type" required>
                   <Select
                     value={newPlatform.type}
                     onValueChange={(value: LTIPlatformType) =>
                       setNewPlatform({ ...newPlatform, type: value })
                     }
                   >
-                    <SelectTrigger className="h-11 bg-[hsl(0_0%_13%)] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className="bg-[hsl(0_0%_12%)] border-white/[0.08]">
+                    <SelectContent className={selectContentClass}>
                       <SelectItem value="canvas">Canvas</SelectItem>
                       <SelectItem value="moodle">Moodle</SelectItem>
                       <SelectItem value="blackboard">Blackboard Learn</SelectItem>
@@ -1301,60 +1300,48 @@ export function LTISettingsSection() {
                       <SelectItem value="other">Other LTI 1.3</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
-              </div>
+                </Field>
+              </FormGrid>
 
-              <div className="space-y-2">
-                <Label className="text-[12.5px] font-medium text-white">
-                  Issuer URL (iss) <span className="text-elec-yellow">*</span>
-                </Label>
+              <Field label="Issuer URL (iss)" required>
                 <Input
                   placeholder="https://canvas.instructure.com"
                   value={newPlatform.issuer}
                   onChange={(e) => setNewPlatform({ ...newPlatform, issuer: e.target.value })}
                   className={cn(
-                    'h-11 bg-[hsl(0_0%_13%)] text-white placeholder:text-white/60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow',
-                    formErrors.issuer && newPlatform.issuer
-                      ? 'border-red-500/60'
-                      : 'border-white/[0.08]'
+                    inputClass,
+                    formErrors.issuer && newPlatform.issuer && 'border-red-500/60'
                   )}
                 />
                 {formErrors.issuer && newPlatform.issuer ? (
                   <p className="text-[11.5px] text-red-400">{formErrors.issuer}</p>
                 ) : (
-                  <p className="text-[11.5px] text-white/70 leading-relaxed">
+                  <p className="text-[11.5px] text-white leading-relaxed">
                     The canonical URL your LMS uses as its OpenID issuer.
                   </p>
                 )}
-              </div>
+              </Field>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-2">
-                  <Label className="text-[12.5px] font-medium text-white">
-                    Client ID <span className="text-elec-yellow">*</span>
-                  </Label>
+              <FormGrid cols={2}>
+                <Field label="Client ID" required>
                   <Input
                     placeholder="From LMS tool settings"
                     value={newPlatform.clientId}
                     onChange={(e) => setNewPlatform({ ...newPlatform, clientId: e.target.value })}
-                    className="h-11 bg-[hsl(0_0%_13%)] border-white/[0.08] text-white placeholder:text-white/60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow font-mono text-[12.5px]"
+                    className={`${inputClass} font-mono`}
                   />
-                </div>
-                <div className="space-y-2">
-                  <Label className="text-[12.5px] font-medium text-white">
-                    Deployment ID{' '}
-                    <span className="text-[10px] font-normal text-white/60">(optional)</span>
-                  </Label>
+                </Field>
+                <Field label="Deployment ID (optional)">
                   <Input
                     placeholder="Optional"
                     value={newPlatform.deploymentId}
                     onChange={(e) =>
                       setNewPlatform({ ...newPlatform, deploymentId: e.target.value })
                     }
-                    className="h-11 bg-[hsl(0_0%_13%)] border-white/[0.08] text-white placeholder:text-white/60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow font-mono text-[12.5px]"
+                    className={`${inputClass} font-mono`}
                   />
-                </div>
-              </div>
+                </Field>
+              </FormGrid>
             </div>
 
             {/* —— Section 2: LMS endpoints —— */}
@@ -1362,19 +1349,16 @@ export function LTISettingsSection() {
               <div className="flex items-center justify-between gap-3 pt-2">
                 <div className="flex items-center gap-2">
                   <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" aria-hidden />
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white/85">
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-white">
                     LMS endpoints
                   </div>
                 </div>
-                <span className="text-[10.5px] text-white/60">
+                <span className="text-[10.5px] text-white">
                   All three are required
                 </span>
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-[12.5px] font-medium text-white">
-                  Authorisation login URL <span className="text-elec-yellow">*</span>
-                </Label>
+              <Field label="Authorisation login URL" required>
                 <Input
                   placeholder="https://canvas.../api/lti/authorize_redirect"
                   value={newPlatform.authLoginUrl}
@@ -1382,21 +1366,17 @@ export function LTISettingsSection() {
                     setNewPlatform({ ...newPlatform, authLoginUrl: e.target.value })
                   }
                   className={cn(
-                    'h-11 bg-[hsl(0_0%_13%)] text-white placeholder:text-white/60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow font-mono text-[12px]',
-                    formErrors.authLoginUrl && newPlatform.authLoginUrl
-                      ? 'border-red-500/60'
-                      : 'border-white/[0.08]'
+                    inputClass,
+                    'font-mono',
+                    formErrors.authLoginUrl && newPlatform.authLoginUrl && 'border-red-500/60'
                   )}
                 />
                 {formErrors.authLoginUrl && newPlatform.authLoginUrl && (
                   <p className="text-[11.5px] text-red-400">{formErrors.authLoginUrl}</p>
                 )}
-              </div>
+              </Field>
 
-              <div className="space-y-2">
-                <Label className="text-[12.5px] font-medium text-white">
-                  Authorisation token URL <span className="text-elec-yellow">*</span>
-                </Label>
+              <Field label="Authorisation token URL" required>
                 <Input
                   placeholder="https://canvas.../login/oauth2/token"
                   value={newPlatform.authTokenUrl}
@@ -1404,40 +1384,35 @@ export function LTISettingsSection() {
                     setNewPlatform({ ...newPlatform, authTokenUrl: e.target.value })
                   }
                   className={cn(
-                    'h-11 bg-[hsl(0_0%_13%)] text-white placeholder:text-white/60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow font-mono text-[12px]',
-                    formErrors.authTokenUrl && newPlatform.authTokenUrl
-                      ? 'border-red-500/60'
-                      : 'border-white/[0.08]'
+                    inputClass,
+                    'font-mono',
+                    formErrors.authTokenUrl && newPlatform.authTokenUrl && 'border-red-500/60'
                   )}
                 />
                 {formErrors.authTokenUrl && newPlatform.authTokenUrl && (
                   <p className="text-[11.5px] text-red-400">{formErrors.authTokenUrl}</p>
                 )}
-              </div>
+              </Field>
 
-              <div className="space-y-2">
-                <Label className="text-[12.5px] font-medium text-white">
-                  LMS JWKS URL <span className="text-elec-yellow">*</span>
-                </Label>
+              <Field label="LMS JWKS URL" required>
                 <Input
                   placeholder="https://canvas.../api/lti/security/jwks"
                   value={newPlatform.jwksUrl}
                   onChange={(e) => setNewPlatform({ ...newPlatform, jwksUrl: e.target.value })}
                   className={cn(
-                    'h-11 bg-[hsl(0_0%_13%)] text-white placeholder:text-white/60 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow font-mono text-[12px]',
-                    formErrors.jwksUrl && newPlatform.jwksUrl
-                      ? 'border-red-500/60'
-                      : 'border-white/[0.08]'
+                    inputClass,
+                    'font-mono',
+                    formErrors.jwksUrl && newPlatform.jwksUrl && 'border-red-500/60'
                   )}
                 />
                 {formErrors.jwksUrl && newPlatform.jwksUrl ? (
                   <p className="text-[11.5px] text-red-400">{formErrors.jwksUrl}</p>
                 ) : (
-                  <p className="text-[11.5px] text-white/70 leading-relaxed">
+                  <p className="text-[11.5px] text-white leading-relaxed">
                     We fetch the LMS's public keys from here to verify signed launches.
                   </p>
                 )}
-              </div>
+              </Field>
             </div>
 
             {!collegeId && (
@@ -1450,16 +1425,13 @@ export function LTISettingsSection() {
 
           {/* Sticky footer */}
           <DialogFooter className="sticky bottom-0 bg-[hsl(0_0%_10%)] border-t border-white/[0.06] px-6 py-4 gap-2">
-            <Button
-              variant="outline"
+            <SecondaryButton
               onClick={() => setIsAddDialogOpen(false)}
               disabled={isSubmittingAdd}
-              className="h-11 touch-manipulation rounded-full border-white/[0.12] text-white hover:bg-white/[0.06]"
             >
               Cancel
-            </Button>
-            <Button
-              className="h-11 touch-manipulation rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium px-6 gap-2"
+            </SecondaryButton>
+            <PrimaryButton
               onClick={handleSavePlatform}
               disabled={isSubmittingAdd || !collegeId || !formValid}
             >
@@ -1470,14 +1442,14 @@ export function LTISettingsSection() {
                 : editingPlatformId
                   ? 'Save changes →'
                   : 'Add platform →'}
-            </Button>
+            </PrimaryButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Setup Guide Dialog */}
       <Dialog open={isSetupGuideOpen} onOpenChange={setIsSetupGuideOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-elec-dark border-elec-yellow/20">
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.08]">
           <DialogHeader>
             <DialogTitle>
               {selectedGuide === 'canvas' && 'Canvas LMS setup guide'}
@@ -1801,65 +1773,52 @@ export function LTISettingsSection() {
           </div>
 
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsSetupGuideOpen(false)}>
+            <SecondaryButton onClick={() => setIsSetupGuideOpen(false)}>
               Close
-            </Button>
-            <Button
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            </SecondaryButton>
+            <PrimaryButton
               onClick={() => {
                 setIsSetupGuideOpen(false);
                 setIsAddDialogOpen(true);
               }}
             >
               Add Platform →
-            </Button>
+            </PrimaryButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Configure Platform Dialog */}
       <Dialog open={isConfigureDialogOpen} onOpenChange={setIsConfigureDialogOpen}>
-        <DialogContent className="max-w-lg bg-elec-dark border-elec-yellow/20">
+        <DialogContent className="max-w-lg bg-[hsl(0_0%_10%)] border-white/[0.08]">
           <DialogHeader>
             <DialogTitle>Configure {selectedPlatform?.name}</DialogTitle>
             <DialogDescription>Update platform settings and features</DialogDescription>
           </DialogHeader>
           {selectedPlatform && (
             <div className="space-y-4 py-4">
-              <div className="space-y-2">
-                <Label>Platform Name</Label>
-                <Input
-                  defaultValue={selectedPlatform.name}
-                  className="bg-elec-gray border-elec-yellow/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Platform URL</Label>
-                <Input
-                  defaultValue={selectedPlatform.url}
-                  className="bg-elec-gray border-elec-yellow/20"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Client ID</Label>
-                <Input
-                  defaultValue={selectedPlatform.clientId}
-                  className="bg-elec-gray border-elec-yellow/20"
-                />
-              </div>
-              <div className="pt-4 border-t border-elec-yellow/10">
-                <h4 className="font-medium mb-3">Features</h4>
+              <Field label="Platform Name">
+                <Input defaultValue={selectedPlatform.name} className={inputClass} />
+              </Field>
+              <Field label="Platform URL">
+                <Input defaultValue={selectedPlatform.url} className={inputClass} />
+              </Field>
+              <Field label="Client ID">
+                <Input defaultValue={selectedPlatform.clientId} className={inputClass} />
+              </Field>
+              <div className="pt-4 border-t border-white/[0.08]">
+                <h4 className="font-medium text-white mb-3">Features</h4>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <Label>Deep Linking</Label>
+                    <Label className={fieldLabelClass}>Deep Linking</Label>
                     <Switch defaultChecked={selectedPlatform.features.deepLinking} />
                   </div>
                   <div className="flex items-center justify-between">
-                    <Label>Grade Sync</Label>
+                    <Label className={fieldLabelClass}>Grade Sync</Label>
                     <Switch defaultChecked={selectedPlatform.features.gradeSync} />
                   </div>
                   <div className="flex items-center justify-between">
-                    <Label>Roster Sync</Label>
+                    <Label className={fieldLabelClass}>Roster Sync</Label>
                     <Switch defaultChecked={selectedPlatform.features.rosterSync} />
                   </div>
                 </div>
@@ -1867,11 +1826,10 @@ export function LTISettingsSection() {
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setIsConfigureDialogOpen(false)}>
+            <SecondaryButton onClick={() => setIsConfigureDialogOpen(false)}>
               Cancel
-            </Button>
-            <Button
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black"
+            </SecondaryButton>
+            <PrimaryButton
               onClick={() => {
                 setIsConfigureDialogOpen(false);
                 toast({
@@ -1881,7 +1839,7 @@ export function LTISettingsSection() {
               }}
             >
               Save Changes
-            </Button>
+            </PrimaryButton>
           </DialogFooter>
         </DialogContent>
       </Dialog>

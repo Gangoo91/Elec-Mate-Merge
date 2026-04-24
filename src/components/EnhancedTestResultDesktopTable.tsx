@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { Table, TableBody } from '@/components/ui/table';
 // Native scroll used instead of Radix ScrollArea for performance with many rows
 import { TestResult } from '@/types/testResult';
@@ -16,6 +16,8 @@ interface EnhancedTestResultDesktopTableProps {
   onRemove: (id: string) => void;
   allResults: TestResult[];
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
+  onMoveUp?: (id: string) => void;
+  onMoveDown?: (id: string) => void;
   onAddCircuit: () => void;
   onBulkFieldUpdate?: (field: keyof TestResult, value: string) => void;
   onScanBoard?: () => void;
@@ -27,11 +29,30 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   onUpdate,
   onRemove,
   onBulkUpdate,
+  onMoveUp,
+  onMoveDown,
   onAddCircuit,
   onBulkFieldUpdate,
   onScanBoard,
   earthingArrangement,
 }) => {
+  // ELE-857 — board-scoped boundaries so arrows disable correctly
+  const { firstOfBoardIds, lastOfBoardIds } = useMemo(() => {
+    const firstIds = new Set<string>();
+    const lastIds = new Set<string>();
+    const seen = new Set<string>();
+    const lastByBoard = new Map<string, string>();
+    testResults.forEach((c) => {
+      const b = (c as any).boardId || '__main__';
+      if (!seen.has(b)) {
+        seen.add(b);
+        firstIds.add(c.id);
+      }
+      lastByBoard.set(b, c.id);
+    });
+    lastByBoard.forEach((id) => lastIds.add(id));
+    return { firstOfBoardIds: firstIds, lastOfBoardIds: lastIds };
+  }, [testResults]);
   const [showRegulationStatus, setShowRegulationStatus] = useState(false);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(new Set());
 
@@ -350,6 +371,10 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                         onUpdate={onUpdate}
                         onRemove={onRemove}
                         onBulkUpdate={handleBulkUpdate}
+                        onMoveUp={onMoveUp}
+                        onMoveDown={onMoveDown}
+                        canMoveUp={onMoveUp ? !firstOfBoardIds.has(result.id) : false}
+                        canMoveDown={onMoveDown ? !lastOfBoardIds.has(result.id) : false}
                         showRegulationStatus={showRegulationStatus}
                         collapsedGroups={collapsedGroups}
                         rowNumber={index + 1}

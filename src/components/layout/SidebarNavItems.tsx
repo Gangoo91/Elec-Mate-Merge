@@ -26,6 +26,13 @@ export const mainNavItems: NavItem[] = [
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
   },
   {
+    name: 'Elec-AI',
+    path: '/electrician-tools/ai-tooling/assistant',
+    roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
+    badge: 'New',
+    badgeVariant: 'new',
+  },
+  {
     name: 'Mate',
     path: '/electrician/business-ai',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],

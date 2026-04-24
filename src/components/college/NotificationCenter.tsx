@@ -180,7 +180,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
           <button
             className={cn(
               'text-[12.5px] font-medium transition-colors touch-manipulation whitespace-nowrap inline-flex items-center gap-1.5',
-              open ? 'text-elec-yellow' : 'text-white/70 hover:text-white'
+              open ? 'text-elec-yellow' : 'text-white hover:text-white'
             )}
           >
             Alerts
@@ -197,7 +197,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
         >
           <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 Notifications
               </div>
               <div className="mt-0.5 text-[13px] font-semibold text-white">
@@ -206,13 +206,13 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
             </div>
             <div className="flex items-center gap-3">
               {unreadCount > 0 && (
-                <button className="text-[11.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation">
+                <button className="text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation">
                   Mark all read
                 </button>
               )}
               <button
                 onClick={() => setOpen(false)}
-                className="text-[11.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                className="text-[11.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
               >
                 Close
               </button>
@@ -223,7 +223,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
             <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06]">
               <TabsTrigger
                 value="all"
-                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
+                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
               >
                 All
                 {unreadCount > 0 && (
@@ -232,7 +232,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
               </TabsTrigger>
               <TabsTrigger
                 value="mentions"
-                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
+                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
               >
                 Mentions
                 {mentionCount > 0 && (
@@ -241,7 +241,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
               </TabsTrigger>
               <TabsTrigger
                 value="actions"
-                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
+                className="flex-1 h-10 touch-manipulation text-[12px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none inline-flex items-center gap-1.5"
               >
                 Actions
                 {actionCount > 0 && (
@@ -257,7 +257,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
                 {filteredNotifications.length === 0 ? (
                   <div className="py-12 text-center">
                     <div className="text-[13px] font-medium text-white">All caught up</div>
-                    <div className="mt-1 text-[11.5px] text-white/75">No notifications right now</div>
+                    <div className="mt-1 text-[11.5px] text-white">No notifications right now</div>
                   </div>
                 ) : (
                   <div className="divide-y divide-white/[0.06]">
@@ -306,11 +306,11 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
                               <p className="text-[13px] font-medium text-white line-clamp-1">
                                 {notification.title}
                               </p>
-                              <span className="text-[11px] text-white/70 shrink-0 tabular-nums">
+                              <span className="text-[11px] text-white shrink-0 tabular-nums">
                                 {formatTime(notification.timestamp)}
                               </span>
                             </div>
-                            <p className="text-[11.5px] text-white/75 line-clamp-2 mt-0.5 leading-relaxed">
+                            <p className="text-[11.5px] text-white line-clamp-2 mt-0.5 leading-relaxed">
                               {notification.description}
                             </p>
                             <div className="flex items-center gap-1.5 mt-2">

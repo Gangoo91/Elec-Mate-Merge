@@ -163,7 +163,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
       <motion.div variants={itemVariants}>
         <button
           onClick={onBack}
-          className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+          className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
         >
           ← Back
         </button>
@@ -192,25 +192,25 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-4">
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 Email
               </div>
               <div className="mt-1 text-[13px] text-white truncate">{student.email || '—'}</div>
             </div>
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 ULN
               </div>
               <div className="mt-1 text-[13px] text-white tabular-nums">{student.uln || '—'}</div>
             </div>
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 Course
               </div>
               <div className="mt-1 text-[13px] text-white truncate">{course?.name || '—'}</div>
             </div>
             <div>
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 Cohort
               </div>
               <div className="mt-1 text-[13px] text-white truncate">{cohort?.name || '—'}</div>
@@ -219,7 +219,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
           {student.progress_percent !== null && student.progress_percent !== undefined && (
             <div className="mt-5">
               <div className="flex items-baseline justify-between text-[11.5px]">
-                <span className="text-white/75 uppercase tracking-[0.12em]">
+                <span className="text-white uppercase tracking-[0.12em]">
                   Overall Progress
                 </span>
                 <span className="font-medium text-white tabular-nums">
@@ -294,7 +294,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
               <span className={cn('text-5xl sm:text-6xl font-semibold tabular-nums leading-none', attendanceColour)}>
                 {attendanceRate}%
               </span>
-              <span className="text-[12px] text-white/75">
+              <span className="text-[12px] text-white">
                 from {studentAttendance.length} session{studentAttendance.length !== 1 ? 's' : ''}
               </span>
             </div>
@@ -317,12 +317,12 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
                 );
               })}
               {studentAttendance.length > 20 && (
-                <span className="text-[11px] text-white/70 ml-1 tabular-nums">
+                <span className="text-[11px] text-white ml-1 tabular-nums">
                   +{studentAttendance.length - 20}
                 </span>
               )}
             </div>
-            <div className="mt-4 flex flex-wrap gap-4 text-[11px] text-white/75">
+            <div className="mt-4 flex flex-wrap gap-4 text-[11px] text-white">
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> Present
               </span>
@@ -369,7 +369,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
               />
             ))}
             {studentGrades.length > 6 && (
-              <div className="px-5 sm:px-6 py-3 text-[11.5px] text-white/70 text-center">
+              <div className="px-5 sm:px-6 py-3 text-[11.5px] text-white text-center">
                 +{studentGrades.length - 6} more grade{studentGrades.length - 6 !== 1 ? 's' : ''}
               </div>
             )}
@@ -390,7 +390,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
         ) : (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 {activeILP.targets?.length ?? 0} target
                 {(activeILP.targets?.length ?? 0) !== 1 ? 's' : ''}
               </div>
@@ -434,20 +434,20 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
                 })}
               </div>
             ) : (
-              <p className="text-[12.5px] text-white/75">No targets set</p>
+              <p className="text-[12.5px] text-white">No targets set</p>
             )}
 
             {activeILP.support_needs && (
               <div className="pt-3 border-t border-white/[0.06]">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   Support Needs
                 </div>
-                <p className="mt-1 text-[13px] text-white/70">{activeILP.support_needs}</p>
+                <p className="mt-1 text-[13px] text-white">{activeILP.support_needs}</p>
               </div>
             )}
 
             {activeILP.review_date && (
-              <div className="pt-3 border-t border-white/[0.06] text-[11.5px] text-white/75 tabular-nums">
+              <div className="pt-3 border-t border-white/[0.06] text-[11.5px] text-white tabular-nums">
                 Next review ·{' '}
                 {new Date(activeILP.review_date).toLocaleDateString('en-GB', {
                   day: 'numeric',
@@ -473,7 +473,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
         ) : (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-5">
             <div className="flex items-center justify-between">
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 Stage
               </div>
               <Pill tone="purple">{studentEPA.status}</Pill>
@@ -495,7 +495,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
                   );
                 })}
               </div>
-              <div className="mt-2 flex items-center justify-between text-[10px] uppercase tracking-[0.12em] text-white/55">
+              <div className="mt-2 flex items-center justify-between text-[10px] uppercase tracking-[0.12em] text-white">
                 {epaStages.map((stage, idx) => (
                   <span
                     key={stage}
@@ -513,7 +513,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
             <div className="pt-4 border-t border-white/[0.06] grid grid-cols-1 sm:grid-cols-3 gap-4 text-[12px]">
               {studentEPA.gateway_date && (
                 <div>
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                     Gateway
                   </div>
                   <p className="mt-1 text-white font-medium tabular-nums">
@@ -527,7 +527,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
               )}
               {studentEPA.epa_date && (
                 <div>
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                     EPA Date
                   </div>
                   <p className="mt-1 text-white font-medium tabular-nums">
@@ -541,7 +541,7 @@ export function Student360Section({ studentId, onNavigate, onBack }: Student360S
               )}
               {studentEPA.result && (
                 <div>
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                     Result
                   </div>
                   <p className="mt-1 text-white font-medium">{studentEPA.result}</p>

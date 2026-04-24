@@ -51,6 +51,7 @@ import {
   getCircuitsForBoard,
   formatBoardsForFormData,
 } from '@/utils/boardMigration';
+import { moveCircuitUp, moveCircuitDown } from '@/utils/circuitReorder';
 import BoardSection, { BoardToolCallbacks } from '../testing/BoardSection';
 import BoardManagement from '../testing/BoardManagement';
 import EnhancedTestResultDesktopTable from '../EnhancedTestResultDesktopTable';
@@ -1882,6 +1883,29 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     toast.success('Circuit restored');
   }, [lastDeleted, onUpdate]);
 
+  // ELE-857 — reorder circuits up/down within their board
+  const reorderTestResultUp = useCallback(
+    (id: string) => {
+      setTestResults((prev) => {
+        const next = moveCircuitUp(prev, id);
+        onUpdate('scheduleOfTests', next);
+        return next;
+      });
+    },
+    [onUpdate]
+  );
+
+  const reorderTestResultDown = useCallback(
+    (id: string) => {
+      setTestResults((prev) => {
+        const next = moveCircuitDown(prev, id);
+        onUpdate('scheduleOfTests', next);
+        return next;
+      });
+    },
+    [onUpdate]
+  );
+
   const removeTestResult = useCallback(
     (id: string) => {
       setTestResults((prev) => {
@@ -2598,6 +2622,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                             onRemove={removeTestResult}
                             onBulkUpdate={handleBulkUpdate}
                             onBulkFieldUpdate={handleBulkFieldUpdate}
+                            onMoveUp={reorderTestResultUp}
+                            onMoveDown={reorderTestResultDown}
                           />
                         ) : (
                           <div className="p-4">
@@ -2606,6 +2632,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                               onUpdate={updateTestResult}
                               onRemove={removeTestResult}
                               onBulkUpdate={handleBulkUpdate}
+                              onMoveUp={reorderTestResultUp}
+                              onMoveDown={reorderTestResultDown}
                               viewMode="card"
                               className="px-0"
                             />
@@ -2847,6 +2875,8 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                       onRemove={removeTestResult}
                       allResults={testResults}
                       onBulkUpdate={handleBulkUpdate}
+                      onMoveUp={reorderTestResultUp}
+                      onMoveDown={reorderTestResultDown}
                       onAddCircuit={() => addCircuitToBoard(board.id)}
                       onBulkFieldUpdate={handleBulkFieldUpdate}
                       earthingArrangement={formData.earthingArrangement as string | undefined}

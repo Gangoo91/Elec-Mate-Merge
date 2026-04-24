@@ -44,6 +44,8 @@ interface CircuitListProps {
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
+  onMoveUp?: (id: string) => void;
+  onMoveDown?: (id: string) => void;
   /** View mode */
   viewMode: 'card' | 'table';
   /** Additional class names */
@@ -59,9 +61,30 @@ export const CircuitList: React.FC<CircuitListProps> = ({
   onUpdate,
   onRemove,
   onBulkUpdate,
+  onMoveUp,
+  onMoveDown,
   viewMode,
   className = '',
 }) => {
+  // Helper: is this circuit first/last within its board?
+  // ELE-857 — arrows disable at the board boundary.
+  const { firstOfBoardIds, lastOfBoardIds } = useMemo(() => {
+    const firstIds = new Set<string>();
+    const lastIds = new Set<string>();
+    const seen = new Set<string>();
+    const lastByBoard = new Map<string, string>();
+    circuits.forEach((c) => {
+      const b = (c as any).boardId || '__main__';
+      if (!seen.has(b)) {
+        seen.add(b);
+        firstIds.add(c.id);
+      }
+      lastByBoard.set(b, c.id);
+    });
+    lastByBoard.forEach((id) => lastIds.add(id));
+    return { firstOfBoardIds: firstIds, lastOfBoardIds: lastIds };
+  }, [circuits]);
+
   const [editingCircuit, setEditingCircuit] = useState<TestResult | null>(null);
   const [editedValues, setEditedValues] = useState<Partial<TestResult>>({});
 
@@ -157,12 +180,16 @@ export const CircuitList: React.FC<CircuitListProps> = ({
             circuit={circuit}
             onEdit={handleEdit}
             onDelete={onRemove}
+            onMoveUp={onMoveUp}
+            onMoveDown={onMoveDown}
+            canMoveUp={onMoveUp ? !firstOfBoardIds.has(circuit.id) : false}
+            canMoveDown={onMoveDown ? !lastOfBoardIds.has(circuit.id) : false}
             enableSwipe={true}
           />
         </div>
       );
     },
-    [circuits, handleEdit, onRemove]
+    [circuits, handleEdit, onRemove, onMoveUp, onMoveDown, firstOfBoardIds, lastOfBoardIds]
   );
 
   if (circuits.length === 0) {
@@ -221,6 +248,10 @@ export const CircuitList: React.FC<CircuitListProps> = ({
                 circuit={circuit}
                 onEdit={handleEdit}
                 onDelete={onRemove}
+                onMoveUp={onMoveUp}
+                onMoveDown={onMoveDown}
+                canMoveUp={onMoveUp ? !firstOfBoardIds.has(circuit.id) : false}
+                canMoveDown={onMoveDown ? !lastOfBoardIds.has(circuit.id) : false}
                 enableSwipe={true}
               />
             </div>

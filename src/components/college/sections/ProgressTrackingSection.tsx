@@ -178,7 +178,7 @@ export function ProgressTrackingSection() {
                 >
                   <div className="min-w-0 flex-1">
                     <div className="text-[14px] font-medium text-white truncate">{cohort.name}</div>
-                    <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                    <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                       {cohort.studentCount} students
                     </div>
                   </div>
@@ -205,7 +205,7 @@ export function ProgressTrackingSection() {
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 flex items-start gap-4">
               <span aria-hidden className="w-[3px] h-10 rounded-full bg-red-400 shrink-0" />
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Immediate attention
                 </div>
                 <div className="mt-1 text-[15px] font-medium text-white">
@@ -218,7 +218,7 @@ export function ProgressTrackingSection() {
                     </Pill>
                   ))}
                   {studentsAtRisk.length > 8 && (
-                    <span className="text-[11px] text-white/70 px-1.5 py-1">
+                    <span className="text-[11px] text-white px-1.5 py-1">
                       +{studentsAtRisk.length - 8}
                     </span>
                   )}
@@ -245,7 +245,7 @@ export function ProgressTrackingSection() {
               <select
                 value={filterCohort}
                 onChange={(e) => setFilterCohort(e.target.value)}
-                className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
               >
                 <option value="all">All Cohorts</option>
                 {cohorts
@@ -285,7 +285,7 @@ export function ProgressTrackingSection() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
                         <div className="flex items-baseline justify-between text-[10.5px]">
-                          <span className="text-white/55 uppercase tracking-[0.12em]">
+                          <span className="text-white uppercase tracking-[0.12em]">
                             Progress
                           </span>
                           <Pill tone={progressTone(data.overallProgress)}>
@@ -301,7 +301,7 @@ export function ProgressTrackingSection() {
                       </div>
                       <div>
                         <div className="flex items-baseline justify-between text-[10.5px]">
-                          <span className="text-white/55 uppercase tracking-[0.12em]">
+                          <span className="text-white uppercase tracking-[0.12em]">
                             Attendance
                           </span>
                           <Pill tone={progressTone(data.attendanceRate)}>
@@ -316,7 +316,7 @@ export function ProgressTrackingSection() {
                         </div>
                       </div>
                       {data.expected_end_date && (
-                        <div className="col-span-full text-[11px] text-white/55 tabular-nums">
+                        <div className="col-span-full text-[11px] text-white tabular-nums">
                           Due{' '}
                           {new Date(data.expected_end_date).toLocaleDateString('en-GB', {
                             month: 'short',

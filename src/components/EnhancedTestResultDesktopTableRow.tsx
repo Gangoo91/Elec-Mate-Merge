@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { TableRow, TableCell } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Trash2, CheckCircle, XCircle, AlertTriangle } from 'lucide-react';
+import { Trash2, CheckCircle, XCircle, AlertTriangle, ChevronUp, ChevronDown } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { validateTestResult } from '@/utils/testValidation';
 import EnhancedRegulationWarningDialog from './EnhancedRegulationWarningDialog';
@@ -33,6 +33,10 @@ interface EnhancedTestResultDesktopTableRowProps {
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
+  onMoveUp?: (id: string) => void;
+  onMoveDown?: (id: string) => void;
+  canMoveUp?: boolean;
+  canMoveDown?: boolean;
   showRegulationStatus?: boolean;
   collapsedGroups: Set<string>;
   rowNumber: number;
@@ -44,6 +48,10 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   onUpdate,
   onRemove,
   onBulkUpdate,
+  onMoveUp,
+  onMoveDown,
+  canMoveUp = false,
+  canMoveDown = false,
   showRegulationStatus = false,
   collapsedGroups,
   rowNumber,
@@ -263,6 +271,31 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
         {/* Actions Column */}
         <TableCell className="text-center h-8 p-1">
           <div className="flex items-center gap-1 justify-center">
+            {/* ELE-857 — move up/down */}
+            {onMoveUp && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onMoveUp(result.id)}
+                disabled={!canMoveUp}
+                className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
+                title="Move circuit up"
+              >
+                <ChevronUp className="h-4 w-4" />
+              </Button>
+            )}
+            {onMoveDown && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onMoveDown(result.id)}
+                disabled={!canMoveDown}
+                className="h-7 w-7 p-0 text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors disabled:opacity-25 disabled:cursor-not-allowed"
+                title="Move circuit down"
+              >
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            )}
             {onBulkUpdate && (
               <Button
                 variant="ghost"
@@ -306,6 +339,10 @@ const arePropsEqual = (
   if (prev.onUpdate !== next.onUpdate) return false;
   if (prev.onRemove !== next.onRemove) return false;
   if (prev.onBulkUpdate !== next.onBulkUpdate) return false;
+  if (prev.onMoveUp !== next.onMoveUp) return false;
+  if (prev.onMoveDown !== next.onMoveDown) return false;
+  if (prev.canMoveUp !== next.canMoveUp) return false;
+  if (prev.canMoveDown !== next.canMoveDown) return false;
   if (prev.showRegulationStatus !== next.showRegulationStatus) return false;
   if (prev.rowNumber !== next.rowNumber) return false;
   // Deep compare Sets: same size and same entries

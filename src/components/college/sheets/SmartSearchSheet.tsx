@@ -9,7 +9,12 @@ import type {
   CollegeCohort,
 } from '@/contexts/CollegeSupabaseContext';
 import { getInitials, getRoleLabel } from '@/utils/collegeHelpers';
-import { Pill, type Tone } from '@/components/college/primitives';
+import {
+  Pill,
+  Eyebrow,
+  EmptyState,
+  type Tone,
+} from '@/components/college/primitives';
 
 const RECENT_SEARCHES_KEY = 'elecmate_college_recent_searches';
 const MAX_RECENT = 5;
@@ -34,8 +39,6 @@ function statusTone(status: string): Tone {
   if (s.includes('withdrawn') || s.includes('inactive') || s.includes('fail')) return 'red';
   return 'yellow';
 }
-
-const eyebrow = 'text-[10px] font-medium uppercase tracking-[0.16em] text-white/55';
 
 export function SmartSearchSheet({
   open,
@@ -128,14 +131,15 @@ export function SmartSearchSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)]">
-        <div className="flex flex-col h-full">
-          {/* Drag Handle */}
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+      >
+        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          {/* Search Header */}
           <SheetHeader className="flex-shrink-0 px-5 pb-4">
             <SheetTitle className="sr-only">Search People</SheetTitle>
             <div className="relative">
@@ -159,16 +163,14 @@ export function SmartSearchSheet({
             </div>
           </SheetHeader>
 
-          {/* Results */}
           <div className="flex-1 overflow-y-auto overscroll-contain px-5 pb-5">
-            {/* No query — show recent searches */}
             {!query.trim() && recentSearches.length > 0 && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <div className={eyebrow}>Recent Searches</div>
+                  <Eyebrow>Recent Searches</Eyebrow>
                   <button
                     type="button"
-                    className="text-[12px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                    className="text-[12px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
                     onClick={clearRecentSearches}
                   >
                     Clear
@@ -177,7 +179,7 @@ export function SmartSearchSheet({
                 {recentSearches.map((recent) => (
                   <button
                     key={recent.timestamp}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation transition-colors"
+                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.08] touch-manipulation transition-colors"
                     onClick={() => setQuery(recent.query)}
                   >
                     <span className="inline-block h-1.5 w-1.5 rounded-full bg-white/30 shrink-0" />
@@ -187,37 +189,29 @@ export function SmartSearchSheet({
               </div>
             )}
 
-            {/* No query, no recent */}
             {!query.trim() && recentSearches.length === 0 && (
-              <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-14 text-center">
-                <div className="text-[14px] font-medium text-white">Search everyone</div>
-                <p className="mt-2 text-[12.5px] text-white/75 max-w-md mx-auto leading-relaxed">
-                  Find students, staff, or cohorts by name, email, or ULN
-                </p>
-              </div>
+              <EmptyState
+                title="Search everyone"
+                description="Find students, staff, or cohorts by name, email, or ULN"
+              />
             )}
 
-            {/* Results with query */}
             {query.trim() && (
               <div className="space-y-5">
-                {/* No results */}
                 {totalResults === 0 && (
-                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 text-center">
-                    <div className="text-[13px] text-white">No results for "{query}"</div>
-                  </div>
+                  <EmptyState title={`No results for "${query}"`} />
                 )}
 
-                {/* Students */}
                 {results.students.length > 0 && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <div className={eyebrow}>Students</div>
+                      <Eyebrow>Students</Eyebrow>
                       <Pill tone="yellow">{results.students.length}</Pill>
                     </div>
                     {results.students.map((student) => (
                       <button
                         key={student.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation transition-colors"
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.08] touch-manipulation transition-colors"
                         onClick={() => handleSelectStudent(student)}
                       >
                         <Avatar className="h-9 w-9 shrink-0">
@@ -230,7 +224,7 @@ export function SmartSearchSheet({
                           <p className="text-[13px] font-medium text-white truncate">
                             {student.name}
                           </p>
-                          <p className="text-[11.5px] text-white/75 truncate">{student.email}</p>
+                          <p className="text-[11.5px] text-white truncate">{student.email}</p>
                         </div>
                         <Pill tone={statusTone(student.status)}>{student.status}</Pill>
                       </button>
@@ -238,17 +232,16 @@ export function SmartSearchSheet({
                   </div>
                 )}
 
-                {/* Staff */}
                 {results.staff.length > 0 && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <div className={eyebrow}>Staff</div>
+                      <Eyebrow>Staff</Eyebrow>
                       <Pill tone="blue">{results.staff.length}</Pill>
                     </div>
                     {results.staff.map((member) => (
                       <button
                         key={member.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation transition-colors"
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.08] touch-manipulation transition-colors"
                         onClick={() => handleSelectStaff(member)}
                       >
                         <Avatar className="h-9 w-9 shrink-0">
@@ -261,7 +254,7 @@ export function SmartSearchSheet({
                           <p className="text-[13px] font-medium text-white truncate">
                             {member.name}
                           </p>
-                          <p className="text-[11.5px] text-white/75 truncate">
+                          <p className="text-[11.5px] text-white truncate">
                             {getRoleLabel(member.role)} — {member.department}
                           </p>
                         </div>
@@ -271,17 +264,16 @@ export function SmartSearchSheet({
                   </div>
                 )}
 
-                {/* Cohorts */}
                 {results.cohorts.length > 0 && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <div className={eyebrow}>Cohorts</div>
+                      <Eyebrow>Cohorts</Eyebrow>
                       <Pill tone="green">{results.cohorts.length}</Pill>
                     </div>
                     {results.cohorts.map((cohort) => (
                       <button
                         key={cohort.id}
-                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.06] touch-manipulation transition-colors"
+                        className="w-full flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] border border-white/[0.08] touch-manipulation transition-colors"
                         onClick={() => handleSelectCohort(cohort)}
                       >
                         <div className="h-9 w-9 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center shrink-0">

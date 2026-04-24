@@ -188,7 +188,7 @@ export function SupportStaffSection() {
                       titleChips={<Pill tone="cyan">{getRoleLabel(member.role)}</Pill>}
                       subtitle={member.department ?? getRoleLabel(member.role)}
                       meta={
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11.5px] text-white/70">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11.5px] text-white">
                           <span className="truncate max-w-[220px]">{member.email}</span>
                           {member.phone && <span>{member.phone}</span>}
                           {member.assessor_qual && (
@@ -232,7 +232,7 @@ export function SupportStaffSection() {
           initial={{ y: 80, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
-          className="fixed bottom-0 inset-x-0 z-50 p-4 bg-background/95 backdrop-blur-sm border-t border-white/[0.06]"
+          className="fixed bottom-0 inset-x-0 z-50 p-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm border-t border-white/[0.06]"
         >
           <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
             <p className="text-sm text-white font-medium tabular-nums">
@@ -240,7 +240,7 @@ export function SupportStaffSection() {
             </p>
             <button
               onClick={exitBatchMode}
-              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+              className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
             >
               Cancel
             </button>

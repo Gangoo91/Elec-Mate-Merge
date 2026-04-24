@@ -97,6 +97,42 @@ export interface GeneratedDifferentiation {
   eal?: string[];
 }
 
+export type BritishValue =
+  | 'democracy'
+  | 'rule_of_law'
+  | 'individual_liberty'
+  | 'mutual_respect'
+  | 'tolerance_of_faiths_beliefs';
+
+export interface GeneratedBritishValue {
+  value: BritishValue;
+  how_embedded: string;
+  activity_ref: string;
+}
+
+export interface GeneratedStretchChallenge {
+  title: string;
+  task: string;
+  target_learner: string;
+  bloom_level: 'apply' | 'analyse' | 'evaluate' | 'create';
+}
+
+export type InclusivePracticeNeed =
+  | 'send'
+  | 'eal'
+  | 'ehcp'
+  | 'neurodivergent'
+  | 'prior_attainment_low'
+  | 'prior_attainment_high'
+  | 'physical_access'
+  | 'other';
+
+export interface GeneratedInclusivePractice {
+  need: InclusivePracticeNeed;
+  strategy: string;
+  activity_ref: string;
+}
+
 export interface GeneratedLessonPlan {
   title: string;
   duration_mins: number;
@@ -112,6 +148,9 @@ export interface GeneratedLessonPlan {
   vocabulary?: GeneratedVocabulary[];
   activities: GeneratedActivity[];
   assessment_for_learning: string[];
+  british_values?: GeneratedBritishValue[];
+  stretch_challenge?: GeneratedStretchChallenge[];
+  inclusive_practice?: GeneratedInclusivePractice[];
   differentiation?: GeneratedDifferentiation;
   health_safety?: { risk: string; control: string; reg_ref: string }[];
   homework?: { description: string; estimated_mins: number };
@@ -735,6 +774,9 @@ export type RefinableSectionKey =
   | 'vocabulary'
   | 'learning_objectives'
   | 'assessment_for_learning'
+  | 'british_values'
+  | 'stretch_challenge'
+  | 'inclusive_practice'
   | 'next_lesson_hint';
 
 export interface RefineInput {

@@ -8,9 +8,12 @@ import type { CollegeStaff } from '@/contexts/CollegeSupabaseContext';
 import { getInitials, getRoleLabel, formatUKDateShort } from '@/utils/collegeHelpers';
 import {
   ListCard,
-  ListRow,
   Pill,
   EmptyState,
+  FormCard,
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -69,13 +72,16 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+      >
+        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-5">
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.08] px-5 pb-5">
             <div className="flex items-start gap-4">
               <Avatar className="h-16 w-16 shrink-0 ring-1 ring-white/[0.08]">
                 <AvatarImage src={staff.photo_url ?? undefined} />
@@ -85,11 +91,9 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
               </Avatar>
 
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                  Staff
-                </div>
-                <SheetTitle className="mt-1 text-xl text-left">{staff.name}</SheetTitle>
-                <p className="mt-0.5 text-[11.5px] text-white/75">{staff.department || 'No department'}</p>
+                <Eyebrow>Staff</Eyebrow>
+                <SheetTitle className="mt-1 text-xl text-left text-white">{staff.name}</SheetTitle>
+                <p className="mt-0.5 text-[11.5px] text-white">{staff.department || 'No department'}</p>
                 <div className="flex flex-wrap gap-1.5 mt-3">
                   <Pill tone={statusTone}>{staff.status}</Pill>
                   <Pill tone="blue">{getRoleLabel(staff.role)}</Pill>
@@ -106,14 +110,14 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
               {staff.phone && (
                 <a
                   href={`tel:${staff.phone}`}
-                  className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                  className="text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
                 >
                   Call
                 </a>
               )}
               <a
                 href={`mailto:${staff.email}`}
-                className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                className="text-[12.5px] font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
               >
                 Email
               </a>
@@ -125,12 +129,12 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
             onValueChange={setActiveTab}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06] flex-shrink-0">
+            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.08] flex-shrink-0">
               {['details', 'cohorts', 'notes'].map((tab) => (
                 <TabsTrigger
                   key={tab}
                   value={tab}
-                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
+                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
                 >
                   {tab}
                 </TabsTrigger>
@@ -149,14 +153,10 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                     transition={{ duration: 0.2 }}
                     className="p-5 space-y-5"
                   >
-                    {/* Contact */}
-                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                        Contact
-                      </div>
-                      <div className="mt-3 space-y-2 text-[13px]">
+                    <FormCard eyebrow="Contact">
+                      <div className="space-y-2 text-[13px]">
                         <div className="flex items-center justify-between">
-                          <span className="text-white/75">Email</span>
+                          <span className="text-white">Email</span>
                           <a
                             href={`mailto:${staff.email}`}
                             className="text-white hover:text-elec-yellow truncate ml-3 max-w-[60%]"
@@ -166,7 +166,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                         </div>
                         {staff.phone && (
                           <div className="flex items-center justify-between">
-                            <span className="text-white/75">Phone</span>
+                            <span className="text-white">Phone</span>
                             <a
                               href={`tel:${staff.phone}`}
                               className="text-white hover:text-elec-yellow tabular-nums"
@@ -176,37 +176,31 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           </div>
                         )}
                         <div className="flex items-center justify-between">
-                          <span className="text-white/75">Department</span>
+                          <span className="text-white">Department</span>
                           <span className="text-white">{staff.department || '—'}</span>
                         </div>
                         {staff.max_teaching_hours && (
                           <div className="flex items-center justify-between">
-                            <span className="text-white/75">Max hours</span>
+                            <span className="text-white">Max hours</span>
                             <span className="text-white tabular-nums">
                               {staff.max_teaching_hours}h/week
                             </span>
                           </div>
                         )}
                       </div>
-                    </div>
+                    </FormCard>
 
-                    {/* Qualifications */}
-                    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                      <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                        Qualifications
-                      </div>
+                    <FormCard eyebrow="Qualifications">
                       {!staff.teaching_qual && !staff.assessor_qual && !staff.iqa_qual ? (
-                        <p className="mt-3 text-[12.5px] text-white/75">
+                        <p className="text-[12.5px] text-white">
                           No qualifications recorded.
                         </p>
                       ) : (
-                        <div className="mt-3 space-y-3">
+                        <div className="space-y-3">
                           {staff.teaching_qual && (
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
-                                  Teaching
-                                </div>
+                                <Eyebrow>Teaching</Eyebrow>
                                 <div className="mt-0.5 text-[13px] text-white">
                                   {staff.teaching_qual}
                                 </div>
@@ -217,9 +211,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           {staff.assessor_qual && (
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
-                                  Assessor
-                                </div>
+                                <Eyebrow>Assessor</Eyebrow>
                                 <div className="mt-0.5 text-[13px] text-white">
                                   {staff.assessor_qual}
                                 </div>
@@ -230,9 +222,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           {staff.iqa_qual && (
                             <div className="flex items-center justify-between">
                               <div>
-                                <div className="text-[10px] uppercase tracking-[0.12em] text-white/55">
-                                  IQA
-                                </div>
+                                <Eyebrow>IQA</Eyebrow>
                                 <div className="mt-0.5 text-[13px] text-white">{staff.iqa_qual}</div>
                               </div>
                               <Pill tone="amber">Verified</Pill>
@@ -240,24 +230,19 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           )}
                         </div>
                       )}
-                    </div>
+                    </FormCard>
 
-                    {/* Specialisations */}
                     {staff.specialisations && staff.specialisations.length > 0 && (
-                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-3">
-                          Specialisations
-                        </div>
+                      <FormCard eyebrow="Specialisations">
                         <div className="flex flex-wrap gap-1.5">
                           {staff.specialisations.map((spec, i) => (
                             <Pill key={i} tone="yellow">{spec}</Pill>
                           ))}
                         </div>
-                      </div>
+                      </FormCard>
                     )}
 
-                    {/* Summary */}
-                    <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+                    <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden">
                       {[
                         { label: 'Active Cohorts', value: activeCohorts.length },
                         { label: 'Students', value: totalStudents },
@@ -273,7 +258,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                           <div className="text-2xl font-semibold tabular-nums text-white leading-none">
                             {stat.value}
                           </div>
-                          <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-white/55">
+                          <div className="mt-2 text-[10px] uppercase tracking-[0.14em] text-white">
                             {stat.label}
                           </div>
                         </div>
@@ -319,7 +304,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                                 </div>
                                 <div className="mt-2">
                                   <div className="flex items-baseline justify-between text-[11px]">
-                                    <span className="text-white/75 uppercase tracking-[0.12em]">
+                                    <span className="text-white uppercase tracking-[0.12em]">
                                       Capacity
                                     </span>
                                     <span className="font-medium text-white tabular-nums">
@@ -333,7 +318,7 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
                                     />
                                   </div>
                                 </div>
-                                <div className="mt-2 text-[11px] text-white/75 tabular-nums">
+                                <div className="mt-2 text-[11px] text-white tabular-nums">
                                   {formatUKDateShort(cohort.start_date)} →{' '}
                                   {formatUKDateShort(cohort.end_date)}
                                 </div>
@@ -366,24 +351,16 @@ export function StaffDetailSheet({ staff, open, onOpenChange, onEdit }: StaffDet
             </div>
           </Tabs>
 
-          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-5 flex-row items-center justify-end gap-4">
-            <button
-              onClick={() => onOpenChange(false)}
-              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-            >
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.08] p-5 flex-row items-center justify-end gap-4">
+            <SecondaryButton onClick={() => onOpenChange(false)}>
               Close
-            </button>
+            </SecondaryButton>
             {staff.status === 'Active' && (
-              <button className="text-[12.5px] font-medium text-amber-400 hover:text-amber-300 transition-colors touch-manipulation">
-                Archive
-              </button>
+              <SecondaryButton>Archive</SecondaryButton>
             )}
-            <button
-              onClick={() => onEdit?.(staff)}
-              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 transition-opacity touch-manipulation"
-            >
+            <PrimaryButton onClick={() => onEdit?.(staff)}>
               Edit →
-            </button>
+            </PrimaryButton>
           </SheetFooter>
         </div>
       </SheetContent>

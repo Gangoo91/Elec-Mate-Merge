@@ -222,7 +222,7 @@ const AcceptableUse = () => {
           <p className="text-gray-300 mb-3">For questions about this policy:</p>
           <div className="p-4 rounded-xl bg-white/5 border border-white/10">
             <p className="text-white font-medium">Elec-Mate Support</p>
-            <p className="text-gray-400 text-sm">Email: support@elec-mate.com</p>
+            <p className="text-gray-400 text-sm">Email: info@elec-mate.com</p>
           </div>
         </section>
       </div>

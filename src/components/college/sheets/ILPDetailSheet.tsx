@@ -12,6 +12,10 @@ import {
   ListRow,
   Pill,
   EmptyState,
+  FormCard,
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
   type Tone,
 } from '@/components/college/primitives';
 
@@ -79,13 +83,16 @@ export function ILPDetailSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
-        <div className="flex flex-col h-full bg-background">
+      <SheetContent
+        side="bottom"
+        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
+      >
+        <div className="flex flex-col h-full bg-[hsl(0_0%_8%)]">
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
             <div className="h-1 w-10 rounded-full bg-white/20" />
           </div>
 
-          <SheetHeader className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-5">
+          <SheetHeader className="flex-shrink-0 border-b border-white/[0.08] px-5 pb-5">
             {isLoading ? (
               <div className="flex items-center gap-4">
                 <div className="h-14 w-14 rounded-full bg-white/[0.04] animate-pulse" />
@@ -103,10 +110,8 @@ export function ILPDetailSheet({
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                    Individual Learning Plan
-                  </div>
-                  <SheetTitle className="mt-1 text-xl text-left">
+                  <Eyebrow>Individual Learning Plan</Eyebrow>
+                  <SheetTitle className="mt-1 text-xl text-left text-white">
                     {student?.name ?? 'Unknown Student'}
                   </SheetTitle>
                   <div className="flex flex-wrap gap-1.5 mt-3">
@@ -127,12 +132,12 @@ export function ILPDetailSheet({
             onValueChange={setActiveTab}
             className="flex-1 flex flex-col overflow-hidden"
           >
-            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.06] flex-shrink-0">
+            <TabsList className="w-full justify-start gap-0 h-auto p-0 bg-transparent rounded-none border-b border-white/[0.08] flex-shrink-0">
               {['targets', 'support', 'history'].map((tab) => (
                 <TabsTrigger
                   key={tab}
                   value={tab}
-                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white/60 data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
+                  className="flex-1 h-11 touch-manipulation text-[12.5px] font-medium text-white data-[state=active]:text-elec-yellow data-[state=active]:bg-transparent rounded-none capitalize"
                 >
                   {tab}
                 </TabsTrigger>
@@ -193,11 +198,8 @@ export function ILPDetailSheet({
                     {isLoading ? (
                       <div className="h-20 bg-white/[0.04] animate-pulse rounded-xl" />
                     ) : ilp?.support_needs ? (
-                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                          Support Needs
-                        </div>
-                        <div className="mt-3 flex flex-wrap gap-1.5">
+                      <FormCard eyebrow="Support Needs">
+                        <div className="flex flex-wrap gap-1.5">
                           {ilp.support_needs
                             .split(',')
                             .map((need) => need.trim())
@@ -206,7 +208,7 @@ export function ILPDetailSheet({
                               <Pill key={i} tone="yellow">{need}</Pill>
                             ))}
                         </div>
-                      </div>
+                      </FormCard>
                     ) : (
                       <EmptyState
                         title="No support needs recorded"
@@ -233,18 +235,14 @@ export function ILPDetailSheet({
                         ))}
                       </div>
                     ) : (
-                      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-                        <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55 mb-5">
-                          Timeline
-                        </div>
-
+                      <FormCard eyebrow="Timeline">
                         <div className="relative pl-6 space-y-5">
                           <div className="absolute left-[5px] top-1 bottom-1 w-px bg-white/[0.08]" />
 
                           <div className="relative">
                             <div className="absolute -left-6 top-1 h-2.5 w-2.5 rounded-full bg-elec-yellow" />
                             <div className="text-[13px] font-medium text-white">ILP created</div>
-                            <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                            <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                               {formatUKDateShort(ilp?.created_at)}
                             </div>
                           </div>
@@ -255,7 +253,7 @@ export function ILPDetailSheet({
                               <div className="text-[13px] font-medium text-white">
                                 Last reviewed
                               </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                              <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                                 {formatUKDateShort(ilp.last_reviewed)}
                                 {reviewer && ` · ${reviewer.name}`}
                               </div>
@@ -268,7 +266,7 @@ export function ILPDetailSheet({
                               <div className="text-[13px] font-medium text-white">
                                 Next review due
                               </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/75 tabular-nums">
+                              <div className="mt-0.5 text-[11.5px] text-white tabular-nums">
                                 {formatUKDateShort(ilp.review_date)}
                               </div>
                               {new Date(ilp.review_date) < new Date() && (
@@ -279,7 +277,7 @@ export function ILPDetailSheet({
                             </div>
                           )}
                         </div>
-                      </div>
+                      </FormCard>
                     )}
                   </motion.div>
                 )}
@@ -287,27 +285,22 @@ export function ILPDetailSheet({
             </div>
           </Tabs>
 
-          <SheetFooter className="flex-shrink-0 border-t border-white/[0.06] p-5 flex-row items-center justify-end gap-4">
-            <button
-              onClick={() => onOpenChange(false)}
-              className="text-[12.5px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
-            >
+          <SheetFooter className="flex-shrink-0 border-t border-white/[0.08] p-5 flex-row items-center justify-end gap-4">
+            <SecondaryButton onClick={() => onOpenChange(false)}>
               Close
-            </button>
-            <button
+            </SecondaryButton>
+            <SecondaryButton
               onClick={() => onEditTargets?.(ilpId)}
               disabled={isLoading || !ilp}
-              className="text-[12.5px] font-medium text-white/70 hover:text-white disabled:opacity-40 transition-colors touch-manipulation"
             >
               Edit targets
-            </button>
-            <button
+            </SecondaryButton>
+            <PrimaryButton
               onClick={() => onConductReview?.(ilpId)}
               disabled={isLoading || !ilp}
-              className="h-11 px-5 bg-elec-yellow text-black rounded-full text-[13px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
             >
               Conduct review →
-            </button>
+            </PrimaryButton>
           </SheetFooter>
         </div>
       </SheetContent>

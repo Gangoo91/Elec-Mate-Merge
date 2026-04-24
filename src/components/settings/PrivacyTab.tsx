@@ -233,7 +233,7 @@ const PrivacyTab = () => {
       haptic.error();
       addNotification({
         title: 'Deletion Failed',
-        message: 'Could not delete your account. Please contact privacy@elec-mate.com',
+        message: 'Could not delete your account. Please contact info@elec-mate.com',
         type: 'error',
       });
       setIsDeleting(false);
@@ -242,7 +242,7 @@ const PrivacyTab = () => {
   };
 
   const openMailto = (subject: string, body?: string) => {
-    const url = `mailto:privacy@elec-mate.com?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ''}`;
+    const url = `mailto:info@elec-mate.com?subject=${encodeURIComponent(subject)}${body ? `&body=${encodeURIComponent(body)}` : ''}`;
     openExternalUrl(url);
   };
 
@@ -420,10 +420,10 @@ const PrivacyTab = () => {
               <div className="mt-2 px-1 text-[11.5px] text-white/65 leading-relaxed">
                 To exercise any right, contact{' '}
                 <button
-                  onClick={() => openExternalUrl('mailto:privacy@elec-mate.com')}
+                  onClick={() => openExternalUrl('mailto:info@elec-mate.com')}
                   className="text-elec-yellow hover:underline touch-manipulation"
                 >
-                  privacy@elec-mate.com
+                  info@elec-mate.com
                 </button>
                 . We respond within one month as required by law.
               </div>
@@ -562,7 +562,7 @@ const PrivacyTab = () => {
                 </ul>
                 <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[13px]">
                   Your data will be permanently removed within 30 days. You have a grace period to
-                  contact privacy@elec-mate.com to cancel.
+                  contact info@elec-mate.com to cancel.
                 </div>
                 <p className="text-[13px]">
                   Type{' '}

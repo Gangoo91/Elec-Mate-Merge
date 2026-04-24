@@ -10,6 +10,14 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useDraftOneToOne } from '@/hooks/useDraftOneToOne';
+import {
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  fieldLabelClass,
+  inputClass,
+  textareaClass,
+} from '@/components/college/primitives';
 
 export type NoteKind =
   | 'note'
@@ -289,7 +297,7 @@ export function AddPastoralNoteDialog({
           <DialogTitle className="text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
             Record about {studentName}
           </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white/70 leading-relaxed">
+          <DialogDescription className="text-[12.5px] text-white leading-relaxed">
             Notes help you and colleagues build the picture. Safeguarding
             entries are restricted to designated leads.
           </DialogDescription>
@@ -298,9 +306,7 @@ export function AddPastoralNoteDialog({
         <div className="flex-1 overflow-y-auto px-6 sm:px-7 py-5 space-y-5">
           {/* Kind */}
           <div>
-            <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65 mb-2.5">
-              Kind
-            </div>
+            <label className={fieldLabelClass}>Kind</label>
             <div className="flex flex-wrap gap-1.5">
               {KIND_CHIPS.map((k) => (
                 <button
@@ -317,7 +323,7 @@ export function AddPastoralNoteDialog({
                           : k.key === 'praise'
                             ? 'bg-emerald-500/[0.08] border-emerald-500/30 text-emerald-200 font-medium'
                             : 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow font-medium'
-                      : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/80 hover:text-white hover:border-white/[0.18]'
+                      : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
                   )}
                 >
                   {k.label}
@@ -327,25 +333,20 @@ export function AddPastoralNoteDialog({
           </div>
 
           {/* Title (optional) */}
-          <div>
-            <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65 mb-2">
-              Title (optional)
-            </div>
+          <Field label="Title (optional)">
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. Late to lesson, catch-up agreed"
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 transition-colors"
+              className={inputClass}
             />
-          </div>
+          </Field>
 
           {/* Body */}
           <div>
-            <div className="flex items-center justify-between gap-3 mb-2">
-              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65">
-                Detail
-              </div>
+            <div className="flex items-center justify-between gap-3 mb-1.5">
+              <label className={fieldLabelClass}>Detail</label>
               {/* AI-draft button — available for kinds where a pre-filled
                   body saves the tutor real time. */}
               {(kind === 'one_to_one' ||
@@ -394,10 +395,7 @@ export function AddPastoralNoteDialog({
               onChange={(e) => setBody(e.target.value)}
               placeholder={meta.placeholder}
               rows={6}
-              className={cn(
-                'w-full bg-[hsl(0_0%_13%)] border rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 transition-colors resize-y min-h-[200px]',
-                drafting ? 'border-elec-yellow/30' : 'border-white/[0.08]'
-              )}
+              className={cn(textareaClass, 'min-h-[200px]', drafting && 'border-elec-yellow/30')}
             />
             {drafting && (
               <div className="mt-1.5 text-[11px] text-elec-yellow/80 flex items-center gap-2">
@@ -410,36 +408,28 @@ export function AddPastoralNoteDialog({
 
           {/* Action (optional) */}
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_180px] gap-3">
-            <div>
-              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65 mb-2">
-                Action (optional)
-              </div>
+            <Field label="Action (optional)">
               <input
                 type="text"
                 value={actionRequired}
                 onChange={(e) => setActionRequired(e.target.value)}
                 placeholder="e.g. Book catch-up session on Thursday"
-                className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 transition-colors"
+                className={inputClass}
               />
-            </div>
-            <div>
-              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65 mb-2">
-                By date
-              </div>
+            </Field>
+            <Field label="By date">
               <input
                 type="date"
                 value={actionByDate}
                 onChange={(e) => setActionByDate(e.target.value)}
-                className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white focus:outline-none focus:border-elec-yellow/60 transition-colors"
+                className={inputClass}
               />
-            </div>
+            </Field>
           </div>
 
           {/* Visibility */}
           <div>
-            <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-white/65 mb-2.5">
-              Visibility
-            </div>
+            <label className={fieldLabelClass}>Visibility</label>
             {isSafeguarding ? (
               <div className="bg-red-500/[0.05] border border-red-500/25 rounded-xl px-4 py-3 text-[12.5px] text-red-200 leading-relaxed">
                 Safeguarding entries are visible to designated leads only. This
@@ -456,7 +446,7 @@ export function AddPastoralNoteDialog({
                       'h-8 px-3 rounded-full text-[12px] border transition-colors',
                       visibility === v
                         ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow font-medium'
-                        : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/80 hover:text-white hover:border-white/[0.18]'
+                        : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:border-white/[0.18]'
                     )}
                   >
                     {v === 'author_only'
@@ -473,22 +463,22 @@ export function AddPastoralNoteDialog({
 
         {/* Footer */}
         <div className="shrink-0 border-t border-white/[0.06] bg-[hsl(0_0%_10%)] px-6 py-4 sm:px-7 sm:py-5 flex items-center justify-end gap-2 flex-col-reverse sm:flex-row">
-          <button
-            type="button"
+          <SecondaryButton
             onClick={() => onOpenChange(false)}
             disabled={saving}
-            className="h-11 w-full sm:w-auto px-5 rounded-full border border-white/[0.12] text-[13px] font-medium text-white hover:bg-white/[0.06] transition-colors disabled:opacity-40"
+            fullWidth
+            className="sm:w-auto"
           >
             Cancel
-          </button>
-          <button
-            type="button"
+          </SecondaryButton>
+          <PrimaryButton
             onClick={handleSave}
             disabled={!canSave}
-            className="h-11 w-full sm:w-auto px-6 rounded-full bg-elec-yellow hover:bg-elec-yellow/90 text-black text-[13px] font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            fullWidth
+            className="sm:w-auto"
           >
             {saving ? 'Saving…' : `Save ${meta.label.toLowerCase()}`}
-          </button>
+          </PrimaryButton>
         </div>
       </DialogContent>
     </Dialog>

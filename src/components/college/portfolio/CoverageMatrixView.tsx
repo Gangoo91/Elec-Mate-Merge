@@ -97,7 +97,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                     : 'inline-block h-1.5 w-1.5 rounded-full bg-purple-400'
               }
             />
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               {title}
             </div>
           </div>
@@ -121,7 +121,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
             >
               <div className="flex items-center gap-2 flex-1 min-w-0">
                 <Pill tone="indigo">{ksb.ksbCode}</Pill>
-                <span className="text-[13px] text-white/70 truncate">{ksb.ksbTitle}</span>
+                <span className="text-[13px] text-white truncate">{ksb.ksbTitle}</span>
               </div>
               <Pill tone={getKSBMappingTone(ksb.mappingStatus)}>
                 {ksb.mappingStatus === 'verified'
@@ -133,7 +133,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
             </div>
           ))}
           {items.length === 0 && (
-            <p className="text-center text-white/70 py-4 text-[12.5px]">
+            <p className="text-center text-white py-4 text-[12.5px]">
               No {title.toLowerCase()} mapped yet
             </p>
           )}
@@ -151,7 +151,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
             <h3 className="text-xl font-semibold text-white tracking-tight">{studentName}</h3>
           )}
           {qualificationTitle && (
-            <p className="mt-1 text-[13px] text-white/55">{qualificationTitle}</p>
+            <p className="mt-1 text-[13px] text-white">{qualificationTitle}</p>
           )}
         </div>
       )}
@@ -179,13 +179,13 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
         <TabsList className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full p-1 h-auto">
           <TabsTrigger
             value="categories"
-            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
           >
             Unit Coverage
           </TabsTrigger>
           <TabsTrigger
             value="ksbs"
-            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white/70"
+            className="rounded-full px-4 py-1.5 text-[12.5px] font-medium data-[state=active]:bg-elec-yellow data-[state=active]:text-black text-white"
           >
             KSB Mapping
           </TabsTrigger>
@@ -196,7 +196,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
             eyebrow="Units"
             title="Qualification Unit Coverage"
           />
-          <p className="text-[13px] text-white/55">
+          <p className="text-[13px] text-white">
             Track evidence coverage across all qualification units
           </p>
 
@@ -214,16 +214,16 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                       <div className="text-[15px] font-medium text-white truncate">
                         {entry.categoryName}
                       </div>
-                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px] text-white/75">
+                      <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-[11.5px] text-white">
                         <span>
                           Evidence{' '}
-                          <span className="text-white/70 tabular-nums">
+                          <span className="text-white tabular-nums">
                             {entry.completedEntries}/{entry.requiredEntries}
                           </span>
                         </span>
                         <span>
                           Verified{' '}
-                          <span className="text-white/70 tabular-nums">
+                          <span className="text-white tabular-nums">
                             {entry.verifiedCriteria}/{entry.totalCriteria}
                           </span>
                         </span>
@@ -235,7 +235,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                             style={{ width: `${entry.completionPercentage}%` }}
                           />
                         </div>
-                        <span className="text-[11.5px] text-white/55 tabular-nums">
+                        <span className="text-[11.5px] text-white tabular-nums">
                           {entry.completionPercentage}%
                         </span>
                       </div>

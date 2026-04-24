@@ -5,7 +5,7 @@
  */
 
 import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { forwardRef, type ReactNode } from 'react';
 
 export { PeopleListRow } from './PeopleListRow';
@@ -94,7 +94,7 @@ export function Eyebrow({ children, className }: { children: ReactNode; classNam
   return (
     <div
       className={cn(
-        'text-[10px] font-medium uppercase tracking-[0.18em] text-white/55',
+        'text-[10px] font-medium uppercase tracking-[0.18em] text-white',
         className
       )}
     >
@@ -304,7 +304,7 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
             >
               {stat.value}
             </span>
-            {stat.sub && <span className="mt-3 text-[11px] text-white/75">{stat.sub}</span>}
+            {stat.sub && <span className="mt-3 text-[11px] text-white">{stat.sub}</span>}
           </>
         );
 
@@ -425,13 +425,13 @@ export function HubCard({
         {title}
       </h3>
       {description && (
-        <p className="mt-2.5 text-[13px] leading-relaxed text-white/55 max-w-[34ch]">
+        <p className="mt-2.5 text-[13px] leading-relaxed text-white max-w-[34ch]">
           {description}
         </p>
       )}
       <div className="flex-grow" />
       <div className="mt-6 flex items-center justify-between pt-4 border-t border-white/[0.06]">
-        <span className="text-[11px] text-white/75 truncate">{meta ?? ''}</span>
+        <span className="text-[11px] text-white truncate">{meta ?? ''}</span>
         <span className="text-[13px] font-medium text-elec-yellow/90 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all shrink-0 ml-3">
           {cta} →
         </span>
@@ -498,7 +498,7 @@ export function ListRow({
       <div className="flex-1 min-w-0">
         <div className="text-sm sm:text-[15px] font-medium text-white truncate">{title}</div>
         {subtitle && (
-          <div className="mt-0.5 text-[11.5px] text-white/75 truncate">{subtitle}</div>
+          <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>
         )}
       </div>
       {trailing && <div className="shrink-0">{trailing}</div>}
@@ -546,7 +546,7 @@ export const EmptyState = forwardRef<
     >
       <div className="text-base font-medium text-white">{title}</div>
       {description && (
-        <p className="mt-2 text-[12.5px] text-white/75 max-w-md mx-auto leading-relaxed">
+        <p className="mt-2 text-[12.5px] text-white max-w-md mx-auto leading-relaxed">
           {description}
         </p>
       )}
@@ -662,7 +662,7 @@ export function FilterBar({
                 'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
                 activeTab === tab.value
                   ? 'bg-elec-yellow text-black'
-                  : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
+                  : 'text-white hover:text-white hover:bg-white/[0.04]'
               )}
             >
               {tab.label}
@@ -670,7 +670,7 @@ export function FilterBar({
                 <span
                   className={cn(
                     'ml-1.5 tabular-nums text-[11px]',
-                    activeTab === tab.value ? 'text-black/60' : 'text-white/70'
+                    activeTab === tab.value ? 'text-black/60' : 'text-white'
                   )}
                 >
                   {tab.count}
@@ -693,5 +693,313 @@ export function FilterBar({
         {actions}
       </div>
     </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────
+   Form field class constants — match college aesthetic
+   ──────────────────────────────────────────────────────── */
+
+export const inputClass =
+  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+
+export const selectTriggerClass =
+  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+
+export const selectContentClass =
+  'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
+
+export const textareaClass =
+  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white/65 focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
+
+export const fieldLabelClass = 'text-[11.5px] text-white mb-1.5 block';
+
+export const checkboxClass =
+  'h-5 w-5 rounded border border-white/[0.15] bg-[hsl(0_0%_9%)] data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black touch-manipulation';
+
+/* ────────────────────────────────────────────────────────
+   Field — label + input wrapper
+   ──────────────────────────────────────────────────────── */
+
+export function Field({
+  label,
+  hint,
+  required,
+  children,
+  className,
+}: {
+  label?: string;
+  hint?: string;
+  required?: boolean;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('space-y-1.5', className)}>
+      {label && (
+        <label className={fieldLabelClass}>
+          {label}
+          {required && <span className="ml-1 text-elec-yellow">*</span>}
+        </label>
+      )}
+      {children}
+      {hint && <p className="text-[11px] text-white">{hint}</p>}
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────
+   FormCard — grouped section wrapper with optional eyebrow
+   ──────────────────────────────────────────────────────── */
+
+export function FormCard({
+  eyebrow,
+  children,
+  className,
+}: {
+  eyebrow?: string;
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3',
+        className
+      )}
+    >
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      {children}
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────
+   FormGrid — responsive multi-column field layout
+   ──────────────────────────────────────────────────────── */
+
+export function FormGrid({
+  cols = 2,
+  children,
+  className,
+}: {
+  cols?: 1 | 2 | 3;
+  children: ReactNode;
+  className?: string;
+}) {
+  const gridClass =
+    cols === 3
+      ? 'grid-cols-1 sm:grid-cols-3'
+      : cols === 2
+        ? 'grid-cols-1 sm:grid-cols-2'
+        : 'grid-cols-1';
+  return <div className={cn('grid gap-3', gridClass, className)}>{children}</div>;
+}
+
+/* ────────────────────────────────────────────────────────
+   Buttons — canonical variants
+   ──────────────────────────────────────────────────────── */
+
+interface ButtonProps {
+  children: ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  className?: string;
+  size?: 'sm' | 'md' | 'lg';
+  fullWidth?: boolean;
+}
+
+const sizeToClasses: Record<'sm' | 'md' | 'lg', string> = {
+  sm: 'h-9 px-4 text-[12.5px]',
+  md: 'h-11 px-5 text-[13px]',
+  lg: 'h-12 px-6 text-[14px]',
+};
+
+export function PrimaryButton({
+  children,
+  onClick,
+  disabled,
+  type = 'button',
+  className,
+  size = 'md',
+  fullWidth,
+}: ButtonProps) {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={cn(
+        'inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
+        sizeToClasses[size],
+        fullWidth && 'w-full',
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function SecondaryButton({
+  children,
+  onClick,
+  disabled,
+  type = 'button',
+  className,
+  size = 'md',
+  fullWidth,
+}: ButtonProps) {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={cn(
+        'inline-flex items-center justify-center font-medium rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
+        sizeToClasses[size],
+        fullWidth && 'w-full',
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function DestructiveButton({
+  children,
+  onClick,
+  disabled,
+  type = 'button',
+  className,
+  size = 'md',
+  fullWidth,
+}: ButtonProps) {
+  return (
+    <button
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      className={cn(
+        'inline-flex items-center justify-center font-semibold rounded-full bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
+        sizeToClasses[size],
+        fullWidth && 'w-full',
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+export function IconButton({
+  children,
+  onClick,
+  disabled,
+  'aria-label': ariaLabel,
+  className,
+}: {
+  children: ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  disabled?: boolean;
+  'aria-label'?: string;
+  className?: string;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={ariaLabel}
+      className={cn(
+        'h-10 w-10 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation',
+        className
+      )}
+    >
+      {children}
+    </button>
+  );
+}
+
+/* ────────────────────────────────────────────────────────
+   SheetShell — drag handle + eyebrow header + body + footer
+   ──────────────────────────────────────────────────────── */
+
+export function SheetShell({
+  eyebrow,
+  title,
+  description,
+  children,
+  footer,
+  className,
+}: {
+  eyebrow?: string;
+  title: ReactNode;
+  description?: ReactNode;
+  children: ReactNode;
+  footer?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn('flex flex-col h-full bg-[hsl(0_0%_8%)]', className)}>
+      <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
+        <div className="h-1 w-10 rounded-full bg-white/20" />
+      </div>
+      <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+        <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
+          {title}
+        </div>
+        {description && (
+          <div className="mt-1.5 text-[12.5px] text-white">{description}</div>
+        )}
+      </div>
+      <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
+        {children}
+      </div>
+      {footer && (
+        <div className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2">
+          {footer}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────
+   Success checkmark overlay
+   ──────────────────────────────────────────────────────── */
+
+export function SuccessCheckmark({ show }: { show: boolean }) {
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0, opacity: 0 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+          className="fixed inset-0 z-[200] flex items-center justify-center pointer-events-none"
+        >
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: [0, 1.2, 1] }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="h-20 w-20 rounded-full bg-emerald-500/20 border-2 border-emerald-400 flex items-center justify-center"
+          >
+            <motion.span
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+              className="text-[40px] leading-none font-semibold text-emerald-400"
+              aria-hidden
+            >
+              ✓
+            </motion.span>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

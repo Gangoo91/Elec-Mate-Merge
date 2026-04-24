@@ -1,11 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
 import { Pill } from '@/components/college/primitives';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Slider } from '@/components/ui/slider';
 import {
   Dialog,
   DialogContent,
@@ -22,12 +19,22 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { CommentThread } from '@/components/college/comments';
 import { useCollegeGrades, useGradeAssessment } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
+import { cn } from '@/lib/utils';
+import {
+  Field,
+  PrimaryButton,
+  SecondaryButton,
+  checkboxClass,
+  fieldLabelClass,
+  selectContentClass,
+  selectTriggerClass,
+  textareaClass,
+} from '@/components/college/primitives';
 
 interface RubricGradingDialogProps {
   open: boolean;
@@ -65,10 +72,10 @@ const defaultCriteria = [
 ];
 
 const scoreLabels = [
-  { value: 0, label: 'Not Assessed', color: 'bg-muted text-white' },
-  { value: 1, label: 'Not Met', color: 'bg-destructive/20 text-destructive' },
-  { value: 2, label: 'Partially Met', color: 'bg-amber-500/20 text-amber-500' },
-  { value: 3, label: 'Met', color: 'bg-success/20 text-success' },
+  { value: 0, label: 'Not Assessed', color: 'bg-white/[0.04] text-white' },
+  { value: 1, label: 'Not Met', color: 'bg-red-500/20 text-red-400' },
+  { value: 2, label: 'Partially Met', color: 'bg-amber-500/20 text-amber-400' },
+  { value: 3, label: 'Met', color: 'bg-emerald-500/20 text-emerald-400' },
   { value: 4, label: 'Exceeded', color: 'bg-elec-yellow/20 text-elec-yellow' },
 ];
 
@@ -114,7 +121,7 @@ export function RubricGradingDialog({
   const gradeCalculation = useMemo(() => {
     const assessedCriteria = criteriaScores.filter((c) => c.score > 0);
     if (assessedCriteria.length === 0) {
-      return { grade: 'Not Graded', percentage: 0, color: 'bg-muted text-white' };
+      return { grade: 'Not Graded', percentage: 0, color: 'bg-white/[0.04] text-white' };
     }
 
     const totalScore = assessedCriteria.reduce((sum, c) => sum + c.score, 0);
@@ -122,27 +129,27 @@ export function RubricGradingDialog({
     const percentage = Math.round((totalScore / maxPossible) * 100);
 
     let calculatedGrade = 'Not Yet Competent';
-    let color = 'bg-destructive/20 text-destructive';
+    let color = 'bg-red-500/20 text-red-400';
 
     if (percentage >= 90) {
       calculatedGrade = 'Distinction';
       color = 'bg-elec-yellow/20 text-elec-yellow';
     } else if (percentage >= 75) {
       calculatedGrade = 'Merit';
-      color = 'bg-info/20 text-info';
+      color = 'bg-blue-500/20 text-blue-400';
     } else if (percentage >= 60) {
       calculatedGrade = 'Pass';
-      color = 'bg-success/20 text-success';
+      color = 'bg-emerald-500/20 text-emerald-400';
     } else if (percentage >= 40) {
       calculatedGrade = 'Refer';
-      color = 'bg-amber-500/20 text-amber-500';
+      color = 'bg-amber-500/20 text-amber-400';
     }
 
     // Check if any criteria are "Not Met"
     const hasNotMet = assessedCriteria.some((c) => c.score === 1);
     if (hasNotMet && percentage >= 60) {
       calculatedGrade = 'Refer';
-      color = 'bg-amber-500/20 text-amber-500';
+      color = 'bg-amber-500/20 text-amber-400';
     }
 
     return { grade: calculatedGrade, percentage, color };
@@ -240,19 +247,19 @@ export function RubricGradingDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <DialogHeader>
-          <DialogTitle>Rubric grading</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-white">Rubric grading</DialogTitle>
+          <DialogDescription className="text-white">
             {grade?.unit_name} - {student?.name}
           </DialogDescription>
         </DialogHeader>
 
         {/* Grade Summary Bar */}
-        <div className="flex items-center gap-4 p-3 rounded-lg bg-muted/50 border border-border">
+        <div className="flex items-center gap-4 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
           <div className="flex-1">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-sm font-medium">Overall Grade</span>
+              <span className="text-sm font-medium text-white">Overall grade</span>
               <Pill tone="yellow">{gradeCalculation.grade}</Pill>
             </div>
             <Progress value={gradeCalculation.percentage} className="h-2" />
@@ -270,7 +277,7 @@ export function RubricGradingDialog({
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="criteria">Criteria</TabsTrigger>
             <TabsTrigger value="feedback">Feedback</TabsTrigger>
-            <TabsTrigger value="signoff">Sign Off</TabsTrigger>
+            <TabsTrigger value="signoff">Sign off</TabsTrigger>
           </TabsList>
 
           {/* Criteria Scoring Tab */}
@@ -287,29 +294,29 @@ export function RubricGradingDialog({
                     const currentScore = score?.score || 0;
 
                     return (
-                      <Card key={criterion.code} className="border-border">
-                        <CardContent className="p-3">
+                      <div key={criterion.code} className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl">
+                        <div className="p-3">
                           <div className="flex items-start gap-3">
                             <Pill tone="yellow" className="font-mono shrink-0">
                               {criterion.code}
                             </Pill>
                             <div className="flex-1 min-w-0">
-                              <p className="text-sm font-medium">{criterion.text}</p>
+                              <p className="text-sm font-medium text-white">{criterion.text}</p>
                               <div className="flex items-center gap-2 mt-2">
                                 {scoreLabels.map((sl) => (
-                                  <Button
+                                  <button
                                     key={sl.value}
-                                    variant="outline"
-                                    size="sm"
-                                    className={`text-xs px-2 py-1 h-auto ${
-                                      currentScore === sl.value ? sl.color + ' border-2' : ''
-                                    }`}
+                                    type="button"
+                                    className={cn(
+                                      'text-xs px-2 py-1 h-auto rounded-full border border-white/[0.08] bg-[hsl(0_0%_9%)] text-white font-medium transition-colors touch-manipulation',
+                                      currentScore === sl.value && `${sl.color} border-2`
+                                    )}
                                     onClick={() =>
                                       updateCriterionScore(criterion.code, 'score', sl.value)
                                     }
                                   >
                                     {sl.value === 0 ? '-' : sl.value}
-                                  </Button>
+                                  </button>
                                 ))}
                                 <span className="text-xs text-white ml-2">
                                   {scoreLabels[currentScore].label}
@@ -327,14 +334,14 @@ export function RubricGradingDialog({
                                         e.target.value
                                       )
                                     }
-                                    className="min-h-[40px] text-sm"
+                                    className={cn(textareaClass, 'min-h-[40px] text-sm')}
                                   />
                                 </div>
                               )}
                             </div>
                           </div>
-                        </CardContent>
-                      </Card>
+                        </div>
+                      </div>
                     );
                   })}
                 </div>
@@ -345,58 +352,58 @@ export function RubricGradingDialog({
           {/* Feedback Tab */}
           <TabsContent value="feedback" className="flex-1 overflow-y-auto mt-4 space-y-4">
             <div className="flex items-center justify-between">
-              <Label>Overall Feedback</Label>
-              <Button variant="outline" size="sm" onClick={generateAIFeedback}>
+              <label className={fieldLabelClass}>Overall feedback</label>
+              <SecondaryButton size="sm" onClick={generateAIFeedback}>
                 Generate with AI
-              </Button>
+              </SecondaryButton>
             </div>
             <Textarea
               value={overallFeedback}
               onChange={(e) => setOverallFeedback(e.target.value)}
               placeholder="Provide comprehensive feedback for the student..."
-              className="min-h-[200px]"
+              className={cn(textareaClass, 'min-h-[200px]')}
             />
 
             {/* Criteria Summary */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              <Card className="bg-elec-yellow/10 border-elec-yellow/20">
-                <CardContent className="p-3 text-center">
+              <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl">
+                <div className="p-3 text-center">
                   <p className="text-lg font-bold text-elec-yellow">
                     {criteriaScores.filter((c) => c.score === 4).length}
                   </p>
                   <p className="text-xs text-white">Exceeded</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-success/10 border-success/20">
-                <CardContent className="p-3 text-center">
-                  <p className="text-lg font-bold text-success">
+                </div>
+              </div>
+              <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                <div className="p-3 text-center">
+                  <p className="text-lg font-bold text-emerald-400">
                     {criteriaScores.filter((c) => c.score === 3).length}
                   </p>
                   <p className="text-xs text-white">Met</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-amber-500/10 border-amber-500/20">
-                <CardContent className="p-3 text-center">
-                  <p className="text-lg font-bold text-amber-500">
+                </div>
+              </div>
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl">
+                <div className="p-3 text-center">
+                  <p className="text-lg font-bold text-amber-400">
                     {criteriaScores.filter((c) => c.score === 2).length}
                   </p>
                   <p className="text-xs text-white">Partially</p>
-                </CardContent>
-              </Card>
-              <Card className="bg-destructive/10 border-destructive/20">
-                <CardContent className="p-3 text-center">
-                  <p className="text-lg font-bold text-destructive">
+                </div>
+              </div>
+              <div className="bg-red-500/10 border border-red-500/20 rounded-xl">
+                <div className="p-3 text-center">
+                  <p className="text-lg font-bold text-red-400">
                     {criteriaScores.filter((c) => c.score === 1).length}
                   </p>
-                  <p className="text-xs text-white">Not Met</p>
-                </CardContent>
-              </Card>
+                  <p className="text-xs text-white">Not met</p>
+                </div>
+              </div>
             </div>
 
             {/* Comments Section */}
             <Separator />
             <div className="space-y-2">
-              <h3 className="text-sm font-semibold">Discussion & Comments</h3>
+              <h3 className="text-sm font-semibold text-white">Discussion & comments</h3>
               <p className="text-xs text-white">
                 Leave notes, request feedback, or discuss with colleagues using @mentions
               </p>
@@ -406,11 +413,11 @@ export function RubricGradingDialog({
 
           {/* Sign Off Tab */}
           <TabsContent value="signoff" className="flex-1 overflow-y-auto mt-4 space-y-4">
-            <Card className="border-elec-yellow/20">
-              <CardContent className="p-4 space-y-4">
+            <div className="bg-[hsl(0_0%_12%)] border border-elec-yellow/20 rounded-xl">
+              <div className="p-4 space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="font-semibold">Assessment Summary</h3>
+                    <h3 className="font-semibold text-white">Assessment summary</h3>
                     <p className="text-sm text-white">{grade?.unit_name}</p>
                   </div>
                   <Pill tone="yellow" className="text-lg px-4 py-1">
@@ -418,34 +425,33 @@ export function RubricGradingDialog({
                   </Pill>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 p-3 bg-muted/50 rounded-lg">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-white/[0.04] rounded-xl">
                   <div>
                     <p className="text-xs text-white">Student</p>
-                    <p className="font-medium">{student?.name}</p>
+                    <p className="font-medium text-white">{student?.name}</p>
                   </div>
                   <div>
                     <p className="text-xs text-white">Score</p>
-                    <p className="font-medium">{gradeCalculation.percentage}%</p>
+                    <p className="font-medium text-white">{gradeCalculation.percentage}%</p>
                   </div>
                   <div>
-                    <p className="text-xs text-white">Criteria Assessed</p>
-                    <p className="font-medium">
+                    <p className="text-xs text-white">Criteria assessed</p>
+                    <p className="font-medium text-white">
                       {assessedCount}/{totalCriteria}
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs text-white">Assessment Type</p>
-                    <p className="font-medium">{grade?.assessment_type}</p>
+                    <p className="text-xs text-white">Assessment type</p>
+                    <p className="font-medium text-white">{grade?.assessment_type}</p>
                   </div>
                 </div>
 
-                <div>
-                  <Label>Assessed By *</Label>
+                <Field label="Assessed by" required>
                   <Select value={assessorId} onValueChange={setAssessorId}>
-                    <SelectTrigger className="mt-1">
+                    <SelectTrigger className={selectTriggerClass}>
                       <SelectValue placeholder="Select assessor" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className={selectContentClass}>
                       {assessors.map((assessor) => (
                         <SelectItem key={assessor.id} value={assessor.id}>
                           {assessor.name} ({assessor.role})
@@ -453,18 +459,19 @@ export function RubricGradingDialog({
                       ))}
                     </SelectContent>
                   </Select>
-                </div>
+                </Field>
 
-                <div className="flex items-start gap-3 p-3 rounded-lg border border-amber-500/30 bg-amber-500/10">
+                <div className="flex items-start gap-3 p-3 rounded-xl border border-amber-500/30 bg-amber-500/10">
                   <Checkbox
                     id="signoff"
                     checked={signedOff}
                     onCheckedChange={(checked) => setSignedOff(checked as boolean)}
+                    className={checkboxClass}
                   />
                   <div className="grid gap-1.5 leading-none">
                     <label
                       htmlFor="signoff"
-                      className="text-sm font-medium leading-none cursor-pointer"
+                      className="text-sm font-medium leading-none cursor-pointer text-white"
                     >
                       I confirm this assessment is accurate
                     </label>
@@ -474,22 +481,21 @@ export function RubricGradingDialog({
                     </p>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </TabsContent>
         </Tabs>
 
-        <DialogFooter className="border-t pt-4">
-          <Button variant="outline" onClick={() => onOpenChange(false)} disabled={isSubmitting}>
+        <DialogFooter className="border-t border-white/[0.06] pt-4">
+          <SecondaryButton onClick={() => onOpenChange(false)} disabled={isSubmitting}>
             Cancel
-          </Button>
-          <Button
+          </SecondaryButton>
+          <PrimaryButton
             onClick={handleSubmit}
             disabled={isSubmitting || !assessorId || !signedOff || assessedCount === 0}
-            className="gap-2 bg-elec-yellow hover:bg-elec-yellow/90 text-black"
           >
-            {isSubmitting ? 'Saving…' : 'Submit Grade'}
-          </Button>
+            {isSubmitting ? 'Saving…' : 'Submit grade'}
+          </PrimaryButton>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -22,6 +22,8 @@ import {
   ListCard,
   Pill,
   EmptyState,
+  PrimaryButton,
+  inputClass,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
@@ -153,7 +155,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                 <select
                   value={filterStatus}
                   onChange={(e) => setFilterStatus(e.target.value)}
-                  className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                  className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
                 >
                   <option value="all">All Status</option>
                   <option value="Pending">Pending</option>
@@ -163,7 +165,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                 <select
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
-                  className="h-10 px-3 bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
+                  className="h-10 px-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full text-[13px] text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation"
                 >
                   <option value="all">All Types</option>
                   <option value="grade">Grades</option>
@@ -218,7 +220,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                       titleChips={<Pill tone={priorityTone(item.priority)}>{item.priority}</Pill>}
                       status={{ label: currentStatus, tone: statusTone(currentStatus) }}
                       meta={
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white">
                           <span className="tabular-nums">
                             Created{' '}
                             {new Date(item.createdAt).toLocaleDateString('en-GB', {
@@ -303,19 +305,19 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                           placeholder="Add a note…"
                           value={noteText}
                           onChange={(e) => setNoteText(e.target.value)}
-                          className="h-11 touch-manipulation flex-1 bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow"
+                          className={`${inputClass} flex-1`}
                         />
-                        <button
+                        <PrimaryButton
                           onClick={() => {
                             toast({ title: 'Note added', description: noteText });
                             setNoteItemId(null);
                             setNoteText('');
                           }}
                           disabled={!noteText.trim()}
-                          className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+                          size="sm"
                         >
                           Save
-                        </button>
+                        </PrimaryButton>
                       </div>
                     )}
                   </div>

@@ -11,6 +11,8 @@ interface MobileHorizontalScrollTableProps {
   onRemove: (id: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
   onBulkFieldUpdate?: (field: keyof TestResult, value: string) => void;
+  onMoveUp?: (id: string) => void;
+  onMoveDown?: (id: string) => void;
 }
 
 export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTableProps> = ({
@@ -19,7 +21,25 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   onRemove,
   onBulkUpdate,
   onBulkFieldUpdate,
+  onMoveUp,
+  onMoveDown,
 }) => {
+  // ELE-857 — per-board first/last identification
+  const firstOfBoardIds = new Set<string>();
+  const lastOfBoardIds = new Set<string>();
+  {
+    const seen = new Set<string>();
+    const lastByBoard = new Map<string, string>();
+    testResults.forEach((c) => {
+      const b = (c as any).boardId || '__main__';
+      if (!seen.has(b)) {
+        seen.add(b);
+        firstOfBoardIds.add(c.id);
+      }
+      lastByBoard.set(b, c.id);
+    });
+    lastByBoard.forEach((id) => lastOfBoardIds.add(id));
+  }
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleFillAllRcdTestButton = () => {
@@ -223,6 +243,10 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
                 result={result}
                 onUpdate={onUpdate}
                 onRemove={onRemove}
+                onMoveUp={onMoveUp}
+                onMoveDown={onMoveDown}
+                canMoveUp={onMoveUp ? !firstOfBoardIds.has(result.id) : false}
+                canMoveDown={onMoveDown ? !lastOfBoardIds.has(result.id) : false}
               />
             ))}
           </TableBody>

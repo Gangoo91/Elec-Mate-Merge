@@ -7,3 +7,6 @@ export { FollowUpChips } from './FollowUpChips';
 export { MobileChatInput } from './MobileChatInput';
 export { WelcomeScreen } from './WelcomeScreen';
 export { ChatHistoryDrawer } from './ChatHistoryDrawer';
+export { VoiceInputButton } from './VoiceInputButton';
+export { RegulationDetailSheet } from './RegulationDetailSheet';
+export { SaveToJobSheet } from './SaveToJobSheet';

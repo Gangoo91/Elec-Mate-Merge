@@ -367,6 +367,76 @@ export default function LessonPrintPage() {
         </section>
       )}
 
+      {plan.british_values && plan.british_values.length > 0 && (
+        <section className="print-section">
+          <PrintSectionHeader eyebrow="Ofsted · DfE" title="British Values" />
+          <ol className="divide-y divide-gray-200 border border-gray-200 rounded">
+            {plan.british_values.map((bv, i) => (
+              <li key={i} className="px-4 py-3">
+                <div className="text-[8.5pt] uppercase tracking-[0.18em] text-gray-600">
+                  {bv.value.replace(/_/g, ' ')}
+                </div>
+                <div className="mt-1 text-[10.5pt] leading-snug">{bv.how_embedded}</div>
+                {bv.activity_ref && (
+                  <div className="mt-1 text-[9pt] text-gray-500">
+                    Tied to: {bv.activity_ref}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      {plan.stretch_challenge && plan.stretch_challenge.length > 0 && (
+        <section className="print-section">
+          <PrintSectionHeader eyebrow="Raise the bar" title="Stretch & challenge" />
+          <div className="grid grid-cols-2 gap-3">
+            {plan.stretch_challenge.map((s, i) => (
+              <div
+                key={i}
+                className="border border-gray-200 rounded px-3 py-3"
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="text-[8.5pt] uppercase tracking-[0.18em] text-gray-600">
+                    {s.title}
+                  </div>
+                  <div className="text-[8pt] uppercase tracking-wider text-gray-500">
+                    {s.bloom_level}
+                  </div>
+                </div>
+                <div className="mt-1.5 text-[10pt] leading-snug">{s.task}</div>
+                <div className="mt-1.5 pt-1.5 border-t border-gray-200 text-[9pt] text-gray-700">
+                  <span className="font-semibold">For: </span>
+                  {s.target_learner}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {plan.inclusive_practice && plan.inclusive_practice.length > 0 && (
+        <section className="print-section">
+          <PrintSectionHeader eyebrow="Inclusion" title="Inclusive practice" />
+          <ol className="divide-y divide-gray-200 border border-gray-200 rounded">
+            {plan.inclusive_practice.map((ip, i) => (
+              <li key={i} className="px-4 py-3">
+                <div className="text-[8.5pt] uppercase tracking-[0.18em] text-gray-600">
+                  {ip.need.replace(/_/g, ' ')}
+                </div>
+                <div className="mt-1 text-[10pt] leading-snug">{ip.strategy}</div>
+                {ip.activity_ref && (
+                  <div className="mt-1 text-[9pt] text-gray-500">
+                    Tied to: {ip.activity_ref}
+                  </div>
+                )}
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
+
       {plan.differentiation && (
         <section className="print-section">
           <PrintSectionHeader eyebrow="Inclusion" title="Differentiation" />
