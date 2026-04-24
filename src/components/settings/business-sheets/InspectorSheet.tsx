@@ -24,12 +24,22 @@ const AVAILABLE_QUALIFICATIONS = [
   'City & Guilds 2330 Level 3',
   'NVQ Level 3 Electrical Installation',
   'AM2 Assessment',
+  // ELE-850 — Awarding-body-neutral Level 3 I&T options. Use these if you
+  // hold an LCL / PAA / VTCT / NOCN / equivalent qualification and do NOT
+  // hold the specific City & Guilds 2391-xx number. Misrepresenting a
+  // specific qualification on a signed statutory document is a legal risk.
+  'Level 3 Award in Inspection & Testing (any awarding body)',
+  'Level 3 Award in Initial Verification & Certification (any awarding body)',
+  'Level 3 Award in Periodic Inspection, Testing & Certification (any awarding body)',
   'City & Guilds 2391-52',
   'City & Guilds 2391-51',
   'City & Guilds 2394/2395',
   'EAL Level 3 Inspection & Testing',
   'EAL Level 3 Initial Verification',
   'EAL Level 3 Periodic Inspection',
+  'LCL Level 3 Inspection & Testing',
+  'PAA/VTCT Level 3 Inspection & Testing',
+  'NOCN Level 3 Inspection & Testing',
   'City & Guilds 2377 PAT Testing',
   'PAT Testing Certified',
   'NICEIC Approved',

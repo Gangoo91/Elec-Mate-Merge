@@ -230,7 +230,7 @@ export const EICRWizard: React.FC<EICRWizardProps> = ({
 
       {/* Step content */}
       <main className="flex-1 overflow-y-auto min-h-0">
-        <div className="max-w-4xl mx-auto px-4 py-6 pb-32">
+        <div className="max-w-4xl mx-auto px-4 py-6 pb-40" style={{ scrollPaddingBottom: '10rem' }}>
           {/* Step title */}
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-foreground">

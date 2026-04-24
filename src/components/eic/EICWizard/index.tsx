@@ -385,7 +385,7 @@ export const EICWizard: React.FC<EICWizardProps> = ({
           renderStepContent()
         ) : (
           /* Other steps: constrained width */
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pb-20">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 pb-40" style={{ scrollPaddingBottom: '10rem' }}>
             <div className="mb-4">
               <h2 className="text-xl font-bold text-foreground">{currentStepConfig?.label}</h2>
               {currentStepConfig?.description && (

@@ -28,7 +28,7 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
   if (formData.distributionBoards?.length > 0) {
     // Ensure all boards have required fields (handles boards saved before new fields were added)
     const boardsWithDefaults = formData.distributionBoards.map(
-      (board: Partial<DistributionBoard>) => ({
+      (board: Partial<DistributionBoard> & Record<string, any>) => ({
         // Start with defaults from createDefaultBoard pattern
         id: board.id || MAIN_BOARD_ID,
         name: board.name || 'Board',
@@ -41,6 +41,25 @@ export const migrateToMultiBoard = (formData: any): MultiboardFormData => {
         ringFinalCircuitConfirmed: board.ringFinalCircuitConfirmed ?? false,
         spdOperationalStatus: board.spdOperationalStatus ?? false,
         spdNA: board.spdNA ?? false,
+        // ELE-851 — SPD details must round-trip through migration or the Type
+        // 1/2/3 tick buttons and SPD Make/Model/Location/Rated fields silently
+        // reset whenever the form remounts (tab switch, accordion toggle etc.)
+        spdT1: board.spdT1 ?? false,
+        spdT2: board.spdT2 ?? false,
+        spdT3: board.spdT3 ?? false,
+        spdMake: board.spdMake,
+        spdModel: board.spdModel,
+        spdLocation: board.spdLocation,
+        spdRatedCurrentKa: board.spdRatedCurrentKa,
+        // ELE-851 — BoardSetupCard uses these as (board as any).x which is a
+        // code smell that they were never declared on the type. Preserve so
+        // they don't get dropped on remount either.
+        boardMounting: board.boardMounting,
+        incomingRcdMa: board.incomingRcdMa,
+        incomingRcdMs: board.incomingRcdMs,
+        mainSwitchRcdMa: board.mainSwitchRcdMa,
+        mainSwitchRcdMs: board.mainSwitchRcdMs,
+        totalWaysCustom: board.totalWaysCustom,
         // Optional fields
         location: board.location,
         make: board.make,

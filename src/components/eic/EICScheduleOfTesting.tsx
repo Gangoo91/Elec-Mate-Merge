@@ -78,7 +78,7 @@ import { toast } from 'sonner';
 import { twinAndEarthCpcFor, normaliseCableSize } from '@/utils/twinAndEarth';
 import { calculatePointsServed } from '@/types/autoFillTypes';
 import { getTableViewPreference, setTableViewPreference } from '@/utils/mobileTableUtils';
-import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
 import { createCircuitWithDefaults } from '@/utils/circuitDefaults';
 import { resolveFieldName } from '@/utils/voiceFieldAliases';
@@ -1529,12 +1529,36 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
     };
   };
 
-  // Calculate maxZs from device details (with 80% derating applied)
-  const calculateMaxZsForCircuit = (bsStandard: string, curve: string, rating: string): string => {
+  // Calculate maxZs — RCD-aware. When the circuit (or its board) has an RCD,
+  // uses 50/IΔn (UL/IΔn per BS 7671 Reg 411.5.3) instead of the overcurrent
+  // device table. Falls back to the MCB/fuse table when no RCD context.
+  const calculateMaxZsForCircuit = (
+    bsStandard: string,
+    curve: string,
+    rating: string,
+    rcdContext?: {
+      rcdRating?: string | null;
+      rcdType?: string | null;
+      protectiveDeviceType?: string | null;
+    }
+  ): string => {
     if (!bsStandard || !rating) return '';
 
-    const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, rating);
-    return maxZs !== null ? maxZs.toFixed(2) : '';
+    const mainBoard = (formData as any)?.distributionBoards?.[0];
+    const boardHasMainRcd = (formData as any)?.rcdMainSwitch === 'yes' || mainBoard?.rcdMainSwitch === 'yes';
+    const boardMainRcdRating = (formData as any)?.rcdRating || mainBoard?.rcdRating || null;
+
+    const lookup = getMaxZsWithRcd({
+      bsStandard,
+      curve,
+      rating,
+      rcdRating: rcdContext?.rcdRating ?? null,
+      rcdType: rcdContext?.rcdType ?? null,
+      protectiveDeviceType: rcdContext?.protectiveDeviceType ?? null,
+      boardHasMainRcd,
+      boardMainRcdRating,
+    });
+    return lookup.maxZs !== null ? lookup.maxZs.toFixed(2) : '';
   };
 
   // Convert Circuit[] format to Partial<TestResult>[] format
@@ -1637,7 +1661,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           maxZs: calculateMaxZsForCircuit(
             normalisedCircuit.bsStandard,
             normalisedCircuit.protectiveDeviceCurve,
-            normalisedCircuit.protectiveDeviceRating
+            normalisedCircuit.protectiveDeviceRating,
+            {
+              rcdRating: null,
+              rcdType: null,
+              protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
+            }
           ),
           ringContinuityLive: isRingCircuit ? '' : 'N/A',
           ringContinuityNeutral: isRingCircuit ? '' : 'N/A',
@@ -1723,7 +1752,12 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         maxZs: calculateMaxZsForCircuit(
           circuit.bsStandard,
           circuit.protectiveDeviceCurve,
-          circuit.protectiveDeviceRating
+          circuit.protectiveDeviceRating,
+          {
+            rcdRating: circuit.rcdRating || (requiresRCD ? '30mA' : null),
+            rcdType: circuit.rcdType || null,
+            protectiveDeviceType: circuit.protectiveDeviceType,
+          }
         ),
         pointsServed: calculatePointsServed(circuitDesc, circuitType, circuit.protectiveDeviceType),
         rcdRating: requiresRCD ? '30mA' : '',
@@ -1987,6 +2021,33 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               updatedResult.liveSize = value;
             } else if (field === 'protectiveDevice') {
               updatedResult.protectiveDeviceRating = value.replace(/\D/g, '');
+            }
+
+            // ELE-854 — Cascade bsStandard + maxZs when device details change
+            if (
+              field === 'protectiveDeviceType' ||
+              field === 'protectiveDeviceCurve' ||
+              field === 'protectiveDeviceRating'
+            ) {
+              const deviceType = updatedResult.protectiveDeviceType;
+              const curve = updatedResult.protectiveDeviceCurve || '';
+              const rating = updatedResult.protectiveDeviceRating || '';
+              if (!updatedResult.bsStandard && deviceType) {
+                updatedResult.bsStandard = getDefaultBsStandard(deviceType) || '';
+              }
+              if (updatedResult.bsStandard && rating) {
+                const newMaxZs = calculateMaxZsForCircuit(
+                  updatedResult.bsStandard,
+                  curve,
+                  rating,
+                  {
+                    rcdRating: updatedResult.rcdRating || null,
+                    rcdType: updatedResult.rcdType || null,
+                    protectiveDeviceType: deviceType,
+                  }
+                );
+                if (newMaxZs) updatedResult.maxZs = newMaxZs;
+              }
             }
 
             return updatedResult;

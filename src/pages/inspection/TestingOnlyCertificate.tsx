@@ -272,7 +272,7 @@ export default function TestingOnlyCertificate() {
       <section className="space-y-4">
         <SectionHeader title="Tester Details" />
         <Field label="Name" required><Input value={data.testerName} onChange={(e) => update('testerName', e.target.value)} className={inputCn} /></Field>
-        <Field label="Qualifications"><Input value={data.testerQualifications} onChange={(e) => update('testerQualifications', e.target.value)} className={inputCn} placeholder="e.g. C&G 2391-52" /></Field>
+        <Field label="Qualifications"><Input value={data.testerQualifications} onChange={(e) => update('testerQualifications', e.target.value)} className={inputCn} placeholder="e.g. C&G 2391-52, Level 3 I&T, LCL L3, EAL L3" /></Field>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Phone"><Input type="tel" value={data.testerPhone} onChange={(e) => update('testerPhone', e.target.value)} className={inputCn} /></Field>
           <Field label="Email"><Input type="email" value={data.testerEmail} onChange={(e) => update('testerEmail', e.target.value)} className={inputCn} /></Field>

@@ -1511,6 +1511,38 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             updatedResult.protectiveDeviceRating = value.replace(/\D/g, '');
           }
 
+          // ELE-854 — Cascade bsStandard + maxZs when device details change
+          // via non-cell paths (voice, import, SimpleCircuitTable). The
+          // ProtectiveDeviceCells dropdown handlers already do this; this
+          // covers every other update path so Max Zs never stays blank just
+          // because bsStandard wasn't set by the same action.
+          if (
+            field === 'protectiveDeviceType' ||
+            field === 'protectiveDeviceCurve' ||
+            field === 'protectiveDeviceRating'
+          ) {
+            const deviceType = updatedResult.protectiveDeviceType;
+            const curve = updatedResult.protectiveDeviceCurve || '';
+            const rating = updatedResult.protectiveDeviceRating || '';
+            // Derive BS standard if blank so the maxZs lookup has what it needs
+            if (!updatedResult.bsStandard && deviceType) {
+              updatedResult.bsStandard = getDefaultBsStandard(deviceType) || '';
+            }
+            if (updatedResult.bsStandard && rating) {
+              const newMaxZs = calculateMaxZsForCircuit(
+                updatedResult.bsStandard,
+                curve,
+                rating,
+                {
+                  rcdRating: updatedResult.rcdRating || null,
+                  rcdType: updatedResult.rcdType || null,
+                  protectiveDeviceType: deviceType,
+                }
+              );
+              if (newMaxZs) updatedResult.maxZs = newMaxZs;
+            }
+          }
+
           return updatedResult;
         }
         return result;
