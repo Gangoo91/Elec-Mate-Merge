@@ -23,6 +23,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
+import { ScheduleLessonDialog } from '@/components/college/dialogs/ScheduleLessonDialog';
 import { supabase } from '@/integrations/supabase/client';
 
 /* ==========================================================================
@@ -1251,23 +1252,53 @@ function PlanActionBar({
   const [busy, setBusy] = useState<null | 'duplicate' | 'ready' | 'delete'>(null);
   const [status, setStatus] = useState<string>('draft');
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [scheduleOpen, setScheduleOpen] = useState(false);
+  const [scheduleMeta, setScheduleMeta] = useState<{
+    scheduled_date: string | null;
+    scheduled_start_time: string | null;
+    scheduled_room: string | null;
+    cohort_id: string | null;
+  } | null>(null);
 
-  // Hydrate current status — only when we have a real persisted id
+  // Hydrate current status + scheduling — only when we have a real persisted id
   useEffect(() => {
     if (!UUID_RE.test(lessonId)) return;
     let cancelled = false;
     supabase
       .from('college_lesson_plans')
-      .select('status')
+      .select('status, scheduled_date, scheduled_start_time, scheduled_room, cohort_id')
       .eq('id', lessonId)
       .maybeSingle()
       .then(({ data }) => {
-        if (!cancelled && data?.status) setStatus(data.status);
+        if (cancelled || !data) return;
+        if (data.status) setStatus(data.status);
+        setScheduleMeta({
+          scheduled_date: (data.scheduled_date as string | null) ?? null,
+          scheduled_start_time: (data.scheduled_start_time as string | null) ?? null,
+          scheduled_room: (data.scheduled_room as string | null) ?? null,
+          cohort_id: (data.cohort_id as string | null) ?? null,
+        });
       });
     return () => {
       cancelled = true;
     };
   }, [lessonId]);
+
+  const refreshSchedule = async () => {
+    const { data } = await supabase
+      .from('college_lesson_plans')
+      .select('scheduled_date, scheduled_start_time, scheduled_room, cohort_id')
+      .eq('id', lessonId)
+      .maybeSingle();
+    if (data) {
+      setScheduleMeta({
+        scheduled_date: (data.scheduled_date as string | null) ?? null,
+        scheduled_start_time: (data.scheduled_start_time as string | null) ?? null,
+        scheduled_room: (data.scheduled_room as string | null) ?? null,
+        cohort_id: (data.cohort_id as string | null) ?? null,
+      });
+    }
+  };
 
   const isReady = status === 'Approved' || status === 'ready' || status === 'Published';
 
@@ -1396,26 +1427,57 @@ function PlanActionBar({
   };
 
   const handlePrint = () => {
-    window.print();
+    // Opens a dedicated light-themed print route in a new window/tab, which
+    // auto-invokes window.print() once the plan has loaded. Tutors can then
+    // select "Save as PDF" or send to a real printer.
+    window.open(`/college/lessons/${lessonId}/print?auto=1`, '_blank', 'noopener');
   };
 
   const statusLabel = isReady ? 'Ready to teach' : 'Draft';
   const statusDot = isReady ? 'bg-emerald-400' : 'bg-amber-400';
+  const isScheduled = Boolean(
+    scheduleMeta?.scheduled_date && scheduleMeta?.scheduled_start_time
+  );
+  const scheduleSummary =
+    isScheduled && scheduleMeta
+      ? `${new Date(scheduleMeta.scheduled_date as string).toLocaleDateString('en-GB', {
+          weekday: 'short',
+          day: 'numeric',
+          month: 'short',
+        })} · ${scheduleMeta.scheduled_start_time?.slice(0, 5)}${
+          scheduleMeta.scheduled_room ? ` · ${scheduleMeta.scheduled_room}` : ''
+        }`
+      : null;
 
   return (
     <>
       <div className="no-print sticky top-0 z-30 -mx-4 sm:-mx-6 mb-6 bg-[hsl(0_0%_8%)]/90 backdrop-blur-md border-b border-white/[0.06]">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 py-3 flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-2 text-[11.5px] text-white/75 mr-auto">
-            <span className={cn('inline-block h-1.5 w-1.5 rounded-full', statusDot)} />
+          <div className="flex items-center gap-2 text-[11.5px] text-white/75 mr-auto min-w-0">
+            <span className={cn('inline-block h-1.5 w-1.5 rounded-full shrink-0', statusDot)} />
             <span className="uppercase tracking-[0.14em] font-medium">{statusLabel}</span>
+            {scheduleSummary && (
+              <>
+                <span className="text-white/25 mx-1">·</span>
+                <span className="text-elec-yellow/90 truncate">{scheduleSummary}</span>
+              </>
+            )}
           </div>
           <div className="flex items-center gap-1.5 flex-wrap">
+            <ActionBtn
+              label="Deliver"
+              onClick={() => navigate(`/college/lessons/${lessonId}/deliver`)}
+              primary
+            />
+            <ActionBtn
+              label={isScheduled ? 'Reschedule' : 'Schedule'}
+              onClick={() => setScheduleOpen(true)}
+              accent
+            />
             <ActionBtn
               label={isReady ? 'Mark draft' : 'Mark ready'}
               onClick={handleMarkReady}
               loading={busy === 'ready'}
-              primary={!isReady}
             />
             <ActionBtn
               label="Duplicate"
@@ -1431,6 +1493,16 @@ function PlanActionBar({
           </div>
         </div>
       </div>
+
+      <ScheduleLessonDialog
+        open={scheduleOpen}
+        onOpenChange={setScheduleOpen}
+        lessonId={lessonId}
+        planTitle={plan.title}
+        defaultDurationMins={plan.duration_mins}
+        initialCohortId={scheduleMeta?.cohort_id ?? null}
+        onScheduled={refreshSchedule}
+      />
 
       <ConfirmationDialog
         open={confirmDelete}
@@ -1451,12 +1523,14 @@ function ActionBtn({
   onClick,
   loading,
   primary,
+  accent,
   destructive,
 }: {
   label: string;
   onClick: () => void;
   loading?: boolean;
   primary?: boolean;
+  accent?: boolean;
   destructive?: boolean;
 }) {
   return (
@@ -1467,9 +1541,11 @@ function ActionBtn({
         'h-9 px-3.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation disabled:opacity-50',
         primary
           ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-          : destructive
-            ? 'text-red-300 hover:text-red-200 hover:bg-red-500/10 border border-red-500/20'
-            : 'text-white/85 hover:text-white hover:bg-white/[0.06] border border-white/[0.1]'
+          : accent
+            ? 'text-elec-yellow hover:text-black hover:bg-elec-yellow border border-elec-yellow/40 hover:border-elec-yellow'
+            : destructive
+              ? 'text-red-300 hover:text-red-200 hover:bg-red-500/10 border border-red-500/20'
+              : 'text-white/85 hover:text-white hover:bg-white/[0.06] border border-white/[0.1]'
       )}
     >
       {loading ? '…' : label}

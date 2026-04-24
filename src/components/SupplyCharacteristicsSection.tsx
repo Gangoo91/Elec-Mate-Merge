@@ -16,6 +16,11 @@ import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
+import {
+  FieldLimitationBadge,
+  FieldNotesInput,
+  isFieldMarker,
+} from '@/components/field-limitations';
 
 // Fields managed by this section (for memoization comparison)
 const SUPPLY_SECTION_FIELDS = [
@@ -50,6 +55,16 @@ const SUPPLY_SECTION_FIELDS = [
   'rcdTimeDelay',
   'rcdMeasuredTime',
   'rcdBreakingCapacity',
+  // ELE-849 — limitation reason notes, sibling to their marker-capable fields
+  'dnoNameNotes',
+  'mpanNotes',
+  'cutoutLocationNotes',
+  'externalZeNotes',
+  'prospectiveFaultCurrentNotes',
+  'otherSourcesOfSupplyNotes',
+  'earthingArrangementNotes',
+  'earthElectrodeTypeNotes',
+  'supplyFrequencyNotes',
 ] as const;
 
 interface SupplyCharacteristicsSectionProps {
@@ -68,18 +83,23 @@ const FormField = ({
   label,
   required,
   hint,
+  trailing,
   children,
 }: {
   label: string;
   required?: boolean;
   hint?: string;
+  trailing?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
-      {label}
-      {required && ' *'}
-    </Label>
+    <div className="flex items-center justify-between gap-2 mb-1.5">
+      <Label className="text-white text-xs">
+        {label}
+        {required && ' *'}
+      </Label>
+      {trailing}
+    </div>
     {children}
     {hint && <span className="text-xs text-white block mt-1">{hint}</span>}
   </div>
@@ -300,35 +320,99 @@ const SupplyCharacteristicsSectionInner = ({
         <div className="space-y-3 py-3">
           {/* Row 1: DNO + MPAN */}
           <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField label="DNO">
-              <FormSelectSheet
-                value={formData.dnoName || ''}
-                onValueChange={(value) => onUpdate('dnoName', value)}
-                label="Distribution Network Operator"
-                placeholder="Select DNO"
-                options={dnoOptions.map((dno) => ({ value: dno, label: dno }))}
-                allowCustom
-                customLabel="Other DNO"
+            <FormField
+              label="DNO"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.dnoName || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('dnoName', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.dnoName) ? (
+                <Input
+                  value={formData.dnoName}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <FormSelectSheet
+                  value={formData.dnoName || ''}
+                  onValueChange={(value) => onUpdate('dnoName', value)}
+                  label="Distribution Network Operator"
+                  placeholder="Select DNO"
+                  options={dnoOptions.map((dno) => ({ value: dno, label: dno }))}
+                  allowCustom
+                  customLabel="Other DNO"
+                />
+              )}
+              <FieldNotesInput
+                parentValue={formData.dnoName || ''}
+                value={formData.dnoNameNotes || ''}
+                onChange={(v) => onUpdate('dnoNameNotes', v)}
+                placeholder="Reason (e.g. not displayed on cutout)"
               />
             </FormField>
-            <FormField label="MPAN">
+            <FormField
+              label="MPAN"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.mpan || ''}
+                  markers={['N/A']}
+                  onChange={(v) => onUpdate('mpan', v)}
+                />
+              }
+            >
               <Input
                 value={formData.mpan || ''}
                 onChange={(e) => onUpdate('mpan', e.target.value)}
                 placeholder="12 345 678 901 234"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                disabled={isFieldMarker(formData.mpan)}
+                className={cn(
+                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
+                  isFieldMarker(formData.mpan) && 'opacity-60'
+                )}
+              />
+              <FieldNotesInput
+                parentValue={formData.mpan || ''}
+                value={formData.mpanNotes || ''}
+                onChange={(v) => onUpdate('mpanNotes', v)}
+                placeholder="Reason (e.g. sub-distribution, no MPAN)"
               />
             </FormField>
           </div>
 
           {/* Row 2: Cutout + Service Entry */}
           <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField label="Cutout Location">
+            <FormField
+              label="Cutout Location"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.cutoutLocation || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('cutoutLocation', v)}
+                />
+              }
+            >
               <Input
                 value={formData.cutoutLocation || ''}
                 onChange={(e) => onUpdate('cutoutLocation', e.target.value)}
                 placeholder="Under stairs"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                disabled={isFieldMarker(formData.cutoutLocation)}
+                className={cn(
+                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
+                  isFieldMarker(formData.cutoutLocation) && 'opacity-60'
+                )}
+              />
+              <FieldNotesInput
+                parentValue={formData.cutoutLocation || ''}
+                value={formData.cutoutLocationNotes || ''}
+                onChange={(v) => onUpdate('cutoutLocationNotes', v)}
+                placeholder="Reason (e.g. locked meter room)"
               />
             </FormField>
             <FormField label="Service Entry">
@@ -471,12 +555,32 @@ const SupplyCharacteristicsSectionInner = ({
                 }
               />
             </FormField>
-            <FormField label="Hz">
+            <FormField
+              label="Hz"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.supplyFrequency || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('supplyFrequency', v)}
+                />
+              }
+            >
               <Input
-                value={formData.supplyFrequency || '50'}
+                value={isFieldMarker(formData.supplyFrequency) ? formData.supplyFrequency : (formData.supplyFrequency || '50')}
                 onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
                 placeholder="50"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                disabled={isFieldMarker(formData.supplyFrequency)}
+                className={cn(
+                  'h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]',
+                  isFieldMarker(formData.supplyFrequency) && 'opacity-60'
+                )}
+              />
+              <FieldNotesInput
+                parentValue={formData.supplyFrequency || ''}
+                value={formData.supplyFrequencyNotes || ''}
+                onChange={(v) => onUpdate('supplyFrequencyNotes', v)}
+                placeholder="Reason"
               />
             </FormField>
             <FormField label="PME">
@@ -505,28 +609,76 @@ const SupplyCharacteristicsSectionInner = ({
 
           {/* Row 3: Ze + Ipf */}
           <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField label="External Ze (Ω)">
-              <Input
-                type="number"
-                step="0.01"
-                min="0"
-                value={formData.externalZe || ''}
-                onChange={(e) => onUpdate('externalZe', e.target.value)}
-                placeholder="0.35"
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                inputMode="decimal"
+            <FormField
+              label="External Ze (Ω)"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.externalZe || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('externalZe', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.externalZe) ? (
+                <Input
+                  value={formData.externalZe}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <Input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={formData.externalZe || ''}
+                  onChange={(e) => onUpdate('externalZe', e.target.value)}
+                  placeholder="0.35"
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  inputMode="decimal"
+                />
+              )}
+              <FieldNotesInput
+                parentValue={formData.externalZe || ''}
+                value={formData.externalZeNotes || ''}
+                onChange={(v) => onUpdate('externalZeNotes', v)}
+                placeholder="Reason (e.g. meter room locked)"
               />
             </FormField>
-            <FormField label="Ipf at Origin (kA)">
-              <Input
-                type="number"
-                step="0.01"
-                min="0"
-                value={formData.prospectiveFaultCurrent || ''}
-                onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
-                placeholder={ipfSuggestion ? `~${ipfSuggestion.value}` : '16'}
-                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
-                inputMode="decimal"
+            <FormField
+              label="Ipf at Origin (kA)"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.prospectiveFaultCurrent || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('prospectiveFaultCurrent', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.prospectiveFaultCurrent) ? (
+                <Input
+                  value={formData.prospectiveFaultCurrent}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <Input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={formData.prospectiveFaultCurrent || ''}
+                  onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
+                  placeholder={ipfSuggestion ? `~${ipfSuggestion.value}` : '16'}
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                  inputMode="decimal"
+                />
+              )}
+              <FieldNotesInput
+                parentValue={formData.prospectiveFaultCurrent || ''}
+                value={formData.prospectiveFaultCurrentNotes || ''}
+                onChange={(v) => onUpdate('prospectiveFaultCurrentNotes', v)}
+                placeholder="Reason (e.g. not measurable from here)"
               />
             </FormField>
           </div>
@@ -551,9 +703,27 @@ const SupplyCharacteristicsSectionInner = ({
               </button>
             </FormField>
             {/* A4:2026 — Other sources of supply tick-box */}
-            <FormField label="Other Sources">
+            <FormField
+              label="Other Sources"
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : ''}
+                  markers={['N/A']}
+                  onChange={(v) => {
+                    if (v === 'N/A') {
+                      onUpdate('otherSourcesOfSupplyPresent', 'N/A');
+                      onUpdate('otherSourcesOfSupply', '');
+                    } else {
+                      onUpdate('otherSourcesOfSupplyPresent', 'false');
+                    }
+                  }}
+                />
+              }
+            >
               <button
                 type="button"
+                disabled={formData.otherSourcesOfSupplyPresent === 'N/A'}
                 onClick={() => {
                   haptic.light();
                   onUpdate('otherSourcesOfSupplyPresent', formData.otherSourcesOfSupplyPresent === 'true' ? 'false' : 'true');
@@ -562,12 +732,19 @@ const SupplyCharacteristicsSectionInner = ({
                   'w-full h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-2',
                   formData.otherSourcesOfSupplyPresent === 'true'
                     ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    : 'bg-white/[0.05] border border-white/[0.08] text-white',
+                  formData.otherSourcesOfSupplyPresent === 'N/A' && 'opacity-40'
                 )}
               >
                 {formData.otherSourcesOfSupplyPresent === 'true' && <Check className="h-3.5 w-3.5" />}
-                Present
+                {formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : 'Present'}
               </button>
+              <FieldNotesInput
+                parentValue={formData.otherSourcesOfSupplyPresent === 'N/A' ? 'N/A' : ''}
+                value={formData.otherSourcesOfSupplyNotes || ''}
+                onChange={(v) => onUpdate('otherSourcesOfSupplyNotes', v)}
+                placeholder="Reason (e.g. cabin-only install, no secondary source)"
+              />
             </FormField>
           </div>
           {formData.otherSourcesOfSupplyPresent === 'true' && (
@@ -817,29 +994,71 @@ const SupplyCharacteristicsSectionInner = ({
       <div>
         <SectionTitle title="Earthing System" />
         <div className="space-y-3 py-3">
-          <FormField label="Earthing Arrangement *">
-            <div className="grid grid-cols-5 gap-2">
-              {earthingOptions.map((option) => (
-                <button
-                  key={option.value}
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    onUpdate('earthingArrangement', formData.earthingArrangement === option.value ? '' : option.value);
-                  }}
-                  className={cn(
-                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    formData.earthingArrangement === option.value
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                  )}
-                >
-                  {option.value}
-                </button>
-              ))}
-            </div>
+          <FormField
+            label="Earthing Arrangement"
+            required
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.earthingArrangement || ''}
+                markers={['LIM']}
+                onChange={(v) => onUpdate('earthingArrangement', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.earthingArrangement) ? (
+              <Input
+                value={formData.earthingArrangement}
+                disabled
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+              />
+            ) : (
+              <div className="grid grid-cols-5 gap-2">
+                {earthingOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate('earthingArrangement', formData.earthingArrangement === option.value ? '' : option.value);
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                      formData.earthingArrangement === option.value
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {option.value}
+                  </button>
+                ))}
+              </div>
+            )}
+            <FieldNotesInput
+              parentValue={formData.earthingArrangement || ''}
+              value={formData.earthingArrangementNotes || ''}
+              onChange={(v) => onUpdate('earthingArrangementNotes', v)}
+              placeholder="Reason (e.g. meter room locked — could not confirm)"
+            />
           </FormField>
-          <FormField label="Electrode Type">
+          <FormField
+            label="Electrode Type"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.earthElectrodeType || ''}
+                markers={['LIM']}
+                onChange={(v) => onUpdate('earthElectrodeType', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.earthElectrodeType) ? (
+              <Input
+                value={formData.earthElectrodeType}
+                disabled
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+              />
+            ) : (
             <FormSelectSheet
               value={formData.earthElectrodeType || ''}
               onValueChange={(value) => {
@@ -858,6 +1077,13 @@ const SupplyCharacteristicsSectionInner = ({
                 { value: 'water-pipe', label: 'Water Pipe' },
                 { value: 'n/a', label: 'N/A' },
               ]}
+            />
+            )}
+            <FieldNotesInput
+              parentValue={formData.earthElectrodeType || ''}
+              value={formData.earthElectrodeTypeNotes || ''}
+              onChange={(v) => onUpdate('earthElectrodeTypeNotes', v)}
+              placeholder="Reason"
             />
           </FormField>
         </div>

@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { StaffDetailSheet } from '@/components/college/sheets/StaffDetailSheet';
 import { EditStaffSheet } from '@/components/college/sheets/EditStaffSheet';
 import { AddTutorDialog } from '@/components/college/dialogs/AddTutorDialog';
-import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StaffCardSkeletonList } from '@/components/college/ui/StaffCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
@@ -13,6 +12,7 @@ import { getInitials, getRoleLabel } from '@/utils/collegeHelpers';
 import { cn } from '@/lib/utils';
 import {
   PageFrame,
+  PeopleListRow,
   PageHero,
   ListCard,
   Pill,
@@ -164,98 +164,61 @@ export function SupportStaffSection() {
               <ListCard>
                 {filteredStaff.map((member) => {
                   const isSelected = selectedIds.has(member.id);
+                  const statusTone =
+                    member.status === 'Active'
+                      ? 'green'
+                      : member.status === 'On Leave'
+                        ? 'amber'
+                        : 'red';
                   return (
-                    <SwipeableCard
+                    <PeopleListRow
                       key={member.id}
-                      onTap={() => handleSelectStaff(member)}
-                      onLongPress={() => handleLongPress(member.id)}
+                      id={member.id}
+                      lead={
+                        batchMode
+                          ? { kind: 'checkbox', checked: isSelected }
+                          : {
+                              kind: 'avatar',
+                              name: member.name,
+                              photoUrl: member.photo_url,
+                              ringTone: 'blue',
+                            }
+                      }
+                      title={member.name}
+                      titleChips={<Pill tone="cyan">{getRoleLabel(member.role)}</Pill>}
+                      subtitle={member.department ?? getRoleLabel(member.role)}
+                      meta={
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11.5px] text-white/70">
+                          <span className="truncate max-w-[220px]">{member.email}</span>
+                          {member.phone && <span>{member.phone}</span>}
+                          {member.assessor_qual && (
+                            <Pill tone="blue">{member.assessor_qual}</Pill>
+                          )}
+                          {member.iqa_qual && <Pill tone="amber">{member.iqa_qual}</Pill>}
+                        </div>
+                      }
+                      status={{ label: member.status, tone: statusTone }}
                       selected={isSelected}
-                      rightActions={[
+                      onOpen={() => handleSelectStaff(member)}
+                      onLongPress={() => handleLongPress(member.id)}
+                      actions={[
+                        { label: 'Open profile', onClick: () => handleSelectStaff(member) },
                         {
-                          label: 'Call',
+                          label: member.phone ? `Call · ${member.phone}` : 'Call',
                           onClick: () => {
                             if (member.phone) window.location.href = `tel:${member.phone}`;
                           },
-                          className: 'bg-emerald-500/90 text-white',
+                          disabled: !member.phone,
+                          divider: true,
                         },
                         {
                           label: 'Email',
                           onClick: () => {
                             window.location.href = `mailto:${member.email}`;
                           },
-                          className: 'bg-blue-500/90 text-white',
                         },
                       ]}
-                    >
-                      <button
-                        onClick={() => handleSelectStaff(member)}
-                        className={cn(
-                          'group w-full flex items-start gap-4 px-5 sm:px-6 py-5 text-left touch-manipulation transition-colors',
-                          isSelected ? 'bg-cyan-500/10' : 'hover:bg-[hsl(0_0%_15%)]'
-                        )}
-                      >
-                        {batchMode ? (
-                          <div
-                            className={cn(
-                              'h-10 w-10 shrink-0 rounded-full flex items-center justify-center border-2 transition-colors',
-                              isSelected
-                                ? 'bg-cyan-500 border-cyan-500 text-white'
-                                : 'border-white/20'
-                            )}
-                          >
-                            {isSelected && <span className="text-sm font-semibold">✓</span>}
-                          </div>
-                        ) : (
-                          <Avatar className="h-10 w-10 shrink-0 ring-1 ring-white/[0.08]">
-                            <AvatarImage src={member.photo_url ?? undefined} />
-                            <AvatarFallback className="bg-cyan-500/10 text-cyan-400 text-xs font-semibold">
-                              {getInitials(member.name)}
-                            </AvatarFallback>
-                          </Avatar>
-                        )}
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-baseline justify-between gap-2">
-                            <div className="min-w-0">
-                              <div className="text-[15px] font-medium text-white truncate">
-                                {member.name}
-                              </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
-                                {member.department ?? getRoleLabel(member.role)}
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-1.5 shrink-0">
-                              <Pill tone="cyan">{getRoleLabel(member.role)}</Pill>
-                              <Pill
-                                tone={
-                                  member.status === 'Active'
-                                    ? 'green'
-                                    : member.status === 'On Leave'
-                                      ? 'amber'
-                                      : 'red'
-                                }
-                              >
-                                {member.status}
-                              </Pill>
-                            </div>
-                          </div>
-
-                          <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-white/75">
-                            <span className="truncate max-w-[200px]">{member.email}</span>
-                            {member.phone && <span>{member.phone}</span>}
-                          </div>
-
-                          {(member.assessor_qual || member.iqa_qual) && (
-                            <div className="mt-2 flex flex-wrap gap-1">
-                              {member.assessor_qual && (
-                                <Pill tone="blue">{member.assessor_qual}</Pill>
-                              )}
-                              {member.iqa_qual && <Pill tone="amber">{member.iqa_qual}</Pill>}
-                            </div>
-                          )}
-                        </div>
-                      </button>
-                    </SwipeableCard>
+                    />
                   );
                 })}
               </ListCard>

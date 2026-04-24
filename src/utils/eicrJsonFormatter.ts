@@ -875,7 +875,28 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   // Prevents double-unit display like "25mmmm²" when PDF template appends "mm²"
   const stripUnit = (value: string): string => {
     if (!value) return value;
+    if (isMarker(value)) return value;
     return value.replace(/mm²?$/i, '').trim();
+  };
+
+  // ELE-849 — LIM / N/V / N/A marker handling. When a field carries one of
+  // these markers, pass it through verbatim rather than normalising to bool
+  // or stripping units. The PDF template renders a coloured badge for these.
+  const isMarker = (v: any): v is 'LIM' | 'N/V' | 'N/A' =>
+    v === 'LIM' || v === 'N/V' || v === 'N/A';
+
+  /** Emits the field's sibling reason note. Always safe — returns '' if unset. */
+  const note = (key: string): string => get(`${key}Notes`);
+
+  /**
+   * For boolean fields that can now also carry a marker. Returns the marker
+   * string when present so the template can branch on it; otherwise returns
+   * the boolean. Use for checkboxes like means_of_earthing_*.
+   */
+  const getBoolOrMarker = (key: string, defaultValue: boolean = false): boolean | string => {
+    const raw = formData[key];
+    if (isMarker(raw)) return String(raw);
+    return getBool(key, defaultValue);
   };
 
   // NESTED, GROUPED structure for improved organization
@@ -938,12 +959,20 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
 
     supply_characteristics: {
       supply_voltage: get('supplyVoltageCustom') || get('supplyVoltage'),
-      supply_frequency: get('supplyFrequency', '50'),
+      // ELE-849 — preserve LIM marker rather than defaulting to 50 Hz
+      supply_frequency: isMarker(formData.supplyFrequency)
+        ? String(formData.supplyFrequency)
+        : get('supplyFrequency', '50'),
+      supply_frequency_note: note('supplyFrequency'),
       supply_ac_dc: get('supplyAcDc', 'ac'),
       conductor_configuration: get('conductorConfiguration'),
       dc_conductor_config: get('dcConductorConfig'),
       phases: normalisePhases(get('phases')),
-      earthing_arrangement: normaliseEarthing(get('earthingArrangement')),
+      // ELE-849 — preserve LIM on earthing arrangement (skip normalisation)
+      earthing_arrangement: isMarker(formData.earthingArrangement)
+        ? String(formData.earthingArrangement)
+        : normaliseEarthing(get('earthingArrangement')),
+      earthing_arrangement_note: note('earthingArrangement'),
       // supply_type: derived from phases when not explicitly set (no UI control for supplyType in EICR form)
       supply_type: (() => {
         const explicit = get('supplyType');
@@ -955,14 +984,25 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       })(),
       supply_pme: get('supplyPME'),
       dno_name: get('dnoName'),
+      dno_name_note: note('dnoName'),
       mpan: get('mpan'),
+      mpan_note: note('mpan'),
       cutout_location: get('cutoutLocation'),
+      cutout_location_note: note('cutoutLocation'),
       service_entry: get('serviceEntry'),
       external_ze: get('externalZe'),
+      external_ze_note: note('externalZe'),
       prospective_fault_current: get('prospectiveFaultCurrent'),
+      prospective_fault_current_note: note('prospectiveFaultCurrent'),
       supply_polarity_confirmed: getBool('supplyPolarityConfirmed'),
       other_sources_of_supply: get('otherSourcesOfSupply'),
-      other_sources_of_supply_present: getBool('otherSourcesOfSupplyPresent'),
+      // ELE-849 — present toggle can now be 'N/A'; pass through the marker so
+      // the template can branch to render "N/A" pill instead of "Present".
+      other_sources_of_supply_present:
+        formData.otherSourcesOfSupplyPresent === 'N/A'
+          ? 'N/A'
+          : getBool('otherSourcesOfSupplyPresent'),
+      other_sources_of_supply_note: note('otherSourcesOfSupply'),
     },
 
     main_protective_device: (() => {
@@ -1019,9 +1059,12 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         get('intakeCableSize') === 'custom'
           ? get('intakeCableSizeCustom')
           : stripUnit(get('intakeCableSize')),
+      intake_cable_size_note: note('intakeCableSize'),
       intake_cable_type: get('intakeCableType'),
+      intake_cable_type_note: note('intakeCableType'),
       tails_size:
         get('tailsSize') === 'custom' ? get('tailsSizeCustom') : stripUnit(get('tailsSize')),
+      tails_size_note: note('tailsSize'),
       tails_length: get('tailsLength'),
     },
 
@@ -1031,33 +1074,44 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       const bondingStr = (formData.mainBondingLocations || '').toLowerCase();
 
       return {
-        means_of_earthing_distributor: getBool('meansOfEarthingDistributor'),
-        means_of_earthing_electrode: getBool('meansOfEarthingElectrode'),
+        // ELE-849 — markers can live on these bool fields; pass through.
+        means_of_earthing_distributor: getBoolOrMarker('meansOfEarthingDistributor'),
+        means_of_earthing_electrode: getBoolOrMarker('meansOfEarthingElectrode'),
+        means_of_earthing_note: note('meansOfEarthing'),
         earth_electrode_type: get('earthElectrodeType'),
+        earth_electrode_type_note: note('earthElectrodeType'),
         earth_electrode_location: get('earthElectrodeLocation'),
         earth_electrode_resistance: get('earthElectrodeResistance') || 'N/A',
         main_earthing_conductor_type: get('mainEarthingConductorType'),
+        main_earthing_conductor_type_note: note('mainEarthingConductorType'),
         main_earthing_conductor_size:
           get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize'),
+        main_earthing_conductor_size_note: note('mainEarthingConductorSize'),
         main_earthing_conductor: (() => {
-          const size = stripUnit(
-            get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize')
-          );
+          const rawSize = get('mainEarthingConductorSizeCustom') || get('mainEarthingConductorSize');
           const type = get('mainEarthingConductorType');
+          if (isMarker(rawSize)) return rawSize;
+          if (isMarker(type)) return type;
+          const size = stripUnit(rawSize);
           if (size && type) return `${size}mm² ${type}`;
           if (size) return `${size}mm²`;
           return '';
         })(),
         main_bonding_conductor_type: get('mainBondingConductorType'),
+        main_bonding_conductor_type_note: note('mainBondingConductorType'),
         main_bonding_conductor: (() => {
-          const size = stripUnit(get('mainBondingSizeCustom') || get('mainBondingSize'));
+          const rawSize = get('mainBondingSizeCustom') || get('mainBondingSize');
           const type = get('mainBondingConductorType');
+          if (isMarker(rawSize)) return rawSize;
+          if (isMarker(type)) return type;
+          const size = stripUnit(rawSize);
           if (size && type) return `${size}mm² ${type}`;
           if (size) return `${size}mm²`;
           return '';
         })(),
         main_bonding_size: get('mainBondingSizeCustom') || get('mainBondingSize'),
         main_bonding_size_custom: get('mainBondingSizeCustom'),
+        main_bonding_size_note: note('mainBondingSize'),
         main_bonding_locations: get('mainBondingLocations'),
         // Bonding connections - parse from mainBondingLocations string
         bonding_water: bondingStr.includes('water'),
@@ -1068,8 +1122,12 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         bonding_other: bondingStr.includes('telecom') || bondingStr.includes('other'),
         bonding_other_specify: get('bondingOtherSpecify'),
         bonding_compliance: get('bondingCompliance'),
-        earthing_conductor_continuity_verified: getBool('earthingConductorContinuityVerified'),
-        bonding_conductor_continuity_verified: getBool('bondingConductorContinuityVerified'),
+        bonding_compliance_note: note('bondingCompliance'),
+        // ELE-849 — continuity toggles now allow N/V; pass marker through.
+        earthing_conductor_continuity_verified: getBoolOrMarker('earthingConductorContinuityVerified'),
+        earthing_conductor_continuity_verified_note: note('earthingConductorContinuityVerified'),
+        bonding_conductor_continuity_verified: getBoolOrMarker('bondingConductorContinuityVerified'),
+        bonding_conductor_continuity_verified_note: note('bondingConductorContinuityVerified'),
         // Derive presence from size when no explicit value set (no UI control for this field)
         supplementary_bonding:
           get('supplementaryBonding') ||
@@ -1079,6 +1137,7 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         supplementary_bonding_size:
           get('supplementaryBondingSizeCustom') || get('supplementaryBondingSize'),
         supplementary_bonding_size_custom: get('supplementaryBondingSizeCustom'),
+        supplementary_bonding_size_note: note('supplementaryBondingSize'),
         equipotential_bonding: get('equipotentialBonding'),
       };
     })(),

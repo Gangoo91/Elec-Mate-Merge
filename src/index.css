@@ -3102,3 +3102,100 @@ input[type='datetime-local']::-webkit-datetime-edit {
   size: A4;
   margin: 14mm 14mm 16mm 14mm;
 }
+
+/* Dedicated print page — /college/lessons/:id/print */
+html.lesson-print-html,
+html.lesson-print-html body {
+  background: #ffffff !important;
+  color: #111 !important;
+}
+
+.print-page {
+  max-width: 182mm;
+  margin: 0 auto;
+  padding: 10mm 8mm;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  color: #111;
+}
+
+.print-cover {
+  padding-bottom: 8mm;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 8mm;
+}
+
+.print-title {
+  font-size: 24pt;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: #111;
+}
+
+.print-section {
+  margin-top: 8mm;
+  page-break-inside: avoid;
+}
+
+.print-callout-amber {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 4px;
+  padding: 10px 14px;
+}
+
+.print-activity {
+  page-break-inside: avoid;
+}
+
+.print-prose h2 {
+  font-size: 13pt;
+  font-weight: 600;
+  margin-top: 8mm;
+  margin-bottom: 2mm;
+  page-break-after: avoid;
+}
+.print-prose h2:first-child {
+  margin-top: 0;
+}
+.print-prose p {
+  font-size: 10.5pt;
+  line-height: 1.55;
+  margin: 0 0 4mm 0;
+  color: #222;
+}
+.print-prose ul,
+.print-prose ol {
+  font-size: 10.5pt;
+  line-height: 1.55;
+  margin: 0 0 4mm 16pt;
+}
+.print-prose li {
+  margin-bottom: 1.5mm;
+}
+.print-prose strong {
+  color: #000;
+  font-weight: 600;
+}
+
+.page-break-before {
+  page-break-before: always;
+}
+
+@media print {
+  html.lesson-print-html body > :not(.print-page) {
+    display: none !important;
+  }
+  .print-page {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+}

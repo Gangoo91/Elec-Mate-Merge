@@ -1,13 +1,19 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { AddStudentDialog } from '@/components/college/dialogs/AddStudentDialog';
 import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailSheet';
 import { EditStudentSheet } from '@/components/college/sheets/EditStudentSheet';
 import { WithdrawStudentDialog } from '@/components/college/dialogs/WithdrawStudentDialog';
-import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { ProgressSparkline } from '@/components/college/ui/ProgressSparkline';
 import { StudentCardSkeletonList } from '@/components/college/ui/StudentCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStudent } from '@/contexts/CollegeSupabaseContext';
@@ -27,6 +33,7 @@ import {
 export function StudentsSection() {
   const { students, cohorts, attendance, isLoading, updateStudent } = useCollegeSupabase();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
@@ -43,8 +50,39 @@ export function StudentsSection() {
       toggleSelection(student.id);
       return;
     }
-    setSelectedStudent(student);
-    setDetailOpen(true);
+    // Dedicated Student 360 page is the primary profile view.
+    navigate(`/college/students/${student.id}`);
+  };
+
+  const handleCall = (student: CollegeStudent) => {
+    if (student.phone) window.location.href = `tel:${student.phone}`;
+  };
+  const handleEmail = (student: CollegeStudent) => {
+    if (student.email) window.location.href = `mailto:${student.email}`;
+  };
+  const handleFlagAtRisk = async (student: CollegeStudent) => {
+    await updateStudent(student.id, { risk_level: 'High' });
+    toast({
+      title: 'Flagged as at risk',
+      description: `${student.name} has been flagged. Open their profile to add context.`,
+    });
+  };
+
+  // Long-press detection for touch devices — starts batch mode
+  const longPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const longPressFiredRef = useRef(false);
+  const startLongPress = (id: string) => {
+    longPressFiredRef.current = false;
+    longPressTimerRef.current = setTimeout(() => {
+      longPressFiredRef.current = true;
+      handleLongPress(id);
+    }, 450);
+  };
+  const cancelLongPress = () => {
+    if (longPressTimerRef.current) {
+      clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
   };
   const handleEditStudent = (student: CollegeStudent) => {
     setSelectedStudent(student);
@@ -83,18 +121,6 @@ export function StudentsSection() {
     if (records.length === 0) return 100;
     const present = records.filter((a) => a.status === 'Present' || a.status === 'Late').length;
     return Math.round((present / records.length) * 100);
-  };
-
-  const getSparklineData = (student: CollegeStudent): number[] => {
-    const base = student.progress_percent ?? 0;
-    const seed = student.id.charCodeAt(0) + student.id.charCodeAt(1);
-    return [
-      Math.max(0, base - 15 - (seed % 10)),
-      Math.max(0, base - 10 - (seed % 5)),
-      Math.max(0, base - 8 + (seed % 7)),
-      Math.max(0, base - 4),
-      base,
-    ];
   };
 
   const filteredStudents = useMemo(
@@ -210,54 +236,64 @@ export function StudentsSection() {
                 {filteredStudents.map((student) => {
                   const attendanceRate = getAttendanceRate(student.id);
                   const progressPercent = student.progress_percent ?? 0;
-                  const isAtRisk = student.risk_level === 'High' || student.risk_level === 'Medium';
+                  const isAtRisk =
+                    student.risk_level === 'High' || student.risk_level === 'Medium';
+                  const isCritical = student.risk_level === 'Critical' || student.risk_level === 'High';
                   const isSelected = selectedIds.has(student.id);
 
+                  const attendanceTone =
+                    attendanceRate < 80
+                      ? 'text-red-400'
+                      : attendanceRate < 90
+                        ? 'text-amber-400'
+                        : 'text-emerald-400';
+
                   return (
-                    <SwipeableCard
+                    <div
                       key={student.id}
-                      onTap={() => handleSelectStudent(student)}
-                      onLongPress={() => handleLongPress(student.id)}
-                      selected={isSelected}
-                      rightActions={[
-                        {
-                          label: 'Call',
-                          onClick: () => {
-                            if (student.phone) window.location.href = `tel:${student.phone}`;
-                          },
-                          className: 'bg-emerald-500/90 text-white',
-                        },
-                        {
-                          label: 'Email',
-                          onClick: () => {
-                            window.location.href = `mailto:${student.email}`;
-                          },
-                          className: 'bg-blue-500/90 text-white',
-                        },
-                      ]}
-                      leftActions={
-                        isAtRisk
-                          ? []
-                          : [
-                              {
-                                label: 'Flag',
-                                onClick: () => handleEditStudent(student),
-                                className: 'bg-amber-500/90 text-white',
-                              },
-                            ]
-                      }
+                      className={cn(
+                        'relative group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-5 transition-colors',
+                        isSelected
+                          ? 'bg-elec-yellow/[0.06]'
+                          : 'hover:bg-[hsl(0_0%_14%)]'
+                      )}
+                      onTouchStart={() => startLongPress(student.id)}
+                      onTouchEnd={cancelLongPress}
+                      onTouchCancel={cancelLongPress}
+                      onTouchMove={cancelLongPress}
                     >
+                      {/* Risk accent rail — visible left edge for at-risk */}
+                      {isAtRisk && !batchMode && (
+                        <span
+                          aria-hidden
+                          className={cn(
+                            'absolute left-0 top-3 bottom-3 w-[3px] rounded-full',
+                            isCritical ? 'bg-red-400/80' : 'bg-amber-400/80'
+                          )}
+                        />
+                      )}
+
+                      {/* Avatar / checkbox (col 1) */}
                       <button
-                        onClick={() => handleSelectStudent(student)}
-                        className={cn(
-                          'group w-full flex items-start gap-4 px-5 sm:px-6 py-5 text-left touch-manipulation transition-colors',
-                          isSelected ? 'bg-elec-yellow/10' : 'hover:bg-[hsl(0_0%_15%)]'
-                        )}
+                        type="button"
+                        onMouseDown={() => {
+                          // Long-press for desktop mouse too (nice-to-have)
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (longPressFiredRef.current) {
+                            longPressFiredRef.current = false;
+                            return;
+                          }
+                          handleSelectStudent(student);
+                        }}
+                        className="shrink-0 touch-manipulation"
+                        aria-label={`Open ${student.name}`}
                       >
                         {batchMode ? (
                           <div
                             className={cn(
-                              'h-10 w-10 shrink-0 rounded-full flex items-center justify-center border-2 transition-colors',
+                              'h-10 w-10 rounded-full flex items-center justify-center border-2 transition-colors',
                               isSelected
                                 ? 'bg-elec-yellow border-elec-yellow text-black'
                                 : 'border-white/20'
@@ -268,12 +304,12 @@ export function StudentsSection() {
                         ) : (
                           <Avatar
                             className={cn(
-                              'h-10 w-10 shrink-0 ring-1',
-                              student.status === 'Active'
-                                ? isAtRisk
+                              'h-10 w-10 ring-1 transition-colors',
+                              isCritical
+                                ? 'ring-red-500/40'
+                                : isAtRisk
                                   ? 'ring-amber-500/40'
                                   : 'ring-white/[0.08]'
-                                : 'ring-white/[0.08]'
                             )}
                           >
                             <AvatarImage src={student.photo_url ?? undefined} />
@@ -282,76 +318,155 @@ export function StudentsSection() {
                             </AvatarFallback>
                           </Avatar>
                         )}
+                      </button>
 
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-baseline justify-between gap-2">
-                            <div className="min-w-0">
-                              <div className="text-[15px] font-medium text-white truncate">
-                                {student.name}
-                              </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/75 truncate tabular-nums">
-                                {student.uln ? `ULN · ${student.uln}` : getCohortName(student.cohort_id)}
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-1.5 shrink-0">
-                              {isAtRisk && (
-                                <Pill tone={student.risk_level === 'High' ? 'red' : 'amber'}>
-                                  {student.risk_level}
-                                </Pill>
-                              )}
-                              <Pill
-                                tone={
-                                  student.status === 'Active'
-                                    ? 'green'
-                                    : student.status === 'Withdrawn'
-                                      ? 'red'
-                                      : 'yellow'
-                                }
-                              >
-                                {student.status}
-                              </Pill>
-                            </div>
-                          </div>
+                      {/* Body (col 2) — tappable row */}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (longPressFiredRef.current) {
+                            longPressFiredRef.current = false;
+                            return;
+                          }
+                          handleSelectStudent(student);
+                        }}
+                        className="text-left min-w-0 touch-manipulation"
+                      >
+                        <div className="flex items-baseline gap-2 flex-wrap">
+                          <span className="text-[14.5px] sm:text-[15px] font-semibold text-white truncate max-w-full">
+                            {student.name}
+                          </span>
+                          {isAtRisk && (
+                            <Pill tone={isCritical ? 'red' : 'amber'}>
+                              {student.risk_level}
+                            </Pill>
+                          )}
+                        </div>
+                        <div className="mt-0.5 text-[11.5px] text-white/60 truncate tabular-nums">
+                          {student.uln
+                            ? `ULN · ${student.uln}`
+                            : getCohortName(student.cohort_id)}
+                        </div>
 
-                          {/* Progress */}
-                          <div className="mt-3 flex items-center gap-3">
-                            <div className="flex-1 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                              <div
-                                className="h-full bg-elec-yellow/80 rounded-full transition-all"
-                                style={{ width: `${progressPercent}%` }}
-                              />
-                            </div>
-                            <ProgressSparkline
-                              data={getSparklineData(student)}
-                              width={44}
-                              height={14}
-                            />
-                            <span className="text-[11.5px] font-medium text-white tabular-nums shrink-0">
-                              {progressPercent}%
-                            </span>
-                          </div>
-
-                          <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
-                            <span
+                        {/* Progress + meta — single responsive line */}
+                        <div className="mt-2.5 flex items-center gap-3">
+                          <div className="flex-1 max-w-[180px] h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                            <div
                               className={cn(
-                                'tabular-nums',
-                                attendanceRate < 80 && 'text-red-400',
-                                attendanceRate >= 80 && attendanceRate < 90 && 'text-amber-400',
-                                attendanceRate >= 90 && 'text-emerald-400'
+                                'h-full rounded-full transition-all',
+                                progressPercent >= 66
+                                  ? 'bg-emerald-400/80'
+                                  : progressPercent >= 33
+                                    ? 'bg-elec-yellow/80'
+                                    : 'bg-red-400/70'
                               )}
-                            >
-                              {attendanceRate}% attendance
-                            </span>
-                            <span>Cohort · {getCohortName(student.cohort_id)}</span>
-                            {student.expected_end_date && (
-                              <span className="tabular-nums">
-                                Due {formatUKDateShort(student.expected_end_date)}
-                              </span>
-                            )}
+                              style={{ width: `${progressPercent}%` }}
+                            />
                           </div>
+                          <span className="text-[11.5px] font-medium text-white tabular-nums shrink-0">
+                            {progressPercent}%
+                          </span>
+                          <span className={cn('text-[11px] tabular-nums shrink-0', attendanceTone)}>
+                            {attendanceRate}% att
+                          </span>
+                          <span className="hidden sm:inline text-[11px] text-white/55 truncate">
+                            {getCohortName(student.cohort_id)}
+                          </span>
+                          {student.expected_end_date && (
+                            <span className="hidden lg:inline text-[11px] text-white/55 tabular-nums">
+                              Due {formatUKDateShort(student.expected_end_date)}
+                            </span>
+                          )}
                         </div>
                       </button>
-                    </SwipeableCard>
+
+                      {/* Trailing (col 3) — status + actions */}
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <Pill
+                          tone={
+                            student.status === 'Active'
+                              ? 'green'
+                              : student.status === 'Withdrawn'
+                                ? 'red'
+                                : 'yellow'
+                          }
+                        >
+                          <span className="hidden sm:inline">{student.status}</span>
+                          <span className="sm:hidden">
+                            {student.status === 'Active'
+                              ? '●'
+                              : student.status === 'Withdrawn'
+                                ? '○'
+                                : '◐'}
+                          </span>
+                        </Pill>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button
+                              type="button"
+                              aria-label="More actions"
+                              onClick={(e) => e.stopPropagation()}
+                              className="h-9 w-9 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+                            >
+                              <span className="text-[15px] font-semibold tracking-[0.12em]">
+                                ⋯
+                              </span>
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent
+                            align="end"
+                            className="bg-[hsl(0_0%_11%)] border border-white/[0.08] text-white min-w-[180px]"
+                          >
+                            <DropdownMenuItem
+                              onClick={() => handleSelectStudent(student)}
+                              className="text-[13px]"
+                            >
+                              Open profile
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator className="bg-white/[0.06]" />
+                            {student.phone && (
+                              <DropdownMenuItem
+                                onClick={() => handleCall(student)}
+                                className="text-[13px]"
+                              >
+                                Call · {student.phone}
+                              </DropdownMenuItem>
+                            )}
+                            {student.email && (
+                              <DropdownMenuItem
+                                onClick={() => handleEmail(student)}
+                                className="text-[13px]"
+                              >
+                                Email
+                              </DropdownMenuItem>
+                            )}
+                            <DropdownMenuSeparator className="bg-white/[0.06]" />
+                            {!isAtRisk && (
+                              <DropdownMenuItem
+                                onClick={() => handleFlagAtRisk(student)}
+                                className="text-[13px] text-amber-300 focus:text-amber-200"
+                              >
+                                Flag as at risk
+                              </DropdownMenuItem>
+                            )}
+                            <DropdownMenuItem
+                              onClick={() => handleEditStudent(student)}
+                              className="text-[13px]"
+                            >
+                              Edit details
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator className="bg-white/[0.06]" />
+                            <DropdownMenuItem
+                              onClick={() => handleWithdrawStudent(student)}
+                              className="text-[13px] text-red-300 focus:text-red-200"
+                            >
+                              Withdraw
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </div>
                   );
                 })}
               </ListCard>

@@ -289,7 +289,28 @@ const validateZs = (
     };
   }
 
-  // TN systems: Find the protective device in our options
+  // ELE — RCD-protected circuits on TN systems (RCBO, downstream RCD, or
+  // whole-board RCD) use the RCD limit (UL/IΔn), not the MCB/fuse table.
+  // Per BS 7671 Reg 411.5.3 / Reg 415.1.1. This fixes the "Max Zs too high"
+  // false alarm on RCBO-protected circuits.
+  const rcdMa = parseRcdRatingMa(rcdRating);
+  if (rcdMa && TT_ZS_LIMITS_BY_RCD_MA[rcdMa]) {
+    const rcdMaxZs = TT_ZS_LIMITS_BY_RCD_MA[rcdMa];
+    if (numValue <= rcdMaxZs) {
+      return {
+        isValid: true,
+        level: 'pass',
+        message: `Zs OK — RCD-protected (${rcdMa}mA RCD, limit ${rcdMaxZs}Ω per Reg 411.5.3)`,
+      };
+    }
+    return {
+      isValid: false,
+      level: 'fail',
+      message: `Zs ${numValue}Ω exceeds RCD limit for ${rcdMa}mA RCD (${rcdMaxZs}Ω, Reg 411.5.3)`,
+    };
+  }
+
+  // TN systems without RCD: Find the protective device in our options
   const deviceOption = protectiveDeviceOptions.find((option) => option.value === protectiveDevice);
 
   if (deviceOption) {

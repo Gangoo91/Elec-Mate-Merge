@@ -4,7 +4,6 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AddTutorDialog } from '@/components/college/dialogs/AddTutorDialog';
 import { StaffDetailSheet } from '@/components/college/sheets/StaffDetailSheet';
 import { EditStaffSheet } from '@/components/college/sheets/EditStaffSheet';
-import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StaffCardSkeletonList } from '@/components/college/ui/StaffCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
@@ -13,6 +12,7 @@ import { getInitials } from '@/utils/collegeHelpers';
 import { cn } from '@/lib/utils';
 import {
   PageFrame,
+  PeopleListRow,
   PageHero,
   SectionHeader,
   ListCard,
@@ -162,130 +162,94 @@ export function TutorsSection() {
                   const cohortCount = getCohortCount(tutor.id);
                   const isSelected = selectedIds.has(tutor.id);
 
+                  const statusTone =
+                    tutor.status === 'Active'
+                      ? 'green'
+                      : tutor.status === 'On Leave'
+                        ? 'amber'
+                        : 'red';
+
                   return (
-                    <SwipeableCard
+                    <PeopleListRow
                       key={tutor.id}
-                      onTap={() => handleSelectStaff(tutor)}
-                      onLongPress={() => handleLongPress(tutor.id)}
+                      id={tutor.id}
+                      lead={
+                        batchMode
+                          ? { kind: 'checkbox', checked: isSelected }
+                          : {
+                              kind: 'avatar',
+                              name: tutor.name,
+                              photoUrl: tutor.photo_url,
+                              ringTone: 'blue',
+                            }
+                      }
+                      title={tutor.name}
+                      titleChips={
+                        cohortCount > 0 ? (
+                          <Pill tone="blue">
+                            {cohortCount} cohort{cohortCount !== 1 ? 's' : ''}
+                          </Pill>
+                        ) : null
+                      }
+                      subtitle={tutor.department ?? 'Tutor'}
+                      meta={
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11.5px] text-white/70">
+                          {tutor.specialisations?.length
+                            ? tutor.specialisations
+                                .slice(0, 3)
+                                .map((s, i) => (
+                                  <span
+                                    key={i}
+                                    className="text-[11px] text-white/70 bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
+                                  >
+                                    {s}
+                                  </span>
+                                ))
+                            : null}
+                          {tutor.specialisations && tutor.specialisations.length > 3 && (
+                            <span className="text-[11px] text-white/50">
+                              +{tutor.specialisations.length - 3}
+                            </span>
+                          )}
+                          {tutor.max_teaching_hours && (
+                            <span className="tabular-nums">
+                              {tutor.max_teaching_hours}h/wk
+                            </span>
+                          )}
+                          {tutor.teaching_qual && (
+                            <Pill tone="green">{tutor.teaching_qual}</Pill>
+                          )}
+                          {tutor.assessor_qual && (
+                            <Pill tone="blue">{tutor.assessor_qual}</Pill>
+                          )}
+                          {tutor.iqa_qual && <Pill tone="amber">{tutor.iqa_qual}</Pill>}
+                        </div>
+                      }
+                      status={{ label: tutor.status, tone: statusTone }}
                       selected={isSelected}
-                      rightActions={[
+                      onOpen={() => handleSelectStaff(tutor)}
+                      onLongPress={() => handleLongPress(tutor.id)}
+                      actions={[
                         {
-                          label: 'Call',
+                          label: 'Open profile',
+                          onClick: () => handleSelectStaff(tutor),
+                        },
+                        {
+                          label: tutor.phone ? `Call · ${tutor.phone}` : 'Call',
                           onClick: () => {
                             if (tutor.phone) window.location.href = `tel:${tutor.phone}`;
                           },
-                          className: 'bg-emerald-500/90 text-white',
+                          disabled: !tutor.phone,
+                          divider: true,
                         },
                         {
                           label: 'Email',
                           onClick: () => {
                             window.location.href = `mailto:${tutor.email}`;
                           },
-                          className: 'bg-blue-500/90 text-white',
                         },
                       ]}
-                    >
-                      <button
-                        onClick={() => handleSelectStaff(tutor)}
-                        className={cn(
-                          'group w-full flex items-start gap-4 px-5 sm:px-6 py-5 text-left touch-manipulation transition-colors',
-                          isSelected ? 'bg-blue-500/10' : 'hover:bg-[hsl(0_0%_15%)]'
-                        )}
-                      >
-                        {batchMode ? (
-                          <div
-                            className={cn(
-                              'h-10 w-10 shrink-0 rounded-full flex items-center justify-center border-2 transition-colors',
-                              isSelected
-                                ? 'bg-blue-500 border-blue-500 text-white'
-                                : 'border-white/20'
-                            )}
-                          >
-                            {isSelected && (
-                              <span className="text-[14px] font-semibold">✓</span>
-                            )}
-                          </div>
-                        ) : (
-                          <Avatar className="h-10 w-10 shrink-0 ring-1 ring-white/[0.08]">
-                            <AvatarImage src={tutor.photo_url ?? undefined} />
-                            <AvatarFallback className="bg-blue-500/10 text-blue-400 text-xs font-semibold">
-                              {getInitials(tutor.name)}
-                            </AvatarFallback>
-                          </Avatar>
-                        )}
-
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-baseline justify-between gap-2">
-                            <div className="min-w-0">
-                              <div className="text-[15px] font-medium text-white truncate">
-                                {tutor.name}
-                              </div>
-                              <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
-                                {tutor.department ?? 'Tutor'}
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-1.5 shrink-0">
-                              {cohortCount > 0 && (
-                                <Pill tone="blue">
-                                  {cohortCount} cohort{cohortCount !== 1 ? 's' : ''}
-                                </Pill>
-                              )}
-                              <Pill
-                                tone={
-                                  tutor.status === 'Active'
-                                    ? 'green'
-                                    : tutor.status === 'On Leave'
-                                      ? 'amber'
-                                      : 'red'
-                                }
-                              >
-                                {tutor.status}
-                              </Pill>
-                            </div>
-                          </div>
-
-                          {tutor.specialisations && tutor.specialisations.length > 0 && (
-                            <div className="mt-3 flex flex-wrap gap-1">
-                              {tutor.specialisations.slice(0, 4).map((spec, i) => (
-                                <span
-                                  key={i}
-                                  className="text-[11px] text-white/60 bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
-                                >
-                                  {spec}
-                                </span>
-                              ))}
-                              {tutor.specialisations.length > 4 && (
-                                <span className="text-[11px] text-white/70 px-1.5 py-0.5">
-                                  +{tutor.specialisations.length - 4}
-                                </span>
-                              )}
-                            </div>
-                          )}
-
-                          <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-white/75">
-                            <span className="truncate max-w-[200px]">{tutor.email}</span>
-                            {tutor.phone && <span>{tutor.phone}</span>}
-                            {tutor.max_teaching_hours && (
-                              <span className="tabular-nums">
-                                {tutor.max_teaching_hours}h/week
-                              </span>
-                            )}
-                          </div>
-
-                          {(tutor.teaching_qual || tutor.assessor_qual || tutor.iqa_qual) && (
-                            <div className="mt-2 flex flex-wrap gap-1">
-                              {tutor.teaching_qual && (
-                                <Pill tone="green">{tutor.teaching_qual}</Pill>
-                              )}
-                              {tutor.assessor_qual && (
-                                <Pill tone="blue">{tutor.assessor_qual}</Pill>
-                              )}
-                              {tutor.iqa_qual && <Pill tone="amber">{tutor.iqa_qual}</Pill>}
-                            </div>
-                          )}
-                        </div>
-                      </button>
-                    </SwipeableCard>
+                    />
                   );
                 })}
               </ListCard>

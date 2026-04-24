@@ -241,6 +241,103 @@ export const getMaxZsFromDeviceDetails = (
   return null;
 };
 
+/**
+ * RCD-based Max Zs — per BS 7671 Reg 411.5.3 / Reg 415.1.1 Note.
+ * When the circuit is protected by an RCD, disconnection is by residual
+ * current rather than overcurrent, so Zs is limited by UL / IΔn where
+ * UL = 50 V (touch voltage limit) and IΔn is the RCD's rated residual
+ * operating current.
+ *
+ *   30 mA  → 50 / 0.030 = 1667 Ω
+ *   100 mA → 50 / 0.100 =  500 Ω
+ *   300 mA → 50 / 0.300 =  167 Ω
+ *   500 mA → 50 / 0.500 =  100 Ω
+ *
+ * @param rcdRating - '30mA' / '100mA' / '300mA' / '500mA' / number in mA
+ */
+export const getRcdMaxZs = (rcdRating: string | number | null | undefined): number | null => {
+  if (!rcdRating) return null;
+  const raw = String(rcdRating).trim().toLowerCase();
+  if (!raw || raw === 'n/a' || raw === '—' || raw === '-') return null;
+  // Strip 'mA' and any non-digit/decimal chars
+  const ma = parseFloat(raw.replace(/[^\d.]/g, ''));
+  if (isNaN(ma) || ma <= 0) return null;
+  // UL (50 V) / IΔn (A)
+  const maxZs = 50 / (ma / 1000);
+  return Math.round(maxZs * 100) / 100;
+};
+
+/**
+ * Is the circuit RCD-protected? True if:
+ *   - circuit has its own RCBO / downstream RCD (rcdRating set)
+ *   - OR the upstream board has a main RCD (`rcdMainSwitch === 'yes'`)
+ *   - OR the protective device type indicates RCBO
+ */
+export const isCircuitRcdProtected = (opts: {
+  rcdRating?: string | null;
+  rcdType?: string | null;
+  protectiveDeviceType?: string | null;
+  bsStandard?: string | null;
+  boardHasMainRcd?: boolean;
+}): boolean => {
+  const { rcdRating, rcdType, protectiveDeviceType, bsStandard, boardHasMainRcd } = opts;
+  const hasRcdRating = rcdRating && rcdRating.toString().trim() !== '' && rcdRating !== 'N/A';
+  const hasRcdType = rcdType && rcdType.toString().trim() !== '' && rcdType !== 'N/A';
+  const isRcbo = /rcbo|61009/i.test(String(protectiveDeviceType || '') + ' ' + String(bsStandard || ''));
+  return Boolean(hasRcdRating || hasRcdType || isRcbo || boardHasMainRcd);
+};
+
+/**
+ * RCD-aware Max Zs lookup.
+ *
+ * When the circuit is RCD-protected, returns the RCD-based limit (50/IΔn).
+ * Otherwise falls back to the BS 7671 overcurrent table (`getMaxZsFromDeviceDetails`).
+ *
+ * Pass the RCD details + board context alongside the normal device details.
+ */
+export const getMaxZsWithRcd = (opts: {
+  bsStandard: string;
+  curve: string;
+  rating: string;
+  rcdRating?: string | null;
+  rcdType?: string | null;
+  protectiveDeviceType?: string | null;
+  boardHasMainRcd?: boolean;
+  boardMainRcdRating?: string | null;
+  circuitDescription?: string;
+}): { maxZs: number | null; source: 'rcd' | 'overcurrent' | 'unknown'; rcdRating?: string | null } => {
+  const rcdProtected = isCircuitRcdProtected({
+    rcdRating: opts.rcdRating,
+    rcdType: opts.rcdType,
+    protectiveDeviceType: opts.protectiveDeviceType,
+    bsStandard: opts.bsStandard,
+    boardHasMainRcd: opts.boardHasMainRcd,
+  });
+
+  if (rcdProtected) {
+    // Prefer the circuit's own RCD rating. Fall back to the board's main RCD rating.
+    const effectiveRating =
+      (opts.rcdRating && String(opts.rcdRating).trim() !== '' && opts.rcdRating !== 'N/A'
+        ? opts.rcdRating
+        : opts.boardMainRcdRating) || '';
+    const rcdMax = getRcdMaxZs(effectiveRating);
+    if (rcdMax !== null) {
+      return { maxZs: rcdMax, source: 'rcd', rcdRating: effectiveRating };
+    }
+  }
+
+  const overcurrentMax = getMaxZsFromDeviceDetails(
+    opts.bsStandard,
+    opts.curve,
+    opts.rating,
+    opts.circuitDescription || ''
+  );
+  return {
+    maxZs: overcurrentMax,
+    source: overcurrentMax !== null ? 'overcurrent' : 'unknown',
+  };
+};
+
 // Re-export for convenience
 export { getDisconnectionTimeForCircuit, getZsLimitFromDeviceString };
 export type { DisconnectionTime, ZsLookupResult };

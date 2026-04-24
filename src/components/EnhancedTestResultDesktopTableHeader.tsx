@@ -346,7 +346,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               </div>
             </TableHead>
             <TableHead
-              className="sot-header-cell w-28 min-w-[110px] max-w-[110px]"
+              className="sot-header-cell w-32 min-w-[132px] max-w-[132px]"
               data-group="protection"
             >
               <div className="flex items-center justify-center gap-2">

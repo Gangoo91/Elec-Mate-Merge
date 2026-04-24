@@ -172,57 +172,123 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
   if (!showApple && !showGoogle) return null;
 
   return (
-    <div className="rounded-2xl bg-gradient-to-br from-white/[0.06] to-white/[0.02] border border-white/[0.08] p-5">
-      <div className="flex items-center gap-2 mb-4">
-        <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-        <h3 className="text-sm font-semibold text-white uppercase tracking-wide">Add to Phone Wallet</h3>
-      </div>
+    <section className="relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/40 to-transparent" />
 
-      <p className="text-sm text-white mb-5">
-        One swipe from your lock screen — your verified Elec-ID always ready, even without internet.
-      </p>
+      <div className="grid gap-8 px-6 py-7 sm:px-8 sm:py-9 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
+        {/* ── Left: header + preview pass ───────────────────────────────── */}
+        <div className="min-w-0">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
+            Phone Wallet
+          </div>
+          <h3 className="mt-3 text-[22px] sm:text-[26px] font-semibold leading-[1.15] tracking-tight text-white">
+            Carry your Elec-ID
+            <br className="hidden sm:block" />
+            on your lock screen.
+          </h3>
+          <p className="mt-3 text-[13px] leading-relaxed text-white/70 max-w-sm">
+            One swipe. Works offline. Auto-updates when your ECS card or verification tier changes.
+          </p>
 
-      <div className={`flex gap-3 ${showApple && showGoogle ? 'flex-col sm:flex-row' : ''}`}>
-        {showApple && (
-          <button
-            onClick={addToAppleWallet}
-            disabled={isAppleLoading}
-            className="relative flex items-center justify-center touch-manipulation active:scale-95 transition-transform disabled:opacity-60"
-            aria-label="Add to Apple Wallet"
-          >
-            {isAppleLoading ? (
-              <div className="h-12 flex items-center gap-2 bg-black rounded-xl px-5 border border-white/20">
-                <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                <span className="text-white text-sm">Generating…</span>
+          {/* Mini pass preview */}
+          <div className="mt-6 relative rounded-2xl bg-gradient-to-br from-black via-[#0a0a0a] to-[#111] border border-white/[0.1] p-5 shadow-[0_10px_40px_rgba(0,0,0,0.4)] max-w-[320px]">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/60 to-transparent" />
+            <div className="flex items-start justify-between">
+              <div>
+                <div className="text-[9px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
+                  Elec-ID
+                </div>
+                <div className="mt-1 text-[11px] text-white/50">Verified Electrician</div>
               </div>
-            ) : (
-              <AppleWalletBadge />
-            )}
-          </button>
-        )}
-
-        {showGoogle && (
-          <button
-            onClick={addToGoogleWallet}
-            disabled={isGoogleLoading}
-            className="relative flex items-center justify-center touch-manipulation active:scale-95 transition-transform disabled:opacity-60"
-            aria-label="Add to Google Wallet"
-          >
-            {isGoogleLoading ? (
-              <div className="h-12 flex items-center gap-2 bg-[#1a1a2e] rounded-xl px-5 border border-white/20">
-                <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                <span className="text-white text-sm">Generating…</span>
+              <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-white/45">
+                Elec-Mate
               </div>
-            ) : (
-              <GoogleWalletBadge />
-            )}
-          </button>
-        )}
-      </div>
+            </div>
+            <div className="mt-8 text-[20px] font-semibold tracking-tight text-white break-all">
+              {elecIdNumber}
+            </div>
+            <div className="mt-5 flex items-end justify-between gap-4">
+              <div className="text-[10px] uppercase tracking-[0.15em] text-white/40">Tap to verify</div>
+              <div className="h-10 w-10 rounded-md bg-white/[0.04] border border-white/[0.08] grid grid-cols-4 grid-rows-4 gap-px p-1">
+                {Array.from({ length: 16 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className={`rounded-[1px] ${
+                      [0, 2, 5, 6, 7, 9, 10, 13, 15].includes(i) ? 'bg-white/70' : 'bg-transparent'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <p className="text-xs text-white mt-4">
-        Pass includes your name, verification tier, ECS card details and a QR code linking to your public profile.
-      </p>
-    </div>
+        {/* ── Right: benefits + actions ─────────────────────────────────── */}
+        <div className="min-w-0 flex flex-col">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
+            What's included
+          </div>
+          <ul className="mt-4 space-y-3.5">
+            {[
+              'Name, role and verification tier',
+              'ECS card number and expiry',
+              'Live QR to your public verification page',
+              'Automatic updates — never expires while active',
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-3 text-[13px] leading-snug text-white">
+                <span className="mt-[7px] h-1 w-1 shrink-0 rounded-full bg-elec-yellow" />
+                {item}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-auto pt-7">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55 mb-3">
+              Add to device
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              {showApple && (
+                <button
+                  onClick={addToAppleWallet}
+                  disabled={isAppleLoading}
+                  aria-label="Add to Apple Wallet"
+                  className="inline-flex items-center justify-center touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-60"
+                >
+                  {isAppleLoading ? (
+                    <div className="flex h-[48px] items-center gap-2 rounded-xl bg-black px-5 border border-white/20">
+                      <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                      <span className="text-[13px] font-medium text-white">Generating pass…</span>
+                    </div>
+                  ) : (
+                    <AppleWalletBadge />
+                  )}
+                </button>
+              )}
+
+              {showGoogle && (
+                <button
+                  onClick={addToGoogleWallet}
+                  disabled={isGoogleLoading}
+                  aria-label="Add to Google Wallet"
+                  className="inline-flex items-center justify-center touch-manipulation active:scale-[0.98] transition-transform disabled:opacity-60"
+                >
+                  {isGoogleLoading ? (
+                    <div className="flex h-[48px] items-center gap-2 rounded-xl bg-[#1a1a2e] px-5 border border-white/20">
+                      <div className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                      <span className="text-[13px] font-medium text-white">Generating pass…</span>
+                    </div>
+                  ) : (
+                    <GoogleWalletBadge />
+                  )}
+                </button>
+              )}
+            </div>
+            <p className="mt-4 text-[11px] leading-relaxed text-white/50">
+              You can remove the pass anytime from the wallet app. Re-add it here if you ever need it back.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

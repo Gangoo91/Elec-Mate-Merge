@@ -109,6 +109,9 @@ const EmployerDashboard = lazy(() => import('@/pages/employer/EmployerDashboard'
 const CollegeDashboard = lazy(() => import('@/pages/college/CollegeDashboard'));
 const LtiHandoff = lazy(() => import('@/pages/LtiHandoff'));
 const LessonPlanPage = lazy(() => import('@/pages/college/LessonPlanPage'));
+const LessonDeliverPage = lazy(() => import('@/pages/college/LessonDeliverPage'));
+const LessonPrintPage = lazy(() => import('@/pages/college/LessonPrintPage'));
+const Student360Page = lazy(() => import('@/pages/college/Student360Page'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('@/pages/legal/TermsOfService'));
@@ -1860,6 +1863,42 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <LessonPlanPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Curriculum Hub — presenter / deliver mode for a lesson */}
+          <Route
+            path="college/lessons/:id/deliver"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <LessonDeliverPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Curriculum Hub — classroom-ready A4 print / PDF view */}
+          <Route
+            path="college/lessons/:id/print"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <LessonPrintPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* People Hub — learner 360 profile */}
+          <Route
+            path="college/students/:id"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <Student360Page />
                 </CollegeGuard>
               </LazyRoute>
             }

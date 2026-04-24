@@ -15,7 +15,7 @@ import {
   bsStandardRequiresCurve,
 } from '@/types/protectiveDeviceTypes';
 import { EnhancedValidatedInput } from './EnhancedValidatedInput';
-import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
 import { FieldTooltip } from '@/components/ui/field-tooltip';
 import ComboboxCell from './ComboboxCell';
 
@@ -46,13 +46,21 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         updates.protectiveDeviceCurve = '';
       }
 
-      // Auto-fill maxZs if we have all required data
+      // Auto-fill maxZs — RCD-aware. If the circuit has any RCD (own RCD,
+      // RCBO, or upstream), the UL/IΔn limit wins (Reg 411.5.3).
       const rating = result.protectiveDeviceRating || '';
       const curve = needsCurve ? result.protectiveDeviceCurve || '' : '';
       if (rating && (needsCurve ? curve : true)) {
-        const maxZs = getMaxZsFromDeviceDetails(value, curve, rating);
-        if (maxZs !== null) {
-          updates.maxZs = maxZs.toString();
+        const lookup = getMaxZsWithRcd({
+          bsStandard: value,
+          curve,
+          rating,
+          rcdRating: result.rcdRating,
+          rcdType: result.rcdType,
+          protectiveDeviceType: result.protectiveDeviceType,
+        });
+        if (lookup.maxZs !== null) {
+          updates.maxZs = lookup.maxZs.toString();
         }
       }
 
@@ -65,7 +73,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         });
       }
     },
-    [result.id, result.protectiveDeviceCurve, result.protectiveDeviceRating, onUpdate, onBulkUpdate]
+    [result.id, result.protectiveDeviceCurve, result.protectiveDeviceRating, result.rcdRating, result.rcdType, result.protectiveDeviceType, onUpdate, onBulkUpdate]
   );
 
   // Handle Curve change
@@ -75,13 +83,20 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         protectiveDeviceCurve: value,
       };
 
-      // Auto-fill maxZs if we have all required data
+      // Auto-fill maxZs — RCD-aware
       const bsStandard = result.bsStandard || '';
       const rating = result.protectiveDeviceRating || '';
       if (bsStandard && rating) {
-        const maxZs = getMaxZsFromDeviceDetails(bsStandard, value, rating);
-        if (maxZs !== null) {
-          updates.maxZs = maxZs.toString();
+        const lookup = getMaxZsWithRcd({
+          bsStandard,
+          curve: value,
+          rating,
+          rcdRating: result.rcdRating,
+          rcdType: result.rcdType,
+          protectiveDeviceType: result.protectiveDeviceType,
+        });
+        if (lookup.maxZs !== null) {
+          updates.maxZs = lookup.maxZs.toString();
         }
       }
 
@@ -94,7 +109,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         });
       }
     },
-    [result.id, result.bsStandard, result.protectiveDeviceRating, onUpdate, onBulkUpdate]
+    [result.id, result.bsStandard, result.protectiveDeviceRating, result.rcdRating, result.rcdType, result.protectiveDeviceType, onUpdate, onBulkUpdate]
   );
 
   // Handle Rating change
@@ -104,14 +119,21 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         protectiveDeviceRating: value,
       };
 
-      // Auto-fill maxZs if we have all required data
+      // Auto-fill maxZs — RCD-aware
       const bsStandard = result.bsStandard || '';
       const curve = result.protectiveDeviceCurve || '';
       const needsCurve = bsStandardRequiresCurve(bsStandard);
       if (bsStandard && (needsCurve ? curve : true)) {
-        const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, value);
-        if (maxZs !== null) {
-          updates.maxZs = maxZs.toString();
+        const lookup = getMaxZsWithRcd({
+          bsStandard,
+          curve,
+          rating: value,
+          rcdRating: result.rcdRating,
+          rcdType: result.rcdType,
+          protectiveDeviceType: result.protectiveDeviceType,
+        });
+        if (lookup.maxZs !== null) {
+          updates.maxZs = lookup.maxZs.toString();
         }
       }
 
@@ -124,7 +146,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         });
       }
     },
-    [result.id, result.bsStandard, result.protectiveDeviceCurve, onUpdate, onBulkUpdate]
+    [result.id, result.bsStandard, result.protectiveDeviceCurve, result.rcdRating, result.rcdType, result.protectiveDeviceType, onUpdate, onBulkUpdate]
   );
 
   return (
@@ -191,8 +213,8 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
         />
       </TableCell>
 
-      {/* Column 12: Maximum permitted Zs (Ω)§ */}
-      <TableCell className="p-0 h-8 align-middle w-28 min-w-[110px] max-w-[110px]">
+      {/* Column 12: Maximum permitted Zs (Ω)§ — 20% wider per customer feedback */}
+      <TableCell className="p-0 h-8 align-middle w-32 min-w-[132px] max-w-[132px]">
         <div className="flex items-center gap-1">
           <EnhancedValidatedInput
             value={result.maxZs || ''}

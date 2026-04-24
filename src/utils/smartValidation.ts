@@ -3,7 +3,7 @@
  * Provides helpful, context-aware validation messages for BS7671 compliance
  */
 
-import { getMaxZsFromDeviceDetails } from './zsCalculations';
+import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from './zsCalculations';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
 
 export interface ValidationResult {
@@ -22,7 +22,18 @@ export function validateZs(
   value: string,
   deviceType: string,
   deviceRating: string,
-  deviceCurve?: string
+  deviceCurve?: string,
+  /**
+   * RCD context — when provided, validation uses `50 / IΔn` per BS 7671
+   * Reg 411.5.3 instead of the overcurrent device's disconnection table.
+   */
+  rcdContext?: {
+    rcdRating?: string | null;
+    rcdType?: string | null;
+    boardHasMainRcd?: boolean;
+    boardMainRcdRating?: string | null;
+    bsStandard?: string | null;
+  }
 ): ValidationResult {
   const zs = parseFloat(value);
   if (isNaN(zs) || value.trim() === '') {
@@ -33,8 +44,18 @@ export function validateZs(
     };
   }
 
-  const bsStandard = getDefaultBsStandard(deviceType);
-  const maxZs = getMaxZsFromDeviceDetails(bsStandard, deviceCurve || 'B', deviceRating);
+  const bsStandard = (rcdContext && rcdContext.bsStandard) || getDefaultBsStandard(deviceType);
+  const lookup = getMaxZsWithRcd({
+    bsStandard,
+    curve: deviceCurve || 'B',
+    rating: deviceRating,
+    rcdRating: rcdContext?.rcdRating ?? null,
+    rcdType: rcdContext?.rcdType ?? null,
+    protectiveDeviceType: deviceType,
+    boardHasMainRcd: rcdContext?.boardHasMainRcd ?? false,
+    boardMainRcdRating: rcdContext?.boardMainRcdRating ?? null,
+  });
+  const maxZs = lookup.maxZs;
 
   if (maxZs === null) {
     return {
@@ -46,14 +67,20 @@ export function validateZs(
 
   // Apply 80% rule (already done in getMaxZsFromDeviceDetails)
   const percentOfMax = (zs / maxZs) * 100;
+  const rcdSource = lookup.source === 'rcd';
+  const limitSuffix = rcdSource
+    ? ` (RCD-protected, 50V/IΔn = ${maxZs.toFixed(2)}Ω)`
+    : '';
 
   if (zs > maxZs) {
     return {
       status: 'error',
-      message: `Zs exceeds limit for ${deviceType} ${deviceCurve || ''}${deviceRating}A`,
-      hint: `Maximum allowed: ${maxZs.toFixed(2)}Ω (with 80% derating). Measured: ${zs.toFixed(2)}Ω`,
+      message: rcdSource
+        ? `Zs exceeds RCD limit (UL/IΔn = ${maxZs.toFixed(2)}Ω)`
+        : `Zs exceeds limit for ${deviceType} ${deviceCurve || ''}${deviceRating}A`,
+      hint: `Maximum allowed: ${maxZs.toFixed(2)}Ω${rcdSource ? ' (RCD-based)' : ' (with 80% derating)'}. Measured: ${zs.toFixed(2)}Ω`,
       action: 'Check cable connections and route length. Verify instrument calibration.',
-      bs7671Reference: 'Reg 411.4.5, Table 41.2',
+      bs7671Reference: rcdSource ? 'Reg 411.5.3 / Reg 415.1.1' : 'Reg 411.4.5, Table 41.2',
     };
   }
 

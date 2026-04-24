@@ -11,7 +11,6 @@ import { useToast } from '@/hooks/use-toast';
 import { ProgressCardSkeletonList } from '@/components/college/ui/ProgressCardSkeleton';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { useQueryClient } from '@tanstack/react-query';
-import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +19,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import {
   PageFrame,
+  PeopleListRow,
   PageHero,
   StatStrip,
   FilterBar,
@@ -268,136 +268,55 @@ export function ProgressTrackingSection() {
           <motion.div variants={itemVariants}>
             <ListCard>
               {sortedProgress.map((data) => (
-                <SwipeableCard
+                <PeopleListRow
                   key={data.id}
-                  leftActions={[
-                    {
-                      label: 'Email',
-                      onClick: () => {
-                        if (data.email) window.location.href = 'mailto:' + data.email;
-                      },
-                      className: 'bg-blue-500/90 text-white',
-                    },
-                    {
-                      label: 'Call',
-                      onClick: () => {
-                        if (data.phone) window.location.href = 'tel:' + data.phone;
-                      },
-                      className: 'bg-emerald-500/90 text-white',
-                    },
-                  ]}
-                  rightActions={[
-                    {
-                      label: 'Flag',
-                      onClick: () => {
-                        setSelectedStudentId(data.id);
-                        setProgressSheetOpen(true);
-                      },
-                      className: 'bg-amber-500/90 text-white',
-                    },
-                  ]}
-                >
-                  <div className="group flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors">
-                    <span
-                      aria-hidden
-                      className={cn(
-                        'w-[3px] self-stretch rounded-full shrink-0',
-                        data.isAtRisk ? 'bg-red-400' : 'bg-transparent'
-                      )}
-                    />
-                    <Avatar className="h-10 w-10 shrink-0 ring-1 ring-white/[0.08]">
-                      <AvatarImage src={data.photo_url ?? undefined} />
-                      <AvatarFallback className="bg-blue-500/10 text-blue-400 text-xs font-semibold">
-                        {getAvatarInitials(data.name)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-baseline justify-between gap-2">
-                        <div className="min-w-0">
-                          <div className="flex items-center gap-2">
-                            <div className="text-[15px] font-medium text-white truncate">
-                              {data.name}
-                            </div>
-                            {data.isAtRisk && <Pill tone="red">At Risk</Pill>}
-                          </div>
-                          <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
-                            {getCohortName(data.cohort_id)}
-                          </div>
+                  id={data.id}
+                  accent={data.isAtRisk ? 'red' : 'none'}
+                  lead={{
+                    kind: 'avatar',
+                    name: data.name,
+                    photoUrl: data.photo_url,
+                    ringTone: data.isAtRisk ? 'red' : 'blue',
+                  }}
+                  title={data.name}
+                  titleChips={data.isAtRisk ? <Pill tone="red">At risk</Pill> : null}
+                  subtitle={getCohortName(data.cohort_id)}
+                  meta={
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <div className="flex items-baseline justify-between text-[10.5px]">
+                          <span className="text-white/55 uppercase tracking-[0.12em]">
+                            Progress
+                          </span>
+                          <Pill tone={progressTone(data.overallProgress)}>
+                            {data.overallProgress}%
+                          </Pill>
                         </div>
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <button
-                              className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation shrink-0"
-                              aria-label="Options"
-                            >
-                              ⋯
-                            </button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuItem
-                              className="h-11"
-                              onClick={() => {
-                                setSelectedStudent(data);
-                                setProfileSheetOpen(true);
-                              }}
-                            >
-                              View profile
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11"
-                              onClick={() => {
-                                setSelectedStudentId(data.id);
-                                setProgressSheetOpen(true);
-                              }}
-                            >
-                              Update progress
-                            </DropdownMenuItem>
-                            <DropdownMenuItem
-                              className="h-11"
-                              onClick={() => {
-                                if (data.email)
-                                  window.location.href = 'mailto:' + data.email;
-                              }}
-                            >
-                              Contact student
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </div>
-
-                      <div className="mt-3 grid grid-cols-2 gap-4">
-                        <div>
-                          <div className="flex items-baseline justify-between text-[11px]">
-                            <span className="text-white/75 uppercase tracking-[0.12em]">
-                              Progress
-                            </span>
-                            <Pill tone={progressTone(data.overallProgress)}>{data.overallProgress}%</Pill>
-                          </div>
-                          <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-elec-yellow/80 rounded-full"
-                              style={{ width: `${data.overallProgress}%` }}
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="flex items-baseline justify-between text-[11px]">
-                            <span className="text-white/75 uppercase tracking-[0.12em]">
-                              Attendance
-                            </span>
-                            <Pill tone={progressTone(data.attendanceRate)}>{data.attendanceRate}%</Pill>
-                          </div>
-                          <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
-                            <div
-                              className="h-full bg-emerald-400/80 rounded-full"
-                              style={{ width: `${data.attendanceRate}%` }}
-                            />
-                          </div>
+                        <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-elec-yellow/80 rounded-full"
+                            style={{ width: `${data.overallProgress}%` }}
+                          />
                         </div>
                       </div>
-
+                      <div>
+                        <div className="flex items-baseline justify-between text-[10.5px]">
+                          <span className="text-white/55 uppercase tracking-[0.12em]">
+                            Attendance
+                          </span>
+                          <Pill tone={progressTone(data.attendanceRate)}>
+                            {data.attendanceRate}%
+                          </Pill>
+                        </div>
+                        <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-emerald-400/80 rounded-full"
+                            style={{ width: `${data.attendanceRate}%` }}
+                          />
+                        </div>
+                      </div>
                       {data.expected_end_date && (
-                        <div className="mt-3 text-[11px] text-white/75 tabular-nums">
+                        <div className="col-span-full text-[11px] text-white/55 tabular-nums">
                           Due{' '}
                           {new Date(data.expected_end_date).toLocaleDateString('en-GB', {
                             month: 'short',
@@ -406,8 +325,44 @@ export function ProgressTrackingSection() {
                         </div>
                       )}
                     </div>
-                  </div>
-                </SwipeableCard>
+                  }
+                  onOpen={() => {
+                    setSelectedStudent(data);
+                    setProfileSheetOpen(true);
+                  }}
+                  actions={[
+                    {
+                      label: 'View profile',
+                      onClick: () => {
+                        setSelectedStudent(data);
+                        setProfileSheetOpen(true);
+                      },
+                    },
+                    {
+                      label: 'Update progress',
+                      onClick: () => {
+                        setSelectedStudentId(data.id);
+                        setProgressSheetOpen(true);
+                      },
+                      divider: true,
+                    },
+                    {
+                      label: data.phone ? `Call · ${data.phone}` : 'Call',
+                      onClick: () => {
+                        if (data.phone) window.location.href = 'tel:' + data.phone;
+                      },
+                      disabled: !data.phone,
+                      divider: true,
+                    },
+                    {
+                      label: 'Email',
+                      onClick: () => {
+                        if (data.email) window.location.href = 'mailto:' + data.email;
+                      },
+                      disabled: !data.email,
+                    },
+                  ]}
+                />
               ))}
             </ListCard>
           </motion.div>

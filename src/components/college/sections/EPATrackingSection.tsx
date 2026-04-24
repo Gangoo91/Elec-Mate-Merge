@@ -10,7 +10,6 @@ import { GatewayMeetingSheet } from '@/components/college/sheets/GatewayMeetingS
 import { AddEPARecordSheet } from '@/components/college/sheets/AddEPARecordSheet';
 import { EPACardSkeletonList } from '@/components/college/ui/EPACardSkeleton';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   DropdownMenu,
@@ -20,6 +19,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import {
   PageFrame,
+  PeopleListRow,
   PageHero,
   StatStrip,
   FilterBar,
@@ -244,92 +244,32 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                 const step = getStatusStep(epa.status);
 
                 return (
-                  <SwipeableCard
+                  <PeopleListRow
                     key={epa.id}
-                    leftActions={[
-                      {
-                        label: 'Details',
-                        onClick: () => {
-                          setSelectedEpaId(epa.id);
-                          setDetailSheetOpen(true);
-                        },
-                        className: 'bg-blue-500/90 text-white',
-                      },
-                      {
-                        label: 'Gateway',
-                        onClick: () => {
-                          setSelectedEpaId(epa.id);
-                          setSelectedStudentId(epa.student_id);
-                          setGatewaySheetOpen(true);
-                        },
-                        className: 'bg-emerald-500/90 text-white',
-                      },
-                    ]}
-                  >
-                    <div className="group flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors">
-                      <Avatar className="h-10 w-10 shrink-0 ring-1 ring-white/[0.08]">
-                        <AvatarImage src={studentInfo.photoUrl} />
-                        <AvatarFallback className="bg-green-500/10 text-green-400 text-xs font-semibold">
-                          {studentInfo.initials}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-baseline justify-between gap-2">
-                          <div className="min-w-0">
-                            <div className="text-[15px] font-medium text-white truncate">
-                              {studentInfo.name}
-                            </div>
-                            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
-                              {getCohortName(studentInfo.cohortId)}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <Pill tone={statusTone(epa.status)}>{epa.status ?? 'Unknown'}</Pill>
-                            {epa.result && <Pill tone={gradeTone(epa.result)}>{epa.result}</Pill>}
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <button
-                                  className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
-                                  aria-label="Options"
-                                >
-                                  ⋯
-                                </button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedEpaId(epa.id);
-                                    setDetailSheetOpen(true);
-                                  }}
-                                >
-                                  View details
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="h-11" onClick={() => onNavigate?.('grading')}>
-                                  Add assessment
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedEpaId(epa.id);
-                                    setSelectedStudentId(epa.student_id);
-                                    setGatewaySheetOpen(true);
-                                  }}
-                                >
-                                  Gateway meeting
-                                </DropdownMenuItem>
-                                <DropdownMenuItem className="h-11" onClick={() => onNavigate?.('portfolio')}>
-                                  View portfolio
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </div>
-                        </div>
-
-                        <div className="mt-3">
-                          <div className="flex items-baseline justify-between text-[11.5px]">
-                            <span className="text-white/75 uppercase tracking-[0.12em]">
-                              EPA Progress
+                    id={epa.id}
+                    lead={{
+                      kind: 'avatar',
+                      name: studentInfo.name,
+                      photoUrl: studentInfo.photoUrl ?? null,
+                      ringTone: 'emerald',
+                    }}
+                    title={studentInfo.name}
+                    titleChips={
+                      epa.result ? (
+                        <Pill tone={gradeTone(epa.result)}>{epa.result}</Pill>
+                      ) : null
+                    }
+                    subtitle={getCohortName(studentInfo.cohortId)}
+                    status={{
+                      label: epa.status ?? 'Unknown',
+                      tone: statusTone(epa.status),
+                    }}
+                    meta={
+                      <div className="space-y-2.5">
+                        <div>
+                          <div className="flex items-baseline justify-between text-[10.5px]">
+                            <span className="text-white/55 uppercase tracking-[0.12em]">
+                              EPA progress
                             </span>
                             <span className="font-medium text-white tabular-nums">
                               {Math.round(progressPercent)}%
@@ -341,14 +281,15 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                                 key={s}
                                 aria-hidden
                                 className={
-                                  step >= s ? 'flex-1 h-1 rounded-full bg-elec-yellow/80' : 'flex-1 h-1 rounded-full bg-white/[0.08]'
+                                  step >= s
+                                    ? 'flex-1 h-1 rounded-full bg-elec-yellow/80'
+                                    : 'flex-1 h-1 rounded-full bg-white/[0.08]'
                                 }
                               />
                             ))}
                           </div>
                         </div>
-
-                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70">
                           {epa.gateway_date && (
                             <span className="tabular-nums">
                               Gateway{' '}
@@ -369,8 +310,38 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                           )}
                         </div>
                       </div>
-                    </div>
-                  </SwipeableCard>
+                    }
+                    onOpen={() => {
+                      setSelectedEpaId(epa.id);
+                      setDetailSheetOpen(true);
+                    }}
+                    actions={[
+                      {
+                        label: 'View details',
+                        onClick: () => {
+                          setSelectedEpaId(epa.id);
+                          setDetailSheetOpen(true);
+                        },
+                      },
+                      {
+                        label: 'Gateway meeting',
+                        onClick: () => {
+                          setSelectedEpaId(epa.id);
+                          setSelectedStudentId(epa.student_id);
+                          setGatewaySheetOpen(true);
+                        },
+                        divider: true,
+                      },
+                      {
+                        label: 'Add assessment',
+                        onClick: () => onNavigate?.('grading'),
+                      },
+                      {
+                        label: 'View portfolio',
+                        onClick: () => onNavigate?.('portfolio'),
+                      },
+                    ]}
+                  />
                 );
               })}
             </ListCard>

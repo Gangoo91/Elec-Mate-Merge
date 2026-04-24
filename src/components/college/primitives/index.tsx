@@ -6,7 +6,16 @@
 
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { forwardRef, type ReactNode } from 'react';
+
+export { PeopleListRow } from './PeopleListRow';
+export type {
+  PeopleListRowProps,
+  PeopleListRowAction,
+  LeadSlot,
+  StatusPill,
+  AccentTone,
+} from './PeopleListRow';
 
 /* ────────────────────────────────────────────────────────
    Tone tokens — family-level colour memory
@@ -515,21 +524,21 @@ export function ListRow({
    Empty state
    ──────────────────────────────────────────────────────── */
 
-export function EmptyState({
-  title,
-  description,
-  action,
-  onAction,
-  className,
-}: {
-  title: string;
-  description?: string;
-  action?: string;
-  onAction?: () => void;
-  className?: string;
-}) {
+// forwardRef so framer-motion's AnimatePresence can measure the element when
+// it's rendered as a direct child of <AnimatePresence>.
+export const EmptyState = forwardRef<
+  HTMLDivElement,
+  {
+    title: string;
+    description?: string;
+    action?: string;
+    onAction?: () => void;
+    className?: string;
+  }
+>(({ title, description, action, onAction, className }, ref) => {
   return (
     <div
+      ref={ref}
       className={cn(
         'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 sm:py-14 text-center',
         className
@@ -551,7 +560,8 @@ export function EmptyState({
       )}
     </div>
   );
-}
+});
+EmptyState.displayName = 'EmptyState';
 
 /* ────────────────────────────────────────────────────────
    Loading state

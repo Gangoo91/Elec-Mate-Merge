@@ -6,6 +6,7 @@ import { TestResult } from '@/types/testResult';
 import { validateTestResult } from '@/utils/testValidation';
 import EnhancedRegulationWarningDialog from './EnhancedRegulationWarningDialog';
 import { checkRegulationCompliance } from '@/utils/autoRegChecker';
+import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
 
 // Import all the cell components
 import { CircuitNumberCell } from './table-cells/CircuitNumberCell';
@@ -192,7 +193,16 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
               <EnhancedValidatedInput
                 value={result.circuitDescription}
                 onChange={(value) => onUpdate(result.id, 'circuitDescription', value)}
-                placeholder="e.g. Kitchen Ring, Upstairs Lighting"
+                onCommit={(value) => {
+                  // Typing "spare" in the description cascades N/A to every
+                  // test + detail field — saves hunting for the Spare button
+                  // on the right-hand side of a 30-column table.
+                  const normalised = (value || '').trim().toLowerCase();
+                  if ((normalised === 'spare' || normalised === 'spare way') && onBulkUpdate) {
+                    onBulkUpdate(result.id, getSpareCircuitFields());
+                  }
+                }}
+                placeholder="e.g. Kitchen Ring — type 'spare' to N/A all fields"
                 className="h-8 text-sm px-2 w-full"
                 disabled={!!result.sourceCircuitId}
               />
@@ -257,30 +267,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() =>
-                  onBulkUpdate(result.id, {
-                    circuitDescription: 'Spare',
-                    r1r2: 'N/A',
-                    r2: 'N/A',
-                    ringContinuityLive: 'N/A',
-                    ringContinuityNeutral: 'N/A',
-                    ringR1: 'N/A',
-                    ringRn: 'N/A',
-                    ringR2: 'N/A',
-                    insulationTestVoltage: 'N/A',
-                    insulationLiveNeutral: 'N/A',
-                    insulationLiveEarth: 'N/A',
-                    insulationResistance: 'N/A',
-                    insulationNeutralEarth: 'N/A',
-                    polarity: 'N/A',
-                    zs: 'N/A',
-                    rcdOneX: 'N/A',
-                    rcdFiveX: 'N/A',
-                    rcdHalfX: 'N/A',
-                    rcdRating: 'N/A',
-                    rcdType: 'N/A',
-                  })
-                }
+                onClick={() => onBulkUpdate(result.id, getSpareCircuitFields())}
                 className="h-7 px-2 text-[11px] text-muted-foreground hover:text-foreground hover:bg-muted/30 rounded-md transition-colors"
                 title="Mark as spare way — sets all results to N/A"
               >

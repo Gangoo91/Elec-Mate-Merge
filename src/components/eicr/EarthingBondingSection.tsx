@@ -8,6 +8,11 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
+import {
+  FieldLimitationBadge,
+  FieldNotesInput,
+  isFieldMarker,
+} from '@/components/field-limitations';
 
 // Fields managed by this section (for memoization comparison)
 const EARTHING_SECTION_FIELDS = [
@@ -31,6 +36,16 @@ const EARTHING_SECTION_FIELDS = [
   'supplementaryBondingSize',
   'supplementaryBondingSizeCustom',
   'equipotentialBonding',
+  // ELE-849 — limitation reason notes
+  'meansOfEarthingNotes',
+  'mainEarthingConductorTypeNotes',
+  'mainEarthingConductorSizeNotes',
+  'earthingConductorContinuityVerifiedNotes',
+  'mainBondingConductorTypeNotes',
+  'mainBondingSizeNotes',
+  'bondingConductorContinuityVerifiedNotes',
+  'supplementaryBondingSizeNotes',
+  'bondingComplianceNotes',
 ] as const;
 
 interface EarthingBondingSectionProps {
@@ -51,17 +66,22 @@ const FormField = ({
   label,
   required,
   hint,
+  trailing,
   children,
 }: {
   label: string;
   required?: boolean;
   hint?: string;
+  trailing?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
-      {label}{required && ' *'}
-    </Label>
+    <div className="flex items-center justify-between gap-2 mb-1.5">
+      <Label className="text-white text-xs">
+        {label}{required && ' *'}
+      </Label>
+      {trailing}
+    </div>
     {children}
     {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
   </div>
@@ -261,11 +281,30 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
 
       {/* Means of Earthing Section */}
       <div>
-        <SectionTitle title="Means of Earthing" />
+        <div className="flex items-center justify-between gap-3 border-b border-white/[0.06] pb-1 mb-3">
+          <div>
+            <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
+            <h2 className="text-xs font-medium text-white uppercase tracking-wider">Means of Earthing</h2>
+          </div>
+          <FieldLimitationBadge
+            compact
+            value={formData.meansOfEarthingDistributor === 'LIM' ? 'LIM' : ''}
+            markers={['LIM']}
+            onChange={(v) => {
+              if (v === 'LIM') {
+                onUpdate('meansOfEarthingDistributor', 'LIM');
+                onUpdate('meansOfEarthingElectrode', 'false');
+              } else {
+                onUpdate('meansOfEarthingDistributor', 'false');
+              }
+            }}
+          />
+        </div>
         <div className="py-3">
           <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
+              disabled={formData.meansOfEarthingDistributor === 'LIM'}
               onClick={() => {
                 haptic.light();
                 onUpdate('meansOfEarthingDistributor', formData.meansOfEarthingDistributor === 'true' ? 'false' : 'true');
@@ -274,7 +313,8 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-2',
                 formData.meansOfEarthingDistributor === 'true'
                   ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white',
+                formData.meansOfEarthingDistributor === 'LIM' && 'opacity-40'
               )}
             >
               {formData.meansOfEarthingDistributor === 'true' && <Check className="h-3.5 w-3.5" />}
@@ -282,6 +322,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             </button>
             <button
               type="button"
+              disabled={formData.meansOfEarthingDistributor === 'LIM'}
               onClick={() => {
                 haptic.light();
                 onUpdate('meansOfEarthingElectrode', formData.meansOfEarthingElectrode === 'true' ? 'false' : 'true');
@@ -290,13 +331,20 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                 'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-2',
                 formData.meansOfEarthingElectrode === 'true'
                   ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                  : 'bg-white/[0.05] border border-white/[0.08] text-white',
+                formData.meansOfEarthingDistributor === 'LIM' && 'opacity-40'
               )}
             >
               {formData.meansOfEarthingElectrode === 'true' && <Check className="h-3.5 w-3.5" />}
               Electrode
             </button>
           </div>
+          <FieldNotesInput
+            parentValue={formData.meansOfEarthingDistributor === 'LIM' ? 'LIM' : ''}
+            value={formData.meansOfEarthingNotes || ''}
+            onChange={(v) => onUpdate('meansOfEarthingNotes', v)}
+            placeholder="Reason (e.g. meter room locked)"
+          />
         </div>
       </div>
 
@@ -306,67 +354,132 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
         <div className="space-y-3 py-3">
           {/* Row 1: Material + Size */}
           <div className="grid grid-cols-3 gap-2">
-            <FormField label="Material *">
-              <div className="grid grid-cols-2 gap-1">
-                {[
-                  { value: 'Cu', label: 'Cu' },
-                  { value: 'Al', label: 'Al' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('mainEarthingConductorType', formData.mainEarthingConductorType === option.value ? '' : option.value);
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
-                      formData.mainEarthingConductorType === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
+            <FormField
+              label="Material"
+              required
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.mainEarthingConductorType || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('mainEarthingConductorType', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.mainEarthingConductorType) ? (
+                <Input
+                  value={formData.mainEarthingConductorType}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <div className="grid grid-cols-2 gap-1">
+                  {[
+                    { value: 'Cu', label: 'Cu' },
+                    { value: 'Al', label: 'Al' },
+                  ].map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => {
+                        haptic.light();
+                        onUpdate('mainEarthingConductorType', formData.mainEarthingConductorType === option.value ? '' : option.value);
+                      }}
+                      className={cn(
+                        'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
+                        formData.mainEarthingConductorType === option.value
+                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                          : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                      )}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <FieldNotesInput
+                parentValue={formData.mainEarthingConductorType || ''}
+                value={formData.mainEarthingConductorTypeNotes || ''}
+                onChange={(v) => onUpdate('mainEarthingConductorTypeNotes', v)}
+                placeholder="Reason"
+              />
             </FormField>
-            <FormField label="Size *">
-              <FormSelectSheet
-                value={formData.mainEarthingConductorSize || ''}
-                onValueChange={(value) => {
-                  haptic.light();
-                  onUpdate('mainEarthingConductorSize', value);
-                }}
-                placeholder="mm²"
-                label="Earthing Conductor Size"
-                allowCustom
-                customLabel="Custom size"
-                options={conductorSizes
-                  .filter((s) => s !== 'custom')
-                  .map((size) => ({
-                    value: size,
-                    label: size === 'none' ? 'None' : `${size}mm²`,
-                  }))}
+            <FormField
+              label="Size"
+              required
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.mainEarthingConductorSize || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('mainEarthingConductorSize', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.mainEarthingConductorSize) ? (
+                <Input
+                  value={formData.mainEarthingConductorSize}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <FormSelectSheet
+                  value={formData.mainEarthingConductorSize || ''}
+                  onValueChange={(value) => {
+                    haptic.light();
+                    onUpdate('mainEarthingConductorSize', value);
+                  }}
+                  placeholder="mm²"
+                  label="Earthing Conductor Size"
+                  allowCustom
+                  customLabel="Custom size"
+                  options={conductorSizes
+                    .filter((s) => s !== 'custom')
+                    .map((size) => ({
+                      value: size,
+                      label: size === 'none' ? 'None' : `${size}mm²`,
+                    }))}
+                />
+              )}
+              <FieldNotesInput
+                parentValue={formData.mainEarthingConductorSize || ''}
+                value={formData.mainEarthingConductorSizeNotes || ''}
+                onChange={(v) => onUpdate('mainEarthingConductorSizeNotes', v)}
+                placeholder="Reason"
               />
             </FormField>
             <FormField label="Verified">
-              <button
-                type="button"
-                onClick={() => {
-                  haptic.light();
-                  onUpdate('earthingConductorContinuityVerified', formData.earthingConductorContinuityVerified === 'true' ? 'false' : 'true');
-                }}
-                className={cn(
-                  'w-full h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98] flex items-center justify-center gap-1.5',
-                  formData.earthingConductorContinuityVerified === 'true'
-                    ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {formData.earthingConductorContinuityVerified === 'true' && <Check className="h-3.5 w-3.5" />}
-                {formData.earthingConductorContinuityVerified === 'true' ? 'Yes' : 'No'}
-              </button>
+              {/* 3-way toggle: Yes / No / N/V */}
+              <div className="grid grid-cols-3 gap-1">
+                {[
+                  { value: 'true', label: 'Yes', activeClass: 'bg-green-500/20 border-green-500/40 text-green-400' },
+                  { value: 'false', label: 'No', activeClass: 'bg-zinc-500/20 border-zinc-500/40 text-zinc-300' },
+                  { value: 'N/V', label: 'N/V', activeClass: 'bg-slate-500/20 border-slate-500/40 text-slate-300' },
+                ].map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate('earthingConductorContinuityVerified', formData.earthingConductorContinuityVerified === opt.value ? '' : opt.value);
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-[11px] active:scale-[0.98] border',
+                      formData.earthingConductorContinuityVerified === opt.value
+                        ? opt.activeClass
+                        : 'bg-white/[0.05] border-white/[0.08] text-white'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              <FieldNotesInput
+                parentValue={formData.earthingConductorContinuityVerified === 'N/V' ? 'N/V' : ''}
+                value={formData.earthingConductorContinuityVerifiedNotes || ''}
+                onChange={(v) => onUpdate('earthingConductorContinuityVerifiedNotes', v)}
+                placeholder="Reason (e.g. conductor concealed)"
+              />
             </FormField>
           </div>
 
@@ -389,59 +502,110 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
         <div className="space-y-3 py-3">
           {/* Row 1: Material + Size */}
           <div className="grid grid-cols-2 gap-3 items-end">
-            <FormField label="Material *">
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { value: 'Cu', label: 'Copper (Cu)' },
-                  { value: 'Al', label: 'Aluminium (Al)' },
-                ].map((option) => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('mainBondingConductorType', formData.mainBondingConductorType === option.value ? '' : option.value);
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                      formData.mainBondingConductorType === option.value
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
+            <FormField
+              label="Material"
+              required
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.mainBondingConductorType || ''}
+                  markers={['LIM']}
+                  onChange={(v) => onUpdate('mainBondingConductorType', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.mainBondingConductorType) ? (
+                <Input
+                  value={formData.mainBondingConductorType}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { value: 'Cu', label: 'Copper (Cu)' },
+                    { value: 'Al', label: 'Aluminium (Al)' },
+                  ].map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => {
+                        haptic.light();
+                        onUpdate('mainBondingConductorType', formData.mainBondingConductorType === option.value ? '' : option.value);
+                      }}
+                      className={cn(
+                        'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                        formData.mainBondingConductorType === option.value
+                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                          : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                      )}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <FieldNotesInput
+                parentValue={formData.mainBondingConductorType || ''}
+                value={formData.mainBondingConductorTypeNotes || ''}
+                onChange={(v) => onUpdate('mainBondingConductorTypeNotes', v)}
+                placeholder="Reason"
+              />
             </FormField>
-            <FormField label="Size *">
-              <FormSelectSheet
-                value={formData.mainBondingSize || ''}
-                onValueChange={(value) => {
-                  haptic.light();
-                  onUpdate('mainBondingSize', value);
-                }}
-                placeholder="Select size"
-                label="Main Bonding Size"
-                allowCustom
-                customLabel="Custom size"
-                options={conductorSizes
-                  .filter((s) => s !== 'custom')
-                  .map((size) => ({
-                    value: size,
-                    label: size === 'none' ? 'None' : `${size}mm²`,
-                  }))}
+            <FormField
+              label="Size"
+              required
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.mainBondingSize || ''}
+                  markers={['LIM', 'N/A']}
+                  onChange={(v) => onUpdate('mainBondingSize', v)}
+                />
+              }
+            >
+              {isFieldMarker(formData.mainBondingSize) ? (
+                <Input
+                  value={formData.mainBondingSize}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <FormSelectSheet
+                  value={formData.mainBondingSize || ''}
+                  onValueChange={(value) => {
+                    haptic.light();
+                    onUpdate('mainBondingSize', value);
+                  }}
+                  placeholder="Select size"
+                  label="Main Bonding Size"
+                  allowCustom
+                  customLabel="Custom size"
+                  options={conductorSizes
+                    .filter((s) => s !== 'custom')
+                    .map((size) => ({
+                      value: size,
+                      label: size === 'none' ? 'None' : `${size}mm²`,
+                    }))}
+                />
+              )}
+              <FieldNotesInput
+                parentValue={formData.mainBondingSize || ''}
+                value={formData.mainBondingSizeNotes || ''}
+                onChange={(v) => onUpdate('mainBondingSizeNotes', v)}
+                placeholder="Reason (e.g. no bonding services present)"
               />
             </FormField>
           </div>
 
-          {/* Row 2: Compliance */}
-          <FormField label="Compliance *">
-            <div className="grid grid-cols-3 gap-2">
+          {/* Row 2: Compliance (ELE-849 — 4-way with N/V added) */}
+          <FormField label="Compliance" required>
+            <div className="grid grid-cols-4 gap-2">
               {[
-                { value: 'satisfactory', label: 'Satisfactory' },
-                { value: 'unsatisfactory', label: 'Unsatisfactory' },
-                { value: 'not-applicable', label: 'N/A' },
+                { value: 'satisfactory', label: 'Satisfactory', activeClass: 'bg-green-500/20 border-green-500/40 text-green-400' },
+                { value: 'unsatisfactory', label: 'Unsatisfactory', activeClass: 'bg-red-500/20 border-red-500/40 text-red-400' },
+                { value: 'N/V', label: 'N/V', activeClass: 'bg-slate-500/20 border-slate-500/40 text-slate-300' },
+                { value: 'not-applicable', label: 'N/A', activeClass: 'bg-elec-yellow/20 border-elec-yellow/40 text-elec-yellow' },
               ].map((option) => (
                 <button
                   key={option.value}
@@ -451,20 +615,22 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
                     onUpdate('bondingCompliance', formData.bondingCompliance === option.value ? '' : option.value);
                   }}
                   className={cn(
-                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-sm active:scale-[0.98]',
+                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] border',
                     formData.bondingCompliance === option.value
-                      ? option.value === 'satisfactory'
-                        ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                        : option.value === 'unsatisfactory'
-                          ? 'bg-red-500/20 border border-red-500/40 text-red-400'
-                          : 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                      ? option.activeClass
+                      : 'bg-white/[0.05] border-white/[0.08] text-white'
                   )}
                 >
                   {option.label}
                 </button>
               ))}
             </div>
+            <FieldNotesInput
+              parentValue={formData.bondingCompliance === 'N/V' ? 'N/V' : ''}
+              value={formData.bondingComplianceNotes || ''}
+              onChange={(v) => onUpdate('bondingComplianceNotes', v)}
+              placeholder="Reason (e.g. bonding not fully inspected)"
+            />
           </FormField>
 
           {/* Smart validation warnings */}
@@ -483,23 +649,39 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
             </FormField>
           )}
 
-          {/* Row 2: Continuity verified toggle */}
-          <button
-            type="button"
-            onClick={() => {
-              haptic.light();
-              onUpdate('bondingConductorContinuityVerified', formData.bondingConductorContinuityVerified === 'true' ? 'false' : 'true');
-            }}
-            className={cn(
-              'w-full h-11 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98] flex items-center justify-center gap-2',
-              formData.bondingConductorContinuityVerified === 'true'
-                ? 'bg-green-500/20 border border-green-500/40 text-green-400'
-                : 'bg-white/[0.05] border border-white/[0.08] text-white'
-            )}
-          >
-            {formData.bondingConductorContinuityVerified === 'true' && <Check className="h-3.5 w-3.5" />}
-            Continuity Verified
-          </button>
+          {/* Row 2: Continuity verified — 3-way toggle (Yes/No/N/V) */}
+          <FormField label="Continuity Verified">
+            <div className="grid grid-cols-3 gap-1">
+              {[
+                { value: 'true', label: 'Yes', activeClass: 'bg-green-500/20 border-green-500/40 text-green-400' },
+                { value: 'false', label: 'No', activeClass: 'bg-zinc-500/20 border-zinc-500/40 text-zinc-300' },
+                { value: 'N/V', label: 'N/V', activeClass: 'bg-slate-500/20 border-slate-500/40 text-slate-300' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    onUpdate('bondingConductorContinuityVerified', formData.bondingConductorContinuityVerified === opt.value ? '' : opt.value);
+                  }}
+                  className={cn(
+                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98] border',
+                    formData.bondingConductorContinuityVerified === opt.value
+                      ? opt.activeClass
+                      : 'bg-white/[0.05] border-white/[0.08] text-white'
+                  )}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <FieldNotesInput
+              parentValue={formData.bondingConductorContinuityVerified === 'N/V' ? 'N/V' : ''}
+              value={formData.bondingConductorContinuityVerifiedNotes || ''}
+              onChange={(v) => onUpdate('bondingConductorContinuityVerifiedNotes', v)}
+              placeholder="Reason (e.g. conductor not accessible)"
+            />
+          </FormField>
 
           {/* Row 3: Bonding Locations — 3x2 grid */}
           <FormField label="Bonding Locations">
@@ -537,23 +719,47 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
       <div>
         <SectionTitle title="Supplementary Bonding" />
         <div className="space-y-3 py-3">
-          <FormField label="Conductor Size">
-            <FormSelectSheet
-              value={formData.supplementaryBondingSize || ''}
-              onValueChange={(value) => {
-                haptic.light();
-                onUpdate('supplementaryBondingSize', value);
-              }}
-              placeholder="Select size"
-              label="Supplementary Bonding Size"
-              allowCustom
-              customLabel="Custom size"
-              options={supplementarySizes
-                .filter((s) => s !== 'custom')
-                .map((size) => ({
-                  value: size,
-                  label: size === 'not-required' ? 'Not Required' : `${size}mm²`,
-                }))}
+          <FormField
+            label="Conductor Size"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.supplementaryBondingSize || ''}
+                markers={['LIM']}
+                onChange={(v) => onUpdate('supplementaryBondingSize', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.supplementaryBondingSize) ? (
+              <Input
+                value={formData.supplementaryBondingSize}
+                disabled
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+              />
+            ) : (
+              <FormSelectSheet
+                value={formData.supplementaryBondingSize || ''}
+                onValueChange={(value) => {
+                  haptic.light();
+                  onUpdate('supplementaryBondingSize', value);
+                }}
+                placeholder="Select size"
+                label="Supplementary Bonding Size"
+                allowCustom
+                customLabel="Custom size"
+                options={supplementarySizes
+                  .filter((s) => s !== 'custom')
+                  .map((size) => ({
+                    value: size,
+                    label: size === 'not-required' ? 'Not Required' : `${size}mm²`,
+                  }))}
+              />
+            )}
+            <FieldNotesInput
+              parentValue={formData.supplementaryBondingSize || ''}
+              value={formData.supplementaryBondingSizeNotes || ''}
+              onChange={(v) => onUpdate('supplementaryBondingSizeNotes', v)}
+              placeholder="Reason"
             />
           </FormField>
 

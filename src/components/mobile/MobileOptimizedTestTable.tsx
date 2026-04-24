@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
+import { getSpareCircuitFields } from '@/utils/spareCircuitFields';
 import { circuitTypes } from '@/types/circuitTypes';
 import {
   protectiveDeviceTypeOptions,
@@ -698,17 +699,7 @@ const MobileOptimizedTestTable: React.FC<MobileOptimizedTestTableProps> = ({
                         <Button
                           variant="outline"
                           className="flex-1 h-12 gap-2 touch-manipulation border-white/20 text-white hover:bg-white/10"
-                          onClick={() => onBulkUpdate(result.id, {
-                            circuitDescription: 'Spare',
-                            r1r2: 'N/A', r2: 'N/A',
-                            ringContinuityLive: 'N/A', ringContinuityNeutral: 'N/A',
-                            ringR1: 'N/A', ringRn: 'N/A', ringR2: 'N/A',
-                            insulationTestVoltage: 'N/A', insulationLiveNeutral: 'N/A',
-                            insulationLiveEarth: 'N/A', insulationResistance: 'N/A', insulationNeutralEarth: 'N/A',
-                            polarity: 'N/A', zs: 'N/A',
-                            rcdOneX: 'N/A', rcdFiveX: 'N/A', rcdHalfX: 'N/A',
-                            rcdRating: 'N/A', rcdType: 'N/A',
-                          })}
+                          onClick={() => onBulkUpdate(result.id, getSpareCircuitFields())}
                         >
                           Spare
                         </Button>

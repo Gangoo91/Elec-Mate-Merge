@@ -87,7 +87,7 @@ import { createCircuitWithDefaults } from '@/utils/circuitDefaults';
 import { resolveFieldName } from '@/utils/voiceFieldAliases';
 import { resolveDropdownValue } from '@/utils/voiceDropdownResolver';
 import { calculatePointsServed } from '@/types/autoFillTypes';
-import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
 
 interface EICRScheduleOfTestsProps {
@@ -1906,12 +1906,38 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     };
   };
 
-  // Calculate maxZs from device details (with 80% derating applied)
-  const calculateMaxZsForCircuit = (bsStandard: string, curve: string, rating: string): string => {
+  // Calculate maxZs from device details. When the circuit is RCD-protected
+  // (own RCBO, downstream RCD, or board-level RCD main switch), the RCD-based
+  // limit (50 V / IΔn — 1667 Ω for 30 mA) is used per BS 7671 Reg 411.5.3.
+  // Falls back to the overcurrent table when not RCD-protected.
+  const calculateMaxZsForCircuit = (
+    bsStandard: string,
+    curve: string,
+    rating: string,
+    rcdContext?: {
+      rcdRating?: string | null;
+      rcdType?: string | null;
+      protectiveDeviceType?: string | null;
+    }
+  ): string => {
     if (!bsStandard || !rating) return '';
 
-    const maxZs = getMaxZsFromDeviceDetails(bsStandard, curve, rating);
-    return maxZs !== null ? maxZs.toFixed(2) : '';
+    // Board-level main RCD: pulled from the main board if present
+    const mainBoard = formData?.distributionBoards?.[0];
+    const boardHasMainRcd = formData?.rcdMainSwitch === 'yes' || mainBoard?.rcdMainSwitch === 'yes';
+    const boardMainRcdRating = formData?.rcdRating || mainBoard?.rcdRating || null;
+
+    const lookup = getMaxZsWithRcd({
+      bsStandard,
+      curve,
+      rating,
+      rcdRating: rcdContext?.rcdRating ?? null,
+      rcdType: rcdContext?.rcdType ?? null,
+      protectiveDeviceType: rcdContext?.protectiveDeviceType ?? null,
+      boardHasMainRcd,
+      boardMainRcdRating,
+    });
+    return lookup.maxZs !== null ? lookup.maxZs.toFixed(2) : '';
   };
 
   // Convert Circuit[] format from SimpleCircuitTable to TestResult format
@@ -2018,7 +2044,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           maxZs: calculateMaxZsForCircuit(
             normalisedCircuit.bsStandard,
             normalisedCircuit.protectiveDeviceCurve,
-            normalisedCircuit.protectiveDeviceRating
+            normalisedCircuit.protectiveDeviceRating,
+            {
+              rcdRating: requiresRCD ? '30mA' : null,
+              rcdType: null,
+              protectiveDeviceType: normalisedCircuit.protectiveDeviceType,
+            }
           ),
           ringContinuityLive: '',
           ringContinuityNeutral: '',
@@ -2103,7 +2134,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         maxZs: calculateMaxZsForCircuit(
           circuit.bsStandard,
           circuit.protectiveDeviceCurve,
-          circuit.protectiveDeviceRating
+          circuit.protectiveDeviceRating,
+          {
+            rcdRating: circuit.rcdRating || (requiresRCD ? '30mA' : null),
+            rcdType: circuit.rcdType || null,
+            protectiveDeviceType: circuit.protectiveDeviceType,
+          }
         ),
         pointsServed: calculatePointsServed(circuitDesc, circuitType, circuit.protectiveDeviceType),
         rcdRating: requiresRCD ? '30mA' : '',

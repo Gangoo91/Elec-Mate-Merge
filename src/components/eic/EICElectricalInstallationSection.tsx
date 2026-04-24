@@ -11,6 +11,11 @@ import {
   MAIN_BOARD_ID,
 } from '@/types/distributionBoard';
 import { cn } from '@/lib/utils';
+import {
+  FieldLimitationBadge,
+  FieldNotesInput,
+  isFieldMarker,
+} from '@/components/field-limitations';
 
 const SectionTitle = ({ title }: { title: string }) => (
   <div className="border-b border-white/[0.06] pb-1 mb-3">
@@ -19,9 +24,12 @@ const SectionTitle = ({ title }: { title: string }) => (
   </div>
 );
 
-const FormField = ({ label, required, hint, children }: { label: string; required?: boolean; hint?: string; children: React.ReactNode }) => (
+const FormField = ({ label, required, hint, trailing, children }: { label: string; required?: boolean; hint?: string; trailing?: React.ReactNode; children: React.ReactNode }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">{label}{required && ' *'}</Label>
+    <div className="flex items-center justify-between gap-2 mb-1.5">
+      <Label className="text-white text-xs">{label}{required && ' *'}</Label>
+      {trailing}
+    </div>
     {children}
     {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
   </div>
@@ -558,51 +566,33 @@ const EICElectricalInstallationSection = ({
       <SectionTitle title="Supply Cables" />
       <div className="space-y-3">
         {/* Intake Cable — size as toggle buttons */}
-        <FormField label="Intake Cable Size">
-          <div className="grid grid-cols-6 gap-1">
-            {['16mm', '25mm', '35mm', '50mm', '70mm', '95mm'].map((size) => (
-              <button
-                key={size}
-                type="button"
-                onClick={() => onUpdate('intakeCableSize', formData.intakeCableSize === size ? '' : size)}
-                className={cn(
-                  'h-10 rounded-lg font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
-                  formData.intakeCableSize === size
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.05] border border-white/[0.08] text-white'
-                )}
-              >
-                {size}²
-              </button>
-            ))}
-          </div>
-        </FormField>
-
-        <FormField label="Intake Cable Type">
-          <MobileSelectPicker
-            value={(formData.intakeCableType as string) || ''}
-            onValueChange={(value) =>
-              onUpdate('intakeCableType', value === '__clear__' ? '' : value)
-            }
-            options={intakeCableTypeOptions}
-            placeholder="Cable type"
-            title="Intake Cable Type"
-            triggerClassName={inputClasses}
-          />
-        </FormField>
-
-        {/* Meter Tails — size as toggle buttons */}
-        <div className="grid grid-cols-2 gap-3 items-end">
-          <FormField label="Tails Size">
-            <div className="grid grid-cols-3 gap-1">
-              {['16mm', '25mm', '35mm'].map((size) => (
+        <FormField
+          label="Intake Cable Size"
+          trailing={
+            <FieldLimitationBadge
+              compact
+              value={(formData.intakeCableSize as string) || ''}
+              markers={['LIM', 'N/V']}
+              onChange={(v) => onUpdate('intakeCableSize', v)}
+            />
+          }
+        >
+          {isFieldMarker(formData.intakeCableSize as string) ? (
+            <Input
+              value={formData.intakeCableSize as string}
+              disabled
+              className={cn(inputClasses, 'opacity-60')}
+            />
+          ) : (
+            <div className="grid grid-cols-6 gap-1">
+              {['16mm', '25mm', '35mm', '50mm', '70mm', '95mm'].map((size) => (
                 <button
                   key={size}
                   type="button"
-                  onClick={() => onUpdate('tailsSize', formData.tailsSize === size ? '' : size)}
+                  onClick={() => onUpdate('intakeCableSize', formData.intakeCableSize === size ? '' : size)}
                   className={cn(
-                    'h-10 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    formData.tailsSize === size
+                    'h-10 rounded-lg font-medium transition-all touch-manipulation text-[10px] active:scale-[0.98]',
+                    formData.intakeCableSize === size
                       ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
                       : 'bg-white/[0.05] border border-white/[0.08] text-white'
                   )}
@@ -611,6 +601,96 @@ const EICElectricalInstallationSection = ({
                 </button>
               ))}
             </div>
+          )}
+          <FieldNotesInput
+            parentValue={(formData.intakeCableSize as string) || ''}
+            value={(formData.intakeCableSizeNotes as string) || ''}
+            onChange={(v) => onUpdate('intakeCableSizeNotes', v)}
+            placeholder="Reason (e.g. cable concealed / inaccessible)"
+          />
+        </FormField>
+
+        <FormField
+          label="Intake Cable Type"
+          trailing={
+            <FieldLimitationBadge
+              compact
+              value={(formData.intakeCableType as string) || ''}
+              markers={['LIM', 'N/V']}
+              onChange={(v) => onUpdate('intakeCableType', v)}
+            />
+          }
+        >
+          {isFieldMarker(formData.intakeCableType as string) ? (
+            <Input
+              value={formData.intakeCableType as string}
+              disabled
+              className={cn(inputClasses, 'opacity-60')}
+            />
+          ) : (
+            <MobileSelectPicker
+              value={(formData.intakeCableType as string) || ''}
+              onValueChange={(value) =>
+                onUpdate('intakeCableType', value === '__clear__' ? '' : value)
+              }
+              options={intakeCableTypeOptions}
+              placeholder="Cable type"
+              title="Intake Cable Type"
+              triggerClassName={inputClasses}
+            />
+          )}
+          <FieldNotesInput
+            parentValue={(formData.intakeCableType as string) || ''}
+            value={(formData.intakeCableTypeNotes as string) || ''}
+            onChange={(v) => onUpdate('intakeCableTypeNotes', v)}
+            placeholder="Reason (e.g. cable run inaccessible)"
+          />
+        </FormField>
+
+        {/* Meter Tails — size as toggle buttons */}
+        <div className="grid grid-cols-2 gap-3 items-end">
+          <FormField
+            label="Tails Size"
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={(formData.tailsSize as string) || ''}
+                markers={['LIM', 'N/V']}
+                onChange={(v) => onUpdate('tailsSize', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.tailsSize as string) ? (
+              <Input
+                value={formData.tailsSize as string}
+                disabled
+                className={cn(inputClasses, 'opacity-60')}
+              />
+            ) : (
+              <div className="grid grid-cols-3 gap-1">
+                {['16mm', '25mm', '35mm'].map((size) => (
+                  <button
+                    key={size}
+                    type="button"
+                    onClick={() => onUpdate('tailsSize', formData.tailsSize === size ? '' : size)}
+                    className={cn(
+                      'h-10 rounded-lg font-medium transition-all touch-manipulation text-xs active:scale-[0.98]',
+                      formData.tailsSize === size
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.05] border border-white/[0.08] text-white'
+                    )}
+                  >
+                    {size}²
+                  </button>
+                ))}
+              </div>
+            )}
+            <FieldNotesInput
+              parentValue={(formData.tailsSize as string) || ''}
+              value={(formData.tailsSizeNotes as string) || ''}
+              onChange={(v) => onUpdate('tailsSizeNotes', v)}
+              placeholder="Reason (e.g. tails not accessible)"
+            />
           </FormField>
           <FormField label="Tails Length">
             <div className="grid grid-cols-3 gap-1">

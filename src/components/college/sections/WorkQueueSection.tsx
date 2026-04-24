@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { WorkQueueCardSkeletonList } from '@/components/college/ui/WorkQueueCardSkeleton';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
 import {
   PageFrame,
+  PeopleListRow,
   PageHero,
   StatStrip,
   FilterBar,
@@ -189,107 +189,36 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
               {sortedItems.map((item) => {
                 const currentStatus = getItemStatus(item);
                 const overdue = isOverdue(item.dueDate) && currentStatus !== 'Completed';
+                const accent = overdue ? 'red' : item.priority === 'Urgent' ? 'amber' : 'none';
+                const leadInitials = (item.studentName || '?')
+                  .split(/\s+/)
+                  .slice(0, 2)
+                  .map((w) => w[0])
+                  .join('')
+                  .toUpperCase();
                 return (
-                  <SwipeableCard
-                    key={item.id}
-                    leftActions={
-                      currentStatus === 'Pending'
-                        ? [
-                            {
-                              label: 'Start',
-                              onClick: () => handleStartWork(item.id),
-                              className: 'bg-blue-500/90 text-white',
-                            },
-                          ]
-                        : currentStatus === 'In Progress'
-                          ? [
-                              {
-                                label: 'Complete',
-                                onClick: () => handleCompleteWork(item.id),
-                                className: 'bg-emerald-500/90 text-white',
-                              },
-                            ]
-                          : []
-                    }
-                    rightActions={[
-                      {
-                        label: 'Details',
-                        onClick: () => handleViewDetails(item),
-                        className: 'bg-blue-500/90 text-white',
-                      },
-                    ]}
-                  >
-                    <div className="group flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors">
-                      <span
-                        aria-hidden
-                        className={cn(
-                          'w-[3px] self-stretch rounded-full shrink-0',
-                          overdue ? 'bg-red-400' : item.priority === 'Urgent' ? 'bg-amber-400' : 'bg-transparent'
-                        )}
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-baseline justify-between gap-2">
-                          <div className="min-w-0">
-                            <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
-                              {typeLabel(item.type)}
-                            </div>
-                            <div className="mt-1 text-[15px] font-medium text-white truncate">
-                              {item.title}
-                            </div>
-                            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
-                              {item.studentName}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <Pill tone={priorityTone(item.priority)}>{item.priority}</Pill>
-                            <Pill tone={statusTone(currentStatus)}>{currentStatus}</Pill>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <button
-                                  className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
-                                  aria-label="Options"
-                                >
-                                  ⋯
-                                </button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => handleViewDetails(item)}
-                                >
-                                  View details
-                                </DropdownMenuItem>
-                                {currentStatus === 'Pending' && (
-                                  <DropdownMenuItem
-                                    className="h-11"
-                                    onClick={() => handleStartWork(item.id)}
-                                  >
-                                    Start work
-                                  </DropdownMenuItem>
-                                )}
-                                {currentStatus === 'In Progress' && (
-                                  <DropdownMenuItem
-                                    className="h-11"
-                                    onClick={() => handleCompleteWork(item.id)}
-                                  >
-                                    Mark complete
-                                  </DropdownMenuItem>
-                                )}
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setNoteItemId(noteItemId === item.id ? null : item.id);
-                                    setNoteText('');
-                                  }}
-                                >
-                                  Add note
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </div>
-                        </div>
-
-                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11.5px] text-white/75">
+                  <div key={item.id}>
+                    <PeopleListRow
+                      id={item.id}
+                      accent={accent}
+                      lead={{
+                        kind: 'initials',
+                        text: leadInitials,
+                        tone: accent === 'none' ? 'yellow' : accent,
+                      }}
+                      title={item.title}
+                      subtitle={
+                        <>
+                          <span className="uppercase tracking-[0.16em] text-white/50 text-[10px] mr-2">
+                            {typeLabel(item.type)}
+                          </span>
+                          {item.studentName}
+                        </>
+                      }
+                      titleChips={<Pill tone={priorityTone(item.priority)}>{item.priority}</Pill>}
+                      status={{ label: currentStatus, tone: statusTone(currentStatus) }}
+                      meta={
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70">
                           <span className="tabular-nums">
                             Created{' '}
                             {new Date(item.createdAt).toLocaleDateString('en-GB', {
@@ -298,7 +227,9 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                             })}
                           </span>
                           {item.dueDate && (
-                            <span className={cn('tabular-nums', overdue && 'text-red-400')}>
+                            <span
+                              className={cn('tabular-nums', overdue && 'text-red-400')}
+                            >
                               Due{' '}
                               {new Date(item.dueDate).toLocaleDateString('en-GB', {
                                 day: 'numeric',
@@ -307,53 +238,87 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                               {overdue && ' · overdue'}
                             </span>
                           )}
-                        </div>
-
-                        {currentStatus !== 'Completed' && (
-                          <div className="mt-3 flex items-center gap-3">
-                            {currentStatus === 'Pending' && (
-                              <button
-                                onClick={() => handleStartWork(item.id)}
-                                className="text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation"
-                              >
-                                Start work →
-                              </button>
-                            )}
-                            {currentStatus === 'In Progress' && (
-                              <button
-                                onClick={() => handleCompleteWork(item.id)}
-                                className="text-[12px] font-medium text-emerald-400 hover:text-emerald-300 transition-colors touch-manipulation"
-                              >
-                                Mark complete →
-                              </button>
-                            )}
-                          </div>
-                        )}
-
-                        {noteItemId === item.id && (
-                          <div className="mt-3 flex items-center gap-2">
-                            <Input
-                              placeholder="Add a note…"
-                              value={noteText}
-                              onChange={(e) => setNoteText(e.target.value)}
-                              className="h-11 touch-manipulation flex-1 bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow"
-                            />
+                          {currentStatus === 'Pending' && (
                             <button
-                              onClick={() => {
-                                toast({ title: 'Note added', description: noteText });
-                                setNoteItemId(null);
-                                setNoteText('');
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleStartWork(item.id);
                               }}
-                              disabled={!noteText.trim()}
-                              className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+                              className="text-elec-yellow/90 hover:text-elec-yellow font-medium touch-manipulation"
                             >
-                              Save
+                              Start work →
                             </button>
-                          </div>
-                        )}
+                          )}
+                          {currentStatus === 'In Progress' && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleCompleteWork(item.id);
+                              }}
+                              className="text-emerald-400 hover:text-emerald-300 font-medium touch-manipulation"
+                            >
+                              Mark complete →
+                            </button>
+                          )}
+                        </div>
+                      }
+                      onOpen={() => handleViewDetails(item)}
+                      actions={[
+                        {
+                          label: 'View details',
+                          onClick: () => handleViewDetails(item),
+                        },
+                        ...(currentStatus === 'Pending'
+                          ? [
+                              {
+                                label: 'Start work',
+                                onClick: () => handleStartWork(item.id),
+                                divider: true,
+                              },
+                            ]
+                          : []),
+                        ...(currentStatus === 'In Progress'
+                          ? [
+                              {
+                                label: 'Mark complete',
+                                onClick: () => handleCompleteWork(item.id),
+                                variant: 'success' as const,
+                                divider: true,
+                              },
+                            ]
+                          : []),
+                        {
+                          label: 'Add note',
+                          onClick: () => {
+                            setNoteItemId(noteItemId === item.id ? null : item.id);
+                            setNoteText('');
+                          },
+                          divider: true,
+                        },
+                      ]}
+                    />
+                    {noteItemId === item.id && (
+                      <div className="px-4 sm:px-6 pb-4 -mt-1 flex items-center gap-2">
+                        <Input
+                          placeholder="Add a note…"
+                          value={noteText}
+                          onChange={(e) => setNoteText(e.target.value)}
+                          className="h-11 touch-manipulation flex-1 bg-[hsl(0_0%_9%)] border-white/[0.08] focus:border-elec-yellow"
+                        />
+                        <button
+                          onClick={() => {
+                            toast({ title: 'Note added', description: noteText });
+                            setNoteItemId(null);
+                            setNoteText('');
+                          }}
+                          disabled={!noteText.trim()}
+                          className="h-11 px-4 bg-elec-yellow text-black rounded-full text-[12.5px] font-semibold hover:opacity-90 disabled:opacity-40 transition-opacity touch-manipulation"
+                        >
+                          Save
+                        </button>
                       </div>
-                    </div>
-                  </SwipeableCard>
+                    )}
+                  </div>
                 );
               })}
             </ListCard>

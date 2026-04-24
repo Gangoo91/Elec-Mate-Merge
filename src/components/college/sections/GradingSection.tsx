@@ -7,7 +7,6 @@ import { GradeDetailSheet } from '@/components/college/sheets/GradeDetailSheet';
 import { FeedbackSheet } from '@/components/college/sheets/FeedbackSheet';
 import { GradeCardSkeletonList } from '@/components/college/ui/GradeCardSkeleton';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
-import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
 import { useCollegeGrades, useUpdateGrade } from '@/hooks/college/useCollegeGrades';
 import { useCollegeStudents } from '@/hooks/college/useCollegeStudents';
 import { useCollegeStaff } from '@/hooks/college/useCollegeStaff';
@@ -22,6 +21,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import {
   PageFrame,
+  PeopleListRow,
   PageHero,
   StatStrip,
   FilterBar,
@@ -217,118 +217,29 @@ export function GradingSection() {
                 const tone = statusTone(grade.status);
 
                 return (
-                  <SwipeableCard
+                  <PeopleListRow
                     key={grade.id}
-                    leftActions={[
-                      {
-                        label: 'Grade',
-                        onClick: () => {
-                          setSelectedAssessmentId(grade.id);
-                          setGradeDialogOpen(true);
-                        },
-                        className: 'bg-emerald-500/90 text-white',
-                      },
-                      {
-                        label: 'View',
-                        onClick: () => {
-                          setSelectedGradeId(grade.id);
-                          setGradeDetailOpen(true);
-                        },
-                        className: 'bg-blue-500/90 text-white',
-                      },
-                    ]}
-                    rightActions={[
-                      {
-                        label: 'Resubmit',
-                        onClick: () => handleRequestResubmission(grade.id),
-                        className: 'bg-amber-500/90 text-white',
-                      },
-                    ]}
-                  >
-                    <div className="group flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors">
-                      <Avatar className="h-10 w-10 shrink-0 ring-1 ring-white/[0.08]">
-                        <AvatarImage src={photoUrl} />
-                        <AvatarFallback className="bg-amber-500/10 text-amber-400 text-xs font-semibold">
-                          {initials}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-baseline justify-between gap-2">
-                          <div className="min-w-0">
-                            <div className="text-[15px] font-medium text-white truncate">
-                              {grade.unit_name || 'Untitled unit'}
-                            </div>
-                            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
-                              {getStudentName(grade.student_id)}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <Pill tone={tone}>{grade.status || 'Unknown'}</Pill>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <button
-                                  className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
-                                  aria-label="Options"
-                                >
-                                  ⋯
-                                </button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedGradeId(grade.id);
-                                    setGradeDetailOpen(true);
-                                  }}
-                                >
-                                  View submission
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedAssessmentId(grade.id);
-                                    setRubricDialogOpen(true);
-                                  }}
-                                >
-                                  Grade with rubric
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedAssessmentId(grade.id);
-                                    setGradeDialogOpen(true);
-                                  }}
-                                >
-                                  Quick grade
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedGradeId(grade.id);
-                                    setFeedbackSheetOpen(true);
-                                  }}
-                                >
-                                  Add feedback
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => handleRequestResubmission(grade.id)}
-                                >
-                                  Request resubmission
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </div>
-                        </div>
-
-                        <div className="mt-2.5 flex flex-wrap gap-1.5">
+                    id={grade.id}
+                    lead={{
+                      kind: 'avatar',
+                      name: getStudentName(grade.student_id) || '?',
+                      photoUrl,
+                      ringTone: 'amber',
+                    }}
+                    title={grade.unit_name || 'Untitled unit'}
+                    subtitle={getStudentName(grade.student_id)}
+                    status={{ label: grade.status || 'Unknown', tone }}
+                    meta={
+                      <div className="space-y-2">
+                        <div className="flex flex-wrap gap-1.5">
                           {grade.assessment_type && (
                             <Pill tone="yellow">{grade.assessment_type}</Pill>
                           )}
-                          {grade.grade && <Pill tone={gradeTone(grade.grade)}>{grade.grade}</Pill>}
+                          {grade.grade && (
+                            <Pill tone={gradeTone(grade.grade)}>{grade.grade}</Pill>
+                          )}
                         </div>
-
-                        <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70">
                           <span>Assessor · {getAssessorName(grade.assessed_by)}</span>
                           {grade.assessed_at && (
                             <span className="tabular-nums">
@@ -339,18 +250,58 @@ export function GradingSection() {
                             </span>
                           )}
                         </div>
-
                         {grade.feedback && (
-                          <div className="mt-3 text-[12px] text-white/70 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2">
-                            <span className="text-white/70">Feedback · </span>
+                          <div className="text-[12px] text-white/70 bg-white/[0.03] border border-white/[0.06] rounded-lg px-3 py-2">
+                            <span className="text-white/55">Feedback · </span>
                             {grade.feedback.length > 120
                               ? grade.feedback.substring(0, 120) + '…'
                               : grade.feedback}
                           </div>
                         )}
                       </div>
-                    </div>
-                  </SwipeableCard>
+                    }
+                    onOpen={() => {
+                      setSelectedGradeId(grade.id);
+                      setGradeDetailOpen(true);
+                    }}
+                    actions={[
+                      {
+                        label: 'View submission',
+                        onClick: () => {
+                          setSelectedGradeId(grade.id);
+                          setGradeDetailOpen(true);
+                        },
+                      },
+                      {
+                        label: 'Grade with rubric',
+                        onClick: () => {
+                          setSelectedAssessmentId(grade.id);
+                          setRubricDialogOpen(true);
+                        },
+                        divider: true,
+                      },
+                      {
+                        label: 'Quick grade',
+                        onClick: () => {
+                          setSelectedAssessmentId(grade.id);
+                          setGradeDialogOpen(true);
+                        },
+                      },
+                      {
+                        label: 'Add feedback',
+                        onClick: () => {
+                          setSelectedGradeId(grade.id);
+                          setFeedbackSheetOpen(true);
+                        },
+                      },
+                      {
+                        label: 'Request resubmission',
+                        onClick: () => handleRequestResubmission(grade.id),
+                        variant: 'warn',
+                        divider: true,
+                      },
+                    ]}
+                  />
                 );
               })}
             </ListCard>

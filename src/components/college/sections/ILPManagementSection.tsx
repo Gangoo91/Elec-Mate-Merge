@@ -18,9 +18,9 @@ import { CreateILPSheet } from '@/components/college/sheets/CreateILPSheet';
 import { ILPCardSkeletonList } from '@/components/college/ui/ILPCardSkeleton';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { useQueryClient } from '@tanstack/react-query';
-import { SwipeableCard } from '@/components/college/ui/SwipeableCard';
 import {
   PageFrame,
+  PeopleListRow,
   PageHero,
   StatStrip,
   FilterBar,
@@ -254,104 +254,39 @@ export function ILPManagementSection() {
                 const dueSoon = isReviewDueSoon(ilp.review_date);
 
                 return (
-                  <SwipeableCard
+                  <PeopleListRow
                     key={ilp.id}
-                    leftActions={[
-                      {
-                        label: 'Review',
-                        onClick: () => {
-                          setSelectedIlpId(ilp.id);
-                          setReviewSheetOpen(true);
-                        },
-                        className: 'bg-emerald-500/90 text-white',
-                      },
-                      {
-                        label: 'Targets',
-                        onClick: () => {
-                          setSelectedIlpId(ilp.id);
-                          setTargetsSheetOpen(true);
-                        },
-                        className: 'bg-blue-500/90 text-white',
-                      },
-                    ]}
-                  >
-                    <div className="group flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors">
-                      <span
-                        aria-hidden
-                        className={cn(
-                          'w-[3px] self-stretch rounded-full shrink-0',
-                          overdue ? 'bg-red-400' : dueSoon ? 'bg-amber-400' : 'bg-transparent'
-                        )}
-                      />
-                      <Avatar className="h-10 w-10 shrink-0 ring-1 ring-white/[0.08]">
-                        <AvatarImage src={studentInfo.photoUrl} />
-                        <AvatarFallback className="bg-orange-500/10 text-orange-400 text-xs font-semibold">
-                          {studentInfo.initials}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-baseline justify-between gap-2">
-                          <div className="min-w-0">
-                            <div className="text-[15px] font-medium text-white truncate">
-                              {studentInfo.name}
-                            </div>
-                            <div className="mt-0.5 text-[11.5px] text-white/75 truncate">
-                              {getCohortName(studentInfo.cohortId)} · Tutor · {getTutorName(ilp.reviewed_by)}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1.5 shrink-0">
-                            <Pill tone={statusTone(ilp.status)}>{ilp.status || 'Unknown'}</Pill>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <button
-                                  className="text-white/75 hover:text-white text-[18px] leading-none px-1 touch-manipulation"
-                                  aria-label="Options"
-                                >
-                                  ⋯
-                                </button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedIlpId(ilp.id);
-                                    setDetailInitialTab('targets');
-                                    setDetailSheetOpen(true);
-                                  }}
-                                >
-                                  View ILP
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedIlpId(ilp.id);
-                                    setReviewSheetOpen(true);
-                                  }}
-                                >
-                                  Conduct review
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  className="h-11"
-                                  onClick={() => {
-                                    setSelectedIlpId(ilp.id);
-                                    setTargetsSheetOpen(true);
-                                  }}
-                                >
-                                  Edit targets
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </div>
-                        </div>
-
+                    id={ilp.id}
+                    accent={overdue ? 'red' : dueSoon ? 'amber' : 'none'}
+                    lead={{
+                      kind: 'avatar',
+                      name: studentInfo.name,
+                      photoUrl: studentInfo.photoUrl ?? null,
+                      ringTone: overdue ? 'red' : dueSoon ? 'amber' : 'none',
+                    }}
+                    title={studentInfo.name}
+                    subtitle={
+                      <>
+                        {getCohortName(studentInfo.cohortId)}
+                        <span className="mx-1.5 text-white/25">·</span>
+                        Tutor · {getTutorName(ilp.reviewed_by)}
+                      </>
+                    }
+                    status={{
+                      label: ilp.status || 'Unknown',
+                      tone: statusTone(ilp.status),
+                    }}
+                    meta={
+                      <div className="space-y-2.5">
                         {targets.length > 0 && (
-                          <div className="mt-3">
-                            <div className="flex items-baseline justify-between text-[11.5px]">
-                              <span className="text-white/75 uppercase tracking-[0.12em]">
+                          <div>
+                            <div className="flex items-baseline justify-between text-[10.5px]">
+                              <span className="text-white/55 uppercase tracking-[0.12em]">
                                 Targets
                               </span>
                               <span className="font-medium text-white tabular-nums">
-                                {targets.filter((t) => t.status === 'Achieved').length}/{targets.length} · {progress}%
+                                {targets.filter((t) => t.status === 'Achieved').length}/
+                                {targets.length} · {progress}%
                               </span>
                             </div>
                             <div className="mt-1.5 h-1 bg-white/[0.06] rounded-full overflow-hidden">
@@ -362,25 +297,23 @@ export function ILPManagementSection() {
                             </div>
                           </div>
                         )}
-
                         {targets.length > 0 && (
-                          <div className="mt-3 flex flex-wrap gap-1">
-                            {targets.slice(0, 4).map((target, i) => (
+                          <div className="flex flex-wrap gap-1">
+                            {targets.slice(0, 3).map((target, i) => (
                               <Pill key={i} tone={targetTone(target.status)}>
-                                {target.description.length > 32
-                                  ? target.description.substring(0, 32) + '…'
+                                {target.description.length > 28
+                                  ? target.description.substring(0, 28) + '…'
                                   : target.description}
                               </Pill>
                             ))}
-                            {targets.length > 4 && (
-                              <span className="text-[11px] text-white/70 px-1.5 py-0.5">
-                                +{targets.length - 4}
+                            {targets.length > 3 && (
+                              <span className="text-[11px] text-white/55 px-1.5 py-0.5">
+                                +{targets.length - 3}
                               </span>
                             )}
                           </div>
                         )}
-
-                        <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/75">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white/70">
                           {ilp.last_reviewed && (
                             <span className="tabular-nums">
                               Reviewed{' '}
@@ -407,8 +340,38 @@ export function ILPManagementSection() {
                           )}
                         </div>
                       </div>
-                    </div>
-                  </SwipeableCard>
+                    }
+                    onOpen={() => {
+                      setSelectedIlpId(ilp.id);
+                      setDetailInitialTab('targets');
+                      setDetailSheetOpen(true);
+                    }}
+                    actions={[
+                      {
+                        label: 'View ILP',
+                        onClick: () => {
+                          setSelectedIlpId(ilp.id);
+                          setDetailInitialTab('targets');
+                          setDetailSheetOpen(true);
+                        },
+                      },
+                      {
+                        label: 'Conduct review',
+                        onClick: () => {
+                          setSelectedIlpId(ilp.id);
+                          setReviewSheetOpen(true);
+                        },
+                        divider: true,
+                      },
+                      {
+                        label: 'Edit targets',
+                        onClick: () => {
+                          setSelectedIlpId(ilp.id);
+                          setTargetsSheetOpen(true);
+                        },
+                      },
+                    ]}
+                  />
                 );
               })}
             </ListCard>

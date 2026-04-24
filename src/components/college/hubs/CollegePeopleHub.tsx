@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailSheet';
 import { EditStudentSheet } from '@/components/college/sheets/EditStudentSheet';
@@ -24,6 +25,10 @@ import {
   Pill,
   itemVariants,
 } from '@/components/college/primitives';
+import {
+  useCurrentRiskForStudents,
+  useRecomputeRisk,
+} from '@/hooks/useStudentRisk';
 
 interface CollegePeopleHubProps {
   onNavigate: (section: CollegeSection) => void;
@@ -58,14 +63,27 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
   const activeCohorts = cohorts?.filter((c) => c.status === 'Active').length ?? 0;
   const atRiskStudents = getStudentsAtRiskData() ?? [];
   const studentsAtRisk = atRiskStudents.length;
+
+  // Pull computed risk rows for the visible at-risk list so we can surface
+  // the top contributing factor as each row's subtitle.
+  const atRiskIds = atRiskStudents.slice(0, 5).map((s) => s.id);
+  const { byStudent: riskById, refresh: refreshRisk } =
+    useCurrentRiskForStudents(atRiskIds);
+  const { recompute, running: recomputing } = useRecomputeRisk();
+
+  const handleRefreshRisk = async () => {
+    await recompute({ student_ids: atRiskIds });
+    await refreshRisk();
+  };
   const supportStaffCount =
     staff?.filter((s) => ['admin', 'support', 'assessor'].includes(s.role) && s.status === 'Active')
       .length ?? 0;
   const overdueILPs = getOverdueILPReviewsData()?.length ?? 0;
 
+  const navigate = useNavigate();
   const handleSelectStudent = (student: CollegeStudent) => {
-    setSelectedStudent(student);
-    setDetailOpen(true);
+    // Student 360 is a dedicated page; take tutors there rather than a side sheet.
+    navigate(`/college/students/${student.id}`);
   };
   const handleEditStudent = (student: CollegeStudent) => {
     setSelectedStudent(student);
@@ -153,12 +171,21 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
         {/* PRIORITY — At Risk learners */}
         {studentsAtRisk > 0 && (
           <motion.section variants={itemVariants} className="space-y-5">
-            <SectionHeader
-              eyebrow="Priority"
-              title="Students requiring attention"
-              action="View all"
-              onAction={() => onNavigate('progresstracking')}
-            />
+            <div className="flex items-end justify-between gap-4 flex-wrap">
+              <SectionHeader
+                eyebrow="Priority"
+                title="Students requiring attention"
+                action="View all"
+                onAction={() => onNavigate('progresstracking')}
+              />
+              <button
+                onClick={handleRefreshRisk}
+                disabled={recomputing}
+                className="text-[12px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors disabled:opacity-40"
+              >
+                {recomputing ? 'Refreshing risk…' : 'Refresh risk →'}
+              </button>
+            </div>
             <ListCard>
               {atRiskStudents.slice(0, 5).map((student) => {
                 const initials = student.name
@@ -166,17 +193,29 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
                   .map((n) => n[0])
                   .join('')
                   .toUpperCase();
+                const risk = riskById.get(student.id);
+                const topFactor = risk?.factors?.[0];
+                const subtitle = topFactor
+                  ? topFactor.label
+                  : `${student.progress_percent ?? 0}% progress`;
+                const level = risk?.level ?? student.risk_level?.toLowerCase();
+                const tone =
+                  level === 'critical' || level === 'high'
+                    ? 'red'
+                    : level === 'medium'
+                      ? 'amber'
+                      : 'yellow';
+                const displayLevel =
+                  (risk?.level ?? student.risk_level ?? '')
+                    .toString()
+                    .charAt(0)
+                    .toUpperCase() +
+                  (risk?.level ?? student.risk_level ?? '').toString().slice(1);
                 return (
                   <ListRow
                     key={student.id}
                     onClick={() => handleSelectStudent(student)}
-                    accent={
-                      student.risk_level === 'High'
-                        ? 'red'
-                        : student.risk_level === 'Medium'
-                          ? 'amber'
-                          : 'yellow'
-                    }
+                    accent={tone}
                     lead={
                       <div className="h-9 w-9 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
                         <span className="text-[11px] font-semibold text-white/80 tabular-nums">
@@ -185,19 +224,16 @@ export function CollegePeopleHub({ onNavigate }: CollegePeopleHubProps) {
                       </div>
                     }
                     title={student.name}
-                    subtitle={`${student.progress_percent ?? 0}% progress`}
+                    subtitle={subtitle}
                     trailing={
-                      <Pill
-                        tone={
-                          student.risk_level === 'High'
-                            ? 'red'
-                            : student.risk_level === 'Medium'
-                              ? 'amber'
-                              : 'yellow'
-                        }
-                      >
-                        {student.risk_level}
-                      </Pill>
+                      <div className="flex items-center gap-2 shrink-0">
+                        {risk && risk.factors.length > 1 && (
+                          <span className="text-[10.5px] text-white/55 font-mono tabular-nums">
+                            +{risk.factors.length - 1}
+                          </span>
+                        )}
+                        <Pill tone={tone}>{displayLevel || 'Low'}</Pill>
+                      </div>
                     }
                   />
                 );

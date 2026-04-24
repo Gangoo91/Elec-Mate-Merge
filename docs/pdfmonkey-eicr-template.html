@@ -1078,6 +1078,221 @@
       .intake-list li {
         margin-bottom: 1px;
       }
+
+      /* =============================================
+           BS 7671 A4:2026 model-form layout classes
+           ============================================= */
+      /* Dotted-leader row — label on left, value on right, dots fill the gap.
+         Mirrors the classic IET form fill-ins. */
+      .lead-row {
+        display: flex;
+        align-items: baseline;
+        gap: 6px;
+        font-size: 9px;
+        line-height: 1.5;
+        padding: 2px 0;
+      }
+      .lead-row .lead-label {
+        flex-shrink: 0;
+        font-weight: 600;
+        color: #0f172a;
+      }
+      .lead-row .lead-dots {
+        flex: 1;
+        border-bottom: 1px dotted #64748b;
+        min-width: 20px;
+        align-self: flex-end;
+        margin-bottom: 2px;
+      }
+      .lead-row .lead-value {
+        flex-shrink: 0;
+        color: #000;
+        font-weight: 500;
+        white-space: nowrap;
+        max-width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .lead-row .lead-suffix {
+        flex-shrink: 0;
+        color: #475569;
+        font-weight: 400;
+      }
+
+      /* Compound cell — 4-col layout for Section F. Uses flex so columns can
+         balance heights and the whole block stays together on page breaks. */
+      .compound-grid {
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+        font-size: 8px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .compound-grid > .compound-col {
+        border: 1px solid #cbd5e1;
+        border-right: 0;
+        padding: 5px 7px;
+        background: #fff;
+        box-sizing: border-box;
+      }
+      .compound-grid > .compound-col:last-child {
+        border-right: 1px solid #cbd5e1;
+      }
+      .compound-grid > .compound-col > .compound-title {
+        font-weight: 700;
+        font-size: 8.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        color: #0f172a;
+        margin-bottom: 4px;
+        padding-bottom: 3px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      /* Uniform grid-row system — use throughout board cards, RCD, cables.
+         Every label aligns to the same baseline, every value is the same
+         width, every row is perfectly level. */
+      .grid-row {
+        display: grid;
+        gap: 8px;
+        margin-bottom: 5px;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+      .grid-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+      .grid-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+      .grid-row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+      .grid-row.cols-5 { grid-template-columns: repeat(5, 1fr); }
+      .grid-row.cols-6 { grid-template-columns: repeat(6, 1fr); }
+      .grid-cell {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+      }
+      .grid-cell .cell-label {
+        font-size: 7.5px;
+        font-weight: 700;
+        color: #475569;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        line-height: 1.25;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .grid-cell .cell-value {
+        font-size: 9px;
+        font-weight: 500;
+        color: #0f172a;
+        border-bottom: 1px dotted #94a3b8;
+        padding: 2px 3px;
+        min-height: 15px;
+        line-height: 1.3;
+        word-break: break-word;
+      }
+      /* Inside Section F compound columns, label+value rows use uniform heights
+         so Col 3 and Col 4 line up row-for-row horizontally. */
+      .compound-col .grid-cell {
+        min-height: 34px;
+        justify-content: flex-start;
+      }
+      .compound-col .grid-cell .cell-label {
+        min-height: 12px;
+      }
+      .compound-col .grid-cell .cell-value {
+        min-height: 15px;
+      }
+      /* When a marker badge is the value, drop the dotted underline so the
+         pill reads as the entire value — cleaner alignment. */
+      .grid-cell .cell-value.is-marker {
+        border-bottom: 0;
+        padding-bottom: 3px;
+      }
+      /* Tighten marker badges when they sit inside grid/lead cells. */
+      .grid-cell .marker-badge,
+      .lead-row .marker-badge,
+      .cell-value .marker-badge {
+        font-size: 8px;
+        padding: 1px 5px;
+        line-height: 1.2;
+      }
+      .grid-cell .cell-check {
+        font-size: 9px;
+        color: #0f172a;
+        line-height: 1.35;
+        padding: 2px 0;
+      }
+      .grid-cell .cell-check .tick {
+        font-size: 10px;
+        margin-right: 4px;
+      }
+
+      /* Static tickbox glyphs — render reliably across PDF engines */
+      .tick {
+        font-size: 10px;
+        display: inline-block;
+        min-width: 10px;
+        color: #0f172a;
+      }
+      .tick-row {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 9px;
+        margin-right: 12px;
+        white-space: nowrap;
+      }
+
+      /* =============================================
+           ELE-849 — LIM / N/V / N/A marker badges + field notes
+           ============================================= */
+      .marker-badge {
+        display: inline-block;
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-size: 8.5px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        border: 1px solid;
+        line-height: 1.3;
+      }
+      .marker-lim {
+        background: #fff7ed;
+        color: #ea580c;
+        border-color: #fb923c;
+      }
+      .marker-nv {
+        background: #f1f5f9;
+        color: #475569;
+        border-color: #94a3b8;
+      }
+      .marker-na {
+        background: #f4f4f5;
+        color: #52525b;
+        border-color: #a1a1aa;
+      }
+      .field-note {
+        display: block;
+        font-size: 7.5px;
+        font-style: italic;
+        color: #475569;
+        margin-top: 2px;
+        line-height: 1.3;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
+      /* Long notes / values must wrap inside their container column */
+      .compound-col .field-note,
+      .compound-col .cell-value,
+      .grid-cell .field-note,
+      .grid-cell .cell-value {
+        word-break: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+      }
     </style>
   </head>
   <body>
@@ -1119,23 +1334,17 @@
       <div class="form-grid">
         <div class="form-row">
           <div class="form-label">Client Name</div>
-          <div class="form-value"><input type="text" value="{{client_details.client_name}}" /></div>
+          <div class="form-value">{{client_details.client_name}}</div>
           <div class="form-label">Telephone</div>
-          <div class="form-value">
-            <input type="text" value="{{client_details.client_phone}}" />
-          </div>
+          <div class="form-value">{{client_details.client_phone}}</div>
         </div>
         <div class="form-row">
           <div class="form-label">Client Address</div>
-          <div class="form-value" colspan="3">
-            <input type="text" value="{{client_details.client_address}}" />
-          </div>
+          <div class="form-value" colspan="3">{{client_details.client_address}}</div>
         </div>
         <div class="form-row">
           <div class="form-label">Email Address</div>
-          <div class="form-value">
-            <input type="text" value="{{client_details.client_email}}" />
-          </div>
+          <div class="form-value">{{client_details.client_email}}</div>
           <div class="form-label"></div>
           <div class="form-value"></div>
         </div>
@@ -1148,9 +1357,7 @@
       <div class="form-grid">
         <div class="form-row">
           <div class="form-label">Installation Address</div>
-          <div class="form-value" style="width: 100%">
-            <input type="text" value="{{installation_details.address}}" />
-          </div>
+          <div class="form-value" style="width: 100%">{{installation_details.address}}</div>
         </div>
       </div>
     </div>
@@ -1162,22 +1369,10 @@
         <div class="inline-group">
           <span class="inline-label">Type:</span>
           <div class="checkbox-row">
-            <div class="checkbox-item">
-              <input type="checkbox" id="residential" {% if installation_details.description == "domestic" or installation_details.description == "residential" %}checked{% endif %} />
-              <label for="residential">Residential</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="commercial" {% if installation_details.description == "commercial" %}checked{% endif %} />
-              <label for="commercial">Commercial</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="industrial" {% if installation_details.description == "industrial" %}checked{% endif %} />
-              <label for="industrial">Industrial</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="other" {% if installation_details.description == "other" %}checked{% endif %} />
-              <label for="other">Other (include brief description)</label>
-            </div>
+            <div class="tick-row"><span class="tick">{% if installation_details.description == "domestic" or installation_details.description == "residential" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Residential</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.description == "commercial" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Commercial</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.description == "industrial" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Industrial</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.description == "other" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other (include brief description)</div>
             {% if installation_details.description == "other" and installation_details.other_premises_description != "" %}
             <span class="inline-value" style="margin-left: 8px;">{{installation_details.other_premises_description}}</span>
             {% endif %}
@@ -1187,19 +1382,25 @@
           <span class="inline-label">Est. Age:</span>
           <span class="inline-value">{{installation_details.estimated_age}} years</span>
         </div>
+        {% if installation_details.installation_date and installation_details.installation_date != "" %}
+        <div class="inline-group">
+          <span class="inline-label">Installation Date:</span>
+          <span class="inline-value">{{installation_details.installation_date}}</span>
+        </div>
+        {% endif %}
+        {% if installation_details.construction_date and installation_details.construction_date != "" %}
+        <div class="inline-group">
+          <span class="inline-label">Construction Date:</span>
+          <span class="inline-value">{{installation_details.construction_date}}</span>
+        </div>
+        {% endif %}
       </div>
       <div class="inline-form" style="margin-top: 4px">
         <div class="inline-group">
           <span class="inline-label">Evidence of alterations:</span>
           <div class="checkbox-row">
-            <div class="checkbox-item">
-              <input type="checkbox" {% if installation_details.evidence_of_alterations == "yes" %}checked{% endif %} />
-              <label>Yes</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" {% if installation_details.evidence_of_alterations == "not-apparent" or installation_details.evidence_of_alterations == "no" %}checked{% endif %} />
-              <label>Not apparent</label>
-            </div>
+            <div class="tick-row"><span class="tick">{% if installation_details.evidence_of_alterations == "yes" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Yes</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.evidence_of_alterations == "not-apparent" or installation_details.evidence_of_alterations == "no" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Not apparent</div>
             {% if installation_details.evidence_of_alterations == "yes" %}
             <div class="checkbox-item" style="margin-left: 10px;">
               <span class="inline-label">If yes, age:</span>
@@ -1218,31 +1419,16 @@
         <div class="inline-group">
           <span class="inline-label">Installation records available? (Reg 651.1):</span>
           <div class="checkbox-row">
-            <div class="checkbox-item">
-              <input type="checkbox" {% if installation_details.installation_records_available == "yes" %}checked{% endif %} />
-              <label>Yes</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" {% if installation_details.installation_records_available == "no" %}checked{% endif %} />
-              <label>No</label>
-            </div>
+            <div class="tick-row"><span class="tick">{% if installation_details.installation_records_available == "yes" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Yes</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.installation_records_available == "no" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;No</div>
           </div>
         </div>
         <div class="inline-group">
           <span class="inline-label">Date of last inspection:</span>
           <div class="checkbox-row">
-            <div class="checkbox-item">
-              <input type="checkbox" {% if installation_details.last_inspection_type == "known" %}checked{% endif %} />
-              <label>Known</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" {% if installation_details.last_inspection_type == "unknown" %}checked{% endif %} />
-              <label>Unknown</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" {% if installation_details.last_inspection_type == "first" or installation_details.last_inspection_type == "not-applicable" %}checked{% endif %} />
-              <label>N/A (First)</label>
-            </div>
+            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "known" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Known</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "unknown" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Unknown</div>
+            <div class="tick-row"><span class="tick">{% if installation_details.last_inspection_type == "first" or installation_details.last_inspection_type == "not-applicable" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;N/A (First)</div>
           </div>
         </div>
         <div class="inline-group">
@@ -1275,6 +1461,14 @@
           <span class="inline-value">{{installation_details.next_inspection_date}}</span>
         </div>
       </div>
+      {% if installation_details.interval_reasons and installation_details.interval_reasons != "" %}
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Reasons for recommended interval:</span>
+          <span class="inline-value wide">{{installation_details.interval_reasons}}</span>
+        </div>
+      </div>
+      {% endif %}
       <div class="inline-form" style="margin-top: 4px">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Extent:</span>
@@ -1294,6 +1488,14 @@
           <span class="inline-value wide">{{installation_details.operational_limitations}}</span>
         </div>
       </div>
+      {% if installation_details.agreed_with and installation_details.agreed_with != "" %}
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Agreed with:</span>
+          <span class="inline-value wide">{{installation_details.agreed_with}}</span>
+        </div>
+      </div>
+      {% endif %}
       <!-- A4:2026 — Standard limitations boilerplate -->
       <div class="inline-form" style="margin-top: 6px; padding: 6px 8px; background: #f8fafc; border-left: 3px solid #fbbf24;">
         <div class="inline-group" style="flex: 1; display: block;">
@@ -1382,113 +1584,153 @@
       </div>
     </div>
 
-    <!-- SECTION F: SUPPLY CHARACTERISTICS -->
+    <!-- SECTION F: SUPPLY CHARACTERISTICS (BS 7671 A4:2026 4-column compound table) -->
     <div class="section">
       <div class="section-title">Section F: Supply Characteristics and Earthing Arrangements</div>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th style="width: 50%">Earthing Arrangements</th>
-            <th style="width: 50%">Supply Parameters</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="data-field">
-                <div class="data-field-label">System Type (A4:2026)</div>
-                <div class="checkbox-row" style="margin-top: 4px; flex-wrap: wrap; gap: 8px;">
-                  <div class="checkbox-item">
-                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TN-C" %}checked{% endif %} />
-                    <label>TN-C</label>
-                  </div>
-                  <div class="checkbox-item">
-                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TN-S" %}checked{% endif %} />
-                    <label>TN-S</label>
-                  </div>
-                  <div class="checkbox-item">
-                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TN-C-S" or supply_characteristics.earthing_arrangement == "TN-C-S-PME" %}checked{% endif %} />
-                    <label>TN-C-S (PME)</label>
-                  </div>
-                  <div class="checkbox-item">
-                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TN-C-S-PNB" %}checked{% endif %} />
-                    <label>TN-C-S (PNB)</label>
-                  </div>
-                  <div class="checkbox-item">
-                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "TT" %}checked{% endif %} />
-                    <label>TT</label>
-                  </div>
-                  <div class="checkbox-item">
-                    <input type="checkbox" {% if supply_characteristics.earthing_arrangement == "IT" %}checked{% endif %} />
-                    <label>IT</label>
-                  </div>
-                </div>
-              </div>
-              <!-- A4:2026 — Other sources of supply tick-box -->
-              <div class="data-field" style="margin-top: 6px;">
-                <div class="checkbox-item">
-                  <input type="checkbox" {% if supply_characteristics.other_sources_of_supply_present %}checked{% endif %} />
-                  <label>Other sources of supply (as detailed on attached continuation sheet)</label>
-                </div>
-                {% if supply_characteristics.other_sources_of_supply_present and supply_characteristics.other_sources_of_supply != "" %}
-                <div class="data-field-value" style="font-size: 8px; margin-top: 2px;">{{supply_characteristics.other_sources_of_supply}}</div>
-                {% endif %}
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">Supply PME</div>
-                <div class="data-field-value">{{supply_characteristics.supply_pme}}</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">Earth Electrode Type</div>
-                <div class="data-field-value">{{earthing_bonding.earth_electrode_type}}</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">DNO (Distribution Network Operator)</div>
-                <div class="data-field-value">{{supply_characteristics.dno_name}}</div>
-              </div>
-            </td>
-            <td>
-              <div class="data-field">
-                <div class="data-field-label">Nominal Voltage (U&#8320;)</div>
-                <div class="data-field-value">{{supply_characteristics.supply_voltage}} V</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">Nominal Frequency</div>
-                <div class="data-field-value">{{supply_characteristics.supply_frequency}} Hz</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">Number of Phases</div>
-                <div class="data-field-value">{{supply_characteristics.phases}}</div>
-              </div>
-              {% if supply_characteristics.supply_ac_dc == "dc" and supply_characteristics.dc_conductor_config != "" %}
-              <div class="data-field">
-                <div class="data-field-label">DC Conductor Configuration (A4:2026)</div>
-                <div class="data-field-value">{{supply_characteristics.dc_conductor_config}}</div>
-              </div>
-              {% endif %}
-              <div class="data-field">
-                <div class="data-field-label">Main Protective Device</div>
-                <div class="data-field-value">{{main_protective_device.device_type}}</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">Main Switch Rating</div>
-                <div class="data-field-value">{{main_protective_device.main_switch_rating}} A</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">Breaking Capacity</div>
-                <div class="data-field-value">{{main_protective_device.breaking_capacity}} kA</div>
-              </div>
-              <!-- A4:2026 — Confirmation of supply polarity -->
-              <div class="data-field">
-                <div class="checkbox-item">
-                  <input type="checkbox" {% if supply_characteristics.supply_polarity_confirmed %}checked{% endif %} />
-                  <label>Confirmation of supply polarity</label>
-                </div>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="compound-grid">
+        <!-- Col 1: Earthing arrangements -->
+        <div class="compound-col" style="width: 16%">
+          <div class="compound-title">Earthing arrangements</div>
+          {% if supply_characteristics.earthing_arrangement == "LIM" or supply_characteristics.earthing_arrangement == "N/V" or supply_characteristics.earthing_arrangement == "N/A" %}
+            <span class="marker-badge marker-{% if supply_characteristics.earthing_arrangement == 'LIM' %}lim{% elsif supply_characteristics.earthing_arrangement == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.earthing_arrangement}}</span>
+            {% if supply_characteristics.earthing_arrangement_note != "" %}<div class="field-note">{{supply_characteristics.earthing_arrangement_note}}</div>{% endif %}
+          {% else %}
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-S" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-S</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C-S" or supply_characteristics.earthing_arrangement == "TN-C-S-PME" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C-S (PME)</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TN-C-S-PNB" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TN-C-S (PNB)</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "TT" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;TT</div>
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.earthing_arrangement == "IT" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;IT</div>
+          {% endif %}
+        </div>
+
+        <!-- Col 2: Number and Type of Live Conductors -->
+        <div class="compound-col" style="width: 26%">
+          <div class="compound-title">Number and Type of Live Conductors</div>
+          <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.supply_ac_dc == "ac" or supply_characteristics.supply_ac_dc == "" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;<strong>AC</strong></div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "1-phase-2-wire" or supply_characteristics.conductor_configuration == "2-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;1-phase, 2-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "1-phase-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;1-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "2-phase-3-wire" or supply_characteristics.conductor_configuration == "3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;2-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "3-phase-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-phase, 3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.conductor_configuration == "3-phase-4-wire" or supply_characteristics.conductor_configuration == "4-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-phase, 4-wire</div>
+          <div class="tick-row" style="display: flex; margin-top: 3px;"><span class="tick">{% if supply_characteristics.supply_ac_dc == "dc" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;<strong>DC</strong></div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-2-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;2-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-3-wire" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;3-wire</div>
+          <div class="tick-row" style="display: flex; margin-left: 14px;"><span class="tick">{% if supply_characteristics.dc_conductor_config == "dc-other" %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other</div>
+          <div style="margin-top: 4px; border-top: 1px dotted #cbd5e1; padding-top: 3px;">
+            <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.supply_polarity_confirmed == true %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Confirmation of supply polarity</div>
+          </div>
+        </div>
+
+        <!-- Col 3: Nature of Supply Parameters (stacked label/value, no horizontal overflow) -->
+        <div class="compound-col" style="width: 30%">
+          <div class="compound-title">Nature of Supply Parameters</div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Nominal voltage, U/U<sub>0</sub> (V)</div>
+            <div class="cell-value">{{supply_characteristics.supply_voltage | default: "-"}}</div>
+          </div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Nominal frequency, f (Hz)</div>
+            <div class="cell-value{% if supply_characteristics.supply_frequency == 'LIM' or supply_characteristics.supply_frequency == 'N/V' or supply_characteristics.supply_frequency == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.supply_frequency == "LIM" or supply_characteristics.supply_frequency == "N/V" or supply_characteristics.supply_frequency == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.supply_frequency == 'LIM' %}lim{% elsif supply_characteristics.supply_frequency == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.supply_frequency}}</span>{% if supply_characteristics.supply_frequency_note != "" %}<span class="field-note">{{supply_characteristics.supply_frequency_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.supply_frequency | default: "-"}}{% endif %}
+            </div>
+          </div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Prospective fault current, I<sub>pf</sub> (kA)</div>
+            <div class="cell-value{% if supply_characteristics.prospective_fault_current == 'LIM' or supply_characteristics.prospective_fault_current == 'N/V' or supply_characteristics.prospective_fault_current == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.prospective_fault_current == "LIM" or supply_characteristics.prospective_fault_current == "N/V" or supply_characteristics.prospective_fault_current == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.prospective_fault_current == 'LIM' %}lim{% elsif supply_characteristics.prospective_fault_current == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.prospective_fault_current}}</span>{% if supply_characteristics.prospective_fault_current_note != "" %}<span class="field-note">{{supply_characteristics.prospective_fault_current_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.prospective_fault_current | default: "-"}}{% endif %}
+            </div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">External earth fault loop impedance, Z<sub>e</sub> (&#937;)</div>
+            <div class="cell-value{% if supply_characteristics.external_ze == 'LIM' or supply_characteristics.external_ze == 'N/V' or supply_characteristics.external_ze == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.external_ze == "LIM" or supply_characteristics.external_ze == "N/V" or supply_characteristics.external_ze == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.external_ze == 'LIM' %}lim{% elsif supply_characteristics.external_ze == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.external_ze}}</span>{% if supply_characteristics.external_ze_note != "" %}<span class="field-note">{{supply_characteristics.external_ze_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.external_ze | default: "-"}}{% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 4: Supply Protective Device (stacked label/value) -->
+        <div class="compound-col" style="width: 28%">
+          <div class="compound-title">Supply Protective Device</div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">BS (EN)</div>
+            <div class="cell-value">{{main_protective_device.bs_en | default: "-"}}</div>
+          </div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Type</div>
+            <div class="cell-value">{{main_protective_device.device_type | default: "-"}}</div>
+          </div>
+          <div class="grid-cell" style="margin-bottom: 4px;">
+            <div class="cell-label">Rated current (A)</div>
+            <div class="cell-value">{{main_protective_device.main_switch_rating | default: "-"}}</div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Breaking capacity (kA)</div>
+            <div class="cell-value">{{main_protective_device.breaking_capacity | default: "-"}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other sources of supply + DNO / MPAN / Cutout + PME / Electrode / Service Entry (grid-aligned) -->
+      <div style="margin-top: 5px; padding: 6px 8px; border: 1px solid #e2e8f0; background: #fafbfc;">
+        {% if supply_characteristics.other_sources_of_supply_present == "N/A" %}
+          <div class="tick-row"><span class="marker-badge marker-na">N/A</span>&nbsp;Other sources of supply</div>
+          {% if supply_characteristics.other_sources_of_supply_note != "" %}<div class="field-note">{{supply_characteristics.other_sources_of_supply_note}}</div>{% endif %}
+        {% else %}
+          <div class="tick-row" style="display: flex;"><span class="tick">{% if supply_characteristics.other_sources_of_supply_present == true %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;Other sources of supply (as detailed on attached continuation sheet)</div>
+          {% if supply_characteristics.other_sources_of_supply_present == true and supply_characteristics.other_sources_of_supply != "" %}<div class="field-note">{{supply_characteristics.other_sources_of_supply}}</div>{% endif %}
+        {% endif %}
+        <div class="grid-row cols-3" style="margin-top: 4px;">
+          <div class="grid-cell">
+            <div class="cell-label">DNO</div>
+            <div class="cell-value{% if supply_characteristics.dno_name == 'LIM' or supply_characteristics.dno_name == 'N/V' or supply_characteristics.dno_name == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.dno_name == "LIM" or supply_characteristics.dno_name == "N/V" or supply_characteristics.dno_name == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.dno_name == 'LIM' %}lim{% elsif supply_characteristics.dno_name == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.dno_name}}</span>{% if supply_characteristics.dno_name_note != "" %}<span class="field-note">{{supply_characteristics.dno_name_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.dno_name}}{% endif %}
+            </div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">MPAN</div>
+            <div class="cell-value{% if supply_characteristics.mpan == 'LIM' or supply_characteristics.mpan == 'N/V' or supply_characteristics.mpan == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.mpan == "LIM" or supply_characteristics.mpan == "N/V" or supply_characteristics.mpan == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.mpan == 'LIM' %}lim{% elsif supply_characteristics.mpan == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.mpan}}</span>{% if supply_characteristics.mpan_note != "" %}<span class="field-note">{{supply_characteristics.mpan_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.mpan}}{% endif %}
+            </div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Cutout Location</div>
+            <div class="cell-value{% if supply_characteristics.cutout_location == 'LIM' or supply_characteristics.cutout_location == 'N/V' or supply_characteristics.cutout_location == 'N/A' %} is-marker{% endif %}">
+              {% if supply_characteristics.cutout_location == "LIM" or supply_characteristics.cutout_location == "N/V" or supply_characteristics.cutout_location == "N/A" %}
+                <span class="marker-badge marker-{% if supply_characteristics.cutout_location == 'LIM' %}lim{% elsif supply_characteristics.cutout_location == 'N/V' %}nv{% else %}na{% endif %}">{{supply_characteristics.cutout_location}}</span>{% if supply_characteristics.cutout_location_note != "" %}<span class="field-note">{{supply_characteristics.cutout_location_note}}</span>{% endif %}
+              {% else %}{{supply_characteristics.cutout_location}}{% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="grid-row cols-3">
+          <div class="grid-cell">
+            <div class="cell-label">Supply PME</div>
+            <div class="cell-value">{{supply_characteristics.supply_pme}}</div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Earth Electrode Type</div>
+            <div class="cell-value{% if earthing_bonding.earth_electrode_type == 'LIM' or earthing_bonding.earth_electrode_type == 'N/V' or earthing_bonding.earth_electrode_type == 'N/A' %} is-marker{% endif %}">
+              {% if earthing_bonding.earth_electrode_type == "LIM" or earthing_bonding.earth_electrode_type == "N/V" or earthing_bonding.earth_electrode_type == "N/A" %}
+                <span class="marker-badge marker-{% if earthing_bonding.earth_electrode_type == 'LIM' %}lim{% elsif earthing_bonding.earth_electrode_type == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.earth_electrode_type}}</span>{% if earthing_bonding.earth_electrode_type_note != "" %}<span class="field-note">{{earthing_bonding.earth_electrode_type_note}}</span>{% endif %}
+              {% else %}{{earthing_bonding.earth_electrode_type}}{% endif %}
+            </div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Service Entry</div>
+            <div class="cell-value">{{supply_characteristics.service_entry}}</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- SECTION G: BONDING + A4:2026 Maximum Demand -->
@@ -1496,41 +1738,129 @@
       <div class="section-title">Section G: Particulars of Installation</div>
       <!-- A4:2026 — Means of Earthing + Maximum Demand -->
       <div class="inline-form" style="background: #fffbeb; padding: 6px 8px; border-left: 3px solid #fbbf24;">
-        <div class="inline-group">
-          <div class="checkbox-item">
-            <input type="checkbox" {% if earthing_bonding.means_of_earthing_distributor %}checked{% endif %} />
-            <label>Distributor's facility</label>
+        {% if earthing_bonding.means_of_earthing_distributor == "LIM" or earthing_bonding.means_of_earthing_distributor == "N/V" or earthing_bonding.means_of_earthing_distributor == "N/A" %}
+          <div class="inline-group">
+            <span class="inline-label">Means of Earthing:</span>
+            <span class="marker-badge marker-{% if earthing_bonding.means_of_earthing_distributor == 'LIM' %}lim{% elsif earthing_bonding.means_of_earthing_distributor == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.means_of_earthing_distributor}}</span>
+            {% if earthing_bonding.means_of_earthing_note and earthing_bonding.means_of_earthing_note != "" %}<span class="field-note">{{earthing_bonding.means_of_earthing_note}}</span>{% endif %}
           </div>
-        </div>
-        <div class="inline-group">
-          <div class="checkbox-item">
-            <input type="checkbox" {% if earthing_bonding.means_of_earthing_electrode %}checked{% endif %} />
-            <label>Installation earth electrode</label>
+        {% else %}
+          <div class="inline-group">
+            <div class="checkbox-item">
+              <input type="checkbox" {% if earthing_bonding.means_of_earthing_distributor == true %}checked{% endif %} />
+              <label>Distributor's facility</label>
+            </div>
           </div>
-        </div>
+          <div class="inline-group">
+            <div class="checkbox-item">
+              <input type="checkbox" {% if earthing_bonding.means_of_earthing_electrode == true %}checked{% endif %} />
+              <label>Installation earth electrode</label>
+            </div>
+          </div>
+        {% endif %}
         <div class="inline-group">
           <span class="inline-label">Maximum Demand (load):</span>
           <span class="inline-value">{{maximum_demand | default: "-"}} {{maximum_demand_unit | default: "A"}}</span>
         </div>
       </div>
-      <div class="inline-form" style="margin-top: 4px">
-        <div class="inline-group">
-          <span class="inline-label">Main Bonding Size (mm&#178;):</span>
-          <span class="inline-value">{{earthing_bonding.main_bonding_size}}</span>
+      {% if earthing_bonding.earth_electrode_location != "" or earthing_bonding.earth_electrode_resistance != "" %}
+      <!-- Installation Earth Electrode details (BS 7671 Section J) -->
+      <div class="grid-row cols-3" style="margin-top: 4px">
+        <div class="grid-cell">
+          <div class="cell-label">Earth Electrode Type</div>
+          <div class="cell-value{% if earthing_bonding.earth_electrode_type == 'LIM' or earthing_bonding.earth_electrode_type == 'N/V' or earthing_bonding.earth_electrode_type == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.earth_electrode_type == "LIM" or earthing_bonding.earth_electrode_type == "N/V" or earthing_bonding.earth_electrode_type == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.earth_electrode_type == 'LIM' %}lim{% elsif earthing_bonding.earth_electrode_type == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.earth_electrode_type}}</span>
+            {% else %}{{earthing_bonding.earth_electrode_type}}{% endif %}
+          </div>
         </div>
-        <div class="inline-group">
-          <span class="inline-label">Compliance:</span>
-          <span class="inline-value">{{earthing_bonding.bonding_compliance}}</span>
+        <div class="grid-cell">
+          <div class="cell-label">Earth Electrode Location</div>
+          <div class="cell-value">{{earthing_bonding.earth_electrode_location}}</div>
         </div>
-        <div class="inline-group">
-          <span class="inline-label">Supplementary Bonding (mm&#178;):</span>
-          <span class="inline-value">{{earthing_bonding.supplementary_bonding_size}}</span>
+        <div class="grid-cell">
+          <div class="cell-label">Electrode Resistance R<sub>A</sub>/Z<sub>s</sub> (&#937;)</div>
+          <div class="cell-value">{{earthing_bonding.earth_electrode_resistance}}</div>
         </div>
       </div>
-      <div class="inline-form" style="margin-top: 4px">
-        <div class="inline-group" style="flex: 1">
-          <span class="inline-label">Main Bonding Locations:</span>
-          <span class="inline-value wide">{{earthing_bonding.main_bonding_locations}}</span>
+      {% endif %}
+      <!-- Section G bonding — grid-aligned rows -->
+      <div class="grid-row cols-3" style="margin-top: 4px">
+        <div class="grid-cell">
+          <div class="cell-label">Main Bonding Size (mm&#178;)</div>
+          <div class="cell-value{% if earthing_bonding.main_bonding_size == 'LIM' or earthing_bonding.main_bonding_size == 'N/V' or earthing_bonding.main_bonding_size == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.main_bonding_size == "LIM" or earthing_bonding.main_bonding_size == "N/V" or earthing_bonding.main_bonding_size == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.main_bonding_size == 'LIM' %}lim{% elsif earthing_bonding.main_bonding_size == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.main_bonding_size}}</span>{% if earthing_bonding.main_bonding_size_note != "" %}<span class="field-note">{{earthing_bonding.main_bonding_size_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.main_bonding_size}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Compliance</div>
+          <div class="cell-value{% if earthing_bonding.bonding_compliance == 'N/V' %} is-marker{% endif %}">
+            {% if earthing_bonding.bonding_compliance == "N/V" %}
+              <span class="marker-badge marker-nv">N/V</span>{% if earthing_bonding.bonding_compliance_note != "" %}<span class="field-note">{{earthing_bonding.bonding_compliance_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.bonding_compliance}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Supplementary Bonding (mm&#178;)</div>
+          <div class="cell-value{% if earthing_bonding.supplementary_bonding_size == 'LIM' or earthing_bonding.supplementary_bonding_size == 'N/V' or earthing_bonding.supplementary_bonding_size == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.supplementary_bonding_size == "LIM" or earthing_bonding.supplementary_bonding_size == "N/V" or earthing_bonding.supplementary_bonding_size == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.supplementary_bonding_size == 'LIM' %}lim{% elsif earthing_bonding.supplementary_bonding_size == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.supplementary_bonding_size}}</span>{% if earthing_bonding.supplementary_bonding_size_note != "" %}<span class="field-note">{{earthing_bonding.supplementary_bonding_size_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.supplementary_bonding_size}}{% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="grid-row" style="grid-template-columns: 1fr;">
+        <div class="grid-cell">
+          <div class="cell-label">Main Bonding Locations</div>
+          <div class="cell-value">{{earthing_bonding.main_bonding_locations}}</div>
+        </div>
+      </div>
+      {% if earthing_bonding.equipotential_bonding and earthing_bonding.equipotential_bonding != "" %}
+      <div class="grid-row" style="grid-template-columns: 1fr;">
+        <div class="grid-cell">
+          <div class="cell-label">Equipotential Bonding</div>
+          <div class="cell-value">{{earthing_bonding.equipotential_bonding}}</div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Main Switch / Consumer's Switch (BS 7671 Section J) -->
+      {% if main_protective_device.main_switch_location != "" or main_protective_device.main_switch_poles != "" or main_protective_device.main_switch_voltage_rating != "" or main_protective_device.fuse_device_rating != "" %}
+      <div class="avoid-break">
+        <div class="section-subtitle">Main Switch / Consumer's Switch</div>
+        <div class="grid-row cols-3">
+          <div class="grid-cell"><div class="cell-label">Location</div><div class="cell-value">{{main_protective_device.main_switch_location}}</div></div>
+          <div class="grid-cell"><div class="cell-label">No of poles</div><div class="cell-value">{{main_protective_device.main_switch_poles}}</div></div>
+          <div class="grid-cell"><div class="cell-label">Voltage rating (V)</div><div class="cell-value">{{main_protective_device.main_switch_voltage_rating}}</div></div>
+        </div>
+        {% if main_protective_device.fuse_device_rating != "" %}
+        <div class="grid-row cols-3">
+          <div class="grid-cell"><div class="cell-label">Fuse / device rating</div><div class="cell-value">{{main_protective_device.fuse_device_rating}}</div></div>
+          <div class="grid-cell"><div class="cell-label"></div><div class="cell-value" style="border-bottom: 0;"></div></div>
+          <div class="grid-cell"><div class="cell-label"></div><div class="cell-value" style="border-bottom: 0;"></div></div>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+      <!-- ELE-849 — Continuity verification row (Yes/No/N/V) — grid-aligned -->
+      <div class="grid-row cols-2">
+        <div class="grid-cell">
+          <div class="cell-label">Earthing Conductor Continuity Verified</div>
+          <div class="cell-value{% if earthing_bonding.earthing_conductor_continuity_verified == 'N/V' or earthing_bonding.earthing_conductor_continuity_verified == 'LIM' or earthing_bonding.earthing_conductor_continuity_verified == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.earthing_conductor_continuity_verified == "N/V" or earthing_bonding.earthing_conductor_continuity_verified == "LIM" or earthing_bonding.earthing_conductor_continuity_verified == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.earthing_conductor_continuity_verified == 'LIM' %}lim{% elsif earthing_bonding.earthing_conductor_continuity_verified == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.earthing_conductor_continuity_verified}}</span>{% if earthing_bonding.earthing_conductor_continuity_verified_note != "" %}<span class="field-note">{{earthing_bonding.earthing_conductor_continuity_verified_note}}</span>{% endif %}
+            {% elsif earthing_bonding.earthing_conductor_continuity_verified == true %}Yes{% else %}No{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Bonding Conductor Continuity Verified</div>
+          <div class="cell-value{% if earthing_bonding.bonding_conductor_continuity_verified == 'N/V' or earthing_bonding.bonding_conductor_continuity_verified == 'LIM' or earthing_bonding.bonding_conductor_continuity_verified == 'N/A' %} is-marker{% endif %}">
+            {% if earthing_bonding.bonding_conductor_continuity_verified == "N/V" or earthing_bonding.bonding_conductor_continuity_verified == "LIM" or earthing_bonding.bonding_conductor_continuity_verified == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.bonding_conductor_continuity_verified == 'LIM' %}lim{% elsif earthing_bonding.bonding_conductor_continuity_verified == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.bonding_conductor_continuity_verified}}</span>{% if earthing_bonding.bonding_conductor_continuity_verified_note != "" %}<span class="field-note">{{earthing_bonding.bonding_conductor_continuity_verified_note}}</span>{% endif %}
+            {% elsif earthing_bonding.bonding_conductor_continuity_verified == true %}Yes{% else %}No{% endif %}
+          </div>
         </div>
       </div>
     </div>
@@ -1548,122 +1878,91 @@
           <span class="board-card-badge">DB1</span>
         </div>
         <div class="board-card-body">
-          <div class="inline-form" style="border: none; padding: 0; background: transparent">
-            <div class="inline-group">
-              <span class="inline-label">Location:</span>
-              <span class="inline-value">{{distribution_board.board_location}}</span>
+          {% assign main_board_schedule = boards_with_schedules | first %}
+          <!-- Row 1: Location / Manufacturer / Type / Ways / Supplied from (5-col uniform grid) -->
+          <div class="grid-row cols-5">
+            <div class="grid-cell">
+              <div class="cell-label">Location</div>
+              <div class="cell-value">{{distribution_board.board_location}}</div>
             </div>
-            <div class="inline-group">
-              <span class="inline-label">Manufacturer:</span>
-              <span class="inline-value">{{distribution_board.board_manufacturer}}</span>
+            <div class="grid-cell">
+              <div class="cell-label">Manufacturer</div>
+              <div class="cell-value">{{distribution_board.board_manufacturer}}</div>
             </div>
-            <div class="inline-group">
-              <span class="inline-label">Type:</span>
-              <span class="inline-value">{{distribution_board.board_type}}</span>
+            <div class="grid-cell">
+              <div class="cell-label">Type</div>
+              <div class="cell-value">{{distribution_board.board_type}}</div>
             </div>
-            <div class="inline-group">
-              <span class="inline-label">Ways:</span>
-              <span class="inline-value">{{distribution_board.board_ways}}</span>
+            <div class="grid-cell">
+              <div class="cell-label">Ways</div>
+              <div class="cell-value">{{distribution_board.board_ways}}</div>
             </div>
-            <!-- A4:2026 — Supplied from -->
-            {% assign main_board_schedule = boards_with_schedules | first %}
-            <div class="inline-group">
-              <span class="inline-label">Supplied from:</span>
-              <span class="inline-value">{{main_board_schedule.supplied_from | default: "DNO"}}</span>
-            </div>
-          </div>
-          <!-- Row 2: Zdb / Ipf / Polarity / Phase Sequence / Ring Final -->
-          <div
-            class="inline-form"
-            style="border: none; padding: 0; background: transparent; margin-top: 4px"
-          >
-            <div class="inline-group">
-              <span class="inline-label">Zdb (&#937;):</span>
-              <span class="inline-value">{{distribution_board_verification.zdb}}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Ipf (kA):</span>
-              <span class="inline-value">{{distribution_board_verification.ipf}}</span>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.confirmed_correct_polarity %}checked{% endif %} />
-                <label>Polarity Confirmed</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.confirmed_phase_sequence or main_board_schedule.phase_sequence_confirmed %}checked{% endif %} />
-                <label>Phase Sequence</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.ring_final_circuit_confirmed or main_board_schedule.ring_final_circuit_confirmed %}checked{% endif %} />
-                <label>Ring Final Circuit</label>
-              </div>
+            <div class="grid-cell">
+              <div class="cell-label">Supplied from</div>
+              <div class="cell-value">{{main_board_schedule.supplied_from | default: "DNO"}}</div>
             </div>
           </div>
-          <!-- Row 3: SPD checkboxes -->
-          <div
-            class="inline-form"
-            style="border: none; padding: 0; background: transparent; margin-top: 4px"
-          >
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.spd_operational_status %}checked{% endif %} />
-                <label>SPD Operational</label>
-              </div>
+          <!-- Row 2: Zdb / Ipf / Polarity / Phase Seq / Ring Final -->
+          <div class="grid-row cols-5">
+            <div class="grid-cell">
+              <div class="cell-label">Zdb (&#937;)</div>
+              <div class="cell-value">{{distribution_board_verification.zdb}}</div>
             </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if distribution_board_verification.spd_na %}checked{% endif %} />
-                <label>N/A</label>
-              </div>
+            <div class="grid-cell">
+              <div class="cell-label">Ipf (kA)</div>
+              <div class="cell-value">{{distribution_board_verification.ipf}}</div>
             </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if main_board_schedule.spd_t1 %}checked{% endif %} />
-                <label>T1</label>
-              </div>
+            <div class="grid-cell">
+              <div class="cell-label">Polarity</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.confirmed_correct_polarity %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
             </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if main_board_schedule.spd_t2 %}checked{% endif %} />
-                <label>T2</label>
-              </div>
+            <div class="grid-cell">
+              <div class="cell-label">Phase Seq</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.confirmed_phase_sequence or main_board_schedule.phase_sequence_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
             </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if main_board_schedule.spd_t3 %}checked{% endif %} />
-                <label>T3</label>
-              </div>
+            <div class="grid-cell">
+              <div class="cell-label">Ring Final</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.ring_final_circuit_confirmed or main_board_schedule.ring_final_circuit_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div>
             </div>
           </div>
-          <!-- Row 4: SPD details (only if any value present) -->
+          <!-- Row 3: SPD Operational / N/A / T1 / T2 / T3 -->
+          <div class="grid-row cols-5">
+            <div class="grid-cell">
+              <div class="cell-label">SPD</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.spd_operational_status %}&#9745;{% else %}&#9744;{% endif %}</span>Operational</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">SPD N/A</div>
+              <div class="cell-check"><span class="tick">{% if distribution_board_verification.spd_na %}&#9745;{% else %}&#9744;{% endif %}</span>Not installed</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Type 1</div>
+              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t1 %}&#9745;{% else %}&#9744;{% endif %}</span>T1</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Type 2</div>
+              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t2 %}&#9745;{% else %}&#9744;{% endif %}</span>T2</div>
+            </div>
+            <div class="grid-cell">
+              <div class="cell-label">Type 3</div>
+              <div class="cell-check"><span class="tick">{% if main_board_schedule.spd_t3 %}&#9745;{% else %}&#9744;{% endif %}</span>T3</div>
+            </div>
+          </div>
+          <!-- Row 4: SPD details (only when SPD present) -->
           {% if main_board_schedule.spd_make != "" or main_board_schedule.spd_model != "" or main_board_schedule.spd_location != "" or main_board_schedule.spd_rated_current_ka != "" %}
-          <div
-            class="inline-form"
-            style="border: none; padding: 0; background: transparent; margin-top: 4px"
-          >
-            {% if main_board_schedule.spd_make != "" or main_board_schedule.spd_model != "" %}
-            <div class="inline-group">
-              <span class="inline-label">SPD Make/Model:</span>
-              <span class="inline-value">{{main_board_schedule.spd_make}} {{main_board_schedule.spd_model}}</span>
+          <div class="grid-row cols-3">
+            <div class="grid-cell">
+              <div class="cell-label">SPD Make / Model</div>
+              <div class="cell-value">{{main_board_schedule.spd_make}} {{main_board_schedule.spd_model}}</div>
             </div>
-            {% endif %}
-            {% if main_board_schedule.spd_location != "" %}
-            <div class="inline-group">
-              <span class="inline-label">SPD Location:</span>
-              <span class="inline-value">{{main_board_schedule.spd_location}}</span>
+            <div class="grid-cell">
+              <div class="cell-label">SPD Location</div>
+              <div class="cell-value">{{main_board_schedule.spd_location}}</div>
             </div>
-            {% endif %}
-            {% if main_board_schedule.spd_rated_current_ka != "" %}
-            <div class="inline-group">
-              <span class="inline-label">SPD Rated Current (kA):</span>
-              <span class="inline-value">{{main_board_schedule.spd_rated_current_ka}}</span>
+            <div class="grid-cell">
+              <div class="cell-label">SPD Rated Current (kA)</div>
+              <div class="cell-value">{{main_board_schedule.spd_rated_current_ka}}</div>
             </div>
-            {% endif %}
           </div>
           {% endif %}
         </div>
@@ -1677,213 +1976,192 @@
           <span class="board-card-badge">DB{{forloop.index | plus: 1}}</span>
         </div>
         <div class="board-card-body">
-          <div class="inline-form" style="border: none; padding: 0; background: transparent">
-            <div class="inline-group">
-              <span class="inline-label">Location:</span>
-              <span class="inline-value">{{board.location}}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Manufacturer:</span>
-              <span class="inline-value">{{board.manufacturer}}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Type:</span>
-              <span class="inline-value">{{board.board_type}}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Ways:</span>
-              <span class="inline-value">{{board.ways}}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Supplied from:</span>
-              <span class="inline-value">{{board.supplied_from | default: "Main DB"}}</span>
-            </div>
+          <div class="grid-row cols-5">
+            <div class="grid-cell"><div class="cell-label">Location</div><div class="cell-value">{{board.location}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Manufacturer</div><div class="cell-value">{{board.manufacturer}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Type</div><div class="cell-value">{{board.board_type}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Ways</div><div class="cell-value">{{board.ways}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Supplied from</div><div class="cell-value">{{board.supplied_from | default: "Main DB"}}</div></div>
           </div>
-          <div
-            class="inline-form"
-            style="border: none; padding: 0; background: transparent; margin-top: 4px"
-          >
-            <div class="inline-group">
-              <span class="inline-label">Zdb (&#937;):</span>
-              <span class="inline-value">{{board.zdb}}</span>
-            </div>
-            <div class="inline-group">
-              <span class="inline-label">Ipf (kA):</span>
-              <span class="inline-value">{{board.ipf}}</span>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if board.polarity_confirmed %}checked{% endif %} />
-                <label>Polarity Confirmed</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if board.phase_sequence_confirmed %}checked{% endif %} />
-                <label>Phase Sequence</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if board.ring_final_circuit_confirmed %}checked{% endif %} />
-                <label>Ring Final Circuit</label>
-              </div>
-            </div>
+          <div class="grid-row cols-5">
+            <div class="grid-cell"><div class="cell-label">Zdb (&#937;)</div><div class="cell-value">{{board.zdb}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Ipf (kA)</div><div class="cell-value">{{board.ipf}}</div></div>
+            <div class="grid-cell"><div class="cell-label">Polarity</div><div class="cell-check"><span class="tick">{% if board.polarity_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
+            <div class="grid-cell"><div class="cell-label">Phase Seq</div><div class="cell-check"><span class="tick">{% if board.phase_sequence_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
+            <div class="grid-cell"><div class="cell-label">Ring Final</div><div class="cell-check"><span class="tick">{% if board.ring_final_circuit_confirmed %}&#9745;{% else %}&#9744;{% endif %}</span>Confirmed</div></div>
           </div>
-          <!-- SPD checkboxes row -->
-          <div class="inline-form" style="border: none; padding: 0; background: transparent; margin-top: 4px">
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if board.spd_operational %}checked{% endif %} />
-                <label>SPD Operational</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if board.spd_na %}checked{% endif %} />
-                <label>N/A</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if board.spd_t1 %}checked{% endif %} />
-                <label>T1</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if board.spd_t2 %}checked{% endif %} />
-                <label>T2</label>
-              </div>
-            </div>
-            <div class="inline-group">
-              <div class="checkbox-item">
-                <input type="checkbox" {% if board.spd_t3 %}checked{% endif %} />
-                <label>T3</label>
-              </div>
-            </div>
+          <div class="grid-row cols-5">
+            <div class="grid-cell"><div class="cell-label">SPD</div><div class="cell-check"><span class="tick">{% if board.spd_operational %}&#9745;{% else %}&#9744;{% endif %}</span>Operational</div></div>
+            <div class="grid-cell"><div class="cell-label">SPD N/A</div><div class="cell-check"><span class="tick">{% if board.spd_na %}&#9745;{% else %}&#9744;{% endif %}</span>Not installed</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 1</div><div class="cell-check"><span class="tick">{% if board.spd_t1 %}&#9745;{% else %}&#9744;{% endif %}</span>T1</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 2</div><div class="cell-check"><span class="tick">{% if board.spd_t2 %}&#9745;{% else %}&#9744;{% endif %}</span>T2</div></div>
+            <div class="grid-cell"><div class="cell-label">Type 3</div><div class="cell-check"><span class="tick">{% if board.spd_t3 %}&#9745;{% else %}&#9744;{% endif %}</span>T3</div></div>
           </div>
-          <!-- SPD details row (only if any value present) -->
           {% if board.spd_make != "" or board.spd_model != "" or board.spd_location != "" or board.spd_rated_current_ka != "" %}
-          <div class="inline-form" style="border: none; padding: 0; background: transparent; margin-top: 4px">
-            {% if board.spd_make != "" or board.spd_model != "" %}
-            <div class="inline-group">
-              <span class="inline-label">SPD Make/Model:</span>
-              <span class="inline-value">{{board.spd_make}} {{board.spd_model}}</span>
-            </div>
-            {% endif %}
-            {% if board.spd_location != "" %}
-            <div class="inline-group">
-              <span class="inline-label">SPD Location:</span>
-              <span class="inline-value">{{board.spd_location}}</span>
-            </div>
-            {% endif %}
-            {% if board.spd_rated_current_ka != "" %}
-            <div class="inline-group">
-              <span class="inline-label">SPD Rated Current (kA):</span>
-              <span class="inline-value">{{board.spd_rated_current_ka}}</span>
-            </div>
-            {% endif %}
+          <div class="grid-row cols-3">
+            <div class="grid-cell"><div class="cell-label">SPD Make / Model</div><div class="cell-value">{{board.spd_make}} {{board.spd_model}}</div></div>
+            <div class="grid-cell"><div class="cell-label">SPD Location</div><div class="cell-value">{{board.spd_location}}</div></div>
+            <div class="grid-cell"><div class="cell-label">SPD Rated (kA)</div><div class="cell-value">{{board.spd_rated_current_ka}}</div></div>
           </div>
           {% endif %}
         </div>
       </div>
       {% endfor %}
 
-      <!-- RCD Details (A4:2026 — full main switch block) -->
-      <div class="section-subtitle">RCD Main Switch (where applicable)</div>
-      <div class="inline-form">
-        <div class="inline-group">
-          <span class="inline-label">RCD Main Switch:</span>
-          <span class="inline-value">{{ rcd_details.rcd_main_switch }}</span>
+      <!-- RCD Details (kept together across page breaks) -->
+      <div class="avoid-break">
+        <div class="section-subtitle">RCD Main Switch (where applicable)</div>
+        <div class="grid-row cols-3">
+          <div class="grid-cell"><div class="cell-label">RCD Main Switch</div><div class="cell-value">{{ rcd_details.rcd_main_switch }}</div></div>
+          <div class="grid-cell"><div class="cell-label">Type (AC/A/F/B)</div><div class="cell-value">{{ rcd_details.rcd_type }}</div></div>
+          <div class="grid-cell"><div class="cell-label">I&#916;n (mA)</div><div class="cell-value">{{ rcd_details.rcd_rating }}</div></div>
         </div>
-        <div class="inline-group">
-          <span class="inline-label">Type (AC/A/F/B):</span>
-          <span class="inline-value">{{ rcd_details.rcd_type }}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">I&#916;n (mA):</span>
-          <span class="inline-value">{{ rcd_details.rcd_rating }}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">Time Delay (ms):</span>
-          <span class="inline-value">{{ rcd_details.rcd_time_delay }}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">Measured Operating Time (ms):</span>
-          <span class="inline-value">{{ rcd_details.rcd_measured_time }}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">Breaking Capacity (kA):</span>
-          <span class="inline-value">{{ rcd_details.rcd_breaking_capacity }}</span>
+        <div class="grid-row cols-3">
+          <div class="grid-cell"><div class="cell-label">Time Delay (ms)</div><div class="cell-value">{{ rcd_details.rcd_time_delay }}</div></div>
+          <div class="grid-cell"><div class="cell-label">Measured Operating Time (ms)</div><div class="cell-value">{{ rcd_details.rcd_measured_time }}</div></div>
+          <div class="grid-cell"><div class="cell-label">Breaking Capacity (kA)</div><div class="cell-value">{{ rcd_details.rcd_breaking_capacity }}</div></div>
         </div>
       </div>
 
-      <!-- Cables -->
-      <div class="section-subtitle">Meter &amp; Cable Details</div>
-      <div class="inline-form">
-        {% if cables.intake_cable_type and cables.intake_cable_type != "" %}
-        <div class="inline-group">
-          <span class="inline-label">Intake Cable Type:</span>
-          <span class="inline-value">{{cables.intake_cable_type}}</span>
-        </div>
-        {% endif %}
-        {% if cables.intake_cable_size and cables.intake_cable_size != "" %}
-        <div class="inline-group">
-          <span class="inline-label">Intake Cable Size (mm&#178;):</span>
-          <span class="inline-value">{{cables.intake_cable_size}}</span>
-        </div>
-        {% endif %}
-        <div class="inline-group">
-          <span class="inline-label">Meter Tails Size (mm&#178;):</span>
-          <span class="inline-value">{{cables.tails_size}}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">Tails Length (m):</span>
-          <span class="inline-value">{{cables.tails_length}}</span>
-        </div>
-        <div class="inline-group">
-          <span class="inline-label">Main Earth Conductor:</span>
-          <span class="inline-value">{{earthing_bonding.main_earthing_conductor}}</span>
-        </div>
-        {% if supply_characteristics.service_entry and supply_characteristics.service_entry != "" %}
-        <div class="inline-group">
-          <span class="inline-label">Service Entry:</span>
-          <span class="inline-value">{{supply_characteristics.service_entry}}</span>
-        </div>
-        {% endif %}
-      </div>
-    </div>
-
-    <!-- SECTION K: OBSERVATIONS SUMMARY -->
-    {% if observations.size > 0 %}
-    <div class="section">
-      <div class="section-title">Section K: Observations</div>
-      <div class="observations-summary">
-        <div class="observations-row" style="background: #f1f5f9; font-weight: 600">
-          <div class="observations-text">Observation Description</div>
-          <div class="observations-code">Code</div>
-        </div>
-        {% for observation in observations %}
-        <div class="observations-row">
-          <div class="observations-text">{{observation.description}}</div>
-          <div
-            class="observations-code {% if observation.defect_code == 'C1' %}code-c1{% elsif observation.defect_code == 'C2' %}code-c2{% elsif observation.defect_code == 'C3' %}code-c3{% else %}code-fi{% endif %}"
-          >
-            {{observation.defect_code}}
+      <!-- Cables (aligned 4-col / 3-col grids, kept together across page breaks) -->
+      <div class="avoid-break">
+        <div class="section-subtitle">Meter &amp; Cable Details</div>
+        <div class="grid-row cols-4">
+        <div class="grid-cell">
+          <div class="cell-label">Intake Cable Type</div>
+          <div class="cell-value">
+            {% if cables.intake_cable_type == "LIM" or cables.intake_cable_type == "N/V" or cables.intake_cable_type == "N/A" %}
+              <span class="marker-badge marker-{% if cables.intake_cable_type == 'LIM' %}lim{% elsif cables.intake_cable_type == 'N/V' %}nv{% else %}na{% endif %}">{{cables.intake_cable_type}}</span>{% if cables.intake_cable_type_note != "" %}<span class="field-note">{{cables.intake_cable_type_note}}</span>{% endif %}
+            {% else %}{{cables.intake_cable_type}}{% endif %}
           </div>
         </div>
-        {% endfor %}
+        <div class="grid-cell">
+          <div class="cell-label">Intake Size (mm&#178;)</div>
+          <div class="cell-value">
+            {% if cables.intake_cable_size == "LIM" or cables.intake_cable_size == "N/V" or cables.intake_cable_size == "N/A" %}
+              <span class="marker-badge marker-{% if cables.intake_cable_size == 'LIM' %}lim{% elsif cables.intake_cable_size == 'N/V' %}nv{% else %}na{% endif %}">{{cables.intake_cable_size}}</span>{% if cables.intake_cable_size_note != "" %}<span class="field-note">{{cables.intake_cable_size_note}}</span>{% endif %}
+            {% else %}{{cables.intake_cable_size}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Tails Size (mm&#178;)</div>
+          <div class="cell-value">
+            {% if cables.tails_size == "LIM" or cables.tails_size == "N/V" or cables.tails_size == "N/A" %}
+              <span class="marker-badge marker-{% if cables.tails_size == 'LIM' %}lim{% elsif cables.tails_size == 'N/V' %}nv{% else %}na{% endif %}">{{cables.tails_size}}</span>{% if cables.tails_size_note != "" %}<span class="field-note">{{cables.tails_size_note}}</span>{% endif %}
+            {% else %}{{cables.tails_size}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Tails Length (m)</div>
+          <div class="cell-value">{{cables.tails_length}}</div>
+        </div>
       </div>
-      <div class="codes-legend">
-        <strong>Classification Codes:</strong><br />
-        <strong>C1</strong> - Danger present. Risk of injury. Immediate remedial action required.<br />
-        <strong>C2</strong> - Potentially dangerous. Urgent remedial action required.<br />
-        <strong>C3</strong> - Improvement recommended.<br />
-        <strong>FI</strong> - Further investigation required without delay.
+      <div class="grid-row cols-3">
+        <div class="grid-cell">
+          <div class="cell-label">Main Earth Conductor</div>
+          <div class="cell-value">
+            {% if earthing_bonding.main_earthing_conductor == "LIM" or earthing_bonding.main_earthing_conductor == "N/V" or earthing_bonding.main_earthing_conductor == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.main_earthing_conductor == 'LIM' %}lim{% elsif earthing_bonding.main_earthing_conductor == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.main_earthing_conductor}}</span>{% if earthing_bonding.main_earthing_conductor_size_note != "" %}<span class="field-note">{{earthing_bonding.main_earthing_conductor_size_note}}</span>{% elsif earthing_bonding.main_earthing_conductor_type_note != "" %}<span class="field-note">{{earthing_bonding.main_earthing_conductor_type_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.main_earthing_conductor}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Main Bonding Conductor</div>
+          <div class="cell-value">
+            {% if earthing_bonding.main_bonding_conductor == "LIM" or earthing_bonding.main_bonding_conductor == "N/V" or earthing_bonding.main_bonding_conductor == "N/A" %}
+              <span class="marker-badge marker-{% if earthing_bonding.main_bonding_conductor == 'LIM' %}lim{% elsif earthing_bonding.main_bonding_conductor == 'N/V' %}nv{% else %}na{% endif %}">{{earthing_bonding.main_bonding_conductor}}</span>{% if earthing_bonding.main_bonding_size_note != "" %}<span class="field-note">{{earthing_bonding.main_bonding_size_note}}</span>{% elsif earthing_bonding.main_bonding_conductor_type_note != "" %}<span class="field-note">{{earthing_bonding.main_bonding_conductor_type_note}}</span>{% endif %}
+            {% else %}{{earthing_bonding.main_bonding_conductor}}{% endif %}
+          </div>
+        </div>
+        <div class="grid-cell">
+          <div class="cell-label">Service Entry</div>
+          <div class="cell-value">{{supply_characteristics.service_entry}}</div>
+        </div>
+      </div>
       </div>
     </div>
-    {% endif %}
+
+    <!-- SECTION K: OBSERVATIONS (BS 7671 A4:2026 — C1/C2 and C3/FI split into separate tables) -->
+    <div class="section">
+      <div class="section-title">Section K: Observations</div>
+      {% assign no_obs = true %}
+      {% for observation in observations %}{% assign no_obs = false %}{% endfor %}
+      <div style="font-size: 8.5px; margin-bottom: 4px;">
+        Referring to the attached Schedule(s) of Inspection and Schedule(s) of Circuit Details and Test Results, and subject to the limitations specified at the Extent and limitations of inspection and testing section:
+      </div>
+      <div class="tick-row" style="display: flex; margin-bottom: 4px;">
+        <span class="tick">{% if no_obs %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;No remedial action is required&nbsp;&nbsp;
+        <span class="tick">{% if no_obs == false %}&#9745;{% else %}&#9744;{% endif %}</span>&nbsp;The following observations are made (see below)
+      </div>
+
+      <!-- Table 1: C1 and C2 observations (legally distinct — affect overall assessment) -->
+      <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; margin-bottom: 6px;">
+        <thead>
+          <tr>
+            <th style="width: 50px; padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: left;">Item No.</th>
+            <th style="padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: left;">C1 and C2 OBSERVATION(S) <span style="font-weight: 400; font-style: italic; color: #64748b;">Include the relevant schedule reference(s)</span></th>
+            <th style="width: 80px; padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: center;">Classification code</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% assign has_c12 = false %}
+          {% for observation in observations %}
+            {% if observation.defect_code == "C1" or observation.defect_code == "C2" %}
+              {% assign has_c12 = true %}
+              <tr>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 600;">{{forloop.index}}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0;">{{observation.description}}{% if observation.item and observation.item != "" %}<br><span style="font-size: 7.5px; color: #64748b;">Location: {{observation.item}}</span>{% endif %}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700;" class="{% if observation.defect_code == 'C1' %}code-c1{% else %}code-c2{% endif %}">{{observation.defect_code}}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+          {% unless has_c12 %}
+          <tr>
+            <td colspan="3" style="padding: 6px; border: 1px solid #e2e8f0; text-align: center; color: #64748b; font-style: italic;">None</td>
+          </tr>
+          {% endunless %}
+        </tbody>
+      </table>
+      <div style="font-size: 7.5px; color: #475569; margin-bottom: 6px; padding: 3px 6px; background: #fefce8; border-left: 3px solid #eab308;">
+        One of the following codes, as appropriate, has been allocated to each of the observations above to indicate the degree of urgency for remedial action. <strong>These items affect the overall assessment of the report.</strong><br />
+        <strong>C1</strong> — Danger present. Risk of injury. Immediate remedial action is necessary<br />
+        <strong>C2</strong> — Potentially dangerous — urgent remedial action is necessary
+      </div>
+
+      <!-- Table 2: C3 and FI observations (advisory — do not affect overall assessment) -->
+      <table style="width: 100%; border-collapse: collapse; font-size: 8.5px; margin-bottom: 6px;">
+        <thead>
+          <tr>
+            <th style="width: 50px; padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: left;">Item No.</th>
+            <th style="padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: left;">C3 and FI OBSERVATION(S) <span style="font-weight: 400; font-style: italic; color: #64748b;">Include the relevant schedule reference(s)</span></th>
+            <th style="width: 80px; padding: 4px 6px; background: #f1f5f9; border: 1px solid #cbd5e1; font-weight: 700; text-align: center;">Classification code</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% assign has_c3fi = false %}
+          {% for observation in observations %}
+            {% if observation.defect_code == "C3" or observation.defect_code == "FI" %}
+              {% assign has_c3fi = true %}
+              <tr>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 600;">{{forloop.index}}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0;">{{observation.description}}{% if observation.item and observation.item != "" %}<br><span style="font-size: 7.5px; color: #64748b;">Location: {{observation.item}}</span>{% endif %}</td>
+                <td style="padding: 4px 6px; border: 1px solid #e2e8f0; text-align: center; font-weight: 700;" class="{% if observation.defect_code == 'C3' %}code-c3{% else %}code-fi{% endif %}">{{observation.defect_code}}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+          {% unless has_c3fi %}
+          <tr>
+            <td colspan="3" style="padding: 6px; border: 1px solid #e2e8f0; text-align: center; color: #64748b; font-style: italic;">None</td>
+          </tr>
+          {% endunless %}
+        </tbody>
+      </table>
+      <div style="font-size: 7.5px; color: #475569; padding: 3px 6px; background: #f8fafc; border-left: 3px solid #94a3b8;">
+        One of the following codes, as appropriate, has been allocated to each of the observations above to indicate the advisory nature of urgency for remedial action. <strong>These items do not affect the overall assessment of the report.</strong><br />
+        <strong>C3</strong> — Improvement recommended<br />
+        <strong>FI</strong> — Further investigation is advised
+      </div>
+    </div>
 
     <!-- A4:2026 Section H — Schedules and Continuation Sheets Attached -->
     <div class="section avoid-break">
@@ -2238,6 +2516,32 @@
         </div>
       </div>
       {% endif %}
+
+      <!-- BS 7671 / Building Regs / CP Scheme / Departures compliance block -->
+      <div class="avoid-break" style="margin-top: 8px;">
+        <div class="grid-row cols-3">
+          <div class="grid-cell">
+            <div class="cell-label">BS 7671 Compliance</div>
+            <div class="cell-check"><span class="tick">{% if declarations.bs7671_compliance == true %}&#9745;{% else %}&#9744;{% endif %}</span>Installation complies with BS 7671 as amended</div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Building Regs Compliance</div>
+            <div class="cell-check"><span class="tick">{% if declarations.building_regs_compliance == true %}&#9745;{% else %}&#9744;{% endif %}</span>Complies with applicable Building Regulations</div>
+          </div>
+          <div class="grid-cell">
+            <div class="cell-label">Competent Person Scheme</div>
+            <div class="cell-check"><span class="tick">{% if declarations.competent_person_scheme == true %}&#9745;{% else %}&#9744;{% endif %}</span>Notified under CPS where applicable</div>
+          </div>
+        </div>
+        {% if departures and departures != "" %}
+        <div class="grid-row" style="grid-template-columns: 1fr;">
+          <div class="grid-cell">
+            <div class="cell-label">Departures from BS 7671 (Regs 120.3, 133.5)</div>
+            <div class="cell-value">{{departures}}</div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
     </div>
 
     <!-- Signatures -->

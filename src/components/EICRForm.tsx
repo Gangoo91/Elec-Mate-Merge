@@ -6,7 +6,7 @@ import EICRFormHeader from './eicr/EICRFormHeader';
 import EICRFormContent from './eicr/EICRFormContent';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
 import { getCableSizeForRating, getCpcForLive, BS_STANDARD_MAP } from '@/utils/circuitDefaults';
-import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
+import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
 
 // Tab value type
 type TabValue = 'details' | 'inspection' | 'testing' | 'inspector' | 'certificate';
@@ -68,13 +68,20 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
         // Get BS standard from device category
         const bsStandard = BS_STANDARD_MAP[deviceCategory] || 'MCB (BS EN 60898)';
 
-        // Calculate Max Zs from detected device
-        const maxZs = getMaxZsFromDeviceDetails(
+        // Calculate Max Zs from detected device — RCD-aware (if the AI
+        // detected an RCBO, the RCD limit of 1667Ω (30mA) applies per
+        // BS 7671 Reg 411.5.3 instead of the overcurrent table).
+        const maxZsLookup = getMaxZsWithRcd({
           bsStandard,
-          deviceCurve,
-          ratingAmps?.toString() || '',
-          circuit.label || ''
-        );
+          curve: deviceCurve,
+          rating: ratingAmps?.toString() || '',
+          protectiveDeviceType: deviceCategory,
+          // If the scanned device is an RCBO, default to 30mA so the RCD
+          // branch fires; the user can adjust in the cell afterwards.
+          rcdRating: /rcbo/i.test(deviceCategory) ? '30mA' : null,
+          circuitDescription: circuit.label || '',
+        });
+        const maxZs = maxZsLookup.maxZs;
 
         return {
           id: `circuit-${Date.now()}-${index}`,

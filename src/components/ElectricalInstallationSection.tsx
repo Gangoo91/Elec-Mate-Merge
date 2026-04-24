@@ -9,6 +9,11 @@ import { useHaptic } from '@/hooks/useHaptic';
 import { useEICRSmartForm } from '@/hooks/inspection/useEICRSmartForm';
 import MultiboardSetup from '@/components/testing/MultiboardSetup';
 import {
+  FieldLimitationBadge,
+  FieldNotesInput,
+  isFieldMarker,
+} from '@/components/field-limitations';
+import {
   DistributionBoard,
   createMainBoard,
   getBoardWays,
@@ -29,6 +34,10 @@ const ELECTRICAL_SECTION_FIELDS = [
   'tailsSize',
   'tailsSizeCustom',
   'tailsLength',
+  // ELE-849 — limitation reason notes
+  'intakeCableSizeNotes',
+  'intakeCableTypeNotes',
+  'tailsSizeNotes',
 ] as const;
 
 interface ElectricalInstallationSectionProps {
@@ -47,17 +56,22 @@ const FormField = ({
   label,
   required,
   hint,
+  trailing,
   children,
 }: {
   label: string;
   required?: boolean;
   hint?: string;
+  trailing?: React.ReactNode;
   children: React.ReactNode;
 }) => (
   <div>
-    <Label className="text-white text-xs mb-1.5 block">
-      {label}{required && ' *'}
-    </Label>
+    <div className="flex items-center justify-between gap-2 mb-1.5">
+      <Label className="text-white text-xs">
+        {label}{required && ' *'}
+      </Label>
+      {trailing}
+    </div>
     {children}
     {hint && <span className="text-[10px] text-white block mt-1">{hint}</span>}
   </div>
@@ -152,70 +166,122 @@ const ElectricalInstallationSectionInner = ({
       <div>
         <SectionTitle title="Intake Cable" />
         <div className={cn('space-y-4 py-4', '')}>
-          <FormField label="Intake Cable Size" required>
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
-              {intakeCableSizes.map((size) => (
-                <button
-                  key={size}
-                  type="button"
-                  onClick={() => {
-                    haptic.light();
-                    onUpdate('intakeCableSize', formData.intakeCableSize === size ? '' : size);
-                  }}
-                  className={cn(
-                    'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
-                    formData.intakeCableSize === size
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.03] text-white border border-white/[0.06]'
-                  )}
-                >
-                  {size}²
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={() => { haptic.light(); onUpdate('intakeCableSize', 'custom'); }}
-                className={cn(
-                  'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
-                  formData.intakeCableSize === 'custom'
-                    ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.03] text-white border border-white/[0.06]'
-                )}
-              >
-                Other
-              </button>
-            </div>
-            {formData.intakeCableSize === 'custom' && (
-              <Input
-                value={formData.intakeCableSizeCustom || ''}
-                onChange={(e) => onUpdate('intakeCableSizeCustom', e.target.value)}
-                placeholder="e.g. 400mm²"
-                className="h-11 text-base touch-manipulation mt-2"
+          <FormField
+            label="Intake Cable Size"
+            required
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.intakeCableSize || ''}
+                markers={['LIM', 'N/V']}
+                onChange={(v) => onUpdate('intakeCableSize', v)}
               />
+            }
+          >
+            {isFieldMarker(formData.intakeCableSize) ? (
+              <Input
+                value={formData.intakeCableSize}
+                disabled
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+              />
+            ) : (
+              <>
+                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+                  {intakeCableSizes.map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      onClick={() => {
+                        haptic.light();
+                        onUpdate('intakeCableSize', formData.intakeCableSize === size ? '' : size);
+                      }}
+                      className={cn(
+                        'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                        formData.intakeCableSize === size
+                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                          : 'bg-white/[0.03] text-white border border-white/[0.06]'
+                      )}
+                    >
+                      {size}²
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => { haptic.light(); onUpdate('intakeCableSize', 'custom'); }}
+                    className={cn(
+                      'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                      formData.intakeCableSize === 'custom'
+                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                        : 'bg-white/[0.03] text-white border border-white/[0.06]'
+                    )}
+                  >
+                    Other
+                  </button>
+                </div>
+                {formData.intakeCableSize === 'custom' && (
+                  <Input
+                    value={formData.intakeCableSizeCustom || ''}
+                    onChange={(e) => onUpdate('intakeCableSizeCustom', e.target.value)}
+                    placeholder="e.g. 400mm²"
+                    className="h-11 text-base touch-manipulation mt-2"
+                  />
+                )}
+              </>
             )}
+            <FieldNotesInput
+              parentValue={formData.intakeCableSize || ''}
+              value={formData.intakeCableSizeNotes || ''}
+              onChange={(v) => onUpdate('intakeCableSizeNotes', v)}
+              placeholder="Reason (e.g. cable concealed / inaccessible)"
+            />
           </FormField>
 
           {getWarningsForField('intakeCableSize').map((w, i) => (
             <p key={i} className="text-[10px] text-amber-400/80">{w.message} ({w.regulation})</p>
           ))}
 
-          <FormField label="Intake Cable Type" required>
-            <FormSelectSheet
-              value={formData.intakeCableType || ''}
-              onValueChange={(value) => {
-                haptic.light();
-                onUpdate('intakeCableType', value);
-              }}
-              placeholder="Select cable type"
-              label="Intake Cable Type"
-              allowCustom
-              customLabel="Other (specify)"
-              options={cableTypes
-                .filter((t) => t.value !== 'other')
-                .map((type) => ({
-                  value: type.value,
-                  label: type.label,
-                }))}
+          <FormField
+            label="Intake Cable Type"
+            required
+            trailing={
+              <FieldLimitationBadge
+                compact
+                value={formData.intakeCableType || ''}
+                markers={['LIM', 'N/V']}
+                onChange={(v) => onUpdate('intakeCableType', v)}
+              />
+            }
+          >
+            {isFieldMarker(formData.intakeCableType) ? (
+              <Input
+                value={formData.intakeCableType}
+                disabled
+                className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+              />
+            ) : (
+              <FormSelectSheet
+                value={formData.intakeCableType || ''}
+                onValueChange={(value) => {
+                  haptic.light();
+                  onUpdate('intakeCableType', value);
+                }}
+                placeholder="Select cable type"
+                label="Intake Cable Type"
+                allowCustom
+                customLabel="Other (specify)"
+                options={cableTypes
+                  .filter((t) => t.value !== 'other')
+                  .map((type) => ({
+                    value: type.value,
+                    label: type.label,
+                  }))}
+              />
+            )}
+            <FieldNotesInput
+              parentValue={formData.intakeCableType || ''}
+              value={formData.intakeCableTypeNotes || ''}
+              onChange={(v) => onUpdate('intakeCableTypeNotes', v)}
+              placeholder="Reason (e.g. cable run inaccessible)"
             />
           </FormField>
         </div>
@@ -226,47 +292,74 @@ const ElectricalInstallationSectionInner = ({
         <SectionTitle title="Meter Tails" />
         <div className="space-y-3 py-3">
           <div className="grid grid-cols-[2fr_1fr] gap-3">
-            <FormField label="Tails Size *">
-              <div className="grid grid-cols-3 gap-1.5">
-                {tailsSizes.map((size) => (
-                  <button
-                    key={size}
-                    type="button"
-                    onClick={() => {
-                      haptic.light();
-                      onUpdate('tailsSize', formData.tailsSize === size ? '' : size);
-                    }}
-                    className={cn(
-                      'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                      formData.tailsSize === size
-                        ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                        : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                    )}
-                  >
-                    {size}²
-                  </button>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => { haptic.light(); onUpdate('tailsSize', 'custom'); }}
-                  className={cn(
-                    'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
-                    formData.tailsSize === 'custom'
-                      ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
-                      : 'bg-white/[0.05] text-white border border-white/[0.08]'
-                  )}
-                >
-                  Other
-                </button>
-              </div>
-              {formData.tailsSize === 'custom' && (
-                <Input
-                  value={formData.tailsSizeCustom || ''}
-                  onChange={(e) => onUpdate('tailsSizeCustom', e.target.value)}
-                  placeholder="e.g. 120mm²"
-                  className="h-11 text-base touch-manipulation mt-2"
+            <FormField
+              label="Tails Size"
+              required
+              trailing={
+                <FieldLimitationBadge
+                  compact
+                  value={formData.tailsSize || ''}
+                  markers={['LIM', 'N/V']}
+                  onChange={(v) => onUpdate('tailsSize', v)}
                 />
+              }
+            >
+              {isFieldMarker(formData.tailsSize) ? (
+                <Input
+                  value={formData.tailsSize}
+                  disabled
+                  className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08] opacity-60"
+                />
+              ) : (
+                <>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {tailsSizes.map((size) => (
+                      <button
+                        key={size}
+                        type="button"
+                        onClick={() => {
+                          haptic.light();
+                          onUpdate('tailsSize', formData.tailsSize === size ? '' : size);
+                        }}
+                        className={cn(
+                          'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                          formData.tailsSize === size
+                            ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                            : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                        )}
+                      >
+                        {size}²
+                      </button>
+                    ))}
+                    <button
+                      type="button"
+                      onClick={() => { haptic.light(); onUpdate('tailsSize', 'custom'); }}
+                      className={cn(
+                        'h-11 rounded-lg font-semibold transition-all touch-manipulation text-xs active:scale-[0.98]',
+                        formData.tailsSize === 'custom'
+                          ? 'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow'
+                          : 'bg-white/[0.05] text-white border border-white/[0.08]'
+                      )}
+                    >
+                      Other
+                    </button>
+                  </div>
+                  {formData.tailsSize === 'custom' && (
+                    <Input
+                      value={formData.tailsSizeCustom || ''}
+                      onChange={(e) => onUpdate('tailsSizeCustom', e.target.value)}
+                      placeholder="e.g. 120mm²"
+                      className="h-11 text-base touch-manipulation mt-2"
+                    />
+                  )}
+                </>
               )}
+              <FieldNotesInput
+                parentValue={formData.tailsSize || ''}
+                value={formData.tailsSizeNotes || ''}
+                onChange={(v) => onUpdate('tailsSizeNotes', v)}
+                placeholder="Reason (e.g. tails not accessible)"
+              />
             </FormField>
             <FormField label="Length (m)">
               <Input
