@@ -1,11 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import {
-  BookOpen,
   Plus,
   Search,
   Calendar,
@@ -26,6 +20,19 @@ import {
 import { useJournalData } from '@/hooks/useMentalHealthSync';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
+import {
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  IconButton,
+  Field,
+  FormCard,
+  ListCard,
+  ListRow,
+  EmptyState,
+  inputClass,
+  textareaClass,
+} from '@/components/college/primitives';
 
 interface JournalEntry {
   id?: string;
@@ -42,11 +49,11 @@ interface JournalEntry {
 }
 
 const moodOptions = [
-  { value: 1, emoji: '😢', label: 'Very Low', color: 'bg-red-500' },
-  { value: 2, emoji: '😔', label: 'Low', color: 'bg-orange-500' },
-  { value: 3, emoji: '😐', label: 'Okay', color: 'bg-yellow-500' },
-  { value: 4, emoji: '🙂', label: 'Good', color: 'bg-lime-500' },
-  { value: 5, emoji: '😊', label: 'Great', color: 'bg-green-500' },
+  { value: 1, emoji: '😢', label: 'Very Low' },
+  { value: 2, emoji: '😔', label: 'Low' },
+  { value: 3, emoji: '😐', label: 'Okay' },
+  { value: 4, emoji: '🙂', label: 'Good' },
+  { value: 5, emoji: '😊', label: 'Great' },
 ];
 
 const journalPrompts = [
@@ -236,58 +243,55 @@ const WellbeingJournal = () => {
       <div className="space-y-4">
         {/* Header */}
         <div className="text-center py-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 mb-3">
-            <BookOpen className="h-6 w-6 text-purple-400" />
-          </div>
-          <h2 className="text-xl font-bold text-white mb-1">Wellbeing Journal</h2>
-          <p className="text-sm text-white">Track your thoughts, feelings, and growth</p>
+          <Eyebrow>Mental health</Eyebrow>
+          <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
+            Wellbeing journal
+          </h2>
+          <p className="mt-1 text-[13px] text-white">Track your thoughts, feelings, and growth</p>
         </div>
 
         {/* Cloud Sync Status */}
-        <div className="flex items-center justify-center gap-2 text-xs">
+        <div className="flex items-center justify-center gap-2 text-[12px]">
           {user ? (
-            <span className="flex items-center gap-1 text-green-400">
+            <span className="flex items-center gap-1 text-emerald-400">
               <Cloud className="h-3 w-3" />
               Synced to cloud
             </span>
           ) : (
             <span className="flex items-center gap-1 text-white">
               <CloudOff className="h-3 w-3" />
-              Local only - sign in to sync
+              Local only — sign in to sync
             </span>
           )}
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-3">
-          <Card className="border-purple-500/20 bg-purple-500/5">
-            <CardContent className="p-3 text-center">
-              <div className="text-2xl font-bold text-purple-400">{entries.length}</div>
-              <div className="text-[10px] text-white">Entries</div>
-            </CardContent>
-          </Card>
-          <Card className="border-orange-500/20 bg-orange-500/5">
-            <CardContent className="p-3 text-center">
-              <div className="text-2xl font-bold text-orange-400">{getStreak()}</div>
-              <div className="text-[10px] text-white">Day Streak</div>
-            </CardContent>
-          </Card>
-          <Card className="border-green-500/20 bg-green-500/5">
-            <CardContent className="p-3 text-center">
-              <div className="text-2xl font-bold text-green-400">{getAverageMood()}</div>
-              <div className="text-[10px] text-white">Avg Mood</div>
-            </CardContent>
-          </Card>
+        <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+          <div className="bg-[hsl(0_0%_12%)] px-4 py-4 text-center">
+            <Eyebrow>Entries</Eyebrow>
+            <div className="mt-2 text-2xl font-semibold text-white tabular-nums">
+              {entries.length}
+            </div>
+          </div>
+          <div className="bg-[hsl(0_0%_12%)] px-4 py-4 text-center">
+            <Eyebrow>Day streak</Eyebrow>
+            <div className="mt-2 text-2xl font-semibold text-elec-yellow tabular-nums">
+              {getStreak()}
+            </div>
+          </div>
+          <div className="bg-[hsl(0_0%_12%)] px-4 py-4 text-center">
+            <Eyebrow>Avg mood</Eyebrow>
+            <div className="mt-2 text-2xl font-semibold text-white tabular-nums">
+              {getAverageMood()}
+            </div>
+          </div>
         </div>
 
         {/* New Entry Button */}
-        <Button
-          onClick={startNewEntry}
-          className="w-full h-14 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold text-lg rounded-xl shadow-lg shadow-purple-500/25 transition-all duration-200 touch-manipulation active:scale-[0.98]"
-        >
+        <PrimaryButton onClick={startNewEntry} size="lg" fullWidth>
           <Plus className="h-5 w-5 mr-2" />
-          Write New Entry
-        </Button>
+          Write new entry
+        </PrimaryButton>
 
         {/* Search and Filter */}
         {entries.length > 0 && (
@@ -297,57 +301,51 @@ const WellbeingJournal = () => {
                 {!searchTerm && (
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                 )}
-                <Input
+                <input
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search entries..."
-                  className={cn(
-                    'h-12 bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl touch-manipulation',
-                    !searchTerm && 'pl-10'
-                  )}
+                  className={cn(inputClass, !searchTerm && 'pl-10')}
                 />
               </div>
-              <Button
-                variant="outline"
-                size="icon"
+              <IconButton
                 onClick={() => setShowFilters(!showFilters)}
-                className={cn(
-                  'h-12 w-12 touch-manipulation active:scale-95 transition-all',
-                  showFilters ? 'bg-purple-500/20 border-purple-500/30' : 'border-white/10'
-                )}
+                aria-label="Filter entries"
+                className={showFilters ? 'bg-elec-yellow/15 border-elec-yellow/25' : ''}
               >
                 <Filter className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={exportEntries}
-                className="h-12 w-12 border-white/10 touch-manipulation active:scale-95 transition-all"
-              >
+              </IconButton>
+              <IconButton onClick={exportEntries} aria-label="Export entries">
                 <Download className="h-4 w-4" />
-              </Button>
+              </IconButton>
             </div>
 
             {showFilters && (
               <div className="flex gap-2 overflow-x-auto pb-2">
-                <Button
-                  size="sm"
-                  variant={filterMood === null ? 'default' : 'outline'}
+                <button
                   onClick={() => setFilterMood(null)}
-                  className="text-xs h-10 min-w-[60px]"
+                  className={cn(
+                    'px-4 h-10 min-w-[60px] rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
+                    filterMood === null
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08]'
+                  )}
                 >
                   All
-                </Button>
+                </button>
                 {moodOptions.map((mood) => (
-                  <Button
+                  <button
                     key={mood.value}
-                    size="sm"
-                    variant={filterMood === mood.value ? 'default' : 'outline'}
                     onClick={() => setFilterMood(mood.value)}
-                    className="text-xs h-10 min-w-[50px]"
+                    className={cn(
+                      'px-3 h-10 min-w-[50px] rounded-full text-[12.5px] transition-colors touch-manipulation',
+                      filterMood === mood.value
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-[hsl(0_0%_12%)] text-white border border-white/[0.08]'
+                    )}
                   >
                     {mood.emoji}
-                  </Button>
+                  </button>
                 ))}
               </div>
             )}
@@ -357,127 +355,100 @@ const WellbeingJournal = () => {
         {/* Entries List */}
         <div className="space-y-3">
           {filteredEntries.length > 0 ? (
-            filteredEntries.map((entry) => {
-              const mood = moodOptions.find((m) => m.value === entry.mood);
-              const gratitude = entry.gratitude || [];
-              const tags = entry.tags || [];
-              return (
-                <Card
-                  key={entry.id}
-                  className="border-white/10 bg-white/5 cursor-pointer touch-manipulation active:scale-[0.98] transition-all"
-                  onClick={() => {
-                    setSelectedEntry(entry);
-                    setView('entry');
-                  }}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      {/* Mood indicator circle */}
-                      <div
-                        className={cn(
-                          'w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0',
-                          mood?.color
-                        )}
-                      >
+            <ListCard>
+              {filteredEntries.map((entry) => {
+                const mood = moodOptions.find((m) => m.value === entry.mood);
+                const gratitude = entry.gratitude || [];
+                const tags = entry.tags || [];
+                return (
+                  <ListRow
+                    key={entry.id}
+                    onClick={() => {
+                      setSelectedEntry(entry);
+                      setView('entry');
+                    }}
+                    lead={
+                      <div className="w-12 h-12 rounded-full bg-[hsl(0_0%_15%)] border border-white/[0.08] flex items-center justify-center">
                         <span className="text-2xl">{mood?.emoji}</span>
                       </div>
-
-                      <div className="flex-1 min-w-0">
-                        {/* Date and time on right */}
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-center gap-2 text-xs text-white font-medium">
-                            <Calendar className="h-3 w-3" />
-                            {new Date(entry.date).toLocaleDateString('en-GB', {
-                              weekday: 'short',
-                              day: 'numeric',
-                              month: 'short',
-                            })}
-                          </div>
-                          <div className="flex items-center gap-1 text-xs text-white">
-                            <Clock className="h-3 w-3" />
-                            {entry.time}
-                          </div>
-                        </div>
-
-                        {/* Content preview with line-clamp-2 */}
-                        <p className="text-sm text-white line-clamp-2 mb-2">
+                    }
+                    title={
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="flex items-center gap-2 text-[12.5px] text-white font-medium">
+                          <Calendar className="h-3 w-3" />
+                          {new Date(entry.date).toLocaleDateString('en-GB', {
+                            weekday: 'short',
+                            day: 'numeric',
+                            month: 'short',
+                          })}
+                        </span>
+                        <span className="flex items-center gap-1 text-[11px] text-white">
+                          <Clock className="h-3 w-3" />
+                          {entry.time}
+                        </span>
+                      </div>
+                    }
+                    subtitle={
+                      <div>
+                        <p className="text-[13px] text-white line-clamp-2">
                           {entry.content || gratitude.join(', ') || 'No content'}
                         </p>
-
-                        {/* Tags as small badges */}
                         {tags.length > 0 && (
                           <div className="flex gap-1.5 mt-2 flex-wrap">
                             {tags.slice(0, 3).map((tag) => (
-                              <Badge
+                              <span
                                 key={tag}
-                                variant="outline"
-                                className="text-[10px] py-0 px-2 text-white border-white/20"
+                                className="text-[10px] py-0.5 px-2 rounded-full bg-white/[0.06] text-white border border-white/[0.08]"
                               >
                                 {tag}
-                              </Badge>
+                              </span>
                             ))}
                             {tags.length > 3 && (
-                              <Badge
-                                variant="outline"
-                                className="text-[10px] py-0 px-2 text-white border-white/20"
-                              >
+                              <span className="text-[10px] py-0.5 px-2 rounded-full bg-white/[0.06] text-white border border-white/[0.08]">
                                 +{tags.length - 3}
-                              </Badge>
+                              </span>
                             )}
                           </div>
                         )}
                       </div>
-
-                      <ChevronRight className="h-5 w-5 text-white flex-shrink-0 mt-2" />
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })
+                    }
+                    trailing={<ChevronRight className="h-5 w-5 text-white" />}
+                  />
+                );
+              })}
+            </ListCard>
           ) : entries.length > 0 ? (
-            <Card className="border-white/10 bg-white/5">
-              <CardContent className="text-center py-8">
-                <Search className="h-10 w-10 text-white mx-auto mb-3" />
-                <p className="text-sm text-white">No matching entries found</p>
-              </CardContent>
-            </Card>
+            <EmptyState
+              title="No matching entries"
+              description="Try adjusting your search or filters."
+            />
           ) : (
-            <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 to-pink-500/5">
-              <CardContent className="text-center py-8">
-                <Sparkles className="h-10 w-10 text-purple-400 mx-auto mb-3" />
-                <h3 className="font-medium text-white mb-2">Start Your Journal</h3>
-                <p className="text-sm text-white mb-4">
-                  Writing regularly helps identify patterns in your mental health. Just a few
-                  minutes a day can make a difference.
-                </p>
-                <Button onClick={startNewEntry} className="bg-purple-500 hover:bg-purple-600 h-12">
-                  <Plus className="h-4 w-4 mr-2" />
-                  Write First Entry
-                </Button>
-              </CardContent>
-            </Card>
+            <EmptyState
+              title="Start your journal"
+              description="Writing regularly helps identify patterns in your mental health. Just a few minutes a day can make a difference."
+              action="Write first entry"
+              onAction={startNewEntry}
+            />
           )}
         </div>
 
         {/* Insight Card */}
         {entries.length >= 3 && (
-          <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-indigo-500/5">
-            <CardContent className="p-4">
-              <div className="flex items-start gap-3">
-                <TrendingUp className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <h4 className="font-medium text-blue-400 text-sm mb-1">Your Insight</h4>
-                  <p className="text-sm text-white">
-                    {getStreak() >= 3
-                      ? `Great consistency! You've journaled for ${getStreak()} days in a row. This habit builds self-awareness.`
-                      : entries.length >= 7
-                        ? `You've written ${entries.length} entries. Regular reflection helps identify patterns in your wellbeing.`
-                        : 'Keep journaling to unlock insights about your mental health patterns.'}
-                  </p>
-                </div>
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+            <div className="flex items-start gap-3">
+              <TrendingUp className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <div>
+                <Eyebrow>Your insight</Eyebrow>
+                <p className="mt-2 text-[13px] text-white leading-relaxed">
+                  {getStreak() >= 3
+                    ? `Great consistency. You've journaled for ${getStreak()} days in a row. This habit builds self-awareness.`
+                    : entries.length >= 7
+                      ? `You've written ${entries.length} entries. Regular reflection helps identify patterns in your wellbeing.`
+                      : 'Keep journaling to unlock insights about your mental health patterns.'}
+                </p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         )}
       </div>
     );
@@ -488,17 +459,16 @@ const WellbeingJournal = () => {
     return (
       <div className="space-y-4 pb-28 sm:pb-4">
         {/* Sticky Header */}
-        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
+        <div className="sticky top-0 z-40 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-b border-white/[0.06] -mx-4 px-4 py-3 mb-2">
           <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
+            <button
               onClick={() => setView('list')}
-              className="h-11 touch-manipulation active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-1 h-11 px-3 rounded-full text-[13px] font-medium text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
             >
-              <ChevronLeft className="h-5 w-5 mr-1" />
+              <ChevronLeft className="h-5 w-5" />
               Back
-            </Button>
-            <span className="text-sm text-white font-medium">
+            </button>
+            <span className="text-[13px] text-white font-medium">
               {new Date().toLocaleDateString('en-GB', {
                 weekday: 'short',
                 day: 'numeric',
@@ -509,194 +479,174 @@ const WellbeingJournal = () => {
           </div>
         </div>
 
-        {/* Mood Selection - Larger for mobile */}
-        <Card className="border-white/10 bg-white/5">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-medium text-white mb-3">How are you feeling?</h3>
-            <div className="grid grid-cols-5 gap-1 sm:gap-2">
-              {moodOptions.map((mood) => (
-                <button
-                  key={mood.value}
-                  onClick={() =>
-                    setCurrentEntry({ ...currentEntry, mood: mood.value, moodLabel: mood.label })
-                  }
-                  className={cn(
-                    'flex flex-col items-center p-2 sm:p-3 rounded-xl transition-all min-h-[72px]',
-                    'border-2 touch-manipulation active:scale-[0.95]',
-                    currentEntry.mood === mood.value
-                      ? 'bg-white/10 border-white/30 scale-105'
-                      : 'border-transparent hover:bg-white/5'
-                  )}
-                >
-                  <span className="text-2xl sm:text-3xl mb-1">{mood.emoji}</span>
-                  <span className="text-[10px] sm:text-xs text-white font-medium">
-                    {mood.label}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        {/* Mood Selection */}
+        <FormCard eyebrow="How are you feeling?">
+          <div className="grid grid-cols-5 gap-1 sm:gap-2">
+            {moodOptions.map((mood) => (
+              <button
+                key={mood.value}
+                onClick={() =>
+                  setCurrentEntry({ ...currentEntry, mood: mood.value, moodLabel: mood.label })
+                }
+                className={cn(
+                  'flex flex-col items-center p-2 sm:p-3 rounded-xl transition-all min-h-[72px]',
+                  'touch-manipulation active:scale-[0.95]',
+                  currentEntry.mood === mood.value
+                    ? 'bg-elec-yellow/15 border border-elec-yellow/40'
+                    : 'bg-[hsl(0_0%_9%)] border border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
+                )}
+              >
+                <span className="text-2xl sm:text-3xl mb-1">{mood.emoji}</span>
+                <span className="text-[10px] sm:text-[11px] text-white font-medium">
+                  {mood.label}
+                </span>
+              </button>
+            ))}
+          </div>
+        </FormCard>
 
         {/* Journal Prompt */}
         {currentPrompt && (
-          <Card className="border-purple-500/20 bg-purple-500/5">
-            <CardContent className="p-4">
-              <div className="flex items-start gap-2">
-                <Sparkles className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-xs text-purple-400 font-medium">Today's Prompt</span>
-                  <p className="text-sm text-white mt-0.5">{currentPrompt}</p>
-                </div>
+          <div className="bg-[hsl(0_0%_12%)] border border-elec-yellow/20 rounded-2xl p-5">
+            <div className="flex items-start gap-2">
+              <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <div>
+                <Eyebrow>Today's prompt</Eyebrow>
+                <p className="mt-1.5 text-[13px] text-white">{currentPrompt}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         )}
 
         {/* Main Content */}
-        <Card className="border-white/10 bg-white/5">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-medium text-white mb-3">What's on your mind?</h3>
-            <Textarea
-              value={currentEntry.content || ''}
-              onChange={(e) => setCurrentEntry({ ...currentEntry, content: e.target.value })}
-              placeholder="Write your thoughts, feelings, reflections..."
-              className="min-h-[150px] resize-none text-base touch-manipulation bg-white/5 border-white/10 focus:border-white/20 focus:ring-1 focus:ring-white/10 rounded-xl"
-            />
-          </CardContent>
-        </Card>
+        <FormCard eyebrow="What's on your mind?">
+          <textarea
+            value={currentEntry.content || ''}
+            onChange={(e) => setCurrentEntry({ ...currentEntry, content: e.target.value })}
+            placeholder="Write your thoughts, feelings, reflections..."
+            className={`${textareaClass} min-h-[150px]`}
+          />
+        </FormCard>
 
         {/* Gratitude Section */}
-        <Card className="border-green-500/20 bg-green-500/5">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-medium text-green-400 mb-2">Gratitude</h3>
-            <p className="text-xs text-white mb-3">What are you grateful for today?</p>
+        <FormCard eyebrow="Gratitude">
+          <p className="text-[12px] text-white">What are you grateful for today?</p>
+          <div className="flex gap-2">
+            <input
+              value={newGratitude}
+              onChange={(e) => setNewGratitude(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && addGratitude()}
+              placeholder="Add something you're grateful for..."
+              className={`${inputClass} flex-1`}
+            />
+            <button
+              onClick={addGratitude}
+              aria-label="Add gratitude"
+              className="h-11 w-11 rounded-full bg-elec-yellow text-black flex items-center justify-center hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+            >
+              <Plus className="h-5 w-5" />
+            </button>
+          </div>
 
-            <div className="flex gap-2 mb-3">
-              <Input
-                value={newGratitude}
-                onChange={(e) => setNewGratitude(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && addGratitude()}
-                placeholder="Add something you're grateful for..."
-                className="flex-1 h-12 bg-white/5 border-white/10 focus:border-green-500/30 focus:ring-1 focus:ring-green-500/20 rounded-xl touch-manipulation"
-              />
-              <Button
-                size="sm"
-                onClick={addGratitude}
-                className="h-12 w-12 bg-green-500 hover:bg-green-600 touch-manipulation active:scale-95 transition-all"
-              >
-                <Plus className="h-5 w-5" />
-              </Button>
-            </div>
-
-            {currentEntry.gratitude && currentEntry.gratitude.length > 0 && (
-              <div className="space-y-2">
-                {currentEntry.gratitude.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-green-500/10 border border-green-500/20"
-                  >
-                    <span className="text-green-400 font-semibold">✓</span>
-                    <span className="text-sm text-white flex-1">{item}</span>
-                    <button
-                      onClick={() => removeGratitude(index)}
-                      className="text-white hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Triggers Section */}
-        <Card className="border-orange-500/20 bg-orange-500/5">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-medium text-orange-400 mb-2">Triggers or Challenges</h3>
-            <p className="text-xs text-white mb-3">Any stressors affecting you? (optional)</p>
-
-            <div className="flex gap-2 mb-3">
-              <Input
-                value={newTrigger}
-                onChange={(e) => setNewTrigger(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && addTrigger()}
-                placeholder="Add a trigger or challenge..."
-                className="flex-1 h-12 bg-white/5 border-white/10 focus:border-orange-500/30 focus:ring-1 focus:ring-orange-500/20 rounded-xl touch-manipulation"
-              />
-              <Button
-                size="sm"
-                onClick={addTrigger}
-                className="h-12 w-12 bg-orange-500 hover:bg-orange-600 touch-manipulation active:scale-95 transition-all"
-              >
-                <Plus className="h-5 w-5" />
-              </Button>
-            </div>
-
-            {currentEntry.triggers && currentEntry.triggers.length > 0 && (
-              <div className="space-y-2">
-                {currentEntry.triggers.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-orange-500/10 border border-orange-500/20"
-                  >
-                    <span className="text-orange-400 font-semibold">!</span>
-                    <span className="text-sm text-white flex-1">{item}</span>
-                    <button
-                      onClick={() => removeTrigger(index)}
-                      className="text-white hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Tags */}
-        <Card className="border-white/10 bg-white/5">
-          <CardContent className="p-4">
-            <h3 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
-              <Tag className="h-4 w-4" />
-              Tags
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {commonTags.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => toggleTag(tag)}
-                  className={cn(
-                    'px-4 py-2.5 rounded-full text-sm transition-all min-h-[40px] touch-manipulation active:scale-[0.95]',
-                    currentEntry.tags?.includes(tag)
-                      ? 'bg-purple-500 text-white'
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  )}
+          {currentEntry.gratitude && currentEntry.gratitude.length > 0 && (
+            <div className="space-y-2">
+              {currentEntry.gratitude.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08]"
                 >
-                  {tag}
-                </button>
+                  <span className="text-emerald-400 font-semibold">+</span>
+                  <span className="text-[13px] text-white flex-1">{item}</span>
+                  <button
+                    onClick={() => removeGratitude(index)}
+                    aria-label="Remove gratitude"
+                    className="text-white hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
+          )}
+        </FormCard>
+
+        {/* Triggers Section */}
+        <FormCard eyebrow="Triggers or challenges">
+          <p className="text-[12px] text-white">Any stressors affecting you? (optional)</p>
+          <div className="flex gap-2">
+            <input
+              value={newTrigger}
+              onChange={(e) => setNewTrigger(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && addTrigger()}
+              placeholder="Add a trigger or challenge..."
+              className={`${inputClass} flex-1`}
+            />
+            <button
+              onClick={addTrigger}
+              aria-label="Add trigger"
+              className="h-11 w-11 rounded-full bg-elec-yellow text-black flex items-center justify-center hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+            >
+              <Plus className="h-5 w-5" />
+            </button>
+          </div>
+
+          {currentEntry.triggers && currentEntry.triggers.length > 0 && (
+            <div className="space-y-2">
+              {currentEntry.triggers.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08]"
+                >
+                  <span className="text-orange-400 font-semibold">!</span>
+                  <span className="text-[13px] text-white flex-1">{item}</span>
+                  <button
+                    onClick={() => removeTrigger(index)}
+                    aria-label="Remove trigger"
+                    className="text-white hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </FormCard>
+
+        {/* Tags */}
+        <FormCard eyebrow="Tags">
+          <div className="flex items-center gap-2 text-white">
+            <Tag className="h-4 w-4" />
+            <span className="text-[12px]">Choose all that apply</span>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {commonTags.map((tag) => (
+              <button
+                key={tag}
+                onClick={() => toggleTag(tag)}
+                className={cn(
+                  'px-4 py-2.5 rounded-full text-[13px] transition-all min-h-[40px] touch-manipulation active:scale-[0.95]',
+                  currentEntry.tags?.includes(tag)
+                    ? 'bg-elec-yellow text-black font-semibold'
+                    : 'bg-[hsl(0_0%_9%)] text-white border border-white/[0.08] hover:bg-[hsl(0_0%_15%)]'
+                )}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
+        </FormCard>
 
         {/* Sticky Save Button */}
-        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-background/95 backdrop-blur-xl border-t border-white/10 sm:static sm:bg-transparent sm:border-none sm:p-0">
-          <Button
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-t border-white/[0.06] sm:static sm:bg-transparent sm:border-none sm:p-0">
+          <PrimaryButton
             onClick={saveEntry}
             disabled={!currentEntry.content?.trim() && !currentEntry.gratitude?.length}
-            className="w-full h-14 bg-gradient-to-r from-pink-500 to-purple-500
-                       hover:from-pink-600 hover:to-purple-600
-                       text-white font-semibold text-lg
-                       rounded-xl shadow-lg shadow-pink-500/25
-                       transition-all duration-200
-                       touch-manipulation active:scale-[0.98]"
+            size="lg"
+            fullWidth
           >
             <Save className="mr-2 h-5 w-5" />
-            Save Journal Entry
-          </Button>
+            Save journal entry
+          </PrimaryButton>
         </div>
       </div>
     );
@@ -708,125 +658,113 @@ const WellbeingJournal = () => {
     return (
       <div className="space-y-4">
         {/* Sticky Header */}
-        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
+        <div className="sticky top-0 z-40 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-b border-white/[0.06] -mx-4 px-4 py-3 mb-2">
           <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
+            <button
               onClick={() => {
                 setSelectedEntry(null);
                 setView('list');
               }}
-              className="h-11 touch-manipulation active:scale-[0.98] transition-all"
+              className="inline-flex items-center gap-1 h-11 px-3 rounded-full text-[13px] font-medium text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
             >
-              <ChevronLeft className="h-5 w-5 mr-1" />
+              <ChevronLeft className="h-5 w-5" />
               Back
-            </Button>
-            <Button
-              variant="ghost"
+            </button>
+            <button
               onClick={() => deleteEntry(selectedEntry.id)}
-              className="h-11 w-11 text-red-400 hover:text-red-300 hover:bg-red-500/10 touch-manipulation active:scale-[0.98] transition-all"
+              aria-label="Delete entry"
+              className="h-11 w-11 rounded-full text-red-400 hover:bg-red-500/10 flex items-center justify-center touch-manipulation"
             >
               <Trash2 className="h-5 w-5" />
-            </Button>
+            </button>
           </div>
         </div>
 
         {/* Entry Header */}
-        <Card className="border-white/10 bg-white/5">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-4">
-              <div
-                className={cn('w-14 h-14 rounded-xl flex items-center justify-center', mood?.color)}
-              >
-                <span className="text-3xl">{mood?.emoji}</span>
+        <FormCard>
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-xl bg-[hsl(0_0%_9%)] border border-white/[0.08] flex items-center justify-center">
+              <span className="text-3xl">{mood?.emoji}</span>
+            </div>
+            <div>
+              <div className="text-lg font-semibold text-white">{mood?.label}</div>
+              <div className="flex items-center gap-2 text-[13px] text-white">
+                <Calendar className="h-4 w-4" />
+                {new Date(selectedEntry.date).toLocaleDateString('en-GB', {
+                  weekday: 'long',
+                  day: 'numeric',
+                  month: 'long',
+                  year: 'numeric',
+                })}
               </div>
-              <div>
-                <div className="text-lg font-semibold text-white">{mood?.label}</div>
-                <div className="flex items-center gap-2 text-sm text-white">
-                  <Calendar className="h-4 w-4" />
-                  {new Date(selectedEntry.date).toLocaleDateString('en-GB', {
-                    weekday: 'long',
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </div>
-                <div className="flex items-center gap-2 text-xs text-white">
-                  <Clock className="h-3 w-3" />
-                  {selectedEntry.time}
-                </div>
+              <div className="flex items-center gap-2 text-[11px] text-white">
+                <Clock className="h-3 w-3" />
+                {selectedEntry.time}
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </FormCard>
 
         {/* Prompt */}
         {selectedEntry.prompt && (
-          <Card className="border-purple-500/20 bg-purple-500/5">
-            <CardContent className="p-4">
-              <div className="flex items-start gap-2">
-                <Sparkles className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <span className="text-xs text-purple-400 font-medium">Prompt</span>
-                  <p className="text-sm text-white mt-0.5">{selectedEntry.prompt}</p>
-                </div>
+          <div className="bg-[hsl(0_0%_12%)] border border-elec-yellow/20 rounded-2xl p-5">
+            <div className="flex items-start gap-2">
+              <Sparkles className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+              <div>
+                <Eyebrow>Prompt</Eyebrow>
+                <p className="mt-1.5 text-[13px] text-white">{selectedEntry.prompt}</p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         )}
 
         {/* Content */}
         {selectedEntry.content && (
-          <Card className="border-white/10 bg-white/5">
-            <CardContent className="p-4">
-              <p className="text-sm text-white whitespace-pre-wrap leading-relaxed">
-                {selectedEntry.content}
-              </p>
-            </CardContent>
-          </Card>
+          <FormCard>
+            <p className="text-[13px] text-white whitespace-pre-wrap leading-relaxed">
+              {selectedEntry.content}
+            </p>
+          </FormCard>
         )}
 
         {/* Gratitude */}
         {(selectedEntry.gratitude?.length || 0) > 0 && (
-          <Card className="border-green-500/20 bg-green-500/5">
-            <CardContent className="p-4">
-              <h3 className="text-sm font-medium text-green-400 mb-3">Gratitude</h3>
-              <div className="space-y-2">
-                {(selectedEntry.gratitude || []).map((item, index) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <span className="text-green-400 mt-0.5">+</span>
-                    <span className="text-sm text-white">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <FormCard eyebrow="Gratitude">
+            <div className="space-y-2">
+              {(selectedEntry.gratitude || []).map((item, index) => (
+                <div key={index} className="flex items-start gap-2">
+                  <span className="text-emerald-400 mt-0.5">+</span>
+                  <span className="text-[13px] text-white">{item}</span>
+                </div>
+              ))}
+            </div>
+          </FormCard>
         )}
 
         {/* Triggers */}
         {(selectedEntry.triggers?.length || 0) > 0 && (
-          <Card className="border-orange-500/20 bg-orange-500/5">
-            <CardContent className="p-4">
-              <h3 className="text-sm font-medium text-orange-400 mb-3">Triggers</h3>
-              <div className="space-y-2">
-                {(selectedEntry.triggers || []).map((item, index) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <span className="text-orange-400 mt-0.5">!</span>
-                    <span className="text-sm text-white">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <FormCard eyebrow="Triggers">
+            <div className="space-y-2">
+              {(selectedEntry.triggers || []).map((item, index) => (
+                <div key={index} className="flex items-start gap-2">
+                  <span className="text-orange-400 mt-0.5">!</span>
+                  <span className="text-[13px] text-white">{item}</span>
+                </div>
+              ))}
+            </div>
+          </FormCard>
         )}
 
         {/* Tags */}
         {(selectedEntry.tags?.length || 0) > 0 && (
           <div className="flex flex-wrap gap-2">
             {(selectedEntry.tags || []).map((tag) => (
-              <Badge key={tag} variant="outline" className="text-xs text-white border-white/20">
+              <span
+                key={tag}
+                className="text-[11px] py-0.5 px-2 rounded-full bg-white/[0.06] text-white border border-white/[0.08]"
+              >
                 {tag}
-              </Badge>
+              </span>
             ))}
           </div>
         )}

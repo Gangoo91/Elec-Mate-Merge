@@ -309,7 +309,7 @@ const FeatureComparison = () => {
         <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
           Compare all features
         </h2>
-        <p className="text-[13px] text-white/70 mt-1">
+        <p className="text-[13px] text-white mt-1">
           Every capability across the five plans. <span className="text-amber-400">Amber ticks</span>{' '}
           mark early-access plans.
         </p>
@@ -354,14 +354,14 @@ const FeatureComparison = () => {
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-white/70">{tier.price}</span>
+                  <span className="text-xs text-white">{tier.price}</span>
                 </div>
-                <span className="text-[11px] text-white/60 tabular-nums">
+                <span className="text-[11px] text-white tabular-nums">
                   {included.length} features
                 </span>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/60 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     isOpen && 'rotate-180'
                   )}
                 />
@@ -385,7 +385,7 @@ const FeatureComparison = () => {
                                   tier.earlyAccess ? 'text-amber-400' : 'text-elec-yellow'
                                 )}
                               />
-                              <span className="text-[13px] text-white/85 leading-snug">
+                              <span className="text-[13px] text-white leading-snug">
                                 {r.label}
                               </span>
                             </li>
@@ -405,7 +405,7 @@ const FeatureComparison = () => {
       <div className="hidden lg:block rounded-2xl border border-white/[0.08] overflow-hidden">
         {/* Header */}
         <div className="grid grid-cols-[minmax(0,1fr)_repeat(5,110px)] bg-white/[0.03] border-b border-white/[0.08]">
-          <div className="px-5 py-4 text-[11px] font-semibold uppercase tracking-wider text-white/60">
+          <div className="px-5 py-4 text-[11px] font-semibold uppercase tracking-wider text-white">
             Feature
           </div>
           {TIERS.map((tier) => (
@@ -425,7 +425,7 @@ const FeatureComparison = () => {
               >
                 {tier.name}
               </div>
-              <div className="text-[11px] text-white/60 mt-0.5">{tier.price}</div>
+              <div className="text-[11px] text-white mt-0.5">{tier.price}</div>
               {tier.earlyAccess && (
                 <div className="text-[10px] font-semibold text-amber-400 mt-1 uppercase tracking-wide">
                   Early access
@@ -448,7 +448,7 @@ const FeatureComparison = () => {
                 key={i}
                 className="grid grid-cols-[minmax(0,1fr)_repeat(5,110px)] border-t border-white/[0.03] hover:bg-white/[0.015] transition-colors"
               >
-                <div className="px-5 py-2.5 text-[13px] text-white/80 leading-snug">{r.label}</div>
+                <div className="px-5 py-2.5 text-[13px] text-white leading-snug">{r.label}</div>
                 {TIERS.map((tier) => (
                   <div
                     key={tier.key}

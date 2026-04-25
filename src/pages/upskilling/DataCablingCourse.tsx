@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  ArrowLeft,
   Cable,
   BookOpen,
   Wifi,
@@ -9,122 +7,103 @@ import {
   FileCheck,
   GraduationCap,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
+import { CourseShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const DataCablingCourse = () => {
-  const modules: Array<{
-    id: number;
-    title: string;
-    description: string;
-    duration: string;
-    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-    isExam?: boolean;
-  }> = [
-    {
-      id: 1,
-      title: 'Introduction to Structured Cabling Systems',
-      description: 'Network infrastructure fundamentals',
-      duration: '45 mins',
-      icon: BookOpen,
-    },
-    {
-      id: 2,
-      title: 'Copper Cabling Standards (Cat5e, Cat6, etc.)',
-      description: 'Copper cable types and performance',
-      duration: '50 mins',
-      icon: Cable,
-    },
-    {
-      id: 3,
-      title: 'Fibre Optics: Types, Termination, and Testing',
-      description: 'Fibre optic systems and installation',
-      duration: '60 mins',
-      icon: Wifi,
-    },
-    {
-      id: 4,
-      title: 'Containment, Labelling, and Installation Best Practices',
-      description: 'Cable management and standards',
-      duration: '55 mins',
-      icon: Package,
-    },
-    {
-      id: 5,
-      title: 'Termination and Certification Procedures',
-      description: 'Testing and certification processes',
-      duration: '50 mins',
-      icon: Wrench,
-    },
-    {
-      id: 6,
-      title: 'TIA/EIA and ISO Cabling Standards Explained',
-      description: 'Industry standards and compliance',
-      duration: '40 mins',
-      icon: FileCheck,
-    },
-    {
-      id: 7,
-      title: 'Mock Exam',
-      description: 'Test your knowledge',
-      duration: '75 mins',
-      icon: GraduationCap,
-      isExam: true,
-    },
-  ];
+const modules = [
+  {
+    id: 1,
+    title: 'Introduction to structured cabling systems',
+    description: 'Network infrastructure fundamentals, topologies and future-proofing.',
+    duration: '45 mins',
+    icon: BookOpen,
+    link: '../data-cabling-module-1',
+  },
+  {
+    id: 2,
+    title: 'Copper cabling standards (Cat5e, Cat6, etc.)',
+    description: 'Twisted pair categories, shielding, performance and Power over Ethernet.',
+    duration: '50 mins',
+    icon: Cable,
+    link: '../data-cabling-module-2',
+  },
+  {
+    id: 3,
+    title: 'Fibre optics: types, termination and testing',
+    description: 'Singlemode vs multimode, connectors, splicing, OTDR and loss budgets.',
+    duration: '60 mins',
+    icon: Wifi,
+    link: '../data-cabling-module-3',
+  },
+  {
+    id: 4,
+    title: 'Containment, labelling and installation best practice',
+    description: 'Cable containment, separation, fire-stopping and rack organisation.',
+    duration: '55 mins',
+    icon: Package,
+    link: '../data-cabling-module-4',
+  },
+  {
+    id: 5,
+    title: 'Termination and certification procedures',
+    description: 'Termination tools, link vs channel testing and fault diagnosis.',
+    duration: '50 mins',
+    icon: Wrench,
+    link: '../data-cabling-module-5',
+  },
+  {
+    id: 6,
+    title: 'TIA/EIA and ISO cabling standards explained',
+    description: 'Class D/E/EA/F, TIA/EIA 568, ISO/IEC 11801 and documentation.',
+    duration: '40 mins',
+    icon: FileCheck,
+    link: '../data-cabling-module-6',
+  },
+  {
+    id: 7,
+    title: 'Mock exam',
+    description: 'Test your data cabling knowledge under timed exam conditions.',
+    duration: '75 mins',
+    icon: GraduationCap,
+    link: '../data-cabling-mock-exam',
+    isExam: true,
+  },
+];
+
+export default function DataCablingCourse() {
+  useSEO({
+    title: 'Data & Communications Cabling | Professional Upskilling | Elec-Mate',
+    description:
+      'Structured cabling, copper categories, fibre optics, termination, certification and TIA/ISO standards for network infrastructure.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Courses
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Course Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Data & Communications Cabling
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Structured cabling systems, fiber optics, and network infrastructure
-          </p>
-        </div>
-
-        {/* Module Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {modules.map((module, index) => (
-            <ModuleCard
-              key={module.id}
-              to={
-                module.isExam ? `../data-cabling-mock-exam` : `../data-cabling-module-${module.id}`
-              }
-              moduleNumber={module.id}
-              title={module.title}
-              description={module.description}
-              duration={module.duration}
-              icon={module.icon}
-              isExam={module.isExam}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <CourseShell
+      backTo="/study-centre/upskilling"
+      backLabel="Professional upskilling"
+      eyebrow="Professional upskilling"
+      title="Data and communications cabling"
+      description="Structured cabling, fibre optics and network infrastructure for electrical professionals."
+      tone="cyan"
+      level="Intermediate"
+      modulesCount={modules.length}
+      pagesCount="200+"
+      totalDuration="6h"
+    >
+      {modules.map((mod, index) => (
+        <ModuleCard
+          key={mod.id}
+          to={mod.link}
+          moduleNumber={mod.id}
+          title={mod.title}
+          description={mod.description}
+          icon={mod.icon}
+          duration={mod.duration}
+          isExam={mod.isExam}
+          index={index}
+        />
+      ))}
+    </CourseShell>
   );
-};
-
-export default DataCablingCourse;
+}

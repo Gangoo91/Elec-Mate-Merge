@@ -1,69 +1,55 @@
-import { Link } from 'react-router-dom';
-import {
-  ArrowLeft,
-  FileText,
-  Clock,
-  Target,
-  BarChart3,
-  CheckCircle,
-  AlertTriangle,
-} from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { FileText, Clock } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: 'Section 1',
-    title: 'Mock Exams',
-    description:
-      'Complete practice examinations that simulate the real Level 2 electrical installation exam conditions and timing.',
+    id: 1,
+    title: 'Mock exams',
     icon: FileText,
+    description: 'Full practice papers that simulate the real Level 2 exam conditions and timing.',
     href: 'section1',
   },
   {
-    number: 'Section 2',
-    title: 'How to Pass Exams – Tips and Techniques',
-    description:
-      'Essential exam strategies, time management techniques, and proven methods to maximise your examination performance.',
+    id: 2,
+    title: 'How to pass exams — tips and techniques',
     icon: Clock,
+    description: 'Exam strategy, time management and proven techniques to maximise your score.',
     href: 'section2',
   },
 ];
 
-const Module8 = () => {
+export default function Module8() {
+  useSEO({
+    title: 'Module 8: Mock Examinations and Assessment | Level 2 Electrical | Elec-Mate',
+    description:
+      'Practice exam papers and exam technique tips to build confidence for the Level 2 electrical installation assessment.',
+  });
+
   return (
-    <div className="bg-[#1a1a1a] p-4 sm:p-6 lg:p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <Link
-            to=".."
-            className="inline-flex items-center text-white hover:text-white transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Level 2 Overview
-          </Link>
-        </div>
-
-        <div className="mb-8">
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
-            Module 8: Mock Examinations & Assessment
-          </h1>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {sections.map((section) => (
-            <ModuleCard
-              key={section.number}
-              number={section.number}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              href={section.href}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo=".."
+      backLabel="Level 2 electrical installation"
+      moduleNumber={8}
+      title="Mock examinations and assessment"
+      description="Practice papers and exam technique tips to build confidence for the real assessment."
+      tone="emerald"
+      sectionsCount={sections.length}
+      prevModuleHref="../module7"
+      prevModuleLabel="Electrical fault finding and diagnosis"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={section.href}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default Module8;
+}

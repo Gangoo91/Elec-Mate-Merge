@@ -22,6 +22,11 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
   ({ width = 320, height = 160, onSignatureChange, initialSignature, disabled = false }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const isDrawingRef = useRef(false);
+    // ELE-864 — track last position so each move segment can be drawn
+    // independently with beginPath + moveTo + lineTo + stroke. Without this
+    // the second stroke wipes the first because beginPath() in onStart
+    // discards the accumulated path.
+    const lastPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
     const debounceRef = useRef<NodeJS.Timeout>();
     const [isEmpty, setIsEmpty] = useState(true);
 
@@ -125,8 +130,9 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
           const { x, y } = getCoords(e);
           ctx.strokeStyle = '#000000';
           ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
+          // ELE-864 — store start position; do NOT beginPath here, segments
+          // are drawn independently in onMove
+          lastPosRef.current = { x, y };
           isDrawingRef.current = true;
         }
       };
@@ -138,8 +144,13 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
         const ctx = canvas.getContext('2d');
         if (ctx) {
           const { x, y } = getCoords(e);
+          // ELE-864 — draw each segment as its own path so subsequent
+          // strokes don't get wiped on the next mousedown
+          ctx.beginPath();
+          ctx.moveTo(lastPosRef.current.x, lastPosRef.current.y);
           ctx.lineTo(x, y);
           ctx.stroke();
+          lastPosRef.current = { x, y };
           setIsEmpty(false);
         }
       };

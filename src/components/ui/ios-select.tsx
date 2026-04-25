@@ -38,7 +38,7 @@ const IOSSelect = React.forwardRef<HTMLButtonElement, IOSSelectProps>(
           className={cn(
             'block text-ios-subhead font-medium',
             'transition-colors duration-ios-fast',
-            isOpen ? 'text-elec-yellow' : 'text-white/80',
+            isOpen ? 'text-elec-yellow' : 'text-white',
             error && 'text-red-400'
           )}
         >

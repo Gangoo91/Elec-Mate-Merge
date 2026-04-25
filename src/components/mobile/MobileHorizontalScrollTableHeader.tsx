@@ -241,6 +241,12 @@ export const MobileHorizontalScrollTableHeader: React.FC<
             )}
           </div>
         </TableHead>
+        {/* ELE-868 — Neutral-Earth column (was missing from UI; PDF already had it) */}
+        <TableHead className={`${headerCell} w-[110px] min-w-[110px] max-w-[110px]`}>
+          <div className="flex items-center justify-center">
+            <span>N-E</span>
+          </div>
+        </TableHead>
 
         {/* Earth Fault Tests Group */}
         <TableHead className={`${headerCell} w-[76px] min-w-[76px] max-w-[76px]`}>

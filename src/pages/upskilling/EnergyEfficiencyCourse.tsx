@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  ArrowLeft,
   BookOpen,
   Gauge,
   Search,
@@ -8,110 +6,93 @@ import {
   BarChart,
   FileCheck,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
+import { CourseShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EnergyEfficiencyCourse = () => {
-  const modules: Array<{
-    id: number;
-    title: string;
-    description: string;
-    duration: string;
-    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-  }> = [
-    {
-      id: 1,
-      title: 'Introduction to Energy Efficiency',
-      description: 'Understanding the fundamentals of energy efficiency',
-      duration: '45 mins',
-      icon: BookOpen,
-    },
-    {
-      id: 2,
-      title: 'Power Quality and Load Analysis',
-      description: 'Power quality issues and load characteristics',
-      duration: '55 mins',
-      icon: Gauge,
-    },
-    {
-      id: 3,
-      title: 'Energy Auditing Methods',
-      description: 'Comprehensive auditing techniques',
-      duration: '60 mins',
-      icon: Search,
-    },
-    {
-      id: 4,
-      title: 'Reducing Demand and Improving Efficiency',
-      description: 'Practical measures for efficiency',
-      duration: '50 mins',
-      icon: TrendingDown,
-    },
-    {
-      id: 5,
-      title: 'Monitoring, Analytics, and Smart Metering',
-      description: 'Advanced monitoring systems',
-      duration: '55 mins',
-      icon: BarChart,
-    },
-    {
-      id: 6,
-      title: 'Regulations, Carbon Compliance, and ROI',
-      description: 'Compliance and financial modelling',
-      duration: '40 mins',
-      icon: FileCheck,
-    },
-  ];
+const modules = [
+  {
+    id: 1,
+    title: 'Introduction to energy efficiency',
+    description: 'The business case, UK carbon targets, identifying waste and key standards.',
+    duration: '45 mins',
+    icon: BookOpen,
+    link: '../energy-efficiency-module-1',
+  },
+  {
+    id: 2,
+    title: 'Power quality and load analysis',
+    description: 'Harmonics, demand patterns, kW vs kVA vs kWh and power monitoring equipment.',
+    duration: '55 mins',
+    icon: Gauge,
+    link: '../energy-efficiency-module-2',
+  },
+  {
+    id: 3,
+    title: 'Energy auditing methods',
+    description: 'Walkthrough surveys, data collection, benchmarking and audit reporting.',
+    duration: '60 mins',
+    icon: Search,
+    link: '../energy-efficiency-module-3',
+  },
+  {
+    id: 4,
+    title: 'Reducing demand and improving efficiency',
+    description: 'LED upgrades, motor efficiency, smart controls and ROI calculators.',
+    duration: '50 mins',
+    icon: TrendingDown,
+    link: '../energy-efficiency-module-4',
+  },
+  {
+    id: 5,
+    title: 'Monitoring, analytics and smart metering',
+    description: 'Sub-metering strategy, energy dashboards, fault alerts and cybersecurity.',
+    duration: '55 mins',
+    icon: BarChart,
+    link: '../energy-efficiency-module-5',
+  },
+  {
+    id: 6,
+    title: 'Regulations, carbon compliance and ROI',
+    description: 'ESOS, SECR, building regs, payback models, incentives and KPI dashboards.',
+    duration: '40 mins',
+    icon: FileCheck,
+    link: '../energy-efficiency-module-6',
+  },
+];
+
+export default function EnergyEfficiencyCourse() {
+  useSEO({
+    title: 'Energy Efficiency & Management | Professional Upskilling | Elec-Mate',
+    description:
+      'Power quality analysis, energy auditing, monitoring, ROI modelling and carbon compliance for electrical professionals.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Courses
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Course Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Energy Efficiency & Management
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Power quality analysis, energy auditing, and optimisation strategies
-          </p>
-        </div>
-
-        {/* Module Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {modules.map((module, index) => (
-            <ModuleCard
-              key={module.id}
-              to={`../energy-efficiency-module-${module.id}`}
-              moduleNumber={module.id}
-              title={module.title}
-              description={module.description}
-              duration={module.duration}
-              icon={module.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <CourseShell
+      backTo="/study-centre/upskilling"
+      backLabel="Professional upskilling"
+      eyebrow="Professional upskilling"
+      title="Energy efficiency and management"
+      description="Power quality analysis, energy auditing and optimisation strategies for net-zero operations."
+      tone="yellow"
+      level="Advanced"
+      modulesCount={modules.length}
+      pagesCount="200+"
+      totalDuration="5h"
+    >
+      {modules.map((mod, index) => (
+        <ModuleCard
+          key={mod.id}
+          to={mod.link}
+          moduleNumber={mod.id}
+          title={mod.title}
+          description={mod.description}
+          icon={mod.icon}
+          duration={mod.duration}
+          index={index}
+        />
+      ))}
+    </CourseShell>
   );
-};
-
-export default EnergyEfficiencyCourse;
+}

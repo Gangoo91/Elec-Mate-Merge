@@ -92,7 +92,7 @@ export const SmartTabs = ({
         {/* Progress strip — hairline rule with count + percent */}
         {showProgress && (
           <div className="flex items-center gap-4 pb-3">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70 shrink-0 tabular-nums">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white shrink-0 tabular-nums">
               {completedCount}/{tabs.length} sections
             </span>
             <div className="flex-1 h-px bg-white/[0.08] relative overflow-hidden">
@@ -101,7 +101,7 @@ export const SmartTabs = ({
                 style={{ width: `${progressPercent}%`, transition: 'width 300ms ease-out' }}
               />
             </div>
-            <span className="text-[10px] tabular-nums text-white/70 shrink-0">{progressPercent}%</span>
+            <span className="text-[10px] tabular-nums text-white shrink-0">{progressPercent}%</span>
           </div>
         )}
 
@@ -127,7 +127,7 @@ export const SmartTabs = ({
                   <span
                     className={cn(
                       'text-[11px] font-semibold tabular-nums tracking-[0.18em] transition-colors',
-                      isActive ? 'text-elec-yellow' : 'text-white/40 group-hover:text-white/70'
+                      isActive ? 'text-elec-yellow' : 'text-white group-hover:text-white'
                     )}
                   >
                     {String(index + 1).padStart(2, '0')}

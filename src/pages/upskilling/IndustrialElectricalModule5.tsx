@@ -1,96 +1,46 @@
-import { ArrowLeft, Search, Zap, TestTube, FileSearch, FileCheck } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Search, Zap, TestTube, FileSearch, FileCheck } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const IndustrialElectricalModule5 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Fault-Finding Strategies and Logic Flow',
-      icon: Search,
-      description: 'Systematic approach to industrial fault diagnosis',
-    },
-    {
-      id: 2,
-      title: 'Common Control Faults (Coils, Relays, Power)',
-      icon: Zap,
-      description: 'Typical control system failures and diagnosis',
-    },
-    {
-      id: 3,
-      title: 'Loop Testing and Continuity',
-      icon: TestTube,
-      description: 'Circuit testing and continuity verification',
-    },
-    {
-      id: 4,
-      title: 'PLC Diagnostics and Alarms',
-      icon: FileSearch,
-      description: 'PLC system diagnostics and alarm analysis',
-    },
-    {
-      id: 5,
-      title: 'Root Cause Analysis and Reporting',
-      icon: FileCheck,
-      description: 'Investigation methods and documentation',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Fault-finding strategies and logic flow', icon: Search, description: 'Systematic approach to industrial fault diagnosis.' },
+  { id: 2, title: 'Common control faults (coils, relays, power)', icon: Zap, description: 'Typical control system failures and diagnosis.' },
+  { id: 3, title: 'Loop testing and continuity', icon: TestTube, description: 'Circuit testing and continuity verification.' },
+  { id: 4, title: 'PLC diagnostics and alarms', icon: FileSearch, description: 'PLC system diagnostics and alarm analysis.' },
+  { id: 5, title: 'Root cause analysis and reporting', icon: FileCheck, description: 'Investigation methods and documentation.' },
+];
+
+export default function IndustrialElectricalModule5() {
+  useSEO({
+    title: 'Module 5: Industrial Fault Finding | Industrial Electrical | Elec-Mate',
+    description: 'Systematic fault-finding, common control faults, loop testing, PLC diagnostics and root cause analysis.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/industrial-electrical-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Industrial Electrical Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 5</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">65 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Industrial Fault Finding and Troubleshooting
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Fault diagnosis, troubleshooting, and root cause analysis
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../industrial-electrical-module-5-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../industrial-electrical-course"
+      backLabel="Industrial electrical systems"
+      moduleNumber={5}
+      title="Industrial fault finding and troubleshooting"
+      description="Diagnose, test and document — a structured approach to industrial fault finding."
+      tone="orange"
+      sectionsCount={sections.length}
+      duration="65 mins"
+      prevModuleHref="../industrial-electrical-module-4"
+      prevModuleLabel="PLC basics and system integration"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../industrial-electrical-module-5-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default IndustrialElectricalModule5;
+}

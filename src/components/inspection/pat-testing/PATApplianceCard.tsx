@@ -30,7 +30,7 @@ const PATApplianceCard: React.FC<PATApplianceCardProps> = ({ appliance, index, o
   const statusBadge =
     result === 'pass' ? { label: 'Pass', style: 'bg-green-500/15 text-green-400' }
     : result === 'fail' ? { label: 'Fail', style: 'bg-red-500/15 text-red-400' }
-    : { label: 'Untested', style: 'bg-white/[0.08] text-white/60' };
+    : { label: 'Untested', style: 'bg-white/[0.08] text-white' };
 
   // Build subtitle
   const subtitleParts: string[] = [];

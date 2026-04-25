@@ -1,97 +1,66 @@
-import { ArrowLeft, FileText, Clock, Target, BarChart3, CheckCircle, Zap } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { FileText, Clock, Target, BarChart3 } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: 'Section 1',
-    title: 'Mock Exams',
-    description: 'Practice exams and timed tests to prepare for real assessments',
+    id: 1,
+    title: 'Mock exams',
+    description: 'Practice exams and timed tests to prepare for real assessments.',
     icon: FileText,
-    href: '../level3-module8-section1',
   },
   {
-    number: 'Section 2',
-    title: 'Practical Help',
-    description: 'Practical assessment guides and techniques for hands-on assessments',
+    id: 2,
+    title: 'Practical help',
+    description: 'Practical assessment guides and techniques for hands-on assessments.',
     icon: Target,
-    href: '../level3-module8-section2',
   },
   {
-    number: 'Section 3',
-    title: 'Exam Tips',
-    description: 'Time management, memory techniques and stress management strategies',
+    id: 3,
+    title: 'Exam tips',
+    description: 'Time management, memory techniques and stress management strategies.',
     icon: Clock,
-    href: '../level3-module8-section3',
   },
   {
-    number: 'Section 4',
-    title: 'Results Review',
-    description: 'Score analysis and progress tracking to identify areas for improvement',
+    id: 4,
+    title: 'Results review',
+    description: 'Score analysis and progress tracking to identify areas for improvement.',
     icon: BarChart3,
-    href: '../level3-module8-section4',
   },
 ];
 
-const learningOutcomes = [
-  'Practice with realistic mock examinations under timed conditions',
-  'Develop effective practical assessment techniques',
-  'Apply time management strategies for exam success',
-  'Use memory techniques to retain key information',
-  'Manage exam stress and maintain focus',
-  'Track progress and identify areas requiring improvement',
-];
-
-const Level3Module8 = () => {
-  useSEO(
-    'Module 8: Mock Examinations & Assessment - Level 3 Electrical Course',
-    'Comprehensive mock examinations, practical guidance, and exam techniques for Level 3 electrical installation qualifications'
-  );
+export default function Level3Module8() {
+  useSEO({
+    title: 'Module 8: Mock Exams and Assessment | Level 3 Electrical Installation | Elec-Mate',
+    description:
+      'Mock examinations, practical assessment guidance, exam tips and results review for the Level 3 electrical installation qualification.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Level 3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Sections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {sections.map((section, index) => (
-                <ModuleCard
-                  key={index}
-                  number={section.number}
-                  title={section.title}
-                  description={section.description}
-                  icon={section.icon}
-                  href={section.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../level3"
+      backLabel="Level 3 electrical installation"
+      moduleNumber={8}
+      title="Mock exams and assessment"
+      description="Mock examinations, practical assessment guidance, exam techniques and results review for the Level 3 qualification."
+      tone="blue"
+      sectionsCount={sections.length}
+      duration="60 mins"
+      prevModuleHref="../level3-module7"
+      prevModuleLabel="Career awareness and professional development"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../level3-module8-section${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default Level3Module8;
+}

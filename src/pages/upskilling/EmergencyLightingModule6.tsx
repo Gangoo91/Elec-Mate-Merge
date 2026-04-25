@@ -1,90 +1,66 @@
-import { ArrowLeft, FileText, Shield, ClipboardCheck, FileCheck } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { FileText, Shield, ClipboardCheck, FileCheck } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EmergencyLightingModule6 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Key Clauses from BS 5266-1 and EN 1838',
-      icon: FileText,
-      description: 'Essential standards and regulatory requirements',
-    },
-    {
-      id: 2,
-      title: 'Integration with Fire Safety Regulations',
-      icon: Shield,
-      description: 'Coordination with fire safety systems and regulations',
-    },
-    {
-      id: 3,
-      title: 'Emergency Lighting in Risk Assessments',
-      icon: ClipboardCheck,
-      description: 'Risk assessment integration and considerations',
-    },
-    {
-      id: 4,
-      title: 'Documentation for Audits and Fire Authorities',
-      icon: FileCheck,
-      description: 'Compliance documentation and authority requirements',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Key clauses from BS 5266-1 and EN 1838',
+    icon: FileText,
+    description: 'Essential standards clauses and the regulatory requirements they impose.',
+  },
+  {
+    id: 2,
+    title: 'Integration with fire safety regulations',
+    icon: Shield,
+    description: 'Coordination with fire safety systems and the wider regulations.',
+  },
+  {
+    id: 3,
+    title: 'Emergency lighting in risk assessments',
+    icon: ClipboardCheck,
+    description: 'How emergency lighting feeds into building risk assessments.',
+  },
+  {
+    id: 4,
+    title: 'Documentation for audits and fire authorities',
+    icon: FileCheck,
+    description: 'Compliance documentation expected by auditors and fire authorities.',
+  },
+];
+
+export default function EmergencyLightingModule6() {
+  useSEO({
+    title: 'Module 6: Regulatory Compliance & BS 5266 | Emergency Lighting | Elec-Mate',
+    description:
+      'BS 5266-1, EN 1838, fire safety integration, risk assessments and audit-ready documentation.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/emergency-lighting-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Emergency Lighting Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 6</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">4 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">40 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Regulatory Compliance and BS 5266
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Standards compliance and regulatory documentation
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../emergency-lighting-module-6-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../emergency-lighting-course"
+      backLabel="Emergency lighting systems"
+      moduleNumber={6}
+      title="Regulatory compliance and BS 5266"
+      description="Standards compliance and the documentation regulators expect."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="40 mins"
+      prevModuleHref="../emergency-lighting-module-5"
+      prevModuleLabel="Installation, testing and maintenance"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../emergency-lighting-module-6-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EmergencyLightingModule6;
+}

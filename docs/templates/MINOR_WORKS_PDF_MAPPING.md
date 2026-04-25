@@ -2,11 +2,24 @@
 
 ## Overview
 
-This document maps the BS 7671:2018+A3:2024 Minor Electrical Installation Works Certificate (MEIWC) fields between:
+This document maps the **BS 7671:2018+A4:2026** Minor Electrical Installation Works Certificate (MEIWC) fields between:
 
-- The official IET model form (28th March 2022)
+- The official IET model form (15 April 2026)
 - The elec-mate React app form fields
 - The PDF Monkey template variables
+
+## A4:2026 changes from A3:2024
+
+- **Earthing arrangements** split into 6 distinct values: TN-S, TN-C-S (PME), **TN-C-S (PNB)** [new], TT, TN-C, IT
+- **Reg 133.1.2** added to the cited departures list (Section A item 4)
+- **"Comments on (including any defects observed in)..."** wording (Section A item 5)
+- **AFDD satisfactory test button operation** checkbox (Section D) + "Not all AFDDs have a test button" note
+- **SPD functionality confirmed** checkbox (Section D) + "Not all SPDs have visible functionality indication" note
+- **Reference method** footnote: "Table 4A2 of Appendix 4 of BS 7671:2018+A4:2026"
+- **AFDD inspection (Reg 421.1.7)** added to inspection checklist
+- **Luminaire RCD protection (Reg 411.3.4)** added to inspection checklist
+- **Declaration text** dynamic amendment date via `{{ bs_amendment_date }}` (default "15 April 2026")
+- Page 3 Guidance for Recipients refreshed: 6-monthly AFDD test, SPD status indicator check, alternative-supply warning
 
 ## Template Syntax
 

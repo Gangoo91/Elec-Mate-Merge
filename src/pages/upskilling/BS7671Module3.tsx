@@ -1,102 +1,80 @@
-import { ArrowLeft, Grid, Calculator, Thermometer, Zap, Shield, TrendingUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Grid, Calculator, Thermometer, Zap, Shield, TrendingUp } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BS7671Module3 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Supply Systems – TN-S, TN-C-S, TT, IT',
-      icon: Grid,
-      description: 'Understanding earthing arrangements and their safety implications',
-    },
-    {
-      id: 2,
-      title: 'Maximum Demand, Diversity, and Load Profiles',
-      icon: Calculator,
-      description: 'Load calculations, diversity factors, and system design principles',
-    },
-    {
-      id: 3,
-      title: 'External Influences and Installation Conditions',
-      icon: Thermometer,
-      description: 'Environmental conditions affecting material selection and installation methods',
-    },
-    {
-      id: 4,
-      title: 'Voltage Drop and System Design Limits',
-      icon: Zap,
-      description: 'Calculating and managing voltage drop within BS 7671 limits',
-    },
-    {
-      id: 5,
-      title: 'Earthing Arrangements and Protective Measures Selection',
-      icon: Shield,
-      description: 'Matching earthing systems with appropriate protection strategies',
-    },
-    {
-      id: 6,
-      title: 'Amendment 3 Current Requirements',
-      icon: TrendingUp,
-      description: 'Latest bidirectional protection and renewable energy integration requirements',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Supply systems — TN-S, TN-C-S, TT, IT',
+    icon: Grid,
+    description: 'Earthing arrangements and their safety implications for installation design.',
+  },
+  {
+    id: 2,
+    title: 'Maximum demand, diversity and load profiles',
+    icon: Calculator,
+    description: 'Load calculations, diversity factors and system design principles.',
+  },
+  {
+    id: 3,
+    title: 'External influences and installation conditions',
+    icon: Thermometer,
+    description: 'Environmental conditions affecting material selection and installation methods.',
+  },
+  {
+    id: 4,
+    title: 'Voltage drop and system design limits',
+    icon: Zap,
+    description: 'Calculating and managing voltage drop within BS 7671 limits.',
+  },
+  {
+    id: 5,
+    title: 'Earthing arrangements and protective measures selection',
+    icon: Shield,
+    description: 'Matching earthing systems with appropriate protection strategies.',
+  },
+  {
+    id: 6,
+    title: 'Amendment 3 current requirements',
+    icon: TrendingUp,
+    description: 'Latest bidirectional protection and renewable energy integration requirements.',
+  },
+];
+
+export default function BS7671Module3() {
+  useSEO({
+    title: 'Module 3: General Characteristics & Selection | BS 7671 | Elec-Mate',
+    description:
+      'Supply systems, diversity, voltage drop, external influences and earthing arrangements per BS 7671.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/bs7671-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to BS7671 Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">55 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            General Characteristics & Selection Criteria
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            System design fundamentals, earthing arrangements, and selection criteria
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../bs7671-module-3-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../bs7671-course"
+      backLabel="18th edition (BS 7671)"
+      moduleNumber={3}
+      title="General characteristics and selection criteria"
+      description="System design fundamentals — earthing arrangements, diversity and voltage drop."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="55 mins"
+      prevModuleHref="../bs7671-module-2"
+      prevModuleLabel="Definitions and key terminology"
+      nextModuleHref="../bs7671-module-4"
+      nextModuleLabel="Protection for safety"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../bs7671-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default BS7671Module3;
+}

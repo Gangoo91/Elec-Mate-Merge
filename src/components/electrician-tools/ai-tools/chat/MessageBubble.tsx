@@ -67,7 +67,7 @@ export const MessageBubble = memo(function MessageBubble({
           </div>
         </div>
         {timeLabel && !isStreaming && (
-          <div className="mt-1 text-[11px] text-white/40">{timeLabel}</div>
+          <div className="mt-1 text-[11px] text-white">{timeLabel}</div>
         )}
       </motion.div>
     );
@@ -98,7 +98,7 @@ export const MessageBubble = memo(function MessageBubble({
           >
             {isCopied ? 'Copied' : 'Copy'}
           </button>
-          {timeLabel && <span className="text-white/40">{timeLabel}</span>}
+          {timeLabel && <span className="text-white">{timeLabel}</span>}
         </div>
       )}
     </motion.div>

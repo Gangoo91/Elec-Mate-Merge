@@ -101,7 +101,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
               placeholder="Search by name, email, phone..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.12] text-[15px] text-white placeholder:text-white/60 outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 touch-manipulation"
+              className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.12] text-[15px] text-white placeholder:text-white outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 touch-manipulation"
             />
           </div>
 

@@ -199,7 +199,7 @@ const EmergencyLightingTabNavigation: React.FC<EmergencyLightingTabNavigationPro
         <DialogContent className="bg-[#1a1a1e] border-white/[0.08] text-white">
           <DialogHeader>
             <DialogTitle className="text-white">Email Certificate</DialogTitle>
-            <DialogDescription className="text-white/70">
+            <DialogDescription className="text-white">
               The certificate will be generated and sent as a PDF attachment.
             </DialogDescription>
           </DialogHeader>

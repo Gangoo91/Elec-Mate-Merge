@@ -10,7 +10,7 @@ const SupportCallout = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-[hsl(0_0%_12%)]">
       <CardContent className="p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div>
           <h3 className="text-lg font-medium mb-1">Need immediate support?</h3>

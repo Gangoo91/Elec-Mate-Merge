@@ -673,7 +673,7 @@ const ElecIdQualifications = () => {
                         <CollapsibleContent>
                           <div className="mt-1 ml-7 mr-3 pl-3 border-l border-white/[0.06] space-y-2 py-3">
                             <div className="flex items-center gap-2 text-xs">
-                              <span className="text-white/55">Achieved</span>
+                              <span className="text-white">Achieved</span>
                               <span className="text-white font-medium">
                                 {qual.dateAchieved
                                   ? new Date(qual.dateAchieved).toLocaleDateString('en-GB', {
@@ -686,7 +686,7 @@ const ElecIdQualifications = () => {
                             </div>
 
                             <div className="flex items-center gap-2 text-xs">
-                              <span className="text-white/55">Expires</span>
+                              <span className="text-white">Expires</span>
                               <span
                                 className={cn(
                                   'font-medium',
@@ -709,7 +709,7 @@ const ElecIdQualifications = () => {
 
                             {qual.certificateNumber && (
                               <div className="flex items-center gap-2 text-xs">
-                                <span className="text-white/55">Cert no.</span>
+                                <span className="text-white">Cert no.</span>
                                 <span className="text-white font-mono font-medium">
                                   {qual.certificateNumber}
                                 </span>

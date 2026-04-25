@@ -61,7 +61,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
         style: baseStyle,
         classNames: {
           title: '!text-white !font-semibold !text-[15px] !leading-snug',
-          description: '!text-white/60 !text-[13px] !leading-snug !mt-0.5',
+          description: '!text-white !text-[13px] !leading-snug !mt-0.5',
           icon: '!hidden',
         },
       }}

@@ -42,7 +42,7 @@ export function PeerChatActions({
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-white/80 hover:text-foreground"
+            className="h-8 w-8 text-white hover:text-white"
           >
             <MoreVertical className="h-5 w-5" />
             <span className="sr-only">Chat actions</span>

@@ -73,7 +73,7 @@ export const MobileSelectPicker = ({
               <div className="flex flex-col">
                 <span>{option.label}</span>
                 {option.description && (
-                  <span className="text-xs text-white/60">{option.description}</span>
+                  <span className="text-xs text-white">{option.description}</span>
                 )}
               </div>
             </SelectItem>

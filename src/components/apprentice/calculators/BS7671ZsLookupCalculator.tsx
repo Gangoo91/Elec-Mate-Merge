@@ -334,7 +334,7 @@ const BS7671ZsLookupCalculator = () => {
           </div>
           <div>
             <h2 className="text-lg font-semibold text-white">BS 7671 Zs Lookup</h2>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Tables 41.2-41.5 Maximum Earth Fault Loop Impedance
             </p>
           </div>

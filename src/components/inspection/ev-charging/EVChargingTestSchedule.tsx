@@ -447,7 +447,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
               <MobileSelectPicker
                 label="Phase Rotation"
                 value={testResults.phaseRotation || ''}
-                onChange={(value) => updateTestResult('phaseRotation', value)}
+                onValueChange={(value) => updateTestResult('phaseRotation', value)}
                 options={[
                   { value: 'L1-L2-L3', label: 'L1-L2-L3 (Correct)' },
                   { value: 'L1-L3-L2', label: 'L1-L3-L2 (Reversed)' },
@@ -693,7 +693,7 @@ const EVChargingTestSchedule: React.FC<EVChargingTestScheduleProps> = ({ formDat
             <MobileSelectPicker
               label="Load Management Type"
               value={formData.loadManagementType || ''}
-              onChange={(value) => onUpdate('loadManagementType', value)}
+              onValueChange={(value) => onUpdate('loadManagementType', value)}
               options={[
                 { value: 'ct-clamp', label: 'CT Clamp' },
                 { value: 'dynamic', label: 'Dynamic Load Balancing' },

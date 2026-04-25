@@ -711,7 +711,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               }}
               className={cn(
                 'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 touch-manipulation active:scale-[0.98] transition-colors',
-                showSearch ? 'text-elec-yellow bg-elec-yellow/10' : 'text-white/60 hover:text-white hover:bg-white/10'
+                showSearch ? 'text-elec-yellow bg-elec-yellow/10' : 'text-white hover:text-white hover:bg-white/10'
               )}
             >
               <Search className="h-4 w-4" />
@@ -720,7 +720,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             {/* Overflow Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors">
+                <button className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors">
                   <MoreVertical className="h-4 w-4" />
                 </button>
               </DropdownMenuTrigger>
@@ -786,7 +786,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 className="px-4 pb-3 overflow-hidden"
               >
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     placeholder="Search by name, address, or certificate..."
                     value={searchQuery}
@@ -798,7 +798,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 touch-manipulation text-white/40"
+                      className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 touch-manipulation text-white"
                       onClick={() => {
                         navigator.vibrate?.(10);
                         setSearchQuery('');
@@ -1136,7 +1136,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
               <SheetTitle className="text-white text-base font-semibold">Link to Customer</SheetTitle>
               {reportToLink && (
-                <p className="text-xs text-white/40 mt-0.5">
+                <p className="text-xs text-white mt-0.5">
                   Certificate <span className="font-mono text-elec-yellow">{reportToLink.report_id.split('-').slice(-1)[0]}</span>
                 </p>
               )}
@@ -1153,7 +1153,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 <CommandList className="flex-1 max-h-none overflow-y-auto">
                   <CommandEmpty>
                     <div className="py-8 text-center">
-                      <p className="text-sm text-white/40">
+                      <p className="text-sm text-white">
                         {isLoadingCustomers ? 'Loading customers...' : 'No customers found'}
                       </p>
                     </div>
@@ -1174,7 +1174,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                           <div className="flex-1 min-w-0">
                             <p className="font-semibold text-[13px] text-white truncate">{customer.name}</p>
                             {customer.address && (
-                              <p className="text-[11px] text-white/40 truncate">{customer.address}</p>
+                              <p className="text-[11px] text-white truncate">{customer.address}</p>
                             )}
                           </div>
                           <ChevronRight className="h-4 w-4 text-white/20 flex-shrink-0" />
@@ -1189,7 +1189,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             {isLinking && (
               <div className="flex items-center justify-center gap-2 py-3 border-t border-white/[0.06]">
                 <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
-                <span className="text-sm text-white/60">Linking...</span>
+                <span className="text-sm text-white">Linking...</span>
               </div>
             )}
           </div>

@@ -113,7 +113,7 @@ const QuickValueInput: React.FC<QuickValueInputProps> = ({
     >
       {/* Label */}
       <div className="flex items-center justify-between mb-3">
-        <span className="text-sm font-medium text-white/80">{label}</span>
+        <span className="text-sm font-medium text-white">{label}</span>
         {unit && <span className="text-xs text-white/50">{unit}</span>}
       </div>
 
@@ -170,7 +170,7 @@ const QuickValueInput: React.FC<QuickValueInputProps> = ({
               'touch-manipulation active:scale-95',
               localValue === preset
                 ? 'bg-elec-yellow text-black'
-                : 'bg-white/10 text-white/80 hover:bg-white/20'
+                : 'bg-white/10 text-white hover:bg-white/20'
             )}
           >
             {preset}

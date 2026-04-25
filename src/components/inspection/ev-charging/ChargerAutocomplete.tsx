@@ -176,7 +176,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             )}
           </div>
         ) : (
-          <span className="text-sm text-white/40">Search UK chargers...</span>
+          <span className="text-sm text-white">Search UK chargers...</span>
         )}
       </div>
       {selectedCharger && (
@@ -185,7 +185,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
           onClick={handleClear}
           className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation flex-shrink-0"
         >
-          <X className="h-3.5 w-3.5 text-white/40" />
+          <X className="h-3.5 w-3.5 text-white" />
         </button>
       )}
     </button>

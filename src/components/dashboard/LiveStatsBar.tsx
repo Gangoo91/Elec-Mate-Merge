@@ -15,7 +15,7 @@ import {
   CheckCircle,
   AlertCircle,
 } from 'lucide-react';
-import { useDashboardData } from '@/hooks/useDashboardData';
+import { useSharedDashboardData, useDashboardData } from '@/hooks/useDashboardData';
 import { StatCard, StatVariant } from './StatCard';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -125,7 +125,7 @@ const itemVariants = {
 };
 
 export function LiveStatsBar() {
-  const dashboardData = useDashboardData();
+  const dashboardData = useSharedDashboardData();
   const navigate = useNavigate();
   const { profile } = useAuth();
   const { isLoading } = dashboardData;
@@ -202,7 +202,7 @@ export function LiveStatsBar() {
  * Compact version for secondary placement
  */
 export function LiveStatsCompact() {
-  const { business, learning, certificates } = useDashboardData();
+  const { business, learning, certificates } = useSharedDashboardData();
 
   return (
     <div className="flex flex-wrap gap-2">

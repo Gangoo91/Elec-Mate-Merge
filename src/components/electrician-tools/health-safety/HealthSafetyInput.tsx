@@ -327,7 +327,7 @@ export const HealthSafetyInput = ({
 
               {/* Customer Selector */}
               <div className="space-y-2">
-                <label className="text-[13px] font-medium text-white/70 flex items-center gap-2">
+                <label className="text-[13px] font-medium text-white flex items-center gap-2">
                   <Users className="h-3.5 w-3.5" />
                   Select Customer
                 </label>

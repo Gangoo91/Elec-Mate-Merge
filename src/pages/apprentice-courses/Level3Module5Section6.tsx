@@ -1,34 +1,33 @@
-import { ArrowLeft, AlertTriangle, Search, Wrench, RefreshCw, Zap } from 'lucide-react';
+import { AlertTriangle, Search, Wrench, RefreshCw } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '6.1',
-    title: 'Dealing with Unexpected Results',
+    title: 'Dealing with unexpected results',
     description: 'Procedures for handling unexpected test results and anomalies',
     icon: AlertTriangle,
     href: '../level3-module5-section6-1',
   },
   {
     number: '6.2',
-    title: 'Investigating Faults Identified During Testing',
+    title: 'Investigating faults identified during testing',
     description: 'Methods for investigating and diagnosing faults discovered during testing',
     icon: Search,
     href: '../level3-module5-section6-2',
   },
   {
     number: '6.3',
-    title: 'Rectification Procedures',
+    title: 'Rectification procedures',
     description: 'Procedures for rectifying faults and defects found during inspection and testing',
     icon: Wrench,
     href: '../level3-module5-section6-3',
   },
   {
     number: '6.4',
-    title: 'Re-testing and Updating Records',
+    title: 'Re-testing and updating records',
     description: 'Re-testing procedures after rectification and updating documentation',
     icon: RefreshCw,
     href: '../level3-module5-section6-4',
@@ -42,46 +41,29 @@ const Level3Module5Section6 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 5
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module5"
+      backLabel="Module 5"
+      moduleNumber={5}
+      sectionNumber={6}
+      title="Faults found during testing"
+      description="Procedures for dealing with faults discovered during testing and inspection."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../level3-module5-section5"
+      prevSectionLabel="Certification and reporting"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

@@ -48,7 +48,7 @@ const DefectObservationsList = ({
   if (defectObservations.length === 0) {
     return (
       <div className="text-center py-8 border-2 border-dashed border-white/[0.06] rounded-xl">
-        <p className="text-white/40 text-sm mb-1">No observations recorded</p>
+        <p className="text-white text-sm mb-1">No observations recorded</p>
         <p className="text-white/25 text-xs">
           Complete the inspection checklist to auto-populate observations
         </p>

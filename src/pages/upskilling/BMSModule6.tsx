@@ -1,110 +1,80 @@
-import {
-  ArrowLeft,
-  AlertTriangle,
-  TrendingUp,
-  Monitor,
-  Zap,
-  Shield,
-  Smartphone,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { AlertTriangle, TrendingUp, Monitor, Zap, Shield, Smartphone } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BMSModule6 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Alarm Priorities and Escalation Logic',
-      icon: AlertTriangle,
-      description: 'Alarm management and escalation procedures',
-    },
-    {
-      id: 2,
-      title: 'Trend Logging and Historical Data Collection',
-      icon: TrendingUp,
-      description: 'Data logging and historical analysis',
-    },
-    {
-      id: 3,
-      title: 'BMS Dashboards and Visualisation Platforms',
-      icon: Monitor,
-      description: 'User interfaces and data visualization',
-    },
-    {
-      id: 4,
-      title: 'Event Triggers and Auto-Reporting',
-      icon: Zap,
-      description: 'Automated reporting and event handling',
-    },
-    {
-      id: 5,
-      title: 'Integration with Fire Panels, Emergency Shutdowns',
-      icon: Shield,
-      description: 'Safety system integration',
-    },
-    {
-      id: 6,
-      title: 'Remote Monitoring and Fault Alerts',
-      icon: Smartphone,
-      description: 'Remote access and notification systems',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Alarm priorities and escalation logic',
+    icon: AlertTriangle,
+    description: 'Alarm classification, priorities and escalation procedures.',
+  },
+  {
+    id: 2,
+    title: 'Trend logging and historical data collection',
+    icon: TrendingUp,
+    description: 'Data logging strategies and historical trend analysis.',
+  },
+  {
+    id: 3,
+    title: 'BMS dashboards and visualisation platforms',
+    icon: Monitor,
+    description: 'User interfaces, mimics and data visualisation patterns.',
+  },
+  {
+    id: 4,
+    title: 'Event triggers and auto-reporting',
+    icon: Zap,
+    description: 'Automated reports, triggered events and notification rules.',
+  },
+  {
+    id: 5,
+    title: 'Integration with fire panels and emergency shutdowns',
+    icon: Shield,
+    description: 'Safety system integration and interlocks for life-safety events.',
+  },
+  {
+    id: 6,
+    title: 'Remote monitoring and fault alerts',
+    icon: Smartphone,
+    description: 'Remote access, mobile alerts and out-of-hours notification.',
+  },
+];
+
+export default function BMSModule6() {
+  useSEO({
+    title: 'Module 6: Alarms, Monitoring & Data Logging | BMS Course | Elec-Mate',
+    description:
+      'Alarm management, trend logging, dashboards, event triggers and remote monitoring for building management systems.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/bms-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to BMS Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 6</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Alarms, Monitoring, and Data Logging
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            System monitoring, alarms, and data management
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../bms-module-6-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../bms-course"
+      backLabel="Building management systems"
+      moduleNumber={6}
+      title="Alarms, monitoring and data logging"
+      description="System monitoring, alarm management and historical data analysis."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      prevModuleHref="../bms-module-5"
+      prevModuleLabel="Communication protocols: BACnet, Modbus, KNX"
+      nextModuleHref="../bms-module-7"
+      nextModuleLabel="BMS design, programming and commissioning"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../bms-module-6-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default BMSModule6;
+}

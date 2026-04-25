@@ -1,28 +1,27 @@
-import { ArrowLeft, FileCheck, BookOpen, List, Shield, FileText, Zap } from 'lucide-react';
+import { FileCheck, BookOpen, List, Shield, FileText } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '1.1',
-    title: 'Purpose of Inspection and Testing',
+    title: 'Purpose of inspection and testing',
     description: 'Initial verification vs periodic inspection and their respective purposes',
     icon: FileCheck,
     href: '../level3-module5-section1-1',
   },
   {
     number: '1.2',
-    title: 'BS 7671 Requirements and Part 6',
+    title: 'BS 7671 requirements and Part 6',
     description:
-      'Understanding the regulatory requirements for inspection and testing under BS7671',
+      'Understanding the regulatory requirements for inspection and testing under BS 7671',
     icon: BookOpen,
     href: '../level3-module5-section1-2',
   },
   {
     number: '1.3',
-    title: 'Sequence of Inspection and Testing (GN3 Guidance)',
+    title: 'Sequence of inspection and testing (GN3 guidance)',
     description:
       'Following the correct sequence for inspection and testing as outlined in Guidance Note 3',
     icon: List,
@@ -30,14 +29,14 @@ const subsections = [
   },
   {
     number: '1.4',
-    title: 'Safety Precautions and Risk Assessment Before Testing',
+    title: 'Safety precautions and risk assessment before testing',
     description: 'Essential safety procedures and risk assessments required before testing begins',
     icon: Shield,
     href: '../level3-module5-section1-4',
   },
   {
     number: '1.5',
-    title: 'Documentation and Certification Requirements',
+    title: 'Documentation and certification requirements',
     description:
       'Understanding the documentation and certification requirements for inspection and testing',
     icon: FileText,
@@ -52,46 +51,29 @@ const Level3Module5Section1 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 5
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module5"
+      backLabel="Module 5"
+      moduleNumber={5}
+      sectionNumber={1}
+      title="Principles of inspection and testing"
+      description="Fundamental principles, requirements and procedures for electrical inspection and testing."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      nextSectionHref="../level3-module5-section2"
+      nextSectionLabel="Inspection procedures"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

@@ -152,7 +152,7 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
               {/* Ring final tests (if applicable) */}
               {editedCircuit.circuitType?.toLowerCase().includes('ring') && (
                 <div className="space-y-3 pt-4 border-t border-white/10">
-                  <h4 className="text-sm font-medium text-white/60">Ring Final Tests</h4>
+                  <h4 className="text-sm font-medium text-white">Ring Final Tests</h4>
                   <div className="grid grid-cols-3 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-xs text-white/50">Ring R1</Label>
@@ -377,7 +377,7 @@ const CircuitEditSheet: React.FC<CircuitEditSheetProps> = ({
               {(editedCircuit.protectiveDeviceType === 'RCBO' ||
                 editedCircuit.protectiveDeviceType === 'RCD') && (
                 <div className="space-y-3 pt-4 border-t border-white/10">
-                  <h4 className="text-sm font-medium text-white/60">RCD Details</h4>
+                  <h4 className="text-sm font-medium text-white">RCD Details</h4>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-xs text-white/50">RCD Type</Label>

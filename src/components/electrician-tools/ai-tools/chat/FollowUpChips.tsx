@@ -51,8 +51,8 @@ export const FollowUpChips = memo(function FollowUpChips({
       transition={{ delay: 0.2, duration: 0.25 }}
       className={cn('space-y-2 min-w-0', className)}
     >
-      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
-        You might also ask
+      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+        Suggested follow-ups
       </div>
       {/* Stacked rows on mobile (chip pills on desktop). Each row wraps text,
           clamps to the container width, and can't push the page sideways. */}
@@ -68,7 +68,7 @@ export const FollowUpChips = memo(function FollowUpChips({
               onClick={() => handleSelect(question)}
               className={cn(
                 'group w-full sm:w-auto max-w-full min-w-0 text-left',
-                'text-[13px] leading-snug text-white/90 hover:text-white',
+                'text-[13px] leading-snug text-white hover:text-white',
                 'bg-transparent sm:bg-white/[0.04] sm:hover:bg-white/[0.08]',
                 'border-0 sm:border sm:border-white/[0.08] sm:rounded-full',
                 'border-t border-white/[0.06] sm:border-t-0',

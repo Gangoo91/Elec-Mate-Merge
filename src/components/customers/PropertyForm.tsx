@@ -179,7 +179,7 @@ export const PropertyForm = ({ open, onOpenChange, property, onSave }: PropertyF
             >
               <StickyNote className="h-3 w-3" />
               Notes{' '}
-              <span className="normal-case tracking-normal text-white/60">
+              <span className="normal-case tracking-normal text-white">
                 (optional)
               </span>
             </Label>

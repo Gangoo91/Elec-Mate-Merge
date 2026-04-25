@@ -28,10 +28,15 @@ interface Message {
   content: string;
   timestamp?: Date;
   followUpQuestions?: string[];
+  /** First attached image — kept for back-compat with old chat history. */
   imageUrl?: string;
+  /** All attached images on the user message (max 5). */
+  imageUrls?: string[];
   /** Regulation numbers cited in this answer (populated post-stream). */
   citedRegulations?: string[];
 }
+
+const MAX_IMAGES_PER_MESSAGE = 5;
 
 const STREAM_STAGES = [
   'Understanding…',
@@ -93,8 +98,8 @@ export default function ConversationalSearch() {
   const [input, setInput] = useState('');
   const [isStreaming, setIsStreaming] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isCompressing, setIsCompressing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -115,7 +120,8 @@ export default function ConversationalSearch() {
     answer: string;
     question: string;
     cited: string[];
-  }>({ open: false, answer: '', question: '', cited: [] });
+    imageUrls: string[];
+  }>({ open: false, answer: '', question: '', cited: [], imageUrls: [] });
 
   // Streaming-status chip. `stage` is either a value emitted from the
   // backend (future-friendly) or an index into STREAM_STAGES.
@@ -192,14 +198,19 @@ export default function ConversationalSearch() {
     };
   }, []);
 
-  // Image handling
+  // Image handling — supports up to MAX_IMAGES_PER_MESSAGE photos per turn.
+  // Each call APPENDS to the current set (deliberately — sparkies often add
+  // extra angles after a first shot). At the cap, we toast and ignore.
   const handleImageSelect = useCallback(
     async (file: File) => {
       if (!isImageFile(file)) {
         toast.error('Please select an image');
         return;
       }
-
+      if (selectedImages.length >= MAX_IMAGES_PER_MESSAGE) {
+        toast.message(`Up to ${MAX_IMAGES_PER_MESSAGE} photos per question`);
+        return;
+      }
       const validation = validateImageSize(file);
       if (!validation.valid) {
         toast.error(validation.error);
@@ -213,8 +224,8 @@ export default function ConversationalSearch() {
 
       try {
         const compressed = await compressImageForUpload(file);
-        setSelectedImage(compressed);
-        setImagePreview(URL.createObjectURL(compressed));
+        setSelectedImages((prev) => [...prev, compressed]);
+        setImagePreviews((prev) => [...prev, URL.createObjectURL(compressed)]);
         haptic.selection();
 
         if (needsCompression) {
@@ -228,16 +239,28 @@ export default function ConversationalSearch() {
         setIsCompressing(false);
       }
     },
-    [haptic]
+    [haptic, selectedImages.length]
+  );
+
+  const removeImageAt = useCallback(
+    (index: number) => {
+      setImagePreviews((prev) => {
+        const url = prev[index];
+        if (url) URL.revokeObjectURL(url);
+        return prev.filter((_, i) => i !== index);
+      });
+      setSelectedImages((prev) => prev.filter((_, i) => i !== index));
+    },
+    []
   );
 
   const clearImage = useCallback(() => {
-    if (imagePreview) {
-      URL.revokeObjectURL(imagePreview);
-    }
-    setSelectedImage(null);
-    setImagePreview(null);
-  }, [imagePreview]);
+    setImagePreviews((prev) => {
+      prev.forEach((u) => URL.revokeObjectURL(u));
+      return [];
+    });
+    setSelectedImages([]);
+  }, []);
 
   const uploadImage = useCallback(async (file: File): Promise<string> => {
     const {
@@ -262,20 +285,23 @@ export default function ConversationalSearch() {
     async (queryText?: string, options?: { replaceLastAssistant?: boolean }) => {
       const messageText = queryText || input.trim();
 
-      if (!messageText && !selectedImage) return;
+      if (!messageText && selectedImages.length === 0) return;
 
       haptic.medium();
 
-      let imageUrl: string | undefined;
-      if (selectedImage) {
+      // Upload all attached photos in parallel — first one becomes the
+      // legacy `imageUrl` for back-compat, full set lives in `imageUrls`.
+      let imageUrls: string[] = [];
+      if (selectedImages.length > 0) {
         try {
-          imageUrl = await uploadImage(selectedImage);
+          imageUrls = await Promise.all(selectedImages.map((f) => uploadImage(f)));
           clearImage();
         } catch {
-          toast.error('Failed to upload image');
+          toast.error('Failed to upload one or more images');
           return;
         }
       }
+      const imageUrl = imageUrls[0];
 
       const isRegenerate = !!options?.replaceLastAssistant;
 
@@ -300,6 +326,7 @@ export default function ConversationalSearch() {
         content: messageText || 'What can you tell me about this?',
         timestamp: new Date(),
         imageUrl,
+        imageUrls: imageUrls.length > 0 ? imageUrls : undefined,
       };
 
       if (!isRegenerate) {
@@ -334,6 +361,7 @@ export default function ConversationalSearch() {
               content: m.content,
             })),
             imageUrl,
+            imageUrls: imageUrls.length > 0 ? imageUrls : undefined,
           }),
           signal: abortControllerRef.current.signal,
         });
@@ -484,7 +512,7 @@ export default function ConversationalSearch() {
         setStreamStatus(null);
       }
     },
-    [input, messages, streaming, haptic, selectedImage, uploadImage, clearImage, offlineCache]
+    [input, messages, streaming, haptic, selectedImages, uploadImage, clearImage, offlineCache]
   );
 
   const handleNewChat = useCallback(() => {
@@ -505,11 +533,15 @@ export default function ConversationalSearch() {
 
   const handleFollowUpSelect = useCallback(
     (question: string) => {
-      setInput(question);
-      inputRef.current?.focus();
+      // ELE-862: chips are suggested follow-ups (user-voice) — tapping
+      // sends them straight to the AI rather than dropping into the input
+      // box. The previous behaviour caused the user to feel like the AI was
+      // asking THEM the questions, because the user had to "send" the
+      // suggestion themselves.
       haptic.selection();
+      void handleSend(question);
     },
-    [haptic]
+    [haptic, handleSend]
   );
 
   // Regenerate the last assistant message by resubmitting the preceding
@@ -523,15 +555,23 @@ export default function ConversationalSearch() {
   }, [messages, haptic, handleSend]);
 
   const handleOpenSaveSheet = useCallback((message: Message) => {
-    // Find the user question that produced this answer.
+    // Find the user question that produced this answer + any photos they attached.
     const idx = messages.indexOf(message);
-    const question =
-      idx > 0 && messages[idx - 1].role === 'user' ? messages[idx - 1].content : undefined;
+    const userMsg =
+      idx > 0 && messages[idx - 1].role === 'user' ? messages[idx - 1] : undefined;
+    const question = userMsg?.content || '';
+    const imageUrls =
+      userMsg?.imageUrls && userMsg.imageUrls.length > 0
+        ? userMsg.imageUrls
+        : userMsg?.imageUrl
+          ? [userMsg.imageUrl]
+          : [];
     setSaveSheet({
       open: true,
       answer: message.content,
-      question: question || '',
+      question,
       cited: message.citedRegulations ?? [],
+      imageUrls,
     });
   }, [messages]);
 
@@ -603,7 +643,7 @@ export default function ConversationalSearch() {
         <div className="flex items-center gap-3 sm:gap-4 px-3 sm:px-6 h-14">
           <button
             onClick={() => navigate('/electrician')}
-            className="shrink-0 text-[13px] font-medium text-white/70 hover:text-white transition-colors touch-manipulation -ml-1"
+            className="shrink-0 text-[13px] font-medium text-white hover:text-white transition-colors touch-manipulation -ml-1"
           >
             ← Back
           </button>
@@ -612,7 +652,7 @@ export default function ConversationalSearch() {
               Elec-AI
             </h1>
             {/* Subtitle hidden on narrow screens to stop truncation (ASSISTA...) */}
-            <p className="hidden sm:block mt-0.5 text-[10px] font-medium uppercase tracking-[0.22em] text-white/55 truncate">
+            <p className="hidden sm:block mt-0.5 text-[10px] font-medium uppercase tracking-[0.22em] text-white truncate">
               BS 7671 A4:2026 assistant
             </p>
           </div>
@@ -620,7 +660,7 @@ export default function ConversationalSearch() {
             <div className="shrink-0 flex items-center gap-3 sm:gap-4 text-[13px] font-medium">
               <button
                 onClick={() => setHistoryOpen(true)}
-                className="text-white/70 hover:text-white transition-colors touch-manipulation"
+                className="text-white hover:text-white transition-colors touch-manipulation"
                 aria-label="Chat history"
               >
                 History
@@ -643,12 +683,12 @@ export default function ConversationalSearch() {
       {messages.length === 0 && (
         <ChatMessagesArea className="px-3 sm:px-6">
           {offlineBannerVisible && (
-            <div className="mx-auto max-w-3xl pt-4">
+            <div className="mx-auto max-w-4xl pt-4">
               <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3">
-                <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                   Offline · showing your last {offlineCache.limit} saved answers
                 </div>
-                <p className="mt-1 text-[12px] text-white/70 leading-relaxed">
+                <p className="mt-1 text-[12px] text-white leading-relaxed">
                   You’re offline. Elec-AI can’t stream new answers, but your
                   recent cached answers are below.
                 </p>
@@ -666,7 +706,7 @@ export default function ConversationalSearch() {
                       <div className="mt-1 text-[13px] font-semibold text-white">
                         {entry.question}
                       </div>
-                      <p className="mt-1 text-[13px] text-white/70 leading-relaxed line-clamp-4 whitespace-pre-wrap">
+                      <p className="mt-1 text-[13px] text-white leading-relaxed line-clamp-4 whitespace-pre-wrap">
                         {entry.answer}
                       </p>
                     </div>
@@ -686,7 +726,7 @@ export default function ConversationalSearch() {
           onScroll={handleScrollPosition}
           className="px-3 sm:px-6"
         >
-          <div className="mx-auto max-w-3xl py-4 sm:py-6 space-y-6 sm:space-y-8">
+          <div className="mx-auto max-w-4xl py-4 sm:py-6 space-y-6 sm:space-y-8">
             <AnimatePresence mode="popLayout">
               {messages.map((message, idx) => {
                 const isCurrentlyStreaming =
@@ -707,15 +747,43 @@ export default function ConversationalSearch() {
                         data-msg-anchor={`user-${idx}`}
                       >
                         <div className="max-w-[92%] sm:max-w-[75%] min-w-0 space-y-2">
-                          {message.imageUrl && (
-                            <div className="rounded-2xl overflow-hidden ml-auto max-w-[220px] border border-white/[0.06]">
-                              <img
-                                src={message.imageUrl}
-                                alt="Attached"
-                                className="w-full h-auto object-cover"
-                              />
-                            </div>
-                          )}
+                          {(() => {
+                            // Prefer the new array; fall back to legacy single.
+                            const urls =
+                              (message.imageUrls && message.imageUrls.length > 0
+                                ? message.imageUrls
+                                : message.imageUrl
+                                  ? [message.imageUrl]
+                                  : []) as string[];
+                            if (urls.length === 0) return null;
+                            if (urls.length === 1) {
+                              return (
+                                <div className="rounded-2xl overflow-hidden ml-auto max-w-[220px] border border-white/[0.06]">
+                                  <img
+                                    src={urls[0]}
+                                    alt="Attached"
+                                    className="w-full h-auto object-cover"
+                                  />
+                                </div>
+                              );
+                            }
+                            return (
+                              <div className="ml-auto flex flex-wrap justify-end gap-1.5 max-w-[260px]">
+                                {urls.map((url, i) => (
+                                  <div
+                                    key={url}
+                                    className="rounded-xl overflow-hidden border border-white/[0.06] w-[80px] h-[80px]"
+                                  >
+                                    <img
+                                      src={url}
+                                      alt={`Attached ${i + 1}`}
+                                      className="w-full h-full object-cover"
+                                    />
+                                  </div>
+                                ))}
+                              </div>
+                            );
+                          })()}
                           <div className="rounded-2xl px-3.5 py-3 sm:px-4 bg-elec-yellow/10 border border-elec-yellow/20 text-white">
                             <div
                               className="whitespace-pre-wrap text-[14.5px] leading-relaxed"
@@ -726,7 +794,7 @@ export default function ConversationalSearch() {
                           </div>
                         </div>
                         {message.timestamp && (
-                          <p className="mt-1 text-[11px] text-white/40 text-right">
+                          <p className="mt-1 text-[11px] text-white text-right">
                             {formatRelativeTime(message.timestamp)}
                           </p>
                         )}
@@ -765,7 +833,7 @@ export default function ConversationalSearch() {
 
                           {/* Streaming status chip */}
                           {isCurrentlyStreaming && streamStatus && (
-                            <div className="text-[11px] uppercase tracking-[0.22em] text-white/55">
+                            <div className="text-[11px] uppercase tracking-[0.22em] text-white">
                               {streamStatus}
                             </div>
                           )}
@@ -780,7 +848,7 @@ export default function ConversationalSearch() {
                             )}
 
                           {message.timestamp && !isCurrentlyStreaming && (
-                            <p className="text-[11px] text-white/40">
+                            <p className="text-[11px] text-white">
                               {formatRelativeTime(message.timestamp)}
                             </p>
                           )}
@@ -799,7 +867,7 @@ export default function ConversationalSearch() {
 
       {/* Input area */}
       <ChatInputArea>
-        <div className="mx-auto w-full max-w-3xl">
+        <div className="mx-auto w-full max-w-4xl">
           {/* Compression indicator */}
           <AnimatePresence>
             {isCompressing && (
@@ -809,7 +877,7 @@ export default function ConversationalSearch() {
                 exit={{ opacity: 0, height: 0 }}
                 className="pb-2"
               >
-                <div className="flex items-center gap-2 text-[12px] text-white/55">
+                <div className="flex items-center gap-2 text-[12px] text-white">
                   <span className="h-3 w-3 rounded-full border-2 border-elec-yellow border-t-transparent animate-spin" />
                   <span>Optimising image…</span>
                 </div>
@@ -817,28 +885,37 @@ export default function ConversationalSearch() {
             )}
           </AnimatePresence>
 
-          {/* Image preview */}
+          {/* Image previews — up to 5 photos, scrollable strip */}
           <AnimatePresence>
-            {imagePreview && !isCompressing && (
+            {imagePreviews.length > 0 && !isCompressing && (
               <motion.div
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 className="pb-2"
               >
-                <div className="relative inline-block">
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="h-16 rounded-xl object-cover border border-white/[0.08]"
-                  />
-                  <button
-                    onClick={clearImage}
-                    className="absolute -top-2 -right-2 h-6 px-2 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.1] text-[11px] font-medium text-white hover:bg-[hsl(0_0%_15%)] touch-manipulation"
-                    aria-label="Remove image"
-                  >
-                    Remove
-                  </button>
+                <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                  {imagePreviews.map((url, idx) => (
+                    <div key={url} className="relative shrink-0">
+                      <img
+                        src={url}
+                        alt={`Preview ${idx + 1}`}
+                        className="h-16 w-16 rounded-xl object-cover border border-white/[0.08]"
+                      />
+                      <button
+                        onClick={() => removeImageAt(idx)}
+                        className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.1] text-[12px] font-medium text-white hover:bg-[hsl(0_0%_15%)] touch-manipulation flex items-center justify-center"
+                        aria-label={`Remove image ${idx + 1}`}
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                  {imagePreviews.length < MAX_IMAGES_PER_MESSAGE && (
+                    <span className="shrink-0 text-[11px] text-white/55 px-2">
+                      {imagePreviews.length}/{MAX_IMAGES_PER_MESSAGE}
+                    </span>
+                  )}
                 </div>
               </motion.div>
             )}
@@ -870,14 +947,24 @@ export default function ConversationalSearch() {
             type="file"
             accept="image/*,.heic,.heif"
             capture="environment"
-            onChange={(e) => e.target.files?.[0] && handleImageSelect(e.target.files[0])}
+            onChange={async (e) => {
+              const files = Array.from(e.target.files ?? []);
+              for (const f of files) await handleImageSelect(f);
+              // Reset so the same shot can be re-attached after a remove.
+              e.target.value = '';
+            }}
             className="hidden"
           />
           <input
             ref={fileInputRef}
             type="file"
             accept="image/*,.heic,.heif"
-            onChange={(e) => e.target.files?.[0] && handleImageSelect(e.target.files[0])}
+            multiple
+            onChange={async (e) => {
+              const files = Array.from(e.target.files ?? []);
+              for (const f of files) await handleImageSelect(f);
+              e.target.value = '';
+            }}
             className="hidden"
           />
 
@@ -892,6 +979,7 @@ export default function ConversationalSearch() {
             showClearButton={messages.length > 0}
             voiceEnabled
             onTranscript={handleVoiceTranscript}
+            canSubmitWithoutText={selectedImages.length > 0}
           />
         </div>
       </ChatInputArea>
@@ -920,6 +1008,7 @@ export default function ConversationalSearch() {
         answer={saveSheet.answer}
         question={saveSheet.question}
         citedRegulations={saveSheet.cited}
+        imageUrls={saveSheet.imageUrls}
       />
     </ChatContainer>
   );

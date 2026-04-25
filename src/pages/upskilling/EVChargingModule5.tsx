@@ -1,96 +1,74 @@
-import { ArrowLeft, Settings, Zap, Activity, Clock, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Settings, Zap, Activity, Clock, Users } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EVChargingModule5 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Dynamic Load Management (DLM)',
-      icon: Settings,
-      description: 'Implementing intelligent load management systems',
-    },
-    {
-      id: 2,
-      title: 'EV/PV/Battery Integration via HEMS',
-      icon: Zap,
-      description: 'Integrating charging with renewable energy and storage',
-    },
-    {
-      id: 3,
-      title: 'CT Clamps, Load-Sensing, and Control Logic',
-      icon: Activity,
-      description: 'Monitoring and control technology for load management',
-    },
-    {
-      id: 4,
-      title: 'Off-Peak Charging Strategies',
-      icon: Clock,
-      description: 'Optimising charging times for cost and grid impact',
-    },
-    {
-      id: 5,
-      title: 'Multiple Unit Coordination (Flats/Shared Sites)',
-      icon: Users,
-      description: 'Managing charging across multi-unit developments',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Dynamic load management (DLM)',
+    icon: Settings,
+    description: 'Implementing intelligent load management systems on shared supplies.',
+  },
+  {
+    id: 2,
+    title: 'EV/PV/battery integration via HEMS',
+    icon: Zap,
+    description: 'Integrating charging with renewable energy and storage via a HEMS.',
+  },
+  {
+    id: 3,
+    title: 'CT clamps, load-sensing and control logic',
+    icon: Activity,
+    description: 'Monitoring and control technology that enables load management.',
+  },
+  {
+    id: 4,
+    title: 'Off-peak charging strategies',
+    icon: Clock,
+    description: 'Optimising charging times for cost savings and reduced grid impact.',
+  },
+  {
+    id: 5,
+    title: 'Multiple unit coordination (flats / shared sites)',
+    icon: Users,
+    description: 'Managing charging across multi-unit developments and shared supplies.',
+  },
+];
+
+export default function EVChargingModule5() {
+  useSEO({
+    title: 'Module 5: Load Management & Diversity | EV Charging | Elec-Mate',
+    description:
+      'Dynamic load management, EV/PV/battery integration via HEMS, CT clamps, off-peak charging and multi-unit sites.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/ev-charging-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to EV Charging Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 5</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Load Management and Diversity in EV Systems
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Advanced load management and system integration strategies
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../ev-charging-module-5-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../ev-charging-course"
+      backLabel="EV charging installation"
+      moduleNumber={5}
+      title="Load management and diversity in EV systems"
+      description="Advanced load management and the integration strategies that keep installations safe."
+      tone="green"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../ev-charging-module-4"
+      prevModuleLabel="Earthing and protection considerations"
+      nextModuleHref="../ev-charging-module-6"
+      nextModuleLabel="Installation, inspection and testing procedures"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../ev-charging-module-5-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EVChargingModule5;
+}

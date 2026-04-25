@@ -183,7 +183,7 @@ export default function FireAlarmPhotoUpload({
       {/* Photo grid */}
       {photos.length > 0 ? (
         <div className="space-y-2">
-          <p className="text-xs text-white/60">
+          <p className="text-xs text-white">
             {photos.length} photo{photos.length !== 1 ? 's' : ''} attached
           </p>
           <div className="grid grid-cols-3 gap-2">
@@ -202,7 +202,7 @@ export default function FireAlarmPhotoUpload({
                   <X className="h-3.5 w-3.5 text-white" />
                 </button>
                 <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/50 to-transparent p-1.5">
-                  <span className="text-[10px] text-white/80 font-medium">{i + 1}</span>
+                  <span className="text-[10px] text-white font-medium">{i + 1}</span>
                 </div>
               </div>
             ))}
@@ -211,7 +211,7 @@ export default function FireAlarmPhotoUpload({
       ) : (
         <div className="rounded-xl bg-white/[0.02] border border-dashed border-white/[0.08] p-6 text-center">
           <ImageIcon className="h-8 w-8 text-white/20 mx-auto mb-2" />
-          <p className="text-xs text-white/40">No photos yet</p>
+          <p className="text-xs text-white">No photos yet</p>
           <p className="text-[10px] text-white/30 mt-0.5">
             Take a photo or upload from gallery
           </p>

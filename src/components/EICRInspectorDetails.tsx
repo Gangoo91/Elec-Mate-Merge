@@ -25,6 +25,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import FormField from '@/components/ui/FormField';
+import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
 
 interface EICRInspectorDetailsProps {
   formData: any;
@@ -33,22 +34,8 @@ interface EICRInspectorDetailsProps {
   onToggle?: () => void;
 }
 
-const availableQualifications = [
-  '18th Edition BS7671',
-  'City & Guilds 2391-52',
-  'City & Guilds 2391-51',
-  'City & Guilds 2394/2395',
-  'EAL Level 3 I&T',
-  'EAL Level 4 I&T',
-  'NICEIC Approved',
-  'NAPIT Registered',
-  'ELECSA Registered',
-  'ECA Member',
-  'JIB Approved',
-  'CompEx Certified',
-  'AM2 Certified',
-  'SSSTS/SMSTS',
-];
+// Single source of truth — ELE-850 (LCL/PAA/VTCT/NOCN + neutral L3 I&T options)
+const availableQualifications = INSPECTOR_QUALIFICATIONS;
 
 const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps) => {
   const isMobile = useIsMobile();
@@ -622,7 +609,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
             {/* Logo Upload */}
             {/* Logo */}
             <div className="space-y-2">
-              <label className="text-xs text-white/80 block">Company Logo</label>
+              <label className="text-xs text-white block">Company Logo</label>
               {formData.companyLogo ? (
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
                   <img

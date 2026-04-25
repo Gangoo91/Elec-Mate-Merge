@@ -95,7 +95,7 @@ export default function InviteLanding() {
       <div className="mx-auto flex min-h-[100svh] max-w-lg flex-col px-5 pt-[max(1.5rem,env(safe-area-inset-top))] pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         {/* Top nav */}
         <div className="mb-8 flex items-center justify-between">
-          <Link to="/" className="text-sm text-white/60 hover:text-white">
+          <Link to="/" className="text-sm text-white hover:text-white">
             ← Elec-Mate
           </Link>
         </div>
@@ -123,7 +123,7 @@ export default function InviteLanding() {
               </>
             )}
           </h1>
-          <p className="mb-6 text-sm leading-relaxed text-white/70 sm:text-base">
+          <p className="mb-6 text-sm leading-relaxed text-white sm:text-base">
             The complete platform for UK electricians — certificates, AI assistants, voice quotes,
             60+ calculators. Sign up with this code to claim your free month on top of the standard
             7-day trial.
@@ -154,7 +154,7 @@ export default function InviteLanding() {
                 )}
               </Button>
             </div>
-            <p className="mt-3 text-[11px] text-white/40">
+            <p className="mt-3 text-[11px] text-white">
               We've saved this automatically — it will apply when you sign up.
             </p>
           </div>
@@ -170,7 +170,7 @@ export default function InviteLanding() {
           {/* Mobile: also offer native app install */}
           {isMobile && (
             <div className="mb-4">
-              <p className="mb-2 text-center text-[11px] uppercase tracking-wider text-white/40">
+              <p className="mb-2 text-center text-[11px] uppercase tracking-wider text-white">
                 or get the app
               </p>
               <div className="grid grid-cols-1 gap-2">
@@ -216,7 +216,7 @@ export default function InviteLanding() {
                 className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3"
               >
                 <Icon className="mx-auto mb-1 h-4 w-4 text-yellow-400" />
-                <p className="text-[11px] text-white/70">{label}</p>
+                <p className="text-[11px] text-white">{label}</p>
               </div>
             ))}
           </div>

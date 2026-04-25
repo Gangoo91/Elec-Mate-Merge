@@ -1,78 +1,56 @@
-import { ArrowLeft, FileCheck, HelpCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { FileCheck, HelpCircle } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BS7671Module9 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Mock Exam',
-      description:
-        'Complete practice examination under timed conditions covering all BS 7671 requirements',
-      icon: FileCheck,
-    },
-    {
-      id: 2,
-      title: 'Hints & Tips',
-      description:
-        'Essential guidance, best practices, and expert tips for successful examination completion',
-      icon: HelpCircle,
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Mock exam',
+    icon: FileCheck,
+    description: 'Complete practice examination under timed conditions covering all BS 7671 requirements.',
+    to: '../bs7671-mock-exam',
+  },
+  {
+    id: 2,
+    title: 'Hints and tips',
+    icon: HelpCircle,
+    description: 'Essential guidance, best practices and expert tips for successful exam completion.',
+    to: '../bs7671-exam-guide',
+  },
+];
+
+export default function BS7671Module9() {
+  useSEO({
+    title: 'Module 9: Mock Exam | BS 7671 | Elec-Mate',
+    description:
+      'Comprehensive practice examination plus hints and tips for the BS 7671 18th Edition assessment.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/bs7671-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to BS7671 Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 9</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">2 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">90 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
-          <p className="text-white text-sm sm:text-base">
-            Comprehensive practice examination to test your knowledge of BS 7671
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={section.id === 1 ? `../bs7671-mock-exam` : `../bs7671-exam-guide`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../bs7671-course"
+      backLabel="18th edition (BS 7671)"
+      moduleNumber={9}
+      title="Mock exam"
+      description="Comprehensive practice examination to test your knowledge of BS 7671."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="90 mins"
+      prevModuleHref="../bs7671-module-8"
+      prevModuleLabel="Reference materials and Amendment 3"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={section.to}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default BS7671Module9;
+}

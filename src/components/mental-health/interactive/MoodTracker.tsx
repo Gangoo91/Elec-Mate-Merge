@@ -40,7 +40,7 @@ const MoodTracker = () => {
     <div className="space-y-5 pt-4">
       {/* Mood selection */}
       <div>
-        <p className="text-sm text-white/70 mb-4">How are you feeling right now?</p>
+        <p className="text-sm text-white mb-4">How are you feeling right now?</p>
         <div className="flex justify-between px-1">
           {moodOptions.map((mood) => (
             <button
@@ -52,7 +52,7 @@ const MoodTracker = () => {
               )}
             >
               <span className={cn('text-3xl transition-all', selectedMood === mood.value ? '' : 'grayscale-[0.2]')}>{mood.emoji}</span>
-              <span className={cn('text-[10px] font-medium', selectedMood === mood.value ? 'text-white' : 'text-white/70')}>{mood.label}</span>
+              <span className={cn('text-[10px] font-medium', selectedMood === mood.value ? 'text-white' : 'text-white')}>{mood.label}</span>
             </button>
           ))}
         </div>
@@ -75,12 +75,12 @@ const MoodTracker = () => {
       {/* Notes */}
       {selectedMood !== null && (
         <div>
-          <p className="text-xs text-white/80 mb-2">Want to add a note? (optional)</p>
+          <p className="text-xs text-white mb-2">Want to add a note? (optional)</p>
           <textarea
             value={notes}
             onChange={(e) => { setNotes(e.target.value); setSaved(false); }}
             placeholder="What's on your mind..."
-            className="w-full min-h-[80px] p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white/60 focus:border-white/20 focus:outline-none resize-none touch-manipulation"
+            className="w-full min-h-[80px] p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-white/20 focus:outline-none resize-none touch-manipulation"
             style={{ fontSize: '16px' }}
           />
         </div>
@@ -106,7 +106,7 @@ const MoodTracker = () => {
       {/* Weekly bar chart */}
       {moodHistory.length >= 2 && (
         <div className="pt-2">
-          <p className="text-[10px] font-bold text-white/70 uppercase tracking-wider mb-3">Last 7 Days</p>
+          <p className="text-[10px] font-bold text-white uppercase tracking-wider mb-3">Last 7 Days</p>
           <div className="flex items-end gap-1.5 h-16">
             {Array.from({ length: 7 }).map((_, i) => {
               const d = new Date(); d.setDate(d.getDate() - (6 - i));
@@ -122,7 +122,7 @@ const MoodTracker = () => {
                       style={{ height: mood > 0 ? `${(mood / 5) * 100}%` : '4px' }}
                     />
                   </div>
-                  <span className="text-[8px] text-white/60">{['S','M','T','W','T','F','S'][d.getDay()]}</span>
+                  <span className="text-[8px] text-white">{['S','M','T','W','T','F','S'][d.getDay()]}</span>
                 </div>
               );
             })}

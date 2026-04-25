@@ -1,5 +1,15 @@
-import { Button } from '@/components/ui/button';
-import { ArrowRight, ExternalLink, MessageSquare, Phone, PhoneCall } from 'lucide-react';
+import {
+  PageHero,
+  SectionHeader,
+  ListCard,
+  ListRow,
+  Pill,
+} from '@/components/college/primitives';
+
+const PHONE_PRIMARY =
+  'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25 text-[13px] font-semibold touch-manipulation';
+const PHONE_SECONDARY =
+  'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-semibold touch-manipulation';
 
 const quickContacts = [
   {
@@ -8,17 +18,17 @@ const quickContacts = [
     displayPhone: '116 123',
     availability: '24/7, 365 days',
     description: 'Free confidential listening support at any hour.',
-    icon: PhoneCall,
     href: 'tel:116123',
+    isSms: false,
   },
   {
     name: 'Shout',
     phone: '85258',
-    displayPhone: 'Text SHOUT to 85258',
+    displayPhone: 'Text 85258',
     availability: '24/7 text support',
     description: 'Text-based support if talking feels harder right now.',
-    icon: MessageSquare,
     href: 'sms:85258?body=SHOUT',
+    isSms: true,
   },
   {
     name: 'NHS 111',
@@ -26,8 +36,8 @@ const quickContacts = [
     displayPhone: '111 (Option 2)',
     availability: '24/7 mental health',
     description: 'Urgent mental health advice and local NHS signposting.',
-    icon: Phone,
     href: 'tel:111',
+    isSms: false,
   },
 ];
 
@@ -36,13 +46,15 @@ const industryContacts = [
     name: 'Electrical Industries Charity',
     phone: '01895 823 726',
     href: 'tel:01895823726',
-    description: 'Support for electrical workers and families, including financial and emotional help.',
+    description:
+      'Support for electrical workers and families, including financial and emotional help.',
   },
   {
     name: 'Mates in Mind',
     phone: '0203 510 5960',
     href: 'tel:02035105960',
-    description: 'Trade-focused mental health support across construction and related industries.',
+    description:
+      'Trade-focused mental health support across construction and related industries.',
   },
   {
     name: 'Lighthouse Charity',
@@ -82,88 +94,89 @@ const onlineResources = [
 
 const SupportNetworkTab = () => {
   return (
-    <div className="space-y-6">
-      <div className="border-t border-white/10 pt-5">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/45">
-          Support Network
-        </p>
-        <h2 className="mt-2 text-2xl font-semibold text-white">Talk to someone, today.</h2>
-        <p className="mt-2 max-w-2xl text-sm leading-6 text-white/72">
-          This is the place for real support options, not more admin. Start with the fastest way to
-          talk, then use trade-specific or longer-term help if that fits better.
-        </p>
+    <div className="space-y-8 sm:space-y-10">
+      <PageHero
+        eyebrow="Support network"
+        title="Talk to someone, today."
+        description="This is the place for real support options, not more admin. Start with the fastest way to talk, then use trade-specific or longer-term help if that fits better."
+        tone="emerald"
+      />
+
+      <div className="space-y-3">
+        <SectionHeader eyebrow="Fastest help" title="Talk now" />
+        <ListCard>
+          {quickContacts.map((c) => (
+            <ListRow
+              key={c.name}
+              accent="emerald"
+              title={c.name}
+              subtitle={`${c.availability} · ${c.description}`}
+              trailing={
+                <a
+                  href={c.href}
+                  className={PHONE_PRIMARY}
+                  aria-label={`${c.isSms ? 'Text' : 'Call'} ${c.name}`}
+                >
+                  {c.displayPhone}
+                </a>
+              }
+            />
+          ))}
+        </ListCard>
       </div>
 
-      <div className="grid gap-3 md:grid-cols-3">
-        {quickContacts.map((contact) => {
-          const Icon = contact.icon;
-          return (
-            <a key={contact.name} href={contact.href} className="block">
-              <div className="flex h-full flex-col border-t border-white/10 pt-5 transition-colors hover:opacity-100">
-                  <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5">
-                    <Icon className="h-5 w-5 text-white" />
-                  </div>
-                  <p className="text-sm text-white/55">{contact.availability}</p>
-                  <h3 className="mt-1 text-lg font-semibold text-white">{contact.name}</h3>
-                  <p className="mt-1 text-base font-medium text-elec-yellow">{contact.displayPhone}</p>
-                  <p className="mt-3 text-sm leading-6 text-white/72">{contact.description}</p>
-              </div>
-            </a>
-          );
-        })}
+      <div className="space-y-3">
+        <SectionHeader eyebrow="Trade-focused" title="Built for the trade" />
+        <ListCard>
+          {industryContacts.map((c) => (
+            <ListRow
+              key={c.name}
+              accent="amber"
+              title={c.name}
+              subtitle={c.description}
+              trailing={
+                <a href={c.href} className={PHONE_SECONDARY} aria-label={`Call ${c.name}`}>
+                  {c.phone}
+                </a>
+              }
+            />
+          ))}
+        </ListCard>
       </div>
 
-      <section className="border-t border-amber-500/20 pt-5">
-        <h3 className="text-xl font-medium text-white">Built for the trade</h3>
-        <div className="mt-4 space-y-3">
-          {industryContacts.map((contact) => (
-            <div
-              key={contact.name}
-              className="flex flex-col gap-3 border-b border-white/10 pb-4 sm:flex-row sm:items-center sm:justify-between"
-            >
-              <div className="max-w-xl">
-                <h3 className="font-medium text-white">{contact.name}</h3>
-                <p className="mt-1 text-sm leading-6 text-white/72">{contact.description}</p>
-              </div>
-              <Button asChild variant="outline" className="border-amber-400/25 text-white hover:bg-amber-500/10">
-                <a href={contact.href}>{contact.phone}</a>
-              </Button>
-            </div>
+      <div className="space-y-3">
+        <SectionHeader eyebrow="Online" title="Keep useful links close" />
+        <ListCard>
+          {onlineResources.map((r) => (
+            <ListRow
+              key={r.name}
+              accent="cyan"
+              title={r.name}
+              subtitle={r.description}
+              trailing={<Pill tone="cyan">Open</Pill>}
+              onClick={() => window.open(r.url, '_blank', 'noopener,noreferrer')}
+            />
           ))}
-        </div>
-      </section>
+        </ListCard>
+      </div>
 
-      <section className="border-t border-white/10 pt-5">
-        <h3 className="text-xl font-medium text-white">Keep useful links close</h3>
-        <div className="mt-4 space-y-2">
-          {onlineResources.map((resource) => (
-            <a
-              key={resource.name}
-              href={resource.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-between border-b border-white/10 py-4 transition-colors hover:opacity-100"
-            >
-              <div className="pr-4">
-                <h3 className="font-medium text-white">{resource.name}</h3>
-                <p className="mt-1 text-sm leading-6 text-white/72">{resource.description}</p>
-              </div>
-              <ExternalLink className="h-4 w-4 shrink-0 text-white/55" />
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+        <div className="flex items-start gap-3">
+          <Pill tone="red">Crisis</Pill>
+          <p className="text-[13px] text-white leading-relaxed">
+            If you feel unsafe or at immediate risk, skip this section and go straight to crisis
+            support. Call{' '}
+            <a href="tel:999" className="font-semibold text-red-400">
+              999
             </a>
-          ))}
-        </div>
-      </section>
-
-      <div className="border-t border-red-500/20 pt-4">
-        <p className="text-sm leading-6 text-white/78">
-          If you feel unsafe or at immediate risk, skip this section and go straight to crisis
-          support. Call <a href="tel:999" className="font-semibold text-red-300">999</a>, call{' '}
-          <a href="tel:116123" className="font-semibold text-red-300">116 123</a>, or text SHOUT to{' '}
-          <span className="font-semibold text-red-300">85258</span>.
-        </p>
-        <div className="mt-3 flex items-center gap-2 text-sm text-red-200">
-          <span>Fastest route to help matters most.</span>
-          <ArrowRight className="h-4 w-4" />
+            , call{' '}
+            <a href="tel:116123" className="font-semibold text-red-400">
+              116 123
+            </a>
+            , or text SHOUT to{' '}
+            <span className="font-semibold text-red-400">85258</span>. Fastest route to help matters
+            most.
+          </p>
         </div>
       </div>
     </div>

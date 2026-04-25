@@ -22,7 +22,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="testMethod" className="text-xs text-white/80">
+          <Label htmlFor="testMethod" className="text-xs text-white">
             Test Method Applied
           </Label>
           <MobileSelectPicker
@@ -35,7 +35,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="testVoltage" className="text-xs text-white/80">
+          <Label htmlFor="testVoltage" className="text-xs text-white">
             Test Voltage Applied
           </Label>
           <MobileSelectPicker
@@ -50,7 +50,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="testNotes" className="text-xs text-white/80">
+        <Label htmlFor="testNotes" className="text-xs text-white">
           Test Notes & Observations
         </Label>
         <Textarea

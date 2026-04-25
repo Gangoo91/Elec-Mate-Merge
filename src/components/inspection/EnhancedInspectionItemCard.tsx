@@ -268,7 +268,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
               {sectionItem.item}
             </p>
             {sectionItem.clause && (
-              <span className="text-xs text-white/80 font-mono block text-left">
+              <span className="text-xs text-white font-mono block text-left">
                 {sectionItem.clause}
               </span>
             )}
@@ -277,7 +277,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
           {/* Expand indicator */}
           <ChevronRight
             className={cn(
-              'h-4 w-4 text-white/80 transition-transform',
+              'h-4 w-4 text-white transition-transform',
               isExpanded && 'rotate-90'
             )}
           />
@@ -292,7 +292,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
               red: { active: 'bg-red-500/25 border-red-500/50 text-red-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
               orange: { active: 'bg-orange-500/25 border-orange-500/50 text-orange-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
               yellow: { active: 'bg-yellow-500/25 border-yellow-500/50 text-yellow-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
-              gray: { active: 'bg-white/[0.15] border-white/[0.20] text-white', inactive: 'bg-white/[0.05] border-white/[0.08] text-white/60' },
+              gray: { active: 'bg-white/[0.15] border-white/[0.20] text-white', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
               blue: { active: 'bg-blue-500/25 border-blue-500/50 text-blue-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
               cyan: { active: 'bg-cyan-500/25 border-cyan-500/50 text-cyan-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
               purple: { active: 'bg-purple-500/25 border-purple-500/50 text-purple-400', inactive: 'bg-white/[0.05] border-white/[0.08] text-white' },
@@ -323,7 +323,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
               onChange={(e) => handleNotesChange(e.target.value)}
               rows={2}
               style={{ fontSize: '16px' }}
-              className="text-base text-white bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow placeholder:text-white/40 resize-none min-h-[60px]"
+              className="text-base text-white bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow placeholder:text-white resize-none min-h-[60px]"
             />
 
             <div className="grid grid-cols-2 gap-2">

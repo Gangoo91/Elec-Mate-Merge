@@ -1,101 +1,72 @@
-import { ArrowLeft, Focus, Timer, Package, BatteryCharging } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Focus, Timer, Package, BatteryCharging } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: 'Deep Work & Eliminating Distractions',
+    title: 'Deep work & eliminating distractions',
     icon: Focus,
     description:
-      "Cal Newport's Deep Work principles, shallow vs deep work, attention residue, and creating focused conditions for tradespeople",
+      "Cal Newport's Deep Work principles, shallow vs deep work, attention residue and creating focused conditions for tradespeople.",
   },
   {
     id: 2,
-    title: 'The Pomodoro Technique & Time-Boxing',
+    title: 'The Pomodoro Technique & time-boxing',
     icon: Timer,
     description:
-      "Francesco Cirillo's 25-minute focused sprints, time-boxing for admin, Parkinson's Law, and the power of artificial deadlines",
+      "Francesco Cirillo's 25-minute focused sprints, time-boxing for admin, Parkinson's Law and the power of artificial deadlines.",
   },
   {
     id: 3,
-    title: 'Batching & the 80/20 Rule',
+    title: 'Batching & the 80/20 rule',
     icon: Package,
     description:
-      "Task batching to reduce context switching, Pareto's 80/20 principle, batch processing communication, and errands batching",
+      "Task batching to reduce context switching, Pareto's 80/20 principle, batch processing communication and errands batching.",
   },
   {
     id: 4,
-    title: 'Energy Management vs Time Management',
+    title: 'Energy management vs time management',
     icon: BatteryCharging,
     description:
-      'Circadian rhythms, matching tasks to energy, the 90-minute ultradian cycle, and physical, emotional, and mental energy',
+      'Circadian rhythms, matching tasks to energy, the 90-minute ultradian cycle and physical, emotional and mental energy.',
   },
 ];
 
 export default function TMOModule3() {
   useSEO({
-    title: 'Module 3: Focus & Productivity | Time Management & Organisation',
+    title: 'Module 3: Focus & Productivity | Time Management & Organisation | Elec-Mate',
     description:
       'Deep work, the Pomodoro Technique, batching and the 80/20 rule, and energy management.',
   });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-8 lg:px-12 py-2">
-          <div className="max-w-4xl mx-auto">
-            <Button
-              variant="ghost"
-              size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-              asChild
-            >
-              <Link to="../time-management-organisation">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Time Management &amp; Organisation
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-4 sm:px-8 lg:px-12 py-6 sm:py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">MODULE 3</span>
-              <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">4 Sections</span>
-              <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">35 mins</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Focus &amp; Productivity
-            </h1>
-            <p className="text-white text-sm sm:text-base">
-              How to achieve deep focus, use time-boxing techniques, batch similar tasks together,
-              and manage your energy for peak performance
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {sections.map((section, index) => (
-              <SectionCard
-                key={section.id}
-                to={`../tmo-module-3-section-${section.id}`}
-                sectionNumber={section.id}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../time-management-organisation"
+      backLabel="Time management & organisation"
+      moduleNumber={3}
+      title="Focus & productivity"
+      description="How to achieve deep focus, use time-boxing techniques, batch similar tasks together and manage your energy for peak performance."
+      tone="indigo"
+      sectionsCount={sections.length}
+      duration="35 mins"
+      prevModuleHref="../tmo-module-2"
+      prevModuleLabel="Planning & scheduling"
+      nextModuleHref="../tmo-module-4"
+      nextModuleLabel="Organisation & admin"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../tmo-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
 }

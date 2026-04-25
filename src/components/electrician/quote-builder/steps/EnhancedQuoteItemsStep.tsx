@@ -555,13 +555,13 @@ export const EnhancedQuoteItemsStep = ({
                       if (!isNaN(num)) handleHoursChange(num);
                     }
                   }}
-                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/40 touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
+                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
                 />
-                <span className="text-[13px] font-medium text-white/70">hours</span>
+                <span className="text-[13px] font-medium text-white">hours</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex-1 h-px bg-white/[0.12]" />
-                <span className="text-[11px] text-white/60 uppercase tracking-wide">or quick pick</span>
+                <span className="text-[11px] text-white uppercase tracking-wide">or quick pick</span>
                 <div className="flex-1 h-px bg-white/[0.12]" />
               </div>
               <div className="grid grid-cols-4 gap-1.5">

@@ -244,7 +244,7 @@ const EVCircuitPresets: React.FC<EVCircuitPresetsProps> = ({ onApplyPreset, clas
             >
               <div className="w-full h-[2px] rounded-full bg-gradient-to-r from-elec-yellow/60 to-amber-500/40 mb-2" />
               <span className="text-[15px] font-semibold text-white">{preset.label}</span>
-              <span className="text-xs text-white/70 mt-0.5">{preset.desc}</span>
+              <span className="text-xs text-white mt-0.5">{preset.desc}</span>
             </button>
           ))}
         </div>

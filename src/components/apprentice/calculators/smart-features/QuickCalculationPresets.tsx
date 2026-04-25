@@ -158,7 +158,7 @@ const QuickCalculationPresets: React.FC<QuickCalculationPresetsProps> = ({
       case 'industrial':
         return 'bg-orange-500/20 text-orange-300 border-orange-500/30';
       default:
-        return 'bg-white/10 text-white/80 border-white/30';
+        return 'bg-white/10 text-white border-white/30';
     }
   };
 

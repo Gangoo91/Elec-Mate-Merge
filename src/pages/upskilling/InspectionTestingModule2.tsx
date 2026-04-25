@@ -1,49 +1,49 @@
-import { ArrowLeft, Shield, Lock, Tag, Zap, Power, RotateCw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Shield, Lock, Tag, Zap, Power, RotateCw } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: 'Principles of Safe Isolation',
+    title: 'Principles of safe isolation',
     description:
-      'Understand the fundamental principles and importance of safe isolation in electrical work.',
+      'The fundamental principles of safe isolation and why it underpins every electrical task.',
     icon: Shield,
   },
   {
     id: 2,
-    title: 'Isolation Equipment and PPE',
+    title: 'Isolation equipment and PPE',
     description:
-      'Learn about the essential equipment and personal protective equipment required for safe isolation.',
+      'The essential equipment and personal protective equipment required for safe isolation.',
     icon: Lock,
   },
   {
     id: 3,
-    title: 'Lock-Off/Tag-Out Procedures',
+    title: 'Lock-off and tag-out procedures',
     description:
-      'Master the lock-off and tag-out procedures to ensure circuits remain isolated during work.',
+      'Lock-off and tag-out procedures that keep circuits isolated for the duration of the work.',
     icon: Tag,
   },
   {
     id: 4,
-    title: 'Proving Dead Techniques',
+    title: 'Proving dead techniques',
     description:
-      'Learn the correct methods for proving that circuits are dead before commencing work.',
+      'Correct methods for proving circuits dead before any conductive work begins.',
     icon: Zap,
   },
   {
     id: 5,
-    title: 'Working on Isolated Systems',
+    title: 'Working on isolated systems',
     description:
-      'Best practices and safety considerations when working on isolated electrical systems.',
+      'Best practice and safety considerations when working on isolated electrical systems.',
     icon: Power,
   },
   {
     id: 6,
-    title: 'Re-energisation Procedures',
-    description: 'Safe procedures for re-energising circuits after work has been completed.',
+    title: 'Re-energisation procedures',
+    description:
+      'Safely re-energising circuits once the work has been completed and verified.',
     icon: RotateCw,
   },
 ];
@@ -52,60 +52,35 @@ export default function InspectionTestingModule2() {
   useSEO({
     title: 'Module 2: Safe Isolation Procedures | Inspection & Testing',
     description:
-      'Learn safe isolation procedures including lock-off/tag-out, proving dead techniques, and re-energisation procedures.',
+      'Lock-off and tag-out, proving dead techniques and safe re-energisation across single- and three-phase systems.',
   });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/inspection-testing">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Inspection & Testing
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 2</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Safe Isolation Procedures
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Master the critical procedures for safely isolating electrical circuits before carrying
-            out any work
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../inspection-testing/module-2/section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../inspection-testing"
+      backLabel="Inspection & testing"
+      moduleNumber={2}
+      title="Safe isolation procedures"
+      description="Master the procedures for safely isolating electrical circuits before any work begins."
+      tone="purple"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../inspection-testing/module-1"
+      prevModuleLabel="Introduction to inspection & testing"
+      nextModuleHref="../inspection-testing/module-3"
+      nextModuleLabel="Continuity testing"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../inspection-testing/module-2/section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
 }

@@ -420,7 +420,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
             <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border-b border-elec-yellow/30 px-4 py-2.5 flex items-center gap-2">
               <Info className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <h4 className="text-sm font-semibold text-white tracking-wide">
-                Standard Limitations <span className="text-white/60 font-normal">(BS 7671:2018+A4:2026)</span>
+                Standard Limitations <span className="text-white font-normal">(BS 7671:2018+A4:2026)</span>
               </h4>
             </div>
             <div className="p-4 space-y-3">
@@ -438,7 +438,7 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                 </li>
               </ul>
               <div className="pt-3 border-t border-white/10">
-                <p className="text-sm text-white/90 leading-relaxed italic">
+                <p className="text-sm text-white leading-relaxed italic">
                   An inspection should be made of other electrical equipment housed within an accessible roof space.
                 </p>
               </div>

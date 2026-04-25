@@ -59,11 +59,11 @@ const RegulationSources = ({
       {/* Header row */}
       <div className="px-5 pt-4 pb-3 flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             Sources · {regulations.length}{' '}
             {regulations.length === 1 ? 'regulation' : 'regulations'}
           </div>
-          <div className="mt-0.5 text-[12px] text-white/70">
+          <div className="mt-0.5 text-[12px] text-white">
             BS 7671 A4:2026 cited in this answer
           </div>
         </div>
@@ -119,7 +119,7 @@ const RegulationSources = ({
                 ? 'text-emerald-400'
                 : similarityPct >= 60
                   ? 'text-elec-yellow'
-                  : 'text-white/55';
+                  : 'text-white';
             return (
               <>
                 <div className="flex items-baseline justify-between gap-3">
@@ -127,7 +127,7 @@ const RegulationSources = ({
                     <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
                       Reg {reg.regulation_number}
                       {reg.amendment && (
-                        <span className="ml-2 text-white/55">· {reg.amendment}</span>
+                        <span className="ml-2 text-white">· {reg.amendment}</span>
                       )}
                     </div>
                     <div className="mt-1 text-[15px] font-semibold text-white tracking-tight">
@@ -138,7 +138,7 @@ const RegulationSources = ({
                     {similarityPct}% match
                   </div>
                 </div>
-                <p className="text-[13px] leading-relaxed text-white/70 whitespace-pre-wrap">
+                <p className="text-[13px] leading-relaxed text-white whitespace-pre-wrap">
                   {reg.content}
                 </p>
               </>
@@ -148,7 +148,7 @@ const RegulationSources = ({
       )}
 
       {/* Footer line */}
-      <div className="border-t border-white/[0.06] px-5 py-3 text-[11px] text-white/55">
+      <div className="border-t border-white/[0.06] px-5 py-3 text-[11px] text-white">
         Sourced from BS 7671:2018 + A4:2026 database
       </div>
     </div>

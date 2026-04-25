@@ -2,7 +2,7 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const ApprenticeStressors = () => {
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-[hsl(0_0%_12%)]">
       <CardContent className="p-4">
         <h3 className="text-lg font-medium mb-3">Common Apprentice Stressors</h3>
         <div className="space-y-2">

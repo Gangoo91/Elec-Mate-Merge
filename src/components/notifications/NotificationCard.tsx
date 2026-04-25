@@ -182,7 +182,7 @@ export const NotificationCard = ({
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="w-9 h-9 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors flex-shrink-0">
+                <button className="w-9 h-9 rounded-lg flex items-center justify-center text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors flex-shrink-0">
                   <MoreVertical className="w-4 h-4" />
                 </button>
               </DropdownMenuTrigger>

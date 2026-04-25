@@ -1,195 +1,115 @@
+import { useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import {
-  GraduationCap,
-  Zap,
-  BookOpen,
-  Award,
-  Target,
-  ChevronRight,
-  Flame,
-  Star,
-  Sparkles,
-  ArrowLeft,
-  Shield,
-  Compass,
-  Trophy,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { ArrowRight, Flame, Trophy, Sparkles } from 'lucide-react';
+
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useQuizResults } from '@/hooks/useQuizResults';
-import { useAuth } from '@/contexts/AuthContext';
+import { useLearningXP } from '@/hooks/useLearningXP';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
-// StudyStatsDashboard moved to LeaderboardPage only
 import useSEO from '@/hooks/useSEO';
+import { cn } from '@/lib/utils';
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.05 },
-  },
-};
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListRow,
+  HubGrid,
+  HubCard,
+  Eyebrow,
+  type Tone,
+} from '@/components/college/primitives';
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 300, damping: 24 },
-  },
-};
+/* ── Category model ────────────────────────────────────────────────── */
 
-interface CategoryCardProps {
+interface CategoryDef {
+  id: string;
+  number: string;
   title: string;
   description: string;
-  icon: React.ElementType;
-  courseCount: number;
-  tags: { label: string; color: string }[];
-  accentGradient: string;
-  iconColor: string;
-  iconBg: string;
-  hoverColor: string;
-  onClick: () => void;
-  badge?: { label: string; icon: React.ElementType };
-  progressPct?: number;
-  completedCourses?: number;
+  meta: string;
+  count: number;
+  tone: Tone;
+  pro?: boolean;
+  routeKeys: string[];
+  href: string;
 }
 
-function CategoryCard({
-  title,
-  description,
-  icon: _Icon,
-  courseCount,
-  tags,
-  accentGradient,
-  iconColor,
-  iconBg,
-  hoverColor,
-  onClick,
-  badge,
-  progressPct = 0,
-  completedCourses = 0,
-}: CategoryCardProps) {
-  return (
-    <motion.div
-      variants={itemVariants}
-      whileTap={{ scale: 0.98 }}
-      onClick={onClick}
-      className="group relative overflow-hidden card-surface-interactive cursor-pointer touch-manipulation"
-    >
-      {/* Top accent line */}
-      <div
-        className={cn(
-          'absolute inset-x-0 top-0 h-[2px]',
-          'bg-gradient-to-r',
-          accentGradient,
-          'opacity-30 group-hover:opacity-80',
-          'transition-opacity duration-200'
-        )}
-      />
+const CATEGORIES: CategoryDef[] = [
+  {
+    id: 'apprentice',
+    number: '01',
+    title: 'Apprentice training',
+    description: 'Level 2 & 3 qualifications, AM2 prep and the fundamentals every electrician needs.',
+    meta: 'Level 2 · Level 3 · AM2',
+    count: 8,
+    tone: 'blue',
+    routeKeys: ['apprentice'],
+    href: '/study-centre/apprentice',
+  },
+  {
+    id: 'upskilling',
+    number: '02',
+    title: 'Professional upskilling',
+    description: 'BS 7671, EV charging, solar PV, smart home and other specialist tracks.',
+    meta: 'BS 7671 · EV · Solar PV · Smart home',
+    count: 14,
+    tone: 'yellow',
+    pro: true,
+    routeKeys: [
+      'upskilling', 'bs7671', 'ev-charging', 'solar-pv', 'smart-home', 'fire-alarm',
+      'data-cabling', 'bms', 'inspection-testing', 'industrial-electrical',
+      'energy-efficiency', 'fiber-optics', 'instrumentation', 'renewable-energy',
+      'emergency-lighting',
+    ],
+    href: '/study-centre/upskilling',
+  },
+  {
+    id: 'general',
+    number: '03',
+    title: 'General upskilling',
+    description: 'Cross-industry safety — IPAF, first aid, working at height and site essentials.',
+    meta: 'IPAF · First aid · COSHH · Fire safety',
+    count: 14,
+    tone: 'emerald',
+    routeKeys: [
+      'general-upskilling', 'fire-safety', 'first-aid', 'manual-handling',
+      'working-at-height', 'ipaf', 'pasma', 'mewp', 'coshh-awareness',
+      'confined-spaces', 'asbestos', 'scaffolding-awareness', 'cdm-regulations',
+      'cscs-card', 'environmental-sustainability',
+    ],
+    href: '/study-centre/general-upskilling',
+  },
+  {
+    id: 'personal',
+    number: '04',
+    title: 'Personal development',
+    description: 'Leadership, emotional intelligence, resilience and the soft skills that compound.',
+    meta: 'Leadership · Mental health · Communication',
+    count: 10,
+    tone: 'purple',
+    routeKeys: [
+      'personal-development', 'leadership-on-site', 'mental-health',
+      'mental-health-awareness', 'communication-confidence', 'conflict-resolution',
+      'emotional-intelligence', 'resilience-stress-management',
+      'time-management-organisation', 'goal-setting-growth',
+      'mentoring-developing-others', 'personal-finance',
+    ],
+    href: '/study-centre/personal-development',
+  },
+];
 
-      <div className="relative z-10 p-4 sm:p-5 flex flex-col h-full min-h-[180px]">
-        {/* Top row — badges */}
-        <div className="flex items-start justify-end mb-3">
-          <div className="flex items-center gap-1.5">
-            {badge && (
-              <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/20">
-                <badge.icon className="h-3 w-3 text-elec-yellow fill-elec-yellow" />
-                <span className="text-[10px] font-bold text-elec-yellow">{badge.label}</span>
-              </div>
-            )}
-            <span className="px-2 py-1 rounded-full text-[10px] font-medium bg-white/[0.04] text-white border border-white/[0.06]">
-              {courseCount} Courses
-            </span>
-          </div>
-        </div>
-
-        {/* Title & Description */}
-        <h3
-          className={cn(
-            'text-base sm:text-lg font-semibold text-white mb-1',
-            hoverColor,
-            'transition-colors'
-          )}
-        >
-          {title}
-        </h3>
-        <p className="text-xs sm:text-sm text-white leading-relaxed mb-3 line-clamp-2">
-          {description}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {tags.map((tag) => (
-            <span
-              key={tag.label}
-              className={cn(
-                'px-2 py-0.5 text-[10px] font-medium rounded-full bg-gradient-to-r border',
-                tag.color
-              )}
-            >
-              {tag.label}
-            </span>
-          ))}
-        </div>
-
-        {/* Progress bar */}
-        {completedCourses > 0 && (
-          <div className="mb-3">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] font-medium text-white">
-                {completedCourses}/{courseCount} completed
-              </span>
-              <span className="text-[10px] font-medium text-white">{Math.round(progressPct)}%</span>
-            </div>
-            <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className={cn('h-full rounded-full bg-gradient-to-r transition-all duration-500', accentGradient)}
-                style={{ width: `${progressPct}%` }}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* Spacer */}
-        <div className="flex-grow" />
-
-        {/* Bottom action */}
-        <div className="flex items-center justify-between mt-2">
-          <span className="text-xs sm:text-sm font-medium text-elec-yellow">
-            {completedCourses > 0 ? 'Continue Learning' : 'Start Learning'}
-          </span>
-          <div
-            className={cn(
-              'w-7 h-7 sm:w-8 sm:h-8 rounded-full',
-              'bg-white/[0.05] border border-elec-yellow/20',
-              'flex items-center justify-center',
-              'group-hover:bg-elec-yellow group-hover:border-elec-yellow',
-              'transition-all duration-200'
-            )}
-          >
-            <ChevronRight
-              className={cn(
-                'w-4 h-4 text-white',
-                'group-hover:text-black group-hover:translate-x-0.5',
-                'transition-all'
-              )}
-            />
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+/* ── Page ──────────────────────────────────────────────────────────── */
 
 export default function StudyCentreIndex() {
   const navigate = useNavigate();
-  const { user } = useAuth();
   const studyStreakData = useStudyStreak();
   const quizData = useQuizResults();
+  const xpData = useLearningXP();
+  const { lastLocation, loading: lastLocLoading, getLastStudiedDisplay } = useLastStudyLocation();
+  const { allProgress } = useCourseProgress();
 
   useSEO({
     title: 'Study Centre | Electrical Training & CPD Courses',
@@ -200,205 +120,225 @@ export default function StudyCentreIndex() {
       name: 'Elec-Mate Study Centre',
       description:
         'Educational hub for UK electrical professionals - apprenticeship training and CPD courses',
-      provider: {
-        '@type': 'Organization',
-        name: 'Elec-Mate',
-      },
+      provider: { '@type': 'Organization', name: 'Elec-Mate' },
     },
   });
 
-  const { lastLocation, loading: lastLocLoading, getLastStudiedDisplay } = useLastStudyLocation();
-  const { allProgress } = useCourseProgress();
-
-  // Count completed courses per category
-  // Course keys from tracker are URL path segments (e.g. "fire-safety", "bs7671")
-  // Map route prefixes to categories based on StudyCentreRoutes structure
-  const apprenticeKeys = ['apprentice'];
-  const upskillingKeys = ['upskilling', 'bs7671', 'ev-charging', 'solar-pv', 'smart-home', 'fire-alarm', 'data-cabling', 'bms', 'inspection-testing', 'industrial-electrical', 'energy-efficiency', 'fiber-optics', 'instrumentation', 'renewable-energy', 'emergency-lighting'];
-  const generalKeys = ['general-upskilling', 'fire-safety', 'first-aid', 'manual-handling', 'working-at-height', 'ipaf', 'pasma', 'mewp', 'coshh-awareness', 'confined-spaces', 'asbestos', 'scaffolding-awareness', 'cdm-regulations', 'cscs-card', 'environmental-sustainability'];
-  const personalKeys = ['personal-development', 'leadership-on-site', 'mental-health', 'mental-health-awareness', 'communication-confidence', 'conflict-resolution', 'emotional-intelligence', 'resilience-stress-management', 'time-management-organisation', 'goal-setting-growth', 'mentoring-developing-others', 'personal-finance'];
-
-  const completedByCategory = {
-    apprentice: allProgress.filter((p) => p.completed && apprenticeKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))).length,
-    upskilling: allProgress.filter((p) => p.completed && upskillingKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))).length,
-    general: allProgress.filter((p) => p.completed && generalKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))).length,
-    personal: allProgress.filter((p) => p.completed && personalKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))).length,
-  };
-
   const currentStreak = studyStreakData?.streak?.currentStreak || 0;
   const quizResults = quizData?.results || [];
-  const totalQuizzesTaken = quizResults.length;
-  const averageScore =
-    quizResults.length > 0
-      ? Math.round(
-          quizResults.reduce((acc: number, r: any) => acc + (r.score || 0), 0) / quizResults.length
-        )
-      : 0;
+  const totalQuizzes = quizResults.length;
+  const avgScore = useMemo(
+    () =>
+      quizResults.length > 0
+        ? Math.round(
+            quizResults.reduce((acc: number, r: any) => acc + (r.score || r.percentage || 0), 0) /
+              quizResults.length
+          )
+        : 0,
+    [quizResults]
+  );
+  const totalXP = xpData?.totalXP ?? 0;
+  const level = xpData?.level ?? 1;
+  const xpProgress = xpData?.xpProgress ?? 0;
+
+  const completedByCategory = useMemo(() => {
+    const map: Record<string, number> = {};
+    for (const cat of CATEGORIES) {
+      map[cat.id] = allProgress.filter(
+        (p) =>
+          p.completed &&
+          cat.routeKeys.some((k) => p.course_key === k || p.course_key.startsWith(k + '/'))
+      ).length;
+    }
+    return map;
+  }, [allProgress]);
+
+  const totalCompleted = Object.values(completedByCategory).reduce((a, b) => a + b, 0);
+  const totalCourses = CATEGORIES.reduce((a, c) => a + c.count, 0);
 
   return (
-    <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
-      <div className="max-w-6xl mx-auto lg:px-8">
-        {/* Sticky Header */}
-        <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/[0.06]">
-          <div className="px-4 py-2">
-            <div className="flex items-center gap-3 h-11">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate('/dashboard')}
-                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <div className="flex items-center gap-2.5">
-                <div className="p-1.5 rounded-lg bg-purple-500/10 border border-purple-500/20">
-                  <BookOpen className="h-4 w-4 text-purple-400" />
-                </div>
-                <h1 className="text-base font-semibold text-white">Study Centre</h1>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <PageHero
+            eyebrow="Learning"
+            title="Study centre"
+            description="Apprentice training, CPD and the soft skills that round out a career — track every minute, every quiz, every win."
+            tone="purple"
+            actions={
+              <>
+                {currentStreak >= 2 && (
+                  <span className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-elec-yellow/10 border border-elec-yellow/25 text-elec-yellow text-[12px] font-semibold">
+                    <Flame className="h-3.5 w-3.5" />
+                    {currentStreak}-day streak
+                  </span>
+                )}
+                <button
+                  onClick={() => navigate('/study-centre/leaderboard')}
+                  className="inline-flex items-center gap-1.5 h-10 px-4 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12.5px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation"
+                >
+                  <Trophy className="h-3.5 w-3.5 text-elec-yellow" />
+                  Leaderboard
+                </button>
+              </>
+            }
+          />
 
-        {/* Main Content */}
-        <motion.main
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="px-4 py-4 space-y-5"
-        >
-          {/* Continue Where You Left Off */}
+          {/* Continue where you left off — only when there's somewhere to go */}
           {lastLocation && !lastLocLoading && (
-            <motion.div variants={itemVariants}>
-              <Link to={lastLocation.path} className="block touch-manipulation active:scale-[0.98]">
-                <div style={{ background: 'hsl(0 0% 12%)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <p className="text-[11px] text-elec-yellow font-bold uppercase tracking-wider">Continue where you left off</p>
-                    <p className="text-sm font-semibold text-white truncate mt-1">{lastLocation.title}</p>
-                    <p className="text-xs text-white mt-1">{getLastStudiedDisplay()}</p>
+            <Link
+              to={lastLocation.path}
+              className="block touch-manipulation active:scale-[0.99] transition-transform"
+            >
+              <div className="relative overflow-hidden rounded-2xl border border-elec-yellow/20 bg-gradient-to-br from-elec-yellow/[0.08] via-amber-500/[0.04] to-transparent p-5">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-70" />
+                <div className="flex items-start gap-4">
+                  <div className="flex-1 min-w-0">
+                    <Eyebrow>Continue where you left off</Eyebrow>
+                    <div className="mt-1.5 text-[16px] sm:text-[18px] font-semibold text-white truncate">
+                      {lastLocation.title}
+                    </div>
+                    <div className="mt-1 text-[12px] text-white">{getLastStudiedDisplay()}</div>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
+                  <div className="shrink-0 mt-1 h-10 w-10 rounded-full bg-elec-yellow/15 border border-elec-yellow/30 flex items-center justify-center">
+                    <ArrowRight className="h-4 w-4 text-elec-yellow" />
+                  </div>
                 </div>
-              </Link>
-            </motion.div>
-          )}
-
-          {/* Leaderboard Card — full width, inline styles to match Continue card */}
-          <motion.div variants={itemVariants}>
-            <Link to="/study-centre/leaderboard" className="block touch-manipulation active:scale-[0.98]">
-              <div style={{ background: 'hsl(0 0% 12%)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '16px', padding: '16px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <p className="text-[11px] text-elec-yellow font-bold uppercase tracking-wider">Leaderboard</p>
-                  <p className="text-sm font-semibold text-white mt-1">Rankings, Streaks & Achievements</p>
-                </div>
-                <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
               </div>
             </Link>
-          </motion.div>
+          )}
 
-          {/* Course Categories */}
-          <motion.section variants={itemVariants} className="space-y-3">
-            <h2 className="text-xs font-medium text-white uppercase tracking-wider px-0.5">
-              Categories
-            </h2>
-            <div className="grid grid-cols-1 gap-3">
-              <CategoryCard
-                title="Apprentice Training"
-                description="Level 2 & 3 qualifications, AM2 preparation, and essential fundamentals"
-                icon={GraduationCap}
-                courseCount={8}
-                completedCourses={completedByCategory.apprentice}
-                progressPct={(completedByCategory.apprentice / 8) * 100}
-                accentGradient="from-blue-500 via-blue-400 to-cyan-400"
-                iconColor="text-blue-400"
-                iconBg="bg-blue-500/10 border border-blue-500/20"
-                hoverColor="group-hover:text-blue-300"
-                onClick={() => navigate('/study-centre/apprentice')}
-                tags={[
-                  { label: 'Level 2', color: 'from-blue-500/15 to-blue-600/15 border-blue-500/25 text-blue-300' },
-                  { label: 'Level 3', color: 'from-purple-500/15 to-purple-600/15 border-purple-500/25 text-purple-300' },
-                  { label: 'AM2', color: 'from-cyan-500/15 to-cyan-600/15 border-cyan-500/25 text-cyan-300' },
-                  { label: 'Mock Exams', color: 'from-indigo-500/15 to-indigo-600/15 border-indigo-500/25 text-indigo-300' },
-                ]}
+          {/* Snapshot — XP / Streak / Quizzes / Progress */}
+          <StatStrip
+            columns={4}
+            stats={[
+              {
+                label: 'Total XP',
+                value: totalXP.toLocaleString(),
+                sub: `Level ${level} · ${Math.round(xpProgress)}%`,
+              },
+              {
+                label: 'Streak',
+                value: currentStreak,
+                sub: currentStreak > 0 ? 'days running' : 'Start today',
+              },
+              {
+                label: 'Quizzes',
+                value: totalQuizzes,
+                sub: totalQuizzes > 0 ? `Avg ${avgScore}%` : 'Take your first',
+              },
+              {
+                label: 'Completed',
+                value: `${totalCompleted}/${totalCourses}`,
+                sub: 'courses',
+              },
+            ]}
+          />
+
+          {/* Categories — black hairline dividers between cards */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-3 px-0.5">
+              <Eyebrow>Categories</Eyebrow>
+              <span className="text-[11px] text-white">{totalCourses} courses</span>
+            </div>
+
+            <HubGrid columns={2} className="!bg-black gap-[1.5px]">
+              {CATEGORIES.map((c) => {
+                const completed = completedByCategory[c.id] ?? 0;
+                return (
+                  <HubCard
+                    key={c.id}
+                    number={c.number}
+                    eyebrow={c.title.toUpperCase()}
+                    title={c.title}
+                    description={c.description}
+                    meta={`${c.meta} · ${c.count} courses${c.pro ? ' · Pro' : ''}`}
+                    tone={c.tone}
+                    cta={completed > 0 ? `Continue · ${completed}/${c.count}` : 'Start learning'}
+                    onClick={() => navigate(c.href)}
+                    badge={
+                      c.pro ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow text-[10px] font-bold uppercase tracking-wider">
+                          Pro
+                        </span>
+                      ) : undefined
+                    }
+                  />
+                );
+              })}
+            </HubGrid>
+          </div>
+
+          {/* Recent activity / Achievements teaser */}
+          <ListCard>
+            <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-purple-500/70 via-violet-400/70 to-indigo-400/70 opacity-70" />
+              <div className="flex items-center justify-between gap-2">
+                <div className="text-[13px] font-semibold text-white">Your progress</div>
+                <Link
+                  to="/study-centre/leaderboard"
+                  className="text-[12px] font-medium text-elec-yellow hover:text-white transition-colors"
+                >
+                  Leaderboard →
+                </Link>
+              </div>
+            </div>
+            <div>
+              <ListRow
+                lead={<span className="h-2 w-2 rounded-full bg-elec-yellow block" />}
+                title={`Level ${level}`}
+                subtitle={`${Math.round(xpProgress)}% of the way to level ${level + 1} — keep stacking small wins.`}
+                trailing={
+                  <span className="text-[11.5px] text-white">{totalXP.toLocaleString()} XP</span>
+                }
               />
-
-              <CategoryCard
-                title="Professional Upskilling"
-                description="BS7671, EV charging, solar PV, smart home technology, and specialist courses"
-                icon={Zap}
-                courseCount={14}
-                completedCourses={completedByCategory.upskilling}
-                progressPct={(completedByCategory.upskilling / 14) * 100}
-                accentGradient="from-elec-yellow via-amber-400 to-orange-400"
-                iconColor="text-elec-yellow"
-                iconBg="bg-elec-yellow/10 border border-elec-yellow/20"
-                hoverColor="group-hover:text-elec-yellow"
-                onClick={() => navigate('/study-centre/upskilling')}
-                badge={{ label: 'PRO', icon: Star }}
-                tags={[
-                  { label: 'BS7671', color: 'from-elec-yellow/15 to-amber-500/15 border-elec-yellow/25 text-elec-yellow' },
-                  { label: 'EV Charging', color: 'from-green-500/15 to-emerald-500/15 border-green-500/25 text-green-400' },
-                  { label: 'Solar PV', color: 'from-orange-500/15 to-amber-500/15 border-orange-500/25 text-orange-400' },
-                  { label: 'Smart Home', color: 'from-cyan-500/15 to-blue-500/15 border-cyan-500/25 text-cyan-400' },
-                ]}
+              <ListRow
+                lead={<span className="h-2 w-2 rounded-full bg-orange-400 block" />}
+                title={currentStreak > 0 ? `${currentStreak}-day streak` : 'No streak yet'}
+                subtitle={
+                  currentStreak > 0
+                    ? 'One section or quiz a day keeps it alive.'
+                    : 'Complete one section or quiz today to start.'
+                }
+                trailing={
+                  currentStreak >= 2 ? (
+                    <span className="inline-flex items-center gap-1 text-[11.5px] font-semibold text-elec-yellow">
+                      <Flame className="h-3 w-3" />
+                      {currentStreak}
+                    </span>
+                  ) : undefined
+                }
               />
-
-              <CategoryCard
-                title="General Upskilling"
-                description="Cross-industry safety training — IPAF, first aid, working at height, and site skills"
-                icon={Shield}
-                courseCount={14}
-                completedCourses={completedByCategory.general}
-                progressPct={(completedByCategory.general / 14) * 100}
-                accentGradient="from-emerald-500 via-emerald-400 to-green-400"
-                iconColor="text-emerald-400"
-                iconBg="bg-emerald-500/10 border border-emerald-500/20"
-                hoverColor="group-hover:text-emerald-300"
-                onClick={() => navigate('/study-centre/general-upskilling')}
-                tags={[
-                  { label: 'IPAF Scaffold', color: 'from-emerald-500/15 to-green-500/15 border-emerald-500/25 text-emerald-400' },
-                  { label: 'First Aid', color: 'from-red-500/15 to-rose-500/15 border-red-500/25 text-red-400' },
-                  { label: 'COSHH', color: 'from-orange-500/15 to-amber-500/15 border-orange-500/25 text-orange-400' },
-                  { label: 'Fire Safety', color: 'from-yellow-500/15 to-amber-500/15 border-yellow-500/25 text-yellow-400' },
-                ]}
-              />
-
-              <CategoryCard
-                title="Personal Development"
-                description="Leadership, emotional intelligence, resilience, and becoming the best version of yourself"
-                icon={Compass}
-                courseCount={10}
-                completedCourses={completedByCategory.personal}
-                progressPct={(completedByCategory.personal / 10) * 100}
-                accentGradient="from-pink-500 via-rose-400 to-red-400"
-                iconColor="text-pink-400"
-                iconBg="bg-pink-500/10 border border-pink-500/20"
-                hoverColor="group-hover:text-pink-300"
-                onClick={() => navigate('/study-centre/personal-development')}
-                tags={[
-                  { label: 'Leadership', color: 'from-rose-500/15 to-pink-500/15 border-rose-500/25 text-rose-400' },
-                  { label: 'Mental Health', color: 'from-purple-500/15 to-violet-500/15 border-purple-500/25 text-purple-400' },
-                  { label: 'Communication', color: 'from-sky-500/15 to-blue-500/15 border-sky-500/25 text-sky-400' },
-                  { label: 'Resilience', color: 'from-amber-500/15 to-orange-500/15 border-amber-500/25 text-amber-400' },
-                ]}
+              <ListRow
+                lead={<span className="h-2 w-2 rounded-full bg-emerald-400 block" />}
+                title={totalQuizzes > 0 ? `${totalQuizzes} quizzes taken` : 'No quizzes yet'}
+                subtitle={
+                  totalQuizzes > 0
+                    ? `Average score ${avgScore}% — keep nudging it up.`
+                    : 'Take a quiz to start scoring yourself.'
+                }
+                trailing={
+                  totalQuizzes > 0 ? (
+                    <span className="text-[11.5px] text-white">{avgScore}%</span>
+                  ) : undefined
+                }
               />
             </div>
-          </motion.section>
+          </ListCard>
 
-          {/* Quick Tip */}
-          <motion.div variants={itemVariants} className="card-surface p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
-              <span className="text-[11px] font-medium text-white uppercase tracking-wider">
-                Quick Tip
-              </span>
-            </div>
-            <p className="text-xs text-white leading-relaxed">
-              Complete at least one quiz daily to build your streak and reinforce your learning.
-              Consistency beats intensity!
+          {/* Quick tip — single-line, no animation, plays well on mobile */}
+          <div
+            className={cn(
+              'rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] px-5 py-4',
+              'flex items-start gap-3'
+            )}
+          >
+            <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
+            <p className="text-[12.5px] sm:text-[13px] text-white leading-relaxed">
+              One quiz a day keeps your streak alive and locks knowledge in. Consistency beats intensity.
             </p>
-          </motion.div>
-        </motion.main>
+          </div>
+        </PageFrame>
       </div>
     </div>
   );

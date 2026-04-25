@@ -663,7 +663,7 @@ export const InvoiceItemsStep = ({
                 value={materialSearch}
                 onChange={(e) => setMaterialSearch(e.target.value)}
                 style={darkInputStyle}
-                className="w-full h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[14px] text-white placeholder:text-white/60 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+                className="w-full h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[14px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
               />
 
               {/* Category Selector */}
@@ -795,7 +795,7 @@ export const InvoiceItemsStep = ({
                 onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
                 placeholder="Enter item description"
                 style={darkInputStyle}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white placeholder:text-white/60 focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
+                className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white placeholder:text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
               />
             </div>
             <div className="grid grid-cols-2 gap-3 py-3">
@@ -910,7 +910,7 @@ export const InvoiceItemsStep = ({
       {originalItems.length === 0 && additionalItems.length === 0 && (
         <div className="text-center py-10 px-4">
           <p className="text-[15px] font-medium text-white mb-1">No items yet</p>
-          <p className="text-[13px] text-white/60 mb-5">Add labour, materials, or equipment to your invoice</p>
+          <p className="text-[13px] text-white mb-5">Add labour, materials, or equipment to your invoice</p>
           <div className="flex gap-2 justify-center">
             <button
               onClick={() => setActiveAddMethod('quick')}
@@ -1066,7 +1066,7 @@ export const InvoiceItemsStep = ({
                   inputMode="decimal"
                   placeholder="3.5"
                   style={darkInputStyle}
-                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
+                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       const val = parseFloat((e.target as HTMLInputElement).value);
@@ -1078,14 +1078,14 @@ export const InvoiceItemsStep = ({
                     if (!isNaN(val) && val > 0) handleHoursChange(val);
                   }}
                 />
-                <span className="text-[13px] font-medium text-white/70">hours</span>
+                <span className="text-[13px] font-medium text-white">hours</span>
               </div>
             </div>
 
             {/* Divider */}
             <div className="flex items-center gap-3">
               <div className="flex-1 h-px bg-white/[0.12]" />
-              <span className="text-[11px] text-white/60 uppercase tracking-wide">or pick a common value</span>
+              <span className="text-[11px] text-white uppercase tracking-wide">or pick a common value</span>
               <div className="flex-1 h-px bg-white/[0.12]" />
             </div>
 

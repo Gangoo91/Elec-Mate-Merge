@@ -1,5 +1,4 @@
 import {
-  ArrowLeft,
   FileText,
   Lightbulb,
   MapPin,
@@ -8,116 +7,94 @@ import {
   MessageSquare,
   Clipboard,
 } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: 'Section 1',
-    title: 'Understanding Installation Specifications and Drawings',
-    description: 'Reading and interpreting technical drawings and specifications',
+    id: 1,
+    title: 'Understanding installation specifications and drawings',
     icon: FileText,
+    description: 'Reading and interpreting technical drawings and specifications.',
     href: 'section1',
   },
   {
-    number: 'Section 2',
-    title: 'Basic Electrical Design Principles',
-    description: 'Fundamental principles of electrical system design',
+    id: 2,
+    title: 'Basic electrical design principles',
     icon: Lightbulb,
+    description: 'Fundamental principles of electrical system design.',
     href: 'section2',
   },
   {
-    number: 'Section 3',
-    title: 'Planning Installation Work on Site',
-    description: 'Planning and organising electrical installation projects',
+    id: 3,
+    title: 'Planning installation work on site',
     icon: MapPin,
+    description: 'Planning and organising electrical installation projects.',
     href: 'section3',
   },
   {
-    number: 'Section 4',
-    title: 'Materials, Tools, and Resource Planning',
-    description: 'Planning and managing resources for electrical installations',
+    id: 4,
+    title: 'Materials, tools and resource planning',
     icon: Package,
+    description: 'Planning and managing resources for electrical installations.',
     href: 'section4',
   },
   {
-    number: 'Section 5',
-    title: 'Working with Other Trades and Site Personnel',
-    description: 'Collaboration and coordination with other construction trades',
+    id: 5,
+    title: 'Working with other trades and site personnel',
     icon: Users,
+    description: 'Collaboration and coordination with other construction trades.',
     href: 'section5',
   },
   {
-    number: 'Section 6',
-    title: 'Communicating Information Effectively',
-    description: 'Professional communication skills for electrical work',
+    id: 6,
+    title: 'Communicating information effectively',
     icon: MessageSquare,
+    description: 'Professional communication skills for electrical work.',
     href: 'section6',
   },
   {
-    number: 'Section 7',
-    title: 'Documentation, Labelling, and Record Keeping',
-    description: 'Maintaining accurate records and documentation',
+    id: 7,
+    title: 'Documentation, labelling and record keeping',
     icon: Clipboard,
+    description: 'Maintaining accurate records and documentation.',
     href: 'section7',
   },
 ];
 
-const Module5 = () => {
+export default function Module5() {
+  useSEO({
+    title: 'Module 5: Design, Planning and Communication | Level 2 Electrical | Elec-Mate',
+    description:
+      'Reading drawings, design principles, site planning, resources, working with other trades and documentation.',
+  });
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Level 2
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Level 2</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Electrical Apprenticeship</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Module 5: Design, Planning & Communication
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Project planning, technical documentation and effective team communication
-            </p>
-          </header>
-
-          {/* Sections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {sections.map((section, index) => (
-              <ModuleCard
-                key={index}
-                number={section.number}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                href={section.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo=".."
+      backLabel="Level 2 electrical installation"
+      moduleNumber={5}
+      title="Design, planning and communication"
+      description="Project planning, technical documentation and effective team communication."
+      tone="emerald"
+      sectionsCount={sections.length}
+      prevModuleHref="../module4"
+      prevModuleLabel="Installing wiring systems and enclosures"
+      nextModuleHref="../module6"
+      nextModuleLabel="Inspection, testing and certification"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={section.href}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default Module5;
+}

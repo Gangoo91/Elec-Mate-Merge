@@ -20,7 +20,7 @@ import {
   LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useDashboardData, DashboardActionItem } from '@/hooks/useDashboardData';
+import { useSharedDashboardData, DashboardActionItem } from '@/hooks/useDashboardData';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -142,7 +142,7 @@ const actionRoleFilters: Record<string, string[]> = {
 };
 
 export function SmartActions() {
-  const { actions, isLoading } = useDashboardData();
+  const { actions, isLoading } = useSharedDashboardData();
   const { profile } = useAuth();
   const userRole = profile?.role || 'visitor';
 
@@ -202,7 +202,7 @@ export function SmartActions() {
  * Compact version for sidebar or smaller spaces
  */
 export function SmartActionsCompact() {
-  const { actions } = useDashboardData();
+  const { actions } = useSharedDashboardData();
   const { profile } = useAuth();
   const navigate = useNavigate();
   const userRole = profile?.role || 'visitor';

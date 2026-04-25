@@ -462,10 +462,10 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/20 mb-3 relative">
           <Bot className="h-8 w-8 text-purple-400" />
           <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-            <Sparkles className="h-3 w-3 text-foreground" />
+            <Sparkles className="h-3 w-3 text-white" />
           </div>
         </div>
-        <h2 className="text-xl font-bold text-foreground mb-1">Mental Health Mate</h2>
+        <h2 className="text-xl font-bold text-white mb-1">Mental Health Mate</h2>
         <p className="text-sm text-white">
           Your 24/7 AI companion - here to listen, support, and guide
         </p>
@@ -485,7 +485,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                 variant="ghost"
                 size="sm"
                 onClick={clearChat}
-                className="h-7 px-2 text-xs text-white hover:text-foreground"
+                className="h-7 px-2 text-xs text-white hover:text-white"
               >
                 <RefreshCw className="h-3 w-3 mr-1" />
                 New chat
@@ -500,15 +500,15 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                 {/* Welcome Message */}
                 <div className="flex items-start gap-3">
                   <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                    <Bot className="h-5 w-5 text-foreground" />
+                    <Bot className="h-5 w-5 text-white" />
                   </div>
                   <div className="flex-1">
                     <div className="bg-purple-500/10 rounded-2xl rounded-tl-none p-4">
-                      <p className="text-sm text-foreground leading-relaxed">
+                      <p className="text-sm text-white leading-relaxed">
                         Hey{userName ? ` ${userName}` : ''}! I'm your Mental Health Mate - an AI
                         companion designed to support electricians and apprentices like you.
                       </p>
-                      <p className="text-sm text-foreground/80 mt-2 leading-relaxed">
+                      <p className="text-sm text-white mt-2 leading-relaxed">
                         Whether you're stressed, anxious, or just need someone to talk to, I'm here
                         24/7. Everything you share stays private.
                       </p>
@@ -523,7 +523,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                           <button
                             key={i}
                             onClick={() => handleAIChat(prompt.text)}
-                            className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-full bg-white/10 text-foreground/80
+                            className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-full bg-white/10 text-white
                               hover:bg-white/20 active:scale-95 transition-all border border-white/10"
                           >
                             <Icon className="h-3 w-3" />
@@ -550,9 +550,9 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                       }`}
                     >
                       {message.type === 'user' ? (
-                        <Users className="h-5 w-5 text-foreground" />
+                        <Users className="h-5 w-5 text-white" />
                       ) : (
-                        <Bot className="h-5 w-5 text-foreground" />
+                        <Bot className="h-5 w-5 text-white" />
                       )}
                     </div>
                     <div className={`flex-1 ${message.type === 'user' ? 'flex justify-end' : ''}`}>
@@ -563,7 +563,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                             : 'bg-purple-500/10 rounded-tl-none'
                         }`}
                       >
-                        <p className="text-sm text-foreground whitespace-pre-line leading-relaxed">
+                        <p className="text-sm text-white whitespace-pre-line leading-relaxed">
                           {message.content}
                         </p>
 
@@ -600,7 +600,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                             <button
                               key={i}
                               onClick={() => handleSuggestionClick(suggestion)}
-                              className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-white/90
+                              className="text-xs px-3 py-1.5 rounded-full bg-white/5 text-white
                                 hover:bg-white/10 active:scale-95 transition-all border border-white/10"
                             >
                               {suggestion}
@@ -617,7 +617,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
             {isLoading && (
               <div className="flex items-start gap-3">
                 <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                  <Loader2 className="h-5 w-5 text-foreground animate-spin" />
+                  <Loader2 className="h-5 w-5 text-white animate-spin" />
                 </div>
                 <div className="bg-purple-500/10 rounded-2xl rounded-tl-none p-4">
                   <div className="flex gap-1.5">
@@ -709,7 +709,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
               <Users className="h-4 w-4 sm:h-5 sm:w-5 text-green-400" />
             </div>
             <div className="text-left">
-              <h3 className="font-semibold text-foreground text-xs sm:text-sm">
+              <h3 className="font-semibold text-white text-xs sm:text-sm">
                 Talk to a Real Person
               </h3>
               <p className="text-[10px] sm:text-xs text-white">
@@ -761,7 +761,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <p className="font-medium text-sm text-foreground">{mate.name}</p>
+                        <p className="font-medium text-sm text-white">{mate.name}</p>
                         {mate.badge && (
                           <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400">
                             {mate.badge}
@@ -813,7 +813,7 @@ const MentalHealthMate = ({ onBecomeMate }: MentalHealthMateProps) => {
           <Lightbulb className="h-3 w-3" />
           <span>AI learns your preferences</span>
         </div>
-        <div className="w-1 h-1 rounded-full bg-muted-foreground/50" />
+        <div className="w-1 h-1 rounded-full bg-[hsl(0_0%_12%)]-foreground/50" />
         <div className="flex items-center gap-1">
           <Heart className="h-3 w-3" />
           <span>100% confidential</span>

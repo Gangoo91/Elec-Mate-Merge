@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  ArrowLeft,
   BookOpen,
   Layers,
   MapPin,
@@ -9,124 +7,103 @@ import {
   FileCheck,
   GraduationCap,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
+import { CourseShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EmergencyLightingCourse = () => {
-  const modules: Array<{
-    id: number | string;
-    title: string;
-    description: string;
-    duration: string;
-    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-    isExam?: boolean;
-  }> = [
-    {
-      id: 1,
-      title: 'Introduction to Emergency Lighting',
-      description: 'Purpose, legal framework, and system fundamentals',
-      duration: '40 mins',
-      icon: BookOpen,
-    },
-    {
-      id: 2,
-      title: 'System Categories and Lighting Types',
-      description: 'Emergency lighting categories and applications',
-      duration: '45 mins',
-      icon: Layers,
-    },
-    {
-      id: 3,
-      title: 'Design Requirements and Placement',
-      description: 'Technical design criteria and positioning',
-      duration: '50 mins',
-      icon: MapPin,
-    },
-    {
-      id: 4,
-      title: 'Cabling, Battery Backup, and Circuiting',
-      description: 'Power supply systems and circuit design',
-      duration: '55 mins',
-      icon: Battery,
-    },
-    {
-      id: 5,
-      title: 'Installation, Testing, and Maintenance',
-      description: 'Complete testing procedures and protocols',
-      duration: '50 mins',
-      icon: Wrench,
-    },
-    {
-      id: 6,
-      title: 'Regulatory Compliance and BS 5266',
-      description: 'Standards compliance and documentation',
-      duration: '40 mins',
-      icon: FileCheck,
-    },
-    {
-      id: 7,
-      title: 'Mock Exam',
-      description: 'Test your knowledge',
-      duration: '75 mins',
-      icon: GraduationCap,
-      isExam: true,
-    },
-  ];
+const modules = [
+  {
+    id: 1,
+    title: 'Introduction to emergency lighting',
+    description: 'Purpose, legal framework, system fundamentals and BS 5266 overview.',
+    duration: '40 mins',
+    icon: BookOpen,
+    link: '../emergency-lighting-module-1',
+  },
+  {
+    id: 2,
+    title: 'System categories and lighting types',
+    description: 'Escape, anti-panic, high-risk task lighting, maintained vs non-maintained systems.',
+    duration: '45 mins',
+    icon: Layers,
+    link: '../emergency-lighting-module-2',
+  },
+  {
+    id: 3,
+    title: 'Design requirements and placement',
+    description: 'Illumination levels, escape routes, mounting heights and risk-based design.',
+    duration: '50 mins',
+    icon: MapPin,
+    link: '../emergency-lighting-module-3',
+  },
+  {
+    id: 4,
+    title: 'Cabling, battery backup and circuiting',
+    description: 'Cable specs, self-contained vs central battery, autonomy and fire integrity.',
+    duration: '55 mins',
+    icon: Battery,
+    link: '../emergency-lighting-module-4',
+  },
+  {
+    id: 5,
+    title: 'Installation, testing and maintenance',
+    description: 'Functional and 3-hour duration tests, monthly/annual schedules and handover.',
+    duration: '50 mins',
+    icon: Wrench,
+    link: '../emergency-lighting-module-5',
+  },
+  {
+    id: 6,
+    title: 'Regulatory compliance and BS 5266',
+    description: 'BS 5266-1, EN 1838, fire safety integration and audit documentation.',
+    duration: '40 mins',
+    icon: FileCheck,
+    link: '../emergency-lighting-module-6',
+  },
+  {
+    id: 7,
+    title: 'Mock exam',
+    description: 'Test your emergency lighting knowledge under timed exam conditions.',
+    duration: '75 mins',
+    icon: GraduationCap,
+    link: '../emergency-lighting-mock-exam',
+    isExam: true,
+  },
+];
+
+export default function EmergencyLightingCourse() {
+  useSEO({
+    title: 'Emergency Lighting Systems | Professional Upskilling | Elec-Mate',
+    description:
+      'Emergency lighting design, installation, testing schedules and BS 5266 compliance for commercial and public buildings.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Courses
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Course Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Emergency Lighting Systems
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Emergency lighting design, testing schedules, and BS 5266 compliance
-          </p>
-        </div>
-
-        {/* Module Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {modules.map((module, index) => (
-            <ModuleCard
-              key={module.id}
-              to={
-                module.isExam
-                  ? `../emergency-lighting-mock-exam`
-                  : `../emergency-lighting-module-${module.id}`
-              }
-              moduleNumber={typeof module.id === 'number' ? module.id : index + 1}
-              title={module.title}
-              description={module.description}
-              duration={module.duration}
-              icon={module.icon}
-              isExam={module.isExam}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <CourseShell
+      backTo="/study-centre/upskilling"
+      backLabel="Professional upskilling"
+      eyebrow="Professional upskilling"
+      title="Emergency lighting systems"
+      description="Emergency lighting design, testing schedules and BS 5266 compliance."
+      tone="yellow"
+      level="Intermediate"
+      modulesCount={modules.length}
+      pagesCount="200+"
+      totalDuration="6h"
+    >
+      {modules.map((mod, index) => (
+        <ModuleCard
+          key={mod.id}
+          to={mod.link}
+          moduleNumber={mod.id}
+          title={mod.title}
+          description={mod.description}
+          icon={mod.icon}
+          duration={mod.duration}
+          isExam={mod.isExam}
+          index={index}
+        />
+      ))}
+    </CourseShell>
   );
-};
-
-export default EmergencyLightingCourse;
+}

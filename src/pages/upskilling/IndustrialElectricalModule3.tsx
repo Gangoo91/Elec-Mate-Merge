@@ -1,96 +1,48 @@
-import { ArrowLeft, PanelLeft, Layout, Tag, Thermometer, TestTube } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { PanelLeft, Layout, Tag, Thermometer, TestTube } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const IndustrialElectricalModule3 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Layout Planning for MCC and Control Panels',
-      icon: Layout,
-      description: 'Motor control centre and panel layout design principles',
-    },
-    {
-      id: 2,
-      title: 'Component Mounting and DIN Rail Organisation',
-      icon: PanelLeft,
-      description: 'Component arrangement and DIN rail systems',
-    },
-    {
-      id: 3,
-      title: 'Cable Termination and Ferrule ID',
-      icon: Tag,
-      description: 'Cable termination techniques and identification methods',
-    },
-    {
-      id: 4,
-      title: 'Panel Cooling and IP Ratings',
-      icon: Thermometer,
-      description: 'Thermal management and ingress protection',
-    },
-    {
-      id: 5,
-      title: 'Functional Testing and Documentation',
-      icon: TestTube,
-      description: 'Testing procedures and documentation requirements',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Layout planning for MCC and control panels', icon: Layout, description: 'Motor control centre and panel layout design principles.' },
+  { id: 2, title: 'Component mounting and DIN rail organisation', icon: PanelLeft, description: 'Component arrangement and DIN rail systems.' },
+  { id: 3, title: 'Cable termination and ferrule ID', icon: Tag, description: 'Cable termination techniques and identification methods.' },
+  { id: 4, title: 'Panel cooling and IP ratings', icon: Thermometer, description: 'Thermal management and ingress protection.' },
+  { id: 5, title: 'Functional testing and documentation', icon: TestTube, description: 'Testing procedures and documentation requirements.' },
+];
+
+export default function IndustrialElectricalModule3() {
+  useSEO({
+    title: 'Module 3: Industrial Panel Assembly | Industrial Electrical | Elec-Mate',
+    description: 'MCC and control panel layout, DIN rail organisation, ferrule ID, IP ratings and functional testing.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/industrial-electrical-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Industrial Electrical Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">60 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Industrial Panel Assembly and Layout
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Panel design, component mounting, and assembly best practices
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../industrial-electrical-module-3-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../industrial-electrical-course"
+      backLabel="Industrial electrical systems"
+      moduleNumber={3}
+      title="Industrial panel assembly and layout"
+      description="Plan, build and prove an industrial control panel — from layout drawings to functional test."
+      tone="orange"
+      sectionsCount={sections.length}
+      duration="60 mins"
+      prevModuleHref="../industrial-electrical-module-2"
+      prevModuleLabel="Motors, starters and control gear"
+      nextModuleHref="../industrial-electrical-module-4"
+      nextModuleLabel="PLC basics and system integration"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../industrial-electrical-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default IndustrialElectricalModule3;
+}

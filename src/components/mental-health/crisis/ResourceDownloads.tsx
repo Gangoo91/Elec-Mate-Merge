@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 
 const ResourceDownloads = () => {
   return (
-    <Card className="border-red-500/20 bg-elec-gray hover:shadow-md transition-shadow shadow-sm">
+    <Card className="border-red-500/20 bg-[hsl(0_0%_12%)] hover:shadow-md transition-shadow shadow-sm">
       <CardHeader className="pb-3 border-b border-red-500/10">
         <CardTitle className="text-base flex items-center gap-2">
           <Download className="h-4 w-4 text-red-500" />

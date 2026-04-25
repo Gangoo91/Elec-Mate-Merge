@@ -249,7 +249,7 @@ const JobDetailSheet = ({
 
                   {/* Company — only if known */}
                   {companyLabel && (
-                    <p className="mt-0.5 text-sm text-white/70 font-medium truncate">
+                    <p className="mt-0.5 text-sm text-white font-medium truncate">
                       {companyLabel}
                     </p>
                   )}
@@ -298,15 +298,15 @@ const JobDetailSheet = ({
 
                 {hasDescription ? (
                   <div
-                    className="prose prose-invert prose-sm max-w-none text-white/85 leading-relaxed [&_p]:my-2 [&_ul]:my-2 [&_li]:my-0.5"
+                    className="prose prose-invert prose-sm max-w-none text-white leading-relaxed [&_p]:my-2 [&_ul]:my-2 [&_li]:my-0.5"
                     dangerouslySetInnerHTML={{ __html: rawDescription }}
                   />
                 ) : (
                   <div className="text-center py-6 px-2">
                     <div className="w-12 h-12 rounded-2xl bg-white/[0.04] mx-auto flex items-center justify-center mb-3">
-                      <FileText className="h-5 w-5 text-white/40" />
+                      <FileText className="h-5 w-5 text-white" />
                     </div>
-                    <p className="text-sm text-white/70 font-medium mb-1">
+                    <p className="text-sm text-white font-medium mb-1">
                       Description not available
                     </p>
                     <p className="text-xs text-white/50 max-w-xs mx-auto leading-relaxed">

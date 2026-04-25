@@ -1,96 +1,48 @@
-import { ArrowLeft, Lightbulb, Clock, Palette, Zap, Link2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Lightbulb, Clock, Palette, Zap, Link2 } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const SmartHomeModule3 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Types of Smart Lighting Systems',
-      icon: Lightbulb,
-      description: 'Overview of different smart lighting technologies and controls',
-    },
-    {
-      id: 2,
-      title: 'Scene-Based Control and Schedules',
-      icon: Clock,
-      description: 'Programming lighting scenes and automated schedules',
-    },
-    {
-      id: 3,
-      title: 'Dimming, RGBW, and Colour Temperature',
-      icon: Palette,
-      description: 'Understanding colour control and dimming capabilities',
-    },
-    {
-      id: 4,
-      title: 'Load Compatibility and Control Types',
-      icon: Zap,
-      description: 'Matching controls to different lighting load types',
-    },
-    {
-      id: 5,
-      title: 'Grouping, Linking, and Motion Logic',
-      icon: Link2,
-      description: 'Creating intelligent lighting groups and motion-based control',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Types of smart lighting systems', icon: Lightbulb, description: 'An overview of smart lighting technologies and controls.' },
+  { id: 2, title: 'Scene-based control and schedules', icon: Clock, description: 'Programming lighting scenes and automated schedules.' },
+  { id: 3, title: 'Dimming, RGBW and colour temperature', icon: Palette, description: 'Colour control and dimming capabilities.' },
+  { id: 4, title: 'Load compatibility and control types', icon: Zap, description: 'Matching controls to different lighting load types.' },
+  { id: 5, title: 'Grouping, linking and motion logic', icon: Link2, description: 'Intelligent lighting groups and motion-based control.' },
+];
+
+export default function SmartHomeModule3() {
+  useSEO({
+    title: 'Module 3: Smart Lighting and Scene Programming | Smart Home | Elec-Mate',
+    description: 'Smart lighting types, scene control, dimming, colour temperature, load compatibility and motion logic.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/smart-home-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Smart Home Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Smart Lighting and Scene Programming
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Mastering smart lighting systems and scene-based control
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../smart-home-module-3-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../smart-home-course"
+      backLabel="Smart home technology"
+      moduleNumber={3}
+      title="Smart lighting and scene programming"
+      description="From colour temperature to motion logic — the design choices behind smart lighting."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../smart-home-module-2"
+      prevModuleLabel="Smart protocols: Zigbee, Z-Wave, Wi-Fi and more"
+      nextModuleHref="../smart-home-module-4"
+      nextModuleLabel="Heating, HVAC and environmental control"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../smart-home-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default SmartHomeModule3;
+}

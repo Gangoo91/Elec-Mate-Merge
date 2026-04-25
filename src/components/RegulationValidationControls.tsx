@@ -117,7 +117,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
       ? { dot: 'bg-red-500', text: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' }
       : stats.warningIssues > 0
         ? { dot: 'bg-amber-400', text: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/30' }
-        : { dot: 'bg-white/30', text: 'text-white/70', bg: 'bg-white/[0.03]', border: 'border-white/10' };
+        : { dot: 'bg-white/30', text: 'text-white', bg: 'bg-white/[0.03]', border: 'border-white/10' };
 
   return (
     <>
@@ -166,7 +166,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
               <span className="text-lg font-bold text-white tabular-nums leading-none">
                 {stats.totalCircuits}
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/60 mt-1">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-white mt-1">
                 Circuits
               </span>
             </div>
@@ -174,7 +174,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
               <span className="text-lg font-bold text-green-400 tabular-nums leading-none">
                 {stats.compliantCircuits}
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/60 mt-1">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-white mt-1">
                 Compliant
               </span>
             </div>
@@ -182,12 +182,12 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
               <span
                 className={cn(
                   'text-lg font-bold tabular-nums leading-none',
-                  stats.criticalIssues > 0 ? 'text-red-400' : 'text-white/40'
+                  stats.criticalIssues > 0 ? 'text-red-400' : 'text-white'
                 )}
               >
                 {stats.criticalIssues}
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/60 mt-1">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-white mt-1">
                 Critical
               </span>
             </div>
@@ -195,12 +195,12 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
               <span
                 className={cn(
                   'text-lg font-bold tabular-nums leading-none',
-                  stats.warningIssues > 0 ? 'text-amber-400' : 'text-white/40'
+                  stats.warningIssues > 0 ? 'text-amber-400' : 'text-white'
                 )}
               >
                 {stats.warningIssues}
               </span>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-white/60 mt-1">
+              <span className="text-[10px] font-semibold uppercase tracking-wider text-white mt-1">
                 Warnings
               </span>
             </div>
@@ -219,7 +219,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
               <div className="min-w-0 flex-1 text-[12px] text-white">
                 <span className="font-bold tabular-nums">{topOffendingReg.count}×</span>{' '}
                 <span className="font-semibold">{topOffendingReg.title}</span>
-                <span className="text-white/60"> — {topOffendingReg.regulation}</span>
+                <span className="text-white"> — {topOffendingReg.regulation}</span>
               </div>
             </div>
           )}
@@ -243,7 +243,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
                   'h-10 inline-flex items-center gap-2.5 pl-1 pr-4 rounded-full border transition-all touch-manipulation',
                   showRegulationStatus
                     ? 'bg-elec-yellow/10 border-elec-yellow/40 text-elec-yellow'
-                    : 'bg-white/[0.03] border-white/15 text-white/80 hover:bg-white/[0.06]'
+                    : 'bg-white/[0.03] border-white/15 text-white hover:bg-white/[0.06]'
                 )}
                 aria-pressed={showRegulationStatus}
               >
@@ -271,7 +271,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
               <PopoverTrigger asChild>
                 <button
                   type="button"
-                  className="h-9 px-3 rounded-full border border-white/15 bg-white/[0.03] text-[12px] font-bold text-white/70 hover:text-white hover:bg-white/[0.06] transition-colors"
+                  className="h-9 px-3 rounded-full border border-white/15 bg-white/[0.03] text-[12px] font-bold text-white hover:text-white hover:bg-white/[0.06] transition-colors"
                   aria-label="Keyboard shortcuts"
                   title="Keyboard shortcuts"
                 >
@@ -285,7 +285,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
                 <p className="text-[11px] font-bold uppercase tracking-wider text-elec-yellow mb-2">
                   Keyboard
                 </p>
-                <ul className="space-y-1.5 text-[12px] text-white/85">
+                <ul className="space-y-1.5 text-[12px] text-white">
                   <li className="flex items-center justify-between">
                     <span>Move between cells</span>
                     <kbd className="px-1.5 py-0.5 rounded bg-white/[0.06] border border-white/10 text-[10px] font-mono">

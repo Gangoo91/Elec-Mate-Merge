@@ -1,117 +1,50 @@
-import {
-  ArrowLeft,
-  Cable,
-  Power,
-  Calculator,
-  Palette,
-  Shield,
-  Wrench,
-  AlertTriangle,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Cable, Power, Calculator, Palette, Shield, Wrench, AlertTriangle } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const InstrumentationModule7 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: "What Is a 4–20mA Loop and Why It's Used",
-      icon: Cable,
-      description: 'Understanding the 4-20mA current loop standard and its advantages',
-    },
-    {
-      id: 2,
-      title: 'Loop-Powered vs Externally Powered Devices',
-      icon: Power,
-      description: 'Different power supply configurations for instrumentation loops',
-    },
-    {
-      id: 3,
-      title: 'Loop Design and Load Calculations',
-      icon: Calculator,
-      description: 'Designing current loops and calculating power requirements',
-    },
-    {
-      id: 4,
-      title: 'Wiring Standards and Colour Coding',
-      icon: Palette,
-      description: 'Industry standards for instrumentation wiring and identification',
-    },
-    {
-      id: 5,
-      title: 'Barriers, Isolators, and Intrinsically Safe Loops',
-      icon: Shield,
-      description: 'Safety devices and intrinsically safe system design',
-    },
-    {
-      id: 6,
-      title: 'Loop Testing Tools (Loop Calibrators, Simulators, Multimeters)',
-      icon: Wrench,
-      description: 'Equipment and techniques for testing current loops',
-    },
-    {
-      id: 7,
-      title: 'Common Wiring Faults and Loop Integrity Checks',
-      icon: AlertTriangle,
-      description: 'Troubleshooting wiring problems and verifying loop integrity',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'What is a 4-20 mA loop and why it is used', icon: Cable, description: 'The 4-20 mA current loop standard and its advantages.' },
+  { id: 2, title: 'Loop-powered vs externally powered devices', icon: Power, description: 'Different power supply configurations for instrumentation loops.' },
+  { id: 3, title: 'Loop design and load calculations', icon: Calculator, description: 'Designing current loops and calculating power requirements.' },
+  { id: 4, title: 'Wiring standards and colour coding', icon: Palette, description: 'Industry standards for instrumentation wiring and identification.' },
+  { id: 5, title: 'Barriers, isolators and intrinsically safe loops', icon: Shield, description: 'Safety devices and intrinsically safe system design.' },
+  { id: 6, title: 'Loop testing tools (loop calibrators, simulators, multimeters)', icon: Wrench, description: 'Equipment and techniques for testing current loops.' },
+  { id: 7, title: 'Common wiring faults and loop integrity checks', icon: AlertTriangle, description: 'Troubleshooting wiring problems and verifying loop integrity.' },
+];
+
+export default function InstrumentationModule7() {
+  useSEO({
+    title: 'Module 7: 4-20 mA Loops and Wiring | Instrumentation | Elec-Mate',
+    description: 'The 4-20 mA standard, loop design, wiring colour codes, intrinsic safety and loop testing tools.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/instrumentation-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Instrumentation Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 7</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">7 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">55 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Instrumentation Wiring and 4–20mA Loops
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding current loop systems, wiring standards, and testing procedures
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../instrumentation-module-7-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../instrumentation-course"
+      backLabel="Instrumentation"
+      moduleNumber={7}
+      title="Instrumentation wiring and 4-20 mA loops"
+      description="The 4-20 mA loop end-to-end — design, wiring, intrinsic safety and proving loop integrity."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="55 mins"
+      prevModuleHref="../instrumentation-module-6"
+      prevModuleLabel="Calibration methods and standards"
+      nextModuleHref="../instrumentation-module-8"
+      nextModuleLabel="Fault finding, diagnostics and maintenance"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../instrumentation-module-7-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default InstrumentationModule7;
+}

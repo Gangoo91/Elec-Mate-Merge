@@ -1,13 +1,12 @@
-import { ArrowLeft, Scale, Zap, FileWarning, Shield, Wrench, Mountain, Users } from 'lucide-react';
+import { Scale, Zap, FileWarning, Shield, Wrench, Mountain, Users } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '1.1',
-    title: 'Health & Safety at Work Act (HASAWA) 1974',
+    title: 'Health and Safety at Work Act (HASAWA) 1974',
     description: 'Foundation legislation for workplace health and safety requirements',
     icon: Scale,
     href: '../level3-module1-section1-1',
@@ -21,21 +20,21 @@ const subsections = [
   },
   {
     number: '1.3',
-    title: 'RIDDOR (Reporting of Injuries, Diseases & Dangerous Occurrences Regulations)',
+    title: 'RIDDOR (reporting of injuries, diseases and dangerous occurrences regulations)',
     description: 'Mandatory reporting requirements for workplace incidents and accidents',
     icon: FileWarning,
     href: '../level3-module1-section1-3',
   },
   {
     number: '1.4',
-    title: 'COSHH (Control of Substances Hazardous to Health)',
+    title: 'COSHH (control of substances hazardous to health)',
     description: 'Regulations for managing and controlling hazardous substances in the workplace',
     icon: Shield,
     href: '../level3-module1-section1-4',
   },
   {
     number: '1.5',
-    title: 'PUWER & LOLER (equipment and lifting regs)',
+    title: 'PUWER and LOLER (equipment and lifting regs)',
     description: 'Equipment safety regulations and lifting operations requirements',
     icon: Wrench,
     href: '../level3-module1-section1-5',
@@ -49,7 +48,7 @@ const subsections = [
   },
   {
     number: '1.7',
-    title: 'Employer vs. employee responsibilities under law',
+    title: 'Employer vs employee responsibilities under law',
     description: 'Legal duties and responsibilities of employers and employees in workplace safety',
     icon: Users,
     href: '../level3-module1-section1-7',
@@ -63,46 +62,29 @@ const Level3Module1Section1 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module1">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 1
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module1"
+      backLabel="Module 1"
+      moduleNumber={1}
+      sectionNumber={1}
+      title="Legislation and regulations"
+      description="Key legislation, regulations and standards governing electrical work and building services."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      nextSectionHref="../level3-module1-section2"
+      nextSectionLabel="Risk assessment and method statements"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

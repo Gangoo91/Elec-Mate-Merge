@@ -27,7 +27,7 @@ export const MessageSkeleton = memo(function MessageSkeleton({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -6 }}
       transition={{ duration: 0.18 }}
-      className={cn('w-full max-w-3xl space-y-3', className)}
+      className={cn('w-full max-w-4xl space-y-3', className)}
     >
       <div className="h-2.5 w-24 rounded-full bg-white/[0.06] animate-pulse" />
       <div className="space-y-2.5">
@@ -88,9 +88,9 @@ export const SearchingSkeleton = memo(function SearchingSkeleton({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18 }}
-      className={cn('w-full max-w-3xl', className)}
+      className={cn('w-full max-w-4xl', className)}
     >
-      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+      <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
         Searching knowledge bases
       </div>
       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px]">
@@ -102,7 +102,7 @@ export const SearchingSkeleton = memo(function SearchingSkeleton({
             transition={{ delay: idx * 0.08 }}
             className={cn(
               'font-medium',
-              source.complete ? toneText[source.tone ?? 'yellow'] : 'text-white/70',
+              source.complete ? toneText[source.tone ?? 'yellow'] : 'text-white',
               !source.complete && 'animate-pulse'
             )}
           >

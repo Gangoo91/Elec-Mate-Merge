@@ -112,12 +112,12 @@ const SolarPVSystemDesign: React.FC<Props> = ({ formData, onUpdate }) => {
         <div className="flex items-center gap-3">
           <div>
             <span className="text-xl font-bold text-amber-400">{formData.totalCapacity?.toFixed(1) || '0'}</span>
-            <span className="text-xs text-white/40 ml-1">kWp</span>
+            <span className="text-xs text-white ml-1">kWp</span>
           </div>
           <div className="w-px h-5 bg-white/[0.08]" />
           <div>
             <span className="text-xl font-bold text-green-400">{formData.estimatedAnnualYield?.toLocaleString() || '0'}</span>
-            <span className="text-xs text-white/40 ml-1">kWh/yr</span>
+            <span className="text-xs text-white ml-1">kWh/yr</span>
           </div>
         </div>
         <div>
@@ -585,7 +585,7 @@ const SolarPVSystemDesign: React.FC<Props> = ({ formData, onUpdate }) => {
           </Field>
         </div>
         <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-[10px] text-white/60">
+          <p className="text-[10px] text-white">
             <strong>MCS:</strong> Yield estimates must use an approved methodology. MCS Yield Estimator or SAP 2012 are most commonly accepted.
           </p>
         </div>

@@ -1,101 +1,73 @@
-import { ArrowLeft, PenLine, Mail, ClipboardList, FileText, Smartphone } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Mail, ClipboardList, FileText, Smartphone } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: 'Professional Email Essentials',
+    title: 'Professional email essentials',
     icon: Mail,
     description:
-      'Email structure, tone and formality, reply-all etiquette, 24-hour rule, construction examples',
+      'Email structure, tone and formality, reply-all etiquette, the 24-hour rule, construction examples.',
   },
   {
     id: 2,
-    title: 'Site Diaries & Technical Reports',
+    title: 'Site diaries & technical reports',
     icon: ClipboardList,
     description:
-      'JCT site diary requirements, NEC record-keeping, EICR/EIC report writing, factual vs opinion writing',
+      'JCT site diary requirements, NEC record-keeping, EICR/EIC report writing, factual vs opinion writing.',
   },
   {
     id: 3,
-    title: 'Quotes, Proposals & Written Agreements',
+    title: 'Quotes, proposals & written agreements',
     icon: FileText,
     description:
-      'Quote structure, professional language, avoiding ambiguity, domestic and commercial examples',
+      'Quote structure, professional language, avoiding ambiguity, domestic and commercial examples.',
   },
   {
     id: 4,
-    title: 'Digital Communication & Social Media',
+    title: 'Digital communication & social media',
     icon: Smartphone,
     description:
-      'WhatsApp etiquette, negativity bias in text, phone vs text vs email, GDPR basics for tradespeople',
+      'WhatsApp etiquette, negativity bias in text, phone vs text vs email, GDPR basics for tradespeople.',
   },
 ];
 
 export default function CCModule4() {
   useSEO({
-    title: 'Module 4: Professional Writing & Digital Communication | Communication & Confidence',
+    title:
+      'Module 4: Professional writing & digital communication | Communication & confidence | Elec-Mate',
     description:
       'Professional emails, site diaries and reports, quotes and proposals, digital communication and social media for construction professionals.',
   });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-8 lg:px-12 py-2">
-          <div className="max-w-4xl mx-auto">
-            <Button
-              variant="ghost"
-              size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-              asChild
-            >
-              <Link to="../communication-confidence">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Communication &amp; Confidence
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-4 sm:px-8 lg:px-12 py-6 sm:py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">MODULE 4</span>
-              <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">4 Sections</span>
-              <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">40 mins</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Professional Writing &amp; Digital Communication
-            </h1>
-            <p className="text-white text-sm sm:text-base">
-              Professional emails, site diaries and reports, quotes and proposals, and digital
-              communication for construction professionals
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {sections.map((section, index) => (
-              <SectionCard
-                key={section.id}
-                to={`../cc-module-4-section-${section.id}`}
-                sectionNumber={section.id}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../communication-confidence"
+      backLabel="Communication & confidence"
+      moduleNumber={4}
+      title="Professional writing & digital communication"
+      description="Professional emails, site diaries and reports, quotes and proposals, and digital communication for construction professionals."
+      tone="purple"
+      sectionsCount={sections.length}
+      duration="40 mins"
+      prevModuleHref="../cc-module-3"
+      prevModuleLabel="Speaking with confidence"
+      nextModuleHref="../cc-module-5"
+      nextModuleLabel="Negotiation, persuasion & difficult conversations"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../cc-module-4-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
 }

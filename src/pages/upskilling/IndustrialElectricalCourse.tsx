@@ -1,125 +1,53 @@
-import { ArrowLeft, Settings, GraduationCap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Settings, Cog, PanelLeft, Cpu, Search, Cable, Activity, Lock, GraduationCap } from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
+import { CourseShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const IndustrialElectricalCourse = () => {
-  const modules: Array<{
-    id: number | string;
-    title: string;
-    duration: string;
-    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-    isExam?: boolean;
-  }> = [
-    {
-      id: 1,
-      title: 'Overview of Industrial Electrical Distribution',
-      duration: '50 mins',
-      icon: Settings,
-    },
-    {
-      id: 2,
-      title: 'Motors, Starters, and Control Gear',
-      duration: '65 mins',
-      icon: Settings,
-    },
-    {
-      id: 3,
-      title: 'Industrial Panel Assembly and Layout',
-      duration: '60 mins',
-      icon: Settings,
-    },
-    {
-      id: 4,
-      title: 'PLC Basics and System Integration',
-      duration: '70 mins',
-      icon: Settings,
-    },
-    {
-      id: 5,
-      title: 'Industrial Fault Finding and Troubleshooting',
-      duration: '65 mins',
-      icon: Settings,
-    },
-    {
-      id: 6,
-      title: 'Cable Types, Containment, and Routing',
-      duration: '55 mins',
-      icon: Settings,
-    },
-    {
-      id: 7,
-      title: 'Power Factor Correction and Harmonics',
-      duration: '60 mins',
-      icon: Settings,
-    },
-    {
-      id: 8,
-      title: 'Industrial Safety, Isolation, and Lock-off',
-      duration: '45 mins',
-      icon: Settings,
-    },
-    {
-      id: 'exam',
-      title: 'Mock Exam',
-      duration: '120 mins',
-      icon: GraduationCap,
-      isExam: true,
-    },
-  ];
+const modules = [
+  { moduleNumber: 1, title: 'Overview of industrial electrical distribution', description: 'Industrial vs domestic, HV/LV separation, MCC panels, busbars and earthing strategies.', icon: Settings, duration: '50 mins', link: '../industrial-electrical-module-1' },
+  { moduleNumber: 2, title: 'Motors, starters and control gear', description: 'DOL, star-delta, soft starters, VSDs, contactors, overloads and emergency stops.', icon: Cog, duration: '65 mins', link: '../industrial-electrical-module-2' },
+  { moduleNumber: 3, title: 'Industrial panel assembly and layout', description: 'MCC layout, DIN rail organisation, ferrule ID, IP ratings and functional testing.', icon: PanelLeft, duration: '60 mins', link: '../industrial-electrical-module-3' },
+  { moduleNumber: 4, title: 'PLC basics and system integration', description: 'PLC architecture, ladder logic, industrial protocols, SCADA, HMI and safety PLCs.', icon: Cpu, duration: '70 mins', link: '../industrial-electrical-module-4' },
+  { moduleNumber: 5, title: 'Industrial fault finding and troubleshooting', description: 'Strategy, control faults, loop testing, PLC diagnostics and root cause analysis.', icon: Search, duration: '65 mins', link: '../industrial-electrical-module-5' },
+  { moduleNumber: 6, title: 'Cable types, containment and routing', description: 'Industrial cable selection, containment systems and segregation requirements.', icon: Cable, duration: '55 mins', link: '../industrial-electrical-module-6' },
+  { moduleNumber: 7, title: 'Power factor correction and harmonics', description: 'Reactive power, capacitor banks and harmonic mitigation strategies.', icon: Activity, duration: '60 mins', link: '../industrial-electrical-module-7' },
+  { moduleNumber: 8, title: 'Industrial safety, isolation and lock-off', description: 'Safe isolation procedures, LOTO and industrial safety legislation.', icon: Lock, duration: '45 mins', link: '../industrial-electrical-module-8' },
+  { moduleNumber: 9, title: 'Mock exam', description: 'Comprehensive assessment covering every industrial electrical module.', icon: GraduationCap, duration: '120 mins', link: '../industrial-electrical-mock-exam', isExam: true },
+];
+
+export default function IndustrialElectricalCourse() {
+  useSEO({
+    title: 'Industrial Electrical Systems | Professional Upskilling | Elec-Mate',
+    description:
+      'High voltage systems, motor control, PLCs and industrial automation — covering distribution, panels, fault finding, power factor and safety isolation.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Courses
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Course Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Industrial Electrical Systems
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            High voltage systems, motor control, and industrial automation
-          </p>
-        </div>
-
-        {/* Module Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {modules.map((module, index) => (
-            <ModuleCard
-              key={module.id}
-              to={
-                module.isExam
-                  ? `../industrial-electrical-mock-exam`
-                  : `../industrial-electrical-module-${module.id}`
-              }
-              moduleNumber={typeof module.id === 'number' ? module.id : 0}
-              title={module.title}
-              duration={module.duration}
-              icon={module.icon}
-              isExam={module.isExam}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <CourseShell
+      backTo="/electrician/upskilling"
+      backLabel="Professional upskilling"
+      eyebrow="Professional upskilling"
+      title="Industrial electrical systems"
+      description="High voltage distribution, motor control, PLCs and industrial automation for the working electrician."
+      tone="orange"
+      level="Specialist"
+      modulesCount={modules.length}
+      pagesCount="200+"
+      totalDuration="9h"
+    >
+      {modules.map((mod, index) => (
+        <ModuleCard
+          key={mod.moduleNumber}
+          to={mod.link}
+          moduleNumber={mod.moduleNumber}
+          title={mod.title}
+          description={mod.description}
+          icon={mod.icon}
+          duration={mod.duration}
+          isExam={mod.isExam}
+          index={index}
+        />
+      ))}
+    </CourseShell>
   );
-};
-
-export default IndustrialElectricalCourse;
+}

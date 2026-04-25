@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX, Check } from 'lucide-react';
+import {
+  Eyebrow,
+  PrimaryButton,
+  SecondaryButton,
+  IconButton,
+} from '@/components/college/primitives';
 
 interface BreathingExerciseProps {
   onClose: () => void;
@@ -15,6 +19,21 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
   const [totalCycles] = useState(4);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Respect the OS-level reduce-motion setting. When on, we replace the
+  // expanding/shrinking circle with a still pulse-free dot so users with
+  // vestibular sensitivity can still follow the timer.
+  const [reduceMotion, setReduceMotion] = useState<boolean>(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = (e: MediaQueryListEvent) => setReduceMotion(e.matches);
+    mq.addEventListener?.('change', onChange);
+    return () => mq.removeEventListener?.('change', onChange);
+  }, []);
 
   const phaseConfig = {
     inhale: { duration: 4, instruction: 'Breathe In', color: 'from-blue-400 to-cyan-400' },
@@ -96,24 +115,21 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
   return (
     <div className="min-h-[80vh] flex flex-col">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 px-4 py-3 -mx-4 mb-4">
-        <div className="flex items-center justify-between">
-          <Button
-            variant="ghost"
+      <div className="sticky top-0 z-40 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-b border-white/[0.06] px-4 py-3 -mx-4 mb-4">
+        <div className="flex items-center justify-between gap-3">
+          <button
             onClick={onClose}
-            className="h-11 gap-2 touch-manipulation active:scale-[0.98] transition-all"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full text-[13px] font-medium text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
           >
             <ArrowLeft className="h-5 w-5" />
             Back
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
+          </button>
+          <IconButton
             onClick={() => setSoundEnabled(!soundEnabled)}
-            className="h-11 w-11 text-white touch-manipulation active:scale-[0.98] transition-all"
+            aria-label={soundEnabled ? 'Mute sound' : 'Enable sound'}
           >
             {soundEnabled ? <Volume2 className="h-5 w-5" /> : <VolumeX className="h-5 w-5" />}
-          </Button>
+          </IconButton>
         </div>
       </div>
 
@@ -121,38 +137,41 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
       <div className="flex-1 flex flex-col items-center justify-center px-4">
         {phase === 'complete' ? (
           /* Completion Screen */
-          <div className="text-center space-y-6 animate-fade-in">
+          <div className="text-center space-y-6 animate-fade-in max-w-sm">
             <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-green-400 to-emerald-400 flex items-center justify-center">
-              <Check className="h-12 w-12 text-foreground" />
+              <Check className="h-12 w-12 text-black" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-foreground mb-2">Well Done!</h2>
-              <p className="text-white">You completed {totalCycles} breathing cycles.</p>
-              <p className="text-sm text-white mt-2">Take a moment to notice how you feel.</p>
+              <Eyebrow>Mental health</Eyebrow>
+              <h2 className="mt-1.5 text-[22px] sm:text-[28px] font-semibold text-white tracking-tight leading-tight">
+                Well done
+              </h2>
+              <p className="mt-3 text-[13px] text-white">
+                You completed {totalCycles} breathing cycles.
+              </p>
+              <p className="mt-1 text-[12.5px] text-white">
+                Take a moment to notice how you feel.
+              </p>
             </div>
             <div className="flex gap-3 justify-center">
-              <Button
-                onClick={reset}
-                variant="outline"
-                className="h-12 px-6 text-base touch-manipulation active:scale-[0.98] transition-all"
-              >
+              <SecondaryButton onClick={reset} size="lg">
                 <RotateCcw className="h-5 w-5 mr-2" />
                 Again
-              </Button>
-              <Button
-                onClick={onClose}
-                className="h-12 px-6 text-base touch-manipulation active:scale-[0.98] transition-all"
-              >
+              </SecondaryButton>
+              <PrimaryButton onClick={onClose} size="lg">
                 Done
-              </Button>
+              </PrimaryButton>
             </div>
           </div>
         ) : (
           /* Exercise Screen */
           <>
             <div className="text-center mb-8">
-              <h2 className="text-xl font-semibold text-foreground mb-1">Box Breathing</h2>
-              <p className="text-sm text-white">
+              <Eyebrow>Mental health</Eyebrow>
+              <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                Box breathing
+              </h2>
+              <p className="mt-2 text-[13px] text-white">
                 {phase === 'ready'
                   ? 'Find a comfortable position and relax'
                   : `Cycle ${cyclesCompleted + 1} of ${totalCycles}`}
@@ -162,7 +181,7 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
             {/* Breathing Circle - Responsive for mobile */}
             <div className="relative w-[min(16rem,80vw)] h-[min(16rem,80vw)] mb-8">
               {/* Outer ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-white/10" />
+              <div className="absolute inset-0 rounded-full border-4 border-white/[0.08]" />
 
               {/* Progress ring */}
               {phase !== 'ready' && (
@@ -176,19 +195,21 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
                     strokeWidth="4"
                     strokeDasharray={780}
                     strokeDashoffset={780 - 780 * (cyclesCompleted / totalCycles)}
-                    className="text-green-400/30 transition-all duration-500"
+                    className="text-elec-yellow/40 transition-all duration-500"
                   />
                 </svg>
               )}
 
-              {/* Animated breathing circle */}
+              {/* Animated breathing circle — animation disabled when the
+                  user has prefers-reduced-motion set */}
               <div
                 className={`absolute inset-4 rounded-full bg-gradient-to-br ${getCurrentColor()}
-                  flex items-center justify-center transition-transform duration-1000 ease-in-out
-                  shadow-lg shadow-blue-500/20`}
-                style={{ transform: `scale(${getCircleScale()})` }}
+                  flex items-center justify-center shadow-lg shadow-blue-500/20 ${
+                    reduceMotion ? '' : 'transition-transform duration-1000 ease-in-out'
+                  }`}
+                style={{ transform: `scale(${reduceMotion ? 1.25 : getCircleScale()})` }}
               >
-                <div className="text-center text-foreground">
+                <div className="text-center text-white">
                   {phase === 'ready' ? (
                     <div className="text-lg font-medium">Ready?</div>
                   ) : (
@@ -205,14 +226,14 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
 
             {/* Phase Indicators */}
             {phase !== 'ready' && (
-              <div className="flex gap-3 mb-8">
+              <div className="flex gap-2 mb-8">
                 {['inhale', 'hold', 'exhale'].map((p) => (
                   <div
                     key={p}
-                    className={`text-sm px-4 py-2 rounded-full transition-all ${
+                    className={`text-[12.5px] px-4 py-1.5 rounded-full transition-all ${
                       phase === p
-                        ? 'bg-white text-black font-medium'
-                        : 'bg-white/10 text-foreground/60'
+                        ? 'bg-elec-yellow text-black font-semibold'
+                        : 'bg-white/[0.06] text-white border border-white/[0.08]'
                     }`}
                   >
                     {p.charAt(0).toUpperCase() + p.slice(1)}
@@ -224,22 +245,13 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
             {/* Controls */}
             <div className="flex gap-3">
               {phase === 'ready' ? (
-                <Button
-                  onClick={startExercise}
-                  size="lg"
-                  className="h-14 px-8 text-base bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-foreground touch-manipulation active:scale-[0.98] transition-all"
-                >
-                  <Play className="h-6 w-6 mr-2" />
+                <PrimaryButton onClick={startExercise} size="lg">
+                  <Play className="h-5 w-5 mr-2" />
                   Start
-                </Button>
+                </PrimaryButton>
               ) : (
                 <>
-                  <Button
-                    onClick={togglePause}
-                    size="lg"
-                    variant="outline"
-                    className="h-14 px-6 text-base touch-manipulation active:scale-[0.98] transition-all"
-                  >
+                  <SecondaryButton onClick={togglePause} size="lg">
                     {isActive ? (
                       <>
                         <Pause className="h-5 w-5 mr-2" />
@@ -251,15 +263,10 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
                         Resume
                       </>
                     )}
-                  </Button>
-                  <Button
-                    onClick={reset}
-                    size="lg"
-                    variant="ghost"
-                    className="h-14 w-14 touch-manipulation active:scale-[0.98] transition-all"
-                  >
+                  </SecondaryButton>
+                  <IconButton onClick={reset} aria-label="Reset">
                     <RotateCcw className="h-5 w-5" />
-                  </Button>
+                  </IconButton>
                 </>
               )}
             </div>
@@ -268,17 +275,15 @@ const BreathingExercise = ({ onClose }: BreathingExerciseProps) => {
       </div>
 
       {/* Tips */}
-      <Card className="mt-auto border-blue-500/20 bg-blue-500/5">
-        <CardContent className="p-4">
-          <p className="text-sm text-white text-center">
-            {phase === 'ready'
-              ? 'Box breathing helps activate your parasympathetic nervous system, reducing stress and anxiety.'
-              : phase === 'complete'
-                ? 'Regular practice can help manage stress, improve focus, and promote better sleep.'
-                : 'Focus on the rhythm. Let your thoughts pass without judgment.'}
-          </p>
-        </CardContent>
-      </Card>
+      <div className="mt-auto bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-4">
+        <p className="text-[12.5px] text-white text-center leading-relaxed">
+          {phase === 'ready'
+            ? 'Box breathing helps activate your parasympathetic nervous system, reducing stress and anxiety.'
+            : phase === 'complete'
+              ? 'Regular practice can help manage stress, improve focus, and promote better sleep.'
+              : 'Focus on the rhythm. Let your thoughts pass without judgment.'}
+        </p>
+      </div>
     </div>
   );
 };

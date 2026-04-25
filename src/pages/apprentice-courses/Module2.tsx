@@ -1,112 +1,85 @@
-import { ArrowLeft, Calculator, Zap, GitBranch, Power, Wrench, TrendingUp } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Calculator, Zap, GitBranch, Power, Wrench, TrendingUp } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: 'Section 1',
-    title: 'Electrical Quantities and Units',
-    description:
-      'Understanding fundamental electrical quantities: voltage, current, resistance, and their units',
+    id: 1,
+    title: 'Electrical quantities and units',
     icon: Calculator,
+    description: 'Voltage, current, resistance and the units used to measure them.',
     href: 'section1',
   },
   {
-    number: 'Section 2',
-    title: "Ohm's Law and Electrical Calculations",
-    description:
-      "Application of Ohm's Law for calculating voltage, current, and resistance relationships",
+    id: 2,
+    title: "Ohm's law and electrical calculations",
     icon: Zap,
+    description: "Applying Ohm's law to calculate voltage, current and resistance relationships.",
     href: 'section2',
   },
   {
-    number: 'Section 3',
-    title: 'Series and Parallel Circuits',
-    description:
-      'Analysis and calculation of electrical parameters in series and parallel circuit configurations',
+    id: 3,
+    title: 'Series and parallel circuits',
     icon: GitBranch,
+    description: 'Analysing electrical parameters in series and parallel circuit configurations.',
     href: 'section3',
   },
   {
-    number: 'Section 4',
-    title: 'AC and DC Supply',
-    description:
-      'Understanding alternating and direct current characteristics, waveforms, and applications',
+    id: 4,
+    title: 'AC and DC supply',
     icon: Power,
+    description: 'Alternating and direct current characteristics, waveforms and applications.',
     href: 'section4',
   },
   {
-    number: 'Section 5',
-    title: 'Electrical Materials and Resistance',
-    description:
-      'Properties of electrical materials, conductors, insulators, and factors affecting resistance',
+    id: 5,
+    title: 'Electrical materials and resistance',
     icon: Wrench,
+    description: 'Conductors, insulators and the factors that affect resistance.',
     href: 'section5',
   },
   {
-    number: 'Section 6',
-    title: 'Power, Energy, and Efficiency',
-    description: 'Calculating electrical power consumption, energy usage, and system efficiency',
+    id: 6,
+    title: 'Power, energy and efficiency',
     icon: TrendingUp,
+    description: 'Calculating electrical power consumption, energy usage and system efficiency.',
     href: 'section6',
   },
 ];
 
-const Module2 = () => {
+export default function Module2() {
+  useSEO({
+    title: 'Module 2: Principles of Electrical Science | Level 2 Electrical | Elec-Mate',
+    description:
+      "Electrical quantities, Ohm's law, series and parallel circuits, AC/DC supply, materials and power calculations.",
+  });
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Level 2
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Level 2</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Electrical Apprenticeship</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Module 2: Electrical Principles and Science
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Fundamental electrical theory, voltage, current, resistance and power calculations
-            </p>
-          </header>
-
-          {/* Sections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {sections.map((section, index) => (
-              <ModuleCard
-                key={index}
-                number={section.number}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                href={section.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo=".."
+      backLabel="Level 2 electrical installation"
+      moduleNumber={2}
+      title="Principles of electrical science"
+      description="Fundamental electrical theory — quantities, Ohm's law, circuits, AC/DC supply, materials and power."
+      tone="emerald"
+      sectionsCount={sections.length}
+      prevModuleHref="../module1"
+      prevModuleLabel="Health and safety in installation"
+      nextModuleHref="../module3"
+      nextModuleLabel="Installation methods and technology"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={section.href}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default Module2;
+}

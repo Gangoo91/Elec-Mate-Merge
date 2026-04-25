@@ -15,7 +15,7 @@ export function SEOTestimonialStrip() {
         <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Trusted by electricians across the UK
         </h2>
-        <p className="text-white/60 text-sm">Real feedback from real sparks</p>
+        <p className="text-white text-sm">Real feedback from real sparks</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -35,14 +35,14 @@ export function SEOTestimonialStrip() {
             </div>
 
             {/* Quote */}
-            <p className="text-sm text-white/80 leading-relaxed flex-1 mb-4">
+            <p className="text-sm text-white leading-relaxed flex-1 mb-4">
               &ldquo;{t.quote}&rdquo;
             </p>
 
             {/* Author */}
             <div className="border-t border-white/[0.06] pt-3">
               <p className="text-sm font-semibold text-white">{t.name}</p>
-              <p className="text-[11px] text-white/40">
+              <p className="text-[11px] text-white">
                 {t.role} · {t.company}
               </p>
             </div>

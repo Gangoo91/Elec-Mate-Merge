@@ -229,7 +229,7 @@ export default function AdminPanel() {
             <button
               onClick={() => setPaletteOpen(true)}
               aria-label="Open command palette"
-              className="shrink-0 flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.05] border border-white/[0.08] hover:bg-white/[0.08] text-white/80 hover:text-white transition-colors touch-manipulation"
+              className="shrink-0 flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.05] border border-white/[0.08] hover:bg-white/[0.08] text-white hover:text-white transition-colors touch-manipulation"
             >
               <Search className="h-4 w-4" />
               <span className="hidden sm:inline text-[12.5px]">Search</span>

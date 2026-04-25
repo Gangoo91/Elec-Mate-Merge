@@ -1,102 +1,49 @@
-import { ArrowLeft, Battery, Zap, Settings, Cable, TrendingUp, Power } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Battery, Zap, Settings, Cable, TrendingUp, Power } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const RenewableEnergyModule4 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Types of Batteries (Li-Ion, Lead-Acid, LFP, Flow)',
-      icon: Battery,
-      description: 'Identify key battery types and compare their performance characteristics',
-    },
-    {
-      id: 2,
-      title: 'Battery Sizing, Depth of Discharge, and Lifespan',
-      icon: TrendingUp,
-      description: 'Calculate storage capacity requirements and understand performance metrics',
-    },
-    {
-      id: 3,
-      title: 'Battery Management Systems (BMS)',
-      icon: Settings,
-      description: 'Understand BMS functions and safety protection mechanisms',
-    },
-    {
-      id: 4,
-      title: 'Energy Management Strategies',
-      icon: Zap,
-      description: 'Learn load management and demand-side response techniques',
-    },
-    {
-      id: 5,
-      title: 'Grid Integration and Inverter Systems',
-      icon: Cable,
-      description: 'Explore grid-tie capabilities and power conversion systems',
-    },
-    {
-      id: 6,
-      title: 'Economics and Business Models',
-      icon: Power,
-      description: 'Analyse costs, payback periods, and revenue streams',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Types of batteries (Li-ion, lead-acid, LFP, flow)', icon: Battery, description: 'Key battery types and their performance characteristics.' },
+  { id: 2, title: 'Battery sizing, depth of discharge and lifespan', icon: TrendingUp, description: 'Calculating storage capacity and understanding performance metrics.' },
+  { id: 3, title: 'Battery management systems (BMS)', icon: Settings, description: 'BMS functions and safety protection mechanisms.' },
+  { id: 4, title: 'Energy management strategies', icon: Zap, description: 'Load management and demand-side response techniques.' },
+  { id: 5, title: 'Grid integration and inverter systems', icon: Cable, description: 'Grid-tie capabilities and power conversion systems.' },
+  { id: 6, title: 'Economics and business models', icon: Power, description: 'Costs, payback periods and revenue streams.' },
+];
+
+export default function RenewableEnergyModule4() {
+  useSEO({
+    title: 'Module 4: Battery Storage and Energy Management | Renewable Energy | Elec-Mate',
+    description: 'Battery chemistries, sizing, BMS, energy management strategies and grid integration economics.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/renewable-energy-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Renewable Energy Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 4</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Battery Storage and Energy Management
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding battery storage systems and energy management strategies
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../renewable-energy-module-4-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../renewable-energy-course"
+      backLabel="Renewable energy systems"
+      moduleNumber={4}
+      title="Battery storage and energy management"
+      description="Selecting, sizing and managing battery storage — from chemistry choice to commercial business case."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../renewable-energy-module-3"
+      prevModuleLabel="Wind turbines and microgeneration systems"
+      nextModuleHref="../renewable-energy-module-5"
+      nextModuleLabel="Inverter technology and grid integration"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../renewable-energy-module-4-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default RenewableEnergyModule4;
+}

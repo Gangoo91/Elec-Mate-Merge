@@ -43,7 +43,7 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
             <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">
               Accounting software
             </h2>
-            <p className="mt-1 text-[13px] text-white/70">
+            <p className="mt-1 text-[13px] text-white">
               Connect your accounting provider to sync invoices automatically.
             </p>
           </header>
@@ -189,7 +189,7 @@ const AccountingSheet = ({ open, onOpenChange }: AccountingSheetProps) => {
                 <button
                   type="button"
                   disabled
-                  className="w-full h-11 rounded-xl border border-white/[0.06] bg-white/[0.04] text-white/40 text-[13px] font-medium cursor-not-allowed"
+                  className="w-full h-11 rounded-xl border border-white/[0.06] bg-white/[0.04] text-white text-[13px] font-medium cursor-not-allowed"
                 >
                   Coming soon
                 </button>

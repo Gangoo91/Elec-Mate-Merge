@@ -956,7 +956,7 @@ const DiagramBuilderPage = () => {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-yellow-400" />
               </span>
               <span className="text-yellow-400">Cable tool</span>
-              <span className="text-white/60">·</span>
+              <span className="text-white">·</span>
               <span>Tap a symbol, then tap the next to route</span>
             </div>
           </div>
@@ -1010,13 +1010,13 @@ const DiagramBuilderPage = () => {
           <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
             <div className="text-center pointer-events-auto px-6 max-w-sm rounded-3xl bg-black/45 backdrop-blur-md border border-white/10 shadow-2xl py-6">
               <h2 className="text-white text-lg font-bold mb-1">Start Your First Room</h2>
-              <p className="text-white/80 text-xs mb-5">Choose a starting point to draw your room layout.</p>
+              <p className="text-white text-xs mb-5">Choose a starting point to draw your room layout.</p>
               <div className="space-y-2">
                 <button onClick={() => setShapesSheetOpen(true)} className="w-full p-3 bg-white/[0.08] border border-white/15 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
                   <LayoutGrid className="h-5 w-5 text-elec-yellow shrink-0" />
                   <div>
                     <p className="text-sm font-semibold text-white">Use a Room Shape</p>
-                    <p className="text-[10px] text-white/60">Start with a rectangle, L-shape, T-shape, or corridor.</p>
+                    <p className="text-[10px] text-white">Start with a rectangle, L-shape, T-shape, or corridor.</p>
                   </div>
                 </button>
                 <button onClick={() => setAiDialogOpen(true)} className="w-full p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl touch-manipulation active:scale-95 text-left flex items-center gap-3">
@@ -1027,7 +1027,7 @@ const DiagramBuilderPage = () => {
                   </div>
                 </button>
               </div>
-              <p className="text-white/70 text-[10px] mt-4">You can also draw walls manually from the toolbar below.</p>
+              <p className="text-white text-[10px] mt-4">You can also draw walls manually from the toolbar below.</p>
             </div>
           </div>
         )}
@@ -1051,7 +1051,7 @@ const DiagramBuilderPage = () => {
                     ? 'text-elec-yellow'
                     : isAction
                       ? 'text-white'
-                      : 'text-white/60'
+                      : 'text-white'
                 )}
               >
                 <Icon className="h-5 w-5" />
@@ -1375,7 +1375,7 @@ const DiagramBuilderPage = () => {
           <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
             <div className="flex-1">
               <p className="text-xs text-white mb-1.5 font-medium">Wall length</p>
-              <p className="text-[11px] text-white/55 mb-2">Drag the end handles on the wall or enter an exact length.</p>
+              <p className="text-[11px] text-white mb-2">Drag the end handles on the wall or enter an exact length.</p>
               <div className="flex items-center gap-2">
                 <input
                   type="number"

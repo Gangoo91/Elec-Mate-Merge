@@ -23,7 +23,7 @@ const ResourceCard = ({ title, description, type, url, isExternal = true }: Reso
 
   return (
     <Card
-      className={`${isAndysManClub ? 'border-purple-500/30 bg-purple-500/5' : 'border-purple-500/20 bg-elec-gray'} h-full`}
+      className={`${isAndysManClub ? 'border-purple-500/30 bg-purple-500/5' : 'border-purple-500/20 bg-[hsl(0_0%_12%)]'} h-full`}
     >
       <CardHeader className="pb-2">
         <div className="flex gap-3 items-start">

@@ -1,27 +1,26 @@
-import { ArrowLeft, Car, Thermometer, Zap, Atom, Lightbulb } from 'lucide-react';
+import { Car, Thermometer, Zap, Atom, Lightbulb } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '4.1',
-    title: 'Electric Vehicle (EV) charging infrastructure',
+    title: 'Electric vehicle (EV) charging infrastructure',
     description: 'EV charging point installation, types and electrical infrastructure requirements',
     icon: Car,
     href: '../level3-module2-section4-1',
   },
   {
     number: '4.2',
-    title: 'Heat pumps (air source & ground source)',
+    title: 'Heat pumps (air source and ground source)',
     description: 'Heat pump technology, electrical requirements and installation considerations',
     icon: Thermometer,
     href: '../level3-module2-section4-2',
   },
   {
     number: '4.3',
-    title: 'Combined Heat & Power (CHP) awareness',
+    title: 'Combined heat and power (CHP) awareness',
     description: 'CHP systems overview and electrical integration requirements',
     icon: Zap,
     href: '../level3-module2-section4-3',
@@ -49,46 +48,31 @@ const Level3Module2Section4 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module2">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 2
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module2"
+      backLabel="Module 2"
+      moduleNumber={2}
+      sectionNumber={4}
+      title="Low carbon technologies"
+      description="Carbon reduction technologies and their integration in building services."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../level3-module2-section3"
+      prevSectionLabel="Renewable energy systems"
+      nextSectionHref="../level3-module2-section5"
+      nextSectionLabel="Integration with electrical installations"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

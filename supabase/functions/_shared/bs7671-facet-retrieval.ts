@@ -48,7 +48,14 @@ export interface FacetContextUnit {
   /** Stable id (facet id or synthetic for tables / figures). */
   id: string;
   /** Where this hit came from — useful for debugging and citation. */
-  source: 'exact_reg' | 'vector' | 'bm25' | 'table' | 'figure' | 'cross_ref';
+  source:
+    | 'exact_reg'
+    | 'vector'
+    | 'bm25'
+    | 'table'
+    | 'figure'
+    | 'cross_ref'
+    | 'practical';
   /** Primary rank from the source (1 = best). Used for RRF. */
   rank: number;
   /** Raw score from the source (if any). */
@@ -69,18 +76,33 @@ export interface FacetContextUnit {
   system_types?: string[];
   bs7671_zones?: string[];
   equipment_category?: string;
+  equipment_subcategory?: string;
   protection_method?: string;
   keywords?: string[];
+
+  /** Practical-intelligence-only fields (only set when source === 'practical'). */
+  bs7671_regulations?: string[];
+  test_procedures?: unknown;
+  common_defects?: string[];
+  troubleshooting_steps?: string[];
+  inspection_checklist?: string[];
+  typical_duration_minutes?: number;
+  skill_level?: string;
+  tools_required?: string[];
+  /** Marker — true when this unit is from practical_work_intelligence. */
+  is_practical?: boolean;
 }
 
 export interface FacetRetrievalResult {
   primary: FacetContextUnit[];
   related: FacetContextUnit[];
+  practical: FacetContextUnit[];
   stats: {
     exact_ms: number;
     vector_ms: number;
     bm25_ms: number;
     table_ms: number;
+    practical_ms: number;
     total_ms: number;
     total_candidates: number;
     deadline_exceeded: boolean;
@@ -395,6 +417,101 @@ async function fetchTablesAndFigures(
   return out;
 }
 
+/**
+ * Branch 5: Practical Work Intelligence — vector + BM25 hybrid over the
+ * separate `practical_work_intelligence` corpus (industrial, EV, solar, fire,
+ * emergency lighting, data-centre, BMS, HVAC etc.). Mirrors the BS 7671
+ * branches but goes through `search_practical_v1` and tags every result as
+ * `source: 'practical'` so the prompt formatter labels it as practitioner
+ * guidance, not regulation.
+ *
+ * Cap is intentionally smaller (5) so practical context never dominates the
+ * BS 7671 regulatory results — it complements them.
+ */
+async function fetchPracticalIntelligence(
+  opts: FacetRetrievalOptions
+): Promise<FacetContextUnit[]> {
+  const { supabase, understanding, queryEmbedding } = opts;
+  const queryText = understanding.original;
+
+  // Bail early if neither vector nor text query is usable.
+  if (
+    (!queryEmbedding || queryEmbedding.length === 0) &&
+    (!queryText || queryText.length < 3)
+  ) {
+    return [];
+  }
+
+  // Optional equipment filter when the query understanding pinned a domain.
+  // We keep it loose — the topic tag may not exactly match the stored
+  // equipment_category, so prefer null (let RRF rank) unless we're confident.
+  const equipmentFilter: string | null = null;
+
+  const { data, error } = await supabase.rpc('search_practical_v1', {
+    query_embedding: queryEmbedding ?? null,
+    query_text: queryText || null,
+    equipment_filter: equipmentFilter,
+    facet_type_filter: null,
+    reg_filter: null,
+    min_confidence: 0.6,
+    match_count: 8,
+    vector_weight: queryEmbedding ? 1.0 : 0.0,
+    bm25_weight: queryText ? 1.0 : 0.0,
+    rrf_k: 60,
+  });
+
+  if (error || !data) return [];
+  const rows = data as Array<{
+    facet_id: string;
+    primary_topic: string | null;
+    equipment_category: string | null;
+    equipment_subcategory: string | null;
+    facet_type: string | null;
+    installation_method: string | null;
+    bs7671_regulations: string[] | null;
+    bs7671_zones: string[] | null;
+    keywords: string[] | null;
+    test_procedures: unknown;
+    common_defects: string[] | null;
+    troubleshooting_steps: string[] | null;
+    inspection_checklist: string[] | null;
+    typical_duration_minutes: number | null;
+    skill_level: string | null;
+    tools_required: string[] | null;
+    confidence_score: number | null;
+    rrf_score: number | null;
+    retrieval_source: string | null;
+  }>;
+
+  const out: FacetContextUnit[] = [];
+  let rank = 0;
+  for (const r of rows.slice(0, 8)) {
+    out.push({
+      id: `pwi-${r.facet_id}`,
+      source: 'practical',
+      rank: ++rank,
+      score: Number(r.rrf_score ?? r.confidence_score ?? 0),
+      primary_topic: r.primary_topic ?? undefined,
+      equipment_category: r.equipment_category ?? undefined,
+      equipment_subcategory: r.equipment_subcategory ?? undefined,
+      facet_type: r.facet_type ?? undefined,
+      bs7671_zones: r.bs7671_zones ?? undefined,
+      keywords: r.keywords ?? undefined,
+      bs7671_regulations: r.bs7671_regulations ?? undefined,
+      test_procedures: r.test_procedures,
+      common_defects: r.common_defects ?? undefined,
+      troubleshooting_steps: r.troubleshooting_steps ?? undefined,
+      inspection_checklist: r.inspection_checklist ?? undefined,
+      typical_duration_minutes: r.typical_duration_minutes ?? undefined,
+      skill_level: r.skill_level ?? undefined,
+      tools_required: r.tools_required ?? undefined,
+      content: r.primary_topic ?? '',
+      is_practical: true,
+    });
+  }
+  return out;
+}
+
 // ─── Fusion + cross-ref expansion ────────────────────────────────────────
 
 function fuseUnits(
@@ -409,6 +526,7 @@ function fuseUnits(
     figure: 1.4,
     vector: 1.2,
     bm25: 1.0,
+    practical: 0.85, // intentionally below regulatory branches so regs win on ties
     cross_ref: 0.3,
   };
 
@@ -535,33 +653,49 @@ export async function retrieveBS7671Facets(
     vector: Date.now(),
     bm25: Date.now(),
     table: Date.now(),
+    practical: Date.now(),
   };
 
-  // Kick off all branches in parallel.
-  const [exactResults, vectorResults, bm25Results, tableResults] = await Promise.all([
-    deadlinePromise(fetchExactRegulations(opts), 'exact').then((v) => {
-      t.exact = Date.now() - t.exact;
-      return v as FacetContextUnit[];
-    }),
-    deadlinePromise(fetchVectorMatches(opts), 'vector').then((v) => {
-      t.vector = Date.now() - t.vector;
-      return v as FacetContextUnit[];
-    }),
-    deadlinePromise(fetchFullTextMatches(opts), 'bm25').then((v) => {
-      t.bm25 = Date.now() - t.bm25;
-      return v as FacetContextUnit[];
-    }),
-    deadlinePromise(fetchTablesAndFigures(opts), 'table').then((v) => {
-      t.table = Date.now() - t.table;
-      return v as FacetContextUnit[];
-    }),
-  ]);
+  // Kick off all branches in parallel — including the new practical_work
+  // branch which queries the separate corpus and is RRF-merged into primary.
+  const [exactResults, vectorResults, bm25Results, tableResults, practicalResults] =
+    await Promise.all([
+      deadlinePromise(fetchExactRegulations(opts), 'exact').then((v) => {
+        t.exact = Date.now() - t.exact;
+        return v as FacetContextUnit[];
+      }),
+      deadlinePromise(fetchVectorMatches(opts), 'vector').then((v) => {
+        t.vector = Date.now() - t.vector;
+        return v as FacetContextUnit[];
+      }),
+      deadlinePromise(fetchFullTextMatches(opts), 'bm25').then((v) => {
+        t.bm25 = Date.now() - t.bm25;
+        return v as FacetContextUnit[];
+      }),
+      deadlinePromise(fetchTablesAndFigures(opts), 'table').then((v) => {
+        t.table = Date.now() - t.table;
+        return v as FacetContextUnit[];
+      }),
+      deadlinePromise(fetchPracticalIntelligence(opts), 'practical').then((v) => {
+        t.practical = Date.now() - t.practical;
+        return v as FacetContextUnit[];
+      }),
+    ]);
 
   const total_candidates =
-    exactResults.length + vectorResults.length + bm25Results.length + tableResults.length;
+    exactResults.length +
+    vectorResults.length +
+    bm25Results.length +
+    tableResults.length +
+    practicalResults.length;
 
+  // Practical results are kept as a SEPARATE bucket (returned in `practical`)
+  // AND fused into the primary list at a lower weight, so the regulatory
+  // branches always win on rank ties. This gives the AI both:
+  //   - regulatory primary (which wins on compliance claims)
+  //   - practical context (cited as practitioner guidance)
   const primary = fuseUnits(
-    [exactResults, tableResults, vectorResults, bm25Results],
+    [exactResults, tableResults, vectorResults, bm25Results, practicalResults],
     topK,
     opts.understanding
   );
@@ -583,11 +717,13 @@ export async function retrieveBS7671Facets(
   return {
     primary,
     related,
+    practical: practicalResults.slice(0, 5), // separate bucket so caller can render distinctly
     stats: {
       exact_ms: t.exact,
       vector_ms: t.vector,
       bm25_ms: t.bm25,
       table_ms: t.table,
+      practical_ms: t.practical,
       total_ms,
       total_candidates,
       deadline_exceeded: total_ms > deadlineMs * 1.3,
@@ -601,9 +737,10 @@ export async function retrieveBS7671Facets(
  */
 export function formatFacetsForPrompt(
   primary: FacetContextUnit[],
-  related: FacetContextUnit[]
+  related: FacetContextUnit[],
+  practical: FacetContextUnit[] = []
 ): string {
-  if (primary.length === 0 && related.length === 0) return '';
+  if (primary.length === 0 && related.length === 0 && practical.length === 0) return '';
   const lines: string[] = [];
 
   const bookLabel = (docType?: string): string => {
@@ -612,9 +749,12 @@ export function formatFacetsForPrompt(
     return 'BS 7671 A4:2026';
   };
 
-  if (primary.length > 0) {
+  // Filter regulatory primary down to non-practical units.
+  const regulatoryPrimary = primary.filter((u) => u.source !== 'practical');
+
+  if (regulatoryPrimary.length > 0) {
     lines.push('[RELEVANT BS 7671 A4:2026 / GN3 / OSG CONTEXT]');
-    primary.forEach((u, i) => {
+    regulatoryPrimary.forEach((u, i) => {
       const book = bookLabel(u.document_type);
       const header = u.reg_number
         ? `[${book}] Reg ${u.reg_number}${u.reg_title ? ' — ' + u.reg_title : ''}`
@@ -635,6 +775,48 @@ export function formatFacetsForPrompt(
         : `[${book}] ${u.primary_topic || 'Related'}`;
       const snippet = (u.content || '').trim().slice(0, 300);
       lines.push(`- ${header}: ${snippet}`);
+    });
+  }
+
+  // Practical Work Intelligence — practitioner guidance, never regulation.
+  // Render as a distinct section so the model cites it as practice, not law.
+  // Compact format: equipment / type / topic / 1-line procedures / defects.
+  if (practical.length > 0) {
+    lines.push('');
+    lines.push(
+      '[PRACTICAL WORK INTELLIGENCE — PRACTITIONER GUIDANCE, NOT REGULATION]'
+    );
+    lines.push(
+      'Cite as "common practice" or "practical guidance"; never quote as a BS 7671 requirement. If this conflicts with a BS 7671 reg above, the regulation wins.'
+    );
+    practical.forEach((u, i) => {
+      const eq = [u.equipment_category, u.equipment_subcategory]
+        .filter(Boolean)
+        .join(' / ');
+      const eqLine = eq ? `[${eq}] ` : '';
+      const typeTag = u.facet_type ? `(${u.facet_type})` : '';
+      const topic = (u.primary_topic || '').trim().slice(0, 400);
+      const linkedRegs = (u.bs7671_regulations ?? []).slice(0, 4).join(', ');
+
+      const detailParts: string[] = [];
+      if (Array.isArray(u.test_procedures) && u.test_procedures.length > 0) {
+        const tasks = u.test_procedures
+          .slice(0, 3)
+          .map((p: any) => (typeof p === 'string' ? p : p?.task || ''))
+          .filter(Boolean)
+          .join(' | ');
+        if (tasks) detailParts.push(`Procedure: ${tasks.slice(0, 300)}`);
+      }
+      if (u.common_defects && u.common_defects.length) {
+        detailParts.push(`Common defects: ${u.common_defects.slice(0, 5).join(', ')}`);
+      }
+      if (u.typical_duration_minutes) {
+        detailParts.push(`Typical: ${u.typical_duration_minutes} min`);
+      }
+      if (linkedRegs) detailParts.push(`Refs: ${linkedRegs}`);
+
+      const detail = detailParts.length ? `\n   ${detailParts.join(' · ')}` : '';
+      lines.push(`P${i + 1}. ${eqLine}${topic} ${typeTag}${detail}`);
     });
   }
 

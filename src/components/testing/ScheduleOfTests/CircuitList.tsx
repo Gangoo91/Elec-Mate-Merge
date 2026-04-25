@@ -596,7 +596,7 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
     pass: 'bg-green-500/10 border-green-500/30 text-green-400',
     fail: 'bg-red-500/10 border-red-500/30 text-red-400',
     warning: 'bg-amber-500/10 border-amber-500/30 text-amber-400',
-    empty: 'bg-white/[0.04] border-white/10 text-white/60',
+    empty: 'bg-white/[0.04] border-white/10 text-white',
   };
 
   const handleClick = useCallback(() => {
@@ -620,7 +620,7 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
         tileColors[validation]
       )}
     >
-      <span className="text-[10px] font-medium text-white/70 mb-0.5">{label}</span>
+      <span className="text-[10px] font-medium text-white mb-0.5">{label}</span>
       <span
         className={cn(
           'text-base font-bold',
@@ -631,7 +631,7 @@ const QuickValueTile: React.FC<QuickValueTileProps> = ({
       >
         {value}
       </span>
-      {unit && <span className="text-[10px] text-white/70">{unit}</span>}
+      {unit && <span className="text-[10px] text-white">{unit}</span>}
     </button>
   );
 };
@@ -1060,6 +1060,19 @@ const TestsTabContent: React.FC<TabContentProps> = ({ getValue, onChange }) => (
             placeholder=">200"
           />
         </FormField>
+      </FormRow>
+      {/* ELE-868 — Neutral-Earth (was missing from UI; PDF already had it) */}
+      <FormRow>
+        <FormField label="Neutral-Earth (MΩ)">
+          <Input
+            value={getValue('insulationNeutralEarth') as string}
+            onChange={(e) => onChange('insulationNeutralEarth', e.target.value)}
+            className="h-11 text-sm"
+            inputMode="decimal"
+            placeholder=">200"
+          />
+        </FormField>
+        <div />
       </FormRow>
     </FormSection>
 

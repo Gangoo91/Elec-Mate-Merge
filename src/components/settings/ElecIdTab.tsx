@@ -220,7 +220,7 @@ const ElecIdTab = () => {
               className={cn(
                 'h-11 min-w-[64px] rounded-full text-[13px] font-medium touch-manipulation transition-colors',
                 activeIndex === 0
-                  ? 'text-white/40'
+                  ? 'text-white'
                   : 'text-white hover:text-white bg-white/[0.04]'
               )}
             >
@@ -240,7 +240,7 @@ const ElecIdTab = () => {
               className={cn(
                 'h-11 min-w-[64px] rounded-full text-[13px] font-medium touch-manipulation transition-colors',
                 activeIndex === ELEC_ID_TABS.length - 1
-                  ? 'text-white/40'
+                  ? 'text-white'
                   : 'text-white hover:text-white bg-white/[0.04]'
               )}
             >
@@ -294,7 +294,7 @@ const ElecIdTab = () => {
               ))}
             </div>
             <div className="mt-1.5 flex items-center justify-between">
-              <span className="text-[11px] text-white/55 tabular-nums">
+              <span className="text-[11px] text-white tabular-nums">
                 {activeIndex + 1} of {ELEC_ID_TABS.length}
               </span>
               <span className="text-[11px] font-medium text-elec-yellow tabular-nums">
@@ -317,7 +317,7 @@ const ElecIdTab = () => {
                     'relative px-4 py-3 text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation min-h-[44px] border-b-2',
                     isActive
                       ? 'text-elec-yellow border-elec-yellow'
-                      : 'text-white/55 border-transparent hover:text-white'
+                      : 'text-white border-transparent hover:text-white'
                   )}
                 >
                   {tab.label}

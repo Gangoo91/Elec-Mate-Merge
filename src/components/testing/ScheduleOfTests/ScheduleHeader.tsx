@@ -131,7 +131,7 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xs font-medium text-white uppercase tracking-wider">Schedule of Tests</h2>
-            <p className="text-[10px] text-white/40 mt-0.5">
+            <p className="text-[10px] text-white mt-0.5">
               {circuitCount} circuit{circuitCount !== 1 ? 's' : ''}
             </p>
           </div>
@@ -172,7 +172,7 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="h-10 w-10 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center touch-manipulation active:scale-[0.98] shrink-0">
-                <MoreVertical className="h-4 w-4 text-white/40" />
+                <MoreVertical className="h-4 w-4 text-white" />
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-64 bg-background border-white/[0.08]">
@@ -184,14 +184,14 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
                 <FileText className="h-4 w-4 text-elec-yellow" />
                 <div className="flex flex-col">
                   <span className="font-medium text-white">Scan Test Results</span>
-                  <span className="text-[11px] text-white/40">Photo of test sheet</span>
+                  <span className="text-[11px] text-white">Photo of test sheet</span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onScribbleToTable} className="gap-3 py-2.5">
                 <Pen className="h-4 w-4 text-elec-yellow" />
                 <div className="flex flex-col">
                   <span className="font-medium text-white">Text to Circuits</span>
-                  <span className="text-[11px] text-white/40">Type or paste circuit list</span>
+                  <span className="text-[11px] text-white">Type or paste circuit list</span>
                 </div>
               </DropdownMenuItem>
 
@@ -205,21 +205,21 @@ const MobileHeader: React.FC<Omit<ScheduleHeaderProps, 'isMobile' | 'onShowAnaly
                 <Shield className="h-4 w-4 text-blue-400" />
                 <div className="flex flex-col">
                   <span className="font-medium text-white">RCD Presets</span>
-                  <span className="text-[11px] text-white/40">Apply common RCD settings</span>
+                  <span className="text-[11px] text-white">Apply common RCD settings</span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onBulkInfill} className="gap-3 py-2.5">
                 <Grid className="h-4 w-4 text-green-400" />
                 <div className="flex flex-col">
                   <span className="font-medium text-white">Bulk Infill</span>
-                  <span className="text-[11px] text-white/40">Fill multiple circuits at once</span>
+                  <span className="text-[11px] text-white">Fill multiple circuits at once</span>
                 </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onQuickFillRcd} className="gap-3 py-2.5">
                 <Zap className="h-4 w-4 text-elec-yellow" />
                 <div className="flex flex-col">
                   <span className="font-medium text-white">Quick Fill RCD</span>
-                  <span className="text-[11px] text-white/40">Auto-detect RCD protection</span>
+                  <span className="text-[11px] text-white">Auto-detect RCD protection</span>
                 </div>
               </DropdownMenuItem>
 

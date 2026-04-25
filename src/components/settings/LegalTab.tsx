@@ -100,7 +100,7 @@ const LegalTab = () => {
       {/* Overview */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader eyebrow="00" title="Legal and Privacy" />
-        <p className="text-[13px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[13px] text-white leading-relaxed max-w-2xl">
           Review our policies and learn how we protect your data.
         </p>
       </motion.section>
@@ -120,7 +120,7 @@ const LegalTab = () => {
                 <div className="text-[15px] font-medium text-white truncate">{doc.title}</div>
                 <div className="mt-0.5 text-[11.5px] text-white/65 truncate">{doc.description}</div>
               </div>
-              <span className="hidden sm:inline text-[11px] text-white/55 tabular-nums whitespace-nowrap">
+              <span className="hidden sm:inline text-[11px] text-white tabular-nums whitespace-nowrap">
                 Updated {doc.lastUpdated}
               </span>
               <Arrow />
@@ -146,7 +146,7 @@ const LegalTab = () => {
               >
                 {badge.title}
               </span>
-              <p className="mt-3 text-[12.5px] text-white/70 leading-relaxed">
+              <p className="mt-3 text-[12.5px] text-white leading-relaxed">
                 {badge.description}
               </p>
             </div>
@@ -175,12 +175,12 @@ const LegalTab = () => {
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader eyebrow="04" title="Your Data Rights" />
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-          <p className="text-[13px] text-white/70 mb-4 leading-relaxed">
+          <p className="text-[13px] text-white mb-4 leading-relaxed">
             Under GDPR and UK data protection law, you have the following rights:
           </p>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2">
             {dataRights.map((right) => (
-              <li key={right} className="flex items-center gap-2 text-[13px] text-white/80">
+              <li key={right} className="flex items-center gap-2 text-[13px] text-white">
                 <span
                   aria-hidden
                   className="inline-block h-1.5 w-1.5 rounded-full shrink-0 bg-green-400"
@@ -190,7 +190,7 @@ const LegalTab = () => {
             ))}
           </ul>
           <div className="mt-5 pt-5 border-t border-white/[0.06]">
-            <p className="text-[13px] text-white/70 mb-3 leading-relaxed">
+            <p className="text-[13px] text-white mb-3 leading-relaxed">
               To download your data or request deletion, go to Settings &gt; Privacy.
             </p>
             <Link to="/settings">
@@ -221,7 +221,7 @@ const LegalTab = () => {
         <SectionHeader eyebrow="06" title="Company Information" />
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
           <Eyebrow>Registered</Eyebrow>
-          <p className="mt-2 text-[13px] text-white/70 leading-relaxed">
+          <p className="mt-2 text-[13px] text-white leading-relaxed">
             Elec-Mate Ltd
             <br />
             Registered in England &amp; Wales

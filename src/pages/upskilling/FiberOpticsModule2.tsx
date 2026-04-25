@@ -1,102 +1,49 @@
-import { ArrowLeft, Layers, Award, Plug, Target, Grid, Link2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Layers, Award, Plug, Target, Grid, Link2 } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const FiberOpticsModule2 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Singlemode vs Multimode Fibre',
-      icon: Layers,
-      description: 'Understanding fiber types and core differences',
-    },
-    {
-      id: 2,
-      title: 'OM and OS Standards Explained',
-      icon: Award,
-      description: 'Optical multimode and singlemode classifications',
-    },
-    {
-      id: 3,
-      title: 'Connector Types (LC, SC, ST, MTP)',
-      icon: Plug,
-      description: 'Common connector types and applications',
-    },
-    {
-      id: 4,
-      title: 'Polish Grades (UPC, APC)',
-      icon: Target,
-      description: 'Connector polish types and specifications',
-    },
-    {
-      id: 5,
-      title: 'Patch Panels and Transceivers',
-      icon: Grid,
-      description: 'Network equipment and interface devices',
-    },
-    {
-      id: 6,
-      title: 'Connector Compatibility',
-      icon: Link2,
-      description: 'Ensuring proper connector matching and performance',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Singlemode vs multimode fibre', icon: Layers, description: 'Understanding fibre types and core differences.' },
+  { id: 2, title: 'OM and OS standards explained', icon: Award, description: 'Optical multimode and singlemode classifications.' },
+  { id: 3, title: 'Connector types (LC, SC, ST, MTP)', icon: Plug, description: 'Common connector types and applications.' },
+  { id: 4, title: 'Polish grades (UPC, APC)', icon: Target, description: 'Connector polish types and specifications.' },
+  { id: 5, title: 'Patch panels and transceivers', icon: Grid, description: 'Network equipment and interface devices.' },
+  { id: 6, title: 'Connector compatibility', icon: Link2, description: 'Ensuring proper connector matching and performance.' },
+];
+
+export default function FiberOpticsModule2() {
+  useSEO({
+    title: 'Module 2: Fibre Types and Connectors | Fibre Optics | Elec-Mate',
+    description: 'Singlemode vs multimode fibre, OM/OS standards, connector types, polish grades and patch panel compatibility.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/fiber-optics-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Fiber Optics Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 2</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Fibre Types and Connectors
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding fiber types, standards, and connection methods
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../fiber-optics-module-2-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../fiber-optics-course"
+      backLabel="Fibre optics technology"
+      moduleNumber={2}
+      title="Fibre types and connectors"
+      description="Selecting the right fibre type and connector for the job, including polish grades and compatibility."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../fiber-optics-module-1"
+      prevModuleLabel="Introduction to fibre optics"
+      nextModuleHref="../fiber-optics-module-3"
+      nextModuleLabel="Fibre optic cables and installation"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../fiber-optics-module-2-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default FiberOpticsModule2;
+}

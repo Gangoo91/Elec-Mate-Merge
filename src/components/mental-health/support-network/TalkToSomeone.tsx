@@ -26,7 +26,7 @@ const TalkToSomeone = () => {
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="text-lg font-bold text-red-400 mb-0.5">Need to Talk Now?</h2>
-              <p className="text-sm text-foreground/80">Free, confidential support 24/7</p>
+              <p className="text-sm text-white">Free, confidential support 24/7</p>
             </div>
             <Button
               className="bg-red-500 hover:bg-red-600 text-white flex-shrink-0 h-12 px-5 touch-manipulation active:scale-[0.98]"
@@ -52,7 +52,7 @@ const TalkToSomeone = () => {
             <div className="w-12 h-12 rounded-full bg-blue-500/30 flex items-center justify-center mb-2">
               <MessageSquare className="h-6 w-6 text-blue-400" />
             </div>
-            <div className="text-sm font-medium text-foreground">Message a Mate</div>
+            <div className="text-sm font-medium text-white">Message a Mate</div>
             <div className="text-xs text-white">Connect with peers</div>
           </div>
         </Link>
@@ -66,7 +66,7 @@ const TalkToSomeone = () => {
             <div className="w-12 h-12 rounded-full bg-emerald-500/30 flex items-center justify-center mb-2">
               <User className="h-6 w-6 text-emerald-400" />
             </div>
-            <div className="text-sm font-medium text-foreground">Find a Mentor</div>
+            <div className="text-sm font-medium text-white">Find a Mentor</div>
             <div className="text-xs text-white">Industry guidance</div>
           </div>
         </Link>
@@ -91,7 +91,7 @@ const TalkToSomeone = () => {
                 className={`h-6 w-6 ${isRequestSubmitted ? 'text-purple-300' : 'text-purple-400'}`}
               />
             </div>
-            <div className="text-sm font-medium text-foreground">
+            <div className="text-sm font-medium text-white">
               {isRequestSubmitted ? 'Request Sent' : 'Request Counselor'}
             </div>
             <div className="text-xs text-white">
@@ -109,7 +109,7 @@ const TalkToSomeone = () => {
             <div className="w-12 h-12 rounded-full bg-green-500/30 flex items-center justify-center mb-2">
               <MessageSquare className="h-6 w-6 text-green-400" />
             </div>
-            <div className="text-sm font-medium text-foreground">Text SHOUT</div>
+            <div className="text-sm font-medium text-white">Text SHOUT</div>
             <div className="text-xs text-white">85258 - Free 24/7</div>
           </div>
         </a>

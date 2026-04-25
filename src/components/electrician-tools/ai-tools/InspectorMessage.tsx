@@ -110,15 +110,15 @@ export const InspectorMessage = memo(
     return (
       <div className="flex justify-start w-full text-left min-w-0">
         <div
-          className="w-full max-w-3xl space-y-3 min-w-0"
+          className="w-full max-w-4xl space-y-3 min-w-0"
           style={{ overflowWrap: 'anywhere', wordBreak: 'break-word' }}
         >
           {/* Eyebrow — no avatar tile, editorial */}
           <div className="flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.22em]">
             <span className="text-elec-yellow">{message.agentName || 'Elec-AI'}</span>
-            <span className="text-white/55">BS 7671 A4:2026</span>
+            <span className="text-white">BS 7671 A4:2026</span>
             {isStreaming && (
-              <span className="text-white/55 normal-case tracking-normal">composing…</span>
+              <span className="text-white normal-case tracking-normal">composing…</span>
             )}
           </div>
 
@@ -224,7 +224,7 @@ export const InspectorMessage = memo(
                       );
                     },
                     blockquote: ({ children }) => (
-                      <blockquote className="my-4 pl-4 border-l-2 border-elec-yellow/60 text-white/70 text-[14px] leading-relaxed italic">
+                      <blockquote className="my-4 pl-4 border-l-2 border-elec-yellow/60 text-white text-[14px] leading-relaxed italic">
                         {transformInlineChildren(children, inlineCtx, 'bq')}
                       </blockquote>
                     ),
@@ -278,7 +278,7 @@ export const InspectorMessage = memo(
               {onSaveToJob && (
                 <button
                   onClick={onSaveToJob}
-                  className="font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                  className="font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   Save to job
                 </button>
@@ -286,7 +286,7 @@ export const InspectorMessage = memo(
               {onOpenSources && (
                 <button
                   onClick={onOpenSources}
-                  className="font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                  className="font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   Open sources
                 </button>
@@ -294,12 +294,12 @@ export const InspectorMessage = memo(
               {onRegenerate && (
                 <button
                   onClick={onRegenerate}
-                  className="font-medium text-white/70 hover:text-white transition-colors touch-manipulation"
+                  className="font-medium text-white hover:text-white transition-colors touch-manipulation"
                 >
                   Regenerate
                 </button>
               )}
-              <span className="uppercase tracking-[0.18em] text-white/55">
+              <span className="uppercase tracking-[0.18em] text-white">
                 Cited from BS 7671 A4:2026
               </span>
             </div>

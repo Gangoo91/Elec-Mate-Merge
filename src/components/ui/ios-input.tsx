@@ -160,7 +160,7 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-white hover:text-white/70 active:text-elec-yellow transition-colors touch-manipulation"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-white hover:text-white active:text-elec-yellow transition-colors touch-manipulation"
               tabIndex={-1}
             >
               {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}

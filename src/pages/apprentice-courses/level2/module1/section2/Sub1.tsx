@@ -81,7 +81,7 @@ const quizQuestions = [
   {
     id: 2,
     question: "Roughly what current is the 'let-go' threshold for most people?",
-    options: ['1â2 mA', '10â15 mA', '100 mA', '1 A'],
+    options: ['1–2 mA', '10–15 mA', '100 mA', '1 A'],
     correctAnswer: 1,
     explanation:
       "Around 10-15 mA. Below that you can usually pull away. Above it, the muscles in your forearm contract so hard you can’t release the conductor — and the longer you’re held on, the worse it gets.",

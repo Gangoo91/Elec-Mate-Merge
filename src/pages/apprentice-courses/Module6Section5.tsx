@@ -1,33 +1,32 @@
-import { ArrowLeft, Shield, TestTube, Eye, Wrench } from 'lucide-react';
+import { Shield, TestTube, Eye, Wrench } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 
 const subsections = [
   {
     number: 'Subsection 1',
-    title: 'Purpose of Insulation Resistance Testing',
+    title: 'Purpose of insulation resistance testing',
     description: 'Understanding why insulation resistance testing is essential',
     icon: Shield,
     href: '5-1',
   },
   {
     number: 'Subsection 2',
-    title: 'Test Equipment and Safety Considerations',
+    title: 'Test equipment and safety considerations',
     description: 'Understanding the correct equipment and safety precautions for IR testing',
     icon: TestTube,
     href: '5-2',
   },
   {
     number: 'Subsection 3',
-    title: 'Performing the Insulation Resistance Test',
+    title: 'Performing the insulation resistance test',
     description: 'Step-by-step procedures for conducting accurate IR tests',
     icon: Eye,
     href: '5-3',
   },
   {
     number: 'Subsection 4',
-    title: 'Interpreting Results Against Standards',
+    title: 'Interpreting results against standards',
     description: 'Understanding BS 7671 requirements and making professional judgements',
     icon: Wrench,
     href: '5-4',
@@ -36,57 +35,31 @@ const subsections = [
 
 const Section5 = () => {
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 6
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Section 5</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Insulation Resistance Testing (Introduction Only)
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Basic introduction to insulation resistance testing principles
-            </p>
-          </header>
-
-          {/* Subsections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level2/module6"
+      backLabel="Module 6"
+      moduleNumber={6}
+      sectionNumber={5}
+      title="Insulation resistance testing (introduction)"
+      description="Basic introduction to insulation resistance testing principles."
+      tone="emerald"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../section4"
+      prevSectionLabel="Continuity and polarity checks"
+      nextSectionHref="../section6"
+      nextSectionLabel="Recording test results and defect identification"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

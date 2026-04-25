@@ -17,6 +17,8 @@ export function SignaturePad({ value, onChange, name, error, className }: Signat
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(false);
+  // ELE-864 — track last position so each move segment is its own path
+  const lastPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   // Initialize canvas
   useEffect(() => {
@@ -88,9 +90,8 @@ export function SignaturePad({ value, onChange, name, error, className }: Signat
       setIsDrawing(true);
       setHasDrawn(true);
 
-      const pos = getPosition(e);
-      ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
+      // ELE-864 — store start position; segments drawn independently in `draw`
+      lastPosRef.current = getPosition(e);
     },
     [getPosition]
   );
@@ -106,8 +107,12 @@ export function SignaturePad({ value, onChange, name, error, className }: Signat
       if (!ctx) return;
 
       const pos = getPosition(e);
+      // ELE-864 — each segment is its own path so previous strokes survive
+      ctx.beginPath();
+      ctx.moveTo(lastPosRef.current.x, lastPosRef.current.y);
       ctx.lineTo(pos.x, pos.y);
       ctx.stroke();
+      lastPosRef.current = pos;
     },
     [isDrawing, getPosition]
   );

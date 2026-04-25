@@ -177,27 +177,27 @@ const faqs = [
   {
     question: 'Does HASAWA apply to me as an apprentice?',
     answer:
-      "Yep. The moment you walk on site â paid, unpaid, training, work experience â HASAWA applies. Section 7 binds you. Section 2 binds your boss. Same rules as the qualified spark next to you.",
+      "Yep. The moment you walk on site — paid, unpaid, training, work experience — HASAWA applies. Section 7 binds you. Section 2 binds your boss. Same rules as the qualified spark next to you.",
   },
   {
     question: 'What if I refuse to do something I think is unsafe?',
     answer:
-      "You’re covered. Section 44 of the Employment Rights Act 1996 sits alongside HASAWA â they can’t bin you off or pull your hours for raising a real safety concern, or for refusing work that’s actually dangerous. Make a note of dates, names and what was said in case it kicks off later.",
+      "You’re covered. Section 44 of the Employment Rights Act 1996 sits alongside HASAWA — they can’t bin you off or pull your hours for raising a real safety concern, or for refusing work that’s actually dangerous. Make a note of dates, names and what was said in case it kicks off later.",
   },
   {
     question: 'How does HASAWA fit with BS 7671 and EAWR?',
     answer:
-      "Three layers. HASAWA is the big safety law (any workplace). EAWR 1989 is the electrical version, made under HASAWA. BS 7671 is the standard that tells you HOW to do electrical work safely. Stick to BS 7671 and you generally meet EAWR â and through it, HASAWA.",
+      "Three layers. HASAWA is the big safety law (any workplace). EAWR 1989 is the electrical version, made under HASAWA. BS 7671 is the standard that tells you HOW to do electrical work safely. Stick to BS 7671 and you generally meet EAWR — and through it, HASAWA.",
   },
   {
     question: 'Who can actually take you to court for breaking HASAWA?',
     answer:
-      "HSE inspectors or your local authority. Goes to magistrates' or Crown Court depending on how serious. Worst case for individuals: unlimited fines AND up to two years inside. Companies get hit with bigger fines â multi-million for the worst breaches.",
+      "HSE inspectors or your local authority. Goes to magistrates' or Crown Court depending on how serious. Worst case for individuals: unlimited fines AND up to two years inside. Companies get hit with bigger fines — multi-million for the worst breaches.",
   },
   {
     question: "What’s the difference between 'absolute' and 'reasonably practicable' duties?",
     answer:
-      "An absolute duty has to be met, full stop â no balance. Reasonably practicable means you weigh the risk against what it would take to fix it. Most HASAWA duties are the second kind. EAWR has a few absolute duties (like Reg 4 â working dead is the default), which is why electrical work is treated more strictly.",
+      "An absolute duty has to be met, full stop — no balance. Reasonably practicable means you weigh the risk against what it would take to fix it. Most HASAWA duties are the second kind. EAWR has a few absolute duties (like Reg 4 — working dead is the default), which is why electrical work is treated more strictly.",
   },
   {
     question: 'Do I need to learn this word for word?',

@@ -163,7 +163,7 @@ export const CustomerOverviewTab = ({
                       <span className={`text-[10px] font-semibold px-2 py-0.5 rounded ${statusBadge.style}`}>
                         {statusBadge.label}
                       </span>
-                      <span className="text-[11px] text-white/40 ml-auto">
+                      <span className="text-[11px] text-white ml-auto">
                         {formatDate(report.created_at)}
                       </span>
                     </div>

@@ -203,7 +203,7 @@ export const PowerCalculator: React.FC<PowerCalculatorProps> = ({ className }) =
             category="power"
             size="lg"
           />
-          <p className="text-sm text-white/60 mt-2">
+          <p className="text-sm text-white mt-2">
             <span className="font-medium">Formula:</span> {result.formula}
           </p>
         </CalculatorResult>

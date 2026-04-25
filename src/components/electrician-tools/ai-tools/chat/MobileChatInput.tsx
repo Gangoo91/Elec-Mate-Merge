@@ -38,6 +38,11 @@ interface MobileChatInputProps {
    * text is passed here. If omitted the input value is appended directly.
    */
   onTranscript?: (text: string) => void;
+  /**
+   * When true, Send is enabled even with empty text. Used by photo
+   * diagnostic — a photo with no caption is a valid request.
+   */
+  canSubmitWithoutText?: boolean;
 }
 
 /**
@@ -62,6 +67,7 @@ export const MobileChatInput = memo(function MobileChatInput({
   className,
   voiceEnabled = true,
   onTranscript,
+  canSubmitWithoutText = false,
 }: MobileChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -91,10 +97,11 @@ export const MobileChatInput = memo(function MobileChatInput({
   );
 
   const handleSubmit = useCallback(() => {
-    if (!value.trim() || isStreaming) return;
+    const hasText = value.trim().length > 0;
+    if ((!hasText && !canSubmitWithoutText) || isStreaming) return;
     haptic.medium();
     onSubmit();
-  }, [value, isStreaming, haptic, onSubmit]);
+  }, [value, isStreaming, haptic, onSubmit, canSubmitWithoutText]);
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -140,7 +147,7 @@ export const MobileChatInput = memo(function MobileChatInput({
     onClear?.();
   }, [messageCount, haptic, onClear]);
 
-  const canSend = value.trim().length > 0 && !isStreaming;
+  const canSend = (value.trim().length > 0 || canSubmitWithoutText) && !isStreaming;
 
   return (
     <div className={cn('', className)}>
@@ -148,11 +155,11 @@ export const MobileChatInput = memo(function MobileChatInput({
           Clear lives as a trailing action on the input row instead. */}
       {messageCount > 0 && (
         <div className="hidden sm:flex mb-2 items-center justify-between px-1 text-[11px]">
-          <span className="uppercase tracking-[0.18em] text-white/55">Continuing conversation</span>
+          <span className="uppercase tracking-[0.18em] text-white">Continuing conversation</span>
           {showClearButton && onClear && (
             <button
               onClick={handleClear}
-              className="font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
+              className="font-medium text-white hover:text-white transition-colors touch-manipulation"
             >
               Clear
             </button>
@@ -205,7 +212,7 @@ export const MobileChatInput = memo(function MobileChatInput({
           rows={1}
           className={cn(
             'flex-1 bg-transparent border-none outline-none resize-none',
-            'text-white placeholder:text-white/40',
+            'text-white placeholder:text-white',
             'min-h-[40px] max-h-[120px]',
             'leading-relaxed py-2 px-2.5',
             'disabled:opacity-60'

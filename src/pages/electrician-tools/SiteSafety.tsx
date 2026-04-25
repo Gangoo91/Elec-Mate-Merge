@@ -195,9 +195,9 @@ function SafetyStatCard({ label, value, icon: Icon, variant }: {
     : variant === 'danger' ? 'text-red-400' : 'text-white';
   return (
     <div className="text-center py-3">
-      <Icon className={`h-4 w-4 mx-auto mb-1.5 ${variant === 'danger' ? 'text-red-400' : variant === 'success' ? 'text-green-400' : 'text-white/40'}`} />
+      <Icon className={`h-4 w-4 mx-auto mb-1.5 ${variant === 'danger' ? 'text-red-400' : variant === 'success' ? 'text-green-400' : 'text-white'}`} />
       <p className={`text-lg font-bold ${color}`}>{value}</p>
-      <p className="text-[10px] text-white/40 mt-0.5">{label}</p>
+      <p className="text-[10px] text-white mt-0.5">{label}</p>
     </div>
   );
 }
@@ -663,7 +663,7 @@ const SiteSafety = () => {
                     animate={{ rotate: alertsOpen ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ChevronDown className="h-4 w-4 text-white/40" />
+                    <ChevronDown className="h-4 w-4 text-white" />
                   </motion.div>
                 </button>
               </CollapsibleTrigger>
@@ -709,7 +709,7 @@ const SiteSafety = () => {
                     animate={{ rotate: analyticsOpen ? 180 : 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <ChevronDown className="h-4 w-4 text-white/40" />
+                    <ChevronDown className="h-4 w-4 text-white" />
                   </motion.div>
                 </button>
               </CollapsibleTrigger>

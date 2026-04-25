@@ -86,6 +86,20 @@ const inspectionCategories = {
         text: 'RCD protection where required (special locations)',
         clause: '411.3.3',
       },
+      // A4:2026 — added luminaire RCD protection requirement (411.3.4)
+      {
+        id: 'luminaire_rcd_protection',
+        text: 'RCD protection for luminaires in domestic / similar premises',
+        clause: '411.3.4',
+      },
+      // A4:2026 — AFDD inspection (Reg 421.1.7 — required for socket-outlets
+      // up to 32 A in HMOs, purpose-built student accommodation, care homes
+      // and high-rise residential)
+      {
+        id: 'afdd_protection',
+        text: 'AFDD protection where required (HMO / student / care home / high-rise residential)',
+        clause: '421.1.7',
+      },
       {
         id: 'fire_barriers',
         text: 'Presence of fire barriers, suitable seals and protection',

@@ -68,7 +68,7 @@ const ResistorRow = ({
   <div className="flex items-center gap-2">
     <div className="flex-1">
       <div className="flex items-center gap-2">
-        <span className="text-xs text-white/80 w-8">R{index + 1}</span>
+        <span className="text-xs text-white w-8">R{index + 1}</span>
         <input
           type="text"
           inputMode="decimal"
@@ -90,7 +90,7 @@ const ResistorRow = ({
     </div>
     <button
       onClick={onRemove}
-      className="h-11 w-11 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white/80 hover:text-red-400 hover:bg-red-400/10 hover:border-red-400/30 transition-colors touch-manipulation"
+      className="h-11 w-11 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-white hover:text-red-400 hover:bg-red-400/10 hover:border-red-400/30 transition-colors touch-manipulation"
       aria-label={`Remove R${index + 1}`}
     >
       <X className="h-4 w-4" />
@@ -146,7 +146,7 @@ export default function SeriesParallelCalculators() {
         description="Calculate total resistance for series-connected resistors"
         badge="Rt = ΣR"
       >
-        <p className="text-sm text-white/60 -mt-2">
+        <p className="text-sm text-white -mt-2">
           Add resistor values connected in series. Total resistance equals the sum of all
           resistances.
         </p>
@@ -170,14 +170,14 @@ export default function SeriesParallelCalculators() {
         <div className="flex gap-2">
           <button
             onClick={series.addRow}
-            className="flex-1 h-12 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors touch-manipulation"
+            className="flex-1 h-12 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
           >
             <Plus className="h-4 w-4" />
             Add Resistor
           </button>
           <button
             onClick={series.reset}
-            className="h-12 px-4 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors touch-manipulation"
+            className="h-12 px-4 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
           >
             <RotateCcw className="h-4 w-4" />
           </button>
@@ -187,7 +187,7 @@ export default function SeriesParallelCalculators() {
         {seriesValidCount > 0 && (
           <div className="p-4 rounded-xl border border-amber-400/20 bg-amber-400/5">
             <div className="text-center mb-3">
-              <p className="text-xs text-white/80 mb-1">Total Resistance</p>
+              <p className="text-xs text-white mb-1">Total Resistance</p>
               <div
                 className="text-3xl font-bold bg-clip-text text-transparent"
                 style={{
@@ -199,10 +199,10 @@ export default function SeriesParallelCalculators() {
             </div>
             <div className="grid grid-cols-2 gap-2 text-center text-sm">
               <div className="p-2 rounded-lg bg-white/5">
-                <span className="text-white/60">{seriesFmt.kohm}</span>
+                <span className="text-white">{seriesFmt.kohm}</span>
               </div>
               <div className="p-2 rounded-lg bg-white/5">
-                <span className="text-white/60">{seriesFmt.Mohm}</span>
+                <span className="text-white">{seriesFmt.Mohm}</span>
               </div>
             </div>
           </div>
@@ -218,7 +218,7 @@ export default function SeriesParallelCalculators() {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/70 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showSeriesGuidance && 'rotate-180'
                 )}
               />
@@ -232,7 +232,7 @@ export default function SeriesParallelCalculators() {
                   In series, current flows through each resistor one after another. The total
                   resistance increases.
                 </p>
-                <p className="text-xs text-white/80 mt-2">Example: 100Ω + 200Ω + 300Ω = 600Ω</p>
+                <p className="text-xs text-white mt-2">Example: 100Ω + 200Ω + 300Ω = 600Ω</p>
               </div>
             </CollapsibleContent>
           </div>
@@ -246,7 +246,7 @@ export default function SeriesParallelCalculators() {
         description="Calculate total resistance for parallel-connected resistors"
         badge="1/Rt = Σ(1/R)"
       >
-        <p className="text-sm text-white/60 -mt-2">
+        <p className="text-sm text-white -mt-2">
           Add resistor values connected in parallel. Total resistance is less than the smallest
           resistor.
         </p>
@@ -270,14 +270,14 @@ export default function SeriesParallelCalculators() {
         <div className="flex gap-2">
           <button
             onClick={parallel.addRow}
-            className="flex-1 h-12 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors touch-manipulation"
+            className="flex-1 h-12 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
           >
             <Plus className="h-4 w-4" />
             Add Resistor
           </button>
           <button
             onClick={parallel.reset}
-            className="h-12 px-4 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/80 hover:bg-white/10 transition-colors touch-manipulation"
+            className="h-12 px-4 flex items-center justify-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
           >
             <RotateCcw className="h-4 w-4" />
           </button>
@@ -287,7 +287,7 @@ export default function SeriesParallelCalculators() {
         {parallelValidCount > 0 && (
           <div className="p-4 rounded-xl border border-amber-400/20 bg-amber-400/5">
             <div className="text-center mb-3">
-              <p className="text-xs text-white/80 mb-1">Total Resistance</p>
+              <p className="text-xs text-white mb-1">Total Resistance</p>
               <div
                 className="text-3xl font-bold bg-clip-text text-transparent"
                 style={{
@@ -299,10 +299,10 @@ export default function SeriesParallelCalculators() {
             </div>
             <div className="grid grid-cols-2 gap-2 text-center text-sm">
               <div className="p-2 rounded-lg bg-white/5">
-                <span className="text-white/60">{parallelFmt.kohm}</span>
+                <span className="text-white">{parallelFmt.kohm}</span>
               </div>
               <div className="p-2 rounded-lg bg-white/5">
-                <span className="text-white/60">{parallelFmt.Mohm}</span>
+                <span className="text-white">{parallelFmt.Mohm}</span>
               </div>
             </div>
           </div>
@@ -318,7 +318,7 @@ export default function SeriesParallelCalculators() {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/70 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showParallelGuidance && 'rotate-180'
                 )}
               />
@@ -333,7 +333,7 @@ export default function SeriesParallelCalculators() {
                   In parallel, current has multiple paths. The total resistance decreases below the
                   smallest resistor.
                 </p>
-                <p className="text-xs text-white/80 mt-2">Example: Two 100Ω in parallel = 50Ω</p>
+                <p className="text-xs text-white mt-2">Example: Two 100Ω in parallel = 50Ω</p>
               </div>
             </CollapsibleContent>
           </div>
@@ -352,7 +352,7 @@ export default function SeriesParallelCalculators() {
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 showReference && 'rotate-180'
               )}
             />
@@ -367,7 +367,7 @@ export default function SeriesParallelCalculators() {
                 <strong className="text-amber-300">Parallel circuits:</strong> Used in ring finals
                 (BS 7671), diversity calculations, and earth electrode arrays.
               </p>
-              <p className="text-xs text-white/80 pt-2 border-t border-white/10">
+              <p className="text-xs text-white pt-2 border-t border-white/10">
                 Ring final circuits combine both series and parallel principles for balanced load
                 distribution.
               </p>

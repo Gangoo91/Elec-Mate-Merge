@@ -1,15 +1,12 @@
 import React, { memo } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface AM2NavigationFooterProps {
   prevHref?: string;
   prevLabel?: string;
-  /** Alias for prevHref — accepted by 18+ section files */
   previousHref?: string;
-  /** Alias for prevLabel — accepted by 18+ section files */
   previousLabel?: string;
   nextHref?: string;
   nextLabel?: string;
@@ -18,11 +15,6 @@ interface AM2NavigationFooterProps {
   className?: string;
 }
 
-/**
- * AM2NavigationFooter - Previous/Next navigation component
- * Features full-width buttons on mobile, inline on desktop,
- * progress dots showing current section, and safe area bottom padding.
- */
 export const AM2NavigationFooter = memo(function AM2NavigationFooter({
   prevHref,
   prevLabel,
@@ -34,76 +26,65 @@ export const AM2NavigationFooter = memo(function AM2NavigationFooter({
   totalSections,
   className,
 }: AM2NavigationFooterProps) {
-  // Resolve aliased props — section files use previousHref/previousLabel
   const resolvedPrevHref = prevHref || previousHref;
   const resolvedPrevLabel = prevLabel || previousLabel || 'Previous';
+
   return (
-    <nav className={cn('pt-8 mt-8 border-t border-white/10 safe-bottom', className)}>
-      {/* Progress Dots */}
-      <div className="flex items-center justify-center gap-2 mb-6">
+    <nav className={cn('pt-6 mt-6 border-t border-white/[0.06]', className)}>
+      {/* Progress dots — minimal hairline */}
+      <div className="flex items-center justify-center gap-1.5 mb-5">
         {Array.from({ length: totalSections }, (_, index) => (
-          <div
+          <span
             key={index}
             className={cn(
-              'w-2 h-2 rounded-full transition-all duration-ios-normal ease-ios-ease',
+              'h-1 rounded-full transition-all',
               index + 1 === currentSection
-                ? 'bg-elec-yellow w-6'
+                ? 'w-6 bg-elec-yellow'
                 : index + 1 < currentSection
-                  ? 'bg-elec-yellow/50'
-                  : 'bg-white/20'
+                  ? 'w-1 bg-elec-yellow/50'
+                  : 'w-1 bg-white/15'
             )}
           />
         ))}
       </div>
 
-      {/* Navigation Buttons */}
-      <div className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3">
-        {/* Previous Button */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {resolvedPrevHref ? (
-          <Button
-            variant="ghost"
-            size="lg"
-            className={cn(
-              'w-full sm:w-auto min-h-[52px] px-6',
-              'text-white hover:text-white hover:bg-white/5',
-              'ios-pressable transition-all duration-ios-normal ease-ios-ease',
-              'touch-manipulation'
-            )}
-            asChild
+          <Link
+            to={resolvedPrevHref}
+            className="flex items-center gap-3 rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] px-5 py-4 text-left touch-manipulation active:scale-[0.99]"
           >
-            <Link to={resolvedPrevHref}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              {resolvedPrevLabel}
-            </Link>
-          </Button>
+            <ArrowLeft className="h-4 w-4 text-white shrink-0" />
+            <div className="min-w-0">
+              <div className="text-[10.5px] uppercase tracking-[0.18em] text-white">Previous</div>
+              <div className="mt-0.5 text-[14px] font-semibold text-white truncate">
+                {resolvedPrevLabel}
+              </div>
+            </div>
+          </Link>
         ) : (
-          <div className="hidden sm:block" /> // Spacer for layout
+          <div className="hidden sm:block" />
         )}
 
-        {/* Next Button */}
-        {nextHref && (
-          <Button
-            size="lg"
-            className={cn(
-              'w-full sm:w-auto min-h-[52px] px-6',
-              'bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90',
-              'font-semibold',
-              'ios-pressable transition-all duration-ios-normal ease-ios-ease',
-              'touch-manipulation',
-              'shadow-[0_4px_20px_-4px_hsl(47_100%_50%/0.4)]'
-            )}
-            asChild
+        {nextHref ? (
+          <Link
+            to={nextHref}
+            className="flex items-center justify-end gap-3 rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow px-5 py-4 text-right touch-manipulation active:scale-[0.99]"
           >
-            <Link to={nextHref}>
-              {nextLabel}
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Link>
-          </Button>
+            <div className="min-w-0">
+              <div className="text-[10.5px] uppercase tracking-[0.18em] text-black/70">Next</div>
+              <div className="mt-0.5 text-[14px] font-semibold text-black truncate">
+                {nextLabel}
+              </div>
+            </div>
+            <ArrowRight className="h-4 w-4 text-black shrink-0" />
+          </Link>
+        ) : (
+          <div className="hidden sm:block" />
         )}
       </div>
 
-      {/* Section Counter (Mobile) */}
-      <p className="text-center text-ios-footnote text-white mt-4 sm:hidden">
+      <p className="text-center text-[11px] text-white mt-4">
         Section {currentSection} of {totalSections}
       </p>
     </nav>

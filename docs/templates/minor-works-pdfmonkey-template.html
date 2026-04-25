@@ -627,7 +627,8 @@
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
-          <span class="inline-label">Departures from BS 7671 (Reg 120.3, 133.1.3, 133.5):</span>
+          <!-- A4:2026 — adds Reg 133.1.2; cite the amendment date -->
+          <span class="inline-label">Details of any departures from BS 7671:2018 as amended to {{ bs_amendment_date | default: '15 April 2026' }} (Reg 120.3, 133.1.2, 133.1.3 and 133.5):</span>
           <span class="inline-value wide">{{ departures }}</span>
         </div>
       </div>
@@ -641,7 +642,8 @@
 
       <div class="inline-form mt-4">
         <div class="inline-group" style="flex: 1">
-          <span class="inline-label">Comments on Existing Installation (Reg 644.1.2):</span>
+          <!-- A4:2026 wording — adds "(including any defects observed in)" -->
+          <span class="inline-label">Comments on (including any defects observed in) the existing installation (Reg 644.1.2):</span>
           <span class="inline-value wide">{{ existing_installation_comments }}</span>
         </div>
       </div>
@@ -653,30 +655,41 @@
     <div class="section">
       <div class="section-title">Part 2 &mdash; Presence and Adequacy of Installation Earthing &amp; Bonding Arrangements (Regulation 132.16)</div>
 
+      <!-- A4:2026 — model form lists 6 distinct earthing arrangements:
+           TN-S, TN-C-S (PME), TN-C-S (PNB), TT, TN-C, IT. The legacy
+           value 'TN-C-S' is treated as PME for backwards compatibility. -->
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">Earthing Arrangement:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              <span class="checkbox-box {% if earthing.type == 'TN-C' %}checked{% endif %}">{% if earthing.type == 'TN-C' %}&#10003;{% endif %}</span>
-              <label>TN-C</label>
-            </div>
-            <div class="checkbox-item">
               <span class="checkbox-box {% if earthing.type == 'TN-S' %}checked{% endif %}">{% if earthing.type == 'TN-S' %}&#10003;{% endif %}</span>
               <label>TN-S</label>
             </div>
             <div class="checkbox-item">
-              <span class="checkbox-box {% if earthing.type == 'TN-C-S' %}checked{% endif %}">{% if earthing.type == 'TN-C-S' %}&#10003;{% endif %}</span>
-              <label>TN-C-S</label>
+              <span class="checkbox-box {% if earthing.type == 'TN-C-S-PME' or earthing.type == 'TN-C-S' %}checked{% endif %}">{% if earthing.type == 'TN-C-S-PME' or earthing.type == 'TN-C-S' %}&#10003;{% endif %}</span>
+              <label>TN-C-S (PME)</label>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if earthing.type == 'TN-C-S-PNB' %}checked{% endif %}">{% if earthing.type == 'TN-C-S-PNB' %}&#10003;{% endif %}</span>
+              <label>TN-C-S (PNB)</label>
             </div>
             <div class="checkbox-item">
               <span class="checkbox-box {% if earthing.type == 'TT' %}checked{% endif %}">{% if earthing.type == 'TT' %}&#10003;{% endif %}</span>
               <label>TT</label>
             </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if earthing.type == 'TN-C' %}checked{% endif %}">{% if earthing.type == 'TN-C' %}&#10003;{% endif %}</span>
+              <label>TN-C</label>
+            </div>
+            <div class="checkbox-item">
+              <span class="checkbox-box {% if earthing.type == 'IT' %}checked{% endif %}">{% if earthing.type == 'IT' %}&#10003;{% endif %}</span>
+              <label>IT</label>
+            </div>
           </div>
         </div>
         <div class="inline-group">
-          <span class="inline-label">Z<sub>db</sub> (&Omega;):</span>
+          <span class="inline-label">Z<sub>db</sub> (&Omega;) supplying the final circuit:</span>
           <span class="inline-value">{{ earthing.zdb }}</span>
         </div>
       </div>
@@ -782,7 +795,7 @@
           <span class="inline-value">{{ circuit.type }}</span>
         </div>
         <div class="inline-group">
-          <span class="inline-label">Ref Method:</span>
+          <span class="inline-label">Ref Method*:</span>
           <span class="inline-value">{{ circuit.reference_method }}</span>
         </div>
         <div class="inline-group">
@@ -848,6 +861,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="hint" style="font-size:9pt;color:#555;margin-top:4px;">* See Table 4A2 of Appendix 4 of BS 7671:2018+A4:2026.</p>
 
       <div class="inline-form">
         <div class="inline-group">
@@ -1020,36 +1034,31 @@
         </div>
       </div>
 
-      <!-- AFDD / SPD Tests -->
-      <div class="section-subtitle mt-6">AFDD / SPD Tests</div>
+      <!-- A4:2026 Section D — AFDD + SPD checkboxes with explicit notes -->
+      <div class="section-subtitle mt-6">AFDD &amp; SPD (BS 7671:2018+A4:2026 Section D)</div>
       <div class="inline-form">
         <div class="inline-group">
-          <span class="inline-label">AFDD Test Button:</span>
-          <span class="inline-value">
-            {% if tests.afdd_test_button == 'Pass' or tests.afdd_test_button == 'pass' or tests.afdd_test_button == 'OK' %}<span class="pass">{{ tests.afdd_test_button }}</span>{% elsif tests.afdd_test_button == 'Fail' or tests.afdd_test_button == 'fail' %}<span class="fail">{{ tests.afdd_test_button }}</span>{% else %}{{ tests.afdd_test_button }}{% endif %}
-          </span>
+          <span class="inline-label">AFDD satisfactory test button operation:</span>
+          <span class="checkbox-box {% if tests.afdd_test_button == 'satisfactory' or tests.afdd_test_button == 'Pass' or tests.afdd_test_button == 'pass' or tests.afdd_test_button == 'OK' %}checked{% endif %}">{% if tests.afdd_test_button == 'satisfactory' or tests.afdd_test_button == 'Pass' or tests.afdd_test_button == 'pass' or tests.afdd_test_button == 'OK' %}&#10003;{% endif %}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">AFDD Trip (ms):</span>
           <span class="inline-value">{{ tests.afdd_trip_time }}</span>
         </div>
+      </div>
+      <p class="hint" style="font-size:9pt;color:#555;margin-top:4px;">NOTE: Not all AFDDs have a test button.</p>
+
+      <div class="inline-form mt-4">
         <div class="inline-group">
-          <span class="inline-label">SPD Visual:</span>
-          <span class="inline-value">
-            {% if tests.spd_visual == 'Pass' or tests.spd_visual == 'pass' or tests.spd_visual == 'OK' %}<span class="pass">{{ tests.spd_visual }}</span>{% elsif tests.spd_visual == 'Fail' or tests.spd_visual == 'fail' %}<span class="fail">{{ tests.spd_visual }}</span>{% else %}{{ tests.spd_visual }}{% endif %}
-          </span>
+          <span class="inline-label">SPD functionality confirmed:</span>
+          <span class="checkbox-box {% if tests.spd_ok == true or tests.spd_ok == 'true' or tests.spd_ok == 'satisfactory' or tests.spd_ok == 'Pass' or tests.spd_ok == 'pass' or tests.spd_ok == 'OK' %}checked{% endif %}">{% if tests.spd_ok == true or tests.spd_ok == 'true' or tests.spd_ok == 'satisfactory' or tests.spd_ok == 'Pass' or tests.spd_ok == 'pass' or tests.spd_ok == 'OK' %}&#10003;{% endif %}</span>
         </div>
         <div class="inline-group">
           <span class="inline-label">SPD Indicator:</span>
           <span class="inline-value">{{ tests.spd_indicator }}</span>
         </div>
-        <div class="inline-group">
-          <span class="inline-label">SPD Test Btn:</span>
-          <span class="inline-value">
-            {% if tests.spd_test_button == true or tests.spd_test_button == 'true' or tests.spd_test_button == 'Pass' or tests.spd_test_button == 'pass' or tests.spd_test_button == 'OK' %}<span class="pass">OK</span>{% elsif tests.spd_test_button == false or tests.spd_test_button == 'false' or tests.spd_test_button == '' %}<span class="na-text">N/A</span>{% else %}{{ tests.spd_test_button }}{% endif %}
-          </span>
-        </div>
       </div>
+      <p class="hint" style="font-size:9pt;color:#555;margin-top:4px;">NOTE: Not all SPDs have visible functionality indication.</p>
 
       <div class="inline-form mt-4">
         <div class="inline-group">
@@ -1098,9 +1107,9 @@
         <div class="declaration-text">
           I certify that the work covered by this certificate does not impair the safety of the existing
           installation and the work has been designed, constructed, inspected and tested in accordance with
-          <strong>BS 7671:2018</strong> amended to <strong>A3:2024</strong> and that to the best of my
-          knowledge and belief, at the time of my inspection, complied with BS 7671 except as detailed
-          in Part 1 above.
+          <strong>BS 7671:2018</strong> amended to <strong>{{ bs_amendment_date | default: '15 April 2026' }}</strong>
+          and that to the best of my knowledge and belief, at the time of my inspection, complied with
+          BS 7671 except as detailed in Part 1 above.
         </div>
       </div>
 
@@ -1109,7 +1118,7 @@
         <div class="inline-group">
           <div class="checkbox-item">
             <span class="checkbox-box {% if declaration.bs7671_compliance == true or declaration.bs7671_compliance == 'true' %}checked{% endif %}">{% if declaration.bs7671_compliance == true or declaration.bs7671_compliance == 'true' %}&#10003;{% endif %}</span>
-            <label>Complies with BS 7671:2018+A3:2024</label>
+            <label>Complies with BS 7671:2018+A4:2026</label>
           </div>
         </div>
         <div class="inline-group">
@@ -1224,7 +1233,7 @@
           <p>
             <strong>1.</strong> This certificate confirms that the electrical installation work
             described above has been designed, constructed, inspected and tested in accordance with
-            <strong>BS 7671:2018+A3:2024</strong> (IET Wiring Regulations, Eighteenth Edition).
+            <strong>BS 7671:2018+A4:2026</strong> (IET Wiring Regulations, Eighteenth Edition).
           </p>
           <p>
             <strong>2.</strong> The original certificate should be given to the person ordering the
@@ -1240,25 +1249,38 @@
             recommended date for the next inspection is shown above.
           </p>
           <p>
-            <strong>5.</strong> Where an RCD/RCBO is fitted, it should be tested at six-monthly
-            intervals by pressing the &lsquo;T&rsquo; or &lsquo;Test&rsquo; button.
+            <!-- A4:2026 verbatim -->
+            <strong>5.</strong> Where the installation includes a residual current device (RCD)
+            it should be tested six-monthly by pressing the button marked &lsquo;T&rsquo; or
+            &lsquo;Test&rsquo;. The device should switch off the supply and should then be
+            switched on to restore the supply. If the device does not switch off the supply when
+            the button is pressed, seek expert advice.
             <strong>For safety reasons it is important that this instruction is followed.</strong>
           </p>
         </div>
         <div class="guidance-col">
           <p>
-            <strong>6.</strong> Where an AFDD is fitted, it should be tested at six-monthly
-            intervals by pressing the test button. Note: not all AFDDs are provided with a test
-            button.
+            <!-- A4:2026 verbatim -->
+            <strong>6.</strong> Where the installation includes an arc fault detection device
+            (AFDD) having a manual test facility it should be tested six-monthly by pressing the
+            test button. Where an AFDD has both a test button and automatic test function,
+            manufacturer&rsquo;s instructions should be taken into account with respect to test
+            button operation.
           </p>
           <p>
-            <strong>7.</strong> Where an SPD is fitted, the status indicator should be checked to
-            confirm the device remains in an operational condition.
+            <!-- A4:2026 verbatim -->
+            <strong>7.</strong> Where the installation includes a surge protective device (SPD)
+            the status indicator should be checked to confirm it is in an operational condition
+            in accordance with manufacturer&rsquo;s information. If the indication shows that the
+            device is not operational, seek expert advice.
             <strong>For safety reasons it is important that this instruction is followed.</strong>
           </p>
           <p>
-            <strong>8.</strong> Where alternative or additional sources of supply are present,
-            warning notices should be found at the origin of the installation.
+            <!-- A4:2026 verbatim -->
+            <strong>8.</strong> Where the installation includes alternative or additional sources
+            of supply, warning notices should be found at the origin or meter position or, if
+            remote from the origin, at the consumer unit or distribution board and at all points
+            of isolation of all sources of supply.
           </p>
           <p>
             <strong>9.</strong> If the installation is subsequently altered, a new certificate or
@@ -1272,7 +1294,7 @@
          PAGE FOOTER
          ============================================= -->
     <div class="page-footer">
-      <span>BS 7671:2018+A3:2024 &middot; Minor Electrical Installation Works Certificate</span>
+      <span>BS 7671:2018+A4:2026 &middot; Minor Electrical Installation Works Certificate</span>
       <span class="watermark">Generated by Elec-Mate</span>
     </div>
 

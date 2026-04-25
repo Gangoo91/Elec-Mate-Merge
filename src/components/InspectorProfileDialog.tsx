@@ -126,7 +126,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <button
-          className="text-xs font-medium text-white/40 hover:text-white/60 touch-manipulation"
+          className="text-xs font-medium text-white hover:text-white touch-manipulation"
         >
           Manage Profiles
         </button>
@@ -142,13 +142,13 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
           <MobileTabsList className="grid w-full grid-cols-2 bg-white/[0.06] border-white/[0.08]">
             <MobileTabsTrigger
               value="manage"
-              className="text-white/60 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow data-[state=active]:border-elec-yellow/30"
+              className="text-white data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow data-[state=active]:border-elec-yellow/30"
             >
               Manage Profiles
             </MobileTabsTrigger>
             <MobileTabsTrigger
               value="form"
-              className="text-white/60 data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow data-[state=active]:border-elec-yellow/30"
+              className="text-white data-[state=active]:bg-elec-yellow/20 data-[state=active]:text-elec-yellow data-[state=active]:border-elec-yellow/30"
             >
               {editingProfile ? 'Edit Profile' : 'New Profile'}
             </MobileTabsTrigger>
@@ -180,7 +180,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                             <Star className="h-4 w-4 text-elec-yellow fill-current" />
                           )}
                         </CardTitle>
-                        <p className="text-sm text-white/40 mt-1">{profile.companyName}</p>
+                        <p className="text-sm text-white mt-1">{profile.companyName}</p>
                       </div>
                       <div className="flex gap-2">
                         <Button
@@ -198,7 +198,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                           variant="outline"
                           size="sm"
                           onClick={() => handleEdit(profile)}
-                          className="border-white/[0.08] text-white/60 hover:bg-white/[0.08] hover:text-white"
+                          className="border-white/[0.08] text-white hover:bg-white/[0.08] hover:text-white"
                         >
                           Edit
                         </Button>
@@ -207,7 +207,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                           size="sm"
                           onClick={() => setDefaultProfile(profile.id)}
                           disabled={profile.isDefault}
-                          className="border-white/[0.08] text-white/60 hover:bg-white/[0.08] hover:text-white disabled:opacity-50"
+                          className="border-white/[0.08] text-white hover:bg-white/[0.08] hover:text-white disabled:opacity-50"
                         >
                           <Star className="h-4 w-4" />
                         </Button>
@@ -228,13 +228,13 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                         <Badge
                           key={qual}
                           variant="secondary"
-                          className="text-xs bg-elec-yellow/20 text-white/60 border border-elec-yellow/30"
+                          className="text-xs bg-elec-yellow/20 text-white border border-elec-yellow/30"
                         >
                           {qual}
                         </Badge>
                       ))}
                     </div>
-                    <div className="text-sm text-white/40 space-y-1">
+                    <div className="text-sm text-white space-y-1">
                       {profile.companyPhone && <div>Tel: {profile.companyPhone}</div>}
                       {profile.companyEmail && <div>Email: {profile.companyEmail}</div>}
                       {profile.registrationNumber && <div>Reg: {profile.registrationNumber}</div>}
@@ -243,7 +243,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                 </Card>
               ))}
               {profiles.length === 0 && (
-                <div className="text-center py-8 text-white/40 bg-white/[0.06] rounded-lg border border-white/[0.08]">
+                <div className="text-center py-8 text-white bg-white/[0.06] rounded-lg border border-white/[0.08]">
                   No profiles saved yet. Create your first profile to get started.
                 </div>
               )}
@@ -253,7 +253,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
           <MobileTabsContent value="form" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="profileName" className="text-white/60">
+                <Label htmlFor="profileName" className="text-white">
                   Inspector Name *
                 </Label>
                 <Input
@@ -273,14 +273,14 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                   }
                   className="border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                 />
-                <Label htmlFor="defaultProfile" className="text-white/60">
+                <Label htmlFor="defaultProfile" className="text-white">
                   Set as default profile
                 </Label>
               </div>
             </div>
 
             <div>
-              <Label className="text-white/60">Qualifications</Label>
+              <Label className="text-white">Qualifications</Label>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2 p-3 border border-white/[0.08] rounded-md bg-white/[0.06]">
                 {qualificationOptions.map((qual) => (
                   <div key={qual} className="flex items-center space-x-2">
@@ -290,7 +290,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                       onCheckedChange={() => toggleQualification(qual)}
                       className="border-white/30 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
                     />
-                    <Label htmlFor={qual} className="text-sm text-white/60 cursor-pointer">
+                    <Label htmlFor={qual} className="text-sm text-white cursor-pointer">
                       {qual}
                     </Label>
                   </div>
@@ -300,7 +300,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="companyName" className="text-white/60">
+                <Label htmlFor="companyName" className="text-white">
                   Company Name
                 </Label>
                 <Input
@@ -312,7 +312,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                 />
               </div>
               <div>
-                <Label htmlFor="registrationNumber" className="text-white/60">
+                <Label htmlFor="registrationNumber" className="text-white">
                   Registration Number
                 </Label>
                 <Input
@@ -326,7 +326,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
             </div>
 
             <div>
-              <Label htmlFor="companyAddress" className="text-white/60">
+              <Label htmlFor="companyAddress" className="text-white">
                 Company Address
               </Label>
               <Textarea
@@ -341,7 +341,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="companyPhone" className="text-white/60">
+                <Label htmlFor="companyPhone" className="text-white">
                   Phone Number
                 </Label>
                 <Input
@@ -353,7 +353,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                 />
               </div>
               <div>
-                <Label htmlFor="companyEmail" className="text-white/60">
+                <Label htmlFor="companyEmail" className="text-white">
                   Email Address
                 </Label>
                 <Input
@@ -368,7 +368,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
             </div>
 
             <div>
-              <Label className="text-white/60">Registration Scheme</Label>
+              <Label className="text-white">Registration Scheme</Label>
               <Input
                 value={formData.registrationScheme}
                 onChange={(e) => setFormData({ ...formData, registrationScheme: e.target.value })}
@@ -379,7 +379,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="registrationNumber" className="text-white/60">
+                <Label htmlFor="registrationNumber" className="text-white">
                   Registration Number
                 </Label>
                 <Input
@@ -391,7 +391,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                 />
               </div>
               <div>
-                <Label htmlFor="insuranceProvider" className="text-white/60">
+                <Label htmlFor="insuranceProvider" className="text-white">
                   Insurance Provider
                 </Label>
                 <Input
@@ -411,7 +411,7 @@ const InspectorProfileDialog = ({ onProfileSelected }: InspectorProfileDialogPro
                   resetForm();
                   setActiveTab('manage');
                 }}
-                className="border-white/[0.08] text-white/60 hover:bg-white/[0.06] hover:text-white"
+                className="border-white/[0.08] text-white hover:bg-white/[0.06] hover:text-white"
               >
                 Cancel
               </Button>

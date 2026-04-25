@@ -1,109 +1,85 @@
-import { ArrowLeft, Cable, Package, Wrench, Cog, Cloud, CheckCircle } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Cable, Package, Wrench, Cog, Cloud, CheckCircle } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: 'Section 1',
-    title: 'Types of Wiring Systems and Cable Types',
-    description:
-      'Overview of different wiring systems, cable classifications and their applications',
+    id: 1,
+    title: 'Wiring systems and cable types',
     icon: Cable,
+    description: 'Different wiring systems, cable classifications and their applications.',
     href: 'section1',
   },
   {
-    number: 'Section 2',
-    title: 'Cable Containment Systems',
-    description: 'Methods and systems for containing, protecting and supporting electrical cables',
+    id: 2,
+    title: 'Cable containment systems',
     icon: Package,
+    description: 'Methods and systems for containing, protecting and supporting electrical cables.',
     href: 'section2',
   },
   {
-    number: 'Section 3',
-    title: 'Electrical Tools and Equipment',
-    description:
-      'Essential tools, equipment and testing instruments for electrical installation work',
+    id: 3,
+    title: 'Electrical tools and equipment',
     icon: Wrench,
+    description: 'Essential tools, equipment and testing instruments for installation work.',
     href: 'section3',
   },
   {
-    number: 'Section 4',
-    title: 'Installation Methods and Techniques',
-    description: 'Practical installation methods and techniques for electrical systems',
+    id: 4,
+    title: 'Installation methods and techniques',
     icon: Cog,
+    description: 'Practical installation methods and techniques for electrical systems.',
     href: 'section4',
   },
   {
-    number: 'Section 5',
-    title: 'Environmental Considerations and External Influences',
-    description: 'Environmental factors affecting electrical installations and protective measures',
+    id: 5,
+    title: 'Environmental considerations and external influences',
     icon: Cloud,
+    description: 'Environmental factors affecting installations and protective measures.',
     href: 'section5',
   },
   {
-    number: 'Section 6',
-    title: 'Installation Standards and Best Practice',
-    description: 'Industry standards, regulations and best practice guidelines for electrical work',
+    id: 6,
+    title: 'Installation standards and best practice',
     icon: CheckCircle,
+    description: 'Industry standards, regulations and best-practice guidelines for electrical work.',
     href: 'section6',
   },
 ];
 
-const Module3 = () => {
+export default function Module3() {
+  useSEO({
+    title: 'Module 3: Installation Methods and Technology | Level 2 Electrical | Elec-Mate',
+    description:
+      'Wiring systems, containment, tools, installation techniques, environmental factors and industry standards.',
+  });
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Level 2
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Level 2</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Electrical Apprenticeship</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Module 3: Electrical Installation Methods & Technology
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Wiring systems, containment methods, tools and materials for electrical installations
-            </p>
-          </header>
-
-          {/* Sections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {sections.map((section, index) => (
-              <ModuleCard
-                key={index}
-                number={section.number}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                href={section.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo=".."
+      backLabel="Level 2 electrical installation"
+      moduleNumber={3}
+      title="Installation methods and technology"
+      description="Wiring systems, cable containment, tools, installation techniques, environmental factors and standards."
+      tone="emerald"
+      sectionsCount={sections.length}
+      prevModuleHref="../module2"
+      prevModuleLabel="Principles of electrical science"
+      nextModuleHref="../module4"
+      nextModuleLabel="Installing wiring systems and enclosures"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={section.href}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default Module3;
+}

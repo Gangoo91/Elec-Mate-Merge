@@ -532,7 +532,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                 </>
               ) : (
                 <div className="rounded-lg bg-white/[0.04] border border-white/[0.08] p-4 text-center">
-                  <p className="text-xs text-white/60">No AI analysis yet — tap AI Scan from the photo list to run a quality check.</p>
+                  <p className="text-xs text-white">No AI analysis yet — tap AI Scan from the photo list to run a quality check.</p>
                 </div>
               )}
             </div>

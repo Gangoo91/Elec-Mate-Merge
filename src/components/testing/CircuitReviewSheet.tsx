@@ -316,7 +316,7 @@ export const CircuitReviewSheet: React.FC<CircuitReviewSheetProps> = ({
                   to land it where they want (see handleMoveCircuit). */}
               <button
                 onClick={handleStartAddCircuit}
-                className="mt-2.5 w-full py-3 rounded-xl border border-dashed border-white/10 text-white/80 text-sm font-medium flex items-center justify-center gap-2 hover:border-white/20 hover:text-white hover:bg-white/[0.02] transition-all touch-manipulation"
+                className="mt-2.5 w-full py-3 rounded-xl border border-dashed border-white/10 text-white text-sm font-medium flex items-center justify-center gap-2 hover:border-white/20 hover:text-white hover:bg-white/[0.02] transition-all touch-manipulation"
               >
                 <Plus className="h-4 w-4" />
                 Add Circuit

@@ -1,102 +1,49 @@
-import { ArrowLeft, Radio, Network, Wifi, Bluetooth, CircleDot, GitBranch } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Radio, Network, Wifi, Bluetooth, CircleDot, GitBranch } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const SmartHomeModule2 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Wireless Protocol Overview',
-      icon: Radio,
-      description: 'Understanding different wireless communication protocols',
-    },
-    {
-      id: 2,
-      title: 'Zigbee vs Z-Wave: Range, Mesh, Power Use',
-      icon: Network,
-      description: 'Comparing the two major mesh protocols',
-    },
-    {
-      id: 3,
-      title: 'Wi-Fi, Bluetooth, Thread, and Matter',
-      icon: Wifi,
-      description: 'Modern protocols including the new Matter standard',
-    },
-    {
-      id: 4,
-      title: 'Interference, Channels, and Bandwidth',
-      icon: Bluetooth,
-      description: 'Managing signal interference and channel allocation',
-    },
-    {
-      id: 5,
-      title: 'Hub vs Hubless Ecosystems',
-      icon: CircleDot,
-      description: 'Understanding centralised vs distributed architectures',
-    },
-    {
-      id: 6,
-      title: 'Compatibility Mapping and Bridge Use',
-      icon: GitBranch,
-      description: 'Connecting different protocols and legacy systems',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Wireless protocol overview', icon: Radio, description: 'The different wireless communication protocols.' },
+  { id: 2, title: 'Zigbee vs Z-Wave: range, mesh, power use', icon: Network, description: 'Comparing the two major mesh protocols.' },
+  { id: 3, title: 'Wi-Fi, Bluetooth, Thread and Matter', icon: Wifi, description: 'Modern protocols including the new Matter standard.' },
+  { id: 4, title: 'Interference, channels and bandwidth', icon: Bluetooth, description: 'Managing signal interference and channel allocation.' },
+  { id: 5, title: 'Hub vs hubless ecosystems', icon: CircleDot, description: 'Centralised vs distributed architectures.' },
+  { id: 6, title: 'Compatibility mapping and bridge use', icon: GitBranch, description: 'Connecting different protocols and legacy systems.' },
+];
+
+export default function SmartHomeModule2() {
+  useSEO({
+    title: 'Module 2: Smart Protocols | Smart Home | Elec-Mate',
+    description: 'Zigbee, Z-Wave, Wi-Fi, Bluetooth, Thread and Matter — protocol comparison, interference and bridging.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/smart-home-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Smart Home Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 2</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">55 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Smart Protocols: Zigbee, Z-Wave, Wi-Fi, and More
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding communication protocols and system compatibility
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../smart-home-module-2-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../smart-home-course"
+      backLabel="Smart home technology"
+      moduleNumber={2}
+      title="Smart protocols: Zigbee, Z-Wave, Wi-Fi and more"
+      description="Pick the right protocol for the job and bridge ecosystems where they meet."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="55 mins"
+      prevModuleHref="../smart-home-module-1"
+      prevModuleLabel="Introduction to smart home systems"
+      nextModuleHref="../smart-home-module-3"
+      nextModuleLabel="Smart lighting and scene programming"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../smart-home-module-2-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default SmartHomeModule2;
+}

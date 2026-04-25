@@ -15,49 +15,10 @@ import { CompanyProfile } from '@/types/company';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
 import { Eyebrow } from '@/components/college/primitives';
+import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
 
-const AVAILABLE_QUALIFICATIONS = [
-  '18th Edition BS7671',
-  'City & Guilds 2365 Level 2',
-  'City & Guilds 2365 Level 3',
-  'City & Guilds 2330 Level 2',
-  'City & Guilds 2330 Level 3',
-  'NVQ Level 3 Electrical Installation',
-  'AM2 Assessment',
-  // ELE-850 — Awarding-body-neutral Level 3 I&T options. Use these if you
-  // hold an LCL / PAA / VTCT / NOCN / equivalent qualification and do NOT
-  // hold the specific City & Guilds 2391-xx number. Misrepresenting a
-  // specific qualification on a signed statutory document is a legal risk.
-  'Level 3 Award in Inspection & Testing (any awarding body)',
-  'Level 3 Award in Initial Verification & Certification (any awarding body)',
-  'Level 3 Award in Periodic Inspection, Testing & Certification (any awarding body)',
-  'City & Guilds 2391-52',
-  'City & Guilds 2391-51',
-  'City & Guilds 2394/2395',
-  'EAL Level 3 Inspection & Testing',
-  'EAL Level 3 Initial Verification',
-  'EAL Level 3 Periodic Inspection',
-  'LCL Level 3 Inspection & Testing',
-  'PAA/VTCT Level 3 Inspection & Testing',
-  'NOCN Level 3 Inspection & Testing',
-  'City & Guilds 2377 PAT Testing',
-  'PAT Testing Certified',
-  'NICEIC Approved',
-  'NICEIC Domestic Installer',
-  'NAPIT Registered',
-  'ELECSA Registered',
-  'ECA Member',
-  'SELECT Member',
-  'JIB Approved',
-  'JIB Graded Electrician',
-  'CompEx Certified',
-  'EV Charging Installation',
-  'Solar PV Installation',
-  'Battery Storage Installation',
-  'Fire Alarm (BS 5839)',
-  'Emergency Lighting (BS 5266)',
-  'Data & Fibre Installation',
-];
+// Single source of truth — shared with EICR Inspector Details + EIC Declarations
+const AVAILABLE_QUALIFICATIONS = INSPECTOR_QUALIFICATIONS;
 
 const INSURANCE_PROVIDERS = [
   'Zurich', 'Hiscox', 'AXA', 'Aviva', 'Allianz', 'Markel', 'NFU Mutual', 'QBE',

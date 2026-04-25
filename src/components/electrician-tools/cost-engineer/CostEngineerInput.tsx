@@ -231,7 +231,7 @@ export const CostEngineerInput = ({
               />
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-white/70 flex items-center gap-1.5">
+                <Label className="text-xs font-medium text-white flex items-center gap-1.5">
                   <FileText className="h-3 w-3" />
                   Project Name
                 </Label>
@@ -245,7 +245,7 @@ export const CostEngineerInput = ({
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-white/70 flex items-center gap-1.5">
+                <Label className="text-xs font-medium text-white flex items-center gap-1.5">
                   <User className="h-3 w-3" />
                   Client Information
                 </Label>
@@ -259,7 +259,7 @@ export const CostEngineerInput = ({
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-white/70 flex items-center gap-1.5">
+                <Label className="text-xs font-medium text-white flex items-center gap-1.5">
                   <MapPin className="h-3 w-3" />
                   Location
                 </Label>
@@ -273,7 +273,7 @@ export const CostEngineerInput = ({
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-medium text-white/70">Additional Notes</Label>
+                <Label className="text-xs font-medium text-white">Additional Notes</Label>
                 <Textarea
                   value={additionalInfo}
                   onChange={(e) => onAdditionalInfoChange(e.target.value)}

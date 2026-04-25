@@ -25,7 +25,7 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider shrink-0">{title}</p>
+    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
     <div className="h-px flex-1 bg-white/[0.06]" />
   </div>
 );

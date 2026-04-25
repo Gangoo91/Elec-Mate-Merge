@@ -283,12 +283,23 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
       )}
     >
       {stats.map((stat, i) => {
-        const numeric = typeof stat.value === 'number';
         const valueClass = stat.accent
           ? 'text-elec-yellow'
           : stat.tone
             ? toneText[stat.tone]
             : 'text-white';
+
+        // Long text values (e.g. "Foundation") need a smaller scale than
+        // pure numbers so they don't overflow the cell on mobile.
+        const valueStr = String(stat.value);
+        const isNumericish =
+          typeof stat.value === 'number' || /^[\d.,+\-/%hkm]+$/i.test(valueStr);
+        const sizeClass =
+          isNumericish || valueStr.length <= 4
+            ? 'text-3xl sm:text-5xl lg:text-6xl'
+            : valueStr.length <= 8
+              ? 'text-xl sm:text-3xl lg:text-4xl'
+              : 'text-base sm:text-2xl lg:text-3xl';
 
         const content = (
           <>
@@ -297,8 +308,8 @@ export function StatStrip({ stats, columns = 4, className }: StatStripProps) {
             </Eyebrow>
             <span
               className={cn(
-                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none',
-                'text-4xl sm:text-5xl lg:text-6xl',
+                'mt-3 sm:mt-4 font-semibold tabular-nums tracking-tight leading-none break-words max-w-full',
+                sizeClass,
                 valueClass
               )}
             >

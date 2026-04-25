@@ -1,96 +1,48 @@
-import { ArrowLeft, GitBranch, Compass, Wifi, Settings, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { GitBranch, Compass, Wifi, Settings, Zap } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const RenewableEnergyModule6 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Comparison: Off-Grid, Grid-Tied, and Hybrid Systems',
-      icon: GitBranch,
-      description: 'Understanding the differences between system configurations',
-    },
-    {
-      id: 2,
-      title: 'Off-Grid Design Considerations (Autonomy, Generator Backup)',
-      icon: Compass,
-      description: 'Designing standalone systems with backup generation',
-    },
-    {
-      id: 3,
-      title: 'Grid-Tied Sizing and Export Management',
-      icon: Wifi,
-      description: 'Sizing grid-connected systems and managing energy export',
-    },
-    {
-      id: 4,
-      title: 'Control Strategies: Manual vs Automated Switching',
-      icon: Settings,
-      description: 'Different control approaches for system switching and management',
-    },
-    {
-      id: 5,
-      title: 'Load Priority, Critical Loads, and Energy Routing',
-      icon: Zap,
-      description: 'Managing energy distribution and load prioritisation',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Comparison: off-grid, grid-tied and hybrid systems', icon: GitBranch, description: 'The differences between system configurations.' },
+  { id: 2, title: 'Off-grid design considerations (autonomy, generator backup)', icon: Compass, description: 'Designing standalone systems with backup generation.' },
+  { id: 3, title: 'Grid-tied sizing and export management', icon: Wifi, description: 'Sizing grid-connected systems and managing energy export.' },
+  { id: 4, title: 'Control strategies: manual vs automated switching', icon: Settings, description: 'Different control approaches for system switching.' },
+  { id: 5, title: 'Load priority, critical loads and energy routing', icon: Zap, description: 'Managing energy distribution and prioritising loads.' },
+];
+
+export default function RenewableEnergyModule6() {
+  useSEO({
+    title: 'Module 6: Off-Grid vs Grid-Tied | Renewable Energy | Elec-Mate',
+    description: 'Off-grid, grid-tied and hybrid configurations — design, export management and load prioritisation.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/renewable-energy-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Renewable Energy Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 6</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">55 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Off-Grid vs Grid-Tied System Configuration
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Comparing different system configurations and design considerations
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../renewable-energy-module-6-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../renewable-energy-course"
+      backLabel="Renewable energy systems"
+      moduleNumber={6}
+      title="Off-grid vs grid-tied system configuration"
+      description="Pick the right configuration and design around critical loads, autonomy and export."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="55 mins"
+      prevModuleHref="../renewable-energy-module-5"
+      prevModuleLabel="Inverter technology and grid integration"
+      nextModuleHref="../renewable-energy-module-7"
+      nextModuleLabel="Installation, maintenance and troubleshooting"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../renewable-energy-module-6-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default RenewableEnergyModule6;
+}

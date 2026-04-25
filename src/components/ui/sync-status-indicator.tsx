@@ -192,7 +192,7 @@ export const SyncStatusIndicator: React.FC<SyncStatusIndicatorProps> = ({
         !isOnline ? 'bg-amber-500' :
         'bg-white/30'
       )} />
-      <span className="text-[10px] text-white/70">{statusText}</span>
+      <span className="text-[10px] text-white">{statusText}</span>
     </div>
   );
 };

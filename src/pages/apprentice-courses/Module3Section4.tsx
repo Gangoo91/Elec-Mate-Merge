@@ -1,47 +1,46 @@
-import { ArrowLeft, Cog, Layers, Package, Wrench, CheckCircle } from 'lucide-react';
+import { Cog, Layers, Package, Wrench, CheckCircle } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 
 const subsections = [
   {
     number: 'Subsection 1',
-    title: 'Surface vs Concealed Wiring Installations',
+    title: 'Surface vs concealed wiring installations',
     description: 'Differences between surface and concealed installation methods',
     icon: Cog,
     href: '4-1',
   },
   {
     number: 'Subsection 2',
-    title: 'First Fix and Second Fix Explained',
+    title: 'First fix and second fix explained',
     description: 'Understanding the stages of electrical installation work',
     icon: Layers,
     href: '4-2',
   },
   {
     number: 'Subsection 3',
-    title: 'Terminating Cables: Sleeving, Ferrules, and Crimps',
+    title: 'Terminating cables: sleeving, ferrules and crimps',
     description: 'Proper methods for cable termination and identification',
     icon: Package,
     href: '4-3',
   },
   {
     number: 'Subsection 4',
-    title: 'Jointing and Glanding Techniques',
+    title: 'Jointing and glanding techniques',
     description: 'Methods for joining cables and cable entry techniques',
     icon: Wrench,
     href: '4-4',
   },
   {
     number: 'Subsection 5',
-    title: 'Supporting and Securing Cables',
+    title: 'Supporting and securing cables',
     description: 'Techniques for properly supporting cable runs',
     icon: CheckCircle,
     href: '4-5',
   },
   {
     number: 'Subsection 6',
-    title: 'Installing Accessories (Sockets, Switches, FCUs)',
+    title: 'Installing accessories (sockets, switches, FCUs)',
     description: 'Installation of common electrical accessories',
     icon: Cog,
     href: '4-6',
@@ -50,57 +49,31 @@ const subsections = [
 
 const Section4 = () => {
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level2/module3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Section 4</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Installation Methods and Techniques
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Practical installation methods and techniques for electrical systems
-            </p>
-          </header>
-
-          {/* Subsections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level2/module3"
+      backLabel="Module 3"
+      moduleNumber={3}
+      sectionNumber={4}
+      title="Installation methods and techniques"
+      description="Practical installation methods and techniques for electrical systems."
+      tone="emerald"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../section3"
+      prevSectionLabel="Electrical tools and equipment"
+      nextSectionHref="../section5"
+      nextSectionLabel="Environmental considerations and external influences"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

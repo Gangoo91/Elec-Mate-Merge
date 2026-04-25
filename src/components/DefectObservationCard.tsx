@@ -100,7 +100,7 @@ const defectCodeConfig = {
     description: 'Not applicable',
     bgClass: 'bg-white/10',
     borderClass: 'border-white/20',
-    textClass: 'text-white/60',
+    textClass: 'text-white',
     cardBg: '',
     icon: Minus,
   },
@@ -157,7 +157,7 @@ const DefectObservationCard = ({
       {/* Header — item number + current code badge + delete */}
       <div className="flex items-center justify-between px-3.5 py-2.5 bg-white/[0.02] border-b border-white/[0.04]">
         <div className="flex items-center gap-2.5">
-          <span className="text-sm font-bold text-white/80">#{index + 1}</span>
+          <span className="text-sm font-bold text-white">#{index + 1}</span>
           <span className={cn('text-[11px] font-bold px-2.5 py-1 rounded-md border', config.bgClass, config.borderClass, config.textClass)}>
             {defect.defectCode}
           </span>

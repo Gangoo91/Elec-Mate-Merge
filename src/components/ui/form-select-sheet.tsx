@@ -100,7 +100,7 @@ const FormSelectSheet: React.FC<FormSelectSheetProps> = ({
           'flex items-center justify-between gap-2',
           'active:scale-[0.99] transition-all',
           disabled && 'opacity-50 cursor-not-allowed',
-          !displayLabel && 'text-white/40',
+          !displayLabel && 'text-white',
           displayLabel && 'text-white',
           className
         )}
@@ -108,7 +108,7 @@ const FormSelectSheet: React.FC<FormSelectSheetProps> = ({
         <span className="truncate text-sm">
           {isCustomValue ? value : displayLabel || placeholder}
         </span>
-        <ChevronDown className="h-4 w-4 text-white/40 flex-shrink-0" />
+        <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
       </button>
 
       {/* Bottom Sheet */}
@@ -131,7 +131,7 @@ const FormSelectSheet: React.FC<FormSelectSheetProps> = ({
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-white/60 touch-manipulation"
+                className="w-8 h-8 rounded-lg flex items-center justify-center text-white touch-manipulation"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -186,7 +186,7 @@ const FormSelectSheet: React.FC<FormSelectSheetProps> = ({
                       <div key={groupName}>
                         {groupName !== '_default' && (
                           <div className="px-4 py-2 bg-white/[0.02]">
-                            <span className="text-[10px] font-semibold text-white/40 uppercase tracking-wider">
+                            <span className="text-[10px] font-semibold text-white uppercase tracking-wider">
                               {groupName}
                             </span>
                           </div>
@@ -206,7 +206,7 @@ const FormSelectSheet: React.FC<FormSelectSheetProps> = ({
                             <div className="flex flex-col items-start">
                               <span>{option.label}</span>
                               {option.description && (
-                                <span className="text-[10px] text-white/40">
+                                <span className="text-[10px] text-white">
                                   {option.description}
                                 </span>
                               )}
@@ -233,7 +233,7 @@ const FormSelectSheet: React.FC<FormSelectSheetProps> = ({
                         <div className="flex flex-col items-start">
                           <span>{option.label}</span>
                           {option.description && (
-                            <span className="text-[10px] text-white/40">
+                            <span className="text-[10px] text-white">
                               {option.description}
                             </span>
                           )}

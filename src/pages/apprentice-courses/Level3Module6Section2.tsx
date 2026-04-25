@@ -1,48 +1,47 @@
-import { ArrowLeft, Zap, Cable, Target, Shield, Calculator, Thermometer } from 'lucide-react';
+import { Zap, Cable, Target, Shield, Calculator, Thermometer } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '2.1',
-    title: 'Determining Design Current (Ib, In, Iz)',
+    title: 'Determining design current (Ib, In, Iz)',
     description: 'Calculating design current, nominal current and current-carrying capacity',
     icon: Zap,
     href: '../level3-module6-section2-1',
   },
   {
     number: '2.2',
-    title: 'Cable Sizing and Voltage Drop Calculations',
+    title: 'Cable sizing and voltage drop calculations',
     description: 'Selecting appropriate cable sizes and calculating voltage drop in circuits',
     icon: Cable,
     href: '../level3-module6-section2-2',
   },
   {
     number: '2.3',
-    title: 'Earth Fault Loop Impedance and Disconnection Times',
+    title: 'Earth fault loop impedance and disconnection times',
     description: 'Calculating earth fault loop impedance and verifying disconnection times',
     icon: Target,
     href: '../level3-module6-section2-3',
   },
   {
     number: '2.4',
-    title: 'RCD and RCBO Requirements in Design',
+    title: 'RCD and RCBO requirements in design',
     description: 'Determining RCD and RCBO requirements and incorporating them into designs',
     icon: Shield,
     href: '../level3-module6-section2-4',
   },
   {
     number: '2.5',
-    title: 'Diversity and Demand Calculations',
+    title: 'Diversity and demand calculations',
     description: 'Applying diversity factors and calculating electrical demand for installations',
     icon: Calculator,
     href: '../level3-module6-section2-5',
   },
   {
     number: '2.6',
-    title: 'Thermal Effects and Grouping Factors',
+    title: 'Thermal effects and grouping factors',
     description: 'Understanding thermal effects and applying appropriate grouping factors',
     icon: Thermometer,
     href: '../level3-module6-section2-6',
@@ -56,46 +55,31 @@ const Level3Module6Section2 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 6
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module6"
+      backLabel="Module 6"
+      moduleNumber={6}
+      sectionNumber={2}
+      title="Circuit design calculations"
+      description="Current ratings, cable sizing, voltage drop and protection calculations."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../level3-module6-section1"
+      prevSectionLabel="Design principles and requirements"
+      nextSectionHref="../level3-module6-section3"
+      nextSectionLabel="Selection of protective devices and equipment"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

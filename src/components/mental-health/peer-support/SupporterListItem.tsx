@@ -72,7 +72,7 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
             {topics.slice(0, 2).map((topic) => (
               <span
                 key={topic}
-                className="text-xs px-2.5 py-1 rounded-full bg-white/[0.04] text-white/80"
+                className="text-xs px-2.5 py-1 rounded-full bg-white/[0.04] text-white"
               >
                 {topic}
               </span>

@@ -1198,7 +1198,7 @@ function PlanView({
                         {bv.how_embedded}
                       </p>
                       {bv.activity_ref && (
-                        <div className="mt-2 text-[11px] text-white/55">
+                        <div className="mt-2 text-[11px] text-white">
                           Tied to: {bv.activity_ref}
                         </div>
                       )}
@@ -1235,8 +1235,8 @@ function PlanView({
                     <p className="mt-2.5 text-[13.5px] text-white leading-relaxed">
                       {s.task}
                     </p>
-                    <div className="mt-3 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/70 leading-relaxed">
-                      <span className="text-white/90 font-medium">For · </span>
+                    <div className="mt-3 pt-3 border-t border-white/[0.06] text-[11.5px] text-white leading-relaxed">
+                      <span className="text-white font-medium">For · </span>
                       {s.target_learner}
                     </div>
                   </div>
@@ -1266,7 +1266,7 @@ function PlanView({
                       {ip.activity_ref && (
                         <>
                           <span className="text-white/25 text-[10px]">·</span>
-                          <span className="text-[10.5px] text-white/55">
+                          <span className="text-[10.5px] text-white">
                             {ip.activity_ref}
                           </span>
                         </>
@@ -2693,7 +2693,7 @@ function renderStretchChallengePreview(v: unknown, isStreaming: boolean) {
           </div>
           <p className="mt-2 text-[12.5px] text-white leading-snug">{s.task}</p>
           <div className="mt-2 text-[11px] text-white/65">
-            <span className="text-white/85 font-medium">For: </span>
+            <span className="text-white font-medium">For: </span>
             {s.target_learner}
           </div>
         </div>
@@ -2851,7 +2851,7 @@ function AttachedResourcesSection({ lessonId }: { lessonId: string }) {
                   {r.title}
                 </div>
                 {r.mime_type && (
-                  <div className="mt-1 text-[11px] font-mono text-white/45 truncate">
+                  <div className="mt-1 text-[11px] font-mono text-white truncate">
                     {r.mime_type}
                   </div>
                 )}

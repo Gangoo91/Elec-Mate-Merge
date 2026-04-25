@@ -1993,6 +1993,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
       boardHasMainRcd,
       boardMainRcdRating,
     });
+    // ELE-860 note: Our data table already publishes the post-Cmin (×0.95)
+    // values straight from BS 7671 Table 41.3 (e.g. B32 0.4s = 1.37Ω, not the
+    // pre-Cmin 1.44Ω). No further correction here — applying it would
+    // double-count. The optional GN3 conservative ×0.8 factor is exposed via
+    // `applyZsSiteFactor` for callers who want the cold-measured site limit,
+    // but is NOT the default for the schedule of tests.
     return lookup.maxZs !== null ? lookup.maxZs.toFixed(2) : '';
   };
 
@@ -2276,7 +2282,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                             ? 'bg-green-500/15 text-green-400'
                             : boardProgressPercent > 0
                               ? 'bg-elec-yellow/15 text-elec-yellow'
-                              : 'bg-white/[0.06] text-white/80'
+                              : 'bg-white/[0.06] text-white'
                         )}
                       >
                         {isComplete ? (
@@ -2334,24 +2340,24 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       {/* Board Reference & Location */}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="text-xs text-white/80 block mb-1">Reference</label>
+                          <label className="text-xs text-white block mb-1">Reference</label>
                           <DebouncedInput
                             type="text"
                             value={board.reference || ''}
                             onChange={(value) => handleUpdateBoard(board.id, 'reference', value)}
                             placeholder={board.name}
-                            className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
+                            className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
                             style={{ fontSize: '16px' }}
                           />
                         </div>
                         <div>
-                          <label className="text-xs text-white/80 block mb-1">Location</label>
+                          <label className="text-xs text-white block mb-1">Location</label>
                           <DebouncedInput
                             type="text"
                             value={board.location || ''}
                             onChange={(value) => handleUpdateBoard(board.id, 'location', value)}
                             placeholder="e.g., Garage"
-                            className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
+                            className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
                             style={{ fontSize: '16px' }}
                           />
                         </div>
@@ -2363,7 +2369,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       </p>
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="text-xs text-white/80 block mb-1">
+                          <label className="text-xs text-white block mb-1">
                             Z<sub>DB</sub> (Ω)
                           </label>
                           <div className="relative">
@@ -2373,7 +2379,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               value={board.zdb || ''}
                               onChange={(value) => handleUpdateBoard(board.id, 'zdb', value)}
                               placeholder="0.00"
-                              className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
+                              className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
                             />
                             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">
@@ -2382,7 +2388,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                           </div>
                         </div>
                         <div>
-                          <label className="text-xs text-white/80 block mb-1">
+                          <label className="text-xs text-white block mb-1">
                             I<sub>PF</sub> (kA)
                           </label>
                           <div className="relative">
@@ -2392,7 +2398,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               value={board.ipf || ''}
                               onChange={(value) => handleUpdateBoard(board.id, 'ipf', value)}
                               placeholder="0.0"
-                              className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/40 focus:border-elec-yellow focus:outline-none touch-manipulation"
+                              className="w-full h-11 px-3 pr-8 rounded-lg bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:border-elec-yellow focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
                             />
                             <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-white">
@@ -2581,7 +2587,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                         {/* SPD Type — show when SPD is applicable */}
                         {!board.spdNA && (
                           <div className="space-y-2 mt-1">
-                            <p className="text-xs text-white/80">SPD Type Installed</p>
+                            <p className="text-xs text-white">SPD Type Installed</p>
                             <div className="grid grid-cols-3 gap-2">
                               {(['spdT1', 'spdT2', 'spdT3'] as const).map((field, i) => {
                                 const label = `Type ${i + 1}`;
@@ -2773,14 +2779,14 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               <div className="flex items-center justify-between">
                 <button
                   onClick={handleAddBoard}
-                  className="text-[11px] font-medium text-white hover:text-white/80 touch-manipulation flex items-center gap-1"
+                  className="text-[11px] font-medium text-white hover:text-white touch-manipulation flex items-center gap-1"
                 >
                   <Plus className="h-3 w-3" />
                   Add Sub-Board
                 </button>
                 <button
                   onClick={toggleMobileView}
-                  className="text-[11px] font-medium text-white hover:text-white/80 touch-manipulation flex items-center gap-1"
+                  className="text-[11px] font-medium text-white hover:text-white touch-manipulation flex items-center gap-1"
                 >
                   {mobileViewType === 'table' ? (
                     <Layout className="h-3 w-3" />
@@ -2800,13 +2806,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           <div className="space-y-6">
             <div className="flex items-end justify-between gap-4 flex-wrap">
               <div className="min-w-0 flex-1">
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Schedule of Tests
                 </p>
                 <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
                   BS 7671 A4:2026 circuit testing
                 </h1>
-                <p className="mt-3 text-[13px] sm:text-sm text-white/55 max-w-2xl leading-relaxed">
+                <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
                   Capture verification, continuity, insulation and loop measurements for every
                   circuit on every board — aligned with the A4:2026 model schedule of test results.
                 </p>
@@ -2833,7 +2839,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   key={s.label}
                   className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 flex flex-col items-start"
                 >
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     {String(i + 1).padStart(2, '0')} · {s.label}
                   </span>
                   <span
@@ -2858,7 +2864,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     style={{ width: `${Math.max(2, progressPercent)}%` }}
                   />
                 </div>
-                <span className="text-[11px] font-medium text-white/70 tabular-nums shrink-0">
+                <span className="text-[11px] font-medium text-white tabular-nums shrink-0">
                   {completedCount}/{testResults.length} tested
                 </span>
               </div>
@@ -2868,7 +2874,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             <div className="flex items-center gap-5 text-[13px] pt-4 border-t border-white/[0.06]">
               <button
                 onClick={() => setShowRcdPresetsDialog(true)}
-                className="font-medium text-white/85 hover:text-elec-yellow transition-colors touch-manipulation"
+                className="font-medium text-white hover:text-elec-yellow transition-colors touch-manipulation"
               >
                 RCD presets
               </button>
@@ -2878,7 +2884,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   'font-medium transition-colors touch-manipulation',
                   showAnalytics
                     ? 'text-elec-yellow'
-                    : 'text-white/85 hover:text-elec-yellow'
+                    : 'text-white hover:text-elec-yellow'
                 )}
               >
                 Analytics
@@ -2892,7 +2898,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                     ? 'text-green-400 animate-pulse'
                     : voiceConnecting
                       ? 'text-amber-300 animate-pulse'
-                      : 'text-white/85 hover:text-elec-yellow'
+                      : 'text-white hover:text-elec-yellow'
                 )}
               >
                 {voiceActive ? 'Listening…' : voiceConnecting ? 'Connecting…' : 'Voice'}

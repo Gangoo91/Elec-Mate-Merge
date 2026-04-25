@@ -263,7 +263,7 @@ const PaymentSuccess = () => {
                 <h1 className="mt-3 text-[30px] font-bold tracking-[-0.04em] text-white">
                   {isTrial ? 'Your free trial is live' : `${plan.name} is live`}
                 </h1>
-                <p className="mt-3 text-[15px] leading-7 text-white/70">
+                <p className="mt-3 text-[15px] leading-7 text-white">
                   {isTrial ? (
                     <>
                       You will not be charged until <span className="font-medium text-white">{trialEndDate}</span>.
@@ -323,7 +323,7 @@ const PaymentSuccess = () => {
                   'mt-8 h-14 w-full rounded-2xl text-[16px] font-bold transition-all',
                   isReady
                     ? 'bg-[#FFD700] text-black shadow-[0_2px_24px_rgba(255,215,0,0.2)] hover:bg-[#FFD700]/90'
-                    : 'bg-white/10 text-white/60'
+                    : 'bg-white/10 text-white'
                 )}
               >
                 {!isReady ? (

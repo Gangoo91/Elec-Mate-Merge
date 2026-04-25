@@ -187,7 +187,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
           </button>
           <button
             onClick={() => setIsDismissed(true)}
-            className="h-10 flex items-center gap-1.5 text-xs font-medium text-white ml-auto hover:text-white/80 transition-colors touch-manipulation"
+            className="h-10 flex items-center gap-1.5 text-xs font-medium text-white ml-auto hover:text-white transition-colors touch-manipulation"
           >
             Dismiss
             <X className="h-3 w-3" />
@@ -237,7 +237,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
                         <span className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded', getTypeBadgeStyle(draft.report_type))}>
                           {getTypeLabel(draft.report_type)}
                         </span>
-                        <span className="text-[11px] text-white/40 ml-auto">{updatedAgo}</span>
+                        <span className="text-[11px] text-white ml-auto">{updatedAgo}</span>
                       </div>
                       <h4 className="text-[13px] font-semibold text-white truncate group-hover:text-elec-yellow transition-colors">
                         {draft.client_name || 'Untitled'}

@@ -1,5 +1,4 @@
 import {
-  ArrowLeft,
   Shield,
   Zap,
   Wrench,
@@ -8,163 +7,110 @@ import {
   TestTube,
   AlertTriangle,
   GraduationCap,
-  ChevronLeft,
 } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { ModuleCard } from '@/components/upskilling/cards';
+import { CourseShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
 const modules = [
   {
-    number: 'Module 1',
-    title: 'Health and Safety in Building Services Engineering',
-    description: 'Essential health and safety practices for electrical work environments',
+    moduleNumber: 1,
+    title: 'Health and safety in installation',
+    description:
+      'Legislation, common hazards, RAMS, PPE, safe isolation procedures and emergency response.',
     icon: Shield,
-    href: 'module1',
+    link: 'module1',
   },
   {
-    number: 'Module 2',
-    title: 'Principles of Electrical Science',
-    description:
-      'Fundamental electrical theory, voltage, current, resistance and power calculations',
+    moduleNumber: 2,
+    title: 'Principles of electrical science',
+    description: "Quantities, Ohm's law, series and parallel circuits, AC/DC supply and power.",
     icon: Zap,
-    href: 'module2',
+    link: 'module2',
   },
   {
-    number: 'Module 3',
-    title: 'Electrical Installation Methods & Technology',
+    moduleNumber: 3,
+    title: 'Installation methods and technology',
     description:
-      'Wiring systems, containment methods, tools and materials for electrical installations',
+      'Wiring systems, cable types, containment, tools, environmental factors and standards.',
     icon: Wrench,
-    href: 'module3',
+    link: 'module3',
   },
   {
-    number: 'Module 4',
-    title: 'Installing Wiring Systems & Enclosures',
+    moduleNumber: 4,
+    title: 'Installing wiring systems and enclosures',
     description:
-      'Hands-on installation techniques for PVC, trunking, conduit and cable tray systems',
+      'Setting out, bending conduit, installing trunking and tray, terminations and inspection.',
     icon: HardHat,
-    href: 'module4',
+    link: 'module4',
   },
   {
-    number: 'Module 5',
-    title: 'Design, Planning & Communication',
-    description: 'Project planning, technical documentation and effective team communication',
+    moduleNumber: 5,
+    title: 'Design, planning and communication',
+    description:
+      'Reading drawings, design principles, site planning, working with other trades and documentation.',
     icon: FileText,
-    href: 'module5',
+    link: 'module5',
   },
   {
-    number: 'Module 6',
-    title: 'Inspection, Testing & Certification',
+    moduleNumber: 6,
+    title: 'Inspection, testing and certification',
     description:
-      'Safe isolation procedures, continuity testing, insulation resistance and certification',
+      'Visual inspection, testing instruments, continuity, polarity, insulation resistance and certification.',
     icon: TestTube,
-    href: 'module6',
+    link: 'module6',
   },
   {
-    number: 'Module 7',
-    title: 'Electrical Fault Finding and Diagnosis',
+    moduleNumber: 7,
+    title: 'Electrical fault finding and diagnosis',
     description:
-      'Learn to identify, diagnose, and safely resolve electrical faults in installations',
+      'Common fault types, signs and symptoms, logical testing, safe tool use and reporting.',
     icon: AlertTriangle,
-    href: 'module7',
+    link: 'module7',
   },
   {
-    number: 'Module 8',
-    title: 'Mock Examinations & Assessment',
+    moduleNumber: 8,
+    title: 'Mock examinations and assessment',
     description:
-      'Test your knowledge and exam readiness with comprehensive mock examinations and practice questions',
-    icon: TestTube,
-    href: 'module8',
+      'Practice exam papers and exam technique tips to build confidence for the real assessment.',
+    icon: GraduationCap,
+    link: 'module8',
+    isExam: true,
   },
 ];
 
-const Level2 = () => {
+export default function Level2() {
+  useSEO({
+    title: 'Level 2 Electrical Installation | Apprentice Training | Elec-Mate',
+    description:
+      'Foundation Level 2 electrical installation training — health and safety, electrical science, installation methods, wiring systems, design, inspection and testing, fault finding and mock exams.',
+  });
+
   return (
-    <div className="pb-24 bg-elec-dark">
-      {/* Premium Hero Section */}
-      <div className="relative overflow-hidden">
-        {/* Dark gradient background matching sidebar */}
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-dark via-neutral-900 to-elec-dark" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600/10 via-transparent to-transparent" />
-
-        {/* Floating orbs */}
-        <motion.div
-          className="absolute top-10 right-10 w-32 h-32 rounded-full bg-blue-500/5 blur-3xl"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity }}
+    <CourseShell
+      backTo="/study-centre/apprentice"
+      backLabel="Apprentice training"
+      eyebrow="Apprentice training"
+      title="Level 2 electrical installation"
+      description="Foundation electrical installation skills covering health and safety, electrical science, wiring systems, inspection and testing, and exam preparation."
+      tone="emerald"
+      level="Foundation"
+      modulesCount={modules.length}
+      pagesCount="500+"
+      totalDuration="40h"
+    >
+      {modules.map((mod, index) => (
+        <ModuleCard
+          key={mod.moduleNumber}
+          to={mod.link}
+          moduleNumber={mod.moduleNumber}
+          title={mod.title}
+          description={mod.description}
+          icon={mod.icon}
+          isExam={mod.isExam}
+          index={index}
         />
-        <motion.div
-          className="absolute bottom-0 left-10 w-24 h-24 rounded-full bg-purple-500/10 blur-2xl"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-        />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-6">
-          {/* Back Button */}
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mb-4 text-white hover:text-white hover:bg-white/10 gap-2"
-              asChild
-            >
-              <Link to="/study-centre/apprentice">
-                <ChevronLeft className="h-4 w-4" />
-                Back to Study Centre
-              </Link>
-            </Button>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            {/* Icon with glow */}
-            <div className="relative inline-flex mb-4">
-              <div className="absolute inset-0 bg-blue-500/30 rounded-2xl blur-xl animate-pulse" />
-              <div className="relative p-4 rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 shadow-2xl shadow-blue-500/25">
-                <GraduationCap className="h-8 w-8 text-white" />
-              </div>
-            </div>
-
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
-                Level 2 Electrical Installation
-              </span>
-            </h1>
-            <p className="text-sm text-white max-w-md mx-auto">
-              Foundation electrical installation skills and safety training modules
-            </p>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Modules Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-2">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          {modules.map((module, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + index * 0.05 }}
-            >
-              <ModuleCard
-                number={module.number}
-                title={module.title}
-                description={module.description}
-                icon={module.icon}
-                href={module.href}
-              />
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </div>
+      ))}
+    </CourseShell>
   );
-};
-
-export default Level2;
+}

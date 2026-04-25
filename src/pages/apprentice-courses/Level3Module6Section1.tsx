@@ -1,13 +1,12 @@
-import { ArrowLeft, Target, BookOpen, Users, Shield, Leaf, Zap } from 'lucide-react';
+import { Target, BookOpen, Users, Shield, Leaf } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '1.1',
-    title: 'Purpose of Electrical System Design',
+    title: 'Purpose of electrical system design',
     description: 'Understanding the fundamental purpose and objectives of electrical system design',
     icon: Target,
     href: '../level3-module6-section1-1',
@@ -16,13 +15,13 @@ const subsections = [
     number: '1.2',
     title: 'Compliance with BS 7671 and Building Regulations',
     description:
-      'Ensuring designs comply with BS7671 wiring regulations and relevant building regulations',
+      'Ensuring designs comply with BS 7671 wiring regulations and relevant building regulations',
     icon: BookOpen,
     href: '../level3-module6-section1-2',
   },
   {
     number: '1.3',
-    title: 'Client Requirements and Design Specifications',
+    title: 'Client requirements and design specifications',
     description:
       'Understanding and interpreting client requirements to create appropriate design specifications',
     icon: Users,
@@ -30,7 +29,7 @@ const subsections = [
   },
   {
     number: '1.4',
-    title: 'Designing for Safety, Reliability, and Usability',
+    title: 'Designing for safety, reliability and usability',
     description:
       'Incorporating safety, reliability and usability principles into electrical system design',
     icon: Shield,
@@ -38,7 +37,7 @@ const subsections = [
   },
   {
     number: '1.5',
-    title: 'Designing for Energy Efficiency and Sustainability',
+    title: 'Designing for energy efficiency and sustainability',
     description: 'Creating energy-efficient and sustainable electrical system designs',
     icon: Leaf,
     href: '../level3-module6-section1-5',
@@ -52,46 +51,29 @@ const Level3Module6Section1 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 6
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module6"
+      backLabel="Module 6"
+      moduleNumber={6}
+      sectionNumber={1}
+      title="Design principles and requirements"
+      description="Fundamental design principles, compliance requirements and client specifications."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      nextSectionHref="../level3-module6-section2"
+      nextSectionLabel="Circuit design calculations"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

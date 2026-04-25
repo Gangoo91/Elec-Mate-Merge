@@ -1,203 +1,197 @@
-import { useState, useEffect } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Quote, RefreshCw, Heart, Share2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Heart, Quote, RefreshCw, Share2, Volume2, VolumeX } from 'lucide-react';
 import { toast } from 'sonner';
 import { copyToClipboard } from '@/utils/clipboard';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { supabase } from '@/integrations/supabase/client';
 
-const affirmations = [
-  {
-    text: 'You are capable of handling whatever today brings.',
-    category: 'strength',
-  },
-  {
-    text: "Your skills and expertise make a real difference in people's lives.",
-    category: 'purpose',
-  },
-  {
-    text: "It's okay to ask for help. That's a sign of strength, not weakness.",
-    category: 'support',
-  },
-  {
-    text: 'Every expert was once a beginner. Your progress matters.',
-    category: 'growth',
-  },
-  {
-    text: "Taking breaks is not lazy - it's essential for doing your best work.",
-    category: 'self-care',
-  },
-  {
-    text: 'You deserve to feel safe, valued, and respected at work.',
-    category: 'worth',
-  },
-  {
-    text: "Difficult days don't define you. Your resilience does.",
-    category: 'resilience',
-  },
-  {
-    text: 'Your mental health is just as important as physical safety on site.',
-    category: 'awareness',
-  },
-  {
-    text: 'Small steps forward are still progress. Be patient with yourself.',
-    category: 'patience',
-  },
-  {
-    text: 'You bring unique value to your team. Your contribution matters.',
-    category: 'value',
-  },
-  {
-    text: "It's okay to not be okay. What matters is reaching out when you need to.",
-    category: 'vulnerability',
-  },
-  {
-    text: 'Your wellbeing comes first. Everything else can wait.',
-    category: 'priority',
-  },
-  {
-    text: "You've overcome challenges before. You'll overcome this too.",
-    category: 'experience',
-  },
-  {
-    text: "Taking time for yourself isn't selfish - it's necessary.",
-    category: 'self-care',
-  },
-  {
-    text: "Your feelings are valid. Don't let anyone dismiss them.",
-    category: 'validation',
-  },
-  {
-    text: 'Every job completed safely is a success worth celebrating.',
-    category: 'achievement',
-  },
-  {
-    text: 'Connecting with others who understand is a powerful form of support.',
-    category: 'community',
-  },
-  {
-    text: "Your best is enough. You don't need to be perfect.",
-    category: 'acceptance',
-  },
-  {
-    text: 'Rest is productive. Your mind and body need recovery time.',
-    category: 'rest',
-  },
-  {
-    text: 'You are more than your job. Your whole self matters.',
-    category: 'identity',
-  },
+const FALLBACK_QUOTES = [
+  'Every job you sign off safely is a small act of care for someone you may never meet.',
+  "Long days end. Bills get paid. The work is real, even on the days it doesn't feel like it.",
+  'Asking for a hand is a skill, not a weakness. The good ones do it more, not less.',
+  'You can rest tonight. The board will still be there in the morning, and you will be sharper.',
+  "You've solved harder things than what's in front of you today. Keep going.",
 ];
 
-const DailyAffirmation = () => {
-  const [currentAffirmation, setCurrentAffirmation] = useState(affirmations[0]);
+const CACHE_KEY = 'elec-mate-daily-affirmation-v2';
+
+interface CachedAffirmation {
+  text: string;
+  date: string;
+}
+
+function todayKey() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function pickFallback(seed: string) {
+  let h = 0;
+  for (const c of seed) h = (h * 31 + c.charCodeAt(0)) | 0;
+  return FALLBACK_QUOTES[Math.abs(h) % FALLBACK_QUOTES.length];
+}
+
+export const DailyAffirmation = () => {
+  const [text, setText] = useState<string>(() => pickFallback(todayKey()));
   const [isLiked, setIsLiked] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isPersonalised, setIsPersonalised] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
 
-  useEffect(() => {
-    // Get today's affirmation based on date (consistent per day)
-    const today = new Date();
-    const dayOfYear = Math.floor(
-      (today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 86400000
-    );
-    const index = dayOfYear % affirmations.length;
-    setCurrentAffirmation(affirmations[index]);
+  const loadAffirmation = async (force = false) => {
+    const today = todayKey();
 
-    // Check if user liked this affirmation
-    const likedList = storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []);
-    setIsLiked(likedList.includes(affirmations[index].text));
-  }, []);
-
-  const handleRefresh = () => {
-    setIsRefreshing(true);
-    const randomIndex = Math.floor(Math.random() * affirmations.length);
-    setTimeout(() => {
-      setCurrentAffirmation(affirmations[randomIndex]);
-      setIsRefreshing(false);
-
-      // Check if this one is liked
-      const likedList = storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []);
-      setIsLiked(likedList.includes(affirmations[randomIndex].text));
-    }, 300);
-  };
-
-  const handleLike = () => {
-    let likedList = storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []);
-
-    if (isLiked) {
-      likedList = likedList.filter((t: string) => t !== currentAffirmation.text);
-    } else {
-      likedList.push(currentAffirmation.text);
+    // 1) Local cache hit (same day, not forced)
+    if (!force) {
+      const cached = storageGetJSONSync<CachedAffirmation | null>(CACHE_KEY, null);
+      if (cached && cached.date === today && cached.text) {
+        setText(cached.text);
+        setIsPersonalised(true);
+        return;
+      }
     }
 
-    storageSetJSONSync('elec-mate-liked-affirmations', likedList);
+    setIsRefreshing(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('generate-daily-affirmation');
+      if (error) throw error;
+      const next = (data?.affirmation as string) || pickFallback(today);
+      setText(next);
+      storageSetJSONSync(CACHE_KEY, { text: next, date: today });
+      setIsPersonalised(true);
+    } catch {
+      // Fall back silently — the deterministic seed picks one fallback per day
+      const fallback = pickFallback(today);
+      setText(fallback);
+      setIsPersonalised(false);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    loadAffirmation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Sync liked state whenever text changes
+  useEffect(() => {
+    const liked = storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []);
+    setIsLiked(liked.includes(text));
+  }, [text]);
+
+  const handleLike = () => {
+    let liked = storageGetJSONSync<string[]>('elec-mate-liked-affirmations', []);
+    if (isLiked) liked = liked.filter((t) => t !== text);
+    else liked.push(text);
+    storageSetJSONSync('elec-mate-liked-affirmations', liked);
     setIsLiked(!isLiked);
   };
 
-  const handleShare = async () => {
-    const shareText = `"${currentAffirmation.text}" - Daily affirmation from Elec-Mate Mental Health Hub`;
+  const handleSpeak = () => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      toast.error('Speech not supported on this device');
+      return;
+    }
+    if (isSpeaking) {
+      window.speechSynthesis.cancel();
+      setIsSpeaking(false);
+      return;
+    }
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = 0.95;
+    utter.pitch = 1;
+    utter.onend = () => setIsSpeaking(false);
+    utter.onerror = () => setIsSpeaking(false);
+    setIsSpeaking(true);
+    window.speechSynthesis.speak(utter);
+  };
 
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  const handleShare = async () => {
+    const shareText = `"${text}" — Elec-Mate`;
     if (navigator.share) {
       try {
-        await navigator.share({
-          text: shareText,
-        });
-      } catch (err) {
-        // User cancelled or error
+        await navigator.share({ text: shareText });
+      } catch {
+        /* user cancelled */
       }
     } else {
-      // Fallback: copy to clipboard
       await copyToClipboard(shareText);
-      toast.success('Copied to clipboard!');
+      toast.success('Copied to clipboard');
     }
   };
 
   return (
-    <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-blue-500/10 overflow-hidden">
-      <CardContent className="p-5">
-        <div className="flex items-start gap-3">
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-            <Quote className="h-5 w-5 text-purple-400" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="text-xs text-purple-400 font-medium mb-1.5">Daily Affirmation</div>
-            <p
-              className={`text-foreground font-medium leading-relaxed transition-opacity duration-300 ${
-                isRefreshing ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
-              "{currentAffirmation.text}"
-            </p>
-          </div>
+    <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-purple-500/[0.08] via-white/[0.02] to-elec-yellow/[0.06] p-5">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-purple-500/70 via-violet-400/70 to-indigo-400/70 opacity-70" />
+      <div className="flex items-start gap-3">
+        <div className="shrink-0 mt-0.5">
+          <Quote className="h-4 w-4 text-purple-400" />
         </div>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+              Daily affirmation
+            </span>
+            {isPersonalised && (
+              <span className="inline-flex items-center text-[10px] font-medium px-2 py-0.5 rounded-full border bg-purple-500/10 text-purple-400 border-purple-500/20">
+                For you · today
+              </span>
+            )}
+          </div>
+          <p
+            className={`mt-2 text-[15px] sm:text-base text-white font-medium leading-snug transition-opacity ${
+              isRefreshing ? 'opacity-40' : 'opacity-100'
+            }`}
+          >
+            “{text}”
+          </p>
+        </div>
+      </div>
 
-        {/* Actions */}
-        <div className="flex items-center justify-end gap-1 mt-3">
-          <Button
-            variant="ghost"
-            onClick={handleLike}
-            className={`h-11 w-11 p-0 touch-manipulation active:scale-[0.95] transition-all ${isLiked ? 'text-pink-400' : 'text-white'}`}
-          >
-            <Heart className={`h-5 w-5 ${isLiked ? 'fill-current' : ''}`} />
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={handleShare}
-            className="h-11 w-11 p-0 text-white touch-manipulation active:scale-[0.95] transition-all"
-          >
-            <Share2 className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            onClick={handleRefresh}
-            className="h-11 w-11 p-0 text-white touch-manipulation active:scale-[0.95] transition-all"
-            disabled={isRefreshing}
-          >
-            <RefreshCw className={`h-5 w-5 ${isRefreshing ? 'animate-spin' : ''}`} />
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
+      <div className="flex items-center justify-end gap-1 mt-3">
+        <button
+          onClick={handleLike}
+          className={`h-10 w-10 rounded-full flex items-center justify-center touch-manipulation hover:bg-white/[0.06] transition-colors ${
+            isLiked ? 'text-pink-400' : 'text-white'
+          }`}
+          aria-label={isLiked ? 'Unlike' : 'Like'}
+        >
+          <Heart className={`h-4 w-4 ${isLiked ? 'fill-current' : ''}`} />
+        </button>
+        <button
+          onClick={handleSpeak}
+          className={`h-10 w-10 rounded-full flex items-center justify-center touch-manipulation hover:bg-white/[0.06] transition-colors ${
+            isSpeaking ? 'text-purple-400' : 'text-white'
+          }`}
+          aria-label={isSpeaking ? 'Stop reading' : 'Read aloud'}
+        >
+          {isSpeaking ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+        </button>
+        <button
+          onClick={handleShare}
+          className="h-10 w-10 rounded-full flex items-center justify-center text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+          aria-label="Share"
+        >
+          <Share2 className="h-4 w-4" />
+        </button>
+        <button
+          onClick={() => loadAffirmation(true)}
+          disabled={isRefreshing}
+          className="h-10 w-10 rounded-full flex items-center justify-center text-white hover:bg-white/[0.06] transition-colors touch-manipulation disabled:opacity-50"
+          aria-label="Refresh"
+        >
+          <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+        </button>
+      </div>
+    </div>
   );
 };
 

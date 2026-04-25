@@ -1,13 +1,12 @@
-import { ArrowLeft, Briefcase, Users, Award, GraduationCap, TrendingUp, Zap } from 'lucide-react';
+import { Briefcase, Users, Award, GraduationCap, TrendingUp } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '1.1',
-    title: 'Roles Within the Electrical Industry',
+    title: 'Roles within the electrical industry',
     description:
       'Understanding different roles: installer, tester, designer, inspector and their responsibilities',
     icon: Briefcase,
@@ -15,21 +14,21 @@ const subsections = [
   },
   {
     number: '1.2',
-    title: 'Self-employment vs Employment Routes',
+    title: 'Self-employment vs employment routes',
     description: 'Comparing employed and self-employed career paths in the electrical industry',
     icon: Users,
     href: '../level3-module7-section1-2',
   },
   {
     number: '1.3',
-    title: 'Trade Bodies and Registration (NICEIC, NAPIT, ECA, JIB)',
+    title: 'Trade bodies and registration (NICEIC, NAPIT, ECA, JIB)',
     description: 'Understanding professional trade bodies and registration requirements',
     icon: Award,
     href: '../level3-module7-section1-3',
   },
   {
     number: '1.4',
-    title: 'Apprenticeships, NVQs, and AM2 Assessment',
+    title: 'Apprenticeships, NVQs and AM2 assessment',
     description:
       'Overview of training routes including apprenticeships, NVQs and assessment methods',
     icon: GraduationCap,
@@ -37,7 +36,7 @@ const subsections = [
   },
   {
     number: '1.5',
-    title: 'Progression into Higher Qualifications (HNC, degree routes)',
+    title: 'Progression into higher qualifications (HNC, degree routes)',
     description: 'Pathways to advanced qualifications and career progression opportunities',
     icon: TrendingUp,
     href: '../level3-module7-section1-5',
@@ -51,46 +50,29 @@ const Level3Module7Section1 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module7">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 7
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module7"
+      backLabel="Module 7"
+      moduleNumber={7}
+      sectionNumber={1}
+      title="The electrical industry and career pathways"
+      description="Industry roles, career progression routes and professional pathways."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      nextSectionHref="../level3-module7-section2"
+      nextSectionLabel="Professional standards and responsibilities"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

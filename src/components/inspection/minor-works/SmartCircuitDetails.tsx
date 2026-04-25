@@ -48,19 +48,30 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
         />
         <CollapsibleContent>
           <CardContent className="space-y-6 pt-6">
-            {/* Basic Circuit Information */}
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            {/* Basic Circuit Information — A4:2026 model form has DB Reference + DB Location/type as separate fields */}
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <Label htmlFor="distributionBoard">Distribution Board</Label>
+                <Label htmlFor="distributionBoard">DB Reference No.</Label>
                 <Input
                   id="distributionBoard"
-                  placeholder="e.g., DB1, Main Board"
+                  placeholder="e.g., DB1"
                   value={formData.distributionBoard}
                   onChange={(e) => handleUpdate('distributionBoard', e.target.value)}
                 />
               </div>
               <div>
-                <Label htmlFor="circuitDesignation">Circuit Designation *</Label>
+                <Label htmlFor="dbLocationType">DB Location and type</Label>
+                <Input
+                  id="dbLocationType"
+                  placeholder="e.g., Garage, metal-clad CU"
+                  value={formData.dbLocationType || ''}
+                  onChange={(e) => handleUpdate('dbLocationType', e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div>
+                <Label htmlFor="circuitDesignation">Circuit No. *</Label>
                 <Input
                   id="circuitDesignation"
                   placeholder="e.g., C1, L1"

@@ -404,6 +404,17 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
           placeholder=">200"
         />
       </TableCell>
+      {/* ELE-868 — Neutral-Earth (was missing from UI; PDF already had it) */}
+      <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
+        <input
+          type="text"
+          inputMode="text"
+          value={result.insulationNeutralEarth || ''}
+          onChange={(e) => onUpdate(result.id, 'insulationNeutralEarth', e.target.value)}
+          className="w-full h-11 text-sm text-center bg-background border border-input text-white rounded-md focus:ring-2 focus:ring-primary focus:outline-none touch-manipulation"
+          placeholder=">200"
+        />
+      </TableCell>
 
       {/* Earth Fault Tests Group */}
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[76px] min-w-[76px] max-w-[76px]">

@@ -24,7 +24,7 @@ const Field = ({ label, required, children }: { label: string; required?: boolea
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider shrink-0">{title}</p>
+    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
     <div className="h-px flex-1 bg-white/[0.06]" />
   </div>
 );
@@ -147,7 +147,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
               }`}
             >
               <p className={`text-[11px] font-bold leading-tight ${isPresetActive(preset) ? 'text-elec-yellow' : 'text-white'}`}>{preset.manufacturer}</p>
-              <p className="text-[10px] text-white/70 leading-tight mt-0.5 truncate">{preset.model}</p>
+              <p className="text-[10px] text-white leading-tight mt-0.5 truncate">{preset.model}</p>
               <div className="flex items-center gap-1.5 mt-1.5">
                 <span className="text-[10px] font-bold text-elec-yellow bg-elec-yellow/10 px-1.5 py-0.5 rounded">{preset.capacity} kWh</span>
                 <span className="text-[9px] text-white/50">{preset.chemistry}</span>
@@ -159,7 +159,7 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
           <button
             type="button"
             onClick={() => setShowAllPresets(!showAllPresets)}
-            className="w-full h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] text-[11px] text-white/70 font-medium touch-manipulation active:scale-[0.98]"
+            className="w-full h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] text-[11px] text-white font-medium touch-manipulation active:scale-[0.98]"
           >
             {showAllPresets ? `Show less` : `Show all ${BATTERY_PRESETS.length} systems`}
           </button>
@@ -217,8 +217,8 @@ export default function BESSSystemDesign({ formData, onUpdate }: Props) {
             <div className="px-3 py-2.5 bg-white/[0.02] space-y-1.5">
               <p className="text-[11px] text-white leading-relaxed">{chemistryGuidance.ventilationAdvice}</p>
               <div className="flex gap-3">
-                <span className="text-[10px] text-white/70">Test at <span className="font-bold text-elec-yellow">{chemistryGuidance.dcTestVoltage}V</span></span>
-                <span className="text-[10px] text-white/70">Min IR <span className="font-bold text-elec-yellow">{chemistryGuidance.minResistance} MΩ</span></span>
+                <span className="text-[10px] text-white">Test at <span className="font-bold text-elec-yellow">{chemistryGuidance.dcTestVoltage}V</span></span>
+                <span className="text-[10px] text-white">Min IR <span className="font-bold text-elec-yellow">{chemistryGuidance.minResistance} MΩ</span></span>
               </div>
             </div>
           </div>

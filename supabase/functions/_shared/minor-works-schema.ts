@@ -14,7 +14,8 @@ export const minorWorksSchema = z.object({
   // Certificate metadata
   certificate_number: z.string().default(''),
   generated_at: z.string().default(''),
-  bs7671_amendment_date: z.string().default('A3:2024'),
+  // A4:2026 was published 15 April 2026 — used in Section A item 4 + declaration
+  bs7671_amendment_date: z.string().default('15 April 2026'),
   work_date: z.string().default(''),
   date_of_completion: z.string().default(''),
   next_inspection_due: z.string().default(''),
@@ -212,6 +213,8 @@ export const minorWorksSchema = z.object({
       spd_visual: z.string().default('N/A'),
       spd_indicator: z.string().default('N/A'),
       spd_test_button: z.union([z.string(), z.boolean()]).default('N/A'),
+      // A4:2026 Section D — SPD functionality confirmed boolean
+      spd_ok: z.boolean().default(false),
       // Environment
       temperature: z.string().default('N/A'),
     })

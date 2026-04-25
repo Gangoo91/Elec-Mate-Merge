@@ -1,106 +1,47 @@
-import { ArrowLeft, Shield, Zap, FileCheck, BookOpen, Leaf, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Shield, Zap, FileCheck, BookOpen, Leaf, AlertTriangle } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
-const MOETModule1 = () => {
-  useSEO(
-    'Module 1: Health, Safety and Compliance - MOET Course',
-    'Essential health and safety requirements, risk management and regulatory compliance for maintenance operations'
-  );
+const sections = [
+  { id: 1, title: 'Safe systems of work', icon: Shield, description: 'Permits to work, isolation, lock-out tag-out, work at height and confined spaces.' },
+  { id: 2, title: 'Electrical safety', icon: Zap, description: 'Electrical dangers, safe tool use, PPE, approach distances and earthing.' },
+  { id: 3, title: 'Risk assessment and method statements', icon: FileCheck, description: 'Hazard identification, evaluation, controls and dynamic assessments.' },
+  { id: 4, title: 'Regulations and standards', icon: BookOpen, description: 'HSWA, Electricity at Work, BS 7671, PUWER, LOLER and industry guidance.' },
+  { id: 5, title: 'Environmental and sustainability practices', icon: Leaf, description: 'Waste management, COSHH, energy efficiency and environmental legislation.' },
+  { id: 6, title: 'Emergency procedures and first aid', icon: AlertTriangle, description: 'Fire safety, electrical first aid, evacuation and incident reporting.' },
+];
 
-  const sections = [
-    {
-      number: '1.1',
-      title: 'Safe Systems of Work',
-      description: 'Permit to work, isolation procedures, LOTO, work at height and confined spaces',
-      icon: Shield,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section1',
-    },
-    {
-      number: '1.2',
-      title: 'Electrical Safety',
-      description: 'Electrical dangers, safe use of tools, PPE, approach distances and earthing',
-      icon: Zap,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section2',
-    },
-    {
-      number: '1.3',
-      title: 'Risk Assessment & Method Statements',
-      description: 'Hazard identification, risk evaluation, controls and dynamic assessments',
-      icon: FileCheck,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section3',
-    },
-    {
-      number: '1.4',
-      title: 'Regulations and Standards',
-      description: 'HSWA, Electricity at Work, BS7671, PUWER, LOLER and industry guidance',
-      icon: BookOpen,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section4',
-    },
-    {
-      number: '1.5',
-      title: 'Environmental and Sustainability Practices',
-      description: 'Waste management, COSHH, energy efficiency and environmental legislation',
-      icon: Leaf,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section5',
-    },
-    {
-      number: '1.6',
-      title: 'Emergency Procedures & First Aid',
-      description: 'Fire safety, electrical first aid, evacuation and incident reporting',
-      icon: AlertTriangle,
-      href: '/study-centre/apprentice/m-o-e-t-module1-section6',
-    },
-  ];
+export default function MOETModule1() {
+  useSEO({
+    title: 'Module 1: Health, Safety and Compliance | MOET | Elec-Mate',
+    description: 'Safe systems of work, electrical safety, RAMS, regulations, environment and emergency procedures for maintenance operations.',
+  });
 
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/moet">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to MOET Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            Module 1: Health, Safety and Compliance
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-5xl">
-            Essential health and safety requirements, risk management and regulatory compliance for
-            maintenance operations.
-          </p>
-        </div>
-
-        {/* Sections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {sections.map((section, index) => (
-            <ModuleCard
-              key={index}
-              number={section.number}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              href={section.href}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../moet"
+      backLabel="MOET"
+      moduleNumber={1}
+      title="Health, safety and compliance"
+      description="Essential health and safety, risk management and regulatory compliance for maintenance operations."
+      tone="orange"
+      sectionsCount={sections.length}
+      duration="4h"
+      nextModuleHref="../m-o-e-t-module2"
+      nextModuleLabel="Engineering principles and electrical theory"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../m-o-e-t-module1-section${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default MOETModule1;
+}

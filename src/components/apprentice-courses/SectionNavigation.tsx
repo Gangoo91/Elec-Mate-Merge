@@ -1,6 +1,5 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 
 interface SectionNavigationProps {
   backHref?: string;
@@ -9,41 +8,38 @@ interface SectionNavigationProps {
   nextLabel?: string;
 }
 
-/**
- * Mobile-optimized navigation for course section pages.
- * Provides touch-friendly 48px+ targets with proper spacing.
- */
 export function SectionNavigation({
   backHref = '..',
   backLabel = 'Back',
   nextHref,
-  nextLabel = 'Next Section',
+  nextLabel = 'Next section',
 }: SectionNavigationProps) {
   return (
-    <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-      <Button
-        variant="ghost"
-        size="lg"
-        className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] transition-all"
-        asChild
+    <nav className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-6 mt-6 border-t border-white/[0.06]">
+      <Link
+        to={backHref}
+        className="flex items-center gap-3 rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] px-5 py-4 text-left touch-manipulation active:scale-[0.99]"
       >
-        <Link to={backHref}>
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          {backLabel}
-        </Link>
-      </Button>
+        <ArrowLeft className="h-4 w-4 text-white shrink-0" />
+        <div className="min-w-0">
+          <div className="text-[10.5px] uppercase tracking-[0.18em] text-white">Previous</div>
+          <div className="mt-0.5 text-[14px] font-semibold text-white truncate">{backLabel}</div>
+        </div>
+      </Link>
 
-      {nextHref && (
-        <Button
-          size="lg"
-          className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98] transition-all"
-          asChild
+      {nextHref ? (
+        <Link
+          to={nextHref}
+          className="flex items-center justify-end gap-3 rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow px-5 py-4 text-right touch-manipulation active:scale-[0.99]"
         >
-          <Link to={nextHref}>
-            {nextLabel}
-            <ArrowRight className="w-4 h-4 ml-2" />
-          </Link>
-        </Button>
+          <div className="min-w-0">
+            <div className="text-[10.5px] uppercase tracking-[0.18em] text-black/70">Next</div>
+            <div className="mt-0.5 text-[14px] font-semibold text-black truncate">{nextLabel}</div>
+          </div>
+          <ArrowRight className="h-4 w-4 text-black shrink-0" />
+        </Link>
+      ) : (
+        <div className="hidden sm:block" />
       )}
     </nav>
   );

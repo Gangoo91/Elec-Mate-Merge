@@ -84,7 +84,7 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
         <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pt-4 pb-4">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                 Previous chats
               </div>
               <h2 className="mt-1 text-xl font-semibold text-white tracking-tight">History</h2>
@@ -98,7 +98,7 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
               </button>
               <button
                 onClick={onClose}
-                className="text-white/55 hover:text-white transition-colors touch-manipulation"
+                className="text-white hover:text-white transition-colors touch-manipulation"
                 aria-label="Close history"
               >
                 Close
@@ -117,11 +117,11 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
 
           {!isLoading && sessions.length === 0 && (
             <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-10 text-center">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                 Nothing here yet
               </div>
               <div className="mt-2 text-base font-medium text-white">No previous chats</div>
-              <p className="mt-2 text-[12.5px] text-white/70 max-w-md mx-auto leading-relaxed">
+              <p className="mt-2 text-[12.5px] text-white max-w-md mx-auto leading-relaxed">
                 Start a conversation to build your chat history. Every session is saved for later
                 reference.
               </p>
@@ -153,11 +153,11 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
                         <div
                           className={cn(
                             'text-[10px] font-medium uppercase tracking-[0.22em]',
-                            isActive ? 'text-elec-yellow' : 'text-white/55'
+                            isActive ? 'text-elec-yellow' : 'text-white'
                           )}
                         >
                           {formatDayEyebrow(session.updated_at)}
-                          <span className="ml-2 text-white/40 tabular-nums normal-case tracking-normal">
+                          <span className="ml-2 text-white tabular-nums normal-case tracking-normal">
                             · {session.message_count} messages
                           </span>
                         </div>
@@ -165,7 +165,7 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
                           {session.title}
                         </div>
                         {session.last_message_preview && (
-                          <div className="mt-1 text-[12.5px] text-white/70 truncate leading-relaxed">
+                          <div className="mt-1 text-[12.5px] text-white truncate leading-relaxed">
                             {session.last_message_preview}
                           </div>
                         )}
@@ -177,7 +177,7 @@ export const ChatHistoryDrawer = memo(function ChatHistoryDrawer({
                           'shrink-0 text-[11px] font-medium uppercase tracking-[0.18em] px-2 py-1 rounded-md transition-colors touch-manipulation',
                           confirmDeleteId === session.id
                             ? 'text-red-400 bg-red-500/10 border border-red-500/20'
-                            : 'text-white/40 hover:text-white'
+                            : 'text-white hover:text-white'
                         )}
                         aria-label={
                           confirmDeleteId === session.id ? 'Confirm delete' : 'Delete chat'

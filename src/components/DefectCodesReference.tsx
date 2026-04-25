@@ -188,7 +188,7 @@ const DefectCodesReference = ({ defaultOpen = false }: DefectCodesReferenceProps
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <span className="text-sm text-white font-medium">{code.label}</span>
-                    <p className="text-[10px] text-white/40 mt-0.5 line-clamp-1">
+                    <p className="text-[10px] text-white mt-0.5 line-clamp-1">
                       {code.description}
                     </p>
                   </div>

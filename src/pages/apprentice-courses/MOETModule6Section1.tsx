@@ -1,26 +1,19 @@
-import { ArrowLeft, PenTool, Zap, Wrench, Ruler, GitBranch } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { PenTool, Zap, Wrench, Ruler, GitBranch } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
-const MOETModule6Section1 = () => {
-  useSEO(
-    'Section 6.1: Reading and Producing Technical Drawings - MOET Module 6',
-    'Engineering conventions, electrical schematics, mechanical drawings and revision control'
-  );
-
-  const subsections = [
+const subsections = [
     {
       number: '6.1.1',
-      title: 'Engineering Drawing Conventions',
+      title: 'Engineering drawing conventions',
       description: 'Standard conventions, line types, projection methods and drawing layouts',
       icon: PenTool,
       href: '/study-centre/apprentice/m-o-e-t-module6-section1-1',
     },
     {
       number: '6.1.2',
-      title: 'Legal and Safety Reasons (EAWR, BS 7671 Principles)',
+      title: 'Legal and safety reasons (EAWR, BS 7671 principles)',
       description:
         'Legal requirements under EAWR 1989, BS 7671 compliance, personal responsibility and consequences of non-compliance',
       icon: Zap,
@@ -28,72 +21,56 @@ const MOETModule6Section1 = () => {
     },
     {
       number: '6.1.3',
-      title: 'Mechanical Drawings (for context)',
+      title: 'Mechanical drawings (for context)',
       description: 'Understanding mechanical drawings and their relationship to electrical systems',
       icon: Wrench,
       href: '/study-centre/apprentice/m-o-e-t-module6-section1-3',
     },
     {
       number: '6.1.4',
-      title: 'Tolerances and Dimensions',
+      title: 'Tolerances and dimensions',
       description: 'Dimensional tolerancing, geometric tolerances and measurement standards',
       icon: Ruler,
       href: '/study-centre/apprentice/m-o-e-t-module6-section1-4',
     },
     {
       number: '6.1.5',
-      title: 'Revision Control of Drawings',
+      title: 'Revision control of drawings',
       description: 'Version control, change management and drawing approval processes',
       icon: GitBranch,
       href: '/study-centre/apprentice/m-o-e-t-module6-section1-5',
     },
   ];
 
+
+const MOETModule6Section1 = () => {
+  useSEO(
+    'Section 6.1: Reading and Producing Technical Drawings - MOET Module 6',
+    'Engineering conventions, electrical schematics, mechanical drawings and revision control'
+  );
+
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 6
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            Section 6.1: Reading and Producing Technical Drawings
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-5xl">
-            Engineering conventions, electrical schematics, mechanical drawings and revision
-            control.
-          </p>
-        </div>
-
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
-            <ModuleCard
-              key={index}
-              number={subsection.number}
-              title={subsection.title}
-              description={subsection.description}
-              icon={subsection.icon}
-              href={subsection.href}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/m-o-e-t-module6"
+      backLabel="Module 6"
+      moduleNumber={6}
+      sectionNumber={1}
+      title="Reading and producing technical drawings"
+      description="Engineering conventions, electrical schematics, mechanical drawings and revision control."
+      tone="orange"
+      subsectionsCount={subsections.length}
+    >
+      {subsections.map((subsection, index) => (
+        <ModuleCard
+          key={index}
+          number={subsection.number}
+          title={subsection.title}
+          description={subsection.description}
+          icon={subsection.icon}
+          href={subsection.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

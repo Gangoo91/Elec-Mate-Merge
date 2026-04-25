@@ -434,3 +434,38 @@ export const syncFromLocalStorage = async () => {
     throw error;
   }
 };
+
+// =====================================================
+// CRISIS EVENT TRACKING (private, follow-up only)
+// =====================================================
+//
+// Logged silently when a user taps a crisis call/text button. Stored as a
+// journal entry tagged 'crisis-event' so it inherits the existing RLS policy
+// (visible only to the user, never to admin or anyone else). Used to schedule
+// a private "checking-in" reminder 24 hours later.
+
+export interface CrisisEvent {
+  kind: 'call' | 'text' | 'visit';
+  label: string;
+}
+
+export const recordCrisisEvent = async (event: CrisisEvent): Promise<void> => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return; // Anonymous users can still call helplines; we just don't log
+
+  const today = new Date();
+  const date = today.toISOString().split('T')[0];
+  const time = today.toTimeString().slice(0, 5);
+
+  await supabase.from('mental_health_journal_entries').insert({
+    user_id: user.id,
+    date,
+    time,
+    mood: 1,
+    mood_label: 'crisis-touch',
+    content: `Reached out to ${event.label}`,
+    tags: ['crisis-event', `kind:${event.kind}`],
+  });
+};

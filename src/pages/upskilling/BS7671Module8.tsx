@@ -1,84 +1,62 @@
-import { ArrowLeft, BookOpen, FileText, AlertCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { BookOpen, FileText, AlertCircle } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BS7671Module8 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Navigating Key Appendices',
-      description: 'Zs Tables, Conductor Sizing, Volt Drop',
-      icon: BookOpen,
-    },
-    {
-      id: 2,
-      title: 'Schedules, Checklists, and Reference Charts',
-      description: 'Documentation tools and quality control',
-      icon: FileText,
-    },
-    {
-      id: 3,
-      title: 'Amendment 3 Highlights',
-      description: 'Latest updates and enhanced requirements',
-      icon: AlertCircle,
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Navigating key appendices',
+    icon: BookOpen,
+    description: 'Zs tables, conductor sizing and voltage drop reference material.',
+  },
+  {
+    id: 2,
+    title: 'Schedules, checklists and reference charts',
+    icon: FileText,
+    description: 'Documentation tools and quality control material from the appendices.',
+  },
+  {
+    id: 3,
+    title: 'Amendment 3 highlights',
+    icon: AlertCircle,
+    description: 'Latest updates and enhanced requirements introduced by Amendment 3.',
+  },
+];
+
+export default function BS7671Module8() {
+  useSEO({
+    title: 'Module 8: Reference Materials & Amendment 3 | BS 7671 | Elec-Mate',
+    description:
+      'Master the BS 7671 appendices, Zs tables, conductor sizing, schedules and Amendment 3 highlights.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/bs7671-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to BS7671 Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 8</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">3 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Reference Materials & Amendment 3
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Master the appendices, documentation tools, and recent updates
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../bs7671-module-8-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../bs7671-course"
+      backLabel="18th edition (BS 7671)"
+      moduleNumber={8}
+      title="Reference materials and Amendment 3"
+      description="Master the appendices, documentation tools and the latest Amendment 3 updates."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      prevModuleHref="../bs7671-module-7"
+      prevModuleLabel="Special installations and locations"
+      nextModuleHref="../bs7671-module-9"
+      nextModuleLabel="Mock exam"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../bs7671-module-8-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default BS7671Module8;
+}

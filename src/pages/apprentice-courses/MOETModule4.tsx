@@ -1,129 +1,50 @@
-import {
-  ArrowLeft,
-  Calendar,
-  Activity,
-  Search,
-  Wrench,
-  TestTube,
-  FileX,
-  Settings,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Calendar, Activity, Search, Wrench, TestTube, FileX, Settings } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
-const MOETModule4 = () => {
-  useSEO(
-    'Module 4: Maintenance Techniques and Fault Diagnosis - MOET Course',
-    'Systematic maintenance approaches, fault finding techniques and diagnostic procedures for engineering systems'
-  );
+const sections = [
+  { id: 1, title: 'Planned preventive maintenance (PPM)', icon: Calendar, description: 'PPM principles, scheduling, records, lubrication and inspection routines.' },
+  { id: 2, title: 'Condition monitoring techniques', icon: Activity, description: 'Visual inspection, thermal imaging, vibration analysis and predictive maintenance.' },
+  { id: 3, title: 'Fault finding and diagnostics', icon: Search, description: 'Systematic diagnostics, test instruments, motor faults and control circuits.' },
+  { id: 4, title: 'Repair and replacement procedures', icon: Wrench, description: 'Safe isolation, component replacement, cable jointing and recommissioning.' },
+  { id: 5, title: 'Testing and inspection', icon: TestTube, description: 'Visual inspections, continuity, insulation resistance and functional testing.' },
+  { id: 6, title: 'Root cause analysis', icon: FileX, description: 'Identifying underlying failures, 5 Whys, fishbone diagrams and corrective actions.' },
+  { id: 7, title: 'Reliability-centred maintenance', icon: Settings, description: 'RCM principles, balancing maintenance types and criticality analysis.' },
+];
 
-  const sections = [
-    {
-      number: '4.1',
-      title: 'Planned Preventive Maintenance (PPM)',
-      description:
-        'Principles of PPM, scheduling, records, lubrication, inspection routines and regulatory compliance',
-      icon: Calendar,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section1',
-    },
-    {
-      number: '4.2',
-      title: 'Condition Monitoring Techniques',
-      description:
-        'Visual inspection, thermal imaging, vibration analysis, insulation testing and predictive maintenance',
-      icon: Activity,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section2',
-    },
-    {
-      number: '4.3',
-      title: 'Fault Finding and Diagnostics',
-      description:
-        'Systematic diagnostic approach, test instruments, motor faults, control circuits and documentation',
-      icon: Search,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section3',
-    },
-    {
-      number: '4.4',
-      title: 'Repair and Replacement Procedures',
-      description:
-        'Safe isolation, component replacement, cable jointing, spare parts and recommissioning',
-      icon: Wrench,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section4',
-    },
-    {
-      number: '4.5',
-      title: 'Testing and Inspection',
-      description:
-        'Visual inspections, continuity, insulation resistance, earth fault testing and functional testing',
-      icon: TestTube,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5',
-    },
-    {
-      number: '4.6',
-      title: 'Root Cause Analysis',
-      description:
-        'Identifying underlying failures, 5 Whys technique, fishbone diagrams and corrective actions',
-      icon: FileX,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section6',
-    },
-    {
-      number: '4.7',
-      title: 'Reliability-Centred Maintenance',
-      description:
-        'RCM principles, balancing maintenance types, criticality analysis and industry best practices',
-      icon: Settings,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section7',
-    },
-  ];
+export default function MOETModule4() {
+  useSEO({
+    title: 'Module 4: Maintenance Techniques and Fault Diagnosis | MOET | Elec-Mate',
+    description: 'PPM, condition monitoring, fault diagnostics, repairs, testing, root cause analysis and reliability-centred maintenance.',
+  });
 
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/moet">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to MOET Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            Module 4: Maintenance Techniques and Fault Diagnosis
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-5xl">
-            Systematic maintenance approaches, fault finding techniques and diagnostic procedures
-            for engineering systems.
-          </p>
-        </div>
-
-        {/* Sections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {sections.map((section, index) => (
-            <ModuleCard
-              key={index}
-              number={section.number}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              href={section.href}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../moet"
+      backLabel="MOET"
+      moduleNumber={4}
+      title="Maintenance techniques and fault diagnosis"
+      description="Systematic maintenance approaches, fault-finding techniques and diagnostic procedures for engineering systems."
+      tone="orange"
+      sectionsCount={sections.length}
+      duration="5h"
+      prevModuleHref="../m-o-e-t-module3"
+      prevModuleLabel="Electrical plant, equipment and systems"
+      nextModuleHref="../m-o-e-t-module5"
+      nextModuleLabel="Control, automation and instrumentation"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../m-o-e-t-module4-section${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default MOETModule4;
+}

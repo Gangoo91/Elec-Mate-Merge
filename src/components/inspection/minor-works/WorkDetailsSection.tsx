@@ -219,8 +219,25 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
+            <Label htmlFor="bsAmendmentDate" className="text-sm font-medium">
+              BS 7671 amendment date (as cited in Section A item 4 + declaration)
+            </Label>
+            <Input
+              id="bsAmendmentDate"
+              type="date"
+              value={formData.bsAmendmentDate || '2026-04-15'}
+              onChange={(e) => onUpdate('bsAmendmentDate', e.target.value)}
+              className="h-11 touch-manipulation text-base"
+            />
+            <p className="text-xs text-muted-foreground mt-1">
+              A4:2026 was published 15 April 2026 — defaults to that date.
+            </p>
+          </div>
+
+          <div>
             <Label htmlFor="departuresFromBs7671" className="text-sm font-medium">
-              Details of any departures from BS 7671:2018 (Reg 120.3, 133.1.3 and 133.5)
+              {/* A4:2026 — adds Reg 133.1.2 to the cited list */}
+              Details of any departures from BS 7671:2018 as amended (Reg 120.3, 133.1.2, 133.1.3 and 133.5)
             </Label>
             <Textarea
               id="departuresFromBs7671"
@@ -261,7 +278,8 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
 
           <div>
             <Label htmlFor="commentsOnExistingInstallation" className="text-sm font-medium">
-              Comments on existing installation (Regulation 644.1.2)
+              {/* A4:2026 wording — adds "(including any defects observed in)" */}
+              Comments on (including any defects observed in) the existing installation (Regulation 644.1.2)
             </Label>
             <Textarea
               id="commentsOnExistingInstallation"
@@ -343,9 +361,12 @@ const WorkDetailsSection = ({ formData, onUpdate }: WorkDetailsSectionProps) => 
                   <SelectValue placeholder="Select earthing system" />
                 </SelectTrigger>
                 <SelectContent>
+                  {/* A4:2026 — model form lists 6 distinct earthing arrangements */}
                   <SelectItem value="TN-S">TN-S (Separate neutral and earth)</SelectItem>
-                  <SelectItem value="TN-C-S">TN-C-S (PME/CNE)</SelectItem>
+                  <SelectItem value="TN-C-S-PME">TN-C-S (PME)</SelectItem>
+                  <SelectItem value="TN-C-S-PNB">TN-C-S (PNB)</SelectItem>
                   <SelectItem value="TT">TT (Earth electrode)</SelectItem>
+                  <SelectItem value="TN-C">TN-C</SelectItem>
                   <SelectItem value="IT">IT (Isolated/impedance earthed)</SelectItem>
                 </SelectContent>
               </Select>

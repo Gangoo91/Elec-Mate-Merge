@@ -107,7 +107,7 @@ export default function CurriculumSettingsPage() {
   if (!collegeId) {
     return (
       <PageFrame>
-        <div className="text-white/70 text-[13px]">
+        <div className="text-white text-[13px]">
           Not linked to a college. Ask your admin to add you to the staff roster.
         </div>
       </PageFrame>
@@ -200,7 +200,7 @@ export default function CurriculumSettingsPage() {
       {/* Save bar */}
       <motion.div variants={itemVariants} className="sticky bottom-4 z-20">
         <div className="bg-[hsl(0_0%_10%)]/95 backdrop-blur-md border border-white/[0.1] rounded-2xl px-5 py-4 flex items-center justify-between gap-4">
-          <div className="text-[12px] text-white/70">
+          <div className="text-[12px] text-white">
             Changes apply to the next lesson plan generated.
           </div>
           <button
@@ -219,7 +219,7 @@ export default function CurriculumSettingsPage() {
 function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
   return (
     <div>
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
         {eyebrow}
       </div>
       <h2 className="mt-1.5 text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
@@ -274,7 +274,7 @@ function ToggleCard({
           >
             {label}
           </div>
-          <p className="mt-1 text-[12.5px] text-white/70 leading-relaxed">{hint}</p>
+          <p className="mt-1 text-[12.5px] text-white leading-relaxed">{hint}</p>
         </div>
       </div>
     </button>
@@ -294,7 +294,7 @@ function TextField({
 }) {
   return (
     <div className="px-5 sm:px-6 py-4">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-2">
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
         {label}
       </div>
       <input
@@ -302,7 +302,7 @@ function TextField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="h-11 w-full bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60"
+        className="h-11 w-full bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
       />
     </div>
   );
@@ -321,7 +321,7 @@ function TextAreaField({
 }) {
   return (
     <div className="px-5 sm:px-6 py-4">
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 mb-2">
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white mb-2">
         {label}
       </div>
       <textarea
@@ -329,7 +329,7 @@ function TextAreaField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 resize-y"
+        className="w-full bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 resize-y"
       />
     </div>
   );

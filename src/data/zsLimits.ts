@@ -613,3 +613,49 @@ export function applyTemperatureCorrection(
 
   return measuredZs * factor;
 }
+
+// =============================================================================
+// MAX Zs — RULE-OF-THUMB SITE FACTORS (cold-measured comparison)
+// =============================================================================
+//
+// The MAX_ZS_* tables above give the limit at the conductor's MAXIMUM
+// operating temperature (typically 70 °C for thermoplastic/PVC). On site, a
+// sparky measures Zs cold (10–20 °C), so the raw table value cannot be used
+// as the pass threshold without correction.
+//
+// Two industry-standard rule-of-thumb factors are in common use:
+//
+//   - GN3 / NICEIC / NAPIT: × 0.80 (conservative, recommended in IET GN3)
+//   - Common practice / 2391 syllabus: × 0.95
+//
+// We default to GN3 0.80 — it's the conservative choice. Failing a borderline
+// circuit is the right error direction. The AI tool returns both values so
+// the engineer can see the practical 0.95 limit too, and the user can toggle
+// in settings later.
+//
+// References: IET Guidance Note 3, BS 7671 Appendix 14.
+
+/** GN3 / NICEIC conservative factor — multiply table Max Zs by this for site limit. */
+export const ZS_TEMP_FACTOR_GN3 = 0.8;
+
+/** Practical-use factor — what most 2391-trained electricians apply on site. */
+export const ZS_TEMP_FACTOR_PRACTICAL = 0.95;
+
+/** Default factor for the app — conservative, GN3-aligned. */
+export const ZS_DEFAULT_TEMP_FACTOR = ZS_TEMP_FACTOR_GN3;
+
+/**
+ * Apply a rule-of-thumb temperature correction factor to a raw Max Zs value
+ * pulled from BS 7671 Tables 41.2/41.3/41.4. Use this for the cold-measured
+ * pass threshold a sparky compares to on site.
+ *
+ * @param rawMaxZs   Raw value from the BS 7671 table (Ω, at 70 °C)
+ * @param factor     0.8 (default, GN3) or 0.95 (practical)
+ * @returns          Corrected pass threshold for cold measurements (Ω)
+ */
+export function applyZsSiteFactor(
+  rawMaxZs: number,
+  factor: number = ZS_DEFAULT_TEMP_FACTOR
+): number {
+  return Math.round(rawMaxZs * factor * 100) / 100;
+}

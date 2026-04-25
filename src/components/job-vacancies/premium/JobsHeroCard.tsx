@@ -72,12 +72,12 @@ const JobsHeroCard = ({
                   <span className="text-2xl sm:text-3xl font-bold text-white tabular-nums leading-none">
                     {totalJobs.toLocaleString()}
                   </span>
-                  <span className="text-xs text-white/70 font-medium">
+                  <span className="text-xs text-white font-medium">
                     {totalJobs === 1 ? 'job' : 'jobs'}
                   </span>
                 </div>
                 {lastUpdatedAt && (
-                  <p className="mt-1.5 flex items-center gap-1 text-[11px] text-white/60">
+                  <p className="mt-1.5 flex items-center gap-1 text-[11px] text-white">
                     <Clock className="h-3 w-3" />
                     Updated {formatDistanceToNow(lastUpdatedAt, { addSuffix: true })}
                   </p>
@@ -105,8 +105,8 @@ const JobsHeroCard = ({
           </div>
 
           {/* Sources strip */}
-          <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-3 text-[11px] text-white/60 flex-wrap">
-            <span className="font-semibold text-white/80 uppercase tracking-wider">
+          <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-3 text-[11px] text-white flex-wrap">
+            <span className="font-semibold text-white uppercase tracking-wider">
               Sources
             </span>
             <span>•</span>

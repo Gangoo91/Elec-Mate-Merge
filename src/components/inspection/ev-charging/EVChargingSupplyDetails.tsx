@@ -263,7 +263,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 <MobileSelectPicker
                   label="PME Earthing Measures Applied"
                   value={(formData.pmeEarthingMeasures as string) || ''}
-                  onChange={(value) => onUpdate('pmeEarthingMeasures', value)}
+                  onValueChange={(value) => onUpdate('pmeEarthingMeasures', value)}
                   options={[
                     { value: 'integral-rcd', label: 'Integral RCD protection in charger' },
                     { value: 'earth-electrode', label: 'Additional earth electrode installed' },
@@ -509,7 +509,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
               <MobileSelectPicker
                 label="Cable Type"
                 value={(formData.cableType as string) || ''}
-                onChange={(value) => onUpdate('cableType', value)}
+                onValueChange={(value) => onUpdate('cableType', value)}
                 options={[
                   { value: 'n/a', label: 'N/A' },
                   { value: '6242Y', label: '6242Y Twin & Earth' },
@@ -566,7 +566,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
               <MobileSelectPicker
                 label="Installation Method"
                 value={(formData.installationMethod as string) || ''}
-                onChange={(value) => onUpdate('installationMethod', value)}
+                onValueChange={(value) => onUpdate('installationMethod', value)}
                 options={[
                   { value: 'n/a', label: 'N/A' },
                   { value: 'clipped-direct', label: 'Clipped Direct' },
@@ -676,7 +676,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </span>
                 <div className="min-w-0">
                   <p className="text-xs font-medium text-white">Max Zs</p>
-                  <p className="text-[10px] text-white/60">{maxZsLookup.source}</p>
+                  <p className="text-[10px] text-white">{maxZsLookup.source}</p>
                 </div>
               </div>
               <span className="text-[10px] px-2 py-0.5 rounded-full border border-elec-yellow/30 text-elec-yellow shrink-0">
@@ -700,7 +700,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
               <MobileSelectPicker
                 label="RCD Type"
                 value={(formData.rcdType as string) || ''}
-                onChange={(value) => onUpdate('rcdType', value)}
+                onValueChange={(value) => onUpdate('rcdType', value)}
                 options={[
                   { value: 'Type A', label: 'Type A' },
                   { value: 'Type B', label: 'Type B' },
@@ -824,7 +824,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
 
           {/* G98 deadline info */}
           {formData.dnoNotified && g98Deadline && (
-            <p className="text-[11px] text-white/60 px-1">
+            <p className="text-[11px] text-white px-1">
               G98 deadline: {g98Deadline}
             </p>
           )}

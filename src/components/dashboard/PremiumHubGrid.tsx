@@ -23,7 +23,7 @@ import {
   LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useDashboardData } from '@/hooks/useDashboardData';
+import { useSharedDashboardData, useDashboardData } from '@/hooks/useDashboardData';
 import { useAuth } from '@/contexts/AuthContext';
 import { useDashboardPreferences } from '@/hooks/useDashboardPreferences';
 
@@ -240,7 +240,7 @@ function PremiumHubCard({
 
 export function PremiumHubGrid() {
   const navigate = useNavigate();
-  const dashboardData = useDashboardData();
+  const dashboardData = useSharedDashboardData();
   const { profile, user, isLoading } = useAuth();
   const { isHubVisible } = useDashboardPreferences();
   const userRole = profile?.role || '';

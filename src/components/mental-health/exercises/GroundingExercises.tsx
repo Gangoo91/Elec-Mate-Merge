@@ -294,7 +294,7 @@ const GroundingExercises = () => {
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 mb-3">
             <Anchor className="h-6 w-6 text-purple-400" />
           </div>
-          <h2 className="text-xl font-bold text-foreground mb-1">Grounding Exercises</h2>
+          <h2 className="text-xl font-bold text-white mb-1">Grounding Exercises</h2>
           <p className="text-sm text-white">Techniques to bring you back to the present moment</p>
         </div>
 
@@ -319,7 +319,7 @@ const GroundingExercises = () => {
             <CardContent className="p-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <CheckCircle className="h-5 w-5 text-green-400" />
-                <span className="text-sm text-foreground">{completed.length} completed today</span>
+                <span className="text-sm text-white">{completed.length} completed today</span>
               </div>
               <Sparkles className="h-5 w-5 text-green-400" />
             </CardContent>
@@ -343,7 +343,7 @@ const GroundingExercises = () => {
                   <CheckCircle className="absolute top-1 right-1 h-3 w-3 text-green-400" />
                 )}
                 <Icon className={`h-5 w-5 ${colors.text}`} />
-                <span className="text-[10px] text-foreground font-medium">{ex.shortName}</span>
+                <span className="text-[10px] text-white font-medium">{ex.shortName}</span>
               </button>
             );
           })}
@@ -372,7 +372,7 @@ const GroundingExercises = () => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <h4 className="font-medium text-foreground text-sm">{exercise.name}</h4>
+                        <h4 className="font-medium text-white text-sm">{exercise.name}</h4>
                         {isComplete && <CheckCircle className="h-4 w-4 text-green-400" />}
                       </div>
                       <p className="text-xs text-white line-clamp-1">{exercise.description}</p>
@@ -431,7 +431,7 @@ const GroundingExercises = () => {
           >
             <Icon className={`h-7 w-7 ${colors.text}`} />
           </div>
-          <h2 className="text-xl font-bold text-foreground">{selectedExercise.name}</h2>
+          <h2 className="text-xl font-bold text-white">{selectedExercise.name}</h2>
         </div>
 
         {isFinished ? (
@@ -439,7 +439,7 @@ const GroundingExercises = () => {
           <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
             <CardContent className="p-6 text-center">
               <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
-              <h3 className="text-lg font-bold text-foreground mb-2">Well done!</h3>
+              <h3 className="text-lg font-bold text-white mb-2">Well done!</h3>
               <p className="text-sm text-white mb-4">
                 You've grounded yourself using all five senses. How do you feel now?
               </p>
@@ -489,7 +489,7 @@ const GroundingExercises = () => {
             >
               <CardContent className="p-6 text-center">
                 <span className="text-4xl mb-3 block">{currentSense.emoji}</span>
-                <h3 className="text-2xl font-bold text-foreground mb-2">
+                <h3 className="text-2xl font-bold text-white mb-2">
                   {currentSense.count} things you can{' '}
                   <span className={colors.text}>{currentSense.sense}</span>
                 </h3>
@@ -514,10 +514,10 @@ const GroundingExercises = () => {
                   }}
                   className={`w-10 h-10 rounded-full transition-all ${
                     i < senseCount
-                      ? 'bg-green-500 text-foreground'
+                      ? 'bg-green-500 text-white'
                       : i === senseCount
                         ? `${colors.bg} ${colors.text} ring-2 ring-white/50 animate-pulse`
-                        : 'bg-white/10 text-white/70'
+                        : 'bg-white/10 text-white'
                   }`}
                 >
                   {i + 1}
@@ -555,7 +555,7 @@ const GroundingExercises = () => {
         >
           <Icon className={`h-7 w-7 ${colors.text}`} />
         </div>
-        <h2 className="text-xl font-bold text-foreground">{selectedExercise.name}</h2>
+        <h2 className="text-xl font-bold text-white">{selectedExercise.name}</h2>
         <p className="text-sm text-white">{selectedExercise.description}</p>
       </div>
 
@@ -586,7 +586,7 @@ const GroundingExercises = () => {
                 >
                   <span className={`text-sm font-bold ${colors.text}`}>{currentStep + 1}</span>
                 </div>
-                <p className="text-lg text-foreground leading-relaxed pt-1">
+                <p className="text-lg text-white leading-relaxed pt-1">
                   {selectedExercise.steps[currentStep]}
                 </p>
               </div>
@@ -623,7 +623,7 @@ const GroundingExercises = () => {
         <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
           <CardContent className="p-6 text-center">
             <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
-            <h3 className="text-lg font-bold text-foreground mb-2">Exercise Complete!</h3>
+            <h3 className="text-lg font-bold text-white mb-2">Exercise Complete!</h3>
             <p className="text-sm text-white mb-4">
               Take a moment to notice how you feel now compared to when you started.
             </p>
@@ -655,7 +655,7 @@ const GroundingExercises = () => {
                 <div
                   key={i}
                   className={`text-xs flex items-start gap-2 ${
-                    i <= currentStep ? 'text-foreground' : 'text-white'
+                    i <= currentStep ? 'text-white' : 'text-white'
                   }`}
                 >
                   <span className={i < currentStep ? 'text-green-400' : ''}>{i + 1}.</span>

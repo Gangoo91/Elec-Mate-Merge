@@ -216,10 +216,10 @@ const NewIndustryNewsCard = () => {
                       <span className="text-2xl sm:text-3xl font-bold text-white tabular-nums leading-none">
                         {articles.length.toLocaleString()}
                       </span>
-                      <span className="text-xs text-white/70 font-medium">articles</span>
+                      <span className="text-xs text-white font-medium">articles</span>
                     </div>
                     {lastUpdatedAt && (
-                      <p className="mt-1.5 flex items-center gap-1 text-[11px] text-white/60">
+                      <p className="mt-1.5 flex items-center gap-1 text-[11px] text-white">
                         <Clock className="h-3 w-3" />
                         Updated {formatDistanceToNow(lastUpdatedAt, { addSuffix: true })}
                       </p>
@@ -241,8 +241,8 @@ const NewIndustryNewsCard = () => {
               </div>
 
               {/* Sources strip */}
-              <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-3 text-[11px] text-white/60 flex-wrap">
-                <span className="font-semibold text-white/80 uppercase tracking-wider">
+              <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center gap-3 text-[11px] text-white flex-wrap">
+                <span className="font-semibold text-white uppercase tracking-wider">
                   Sources
                 </span>
                 <span>•</span>
@@ -263,7 +263,7 @@ const NewIndustryNewsCard = () => {
           <div className="relative">
             <div className="relative group">
               {!searchTerm && (
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
               )}
               <Input
                 type="text"

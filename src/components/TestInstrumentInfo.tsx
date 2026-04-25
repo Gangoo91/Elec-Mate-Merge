@@ -249,7 +249,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
         <div className="flex items-center justify-between gap-3 p-2.5 rounded-lg bg-white/[0.03] border border-white/[0.06]">
           <div className="flex items-center gap-2 min-w-0">
             <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow flex-shrink-0" />
-            <span className="text-xs text-white/80 truncate">
+            <span className="text-xs text-white truncate">
               {profileInstrument.make} {profileInstrument.model}
             </span>
           </div>
@@ -262,7 +262,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
             <button
               type="button"
               onClick={handleAutoFillFromProfile}
-              className="h-8 px-2.5 text-[10px] font-medium rounded-md bg-white/[0.06] border border-white/[0.08] text-white/80 hover:text-white/70 touch-manipulation active:scale-[0.98] flex-shrink-0"
+              className="h-8 px-2.5 text-[10px] font-medium rounded-md bg-white/[0.06] border border-white/[0.08] text-white hover:text-white touch-manipulation active:scale-[0.98] flex-shrink-0"
             >
               Use Profile
             </button>
@@ -274,7 +274,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
       <div className="space-y-3">
         {/* Test Instrument - Full Width */}
         <div className="space-y-1.5">
-          <Label htmlFor="testInstrumentMake" className="text-xs text-white/80">
+          <Label htmlFor="testInstrumentMake" className="text-xs text-white">
             Test Instrument
           </Label>
           {!isOtherSelected ? (
@@ -328,7 +328,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
 
         {/* Serial Number - Full Width */}
         <div className="space-y-1.5">
-          <Label htmlFor="testInstrumentSerial" className="text-xs text-white/80">
+          <Label htmlFor="testInstrumentSerial" className="text-xs text-white">
             Serial Number
           </Label>
           <Input
@@ -344,7 +344,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
         {/* Calibration & Temperature - 2 Column Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label htmlFor="calibrationDate" className="text-xs text-white/80">
+            <Label htmlFor="calibrationDate" className="text-xs text-white">
               Calibration Date
             </Label>
             <Input
@@ -358,7 +358,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="testTemperature" className="text-xs text-white/80">
+            <Label htmlFor="testTemperature" className="text-xs text-white">
               Temperature (°C)
             </Label>
             <Input

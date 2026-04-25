@@ -104,7 +104,7 @@ const Sidebar = ({ open, setOpen, desktopCollapsed = false, onToggleDesktopColla
               onClick={onToggleDesktopCollapsed}
               aria-label="Collapse sidebar"
               title="Collapse sidebar"
-              className="h-8 w-8 rounded-md flex items-center justify-center text-white/60 hover:text-white hover:bg-white/5 border border-white/10 transition-colors"
+              className="h-8 w-8 rounded-md flex items-center justify-center text-white hover:text-white hover:bg-white/5 border border-white/10 transition-colors"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>

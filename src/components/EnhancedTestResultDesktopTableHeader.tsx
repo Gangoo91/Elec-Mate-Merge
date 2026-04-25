@@ -143,7 +143,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 3} className="sot-header-group-cell">
+        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 4} className="sot-header-group-cell">
           <button
             onClick={() => onToggleGroup('insulation')}
             className="sot-collapse-btn w-full justify-center"
@@ -895,6 +895,15 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                     </PopoverContent>
                   </Popover>
                 )}
+              </div>
+            </TableHead>
+            {/* ELE-868 — Neutral-Earth column (was missing from UI; PDF already had it) */}
+            <TableHead
+              className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
+              data-group="insulation"
+            >
+              <div className="flex items-center justify-center">
+                <span>N-E</span>
               </div>
             </TableHead>
           </>

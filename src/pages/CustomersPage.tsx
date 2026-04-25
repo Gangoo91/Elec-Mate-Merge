@@ -174,7 +174,7 @@ export default function CustomersPage() {
             <div className="flex items-center h-11 gap-2">
               <div className="relative flex-1">
                 {!searchTerm && (
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                 )}
                 <Input
                   placeholder="Search customers..."
@@ -208,7 +208,7 @@ export default function CustomersPage() {
                 Customers
                 <span className="text-white/30 font-normal tracking-normal normal-case text-xs ml-1.5">{totalCount || customers.length}</span>
               </h1>
-              <button onClick={() => setShowSearch(true)} className="w-9 h-9 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors flex-shrink-0">
+              <button onClick={() => setShowSearch(true)} className="w-9 h-9 rounded-lg flex items-center justify-center text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-colors flex-shrink-0">
                 <Search className="h-4 w-4" />
               </button>
               <button
@@ -275,10 +275,10 @@ export default function CustomersPage() {
               ))}
             </div>
             <div className="flex items-center gap-1 shrink-0 ml-2">
-              <button onClick={() => setShowImportDialog(true)} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/[0.06] active:scale-[0.97] touch-manipulation text-white/60 hover:text-white transition-colors" aria-label="Import">
+              <button onClick={() => setShowImportDialog(true)} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/[0.06] active:scale-[0.97] touch-manipulation text-white hover:text-white transition-colors" aria-label="Import">
                 <Upload className="h-4 w-4" />
               </button>
-              <button onClick={exportCustomers} disabled={customers.length === 0} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/[0.06] active:scale-[0.97] touch-manipulation text-white/60 hover:text-white transition-colors disabled:opacity-40" aria-label="Export">
+              <button onClick={exportCustomers} disabled={customers.length === 0} className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-white/[0.06] active:scale-[0.97] touch-manipulation text-white hover:text-white transition-colors disabled:opacity-40" aria-label="Export">
                 <Download className="h-4 w-4" />
               </button>
             </div>

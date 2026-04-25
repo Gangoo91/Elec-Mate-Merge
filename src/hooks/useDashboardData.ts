@@ -5,7 +5,7 @@
  * Pulls from multiple hooks and provides a single source of truth.
  */
 
-import { useMemo } from 'react';
+import { createContext, createElement, useContext, useMemo, type ReactNode } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useStudyStreak } from '@/hooks/useStudyStreak';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
@@ -284,3 +284,20 @@ export function useDashboardData(): DashboardData {
 }
 
 export default useDashboardData;
+
+// Shared instance: lift the hook once at the dashboard root so subcomponents
+// don't each refetch quotes/invoices/reports — fixes Sentry JAVASCRIPT-REACT-7C.
+const DashboardDataContext = createContext<DashboardData | null>(null);
+
+export function DashboardDataProvider({ children }: { children: ReactNode }) {
+  const value = useDashboardData();
+  return createElement(DashboardDataContext.Provider, { value }, children);
+}
+
+export function useSharedDashboardData(): DashboardData {
+  const ctx = useContext(DashboardDataContext);
+  if (!ctx) {
+    throw new Error('useSharedDashboardData must be used within <DashboardDataProvider>');
+  }
+  return ctx;
+}

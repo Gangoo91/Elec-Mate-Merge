@@ -152,7 +152,7 @@ const InputField = ({
           autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'name'}
           autoCapitalize={type === 'email' || type === 'password' ? 'none' : 'words'}
           className={cn(
-            'h-12 w-full touch-manipulation rounded-2xl border bg-white/[0.04] px-5 pr-12 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 [color-scheme:dark] focus:outline-none lg:h-14',
+            'h-12 w-full touch-manipulation rounded-2xl border bg-white/[0.04] px-5 pr-12 text-[16px] text-white placeholder:text-white outline-none transition-all duration-150 [color-scheme:dark] focus:outline-none lg:h-14',
             focusedField === field
               ? 'border-yellow-400/70 bg-white/[0.06] ring-2 ring-yellow-400/20'
               : 'border-white/[0.12] hover:border-white/[0.22]'
@@ -203,7 +203,7 @@ const ReferralCodeField = ({ onApply }: { onApply: (code: string) => void }) => 
       <button
         type="button"
         onClick={() => setExpanded(true)}
-        className="flex items-center gap-2 py-1 text-[13px] text-white/50 transition-colors hover:text-white/80"
+        className="flex items-center gap-2 py-1 text-[13px] text-white/50 transition-colors hover:text-white"
       >
         <Gift className="h-3.5 w-3.5" />
         Got a referral code?

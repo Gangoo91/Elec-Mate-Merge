@@ -149,7 +149,7 @@ export const InvoiceClientDetailsStep = ({
   }, [form, onUpdate, customerId, savePromptDismissed]);
 
   const inputClass =
-    'w-full h-11 px-3 rounded-lg text-[15px] text-white bg-white/[0.06] border border-white/[0.12] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white/60';
+    'w-full h-11 px-3 rounded-lg text-[15px] text-white bg-white/[0.06] border border-white/[0.12] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
 
   /** Section label with gold gradient */
   const SectionHeader = ({ title }: { title: string }) => (

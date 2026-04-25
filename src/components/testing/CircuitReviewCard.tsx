@@ -96,7 +96,7 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
       <div className="flex items-center justify-center w-14 sm:w-16 flex-shrink-0">
         {circuit.wayNumber ? (
           <div className="flex flex-col items-center justify-center px-1">
-            <span className="text-[10px] font-medium text-white/70">W{circuit.wayNumber}</span>
+            <span className="text-[10px] font-medium text-white">W{circuit.wayNumber}</span>
             <span className="text-xs font-bold text-elec-yellow">
               {circuit.phaseDesignation || `L${((circuit.position - 1) % 3) + 1}`}
             </span>
@@ -188,7 +188,7 @@ export const CircuitReviewCard: React.FC<CircuitReviewCardProps> = ({
           size="icon"
           onClick={onRemove}
           aria-label="Remove circuit"
-          className="h-8 w-8 touch-manipulation text-white/80 hover:text-red-400 hover:bg-red-500/10 rounded-lg"
+          className="h-8 w-8 touch-manipulation text-white hover:text-red-400 hover:bg-red-500/10 rounded-lg"
         >
           <Trash2 className="h-3.5 w-3.5" />
         </Button>

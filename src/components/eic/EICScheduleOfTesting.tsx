@@ -2707,13 +2707,13 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           <div className="space-y-6">
             <div className="flex items-end justify-between gap-4 flex-wrap">
               <div className="min-w-0 flex-1">
-                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                   Schedule of Tests
                 </p>
                 <h1 className="mt-1.5 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
                   BS 7671 A4:2026 circuit testing
                 </h1>
-                <p className="mt-3 text-[13px] sm:text-sm text-white/55 max-w-2xl leading-relaxed">
+                <p className="mt-3 text-[13px] sm:text-sm text-white max-w-2xl leading-relaxed">
                   Capture verification, continuity, insulation and loop measurements for every
                   circuit on every board — aligned with the A4:2026 model schedule of test results.
                 </p>
@@ -2740,7 +2740,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   key={s.label}
                   className="bg-[hsl(0_0%_12%)] px-5 py-6 sm:px-6 sm:py-7 lg:px-7 lg:py-8 flex flex-col items-start"
                 >
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                     {String(i + 1).padStart(2, '0')} · {s.label}
                   </span>
                   <span
@@ -2765,7 +2765,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     style={{ width: `${Math.max(2, progressPercent)}%` }}
                   />
                 </div>
-                <span className="text-[11px] font-medium text-white/70 tabular-nums shrink-0">
+                <span className="text-[11px] font-medium text-white tabular-nums shrink-0">
                   {completedCount}/{testResults.length} tested
                 </span>
               </div>

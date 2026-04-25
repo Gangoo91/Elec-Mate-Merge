@@ -17,6 +17,8 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const isDrawing = useRef(false);
+    // ELE-864 — track last position so each move segment is its own path
+    const lastPosRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
     const [hasSignature, setHasSignature] = useState(false);
 
     useImperativeHandle(ref, () => ({
@@ -139,14 +141,9 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       const canvas = canvasRef.current;
       if (!canvas) return;
 
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
       isDrawing.current = true;
-      const { x, y } = getCoordinates(e);
-
-      ctx.beginPath();
-      ctx.moveTo(x, y);
+      // ELE-864 — store start position; segments drawn independently in `draw`
+      lastPosRef.current = getCoordinates(e);
     };
 
     const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
@@ -161,8 +158,12 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
 
       const { x, y } = getCoordinates(e);
 
+      // ELE-864 — each segment is its own path so previous strokes survive
+      ctx.beginPath();
+      ctx.moveTo(lastPosRef.current.x, lastPosRef.current.y);
       ctx.lineTo(x, y);
       ctx.stroke();
+      lastPosRef.current = { x, y };
 
       // Mark as having signature
       if (!hasSignature) {

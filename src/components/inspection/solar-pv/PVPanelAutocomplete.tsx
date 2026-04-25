@@ -113,7 +113,7 @@ export function PVPanelAutocomplete({
         'flex items-center justify-between gap-2',
         'focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 touch-manipulation',
         'hover:bg-white/[0.08] active:scale-[0.98] transition-all',
-        !selectedPanel && 'text-white/40',
+        !selectedPanel && 'text-white',
         disabled && 'opacity-50 cursor-not-allowed',
         className
       )}
@@ -208,7 +208,7 @@ export function PVPanelAutocomplete({
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search by make, model, wattage..."
-                  className="flex-1 bg-transparent text-base text-white placeholder:text-white/40 outline-none"
+                  className="flex-1 bg-transparent text-base text-white placeholder:text-white outline-none"
                 />
                 {search && (
                   <button onClick={() => setSearch('')} className="w-6 h-6 rounded-full bg-white/[0.1] flex items-center justify-center touch-manipulation">
@@ -227,7 +227,7 @@ export function PVPanelAutocomplete({
               ) : search.trim() ? (
                 <div className="py-12 text-center">
                   <Zap className="h-8 w-8 mx-auto mb-2 text-white/20" />
-                  <p className="text-sm text-white/40">No panels found</p>
+                  <p className="text-sm text-white">No panels found</p>
                 </div>
               ) : (
                 Object.entries(panelsGrouped).map(([manufacturer, panels]) => (

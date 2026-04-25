@@ -713,7 +713,7 @@ const LandingPage = () => {
                   <div className="bg-gradient-to-b from-yellow-300 to-yellow-500 bg-clip-text text-[2.75rem] font-bold leading-none tracking-[-0.04em] text-transparent sm:text-[3rem] lg:text-[4rem]">
                     {stat.value}
                   </div>
-                  <div className="mt-3 text-[13px] font-medium leading-[1.5] text-white/75 sm:text-sm lg:text-[15px]">
+                  <div className="mt-3 text-[13px] font-medium leading-[1.5] text-white sm:text-sm lg:text-[15px]">
                     {stat.label}
                   </div>
                 </div>
@@ -1262,10 +1262,10 @@ const AudienceCard = ({
     <h3 className="text-[1.6rem] font-semibold tracking-[-0.02em] text-white lg:text-[1.75rem]">
       {title}
     </h3>
-    <p className="mt-2 text-[15px] leading-[1.55] text-white/80">{tagline}</p>
+    <p className="mt-2 text-[15px] leading-[1.55] text-white">{tagline}</p>
 
     <div className="mt-6 rounded-[1rem] border border-white/[0.06] bg-white/[0.02] px-4 py-3">
-      <p className="text-[13px] italic leading-[1.6] text-white/75">&ldquo;{painPoint}&rdquo;</p>
+      <p className="text-[13px] italic leading-[1.6] text-white">&ldquo;{painPoint}&rdquo;</p>
     </div>
 
     <div className="mt-6 space-y-2.5">
@@ -1304,7 +1304,7 @@ const AIAgentCard = ({
     <h3 className="text-[1.15rem] font-semibold tracking-[-0.01em] text-white lg:text-[1.25rem]">
       {name}
     </h3>
-    <p className="mt-2 text-[13px] leading-[1.55] text-white/75">{tagline}</p>
+    <p className="mt-2 text-[13px] leading-[1.55] text-white">{tagline}</p>
     <div className="mt-5 space-y-2.5 border-t border-white/[0.06] pt-4">
       {features.map((feature) => (
         <div

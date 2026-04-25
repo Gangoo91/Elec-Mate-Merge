@@ -148,7 +148,7 @@ function ImageViewer({
         ×
       </button>
       <div className="max-w-3xl max-h-[90vh] w-full" onClick={(e) => e.stopPropagation()}>
-        <p className="text-white/70 text-sm mb-4 text-center font-medium tracking-wide">{title}</p>
+        <p className="text-white text-sm mb-4 text-center font-medium tracking-wide">{title}</p>
         <img
           src={imageUrl}
           alt={title}
@@ -231,7 +231,7 @@ function SectionHead({ eyebrow, title, count }: { eyebrow: string; title: string
   return (
     <div className="px-5 py-4 border-b border-white/[0.06] flex items-center justify-between">
       <div>
-        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           {eyebrow}
         </div>
         <h2 className="mt-0.5 text-white font-semibold text-base">{title}</h2>
@@ -356,12 +356,12 @@ export default function PublicElecIdView() {
             </span>
           </div>
           <h1 className="text-2xl font-semibold text-white mb-3">Profile not found</h1>
-          <p className="text-white/70 leading-relaxed mb-6">
+          <p className="text-white leading-relaxed mb-6">
             {isTokenLookup
               ? 'This share link is invalid, expired, or has been deactivated.'
               : 'This Elec-ID number could not be verified. Please check and try again.'}
           </p>
-          <div className="p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-sm text-white/70">
+          <div className="p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-sm text-white">
             If you believe this is an error, contact the credential holder directly.
           </div>
           <a
@@ -406,7 +406,7 @@ export default function PublicElecIdView() {
       <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               Elec-ID
             </div>
             <div className="text-white font-semibold text-base leading-tight">
@@ -468,7 +468,7 @@ export default function PublicElecIdView() {
                   </div>
 
                   <div className="flex-1 min-w-0 pt-1">
-                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Verified professional
                     </div>
                     <h1 className="mt-1 text-xl font-semibold text-white leading-tight break-words">
@@ -483,7 +483,7 @@ export default function PublicElecIdView() {
                   className="mt-5 w-full flex items-center justify-between px-4 py-3 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:bg-white/[0.08] transition-all touch-manipulation"
                 >
                   <div>
-                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+                    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                       Elec-ID
                     </div>
                     <div className="mt-0.5 font-mono text-elec-yellow font-semibold text-lg tracking-wider">
@@ -534,7 +534,7 @@ export default function PublicElecIdView() {
                 )}
 
                 {sections.includes('basics') && profile.bio && (
-                  <p className="mt-4 text-sm text-white/70 leading-relaxed border-t border-white/[0.06] pt-4">
+                  <p className="mt-4 text-sm text-white leading-relaxed border-t border-white/[0.06] pt-4">
                     {profile.bio}
                   </p>
                 )}
@@ -587,7 +587,7 @@ export default function PublicElecIdView() {
                   Limited view — the credential holder has chosen to share select sections only.
                 </p>
                 {expiresAt && (
-                  <p className="text-xs text-white/55 mt-1">Link expires {formatDate(expiresAt)}</p>
+                  <p className="text-xs text-white mt-1">Link expires {formatDate(expiresAt)}</p>
                 )}
               </div>
             )}
@@ -643,7 +643,7 @@ export default function PublicElecIdView() {
                                   </span>
                                 )}
                                 {qual.certificate_number && (
-                                  <code className="text-[11px] font-mono text-white/70 bg-white/[0.04] px-2 py-0.5 rounded">
+                                  <code className="text-[11px] font-mono text-white bg-white/[0.04] px-2 py-0.5 rounded">
                                     #{qual.certificate_number}
                                   </code>
                                 )}
@@ -760,7 +760,7 @@ export default function PublicElecIdView() {
                               {job.location && <span>{job.location}</span>}
                             </div>
                             {job.description && (
-                              <p className="mt-2.5 text-xs text-white/70 leading-relaxed">
+                              <p className="mt-2.5 text-xs text-white leading-relaxed">
                                 {job.description}
                               </p>
                             )}
@@ -824,7 +824,7 @@ export default function PublicElecIdView() {
                                 </span>
                               )}
                               {training.certificate_id && (
-                                <code className="text-[10px] font-mono text-white/70 bg-white/[0.04] px-2 py-0.5 rounded">
+                                <code className="text-[10px] font-mono text-white bg-white/[0.04] px-2 py-0.5 rounded">
                                   #{training.certificate_id}
                                 </code>
                               )}
@@ -875,18 +875,18 @@ export default function PublicElecIdView() {
                   Limited view — the credential holder has chosen to share select sections only.
                 </p>
                 {expiresAt && (
-                  <p className="text-xs text-white/55 mt-1">Link expires {formatDate(expiresAt)}</p>
+                  <p className="text-xs text-white mt-1">Link expires {formatDate(expiresAt)}</p>
                 )}
               </div>
             )}
 
             {/* App CTA */}
             <div className="relative overflow-hidden rounded-2xl border border-elec-yellow/20 bg-[hsl(0_0%_12%)] p-6">
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                 Are you an electrician?
               </div>
               <h3 className="mt-1 font-semibold text-white text-lg">Build your own Elec-ID</h3>
-              <p className="text-white/70 text-sm leading-relaxed mt-2 mb-4">
+              <p className="text-white text-sm leading-relaxed mt-2 mb-4">
                 Share your credentials with employers and homeowners in seconds. 7-day free trial,
                 no card required.
               </p>
@@ -906,12 +906,12 @@ export default function PublicElecIdView() {
       {/* FOOTER */}
       <footer className="border-t border-white/[0.06] bg-[#0a0a0a]/80 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <span className="text-xs text-white/55 font-medium">Powered by Elec-ID</span>
+          <span className="text-xs text-white font-medium">Powered by Elec-ID</span>
           <a
             href="https://elec-mate.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-white/55 hover:text-elec-yellow transition-colors touch-manipulation py-2"
+            className="text-xs text-white hover:text-elec-yellow transition-colors touch-manipulation py-2"
           >
             elec-mate.com →
           </a>

@@ -114,7 +114,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
               <p className="text-xs text-orange-400">{mpanValidation.error}</p>
             </div>
           )}
-          <p className="text-[10px] text-white/40 mt-1">Found on the electricity bill. 13 or 21 digits.</p>
+          <p className="text-[10px] text-white mt-1">Found on the electricity bill. 13 or 21 digits.</p>
         </Field>
 
         {/* Supply details */}
@@ -190,7 +190,7 @@ const SolarPVGridConnection: React.FC<Props> = ({ formData, onUpdate }) => {
                 )}>
                   {opt.label}
                 </span>
-                <span className="text-[10px] text-white/40">{opt.sub}</span>
+                <span className="text-[10px] text-white">{opt.sub}</span>
                 <span className="text-[9px] text-white/30 mt-0.5">{opt.desc}</span>
               </button>
             ))}
@@ -516,7 +516,7 @@ function G98G99CertActions({
   if (isLinking) {
     return (
       <div className="space-y-2">
-        <p className="text-[10px] text-white/40 uppercase tracking-wider">Select existing {certLabel} certificate</p>
+        <p className="text-[10px] text-white uppercase tracking-wider">Select existing {certLabel} certificate</p>
         {existingCerts.length === 0 ? (
           <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.06] text-center">
             <p className="text-sm text-white/50">No {certLabel} certificates found</p>
@@ -538,7 +538,7 @@ function G98G99CertActions({
               <Link2 className="h-4 w-4 text-amber-400 flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white truncate">{cert.data?.referenceNumber || 'No reference'}</p>
-                <p className="text-xs text-white/40">{cert.data?.installationAddress || 'No address'} • {new Date(cert.created_at).toLocaleDateString('en-GB')}</p>
+                <p className="text-xs text-white">{cert.data?.installationAddress || 'No address'} • {new Date(cert.created_at).toLocaleDateString('en-GB')}</p>
               </div>
             </button>
           ))
@@ -546,7 +546,7 @@ function G98G99CertActions({
         <button
           type="button"
           onClick={() => setIsLinking(false)}
-          className="w-full text-center text-xs text-white/40 py-2 touch-manipulation"
+          className="w-full text-center text-xs text-white py-2 touch-manipulation"
         >
           Cancel
         </button>

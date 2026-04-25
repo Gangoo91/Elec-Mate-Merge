@@ -41,7 +41,7 @@ export const FieldNotesInput: React.FC<FieldNotesInputProps> = ({
       placeholder={placeholder}
       maxLength={maxLength}
       className={cn(
-        'h-9 text-[12px] touch-manipulation bg-orange-500/[0.06] border-orange-500/20 text-white placeholder:text-white/40',
+        'h-9 text-[12px] touch-manipulation bg-orange-500/[0.06] border-orange-500/20 text-white placeholder:text-white',
         'mt-1.5',
         className
       )}

@@ -154,7 +154,7 @@ const QuickCopingToolkit = () => {
     return (
       <div className="space-y-4 pb-24 sm:pb-4">
         {/* Sticky Header */}
-        <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
+        <div className="sticky top-0 z-40 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-b border-white/10 -mx-4 px-4 py-3 mb-2">
           <div className="flex items-center justify-between">
             <Button
               variant="ghost"
@@ -178,7 +178,7 @@ const QuickCopingToolkit = () => {
           >
             <Icon className={`h-7 w-7 ${colors.text}`} />
           </div>
-          <h2 className="text-xl font-bold text-foreground">{selectedTechnique.name}</h2>
+          <h2 className="text-xl font-bold text-white">{selectedTechnique.name}</h2>
           <p className="text-sm text-white">{selectedTechnique.description}</p>
         </div>
 
@@ -202,7 +202,7 @@ const QuickCopingToolkit = () => {
           >
             <CardContent className="p-6 text-center">
               <Zap className={`h-8 w-8 ${colors.text} mx-auto mb-3`} />
-              <p className="text-lg text-foreground leading-relaxed">
+              <p className="text-lg text-white leading-relaxed">
                 {selectedTechnique.fastTrack}
               </p>
             </CardContent>
@@ -237,7 +237,7 @@ const QuickCopingToolkit = () => {
                     >
                       <span className={`font-bold ${colors.text}`}>{currentStep + 1}</span>
                     </div>
-                    <p className="text-lg text-foreground leading-relaxed pt-1">
+                    <p className="text-lg text-white leading-relaxed pt-1">
                       {selectedTechnique.steps[currentStep]}
                     </p>
                   </div>
@@ -248,7 +248,7 @@ const QuickCopingToolkit = () => {
               <Card className="border-green-500/20 bg-gradient-to-br from-green-500/10 to-emerald-500/5">
                 <CardContent className="p-6 text-center">
                   <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold text-foreground mb-2">Well done!</h3>
+                  <h3 className="text-lg font-bold text-white mb-2">Well done!</h3>
                   <p className="text-sm text-white">
                     How do you feel now? Remember you can use this anytime.
                   </p>
@@ -258,7 +258,7 @@ const QuickCopingToolkit = () => {
 
             {/* Sticky Navigation */}
             {currentStep < selectedTechnique.steps.length && (
-              <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-background/95 backdrop-blur-xl border-t border-white/10 sm:static sm:bg-transparent sm:border-none sm:p-0">
+              <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pb-6 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-t border-white/10 sm:static sm:bg-transparent sm:border-none sm:p-0">
                 <div className="flex gap-2">
                   {currentStep > 0 && (
                     <Button
@@ -301,7 +301,7 @@ const QuickCopingToolkit = () => {
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500/20 to-orange-500/20 mb-3">
           <Zap className="h-6 w-6 text-yellow-400" />
         </div>
-        <h2 className="text-xl font-bold text-foreground mb-1">Quick Coping Toolkit</h2>
+        <h2 className="text-xl font-bold text-white mb-1">Quick Coping Toolkit</h2>
         <p className="text-sm text-white">Fast techniques for difficult moments</p>
       </div>
 
@@ -311,7 +311,7 @@ const QuickCopingToolkit = () => {
           <div className="flex items-center gap-3">
             <Phone className="h-5 w-5 text-red-400" />
             <div className="flex-1">
-              <p className="text-sm text-foreground font-medium">Need to talk right now?</p>
+              <p className="text-sm text-white font-medium">Need to talk right now?</p>
               <p className="text-xs text-white">Samaritans: 116 123 (free, 24/7)</p>
             </div>
             <a
@@ -345,8 +345,8 @@ const QuickCopingToolkit = () => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-medium text-foreground text-sm">{technique.name}</h3>
-                      <span className="text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-foreground/60">
+                      <h3 className="font-medium text-white text-sm">{technique.name}</h3>
+                      <span className="text-[11px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white">
                         {technique.duration}
                       </span>
                     </div>

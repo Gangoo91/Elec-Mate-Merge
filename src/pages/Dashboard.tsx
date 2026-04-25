@@ -18,6 +18,7 @@ import TrialBanner from '@/components/dashboard/TrialBanner';
 import ReferralBanner from '@/components/referrals/ReferralBanner';
 import WelcomeModal from '@/components/onboarding/WelcomeModal';
 import { DesignedCircuitsCard } from '@/components/dashboard/DesignedCircuitsCard';
+import { DashboardDataProvider } from '@/hooks/useDashboardData';
 import { useAuth } from '@/contexts/AuthContext';
 import useSEO from '@/hooks/useSEO';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
@@ -95,6 +96,7 @@ const Dashboard = () => {
 
   return (
     <DashboardContainer>
+      <DashboardDataProvider>
       <div className="space-y-6 sm:space-y-8">
         {isFirstVisit && (
           <motion.section
@@ -175,6 +177,7 @@ const Dashboard = () => {
 
       {/* Welcome modal for first-time users */}
       <WelcomeModal isOpen={showWelcome} onClose={() => setShowWelcome(false)} />
+      </DashboardDataProvider>
     </DashboardContainer>
   );
 };

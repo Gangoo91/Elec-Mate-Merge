@@ -107,7 +107,7 @@ const BillingTab = () => {
                     {isSubscribed ? 'Active' : 'Free'}
                   </span>
                 </div>
-                <p className="mt-2 text-[13px] text-white/70 max-w-md leading-relaxed">
+                <p className="mt-2 text-[13px] text-white max-w-md leading-relaxed">
                   {isSubscribed
                     ? 'Full access to all premium features.'
                     : 'Upgrade to unlock all features.'}
@@ -138,7 +138,7 @@ const BillingTab = () => {
                 {features.map((feature) => (
                   <li
                     key={feature}
-                    className="flex items-center gap-2 text-[13px] text-white/80"
+                    className="flex items-center gap-2 text-[13px] text-white"
                   >
                     <span
                       aria-hidden

@@ -95,6 +95,9 @@ const MinorWorksForm = ({
     mainEarthingConductorMaterial: 'copper',
     mainBondingConductorSize: '',
     mainBondingConductorSizeCustom: '',
+    // BS 7671 amendment date — A4:2026 (default 15/04/2026, IET publication date)
+    // Used in Section A item 4 (departures cite) + Section E declaration text.
+    bsAmendmentDate: '2026-04-15',
 
     // Bonding Connections
     bondingWater: false,
@@ -746,6 +749,7 @@ const MinorWorksForm = ({
       mainEarthingConductorMaterial: 'copper',
       mainBondingConductorSize: '',
       mainBondingConductorSizeCustom: '',
+      bsAmendmentDate: '2026-04-15',
       bondingWater: false,
       bondingGas: false,
       bondingOil: false,

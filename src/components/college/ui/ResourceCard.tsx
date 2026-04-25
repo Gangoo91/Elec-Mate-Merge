@@ -32,7 +32,7 @@ const KIND_TONE: Record<ResourceKind, string> = {
   video: 'text-cyan-300 border-cyan-500/25 bg-cyan-500/[0.06]',
   audio: 'text-indigo-300 border-indigo-500/25 bg-indigo-500/[0.06]',
   link: 'text-elec-yellow border-elec-yellow/25 bg-elec-yellow/[0.06]',
-  other: 'text-white/70 border-white/[0.1] bg-white/[0.04]',
+  other: 'text-white border-white/[0.1] bg-white/[0.04]',
 };
 
 function prettyBytes(n: number | null): string {
@@ -128,7 +128,7 @@ export function ResourceCard({
           <div className="text-[13.5px] font-medium text-white truncate">
             {resource.title}
           </div>
-          <div className="mt-0.5 text-[11px] text-white/55 truncate tabular-nums">
+          <div className="mt-0.5 text-[11px] text-white truncate tabular-nums">
             {sourceLabel}
             {resource.uploader_name && (
               <>
@@ -142,13 +142,13 @@ export function ResourceCard({
               {resource.tags.slice(0, 3).map((t) => (
                 <span
                   key={t}
-                  className="text-[10px] text-white/70 bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
+                  className="text-[10px] text-white bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
                 >
                   {t}
                 </span>
               ))}
               {resource.tags.length > 3 && (
-                <span className="text-[10px] text-white/45">
+                <span className="text-[10px] text-white">
                   +{resource.tags.length - 3}
                 </span>
               )}
@@ -162,7 +162,7 @@ export function ResourceCard({
             <button
               type="button"
               onClick={(e) => e.stopPropagation()}
-              className="h-8 w-8 rounded-full flex items-center justify-center text-white/55 hover:text-white hover:bg-white/[0.06] transition-colors shrink-0"
+              className="h-8 w-8 rounded-full flex items-center justify-center text-white hover:text-white hover:bg-white/[0.06] transition-colors shrink-0"
               aria-label="More actions"
             >
               <span className="text-[14px] font-semibold tracking-[0.12em]">⋯</span>

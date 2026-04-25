@@ -203,7 +203,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
 
         <div className="px-5 sm:px-6 py-5 space-y-5">
           <div className="rounded-2xl border border-white/[0.06] bg-[#0a0a0a] p-4">
-            <p className="text-[12.5px] text-white/70 leading-relaxed">
+            <p className="text-[12.5px] text-white leading-relaxed">
               PDF Monkey lets you use custom branded certificate templates. Configure your API
               credentials to generate certificates using your own templates instead of the
               built-in ones.
@@ -224,7 +224,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
                   onChange={(e) => field.setter(e.target.value)}
                   className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
-                <p className="text-[11.5px] text-white/55">{field.description}</p>
+                <p className="text-[11.5px] text-white">{field.description}</p>
               </div>
             ))}
           </div>
@@ -281,7 +281,7 @@ export const PdfMonkeySettings: React.FC<PdfMonkeySettingsProps> = ({ onSave }) 
             Template requirements
           </h3>
         </header>
-        <div className="px-5 sm:px-6 py-5 space-y-3 text-[12.5px] text-white/70 leading-relaxed">
+        <div className="px-5 sm:px-6 py-5 space-y-3 text-[12.5px] text-white leading-relaxed">
           <p className="font-semibold">Your PDF template should include fields for:</p>
           <ul className="list-disc pl-6 space-y-1">
             <li>Certificate details (certificateNumber, workDate)</li>

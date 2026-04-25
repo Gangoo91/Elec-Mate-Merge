@@ -397,7 +397,7 @@ const LabelsWarningsSection = ({ onBack }: LabelsWarningsSectionProps) => {
                               <span className="text-[10px] font-semibold px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400">
                                 Issued
                               </span>
-                              <span className="text-[11px] text-white/40 ml-auto flex-shrink-0">
+                              <span className="text-[11px] text-white ml-auto flex-shrink-0">
                                 {formatTimeAgo(doc.updated_at)}
                               </span>
                             </div>

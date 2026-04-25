@@ -1,102 +1,49 @@
-import { ArrowLeft, Target, Wrench, ClipboardCheck, FileText, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Target, Wrench, ClipboardCheck, FileText, Shield } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const InstrumentationModule6 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: "What Is Calibration and Why It's Important",
-      icon: Target,
-      description: 'Understanding the fundamentals and importance of calibration',
-    },
-    {
-      id: 2,
-      title: 'Calibration Equipment and Reference Standards',
-      icon: Wrench,
-      description: 'Tools and standards used for accurate calibration procedures',
-    },
-    {
-      id: 3,
-      title: 'Step-by-Step Calibration of Pressure, Temp, and Electrical Devices',
-      icon: ClipboardCheck,
-      description: 'Practical calibration procedures for different instrument types',
-    },
-    {
-      id: 4,
-      title: 'Recording and Documenting Calibration Results',
-      icon: FileText,
-      description: 'Proper documentation and record-keeping for calibration activities',
-    },
-    {
-      id: 5,
-      title: 'Calibration Intervals, Certificates, and UKAS Traceability',
-      icon: Shield,
-      description: 'Understanding certification requirements and traceability standards',
-    },
-    {
-      id: 6,
-      title: 'Advanced Calibration Topics and Best Practices',
-      icon: Shield,
-      description: 'Advanced techniques, troubleshooting, and future calibration trends',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'What is calibration and why it is important', icon: Target, description: 'Fundamentals and importance of calibration.' },
+  { id: 2, title: 'Calibration equipment and reference standards', icon: Wrench, description: 'Tools and standards used for accurate calibration.' },
+  { id: 3, title: 'Step-by-step calibration of pressure, temperature and electrical devices', icon: ClipboardCheck, description: 'Practical calibration procedures for different instruments.' },
+  { id: 4, title: 'Recording and documenting calibration results', icon: FileText, description: 'Documentation and record-keeping for calibration activities.' },
+  { id: 5, title: 'Calibration intervals, certificates and UKAS traceability', icon: Shield, description: 'Certification requirements and traceability standards.' },
+  { id: 6, title: 'Advanced calibration topics and best practices', icon: Shield, description: 'Advanced techniques, troubleshooting and emerging trends.' },
+];
+
+export default function InstrumentationModule6() {
+  useSEO({
+    title: 'Module 6: Calibration Methods and Standards | Instrumentation | Elec-Mate',
+    description: 'Calibration equipment, step-by-step procedures, documentation, certification and UKAS traceability.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/instrumentation-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Instrumentation Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 6</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Calibration Methods and Standards
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding calibration procedures, standards, and certification requirements
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../instrumentation-module-6-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../instrumentation-course"
+      backLabel="Instrumentation"
+      moduleNumber={6}
+      title="Calibration methods and standards"
+      description="Procedures, documentation and certification — the calibration workflow from start to finish."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      prevModuleHref="../instrumentation-module-5"
+      prevModuleLabel="Control loops and feedback systems"
+      nextModuleHref="../instrumentation-module-7"
+      nextModuleLabel="Instrumentation wiring and 4-20 mA loops"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../instrumentation-module-6-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default InstrumentationModule6;
+}

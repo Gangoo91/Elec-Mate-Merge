@@ -43,10 +43,10 @@ export function SEOSocialProofBar() {
               <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
             ))}
           </div>
-          <p className="text-sm text-white/80 leading-snug line-clamp-2 italic">
+          <p className="text-sm text-white leading-snug line-clamp-2 italic">
             &ldquo;{current.quote}&rdquo;
           </p>
-          <p className="text-[11px] text-white/40 mt-1">
+          <p className="text-[11px] text-white mt-1">
             {current.name} — {current.company}
           </p>
         </div>

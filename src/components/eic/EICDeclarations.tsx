@@ -9,6 +9,7 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { useHaptic } from '@/hooks/useHaptic';
+import { INSPECTOR_QUALIFICATIONS } from '@/constants/inspectorQualifications';
 
 interface EICDeclarationsProps {
   formData: any;
@@ -30,20 +31,9 @@ const POSITION_PRESETS = [
   'Site Manager',
 ];
 
-const QUALIFICATIONS = [
-  '18th Edition',
-  'C&G 2391-52',
-  'C&G 2391-51',
-  'C&G 2394/2395',
-  'EAL Level 3',
-  'EAL Level 4',
-  'NICEIC',
-  'NAPIT',
-  'ELECSA',
-  'ECA',
-  'AM2',
-  'CompEx',
-];
+// ELE-850 — full qual list (LCL/PAA/VTCT/NOCN + neutral Level 3 I&T options)
+// shared with InspectorSheet + EICR Inspector Details
+const QUALIFICATIONS = INSPECTOR_QUALIFICATIONS;
 
 const INTERVAL_PRESETS = [
   { label: '1 yr', months: 12 },

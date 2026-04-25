@@ -13,6 +13,10 @@ import {
   getDisconnectionTimeForCircuit,
   checkZsCompliance as checkZsComplianceFromData,
   applyTemperatureCorrection as applyTempCorrectionFromData,
+  applyZsSiteFactor,
+  ZS_DEFAULT_TEMP_FACTOR,
+  ZS_TEMP_FACTOR_GN3,
+  ZS_TEMP_FACTOR_PRACTICAL,
   type DisconnectionTime,
   type MCBCurve,
   type FuseType,
@@ -338,6 +342,33 @@ export const getMaxZsWithRcd = (opts: {
   };
 };
 
+/**
+ * Same as `getMaxZsFromDeviceDetails` but returns the **cold-measured**
+ * site limit — the raw Table value × the rule-of-thumb temperature factor
+ * (default GN3 ×0.8). Use this for the schedule-of-tests Max Zs column,
+ * the validator pass threshold, and any UI a sparky reads on site.
+ *
+ * Returns `null` when the device isn't recognised.
+ */
+export const getCorrectedMaxZsFromDeviceDetails = (
+  bsStandard: string,
+  curve: string,
+  rating: string,
+  circuitDescription: string = '',
+  factor: number = ZS_DEFAULT_TEMP_FACTOR
+): number | null => {
+  const raw = getMaxZsFromDeviceDetails(bsStandard, curve, rating, circuitDescription);
+  if (raw === null) return null;
+  return applyZsSiteFactor(raw, factor);
+};
+
 // Re-export for convenience
-export { getDisconnectionTimeForCircuit, getZsLimitFromDeviceString };
+export {
+  getDisconnectionTimeForCircuit,
+  getZsLimitFromDeviceString,
+  applyZsSiteFactor,
+  ZS_DEFAULT_TEMP_FACTOR,
+  ZS_TEMP_FACTOR_GN3,
+  ZS_TEMP_FACTOR_PRACTICAL,
+};
 export type { DisconnectionTime, ZsLookupResult };

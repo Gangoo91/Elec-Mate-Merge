@@ -1,11 +1,34 @@
 import { openExternalUrl } from '@/utils/open-external-url';
-import { Phone, ExternalLink, MapPin, MessageSquare, Shield, Heart } from 'lucide-react';
 import LocalResourceFinder from '@/components/mental-health/crisis/LocalResourceFinder';
 import {
   emergencyContacts,
   onlineResources,
 } from '@/components/mental-health/crisis/CrisisResourcesData';
-import { cn } from '@/lib/utils';
+import {
+  PageHero,
+  SectionHeader,
+  ListCard,
+  ListRow,
+  Pill,
+  Eyebrow,
+} from '@/components/college/primitives';
+import { recordCrisisEvent } from '@/services/mentalHealthService';
+
+const onCrisisDial = (label: string) => {
+  recordCrisisEvent({ kind: 'call', label }).catch(() => {
+    /* private follow-up is best-effort; failure must never block the call */
+  });
+};
+const onCrisisText = (label: string) => {
+  recordCrisisEvent({ kind: 'text', label }).catch(() => {
+    /* same — never block */
+  });
+};
+
+const PHONE_PRIMARY =
+  'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25 text-[13px] font-semibold touch-manipulation';
+const PHONE_SECONDARY =
+  'inline-flex items-center gap-1.5 h-11 px-4 rounded-full bg-white/[0.06] text-white border border-white/[0.1] text-[13px] font-semibold touch-manipulation';
 
 const CrisisResourcesTab = () => {
   const priorityHelplines = emergencyContacts.filter(
@@ -16,145 +39,149 @@ const CrisisResourcesTab = () => {
   );
 
   return (
-    <div className="space-y-6">
-      {/* Hero */}
-      <div className="text-center py-2">
-        <div className="w-14 h-14 rounded-2xl bg-red-500/15 border border-red-500/20 flex items-center justify-center mx-auto mb-3">
-          <Shield className="h-7 w-7 text-red-400" />
-        </div>
-        <h2 className="text-xl font-bold text-white">You're not alone</h2>
-        <p className="text-sm text-white/80 mt-2 max-w-sm mx-auto leading-relaxed">
-          If you feel unsafe or overwhelmed, reach out now. Speed matters — pick the option that feels easiest.
-        </p>
-      </div>
+    <div className="space-y-8 sm:space-y-10">
+      <PageHero
+        eyebrow="Crisis support"
+        title="You're not alone"
+        description="If you feel unsafe or overwhelmed, reach out now. Speed matters — pick the option that feels easiest."
+        tone="red"
+      />
 
-      {/* Primary actions — big tappable cards */}
+      {/* Primary actions */}
       <div className="space-y-3">
-        <a
-          href="tel:999"
-          className="block w-full p-4 rounded-2xl bg-red-500/15 border border-red-500/25 touch-manipulation active:scale-[0.98] transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-red-500/25 flex items-center justify-center flex-shrink-0">
-              <Phone className="h-5 w-5 text-red-400" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-base font-bold text-red-300">Call 999</h3>
-              <p className="text-xs text-white/80 mt-0.5">Immediate danger or medical emergency</p>
-            </div>
-          </div>
-        </a>
-
-        <a
-          href="tel:116123"
-          className="block w-full p-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-blue-500/15 flex items-center justify-center flex-shrink-0">
-              <Phone className="h-5 w-5 text-blue-400" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-base font-bold text-white">Call Samaritans 116 123</h3>
-              <p className="text-xs text-white/80 mt-0.5">Free 24/7 support — someone to listen</p>
-            </div>
-          </div>
-        </a>
-
-        <a
-          href="sms:85258?body=SHOUT"
-          className="block w-full p-4 rounded-2xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] transition-all"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-xl bg-purple-500/15 flex items-center justify-center flex-shrink-0">
-              <MessageSquare className="h-5 w-5 text-purple-400" />
-            </div>
-            <div className="flex-1">
-              <h3 className="text-base font-bold text-white">Text SHOUT to 85258</h3>
-              <p className="text-xs text-white/80 mt-0.5">24/7 text support — if speaking feels harder</p>
-            </div>
-          </div>
-        </a>
+        <Eyebrow>Reach out now</Eyebrow>
+        <ListCard>
+          <ListRow
+            accent="red"
+            title="Call 999"
+            subtitle="Immediate danger or medical emergency"
+            trailing={
+              <a
+                href="tel:999"
+                onClick={() => onCrisisDial('999 Emergency')}
+                className={PHONE_PRIMARY}
+                aria-label="Call 999"
+              >
+                999
+              </a>
+            }
+          />
+          <ListRow
+            accent="blue"
+            title="Call Samaritans"
+            subtitle="Free 24/7 support — someone to listen"
+            trailing={
+              <a
+                href="tel:116123"
+                onClick={() => onCrisisDial('Samaritans 116 123')}
+                className={PHONE_PRIMARY}
+                aria-label="Call Samaritans on 116 123"
+              >
+                116 123
+              </a>
+            }
+          />
+          <ListRow
+            accent="purple"
+            title="Text SHOUT"
+            subtitle="24/7 text support — if speaking feels harder"
+            trailing={
+              <a
+                href="sms:85258?body=SHOUT"
+                onClick={() => onCrisisText('SHOUT 85258')}
+                className={PHONE_SECONDARY}
+                aria-label="Text SHOUT to 85258"
+              >
+                85258
+              </a>
+            }
+          />
+        </ListCard>
       </div>
 
       {/* Encouragement */}
-      <div className="flex items-start gap-3 p-4 rounded-2xl bg-emerald-500/[0.06] border border-emerald-500/15">
-        <Heart className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-        <p className="text-sm text-white/90 leading-relaxed">
-          A smaller first step is still a real first step. If calling feels too difficult, start with a text.
-        </p>
+      <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+        <div className="flex items-start gap-3">
+          <Pill tone="emerald">Note</Pill>
+          <p className="text-[13px] text-white leading-relaxed">
+            A smaller first step is still a real first step. If calling feels too difficult, start
+            with a text.
+          </p>
+        </div>
       </div>
 
       {/* Crisis helplines */}
       <div className="space-y-3">
-        <p className="text-[10px] font-bold text-white/70 uppercase tracking-wider">Crisis & Urgent Support</p>
-        {priorityHelplines.map((c) => (
-          <a
-            key={`${c.name}-${c.phone}`}
-            href={`tel:${c.phone.replace(/\s/g, '')}`}
-            className="block w-full p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex-1 min-w-0 pr-3">
-                <h4 className="text-sm font-semibold text-white">{c.name}</h4>
-                <p className="text-[11px] text-white/70 mt-0.5 line-clamp-2">{c.description}</p>
-                <p className="text-[10px] text-white/60 mt-1">{c.hours}</p>
-              </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <span className="text-sm font-bold text-elec-yellow">{c.phone}</span>
-                <Phone className="h-4 w-4 text-elec-yellow" />
-              </div>
-            </div>
-          </a>
-        ))}
+        <SectionHeader eyebrow="Priority lines" title="Crisis & urgent support" />
+        <ListCard>
+          {priorityHelplines.map((c) => (
+            <ListRow
+              key={`${c.name}-${c.phone}`}
+              accent="red"
+              title={c.name}
+              subtitle={`${c.description} · ${c.hours}`}
+              trailing={
+                <a
+                  href={`tel:${c.phone.replace(/\s/g, '')}`}
+                  onClick={() => onCrisisDial(`${c.name} ${c.phone}`)}
+                  className={PHONE_PRIMARY}
+                  aria-label={`Call ${c.name} on ${c.phone}`}
+                >
+                  {c.phone}
+                </a>
+              }
+            />
+          ))}
+        </ListCard>
       </div>
 
       {/* Local resource finder */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <MapPin className="h-4 w-4 text-white/70" />
-          <p className="text-[10px] font-bold text-white/70 uppercase tracking-wider">Find Local Help</p>
-        </div>
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
+        <SectionHeader eyebrow="Nearby" title="Find local help" />
+        <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
           <LocalResourceFinder />
         </div>
       </div>
 
       {/* Support lines */}
       <div className="space-y-3">
-        <p className="text-[10px] font-bold text-white/70 uppercase tracking-wider">Ongoing Support</p>
-        {supportLines.map((c) => (
-          <a
-            key={`${c.name}-${c.phone}`}
-            href={`tel:${c.phone.replace(/\s/g, '')}`}
-            className="block w-full p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex-1 min-w-0 pr-3">
-                <h4 className="text-sm font-semibold text-white">{c.name}</h4>
-                <p className="text-[11px] text-white/70 mt-0.5">{c.description}</p>
-              </div>
-              <span className="text-xs font-bold text-elec-yellow flex-shrink-0">{c.phone}</span>
-            </div>
-          </a>
-        ))}
+        <SectionHeader eyebrow="Long-term" title="Ongoing support" />
+        <ListCard>
+          {supportLines.map((c) => (
+            <ListRow
+              key={`${c.name}-${c.phone}`}
+              accent="yellow"
+              title={c.name}
+              subtitle={c.description}
+              trailing={
+                <a
+                  href={`tel:${c.phone.replace(/\s/g, '')}`}
+                  className={PHONE_SECONDARY}
+                  aria-label={`Call ${c.name} on ${c.phone}`}
+                >
+                  {c.phone}
+                </a>
+              }
+            />
+          ))}
+        </ListCard>
       </div>
 
       {/* Online resources */}
       <div className="space-y-3">
-        <p className="text-[10px] font-bold text-white/70 uppercase tracking-wider">Trusted Online Resources</p>
-        {onlineResources.map((r) => (
-          <button
-            key={`${r.name}-${r.url}`}
-            onClick={() => openExternalUrl(r.url)}
-            className="w-full flex items-center gap-3 p-3.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-all text-left"
-          >
-            <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-semibold text-white">{r.name}</h4>
-              <p className="text-[11px] text-white/70 mt-0.5">{r.description}</p>
-            </div>
-            <ExternalLink className="h-4 w-4 text-white/60 flex-shrink-0" />
-          </button>
-        ))}
+        <SectionHeader eyebrow="Online" title="Trusted resources" />
+        <ListCard>
+          {onlineResources.map((r) => (
+            <ListRow
+              key={`${r.name}-${r.url}`}
+              accent="cyan"
+              title={r.name}
+              subtitle={r.description}
+              trailing={<Pill tone="cyan">Open</Pill>}
+              onClick={() => openExternalUrl(r.url)}
+            />
+          ))}
+        </ListCard>
       </div>
     </div>
   );

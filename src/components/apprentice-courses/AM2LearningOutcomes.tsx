@@ -1,6 +1,5 @@
 import React, { memo, useState } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 interface AM2LearningOutcomesProps {
@@ -10,11 +9,6 @@ interface AM2LearningOutcomesProps {
   className?: string;
 }
 
-/**
- * AM2LearningOutcomes - Learning outcomes list component
- * Features checkmark icons with stagger animation,
- * collapsible on mobile (show first 3, expand to see all).
- */
 export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
   outcomes,
   collapsible = true,
@@ -28,66 +22,49 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
     shouldShowExpandButton && !isExpanded ? outcomes.slice(0, initialVisibleCount) : outcomes;
 
   return (
-    <div className={cn('space-y-4', className)}>
-      {/* Section Title */}
-      <h3 className="text-ios-headline text-white">Learning Outcomes</h3>
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-5 sm:p-6',
+        className
+      )}
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-500/70 via-emerald-400/70 to-green-400/70 opacity-70" />
 
-      {/* Outcomes List */}
-      <ul className="space-y-3">
+      <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
+        Learning outcomes
+      </div>
+
+      <ul className="mt-3 divide-y divide-white/[0.05]">
         {visibleOutcomes.map((outcome, index) => (
-          <li
-            key={index}
-            className={cn('flex items-start gap-3', 'ios-animate-in-delayed')}
-            style={{ '--ios-delay': `${index * 50}ms` } as React.CSSProperties}
-          >
-            {/* Checkmark Icon */}
-            <div
-              className={cn(
-                'flex-shrink-0 mt-0.5',
-                'w-5 h-5 rounded-full',
-                'bg-emerald-500/20 border border-emerald-500/40',
-                'flex items-center justify-center'
-              )}
-            >
-              <Check className="w-3 h-3 text-emerald-400" />
+          <li key={index} className="py-2.5 first:pt-0 last:pb-0 flex items-start gap-3">
+            <div className="shrink-0 mt-0.5 h-5 w-5 rounded-full bg-emerald-500/15 border border-emerald-500/35 flex items-center justify-center">
+              <Check className="h-3 w-3 text-emerald-400" />
             </div>
-
-            {/* Outcome Text */}
-            <span className="text-ios-body text-white leading-relaxed flex-1">{outcome}</span>
+            <span className="text-[13.5px] text-white leading-relaxed flex-1 min-w-0">
+              {outcome}
+            </span>
           </li>
         ))}
       </ul>
 
-      {/* Expand/Collapse Button */}
       {shouldShowExpandButton && (
-        <Button
-          variant="ghost"
-          size="sm"
+        <button
+          type="button"
           onClick={() => setIsExpanded(!isExpanded)}
-          className={cn(
-            'w-full sm:w-auto min-h-[44px] px-4',
-            'text-white hover:text-white hover:bg-white/5',
-            'ios-pressable transition-all duration-ios-normal ease-ios-ease',
-            'touch-manipulation'
-          )}
+          className="mt-4 inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation"
         >
-          <span className="text-ios-subhead">
-            {isExpanded ? 'Show less' : `Show ${outcomes.length - initialVisibleCount} more`}
+          <span>
+            {isExpanded
+              ? 'Show less'
+              : `Show ${outcomes.length - initialVisibleCount} more`}
           </span>
           <ChevronDown
             className={cn(
-              'w-4 h-4 ml-1.5 transition-transform duration-ios-normal ease-ios-ease',
+              'h-3.5 w-3.5 transition-transform',
               isExpanded && 'rotate-180'
             )}
           />
-        </Button>
-      )}
-
-      {/* Hidden count indicator (when collapsed) */}
-      {shouldShowExpandButton && !isExpanded && (
-        <p className="text-ios-footnote text-white pl-8">
-          + {outcomes.length - initialVisibleCount} more outcomes
-        </p>
+        </button>
       )}
     </div>
   );

@@ -33,7 +33,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({
             {title}
           </h3>
           {description && (
-            <p className="mt-1 text-[12.5px] text-white/70 leading-relaxed max-w-2xl">
+            <p className="mt-1 text-[12.5px] text-white leading-relaxed max-w-2xl">
               {description}
             </p>
           )}

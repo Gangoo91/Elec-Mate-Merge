@@ -21,7 +21,7 @@ const SafetyResourcesEnhanced = lazy(
 const LearningFromExperience = lazy(
   () => import('@/pages/electrician/safety-shares/LearningFromExperience')
 );
-const ApprenticeMentalHealth = lazy(() => import('@/pages/apprentice/ApprenticeMentalHealth'));
+const ApprenticeMentalHealth = lazy(() => import('@/pages/MentalHealthHub'));
 const JobVacancies = lazy(() => import('@/pages/electrician/JobVacancies'));
 const ElectricalMaterials = lazy(() => import('@/pages/electrician/ElectricalMaterials'));
 const MaterialsMarketplace = lazy(() => import('@/pages/electrician/MaterialsMarketplace'));
@@ -57,7 +57,7 @@ const BusinessGrowth = lazy(
 );
 const TaxFinances = lazy(() => import('@/pages/electrician/business-development/TaxFinances'));
 const DebtRecovery = lazy(() => import('@/pages/electrician/business-development/DebtRecovery'));
-const ElectricianMentalHealth = lazy(() => import('@/pages/electrician/ElectricianMentalHealth'));
+const ElectricianMentalHealth = lazy(() => import('@/pages/MentalHealthHub'));
 const WorkLifeBalance = lazy(() => import('@/pages/electrician/mental-health/WorkLifeBalance'));
 const MentalHealthResources = lazy(
   () => import('@/pages/electrician/mental-health/MentalHealthResources')

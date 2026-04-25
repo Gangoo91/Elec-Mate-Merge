@@ -1,131 +1,72 @@
-import {
-  ChevronLeft,
-  Target,
-  ClipboardCheck,
-  ClipboardList,
-  Brain,
-  FolderOpen,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { motion } from 'framer-motion';
+import { ClipboardCheck, ClipboardList, Brain, FolderOpen } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
-const FunctionalSkillsModule5 = () => {
-  useSEO(
-    'Module 5: Assessment Preparation - Functional Skills',
-    'Prepare for functional skills assessments with practice exams, study techniques and portfolio building'
-  );
+const sections = [
+  {
+    id: 1,
+    title: 'Level 1 functional skills practice',
+    icon: ClipboardCheck,
+    description: 'Exam format, sample questions, time management and common mistakes.',
+    href: '/study-centre/apprentice/functional-skills/module5/section1',
+  },
+  {
+    id: 2,
+    title: 'Level 2 functional skills practice',
+    icon: ClipboardList,
+    description: 'The step up from Level 1 — harder practice questions and exam strategies.',
+    href: '/study-centre/apprentice/functional-skills/module5/section2',
+  },
+  {
+    id: 3,
+    title: 'Study techniques and exam skills',
+    icon: Brain,
+    description: 'Revision methods, time management, stress management and past papers.',
+    href: '/study-centre/apprentice/functional-skills/module5/section3',
+  },
+  {
+    id: 4,
+    title: 'Portfolio building and evidence',
+    icon: FolderOpen,
+    description: 'Assessor expectations, collecting evidence and writing reflective accounts.',
+    href: '/study-centre/apprentice/functional-skills/module5/section4',
+  },
+];
 
-  const sections = [
-    {
-      number: 'Section 1',
-      title: 'Level 1 Functional Skills Practice',
-      description: 'Exam format, sample questions, time management and common mistakes',
-      icon: ClipboardCheck,
-      href: '/study-centre/apprentice/functional-skills/module5/section1',
-    },
-    {
-      number: 'Section 2',
-      title: 'Level 2 Functional Skills Practice',
-      description: 'Step-up from Level 1, harder practice questions and strategies',
-      icon: ClipboardList,
-      href: '/study-centre/apprentice/functional-skills/module5/section2',
-    },
-    {
-      number: 'Section 3',
-      title: 'Study Techniques & Exam Skills',
-      description: 'Revision methods, time management, stress management and past papers',
-      icon: Brain,
-      href: '/study-centre/apprentice/functional-skills/module5/section3',
-    },
-    {
-      number: 'Section 4',
-      title: 'Portfolio Building & Evidence',
-      description: 'Assessor expectations, collecting evidence and reflective accounts',
-      icon: FolderOpen,
-      href: '/study-centre/apprentice/functional-skills/module5/section4',
-    },
-  ];
+export default function FunctionalSkillsModule5() {
+  useSEO({
+    title: 'Module 5: Assessment Preparation | Functional Skills | Elec-Mate',
+    description:
+      'Prepare for Level 1 and Level 2 functional skills assessments with practice exams, study techniques and portfolio building.',
+  });
 
   return (
-    <div className="pb-24 bg-elec-dark">
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-elec-dark via-neutral-900 to-elec-dark" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-green-600/10 via-transparent to-transparent" />
-        <motion.div
-          className="absolute top-10 right-10 w-32 h-32 rounded-full bg-green-500/5 blur-3xl"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{ duration: 4, repeat: Infinity }}
+    <ModuleShell
+      backTo="../functional-skills"
+      backLabel="Functional skills"
+      moduleNumber={5}
+      title="Assessment preparation"
+      description="Get ready for Level 1 and Level 2 assessments with practice, technique and portfolio guidance."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="1h"
+      prevModuleHref="/study-centre/apprentice/functional-skills/module4"
+      prevModuleLabel="Practical mathematics applications"
+      nextModuleHref="/study-centre/apprentice/functional-skills/module6"
+      nextModuleLabel="Mock exam"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={section.href}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
         />
-        <motion.div
-          className="absolute bottom-0 left-10 w-24 h-24 rounded-full bg-emerald-500/10 blur-2xl"
-          animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
-          transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-        />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-4 pb-6">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mb-4 text-white hover:text-white hover:bg-white/10 gap-2"
-              asChild
-            >
-              <Link to="/study-centre/apprentice/functional-skills">
-                <ChevronLeft className="h-4 w-4" />
-                Back to Functional Skills
-              </Link>
-            </Button>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center"
-          >
-            <div className="relative inline-flex mb-4">
-              <div className="absolute inset-0 bg-green-500/30 rounded-2xl blur-xl animate-pulse" />
-              <div className="relative p-4 rounded-2xl bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 shadow-2xl shadow-green-500/25">
-                <Target className="h-8 w-8 text-white" />
-              </div>
-            </div>
-            <p className="text-xs font-semibold text-green-400 uppercase tracking-wider mb-2">
-              Module 5
-            </p>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-white via-white to-white/80 bg-clip-text text-transparent">
-                Assessment Preparation
-              </span>
-            </h1>
-            <p className="text-sm text-white max-w-lg mx-auto">
-              Prepare for functional skills assessments with practice exams, study techniques and
-              portfolio building
-            </p>
-          </motion.div>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-2">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-          {sections.map((section, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 + index * 0.05 }}
-            >
-              <ModuleCard
-                number={section.number}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                href={section.href}
-              />
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </div>
+      ))}
+    </ModuleShell>
   );
-};
-
-export default FunctionalSkillsModule5;
+}

@@ -34,7 +34,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
       {/* DB Reference, Zdb, Ipf */}
       <div className="grid grid-cols-3 gap-3">
         <div>
-          <label className="text-xs text-white/80 block mb-1">DB Reference</label>
+          <label className="text-xs text-white block mb-1">DB Reference</label>
           <Input
             value={data.dbReference}
             onChange={(e) => onUpdate('dbReference', e.target.value)}
@@ -43,7 +43,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
           />
         </div>
         <div>
-          <label className="text-xs text-white/80 block mb-1">Zdb (Ω)</label>
+          <label className="text-xs text-white block mb-1">Zdb (Ω)</label>
           <Input
             value={data.zdb}
             onChange={(e) => onUpdate('zdb', e.target.value)}
@@ -53,7 +53,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
           />
         </div>
         <div>
-          <label className="text-xs text-white/80 block mb-1">Ipf (kA)</label>
+          <label className="text-xs text-white block mb-1">Ipf (kA)</label>
           <Input
             value={data.ipf}
             onChange={(e) => onUpdate('ipf', e.target.value)}
@@ -66,7 +66,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
 
       {/* Verification */}
       <div>
-        <label className="text-xs text-white/80 block mb-2">Verification</label>
+        <label className="text-xs text-white block mb-2">Verification</label>
         <div className="grid grid-cols-2 gap-2">
           <label className="flex items-center gap-2.5 h-11 px-3 rounded-lg bg-white/[0.05] border border-white/[0.08] cursor-pointer touch-manipulation">
             <Checkbox
@@ -89,7 +89,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
 
       {/* SPD */}
       <div>
-        <label className="text-xs text-white/80 block mb-2">Surge Protection (SPD)</label>
+        <label className="text-xs text-white block mb-2">Surge Protection (SPD)</label>
         <div className="grid grid-cols-2 gap-2">
           <label className="flex items-center gap-2.5 h-11 px-3 rounded-lg bg-white/[0.05] border border-white/[0.08] cursor-pointer touch-manipulation">
             <Checkbox
@@ -118,7 +118,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
           <div className="mt-3 space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-xs text-white/80 block mb-1">SPD Type</label>
+                <label className="text-xs text-white block mb-1">SPD Type</label>
                 <Select value={data.spdType || ''} onValueChange={(v) => onUpdate('spdType', v)}>
                   <SelectTrigger className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]">
                     <SelectValue placeholder="Select" />
@@ -133,7 +133,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
                 </Select>
               </div>
               <div>
-                <label className="text-xs text-white/80 block mb-1">Location</label>
+                <label className="text-xs text-white block mb-1">Location</label>
                 <MobileSelectPicker
                   value={data.spdLocation || ''}
                   onValueChange={(v) => onUpdate('spdLocation', v)}
@@ -145,7 +145,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
             </div>
             <div className="grid grid-cols-3 gap-3">
               <div>
-                <label className="text-xs text-white/80 block mb-1">Make</label>
+                <label className="text-xs text-white block mb-1">Make</label>
                 <MobileSelectPicker
                   value={data.spdMake || ''}
                   onValueChange={(v) => onUpdate('spdMake', v)}
@@ -155,7 +155,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
                 />
               </div>
               <div>
-                <label className="text-xs text-white/80 block mb-1">Model</label>
+                <label className="text-xs text-white block mb-1">Model</label>
                 <MobileSelectPicker
                   value={data.spdModel || ''}
                   onValueChange={(v) => onUpdate('spdModel', v)}
@@ -165,7 +165,7 @@ const DistributionBoardVerificationSection: React.FC<DistributionBoardVerificati
                 />
               </div>
               <div>
-                <label className="text-xs text-white/80 block mb-1">kA</label>
+                <label className="text-xs text-white block mb-1">kA</label>
                 <MobileSelectPicker
                   value={data.spdRatedCurrentKa || ''}
                   onValueChange={(v) => onUpdate('spdRatedCurrentKa', v)}

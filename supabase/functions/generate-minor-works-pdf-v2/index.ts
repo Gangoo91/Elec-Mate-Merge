@@ -224,6 +224,8 @@ interface MinorWorksFormData {
   permittedExceptions?: string;
   riskAssessmentAttached?: boolean;
   commentsOnExistingInstallation?: string;
+  // A4:2026 — amendment date cited in Section A item 4 + declaration
+  bsAmendmentDate?: string;
 
   earthingArrangement?: string;
   zdb?: string;
@@ -341,7 +343,8 @@ function transformFormDataForTemplate(formData: MinorWorksFormData): MinorWorksP
   const result: MinorWorksPayload = {
     certificate_number: formData.certificateNumber || '',
     generated_at: today,
-    bs7671_amendment_date: 'A3:2024',
+    // A4:2026 — pull amendment date from formData; fallback to A4 publish date
+    bs7671_amendment_date: formatDate(formData.bsAmendmentDate) || '15 April 2026',
     work_date: formatDate(formData.workDate),
     date_of_completion: formatDate(formData.dateOfCompletion),
     next_inspection_due: formatDate(formData.nextInspectionDue),
@@ -494,6 +497,12 @@ function transformFormDataForTemplate(formData: MinorWorksFormData): MinorWorksP
       spd_visual: formData.spdVisualInspection || 'N/A',
       spd_indicator: formData.spdIndicatorStatus || 'N/A',
       spd_test_button: formData.spdTestButton ?? false,
+      // A4:2026 Section D — "SPD functionality confirmed" checkbox boolean
+      spd_ok:
+        formData.spdIndicatorStatus === 'satisfactory' ||
+        formData.spdIndicatorStatus === 'Pass' ||
+        formData.spdIndicatorStatus === 'pass' ||
+        formData.spdIndicatorStatus === 'OK',
       temperature: formData.testTemperature || 'N/A',
     },
 

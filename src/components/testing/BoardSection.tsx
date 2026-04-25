@@ -375,7 +375,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     Mobile: keeps the compact inline pill from before. */}
                 <span className={cn(
                   'hidden lg:block text-[10px] font-medium uppercase tracking-[0.18em]',
-                  isMainBoard ? 'text-elec-yellow' : 'text-white/70'
+                  isMainBoard ? 'text-elec-yellow' : 'text-white'
                 )}>
                   {isMainBoard ? 'Main board' : 'Sub-board'}
                 </span>
@@ -395,7 +395,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     {isMainBoard ? 'Main' : 'Sub'}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-[12px] text-white/60 tabular-nums flex-wrap">
+                <div className="flex items-center gap-2 text-[12px] text-white tabular-nums flex-wrap">
                   {earthingArrangement && (
                     <>
                       <span className="text-white">{earthingArrangement}</span>
@@ -498,7 +498,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   aria-label={`Remove ${board.name}`}
                   className={cn(
                     'hidden lg:flex h-9 w-9 rounded-md items-center justify-center shrink-0',
-                    'border border-white/10 bg-white/[0.03] text-white/60',
+                    'border border-white/10 bg-white/[0.03] text-white',
                     'hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-400 transition-colors'
                   )}
                 >
@@ -515,7 +515,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             <div className="hidden lg:flex items-center gap-3 pt-1">
               <span className="text-[11px] font-semibold tabular-nums text-elec-yellow tracking-[0.18em]">01</span>
               <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Setup</span>
-              <span className="text-[10px] tabular-nums text-white/60">{setupFilled}/4</span>
+              <span className="text-[10px] tabular-nums text-white">{setupFilled}/4</span>
               <span className="flex-1 h-px bg-white/[0.06]" />
               {earthingArrangement?.toUpperCase() === 'TT' && (
                 <span className="text-[11px] text-amber-300/90 shrink-0">
@@ -535,7 +535,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   value={board.reference}
                   onChange={(value) => onUpdateBoard(board.id, 'reference', value)}
                   placeholder="e.g. Main CU"
-                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg transition-colors"
+                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg transition-colors"
                 />
               </div>
 
@@ -548,7 +548,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                   value={board.location || ''}
                   onChange={(value) => onUpdateBoard(board.id, 'location', value)}
                   placeholder="e.g. Garage, Kitchen"
-                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg transition-colors"
+                  className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg transition-colors"
                 />
               </div>
 
@@ -579,7 +579,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                       value={board.zdb}
                       onChange={(value) => onUpdateBoard(board.id, 'zdb', value)}
                       placeholder="0.00"
-                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
+                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
                     />
                   )}
                   {!isFieldMarker(board.zdb as string) && (
@@ -623,7 +623,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                       value={board.ipf}
                       onChange={(value) => onUpdateBoard(board.id, 'ipf', value)}
                       placeholder="0.0"
-                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
+                      className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white focus:border-elec-yellow/50 focus:bg-white/[0.05] rounded-lg pr-14 transition-colors"
                     />
                   )}
                   {!isFieldMarker(board.ipf as string) && (
@@ -645,7 +645,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
             <div className="hidden lg:flex items-center gap-3">
               <span className="text-[11px] font-semibold tabular-nums text-elec-yellow tracking-[0.18em]">02</span>
               <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Verification</span>
-              <span className="text-[10px] tabular-nums text-white/60">{verifChecked}/3</span>
+              <span className="text-[10px] tabular-nums text-white">{verifChecked}/3</span>
               <span className="flex-1 h-px bg-white/[0.06]" />
               <div className="flex items-center gap-2 shrink-0">
                 <ConfirmChip
@@ -704,7 +704,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <span className="text-[11px] font-semibold tabular-nums text-elec-yellow tracking-[0.18em]">03</span>
                 <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Surge Protection</span>
                 <span className="text-[10px] uppercase tracking-wider text-white/50">SPD</span>
-                <span className="text-[10px] tabular-nums text-white/60">{spdStatusText}</span>
+                <span className="text-[10px] tabular-nums text-white">{spdStatusText}</span>
                 <span className="flex-1 h-px bg-white/[0.06]" />
                 <NAChip
                   checked={board.spdNA}
@@ -797,7 +797,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                         options={SPD_LOCATIONS}
                         placeholder="Select"
                         title="SPD Location"
-                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white/80 [&[data-placeholder]>span]:text-white/80 hover:bg-white/[0.05] transition-colors"
+                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -816,7 +816,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                         options={SPD_MAKES}
                         placeholder="Select"
                         title="SPD Make"
-                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white/80 [&[data-placeholder]>span]:text-white/80 hover:bg-white/[0.05] transition-colors"
+                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -830,7 +830,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                         placeholder={board.spdMake ? 'Select' : 'Pick make first'}
                         title="SPD Model"
                         disabled={!board.spdMake}
-                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white/80 [&[data-placeholder]>span]:text-white/80 hover:bg-white/[0.05] transition-colors"
+                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
                       />
                     </div>
                     <div className="space-y-1.5">
@@ -843,7 +843,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                         options={SPD_RATED_KA}
                         placeholder="Select"
                         title="Rated kA"
-                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white/80 [&[data-placeholder]>span]:text-white/80 hover:bg-white/[0.05] transition-colors"
+                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
                       />
                     </div>
                   </div>
@@ -857,7 +857,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               <div className="hidden lg:flex items-center gap-3 pt-1">
                 <span className="text-[11px] font-semibold tabular-nums text-elec-yellow tracking-[0.18em]">04</span>
                 <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-white">Circuits</span>
-                <span className="text-[10px] tabular-nums text-white/60">{circuitCount}</span>
+                <span className="text-[10px] tabular-nums text-white">{circuitCount}</span>
                 <span className="flex-1 h-px bg-white/[0.06]" />
                 {showTools && tools && (
                   <div className="flex items-center gap-2 shrink-0">

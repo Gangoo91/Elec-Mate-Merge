@@ -39,6 +39,12 @@ function extractRefNumber(match: string): string {
 // inline text; numeric values are bumped to slightly brighter white + mono
 // so they scan without interrupting the reading rhythm.
 
+// NB: deliberately NO `whitespace-nowrap`. Long refs like `Reg 722.531.3.101`
+// or `30 mA AC Type` could push a 360 px viewport sideways if forced onto one
+// line. Using a non-breaking space between the prefix and number means the
+// short tokens stay together visually but the line breaks naturally if the
+// pill ever lands at a tight margin.
+
 function RegReference({
   regNumber,
   onClick,
@@ -49,7 +55,7 @@ function RegReference({
   const interactive = !!onClick;
   if (!interactive) {
     return (
-      <span className="font-medium text-elec-yellow whitespace-nowrap align-baseline">
+      <span className="font-medium text-elec-yellow align-baseline">
         Reg&nbsp;{regNumber}
       </span>
     );
@@ -59,7 +65,7 @@ function RegReference({
       type="button"
       onClick={() => onClick!(regNumber)}
       className={
-        'inline font-medium text-elec-yellow whitespace-nowrap align-baseline ' +
+        'inline font-medium text-elec-yellow align-baseline ' +
         'underline decoration-elec-yellow/30 decoration-[1.5px] underline-offset-[3px] ' +
         'hover:decoration-elec-yellow/80 transition-colors cursor-pointer touch-manipulation'
       }
@@ -71,7 +77,7 @@ function RegReference({
 
 function RefReference({ kind, reference }: { kind: 'Table' | 'Figure'; reference: string }) {
   return (
-    <span className="font-medium text-white whitespace-nowrap align-baseline">
+    <span className="font-medium text-white align-baseline">
       {kind}&nbsp;{reference}
     </span>
   );
@@ -79,7 +85,7 @@ function RefReference({ kind, reference }: { kind: 'Table' | 'Figure'; reference
 
 function NumericValue({ value }: { value: string }) {
   return (
-    <span className="font-mono text-white whitespace-nowrap align-baseline">
+    <span className="font-mono text-white align-baseline">
       {value.replace(/\s+/g, ' ').trim()}
     </span>
   );

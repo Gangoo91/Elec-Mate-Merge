@@ -51,7 +51,7 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
             <Users className="h-5 w-5 text-emerald-400" />
           </div>
           <div className="text-left">
-            <h3 className="font-semibold text-foreground">Support Groups</h3>
+            <h3 className="font-semibold text-white">Support Groups</h3>
             <p className="text-xs text-white">
               {groups.length} group{groups.length !== 1 ? 's' : ''} • {totalMembers} total members
             </p>
@@ -89,7 +89,7 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
                     <Users className="h-5 w-5 text-emerald-400" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground text-sm">{group.name}</h4>
+                    <h4 className="font-semibold text-white text-sm">{group.name}</h4>
                     <Badge
                       variant="outline"
                       className="mt-1 bg-emerald-500/20 text-emerald-400 border-emerald-500/30 text-xs"

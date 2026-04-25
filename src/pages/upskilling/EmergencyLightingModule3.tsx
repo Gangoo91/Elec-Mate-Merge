@@ -1,110 +1,80 @@
-import {
-  ArrowLeft,
-  Lightbulb,
-  Route,
-  Ruler,
-  AlertTriangle,
-  FileText,
-  Calculator,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Lightbulb, Route, Ruler, AlertTriangle, FileText, Calculator } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EmergencyLightingModule3 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Minimum Illumination Levels and Durations',
-      icon: Lightbulb,
-      description: 'Required lux levels and operating times',
-    },
-    {
-      id: 2,
-      title: 'Escape Route and Coverage Rules',
-      icon: Route,
-      description: 'Path lighting and coverage requirements',
-    },
-    {
-      id: 3,
-      title: 'Mounting Heights and Photometric Considerations',
-      icon: Ruler,
-      description: 'Installation heights and light distribution',
-    },
-    {
-      id: 4,
-      title: 'Risk-Based Design Adjustments',
-      icon: AlertTriangle,
-      description: 'Adapting design based on risk assessment',
-    },
-    {
-      id: 5,
-      title: 'Emergency Lighting Layout Drawings',
-      icon: FileText,
-      description: 'Technical drawings and documentation',
-    },
-    {
-      id: 6,
-      title: 'Software and Calculation Tools',
-      icon: Calculator,
-      description: 'Design software and calculation methods',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Minimum illumination levels and durations',
+    icon: Lightbulb,
+    description: 'Required lux levels and operating times under emergency conditions.',
+  },
+  {
+    id: 2,
+    title: 'Escape route and coverage rules',
+    icon: Route,
+    description: 'Path lighting, points of emphasis and coverage requirements.',
+  },
+  {
+    id: 3,
+    title: 'Mounting heights and photometric considerations',
+    icon: Ruler,
+    description: 'Installation heights and light distribution patterns.',
+  },
+  {
+    id: 4,
+    title: 'Risk-based design adjustments',
+    icon: AlertTriangle,
+    description: 'Adapting the design based on a risk assessment of the premises.',
+  },
+  {
+    id: 5,
+    title: 'Emergency lighting layout drawings',
+    icon: FileText,
+    description: 'Producing technical drawings and supporting documentation.',
+  },
+  {
+    id: 6,
+    title: 'Software and calculation tools',
+    icon: Calculator,
+    description: 'Design software and calculation methods for compliance.',
+  },
+];
+
+export default function EmergencyLightingModule3() {
+  useSEO({
+    title: 'Module 3: Design Requirements & Placement | Emergency Lighting | Elec-Mate',
+    description:
+      'Illumination levels, escape routes, mounting heights, risk-based design and layout drawings.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/emergency-lighting-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Emergency Lighting Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Design Requirements and Placement
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Technical design criteria and positioning requirements
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../emergency-lighting-module-3-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../emergency-lighting-course"
+      backLabel="Emergency lighting systems"
+      moduleNumber={3}
+      title="Design requirements and placement"
+      description="Technical design criteria and the rules that govern luminaire positioning."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../emergency-lighting-module-2"
+      prevModuleLabel="System categories and lighting types"
+      nextModuleHref="../emergency-lighting-module-4"
+      nextModuleLabel="Cabling, battery backup and circuiting"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../emergency-lighting-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EmergencyLightingModule3;
+}

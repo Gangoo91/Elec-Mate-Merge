@@ -81,7 +81,7 @@ export function ProjectTypeSelector({ value, onChange, disabled }: ProjectTypeSe
                 <span
                   className={cn(
                     'text-sm font-semibold block',
-                    isSelected ? 'text-elec-yellow' : 'text-white/60'
+                    isSelected ? 'text-elec-yellow' : 'text-white'
                   )}
                 >
                   {type.label}

@@ -778,6 +778,62 @@ const TestingSection = ({ formData, onUpdate }: TestingSectionProps) => {
                 </div>
               )}
 
+              {/* AFDD satisfactory test button operation — A4:2026 Section D */}
+              <div className="pt-4 border-t">
+                <h4 className="font-semibold text-sm text-muted-foreground mb-3">
+                  AFDD Test (BS 7671:2018+A4:2026)
+                </h4>
+                <div className="max-w-xs">
+                  <Label htmlFor="afddTestButton" className="text-sm font-medium">
+                    AFDD satisfactory test button operation
+                  </Label>
+                  <Select
+                    value={formData.afddTestButton || ''}
+                    onValueChange={(value) => onUpdate('afddTestButton', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select result" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border shadow-lg z-[60]">
+                      <SelectItem value="satisfactory">Satisfactory</SelectItem>
+                      <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
+                      <SelectItem value="na">N/A — no AFDD on this circuit</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Note: Not all AFDDs have a test button.
+                  </p>
+                </div>
+              </div>
+
+              {/* SPD functionality confirmed — A4:2026 Section D */}
+              <div className="pt-4 border-t">
+                <h4 className="font-semibold text-sm text-muted-foreground mb-3">
+                  SPD Functionality
+                </h4>
+                <div className="max-w-xs">
+                  <Label htmlFor="spdIndicatorStatus" className="text-sm font-medium">
+                    SPD functionality confirmed
+                  </Label>
+                  <Select
+                    value={formData.spdIndicatorStatus || ''}
+                    onValueChange={(value) => onUpdate('spdIndicatorStatus', value)}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select result" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-popover border shadow-lg z-[60]">
+                      <SelectItem value="satisfactory">Satisfactory</SelectItem>
+                      <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
+                      <SelectItem value="na">N/A — no SPD on this circuit</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Note: Not all SPDs have visible functionality indication.
+                  </p>
+                </div>
+              </div>
+
               {/* Functional Testing - At the bottom */}
               <div className="pt-4 border-t">
                 <h4 className="font-semibold text-sm text-muted-foreground mb-3">

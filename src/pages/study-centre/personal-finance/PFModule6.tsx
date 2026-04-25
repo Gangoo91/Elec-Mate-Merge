@@ -1,160 +1,235 @@
-import { ArrowLeft, GraduationCap, Clock, Target, BookOpen, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
+import {
+  GraduationCap,
+  Clock,
+  Target,
+  RotateCcw,
+  BookOpen,
+  ShieldCheck,
+  AlertTriangle,
+  CheckCircle,
+  ArrowLeft,
+} from 'lucide-react';
+
+import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  ListCard,
+  ListRow,
+  Eyebrow,
+  PrimaryButton,
+} from '@/components/college/primitives';
 import useSEO from '@/hooks/useSEO';
 
-export default function PFModule6() {
-  useSEO({
-    title: 'Module 6: Mock Exam | Personal Finance & Financial Wellbeing',
+const examFeatures = [
+  {
+    icon: BookOpen,
+    label: '200-question bank',
+    description: 'Randomly selected each attempt so no two exams are the same.',
+  },
+  {
+    icon: Target,
+    label: '20 questions per exam',
+    description: 'Balanced across all five content modules for fair coverage.',
+  },
+  {
+    icon: Clock,
+    label: '30-minute timer',
+    description: 'Timed under exam conditions with a 5-minute warning alert.',
+  },
+  {
+    icon: ShieldCheck,
+    label: '80% pass mark (16/20)',
+    description: 'Matches the standard required by industry assessments.',
+  },
+  {
+    icon: RotateCcw,
+    label: 'Unlimited retakes',
+    description: 'Practise as many times as you need until you feel confident.',
+  },
+];
+
+const categories = [
+  { module: 'Module 1', name: 'Understanding your money', count: 40 },
+  { module: 'Module 2', name: 'Budgeting & cash flow', count: 40 },
+  { module: 'Module 3', name: 'Debt management & credit', count: 40 },
+  { module: 'Module 4', name: 'Pensions & retirement', count: 40 },
+  { module: 'Module 5', name: 'Protection & planning', count: 40 },
+];
+
+const preparationTips = [
+  {
+    title: 'Review all five modules',
     description:
-      'Personal Finance mock examination — 20 random questions from a 200-question bank, 30-minute timer, 80% pass mark.',
+      'Questions are drawn equally from Understanding Your Money, Budgeting, Debt, Pensions and Protection. Cover every module before attempting the exam.',
+  },
+  {
+    title: 'Know UK tax basics',
+    description:
+      'Income Tax bands, National Insurance, allowable expenses and self-assessment deadlines are heavily tested. Understand the difference between PAYE, CIS and limited company income.',
+  },
+  {
+    title: 'Understand the pension system',
+    description:
+      'State Pension qualifying years, workplace auto-enrolment minimums, SIPPs and stakeholder pensions for the self-employed all appear frequently.',
+  },
+  {
+    title: 'Remember key figures',
+    description:
+      'Personal allowance, NI thresholds, ISA limits, Lifetime ISA bonus, VAT registration threshold and emergency fund targets — these numbers come up often.',
+  },
+  {
+    title: 'Know your consumer rights',
+    description:
+      'Section 75 protection, Consumer Credit Act rights, the Financial Ombudsman Service and HMRC Time to Pay arrangements are common exam topics.',
+  },
+  {
+    title: 'Flag and return',
+    description:
+      'Flag questions you are unsure about and return to them later. Do not spend too long on any single question.',
+  },
+];
+
+export default function PFModule6() {
+  const navigate = useNavigate();
+  useSEO({
+    title: 'Personal finance mock exam | Module 6 | Elec-Mate',
+    description:
+      'Test your personal finance knowledge with a timed mock examination. 200-question bank, 20 random questions, 30-minute timer.',
   });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-8 lg:px-12 py-2">
-          <div className="max-w-4xl mx-auto">
-            <Button
-              variant="ghost"
-              size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-              asChild
-            >
-              <Link to="../personal-finance">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Personal Finance
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('../personal-finance')}
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Personal finance & financial wellbeing
+          </button>
 
-      <div className="px-4 sm:px-8 lg:px-12 py-6 sm:py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
-              <span className="text-rose-400 text-xs font-semibold">MODULE 6</span>
-              <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">Mock Exam</span>
-              <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">30 mins</span>
+          <PageHero
+            eyebrow="Module 6 · Final assessment"
+            title="Mock exam"
+            description="Put your personal finance knowledge to the test under timed exam conditions. Questions are drawn from a 200-question bank covering all five content modules."
+            tone="yellow"
+          />
+
+          <StatStrip
+            columns={4}
+            stats={[
+              { label: 'Questions', value: 20, sub: 'Per attempt' },
+              { label: 'Time', value: '30m', sub: 'Timer enforced' },
+              { label: 'Pass mark', value: '80%', sub: '16 / 20 correct' },
+              { label: 'Retakes', value: '∞', sub: 'No cap' },
+            ]}
+          />
+
+          <Link
+            to="../pf-mock-exam"
+            className="block touch-manipulation focus:outline-none"
+          >
+            <div className="rounded-2xl bg-gradient-to-br from-elec-yellow/15 via-amber-500/10 to-transparent border border-elec-yellow/30 p-5 sm:p-6 active:scale-[0.99] transition-transform">
+              <div className="flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <Eyebrow>Ready when you are</Eyebrow>
+                  <div className="mt-1.5 text-[18px] sm:text-[20px] font-semibold text-white">
+                    Start mock exam
+                  </div>
+                  <div className="mt-1 text-[12px] text-white">
+                    Different questions each attempt — retake as often as you like.
+                  </div>
+                </div>
+                <PrimaryButton size="lg" onClick={() => navigate('../pf-mock-exam')}>
+                  <GraduationCap className="h-5 w-5 mr-2" /> Start
+                </PrimaryButton>
+              </div>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Examination</h1>
-            <p className="text-white text-sm sm:text-base">
-              Test your knowledge across all 5 modules with a timed, randomised exam
+          </Link>
+
+          {/* Exam format */}
+          <ListCard>
+            <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-70" />
+              <div className="text-[13px] font-semibold text-white">Exam format</div>
+            </div>
+            <div>
+              {examFeatures.map((f) => (
+                <ListRow
+                  key={f.label}
+                  lead={
+                    <div className="h-8 w-8 rounded-lg bg-elec-yellow/15 border border-elec-yellow/30 flex items-center justify-center shrink-0">
+                      <f.icon className="h-4 w-4 text-elec-yellow" />
+                    </div>
+                  }
+                  title={f.label}
+                  subtitle={f.description}
+                />
+              ))}
+            </div>
+          </ListCard>
+
+          {/* Category coverage */}
+          <ListCard>
+            <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-purple-500/70 via-violet-400/70 to-indigo-400/70 opacity-70" />
+              <div className="text-[13px] font-semibold text-white">Category coverage</div>
+              <div className="mt-1 text-[11px] text-white">
+                4 questions drawn from each category per exam (20 total)
+              </div>
+            </div>
+            <div>
+              {categories.map((c) => (
+                <ListRow
+                  key={c.name}
+                  lead={<span className="h-2 w-2 rounded-full bg-purple-400 block" />}
+                  title={c.name}
+                  subtitle={c.module}
+                  trailing={
+                    <span className="text-[11.5px] text-white">{c.count} questions</span>
+                  }
+                />
+              ))}
+            </div>
+          </ListCard>
+
+          {/* Preparation tips */}
+          <ListCard>
+            <div className="relative px-5 sm:px-6 py-3.5 sm:py-4 border-b border-white/[0.06]">
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-amber-500/70 via-yellow-400/70 to-orange-400/70 opacity-70" />
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0" />
+                <div className="text-[13px] font-semibold text-white">Preparation tips</div>
+              </div>
+            </div>
+            <div>
+              {preparationTips.map((tip, i) => (
+                <ListRow
+                  key={tip.title}
+                  lead={
+                    <div className="h-7 w-7 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 flex items-center justify-center shrink-0">
+                      <span className="text-[11px] font-bold text-elec-yellow">{i + 1}</span>
+                    </div>
+                  }
+                  title={tip.title}
+                  subtitle={tip.description}
+                />
+              ))}
+            </div>
+          </ListCard>
+
+          {/* After-exam tip */}
+          <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-4 flex items-start gap-3">
+            <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
+            <p className="text-[12.5px] text-emerald-200 leading-relaxed">
+              After completing the exam you'll see a full breakdown by category, including which areas
+              need more revision. Use this to focus your study before retaking.
             </p>
           </div>
-
-          <div className="space-y-6">
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-rose-500/10 via-rose-400/5 to-transparent border border-rose-500/15 p-5 sm:p-8">
-              <div className="absolute top-0 right-0 w-48 h-48 bg-rose-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4" />
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2.5 rounded-xl bg-gradient-to-br from-rose-500/20 to-rose-400/20 border border-rose-500/20">
-                    <GraduationCap className="h-6 w-6 text-rose-400" />
-                  </div>
-                  <h2 className="text-lg font-semibold text-white">Exam Details</h2>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                    <BookOpen className="h-5 w-5 text-rose-400 mx-auto mb-1" />
-                    <p className="text-lg font-bold text-white">20</p>
-                    <p className="text-xs text-white">Questions</p>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                    <Clock className="h-5 w-5 text-rose-400 mx-auto mb-1" />
-                    <p className="text-lg font-bold text-white">30</p>
-                    <p className="text-xs text-white">Minutes</p>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                    <Target className="h-5 w-5 text-rose-400 mx-auto mb-1" />
-                    <p className="text-lg font-bold text-white">80%</p>
-                    <p className="text-xs text-white">Pass Mark</p>
-                  </div>
-                  <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                    <GraduationCap className="h-5 w-5 text-rose-400 mx-auto mb-1" />
-                    <p className="text-lg font-bold text-white">200</p>
-                    <p className="text-xs text-white">Question Bank</p>
-                  </div>
-                </div>
-
-                <div className="space-y-3 mb-6">
-                  <h3 className="text-sm font-semibold text-white">How It Works</h3>
-                  <ul className="text-sm text-white space-y-2">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-                      <span>
-                        20 questions randomly selected from a bank of 200, balanced across all 5
-                        modules
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-                      <span>
-                        30-minute timer &mdash; you will receive a warning at the 5-minute mark
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-                      <span>
-                        80% pass mark (16 out of 20 correct) &mdash; matches industry assessment
-                        standards
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-                      <span>Full review after completion with explanations for every question</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-                      <span>Category breakdown shows your strengths and areas for improvement</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
-                      <span>
-                        Retake as many times as you like &mdash; different questions each time
-                      </span>
-                    </li>
-                  </ul>
-                </div>
-
-                <Button
-                  size="lg"
-                  className="w-full sm:w-auto min-h-[48px] bg-rose-500 text-white hover:bg-rose-500/90 font-semibold touch-manipulation active:scale-[0.98]"
-                  asChild
-                >
-                  <Link to="../pf-mock-exam">
-                    Start Mock Exam
-                    <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-
-            <div className="bg-white/5 border border-white/10 rounded-xl p-5">
-              <h3 className="text-sm font-semibold text-white mb-3">Categories Covered</h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {[
-                  'Understanding Your Money',
-                  'Budgeting & Cash Flow',
-                  'Debt Management & Credit',
-                  'Pensions & Retirement Planning',
-                  'Financial Protection & Planning Ahead',
-                ].map((cat) => (
-                  <div
-                    key={cat}
-                    className="flex items-center gap-2 text-sm text-white bg-white/5 rounded-lg p-2.5"
-                  >
-                    <div className="w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0" />
-                    {cat}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        </PageFrame>
       </div>
     </div>
   );

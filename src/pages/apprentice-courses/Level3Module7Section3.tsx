@@ -1,21 +1,12 @@
-import {
-  ArrowLeft,
-  MessageCircle,
-  FileText,
-  Users,
-  AlertTriangle,
-  Presentation,
-  Zap,
-} from 'lucide-react';
+import { MessageCircle, FileText, Users, AlertTriangle, Presentation } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '3.1',
-    title: 'Effective Communication with Clients and Colleagues',
+    title: 'Effective communication with clients and colleagues',
     description:
       'Developing clear and professional communication skills for workplace interactions',
     icon: MessageCircle,
@@ -23,28 +14,28 @@ const subsections = [
   },
   {
     number: '3.2',
-    title: 'Technical Reporting and Documentation Skills',
+    title: 'Technical reporting and documentation skills',
     description: 'Creating clear technical reports and maintaining professional documentation',
     icon: FileText,
     href: '../level3-module7-section3-2',
   },
   {
     number: '3.3',
-    title: 'Working with Other Trades and Coordination on Site',
+    title: 'Working with other trades and coordination on site',
     description: 'Collaborative working practices and effective coordination with other trades',
     icon: Users,
     href: '../level3-module7-section3-3',
   },
   {
     number: '3.4',
-    title: 'Conflict Resolution and Problem-solving',
+    title: 'Conflict resolution and problem-solving',
     description: 'Techniques for resolving conflicts and solving problems in the workplace',
     icon: AlertTriangle,
     href: '../level3-module7-section3-4',
   },
   {
     number: '3.5',
-    title: 'Presentation of Technical Information',
+    title: 'Presentation of technical information',
     description: 'Skills for presenting technical information clearly to different audiences',
     icon: Presentation,
     href: '../level3-module7-section3-5',
@@ -58,46 +49,31 @@ const Level3Module7Section3 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module7">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 7
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module7"
+      backLabel="Module 7"
+      moduleNumber={7}
+      sectionNumber={3}
+      title="Communication and teamworking"
+      description="Effective communication skills and collaborative working practices."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../level3-module7-section2"
+      prevSectionLabel="Professional standards and responsibilities"
+      nextSectionHref="../level3-module7-section4"
+      nextSectionLabel="Continuing professional development"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

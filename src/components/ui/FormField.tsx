@@ -14,7 +14,7 @@ const FormField = ({ label, required, hint, children }: FormFieldProps) => (
       {label}{required && ' *'}
     </Label>
     {children}
-    {hint && <p className="text-[10px] text-white/40 mt-1">{hint}</p>}
+    {hint && <p className="text-[10px] text-white mt-1">{hint}</p>}
   </div>
 );
 

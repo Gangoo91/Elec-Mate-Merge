@@ -109,7 +109,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
           >
             <Card
               className={cn(
-                'border-elec-yellow/20 bg-elec-gray h-full hover:shadow-md hover:border-elec-yellow/30 transition-all',
+                'border-elec-yellow/20 bg-[hsl(0_0%_12%)] h-full hover:shadow-md hover:border-elec-yellow/30 transition-all',
                 'group-hover:scale-[1.02] group-active:scale-[0.98]',
                 'touch-manipulation min-h-[100px]',
                 card.urgent && 'border-red-500/30 bg-red-500/5'
@@ -122,7 +122,7 @@ const MentalHealthHubLayout = ({ children, showBackButton = true }: MentalHealth
                     <CardTitle className="text-xs sm:text-sm">{card.title}</CardTitle>
                   </div>
                   {card.urgent && (
-                    <Badge className="bg-red-500 text-foreground text-[10px] sm:text-xs">
+                    <Badge className="bg-red-500 text-white text-[10px] sm:text-xs">
                       Urgent
                     </Badge>
                   )}

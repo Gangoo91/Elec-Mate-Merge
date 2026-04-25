@@ -126,7 +126,7 @@ export const CustomerListRow = ({
 
           {/* Bottom row */}
           <div className="flex items-center justify-between mt-3">
-            <span className="text-[11px] font-medium text-white/40">
+            <span className="text-[11px] font-medium text-white">
               {formatLastActivity(customer.lastActivityAt)}
             </span>
             <div className="w-6 h-6 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">

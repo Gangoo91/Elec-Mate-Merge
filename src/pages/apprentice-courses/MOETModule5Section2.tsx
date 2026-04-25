@@ -1,8 +1,53 @@
-import { ArrowLeft, Cpu, Cable, Grid, Clock, Monitor, Wrench } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Cpu, Cable, Grid, Clock, Monitor, Wrench } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
+
+const subsections = [
+    {
+      number: '5.2.1',
+      title: 'PLC hardware and architecture',
+      description: 'CPU modules, memory types, power supplies and system architecture',
+      icon: Cpu,
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-1',
+    },
+    {
+      number: '5.2.2',
+      title: 'Input/output devices',
+      description: 'Digital and analogue I/O modules, wiring and interfacing',
+      icon: Cable,
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-2',
+    },
+    {
+      number: '5.2.3',
+      title: 'Ladder logic basics',
+      description: 'Relay logic concepts, contacts, coils and basic programming elements',
+      icon: Grid,
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-3',
+    },
+    {
+      number: '5.2.4',
+      title: 'Timers, counters and sequencing',
+      description: 'Programming timers, counters and sequential control operations',
+      icon: Clock,
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-4',
+    },
+    {
+      number: '5.2.5',
+      title: 'PLC programming software (overview)',
+      description: 'Software packages, development environments and programming methods',
+      icon: Monitor,
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-5',
+    },
+    {
+      number: '5.2.6',
+      title: 'Troubleshooting PLC systems',
+      description: 'Diagnostic tools, fault finding and system maintenance',
+      icon: Wrench,
+      href: '/study-centre/apprentice/m-o-e-t-module5-section2-6',
+    },
+  ];
+
 
 const MOETModule5Section2 = () => {
   useSEO(
@@ -10,95 +55,28 @@ const MOETModule5Section2 = () => {
     'PLC hardware, I/O devices, ladder logic, programming software and troubleshooting'
   );
 
-  const subsections = [
-    {
-      number: '5.2.1',
-      title: 'PLC Hardware and Architecture',
-      description: 'CPU modules, memory types, power supplies and system architecture',
-      icon: Cpu,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section2-1',
-    },
-    {
-      number: '5.2.2',
-      title: 'Input/Output Devices',
-      description: 'Digital and analogue I/O modules, wiring and interfacing',
-      icon: Cable,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section2-2',
-    },
-    {
-      number: '5.2.3',
-      title: 'Ladder Logic Basics',
-      description: 'Relay logic concepts, contacts, coils and basic programming elements',
-      icon: Grid,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section2-3',
-    },
-    {
-      number: '5.2.4',
-      title: 'Timers, Counters and Sequencing',
-      description: 'Programming timers, counters and sequential control operations',
-      icon: Clock,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section2-4',
-    },
-    {
-      number: '5.2.5',
-      title: 'PLC Programming Software (overview)',
-      description: 'Software packages, development environments and programming methods',
-      icon: Monitor,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section2-5',
-    },
-    {
-      number: '5.2.6',
-      title: 'Troubleshooting PLC Systems',
-      description: 'Diagnostic tools, fault finding and system maintenance',
-      icon: Wrench,
-      href: '/study-centre/apprentice/m-o-e-t-module5-section2-6',
-    },
-  ];
-
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module5">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 5
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            Section 5.2: PLCs and Control Systems
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-5xl">
-            PLC hardware, I/O devices, ladder logic, programming software and troubleshooting.
-          </p>
-        </div>
-
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
-            <ModuleCard
-              key={index}
-              number={subsection.number}
-              title={subsection.title}
-              description={subsection.description}
-              icon={subsection.icon}
-              href={subsection.href}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/m-o-e-t-module5"
+      backLabel="Module 5"
+      moduleNumber={5}
+      sectionNumber={2}
+      title="PLCs and control systems"
+      description="PLC hardware, I/O devices, ladder logic, programming software and troubleshooting."
+      tone="orange"
+      subsectionsCount={subsections.length}
+    >
+      {subsections.map((subsection, index) => (
+        <ModuleCard
+          key={index}
+          number={subsection.number}
+          title={subsection.title}
+          description={subsection.description}
+          icon={subsection.icon}
+          href={subsection.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

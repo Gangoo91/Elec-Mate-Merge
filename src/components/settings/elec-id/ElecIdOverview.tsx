@@ -439,11 +439,11 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
       <div className="space-y-2">
         <Label className="text-white text-sm">
-          Your rate <span className="text-white/55">(shown in Talent Pool)</span>
+          Your rate <span className="text-white">(shown in Talent Pool)</span>
         </Label>
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/55">£</span>
+            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white">£</span>
             <Input
               type="number"
               inputMode="decimal"
@@ -451,7 +451,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               value={editFormData.rateAmount}
               onChange={(e) => setEditFormData({ ...editFormData, rateAmount: e.target.value })}
               placeholder="Amount"
-              className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl pl-8 text-white placeholder:text-white/40"
+              className="h-11 bg-white/[0.04] border-white/[0.06] rounded-xl pl-8 text-white placeholder:text-white"
             />
           </div>
           <Select
@@ -473,13 +473,13 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
       <div className="space-y-2">
         <Label className="text-white text-sm">
-          Professional bio <span className="text-white/55">(optional)</span>
+          Professional bio <span className="text-white">(optional)</span>
         </Label>
         <Textarea
           value={editFormData.bio}
           onChange={(e) => setEditFormData({ ...editFormData, bio: e.target.value })}
           placeholder="Brief description of your experience and specialisations…"
-          className="bg-white/[0.04] border-white/[0.06] rounded-xl min-h-[100px] resize-none text-white placeholder:text-white/40"
+          className="bg-white/[0.04] border-white/[0.06] rounded-xl min-h-[100px] resize-none text-white placeholder:text-white"
         />
       </div>
     </div>
@@ -818,7 +818,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           <div className="bg-orange-500/10 border border-orange-500/20 rounded-2xl p-4 flex items-center gap-3">
             <div className="flex-1">
               <p className="font-semibold text-orange-400 text-sm">Elec-ID disabled</p>
-              <p className="text-xs text-white/70 mt-0.5">
+              <p className="text-xs text-white mt-0.5">
                 Hidden from Talent Pool. Your data is still saved.
               </p>
             </div>
@@ -837,7 +837,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.06] rounded-2xl max-w-md">
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2">Disable Elec-ID?</DialogTitle>
-            <DialogDescription className="text-white/70">
+            <DialogDescription className="text-white">
               This will hide your profile from the Talent Pool. Employers will not be able to
               discover you through search.
             </DialogDescription>
@@ -845,7 +845,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           <div className="space-y-4 pt-4">
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06]">
               <p className="text-sm text-white font-medium mb-2">What happens</p>
-              <ul className="space-y-1.5 text-sm text-white/70">
+              <ul className="space-y-1.5 text-sm text-white">
                 <li>· Hidden from employer searches</li>
                 <li>· Your data remains saved</li>
                 <li>· You can re-enable anytime</li>
@@ -916,7 +916,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
           <div className="flex-1 min-w-0">
             <Eyebrow>Profile strength</Eyebrow>
-            <p className="mt-1 text-sm text-white/70">
+            <p className="mt-1 text-sm text-white">
               {completeness.percentage >= 80
                 ? 'Looking great — your profile is strong.'
                 : completeness.percentage >= 50
@@ -931,7 +931,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
             {completeness.missingItems.slice(0, 3).map((item, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] text-xs text-white/80"
+                className="flex items-center gap-2.5 p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] text-xs text-white"
               >
                 <Dot tone="yellow" />
                 <span className="truncate flex-1">{item}</span>
@@ -939,7 +939,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
               </div>
             ))}
             {completeness.missingItems.length > 3 && (
-              <p className="text-xs text-white/55 text-center pt-1">
+              <p className="text-xs text-white text-center pt-1">
                 +{completeness.missingItems.length - 3} more items
               </p>
             )}
@@ -1055,13 +1055,13 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
           className="bg-[hsl(0_0%_12%)] border border-elec-yellow/20 rounded-2xl p-5 sm:p-6"
         >
           <Eyebrow>Your profile is live</Eyebrow>
-          <p className="mt-1 text-sm text-white/70">
+          <p className="mt-1 text-sm text-white">
             Share with employers, clients, or anyone who needs to verify your credentials.
           </p>
 
           <div className="mt-4 flex items-center gap-2">
             <div className="flex-1 min-w-0 px-3 py-2 rounded-xl bg-black/30 border border-white/[0.06]">
-              <p className="text-xs text-white/70 font-mono truncate">
+              <p className="text-xs text-white font-mono truncate">
                 elec-mate.com/verify/
                 <span className="text-elec-yellow font-semibold">
                   {elecIdProfile.elec_id_number}

@@ -60,7 +60,7 @@ const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
     return (
       <div className="rounded-2xl border border-red-500/20 bg-red-500/10 p-6 text-center">
         <h3 className="font-semibold text-white">Failed to load CVs</h3>
-        <p className="text-sm text-white/70 mt-1">Please refresh the page to try again.</p>
+        <p className="text-sm text-white mt-1">Please refresh the page to try again.</p>
       </div>
     );
   }
@@ -78,7 +78,7 @@ const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
           <h2 className="mt-1.5 text-2xl sm:text-3xl font-semibold text-white tracking-tight leading-[1.05]">
             Create your professional CV
           </h2>
-          <p className="mt-3 text-sm text-white/70 max-w-2xl">
+          <p className="mt-3 text-sm text-white max-w-2xl">
             Build a professional CV that showcases your electrical qualifications. Import your
             credentials directly from your Elec-ID profile.
           </p>
@@ -107,7 +107,7 @@ const ElecIdCVTab = ({ onNavigate: _onNavigate }: ElecIdCVTabProps) => {
           ].map((feat) => (
             <div key={feat.title} className="bg-[hsl(0_0%_12%)] p-5">
               <Eyebrow>{feat.title}</Eyebrow>
-              <p className="mt-2 text-sm text-white/70">{feat.description}</p>
+              <p className="mt-2 text-sm text-white">{feat.description}</p>
             </div>
           ))}
         </div>

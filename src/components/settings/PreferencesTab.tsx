@@ -322,7 +322,7 @@ const PreferencesTab = () => {
           eyebrow="01"
           title="Dashboard"
         />
-        <div className="text-[12.5px] text-white/70 leading-relaxed">
+        <div className="text-[12.5px] text-white leading-relaxed">
           Show or hide hubs on your home screen.
         </div>
         <ListCard>
@@ -502,7 +502,7 @@ const PreferencesTab = () => {
               <h2 className="text-xl font-semibold text-white tracking-tight">
                 Confirm your password
               </h2>
-              <p className="text-[13px] text-white/70 leading-relaxed">
+              <p className="text-[13px] text-white leading-relaxed">
                 Enter your password to enable {biometric.biometricType} login.
               </p>
             </div>
@@ -523,7 +523,7 @@ const PreferencesTab = () => {
                 onKeyDown={(e) => e.key === 'Enter' && handleBiometricPasswordSubmit()}
                 className={cn(
                   'w-full h-12 px-4 pr-14 rounded-xl',
-                  'bg-[#0a0a0a] border text-white placeholder:text-white/40 [color-scheme:dark]',
+                  'bg-[#0a0a0a] border text-white placeholder:text-white [color-scheme:dark]',
                   'text-[15px] outline-none transition-all',
                   'border-white/[0.08] focus:border-elec-yellow/50'
                 )}
@@ -531,7 +531,7 @@ const PreferencesTab = () => {
               <button
                 type="button"
                 onClick={() => setShowBioPassword(!showBioPassword)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 h-11 px-3 flex items-center justify-center text-[12px] font-medium text-white/70 hover:text-white touch-manipulation rounded-lg"
+                className="absolute right-2 top-1/2 -translate-y-1/2 h-11 px-3 flex items-center justify-center text-[12px] font-medium text-white hover:text-white touch-manipulation rounded-lg"
               >
                 {showBioPassword ? 'Hide' : 'Show'}
               </button>

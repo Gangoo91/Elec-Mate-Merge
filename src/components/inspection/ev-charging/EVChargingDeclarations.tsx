@@ -91,7 +91,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 <MobileSelectPicker
                   label="Grant Scheme"
                   value={formData.ozevScheme || ''}
-                  onChange={(value) => onUpdate('ozevScheme', value)}
+                  onValueChange={(value) => onUpdate('ozevScheme', value)}
                   options={[
                     { value: 'n/a', label: 'N/A' },
                     { value: 'EVHS', label: 'EVHS' },
@@ -218,7 +218,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
               <MobileSelectPicker
                 label="Scheme"
                 value={formData.installerScheme || ''}
-                onChange={(value) => onUpdate('installerScheme', value)}
+                onValueChange={(value) => onUpdate('installerScheme', value)}
                 options={[
                   { value: 'NICEIC', label: 'NICEIC' },
                   { value: 'NAPIT', label: 'NAPIT' },

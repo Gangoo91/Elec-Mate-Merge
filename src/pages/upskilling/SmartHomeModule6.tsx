@@ -1,96 +1,48 @@
-import { ArrowLeft, CircleDot, Mic, Settings, ArrowUpDown, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { CircleDot, Mic, Settings, ArrowUpDown, AlertTriangle } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const SmartHomeModule6 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Hub Types (Home Assistant, SmartThings, proprietary)',
-      icon: CircleDot,
-      description: 'Understanding different smart home hub options',
-    },
-    {
-      id: 2,
-      title: 'Alexa, Google Home, Siri Integration',
-      icon: Mic,
-      description: 'Connecting smart homes with voice assistants',
-    },
-    {
-      id: 3,
-      title: 'Voice Control Logic and Routine Mapping',
-      icon: Settings,
-      description: 'Programming voice commands and automation routines',
-    },
-    {
-      id: 4,
-      title: 'Bridging Systems and Legacy Devices',
-      icon: ArrowUpDown,
-      description: 'Integrating older systems with modern smart home platforms',
-    },
-    {
-      id: 5,
-      title: 'Troubleshooting Ecosystem Conflicts',
-      icon: AlertTriangle,
-      description: 'Resolving compatibility issues between different systems',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Hub types (Home Assistant, SmartThings, proprietary)', icon: CircleDot, description: 'The different smart home hub options.' },
+  { id: 2, title: 'Alexa, Google Home and Siri integration', icon: Mic, description: 'Connecting smart homes with voice assistants.' },
+  { id: 3, title: 'Voice control logic and routine mapping', icon: Settings, description: 'Programming voice commands and automation routines.' },
+  { id: 4, title: 'Bridging systems and legacy devices', icon: ArrowUpDown, description: 'Integrating older systems with modern smart home platforms.' },
+  { id: 5, title: 'Troubleshooting ecosystem conflicts', icon: AlertTriangle, description: 'Resolving compatibility issues between different systems.' },
+];
+
+export default function SmartHomeModule6() {
+  useSEO({
+    title: 'Module 6: Smart Hubs and Voice Assistants | Smart Home | Elec-Mate',
+    description: 'Hub types, voice assistant integration, routine logic, bridging legacy systems and ecosystem troubleshooting.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/smart-home-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Smart Home Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 6</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Smart Hubs, Voice Assistants, and Interoperability
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Centralising control and ensuring system compatibility
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../smart-home-module-6-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../smart-home-course"
+      backLabel="Smart home technology"
+      moduleNumber={6}
+      title="Smart hubs, voice assistants and interoperability"
+      description="Centralise control with hubs and voice assistants — and unblock the inevitable ecosystem conflicts."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      prevModuleHref="../smart-home-module-5"
+      prevModuleLabel="Access control, CCTV and security integration"
+      nextModuleHref="../smart-home-module-7"
+      nextModuleLabel="Installation, testing and safety requirements"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../smart-home-module-6-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default SmartHomeModule6;
+}

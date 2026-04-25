@@ -159,10 +159,10 @@ export default function CustomerDetailPage() {
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <h1 className="text-sm font-bold text-white tracking-wide uppercase flex-1 min-w-0 truncate">{customer.name}</h1>
-            <button onClick={() => setShowEditDialog(true)} className="w-9 h-9 rounded-lg flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation transition-colors flex-shrink-0">
+            <button onClick={() => setShowEditDialog(true)} className="w-9 h-9 rounded-lg flex items-center justify-center text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation transition-colors flex-shrink-0">
               <Edit className="h-4 w-4" />
             </button>
-            <button onClick={() => setShowDeleteConfirm(true)} className="w-9 h-9 rounded-lg flex items-center justify-center text-white/60 hover:text-red-400 hover:bg-red-500/10 active:scale-[0.98] touch-manipulation transition-colors flex-shrink-0">
+            <button onClick={() => setShowDeleteConfirm(true)} className="w-9 h-9 rounded-lg flex items-center justify-center text-white hover:text-red-400 hover:bg-red-500/10 active:scale-[0.98] touch-manipulation transition-colors flex-shrink-0">
               <Trash2 className="h-4 w-4" />
             </button>
           </div>

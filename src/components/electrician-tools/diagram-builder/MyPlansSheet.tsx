@@ -158,7 +158,7 @@ export function MyPlansSheet({ open, onOpenChange, currentRooms, onLoadPlan, onN
             <div className="text-center py-8">
               <FileText className="h-10 w-10 text-white mx-auto mb-3" />
               <p className="text-white text-sm">No saved floor plans</p>
-              <p className="text-white/60 text-xs mt-1">Save your current work to access it later</p>
+              <p className="text-white text-xs mt-1">Save your current work to access it later</p>
             </div>
           ) : (
             plans.map((plan) => (

@@ -82,7 +82,7 @@ const LocalResourceFinder = () => {
             <div key={index} className="p-3 rounded-lg border border-green-500/20 bg-green-500/5">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-foreground text-sm truncate">{resource.name}</h4>
+                  <h4 className="font-medium text-white text-sm truncate">{resource.name}</h4>
                   <Badge className="bg-green-500/20 text-green-400 text-[10px] mt-0.5">
                     {resource.type}
                   </Badge>

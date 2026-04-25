@@ -1,96 +1,48 @@
-import { ArrowLeft, Zap, BarChart, Filter, Settings, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Zap, BarChart, Filter, Settings, Shield } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const InstrumentationModule3 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Signal Types: Voltage, Current, Resistance, Frequency',
-      icon: Zap,
-      description: 'Understanding different types of electrical signals used in instrumentation',
-    },
-    {
-      id: 2,
-      title: 'Standard Ranges: 4–20mA, 0–10V, Pulse Signals',
-      icon: BarChart,
-      description: 'Industry standard signal ranges and their applications',
-    },
-    {
-      id: 3,
-      title: 'Signal Conditioning: Filtering, Isolation, Amplification',
-      icon: Filter,
-      description: 'Techniques for processing and conditioning instrumentation signals',
-    },
-    {
-      id: 4,
-      title: 'Signal Scaling, Conversions, and Error Introduction',
-      icon: Settings,
-      description: 'Converting between signal types and understanding error sources',
-    },
-    {
-      id: 5,
-      title: 'Signal Integrity: Noise, Ground Loops, and Shielding',
-      icon: Shield,
-      description: 'Maintaining signal quality and preventing interference',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Signal types: voltage, current, resistance, frequency', icon: Zap, description: 'The different electrical signals used in instrumentation.' },
+  { id: 2, title: 'Standard ranges: 4-20 mA, 0-10 V, pulse signals', icon: BarChart, description: 'Industry standard signal ranges and their applications.' },
+  { id: 3, title: 'Signal conditioning: filtering, isolation, amplification', icon: Filter, description: 'Techniques for processing and conditioning instrumentation signals.' },
+  { id: 4, title: 'Signal scaling, conversions and error introduction', icon: Settings, description: 'Converting between signal types and understanding error sources.' },
+  { id: 5, title: 'Signal integrity: noise, ground loops and shielding', icon: Shield, description: 'Maintaining signal quality and preventing interference.' },
+];
+
+export default function InstrumentationModule3() {
+  useSEO({
+    title: 'Module 3: Signal Types and Conditioning | Instrumentation | Elec-Mate',
+    description: 'Signal types, standard ranges, conditioning, scaling and maintaining signal integrity in instrumentation systems.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/instrumentation-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Instrumentation Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">60 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Signal Types, Conditioning, and Scaling
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding signal types, conditioning techniques, and scaling methods
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../instrumentation-module-3-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../instrumentation-course"
+      backLabel="Instrumentation"
+      moduleNumber={3}
+      title="Signal types, conditioning and scaling"
+      description="From raw sensor output to a clean, scaled signal — the techniques that make instrumentation work."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="60 mins"
+      prevModuleHref="../instrumentation-module-2"
+      prevModuleLabel="Sensors and transducers explained"
+      nextModuleHref="../instrumentation-module-4"
+      nextModuleLabel="Measurement of electrical quantities"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../instrumentation-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default InstrumentationModule3;
+}

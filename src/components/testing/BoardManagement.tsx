@@ -25,13 +25,13 @@ const BoardManagement: React.FC<BoardManagementProps> = ({ boards, onAddBoard })
   return (
     <div className="flex items-end justify-between gap-4">
       <div className="min-w-0">
-        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
           Boards
         </p>
         <h2 className="mt-1.5 text-xl sm:text-2xl lg:text-[26px] font-semibold text-white tracking-tight leading-tight">
           Distribution boards
         </h2>
-        <p className="mt-2 text-[12px] text-white/55 tabular-nums">
+        <p className="mt-2 text-[12px] text-white tabular-nums">
           {subtitleParts.join(' · ')}
         </p>
       </div>

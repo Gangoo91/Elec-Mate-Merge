@@ -1,96 +1,48 @@
-import { ArrowLeft, Eye, Cable, Thermometer, TriangleAlert, BarChart3 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Eye, Cable, Thermometer, TriangleAlert, BarChart3 } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const PATTestingModule3 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Cable and Plug Damage Checks',
-      icon: Cable,
-      description: 'Visual inspection of cables and plugs for safety issues',
-    },
-    {
-      id: 2,
-      title: 'Rewiring and Correct Fuse Ratings',
-      icon: Eye,
-      description: 'Assessment of wiring quality and fuse specifications',
-    },
-    {
-      id: 3,
-      title: 'Signs of Overheating or Modification',
-      icon: Thermometer,
-      description: 'Identifying damage and unauthorised modifications',
-    },
-    {
-      id: 4,
-      title: 'Environmental Considerations',
-      icon: TriangleAlert,
-      description: 'Risk assessment for different work environments',
-    },
-    {
-      id: 5,
-      title: 'Risk-Based Approaches to Determine Test Intervals',
-      icon: BarChart3,
-      description: 'Using risk assessment to set testing frequencies',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Cable and plug damage checks', icon: Cable, description: 'Visual inspection of cables and plugs for safety issues.' },
+  { id: 2, title: 'Rewiring and correct fuse ratings', icon: Eye, description: 'Assessment of wiring quality and fuse specifications.' },
+  { id: 3, title: 'Signs of overheating or modification', icon: Thermometer, description: 'Identifying damage and unauthorised modifications.' },
+  { id: 4, title: 'Environmental considerations', icon: TriangleAlert, description: 'Risk assessment for different work environments.' },
+  { id: 5, title: 'Risk-based approaches to test intervals', icon: BarChart3, description: 'Using risk assessment to set testing frequencies.' },
+];
+
+export default function PATTestingModule3() {
+  useSEO({
+    title: 'Module 3: Visual Inspections | PAT Testing | Elec-Mate',
+    description: 'Cable and plug damage, fuse ratings, signs of overheating, environmental considerations and risk-based test intervals.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/pat-testing-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to PAT Testing Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Visual Inspections and Safety Assessment
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Comprehensive visual inspection techniques
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../pat-testing-module-3-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../pat-testing-course"
+      backLabel="PAT testing certification"
+      moduleNumber={3}
+      title="Visual inspections and safety assessment"
+      description="Most PAT failures show before the meter touches them — what to look for and how to risk-assess."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../pat-testing-module-2"
+      prevModuleLabel="Class I, II and III appliances"
+      nextModuleHref="../pat-testing-module-4"
+      nextModuleLabel="Electrical testing methods and equipment"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../pat-testing-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default PATTestingModule3;
+}

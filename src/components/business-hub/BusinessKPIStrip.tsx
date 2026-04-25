@@ -29,7 +29,7 @@ function KPIItem({ label, value, href, dotColour, isLoading }: KPIItemProps) {
           </span>
           <div className="flex items-center gap-1 mt-0.5">
             <div className={`w-1.5 h-1.5 rounded-full ${dotColour}`} />
-            <span className="text-[10px] text-white/40 leading-none uppercase tracking-wide">
+            <span className="text-[10px] text-white leading-none uppercase tracking-wide">
               {label}
             </span>
           </div>

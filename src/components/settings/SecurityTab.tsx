@@ -165,7 +165,7 @@ const SecurityTab = () => {
                       : 'Weak'}
                 </span>
               </div>
-              <p className="mt-2 text-[13px] text-white/70 leading-relaxed max-w-md">
+              <p className="mt-2 text-[13px] text-white leading-relaxed max-w-md">
                 {securityScore >= 80
                   ? 'Your account is well protected.'
                   : securityScore >= 50
@@ -197,7 +197,7 @@ const SecurityTab = () => {
               <div className="mt-2 text-[15px] font-medium text-white">
                 Enable Two-Factor Authentication
               </div>
-              <p className="mt-1 text-[12.5px] text-white/70 leading-relaxed">
+              <p className="mt-1 text-[12.5px] text-white leading-relaxed">
                 Add an extra layer of security to your account.
               </p>
             </div>
@@ -282,7 +282,7 @@ const SecurityTab = () => {
         ) : (
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 space-y-4">
             <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
+              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
                 Current Password
               </Label>
               <div className="relative">
@@ -305,7 +305,7 @@ const SecurityTab = () => {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
+              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
                 New Password
               </Label>
               <div className="relative">
@@ -328,7 +328,7 @@ const SecurityTab = () => {
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-medium text-white/55 uppercase tracking-[0.18em]">
+              <Label className="text-[10px] font-medium text-white uppercase tracking-[0.18em]">
                 Confirm New Password
               </Label>
               <Input

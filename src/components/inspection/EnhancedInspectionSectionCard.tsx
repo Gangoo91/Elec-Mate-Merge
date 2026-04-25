@@ -148,7 +148,7 @@ const EnhancedInspectionSectionCard = ({
                   ? 'bg-green-500/15 text-green-400'
                   : progressPercent > 0
                     ? 'bg-elec-yellow/15 text-elec-yellow'
-                    : 'bg-white/[0.06] text-white/80'
+                    : 'bg-white/[0.06] text-white'
               )}
             >
               {isComplete ? <CheckCircle className="h-3.5 w-3.5" /> : section.sectionNumber}

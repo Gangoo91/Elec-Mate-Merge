@@ -1,90 +1,66 @@
-import { ArrowLeft, Target, Leaf, AlertTriangle, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Target, Leaf, AlertTriangle, FileText } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EnergyEfficiencyModule1 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'The Purpose and Business Case for Efficiency',
-      icon: Target,
-      description: 'Understanding the business benefits of energy efficiency',
-    },
-    {
-      id: 2,
-      title: 'UK Carbon Targets and Net Zero',
-      icon: Leaf,
-      description: 'Government targets and environmental legislation',
-    },
-    {
-      id: 3,
-      title: 'Identifying Waste in Electrical Systems',
-      icon: AlertTriangle,
-      description: 'Common sources of energy waste and inefficiency',
-    },
-    {
-      id: 4,
-      title: 'BS EN and ISO Standards Overview',
-      icon: FileText,
-      description: 'Relevant standards for energy management and efficiency',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'The purpose and business case for efficiency',
+    icon: Target,
+    description: 'Understanding the business benefits of energy efficiency programmes.',
+  },
+  {
+    id: 2,
+    title: 'UK carbon targets and net zero',
+    icon: Leaf,
+    description: 'Government targets, environmental legislation and the path to net zero.',
+  },
+  {
+    id: 3,
+    title: 'Identifying waste in electrical systems',
+    icon: AlertTriangle,
+    description: 'Common sources of energy waste and inefficiency in installations.',
+  },
+  {
+    id: 4,
+    title: 'BS EN and ISO standards overview',
+    icon: FileText,
+    description: 'Relevant standards governing energy management and efficiency programmes.',
+  },
+];
+
+export default function EnergyEfficiencyModule1() {
+  useSEO({
+    title: 'Module 1: Introduction to Energy Efficiency | Elec-Mate',
+    description:
+      'The business case for efficiency, UK carbon targets, identifying waste and applicable BS EN/ISO standards.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/energy-efficiency-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Energy Efficiency Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 1</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">4 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Introduction to Energy Efficiency
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding the fundamentals of energy efficiency and its importance
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../energy-efficiency-module-1-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../energy-efficiency-course"
+      backLabel="Energy efficiency and management"
+      moduleNumber={1}
+      title="Introduction to energy efficiency"
+      description="The fundamentals of energy efficiency and why it matters to every electrical professional."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      nextModuleHref="../energy-efficiency-module-2"
+      nextModuleLabel="Power quality and load analysis"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../energy-efficiency-module-1-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EnergyEfficiencyModule1;
+}

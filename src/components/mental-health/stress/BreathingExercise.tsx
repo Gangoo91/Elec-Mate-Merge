@@ -60,7 +60,7 @@ const BreathingExercise = () => {
   };
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-[hsl(0_0%_12%)]">
       <CardHeader>
         <CardTitle className="text-elec-yellow">4-4-6 Breathing Exercise</CardTitle>
         <p className="text-sm text-white">A calming technique to reduce stress and anxiety</p>
@@ -80,7 +80,7 @@ const BreathingExercise = () => {
           </div>
 
           <div className="text-center space-y-2">
-            <h3 className="text-lg font-medium text-foreground">{phases[phase].instruction}</h3>
+            <h3 className="text-lg font-medium text-white">{phases[phase].instruction}</h3>
             <p className="text-sm text-white">
               Cycle {cycle} • {phase.charAt(0).toUpperCase() + phase.slice(1)} phase
             </p>
@@ -118,7 +118,7 @@ const BreathingExercise = () => {
         </div>
 
         <div className="text-center space-y-2 pt-4 border-t border-elec-yellow/20">
-          <h4 className="font-semibold text-foreground">How it works:</h4>
+          <h4 className="font-semibold text-white">How it works:</h4>
           <div className="grid grid-cols-2 gap-2 text-sm text-white">
             <div>• Inhale for 4 seconds</div>
             <div>• Hold for 4 seconds</div>

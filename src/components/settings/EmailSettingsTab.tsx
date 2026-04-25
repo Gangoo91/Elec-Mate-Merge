@@ -197,7 +197,7 @@ export const EmailSettingsTab = () => {
           </>
         ) : (
           <>
-            <p className="text-[13px] text-white/70 leading-relaxed">
+            <p className="text-[13px] text-white leading-relaxed">
               Connect your {provider === 'gmail' ? 'Gmail' : 'Outlook'} account to send invoices
               and certificates directly from your email address.
             </p>
@@ -224,7 +224,7 @@ export const EmailSettingsTab = () => {
       {/* Overview */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader eyebrow="00" title="Email Integration" />
-        <p className="text-[13px] text-white/70 leading-relaxed max-w-2xl">
+        <p className="text-[13px] text-white leading-relaxed max-w-2xl">
           Send invoices directly from your email account. Connecting Gmail or Outlook improves
           deliverability and keeps messages personal.
         </p>
@@ -257,7 +257,7 @@ export const EmailSettingsTab = () => {
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader eyebrow="03" title="How it works" />
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
-          <p className="text-[13px] text-white/70 leading-relaxed">
+          <p className="text-[13px] text-white leading-relaxed">
             When you connect your email account, invoices and certificates will be sent directly
             from your email address, making them more personal and improving deliverability. Your
             credentials are securely stored and never shared.

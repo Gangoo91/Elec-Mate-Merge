@@ -82,7 +82,7 @@ const IOSStepIndicatorNumbered: React.FC<IOSStepIndicatorNumberedProps> = ({
               <span
                 className={cn(
                   'mt-2 text-ios-caption-2 transition-opacity duration-ios-fast',
-                  isActive ? 'text-white/80 opacity-100' : 'opacity-0'
+                  isActive ? 'text-white opacity-100' : 'opacity-0'
                 )}
               >
                 {step.label}

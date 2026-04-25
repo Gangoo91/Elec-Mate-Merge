@@ -312,7 +312,7 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
                         >
                           {localBackup ? 'Unsynced' : getStatusLabel(report.status)}
                         </span>
-                        <span className="text-[11px] text-white/40 ml-auto">
+                        <span className="text-[11px] text-white ml-auto">
                           {formatTimeAgo(localBackup?.savedAt || report.updated_at)}
                         </span>
                       </div>

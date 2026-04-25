@@ -99,12 +99,12 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
           ? cn(
               'h-8 px-2 rounded-md text-center outline-none',
               // Filled cells blend with the row — no resting pill. Hover/focus/open still highlight.
-              value ? 'text-white bg-transparent' : 'text-white/40 bg-transparent',
+              value ? 'text-white bg-transparent' : 'text-white bg-transparent',
               open && 'bg-elec-yellow/[0.08] ring-1 ring-elec-yellow/40',
               'hover:bg-white/[0.05] focus-visible:bg-white/[0.05] focus-visible:ring-1 focus-visible:ring-elec-yellow/40'
             )
           : 'h-12 px-3 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white focus:border-yellow-500 focus:ring-1 focus:ring-yellow-500 hover:bg-white/[0.08] active:scale-[0.98]',
-        !value && !isTableCell && 'text-white/40',
+        !value && !isTableCell && 'text-white',
         className
       )}
     >
@@ -208,7 +208,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder={allowCustom ? 'Filter or type your own…' : 'Search…'}
-                  className="flex-1 bg-transparent text-base text-white placeholder:text-white/40 outline-none"
+                  className="flex-1 bg-transparent text-base text-white placeholder:text-white outline-none"
                 />
                 {search && (
                   <button
@@ -266,7 +266,7 @@ const ComboboxCell: React.FC<ComboboxCellProps> = ({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Filter..."
-              className="flex-1 bg-transparent text-sm text-white placeholder:text-white/40 outline-none"
+              className="flex-1 bg-transparent text-sm text-white placeholder:text-white outline-none"
               autoFocus
             />
           </div>

@@ -168,7 +168,7 @@ const ResistanceCalculator: React.FC = () => {
                 'px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
                 useTemp
                   ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30'
-                  : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
+                  : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
               )}
             >
               {useTemp ? 'Enabled' : 'Disabled'}
@@ -211,7 +211,7 @@ const ResistanceCalculator: React.FC = () => {
         <div className="space-y-4 animate-fade-in">
           <CalculatorResult category="power">
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <span className="text-sm text-white/60">Resistance Results</span>
+              <span className="text-sm text-white">Resistance Results</span>
               <Badge variant="outline" className="text-amber-400 border-amber-400/50">
                 {material === 'custom' ? 'Custom' : material === 'copper' ? 'Copper' : 'Aluminium'}
               </Badge>
@@ -219,7 +219,7 @@ const ResistanceCalculator: React.FC = () => {
 
             {/* Primary Result */}
             <div className="text-center py-4">
-              <p className="text-sm text-white/60 mb-1">
+              <p className="text-sm text-white mb-1">
                 Resistance at {useTemp ? `${temp}C` : '20C'}
               </p>
               <div
@@ -277,7 +277,7 @@ const ResistanceCalculator: React.FC = () => {
 
             {/* Decimal Places Selector */}
             <div className="flex items-center justify-end gap-2 pt-3 border-t border-white/10">
-              <span className="text-xs text-white/70">Decimals:</span>
+              <span className="text-xs text-white">Decimals:</span>
               <select
                 value={dp}
                 onChange={(e) => setDp(e.target.value)}
@@ -304,7 +304,7 @@ const ResistanceCalculator: React.FC = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showCalculation && 'rotate-180'
                   )}
                 />
@@ -398,7 +398,7 @@ const ResistanceCalculator: React.FC = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showGuidance && 'rotate-180'
                   )}
                 />
@@ -436,7 +436,7 @@ const ResistanceCalculator: React.FC = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showBsRegs && 'rotate-180'
                   )}
                 />

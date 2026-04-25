@@ -208,7 +208,7 @@ export function PATTesterAutocomplete({
         className
       )}
     >
-      <span className={cn('truncate', !hasValue && 'text-white/40')}>{displayValue}</span>
+      <span className={cn('truncate', !hasValue && 'text-white')}>{displayValue}</span>
     </Button>
   );
 

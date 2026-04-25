@@ -21,7 +21,7 @@ const IOSTextarea = React.forwardRef<HTMLTextAreaElement, IOSTextareaProps>(
     const getCharCountColor = () => {
       if (maxChars && charCount > maxChars) return 'text-red-400';
       if (minChars && charCount >= minChars) return 'text-emerald-400';
-      if (charCount > 0) return 'text-white/60';
+      if (charCount > 0) return 'text-white';
       return 'text-white';
     };
 
@@ -33,7 +33,7 @@ const IOSTextarea = React.forwardRef<HTMLTextAreaElement, IOSTextareaProps>(
             className={cn(
               'block text-ios-subhead font-medium',
               'transition-colors duration-ios-fast',
-              isFocused ? 'text-elec-yellow' : 'text-white/80',
+              isFocused ? 'text-elec-yellow' : 'text-white',
               error && 'text-red-400'
             )}
           >

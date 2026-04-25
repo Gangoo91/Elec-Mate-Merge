@@ -665,30 +665,39 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
     <div class="section">
       <div class="section-title">Part 2 &mdash; Presence and Adequacy of Installation Earthing &amp; Bonding Arrangements (Regulation 132.16)</div>
 
+      <!-- A4:2026 — six earthing arrangements (TN-S/TN-C-S(PME)/TN-C-S(PNB)/TT/TN-C/IT) -->
       <div class="inline-form">
         <div class="inline-group">
           <span class="inline-label">Earthing Arrangement:</span>
           <div class="checkbox-row">
             <div class="checkbox-item">
-              ${checkbox(data.earthing.type === 'TN-C')}
-              <label>TN-C</label>
-            </div>
-            <div class="checkbox-item">
               ${checkbox(data.earthing.type === 'TN-S')}
               <label>TN-S</label>
             </div>
             <div class="checkbox-item">
-              ${checkbox(data.earthing.type === 'TN-C-S')}
-              <label>TN-C-S</label>
+              ${checkbox(data.earthing.type === 'TN-C-S-PME' || data.earthing.type === 'TN-C-S')}
+              <label>TN-C-S (PME)</label>
+            </div>
+            <div class="checkbox-item">
+              ${checkbox(data.earthing.type === 'TN-C-S-PNB')}
+              <label>TN-C-S (PNB)</label>
             </div>
             <div class="checkbox-item">
               ${checkbox(data.earthing.type === 'TT')}
               <label>TT</label>
             </div>
+            <div class="checkbox-item">
+              ${checkbox(data.earthing.type === 'TN-C')}
+              <label>TN-C</label>
+            </div>
+            <div class="checkbox-item">
+              ${checkbox(data.earthing.type === 'IT')}
+              <label>IT</label>
+            </div>
           </div>
         </div>
         <div class="inline-group">
-          <span class="inline-label">Z<sub>db</sub> (&Omega;):</span>
+          <span class="inline-label">Z<sub>db</sub> (&Omega;) supplying the final circuit:</span>
           <span class="inline-value">${esc(data.earthing.zdb)}</span>
         </div>
       </div>

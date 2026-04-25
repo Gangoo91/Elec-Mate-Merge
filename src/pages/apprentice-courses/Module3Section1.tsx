@@ -1,54 +1,53 @@
-import { ArrowLeft, Cable, FileText, Zap, Shield, Package } from 'lucide-react';
+import { Cable, FileText, Zap, Shield, Package } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 
 const subsections = [
   {
     number: 'Subsection 1',
-    title: 'Overview of Common Wiring Systems',
+    title: 'Overview of common wiring systems',
     description: 'Introduction to different types of electrical wiring systems',
     icon: Cable,
     href: '1-1',
   },
   {
     number: 'Subsection 2',
-    title: 'Twin and Earth (Flat PVC Sheathed Cable)',
+    title: 'Twin and earth (flat PVC sheathed cable)',
     description: 'Understanding twin and earth cable construction and applications',
     icon: FileText,
     href: '1-2',
   },
   {
     number: 'Subsection 3',
-    title: 'Singles in Conduit or Trunking',
+    title: 'Singles in conduit or trunking',
     description: 'Single core cables used in containment systems',
     icon: Zap,
     href: '1-3',
   },
   {
     number: 'Subsection 4',
-    title: 'Steel Wire Armoured (SWA) Cables',
+    title: 'Steel wire armoured (SWA) cables',
     description: 'Construction and applications of SWA cables',
     icon: Shield,
     href: '1-4',
   },
   {
     number: 'Subsection 5',
-    title: 'Flexible Cords and Flex Outlets',
+    title: 'Flexible cords and flex outlets',
     description: 'Flexible cables and their connection points',
     icon: Package,
     href: '1-5',
   },
   {
     number: 'Subsection 6',
-    title: 'Data, Signal, and Low Voltage Cabling (Basic Awareness)',
+    title: 'Data, signal and low voltage cabling (basic awareness)',
     description: 'Introduction to data and low voltage cable systems',
     icon: Cable,
     href: '1-6',
   },
   {
     number: 'Subsection 7',
-    title: 'Selecting Cables Based on Application and Environment',
+    title: 'Selecting cables based on application and environment',
     description: 'Criteria for choosing appropriate cables for different installations',
     icon: FileText,
     href: '1-7',
@@ -57,57 +56,29 @@ const subsections = [
 
 const Section1 = () => {
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level2/module3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Section 1</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Types of Wiring Systems and Cable Types
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Overview of different wiring systems, cable classifications and their applications
-            </p>
-          </header>
-
-          {/* Subsections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level2/module3"
+      backLabel="Module 3"
+      moduleNumber={3}
+      sectionNumber={1}
+      title="Wiring systems and cable types"
+      description="Overview of different wiring systems, cable classifications and their applications."
+      tone="emerald"
+      subsectionsCount={subsections.length}
+      nextSectionHref="../section2"
+      nextSectionLabel="Cable containment systems"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

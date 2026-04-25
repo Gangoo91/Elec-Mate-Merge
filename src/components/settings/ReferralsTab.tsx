@@ -156,7 +156,7 @@ const ReferralsTab: React.FC = () => {
                 {referralCode || '…'}
               </span>
             </div>
-            <p className="text-[13px] text-white/70 mb-5 text-center max-w-sm leading-relaxed">
+            <p className="text-[13px] text-white mb-5 text-center max-w-sm leading-relaxed">
               Share with your mates — free month for both of you.
             </p>
 
@@ -164,7 +164,7 @@ const ReferralsTab: React.FC = () => {
               onClick={copyLink}
               className="w-full max-w-sm flex items-center gap-3 p-3 rounded-xl bg-[#0a0a0a] border border-white/[0.08] touch-manipulation hover:bg-white/[0.04] transition-colors mb-4"
             >
-              <span className="font-mono text-[11px] text-white/70 flex-1 truncate text-left">
+              <span className="font-mono text-[11px] text-white flex-1 truncate text-left">
                 {referralUrl || 'Loading…'}
               </span>
               <span className="text-[12px] font-medium text-elec-yellow/90 shrink-0">
@@ -248,7 +248,7 @@ const ReferralsTab: React.FC = () => {
             )}
           </div>
 
-          <div className="text-[13px] text-white/70 leading-relaxed">
+          <div className="text-[13px] text-white leading-relaxed">
             {successfulReferrals >= 1 ? (
               <span className="text-elec-yellow font-medium">
                 Free month claimed — nice one. Keep sharing to help your mates.

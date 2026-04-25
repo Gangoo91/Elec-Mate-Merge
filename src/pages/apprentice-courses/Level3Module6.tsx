@@ -1,124 +1,80 @@
-import {
-  ArrowLeft,
-  PenTool,
-  Calculator,
-  Settings,
-  MapPin,
-  FileText,
-  CheckCircle,
-  Zap,
-} from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { PenTool, Calculator, Settings, MapPin, FileText, CheckCircle } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: 'Section 1',
-    title: 'Design Principles and Requirements',
-    description:
-      'Understanding fundamental design principles, compliance requirements and client specifications',
+    id: 1,
+    title: 'Design principles and requirements',
+    description: 'Fundamental design principles, compliance requirements and client specifications.',
     icon: PenTool,
-    href: '../level3-module6-section1',
   },
   {
-    number: 'Section 2',
-    title: 'Circuit Design Calculations',
-    description:
-      'Essential calculations for circuit design including current ratings, cable sizing and protection',
+    id: 2,
+    title: 'Circuit design calculations',
+    description: 'Current ratings, cable sizing, voltage drop and protection calculations.',
     icon: Calculator,
-    href: '../level3-module6-section2',
   },
   {
-    number: 'Section 3',
-    title: 'Selection of Protective Devices and Equipment',
-    description:
-      'Choosing appropriate protective devices, equipment and accessories for electrical installations',
+    id: 3,
+    title: 'Selection of protective devices and equipment',
+    description: 'Choosing appropriate protective devices, equipment and accessories for electrical installations.',
     icon: Settings,
-    href: '../level3-module6-section3',
   },
   {
-    number: 'Section 4',
-    title: 'Designing for Special Installations and Locations',
-    description:
-      'Design considerations for special locations and installations with specific requirements',
+    id: 4,
+    title: 'Designing for special installations and locations',
+    description: 'Design considerations for special locations and installations with specific requirements.',
     icon: MapPin,
-    href: '../level3-module6-section4',
   },
   {
-    number: 'Section 5',
-    title: 'System Documentation and Drawings',
-    description: 'Creating comprehensive design documentation, drawings and specifications',
+    id: 5,
+    title: 'System documentation and drawings',
+    description: 'Producing comprehensive design documentation, drawings and specifications.',
     icon: FileText,
-    href: '../level3-module6-section5',
   },
   {
-    number: 'Section 6',
-    title: 'Verification of Design',
-    description: 'Checking and verifying electrical system designs for compliance and performance',
+    id: 6,
+    title: 'Verification of design',
+    description: 'Checking and verifying electrical system designs for compliance and performance.',
     icon: CheckCircle,
-    href: '../level3-module6-section6',
   },
 ];
 
-const learningOutcomes = [
-  'Understand fundamental electrical design principles and compliance requirements',
-  'Perform circuit design calculations for cable sizing and protection',
-  'Select appropriate protective devices and equipment for installations',
-  'Design electrical systems for special locations and requirements',
-  'Create comprehensive design documentation and drawings',
-  'Verify electrical designs for compliance with BS7671',
-];
-
-const Level3Module6 = () => {
-  useSEO(
-    'Module 6: Electrical Systems Design - Level 3 Electrical Course',
-    'Master electrical systems design principles, calculations and compliance with BS7671'
-  );
+export default function Level3Module6() {
+  useSEO({
+    title: 'Module 6: Electrical Systems Design | Level 3 Electrical Installation | Elec-Mate',
+    description:
+      'Design principles, circuit calculations, protective device selection, special installations, documentation and design verification to BS 7671.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Level 3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Sections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {sections.map((section, index) => (
-                <ModuleCard
-                  key={index}
-                  number={section.number}
-                  title={section.title}
-                  description={section.description}
-                  icon={section.icon}
-                  href={section.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../level3"
+      backLabel="Level 3 electrical installation"
+      moduleNumber={6}
+      title="Electrical systems design"
+      description="Design principles, circuit calculations, protective device selection, special locations, documentation and verification."
+      tone="blue"
+      sectionsCount={sections.length}
+      duration="60 mins"
+      prevModuleHref="../level3-module5"
+      prevModuleLabel="Inspection, testing and commissioning"
+      nextModuleHref="../level3-module7"
+      nextModuleLabel="Career awareness and professional development"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../level3-module6-section${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default Level3Module6;
+}

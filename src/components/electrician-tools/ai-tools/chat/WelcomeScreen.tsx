@@ -42,8 +42,9 @@ const exampleQueries: ExampleQuery[] = [
 
 export function WelcomeScreen({ onSelectQuery }: WelcomeScreenProps) {
   return (
-    <div className="mx-auto w-full max-w-3xl px-1 sm:px-2 py-10 sm:py-14">
-      {/* Hero — editorial, text-led, no tile */}
+    <div className="mx-auto w-full max-w-5xl px-1 sm:px-4 lg:px-6 py-10 sm:py-14">
+      {/* Hero — editorial, text-led, no tile. Internal cap on text width so
+          long-line readability stays good even when the outer column widens. */}
       <motion.div
         initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
@@ -53,14 +54,14 @@ export function WelcomeScreen({ onSelectQuery }: WelcomeScreenProps) {
         {/* Subtle top hairline accent */}
         <div className="absolute inset-x-0 -top-2 h-px bg-gradient-to-r from-transparent via-elec-yellow/60 to-transparent opacity-70" />
 
-        <div className="pt-4">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+        <div className="pt-4 max-w-3xl">
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             BS 7671 A4:2026 · ASSISTANT
           </div>
           <h1 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.05]">
             Every reg. Every table. On tap.
           </h1>
-          <p className="mt-4 max-w-2xl text-[13px] sm:text-sm text-white/70 leading-relaxed">
+          <p className="mt-4 max-w-2xl text-[13px] sm:text-sm text-white leading-relaxed">
             Ask anything about BS 7671 A4:2026 — regulations, calculations, test procedures,
             installation practice. Every answer is cited back to the exact regulation.
           </p>
@@ -72,13 +73,15 @@ export function WelcomeScreen({ onSelectQuery }: WelcomeScreenProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.18 }}
-        className="mt-10 sm:mt-12 text-[10px] font-medium uppercase tracking-[0.22em] text-white/55"
+        className="mt-10 sm:mt-12 text-[10px] font-medium uppercase tracking-[0.22em] text-white"
       >
         Try asking
       </motion.div>
 
-      {/* Four editorial cards — no icons */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+      {/* Editorial cards — 1 col on mobile, 2 on tablet, 2 wide on desktop with
+          extra breathing room. Lets each card feel substantial on a 1440 px+
+          screen instead of being squashed in the centre. */}
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 lg:gap-5">
         {exampleQueries.map((item, idx) => (
           <motion.button
             key={item.category}
@@ -90,7 +93,7 @@ export function WelcomeScreen({ onSelectQuery }: WelcomeScreenProps) {
               'group relative overflow-hidden text-left',
               'bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]',
               'border border-white/[0.06] rounded-2xl',
-              'p-5 sm:p-6',
+              'p-5 sm:p-6 lg:p-7 lg:min-h-[180px]',
               'transition-colors touch-manipulation',
               'active:scale-[0.995]'
             )}
@@ -117,7 +120,7 @@ export function WelcomeScreen({ onSelectQuery }: WelcomeScreenProps) {
               </span>
             </div>
 
-            <p className="mt-4 text-[16px] sm:text-[17px] font-semibold text-white leading-snug tracking-tight">
+            <p className="mt-4 text-[16px] sm:text-[17px] lg:text-[18px] font-semibold text-white leading-snug tracking-tight">
               {item.query}
             </p>
           </motion.button>

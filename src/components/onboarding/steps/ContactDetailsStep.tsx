@@ -27,7 +27,7 @@ export function ContactDetailsStep({ formData, onChange }: StepProps) {
   }, []);
 
   const inputClass =
-    'h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20';
+    'h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[16px] text-white placeholder:text-white outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20';
 
   return (
     <div className="space-y-6">
@@ -81,7 +81,7 @@ export function ContactDetailsStep({ formData, onChange }: StepProps) {
             onChange={(e) => onChange({ ...formData, address: e.target.value })}
             placeholder="123 High Street&#10;London&#10;SW1A 1AA"
             rows={3}
-            className="w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 py-3 text-[16px] leading-[1.6] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20"
+            className="w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 py-3 text-[16px] leading-[1.6] text-white placeholder:text-white outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20"
           />
         </div>
       </div>

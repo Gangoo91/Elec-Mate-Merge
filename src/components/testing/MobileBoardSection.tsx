@@ -380,7 +380,7 @@ const MobileBoardSection: React.FC<MobileBoardSectionProps> = ({
         <div className="bg-background">
           {circuitCount === 0 ? (
             <div className="p-6 text-center space-y-3">
-              <p className="text-xs text-white/40">No circuits — tap Add Circuit or AI Scan</p>
+              <p className="text-xs text-white">No circuits — tap Add Circuit or AI Scan</p>
               <Button
                 onClick={() => onAddCircuit(board.id)}
                 className="h-11 bg-elec-yellow text-black font-medium hover:bg-elec-yellow/90 touch-manipulation"

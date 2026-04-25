@@ -1,90 +1,66 @@
-import { ArrowLeft, BookOpen, Award, Building, FileCheck } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { BookOpen, Award, Building, FileCheck } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const DataCablingModule6 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'TIA/EIA 568 and ISO/IEC 11801 Overview',
-      icon: BookOpen,
-      description: 'International cabling standards and requirements',
-    },
-    {
-      id: 2,
-      title: 'Class D, E, EA, F Standards',
-      icon: Award,
-      description: 'Performance class specifications and applications',
-    },
-    {
-      id: 3,
-      title: 'Building and Campus Standards',
-      icon: Building,
-      description: 'Installation standards for buildings and campuses',
-    },
-    {
-      id: 4,
-      title: 'Record-Keeping and Documentation Requirements',
-      icon: FileCheck,
-      description: 'Documentation standards and record maintenance',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'TIA/EIA 568 and ISO/IEC 11801 overview',
+    icon: BookOpen,
+    description: 'International cabling standards and their requirements.',
+  },
+  {
+    id: 2,
+    title: 'Class D, E, EA and F standards',
+    icon: Award,
+    description: 'Performance class specifications and their applications.',
+  },
+  {
+    id: 3,
+    title: 'Building and campus standards',
+    icon: Building,
+    description: 'Installation standards for buildings and campus environments.',
+  },
+  {
+    id: 4,
+    title: 'Record-keeping and documentation requirements',
+    icon: FileCheck,
+    description: 'Documentation standards and record maintenance.',
+  },
+];
+
+export default function DataCablingModule6() {
+  useSEO({
+    title: 'Module 6: TIA/EIA & ISO Standards | Data Cabling | Elec-Mate',
+    description:
+      'TIA/EIA 568, ISO/IEC 11801, Class D/E/EA/F standards and documentation requirements.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/data-cabling-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Data Cabling Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 6</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">4 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">40 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            TIA/EIA and ISO Cabling Standards Explained
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            International standards and documentation requirements
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../data-cabling-module-6-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../data-cabling-course"
+      backLabel="Data and communications cabling"
+      moduleNumber={6}
+      title="TIA/EIA and ISO cabling standards explained"
+      description="International standards and the documentation they require."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="40 mins"
+      prevModuleHref="../data-cabling-module-5"
+      prevModuleLabel="Termination and certification procedures"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../data-cabling-module-6-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default DataCablingModule6;
+}

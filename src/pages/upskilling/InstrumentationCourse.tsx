@@ -1,142 +1,53 @@
-import React from 'react';
-import {
-  ArrowLeft,
-  BookOpen,
-  Thermometer,
-  Zap,
-  BarChart,
-  RotateCcw,
-  Target,
-  Cable,
-  Search,
-  Award,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { BookOpen, Thermometer, Zap, BarChart, RotateCcw, Target, Cable, Search, Award } from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
+import { CourseShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const InstrumentationCourse = () => {
-  const modules: Array<{
-    id: number;
-    title: string;
-    description: string;
-    duration: string;
-    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-    isExam?: boolean;
-  }> = [
-    {
-      id: 1,
-      title: 'Introduction to Electrical Instrumentation',
-      description: 'Fundamentals and applications of instrumentation',
-      duration: '50 mins',
-      icon: BookOpen,
-    },
-    {
-      id: 2,
-      title: 'Sensors and Transducers Explained',
-      description: 'Function, types, and selection of sensors',
-      duration: '55 mins',
-      icon: Thermometer,
-    },
-    {
-      id: 3,
-      title: 'Signal Types, Conditioning, and Scaling',
-      description: 'Signal processing and conditioning techniques',
-      duration: '60 mins',
-      icon: Zap,
-    },
-    {
-      id: 4,
-      title: 'Measurement of Electrical Quantities',
-      description: 'Techniques and equipment for measurements',
-      duration: '50 mins',
-      icon: BarChart,
-    },
-    {
-      id: 5,
-      title: 'Control Loops and Feedback Systems',
-      description: 'Control theory and feedback systems',
-      duration: '65 mins',
-      icon: RotateCcw,
-    },
-    {
-      id: 6,
-      title: 'Calibration Methods and Standards',
-      description: 'Calibration procedures and certification',
-      duration: '45 mins',
-      icon: Target,
-    },
-    {
-      id: 7,
-      title: 'Instrumentation Wiring and 4–20mA Loops',
-      description: 'Current loop systems and wiring standards',
-      duration: '55 mins',
-      icon: Cable,
-    },
-    {
-      id: 8,
-      title: 'Fault Finding, Diagnostics, and Maintenance',
-      description: 'Troubleshooting and maintenance procedures',
-      duration: '60 mins',
-      icon: Search,
-    },
-    {
-      id: 9,
-      title: 'Mock Exam',
-      description: 'Test your knowledge',
-      duration: '120 mins',
-      icon: Award,
-      isExam: true,
-    },
-  ];
+const modules = [
+  { moduleNumber: 1, title: 'Introduction to electrical instrumentation', description: 'Fundamentals, applications and key industry standards.', icon: BookOpen, duration: '50 mins', link: '../instrumentation-module-1' },
+  { moduleNumber: 2, title: 'Sensors and transducers explained', description: 'Temperature, pressure, flow, level and proximity sensors.', icon: Thermometer, duration: '55 mins', link: '../instrumentation-module-2' },
+  { moduleNumber: 3, title: 'Signal types, conditioning and scaling', description: '4-20 mA, 0-10 V, filtering, isolation and signal integrity.', icon: Zap, duration: '60 mins', link: '../instrumentation-module-3' },
+  { moduleNumber: 4, title: 'Measurement of electrical quantities', description: 'Voltage, current, resistance and frequency — accuracy and equipment.', icon: BarChart, duration: '50 mins', link: '../instrumentation-module-4' },
+  { moduleNumber: 5, title: 'Control loops and feedback systems', description: 'Open vs closed loops, PID basics, tuning and worked examples.', icon: RotateCcw, duration: '65 mins', link: '../instrumentation-module-5' },
+  { moduleNumber: 6, title: 'Calibration methods and standards', description: 'Equipment, procedures, certificates and UKAS traceability.', icon: Target, duration: '45 mins', link: '../instrumentation-module-6' },
+  { moduleNumber: 7, title: 'Instrumentation wiring and 4-20 mA loops', description: 'Loop power, design, intrinsic safety and loop testing.', icon: Cable, duration: '55 mins', link: '../instrumentation-module-7' },
+  { moduleNumber: 8, title: 'Fault finding, diagnostics and maintenance', description: 'Systematic diagnosis, preventive maintenance and reporting.', icon: Search, duration: '60 mins', link: '../instrumentation-module-8' },
+  { moduleNumber: 9, title: 'Mock exam', description: 'Comprehensive assessment covering every instrumentation module.', icon: Award, duration: '120 mins', link: '../instrumentation-module-9', isExam: true },
+];
+
+export default function InstrumentationCourse() {
+  useSEO({
+    title: 'Instrumentation | Professional Upskilling | Elec-Mate',
+    description:
+      'Industrial instrumentation systems, control loops and measurement techniques — sensors, signal conditioning, calibration, 4-20 mA loops and fault finding.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Courses
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Course Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Instrumentation</h1>
-          <p className="text-white text-sm sm:text-base">
-            Industrial instrumentation systems, control loops, and measurement techniques
-          </p>
-        </div>
-
-        {/* Module Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {modules.map((module, index) => (
-            <ModuleCard
-              key={module.id}
-              to={`../instrumentation-module-${module.id}`}
-              moduleNumber={module.id}
-              title={module.title}
-              description={module.description}
-              duration={module.duration}
-              icon={module.icon}
-              isExam={module.isExam}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <CourseShell
+      backTo="/electrician/upskilling"
+      backLabel="Professional upskilling"
+      eyebrow="Professional upskilling"
+      title="Instrumentation"
+      description="Industrial instrumentation, control loops and measurement techniques for the modern electrician."
+      tone="cyan"
+      level="Specialist"
+      modulesCount={modules.length}
+      pagesCount="200+"
+      totalDuration="9h"
+    >
+      {modules.map((mod, index) => (
+        <ModuleCard
+          key={mod.moduleNumber}
+          to={mod.link}
+          moduleNumber={mod.moduleNumber}
+          title={mod.title}
+          description={mod.description}
+          icon={mod.icon}
+          duration={mod.duration}
+          isExam={mod.isExam}
+          index={index}
+        />
+      ))}
+    </CourseShell>
   );
-};
-
-export default InstrumentationCourse;
+}

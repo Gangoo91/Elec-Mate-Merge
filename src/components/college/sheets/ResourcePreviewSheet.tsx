@@ -115,14 +115,14 @@ export function ResourcePreviewSheet({
         <SheetHeader className="border-b border-white/[0.06] px-5 sm:px-6 py-4 shrink-0 text-left">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 flex-1">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                 {kindLabel}
               </div>
               <SheetTitle className="mt-1 text-[17px] sm:text-[18px] font-semibold text-white tracking-tight truncate max-w-full">
                 {resource?.title}
               </SheetTitle>
               {resource?.description && (
-                <p className="mt-1 text-[12.5px] text-white/70 leading-relaxed line-clamp-2">
+                <p className="mt-1 text-[12.5px] text-white leading-relaxed line-clamp-2">
                   {resource.description}
                 </p>
               )}
@@ -141,7 +141,7 @@ export function ResourcePreviewSheet({
 
               <div className="px-5 sm:px-6 py-4 space-y-4">
                 {/* Meta */}
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11.5px] text-white/70">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11.5px] text-white">
                   {resource.size_bytes && (
                     <span className="tabular-nums">
                       {prettyBytes(resource.size_bytes)}
@@ -153,7 +153,7 @@ export function ResourcePreviewSheet({
                     </span>
                   )}
                   {resource.mime_type && (
-                    <span className="font-mono text-white/55">
+                    <span className="font-mono text-white">
                       {resource.mime_type}
                     </span>
                   )}
@@ -174,7 +174,7 @@ export function ResourcePreviewSheet({
                     {resource.tags.map((t) => (
                       <span
                         key={t}
-                        className="text-[11px] text-white/80 bg-white/[0.04] border border-white/[0.06] rounded-full px-2 py-0.5"
+                        className="text-[11px] text-white bg-white/[0.04] border border-white/[0.06] rounded-full px-2 py-0.5"
                       >
                         {t}
                       </span>
@@ -260,7 +260,7 @@ function PreviewSurface({
   }
   if (!url) {
     return (
-      <div className="h-[200px] flex items-center justify-center bg-[hsl(0_0%_9%)] border-b border-white/[0.06] text-[12.5px] text-white/55">
+      <div className="h-[200px] flex items-center justify-center bg-[hsl(0_0%_9%)] border-b border-white/[0.06] text-[12.5px] text-white">
         Preview unavailable.
       </div>
     );
@@ -295,7 +295,7 @@ function PreviewSurface({
     return (
       <div className="bg-[hsl(0_0%_9%)] border-b border-white/[0.06] p-6">
         <div className="max-w-xl mx-auto">
-          <div className="text-[11px] uppercase tracking-[0.22em] text-white/55 mb-3 text-center">
+          <div className="text-[11px] uppercase tracking-[0.22em] text-white mb-3 text-center">
             Audio
           </div>
           <audio src={url} controls className="w-full" preload="metadata" />
@@ -317,13 +317,13 @@ function PreviewSurface({
   if (resource.kind === 'link' && resource.external_url) {
     return (
       <div className="bg-[hsl(0_0%_9%)] border-b border-white/[0.06] px-6 py-8 text-center">
-        <div className="text-[10px] uppercase tracking-[0.22em] text-white/55 mb-2">
+        <div className="text-[10px] uppercase tracking-[0.22em] text-white mb-2">
           External link
         </div>
         <div className="text-[13px] text-white font-mono break-all">
           {resource.external_url}
         </div>
-        <p className="mt-3 text-[12px] text-white/60">
+        <p className="mt-3 text-[12px] text-white">
           Use "Open link →" below to view in a new tab.
         </p>
       </div>
@@ -331,7 +331,7 @@ function PreviewSurface({
   }
 
   return (
-    <div className="bg-[hsl(0_0%_9%)] border-b border-white/[0.06] px-6 py-10 text-center text-[12.5px] text-white/60">
+    <div className="bg-[hsl(0_0%_9%)] border-b border-white/[0.06] px-6 py-10 text-center text-[12.5px] text-white">
       This file type doesn't support inline preview — use Download to open it.
     </div>
   );

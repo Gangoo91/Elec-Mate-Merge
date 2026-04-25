@@ -102,7 +102,7 @@ const EICInspectionChecklistCard: React.FC<EICInspectionChecklistCardProps> = ({
                           : option.value === 'limitation'
                             ? 'bg-amber-500/20 border border-amber-500/40 text-amber-400'
                             : 'bg-white/[0.08] border border-white/[0.15] text-white'
-                        : 'bg-white/[0.03] border border-white/[0.06] text-white/60'
+                        : 'bg-white/[0.03] border border-white/[0.06] text-white'
                     )}
                   >
                     {option.label}

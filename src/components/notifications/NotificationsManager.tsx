@@ -89,7 +89,7 @@ function SectionHeading({ title, count }: { title: string; count?: number }) {
       <div className="flex items-center justify-between">
         <h2 className="text-xs font-medium text-white uppercase tracking-wider">{title}</h2>
         {count !== undefined && count > 0 && (
-          <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-white/60">{count}</span>
+          <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-white">{count}</span>
         )}
       </div>
     </div>
@@ -267,7 +267,7 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
                 <button className="w-full flex items-center justify-between card-surface-interactive rounded-2xl p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
                   <div className="text-left">
                     <p className="text-[15px] font-semibold text-white">Building Control Guide</p>
-                    <p className="text-[13px] text-white/40">What to submit</p>
+                    <p className="text-[13px] text-white">What to submit</p>
                   </div>
                   {isFormGuideOpen ? (
                     <ChevronUp className="h-5 w-5 text-white" />
@@ -394,7 +394,7 @@ export const NotificationsManager = ({ onNavigate, onBeforeNavigate, compact = f
             <button className="w-full flex items-center justify-between card-surface-interactive rounded-2xl p-4 touch-manipulation h-14 active:scale-[0.98] transition-all">
               <div className="text-left">
                 <p className="text-[15px] font-semibold text-white">Building Control Guide</p>
-                <p className="text-[13px] text-white/40">What to submit</p>
+                <p className="text-[13px] text-white">What to submit</p>
               </div>
               {isFormGuideOpen ? <ChevronUp className="h-5 w-5 text-white" /> : <ChevronDown className="h-5 w-5 text-white" />}
             </button>

@@ -1,48 +1,47 @@
-import { ArrowLeft, Droplets, Cloud, Factory, Car, HardHat, Flame, Zap } from 'lucide-react';
+import { Droplets, Cloud, Factory, Car, HardHat, Flame } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '4.1',
-    title: 'Bathrooms and Locations Containing a Bath/Shower',
+    title: 'Bathrooms and locations containing a bath/shower',
     description: 'Special design considerations for bathrooms and wet locations',
     icon: Droplets,
     href: '../level3-module6-section4-1',
   },
   {
     number: '4.2',
-    title: 'Outdoor Installations and External Influences (IP ratings, UV, weatherproofing)',
+    title: 'Outdoor installations and external influences (IP ratings, UV, weatherproofing)',
     description: 'Designing for outdoor installations considering environmental factors',
     icon: Cloud,
     href: '../level3-module6-section4-2',
   },
   {
     number: '4.3',
-    title: 'Agricultural and Industrial Installations',
+    title: 'Agricultural and industrial installations',
     description: 'Special requirements for agricultural and industrial electrical installations',
     icon: Factory,
     href: '../level3-module6-section4-3',
   },
   {
     number: '4.4',
-    title: 'EV Charging Points (OZEV guidance, Section 722)',
+    title: 'EV charging points (OZEV guidance, Section 722)',
     description: 'Design requirements for electric vehicle charging installations',
     icon: Car,
     href: '../level3-module6-section4-4',
   },
   {
     number: '4.5',
-    title: 'Temporary Installations (construction sites, exhibitions)',
+    title: 'Temporary installations (construction sites, exhibitions)',
     description: 'Design considerations for temporary electrical installations',
     icon: HardHat,
     href: '../level3-module6-section4-5',
   },
   {
     number: '4.6',
-    title: 'Fire Alarm, Emergency Lighting and Data/Communications Integration',
+    title: 'Fire alarm, emergency lighting and data/communications integration',
     description: 'Integrating safety systems and communications into electrical designs',
     icon: Flame,
     href: '../level3-module6-section4-6',
@@ -56,46 +55,31 @@ const Level3Module6Section4 = () => {
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 6
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module6"
+      backLabel="Module 6"
+      moduleNumber={6}
+      sectionNumber={4}
+      title="Designing for special installations and locations"
+      description="Design considerations for special locations and installations with specific requirements."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../level3-module6-section3"
+      prevSectionLabel="Selection of protective devices and equipment"
+      nextSectionHref="../level3-module6-section5"
+      nextSectionLabel="System documentation and drawings"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

@@ -1,96 +1,74 @@
-import { ArrowLeft, Wrench, TestTube, BarChart, AlertCircle, Search } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Wrench, TestTube, BarChart, AlertCircle, Search } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const DataCablingModule5 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Copper Termination Tools and Techniques',
-      icon: Wrench,
-      description: 'Tools and methods for copper cable termination',
-    },
-    {
-      id: 2,
-      title: 'Link Testing vs Channel Testing',
-      icon: TestTube,
-      description: 'Different testing methodologies and applications',
-    },
-    {
-      id: 3,
-      title: 'Test Equipment and Results Interpretation',
-      icon: BarChart,
-      description: 'Testing equipment operation and result analysis',
-    },
-    {
-      id: 4,
-      title: 'Cable Map and Test Certificate Generation',
-      icon: AlertCircle,
-      description: 'Documentation and certification processes',
-    },
-    {
-      id: 5,
-      title: 'Fault Diagnosis and Retermination',
-      icon: Search,
-      description: 'Troubleshooting and remedial work procedures',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Copper termination tools and techniques',
+    icon: Wrench,
+    description: 'Tools and methods for accurate copper cable termination.',
+  },
+  {
+    id: 2,
+    title: 'Link testing vs channel testing',
+    icon: TestTube,
+    description: 'Different testing methodologies and when each applies.',
+  },
+  {
+    id: 3,
+    title: 'Test equipment and results interpretation',
+    icon: BarChart,
+    description: 'Operating cable certifiers and reading the result data.',
+  },
+  {
+    id: 4,
+    title: 'Cable map and test certificate generation',
+    icon: AlertCircle,
+    description: 'Documentation, cable maps and the certification deliverable.',
+  },
+  {
+    id: 5,
+    title: 'Fault diagnosis and re-termination',
+    icon: Search,
+    description: 'Troubleshooting and remedial work procedures.',
+  },
+];
+
+export default function DataCablingModule5() {
+  useSEO({
+    title: 'Module 5: Termination & Certification | Data Cabling | Elec-Mate',
+    description:
+      'Copper termination, link vs channel testing, results interpretation and fault diagnosis.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/data-cabling-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Data Cabling Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 5</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Termination and Certification Procedures
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Cable termination, testing, and certification processes
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../data-cabling-module-5-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../data-cabling-course"
+      backLabel="Data and communications cabling"
+      moduleNumber={5}
+      title="Termination and certification procedures"
+      description="Cable termination, testing and the certification process."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../data-cabling-module-4"
+      prevModuleLabel="Containment, labelling and installation best practice"
+      nextModuleHref="../data-cabling-module-6"
+      nextModuleLabel="TIA/EIA and ISO cabling standards explained"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../data-cabling-module-5-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default DataCablingModule5;
+}

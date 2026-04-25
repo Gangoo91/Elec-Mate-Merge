@@ -1,96 +1,74 @@
-import { ArrowLeft, Calculator, Cable, Shield, Folder, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Calculator, Cable, Shield, Folder, Zap } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EVChargingModule3 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Load Estimation and Diversity in Practice',
-      icon: Calculator,
-      description: 'Calculating electrical loads and applying diversity factors',
-    },
-    {
-      id: 2,
-      title: 'Cable Types, Ratings, and Volt Drop',
-      icon: Cable,
-      description: 'Selecting appropriate cables and calculating voltage drop',
-    },
-    {
-      id: 3,
-      title: 'Circuit Protection and RCD Selection',
-      icon: Shield,
-      description: 'Choosing protective devices for EV charging circuits',
-    },
-    {
-      id: 4,
-      title: 'Cable Routing and Containment',
-      icon: Folder,
-      description: 'Professional cable installation practices',
-    },
-    {
-      id: 5,
-      title: 'Future-Proofing Installations (Dual EV, PV Integration)',
-      icon: Zap,
-      description: 'Designing installations for future expansion and integration',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Load estimation and diversity in practice',
+    icon: Calculator,
+    description: 'Calculating electrical loads and applying realistic diversity factors.',
+  },
+  {
+    id: 2,
+    title: 'Cable types, ratings and volt drop',
+    icon: Cable,
+    description: 'Selecting appropriate cables and calculating voltage drop.',
+  },
+  {
+    id: 3,
+    title: 'Circuit protection and RCD selection',
+    icon: Shield,
+    description: 'Choosing protective devices for EV charging circuits.',
+  },
+  {
+    id: 4,
+    title: 'Cable routing and containment',
+    icon: Folder,
+    description: 'Professional cable installation practices and containment selection.',
+  },
+  {
+    id: 5,
+    title: 'Future-proofing installations (dual EV, PV integration)',
+    icon: Zap,
+    description: 'Designing installations for future expansion and renewables integration.',
+  },
+];
+
+export default function EVChargingModule3() {
+  useSEO({
+    title: 'Module 3: Electrical Design & Load Calculation | EV Charging | Elec-Mate',
+    description:
+      'Load estimation, diversity, cable sizing, voltage drop, RCD selection and future-proofing for EV charging.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/ev-charging-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to EV Charging Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">55 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Electrical Design and Load Calculation
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Designing electrical installations for EV charging systems
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../ev-charging-module-3-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../ev-charging-course"
+      backLabel="EV charging installation"
+      moduleNumber={3}
+      title="Electrical design and load calculation"
+      description="Designing electrical installations for EV charging systems."
+      tone="green"
+      sectionsCount={sections.length}
+      duration="55 mins"
+      prevModuleHref="../ev-charging-module-2"
+      prevModuleLabel="EVSE types, modes and standards"
+      nextModuleHref="../ev-charging-module-4"
+      nextModuleLabel="Earthing and protection considerations"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../ev-charging-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EVChargingModule3;
+}

@@ -218,7 +218,7 @@ const SettingsPage = () => {
                             'px-3.5 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
                             isActive
                               ? 'bg-elec-yellow text-black'
-                              : 'bg-white/[0.04] text-white/70 hover:text-white'
+                              : 'bg-white/[0.04] text-white hover:text-white'
                           )}
                         >
                           {tab.label}
@@ -316,7 +316,7 @@ const SettingsPage = () => {
                     'border-b-2',
                     isActive
                       ? 'text-elec-yellow border-elec-yellow'
-                      : 'text-white/55 border-transparent hover:text-white'
+                      : 'text-white border-transparent hover:text-white'
                   )}
                 >
                   {tab.label}

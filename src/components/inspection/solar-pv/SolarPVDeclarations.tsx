@@ -168,7 +168,7 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
       {/* Handover Documentation */}
       <Section title="Handover Documentation" accentColor="from-green-500/40 to-emerald-400/20">
         <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-[10px] text-white/60"><strong className="text-white/80">MCS Required:</strong> All items must be provided to the customer</p>
+          <p className="text-[10px] text-white"><strong className="text-white">MCS Required:</strong> All items must be provided to the customer</p>
         </div>
         <div className="space-y-2">
           {[
@@ -196,7 +196,7 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
       {/* Installer Declaration */}
       <Section title="Installer Declaration" accentColor="from-amber-500/40 to-yellow-400/20">
         <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-xs text-white/60">
+          <p className="text-xs text-white">
             I certify that this Solar PV system has been designed, installed and commissioned in accordance with BS 7671, BS EN 62446, and MCS MIS-3002.
           </p>
         </div>
@@ -246,7 +246,7 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
         {formData.electricianDeclaration?.required && (
           <>
             <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white">
                 I certify the AC electrical installation has been designed, installed and tested in accordance with BS 7671.
               </p>
             </div>
@@ -377,7 +377,7 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
         />
         {uploadedPhotos.length > 0 && (
           <div className="space-y-2">
-            <p className="text-xs text-white/60">{uploadedPhotos.length} photo{uploadedPhotos.length !== 1 ? 's' : ''} uploaded</p>
+            <p className="text-xs text-white">{uploadedPhotos.length} photo{uploadedPhotos.length !== 1 ? 's' : ''} uploaded</p>
             <div className="grid grid-cols-3 gap-2">
               {uploadedPhotos.map((photo) => (
                 <div key={photo.id} className="relative rounded-xl overflow-hidden aspect-square">
@@ -396,7 +396,7 @@ const SolarPVDeclarations: React.FC<Props> = ({ formData, onUpdate }) => {
         )}
         {uploadedPhotos.length === 0 && !isUploading && (
           <div className="rounded-xl bg-white/[0.02] border border-dashed border-white/[0.08] p-6 text-center">
-            <p className="text-xs text-white/40">No photos yet</p>
+            <p className="text-xs text-white">No photos yet</p>
             <p className="text-[10px] text-white/30 mt-0.5">Take a photo or upload from gallery</p>
           </div>
         )}

@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { LucideIcon } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
 interface AM2HeroSectionProps {
@@ -11,11 +10,6 @@ interface AM2HeroSectionProps {
   className?: string;
 }
 
-/**
- * AM2HeroSection - Page hero component for AM2 content pages
- * Features animated icon with glow effect, iOS typography,
- * and optional module/section badge.
- */
 export const AM2HeroSection = memo(function AM2HeroSection({
   icon: Icon,
   title,
@@ -24,57 +18,32 @@ export const AM2HeroSection = memo(function AM2HeroSection({
   className,
 }: AM2HeroSectionProps) {
   return (
-    <div className={cn('pb-6 sm:pb-8', className)}>
-      {/* Icon with Glow Effect */}
-      <div className="relative inline-block mb-4 ios-animate-in">
-        {/* Glow Background */}
-        <div className="absolute inset-0 bg-elec-yellow/20 rounded-2xl blur-xl scale-150" />
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-6 sm:p-8',
+        className
+      )}
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-70" />
 
-        {/* Icon Container */}
-        <div
-          className={cn(
-            'relative p-3 sm:p-4 rounded-2xl',
-            'bg-gradient-to-br from-elec-yellow/20 to-amber-500/10',
-            'border border-elec-yellow/30',
-            'shadow-[0_0_30px_-5px_hsl(47_100%_50%/0.3)]'
+      <div className="flex items-start gap-4">
+        <div className="shrink-0 h-11 w-11 rounded-xl bg-elec-yellow/15 border border-elec-yellow/30 flex items-center justify-center">
+          <Icon className="h-5 w-5 text-elec-yellow" strokeWidth={1.8} />
+        </div>
+        <div className="flex-1 min-w-0">
+          {badge && (
+            <span className="inline-flex items-center text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
+              {badge}
+            </span>
           )}
-        >
-          <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-elec-yellow" />
+          <h1 className="mt-1.5 text-2xl sm:text-3xl lg:text-4xl font-semibold text-white tracking-tight leading-[1.1]">
+            {title}
+          </h1>
+          <p className="mt-3 text-[13px] sm:text-[14px] text-white leading-relaxed max-w-2xl">
+            {description}
+          </p>
         </div>
       </div>
-
-      {/* Badge */}
-      {badge && (
-        <div
-          className="mb-3 ios-animate-in"
-          style={{ '--ios-delay': '50ms' } as React.CSSProperties}
-        >
-          <Badge
-            className={cn(
-              'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/30',
-              'text-ios-caption-1 font-medium px-2.5 py-1'
-            )}
-          >
-            {badge}
-          </Badge>
-        </div>
-      )}
-
-      {/* Title */}
-      <h1
-        className={cn('text-ios-title-1 text-white mb-3', 'ios-animate-in')}
-        style={{ '--ios-delay': '100ms' } as React.CSSProperties}
-      >
-        {title}
-      </h1>
-
-      {/* Description */}
-      <p
-        className={cn('text-ios-body text-white leading-relaxed max-w-2xl', 'ios-animate-in')}
-        style={{ '--ios-delay': '150ms' } as React.CSSProperties}
-      >
-        {description}
-      </p>
     </div>
   );
 });

@@ -201,7 +201,7 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
               {analytics.criticalIssues.slice(0, 5).map((issue, index) => (
                 <li
                   key={index}
-                  className="flex items-start gap-3 px-5 py-3 sm:px-6 text-sm text-white/90 leading-relaxed"
+                  className="flex items-start gap-3 px-5 py-3 sm:px-6 text-sm text-white leading-relaxed"
                 >
                   <span className="text-[10px] font-semibold tabular-nums text-red-400/80 pt-1 tracking-wider">
                     {String(index + 1).padStart(2, '0')}
@@ -248,7 +248,7 @@ const TestAnalytics = ({ testResults, earthingArrangement }: TestAnalyticsProps)
                         <span className="text-sm font-medium text-white truncate">{type}</span>
                         <span className="text-[11px] tabular-nums text-white/50 shrink-0">
                           {count} {count === 1 ? 'circuit' : 'circuits'} ·{' '}
-                          <span className="text-white/80 font-medium">{percent.toFixed(1)}%</span>
+                          <span className="text-white font-medium">{percent.toFixed(1)}%</span>
                         </span>
                       </div>
                       <div className="h-px bg-white/5 relative overflow-hidden rounded-full">
@@ -293,7 +293,7 @@ function ProgressRow({
         </div>
         <span className="text-2xl sm:text-3xl font-semibold tabular-nums tracking-tight leading-none text-white">
           {percent.toFixed(1)}
-          <span className="text-sm text-white/60 ml-1">%</span>
+          <span className="text-sm text-white ml-1">%</span>
         </span>
       </div>
       <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">

@@ -1,92 +1,66 @@
-import { ArrowLeft, BookOpen, Scale, FileText, Lightbulb } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { BookOpen, Scale, FileText, Lightbulb } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BS7671Module1 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Purpose and Legal Status of BS 7671',
-      icon: Scale,
-      description:
-        'Understanding the regulatory framework and legal standing of the wiring regulations',
-    },
-    {
-      id: 2,
-      title: 'Scope and Application of the Regulations',
-      icon: BookOpen,
-      description: 'Where and when BS 7671 applies in electrical installations',
-    },
-    {
-      id: 3,
-      title: 'Structure of BS 7671 (Parts, Chapters, Appendices)',
-      icon: FileText,
-      description: 'How the regulations are organised and how to navigate them effectively',
-    },
-    {
-      id: 4,
-      title: 'Amendment 3 Highlights',
-      icon: Lightbulb,
-      description:
-        'Latest changes including bidirectional protective devices and consumer unit requirements',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Purpose and legal status of BS 7671',
+    icon: Scale,
+    description: 'The regulatory framework and legal standing of the wiring regulations.',
+  },
+  {
+    id: 2,
+    title: 'Scope and application of the regulations',
+    icon: BookOpen,
+    description: 'Where and when BS 7671 applies to electrical installations.',
+  },
+  {
+    id: 3,
+    title: 'Structure of BS 7671 (parts, chapters, appendices)',
+    icon: FileText,
+    description: 'How the regulations are organised and how to navigate them efficiently.',
+  },
+  {
+    id: 4,
+    title: 'Amendment 3 highlights',
+    icon: Lightbulb,
+    description: 'Key changes including bidirectional protective devices and consumer unit requirements.',
+  },
+];
+
+export default function BS7671Module1() {
+  useSEO({
+    title: 'Module 1: Scope, Object & Fundamental Principles | BS 7671 | Elec-Mate',
+    description:
+      'Foundational principles, scope and the legal framework of BS 7671 plus Amendment 3 highlights.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/bs7671-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to BS7671 Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 1</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">4 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Scope, Object & Fundamental Principles
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding the foundational principles and legal framework of BS 7671
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../bs7671-module-1-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../bs7671-course"
+      backLabel="18th edition (BS 7671)"
+      moduleNumber={1}
+      title="Scope, object and fundamental principles"
+      description="Foundational principles and the legal framework that underpins BS 7671."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      nextModuleHref="../bs7671-module-2"
+      nextModuleLabel="Definitions and key terminology"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../bs7671-module-1-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default BS7671Module1;
+}

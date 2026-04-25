@@ -28,9 +28,10 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
   allResults,
   onBulkUpdate,
 }) => {
-  // Use specific fields for Live-Live and Live-Earth
+  // Use specific fields for Live-Live, Live-Earth and Neutral-Earth (ELE-868)
   const liveLiveValue = result.insulationLiveNeutral || '';
   const liveEarthValue = result.insulationLiveEarth || '';
+  const neutralEarthValue = result.insulationNeutralEarth || '';
 
   return (
     <>
@@ -94,6 +95,28 @@ const InsulationCellsComponent: React.FC<InsulationCellsProps> = ({
               value={liveEarthValue}
               fieldName="insulationLiveEarth"
               fieldLabel="Live-Earth (MΩ)"
+              testResults={allResults}
+              onBulkUpdate={onBulkUpdate}
+            />
+          )}
+        </div>
+      </TableCell>
+
+      {/* Column 24: Neutral - Earth (MΩ) — ELE-868 (Mark Glowacki: PDF has N-E
+          column but UI was missing the input). Same pattern as L-L / L-E. */}
+      <TableCell className="p-0 h-8 align-middle w-28 min-w-[104px] max-w-[104px]">
+        <div className="flex items-center gap-1">
+          <EnhancedValidatedInput
+            value={neutralEarthValue}
+            onChange={(value) => onUpdate(result.id, 'insulationNeutralEarth', value)}
+            className="h-8 text-sm text-center px-0 bg-transparent border-0 rounded-none focus-visible:ring-1 focus-visible:ring-elec-yellow/30 hover:bg-muted/20 focus:bg-muted/30"
+            placeholder="—"
+          />
+          {allResults && onBulkUpdate && neutralEarthValue && (
+            <BulkPasteButton
+              value={neutralEarthValue}
+              fieldName="insulationNeutralEarth"
+              fieldLabel="Neutral-Earth (MΩ)"
               testResults={allResults}
               onBulkUpdate={onBulkUpdate}
             />

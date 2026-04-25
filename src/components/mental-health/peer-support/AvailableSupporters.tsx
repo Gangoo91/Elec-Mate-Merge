@@ -182,7 +182,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         <Button
           variant="ghost"
           onClick={() => refetch()}
-          className="h-11 gap-1.5 px-0 text-white/75 hover:text-white touch-manipulation active:scale-[0.98] transition-all"
+          className="h-11 gap-1.5 px-0 text-white hover:text-white touch-manipulation active:scale-[0.98] transition-all"
         >
           <RefreshCw className="w-4 h-4" />
           Refresh

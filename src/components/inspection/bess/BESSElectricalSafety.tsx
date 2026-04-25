@@ -22,7 +22,7 @@ const Field = ({ label, required, children }: { label: string; required?: boolea
 
 const Sub = ({ title }: { title: string }) => (
   <div className="flex items-center gap-2 pt-2">
-    <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider shrink-0">{title}</p>
+    <p className="text-[10px] font-semibold text-white uppercase tracking-wider shrink-0">{title}</p>
     <div className="h-px flex-1 bg-white/[0.06]" />
   </div>
 );
@@ -181,7 +181,7 @@ export default function BESSElectricalSafety({ formData, onUpdate }: Props) {
             </div>
             <div className="px-3 py-2.5 bg-white/[0.02] space-y-2">
               <p className="text-[11px] text-white leading-relaxed">{pmeGuidance.recommendation}</p>
-              <p className="text-[10px] text-white/60">Ref: {pmeGuidance.regulation}</p>
+              <p className="text-[10px] text-white">Ref: {pmeGuidance.regulation}</p>
               <ul className="space-y-1">
                 {pmeGuidance.options.map((opt, i) => (
                   <li key={i} className="text-[11px] text-white flex items-start gap-1.5"><span className="text-red-400 font-bold">{i + 1}.</span> {opt}</li>

@@ -1,102 +1,80 @@
-import { ArrowLeft, Shield, Cable, CheckCircle, TestTube, Users, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Shield, Cable, CheckCircle, TestTube, Users, FileText } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EVChargingModule6 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Safe Installation: Isolation and Site Prep',
-      icon: Shield,
-      description: 'Safety procedures and site preparation for installation',
-    },
-    {
-      id: 2,
-      title: 'Cable Termination and Routing',
-      icon: Cable,
-      description: 'Professional cable termination and routing practices',
-    },
-    {
-      id: 3,
-      title: 'BS 7671 Part 722 Testing Procedure',
-      icon: CheckCircle,
-      description: 'EV charging specific testing requirements and procedures',
-    },
-    {
-      id: 4,
-      title: 'RCD and Functional Testing (Type A, B, EV-RCDs)',
-      icon: TestTube,
-      description: 'Testing protective devices and EV-specific equipment',
-    },
-    {
-      id: 5,
-      title: 'Customer Walkthrough and Labelling',
-      icon: Users,
-      description: 'Customer handover procedures and system labelling',
-    },
-    {
-      id: 6,
-      title: 'Certificate, Test Sheet, and Handover Pack',
-      icon: FileText,
-      description: 'Completing documentation and customer handover',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Safe installation: isolation and site prep',
+    icon: Shield,
+    description: 'Safety procedures and site preparation before installation begins.',
+  },
+  {
+    id: 2,
+    title: 'Cable termination and routing',
+    icon: Cable,
+    description: 'Professional cable termination and routing practices.',
+  },
+  {
+    id: 3,
+    title: 'BS 7671 Part 722 testing procedure',
+    icon: CheckCircle,
+    description: 'EV charging specific testing requirements and the test sequence.',
+  },
+  {
+    id: 4,
+    title: 'RCD and functional testing (Type A, B, EV-RCDs)',
+    icon: TestTube,
+    description: 'Testing protective devices and the EV-specific RCD types.',
+  },
+  {
+    id: 5,
+    title: 'Customer walkthrough and labelling',
+    icon: Users,
+    description: 'Customer handover procedures and the system labelling requirements.',
+  },
+  {
+    id: 6,
+    title: 'Certificate, test sheet and handover pack',
+    icon: FileText,
+    description: 'Completing documentation and packaging the customer handover.',
+  },
+];
+
+export default function EVChargingModule6() {
+  useSEO({
+    title: 'Module 6: Installation, Inspection & Testing | EV Charging | Elec-Mate',
+    description:
+      'Safe installation, cable termination, BS 7671 Part 722 testing, RCD types and customer handover documentation.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/ev-charging-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to EV Charging Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 6</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">60 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Installation, Inspection, and Testing Procedures
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Professional installation and testing practices for EV charging
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../ev-charging-module-6-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../ev-charging-course"
+      backLabel="EV charging installation"
+      moduleNumber={6}
+      title="Installation, inspection and testing procedures"
+      description="Professional installation and testing practices for EV charging."
+      tone="green"
+      sectionsCount={sections.length}
+      duration="60 mins"
+      prevModuleHref="../ev-charging-module-5"
+      prevModuleLabel="Load management and diversity in EV systems"
+      nextModuleHref="../ev-charging-module-7"
+      nextModuleLabel="Government incentives and certification (OZEV, etc.)"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../ev-charging-module-6-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EVChargingModule6;
+}

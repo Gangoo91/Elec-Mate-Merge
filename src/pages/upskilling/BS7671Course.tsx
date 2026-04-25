@@ -1,6 +1,4 @@
-import React from 'react';
 import {
-  ArrowLeft,
   FileText,
   CheckCircle,
   BookOpen,
@@ -11,132 +9,119 @@ import {
   MapPin,
   GraduationCap,
 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
 import { ModuleCard } from '@/components/upskilling/cards';
+import { CourseShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BS7671Course = () => {
-  const modules: Array<{
-    id: number;
-    title: string;
-    description: string;
-    duration: string;
-    icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
-    isExam?: boolean;
-  }> = [
-    {
-      id: 1,
-      title: 'Scope, Object & Fundamental Principles',
-      description: 'Foundational principles and legal framework',
-      duration: '45 mins',
-      icon: BookOpen,
-    },
-    {
-      id: 2,
-      title: 'Definitions & Key Terminology',
-      description: 'Essential vocabulary and definitions',
-      duration: '50 mins',
-      icon: Book,
-    },
-    {
-      id: 3,
-      title: 'General Characteristics & Selection Criteria',
-      description: 'System design and earthing arrangements',
-      duration: '55 mins',
-      icon: Settings,
-    },
-    {
-      id: 4,
-      title: 'Protection for Safety',
-      description: 'Safety protection methods and devices',
-      duration: '60 mins',
-      icon: Shield,
-    },
-    {
-      id: 5,
-      title: 'Selection & Erection of Equipment',
-      description: 'Equipment selection and installation',
-      duration: '65 mins',
-      icon: Wrench,
-    },
-    {
-      id: 6,
-      title: 'Inspection, Testing & Certification',
-      description: 'Verification and certification processes',
-      duration: '55 mins',
-      icon: CheckCircle,
-    },
-    {
-      id: 7,
-      title: 'Special Installations & Locations',
-      description: 'Requirements for special locations',
-      duration: '50 mins',
-      icon: MapPin,
-    },
-    {
-      id: 8,
-      title: 'Appendices & Latest Amendments',
-      description: 'Reference materials and Amendment 3',
-      duration: '45 mins',
-      icon: FileText,
-    },
-    {
-      id: 9,
-      title: 'Mock Exam',
-      description: 'Test your knowledge',
-      duration: '90 mins',
-      icon: GraduationCap,
-      isExam: true,
-    },
-  ];
+const modules = [
+  {
+    id: 1,
+    title: 'Scope, object and fundamental principles',
+    description: 'Foundational principles, scope and the legal framework of BS 7671.',
+    duration: '45 mins',
+    icon: BookOpen,
+    link: '../bs7671-module-1',
+  },
+  {
+    id: 2,
+    title: 'Definitions and key terminology',
+    description: 'Essential vocabulary including CPC, ADS, SELV, PELV and Amendment 3 additions.',
+    duration: '50 mins',
+    icon: Book,
+    link: '../bs7671-module-2',
+  },
+  {
+    id: 3,
+    title: 'General characteristics and selection criteria',
+    description: 'Supply systems, earthing arrangements, voltage drop and design fundamentals.',
+    duration: '55 mins',
+    icon: Settings,
+    link: '../bs7671-module-3',
+  },
+  {
+    id: 4,
+    title: 'Protection for safety',
+    description: 'Shock, overcurrent, RCDs, SPDs, AFDDs and bidirectional protection.',
+    duration: '60 mins',
+    icon: Shield,
+    link: '../bs7671-module-4',
+  },
+  {
+    id: 5,
+    title: 'Selection and erection of equipment',
+    description: 'Equipment ratings, cable selection, containment and isolation.',
+    duration: '65 mins',
+    icon: Wrench,
+    link: '../bs7671-module-5',
+  },
+  {
+    id: 6,
+    title: 'Inspection, testing and certification',
+    description: 'Initial verification, sequence of tests, model forms and common pitfalls.',
+    duration: '55 mins',
+    icon: CheckCircle,
+    link: '../bs7671-module-6',
+  },
+  {
+    id: 7,
+    title: 'Special installations and locations',
+    description: 'Bathrooms, EV charging (Part 722), agricultural, medical and prosumer installations.',
+    duration: '50 mins',
+    icon: MapPin,
+    link: '../bs7671-module-7',
+  },
+  {
+    id: 8,
+    title: 'Reference materials and Amendment 3',
+    description: 'Appendices, Zs tables, conductor sizing and the latest amendment highlights.',
+    duration: '45 mins',
+    icon: FileText,
+    link: '../bs7671-module-8',
+  },
+  {
+    id: 9,
+    title: 'Mock exam',
+    description: 'Comprehensive practice examination plus hints and tips for success.',
+    duration: '90 mins',
+    icon: GraduationCap,
+    link: '../bs7671-module-9',
+    isExam: true,
+  },
+];
+
+export default function BS7671Course() {
+  useSEO({
+    title: '18th Edition BS 7671 | Professional Upskilling | Elec-Mate',
+    description:
+      'Wiring regulations, electrical safety, protection, special installations and Amendment 3 — full BS 7671 18th Edition training.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Courses
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Course Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">18th Edition (BS7671)</h1>
-          <p className="text-white text-sm sm:text-base">
-            Wiring regulations and electrical safety
-          </p>
-        </div>
-
-        {/* Module Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {modules.map((module, index) => (
-            <ModuleCard
-              key={module.id}
-              to={module.isExam ? `../bs7671-module-${module.id}` : `../bs7671-module-${module.id}`}
-              moduleNumber={module.id}
-              title={module.title}
-              description={module.description}
-              duration={module.duration}
-              icon={module.icon}
-              isExam={module.isExam}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <CourseShell
+      backTo="/study-centre/upskilling"
+      backLabel="Professional upskilling"
+      eyebrow="Professional upskilling"
+      title="18th edition (BS 7671)"
+      description="Wiring regulations, electrical safety and the latest Amendment 3 requirements."
+      tone="yellow"
+      level="Advanced"
+      modulesCount={modules.length}
+      pagesCount="200+"
+      totalDuration="8h"
+    >
+      {modules.map((mod, index) => (
+        <ModuleCard
+          key={mod.id}
+          to={mod.link}
+          moduleNumber={mod.id}
+          title={mod.title}
+          description={mod.description}
+          icon={mod.icon}
+          duration={mod.duration}
+          isExam={mod.isExam}
+          index={index}
+        />
+      ))}
+    </CourseShell>
   );
-};
-
-export default BS7671Course;
+}

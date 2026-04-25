@@ -1,46 +1,28 @@
 import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import InstrumentationMockExam from '@/components/upskilling/InstrumentationMockExam';
+import useSEO from '@/hooks/useSEO';
 
-const InstrumentationModule9 = () => {
+// Module 9 IS the mock exam — it renders the timed quiz directly. No separate
+// route exists, so the course "Mock exam" tile points here.
+export default function InstrumentationModule9() {
+  const navigate = useNavigate();
+  useSEO({
+    title: 'Instrumentation Mock Exam | Module 9 | Elec-Mate',
+    description: 'Timed mock examination covering every module of the instrumentation upskilling course.',
+  });
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/instrumentation-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Instrumentation Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MOCK EXAM</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">120 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
-          <p className="text-white text-sm sm:text-base">
-            Comprehensive assessment covering all instrumentation course modules
-          </p>
-        </div>
-
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <button
+          onClick={() => navigate('../instrumentation-course')}
+          className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-4"
+        >
+          <ArrowLeft className="h-4 w-4" /> Instrumentation
+        </button>
         <InstrumentationMockExam />
       </div>
     </div>
   );
-};
-
-export default InstrumentationModule9;
+}

@@ -95,7 +95,7 @@ export function ExitIntentModal() {
             <h2 className="mb-2 text-2xl font-bold leading-tight text-white">
               Grab the <span className="text-yellow-400">BS 7671 A4:2026</span> cheat sheet
             </h2>
-            <p className="mb-5 text-sm leading-relaxed text-white/70">
+            <p className="mb-5 text-sm leading-relaxed text-white">
               Every amendment change on one page — AFDDs, TN-C-S, new schedule columns, model forms.
               Free. No signup.
             </p>

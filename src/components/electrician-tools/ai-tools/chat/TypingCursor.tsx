@@ -78,7 +78,7 @@ export const TypingIndicator = memo(function TypingIndicator({
 
   return (
     <div className={cn('flex items-center gap-3', className)}>
-      <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+      <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
         {label}
       </span>
       <div className="flex gap-1">

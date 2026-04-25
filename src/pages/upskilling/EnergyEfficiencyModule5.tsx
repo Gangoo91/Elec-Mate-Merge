@@ -1,96 +1,74 @@
-import { ArrowLeft, Gauge, BarChart, AlertTriangle, Settings, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Gauge, BarChart, AlertTriangle, Settings, Shield } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EnergyEfficiencyModule5 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Sub-Metering Installation Strategy',
-      icon: Gauge,
-      description: 'Strategic placement and installation of sub-meters',
-    },
-    {
-      id: 2,
-      title: 'Energy Dashboards and Cloud Portals',
-      icon: BarChart,
-      description: 'Creating and managing energy monitoring dashboards',
-    },
-    {
-      id: 3,
-      title: 'Fault Alerts and Event Logging',
-      icon: AlertTriangle,
-      description: 'Setting up automated alerts and event tracking',
-    },
-    {
-      id: 4,
-      title: 'Remote Control and Load Shedding',
-      icon: Settings,
-      description: 'Implementing remote control and demand management',
-    },
-    {
-      id: 5,
-      title: 'Cybersecurity in Energy Systems',
-      icon: Shield,
-      description: 'Securing energy monitoring and control systems',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Sub-metering installation strategy',
+    icon: Gauge,
+    description: 'Strategic placement and installation of sub-meters across a site.',
+  },
+  {
+    id: 2,
+    title: 'Energy dashboards and cloud portals',
+    icon: BarChart,
+    description: 'Creating and managing energy monitoring dashboards.',
+  },
+  {
+    id: 3,
+    title: 'Fault alerts and event logging',
+    icon: AlertTriangle,
+    description: 'Setting up automated alerts and event tracking on energy systems.',
+  },
+  {
+    id: 4,
+    title: 'Remote control and load shedding',
+    icon: Settings,
+    description: 'Implementing remote control and demand management strategies.',
+  },
+  {
+    id: 5,
+    title: 'Cybersecurity in energy systems',
+    icon: Shield,
+    description: 'Securing energy monitoring and control systems against attack.',
+  },
+];
+
+export default function EnergyEfficiencyModule5() {
+  useSEO({
+    title: 'Module 5: Monitoring, Analytics & Smart Metering | Energy Efficiency | Elec-Mate',
+    description:
+      'Sub-metering, energy dashboards, fault alerts, remote load shedding and cybersecurity considerations.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/energy-efficiency-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Energy Efficiency Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 5</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">55 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Monitoring, Analytics, and Smart Metering
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Advanced monitoring systems and data analytics for energy management
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../energy-efficiency-module-5-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../energy-efficiency-course"
+      backLabel="Energy efficiency and management"
+      moduleNumber={5}
+      title="Monitoring, analytics and smart metering"
+      description="Advanced monitoring systems and analytics for ongoing energy management."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="55 mins"
+      prevModuleHref="../energy-efficiency-module-4"
+      prevModuleLabel="Reducing demand and improving efficiency"
+      nextModuleHref="../energy-efficiency-module-6"
+      nextModuleLabel="Regulations, carbon compliance and ROI"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../energy-efficiency-module-5-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EnergyEfficiencyModule5;
+}

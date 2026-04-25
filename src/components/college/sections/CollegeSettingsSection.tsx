@@ -55,13 +55,13 @@ export function CollegeSettingsSection() {
             className="group w-full flex items-center gap-4 px-5 sm:px-6 py-5 text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
           >
             <div className="flex-1 min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+              <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                 Curriculum
               </div>
               <div className="mt-1 text-[15px] font-medium text-white">
                 Lesson plan settings
               </div>
-              <div className="mt-0.5 text-[12px] text-white/70">
+              <div className="mt-0.5 text-[12px] text-white">
                 British Values · Stretch & challenge · Inclusive practice · Safeguarding
                 context for the AI.
               </div>
@@ -82,11 +82,11 @@ export function CollegeSettingsSection() {
               className="flex items-center gap-4 px-5 sm:px-6 py-5"
             >
               <div className="flex-1 min-w-0">
-                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/55">
+                <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
                   {feature.eyebrow}
                 </div>
                 <div className="mt-1 text-[15px] font-medium text-white">{feature.title}</div>
-                <div className="mt-0.5 text-[12px] text-white/70">{feature.description}</div>
+                <div className="mt-0.5 text-[12px] text-white">{feature.description}</div>
               </div>
               <Pill tone="yellow">Soon</Pill>
             </div>

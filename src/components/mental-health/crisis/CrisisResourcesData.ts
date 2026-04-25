@@ -72,6 +72,34 @@ export const emergencyContacts: EmergencyContact[] = [
     description: 'Support for men struggling with mental health - #ITSOKAYTOTALK',
     type: 'specialty',
   },
+  {
+    name: 'SHOUT — text crisis support',
+    phone: '85258',
+    hours: '24/7',
+    description: 'Free, anonymous text-based crisis support. Text SHOUT to 85258. Useful when you cannot or do not want to talk.',
+    type: 'crisis',
+  },
+  {
+    name: 'MoneyHelper',
+    phone: '0800 011 3797',
+    hours: '8am - 6pm, Mon-Fri',
+    description: 'Free, government-backed money guidance. Pricing pressure and bills are a common driver of distress in the trade.',
+    type: 'specialty',
+  },
+  {
+    name: 'StepChange Debt Charity',
+    phone: '0800 138 1111',
+    hours: '8am - 8pm, Mon-Fri / 8am - 4pm, Sat',
+    description: 'Free, confidential debt advice. The most common silent stressor on sole traders.',
+    type: 'specialty',
+  },
+  {
+    name: 'Citizens Advice',
+    phone: '0800 144 8848',
+    hours: '9am - 5pm, Mon-Fri',
+    description: 'Free advice on benefits, work, debt, housing and consumer rights. Independent, impartial, confidential.',
+    type: 'support',
+  },
 ];
 
 export const onlineResources: OnlineResource[] = [
@@ -124,5 +152,23 @@ export const onlineResources: OnlineResource[] = [
     description: 'Resources and toolkits for workplace mental health and employer support',
     type: 'website',
     url: 'https://www.mentalhealthatwork.org.uk/',
+  },
+  {
+    title: 'Hub of Hope',
+    description: 'Find local mental health support near you — therapists, peer groups, charities filtered by need.',
+    type: 'website',
+    url: 'https://hubofhope.co.uk/',
+  },
+  {
+    title: 'Construction Sport',
+    description: 'Free monthly social walks, runs and football matches for construction workers — peer support without sitting in a circle.',
+    type: 'website',
+    url: 'https://www.constructionsport.co.uk/',
+  },
+  {
+    title: 'Lighthouse Construction Industry Charity',
+    description: '24/7 helpline plus financial, legal and emotional aid grants for construction and tradespeople in crisis.',
+    type: 'website',
+    url: 'https://www.lighthouseclub.org/',
   },
 ];

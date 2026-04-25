@@ -1,54 +1,53 @@
-import { ArrowLeft, Package, Wrench, Shield, Layers, Cog } from 'lucide-react';
+import { Package, Wrench, Shield, Layers, Cog } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 
 const subsections = [
   {
     number: 'Subsection 1',
-    title: 'Purpose of Containment in Electrical Installations',
+    title: 'Purpose of containment in electrical installations',
     description: 'Understanding why containment systems are essential',
     icon: Package,
     href: '2-1',
   },
   {
     number: 'Subsection 2',
-    title: 'PVC and Metal Conduit (Surface/Recessed)',
+    title: 'PVC and metal conduit (surface/recessed)',
     description: 'Types of conduit systems and installation methods',
     icon: Wrench,
     href: '2-2',
   },
   {
     number: 'Subsection 3',
-    title: 'Plastic and Steel Trunking Systems',
+    title: 'Plastic and steel trunking systems',
     description: 'Trunking systems for cable containment and protection',
     icon: Shield,
     href: '2-3',
   },
   {
     number: 'Subsection 4',
-    title: 'Cable Tray, Basket, and Ladder Systems',
+    title: 'Cable tray, basket and ladder systems',
     description: 'Open containment systems for larger installations',
     icon: Layers,
     href: '2-4',
   },
   {
     number: 'Subsection 5',
-    title: 'Underfloor Trunking and Dado Trunking',
+    title: 'Underfloor trunking and dado trunking',
     description: 'Specialised trunking systems for concealed installations',
     icon: Cog,
     href: '2-5',
   },
   {
     number: 'Subsection 6',
-    title: 'Fixings, Clips, and Cable Ties',
+    title: 'Fixings, clips and cable ties',
     description: 'Hardware for securing containment and cables',
     icon: Package,
     href: '2-6',
   },
   {
     number: 'Subsection 7',
-    title: 'Good Practice for Installing Containment',
+    title: 'Good practice for installing containment',
     description: 'Best practices and techniques for containment installation',
     icon: Wrench,
     href: '2-7',
@@ -57,57 +56,31 @@ const subsections = [
 
 const Section2 = () => {
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level2/module3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Section 2</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Cable Containment Systems
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Methods and systems for containing, protecting and supporting electrical cables
-            </p>
-          </header>
-
-          {/* Subsections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level2/module3"
+      backLabel="Module 3"
+      moduleNumber={3}
+      sectionNumber={2}
+      title="Cable containment systems"
+      description="Methods and systems for containing, protecting and supporting electrical cables."
+      tone="emerald"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../section1"
+      prevSectionLabel="Wiring systems and cable types"
+      nextSectionHref="../section3"
+      nextSectionLabel="Electrical tools and equipment"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

@@ -1,90 +1,47 @@
-import { ArrowLeft, Award, Building, Calculator, MapPin } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Award, Building, Calculator, MapPin } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const FiberOpticsModule6 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'TIA/EIA and ISO/IEC Standards',
-      icon: Award,
-      description: 'International standards and specifications',
-    },
-    {
-      id: 2,
-      title: 'Structured Cabling Design Rules',
-      icon: Building,
-      description: 'Design principles and layout requirements',
-    },
-    {
-      id: 3,
-      title: 'Loss Budgets and Length Limits',
-      icon: Calculator,
-      description: 'Performance calculations and distance limitations',
-    },
-    {
-      id: 4,
-      title: 'Design Scenarios: Campus, Data Centre, Industrial',
-      icon: MapPin,
-      description: 'Application-specific design considerations',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'TIA/EIA and ISO/IEC standards', icon: Award, description: 'International standards and specifications.' },
+  { id: 2, title: 'Structured cabling design rules', icon: Building, description: 'Design principles and layout requirements.' },
+  { id: 3, title: 'Loss budgets and length limits', icon: Calculator, description: 'Performance calculations and distance limitations.' },
+  { id: 4, title: 'Design scenarios: campus, data centre, industrial', icon: MapPin, description: 'Application-specific design considerations.' },
+];
+
+export default function FiberOpticsModule6() {
+  useSEO({
+    title: 'Module 6: Standards and Network Design | Fibre Optics | Elec-Mate',
+    description: 'TIA/EIA and ISO/IEC standards, structured cabling design rules, loss budgets and real-world design scenarios.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/fiber-optics-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Fiber Optics Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 6</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">4 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Standards and Network Design Principles
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Design standards and network architecture principles
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../fiber-optics-module-6-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../fiber-optics-course"
+      backLabel="Fibre optics technology"
+      moduleNumber={6}
+      title="Standards and network design principles"
+      description="The standards and calculations behind a compliant structured cabling design."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      prevModuleHref="../fiber-optics-module-5"
+      prevModuleLabel="Fibre testing and certification"
+      nextModuleHref="../fiber-optics-module-7"
+      nextModuleLabel="Fault finding, maintenance and upgrades"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../fiber-optics-module-6-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default FiberOpticsModule6;
+}

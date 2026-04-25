@@ -209,7 +209,7 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
                   'h-9 px-3.5 text-xs font-medium rounded-lg transition-all touch-manipulation capitalize active:scale-[0.98]',
                   activeTab === tab
                     ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
-                    : 'bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.07]'
+                    : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
                 )}
               >
                 {tab === 'completed' ? 'Done' : tab} {count > 0 && `(${count})`}
@@ -261,7 +261,7 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
                         <span className="text-[10px] font-medium text-white/30 px-2 py-0.5 rounded bg-white/[0.04]">
                           {circuitCount} circuit{circuitCount !== 1 ? 's' : ''}
                         </span>
-                        <span className="text-[11px] text-white/40 ml-auto">
+                        <span className="text-[11px] text-white ml-auto">
                           {formatDate(design.created_at)}
                         </span>
                       </div>
@@ -307,7 +307,7 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
         <AlertDialogContent className="bg-[hsl(240_5.9%_12%)] border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete Design?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60">
+            <AlertDialogDescription className="text-white">
               This will permanently delete this circuit design.
             </AlertDialogDescription>
           </AlertDialogHeader>

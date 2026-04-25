@@ -1,114 +1,74 @@
-import {
-  ArrowLeft,
-  Briefcase,
-  Shield,
-  Users,
-  GraduationCap,
-  TrendingUp,
-  CheckCircle,
-  Zap,
-} from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Briefcase, Shield, Users, GraduationCap, TrendingUp } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: 'Section 1',
-    title: 'The Electrical Industry and Career Pathways',
-    description:
-      'Understanding industry roles, career progression routes and professional pathways',
+    id: 1,
+    title: 'The electrical industry and career pathways',
+    description: 'Industry roles, career progression routes and professional pathways.',
     icon: Briefcase,
-    href: '../level3-module7-section1',
   },
   {
-    number: 'Section 2',
-    title: 'Professional Standards and Responsibilities',
-    description: 'Professional ethics, standards and responsibilities in electrical work',
+    id: 2,
+    title: 'Professional standards and responsibilities',
+    description: 'Professional ethics, standards and responsibilities in electrical work.',
     icon: Shield,
-    href: '../level3-module7-section2',
   },
   {
-    number: 'Section 3',
-    title: 'Communication and Teamworking',
-    description: 'Effective communication skills and collaborative working practices',
+    id: 3,
+    title: 'Communication and teamworking',
+    description: 'Effective communication skills and collaborative working practices.',
     icon: Users,
-    href: '../level3-module7-section3',
   },
   {
-    number: 'Section 4',
-    title: 'Continuing Professional Development (CPD)',
-    description: 'Lifelong learning, skills development and staying current with industry changes',
+    id: 4,
+    title: 'Continuing professional development',
+    description: 'Lifelong learning, skills development and staying current with industry changes.',
     icon: GraduationCap,
-    href: '../level3-module7-section4',
   },
   {
-    number: 'Section 5',
-    title: 'Employment and Business Awareness',
-    description: 'Employment skills, self-employment options and business development',
+    id: 5,
+    title: 'Employment and business awareness',
+    description: 'Employment skills, self-employment options and business development.',
     icon: TrendingUp,
-    href: '../level3-module7-section5',
   },
 ];
 
-const learningOutcomes = [
-  'Understand the electrical industry structure and career pathways',
-  'Apply professional standards and ethical responsibilities',
-  'Develop effective communication and teamworking skills',
-  'Plan and implement continuing professional development',
-  'Understand employment options including self-employment',
-  'Develop business awareness for career advancement',
-];
-
-const Level3Module7 = () => {
-  useSEO(
-    'Module 7: Career Awareness & Professional Development - Level 3 Electrical Course',
-    'Develop career awareness, professional skills and business knowledge for the electrical industry'
-  );
+export default function Level3Module7() {
+  useSEO({
+    title: 'Module 7: Career Awareness and Professional Development | Level 3 Electrical Installation | Elec-Mate',
+    description:
+      'Industry pathways, professional standards, communication, continuing professional development and employment awareness for the electrical industry.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Level 3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Sections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Module Sections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {sections.map((section, index) => (
-                <ModuleCard
-                  key={index}
-                  number={section.number}
-                  title={section.title}
-                  description={section.description}
-                  icon={section.icon}
-                  href={section.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../level3"
+      backLabel="Level 3 electrical installation"
+      moduleNumber={7}
+      title="Career awareness and professional development"
+      description="Industry pathways, professional standards, communication, continuing professional development and business awareness."
+      tone="blue"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../level3-module6"
+      prevModuleLabel="Electrical systems design"
+      nextModuleHref="../level3-module8"
+      nextModuleLabel="Mock exams and assessment"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../level3-module7-section${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default Level3Module7;
+}

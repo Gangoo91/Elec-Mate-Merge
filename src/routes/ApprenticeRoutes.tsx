@@ -4,7 +4,7 @@ import { LazyRoute } from '@/components/LazyRoute';
 
 // Lazy-loaded pages
 const ApprenticeHub = lazy(() => import('@/pages/ApprenticeHub'));
-const ApprenticeMentalHealth = lazy(() => import('@/pages/apprentice/ApprenticeMentalHealth'));
+const ApprenticeMentalHealth = lazy(() => import('@/pages/MentalHealthHub'));
 const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
 const RightsWages = lazy(() => import('@/pages/apprentice/rights-guide/WagesPage'));
 const RightsYourRights = lazy(() => import('@/pages/apprentice/rights-guide/RightsPage'));

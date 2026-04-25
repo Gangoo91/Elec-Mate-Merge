@@ -1,96 +1,46 @@
-import { ArrowLeft, AlertTriangle, Droplets, Wrench, FileText, TrendingUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { AlertTriangle, Droplets, Wrench, FileText, TrendingUp } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const FiberOpticsModule7 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Common Fibre Faults and Symptoms',
-      icon: AlertTriangle,
-      description: 'Identifying typical fiber optic issues',
-    },
-    {
-      id: 2,
-      title: 'End-Face Contamination and Cleaning',
-      icon: Droplets,
-      description: 'Connector cleaning and maintenance procedures',
-    },
-    {
-      id: 3,
-      title: 'Troubleshooting Tools and OTDR Use',
-      icon: Wrench,
-      description: 'Diagnostic equipment and fault location techniques',
-    },
-    {
-      id: 4,
-      title: 'Fibre Record-Keeping',
-      icon: FileText,
-      description: 'Documentation and maintenance records',
-    },
-    {
-      id: 5,
-      title: 'Upgrade Planning and Network Expansion',
-      icon: TrendingUp,
-      description: 'Future-proofing and capacity planning',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Common fibre faults and symptoms', icon: AlertTriangle, description: 'Identifying typical fibre optic issues.' },
+  { id: 2, title: 'End-face contamination and cleaning', icon: Droplets, description: 'Connector cleaning and maintenance procedures.' },
+  { id: 3, title: 'Troubleshooting tools and OTDR use', icon: Wrench, description: 'Diagnostic equipment and fault location techniques.' },
+  { id: 4, title: 'Fibre record-keeping', icon: FileText, description: 'Documentation and maintenance records.' },
+  { id: 5, title: 'Upgrade planning and network expansion', icon: TrendingUp, description: 'Future-proofing and capacity planning.' },
+];
+
+export default function FiberOpticsModule7() {
+  useSEO({
+    title: 'Module 7: Fault Finding, Maintenance and Upgrades | Fibre Optics | Elec-Mate',
+    description: 'Common fibre faults, end-face cleaning, OTDR troubleshooting, record-keeping and planning network upgrades.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/fiber-optics-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Fiber Optics Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 7</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">55 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Fault Finding, Maintenance, and Upgrades
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Troubleshooting, maintenance, and network expansion strategies
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../fiber-optics-module-7-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../fiber-optics-course"
+      backLabel="Fibre optics technology"
+      moduleNumber={7}
+      title="Fault finding, maintenance and upgrades"
+      description="Diagnose, clean, document and plan ahead — the lifecycle skills for fibre optic networks."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="55 mins"
+      prevModuleHref="../fiber-optics-module-6"
+      prevModuleLabel="Standards and network design principles"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../fiber-optics-module-7-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default FiberOpticsModule7;
+}

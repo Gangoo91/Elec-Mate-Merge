@@ -364,11 +364,11 @@ export function LessonGeneratorDialog({
             <SectionHeader eyebrow="Planning for" title="Who's in the room" />
             <div className="mt-4">
               {loadingCohorts && cohorts.length === 0 ? (
-                <div className="h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/[0.08] flex items-center px-4 text-[12.5px] text-white/55">
+                <div className="h-11 rounded-xl bg-[hsl(0_0%_13%)] border border-white/[0.08] flex items-center px-4 text-[12.5px] text-white">
                   Loading cohorts…
                 </div>
               ) : cohorts.length === 0 ? (
-                <div className="rounded-xl bg-[hsl(0_0%_13%)] border border-white/[0.08] px-4 py-3 text-[12.5px] text-white/60">
+                <div className="rounded-xl bg-[hsl(0_0%_13%)] border border-white/[0.08] px-4 py-3 text-[12.5px] text-white">
                   No active cohorts. You can still generate a generic plan.
                 </div>
               ) : (
@@ -381,7 +381,7 @@ export function LessonGeneratorDialog({
                         'h-9 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation',
                         selectedCohortId === null
                           ? 'bg-white/[0.06] border-white/[0.2] text-white'
-                          : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/70 hover:text-white'
+                          : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:text-white'
                       )}
                     >
                       No cohort
@@ -395,12 +395,12 @@ export function LessonGeneratorDialog({
                           'h-9 px-3.5 rounded-full text-[12.5px] font-medium border transition-colors touch-manipulation',
                           selectedCohortId === c.id
                             ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow'
-                            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/80 hover:text-white hover:border-white/[0.18]'
+                            : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
                         )}
                       >
                         {c.name}
                         {c.learner_count > 0 && (
-                          <span className="ml-2 text-white/45 tabular-nums">
+                          <span className="ml-2 text-white tabular-nums">
                             {c.learner_count}
                           </span>
                         )}
@@ -419,7 +419,7 @@ export function LessonGeneratorDialog({
                         </span>{' '}
                         learner{selectedCohort.learner_count === 1 ? '' : 's'}
                         {selectedCohort.first_names.length > 0 && (
-                          <span className="text-white/70">
+                          <span className="text-white">
                             {' — '}
                             {selectedCohort.first_names.slice(0, 4).join(', ')}
                             {selectedCohort.first_names.length > 4 &&
@@ -427,7 +427,7 @@ export function LessonGeneratorDialog({
                           </span>
                         )}
                       </div>
-                      <div className="mt-1.5 text-[11.5px] text-white/70 tabular-nums flex flex-wrap gap-x-3 gap-y-1">
+                      <div className="mt-1.5 text-[11.5px] text-white tabular-nums flex flex-wrap gap-x-3 gap-y-1">
                         {selectedCohort.send_count > 0 && (
                           <span>{selectedCohort.send_count} SEND</span>
                         )}

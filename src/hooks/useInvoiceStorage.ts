@@ -119,9 +119,7 @@ export const useInvoiceStorage = () => {
       setInvoices(convertedInvoices);
       setLastUpdated(new Date());
     } catch (error) {
-      captureApiError(error instanceof Error ? error : new Error(String(error)), 'invoices/fetch', {
-        errorMessage: error instanceof Error ? error.message : String(error),
-      });
+      captureApiError(error, 'invoices/fetch');
       toast({
         title: 'Error loading invoices',
         description: 'Failed to load invoices. Please try again.',
@@ -181,7 +179,13 @@ export const useInvoiceStorage = () => {
             }
           }
         )
-        .subscribe();
+        .subscribe((status, err) => {
+          if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || err) {
+            captureApiError(err ?? new Error(`Realtime status: ${status}`), 'invoices/realtime', {
+              status,
+            });
+          }
+        });
 
       return channel;
     };
@@ -414,11 +418,10 @@ export const useInvoiceStorage = () => {
           duration: 3000,
         });
       } catch (pdfError) {
-        captureEdgeFunctionError(
-          pdfError instanceof Error ? pdfError : new Error(String(pdfError)),
-          'generate-pdf-monkey',
-          { invoiceId: invoice.id, invoiceNumber: finalInvoiceNumber }
-        );
+        captureEdgeFunctionError(pdfError, 'generate-pdf-monkey', {
+          invoiceId: invoice.id,
+          invoiceNumber: finalInvoiceNumber,
+        });
         // Silent - PDF regenerates in background
       }
 
@@ -441,11 +444,10 @@ export const useInvoiceStorage = () => {
 
       // Track non-duplicate errors (duplicates are expected race conditions)
       if (!isDuplicateKeyError) {
-        captureApiError(
-          error instanceof Error ? error : new Error(String(error)),
-          'invoices/save',
-          { invoiceId: invoice.id, errorCode: error?.code, errorMessage: error?.message }
-        );
+        captureApiError(error, 'invoices/save', {
+          invoiceId: invoice.id,
+          errorCode: error?.code,
+        });
       }
 
       if (isDuplicateKeyError && retryCount < MAX_RETRIES) {
@@ -489,11 +491,7 @@ export const useInvoiceStorage = () => {
 
       return true;
     } catch (error) {
-      captureApiError(
-        error instanceof Error ? error : new Error(String(error)),
-        'invoices/mark-complete',
-        { quoteId }
-      );
+      captureApiError(error, 'invoices/mark-complete', { quoteId });
       toast({
         title: 'Error',
         description: 'Failed to mark work as complete. Please try again.',
@@ -523,11 +521,7 @@ export const useInvoiceStorage = () => {
       await fetchInvoices();
       return true;
     } catch (error) {
-      captureApiError(
-        error instanceof Error ? error : new Error(String(error)),
-        'invoices/update-status',
-        { invoiceId, newStatus: status }
-      );
+      captureApiError(error, 'invoices/update-status', { invoiceId, newStatus: status });
       toast({
         title: 'Error',
         description: 'Failed to update invoice status. Please try again.',
@@ -571,11 +565,7 @@ export const useInvoiceStorage = () => {
       await fetchInvoices();
       return true;
     } catch (error) {
-      captureApiError(
-        error instanceof Error ? error : new Error(String(error)),
-        'invoices/delete',
-        { invoiceId }
-      );
+      captureApiError(error, 'invoices/delete', { invoiceId });
       toast({
         title: 'Error deleting invoice',
         description: 'Failed to delete invoice. Please try again.',

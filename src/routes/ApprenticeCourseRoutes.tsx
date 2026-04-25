@@ -5393,7 +5393,7 @@ const Level3Module8MockExam8 = lazy(() =>
   )
 );
 const Module1 = lazy(() =>
-  withTimeout(() => trackImport('Module1', () => import('@/pages/apprentice-courses/Module1')))
+  withTimeout(() => trackImport('Module1', () => import('@/pages/apprentice-courses/level2/module1/Module1')))
 );
 const Module1Section5_4 = lazy(() =>
   withTimeout(() =>
@@ -8590,134 +8590,134 @@ const NotFound = lazy(() =>
   withTimeout(() => trackImport('NotFound', () => import('@/pages/apprentice-courses/NotFound')))
 );
 const Section1 = lazy(() =>
-  withTimeout(() => trackImport('Section1', () => import('@/pages/apprentice-courses/Section1')))
+  withTimeout(() => trackImport('Section1', () => import('@/pages/apprentice-courses/level2/module1/section1/Landing')))
 );
 const Section2 = lazy(() =>
-  withTimeout(() => trackImport('Section2', () => import('@/pages/apprentice-courses/Section2')))
+  withTimeout(() => trackImport('Section2', () => import('@/pages/apprentice-courses/level2/module1/section2/Landing')))
 );
 const Section2_1_ElectricShock = lazy(() =>
   withTimeout(() =>
     trackImport(
       'Section2_1_ElectricShock',
-      () => import('@/pages/apprentice-courses/Section2_1_ElectricShock')
+      () => import('@/pages/apprentice-courses/level2/module1/section2/Sub1')
     )
   )
 );
 const Section3 = lazy(() =>
-  withTimeout(() => trackImport('Section3', () => import('@/pages/apprentice-courses/Section3')))
+  withTimeout(() => trackImport('Section3', () => import('@/pages/apprentice-courses/level2/module1/section3/Landing')))
 );
 const Section4 = lazy(() =>
-  withTimeout(() => trackImport('Section4', () => import('@/pages/apprentice-courses/Section4')))
+  withTimeout(() => trackImport('Section4', () => import('@/pages/apprentice-courses/level2/module1/section4/Landing')))
 );
 const Section5 = lazy(() =>
-  withTimeout(() => trackImport('Section5', () => import('@/pages/apprentice-courses/Section5')))
+  withTimeout(() => trackImport('Section5', () => import('@/pages/apprentice-courses/level2/module1/section5/Landing')))
 );
 const Section6 = lazy(() =>
-  withTimeout(() => trackImport('Section6', () => import('@/pages/apprentice-courses/Section6')))
+  withTimeout(() => trackImport('Section6', () => import('@/pages/apprentice-courses/level2/module1/section6/Landing')))
 );
 const subsection1 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection1', () => import('@/pages/apprentice-courses/subsection1'))
+    trackImport('subsection1', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub1'))
   )
 );
 const subsection10 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection10', () => import('@/pages/apprentice-courses/subsection10'))
+    trackImport('subsection10', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub1'))
   )
 );
 const subsection11 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection11', () => import('@/pages/apprentice-courses/subsection11'))
+    trackImport('subsection11', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub2'))
   )
 );
 const subsection12 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection12', () => import('@/pages/apprentice-courses/subsection12'))
+    trackImport('subsection12', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub3'))
   )
 );
 const subsection13 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection13', () => import('@/pages/apprentice-courses/subsection13'))
+    trackImport('subsection13', () => import('@/pages/apprentice-courses/level2/module1/section3/Sub4'))
   )
 );
 const subsection14 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection14', () => import('@/pages/apprentice-courses/subsection14'))
+    trackImport('subsection14', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub1'))
   )
 );
 const subsection15 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection15', () => import('@/pages/apprentice-courses/subsection15'))
+    trackImport('subsection15', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub2'))
   )
 );
 const subsection16 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection16', () => import('@/pages/apprentice-courses/subsection16'))
+    trackImport('subsection16', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub3'))
   )
 );
 const subsection17 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection17', () => import('@/pages/apprentice-courses/subsection17'))
+    trackImport('subsection17', () => import('@/pages/apprentice-courses/level2/module1/section4/Sub4'))
   )
 );
 const subsection18 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection18', () => import('@/pages/apprentice-courses/subsection18'))
+    trackImport('subsection18', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub1'))
   )
 );
 const subsection19 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection19', () => import('@/pages/apprentice-courses/subsection19'))
+    trackImport('subsection19', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub2'))
   )
 );
 const subsection2 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection2', () => import('@/pages/apprentice-courses/subsection2'))
+    trackImport('subsection2', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub2'))
   )
 );
 const subsection20 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection20', () => import('@/pages/apprentice-courses/subsection20'))
+    trackImport('subsection20', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub3'))
   )
 );
 const subsection21 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection21', () => import('@/pages/apprentice-courses/subsection21'))
+    trackImport('subsection21', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub4'))
   )
 );
 const subsection22 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection22', () => import('@/pages/apprentice-courses/subsection22'))
+    trackImport('subsection22', () => import('@/pages/apprentice-courses/level2/module1/section5/Sub5'))
   )
 );
 const subsection23 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection23', () => import('@/pages/apprentice-courses/subsection23'))
+    trackImport('subsection23', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub1'))
   )
 );
 const subsection24 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection24', () => import('@/pages/apprentice-courses/subsection24'))
+    trackImport('subsection24', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub2'))
   )
 );
 const subsection25 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection25', () => import('@/pages/apprentice-courses/subsection25'))
+    trackImport('subsection25', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub3'))
   )
 );
 const subsection26 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection26', () => import('@/pages/apprentice-courses/subsection26'))
+    trackImport('subsection26', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub4'))
   )
 );
 const subsection27 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection27', () => import('@/pages/apprentice-courses/subsection27'))
+    trackImport('subsection27', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub5'))
   )
 );
 const subsection28 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection28', () => import('@/pages/apprentice-courses/subsection28'))
+    trackImport('subsection28', () => import('@/pages/apprentice-courses/level2/module1/section6/Sub6'))
   )
 );
 const subsection29 = lazy(() =>
@@ -8727,7 +8727,7 @@ const subsection29 = lazy(() =>
 );
 const subsection3 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection3', () => import('@/pages/apprentice-courses/subsection3'))
+    trackImport('subsection3', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub3'))
   )
 );
 const subsection30 = lazy(() =>
@@ -8757,7 +8757,7 @@ const subsection34 = lazy(() =>
 );
 const subsection4 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection4', () => import('@/pages/apprentice-courses/subsection4'))
+    trackImport('subsection4', () => import('@/pages/apprentice-courses/level2/module1/section1/Sub4'))
   )
 );
 const subsection5 = lazy(() =>
@@ -8767,22 +8767,22 @@ const subsection5 = lazy(() =>
 );
 const subsection6 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection6', () => import('@/pages/apprentice-courses/subsection6'))
+    trackImport('subsection6', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub2'))
   )
 );
 const subsection7 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection7', () => import('@/pages/apprentice-courses/subsection7'))
+    trackImport('subsection7', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub3'))
   )
 );
 const subsection8 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection8', () => import('@/pages/apprentice-courses/subsection8'))
+    trackImport('subsection8', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub4'))
   )
 );
 const subsection9 = lazy(() =>
   withTimeout(() =>
-    trackImport('subsection9', () => import('@/pages/apprentice-courses/subsection9'))
+    trackImport('subsection9', () => import('@/pages/apprentice-courses/level2/module1/section2/Sub5'))
   )
 );
 

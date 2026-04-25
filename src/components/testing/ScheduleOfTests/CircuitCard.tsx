@@ -280,7 +280,7 @@ const CircuitCardInner = ({
           </div>
 
           {/* Edit Arrow */}
-          <ChevronRight className="h-5 w-5 text-white/60 mt-1 shrink-0" />
+          <ChevronRight className="h-5 w-5 text-white mt-1 shrink-0" />
         </div>
       </div>
 
@@ -364,7 +364,7 @@ const CircuitCardInner = ({
               status.level === 'success' && 'text-green-500 bg-green-500/10 border-green-500/30',
               status.level === 'warning' && 'text-amber-500 bg-amber-500/10 border-amber-500/30',
               status.level === 'error' && 'text-red-500 bg-red-500/10 border-red-500/30',
-              status.level === 'pending' && 'text-white/70 bg-white/5 border-white/10'
+              status.level === 'pending' && 'text-white bg-white/5 border-white/10'
             )}
           >
             <StatusIcon className="h-3 w-3" />
@@ -508,7 +508,7 @@ const ValueTile: React.FC<ValueTileProps> = ({
       {/* Label */}
       <span
         className={cn(
-          'text-white/70 font-medium leading-none',
+          'text-white font-medium leading-none',
           compact ? 'text-[9px]' : 'text-[10px]'
         )}
       >
@@ -599,7 +599,7 @@ const CircuitCardCompactInner = ({
       {hasIssue ? (
         <AlertTriangle className="h-4 w-4 text-red-500 shrink-0" />
       ) : (
-        <ChevronRight className="h-4 w-4 text-white/60 shrink-0" />
+        <ChevronRight className="h-4 w-4 text-white shrink-0" />
       )}
     </div>
   );

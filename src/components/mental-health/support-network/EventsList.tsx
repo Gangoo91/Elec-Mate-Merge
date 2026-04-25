@@ -47,7 +47,7 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
             <Calendar className="h-5 w-5 text-amber-400" />
           </div>
           <div className="text-left">
-            <h3 className="font-semibold text-foreground">Upcoming Events</h3>
+            <h3 className="font-semibold text-white">Upcoming Events</h3>
             <p className="text-xs text-white">
               {events.length} event{events.length !== 1 ? 's' : ''} scheduled
             </p>
@@ -77,7 +77,7 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-medium text-foreground text-sm mb-2">{event.name}</h4>
+                  <h4 className="font-medium text-white text-sm mb-2">{event.name}</h4>
                   <div className="space-y-1.5">
                     <div className="flex items-center gap-2 text-xs text-white">
                       <Calendar className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />

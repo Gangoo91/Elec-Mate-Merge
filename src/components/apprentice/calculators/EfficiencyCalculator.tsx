@@ -92,7 +92,7 @@ export const EfficiencyCalculator: React.FC = () => {
                 'flex-1 h-12 rounded-xl font-medium text-sm transition-all touch-manipulation',
                 mode === m.key
                   ? 'text-black'
-                  : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
+                  : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
               )}
               style={
                 mode === m.key
@@ -146,7 +146,7 @@ export const EfficiencyCalculator: React.FC = () => {
         {/* Reset Button */}
         <button
           onClick={reset}
-          className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white/60 hover:bg-white/10 transition-colors touch-manipulation"
+          className="w-full h-12 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
         >
           Reset
         </button>
@@ -157,7 +157,7 @@ export const EfficiencyCalculator: React.FC = () => {
         <div className="space-y-4 animate-fade-in">
           <CalculatorResult category="power">
             <div className="text-center pb-4 border-b border-white/10">
-              <p className="text-sm text-white/60 mb-1">
+              <p className="text-sm text-white mb-1">
                 {mode === 'efficiency' ? 'Efficiency' : 'Output Power'}
               </p>
               <div
@@ -214,7 +214,7 @@ export const EfficiencyCalculator: React.FC = () => {
 
             {/* Visual Bar */}
             <div className="pt-4 mt-4 border-t border-white/10">
-              <p className="text-xs text-white/80 mb-2">Power Distribution</p>
+              <p className="text-xs text-white mb-2">Power Distribution</p>
               <div className="h-6 rounded-full overflow-hidden bg-white/10 flex">
                 <div
                   className="h-full transition-all duration-300"
@@ -228,7 +228,7 @@ export const EfficiencyCalculator: React.FC = () => {
                   style={{ width: `${100 - computed.efficiency}%` }}
                 />
               </div>
-              <div className="flex justify-between mt-1 text-xs text-white/80">
+              <div className="flex justify-between mt-1 text-xs text-white">
                 <span>Useful: {computed.efficiency.toFixed(0)}%</span>
                 <span>Lost: {(100 - computed.efficiency).toFixed(0)}%</span>
               </div>
@@ -247,7 +247,7 @@ export const EfficiencyCalculator: React.FC = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/70 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showGuidance && 'rotate-180'
                   )}
                 />
@@ -287,7 +287,7 @@ export const EfficiencyCalculator: React.FC = () => {
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 showReference && 'rotate-180'
               )}
             />

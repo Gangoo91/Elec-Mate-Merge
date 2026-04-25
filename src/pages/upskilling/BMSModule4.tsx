@@ -1,96 +1,74 @@
-import { ArrowLeft, Lightbulb, Sun, Lock, Blinds, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Lightbulb, Sun, Lock, Blinds, Zap } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BMSModule4 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Integration with DALI, 1-10V, and Smart Lighting',
-      icon: Lightbulb,
-      description: 'Lighting protocols and integration methods',
-    },
-    {
-      id: 2,
-      title: 'Daylight Harvesting and PIR Logic',
-      icon: Sun,
-      description: 'Automated lighting and daylight control',
-    },
-    {
-      id: 3,
-      title: 'Access Control Basics and Door Relays',
-      icon: Lock,
-      description: 'Security integration and door control',
-    },
-    {
-      id: 4,
-      title: 'Shading, Blinds, and Facade Automation',
-      icon: Blinds,
-      description: 'Automated shading and facade systems',
-    },
-    {
-      id: 5,
-      title: 'Combined Energy Saving Scenarios (HVAC + Lighting)',
-      icon: Zap,
-      description: 'Integrated energy optimization strategies',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Integration with DALI, 1–10V and smart lighting',
+    icon: Lightbulb,
+    description: 'Lighting protocols, addressing and integration methods.',
+  },
+  {
+    id: 2,
+    title: 'Daylight harvesting and PIR logic',
+    icon: Sun,
+    description: 'Automated lighting control using daylight sensors and occupancy.',
+  },
+  {
+    id: 3,
+    title: 'Access control basics and door relays',
+    icon: Lock,
+    description: 'Security integration, door release relays and credentials.',
+  },
+  {
+    id: 4,
+    title: 'Shading, blinds and façade automation',
+    icon: Blinds,
+    description: 'Automated shading and façade systems for solar gain control.',
+  },
+  {
+    id: 5,
+    title: 'Combined energy saving scenarios (HVAC + lighting)',
+    icon: Zap,
+    description: 'Integrated optimisation across HVAC, lighting and shading.',
+  },
+];
+
+export default function BMSModule4() {
+  useSEO({
+    title: 'Module 4: Lighting, Access & Environmental Control | BMS Course | Elec-Mate',
+    description:
+      'Integrated lighting, access control, shading and combined energy saving strategies for modern BMS deployments.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/bms-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to BMS Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 4</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">55 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Lighting, Access, and Environmental Control
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Integrated lighting, security, and environmental systems
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../bms-module-4-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../bms-course"
+      backLabel="Building management systems"
+      moduleNumber={4}
+      title="Lighting, access and environmental control"
+      description="Integrated lighting, security and environmental subsystems within the BMS."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="55 mins"
+      prevModuleHref="../bms-module-3"
+      prevModuleLabel="HVAC integration and scheduling logic"
+      nextModuleHref="../bms-module-5"
+      nextModuleLabel="Communication protocols: BACnet, Modbus, KNX"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../bms-module-4-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default BMSModule4;
+}

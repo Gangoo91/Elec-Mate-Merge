@@ -121,7 +121,7 @@ const InteractiveStressAssessment = () => {
     const Icon = stress.icon;
 
     return (
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-[hsl(0_0%_12%)]">
         <CardHeader>
           <CardTitle className="text-elec-yellow flex items-center gap-2">
             <Icon className={`h-6 w-6 ${stress.color}`} />
@@ -130,7 +130,7 @@ const InteractiveStressAssessment = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
-            <h4 className="font-semibold text-foreground">Personalised Recommendations:</h4>
+            <h4 className="font-semibold text-white">Personalised Recommendations:</h4>
             <ul className="space-y-2">
               {getRecommendations().map((rec, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm text-white">
@@ -157,7 +157,7 @@ const InteractiveStressAssessment = () => {
   }
 
   return (
-    <Card className="border-elec-yellow/20 bg-elec-gray">
+    <Card className="border-elec-yellow/20 bg-[hsl(0_0%_12%)]">
       <CardHeader>
         <CardTitle className="text-elec-yellow">Quick Stress Assessment</CardTitle>
         <div className="space-y-2">
@@ -169,7 +169,7 @@ const InteractiveStressAssessment = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <h3 className="text-lg font-medium text-foreground">{questions[currentQuestion].text}</h3>
+          <h3 className="text-lg font-medium text-white">{questions[currentQuestion].text}</h3>
 
           <div className="space-y-2">
             {questions[currentQuestion].options.map((option) => (

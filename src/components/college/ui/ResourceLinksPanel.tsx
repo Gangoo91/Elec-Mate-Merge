@@ -66,7 +66,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
             <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
               AI suggestions
               {!aiLoading && visibleSuggestions.length > 0 && (
-                <span className="ml-2 text-white/55 normal-case tracking-normal">
+                <span className="ml-2 text-white normal-case tracking-normal">
                   {visibleSuggestions.length} match
                   {visibleSuggestions.length === 1 ? '' : 'es'}
                 </span>
@@ -83,7 +83,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
             )}
           </div>
           {aiLoading ? (
-            <div className="flex items-center gap-2 py-1 text-[12px] text-white/70">
+            <div className="flex items-center gap-2 py-1 text-[12px] text-white">
               <span className="h-3 w-3 rounded-full border-2 border-white/15 border-t-elec-yellow animate-spin" />
               Matching against this college's assessment criteria…
             </div>
@@ -97,7 +97,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                     ? 'text-emerald-300'
                     : s.confidence >= 0.6
                       ? 'text-elec-yellow'
-                      : 'text-white/60';
+                      : 'text-white';
                 return (
                   <li
                     key={key}
@@ -112,11 +112,11 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                           {confPct}%
                         </span>
                       </div>
-                      <div className="mt-1 text-[12px] text-white/85 leading-snug line-clamp-2">
+                      <div className="mt-1 text-[12px] text-white leading-snug line-clamp-2">
                         {s.ac_text}
                       </div>
                       {s.rationale && (
-                        <div className="mt-1 text-[11px] text-white/55 leading-snug">
+                        <div className="mt-1 text-[11px] text-white leading-snug">
                           {s.rationale}
                         </div>
                       )}
@@ -133,7 +133,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                       <button
                         type="button"
                         onClick={() => dismiss(key)}
-                        className="h-8 w-8 rounded-full text-white/55 hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-colors touch-manipulation"
+                        className="h-8 w-8 rounded-full text-white hover:text-white hover:bg-white/[0.06] flex items-center justify-center transition-colors touch-manipulation"
                         aria-label="Dismiss suggestion"
                       >
                         ×
@@ -147,7 +147,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
           {!aiLoading &&
             visibleSuggestions.length === 0 &&
             suggestions.length > 0 && (
-              <div className="text-[12px] text-white/55">
+              <div className="text-[12px] text-white">
                 All suggested ACs are already linked.
               </div>
             )}
@@ -157,7 +157,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
       {/* AC links */}
       <div>
         <div className="flex items-center justify-between gap-3 mb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/60">
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             Assessment criteria · {acLinks.length}
           </div>
           <div className="flex items-center gap-3">
@@ -179,7 +179,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
           </div>
         </div>
         {aiReason === 'no_college_qualifications' && (
-          <div className="mb-2 text-[11.5px] text-white/60">
+          <div className="mb-2 text-[11.5px] text-white">
             Add courses in Settings to power AI tagging.
           </div>
         )}
@@ -221,7 +221,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
       {/* Lesson links */}
       <div>
         <div className="flex items-center justify-between gap-3 mb-2">
-          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/60">
+          <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
             Lesson plans · {lessonLinks.length}
           </div>
           <button
@@ -245,7 +245,7 @@ export function ResourceLinksPanel({ resourceId }: Props) {
                 <button
                   type="button"
                   onClick={() => removeLessonLink(l.id)}
-                  className="text-[11px] text-white/55 hover:text-red-300 transition-colors shrink-0"
+                  className="text-[11px] text-white hover:text-red-300 transition-colors shrink-0"
                 >
                   Detach
                 </button>
@@ -379,18 +379,18 @@ function AcPicker({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search AC code, unit or text…"
-          className="flex-1 min-w-[160px] h-9 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-[12px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60"
+          className="flex-1 min-w-[160px] h-9 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-[12px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
         />
       </div>
       <div className="max-h-[220px] overflow-y-auto">
         {!qual ? (
-          <div className="px-4 py-4 text-[12px] text-white/55">
+          <div className="px-4 py-4 text-[12px] text-white">
             Pick a qualification to browse its ACs.
           </div>
         ) : loading ? (
-          <div className="px-4 py-4 text-[12px] text-white/55">Loading ACs…</div>
+          <div className="px-4 py-4 text-[12px] text-white">Loading ACs…</div>
         ) : filtered.length === 0 ? (
-          <div className="px-4 py-4 text-[12px] text-white/55">
+          <div className="px-4 py-4 text-[12px] text-white">
             {rows.length === 0
               ? 'No ACs found for this qualification.'
               : 'No ACs match this search.'}
@@ -413,7 +413,7 @@ function AcPicker({
                   <span className="shrink-0 font-mono tabular-nums text-[11px] text-elec-yellow mt-0.5">
                     {r.unit_code}:{r.ac_code}
                   </span>
-                  <span className="flex-1 text-[12px] text-white/85 leading-snug line-clamp-2">
+                  <span className="flex-1 text-[12px] text-white leading-snug line-clamp-2">
                     {r.ac_text}
                   </span>
                 </button>
@@ -479,14 +479,14 @@ function LessonPicker({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search lesson plans…"
-          className="w-full h-9 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-[12px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60"
+          className="w-full h-9 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-full px-3 text-[12px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
         />
       </div>
       <div className="max-h-[240px] overflow-y-auto">
         {loading ? (
-          <div className="px-4 py-4 text-[12px] text-white/55">Loading plans…</div>
+          <div className="px-4 py-4 text-[12px] text-white">Loading plans…</div>
         ) : filtered.length === 0 ? (
-          <div className="px-4 py-4 text-[12px] text-white/55">
+          <div className="px-4 py-4 text-[12px] text-white">
             No lesson plans to attach.
           </div>
         ) : (
@@ -502,7 +502,7 @@ function LessonPicker({
                   )}
                 >
                   <span className="text-[12.5px] text-white truncate">{r.title}</span>
-                  <span className="shrink-0 text-[10.5px] uppercase tracking-[0.16em] text-white/45">
+                  <span className="shrink-0 text-[10.5px] uppercase tracking-[0.16em] text-white">
                     {r.status ?? 'Draft'}
                   </span>
                 </button>

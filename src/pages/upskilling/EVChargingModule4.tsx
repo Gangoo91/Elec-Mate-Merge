@@ -1,96 +1,74 @@
-import { ArrowLeft, Anchor, AlertTriangle, Eye, Pickaxe, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Anchor, AlertTriangle, Eye, Pickaxe, Zap } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EVChargingModule4 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Earthing System Selection: TT, TN-S, TN-C-S',
-      icon: Anchor,
-      description: 'Understanding and selecting appropriate earthing systems',
-    },
-    {
-      id: 2,
-      title: 'Open PEN Fault Protection Methods',
-      icon: AlertTriangle,
-      description: 'Protecting against open PEN conductor faults',
-    },
-    {
-      id: 3,
-      title: 'Use of Monitoring Devices and Relays',
-      icon: Eye,
-      description: 'Installing monitoring equipment for enhanced protection',
-    },
-    {
-      id: 4,
-      title: 'Earth Rod Installation and Testing',
-      icon: Pickaxe,
-      description: 'Proper earth electrode installation and verification',
-    },
-    {
-      id: 5,
-      title: 'Surge and Lightning Protection (SPD)',
-      icon: Zap,
-      description: 'Protecting EV charging systems from electrical surges',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Earthing system selection: TT, TN-S, TN-C-S',
+    icon: Anchor,
+    description: 'Understanding and selecting appropriate earthing systems for EV charging.',
+  },
+  {
+    id: 2,
+    title: 'Open PEN fault protection methods',
+    icon: AlertTriangle,
+    description: 'Protecting against open PEN conductor faults on TN-C-S supplies.',
+  },
+  {
+    id: 3,
+    title: 'Use of monitoring devices and relays',
+    icon: Eye,
+    description: 'Installing monitoring equipment for enhanced protection.',
+  },
+  {
+    id: 4,
+    title: 'Earth rod installation and testing',
+    icon: Pickaxe,
+    description: 'Proper earth electrode installation and verification.',
+  },
+  {
+    id: 5,
+    title: 'Surge and lightning protection (SPD)',
+    icon: Zap,
+    description: 'Protecting EV charging systems from electrical surges.',
+  },
+];
+
+export default function EVChargingModule4() {
+  useSEO({
+    title: 'Module 4: Earthing & Protection | EV Charging | Elec-Mate',
+    description:
+      'Earthing system selection, open PEN protection, monitoring devices, earth rods and surge protection.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/ev-charging-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to EV Charging Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 4</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Earthing and Protection Considerations
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Essential earthing and protection requirements for EV charging
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../ev-charging-module-4-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../ev-charging-course"
+      backLabel="EV charging installation"
+      moduleNumber={4}
+      title="Earthing and protection considerations"
+      description="Essential earthing arrangements and the protection requirements unique to EV charging."
+      tone="green"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      prevModuleHref="../ev-charging-module-3"
+      prevModuleLabel="Electrical design and load calculation"
+      nextModuleHref="../ev-charging-module-5"
+      nextModuleLabel="Load management and diversity in EV systems"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../ev-charging-module-4-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EVChargingModule4;
+}

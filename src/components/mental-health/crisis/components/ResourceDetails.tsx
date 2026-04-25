@@ -30,7 +30,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
         Back to results
       </Button>
 
-      <div className="p-4 bg-background rounded-md border border-red-500/30">
+      <div className="p-4 bg-[hsl(0_0%_8%)] rounded-md border border-red-500/30">
         <div className="flex items-start justify-between flex-wrap gap-2">
           <h3 className="font-medium flex items-center gap-2 flex-wrap">
             {resource.name}
@@ -86,7 +86,7 @@ const ResourceDetails = ({ resource, onBack }: ResourceDetailsProps) => {
           {resource.contact && (
             <Button
               size="sm"
-              className="bg-red-500 hover:bg-red-600 text-foreground flex items-center justify-center gap-2 w-full"
+              className="bg-red-500 hover:bg-red-600 text-white flex items-center justify-center gap-2 w-full"
               onClick={() => handleCopyContact(resource.contact || '')}
             >
               <Phone className="h-4 w-4" /> Copy Contact

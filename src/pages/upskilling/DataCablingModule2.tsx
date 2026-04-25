@@ -1,96 +1,74 @@
-import { ArrowLeft, Cable, Shield, BarChart, Plug, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Cable, Shield, BarChart, Plug, Zap } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const DataCablingModule2 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Twisted Pair Basics and Categories',
-      icon: Cable,
-      description: 'Understanding twisted pair cable construction and categories',
-    },
-    {
-      id: 2,
-      title: 'UTP, FTP, and STP Explained',
-      icon: Shield,
-      description: 'Different cable shielding types and applications',
-    },
-    {
-      id: 3,
-      title: 'Performance Ratings and Bandwidth Limits',
-      icon: BarChart,
-      description: 'Cable performance specifications and limitations',
-    },
-    {
-      id: 4,
-      title: 'Connectors and Patch Panel Config',
-      icon: Plug,
-      description: 'Connector types and patch panel configuration',
-    },
-    {
-      id: 5,
-      title: 'PoE (Power over Ethernet) Use and Limitations',
-      icon: Zap,
-      description: 'Power over Ethernet capabilities and constraints',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Twisted pair basics and categories',
+    icon: Cable,
+    description: 'Understanding twisted pair cable construction and category ratings.',
+  },
+  {
+    id: 2,
+    title: 'UTP, FTP and STP explained',
+    icon: Shield,
+    description: 'Different cable shielding types and where each is best applied.',
+  },
+  {
+    id: 3,
+    title: 'Performance ratings and bandwidth limits',
+    icon: BarChart,
+    description: 'Cable performance specifications and frequency limitations.',
+  },
+  {
+    id: 4,
+    title: 'Connectors and patch panel configuration',
+    icon: Plug,
+    description: 'RJ45 termination, keystones and patch panel layouts.',
+  },
+  {
+    id: 5,
+    title: 'PoE (Power over Ethernet) use and limitations',
+    icon: Zap,
+    description: 'Power over Ethernet capabilities, classes and constraints.',
+  },
+];
+
+export default function DataCablingModule2() {
+  useSEO({
+    title: 'Module 2: Copper Cabling Standards | Data Cabling | Elec-Mate',
+    description:
+      'Twisted pair categories, shielding types, performance ratings, connectors and Power over Ethernet.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/data-cabling-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Data Cabling Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 2</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Copper Cabling Standards (Cat5e, Cat6, etc.)
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Copper cable types, standards, and performance characteristics
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../data-cabling-module-2-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../data-cabling-course"
+      backLabel="Data and communications cabling"
+      moduleNumber={2}
+      title="Copper cabling standards (Cat5e, Cat6, etc.)"
+      description="Copper cable types, standards and performance characteristics."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../data-cabling-module-1"
+      prevModuleLabel="Introduction to structured cabling systems"
+      nextModuleHref="../data-cabling-module-3"
+      nextModuleLabel="Fibre optics: types, termination and testing"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../data-cabling-module-2-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default DataCablingModule2;
+}

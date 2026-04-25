@@ -1,47 +1,46 @@
-import { ArrowLeft, CheckCircle, FileText, Scale, Award, Shield } from 'lucide-react';
+import { CheckCircle, FileText, Scale, Award, Shield } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 
 const subsections = [
   {
     number: 'Subsection 1',
-    title: 'Cable Support Distances (Horizontal/Vertical)',
+    title: 'Cable support distances (horizontal/vertical)',
     description: 'Requirements for supporting cables at correct intervals',
     icon: FileText,
     href: '6-1',
   },
   {
     number: 'Subsection 2',
-    title: 'Routing Cables in Walls and Floors (Zones and Depths)',
+    title: 'Routing cables in walls and floors (zones and depths)',
     description: 'Safe zones and depth requirements for concealed cables',
     icon: Scale,
     href: '6-2',
   },
   {
     number: 'Subsection 3',
-    title: 'Fire Stopping and Sealing Penetrations',
+    title: 'Fire stopping and sealing penetrations',
     description: 'Fire safety measures for cable penetrations',
     icon: Award,
     href: '6-3',
   },
   {
     number: 'Subsection 4',
-    title: 'Safe Entry to Enclosures (Grommets, Bushes, Glands)',
+    title: 'Safe entry to enclosures (grommets, bushes, glands)',
     description: 'Methods for safely entering electrical enclosures',
     icon: CheckCircle,
     href: '6-4',
   },
   {
     number: 'Subsection 5',
-    title: 'Labelling, Identification, and Colour Codes',
+    title: 'Labelling, identification and colour codes',
     description: 'Proper identification and labelling of electrical systems',
     icon: Shield,
     href: '6-5',
   },
   {
     number: 'Subsection 6',
-    title: 'Following Manufacturer Instructions and Site Specs',
+    title: 'Following manufacturer instructions and site specs',
     description: 'Importance of following specifications and instructions',
     icon: FileText,
     href: '6-6',
@@ -50,57 +49,29 @@ const subsections = [
 
 const Section6 = () => {
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level2/module3">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 3
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Section 6</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Installation Standards and Best Practice
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Industry standards, regulations and best practice guidelines for electrical work
-            </p>
-          </header>
-
-          {/* Subsections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {subsections.map((subsection, index) => (
-              <ModuleCard
-                key={index}
-                number={subsection.number}
-                title={subsection.title}
-                description={subsection.description}
-                icon={subsection.icon}
-                href={subsection.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level2/module3"
+      backLabel="Module 3"
+      moduleNumber={3}
+      sectionNumber={6}
+      title="Installation standards and best practice"
+      description="Industry standards, regulations and best-practice guidelines for electrical work."
+      tone="emerald"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../section5"
+      prevSectionLabel="Environmental considerations and external influences"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

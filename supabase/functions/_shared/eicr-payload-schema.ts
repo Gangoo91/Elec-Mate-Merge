@@ -9,6 +9,19 @@
 
 import { z } from 'https://esm.sh/zod@3.23.8';
 
+// Form fields that should be booleans sometimes arrive as the strings
+// "true"/"false"/"yes"/"no"/"N/A"/"LIM" from select inputs. Coerce defensively
+// so schema validation doesn't reject otherwise-valid payloads. Note: plain
+// z.coerce.boolean() would treat "false" as truthy, so we parse explicitly.
+const boolish = z.preprocess((v) => {
+  if (typeof v === 'boolean') return v;
+  if (typeof v === 'string') {
+    const s = v.toLowerCase().trim();
+    return s === 'true' || s === 'yes' || s === '1';
+  }
+  return false;
+}, z.boolean());
+
 // ─── Item numbers from BS 7671 inspection checklist ──────────────────
 // 85 items across 8 sections
 const INSPECTION_ITEM_NUMBERS = [
@@ -397,7 +410,7 @@ export const eicrPayloadSchema = z
         prospective_fault_current: z.string().default(''),
         supply_polarity_confirmed: z.boolean().default(false),
         other_sources_of_supply: z.string().default(''),
-        other_sources_of_supply_present: z.boolean().default(false),
+        other_sources_of_supply_present: boolish.default(false),
       })
       .default({}),
 
@@ -447,8 +460,8 @@ export const eicrPayloadSchema = z
 
     earthing_bonding: z
       .object({
-        means_of_earthing_distributor: z.boolean().default(false),
-        means_of_earthing_electrode: z.boolean().default(false),
+        means_of_earthing_distributor: boolish.default(false),
+        means_of_earthing_electrode: boolish.default(false),
         earth_electrode_type: z.string().default(''),
         earth_electrode_location: z.string().default(''),
         earth_electrode_resistance: z.string().default(''),

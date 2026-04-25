@@ -1,6 +1,4 @@
 import { useState, useMemo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import {
   TrendingUp,
   TrendingDown,
@@ -8,21 +6,22 @@ import {
   Calendar,
   BarChart3,
   Lightbulb,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-  Sun,
-  Moon,
   Clock,
 } from 'lucide-react';
 import { useMentalHealth } from '@/contexts/MentalHealthContext';
+import {
+  Eyebrow,
+  ListCard,
+  EmptyState,
+  FilterBar,
+} from '@/components/college/primitives';
 
 const moodEmojis = [
-  { value: 1, emoji: '😢', label: 'Struggling', color: 'bg-red-500' },
-  { value: 2, emoji: '😔', label: 'Low', color: 'bg-orange-500' },
-  { value: 3, emoji: '😐', label: 'Okay', color: 'bg-yellow-500' },
-  { value: 4, emoji: '🙂', label: 'Good', color: 'bg-lime-500' },
-  { value: 5, emoji: '😊', label: 'Great', color: 'bg-green-500' },
+  { value: 1, emoji: '😢', label: 'Struggling' },
+  { value: 2, emoji: '😔', label: 'Low' },
+  { value: 3, emoji: '😐', label: 'Okay' },
+  { value: 4, emoji: '🙂', label: 'Good' },
+  { value: 5, emoji: '😊', label: 'Great' },
 ];
 
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -126,7 +125,7 @@ const MoodInsights = () => {
     // Average mood insight
     if (stats.average >= 4) {
       insights.push({
-        text: "You've been feeling good overall. That's wonderful!",
+        text: "You've been feeling good overall. That's wonderful.",
         type: 'positive',
       });
     } else if (stats.average < 2.5) {
@@ -139,7 +138,7 @@ const MoodInsights = () => {
     // Consistency insight
     if (stats.totalEntries >= 5 && viewPeriod === 'week') {
       insights.push({
-        text: 'Great job tracking regularly! This builds self-awareness.',
+        text: 'Great job tracking regularly. This builds self-awareness.',
         type: 'positive',
       });
     }
@@ -152,23 +151,15 @@ const MoodInsights = () => {
     return (
       <div className="space-y-4">
         <div className="text-center py-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 mb-3">
-            <BarChart3 className="h-6 w-6 text-blue-400" />
-          </div>
-          <h2 className="text-xl font-bold text-foreground mb-1">Mood Insights</h2>
-          <p className="text-sm text-white">Track patterns in how you feel</p>
+          <Eyebrow>Mental health</Eyebrow>
+          <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">Mood insights</h2>
+          <p className="mt-1 text-[13px] text-white">Track patterns in how you feel</p>
         </div>
 
-        <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-purple-500/5">
-          <CardContent className="text-center py-8">
-            <Lightbulb className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
-            <h3 className="font-medium text-foreground mb-2">Not enough data yet</h3>
-            <p className="text-sm text-white max-w-xs mx-auto">
-              Log your mood a few more times to start seeing patterns and insights. Check in
-              regularly to understand yourself better.
-            </p>
-          </CardContent>
-        </Card>
+        <EmptyState
+          title="Not enough data yet"
+          description="Log your mood a few more times to start seeing patterns and insights. Check in regularly to understand yourself better."
+        />
       </div>
     );
   }
@@ -177,91 +168,80 @@ const MoodInsights = () => {
     <div className="space-y-4">
       {/* Header */}
       <div className="text-center py-2">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 mb-3">
-          <BarChart3 className="h-6 w-6 text-blue-400" />
-        </div>
-        <h2 className="text-xl font-bold text-foreground mb-1">Mood Insights</h2>
-        <p className="text-sm text-white">Understanding your patterns</p>
+        <Eyebrow>Mental health</Eyebrow>
+        <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight">Mood insights</h2>
+        <p className="mt-1 text-[13px] text-white">Understanding your patterns</p>
       </div>
 
       {/* Period Toggle */}
-      <div className="flex justify-center gap-2">
-        <Button
-          size="sm"
-          variant={viewPeriod === 'week' ? 'default' : 'outline'}
-          onClick={() => setViewPeriod('week')}
-          className={viewPeriod === 'week' ? 'bg-blue-500' : ''}
-        >
-          Past Week
-        </Button>
-        <Button
-          size="sm"
-          variant={viewPeriod === 'month' ? 'default' : 'outline'}
-          onClick={() => setViewPeriod('month')}
-          className={viewPeriod === 'month' ? 'bg-blue-500' : ''}
-        >
-          Past Month
-        </Button>
-      </div>
+      <FilterBar
+        tabs={[
+          { value: 'week', label: 'Past week' },
+          { value: 'month', label: 'Past month' },
+        ]}
+        activeTab={viewPeriod}
+        onTabChange={(value) => setViewPeriod(value as 'week' | 'month')}
+      />
 
       {stats && (
         <>
           {/* Overview Stats */}
-          <div className="grid grid-cols-3 gap-2 sm:gap-3">
-            <Card className="border-blue-500/20 bg-blue-500/5">
-              <CardContent className="p-2 sm:p-3 text-center">
-                <div className="text-xl sm:text-2xl mb-1">
-                  {moodEmojis.find((m) => m.value === Math.round(stats.average))?.emoji || '😐'}
-                </div>
-                <div className="text-lg sm:text-xl font-bold text-blue-400">
-                  {stats.average.toFixed(1)}
-                </div>
-                <div className="text-[11px] sm:text-xs text-white">Average</div>
-              </CardContent>
-            </Card>
-            <Card className="border-purple-500/20 bg-purple-500/5">
-              <CardContent className="p-2 sm:p-3 text-center">
+          <div className="grid grid-cols-3 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
+            <div className="bg-[hsl(0_0%_12%)] px-4 py-5 text-center">
+              <Eyebrow>Average</Eyebrow>
+              <div className="mt-2 text-2xl">
+                {moodEmojis.find((m) => m.value === Math.round(stats.average))?.emoji || '😐'}
+              </div>
+              <div className="mt-1 text-lg font-semibold text-white tabular-nums">
+                {stats.average.toFixed(1)}
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_12%)] px-4 py-5 text-center">
+              <Eyebrow>Trend</Eyebrow>
+              <div className="mt-2 flex items-center justify-center">
                 {stats.trend > 0 ? (
-                  <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mx-auto mb-1" />
+                  <TrendingUp className="h-5 w-5 text-emerald-400" />
                 ) : stats.trend < 0 ? (
-                  <TrendingDown className="h-5 w-5 sm:h-6 sm:w-6 text-red-400 mx-auto mb-1" />
+                  <TrendingDown className="h-5 w-5 text-red-400" />
                 ) : (
-                  <Minus className="h-5 w-5 sm:h-6 sm:w-6 text-yellow-400 mx-auto mb-1" />
+                  <Minus className="h-5 w-5 text-elec-yellow" />
                 )}
-                <div
-                  className={`text-lg sm:text-xl font-bold ${
-                    stats.trend > 0
-                      ? 'text-green-400'
-                      : stats.trend < 0
-                        ? 'text-red-400'
-                        : 'text-yellow-400'
-                  }`}
-                >
-                  {stats.trend > 0 ? '+' : ''}
-                  {stats.trend.toFixed(1)}
-                </div>
-                <div className="text-[11px] sm:text-xs text-white">Trend</div>
-              </CardContent>
-            </Card>
-            <Card className="border-green-500/20 bg-green-500/5">
-              <CardContent className="p-2 sm:p-3 text-center">
-                <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-green-400 mx-auto mb-1" />
-                <div className="text-lg sm:text-xl font-bold text-green-400">
-                  {stats.totalEntries}
-                </div>
-                <div className="text-[11px] sm:text-xs text-white">Check-ins</div>
-              </CardContent>
-            </Card>
+              </div>
+              <div
+                className={`mt-1 text-lg font-semibold tabular-nums ${
+                  stats.trend > 0
+                    ? 'text-emerald-400'
+                    : stats.trend < 0
+                      ? 'text-red-400'
+                      : 'text-elec-yellow'
+                }`}
+              >
+                {stats.trend > 0 ? '+' : ''}
+                {stats.trend.toFixed(1)}
+              </div>
+            </div>
+            <div className="bg-[hsl(0_0%_12%)] px-4 py-5 text-center">
+              <Eyebrow>Check-ins</Eyebrow>
+              <div className="mt-2">
+                <Calendar className="h-5 w-5 text-white mx-auto" />
+              </div>
+              <div className="mt-1 text-lg font-semibold text-white tabular-nums">
+                {stats.totalEntries}
+              </div>
+            </div>
           </div>
 
           {/* Mood Distribution */}
-          <Card className="border-white/10 bg-white/5">
-            <CardContent className="p-4">
-              <h3 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
-                <BarChart3 className="h-4 w-4 text-blue-400" />
-                Mood Distribution
+          <ListCard>
+            <div className="px-5 py-4 border-b border-white/[0.06]">
+              <Eyebrow>Mood distribution</Eyebrow>
+              <h3 className="mt-1 text-[15px] font-medium text-white flex items-center gap-2">
+                <BarChart3 className="h-4 w-4 text-elec-yellow" />
+                Mood distribution
               </h3>
-              <div className="flex items-end justify-between gap-2 h-20">
+            </div>
+            <div className="px-5 py-5">
+              <div className="flex items-end justify-between gap-2 h-24">
                 {stats.distribution.map((count, i) => {
                   const maxCount = Math.max(...stats.distribution);
                   const height = maxCount > 0 ? (count / maxCount) * 100 : 0;
@@ -269,9 +249,9 @@ const MoodInsights = () => {
                   return (
                     <div key={i} className="flex-1 flex flex-col items-center gap-1">
                       <div className="w-full flex flex-col items-center">
-                        <span className="text-xs text-white mb-1">{count}</span>
+                        <span className="text-[11px] text-white mb-1 tabular-nums">{count}</span>
                         <div
-                          className={`w-full rounded-t ${mood.color}/60 transition-all`}
+                          className="w-full rounded-t bg-elec-yellow transition-all"
                           style={{ height: `${Math.max(height, 4)}%`, minHeight: '4px' }}
                         />
                       </div>
@@ -280,16 +260,19 @@ const MoodInsights = () => {
                   );
                 })}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </ListCard>
 
           {/* Day of Week Analysis */}
-          <Card className="border-white/10 bg-white/5">
-            <CardContent className="p-4">
-              <h3 className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
-                <Clock className="h-4 w-4 text-purple-400" />
-                By Day of Week
+          <ListCard>
+            <div className="px-5 py-4 border-b border-white/[0.06]">
+              <Eyebrow>By day of week</Eyebrow>
+              <h3 className="mt-1 text-[15px] font-medium text-white flex items-center gap-2">
+                <Clock className="h-4 w-4 text-elec-yellow" />
+                By day of week
               </h3>
+            </div>
+            <div className="px-5 py-5">
               <div className="grid grid-cols-7 gap-1 sm:gap-2">
                 {dayNames.map((day, i) => {
                   const avg = stats.dayAverages[i];
@@ -299,20 +282,20 @@ const MoodInsights = () => {
                   return (
                     <div
                       key={day}
-                      className={`p-1 sm:p-2 rounded-lg text-center ${
+                      className={`p-1.5 sm:p-2 rounded-lg text-center ${
                         isBest
-                          ? 'bg-green-500/20 ring-1 ring-green-500/40'
+                          ? 'bg-emerald-500/15 border border-emerald-500/30'
                           : isWorst
-                            ? 'bg-red-500/20 ring-1 ring-red-500/40'
-                            : 'bg-white/5'
+                            ? 'bg-red-500/15 border border-red-500/30'
+                            : 'bg-[hsl(0_0%_9%)] border border-white/[0.08]'
                       }`}
                     >
                       <span className="text-base sm:text-lg block mb-0.5 sm:mb-1">
                         {mood ? mood.emoji : '—'}
                       </span>
-                      <span className="text-[10px] sm:text-xs text-white block">{day}</span>
+                      <span className="text-[10px] sm:text-[11px] text-white block">{day}</span>
                       {avg > 0 && (
-                        <span className="text-[10px] sm:text-xs text-foreground/50 hidden sm:block">
+                        <span className="text-[10px] text-white tabular-nums hidden sm:block">
                           {avg.toFixed(1)}
                         </span>
                       )}
@@ -320,46 +303,46 @@ const MoodInsights = () => {
                   );
                 })}
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </ListCard>
 
           {/* Insights */}
           {insights.length > 0 && (
-            <Card className="border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-orange-500/5">
-              <CardContent className="p-4">
-                <h3 className="text-sm font-medium text-amber-400 mb-3 flex items-center gap-2">
-                  <Lightbulb className="h-4 w-4" />
-                  Your Insights
+            <ListCard>
+              <div className="px-5 py-4 border-b border-white/[0.06]">
+                <Eyebrow>Your insights</Eyebrow>
+                <h3 className="mt-1 text-[15px] font-medium text-white flex items-center gap-2">
+                  <Lightbulb className="h-4 w-4 text-elec-yellow" />
+                  Your insights
                 </h3>
-                <div className="space-y-2">
-                  {insights.map((insight, i) => (
-                    <div
-                      key={i}
-                      className={`p-3 rounded-lg text-sm ${
-                        insight.type === 'positive'
-                          ? 'bg-green-500/10 text-green-200'
-                          : insight.type === 'concern'
-                            ? 'bg-red-500/10 text-red-200'
-                            : 'bg-white/5 text-foreground/80'
-                      }`}
-                    >
-                      {insight.text}
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+              <div className="px-5 py-5 space-y-2">
+                {insights.map((insight, i) => (
+                  <div
+                    key={i}
+                    className={`px-4 py-3 rounded-xl text-[13px] border ${
+                      insight.type === 'positive'
+                        ? 'bg-emerald-500/10 text-white border-emerald-500/25'
+                        : insight.type === 'concern'
+                          ? 'bg-red-500/10 text-white border-red-500/25'
+                          : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08]'
+                    }`}
+                  >
+                    {insight.text}
+                  </div>
+                ))}
+              </div>
+            </ListCard>
           )}
 
           {/* Tip */}
-          <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/10 to-indigo-500/5">
-            <CardContent className="p-4">
-              <p className="text-sm text-blue-200">
-                <strong className="text-blue-400">Keep tracking:</strong> The more data you log, the
-                better insights you'll get about your mental health patterns.
-              </p>
-            </CardContent>
-          </Card>
+          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
+            <Eyebrow>Keep tracking</Eyebrow>
+            <p className="mt-2 text-[13px] text-white leading-relaxed">
+              The more data you log, the better insights you'll get about your mental health
+              patterns.
+            </p>
+          </div>
         </>
       )}
     </div>

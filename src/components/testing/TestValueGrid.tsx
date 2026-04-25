@@ -157,7 +157,7 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
 
   return (
     <div className="space-y-3">
-      <Label className="text-xs font-medium text-white/60 uppercase tracking-wide">
+      <Label className="text-xs font-medium text-white uppercase tracking-wide">
         Quick Test Entry
       </Label>
 
@@ -222,7 +222,7 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
       <div className="grid grid-cols-3 gap-2 pt-2">
         <div className="space-y-1">
           <Label className="text-xs text-white">Max Zs</Label>
-          <div className="h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-sm text-white/70">
+          <div className="h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-sm text-white">
             {circuit.maxZs || '-'} Ω
           </div>
         </div>

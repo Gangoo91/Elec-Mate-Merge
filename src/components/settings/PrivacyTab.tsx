@@ -513,7 +513,7 @@ const PrivacyTab = () => {
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <Dot tone="yellow" />
-                  <span className="text-[13px] text-white/80 truncate">
+                  <span className="text-[13px] text-white truncate">
                     {actionLabels[entry.action] ?? entry.action}
                   </span>
                 </div>
@@ -541,7 +541,7 @@ const PrivacyTab = () => {
           <AlertDialogHeader>
             <AlertDialogTitle className="text-red-400">Delete Your Account</AlertDialogTitle>
             <AlertDialogDescription asChild>
-              <div className="text-white/80 space-y-3">
+              <div className="text-white space-y-3">
                 <p>This will permanently delete your account and all associated data:</p>
                 <ul className="space-y-1">
                   {[
@@ -575,7 +575,7 @@ const PrivacyTab = () => {
                   placeholder="Type DELETE to confirm"
                   className={cn(
                     'font-mono bg-[#0a0a0a] border-white/[0.08] focus:border-red-500/50',
-                    'text-white placeholder:text-white/40 h-11 touch-manipulation'
+                    'text-white placeholder:text-white h-11 touch-manipulation'
                   )}
                   autoCapitalize="none"
                   autoCorrect="off"

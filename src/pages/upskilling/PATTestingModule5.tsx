@@ -1,94 +1,46 @@
-import { ArrowLeft, FileText, Tag, Database, Calendar, Award } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { FileText, Tag, Database, Calendar, Award } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const PATTestingModule5 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'PAT Labels: Pass/Fail, Retest Dates, Asset ID',
-      icon: Tag,
-      description: 'Labelling systems and identification requirements',
-    },
-    {
-      id: 2,
-      title: 'Test Record Keeping and Legal Requirements',
-      icon: FileText,
-      description: 'Documentation standards and compliance',
-    },
-    {
-      id: 3,
-      title: 'Asset Register Creation and Management',
-      icon: Database,
-      description: 'Creating and maintaining equipment registers',
-    },
-    {
-      id: 4,
-      title: 'Re-Test Period Planning',
-      icon: Calendar,
-      description: 'Schedule planning and resource management',
-    },
-    {
-      id: 5,
-      title: 'Certification and Reporting Requirements',
-      icon: Award,
-      description: 'Professional certification and compliance reporting',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'PAT labels: pass/fail, retest dates, asset ID', icon: Tag, description: 'Labelling systems and identification requirements.' },
+  { id: 2, title: 'Test record keeping and legal requirements', icon: FileText, description: 'Documentation standards and compliance.' },
+  { id: 3, title: 'Asset register creation and management', icon: Database, description: 'Creating and maintaining equipment registers.' },
+  { id: 4, title: 'Retest period planning', icon: Calendar, description: 'Schedule planning and resource management.' },
+  { id: 5, title: 'Certification and reporting requirements', icon: Award, description: 'Professional certification and compliance reporting.' },
+];
+
+export default function PATTestingModule5() {
+  useSEO({
+    title: 'Module 5: Documentation and Labelling | PAT Testing | Elec-Mate',
+    description: 'PAT labels, record keeping, asset registers, retest planning and certification — the paperwork side of PAT testing.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/pat-testing-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to PAT Testing Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 5</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Documentation, Labelling, and Legal Requirements
-          </h1>
-          <p className="text-white text-sm sm:text-base">Compliance and record keeping</p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../pat-testing-module-5-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../pat-testing-course"
+      backLabel="PAT testing certification"
+      moduleNumber={5}
+      title="Documentation, labelling and legal requirements"
+      description="Labels, registers and certificates — the records that prove your PAT testing was done."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      prevModuleHref="../pat-testing-module-4"
+      prevModuleLabel="Electrical testing methods and equipment"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../pat-testing-module-5-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default PATTestingModule5;
+}

@@ -50,7 +50,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
         <div className="px-4 pb-6 overflow-y-auto flex-1 space-y-4">
           {objectLength !== null && (
             <div className="space-y-1 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2">
-              <Label className="text-white/60 text-[11px] uppercase tracking-wide">Length</Label>
+              <Label className="text-white text-[11px] uppercase tracking-wide">Length</Label>
               <p className="text-sm font-semibold text-white">{objectLength.toFixed(2)}m</p>
             </div>
           )}
@@ -201,7 +201,7 @@ export const PropertiesPanel = ({ selectedObject, onUpdate, onClose }: Propertie
                 <Label className="text-white text-xs">Item</Label>
                 <p className="text-sm text-white">{symbolMeta?.name || selectedObject.symbolId}</p>
                 {selectedObject.circuitRef && (
-                  <p className="text-xs text-white/60">Circuit: {selectedObject.circuitRef}</p>
+                  <p className="text-xs text-white">Circuit: {selectedObject.circuitRef}</p>
                 )}
               </div>
             </>

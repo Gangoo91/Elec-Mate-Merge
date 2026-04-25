@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
-import { useDashboardData } from '@/hooks/useDashboardData';
+import { useSharedDashboardData } from '@/hooks/useDashboardData';
 
 const getGreeting = () => {
   const hour = new Date().getHours();
@@ -103,7 +103,7 @@ export function PremiumHero() {
   const { user } = useAuth();
   const { profile } = useAuth();
   const { toast } = useToast();
-  const { user: userData, learning, business, certificates, isLoading } = useDashboardData();
+  const { user: userData, learning, business, certificates, isLoading } = useSharedDashboardData();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(userData.avatarUrl);

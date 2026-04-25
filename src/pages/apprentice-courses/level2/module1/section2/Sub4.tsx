@@ -89,9 +89,9 @@ const quizQuestions = [
     question: 'What’s the correct hierarchy under WAHR 2005?',
     options: [
       'PPE first, then guardrails, then skip the work',
-      'Avoid working at height \u2192 prevent the fall (collective) \u2192 mitigate the fall (personal)',
-      'Assess \u2192 install \u2192 inspect',
-      'Harness \u2192 helmet \u2192 high-vis',
+      'Avoid working at height → prevent the fall (collective) → mitigate the fall (personal)',
+      'Assess → install → inspect',
+      'Harness → helmet → high-vis',
     ],
     correctAnswer: 1,
     explanation:
@@ -108,7 +108,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "The 1:4 rule. Roughly 75°. Too shallow and the feet kick out. Too steep and the top falls back. Most modern ladders have an angle indicator on the stile â use it.",
+      "The 1:4 rule. Roughly 75°. Too shallow and the feet kick out. Too steep and the top falls back. Most modern ladders have an angle indicator on the stile — use it.",
   },
   {
     id: 4,
@@ -134,7 +134,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Two parts to the test. Substantially enclosed AND a specified risk â fire/explosion, loss of consciousness from gas/fumes/lack of Oâ, drowning, asphyxiation from solids, or temperature. Cable risers, plant rooms and floor voids can all qualify.",
+      "Two parts to the test. Substantially enclosed AND a specified risk — fire/explosion, loss of consciousness from gas/fumes/lack of O—, drowning, asphyxiation from solids, or temperature. Cable risers, plant rooms and floor voids can all qualify.",
   },
   {
     id: 6,
@@ -147,20 +147,20 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Below 19.5% you start to get drowsy and uncoordinated â well before you collapse. Above 23.5% normally non-flammable stuff catches fire dangerously easy. Multi-gas detectors alarm at both ends.",
+      "Below 19.5% you start to get drowsy and uncoordinated — well before you collapse. Above 23.5% normally non-flammable stuff catches fire dangerously easy. Multi-gas detectors alarm at both ends.",
   },
   {
     id: 7,
     question: 'What’s the law on ladder pre-use checks?',
     options: [
       'Inspected once a year by the gaffer',
-      'Visual pre-use check by the user, plus a recorded detailed inspection at intervals (typically every 3â12 months)',
+      'Visual pre-use check by the user, plus a recorded detailed inspection at intervals (typically every 3–12 months)',
       'No check needed if it looks fine',
       'PAT-tested every 3 months',
     ],
     correctAnswer: 1,
     explanation:
-      "WAHR Reg 12 plus PUWER 1998. You eyeball it before each use â stiles, rungs, feet, locking bars. The company keeps a recorded inspection log. No record = the gaffer can’t prove the kit was fit for use.",
+      "WAHR Reg 12 plus PUWER 1998. You eyeball it before each use — stiles, rungs, feet, locking bars. The company keeps a recorded inspection log. No record = the gaffer can’t prove the kit was fit for use.",
   },
   {
     id: 8,
@@ -173,7 +173,7 @@ const quizQuestions = [
     ],
     correctAnswer: 3,
     explanation:
-      "Regs 4, 4(2) and 5: avoid entry if you can, have a safe system if you can’t, and rescue arrangements ready BEFORE anyone goes in. Working alone in a confined space is a textbook bad idea â you need a standby person and comms.",
+      "Regs 4, 4(2) and 5: avoid entry if you can, have a safe system if you can’t, and rescue arrangements ready BEFORE anyone goes in. Working alone in a confined space is a textbook bad idea — you need a standby person and comms.",
   },
 ];
 
@@ -181,34 +181,34 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: 'I’m only changing a light fitting on a podium step â do all these regs really apply?',
+    question: 'I’m only changing a light fitting on a podium step — do all these regs really apply?',
     answer:
-      "Yes. The Work at Height Regulations 2005 don’t care that it’s only a couple of metres or a quick job. If you could fall and hurt yourself, the duties apply: pre-use check, right kit for the job, plan, supervision, training. The good news is for low-risk work like that, the controls are usually simple and quick â a properly inspected podium plus three points of contact does the job.",
+      "Yes. The Work at Height Regulations 2005 don’t care that it’s only a couple of metres or a quick job. If you could fall and hurt yourself, the duties apply: pre-use check, right kit for the job, plan, supervision, training. The good news is for low-risk work like that, the controls are usually simple and quick — a properly inspected podium plus three points of contact does the job.",
   },
   {
     question: 'When does a leaning ladder become not-ok and I should call for a tower?',
     answer:
-      "Three triggers. (1) The job will take more than about 30 minutes at the same position. (2) You can’t maintain three points of contact â e.g. you need both hands free to land a heavy fitting. (3) You’re over-reaching, leaning beyond the stile. Any of those, get a tower or MEWP. The cost of hiring one is way less than the cost of falling.",
+      "Three triggers. (1) The job will take more than about 30 minutes at the same position. (2) You can’t maintain three points of contact — e.g. you need both hands free to land a heavy fitting. (3) You’re over-reaching, leaning beyond the stile. Any of those, get a tower or MEWP. The cost of hiring one is way less than the cost of falling.",
   },
   {
     question: 'Is a cable riser, plant room or false floor a confined space?',
     answer:
-      "It can be. Apply the two-part test: substantially enclosed AND a foreseeable specified risk (oxygen depletion, gases, fire, fumes, engulfment). A small basement plant room with poor ventilation and a gas main could be one. A floor void where you’re crawling around with cable spools â same. If in doubt, treat it as one until a proper risk assessment says otherwise.",
+      "It can be. Apply the two-part test: substantially enclosed AND a foreseeable specified risk (oxygen depletion, gases, fire, fumes, engulfment). A small basement plant room with poor ventilation and a gas main could be one. A floor void where you’re crawling around with cable spools — same. If in doubt, treat it as one until a proper risk assessment says otherwise.",
   },
   {
-    question: 'Can I just stick my head in to grab a cable end â surely that’s not 'entry'?',
+    question: 'Can I just stick my head in to grab a cable end — surely that’s not ‘entry’?',
     answer:
-      "Under the Confined Spaces Regs, 'entry' means breaking the plane of the opening with your head or upper body. If your head is in, you’re in â with all the duties that brings (atmosphere tested, standby person, rescue plan). Don’t try to play games with the definition; HSE inspectors and judges aren’t impressed.",
+      'Under the Confined Spaces Regs, ‘entry’ means breaking the plane of the opening with your head or upper body. If your head is in, you’re in — with all the duties that brings (atmosphere tested, standby person, rescue plan). Don’t try to play games with the definition; HSE inspectors and judges aren’t impressed.',
   },
   {
     question: 'What kit do I need for a quick atmosphere test before going down a manhole?',
     answer:
-      "A multi-gas detector â four-gas as a minimum: oxygen (Oâ), carbon monoxide (CO), hydrogen sulphide (HâS) and lower explosive limit (LEL) for flammable gas. Bump-test it daily, calibrate it on schedule, and lower the probe through the opening BEFORE you put your head in. Test top, middle and bottom â some gases settle, others rise.",
+      "A multi-gas detector — four-gas as a minimum: oxygen (O—), carbon monoxide (CO), hydrogen sulphide (H—S) and lower explosive limit (LEL) for flammable gas. Bump-test it daily, calibrate it on schedule, and lower the probe through the opening BEFORE you put your head in. Test top, middle and bottom — some gases settle, others rise.",
   },
   {
     question: 'My foreman says we’ve always done it this way and the harness will do. What now?',
     answer:
-      "The Regs put fall arrest (harness) BELOW collective protection (towers, MEWPs, edge protection) in the hierarchy. 'We’ve always done it' isn’t a defence. Politely ask why we’re not using the higher-tier control. If you’re still pushed, raise it up the chain and write it down â date, time, who said what. HASAWA s.7 puts the duty on you too.",
+      "The Regs put fall arrest (harness) BELOW collective protection (towers, MEWPs, edge protection) in the hierarchy. 'We’ve always done it' isn’t a defence. Politely ask why we’re not using the higher-tier control. If you’re still pushed, raise it up the chain and write it down — date, time, who said what. HASAWA s.7 puts the duty on you too.",
   },
 ];
 
@@ -311,7 +311,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="The hierarchy: avoid → prevent → mitigate"
-            onSite="Tutors love to grill apprentices on this. Memorise the three words and what each one means â it comes up in college, on AM2 and on real RAMS forms."
+            onSite="Tutors love to grill apprentices on this. Memorise the three words and what each one means — it comes up in college, on AM2 and on real RAMS forms."
           >
             <p>WAHR Reg 6 lays out the order you have to think in:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -353,7 +353,7 @@ export default function Sub4() {
           <ConceptBlock
             title="Ladders are for access and short, light work"
             plainEnglish="Ladders aren’t banned. They’re fine for getting up to a platform, or for a quick job where you can keep three points of contact. They’re not workshops."
-            onSite="HSE’s 'LA455 â Safe use of ladders and stepladders' is the doc that gets quoted at inquests. Worth a 10-minute read."
+            onSite="HSE’s 'LA455 — Safe use of ladders and stepladders' is the doc that gets quoted at inquests. Worth a 10-minute read."
           >
             <p>
               The trade myth that "ladders are illegal" came from the older Regs being scrapped.
@@ -414,7 +414,7 @@ export default function Sub4() {
                 In English: a tower has to be inspected (and the inspection recorded) before
                 anyone goes on it, after any alteration, and at intervals of no more than 7 days
                 if it stays up. The Scaffold Tag system on the bottom of the tower is how that
-                gets recorded â if there’s no current tag, don’t use it.
+                gets recorded — if there’s no current tag, don’t use it.
               </>
             }
             cite="Reference: legislation.gov.uk — WAHR 2005 Reg 12; HSE INDG401 'Scaffold Inspection'"
@@ -447,7 +447,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="What actually counts as a confined space"
-            plainEnglish="Two-part test. First: is the space substantially enclosed? Second: is there a foreseeable specified risk â fire/explosion, gas, lack of oxygen, drowning, engulfment, or heat?"
+            plainEnglish="Two-part test. First: is the space substantially enclosed? Second: is there a foreseeable specified risk — fire/explosion, gas, lack of oxygen, drowning, engulfment, or heat?"
           >
             <p>
               The Confined Spaces Regulations 1997 don’t list rooms by name. They give you a test:
@@ -460,7 +460,7 @@ export default function Sub4() {
               </li>
               <li>
                 <strong>Specified risk:</strong> at least one of — fire/explosion, loss of
-                consciousness from gases/fumes/lack of Oâ, drowning, asphyxiation by free-flowing
+                consciousness from gases/fumes/lack of O—, drowning, asphyxiation by free-flowing
                 solids, dangerous heat.
               </li>
             </ul>
@@ -479,7 +479,7 @@ export default function Sub4() {
               <>
                 The first duty is to <strong>avoid entry</strong> if you can. Drop a fish tape
                 instead of crawling in. Pre-fab the assembly outside. Use a remote camera. Only
-                enter when there’s genuinely no other way â and document why.
+                enter when there’s genuinely no other way — and document why.
               </>
             }
             cite="Reference: legislation.gov.uk — The Confined Spaces Regulations 1997 (SI 1997/1713)"
@@ -492,8 +492,8 @@ export default function Sub4() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>1. Test the atmosphere.</strong> Multi-gas detector (Oâ, CO, HâS, LEL).
-                Test top, middle, bottom â some gases sink, some rise. Bump-tested that day,
+                <strong>1. Test the atmosphere.</strong> Multi-gas detector (O—, CO, H—S, LEL).
+                Test top, middle, bottom — some gases sink, some rise. Bump-tested that day,
                 calibrated on schedule.
               </li>
               <li>
@@ -521,7 +521,7 @@ export default function Sub4() {
                 Translation: rescue plan READY before entry, not invented when something goes
                 wrong. That includes rescue equipment on standby (tripod and winch, BA sets,
                 resus kit), a route for the casualty, and competent rescuers. The standby person
-                isn’t the rescuer â they raise the alarm.
+                isn’t the rescuer — they raise the alarm.
               </>
             }
             cite="Reference: legislation.gov.uk — Confined Spaces Regulations 1997; HSE L101 ACoP"
@@ -566,26 +566,26 @@ export default function Sub4() {
               </li>
               <li>
                 <strong>Isolation discipline:</strong> lock-off and prove dead are even more
-                critical. You can’t step back if something goes live â there’s nowhere
+                critical. You can’t step back if something goes live — there’s nowhere
                 to go.
               </li>
             </ul>
           </ConceptBlock>
 
           <Scenario
-            title="Underfloor heating fault in a refurb â the floor void calls"
+            title="Underfloor heating fault in a refurb — the floor void calls"
             situation={
               <>
                 You’re sent to fault-find an underfloor heating system in a converted Victorian
                 house. The mat’s gone short somewhere under the kitchen. Access is via a hatch
-                in the corner of the room â 1.2m drop, brick crawl space, single 600mm opening,
+                in the corner of the room — 1.2m drop, brick crawl space, single 600mm opening,
                 old gas main running along one wall.
               </>
             }
             whatToDo={
               <>
                 Stop. Apply the test: enclosed (yes), specified risk (gas main = potential
-                fire/explosion + possible Oâ displacement = yes). It’s a confined space.
+                fire/explosion + possible O— displacement = yes). It’s a confined space.
                 Don’t go in until: gas detector deployed and reading clear, a permit raised,
                 ventilation set up, a standby person at the hatch, and a means of getting you out
                 if you collapse. Use a 110V or battery insulation tester from outside the void
@@ -594,7 +594,7 @@ export default function Sub4() {
             }
             whyItMatters={
               <>
-                Refurb jobs are where this stuff bites â nobody talks about confined spaces in
+                Refurb jobs are where this stuff bites — nobody talks about confined spaces in
                 a kitchen, until you’re kneeling next to a 1960s steel gas pipe with a
                 resistance meter. The Regs apply just the same as in a sewer.
               </>
@@ -628,31 +628,31 @@ export default function Sub4() {
                 1b, 3a, 3b. PAL card valid 5 years.
               </li>
               <li>
-                <strong>Confined Spaces â low/medium/high risk</strong> training (typically City
+                <strong>Confined Spaces — low/medium/high risk</strong> training (typically City
                 & Guilds 6160 series). Higher risk = breathing apparatus + escape sets + extended
                 rescue training.
               </li>
               <li>
                 <strong>Working at Height Awareness</strong> (often delivered with safe ladder
-                use and harness inspection â free or low-cost from CITB).
+                use and harness inspection — free or low-cost from CITB).
               </li>
             </ul>
             <p>
-              You don’t have to hold all these as an apprentice â but you DO have to know what
+              You don’t have to hold all these as an apprentice — but you DO have to know what
               you’re not yet ticketed for, and not let yourself get pushed into doing it
               anyway.
             </p>
           </ConceptBlock>
 
           <ConceptBlock
-            title="Real penalties â not just for the boss"
+            title="Real penalties — not just for the boss"
             onSite="HSE prosecute under WAHR and the Confined Spaces Regs every year. They go after employers AND individual supervisors AND, less often, individual workers under HASAWA s.7."
           >
             <p>
               Sentencing Council guidelines tie fines to company turnover and seriousness. For
               a fall fatality, fines for the company can run into millions, with custodial
               sentences for directors. For workers found to have ignored the safe system of work
-              â unlimited fine and up to 2 years inside under HASAWA s.7.
+              — unlimited fine and up to 2 years inside under HASAWA s.7.
             </p>
             <p>
               The CSCS card system also bites: serious safety incidents can get your card
@@ -668,12 +668,12 @@ export default function Sub4() {
 
           <KeyTakeaways
             points={[
-              "WAHR 2005 has no height threshold â if a fall could hurt you, the Regs apply.",
-              "Hierarchy: AVOID work at height \u2192 PREVENT the fall (collective kit) \u2192 MITIGATE it (personal kit). Order matters in court.",
-              "Leaning ladders â short, light work only (max 30 min at one position), 1:4 angle, three points of contact, secured.",
+              "WAHR 2005 has no height threshold — if a fall could hurt you, the Regs apply.",
+              "Hierarchy: AVOID work at height → PREVENT the fall (collective kit) → MITIGATE it (personal kit). Order matters in court.",
+              "Leaning ladders — short, light work only (max 30 min at one position), 1:4 angle, three points of contact, secured.",
               "Confined space = substantially enclosed AND a foreseeable specified risk. Cable risers, voids and plant rooms can qualify.",
               "Before entry: test atmosphere, ventilate, permit-to-work, standby person who never enters to rescue.",
-              "Electrical work adds extra risk in both environments â use 110V CTE or battery tools, IP-rated lighting, and obsessive isolation discipline.",
+              "Electrical work adds extra risk in both environments — use 110V CTE or battery tools, IP-rated lighting, and obsessive isolation discipline.",
             ]}
           />
 

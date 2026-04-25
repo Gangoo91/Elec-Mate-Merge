@@ -142,7 +142,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               <Icon className={`h-5 w-5 ${config.iconClass}`} />
             </div>
             <div className="text-left">
-              <h3 className="font-semibold text-foreground">{config.label}</h3>
+              <h3 className="font-semibold text-white">{config.label}</h3>
               <p className="text-xs text-white">
                 {typeResources.length} resource{typeResources.length !== 1 ? 's' : ''}
               </p>
@@ -176,7 +176,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium text-foreground text-sm">{resource.title}</h4>
+                    <h4 className="font-medium text-white text-sm">{resource.title}</h4>
                     <p className="text-xs text-white line-clamp-2 mt-0.5">
                       {resource.description}
                     </p>
@@ -225,7 +225,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               <Label htmlFor="title">Resource Title</Label>
               <Input
                 id="title"
-                className="h-11 touch-manipulation text-base border-white/30 focus:border-cyan-500 focus:ring-cyan-500"
+                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-cyan-500 focus:ring-cyan-500"
                 value={suggestion.title}
                 onChange={(e) => setSuggestion({ ...suggestion, title: e.target.value })}
                 required
@@ -236,7 +236,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               <Label htmlFor="description">Description</Label>
               <Input
                 id="description"
-                className="h-11 touch-manipulation text-base border-white/30 focus:border-cyan-500 focus:ring-cyan-500"
+                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-cyan-500 focus:ring-cyan-500"
                 value={suggestion.description}
                 onChange={(e) => setSuggestion({ ...suggestion, description: e.target.value })}
                 required
@@ -248,7 +248,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               <Input
                 id="url"
                 type="url"
-                className="h-11 touch-manipulation text-base border-white/30 focus:border-cyan-500 focus:ring-cyan-500"
+                className="h-11 touch-manipulation text-base border-white/[0.08] focus:border-cyan-500 focus:ring-cyan-500"
                 value={suggestion.url}
                 onChange={(e) => setSuggestion({ ...suggestion, url: e.target.value })}
                 required

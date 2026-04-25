@@ -122,7 +122,7 @@ export function ReportUserDialog({
               <CheckCircle className="h-8 w-8 text-green-500" />
             </div>
             <h3 className="text-lg font-semibold mb-2">Report Submitted</h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Thank you for helping keep our community safe. Our team will review this report.
             </p>
           </div>
@@ -152,7 +152,7 @@ export function ReportUserDialog({
                       className={`flex items-start space-x-3 p-3 rounded-lg border transition-colors cursor-pointer ${
                         reason === option.value
                           ? 'border-orange-500/50 bg-orange-500/5'
-                          : 'border-border hover:border-border/80'
+                          : 'border-white/[0.08] hover:border-white/[0.08]'
                       }`}
                       onClick={() => setReason(option.value)}
                     >
@@ -161,7 +161,7 @@ export function ReportUserDialog({
                         <Label htmlFor={option.value} className="font-medium cursor-pointer">
                           {option.label}
                         </Label>
-                        <p className="text-xs text-white/80 mt-0.5">{option.description}</p>
+                        <p className="text-xs text-white mt-0.5">{option.description}</p>
                       </div>
                     </div>
                   ))}
@@ -180,7 +180,7 @@ export function ReportUserDialog({
                   className="min-h-[80px] resize-none"
                   maxLength={500}
                 />
-                <p className="text-xs text-white/80 text-right">
+                <p className="text-xs text-white text-right">
                   {additionalNotes.length}/500
                 </p>
               </div>

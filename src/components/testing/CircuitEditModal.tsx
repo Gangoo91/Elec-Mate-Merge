@@ -221,7 +221,7 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
                   <SelectItem key={type.value} value={type.value} className="py-2.5">
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-white">{type.label}</span>
-                      <span className="text-xs text-white/60">{type.desc}</span>
+                      <span className="text-xs text-white">{type.desc}</span>
                     </div>
                   </SelectItem>
                 ))}
@@ -264,7 +264,7 @@ export const CircuitEditModal: React.FC<CircuitEditModalProps> = ({
                     <SelectItem key={curve.value} value={curve.value} className="py-2.5">
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-white">{curve.label}</span>
-                        <span className="text-xs text-white/60">{curve.desc}</span>
+                        <span className="text-xs text-white">{curve.desc}</span>
                       </div>
                     </SelectItem>
                   ))}

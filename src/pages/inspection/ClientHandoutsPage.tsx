@@ -268,7 +268,7 @@ export default function ClientHandoutsPage() {
                     className={cn(
                       'w-full flex items-center justify-between h-11 px-4 rounded-xl text-sm font-medium touch-manipulation active:scale-[0.98] transition-all',
                       handout.category === 'coming-soon'
-                        ? 'bg-white/[0.04] border border-white/[0.06] text-white/40 cursor-not-allowed'
+                        ? 'bg-white/[0.04] border border-white/[0.06] text-white cursor-not-allowed'
                         : 'bg-white/[0.06] border border-white/[0.08] text-white hover:bg-white/[0.1]'
                     )}
                     onClick={() => handleGenerate(handout)}

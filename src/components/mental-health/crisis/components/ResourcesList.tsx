@@ -29,7 +29,7 @@ const ResourcesList = ({ resources, dataSource, onSelectResource }: ResourcesLis
         <div
           key={index}
           onClick={() => onSelectResource(resource)}
-          className="p-3 bg-background rounded-md border border-border flex justify-between items-center cursor-pointer hover:border-red-500/30 hover:bg-red-500/5 active:bg-red-500/10 transition-all touch-manipulation"
+          className="p-3 bg-[hsl(0_0%_8%)] rounded-md border border-white/[0.08] flex justify-between items-center cursor-pointer hover:border-red-500/30 hover:bg-red-500/5 active:bg-red-500/10 transition-all touch-manipulation"
         >
           <div>
             <div className="font-medium text-sm">{resource.name}</div>

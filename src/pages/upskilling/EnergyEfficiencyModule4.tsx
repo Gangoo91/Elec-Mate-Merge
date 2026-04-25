@@ -1,96 +1,74 @@
-import { ArrowLeft, Lightbulb, Settings, Users, Calculator } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Lightbulb, Settings, Users, Calculator } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EnergyEfficiencyModule4 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'LED and Lighting Control Upgrades',
-      icon: Lightbulb,
-      description: 'Upgrading to efficient lighting systems and controls',
-    },
-    {
-      id: 2,
-      title: 'Motor Efficiency and VSD Retrofitting',
-      icon: Settings,
-      description: 'Improving motor efficiency and variable speed drive retrofits',
-    },
-    {
-      id: 3,
-      title: 'Energy-Efficient Controls (Timers, BMS)',
-      icon: Settings,
-      description: 'Implementing smart controls and building management systems',
-    },
-    {
-      id: 4,
-      title: 'Behavioural Measures and Awareness',
-      icon: Users,
-      description: 'Creating energy awareness and behavioural change programmes',
-    },
-    {
-      id: 5,
-      title: 'ROI Calculators and Energy Saving Tools',
-      icon: Calculator,
-      description: 'Tools for calculating return on investment and savings',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'LED and lighting control upgrades',
+    icon: Lightbulb,
+    description: 'Upgrading to efficient lighting systems and modern control gear.',
+  },
+  {
+    id: 2,
+    title: 'Motor efficiency and VSD retrofitting',
+    icon: Settings,
+    description: 'Improving motor efficiency and retrofitting variable speed drives.',
+  },
+  {
+    id: 3,
+    title: 'Energy-efficient controls (timers, BMS)',
+    icon: Settings,
+    description: 'Implementing smart controls and building management systems.',
+  },
+  {
+    id: 4,
+    title: 'Behavioural measures and awareness',
+    icon: Users,
+    description: 'Energy awareness programmes and lasting behavioural change.',
+  },
+  {
+    id: 5,
+    title: 'ROI calculators and energy saving tools',
+    icon: Calculator,
+    description: 'Tools for calculating return on investment and projected savings.',
+  },
+];
+
+export default function EnergyEfficiencyModule4() {
+  useSEO({
+    title: 'Module 4: Reducing Demand & Improving Efficiency | Energy Efficiency | Elec-Mate',
+    description:
+      'LED upgrades, motor efficiency, VSD retrofits, smart controls, behavioural measures and ROI tools.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/energy-efficiency-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Energy Efficiency Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 4</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Reducing Demand and Improving Efficiency
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Practical measures for reducing energy demand and improving efficiency
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../energy-efficiency-module-4-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../energy-efficiency-course"
+      backLabel="Energy efficiency and management"
+      moduleNumber={4}
+      title="Reducing demand and improving efficiency"
+      description="Practical measures for reducing energy demand and improving overall efficiency."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../energy-efficiency-module-3"
+      prevModuleLabel="Energy auditing methods"
+      nextModuleHref="../energy-efficiency-module-5"
+      nextModuleLabel="Monitoring, analytics and smart metering"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../energy-efficiency-module-4-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EnergyEfficiencyModule4;
+}

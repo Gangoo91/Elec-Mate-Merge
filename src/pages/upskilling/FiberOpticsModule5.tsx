@@ -1,104 +1,49 @@
-import {
-  ArrowLeft,
-  CheckCircle,
-  ToggleLeft,
-  Activity,
-  BarChart,
-  Award,
-  FileText,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { CheckCircle, Activity, BarChart, Award, FileText } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const FiberOpticsModule5 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Continuity and Polarity Checks',
-      icon: CheckCircle,
-      description: 'Basic connectivity and polarity verification',
-    },
-    {
-      id: 3,
-      title: 'OTDR Testing Basics',
-      icon: Activity,
-      description: 'Optical time domain reflectometer fundamentals',
-    },
-    {
-      id: 4,
-      title: 'Interpreting Test Results',
-      icon: BarChart,
-      description: 'Understanding and analyzing measurement data',
-    },
-    {
-      id: 5,
-      title: 'Fibre Testing Pass/Fail Criteria',
-      icon: Award,
-      description: 'Performance standards and acceptance criteria',
-    },
-    {
-      id: 6,
-      title: 'Generating Test Reports',
-      icon: FileText,
-      description: 'Documentation and certification reporting',
-    },
-  ];
+// Section 2 intentionally omitted — no content file exists.
+const sections = [
+  { id: 1, title: 'Continuity and polarity checks', icon: CheckCircle, description: 'Basic connectivity and polarity verification.' },
+  { id: 3, title: 'OTDR testing basics', icon: Activity, description: 'Optical time domain reflectometer fundamentals.' },
+  { id: 4, title: 'Interpreting test results', icon: BarChart, description: 'Understanding and analysing measurement data.' },
+  { id: 5, title: 'Fibre testing pass/fail criteria', icon: Award, description: 'Performance standards and acceptance criteria.' },
+  { id: 6, title: 'Generating test reports', icon: FileText, description: 'Documentation and certification reporting.' },
+];
+
+export default function FiberOpticsModule5() {
+  useSEO({
+    title: 'Module 5: Fibre Testing and Certification | Fibre Optics | Elec-Mate',
+    description: 'Continuity, OTDR testing, interpreting results, pass/fail criteria and producing certification reports.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/fiber-optics-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Fiber Optics Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 5</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">5 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Fibre Testing and Certification
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Comprehensive testing methods and certification procedures
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../fiber-optics-module-5-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../fiber-optics-course"
+      backLabel="Fibre optics technology"
+      moduleNumber={5}
+      title="Fibre testing and certification"
+      description="The full test workflow — from continuity checks through OTDR analysis to producing the final report."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../fiber-optics-module-4"
+      prevModuleLabel="Termination and splicing techniques"
+      nextModuleHref="../fiber-optics-module-6"
+      nextModuleLabel="Standards and network design principles"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../fiber-optics-module-5-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default FiberOpticsModule5;
+}

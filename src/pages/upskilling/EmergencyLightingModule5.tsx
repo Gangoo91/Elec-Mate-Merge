@@ -1,102 +1,80 @@
-import { ArrowLeft, Search, TestTube, Calendar, Tag, FileCheck, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Search, TestTube, Calendar, Tag, FileCheck, Users } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const EmergencyLightingModule5 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Initial Inspection and Verification',
-      icon: Search,
-      description: 'Pre-commissioning checks and verification procedures',
-    },
-    {
-      id: 2,
-      title: 'Functional Testing and 3-Hour Duration Tests',
-      icon: TestTube,
-      description: 'Operational testing and duration verification',
-    },
-    {
-      id: 3,
-      title: 'Monthly and Annual Testing Requirements',
-      icon: Calendar,
-      description: 'Scheduled testing regimes and frequencies',
-    },
-    {
-      id: 4,
-      title: 'System Labelling and Maintenance Records',
-      icon: Tag,
-      description: 'Documentation and record-keeping requirements',
-    },
-    {
-      id: 5,
-      title: 'Certification and Commissioning Checklists',
-      icon: FileCheck,
-      description: 'Formal certification procedures and checklists',
-    },
-    {
-      id: 6,
-      title: 'Client Handover Procedure',
-      icon: Users,
-      description: 'Handover documentation and client training',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Initial inspection and verification',
+    icon: Search,
+    description: 'Pre-commissioning checks and the verification procedure.',
+  },
+  {
+    id: 2,
+    title: 'Functional testing and 3-hour duration tests',
+    icon: TestTube,
+    description: 'Operational testing and the full duration verification test.',
+  },
+  {
+    id: 3,
+    title: 'Monthly and annual testing requirements',
+    icon: Calendar,
+    description: 'Scheduled testing regimes, frequencies and recordkeeping.',
+  },
+  {
+    id: 4,
+    title: 'System labelling and maintenance records',
+    icon: Tag,
+    description: 'Labelling, log books and the documentation requirements.',
+  },
+  {
+    id: 5,
+    title: 'Certification and commissioning checklists',
+    icon: FileCheck,
+    description: 'Formal certification procedures and the commissioning checklists.',
+  },
+  {
+    id: 6,
+    title: 'Client handover procedure',
+    icon: Users,
+    description: 'Handover documentation, client training and ongoing duties.',
+  },
+];
+
+export default function EmergencyLightingModule5() {
+  useSEO({
+    title: 'Module 5: Installation, Testing & Maintenance | Emergency Lighting | Elec-Mate',
+    description:
+      'Initial inspection, functional and 3-hour duration tests, monthly/annual schedules and client handover.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/emergency-lighting-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Emergency Lighting Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 5</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Installation, Testing, and Maintenance
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Complete testing procedures and maintenance protocols
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../emergency-lighting-module-5-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../emergency-lighting-course"
+      backLabel="Emergency lighting systems"
+      moduleNumber={5}
+      title="Installation, testing and maintenance"
+      description="Complete testing procedures and the maintenance protocols that follow."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../emergency-lighting-module-4"
+      prevModuleLabel="Cabling, battery backup and circuiting"
+      nextModuleHref="../emergency-lighting-module-6"
+      nextModuleLabel="Regulatory compliance and BS 5266"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../emergency-lighting-module-5-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default EmergencyLightingModule5;
+}

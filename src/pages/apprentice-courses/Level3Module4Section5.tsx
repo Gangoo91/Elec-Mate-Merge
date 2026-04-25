@@ -1,13 +1,12 @@
-import { ArrowLeft, Wrench, CheckCircle, FileText, TestTube, Shield, Zap } from 'lucide-react';
+import { Wrench, CheckCircle, FileText, TestTube, Shield } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
     number: '5.1',
-    title: 'Selecting Correct Repair Methods',
+    title: 'Selecting correct repair methods',
     description:
       'Choosing appropriate repair techniques: replacement, re-termination, re-insulation',
     icon: Wrench,
@@ -15,28 +14,28 @@ const subsections = [
   },
   {
     number: '5.2',
-    title: 'Ensuring Compliance with BS7671 After Repair',
+    title: 'Ensuring compliance with BS 7671 after repair',
     description: 'Maintaining regulatory compliance during and after rectification work',
     icon: CheckCircle,
     href: '../level3-module4-section5-2',
   },
   {
     number: '5.3',
-    title: 'Recording Remedial Works',
+    title: 'Recording remedial works',
     description: 'Proper documentation and recording of all remedial work undertaken',
     icon: FileText,
     href: '../level3-module4-section5-3',
   },
   {
     number: '5.4',
-    title: 'Re-testing and Certification',
+    title: 'Re-testing and certification',
     description: 'Post-repair testing procedures and certification requirements',
     icon: TestTube,
     href: '../level3-module4-section5-4',
   },
   {
     number: '5.5',
-    title: 'Preventative Maintenance Strategies',
+    title: 'Preventative maintenance strategies',
     description: 'Implementing maintenance strategies to prevent future faults',
     icon: Shield,
     href: '../level3-module4-section5-5',
@@ -46,50 +45,35 @@ const subsections = [
 const Level3Module4Section5 = () => {
   useSEO(
     'Section 5: Rectification and Verification - Level 3 Module 4',
-    'Repair methods, BS7671 compliance, recording works and preventative maintenance'
+    'Repair methods, BS 7671 compliance, recording works and preventative maintenance'
   );
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/level3-module4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 4
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Subsections Grid */}
-          <section>
-            <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>
-            <div className="grid grid-cols-1 gap-4">
-              {subsections.map((subsection, index) => (
-                <ModuleCard
-                  key={index}
-                  number={subsection.number}
-                  title={subsection.title}
-                  description={subsection.description}
-                  icon={subsection.icon}
-                  href={subsection.href}
-                />
-              ))}
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/level3-module4"
+      backLabel="Module 4"
+      moduleNumber={4}
+      sectionNumber={5}
+      title="Rectification and verification"
+      description="Repair methods, BS 7671 compliance, recording works and preventative maintenance."
+      tone="blue"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../level3-module4-section4"
+      prevSectionLabel="Systematic fault-finding techniques"
+      nextSectionHref="../level3-module4-section6"
+      nextSectionLabel="Professional practice in fault work"
+    >
+      {subsections.map((s, i) => (
+        <ModuleCard
+          key={i}
+          number={s.number}
+          title={s.title}
+          description={s.description}
+          icon={s.icon}
+          href={s.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

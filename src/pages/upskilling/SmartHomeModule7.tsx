@@ -1,102 +1,49 @@
-import { ArrowLeft, Wrench, CheckCircle, Wifi, Shield, Users, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Wrench, CheckCircle, Wifi, Shield, Users, FileText } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const SmartHomeModule7 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Device Wiring, Power Supplies, and Containment',
-      icon: Wrench,
-      description: 'Proper installation practices and electrical requirements',
-    },
-    {
-      id: 2,
-      title: 'Commissioning and Device Pairing',
-      icon: CheckCircle,
-      description: 'System commissioning procedures and device setup',
-    },
-    {
-      id: 3,
-      title: 'Wi-Fi and RF Signal Verification',
-      icon: Wifi,
-      description: 'Testing and optimising wireless communication',
-    },
-    {
-      id: 4,
-      title: 'Electrical Safety and Isolation (BS 7671 Alignment)',
-      icon: Shield,
-      description: 'Safety procedures aligned with UK electrical regulations',
-    },
-    {
-      id: 5,
-      title: 'Customer Handover and App Training',
-      icon: Users,
-      description: 'Training customers on system operation and mobile apps',
-    },
-    {
-      id: 6,
-      title: 'Documentation, Warranty, and Aftercare',
-      icon: FileText,
-      description: 'Completing installation records and ongoing support',
-    },
-  ];
+const sections = [
+  { id: 1, title: 'Device wiring, power supplies and containment', icon: Wrench, description: 'Proper installation practices and electrical requirements.' },
+  { id: 2, title: 'Commissioning and device pairing', icon: CheckCircle, description: 'System commissioning procedures and device setup.' },
+  { id: 3, title: 'Wi-Fi and RF signal verification', icon: Wifi, description: 'Testing and optimising wireless communication.' },
+  { id: 4, title: 'Electrical safety and isolation (BS 7671 alignment)', icon: Shield, description: 'Safety procedures aligned with UK electrical regulations.' },
+  { id: 5, title: 'Customer handover and app training', icon: Users, description: 'Training customers on system operation and mobile apps.' },
+  { id: 6, title: 'Documentation, warranty and aftercare', icon: FileText, description: 'Completing installation records and ongoing support.' },
+];
+
+export default function SmartHomeModule7() {
+  useSEO({
+    title: 'Module 7: Installation, Testing and Safety | Smart Home | Elec-Mate',
+    description: 'Device wiring, commissioning, RF verification, BS 7671 alignment, customer handover and documentation.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/smart-home-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Smart Home Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 7</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">50 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Installation, Testing, and Safety Requirements
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Professional installation practices and safety compliance
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../smart-home-module-7-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../smart-home-course"
+      backLabel="Smart home technology"
+      moduleNumber={7}
+      title="Installation, testing and safety requirements"
+      description="Install, commission and hand over a smart home system safely and to BS 7671."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="50 mins"
+      prevModuleHref="../smart-home-module-6"
+      prevModuleLabel="Smart hubs, voice assistants and interoperability"
+      nextModuleHref="../smart-home-module-8"
+      nextModuleLabel="Mock exam"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../smart-home-module-7-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default SmartHomeModule7;
+}

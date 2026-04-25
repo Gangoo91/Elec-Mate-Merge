@@ -52,21 +52,21 @@ const NotificationCard = ({ n, onRead, onDelete }: { n: Notification; onRead: ()
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
-            <h3 className={cn('text-sm leading-snug', n.read ? 'font-medium text-white/80' : 'font-semibold text-white')}>
+            <h3 className={cn('text-sm leading-snug', n.read ? 'font-medium text-white' : 'font-semibold text-white')}>
               {n.title}
             </h3>
             <button
               onClick={(e) => { e.stopPropagation(); onDelete(); }}
               className="h-7 w-7 rounded-lg flex items-center justify-center opacity-0 group-hover:opacity-100 hover:bg-red-500/15 transition-all touch-manipulation flex-shrink-0"
             >
-              <X className="h-3.5 w-3.5 text-white/70 hover:text-red-400" />
+              <X className="h-3.5 w-3.5 text-white hover:text-red-400" />
             </button>
           </div>
-          <p className="text-xs text-white/60 mt-1 line-clamp-2 leading-relaxed">{n.message}</p>
+          <p className="text-xs text-white mt-1 line-clamp-2 leading-relaxed">{n.message}</p>
           <div className="flex items-center justify-between mt-2.5">
             <div className="flex items-center gap-1.5">
-              <Clock className="h-3 w-3 text-white/70" />
-              <span className="text-[10px] text-white/70 font-medium">{formatTime(n.createdAt)}</span>
+              <Clock className="h-3 w-3 text-white" />
+              <span className="text-[10px] text-white font-medium">{formatTime(n.createdAt)}</span>
             </div>
             {!n.read && (
               <button onClick={onRead} className="text-[11px] font-medium text-elec-yellow/70 hover:text-elec-yellow transition-colors touch-manipulation">
@@ -107,12 +107,12 @@ const NotificationsPage = () => {
             {notifications.length > 0 && (
               <div className="flex items-center gap-1.5">
                 {unreadCount > 0 && (
-                  <button onClick={markAllAsRead} className="h-8 px-2.5 rounded-lg text-[11px] font-medium text-white/60 hover:text-white hover:bg-white/[0.06] touch-manipulation transition-colors flex items-center gap-1.5">
+                  <button onClick={markAllAsRead} className="h-8 px-2.5 rounded-lg text-[11px] font-medium text-white hover:text-white hover:bg-white/[0.06] touch-manipulation transition-colors flex items-center gap-1.5">
                     <CheckCheck className="h-3.5 w-3.5" />
                     Read all
                   </button>
                 )}
-                <button onClick={clearAllNotifications} className="h-8 px-2.5 rounded-lg text-[11px] font-medium text-white/60 hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors flex items-center gap-1.5">
+                <button onClick={clearAllNotifications} className="h-8 px-2.5 rounded-lg text-[11px] font-medium text-white hover:text-red-400 hover:bg-red-500/10 touch-manipulation transition-colors flex items-center gap-1.5">
                   <Trash2 className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -127,10 +127,10 @@ const NotificationsPage = () => {
         {notifications.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16">
             <div className="w-16 h-16 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center mb-4">
-              <Bell className="h-7 w-7 text-white/60" />
+              <Bell className="h-7 w-7 text-white" />
             </div>
             <p className="text-sm font-semibold text-white">All caught up</p>
-            <p className="text-xs text-white/70 mt-1">No notifications</p>
+            <p className="text-xs text-white mt-1">No notifications</p>
           </div>
         ) : (
           <AnimatePresence>

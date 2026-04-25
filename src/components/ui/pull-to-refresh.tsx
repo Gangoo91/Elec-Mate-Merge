@@ -138,7 +138,7 @@ export function PullToRefresh({
             >
               <RefreshCw
                 className={`h-5 w-5 transition-colors ${
-                  thresholdReached || isRefreshing ? 'text-elec-yellow' : 'text-white/60'
+                  thresholdReached || isRefreshing ? 'text-elec-yellow' : 'text-white'
                 }`}
               />
             </motion.div>
@@ -146,7 +146,7 @@ export function PullToRefresh({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className={`mt-2 text-xs font-medium transition-colors ${
-                thresholdReached || isRefreshing ? 'text-elec-yellow' : 'text-white/60'
+                thresholdReached || isRefreshing ? 'text-elec-yellow' : 'text-white'
               }`}
             >
               {isRefreshing

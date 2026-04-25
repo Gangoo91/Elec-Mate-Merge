@@ -8,11 +8,6 @@ interface AM2ContentCardProps {
   onClick?: () => void;
 }
 
-/**
- * AM2ContentCard - iOS-style glassmorphism card component
- * Features backdrop blur, subtle border, and pressable interaction.
- * Optional accent variant adds an elec-yellow top border.
- */
 export const AM2ContentCard = memo(function AM2ContentCard({
   children,
   accent = false,
@@ -24,20 +19,10 @@ export const AM2ContentCard = memo(function AM2ContentCard({
   return (
     <div
       className={cn(
-        // Base glassmorphism styling
-        'bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10',
-        // Subtle shadow for depth
-        'shadow-[0_2px_16px_rgba(0,0,0,0.2)]',
-        // Padding
-        'p-4 sm:p-5',
-        // Accent variant - yellow top border
-        accent && 'border-t-2 border-t-elec-yellow',
-        // Interactive state with iOS pressable effect
+        'relative bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6 overflow-hidden',
         isInteractive && [
-          'cursor-pointer',
-          'ios-pressable',
-          'hover:bg-white/[0.07] hover:border-white/15',
-          'transition-all duration-ios-normal ease-ios-ease',
+          'cursor-pointer touch-manipulation',
+          'hover:bg-[hsl(0_0%_15%)] active:scale-[0.99] transition-colors',
         ],
         className
       )}
@@ -55,6 +40,9 @@ export const AM2ContentCard = memo(function AM2ContentCard({
           : undefined
       }
     >
+      {accent && (
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/70 via-amber-400/70 to-orange-400/70 opacity-70" />
+      )}
       {children}
     </div>
   );

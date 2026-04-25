@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 const StressSignsCards = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-[hsl(0_0%_12%)]">
         <CardContent className="p-4">
           <h3 className="text-lg font-medium mb-3">Physical Signs of Stress</h3>
           <ul className="space-y-1 text-sm">
@@ -16,7 +16,7 @@ const StressSignsCards = () => {
         </CardContent>
       </Card>
 
-      <Card className="border-elec-yellow/20 bg-elec-gray">
+      <Card className="border-elec-yellow/20 bg-[hsl(0_0%_12%)]">
         <CardContent className="p-4">
           <h3 className="text-lg font-medium mb-3">Mental Signs of Stress</h3>
           <ul className="space-y-1 text-sm">

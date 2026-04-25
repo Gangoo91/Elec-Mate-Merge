@@ -1,90 +1,66 @@
-import { ArrowLeft, Network, Wifi, Cpu, TrendingUp } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Network, Wifi, Cpu, TrendingUp } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const DataCablingModule1 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'What is Structured Cabling?',
-      icon: Network,
-      description: 'Introduction to structured cabling systems',
-    },
-    {
-      id: 2,
-      title: 'Topologies: Star, Bus, Ring, Mesh',
-      icon: Wifi,
-      description: 'Network topology types and configurations',
-    },
-    {
-      id: 3,
-      title: 'Passive vs Active Hardware',
-      icon: Cpu,
-      description: 'Understanding passive and active network components',
-    },
-    {
-      id: 4,
-      title: 'Network Speed, Bandwidth, and Future Proofing',
-      icon: TrendingUp,
-      description: 'Performance requirements and planning ahead',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'What is structured cabling?',
+    icon: Network,
+    description: 'Introduction to structured cabling systems and their building blocks.',
+  },
+  {
+    id: 2,
+    title: 'Topologies: star, bus, ring, mesh',
+    icon: Wifi,
+    description: 'Network topology types and where each is appropriate.',
+  },
+  {
+    id: 3,
+    title: 'Passive vs active hardware',
+    icon: Cpu,
+    description: 'Understanding passive cabling and active network components.',
+  },
+  {
+    id: 4,
+    title: 'Network speed, bandwidth and future-proofing',
+    icon: TrendingUp,
+    description: 'Performance requirements and planning for capacity growth.',
+  },
+];
+
+export default function DataCablingModule1() {
+  useSEO({
+    title: 'Module 1: Introduction to Structured Cabling | Data Cabling | Elec-Mate',
+    description:
+      'Network infrastructure fundamentals — topologies, passive vs active hardware and future-proofing.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/data-cabling-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Data Cabling Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 1</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">4 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">45 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Introduction to Structured Cabling Systems
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Fundamentals of structured cabling and network infrastructure
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../data-cabling-module-1-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../data-cabling-course"
+      backLabel="Data and communications cabling"
+      moduleNumber={1}
+      title="Introduction to structured cabling systems"
+      description="The fundamentals of structured cabling and modern network infrastructure."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="45 mins"
+      nextModuleHref="../data-cabling-module-2"
+      nextModuleLabel="Copper cabling standards (Cat5e, Cat6, etc.)"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../data-cabling-module-1-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default DataCablingModule1;
+}

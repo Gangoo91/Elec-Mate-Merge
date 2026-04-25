@@ -100,7 +100,7 @@ export function TeachingResourcesSection() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setLinkDialogOpen(true)}
-                className="text-[12.5px] font-medium text-white/85 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+                className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
               >
                 + Link
               </button>
@@ -143,7 +143,7 @@ export function TeachingResourcesSection() {
         <motion.div variants={itemVariants}>
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden">
             <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between gap-3">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/60">
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
                 Uploads ·{' '}
                 {inProgressUploads.length > 0
                   ? `${inProgressUploads.length} in progress`
@@ -167,7 +167,7 @@ export function TeachingResourcesSection() {
                   <span className="flex-1 min-w-0 truncate text-white">
                     {u.file.name}
                   </span>
-                  <span className="hidden sm:inline text-white/55 tabular-nums shrink-0">
+                  <span className="hidden sm:inline text-white tabular-nums shrink-0">
                     {(u.file.size / 1024 / 1024).toFixed(2)} MB
                   </span>
                   <span
@@ -176,7 +176,7 @@ export function TeachingResourcesSection() {
                       u.status === 'done' && 'text-emerald-300',
                       u.status === 'error' && 'text-red-300',
                       u.status === 'uploading' && 'text-elec-yellow/85',
-                      u.status === 'queued' && 'text-white/55'
+                      u.status === 'queued' && 'text-white'
                     )}
                     title={u.status === 'error' ? u.error : undefined}
                   >
@@ -214,7 +214,7 @@ export function TeachingResourcesSection() {
                 <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
                   Drop to upload
                 </div>
-                <div className="mt-1 text-[13px] text-white/85">
+                <div className="mt-1 text-[13px] text-white">
                   Release your files anywhere in the library
                 </div>
               </div>
@@ -222,7 +222,7 @@ export function TeachingResourcesSection() {
           )}
 
           {loading && !hasResources ? (
-            <div className="px-6 py-16 text-center text-[12.5px] text-white/60">
+            <div className="px-6 py-16 text-center text-[12.5px] text-white">
               Loading library…
             </div>
           ) : !hasResources ? (

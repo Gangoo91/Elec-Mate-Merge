@@ -145,7 +145,7 @@ const SignIn = () => {
                 className="text-center"
               >
                 <p className="text-[26px] font-bold tracking-tight text-white">Welcome back</p>
-                <p className="mt-1.5 text-sm text-white/55">Loading your dashboard…</p>
+                <p className="mt-1.5 text-sm text-white">Loading your dashboard…</p>
               </motion.div>
             </div>
           </motion.div>
@@ -286,7 +286,7 @@ const SignIn = () => {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 touch-manipulation items-center justify-center rounded-lg text-white/55 transition-colors hover:bg-white/[0.06] hover:text-white"
+                    className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 touch-manipulation items-center justify-center rounded-lg text-white transition-colors hover:bg-white/[0.06] hover:text-white"
                     aria-label={showPassword ? 'Hide password' : 'Show password'}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}

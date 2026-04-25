@@ -7,7 +7,10 @@ interface Message {
   content: string;
   timestamp?: Date;
   followUpQuestions?: string[];
+  /** Legacy single-image — kept for back-compat with old saved sessions. */
   imageUrl?: string;
+  /** Multi-image (≤5) — preferred field. */
+  imageUrls?: string[];
 }
 
 export interface AIChatSession {

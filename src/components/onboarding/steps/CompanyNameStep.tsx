@@ -29,7 +29,7 @@ export function CompanyNameStep({ formData, onChange }: StepProps) {
           onChange={(e) => onChange({ ...formData, companyName: e.target.value })}
           placeholder="e.g. Smith Electrical Services Ltd"
           autoFocus
-          className="h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20"
+          className="h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[16px] text-white placeholder:text-white outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20"
         />
       </div>
 

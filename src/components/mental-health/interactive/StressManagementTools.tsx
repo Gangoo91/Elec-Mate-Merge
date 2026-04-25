@@ -57,12 +57,12 @@ const StressManagementTools = () => {
   const stop = () => { setIsRunning(false); setActive(null); };
 
   const phaseLabels = { inhale: 'Breathe in', hold: 'Hold', exhale: 'Breathe out', pause: 'Pause' };
-  const phaseColors = { inhale: 'text-blue-400', hold: 'text-amber-400', exhale: 'text-emerald-400', pause: 'text-white/80' };
+  const phaseColors = { inhale: 'text-blue-400', hold: 'text-amber-400', exhale: 'text-emerald-400', pause: 'text-white' };
 
   if (active && isRunning) {
     return (
       <div className="flex flex-col items-center py-8 space-y-6">
-        <p className="text-[10px] font-bold text-white/70 uppercase tracking-wider">{activeEx?.title}</p>
+        <p className="text-[10px] font-bold text-white uppercase tracking-wider">{activeEx?.title}</p>
         <div className={cn(
           'w-36 h-36 rounded-full border-2 flex items-center justify-center transition-all duration-1000 ease-in-out',
           phase === 'inhale' ? 'border-blue-400/50 bg-blue-500/10 scale-110' :
@@ -75,7 +75,7 @@ const StressManagementTools = () => {
             <p className="text-3xl font-bold text-white mt-1">{timeLeft}</p>
           </div>
         </div>
-        <p className="text-xs text-white/70">Cycle {cycles + 1}</p>
+        <p className="text-xs text-white">Cycle {cycles + 1}</p>
         <button onClick={stop} className="h-11 px-8 rounded-2xl bg-white/[0.06] border border-white/[0.1] text-white text-sm font-medium touch-manipulation active:scale-[0.98]">
           Stop
         </button>
@@ -85,7 +85,7 @@ const StressManagementTools = () => {
 
   return (
     <div className="space-y-3 pt-3">
-      <p className="text-xs text-white/60 mb-1">Choose a breathing exercise:</p>
+      <p className="text-xs text-white mb-1">Choose a breathing exercise:</p>
       {exercises.map((ex) => (
         <button
           key={ex.id}
@@ -97,7 +97,7 @@ const StressManagementTools = () => {
           </div>
           <div className="flex-1 min-w-0">
             <h4 className="text-sm font-semibold text-white">{ex.title}</h4>
-            <p className="text-[11px] text-white/80">{ex.sub}</p>
+            <p className="text-[11px] text-white">{ex.sub}</p>
           </div>
         </button>
       ))}

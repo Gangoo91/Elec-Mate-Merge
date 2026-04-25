@@ -1,102 +1,80 @@
-import { ArrowLeft, Wind, Gauge, Clock, Battery, Power, AlertTriangle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Wind, Gauge, Clock, Battery, Power, AlertTriangle } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BMSModule3 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'HVAC Systems in BMS (AHU, FCU, Chillers, Boilers)',
-      icon: Wind,
-      description: 'HVAC equipment integration and control',
-    },
-    {
-      id: 2,
-      title: 'Control Strategies: Temperature, Pressure, Flow',
-      icon: Gauge,
-      description: 'Process control methods and strategies',
-    },
-    {
-      id: 3,
-      title: 'Time Scheduling and Occupancy Programming',
-      icon: Clock,
-      description: 'Automated scheduling and occupancy control',
-    },
-    {
-      id: 4,
-      title: 'Demand-Based Control and Load Shedding',
-      icon: Battery,
-      description: 'Energy optimization and load management',
-    },
-    {
-      id: 5,
-      title: 'Override Functions and Seasonal Settings',
-      icon: Power,
-      description: 'Manual overrides and seasonal adjustments',
-    },
-    {
-      id: 6,
-      title: 'Alarm Responses and Safety Shutdowns',
-      icon: AlertTriangle,
-      description: 'Emergency procedures and safety systems',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'HVAC systems in BMS (AHU, FCU, chillers, boilers)',
+    icon: Wind,
+    description: 'HVAC equipment integration and the control points each unit exposes.',
+  },
+  {
+    id: 2,
+    title: 'Control strategies: temperature, pressure, flow',
+    icon: Gauge,
+    description: 'Process control methods and tuning fundamentals.',
+  },
+  {
+    id: 3,
+    title: 'Time scheduling and occupancy programming',
+    icon: Clock,
+    description: 'Automated scheduling, occupancy detection and setback strategies.',
+  },
+  {
+    id: 4,
+    title: 'Demand-based control and load shedding',
+    icon: Battery,
+    description: 'Energy optimisation and load management during peak demand.',
+  },
+  {
+    id: 5,
+    title: 'Override functions and seasonal settings',
+    icon: Power,
+    description: 'Manual overrides, holiday modes and seasonal adjustments.',
+  },
+  {
+    id: 6,
+    title: 'Alarm responses and safety shutdowns',
+    icon: AlertTriangle,
+    description: 'Emergency procedures, interlocks and safety system responses.',
+  },
+];
+
+export default function BMSModule3() {
+  useSEO({
+    title: 'Module 3: HVAC Integration & Scheduling | BMS Course | Elec-Mate',
+    description:
+      'HVAC control strategies, scheduling, demand-based control, overrides and safety shutdowns within a BMS.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/bms-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to BMS Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">65 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            HVAC Integration and Scheduling Logic
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            HVAC control strategies and scheduling systems
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../bms-module-3-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../bms-course"
+      backLabel="Building management systems"
+      moduleNumber={3}
+      title="HVAC integration and scheduling logic"
+      description="HVAC control strategies, scheduling and demand-based optimisation."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="65 mins"
+      prevModuleHref="../bms-module-2"
+      prevModuleLabel="Control devices and field sensors"
+      nextModuleHref="../bms-module-4"
+      nextModuleLabel="Lighting, access and environmental control"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../bms-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default BMSModule3;
+}

@@ -108,7 +108,7 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
           <DialogTitle className="text-xl font-semibold text-white tracking-tight leading-tight">
             {resource.title}
           </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white/70 leading-relaxed">
+          <DialogDescription className="text-[12.5px] text-white leading-relaxed">
             Update metadata. The file itself can be replaced via re-upload (coming
             next).
           </DialogDescription>
@@ -119,7 +119,7 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60"
+              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
             />
           </Field>
 
@@ -129,7 +129,7 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
                 type="url"
                 value={externalUrl}
                 onChange={(e) => setExternalUrl(e.target.value)}
-                className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 font-mono"
+                className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 font-mono"
               />
             </Field>
           )}
@@ -140,7 +140,7 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="What is this for?"
-              className="w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 resize-y"
+              className="w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 resize-y"
             />
           </Field>
 
@@ -149,7 +149,7 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
               value={tagsInput}
               onChange={(e) => setTagsInput(e.target.value)}
               placeholder="BS 7671, AFDD, Level 3"
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60"
+              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
             />
           </Field>
 
@@ -189,7 +189,7 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
                       >
                         {opt.label}
                       </div>
-                      <div className="text-[11.5px] text-white/55 mt-0.5">
+                      <div className="text-[11.5px] text-white mt-0.5">
                         {opt.hint}
                       </div>
                     </div>

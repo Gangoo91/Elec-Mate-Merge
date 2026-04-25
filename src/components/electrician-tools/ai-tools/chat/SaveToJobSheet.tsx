@@ -5,16 +5,29 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 
-interface ReportRow {
+/**
+ * SaveToJobSheet — bottom sheet listing the user's active projects so the
+ * current Elec-AI answer can be saved against one of them.
+ *
+ * ELE-859 / ELE-861:
+ *   - Lists `spark_projects` rows (NOT reports/certs) — projects are the
+ *     job-level container in the app's mental model.
+ *   - Joins to `customers` for a friendly client name.
+ *   - Writes append-only into `spark_projects.ai_notes` (JSONB array).
+ *   - User-facing copy uses "project", "saved as a note" — never internal
+ *     field names like `ai_saved_notes`.
+ */
+
+interface ProjectRow {
   id: string;
-  report_type: string | null;
-  report_id: string | null;
-  certificate_number: string | null;
-  client_name: string | null;
-  installation_address: string | null;
+  title: string;
+  description: string | null;
   status: string | null;
+  location: string | null;
+  customer_id: string | null;
   updated_at: string | null;
-  data: Record<string, unknown> | null;
+  ai_notes: unknown;
+  customers?: { name: string | null } | null;
 }
 
 interface SaveToJobSheetProps {
@@ -28,6 +41,8 @@ interface SaveToJobSheetProps {
   question?: string;
   /** Optional cited regulation numbers. */
   citedRegulations?: string[];
+  /** Optional photos the user attached when asking the question. */
+  imageUrls?: string[];
 }
 
 interface SavedNote {
@@ -35,13 +50,14 @@ interface SavedNote {
   question: string;
   answer: string;
   cited_regulations?: string[];
+  image_urls?: string[];
   source: 'elec-ai';
   saved_at: string;
 }
 
-function titleCaseType(report_type: string | null): string {
-  if (!report_type) return 'Report';
-  return report_type
+function titleCaseStatus(status: string | null): string {
+  if (!status) return 'Project';
+  return status
     .replace(/[-_]/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
@@ -50,25 +66,18 @@ function formatUpdatedAgo(value: string | null): string {
   if (!value) return '';
   const d = new Date(value);
   if (Number.isNaN(d.getTime())) return '';
-  return `${formatDistanceToNow(d, { addSuffix: true })}`;
+  return formatDistanceToNow(d, { addSuffix: true });
 }
 
-/**
- * SaveToJobSheet — Bottom sheet listing the user's active reports so the
- * current AI answer can be attached as an observation.
- *
- * Writes are non-destructive: we append to `reports.data.ai_saved_notes` (a
- * jsonb array). If the backend later adds a dedicated `ai_saved_notes`
- * table, the migration SQL is shipped in the task report.
- */
 export const SaveToJobSheet = memo(function SaveToJobSheet({
   isOpen,
   onClose,
   answer,
   question,
   citedRegulations,
+  imageUrls,
 }: SaveToJobSheetProps) {
-  const [reports, setReports] = useState<ReportRow[]>([]);
+  const [projects, setProjects] = useState<ProjectRow[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [savingId, setSavingId] = useState<string | null>(null);
 
@@ -84,7 +93,7 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
         } = await supabase.auth.getUser();
         if (!user) {
           if (!cancelled) {
-            setReports([]);
+            setProjects([]);
             setIsLoading(false);
             toast.error('Sign in required');
           }
@@ -92,22 +101,22 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
         }
 
         const { data, error } = await supabase
-          .from('reports')
+          .from('spark_projects')
           .select(
-            'id, report_type, report_id, certificate_number, client_name, installation_address, status, updated_at, data'
+            'id, title, description, status, location, customer_id, updated_at, ai_notes, customers ( name )'
           )
           .eq('user_id', user.id)
-          .is('deleted_at', null)
           .neq('status', 'completed')
+          .neq('status', 'cancelled')
           .order('updated_at', { ascending: false })
-          .limit(10);
+          .limit(15);
 
         if (error) throw error;
         if (cancelled) return;
-        setReports((data ?? []) as unknown as ReportRow[]);
+        setProjects((data ?? []) as unknown as ProjectRow[]);
       } catch (err) {
-        console.error('[SaveToJobSheet] load reports failed', err);
-        if (!cancelled) toast.error('Could not load reports');
+        console.error('[SaveToJobSheet] load projects failed', err);
+        if (!cancelled) toast.error('Could not load projects');
       } finally {
         if (!cancelled) setIsLoading(false);
       }
@@ -119,9 +128,9 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
   }, [isOpen]);
 
   const handleSave = useCallback(
-    async (report: ReportRow) => {
+    async (project: ProjectRow) => {
       if (savingId) return;
-      setSavingId(report.id);
+      setSavingId(project.id);
 
       try {
         const note: SavedNote = {
@@ -132,43 +141,41 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
           question: question?.trim() || 'Elec-AI answer',
           answer: answer.trim(),
           cited_regulations: citedRegulations,
+          image_urls:
+            imageUrls && imageUrls.length > 0 ? imageUrls.slice(0, 5) : undefined,
           source: 'elec-ai',
           saved_at: new Date().toISOString(),
         };
 
-        const existingData = (report.data ?? {}) as Record<string, unknown>;
-        const existingNotes = Array.isArray(
-          (existingData as { ai_saved_notes?: unknown }).ai_saved_notes
-        )
-          ? ((existingData as { ai_saved_notes?: SavedNote[] }).ai_saved_notes as SavedNote[])
+        const existing = Array.isArray(project.ai_notes)
+          ? (project.ai_notes as SavedNote[])
           : [];
 
-        const nextData = {
-          ...existingData,
-          ai_saved_notes: [note, ...existingNotes].slice(0, 50),
-        };
+        // Newest first; cap at 100 per project so we don't grow forever.
+        const nextNotes = [note, ...existing].slice(0, 100);
 
         const { error } = await supabase
-          .from('reports')
-          .update({ data: nextData, updated_at: new Date().toISOString() })
-          .eq('id', report.id);
+          .from('spark_projects')
+          .update({ ai_notes: nextNotes, updated_at: new Date().toISOString() })
+          .eq('id', project.id);
 
         if (error) throw error;
 
-        toast.success('Saved to report', {
-          description: `${titleCaseType(report.report_type)} · ${
-            report.report_id || report.certificate_number || 'untitled'
-          }`,
+        const clientName = project.customers?.name?.trim();
+        toast.success('Saved to project', {
+          description: clientName
+            ? `${project.title} · ${clientName}`
+            : project.title,
         });
         onClose();
       } catch (err) {
         console.error('[SaveToJobSheet] save failed', err);
-        toast.error('Failed to save to report');
+        toast.error('Could not save — try again in a moment');
       } finally {
         setSavingId(null);
       }
     },
-    [answer, citedRegulations, onClose, question, savingId]
+    [answer, citedRegulations, imageUrls, onClose, question, savingId]
   );
 
   return (
@@ -185,21 +192,20 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
         <div className="shrink-0 px-5 pt-5 pb-4 border-b border-white/[0.06]">
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
-                Save to a report
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+                Save to a project
               </div>
               <div className="mt-1.5 text-[15px] font-semibold text-white tracking-tight">
-                Attach this Elec-AI answer
+                Save this Elec-AI answer
               </div>
-              <p className="mt-1 text-[12px] text-white/55 leading-relaxed">
-                Picks one of your in-progress reports. The answer is attached
-                as an observation under <span className="text-white/70">ai_saved_notes</span>.
+              <p className="mt-1 text-[12px] text-white leading-relaxed">
+                Choose a project to save this answer to.
               </p>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="shrink-0 h-8 px-3 rounded-full text-[12px] font-medium text-white/70 hover:text-white bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation"
+              className="shrink-0 h-8 px-3 rounded-full text-[12px] font-medium text-white hover:text-white bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.08] transition-colors touch-manipulation"
               aria-label="Close"
             >
               Close ×
@@ -220,27 +226,32 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
             </div>
           )}
 
-          {!isLoading && reports.length === 0 && (
+          {!isLoading && projects.length === 0 && (
             <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-6 text-center">
-              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
-                No active reports
+              <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-white">
+                No active projects
               </div>
-              <p className="mt-2 text-[13px] text-white/70 leading-relaxed">
-                Start a new certificate or minor works report, then come back
-                here to attach this answer.
+              <p className="mt-2 text-[13px] text-white leading-relaxed">
+                Start a new project, then come back here to save this answer.
               </p>
             </div>
           )}
 
           {!isLoading &&
-            reports.map((report) => {
-              const saving = savingId === report.id;
+            projects.map((project) => {
+              const saving = savingId === project.id;
+              const clientName = project.customers?.name?.trim() || null;
+              const subtitleParts = [clientName, project.location?.trim() || null].filter(
+                (x): x is string => !!x
+              );
+              const subtitle = subtitleParts.length > 0 ? subtitleParts.join(' · ') : null;
+
               return (
                 <button
-                  key={report.id}
+                  key={project.id}
                   type="button"
                   disabled={!!savingId}
-                  onClick={() => handleSave(report)}
+                  onClick={() => handleSave(project)}
                   className={cn(
                     'w-full text-left rounded-2xl px-4 py-3',
                     'bg-[hsl(0_0%_12%)] border border-white/[0.06]',
@@ -250,24 +261,26 @@ export const SaveToJobSheet = memo(function SaveToJobSheet({
                   )}
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow">
-                        {titleCaseType(report.report_type)}
+                        {titleCaseStatus(project.status)}
                       </div>
                       <div className="mt-0.5 text-[14px] font-semibold text-white truncate">
-                        {report.report_id ||
-                          report.certificate_number ||
-                          'Untitled report'}
+                        {project.title || 'Untitled project'}
                       </div>
-                      <div className="mt-0.5 text-[12px] text-white/70 truncate">
-                        {report.client_name ||
-                          report.installation_address ||
-                          'No client on file'}
-                      </div>
+                      {subtitle ? (
+                        <div className="mt-0.5 text-[12px] text-white truncate">
+                          {subtitle}
+                        </div>
+                      ) : (
+                        <div className="mt-0.5 text-[12px] text-white italic truncate">
+                          No client or location
+                        </div>
+                      )}
                     </div>
                     <div className="shrink-0 text-right">
-                      <div className="text-[11px] text-white/55">
-                        {formatUpdatedAgo(report.updated_at)}
+                      <div className="text-[11px] text-white">
+                        {formatUpdatedAgo(project.updated_at)}
                       </div>
                       <div className="mt-1 text-[11px] font-medium text-elec-yellow/90">
                         {saving ? 'Saving…' : 'Save →'}

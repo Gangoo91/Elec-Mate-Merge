@@ -246,7 +246,7 @@ export function LessonPlansSection() {
                           {upcoming && <Pill tone="blue">Upcoming</Pill>}
                           {past && <Pill tone="amber">Overdue</Pill>}
                         </div>
-                        <div className="mt-0.5 text-[11.5px] text-white/70 truncate">
+                        <div className="mt-0.5 text-[11.5px] text-white truncate">
                           {subtitleParts.length > 0
                             ? subtitleParts.join(' · ')
                             : 'Unscheduled'}
@@ -259,7 +259,7 @@ export function LessonPlansSection() {
                         {objectives.slice(0, 3).map((o, i) => (
                           <li
                             key={i}
-                            className="flex items-start gap-2 text-[12px] text-white/85 leading-relaxed"
+                            className="flex items-start gap-2 text-[12px] text-white leading-relaxed"
                           >
                             <span
                               className="mt-[7px] h-1 w-1 rounded-full bg-elec-yellow/70 shrink-0"
@@ -278,7 +278,7 @@ export function LessonPlansSection() {
                           </li>
                         ))}
                         {objectives.length > 3 && (
-                          <li className="ml-3 text-[11px] text-white/55">
+                          <li className="ml-3 text-[11px] text-white">
                             +{objectives.length - 3} more
                           </li>
                         )}
@@ -314,7 +314,7 @@ export function LessonPlansSection() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button
-                          className="h-9 w-9 rounded-full flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
+                          className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
                           aria-label="Options"
                         >
                           <span className="text-[15px] font-semibold tracking-[0.12em]">

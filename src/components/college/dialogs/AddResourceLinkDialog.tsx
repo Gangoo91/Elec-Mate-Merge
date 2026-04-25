@@ -81,7 +81,7 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
           <DialogTitle className="text-xl font-semibold text-white tracking-tight">
             Link a YouTube video, website or doc
           </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white/70 leading-relaxed">
+          <DialogDescription className="text-[12.5px] text-white leading-relaxed">
             Anything with a URL. It'll sit alongside your uploaded files and be
             searchable.
           </DialogDescription>
@@ -93,7 +93,7 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="e.g. BS 7671 A4:2026 — the key changes"
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60"
+              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
             />
           </Field>
           <Field label="URL">
@@ -102,7 +102,7 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://…"
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 font-mono"
+              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 font-mono"
             />
           </Field>
           <Field label="Description (optional)">
@@ -111,7 +111,7 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="A short note on what this is for."
-              className="w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60 resize-y"
+              className="w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 py-3 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60 resize-y"
             />
           </Field>
           <Field label="Tags (comma-separated, optional)">
@@ -119,7 +119,7 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
               value={tagsInput}
               onChange={(e) => setTagsInput(e.target.value)}
               placeholder="BS 7671, AFDD, Level 3"
-              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/60"
+              className="h-11 w-full bg-[hsl(0_0%_13%)] border border-white/[0.08] rounded-xl px-4 text-[13.5px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/60"
             />
           </Field>
         </div>

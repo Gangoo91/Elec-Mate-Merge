@@ -912,7 +912,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                           key={quickDefect}
                           type="button"
                           onClick={() => handleDefectDescriptionChange(defect.id, quickDefect)}
-                          className="h-9 px-3 text-[10px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] rounded-lg touch-manipulation transition-colors text-left text-white/70"
+                          className="h-9 px-3 text-[10px] bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] rounded-lg touch-manipulation transition-colors text-left text-white"
                         >
                           {quickDefect}
                         </button>

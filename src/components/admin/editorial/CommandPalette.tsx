@@ -119,7 +119,7 @@ export function CommandPalette({ open, onOpenChange, items }: CommandPaletteProp
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search users, pages, actions…"
-                className="flex-1 h-9 bg-transparent text-[14px] text-white placeholder:text-white/40 focus:outline-none"
+                className="flex-1 h-9 bg-transparent text-[14px] text-white placeholder:text-white focus:outline-none"
               />
               <Kbd>Esc</Kbd>
             </div>

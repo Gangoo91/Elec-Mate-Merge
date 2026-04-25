@@ -1,8 +1,53 @@
-import { ArrowLeft, Eye, Zap, Shield, RotateCcw, TestTube, Settings } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Eye, Zap, Shield, RotateCcw, TestTube, Settings } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
+
+const subsections = [
+    {
+      number: '4.5.1',
+      title: 'Visual inspections',
+      description: 'Systematic visual inspection procedures and safety checks',
+      icon: Eye,
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-1',
+    },
+    {
+      number: '4.5.2',
+      title: 'Continuity and polarity testing',
+      description: 'Testing electrical continuity and verifying correct polarity',
+      icon: Zap,
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-2',
+    },
+    {
+      number: '4.5.3',
+      title: 'Insulation resistance',
+      description: 'Measuring and evaluating insulation resistance values',
+      icon: Shield,
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-3',
+    },
+    {
+      number: '4.5.4',
+      title: 'Earth fault loop impedance',
+      description: 'Testing earth fault loop impedance and protective conductor integrity',
+      icon: RotateCcw,
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-4',
+    },
+    {
+      number: '4.5.5',
+      title: 'RCD testing',
+      description: 'Testing residual current devices and protective systems',
+      icon: TestTube,
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-5',
+    },
+    {
+      number: '4.5.6',
+      title: 'Functional testing of equipment',
+      description: 'Operational testing and performance verification procedures',
+      icon: Settings,
+      href: '/study-centre/apprentice/m-o-e-t-module4-section5-6',
+    },
+  ];
+
 
 const MOETModule4Section5 = () => {
   useSEO(
@@ -10,96 +55,28 @@ const MOETModule4Section5 = () => {
     'Visual inspections, continuity, insulation resistance, earth fault testing and functional testing'
   );
 
-  const subsections = [
-    {
-      number: '4.5.1',
-      title: 'Visual Inspections',
-      description: 'Systematic visual inspection procedures and safety checks',
-      icon: Eye,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-1',
-    },
-    {
-      number: '4.5.2',
-      title: 'Continuity and Polarity Testing',
-      description: 'Testing electrical continuity and verifying correct polarity',
-      icon: Zap,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-2',
-    },
-    {
-      number: '4.5.3',
-      title: 'Insulation Resistance',
-      description: 'Measuring and evaluating insulation resistance values',
-      icon: Shield,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-3',
-    },
-    {
-      number: '4.5.4',
-      title: 'Earth Fault Loop Impedance',
-      description: 'Testing earth fault loop impedance and protective conductor integrity',
-      icon: RotateCcw,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-4',
-    },
-    {
-      number: '4.5.5',
-      title: 'RCD Testing',
-      description: 'Testing residual current devices and protective systems',
-      icon: TestTube,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-5',
-    },
-    {
-      number: '4.5.6',
-      title: 'Functional Testing of Equipment',
-      description: 'Operational testing and performance verification procedures',
-      icon: Settings,
-      href: '/study-centre/apprentice/m-o-e-t-module4-section5-6',
-    },
-  ];
-
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 4
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            Section 4.5: Testing and Inspection
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-5xl">
-            Visual inspections, continuity, insulation resistance, earth fault testing and
-            functional testing.
-          </p>
-        </div>
-
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
-            <ModuleCard
-              key={index}
-              number={subsection.number}
-              title={subsection.title}
-              description={subsection.description}
-              icon={subsection.icon}
-              href={subsection.href}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/m-o-e-t-module4"
+      backLabel="Module 4"
+      moduleNumber={4}
+      sectionNumber={5}
+      title="Testing and inspection"
+      description="Visual inspections, continuity, insulation resistance, earth fault testing and functional testing."
+      tone="orange"
+      subsectionsCount={subsections.length}
+    >
+      {subsections.map((subsection, index) => (
+        <ModuleCard
+          key={index}
+          number={subsection.number}
+          title={subsection.title}
+          description={subsection.description}
+          icon={subsection.icon}
+          href={subsection.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

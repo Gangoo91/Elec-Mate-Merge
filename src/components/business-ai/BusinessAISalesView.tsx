@@ -417,7 +417,7 @@ export function BusinessAISalesView() {
             variants={fadeUp}
             className="mt-12 text-2xl sm:text-4xl font-bold tracking-[-0.02em] text-white"
           >
-            <span className="text-white/60">Or you just</span>{' '}
+            <span className="text-white">Or you just</span>{' '}
             <span className="text-elec-yellow">message Mate.</span>
           </motion.p>
         </motion.div>
@@ -493,7 +493,7 @@ export function BusinessAISalesView() {
                   <span className="text-elec-yellow text-sm sm:text-base font-bold tabular-nums tracking-tight">
                     {win.stamp}
                   </span>
-                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-white/60">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-white">
                     {win.tag}
                   </span>
                 </div>
@@ -549,7 +549,7 @@ export function BusinessAISalesView() {
             <span className="text-elec-yellow font-bold uppercase tracking-wider text-[11px]">
               Plus
             </span>
-            <span className="mx-2 text-white/40">·</span>
+            <span className="mx-2 text-white">·</span>
             snagging lists · client portal links · project templates · smart pricing
             suggestions · completion checklists · audit trail of every action.
           </motion.p>
@@ -719,7 +719,7 @@ export function BusinessAISalesView() {
               <span className="mt-2.5 h-1 w-6 rounded-full bg-elec-yellow shrink-0" />
               <div>
                 <div className="text-sm font-semibold text-white">Beta tester</div>
-                <div className="text-[13px] text-white/70">
+                <div className="text-[13px] text-white">
                   Working electrician · Active beta
                 </div>
               </div>
@@ -745,7 +745,7 @@ export function BusinessAISalesView() {
               <SheetTitle className="text-3xl font-bold tracking-[-0.02em] text-white leading-tight">
                 Your mobile number.
               </SheetTitle>
-              <SheetDescription className="text-white/85 text-base leading-relaxed">
+              <SheetDescription className="text-white text-base leading-relaxed">
                 Mate lives on WhatsApp, so we need your number to set up your account when your
                 invite lands.
               </SheetDescription>
@@ -755,7 +755,7 @@ export function BusinessAISalesView() {
               <div>
                 <label
                   htmlFor="mate-phone"
-                  className="block text-[11px] font-bold uppercase tracking-[0.14em] text-white/70 mb-2"
+                  className="block text-[11px] font-bold uppercase tracking-[0.14em] text-white mb-2"
                 >
                   UK mobile
                 </label>
@@ -806,7 +806,7 @@ export function BusinessAISalesView() {
                 )}
               </Button>
 
-              <p className="text-[12px] text-white/60 text-center leading-relaxed">
+              <p className="text-[12px] text-white text-center leading-relaxed">
                 We&apos;ll only use this to activate Mate on WhatsApp. Unsubscribe anytime.
               </p>
             </div>
@@ -825,7 +825,7 @@ export function BusinessAISalesView() {
       >
         <div className="flex items-center gap-3 max-w-sm mx-auto">
           <div className="flex-1 min-w-0">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white/60">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.14em] text-white">
               3 days free
             </div>
             <div className="text-[13px] text-white font-semibold truncate">
@@ -995,11 +995,11 @@ function PhoneChatMock() {
               <div className="text-[14px] font-semibold text-white leading-tight truncate">
                 Mate
               </div>
-              <div className="text-[11px] text-white/60 leading-tight mt-0.5">online</div>
+              <div className="text-[11px] text-white leading-tight mt-0.5">online</div>
             </div>
-            <Video className="h-5 w-5 text-white/80 shrink-0" />
-            <Phone className="h-[18px] w-[18px] text-white/80 shrink-0" />
-            <MoreVertical className="h-5 w-5 text-white/80 shrink-0" />
+            <Video className="h-5 w-5 text-white shrink-0" />
+            <Phone className="h-[18px] w-[18px] text-white shrink-0" />
+            <MoreVertical className="h-5 w-5 text-white shrink-0" />
           </div>
 
           {/* Chat wallpaper + messages */}
@@ -1158,10 +1158,10 @@ function VoiceBubble({
 
         {/* Duration + time */}
         <div className="flex flex-col items-end shrink-0">
-          <span className="text-[11px] text-white/85 font-medium tabular-nums leading-none">
+          <span className="text-[11px] text-white font-medium tabular-nums leading-none">
             {duration}
           </span>
-          <span className="text-[10px] text-white/55 tabular-nums leading-none mt-1">
+          <span className="text-[10px] text-white tabular-nums leading-none mt-1">
             {time}
           </span>
         </div>

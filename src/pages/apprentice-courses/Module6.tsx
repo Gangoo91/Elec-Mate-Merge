@@ -1,114 +1,92 @@
-import { ArrowLeft, TestTube, Eye, Wrench, Zap, Shield, FileText, Award } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { TestTube, Eye, Wrench, Zap, Shield, FileText, Award } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
-    number: 'Section 1',
-    title: 'Purpose of Inspection and Testing',
-    description: 'Understanding why inspection and testing are essential for electrical safety',
+    id: 1,
+    title: 'Purpose of inspection and testing',
     icon: TestTube,
+    description: 'Why inspection and testing are essential for electrical safety.',
     href: 'section1',
   },
   {
-    number: 'Section 2',
-    title: 'Visual Inspection of Electrical Installations',
-    description: 'Systematic visual inspection techniques for electrical systems',
+    id: 2,
+    title: 'Visual inspection of electrical installations',
     icon: Eye,
+    description: 'Systematic visual inspection techniques for electrical systems.',
     href: 'section2',
   },
   {
-    number: 'Section 3',
-    title: 'Basic Testing Procedures and Instruments',
-    description: 'Introduction to electrical testing equipment and procedures',
+    id: 3,
+    title: 'Basic testing procedures and instruments',
     icon: Wrench,
+    description: 'Introduction to electrical testing equipment and procedures.',
     href: 'section3',
   },
   {
-    number: 'Section 4',
-    title: 'Continuity and Polarity Checks',
-    description: 'Testing for electrical continuity and correct polarity',
+    id: 4,
+    title: 'Continuity and polarity checks',
     icon: Zap,
+    description: 'Testing for electrical continuity and correct polarity.',
     href: 'section4',
   },
   {
-    number: 'Section 5',
-    title: 'Insulation Resistance Testing (Introduction Only)',
-    description: 'Basic introduction to insulation resistance testing principles',
+    id: 5,
+    title: 'Insulation resistance testing (introduction)',
     icon: Shield,
+    description: 'Basic introduction to insulation resistance testing principles.',
     href: 'section5',
   },
   {
-    number: 'Section 6',
-    title: 'Recording Test Results and Defect Identification',
-    description: 'Documenting test results and identifying electrical defects',
+    id: 6,
+    title: 'Recording test results and defect identification',
     icon: FileText,
+    description: 'Documenting test results and identifying electrical defects.',
     href: 'section6',
   },
   {
-    number: 'Section 7',
-    title: 'Introduction to Certification and Documentation',
-    description: 'Understanding electrical certification and compliance documentation',
+    id: 7,
+    title: 'Introduction to certification and documentation',
     icon: Award,
+    description: 'Understanding electrical certification and compliance documentation.',
     href: 'section7',
   },
 ];
 
-const Module6 = () => {
+export default function Module6() {
+  useSEO({
+    title: 'Module 6: Inspection, Testing and Certification | Level 2 Electrical | Elec-Mate',
+    description:
+      'Visual inspection, testing instruments, continuity, polarity, insulation resistance and electrical certification.',
+  });
+
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Level 2
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-4xl mx-auto">
-          {/* Centered Header */}
-          <header className="text-center mb-10">
-            <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
-              <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Level 2</span>
-              <span className="text-white">•</span>
-              <span className="text-white">Electrical Apprenticeship</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-              Module 6: Inspection, Testing & Certification
-            </h1>
-            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
-              Safe isolation procedures, continuity testing, insulation resistance and certification
-            </p>
-          </header>
-
-          {/* Sections Grid */}
-          <div className="grid grid-cols-1 gap-4">
-            {sections.map((section, index) => (
-              <ModuleCard
-                key={index}
-                number={section.number}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                href={section.href}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo=".."
+      backLabel="Level 2 electrical installation"
+      moduleNumber={6}
+      title="Inspection, testing and certification"
+      description="Visual inspection, testing instruments, continuity, polarity, insulation resistance and certification."
+      tone="emerald"
+      sectionsCount={sections.length}
+      prevModuleHref="../module5"
+      prevModuleLabel="Design, planning and communication"
+      nextModuleHref="../module7"
+      nextModuleLabel="Electrical fault finding and diagnosis"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={section.href}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default Module6;
+}

@@ -428,7 +428,7 @@ export const StartCertificateDialog = ({
         {/* Header */}
         <div className="px-5 pt-2 pb-4 flex-shrink-0">
           <h2 className="text-xl font-bold text-white">New Job for {customer.name}</h2>
-          <p className="text-sm text-white/60 mt-0.5">Start a project or jump straight into a quick action</p>
+          <p className="text-sm text-white mt-0.5">Start a project or jump straight into a quick action</p>
         </div>
 
         {/* Scrollable content */}
@@ -446,7 +446,7 @@ export const StartCertificateDialog = ({
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-white text-base">New Project</p>
-                <p className="text-sm text-white/60 mt-0.5">Track all tasks, certs, quotes &amp; docs in one place</p>
+                <p className="text-sm text-white mt-0.5">Track all tasks, certs, quotes &amp; docs in one place</p>
               </div>
               <ChevronRight
                 className={cn(
@@ -483,7 +483,7 @@ export const StartCertificateDialog = ({
                           'px-3 py-1.5 rounded-lg text-sm font-medium border transition-all touch-manipulation',
                           projectType === type
                             ? 'bg-emerald-500/25 border-emerald-500/50 text-emerald-300'
-                            : 'bg-white/[0.05] border-white/[0.08] text-white/70 hover:bg-white/[0.09]'
+                            : 'bg-white/[0.05] border-white/[0.08] text-white hover:bg-white/[0.09]'
                         )}
                       >
                         {type}
@@ -671,14 +671,14 @@ const ActionCard = ({ action, selected, onSelect, fullWidth }: ActionCardProps) 
           selected ? 'bg-white/10' : 'bg-white/[0.07]'
         )}
       >
-        <Icon className={cn('h-4 w-4', selected ? action.color : 'text-white/60')} />
+        <Icon className={cn('h-4 w-4', selected ? action.color : 'text-white')} />
       </div>
       <div className="flex-1 min-w-0">
-        <p className={cn('font-medium text-sm', selected ? 'text-white' : 'text-white/80')}>
+        <p className={cn('font-medium text-sm', selected ? 'text-white' : 'text-white')}>
           {action.label}
         </p>
         {fullWidth && (
-          <p className={cn('text-xs mt-0.5', selected ? 'text-white/70' : 'text-white')}>
+          <p className={cn('text-xs mt-0.5', selected ? 'text-white' : 'text-white')}>
             {action.description}
           </p>
         )}

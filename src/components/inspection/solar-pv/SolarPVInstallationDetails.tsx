@@ -164,8 +164,8 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
         )}
 
         <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-[10px] text-white/60">
-            <strong className="text-white/80">MCS:</strong> Certificate must be issued within 10 working days of commissioning.
+          <p className="text-[10px] text-white">
+            <strong className="text-white">MCS:</strong> Certificate must be issued within 10 working days of commissioning.
           </p>
         </div>
       </Section>
@@ -385,7 +385,7 @@ const SolarPVInstallationDetails: React.FC<Props> = ({ formData, onUpdate }) => 
       {/* MCS Compliance */}
       <Section title="MCS Compliance" accentColor="from-purple-500/40 to-violet-400/20">
         <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-xs text-white/60">
+          <p className="text-xs text-white">
             MCS certification is required for Smart Export Guarantee (SEG) eligibility and most grant schemes.
           </p>
         </div>

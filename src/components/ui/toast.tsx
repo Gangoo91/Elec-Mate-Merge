@@ -59,7 +59,7 @@ const iconMap = {
 } as const;
 
 const iconBubbleMap = {
-  default: 'bg-white/10 text-white/80',
+  default: 'bg-white/10 text-white',
   success: 'bg-emerald-500/20 text-emerald-400',
   destructive: 'bg-red-500/20 text-red-400',
   warning: 'bg-amber-500/20 text-amber-400',

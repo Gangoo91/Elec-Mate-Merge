@@ -1,102 +1,72 @@
-import { ArrowLeft, Wind, AlertTriangle, Activity, Fan } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
+import { Wind, AlertTriangle, Activity, Fan } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const sections = [
   {
     id: 1,
-    title: 'Atmospheric Hazards',
+    title: 'Atmospheric hazards',
     icon: Wind,
     description:
-      'Oxygen depletion below 19.5%, oxygen enrichment above 23.5%, toxic gases including hydrogen sulphide, carbon monoxide, carbon dioxide and sulphur dioxide, and flammable gases such as methane and LPG',
+      'Oxygen depletion below 19.5%, oxygen enrichment above 23.5%, toxic gases including hydrogen sulphide, carbon monoxide, carbon dioxide and sulphur dioxide, and flammable gases such as methane and LPG.',
   },
   {
     id: 2,
-    title: 'Non-Atmospheric Hazards',
+    title: 'Non-atmospheric hazards',
     icon: AlertTriangle,
     description:
-      'Engulfment and drowning, entrapment by converging walls or machinery, fire and explosion risks, electricity, extreme temperatures, noise, manual handling, and biological hazards',
+      'Engulfment and drowning, entrapment by converging walls or machinery, fire and explosion risks, electricity, extreme temperatures, noise, manual handling and biological hazards.',
   },
   {
     id: 3,
-    title: 'Gas Detection & Monitoring',
+    title: 'Gas detection & monitoring',
     icon: Activity,
     description:
-      'Four-gas monitors and their sensors, bump testing and calibration procedures, continuous versus pre-entry monitoring strategies, and understanding alarm set points',
+      'Four-gas monitors and their sensors, bump testing and calibration procedures, continuous versus pre-entry monitoring strategies, and understanding alarm set points.',
   },
   {
     id: 4,
-    title: 'Ventilation in Confined Spaces',
+    title: 'Ventilation in confined spaces',
     icon: Fan,
     description:
-      'Natural versus forced ventilation, positive and negative pressure configurations, air change rate calculations, ductwork placement, and monitoring the atmosphere during ventilation',
+      'Natural versus forced ventilation, positive and negative pressure configurations, air change rate calculations, ductwork placement and monitoring the atmosphere during ventilation.',
   },
 ];
 
 export default function ConfinedSpacesModule3() {
   useSEO({
-    title: 'Module 3: Hazards & Atmospheric Monitoring | Confined Spaces Awareness',
+    title: 'Module 3: Hazards & atmospheric monitoring | Confined spaces awareness | Elec-Mate',
     description:
-      'Identify atmospheric and non-atmospheric hazards in confined spaces, learn gas detection techniques, and understand ventilation requirements.',
+      'Atmospheric and non-atmospheric hazards in confined spaces, gas detection techniques and ventilation requirements.',
   });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-8 lg:px-12 py-2">
-          <div className="max-w-4xl mx-auto">
-            <Button
-              variant="ghost"
-              size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-              asChild
-            >
-              <Link to="../confined-spaces-course">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Confined Spaces
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      <div className="px-4 sm:px-8 lg:px-12 py-6 sm:py-8">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-3">
-              <span className="text-cyan-400 text-xs font-semibold">MODULE 3</span>
-              <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">4 Sections</span>
-              <span className="text-white text-xs">&bull;</span>
-              <span className="text-white text-xs">30 mins</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Hazards & Atmospheric Monitoring
-            </h1>
-            <p className="text-white text-sm sm:text-base">
-              Explore every hazard category found in confined spaces, from toxic and flammable
-              atmospheres to physical dangers. Learn how four-gas monitors work and how to ventilate
-              a space safely before and during entry.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {sections.map((section, index) => (
-              <SectionCard
-                key={section.id}
-                to={`../confined-spaces-module-3-section-${section.id}`}
-                sectionNumber={section.id}
-                title={section.title}
-                description={section.description}
-                icon={section.icon}
-                index={index}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../confined-spaces-course"
+      backLabel="Confined spaces awareness"
+      moduleNumber={3}
+      title="Hazards & atmospheric monitoring"
+      description="Every hazard category found in confined spaces — toxic and flammable atmospheres, physical dangers, four-gas monitoring, and how to ventilate a space safely before and during entry."
+      tone="cyan"
+      sectionsCount={sections.length}
+      duration="30 mins"
+      prevModuleHref="../confined-spaces-module-2"
+      prevModuleLabel="Legislation & risk assessment"
+      nextModuleHref="../confined-spaces-module-4"
+      nextModuleLabel="Safe entry & working procedures"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../confined-spaces-module-3-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
 }

@@ -70,7 +70,7 @@ export const FieldLimitationBadge: React.FC<FieldLimitationBadgeProps> = ({
             compact ? 'h-7 px-2 text-[10px]' : 'h-8 px-3 text-[10px]',
             value === marker
               ? MARKER_CLASSES[marker]
-              : 'bg-white/[0.05] border-white/[0.08] text-white/70 hover:text-white'
+              : 'bg-white/[0.05] border-white/[0.08] text-white hover:text-white'
           )}
           aria-pressed={value === marker}
           aria-label={`${marker} marker`}

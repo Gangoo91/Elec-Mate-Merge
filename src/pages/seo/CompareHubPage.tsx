@@ -219,7 +219,7 @@ export default function CompareHubPage() {
             {faqs.map((faq) => (
               <div key={faq.question} className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
                 <h3 className="text-lg font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

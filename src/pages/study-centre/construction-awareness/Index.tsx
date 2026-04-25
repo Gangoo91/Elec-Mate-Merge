@@ -1,50 +1,43 @@
-import { ArrowLeft, HardHat } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+
 import useSEO from '@/hooks/useSEO';
+import { PageFrame, PageHero, EmptyState } from '@/components/college/primitives';
 
 export default function ConstructionAwarenessIndex() {
+  const navigate = useNavigate();
+
   useSEO({
-    title: 'Construction Site Awareness | Study Centre',
-    description: 'Site safety, CSCS preparation, and construction industry essentials.',
+    title: 'Construction Site Awareness | Study Centre | Elec-Mate',
+    description: 'Site safety, CSCS preparation and construction industry essentials.',
   });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      <header className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm px-4 sm:px-6 pt-6 pb-4">
-        <Link to="/study-centre">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground transition-colors p-0 h-auto touch-manipulation active:scale-[0.98]"
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('/study-centre')}
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Study Centre
-          </Button>
-        </Link>
-      </header>
+            <ArrowLeft className="h-4 w-4" /> Study centre
+          </button>
 
-      <main className="px-4 sm:px-6 pb-12">
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="space-y-1">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
-              Construction Site Awareness
-            </h1>
-            <p className="text-sm sm:text-base text-muted-foreground">
-              Site safety, CSCS preparation, and industry essentials
-            </p>
-          </div>
+          <PageHero
+            eyebrow="Study centre · Coming soon"
+            title="Construction site awareness"
+            description="Site safety, CSCS prep and the construction-side knowledge that keeps you safe and respected on multi-trade jobs."
+            tone="orange"
+          />
 
-          <div className="flex flex-col items-center justify-center py-16 text-center">
-            <div className="p-4 rounded-2xl bg-orange-500/10 border border-orange-500/20 mb-4">
-              <HardHat className="h-10 w-10 text-orange-400" />
-            </div>
-            <h2 className="text-lg font-semibold text-white mb-2">Courses Coming Soon</h2>
-            <p className="text-sm text-white max-w-[280px]">
-              We're building exciting new courses for this category. Check back soon!
-            </p>
-          </div>
-        </div>
-      </main>
+          <EmptyState
+            title="Courses coming soon"
+            description="We're building primers on site rules, safety inductions, RAMS, working alongside other trades, and the cards every site asks for."
+            action="Browse other categories"
+            onAction={() => navigate('/study-centre')}
+          />
+        </PageFrame>
+      </div>
     </div>
   );
 }

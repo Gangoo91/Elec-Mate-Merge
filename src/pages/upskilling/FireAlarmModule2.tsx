@@ -1,109 +1,48 @@
-import { ArrowLeft, Search, CheckCircle } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { CheckCircle } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Module 2: Detectors, Call Points & Devices - Fire Alarm Course';
-const DESCRIPTION =
-  'Learn about smoke, heat, and multisensor detectors, manual call points, sounders, and visual alarm devices used in fire alarm systems.';
+const sections = [
+  { id: 1, title: 'Detector technologies', icon: CheckCircle, description: 'Smoke, heat, multisensor and beam detectors.' },
+  { id: 2, title: 'Detector siting and coverage', icon: CheckCircle, description: 'Spacing, ceiling heights and environments.' },
+  { id: 3, title: 'Manual call points', icon: CheckCircle, description: 'Types, positioning and accessibility.' },
+  { id: 4, title: 'Sounders and VADs', icon: CheckCircle, description: 'Audible and visual alarm devices.' },
+  { id: 5, title: 'False alarm management', icon: CheckCircle, description: 'Causes and mitigation strategies.' },
+];
 
-const FireAlarmModule2 = () => {
-  useSEO({ title: TITLE, description: DESCRIPTION });
-
-  const sections = [
-    {
-      id: 1,
-      title: 'Detector Technologies',
-      icon: CheckCircle,
-      description: 'Smoke, heat, multisensor and beam detectors',
-    },
-    {
-      id: 2,
-      title: 'Detector Siting & Coverage',
-      icon: CheckCircle,
-      description: 'Spacing, ceiling heights and environments',
-    },
-    {
-      id: 3,
-      title: 'Manual Call Points',
-      icon: CheckCircle,
-      description: 'Types, positioning and accessibility',
-    },
-    {
-      id: 4,
-      title: 'Sounders & VADs',
-      icon: CheckCircle,
-      description: 'Audible and visual alarm devices',
-    },
-    {
-      id: 5,
-      title: 'False Alarm Management',
-      icon: CheckCircle,
-      description: 'Causes and mitigation strategies',
-    },
-  ];
+export default function FireAlarmModule2() {
+  useSEO({
+    title: 'Module 2: Detectors, Call Points and Devices | Fire Alarm | Elec-Mate',
+    description: 'Detection technologies, device selection, siting requirements, sounders, VADs and false alarm prevention.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/fire-alarm-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Fire Alarm Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 2</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">{sections.length} Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">3-4 hours</span>
-          </div>
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
-              <Search className="h-7 w-7 text-elec-yellow" />
-            </div>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Detectors, Call Points & Devices
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Understanding detection technologies, device selection, siting requirements and false
-            alarm prevention.
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../../fire-alarm-course"
+      backLabel="Fire alarm systems"
+      moduleNumber={2}
+      title="Detectors, call points and devices"
+      description="Choose the right detection device, position it correctly and design out false alarms."
+      tone="red"
+      sectionsCount={sections.length}
+      duration="3-4 hours"
+      prevModuleHref="../module-1"
+      prevModuleLabel="Categories of fire alarm systems"
+      nextModuleHref="../module-3"
+      nextModuleLabel="System design and zone planning"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default FireAlarmModule2;
+}

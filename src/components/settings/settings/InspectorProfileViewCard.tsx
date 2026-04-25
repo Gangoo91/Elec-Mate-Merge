@@ -26,7 +26,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <span className="text-[11px] uppercase tracking-[0.18em] text-white/55">Photo</span>
+                <span className="text-[11px] uppercase tracking-[0.18em] text-white">Photo</span>
               </div>
             )}
           </div>
@@ -37,7 +37,7 @@ export function InspectorProfileViewCard({ profile, onEdit }: InspectorProfileVi
               {profile.name}
             </h2>
             {profile.companyName && (
-              <p className="mt-1 text-[13px] text-white/70">{profile.companyName}</p>
+              <p className="mt-1 text-[13px] text-white">{profile.companyName}</p>
             )}
           </div>
 

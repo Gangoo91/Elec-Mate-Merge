@@ -178,7 +178,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
       <div className="grid gap-8 px-6 py-7 sm:px-8 sm:py-9 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12">
         {/* ── Left: header + preview pass ───────────────────────────────── */}
         <div className="min-w-0">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white">
             Phone Wallet
           </div>
           <h3 className="mt-3 text-[22px] sm:text-[26px] font-semibold leading-[1.15] tracking-tight text-white">
@@ -186,7 +186,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
             <br className="hidden sm:block" />
             on your lock screen.
           </h3>
-          <p className="mt-3 text-[13px] leading-relaxed text-white/70 max-w-sm">
+          <p className="mt-3 text-[13px] leading-relaxed text-white max-w-sm">
             One swipe. Works offline. Auto-updates when your ECS card or verification tier changes.
           </p>
 
@@ -200,7 +200,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
                 </div>
                 <div className="mt-1 text-[11px] text-white/50">Verified Electrician</div>
               </div>
-              <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-white/45">
+              <div className="text-[9px] font-semibold uppercase tracking-[0.18em] text-white">
                 Elec-Mate
               </div>
             </div>
@@ -208,7 +208,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
               {elecIdNumber}
             </div>
             <div className="mt-5 flex items-end justify-between gap-4">
-              <div className="text-[10px] uppercase tracking-[0.15em] text-white/40">Tap to verify</div>
+              <div className="text-[10px] uppercase tracking-[0.15em] text-white">Tap to verify</div>
               <div className="h-10 w-10 rounded-md bg-white/[0.04] border border-white/[0.08] grid grid-cols-4 grid-rows-4 gap-px p-1">
                 {Array.from({ length: 16 }).map((_, i) => (
                   <div
@@ -225,7 +225,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
 
         {/* ── Right: benefits + actions ─────────────────────────────────── */}
         <div className="min-w-0 flex flex-col">
-          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
+          <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white">
             What's included
           </div>
           <ul className="mt-4 space-y-3.5">
@@ -243,7 +243,7 @@ export default function ElecIdWallet({ elecIdNumber }: ElecIdWalletProps) {
           </ul>
 
           <div className="mt-auto pt-7">
-            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55 mb-3">
+            <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white mb-3">
               Add to device
             </div>
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">

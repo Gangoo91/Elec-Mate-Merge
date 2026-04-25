@@ -52,7 +52,7 @@ const SelfCareReminders = () => {
         <div className="flex-1 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
           <div className="h-full bg-amber-400 rounded-full transition-all duration-500" style={{ width: `${(done / total) * 100}%` }} />
         </div>
-        <span className="text-xs text-white/80 font-medium">{done}/{total}</span>
+        <span className="text-xs text-white font-medium">{done}/{total}</span>
       </div>
 
       {/* Prompts */}
@@ -69,7 +69,7 @@ const SelfCareReminders = () => {
               )}
             >
               <span className="text-xl flex-shrink-0">{prompt.emoji}</span>
-              <span className={cn('text-sm flex-1', isDone ? 'text-white/70 line-through' : 'text-white')}>{prompt.text}</span>
+              <span className={cn('text-sm flex-1', isDone ? 'text-white line-through' : 'text-white')}>{prompt.text}</span>
               <div className={cn('w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-all',
                 isDone ? 'bg-emerald-500 border-emerald-500' : 'border-white/20'
               )}>

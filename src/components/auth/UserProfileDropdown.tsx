@@ -87,7 +87,7 @@ const UserProfileDropdown = () => {
             {badge > 9 ? '9+' : badge}
           </span>
         )}
-        {variant !== 'danger' && <ChevronRight className="h-4 w-4 text-white/30 group-hover:text-white/60 transition-colors" />}
+        {variant !== 'danger' && <ChevronRight className="h-4 w-4 text-white/30 group-hover:text-white transition-colors" />}
       </div>
     </DropdownMenuItem>
   );
@@ -137,7 +137,7 @@ const UserProfileDropdown = () => {
                 <p className="font-bold text-white text-[15px] truncate leading-tight">
                   {profile?.full_name || 'User'}
                 </p>
-                <p className="text-[11px] text-white/60 truncate mt-0.5">{user.email}</p>
+                <p className="text-[11px] text-white truncate mt-0.5">{user.email}</p>
               </div>
               <div className="flex items-center gap-1 px-2 py-1 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 flex-shrink-0">
                 <Sparkles className="h-3 w-3 text-elec-yellow" />

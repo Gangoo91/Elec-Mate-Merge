@@ -114,10 +114,10 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
             {/* Stats — single row */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="text-xs font-bold text-green-400">{satisfactory} <span className="font-normal text-white/40">OK</span></span>
-                <span className="text-xs font-bold text-red-400">{c1Count} <span className="font-normal text-white/40">C1</span></span>
-                <span className="text-xs font-bold text-orange-400">{c2Count} <span className="font-normal text-white/40">C2</span></span>
-                <span className="text-xs font-bold text-yellow-400">{c3Count} <span className="font-normal text-white/40">C3</span></span>
+                <span className="text-xs font-bold text-green-400">{satisfactory} <span className="font-normal text-white">OK</span></span>
+                <span className="text-xs font-bold text-red-400">{c1Count} <span className="font-normal text-white">C1</span></span>
+                <span className="text-xs font-bold text-orange-400">{c2Count} <span className="font-normal text-white">C2</span></span>
+                <span className="text-xs font-bold text-yellow-400">{c3Count} <span className="font-normal text-white">C3</span></span>
               </div>
               <div className="flex items-center gap-2 text-[10px] text-white/30">
                 <span>{notApplicable} N/A</span>

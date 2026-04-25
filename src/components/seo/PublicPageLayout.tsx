@@ -574,7 +574,7 @@ export function PublicPageLayout({ children }: PublicPageLayoutProps) {
       {/* Sticky Mobile CTA — social proof + price + badges */}
       {!user && (
         <div className="fixed bottom-0 left-0 right-0 sm:hidden z-50 px-4 pt-6 pb-[max(0.75rem,env(safe-area-inset-bottom))] bg-gradient-to-t from-black via-black/95 to-transparent">
-          <p className="text-center text-[11px] text-white/60 mb-2">
+          <p className="text-center text-[11px] text-white mb-2">
             <span className="text-green-400 font-semibold">1,000+ electricians</span>
             {' · '}From £5.99/mo after trial
           </p>

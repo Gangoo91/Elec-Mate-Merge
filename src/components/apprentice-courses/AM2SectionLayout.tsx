@@ -1,7 +1,6 @@
 import React, { memo, useEffect } from 'react';
 import { ArrowLeft, ChevronRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
 
@@ -15,15 +14,9 @@ interface AM2SectionLayoutProps {
   breadcrumbs: (string | Breadcrumb)[];
   children: React.ReactNode;
   className?: string;
-  /** Optional title for tracking - defaults to last breadcrumb */
   trackingTitle?: string;
 }
 
-/**
- * AM2SectionLayout - Master wrapper component for AM2 content pages
- * Features sticky header with back navigation, breadcrumbs, safe area padding,
- * stagger animation container for children, and automatic study location tracking.
- */
 export const AM2SectionLayout = memo(function AM2SectionLayout({
   backHref,
   breadcrumbs,
@@ -34,68 +27,50 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
   const location = useLocation();
   const { updateLastLocation } = useLastStudyLocation();
 
-  // Track study location when page loads
   useEffect(() => {
-    // Get title from trackingTitle prop or last breadcrumb
     const lastBreadcrumb = breadcrumbs[breadcrumbs.length - 1];
     const title =
       trackingTitle ||
       (typeof lastBreadcrumb === 'string' ? lastBreadcrumb : lastBreadcrumb?.label) ||
       'Learning';
-
-    // Update the last study location
     updateLastLocation(location.pathname, title);
   }, [location.pathname, breadcrumbs, trackingTitle, updateLastLocation]);
 
   return (
-    <div className={cn('min-h-screen overflow-x-hidden bg-[#1a1a1a]', className)}>
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-30 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 safe-top">
-        <div className="px-4 sm:px-6 py-3">
-          <div className="flex items-center gap-3">
-            {/* Back Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className={cn(
-                'min-h-[44px] min-w-[44px] p-2 -ml-2',
-                'text-white hover:text-white hover:bg-white/5',
-                'touch-manipulation active:scale-[0.98] transition-all duration-ios-normal ease-ios-ease'
-              )}
-              asChild
+    <div className={cn('min-h-screen overflow-x-hidden bg-[hsl(0_0%_8%)] text-white', className)}>
+      {/* Sticky header — solid surface, hairline border */}
+      <header className="sticky top-0 z-30 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-b border-white/[0.06]">
+        <div className="px-4 sm:px-6 lg:px-8 py-3">
+          <div className="max-w-5xl mx-auto flex items-center gap-3">
+            <Link
+              to={backHref}
+              className="inline-flex items-center justify-center h-10 w-10 rounded-full bg-white/[0.06] border border-white/[0.1] text-white hover:bg-white/[0.1] transition-colors touch-manipulation active:scale-[0.98] shrink-0"
+              aria-label="Back"
             >
-              <Link to={backHref}>
-                <ArrowLeft className="w-5 h-5" />
-              </Link>
-            </Button>
-
-            {/* Breadcrumbs */}
-            <nav className="flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+              <ArrowLeft className="h-4 w-4" />
+            </Link>
+            <nav className="flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-1 min-w-0">
               {breadcrumbs.map((crumb, index) => {
                 const label = typeof crumb === 'string' ? crumb : crumb.label;
                 const href = typeof crumb === 'string' ? undefined : crumb.href;
                 const isLast = index === breadcrumbs.length - 1;
-
                 return (
                   <React.Fragment key={index}>
                     {index > 0 && (
-                      <ChevronRight className="w-3.5 h-3.5 text-white flex-shrink-0" />
+                      <ChevronRight className="w-3 h-3 text-white shrink-0" />
                     )}
                     {href && !isLast ? (
                       <Link
                         to={href}
-                        className={cn(
-                          'text-ios-footnote whitespace-nowrap text-white',
-                          'hover:text-white transition-colors'
-                        )}
+                        className="text-[11.5px] whitespace-nowrap text-white hover:text-elec-yellow transition-colors"
                       >
                         {label}
                       </Link>
                     ) : (
                       <span
                         className={cn(
-                          'text-ios-footnote whitespace-nowrap',
-                          isLast ? 'text-white font-medium' : 'text-white'
+                          'text-[11.5px] whitespace-nowrap',
+                          isLast ? 'text-white font-semibold' : 'text-white'
                         )}
                       >
                         {label}
@@ -109,9 +84,8 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
         </div>
       </header>
 
-      {/* Main Content with Safe Area Padding and Stagger Animation */}
-      <main className="px-4 sm:px-6 py-6 safe-bottom">
-        <div className="max-w-5xl mx-auto ios-stagger-children">{children}</div>
+      <main className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-24">
+        <div className="max-w-5xl mx-auto space-y-5">{children}</div>
       </main>
     </div>
   );

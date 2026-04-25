@@ -1,102 +1,80 @@
-import { ArrowLeft, ToggleLeft, Thermometer, Settings, MapPin, Cable, Shield } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { ToggleLeft, Thermometer, Settings, MapPin, Cable, Shield } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
+import { ModuleShell } from '@/components/study-centre/shells';
+import useSEO from '@/hooks/useSEO';
 
-const BMSModule2 = () => {
-  const sections = [
-    {
-      id: 1,
-      title: 'Digital vs Analog Inputs and Outputs',
-      icon: ToggleLeft,
-      description: 'Signal types and processing methods',
-    },
-    {
-      id: 2,
-      title: 'Types of Sensors: Temperature, Humidity, CO2, Occupancy',
-      icon: Thermometer,
-      description: 'Sensor technologies and applications',
-    },
-    {
-      id: 3,
-      title: 'Actuators, Valves, and Dampers',
-      icon: Settings,
-      description: 'Control devices and mechanical components',
-    },
-    {
-      id: 4,
-      title: 'Sensor Placement and Accuracy Considerations',
-      icon: MapPin,
-      description: 'Installation best practices',
-    },
-    {
-      id: 5,
-      title: 'I/O Modules and Expansion Devices',
-      icon: Cable,
-      description: 'Input/output expansion and connectivity',
-    },
-    {
-      id: 6,
-      title: 'Cabling, Interference, and Shielding Practices',
-      icon: Shield,
-      description: 'Signal integrity and protection methods',
-    },
-  ];
+const sections = [
+  {
+    id: 1,
+    title: 'Digital vs analogue inputs and outputs',
+    icon: ToggleLeft,
+    description: 'Signal types, processing methods and resolution considerations.',
+  },
+  {
+    id: 2,
+    title: 'Sensor types: temperature, humidity, CO2, occupancy',
+    icon: Thermometer,
+    description: 'Common sensor technologies and their typical applications.',
+  },
+  {
+    id: 3,
+    title: 'Actuators, valves and dampers',
+    icon: Settings,
+    description: 'Control devices and mechanical components driven by the BMS.',
+  },
+  {
+    id: 4,
+    title: 'Sensor placement and accuracy considerations',
+    icon: MapPin,
+    description: 'Installation best practices for reliable measurements.',
+  },
+  {
+    id: 5,
+    title: 'I/O modules and expansion devices',
+    icon: Cable,
+    description: 'Input/output expansion, addressing and connectivity options.',
+  },
+  {
+    id: 6,
+    title: 'Cabling, interference and shielding practices',
+    icon: Shield,
+    description: 'Signal integrity, separation and shielding for BMS field cabling.',
+  },
+];
+
+export default function BMSModule2() {
+  useSEO({
+    title: 'Module 2: Control Devices & Field Sensors | BMS Course | Elec-Mate',
+    description:
+      'Field devices, sensors, actuators, I/O modules and cabling practices for BMS installations.',
+  });
 
   return (
-    <div className="overflow-x-hidden bg-[#1a1a1a]">
-      {/* Sticky Header */}
-      <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="px-4 sm:px-6 py-2">
-          <Button
-            variant="ghost"
-            size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
-            asChild
-          >
-            <Link to="/electrician/upskilling/bms-course">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to BMS Course
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        {/* Module Header */}
-        <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
-            <span className="text-elec-yellow text-xs font-semibold">MODULE 2</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">6 Sections</span>
-            <span className="text-white text-xs">•</span>
-            <span className="text-white text-xs">60 mins</span>
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-            Control Devices and Field Sensors
-          </h1>
-          <p className="text-white text-sm sm:text-base">
-            Field devices, sensors, and control equipment
-          </p>
-        </div>
-
-        {/* Section Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section.id}
-              to={`../bms-module-2-section-${section.id}`}
-              sectionNumber={section.id}
-              title={section.title}
-              description={section.description}
-              icon={section.icon}
-              index={index}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <ModuleShell
+      backTo="../bms-course"
+      backLabel="Building management systems"
+      moduleNumber={2}
+      title="Control devices and field sensors"
+      description="Field devices, sensors and the control equipment behind every BMS."
+      tone="yellow"
+      sectionsCount={sections.length}
+      duration="60 mins"
+      prevModuleHref="../bms-module-1"
+      prevModuleLabel="BMS overview and industry applications"
+      nextModuleHref="../bms-module-3"
+      nextModuleLabel="HVAC integration and scheduling logic"
+    >
+      {sections.map((section, index) => (
+        <SectionCard
+          key={section.id}
+          to={`../bms-module-2-section-${section.id}`}
+          sectionNumber={section.id}
+          title={section.title}
+          description={section.description}
+          icon={section.icon}
+          index={index}
+        />
+      ))}
+    </ModuleShell>
   );
-};
-
-export default BMSModule2;
+}

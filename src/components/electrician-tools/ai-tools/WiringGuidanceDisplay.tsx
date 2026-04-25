@@ -535,7 +535,7 @@ const WiringGuidanceDisplay = ({
                       <h4
                         className={cn(
                           'text-base font-bold leading-tight',
-                          isCompleted ? 'text-white/70 line-through' : 'text-white'
+                          isCompleted ? 'text-white line-through' : 'text-white'
                         )}
                       >
                         {step.title}

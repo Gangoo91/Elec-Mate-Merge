@@ -223,7 +223,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
       {/* DC Array Tests */}
       <Section title="DC Array Tests" accentColor="from-amber-500/40 to-yellow-400/20">
         <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-          <p className="text-[10px] text-white/60">
+          <p className="text-[10px] text-white">
             <strong>BS EN 62446:</strong> Record irradiance &gt;400 W/m² for valid Isc. Temperature affects Voc.
           </p>
         </div>
@@ -231,7 +231,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
         {(formData.testResults?.arrayTests || []).length === 0 && (
           <div className="p-6 text-center rounded-xl bg-white/[0.02] border border-white/[0.06]">
             <AlertTriangle className="h-8 w-8 mx-auto mb-2 text-white/20" />
-            <p className="text-sm text-white/40">Add arrays in System Design tab first</p>
+            <p className="text-sm text-white">Add arrays in System Design tab first</p>
           </div>
         )}
 
@@ -257,11 +257,11 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">Expected (V)</p>
+                    <p className="text-[10px] text-white mb-1">Expected (V)</p>
                     <Input type="number" inputMode="decimal" step="0.1" value={test.vocExpected || array?.stringVoltageVoc || ''} onChange={(e) => updateArrayTest(test.arrayId, 'vocExpected', parseFloat(e.target.value) || 0)} className={cn(inputSmCn, 'bg-white/[0.03] text-amber-400')} />
                   </div>
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">Measured (V)</p>
+                    <p className="text-[10px] text-white mb-1">Measured (V)</p>
                     <Input type="number" inputMode="decimal" step="0.1" value={test.vocMeasured || ''} onChange={(e) => {
                       const measured = parseFloat(e.target.value) || 0;
                       const expected = test.vocExpected || 0;
@@ -281,11 +281,11 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">Expected (A)</p>
+                    <p className="text-[10px] text-white mb-1">Expected (A)</p>
                     <Input type="number" inputMode="decimal" step="0.01" value={test.iscExpected || array?.stringCurrentIsc || ''} onChange={(e) => updateArrayTest(test.arrayId, 'iscExpected', parseFloat(e.target.value) || 0)} className={cn(inputSmCn, 'bg-white/[0.03] text-amber-400')} />
                   </div>
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">Measured (A)</p>
+                    <p className="text-[10px] text-white mb-1">Measured (A)</p>
                     <Input type="number" inputMode="decimal" step="0.01" value={test.iscMeasured || ''} onChange={(e) => {
                       const measured = parseFloat(e.target.value) || 0;
                       const expected = test.iscExpected || 0;
@@ -308,11 +308,11 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">+ve to Earth (MΩ)</p>
+                    <p className="text-[10px] text-white mb-1">+ve to Earth (MΩ)</p>
                     <Input type="number" inputMode="decimal" step="0.1" value={test.irPositiveToEarth || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irPositiveToEarth', parseFloat(e.target.value) || 0)} className={inputSmCn} placeholder="≥1 MΩ" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">-ve to Earth (MΩ)</p>
+                    <p className="text-[10px] text-white mb-1">-ve to Earth (MΩ)</p>
                     <Input type="number" inputMode="decimal" step="0.1" value={test.irNegativeToEarth || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irNegativeToEarth', parseFloat(e.target.value) || 0)} className={inputSmCn} placeholder="≥1 MΩ" />
                   </div>
                 </div>
@@ -323,15 +323,15 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
                 <p className="text-xs font-medium text-white">Test Conditions</p>
                 <div className="grid grid-cols-3 gap-2">
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">Irradiance</p>
+                    <p className="text-[10px] text-white mb-1">Irradiance</p>
                     <Input type="number" inputMode="numeric" value={test.irradiance || ''} onChange={(e) => updateArrayTest(test.arrayId, 'irradiance', parseFloat(e.target.value) || 0)} placeholder="W/m²" className={inputSmCn} />
                   </div>
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">Ambient</p>
+                    <p className="text-[10px] text-white mb-1">Ambient</p>
                     <Input type="number" inputMode="decimal" step="0.5" value={test.ambientTemp || ''} onChange={(e) => updateArrayTest(test.arrayId, 'ambientTemp', parseFloat(e.target.value) || 0)} placeholder="°C" className={inputSmCn} />
                   </div>
                   <div>
-                    <p className="text-[10px] text-white/40 mb-1">Module</p>
+                    <p className="text-[10px] text-white mb-1">Module</p>
                     <Input type="number" inputMode="decimal" step="0.5" value={test.moduleTemp || ''} onChange={(e) => updateArrayTest(test.arrayId, 'moduleTemp', parseFloat(e.target.value) || 0)} placeholder="°C" className={inputSmCn} />
                   </div>
                 </div>
@@ -362,7 +362,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
         {(formData.testResults?.inverterTests || []).length === 0 && (
           <div className="p-6 text-center rounded-xl bg-white/[0.02] border border-white/[0.06]">
             <AlertTriangle className="h-8 w-8 mx-auto mb-2 text-white/20" />
-            <p className="text-sm text-white/40">Add inverters in System Design tab first</p>
+            <p className="text-sm text-white">Add inverters in System Design tab first</p>
           </div>
         )}
 
@@ -526,7 +526,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
         {/* Bidirectional Device */}
         <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-3">
           <p className="text-xs font-medium text-white">Bidirectional Protection</p>
-          <p className="text-[10px] text-white/40">BS 7671:2018+A3:2024 Reg. 530.3.201</p>
+          <p className="text-[10px] text-white">BS 7671:2018+A3:2024 Reg. 530.3.201</p>
           <CheckboxCard
             label="Bidirectional Device Installed"
             description="Required for hybrid/battery systems"
@@ -586,7 +586,7 @@ const SolarPVTestSchedule: React.FC<Props> = ({ formData, onUpdate }) => {
 
         {/* Checklist as CheckboxCards */}
         <div className="space-y-2">
-          <p className="text-[10px] text-white/40 uppercase tracking-wider">System & Customer Handover</p>
+          <p className="text-[10px] text-white uppercase tracking-wider">System & Customer Handover</p>
           <CheckboxCard label="System Operational & Generating" checked={!!formData.testResults?.commissioning?.systemOperational} onChange={(v) => updateCommissioning('systemOperational', v)} accentColor="green" />
           <CheckboxCard label="Export to Grid Verified" checked={!!formData.testResults?.commissioning?.exportVerified} onChange={(v) => updateCommissioning('exportVerified', v)} accentColor="green" />
           <CheckboxCard label="Customer Briefed on System" checked={!!formData.testResults?.commissioning?.customerBriefed} onChange={(v) => updateCommissioning('customerBriefed', v)} accentColor="green" />

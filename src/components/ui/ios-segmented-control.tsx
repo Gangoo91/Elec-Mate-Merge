@@ -63,7 +63,7 @@ function IOSSegmentedControl<T extends string>({
               size === 'default' ? 'py-2.5 px-3 text-ios-subhead' : 'py-3.5 px-4 text-ios-body',
               isSelected
                 ? 'text-black font-semibold'
-                : 'text-white/60 font-medium hover:text-white/80'
+                : 'text-white font-medium hover:text-white'
             )}
           >
             {option.icon && (

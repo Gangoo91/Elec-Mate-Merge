@@ -38,7 +38,7 @@ const QuoteOptionsContent: React.FC<{
     <button
       type="button"
       onClick={onClose}
-      className="w-full h-9 text-xs text-white/40 touch-manipulation"
+      className="w-full h-9 text-xs text-white touch-manipulation"
     >
       Cancel
     </button>
@@ -66,7 +66,7 @@ const QuoteOptionsSheet: React.FC<QuoteOptionsSheetProps> = ({
             <h2 className="text-sm font-bold text-white">Quote Options</h2>
             <button
               onClick={() => onOpenChange(false)}
-              className="h-8 w-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white touch-manipulation"
+              className="h-8 w-8 rounded-lg flex items-center justify-center text-white hover:text-white touch-manipulation"
             >
               <X className="h-4 w-4" />
             </button>

@@ -1,16 +1,9 @@
-import { ArrowLeft, Calendar, FileText, Settings, CheckSquare, Scale } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Calendar, FileText, Settings, CheckSquare, Scale } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
-const MOETModule4Section1 = () => {
-  useSEO(
-    'Section 4.1: Planned Preventive Maintenance (PPM) - MOET Module 4',
-    'Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and regulatory compliance'
-  );
-
-  const subsections = [
+const subsections = [
     {
       number: '4.1.1',
       title: 'Principles of PPM',
@@ -21,14 +14,14 @@ const MOETModule4Section1 = () => {
     },
     {
       number: '4.1.2',
-      title: 'Maintenance Scheduling and Records',
+      title: 'Maintenance scheduling and records',
       description: 'Creating maintenance schedules, record keeping and documentation systems',
       icon: FileText,
       href: '/study-centre/apprentice/m-o-e-t-module4-section1-2',
     },
     {
       number: '4.1.3',
-      title: 'Lubrication, Cleaning and Adjustments',
+      title: 'Lubrication, cleaning and adjustments',
       description:
         'Routine maintenance tasks including lubrication schedules and equipment adjustments',
       icon: Settings,
@@ -36,65 +29,49 @@ const MOETModule4Section1 = () => {
     },
     {
       number: '4.1.4',
-      title: 'Electrical Inspection Routines',
+      title: 'Electrical inspection routines',
       description: 'Systematic electrical inspection procedures and safety checks',
       icon: CheckSquare,
       href: '/study-centre/apprentice/m-o-e-t-module4-section1-4',
     },
     {
       number: '4.1.5',
-      title: 'Legal and Regulatory Compliance in PPM',
+      title: 'Legal and regulatory compliance in PPM',
       description: 'Regulatory requirements, standards compliance and legal obligations',
       icon: Scale,
       href: '/study-centre/apprentice/m-o-e-t-module4-section1-5',
     },
   ];
 
+
+const MOETModule4Section1 = () => {
+  useSEO(
+    'Section 4.1: Planned Preventive Maintenance (PPM) - MOET Module 4',
+    'Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and regulatory compliance'
+  );
+
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-muted-foreground hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
-          >
-            <Link to="/study-centre/apprentice/m-o-e-t-module4">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Module 4
-            </Link>
-          </Button>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
-            Section 4.1: Planned Preventive Maintenance (PPM)
-          </h1>
-          <p className="text-xl text-muted-foreground max-w-5xl">
-            Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and
-            regulatory compliance.
-          </p>
-        </div>
-
-        {/* Subsections Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection, index) => (
-            <ModuleCard
-              key={index}
-              number={subsection.number}
-              title={subsection.title}
-              description={subsection.description}
-              icon={subsection.icon}
-              href={subsection.href}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+    <SectionShell
+      backTo="/study-centre/apprentice/m-o-e-t-module4"
+      backLabel="Module 4"
+      moduleNumber={4}
+      sectionNumber={1}
+      title="Planned preventive maintenance (PPM)"
+      description="Principles of PPM, maintenance scheduling, records, lubrication, inspection routines and regulatory compliance."
+      tone="orange"
+      subsectionsCount={subsections.length}
+    >
+      {subsections.map((subsection, index) => (
+        <ModuleCard
+          key={index}
+          number={subsection.number}
+          title={subsection.title}
+          description={subsection.description}
+          icon={subsection.icon}
+          href={subsection.href}
+        />
+      ))}
+    </SectionShell>
   );
 };
 
