@@ -35,7 +35,7 @@ interface PwiRow {
   bs7671_zones: string[] | null;
   common_defects: string[] | null;
   activity_types: string[] | null;
-  test_procedures: any[] | null;
+  test_procedures: Array<string | { task?: string } | unknown> | null;
   inspection_checklist: string[] | null;
 }
 
@@ -61,7 +61,7 @@ function buildEmbeddingText(row: PwiRow): string {
   if (row.test_procedures && Array.isArray(row.test_procedures) && row.test_procedures.length) {
     const tasks = row.test_procedures
       .slice(0, 5)
-      .map((p: any) => (typeof p === 'string' ? p : p?.task || ''))
+      .map((p) => (typeof p === 'string' ? p : (p as { task?: string })?.task || ''))
       .filter(Boolean)
       .join(' | ');
     if (tasks) parts.push(`Tests: ${tasks}`);
@@ -168,7 +168,8 @@ Deno.serve(async (req) => {
           .update({
             embedding_status: 'failed',
             embedding_attempted_at: new Date().toISOString(),
-            embedding_error: err instanceof Error ? err.message.slice(0, 400) : String(err).slice(0, 400),
+            embedding_error:
+              err instanceof Error ? err.message.slice(0, 400) : String(err).slice(0, 400),
           })
           .in('id', ids);
         failed += rows.length;
@@ -180,10 +181,10 @@ Deno.serve(async (req) => {
       // 3. Single bulk UPDATE — embedding + tsv together via the PL/pgSQL helper.
       const ids = (rows as PwiRow[]).map((r) => r.id);
       const vecTexts = embeddings.map(vectorToText);
-      const { data: updated, error: applyErr } = await supabase.rpc(
-        'pwi_apply_embedding_batch',
-        { p_ids: ids, p_embeddings: vecTexts }
-      );
+      const { data: updated, error: applyErr } = await supabase.rpc('pwi_apply_embedding_batch', {
+        p_ids: ids,
+        p_embeddings: vecTexts,
+      });
 
       if (applyErr) {
         lastError = `apply: ${applyErr.message}`;
@@ -203,9 +204,7 @@ Deno.serve(async (req) => {
         batches: batchesRun,
         elapsed_ms: Date.now() - tStart,
         rate_rows_per_sec:
-          Date.now() - tStart > 0
-            ? Math.round((processed / (Date.now() - tStart)) * 1000)
-            : 0,
+          Date.now() - tStart > 0 ? Math.round((processed / (Date.now() - tStart)) * 1000) : 0,
         last_error: lastError,
       }),
       { status: 200, headers: { ...CORS, 'content-type': 'application/json' } }
