@@ -113,6 +113,8 @@ const LessonPrintPage = lazy(() => import('@/pages/college/LessonPrintPage'));
 const Student360Page = lazy(() => import('@/pages/college/Student360Page'));
 const PolicyDetailPage = lazy(() => import('@/pages/college/PolicyDetailPage'));
 const CompliancePackPage = lazy(() => import('@/pages/college/CompliancePackPage'));
+const IqaDashboardPage = lazy(() => import('@/pages/college/IqaDashboardPage'));
+const IqaSamplingPlanPage = lazy(() => import('@/pages/college/IqaSamplingPlanPage'));
 const CurriculumSettingsPage = lazy(() => import('@/pages/college/CurriculumSettingsPage'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
@@ -1920,6 +1922,30 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <CompliancePackPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Quality assurance — IQA dashboard */}
+          <Route
+            path="college/iqa"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <IqaDashboardPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Quality assurance — single sampling plan with verdicts */}
+          <Route
+            path="college/iqa/sampling/:id"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <IqaSamplingPlanPage />
                 </CollegeGuard>
               </LazyRoute>
             }
