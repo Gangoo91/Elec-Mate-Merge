@@ -145,10 +145,7 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
-        side="bottom"
-        className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-      >
+      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
         <SheetShell
           eyebrow="Edit Student"
           title={student.name}
@@ -324,7 +321,7 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
                       className={`h-8 px-3 rounded-full text-[12px] border transition-colors touch-manipulation ${
                         on
                           ? 'bg-elec-yellow/[0.1] border-elec-yellow/40 text-elec-yellow font-medium'
-                          : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white/80 hover:text-white hover:border-white/[0.18]'
+                          : 'bg-[hsl(0_0%_13%)] border-white/[0.08] text-white hover:text-white hover:border-white/[0.18]'
                       }`}
                     >
                       {f.label}
@@ -337,9 +334,7 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
               <Field label="EAL">
                 <Select
                   value={formData.eal ? 'yes' : 'no'}
-                  onValueChange={(value) =>
-                    setFormData((p) => ({ ...p, eal: value === 'yes' }))
-                  }
+                  onValueChange={(value) => setFormData((p) => ({ ...p, eal: value === 'yes' }))}
                 >
                   <SelectTrigger className={selectTriggerClass}>
                     <SelectValue />

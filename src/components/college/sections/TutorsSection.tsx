@@ -2,6 +2,8 @@ import { useState, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AddTutorDialog } from '@/components/college/dialogs/AddTutorDialog';
+import { StaffOnboardingWizard } from '@/components/college/sheets/StaffOnboardingWizard';
+import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
 import { StaffDetailSheet } from '@/components/college/sheets/StaffDetailSheet';
 import { EditStaffSheet } from '@/components/college/sheets/EditStaffSheet';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
@@ -27,6 +29,8 @@ export function TutorsSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterRole, setFilterRole] = useState<string>('all');
   const [addTutorOpen, setAddTutorOpen] = useState(false);
+  const [onboardOpen, setOnboardOpen] = useState(false);
+  const [openStaffId, setOpenStaffId] = useState<string | null>(null);
   const [selectedStaff, setSelectedStaff] = useState<CollegeStaff | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
@@ -109,12 +113,20 @@ export function TutorsSection() {
           description={`${tutors.length} tutor${tutors.length === 1 ? '' : 's'} in the department.`}
           tone="blue"
           actions={
-            <button
-              onClick={() => setAddTutorOpen(true)}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-            >
-              Add tutor →
-            </button>
+            <div className="flex items-center gap-3 flex-wrap justify-end">
+              <button
+                onClick={() => setAddTutorOpen(true)}
+                className="text-[12px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+              >
+                Quick add
+              </button>
+              <button
+                onClick={() => setOnboardOpen(true)}
+                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
+              >
+                Onboard starter →
+              </button>
+            </div>
           }
         />
       </motion.div>
@@ -124,7 +136,11 @@ export function TutorsSection() {
         <FilterBar
           tabs={[
             { value: 'all', label: 'All', count: tutors.length },
-            { value: 'tutor', label: 'Tutors', count: tutors.filter((t) => t.role === 'tutor').length },
+            {
+              value: 'tutor',
+              label: 'Tutors',
+              count: tutors.filter((t) => t.role === 'tutor').length,
+            },
             {
               value: 'head_of_department',
               label: 'Heads',
@@ -195,16 +211,14 @@ export function TutorsSection() {
                       meta={
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11.5px] text-white">
                           {tutor.specialisations?.length
-                            ? tutor.specialisations
-                                .slice(0, 3)
-                                .map((s, i) => (
-                                  <span
-                                    key={i}
-                                    className="text-[11px] text-white bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
-                                  >
-                                    {s}
-                                  </span>
-                                ))
+                            ? tutor.specialisations.slice(0, 3).map((s, i) => (
+                                <span
+                                  key={i}
+                                  className="text-[11px] text-white bg-white/[0.04] border border-white/[0.06] rounded px-1.5 py-0.5"
+                                >
+                                  {s}
+                                </span>
+                              ))
                             : null}
                           {tutor.specialisations && tutor.specialisations.length > 3 && (
                             <span className="text-[11px] text-white/50">
@@ -212,16 +226,10 @@ export function TutorsSection() {
                             </span>
                           )}
                           {tutor.max_teaching_hours && (
-                            <span className="tabular-nums">
-                              {tutor.max_teaching_hours}h/wk
-                            </span>
+                            <span className="tabular-nums">{tutor.max_teaching_hours}h/wk</span>
                           )}
-                          {tutor.teaching_qual && (
-                            <Pill tone="green">{tutor.teaching_qual}</Pill>
-                          )}
-                          {tutor.assessor_qual && (
-                            <Pill tone="blue">{tutor.assessor_qual}</Pill>
-                          )}
+                          {tutor.teaching_qual && <Pill tone="green">{tutor.teaching_qual}</Pill>}
+                          {tutor.assessor_qual && <Pill tone="blue">{tutor.assessor_qual}</Pill>}
                           {tutor.iqa_qual && <Pill tone="amber">{tutor.iqa_qual}</Pill>}
                         </div>
                       }
@@ -281,6 +289,18 @@ export function TutorsSection() {
       )}
 
       <AddTutorDialog open={addTutorOpen} onOpenChange={setAddTutorOpen} />
+      <StaffOnboardingWizard
+        open={onboardOpen}
+        onOpenChange={setOnboardOpen}
+        onComplete={(id) => setOpenStaffId(id)}
+      />
+      <StaffComplianceDrawer
+        open={!!openStaffId}
+        onOpenChange={(o) => {
+          if (!o) setOpenStaffId(null);
+        }}
+        staffId={openStaffId}
+      />
       <StaffDetailSheet
         staff={selectedStaff}
         open={detailOpen}

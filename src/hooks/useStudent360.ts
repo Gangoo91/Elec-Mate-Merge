@@ -170,11 +170,9 @@ export function useStudent360(studentId: string | null): Student360 {
           uln: data.uln,
           photo_url: data.photo_url,
           cohort_id: data.cohort_id,
-          cohort_name:
-            (data.college_cohorts as { name?: string } | null)?.name ?? null,
+          cohort_name: (data.college_cohorts as { name?: string } | null)?.name ?? null,
           course_id: data.course_id,
-          course_name:
-            (data.college_courses as { title?: string } | null)?.title ?? null,
+          course_name: (data.college_courses as { title?: string } | null)?.title ?? null,
           employer_id: data.employer_id,
           start_date: data.start_date,
           expected_end_date: data.expected_end_date,
@@ -216,9 +214,7 @@ export function useStudent360(studentId: string | null): Student360 {
 
     const coveragePromise = supabase
       .from('student_ac_coverage')
-      .select(
-        'qualification_code, unit_code, ac_code, status, evidence_count, last_evidence_at'
-      )
+      .select('qualification_code, unit_code, ac_code, status, evidence_count, last_evidence_at')
       .eq('student_id', studentId)
       .then(({ data }) => {
         setAcCoverage((data ?? []) as AcCoverageRow[]);
@@ -235,9 +231,11 @@ export function useStudent360(studentId: string | null): Student360 {
       .limit(30)
       .then(({ data }) => {
         setNotes(
-          ((data ?? []) as unknown as Array<
-            PastoralNote & { college_staff: { name: string } | null }
-          >).map((n) => ({
+          (
+            (data ?? []) as unknown as Array<
+              PastoralNote & { college_staff: { name: string } | null }
+            >
+          ).map((n) => ({
             ...n,
             author_name: n.college_staff?.name ?? null,
           }))
@@ -333,30 +331,39 @@ export function useStudent360(studentId: string | null): Student360 {
           setNotes((prev) => prev.map((n) => (n.id === row.id ? { ...n, ...row } : n)));
         }
       )
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'student_ac_coverage',
+          filter: `student_id=eq.${studentId}`,
+        },
+        () => {
+          // Coverage rows can be flipped by the observation trigger or seed
+          // edge fn — easiest correct refresh is the full slice fetch.
+          fetchAll();
+        }
+      )
       .subscribe();
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [studentId]);
+  }, [studentId, fetchAll]);
 
-  const prependOptimisticNote = useCallback(
-    (draft: Omit<PastoralNote, 'id' | 'created_at'>) => {
-      const token = `optimistic-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-      const optimistic: PastoralNote = {
-        ...draft,
-        id: token,
-        created_at: new Date().toISOString(),
-      };
-      setNotes((prev) => [optimistic, ...prev]);
-      return token;
-    },
-    []
-  );
+  const prependOptimisticNote = useCallback((draft: Omit<PastoralNote, 'id' | 'created_at'>) => {
+    const token = `optimistic-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const optimistic: PastoralNote = {
+      ...draft,
+      id: token,
+      created_at: new Date().toISOString(),
+    };
+    setNotes((prev) => [optimistic, ...prev]);
+    return token;
+  }, []);
 
   const confirmOptimisticNote = useCallback((token: string, serverRow: PastoralNote) => {
-    setNotes((prev) =>
-      prev.map((n) => (n.id === token ? serverRow : n))
-    );
+    setNotes((prev) => prev.map((n) => (n.id === token ? serverRow : n)));
   }, []);
 
   const rollbackOptimisticNote = useCallback((token: string) => {

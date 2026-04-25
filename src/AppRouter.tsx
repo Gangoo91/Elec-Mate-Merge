@@ -33,8 +33,7 @@ const Subscriptions = lazyWithRetry(() => import('@/pages/Subscriptions'));
 const PaymentSuccess = lazyWithRetry(() => import('@/pages/PaymentSuccess'));
 const InvoicePaymentSuccess = lazyWithRetry(() => import('@/pages/InvoicePaymentSuccess'));
 const NotFound = lazyWithRetry(() => import('@/pages/NotFound'));
-const ApprenticeMentalHealth = lazy(() => import('@/pages/apprentice/ApprenticeMentalHealth'));
-const ElectricianMentalHealth = lazy(() => import('@/pages/electrician/ElectricianMentalHealth'));
+const MentalHealthHub = lazy(() => import('@/pages/MentalHealthHub'));
 const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
 const NotificationsPage = lazy(() => import('@/pages/NotificationsPage'));
 const PublicQuote = lazy(() => import('@/pages/PublicQuote'));
@@ -112,6 +111,8 @@ const LessonPlanPage = lazy(() => import('@/pages/college/LessonPlanPage'));
 const LessonDeliverPage = lazy(() => import('@/pages/college/LessonDeliverPage'));
 const LessonPrintPage = lazy(() => import('@/pages/college/LessonPrintPage'));
 const Student360Page = lazy(() => import('@/pages/college/Student360Page'));
+const PolicyDetailPage = lazy(() => import('@/pages/college/PolicyDetailPage'));
+const CompliancePackPage = lazy(() => import('@/pages/college/CompliancePackPage'));
 const CurriculumSettingsPage = lazy(() => import('@/pages/college/CurriculumSettingsPage'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
@@ -253,13 +254,8 @@ const LegacyRedirect = ({ from, to }: { from: string; to: string }) => {
   return <Navigate to={newPath} replace />;
 };
 
-/** Routes to the correct mental health page based on user role */
-const MentalHealthRouter = () => {
-  const { profile } = useAuth();
-  const role = profile?.role;
-  if (role === 'electrician' || role === 'employer') return <ElectricianMentalHealth />;
-  return <ApprenticeMentalHealth />;
-};
+/** Single Mental Health hub page — role-aware sections rendered inside. */
+const MentalHealthRouter = () => <MentalHealthHub />;
 
 const AppRouter = () => {
   const location = useLocation();
@@ -1900,6 +1896,30 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <Student360Page />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Compliance — institution policy detail */}
+          <Route
+            path="college/policies/:id"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <PolicyDetailPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Compliance — Ofsted-ready audit pack (printable) */}
+          <Route
+            path="college/compliance/pack"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <CompliancePackPage />
                 </CollegeGuard>
               </LazyRoute>
             }

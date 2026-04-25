@@ -2,11 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import {
-  PageFrame,
-  LoadingState,
-  itemVariants,
-} from '@/components/college/primitives';
+import { PageFrame, LoadingState, itemVariants } from '@/components/college/primitives';
 import {
   useStudent360,
   type AcCoverageRow,
@@ -21,6 +17,8 @@ import {
   type NoteKind,
 } from '@/components/college/dialogs/AddPastoralNoteDialog';
 import { StudentMessageSheet } from '@/components/college/sheets/StudentMessageSheet';
+import { RecordObservationSheet } from '@/components/college/sheets/RecordObservationSheet';
+import { SectionObservations } from '@/components/college/student360/SectionObservations';
 import { useSyncAcCoverage, useRecomputeRisk } from '@/hooks/useStudentRisk';
 
 /* ==========================================================================
@@ -35,6 +33,7 @@ export default function Student360Page() {
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteKind, setNoteKind] = useState<NoteKind>('note');
   const [messageOpen, setMessageOpen] = useState(false);
+  const [observationOpen, setObservationOpen] = useState(false);
 
   const { sync: syncCoverage, running: syncingCoverage } = useSyncAcCoverage();
   const { recompute, running: recomputingRisk } = useRecomputeRisk();
@@ -105,22 +104,20 @@ export default function Student360Page() {
                   <span className="mx-2 text-white/25">·</span>
                   <span className="text-white">{core.name}</span>
                 </div>
+                <DesktopActionBtn
+                  label="Observation"
+                  onClick={() => setObservationOpen(true)}
+                  tone="emerald"
+                />
                 <DesktopActionBtn label="Message" onClick={() => setMessageOpen(true)} />
                 <DesktopActionBtn label="Note" onClick={() => openNote('note')} />
-                <DesktopActionBtn
-                  label="1-2-1"
-                  onClick={() => openNote('one_to_one')}
-                />
+                <DesktopActionBtn label="1-2-1" onClick={() => openNote('one_to_one')} />
                 <DesktopActionBtn
                   label="Praise"
                   onClick={() => openNote('praise')}
                   tone="emerald"
                 />
-                <DesktopActionBtn
-                  label="Flag"
-                  onClick={() => openNote('flag')}
-                  tone="amber"
-                />
+                <DesktopActionBtn label="Flag" onClick={() => openNote('flag')} tone="amber" />
                 <DesktopActionBtn
                   label="Concern"
                   onClick={() => openNote('concern')}
@@ -161,6 +158,7 @@ export default function Student360Page() {
                 </div>
                 <NavLink href="#risk">Risk</NavLink>
                 <NavLink href="#coverage">AC coverage</NavLink>
+                <NavLink href="#observations">Observations</NavLink>
                 <NavLink href="#attendance">Attendance</NavLink>
                 <NavLink href="#grades">Assessments</NavLink>
                 <NavLink href="#notes">Pastoral notes</NavLink>
@@ -192,17 +190,14 @@ export default function Student360Page() {
                 }}
                 seeding={syncingCoverage}
               />
-              <SectionAttendance
-                id="attendance"
-                rows={attendance}
-                loading={loading.attendance}
+              <SectionObservations
+                id="observations"
+                studentId={core.id}
+                onAdd={() => setObservationOpen(true)}
               />
+              <SectionAttendance id="attendance" rows={attendance} loading={loading.attendance} />
               <SectionGrades id="grades" rows={grades} loading={loading.grades} />
-              <SectionNotes
-                id="notes"
-                notes={notes}
-                loading={loading.notes}
-              />
+              <SectionNotes id="notes" notes={notes} loading={loading.notes} />
             </div>
           </div>
         </>
@@ -214,7 +209,7 @@ export default function Student360Page() {
           <div className="grid grid-cols-4 gap-2">
             <MobileAction label="Message" onClick={() => setMessageOpen(true)} />
             <MobileAction label="Note" onClick={() => openNote('note')} />
-            <MobileAction label="Flag" onClick={() => openNote('flag')} />
+            <MobileAction label="Observe" onClick={() => setObservationOpen(true)} />
             <MobileAction label="1-2-1" onClick={() => openNote('one_to_one')} primary />
           </div>
         </div>
@@ -243,6 +238,12 @@ export default function Student360Page() {
           <StudentMessageSheet
             open={messageOpen}
             onOpenChange={setMessageOpen}
+            studentId={core.id}
+            studentName={core.name}
+          />
+          <RecordObservationSheet
+            open={observationOpen}
+            onOpenChange={setObservationOpen}
             studentId={core.id}
             studentName={core.name}
           />
@@ -389,11 +390,7 @@ const SEND_LABELS: Record<string, string> = {
 function InclusionChips({ core }: { core: StudentCore }) {
   const hasSend = Array.isArray(core.send_flags) && core.send_flags.length > 0;
   const hasAny =
-    hasSend ||
-    core.eal ||
-    !!core.ehcp_ref ||
-    !!core.pronouns ||
-    !!core.accessibility_notes;
+    hasSend || core.eal || !!core.ehcp_ref || !!core.pronouns || !!core.accessibility_notes;
 
   if (!hasAny) return null;
 
@@ -412,16 +409,12 @@ function InclusionChips({ core }: { core: StudentCore }) {
             {core.first_language ? ` · ${core.first_language}` : ''}
           </InclusionPill>
         )}
-        {core.ehcp_ref && (
-          <InclusionPill tone="red">EHCP · {core.ehcp_ref}</InclusionPill>
-        )}
-        {core.pronouns && (
-          <InclusionPill tone="neutral">{core.pronouns}</InclusionPill>
-        )}
+        {core.ehcp_ref && <InclusionPill tone="red">EHCP · {core.ehcp_ref}</InclusionPill>}
+        {core.pronouns && <InclusionPill tone="neutral">{core.pronouns}</InclusionPill>}
       </div>
       {core.accessibility_notes && (
-        <div className="text-[11.5px] text-white/70 leading-relaxed max-w-2xl">
-          <span className="uppercase tracking-[0.18em] text-[10px] font-medium text-white/55 mr-2">
+        <div className="text-[11.5px] text-white leading-relaxed max-w-2xl">
+          <span className="uppercase tracking-[0.18em] text-[10px] font-medium text-white mr-2">
             Adjustments
           </span>
           {core.accessibility_notes}
@@ -445,7 +438,7 @@ function InclusionPill({
         ? 'bg-emerald-500/[0.08] border-emerald-500/25 text-emerald-200'
         : tone === 'red'
           ? 'bg-red-500/[0.08] border-red-500/30 text-red-200'
-          : 'bg-white/[0.04] border-white/[0.1] text-white/80';
+          : 'bg-white/[0.04] border-white/[0.1] text-white';
   return (
     <span
       className={cn(
@@ -478,9 +471,7 @@ function StatStrip({
   const attRate = useMemo(() => {
     const window = attendance.slice(0, 28);
     if (window.length === 0) return null;
-    const presentCount = window.filter(
-      (a) => a.status === 'present' || a.status === 'late'
-    ).length;
+    const presentCount = window.filter((a) => a.status === 'present' || a.status === 'late').length;
     return Math.round((presentCount / window.length) * 100);
   }, [attendance]);
 
@@ -498,9 +489,7 @@ function StatStrip({
     <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
       <StatCell
         label="Progress"
-        value={
-          typeof core.progress_percent === 'number' ? `${core.progress_percent}%` : '—'
-        }
+        value={typeof core.progress_percent === 'number' ? `${core.progress_percent}%` : '—'}
         href="#coverage"
       />
       <StatCell
@@ -539,9 +528,7 @@ function StatCell({
 }) {
   const content = (
     <>
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
-        {label}
-      </div>
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">{label}</div>
       <div
         className={cn(
           'mt-3 sm:mt-4 text-3xl sm:text-4xl font-semibold tabular-nums tracking-tight leading-none',
@@ -608,7 +595,11 @@ function SectionRiskPanel({
           text="No risk score yet. Compute one now, or wait for the nightly run."
           action={
             onCompute
-              ? { label: computing ? 'Computing…' : 'Compute now', onClick: onCompute, disabled: computing }
+              ? {
+                  label: computing ? 'Computing…' : 'Compute now',
+                  onClick: onCompute,
+                  disabled: computing,
+                }
               : undefined
           }
         />
@@ -675,11 +666,7 @@ function SectionRiskPanel({
   );
 }
 
-function TrendSparkline({
-  history,
-}: {
-  history: { computed_at: string; score: number }[];
-}) {
+function TrendSparkline({ history }: { history: { computed_at: string; score: number }[] }) {
   if (history.length < 2) {
     return <div className="text-[11.5px] text-white">Not enough history yet.</div>;
   }
@@ -712,11 +699,7 @@ function TrendSparkline({
             cx={x}
             cy={y}
             r={i === history.length - 1 ? 2.5 : 1.5}
-            className={cn(
-              i === history.length - 1
-                ? 'fill-elec-yellow'
-                : 'fill-elec-yellow/60'
-            )}
+            className={cn(i === history.length - 1 ? 'fill-elec-yellow' : 'fill-elec-yellow/60')}
           />
         );
       })}
@@ -829,13 +812,9 @@ function AcCell({ row }: { row: AcCoverageRow }) {
       )}
     >
       <span className={cn('inline-block h-1.5 w-1.5 rounded-full', tone.dot)} />
-      <span className={cn('font-mono tabular-nums text-[11.5px]', tone.text)}>
-        {row.ac_code}
-      </span>
+      <span className={cn('font-mono tabular-nums text-[11.5px]', tone.text)}>{row.ac_code}</span>
       {row.evidence_count > 0 && (
-        <span className="text-[10px] font-mono text-white tabular-nums">
-          ×{row.evidence_count}
-        </span>
+        <span className="text-[10px] font-mono text-white tabular-nums">×{row.evidence_count}</span>
       )}
     </div>
   );
@@ -972,7 +951,13 @@ function RingStat({
     <div className="shrink-0 flex flex-col items-center">
       <div className="relative" style={{ width: size, height: size }}>
         <svg width={size} height={size} className="rotate-[-90deg]">
-          <circle cx={size / 2} cy={size / 2} r={r} className="stroke-white/[0.08] fill-none" strokeWidth="6" />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            className="stroke-white/[0.08] fill-none"
+            strokeWidth="6"
+          />
           <circle
             cx={size / 2}
             cy={size / 2}
@@ -1001,15 +986,7 @@ function RingStat({
    Grades
    ========================================================================== */
 
-function SectionGrades({
-  id,
-  rows,
-  loading,
-}: {
-  id: string;
-  rows: GradeRow[];
-  loading: boolean;
-}) {
+function SectionGrades({ id, rows, loading }: { id: string; rows: GradeRow[]; loading: boolean }) {
   return (
     <Section id={id} eyebrow="Outcomes" title="Assessments & grades">
       {loading && rows.length === 0 ? (
@@ -1048,9 +1025,7 @@ function SectionGrades({
                   {g.grade ?? (g.score != null ? g.score.toString() : '—')}
                 </div>
                 {g.score != null && g.grade != null && (
-                  <div className="mt-0.5 text-[10.5px] text-white/50 tabular-nums">
-                    {g.score}
-                  </div>
+                  <div className="mt-0.5 text-[10.5px] text-white/50 tabular-nums">{g.score}</div>
                 )}
               </div>
             </div>
@@ -1077,7 +1052,9 @@ function SectionNotes({
   const [filter, setFilter] = useState<'all' | 'flags' | 'actions'>('all');
   const filtered = useMemo(() => {
     if (filter === 'flags')
-      return notes.filter((n) => n.kind === 'flag' || n.kind === 'concern' || n.kind === 'safeguarding');
+      return notes.filter(
+        (n) => n.kind === 'flag' || n.kind === 'concern' || n.kind === 'safeguarding'
+      );
     if (filter === 'actions')
       return notes.filter((n) => n.action_required && !n.action_completed_at);
     return notes;
@@ -1163,9 +1140,7 @@ function NoteRow({ note }: { note: PastoralNote }) {
         )}
       </div>
       {note.title && <div className="text-[14px] font-semibold text-white">{note.title}</div>}
-      <p className="mt-1 text-[13px] text-white leading-relaxed whitespace-pre-line">
-        {note.body}
-      </p>
+      <p className="mt-1 text-[13px] text-white leading-relaxed whitespace-pre-line">{note.body}</p>
       {note.action_required && (
         <div className="mt-3 pt-3 border-t border-white/[0.06] text-[12px] text-white leading-relaxed">
           <span className="text-elec-yellow/90 font-medium mr-2">Action</span>
@@ -1179,9 +1154,7 @@ function NoteRow({ note }: { note: PastoralNote }) {
               })}
             </span>
           )}
-          {note.action_completed_at && (
-            <span className="text-emerald-300 ml-2">· done</span>
-          )}
+          {note.action_completed_at && <span className="text-emerald-300 ml-2">· done</span>}
         </div>
       )}
     </div>
@@ -1285,7 +1258,10 @@ function SectionSkeleton({
             </div>
             <div className="px-4 sm:px-5 py-4 flex flex-wrap gap-1.5">
               {Array.from({ length: u === 0 ? 12 : 18 }).map((_, i) => (
-                <div key={i} className="h-9 w-14 rounded-md bg-white/[0.04] border border-white/[0.06]" />
+                <div
+                  key={i}
+                  className="h-9 w-14 rounded-md bg-white/[0.04] border border-white/[0.06]"
+                />
               ))}
             </div>
           </div>
@@ -1296,7 +1272,9 @@ function SectionSkeleton({
 
   if (variant === 'attendance') {
     return (
-      <div className={cn(surface, 'px-5 sm:px-6 py-5 flex items-start gap-6 flex-wrap animate-pulse')}>
+      <div
+        className={cn(surface, 'px-5 sm:px-6 py-5 flex items-start gap-6 flex-wrap animate-pulse')}
+      >
         <div className="shrink-0 flex flex-col items-center">
           <div className="h-[88px] w-[88px] rounded-full border-4 border-white/[0.08]" />
           <SkelBar w="w-20" h="h-2" className="mt-2" />
@@ -1373,12 +1351,7 @@ function SkelBar({
   className?: string;
   style?: React.CSSProperties;
 }) {
-  return (
-    <div
-      className={cn('bg-white/[0.06] rounded-sm', w, h, className)}
-      style={style}
-    />
-  );
+  return <div className={cn('bg-white/[0.06] rounded-sm', w, h, className)} style={style} />;
 }
 
 function EmptyCard({

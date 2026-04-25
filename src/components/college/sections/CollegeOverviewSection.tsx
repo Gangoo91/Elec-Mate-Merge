@@ -9,6 +9,11 @@ import { cn } from '@/lib/utils';
 import { AtRiskPredictor } from '@/components/college/widgets/AtRiskPredictor';
 import { EPACountdown } from '@/components/college/widgets/EPACountdown';
 import { ActivityFeed } from '@/components/college/widgets/ActivityFeed';
+import { MyComplianceWidget } from '@/components/college/widgets/MyComplianceWidget';
+import { ComplianceLeadsWidget } from '@/components/college/widgets/ComplianceLeadsWidget';
+import { VerifierInboxWidget } from '@/components/college/widgets/VerifierInboxWidget';
+import { MyAcknowledgementsWidget } from '@/components/college/widgets/MyAcknowledgementsWidget';
+import { TopExpiringWidget } from '@/components/college/widgets/TopExpiringWidget';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useSubmissionQueue } from '@/hooks/college/usePortfolioSubmissions';
@@ -161,19 +166,65 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
   ];
 
   const quickActions = [
-    { title: 'Grade work', desc: 'Record assessments', section: 'grading' as CollegeSection, badge: pendingAssessments },
+    {
+      title: 'Grade work',
+      desc: 'Record assessments',
+      section: 'grading' as CollegeSection,
+      badge: pendingAssessments,
+    },
     { title: 'Take register', desc: 'Record attendance', section: 'attendance' as CollegeSection },
-    { title: 'ILP review', desc: 'Update learning plans', section: 'ilpmanagement' as CollegeSection, badge: overdueILPReviews },
+    {
+      title: 'ILP review',
+      desc: 'Update learning plans',
+      section: 'ilpmanagement' as CollegeSection,
+      badge: overdueILPReviews,
+    },
     { title: 'EPA gateway', desc: 'Check readiness', section: 'epatracking' as CollegeSection },
   ];
 
   const tools = [
-    { eyebrow: 'OTJ', title: 'Off-the-job training', desc: '20% off-the-job time tracker for apprentices.', section: 'otjtraining' as CollegeSection, accent: 'from-emerald-500/70 to-green-400/70' },
-    { eyebrow: 'Quality', title: 'Quality dashboard', desc: 'Ofsted-aligned compliance metrics and reports.', section: 'qualitydashboard' as CollegeSection, accent: 'from-blue-500/70 to-cyan-400/70' },
-    { eyebrow: 'AI', title: 'AI ILP generator', desc: 'Auto-generate SMART targets from learner data.', section: 'aiilpgenerator' as CollegeSection, accent: 'from-elec-yellow/80 to-amber-400/70' },
-    { eyebrow: 'Schedule', title: 'Timetable', desc: 'Weekly lesson schedule across cohorts.', section: 'timetable' as CollegeSection, accent: 'from-purple-500/70 to-indigo-400/70' },
-    { eyebrow: 'Live', title: 'Live lesson', desc: 'In-lesson register with built-in timer.', section: 'livelesson' as CollegeSection, accent: 'from-elec-yellow/80 to-orange-400/70' },
-    { eyebrow: 'Batch', title: 'Batch operations', desc: 'Bulk grading and review workflows.', section: 'batchoperations' as CollegeSection, accent: 'from-amber-500/70 to-yellow-400/70' },
+    {
+      eyebrow: 'OTJ',
+      title: 'Off-the-job training',
+      desc: '20% off-the-job time tracker for apprentices.',
+      section: 'otjtraining' as CollegeSection,
+      accent: 'from-emerald-500/70 to-green-400/70',
+    },
+    {
+      eyebrow: 'Quality',
+      title: 'Quality dashboard',
+      desc: 'Ofsted-aligned compliance metrics and reports.',
+      section: 'qualitydashboard' as CollegeSection,
+      accent: 'from-blue-500/70 to-cyan-400/70',
+    },
+    {
+      eyebrow: 'AI',
+      title: 'AI ILP generator',
+      desc: 'Auto-generate SMART targets from learner data.',
+      section: 'aiilpgenerator' as CollegeSection,
+      accent: 'from-elec-yellow/80 to-amber-400/70',
+    },
+    {
+      eyebrow: 'Schedule',
+      title: 'Timetable',
+      desc: 'Weekly lesson schedule across cohorts.',
+      section: 'timetable' as CollegeSection,
+      accent: 'from-purple-500/70 to-indigo-400/70',
+    },
+    {
+      eyebrow: 'Live',
+      title: 'Live lesson',
+      desc: 'In-lesson register with built-in timer.',
+      section: 'livelesson' as CollegeSection,
+      accent: 'from-elec-yellow/80 to-orange-400/70',
+    },
+    {
+      eyebrow: 'Batch',
+      title: 'Batch operations',
+      desc: 'Bulk grading and review workflows.',
+      section: 'batchoperations' as CollegeSection,
+      accent: 'from-amber-500/70 to-yellow-400/70',
+    },
   ];
 
   return (
@@ -261,7 +312,9 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
               >
                 <span className="w-[3px] h-10 sm:h-12 rounded-full bg-amber-400/70 group-hover:bg-amber-400 transition-colors shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm sm:text-base font-medium text-white">Overdue ILP reviews</div>
+                  <div className="text-sm sm:text-base font-medium text-white">
+                    Overdue ILP reviews
+                  </div>
                   <div className="mt-0.5 text-[12px] text-white">
                     {overdueILPReviews} review{overdueILPReviews > 1 ? 's' : ''} awaiting completion
                   </div>
@@ -283,9 +336,13 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
               >
                 <span className="w-[3px] h-10 sm:h-12 rounded-full bg-purple-400/70 group-hover:bg-purple-400 transition-colors shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm sm:text-base font-medium text-white">Portfolio reviews</div>
+                  <div className="text-sm sm:text-base font-medium text-white">
+                    Portfolio reviews
+                  </div>
                   <div className="mt-0.5 text-[12px] text-white">
-                    {submissionStats.highPriority > 0 ? `${submissionStats.highPriority} high priority · ` : ''}
+                    {submissionStats.highPriority > 0
+                      ? `${submissionStats.highPriority} high priority · `
+                      : ''}
                     {submissionStats.total} awaiting review
                   </div>
                 </div>
@@ -302,6 +359,18 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
           </div>
         </motion.section>
       )}
+
+      {/* ──────────────── YOU ──────────────── */}
+      <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+        <SectionHeader eyebrow="You" title="Your compliance" />
+        <MyAcknowledgementsWidget />
+        <VerifierInboxWidget />
+        <TopExpiringWidget />
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] gap-4 sm:gap-5">
+          <MyComplianceWidget />
+          <ComplianceLeadsWidget />
+        </div>
+      </motion.section>
 
       {/* ──────────────── INSIGHTS ──────────────── */}
       <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
@@ -367,11 +436,15 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
                 >
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-medium text-white truncate">{lesson.title}</div>
-                    <div className="mt-0.5 text-[11px] text-white truncate">{lesson.cohortName}</div>
+                    <div className="mt-0.5 text-[11px] text-white truncate">
+                      {lesson.cohortName}
+                    </div>
                   </div>
                   <div className="text-right shrink-0">
                     <div className="text-[10px] uppercase tracking-[0.14em] text-white">
-                      {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', { weekday: 'short' })}
+                      {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', {
+                        weekday: 'short',
+                      })}
                     </div>
                     <div className="mt-0.5 text-[13px] font-medium tabular-nums text-white">
                       {new Date(lesson.scheduledDate).toLocaleDateString('en-GB', {
@@ -400,9 +473,24 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
           />
           <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden divide-y divide-white/[0.06]">
             {[
-              { label: 'At Gateway', sub: 'Ready for assessment', value: studentsAtGateway, accent: 'text-green-400' },
-              { label: 'In Progress', sub: 'Working toward gateway', value: epaInProgress, accent: 'text-white' },
-              { label: 'Completed', sub: 'EPA passed', value: epaComplete, accent: 'text-elec-yellow' },
+              {
+                label: 'At Gateway',
+                sub: 'Ready for assessment',
+                value: studentsAtGateway,
+                accent: 'text-green-400',
+              },
+              {
+                label: 'In Progress',
+                sub: 'Working toward gateway',
+                value: epaInProgress,
+                accent: 'text-white',
+              },
+              {
+                label: 'Completed',
+                sub: 'EPA passed',
+                value: epaComplete,
+                accent: 'text-elec-yellow',
+              },
             ].map((row) => (
               <button
                 key={row.label}
