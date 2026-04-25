@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { MessageCircle, User, Award, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { PeerSupporter, trainingLevelLabels } from '@/services/peerSupportService';
+import { Pill, PrimaryButton } from '@/components/college/primitives';
+import { cn } from '@/lib/utils';
 
 interface SupporterListItemProps {
   supporter: PeerSupporter;
@@ -11,97 +11,109 @@ interface SupporterListItemProps {
   isConnecting?: boolean;
 }
 
+const getInitials = (name?: string | null) => {
+  if (!name) return '–';
+  const parts = name.trim().split(/\s+/).slice(0, 2);
+  return parts.map((p) => p[0]?.toUpperCase() ?? '').join('') || '–';
+};
+
+const trainingTone: Record<string, 'yellow' | 'emerald' | 'blue'> = {
+  peer: 'blue',
+  trained: 'emerald',
+  mhfa_certified: 'yellow',
+};
+
 const SupporterListItem: React.FC<SupporterListItemProps> = ({
   supporter,
   onConnect,
   onViewProfile,
   isConnecting = false,
 }) => {
-  const trainingBadgeColors: Record<string, string> = {
-    peer: 'bg-blue-500/20 text-blue-300 border-blue-500/30',
-    trained: 'bg-green-500/20 text-green-300 border-green-500/30',
-    mhfa_certified: 'bg-purple-500/20 text-purple-300 border-purple-500/30',
-  };
-
   const topics = supporter.topics_comfortable_with || [];
+  const tone = trainingTone[supporter.training_level] ?? 'blue';
 
   return (
     <div
+      role="button"
+      tabIndex={0}
       onClick={() => onViewProfile?.(supporter)}
-      className="flex items-center gap-4 border-b border-white/10 pb-4 transition-transform touch-manipulation active:scale-[0.995]"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onViewProfile?.(supporter);
+        }
+      }}
+      className="group w-full flex items-start gap-4 px-5 sm:px-6 py-5 text-left hover:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation cursor-pointer focus:outline-none focus-visible:bg-[hsl(0_0%_15%)]"
     >
-      {/* Avatar */}
+      {/* Initials avatar — college pattern */}
       <div className="relative shrink-0">
         {supporter.avatar_url ? (
           <img
             src={supporter.avatar_url}
             alt={supporter.display_name}
-            className="w-14 h-14 rounded-xl object-cover border border-white/10"
+            className="h-12 w-12 rounded-full object-cover border border-white/[0.08]"
           />
         ) : (
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-500/25 border border-white/10 flex items-center justify-center">
-            <User className="w-7 h-7 text-purple-300" />
+          <div className="h-12 w-12 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+            <span className="text-[13px] font-semibold text-white tracking-tight tabular-nums">
+              {getInitials(supporter.display_name)}
+            </span>
           </div>
         )}
-        {/* Online indicator */}
-        <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-background" />
+        <span
+          aria-hidden
+          className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-400 border-[3px] border-[hsl(0_0%_12%)]"
+        />
       </div>
 
-      {/* Info */}
+      {/* Body */}
       <div className="flex-1 min-w-0">
-        {/* Name + Badge row */}
         <div className="flex items-center gap-2 flex-wrap">
-          <h3 className="font-semibold text-white truncate">{supporter.display_name}</h3>
-          <Badge
-            variant="outline"
-            className={`text-[10px] px-1.5 py-0 h-5 ${trainingBadgeColors[supporter.training_level] || trainingBadgeColors.peer}`}
-          >
-            <Award className="w-2.5 h-2.5 mr-0.5" />
-            {trainingLevelLabels[supporter.training_level]}
-          </Badge>
+          <h3 className="text-[15px] font-semibold text-white tracking-tight truncate">
+            {supporter.display_name}
+          </h3>
+          <Pill tone={tone}>{trainingLevelLabels[supporter.training_level]}</Pill>
         </div>
 
-        {/* Bio preview */}
         {supporter.bio && (
-          <p className="text-sm text-white/72 line-clamp-1 mt-0.5">{supporter.bio}</p>
+          <p className="mt-1 text-[12.5px] text-white/70 leading-relaxed line-clamp-2">
+            {supporter.bio}
+          </p>
         )}
 
-        {/* Topics preview - larger touch targets */}
         {topics.length > 0 && (
-          <div className="flex gap-1.5 mt-2 flex-wrap">
-            {topics.slice(0, 2).map((topic) => (
+          <div className="mt-2.5 flex gap-1.5 flex-wrap">
+            {topics.slice(0, 3).map((topic) => (
               <span
                 key={topic}
-                className="text-xs px-2.5 py-1 rounded-full bg-white/[0.04] text-white"
+                className="text-[11px] px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/80 tabular-nums"
               >
                 {topic}
               </span>
             ))}
-            {topics.length > 2 && (
-              <span className="text-xs px-2 py-1 text-white">+{topics.length - 2}</span>
+            {topics.length > 3 && (
+              <span className="text-[11px] px-2 py-0.5 text-white/55 tabular-nums">
+                +{topics.length - 3}
+              </span>
             )}
           </div>
         )}
       </div>
 
-      {/* Chat Button - 48px minimum touch target */}
-      <Button
-        onClick={(e) => {
-          e.stopPropagation();
-          onConnect(supporter.id);
-        }}
-        disabled={isConnecting}
-        className="h-10 rounded-full px-4 bg-gradient-to-br from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 touch-manipulation active:scale-[0.95]"
-      >
-        {isConnecting ? (
-          <Loader2 className="h-5 w-5 animate-spin" />
-        ) : (
-          <>
-            <MessageCircle className="h-4 w-4" />
-            <span className="ml-1 text-sm">Chat</span>
-          </>
-        )}
-      </Button>
+      {/* Chat action — restrained */}
+      <div className="shrink-0 self-center">
+        <PrimaryButton
+          size="sm"
+          disabled={isConnecting}
+          onClick={(e) => {
+            e.stopPropagation();
+            onConnect(supporter.id);
+          }}
+          className={cn(isConnecting && 'min-w-[80px]')}
+        >
+          {isConnecting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Chat'}
+        </PrimaryButton>
+      </div>
     </div>
   );
 };

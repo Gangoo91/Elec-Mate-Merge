@@ -527,6 +527,10 @@ export default function MentalHealthHub() {
   }, [moodHistory, todayKey]);
 
   const streak = useMemo(() => calcStreak(moodHistory), [moodHistory]);
+  // Trade-support ranking — must be a top-level hook (was sitting after the
+  // section-active early return below, which violated the rules-of-hooks
+  // and intermittently crashed with "rendered fewer hooks than expected").
+  const tradeSupport = useMemo(() => rankTradeSupport(role), [role]);
   const isFirstRun = !scoreLoading && moodHistory.length === 0;
 
   // Brief success flash after a mood is logged. Renders a tiny checkmark over
@@ -694,7 +698,6 @@ export default function MentalHealthHub() {
   /* ── Hub landing ───────────────────────────────────────────────── */
 
   const toolkit = buildToolkit(role);
-  const tradeSupport = useMemo(() => rankTradeSupport(role), [role]);
 
   return (
     <MentalHealthProvider>

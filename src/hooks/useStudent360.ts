@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 
 export interface StudentCore {
   id: string;
+  user_id: string | null;
   name: string;
   email: string | null;
   phone: string | null;
@@ -130,7 +131,17 @@ export function useStudent360(studentId: string | null): Student360 {
   const [error, setError] = useState<string | null>(null);
 
   const fetchAll = useCallback(async () => {
-    if (!studentId) return;
+    if (!studentId) {
+      setLoading({
+        core: false,
+        attendance: false,
+        grades: false,
+        acCoverage: false,
+        notes: false,
+        risk: false,
+      });
+      return;
+    }
     setError(null);
     setLoading({
       core: true,
@@ -144,7 +155,7 @@ export function useStudent360(studentId: string | null): Student360 {
     const corePromise = supabase
       .from('college_students')
       .select(
-        'id, name, email, phone, uln, photo_url, cohort_id, course_id, employer_id, start_date, expected_end_date, status, progress_percent, risk_level, send_flags, eal, ehcp_ref, first_language, pronouns, accessibility_notes, college_cohorts(name), college_courses(title)'
+        'id, user_id, name, email, phone, uln, photo_url, cohort_id, course_id, employer_id, start_date, expected_end_date, status, progress_percent, risk_level, send_flags, eal, ehcp_ref, first_language, pronouns, accessibility_notes, college_cohorts(name), college_courses(title)'
       )
       .eq('id', studentId)
       .maybeSingle()
@@ -164,6 +175,7 @@ export function useStudent360(studentId: string | null): Student360 {
         };
         setCore({
           id: data.id,
+          user_id: (data as { user_id?: string | null }).user_id ?? null,
           name: data.name,
           email: data.email,
           phone: data.phone,

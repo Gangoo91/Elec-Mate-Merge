@@ -115,6 +115,7 @@ const PolicyDetailPage = lazy(() => import('@/pages/college/PolicyDetailPage'));
 const CompliancePackPage = lazy(() => import('@/pages/college/CompliancePackPage'));
 const IqaDashboardPage = lazy(() => import('@/pages/college/IqaDashboardPage'));
 const IqaSamplingPlanPage = lazy(() => import('@/pages/college/IqaSamplingPlanPage'));
+const CollegeOtjPage = lazy(() => import('@/pages/college/CollegeOtjPage'));
 const CurriculumSettingsPage = lazy(() => import('@/pages/college/CurriculumSettingsPage'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
@@ -1946,6 +1947,18 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <IqaSamplingPlanPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Off-the-job training — college-wide overview + ESFA CSV export */}
+          <Route
+            path="college/otj"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <CollegeOtjPage />
                 </CollegeGuard>
               </LazyRoute>
             }

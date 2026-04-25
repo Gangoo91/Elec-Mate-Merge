@@ -18,7 +18,14 @@ import {
 } from '@/components/college/dialogs/AddPastoralNoteDialog';
 import { StudentMessageSheet } from '@/components/college/sheets/StudentMessageSheet';
 import { RecordObservationSheet } from '@/components/college/sheets/RecordObservationSheet';
+import { LogCollegeOtjSheet } from '@/components/college/sheets/LogCollegeOtjSheet';
 import { SectionObservations } from '@/components/college/student360/SectionObservations';
+import { SectionApprenticeOtj } from '@/components/college/student360/SectionApprenticeOtj';
+import { SectionCourseProgress } from '@/components/college/student360/SectionCourseProgress';
+import { SectionPortfolio } from '@/components/college/student360/SectionPortfolio';
+import { SectionQuizzes } from '@/components/college/student360/SectionQuizzes';
+import { SectionEpaReadiness } from '@/components/college/student360/SectionEpaReadiness';
+import { SectionIlp } from '@/components/college/student360/SectionIlp';
 import { useSyncAcCoverage, useRecomputeRisk } from '@/hooks/useStudentRisk';
 
 /* ==========================================================================
@@ -34,6 +41,7 @@ export default function Student360Page() {
   const [noteKind, setNoteKind] = useState<NoteKind>('note');
   const [messageOpen, setMessageOpen] = useState(false);
   const [observationOpen, setObservationOpen] = useState(false);
+  const [otjOpen, setOtjOpen] = useState(false);
 
   const { sync: syncCoverage, running: syncingCoverage } = useSyncAcCoverage();
   const { recompute, running: recomputingRisk } = useRecomputeRisk();
@@ -157,8 +165,14 @@ export default function Student360Page() {
                   On this learner
                 </div>
                 <NavLink href="#risk">Risk</NavLink>
+                <NavLink href="#ilp">ILP</NavLink>
+                <NavLink href="#progress">Course progress</NavLink>
                 <NavLink href="#coverage">AC coverage</NavLink>
+                <NavLink href="#otj">OTJ activity</NavLink>
+                <NavLink href="#portfolio">Portfolio</NavLink>
                 <NavLink href="#observations">Observations</NavLink>
+                <NavLink href="#quizzes">Quizzes</NavLink>
+                <NavLink href="#epa">EPA readiness</NavLink>
                 <NavLink href="#attendance">Attendance</NavLink>
                 <NavLink href="#grades">Assessments</NavLink>
                 <NavLink href="#notes">Pastoral notes</NavLink>
@@ -190,10 +204,42 @@ export default function Student360Page() {
                 }}
                 seeding={syncingCoverage}
               />
+              <SectionIlp
+                id="ilp"
+                studentName={core.name}
+                collegeStudentId={core.id}
+              />
+              <SectionCourseProgress
+                id="progress"
+                studentName={core.name}
+                userId={core.user_id}
+              />
+              <SectionApprenticeOtj
+                id="otj"
+                studentName={core.name}
+                userId={core.user_id}
+                onAdd={() => setOtjOpen(true)}
+              />
+              <SectionPortfolio
+                id="portfolio"
+                studentName={core.name}
+                userId={core.user_id}
+              />
               <SectionObservations
                 id="observations"
                 studentId={core.id}
                 onAdd={() => setObservationOpen(true)}
+              />
+              <SectionQuizzes
+                id="quizzes"
+                studentName={core.name}
+                userId={core.user_id}
+              />
+              <SectionEpaReadiness
+                id="epa"
+                studentName={core.name}
+                userId={core.user_id}
+                collegeStudentId={core.id}
               />
               <SectionAttendance id="attendance" rows={attendance} loading={loading.attendance} />
               <SectionGrades id="grades" rows={grades} loading={loading.grades} />
@@ -247,6 +293,14 @@ export default function Student360Page() {
             studentId={core.id}
             studentName={core.name}
           />
+          {core.user_id && (
+            <LogCollegeOtjSheet
+              open={otjOpen}
+              onOpenChange={setOtjOpen}
+              studentUserId={core.user_id}
+              studentName={core.name}
+            />
+          )}
         </>
       )}
     </PageFrame>

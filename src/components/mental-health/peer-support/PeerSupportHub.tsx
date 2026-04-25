@@ -1,17 +1,11 @@
 import React, { useState, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import {
-  Users,
   Heart,
-  MessageCircle,
   Loader2,
-  AlertTriangle,
   ArrowLeft,
   Send,
-  User,
-  Clock,
-  Award,
   Zap,
-  Shield,
 } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import {
@@ -46,12 +40,22 @@ import { cn } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatDistanceToNow } from 'date-fns';
 import {
+  PageFrame,
+  PageHero,
+  StatStrip,
+  SectionHeader,
+  HubGrid,
+  HubCard,
+  ListCard,
+  ListRow,
+  Pill,
   Eyebrow,
+  EmptyState,
   PrimaryButton,
   SecondaryButton,
-  IconButton,
-  EmptyState,
+  TextAction,
   inputClass,
+  itemVariants,
 } from '@/components/college/primitives';
 
 interface PeerSupportHubProps {
@@ -59,58 +63,98 @@ interface PeerSupportHubProps {
 }
 
 type ViewState = 'hub' | 'become-supporter' | 'chat' | 'supporter-detail';
+type TabState = 'browse' | 'chats';
 
-// Skeleton for conversation items
+// ─── Initials helper ──────────────────────────────────────────────────────
+const getInitials = (name?: string | null) => {
+  if (!name) return '–';
+  const parts = name.trim().split(/\s+/).slice(0, 2);
+  return parts.map((p) => p[0]?.toUpperCase() ?? '').join('') || '–';
+};
+
+interface InitialsAvatarProps {
+  name?: string | null;
+  imageUrl?: string | null;
+  size?: 'sm' | 'md' | 'lg';
+  online?: boolean;
+  className?: string;
+}
+
+const InitialsAvatar: React.FC<InitialsAvatarProps> = ({
+  name,
+  imageUrl,
+  size = 'md',
+  online,
+  className,
+}) => {
+  const dim =
+    size === 'lg'
+      ? 'h-20 w-20 text-[24px]'
+      : size === 'sm'
+        ? 'h-10 w-10 text-[12px]'
+        : 'h-12 w-12 text-[13px]';
+  const dot = size === 'lg' ? 'w-4 h-4' : 'w-3 h-3';
+  return (
+    <div className={cn('relative shrink-0', className)}>
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt={name ?? 'avatar'}
+          className={cn(dim, 'rounded-full object-cover border border-white/[0.08]')}
+        />
+      ) : (
+        <div
+          className={cn(
+            dim,
+            'rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center font-semibold text-white tracking-tight tabular-nums'
+          )}
+        >
+          {getInitials(name)}
+        </div>
+      )}
+      {online && (
+        <span
+          aria-hidden
+          className={cn(
+            'absolute -bottom-0.5 -right-0.5 rounded-full bg-emerald-400 border-[3px] border-[hsl(0_0%_8%)]',
+            dot
+          )}
+        />
+      )}
+    </div>
+  );
+};
+
+// ─── Conversation row skeleton ────────────────────────────────────────────
 const ConversationSkeleton = () => (
-  <div className="space-y-3">
+  <ListCard>
     {[1, 2].map((i) => (
-      <div
-        key={i}
-        className="flex items-center gap-4 p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
-      >
-        <Skeleton className="w-12 h-12 rounded-xl bg-white/[0.06]" />
+      <div key={i} className="flex items-center gap-4 px-5 sm:px-6 py-5">
+        <Skeleton className="h-12 w-12 rounded-full bg-white/[0.06]" />
         <div className="flex-1 space-y-2">
           <Skeleton className="h-4 w-32 bg-white/[0.06]" />
           <Skeleton className="h-3 w-48 bg-white/[0.06]" />
         </div>
       </div>
     ))}
-  </div>
+  </ListCard>
 );
 
-// Skeleton for Your Status section
-const StatusSkeleton = () => (
-  <div className="mb-6">
-    <div className="flex items-center justify-between p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-      <div className="flex items-center gap-3">
-        <Skeleton className="w-12 h-12 rounded-xl bg-white/[0.06]" />
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-24 bg-white/[0.06]" />
-          <Skeleton className="h-3 w-20 bg-white/[0.06]" />
-        </div>
-      </div>
-      <Skeleton className="h-6 w-11 rounded-full bg-white/[0.06]" />
-    </div>
-  </div>
-);
-
+// ─── Component ────────────────────────────────────────────────────────────
 const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
   const { toast } = useToast();
   const { user } = useAuth();
 
   const [viewState, setViewState] = useState<ViewState>('hub');
   const [connectingId, setConnectingId] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'browse' | 'chats'>('browse');
+  const [activeTab, setActiveTab] = useState<TabState>('browse');
   const [isToggling, setIsToggling] = useState(false);
 
-  // Chat state
   const [selectedConversation, setSelectedConversation] = useState<PeerConversation | null>(null);
   const [messageInput, setMessageInput] = useState('');
 
-  // Supporter detail state
   const [selectedSupporter, setSelectedSupporter] = useState<PeerSupporter | null>(null);
 
-  // Use centralised hooks for conversations, messages, and profile (all cached)
   const {
     data: conversations = [],
     isLoading: conversationsLoading,
@@ -122,16 +166,12 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     isLoading: profileLoading,
     refetch: refetchProfile,
   } = usePeerSupporterProfile();
-  const { data: chatMessages = [], isLoading: messagesLoading } = usePeerMessages(
-    selectedConversation?.id
-  );
+  const { data: chatMessages = [] } = usePeerMessages(selectedConversation?.id);
   const sendMessage = useSendPeerMessage();
   const markAsRead = useMarkPeerMessagesAsRead();
 
-  // Typing indicator
   const { isOtherTyping, setTyping } = usePeerTyping(selectedConversation?.id);
 
-  // Presence - get partner's user ID
   const partnerId = selectedConversation
     ? selectedConversation.supporter?.user_id === user?.id
       ? (selectedConversation as any).seeker_id
@@ -142,10 +182,10 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     ? calculateStatus(partnerPresence.last_seen)
     : 'offline';
 
-  // Count unread messages
   const unreadCount = conversations.filter(
     (c) => c.status === 'active' && (c as any).unread_count > 0
   ).length;
+  const activeChats = conversations.filter((c) => c.status === 'active').length;
 
   const handleConnect = async (supporterId: string) => {
     setConnectingId(supporterId);
@@ -153,7 +193,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
       const { peerConversationService } = await import('@/services/peerSupportService');
       await peerConversationService.startConversation(supporterId);
       toast({
-        title: 'Connected!',
+        title: 'Connected',
         description: 'You can now start chatting. Be kind to each other.',
       });
       refetchConversations();
@@ -181,7 +221,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     try {
       await peerSupporterService.toggleAvailability();
       toast({
-        title: myProfile.is_available ? "You're now offline" : "You're now available!",
+        title: myProfile.is_available ? "You're now offline" : "You're now available",
         description: myProfile.is_available
           ? "You won't receive new connection requests"
           : 'Others can now see you and connect',
@@ -199,23 +239,18 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     }
   };
 
-  // Open chat with a conversation
   const handleOpenChat = (conversation: PeerConversation) => {
     setSelectedConversation(conversation);
     setViewState('chat');
     markAsRead.mutate(conversation.id);
   };
 
-  // Send a message
   const handleSendMessage = () => {
     if (!selectedConversation || !messageInput.trim() || sendMessage.isPending) return;
-
     sendMessage.mutate(
       { conversationId: selectedConversation.id, content: messageInput.trim() },
       {
-        onSuccess: () => {
-          setMessageInput('');
-        },
+        onSuccess: () => setMessageInput(''),
         onError: () => {
           toast({
             title: 'Failed to send',
@@ -227,7 +262,6 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     );
   };
 
-  // Close chat and return to hub
   const handleCloseChat = () => {
     setViewState('hub');
     setTimeout(() => {
@@ -235,75 +269,65 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     }, 300);
   };
 
-  // Get other person's name in conversation
   const getChatPartnerName = () => {
     if (!selectedConversation) return '';
     const isSupporter = selectedConversation.supporter?.user_id === user?.id;
     if (isSupporter) {
       const seekerName = selectedConversation.seeker?.full_name;
-      if (seekerName) {
-        return seekerName.split(' ')[0];
-      }
+      if (seekerName) return seekerName.split(' ')[0];
       return 'Mate';
     }
     return selectedConversation.supporter?.display_name || 'Peer Supporter';
   };
 
-  // Format conversation time
   const formatConversationTime = (timestamp: string | null) => {
     if (!timestamp) return '';
     const date = new Date(timestamp);
     const now = new Date();
     const diffHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
-
     if (diffHours < 24) {
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
-    if (diffHours < 48) {
-      return 'Yesterday';
-    }
+    if (diffHours < 48) return 'Yesterday';
     return date.toLocaleDateString([], { day: 'numeric', month: 'short' });
   };
 
-  // View supporter profile
   const handleViewProfile = (supporter: PeerSupporter) => {
     setSelectedSupporter(supporter);
     setViewState('supporter-detail');
   };
 
-  // Connect from detail view
   const handleConnectFromDetail = async () => {
     if (!selectedSupporter) return;
     await handleConnect(selectedSupporter.id);
-    // After connecting, go back to hub and switch to chats tab
     setViewState('hub');
     setSelectedSupporter(null);
   };
 
-  // Pull to refresh handler
   const handleRefresh = useCallback(async () => {
     await Promise.all([refetchProfile(), refetchConversations()]);
   }, [refetchProfile, refetchConversations]);
 
-  // Not logged in
+  // ─── Not logged in ──────────────────────────────────────────────────────
   if (!user) {
     return (
       <NativePageWrapper
         title="Mental Health Mates"
         subtitle="Connect with someone who understands"
         icon={<Heart />}
-        headerColor="purple"
         showBackButton={false}
       >
-        <EmptyState
-          title="Sign in required"
-          description="Please sign in to access Mental Health Mates and connect with peer supporters."
-        />
+        <PageFrame>
+          <EmptyState
+            title="Sign in required"
+            description="Please sign in to access Mental Health Mates and connect with peer supporters."
+          />
+        </PageFrame>
       </NativePageWrapper>
     );
   }
 
-  // Become Supporter View
+  // ─── Become Supporter View ──────────────────────────────────────────────
   if (viewState === 'become-supporter') {
     return (
       <BecomeSupporter
@@ -317,14 +341,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     );
   }
 
-  // Supporter Detail View
+  // ─── Supporter Detail View ──────────────────────────────────────────────
   if (viewState === 'supporter-detail' && selectedSupporter) {
-    const trainingBadgeTone: Record<string, string> = {
-      peer: 'bg-[hsl(0_0%_12%)] text-white border-white/[0.08]',
-      trained: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/25',
-      mhfa_certified: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/25',
-    };
-
     const getResponseTime = () => {
       if (!selectedSupporter.last_active_at) return null;
       const diffMins = Math.floor(
@@ -338,180 +356,203 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
 
     const responseTime = getResponseTime();
     const topics = selectedSupporter.topics_comfortable_with || [];
+    const trainingTone =
+      selectedSupporter.training_level === 'mhfa_certified'
+        ? 'yellow'
+        : selectedSupporter.training_level === 'trained'
+          ? 'emerald'
+          : 'blue';
 
     return (
       <NativePageWrapper
         title={selectedSupporter.display_name}
         subtitle="Peer Supporter"
-        icon={<Heart />}
-        headerColor="purple"
-        showBackButton={true}
-        onBack={() => {
-          setViewState('hub');
-          setSelectedSupporter(null);
-        }}
+        hideHeader
+        showBackButton={false}
         collapsingHeader={false}
       >
-        {/* Profile Header */}
-        <div className="flex flex-col items-center text-center mb-6">
-          {/* Large Avatar */}
-          <div className="relative mb-4">
-            {selectedSupporter.avatar_url ? (
-              <img
-                src={selectedSupporter.avatar_url}
-                alt={selectedSupporter.display_name}
-                className="w-24 h-24 rounded-2xl object-cover border border-white/[0.08]"
+        <PageFrame>
+          <motion.div variants={itemVariants}>
+            <TextAction
+              onClick={() => {
+                setViewState('hub');
+                setSelectedSupporter(null);
+              }}
+              className="inline-flex items-center gap-1.5"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" /> Back
+            </TextAction>
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <PageHero
+              eyebrow="Peer supporter"
+              title={selectedSupporter.display_name}
+              description={
+                responseTime ?? trainingLevelLabels[selectedSupporter.training_level]
+              }
+              tone="yellow"
+              actions={
+                <Pill tone={trainingTone}>
+                  {trainingLevelLabels[selectedSupporter.training_level]}
+                </Pill>
+              }
+            />
+          </motion.div>
+
+          <motion.div variants={itemVariants}>
+            <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-6 sm:p-7 flex flex-col sm:flex-row gap-5 sm:gap-6 items-start">
+              <InitialsAvatar
+                name={selectedSupporter.display_name}
+                imageUrl={selectedSupporter.avatar_url}
+                size="lg"
+                online
               />
-            ) : (
-              <div className="w-24 h-24 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.08] flex items-center justify-center">
-                <User className="w-12 h-12 text-white" />
+              <div className="flex-1 min-w-0 space-y-4">
+                {responseTime && (
+                  <div className="inline-flex items-center gap-1.5 text-[12px] text-emerald-400">
+                    <Zap className="w-3.5 h-3.5" />
+                    {responseTime}
+                  </div>
+                )}
+                {selectedSupporter.bio && (
+                  <div>
+                    <Eyebrow>About</Eyebrow>
+                    <p className="mt-1.5 text-[13.5px] text-white/85 leading-relaxed">
+                      {selectedSupporter.bio}
+                    </p>
+                  </div>
+                )}
+                {topics.length > 0 && (
+                  <div>
+                    <Eyebrow>Comfortable discussing</Eyebrow>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {topics.map((topic) => (
+                        <span
+                          key={topic}
+                          className="text-[12px] px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/85"
+                        >
+                          {topic}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-            {/* Online indicator */}
-            <span className="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 rounded-full border-[3px] border-[hsl(0_0%_8%)] flex items-center justify-center">
-              <span className="w-2 h-2 bg-white rounded-full" />
-            </span>
-          </div>
-
-          {/* Name and Badge */}
-          <Eyebrow>Peer supporter</Eyebrow>
-          <h2 className="mt-1.5 text-xl font-semibold text-white tracking-tight mb-2">
-            {selectedSupporter.display_name}
-          </h2>
-          <span
-            className={cn(
-              'inline-flex items-center text-[12px] font-medium px-3 py-1 rounded-full border',
-              trainingBadgeTone[selectedSupporter.training_level] || trainingBadgeTone.peer
-            )}
-          >
-            <Award className="w-3.5 h-3.5 mr-1.5" />
-            {trainingLevelLabels[selectedSupporter.training_level]}
-          </span>
-
-          {/* Response time */}
-          {responseTime && (
-            <div className="flex items-center gap-1.5 mt-3 text-emerald-400">
-              <Zap className="w-4 h-4" />
-              <span className="text-[13px]">{responseTime}</span>
             </div>
-          )}
-        </div>
+          </motion.div>
 
-        {/* Bio Section */}
-        {selectedSupporter.bio && (
-          <div className="mb-6 p-5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-            <Eyebrow>About</Eyebrow>
-            <p className="mt-2 text-[13px] text-white leading-relaxed">{selectedSupporter.bio}</p>
-          </div>
-        )}
+          <motion.div variants={itemVariants}>
+            <StatStrip
+              columns={2}
+              stats={[
+                {
+                  value: selectedSupporter.total_conversations,
+                  label: 'Chats completed',
+                  sub: 'Lifetime conversations',
+                },
+                {
+                  value: 'Verified',
+                  label: 'Status',
+                  sub: 'Profile reviewed',
+                },
+              ]}
+            />
+          </motion.div>
 
-        {/* Topics Section */}
-        {topics.length > 0 && (
-          <div className="mb-6">
-            <Eyebrow>Comfortable discussing</Eyebrow>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {topics.map((topic) => (
-                <span
-                  key={topic}
-                  className="text-[12.5px] px-3 py-1.5 rounded-full bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/25"
-                >
-                  {topic}
-                </span>
-              ))}
+          <motion.div variants={itemVariants}>
+            <div className="border-l-2 border-amber-500/40 bg-[hsl(0_0%_12%)] rounded-r-xl px-5 py-4">
+              <Eyebrow className="text-amber-400">Note</Eyebrow>
+              <p className="mt-1.5 text-[13px] text-white/85 leading-relaxed">
+                This is peer support, not professional therapy. All conversations are confidential.
+              </p>
             </div>
-          </div>
-        )}
+          </motion.div>
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden mb-6">
-          <div className="bg-[hsl(0_0%_12%)] px-5 py-5 text-center">
-            <Eyebrow>Chats completed</Eyebrow>
-            <MessageCircle className="h-5 w-5 text-elec-yellow mx-auto mt-2" />
-            <p className="mt-1 text-2xl font-semibold text-white tabular-nums">
-              {selectedSupporter.total_conversations}
-            </p>
-          </div>
-          <div className="bg-[hsl(0_0%_12%)] px-5 py-5 text-center">
-            <Eyebrow>Peer supporter</Eyebrow>
-            <Shield className="h-5 w-5 text-emerald-400 mx-auto mt-2" />
-            <p className="mt-1 text-2xl font-semibold text-white">Verified</p>
-          </div>
-        </div>
-
-        {/* Safety Notice */}
-        <div className="p-5 rounded-2xl bg-[hsl(0_0%_12%)] border border-amber-500/25 mb-6">
-          <div className="flex items-start gap-3">
-            <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
-            <p className="text-[13px] text-white leading-relaxed">
-              This is peer support, not professional therapy. All conversations are confidential.
-            </p>
-          </div>
-        </div>
-
-        {/* Start Chat Button - Fixed at Bottom */}
-        <div className="sticky bottom-0 pt-4 pb-safe bg-[hsl(0_0%_8%)]">
-          <PrimaryButton
-            onClick={handleConnectFromDetail}
-            disabled={connectingId === selectedSupporter.id}
-            size="lg"
-            fullWidth
+          <motion.div
+            variants={itemVariants}
+            className="sticky bottom-0 pt-4 pb-safe bg-[hsl(0_0%_8%)]"
           >
-            {connectingId === selectedSupporter.id ? (
-              <>
-                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                Connecting...
-              </>
-            ) : (
-              <>
-                <MessageCircle className="mr-2 h-5 w-5" />
-                Start chat with {selectedSupporter.display_name.split(' ')[0]}
-              </>
-            )}
-          </PrimaryButton>
-        </div>
+            <PrimaryButton
+              size="lg"
+              fullWidth
+              disabled={connectingId === selectedSupporter.id}
+              onClick={handleConnectFromDetail}
+            >
+              {connectingId === selectedSupporter.id ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Connecting...
+                </>
+              ) : (
+                `Start chat with ${selectedSupporter.display_name.split(' ')[0]}`
+              )}
+            </PrimaryButton>
+          </motion.div>
+        </PageFrame>
       </NativePageWrapper>
     );
   }
 
-  // Full-Page Chat View
+  // ─── Full-Page Chat View ────────────────────────────────────────────────
   if (viewState === 'chat' && selectedConversation) {
     return (
       <NativePageWrapper
         title={getChatPartnerName()}
         subtitle="Peer Support Chat"
-        icon={<Heart />}
-        headerColor="purple"
-        showBackButton={true}
-        onBack={handleCloseChat}
+        hideHeader
+        showBackButton={false}
         collapsingHeader={false}
         contentClassName="p-0"
       >
-        <div className="flex flex-col h-[calc(100vh-56px)]">
-          {/* Partner Status Bar */}
-          <div className="px-4 py-2 bg-[hsl(0_0%_12%)] border-b border-white/[0.06] flex items-center gap-2">
-            <PresenceIndicator
-              status={partnerPresenceStatus}
-              lastSeen={partnerPresence?.last_seen}
-              size="sm"
-            />
-            <span className="text-[11px] text-white">
-              {partnerPresenceStatus === 'online'
-                ? 'Online now'
-                : partnerPresenceStatus === 'away'
-                  ? 'Away'
-                  : 'Offline'}
-            </span>
+        <div className="flex flex-col h-[calc(100vh-56px)] mx-auto max-w-3xl">
+          {/* Editorial header */}
+          <div className="px-4 pt-4 pb-4 bg-[hsl(0_0%_8%)] border-b border-white/[0.06]">
+            <button
+              onClick={handleCloseChat}
+              className="inline-flex items-center gap-1.5 text-[12px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation mb-3"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              Back
+            </button>
+            <div className="flex items-center gap-3">
+              <InitialsAvatar name={getChatPartnerName()} size="sm" />
+              <div className="flex-1 min-w-0">
+                <Eyebrow>Peer support chat</Eyebrow>
+                <h2 className="mt-1 text-[18px] font-semibold tracking-tight text-white truncate leading-tight">
+                  {getChatPartnerName()}
+                </h2>
+                <div className="flex items-center gap-1.5 mt-1">
+                  <PresenceIndicator
+                    status={partnerPresenceStatus}
+                    lastSeen={partnerPresence?.last_seen}
+                    size="sm"
+                  />
+                  <span className="text-[10.5px] uppercase tracking-[0.14em] text-white/55">
+                    {partnerPresenceStatus === 'online'
+                      ? 'Online now'
+                      : partnerPresenceStatus === 'away'
+                        ? 'Away'
+                        : 'Offline'}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Messages Area */}
-          <div className="flex-1 overflow-y-auto momentum-scroll-y px-4 py-3 space-y-3 bg-[hsl(0_0%_8%)]">
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto momentum-scroll-y px-4 py-4 space-y-3 bg-[hsl(0_0%_8%)]">
             {chatMessages.length === 0 ? (
-              <div className="text-center text-white text-sm py-12">
-                <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] flex items-center justify-center">
-                  <Heart className="h-8 w-8 text-elec-yellow" />
-                </div>
-                <p className="font-medium text-white mb-1">Start a conversation</p>
-                <p className="text-[13px] text-white">Say hello with a warm, supportive message</p>
+              <div className="text-center py-12">
+                <InitialsAvatar
+                  name={getChatPartnerName()}
+                  size="md"
+                  className="mx-auto mb-4"
+                />
+                <Eyebrow>Start the conversation</Eyebrow>
+                <p className="mt-2 text-[13px] text-white/70 max-w-xs mx-auto leading-relaxed">
+                  Say hello with a warm, supportive message.
+                </p>
               </div>
             ) : (
               chatMessages.map((msg) => {
@@ -543,8 +584,8 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                       >
                         <span
                           className={cn(
-                            'text-[10px]',
-                            isOwn ? 'text-black/60' : 'text-white'
+                            'text-[10px] tabular-nums',
+                            isOwn ? 'text-black/60' : 'text-white/50'
                           )}
                         >
                           {new Date(msg.created_at).toLocaleTimeString([], {
@@ -569,20 +610,19 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 );
               })
             )}
-            {/* Typing indicator */}
             {isOtherTyping && (
               <div className="flex justify-start">
                 <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl rounded-bl-md px-4 py-3">
                   <TypingIndicatorWithName
                     userName={getChatPartnerName()}
-                    className="text-white"
+                    className="text-white/70"
                   />
                 </div>
               </div>
             )}
           </div>
 
-          {/* Message Input - Fixed at Bottom */}
+          {/* Input */}
           <div className="sticky bottom-0 p-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur-xl border-t border-white/[0.06] pb-safe">
             <form
               onSubmit={(e) => {
@@ -625,175 +665,217 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
     );
   }
 
-  // Main Hub View
+  // ─── Main Hub View ──────────────────────────────────────────────────────
   return (
     <NativePageWrapper
       title="Mental Health Mates"
       subtitle="Connect with someone who understands"
-      headerColor="purple"
+      hideHeader
       showBackButton={false}
-      hideHeader={true}
       onRefresh={handleRefresh}
-      collapsingHeader={true}
-      compactTitle={true}
+      collapsingHeader
+      compactTitle
     >
-      <div className="space-y-6">
-        <div className="pt-1">
-          <button
+      <PageFrame>
+        {/* Back link */}
+        <motion.div variants={itemVariants}>
+          <TextAction
             onClick={() => (onClose ? onClose() : window.history.back())}
-            className="inline-flex items-center gap-2 text-[13px] text-white hover:text-white transition-colors touch-manipulation"
+            className="inline-flex items-center gap-1.5"
           >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </button>
-        </div>
+            <ArrowLeft className="h-3.5 w-3.5" /> Back
+          </TextAction>
+        </motion.div>
 
-        <div className="border-b border-white/[0.06] pb-5">
-          <Eyebrow>Peer support</Eyebrow>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-white">
-            Mental Health Mates
-          </h1>
-          <p className="mt-2 max-w-xl text-[13px] leading-6 text-white">
-            Connect with someone who understands. Start with a conversation, not a complicated
-            process.
-          </p>
-        </div>
+        {/* HERO */}
+        <motion.div variants={itemVariants}>
+          <PageHero
+            eyebrow="Peer support"
+            title="Mental Health Mates"
+            description="A quiet space to talk to someone who gets it. No referrals, no waiting lists — just a conversation."
+            tone="yellow"
+          />
+        </motion.div>
 
-        {/* Push Notification Prompt */}
-        <PushNotificationPrompt
-          compact
-          context="Get notified when your Mental Health Mate replies"
-          delay={3000}
-        />
+        {/* PUSH NOTIFICATIONS */}
+        <motion.div variants={itemVariants}>
+          <PushNotificationPrompt
+            compact
+            context="Get notified when your Mental Health Mate replies"
+            delay={3000}
+          />
+        </motion.div>
 
-        {/* Your Status Section (if registered) */}
-        {profileLoading ? (
-          <StatusSkeleton />
-        ) : myProfile ? (
-          <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.08] flex items-center justify-center">
-                  {myProfile.avatar_url ? (
-                    <img
-                      src={myProfile.avatar_url}
-                      alt={myProfile.display_name}
-                      className="w-12 h-12 rounded-xl object-cover"
-                    />
-                  ) : (
-                    <User className="h-6 w-6 text-white" />
-                  )}
-                </div>
-                <div>
-                  <h3 className="font-semibold text-white">{myProfile.display_name}</h3>
-                  <p
-                    className={cn(
-                      'text-[13px]',
-                      myProfile.is_available ? 'text-emerald-400' : 'text-white'
-                    )}
-                  >
-                    {myProfile.is_available ? 'Available to help' : 'Currently offline'}
-                  </p>
-                </div>
-              </div>
-              {isToggling ? (
-                <Loader2 className="w-5 h-5 animate-spin text-white" />
-              ) : (
-                <Switch
-                  checked={myProfile.is_available}
-                  onCheckedChange={handleToggleAvailability}
-                  disabled={isToggling}
+        {/* STAT STRIP — only when registered */}
+        {!profileLoading && myProfile && (
+          <motion.div variants={itemVariants}>
+            <StatStrip
+              columns={3}
+              stats={[
+                {
+                  value: myProfile.is_available ? 'Online' : 'Offline',
+                  label: 'Your status',
+                  sub: myProfile.is_available ? 'Available to help' : 'Not receiving requests',
+                  tone: myProfile.is_available ? 'emerald' : undefined,
+                },
+                {
+                  value: myProfile.total_conversations,
+                  label: 'Total chats',
+                  sub: 'Lifetime conversations',
+                },
+                {
+                  value: activeChats,
+                  label: 'Active now',
+                  sub: unreadCount > 0 ? `${unreadCount} unread` : 'All caught up',
+                  accent: unreadCount > 0,
+                  onClick: () => setActiveTab('chats'),
+                },
+              ]}
+            />
+          </motion.div>
+        )}
+
+        {/* YOUR PROFILE — toggle row */}
+        {!profileLoading && myProfile && (
+          <motion.section variants={itemVariants} className="space-y-5">
+            <SectionHeader eyebrow="Your profile" title="Availability" />
+            <ListCard>
+              <div className="flex items-center gap-4 px-5 sm:px-6 py-5">
+                <InitialsAvatar
+                  name={myProfile.display_name}
+                  imageUrl={myProfile.avatar_url}
+                  online={myProfile.is_available}
                 />
-              )}
-            </div>
-
-            <div className="mt-4 flex items-center gap-6 border-t border-white/[0.06] pt-4">
-              <div className="flex items-center gap-3">
-                <MessageCircle className="h-5 w-5 text-elec-yellow" />
-                <div>
-                  <p className="text-lg font-semibold text-white tabular-nums">
-                    {myProfile.total_conversations}
-                  </p>
-                  <Eyebrow>Total chats</Eyebrow>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-[15px] font-semibold tracking-tight text-white truncate">
+                    {myProfile.display_name}
+                  </h3>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span
+                      className={cn(
+                        'inline-block w-1.5 h-1.5 rounded-full',
+                        myProfile.is_available ? 'bg-emerald-400' : 'bg-white/30'
+                      )}
+                    />
+                    <span className="text-[12px] text-white/70">
+                      {myProfile.is_available ? 'Available to help' : 'Currently offline'}
+                      {myProfile.last_active_at && (
+                        <>
+                          {' · last active '}
+                          {formatDistanceToNow(new Date(myProfile.last_active_at), {
+                            addSuffix: false,
+                          })}
+                        </>
+                      )}
+                    </span>
+                  </div>
                 </div>
+                {isToggling ? (
+                  <Loader2 className="w-5 h-5 animate-spin text-white/50" />
+                ) : (
+                  <Switch
+                    checked={myProfile.is_available}
+                    onCheckedChange={handleToggleAvailability}
+                    disabled={isToggling}
+                  />
+                )}
               </div>
-              <div className="h-8 w-px bg-white/[0.06]" />
-              <div className="flex items-center gap-3">
-                <Clock className="h-5 w-5 text-elec-yellow" />
-                <div>
-                  <p className="text-[13px] font-medium text-white">
-                    {myProfile.last_active_at
-                      ? formatDistanceToNow(new Date(myProfile.last_active_at), {
-                          addSuffix: false,
-                        })
-                      : 'Never'}
-                  </p>
-                  <Eyebrow>Last active</Eyebrow>
+            </ListCard>
+          </motion.section>
+        )}
+
+        {/* PROFILE SKELETON */}
+        {profileLoading && (
+          <motion.div variants={itemVariants}>
+            <ListCard>
+              <div className="flex items-center gap-4 px-5 sm:px-6 py-5">
+                <Skeleton className="h-12 w-12 rounded-full bg-white/[0.06]" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-4 w-32 bg-white/[0.06]" />
+                  <Skeleton className="h-3 w-48 bg-white/[0.06]" />
                 </div>
+                <Skeleton className="h-6 w-11 rounded-full bg-white/[0.06]" />
               </div>
-            </div>
-          </div>
-        ) : null}
+            </ListCard>
+          </motion.div>
+        )}
 
-        <div className="flex gap-6 border-b border-white/[0.06]">
-          <button
-            onClick={() => setActiveTab('browse')}
-            className={cn(
-              'inline-flex items-center justify-center gap-2 border-b-2 px-1 pb-3 text-[13px] font-medium transition-all touch-manipulation',
-              activeTab === 'browse'
-                ? 'border-elec-yellow text-white'
-                : 'border-transparent text-white'
-            )}
-          >
-            <Users className="h-4 w-4" />
-            Find support
-          </button>
-          <button
-            onClick={() => setActiveTab('chats')}
-            className={cn(
-              'inline-flex items-center justify-center gap-2 border-b-2 px-1 pb-3 text-[13px] font-medium transition-all touch-manipulation',
-              activeTab === 'chats'
-                ? 'border-elec-yellow text-white'
-                : 'border-transparent text-white'
-            )}
-          >
-            <MessageCircle className="h-4 w-4" />
-            My chats
-            {unreadCount > 0 && (
-              <span className="ml-1 px-2 py-0.5 text-[11px] bg-elec-yellow text-black rounded-full font-semibold tabular-nums">
-                {unreadCount}
-              </span>
-            )}
-          </button>
-        </div>
-
-        {/* Tab Content: Find Support */}
-        {activeTab === 'browse' && (
-          <div className="space-y-6">
-            {!profileLoading && !myProfile && (
-              <PrimaryButton
+        {/* BECOME A MATE — HubCard for non-supporters */}
+        {!profileLoading && !myProfile && (
+          <motion.section variants={itemVariants} className="space-y-5">
+            <SectionHeader eyebrow="Get involved" title="Help others, when you can" />
+            <HubGrid columns={1}>
+              <HubCard
+                number="01"
+                eyebrow="Set up your profile"
+                title="Become a Mental Health Mate"
+                description="A short profile, the topics you're comfortable with, and you're set up to support others. No counselling experience needed."
+                tone="yellow"
+                meta="Takes ~2 minutes"
+                cta="Get started"
                 onClick={() => setViewState('become-supporter')}
-                size="lg"
-                fullWidth
-              >
-                <Heart className="mr-2 h-5 w-5" />
-                Become a Mental Health Mate
-              </PrimaryButton>
-            )}
+              />
+            </HubGrid>
+          </motion.section>
+        )}
 
-            {/* Available Supporters */}
+        {/* TABS */}
+        <motion.div variants={itemVariants}>
+          <div className="flex items-center gap-1 p-1 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-full w-fit">
+            <button
+              onClick={() => setActiveTab('browse')}
+              className={cn(
+                'px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation',
+                activeTab === 'browse'
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
+              )}
+            >
+              Find support
+            </button>
+            <button
+              onClick={() => setActiveTab('chats')}
+              className={cn(
+                'px-4 py-1.5 rounded-full text-[12.5px] font-medium whitespace-nowrap transition-colors touch-manipulation inline-flex items-center gap-1.5',
+                activeTab === 'chats'
+                  ? 'bg-elec-yellow text-black'
+                  : 'text-white/70 hover:text-white hover:bg-white/[0.04]'
+              )}
+            >
+              My chats
+              {unreadCount > 0 && (
+                <span
+                  className={cn(
+                    'tabular-nums text-[11px] px-1.5 rounded-full',
+                    activeTab === 'chats' ? 'bg-black/15 text-black' : 'bg-elec-yellow text-black'
+                  )}
+                >
+                  {unreadCount}
+                </span>
+              )}
+            </button>
+          </div>
+        </motion.div>
+
+        {/* TAB CONTENT — Find support */}
+        {activeTab === 'browse' && (
+          <motion.div variants={itemVariants}>
             <AvailableSupporters
               onConnect={handleConnect}
               onViewProfile={handleViewProfile}
               connectingId={connectingId}
               excludeUserId={user?.id}
             />
-          </div>
+          </motion.div>
         )}
 
-        {/* Tab Content: My Chats */}
+        {/* TAB CONTENT — My chats */}
         {activeTab === 'chats' && (
-          <div>
+          <motion.section variants={itemVariants} className="space-y-5">
+            <SectionHeader
+              eyebrow={`My chats · ${activeChats}`}
+              title="Your conversations"
+            />
             {conversationsLoading ? (
               <ConversationSkeleton />
             ) : conversationsError ? (
@@ -806,82 +888,75 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             ) : conversations.length === 0 ? (
               <EmptyState
                 title="No conversations yet"
-                description="Connect with a Mental Health Mate to start chatting."
+                description="Connect with a Mental Health Mate from the Find support tab to start chatting."
                 action="Find someone to chat with"
                 onAction={() => setActiveTab('browse')}
               />
             ) : (
-              <div className="space-y-2">
-                {conversations.map((convo) => (
-                  <button
-                    key={convo.id}
-                    onClick={() => convo.status === 'active' && handleOpenChat(convo)}
-                    className={cn(
-                      'w-full flex items-center gap-4 p-4 rounded-2xl text-left transition-transform touch-manipulation',
-                      convo.status === 'active'
-                        ? 'bg-[hsl(0_0%_12%)] border border-white/[0.06] active:scale-[0.98] hover:bg-[hsl(0_0%_15%)]'
-                        : 'bg-[hsl(0_0%_10%)] border border-white/[0.04] opacity-50'
-                    )}
-                  >
-                    {/* Avatar */}
-                    <div className="w-12 h-12 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.08] flex items-center justify-center relative shrink-0">
-                      <User className="w-6 h-6 text-elec-yellow" />
-                      {convo.status === 'active' && (
-                        <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-[hsl(0_0%_8%)]" />
-                      )}
-                    </div>
-
-                    {/* Info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-3">
-                        <h4 className="font-medium text-white truncate">
-                          {convo.supporter?.user_id === user?.id
-                            ? convo.seeker?.full_name?.split(' ')[0] || 'Mate'
-                            : convo.supporter?.display_name || 'Supporter'}
-                        </h4>
-                        <span className="text-[11px] text-white shrink-0">
+              <ListCard>
+                {conversations.map((convo) => {
+                  const isActive = convo.status === 'active';
+                  const partnerName =
+                    convo.supporter?.user_id === user?.id
+                      ? convo.seeker?.full_name?.split(' ')[0] || 'Mate'
+                      : convo.supporter?.display_name || 'Supporter';
+                  const partnerAvatar =
+                    convo.supporter?.user_id === user?.id
+                      ? null
+                      : convo.supporter?.avatar_url;
+                  const unread = (convo as any).unread_count > 0;
+                  return (
+                    <ListRow
+                      key={convo.id}
+                      onClick={isActive ? () => handleOpenChat(convo) : undefined}
+                      className={!isActive ? 'opacity-50 pointer-events-none' : undefined}
+                      lead={
+                        <InitialsAvatar
+                          name={partnerName}
+                          imageUrl={partnerAvatar}
+                          online={isActive}
+                        />
+                      }
+                      title={
+                        <span className="flex items-center gap-2">
+                          <span className="truncate">{partnerName}</span>
+                          {unread && <Pill tone="yellow">{(convo as any).unread_count} new</Pill>}
+                        </span>
+                      }
+                      subtitle={
+                        <span className="block truncate text-white/65">
+                          {(convo as any).last_message ||
+                            (isActive ? 'Start chatting…' : 'Conversation ended')}
+                        </span>
+                      }
+                      trailing={
+                        <span className="text-[10.5px] uppercase tracking-[0.12em] text-white/50 tabular-nums">
                           {formatConversationTime((convo as any).last_message_at)}
                         </span>
-                      </div>
-                      <p className="text-[13px] text-white truncate mt-0.5">
-                        {(convo as any).last_message ||
-                          (convo.status === 'active' ? 'Start chatting...' : 'Conversation ended')}
-                      </p>
-                    </div>
-
-                    {/* Unread Badge */}
-                    {(convo as any).unread_count > 0 && (
-                      <span className="w-6 h-6 rounded-full bg-elec-yellow text-black text-[11px] flex items-center justify-center font-semibold tabular-nums">
-                        {(convo as any).unread_count}
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
+                      }
+                    />
+                  );
+                })}
+              </ListCard>
             )}
-          </div>
+          </motion.section>
         )}
 
-        <div className="mt-6 border-t border-white/[0.06] pt-5">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[hsl(0_0%_12%)] border border-amber-500/25 flex items-center justify-center shrink-0">
-              <AlertTriangle className="h-5 w-5 text-amber-400" />
-            </div>
-            <div>
-              <Eyebrow className="text-amber-400">Important</Eyebrow>
-              <p className="mt-2 text-[13px] text-white leading-relaxed">
-                Mental Health Mates are peer supporters, not professional counsellors. If you're in
-                crisis, call{' '}
-                <a href="tel:116123" className="text-elec-yellow font-semibold">
-                  116 123
-                </a>{' '}
-                (Samaritans) or text SHOUT to{' '}
-                <span className="text-elec-yellow font-semibold">85258</span>.
-              </p>
-            </div>
+        {/* CRISIS LINE — left-rule editorial card */}
+        <motion.div variants={itemVariants}>
+          <div className="border-l-2 border-amber-500/40 bg-[hsl(0_0%_12%)] rounded-r-xl px-5 py-5">
+            <Eyebrow className="text-amber-400">If you're in crisis</Eyebrow>
+            <p className="mt-2 text-[13px] text-white/85 leading-relaxed">
+              Mental Health Mates are peer supporters, not professional counsellors. Call{' '}
+              <a href="tel:116123" className="text-elec-yellow font-semibold">
+                116 123
+              </a>{' '}
+              (Samaritans) or text SHOUT to{' '}
+              <span className="text-elec-yellow font-semibold">85258</span>.
+            </p>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </PageFrame>
     </NativePageWrapper>
   );
 };
