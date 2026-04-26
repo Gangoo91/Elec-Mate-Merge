@@ -92,10 +92,34 @@ export function useSyncAcCoverage() {
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
         const body = await res.json();
-        toast({
-          title: 'AC coverage synced',
-          description: `${body.seeded ?? 0} new row${body.seeded === 1 ? '' : 's'} seeded across ${body.students ?? 0} learner${body.students === 1 ? '' : 's'}.`,
-        });
+        const seeded = body.seeded ?? 0;
+        const students = body.students ?? 0;
+        const perStudent = (body.per_student as { total_acs?: number }[] | undefined) ?? [];
+        const totalAcs = perStudent.reduce((s, p) => s + (p.total_acs ?? 0), 0);
+
+        if (seeded > 0) {
+          toast({
+            title: 'AC coverage synced',
+            description: `${seeded} new row${seeded === 1 ? '' : 's'} seeded across ${students} learner${students === 1 ? '' : 's'}.`,
+          });
+        } else if (students === 0) {
+          toast({
+            title: 'No learners to seed',
+            description: 'Either no active learners match, or none have a course assigned. Open the learner profile and set a course.',
+            variant: 'destructive',
+          });
+        } else if (totalAcs === 0) {
+          toast({
+            title: 'No qualification ACs found',
+            description: "Course is set but its qualification has no ACs in qualification_requirements. Add ACs in admin first, then re-sync.",
+            variant: 'destructive',
+          });
+        } else {
+          toast({
+            title: 'Already up to date',
+            description: `${totalAcs} ACs already tracked for ${students} learner${students === 1 ? '' : 's'}. Nothing new to seed.`,
+          });
+        }
         return body;
       } catch (e) {
         toast({

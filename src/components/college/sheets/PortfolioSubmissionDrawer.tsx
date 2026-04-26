@@ -13,6 +13,9 @@ import {
   usePortfolioComments,
   type PortfolioComment,
 } from '@/hooks/usePortfolioComments';
+import { AiAssessorPanel } from './AiAssessorPanel';
+import { useSubmissionSignOffChain, type PortfolioSignature } from '@/hooks/useSubmissionSignOffChain';
+import { Pen, ShieldCheck, Building2, UserCircle2 } from 'lucide-react';
 import {
   type PortfolioSubmission,
   type SubmissionStatus,
@@ -99,6 +102,9 @@ interface Props {
   studentUserId: string | null;
   studentName: string;
   submission: PortfolioSubmission | null;
+  /** Called after a write to portfolio_submissions (e.g. AI Apply) so the
+   * parent can re-fetch immediately rather than wait for realtime. */
+  onSubmissionUpdated?: () => void;
 }
 
 export function PortfolioSubmissionDrawer({
@@ -107,6 +113,7 @@ export function PortfolioSubmissionDrawer({
   studentUserId,
   studentName,
   submission,
+  onSubmissionUpdated,
 }: Props) {
   const { toast } = useToast();
   const { comments, loading, post, toggleResolved, remove } = usePortfolioComments({
@@ -308,6 +315,16 @@ export function PortfolioSubmissionDrawer({
               </div>
             )}
           </div>
+
+          {/* Sign-off chain — surfaces who signed, when, and what role */}
+          <SignOffChainBlock submissionId={submission.id} />
+
+          {/* AI Assessor — drafts a verdict + feedback the human reviews */}
+          <AiAssessorPanel
+            submissionId={submission.id}
+            studentName={studentName}
+            onApplied={onSubmissionUpdated}
+          />
 
           {/* Comment thread */}
           <div>
@@ -532,6 +549,216 @@ function ThreadSkeleton() {
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────
+   Sign-off chain — surfaces who signed this submission
+   (apprentice / employer / supervisor / tutor / IQA) so
+   the college side has the same visibility as the
+   apprentice's portfolio in their hub.
+   ──────────────────────────────────────────────────────── */
+
+function SignOffChainBlock({ submissionId }: { submissionId: string }) {
+  const chain = useSubmissionSignOffChain(submissionId);
+
+  if (chain.loading) {
+    return (
+      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4 animate-pulse h-[100px]" />
+    );
+  }
+
+  const hasAnything =
+    chain.signatures.length > 0 ||
+    chain.signedOff.at ||
+    chain.iqaVerified.at ||
+    chain.itemsSupervisorVerified > 0;
+
+  if (!hasAnything) {
+    return (
+      <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-4">
+        <div className="flex items-center gap-2">
+          <Pen className="h-3.5 w-3.5 text-white/35" />
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Sign-off chain
+          </div>
+        </div>
+        <p className="mt-1.5 text-[11.5px] text-white/55 leading-snug">
+          Not yet signed. The chain populates when the apprentice's employer / supervisor / tutor / IQA approves the submission in their app.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] overflow-hidden">
+      <div className="px-5 py-3 border-b border-white/[0.06] flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Pen className="h-3.5 w-3.5 text-elec-yellow" />
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Sign-off chain
+          </div>
+        </div>
+        {chain.itemsTotal > 0 && (
+          <div className="text-[10.5px] text-white/55 tabular-nums">
+            {chain.itemsSupervisorVerified}/{chain.itemsTotal} items supervisor-verified
+          </div>
+        )}
+      </div>
+
+      {/* Role pills — quick scan */}
+      <div className="px-5 py-3 flex flex-wrap gap-1.5 border-b border-white/[0.04]">
+        <RolePill
+          icon={<UserCircle2 className="h-3 w-3" />}
+          label="Apprentice"
+          active={chain.signatures.some((s) => (s.signer_role ?? '').toLowerCase() === 'apprentice')}
+        />
+        <RolePill
+          icon={<Building2 className="h-3 w-3" />}
+          label="Employer"
+          active={chain.hasEmployer}
+        />
+        <RolePill
+          icon={<UserCircle2 className="h-3 w-3" />}
+          label="Supervisor"
+          active={chain.hasSupervisor}
+        />
+        <RolePill
+          icon={<UserCircle2 className="h-3 w-3" />}
+          label="Tutor"
+          active={Boolean(chain.signedOff.at) || chain.hasTutor}
+        />
+        <RolePill
+          icon={<ShieldCheck className="h-3 w-3" />}
+          label="IQA"
+          active={Boolean(chain.iqaVerified.at)}
+        />
+      </div>
+
+      {/* Detail timeline */}
+      <ul className="divide-y divide-white/[0.04]">
+        {chain.signatures.map((s) => (
+          <li key={s.id} className="px-5 py-3">
+            <SignatureRow sig={s} />
+          </li>
+        ))}
+        {chain.signedOff.at && (
+          <li className="px-5 py-3">
+            <RowLine
+              roleLabel="Tutor sign-off"
+              tone="emerald"
+              actor={chain.signedOff.by_name ?? 'Tutor'}
+              when={chain.signedOff.at}
+            />
+          </li>
+        )}
+        {chain.iqaVerified.at && (
+          <li className="px-5 py-3">
+            <RowLine
+              roleLabel="IQA verified"
+              tone="purple"
+              actor={chain.iqaVerified.by_name ?? 'IQA'}
+              when={chain.iqaVerified.at}
+            />
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
+
+function RolePill({
+  icon,
+  label,
+  active,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  active: boolean;
+}) {
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-1.5 h-6 px-2 rounded-full text-[10.5px] font-semibold tracking-[0.06em] uppercase border',
+        active
+          ? 'bg-emerald-500/[0.10] border-emerald-400/35 text-emerald-200'
+          : 'bg-white/[0.03] border-dashed border-white/[0.10] text-white/35'
+      )}
+    >
+      {icon}
+      {label}
+    </span>
+  );
+}
+
+function SignatureRow({ sig }: { sig: PortfolioSignature }) {
+  const role = (sig.signer_role ?? 'signer').replace(/_/g, ' ');
+  const tone =
+    role === 'employer'
+      ? 'amber'
+      : role === 'supervisor'
+        ? 'blue'
+        : role === 'tutor'
+          ? 'emerald'
+          : 'white';
+  return (
+    <div className="flex items-center gap-3 flex-wrap">
+      <div className="min-w-0 flex-1">
+        <RowLine
+          roleLabel={`${role.charAt(0).toUpperCase() + role.slice(1)} signed`}
+          tone={tone}
+          actor={sig.signer_name ?? sig.signature_text ?? 'Signed'}
+          when={sig.signed_at}
+        />
+      </div>
+      {sig.signature_image && (
+        <img
+          src={sig.signature_image}
+          alt={`${role} signature`}
+          className="h-8 max-w-[120px] rounded-md bg-white/95 object-contain p-1 flex-shrink-0"
+        />
+      )}
+      {!sig.signature_image && sig.signature_type === 'typed' && sig.signature_text && (
+        <span className="text-[12px] italic text-white/85 font-serif tracking-tight">
+          {sig.signature_text}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function RowLine({
+  roleLabel,
+  tone,
+  actor,
+  when,
+}: {
+  roleLabel: string;
+  tone: 'emerald' | 'amber' | 'blue' | 'purple' | 'white';
+  actor: string;
+  when: string | null;
+}) {
+  return (
+    <div className="flex items-baseline gap-2 flex-wrap">
+      <span
+        className={cn(
+          'inline-flex items-center h-5 px-1.5 rounded-md border text-[9.5px] font-semibold tracking-[0.06em] uppercase',
+          tone === 'emerald' && 'bg-emerald-500/[0.10] border-emerald-400/35 text-emerald-200',
+          tone === 'amber' && 'bg-amber-500/[0.10] border-amber-400/35 text-amber-200',
+          tone === 'blue' && 'bg-blue-500/[0.10] border-blue-400/30 text-blue-200',
+          tone === 'purple' && 'bg-purple-500/[0.10] border-purple-400/30 text-purple-200',
+          tone === 'white' && 'bg-white/[0.04] border-white/[0.12] text-white/65'
+        )}
+      >
+        {roleLabel}
+      </span>
+      <span className="text-[12.5px] text-white">{actor}</span>
+      {when && (
+        <span className="text-[10.5px] text-white/45 tabular-nums ml-auto">
+          {new Date(when).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+        </span>
+      )}
     </div>
   );
 }

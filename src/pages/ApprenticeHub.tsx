@@ -35,6 +35,7 @@ import { Badge } from '@/components/ui/badge';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
 import { ElecIdBanner } from '@/components/elec-id/ElecIdBanner';
+import { useMyIlp } from '@/hooks/useMyIlp';
 import { LearningVideosSection } from '@/components/apprentice/learning-videos/LearningVideosSection';
 import { useVideoInsights } from '@/hooks/apprentice-stats/useVideoInsights';
 import { useSiteDiaryEntries } from '@/hooks/site-diary/useSiteDiaryEntries';
@@ -287,6 +288,67 @@ function CompactToolCard({ title, description, icon: _Icon, link }: CompactToolC
   );
 }
 
+// ─── College Plan Card ──────────────────────────────────────────
+// Tap-to-open card matching the rest of the hub. Hides for non-college
+// learners, populates with live ILP stats when linked.
+
+function CollegePlanHubCard() {
+  const { ilp, rollUp, hasCollegeLink } = useMyIlp();
+
+  // Always render — never hide. Description adapts to the learner's state.
+  const description = !hasCollegeLink
+    ? 'Connect with your college to see goals from your tutor and tick them off here'
+    : ilp
+      ? (ilp.headline_focus ??
+        `${rollUp.completed}/${rollUp.total_goals} goals complete · set by your tutor`)
+      : 'Your tutor will set goals here you can tick off and reply to';
+
+  const newCount = rollUp.unread_tutor_comments + (rollUp.needs_acknowledgement || 0);
+
+  return (
+    <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">
+      <SectionHeader title="My College Plan" />
+      <Link to="/apprentice/college-plan" className="block group touch-manipulation">
+        <motion.div
+          whileTap={{ scale: 0.98 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+          className="relative overflow-hidden card-surface-interactive rounded-xl h-full min-h-[130px] active:scale-[0.98] transition-all duration-200"
+        >
+          {/* Top accent line — purple/blue to differentiate from yellow tools */}
+          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 opacity-50 group-hover:opacity-90 transition-opacity duration-200" />
+
+          <div className="relative z-10 flex flex-col h-full p-3.5 sm:p-4">
+            <div className="flex items-start justify-between gap-3">
+              <h3 className="text-[13px] sm:text-sm font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
+                My College Plan
+              </h3>
+              {newCount > 0 && (
+                <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.12] border border-blue-500/40 text-[9px] font-semibold tracking-[0.06em] uppercase text-blue-200 flex-shrink-0">
+                  {newCount} new
+                </span>
+              )}
+            </div>
+            <p className="mt-0.5 text-[11px] sm:text-[12px] text-white leading-tight line-clamp-2">
+              {description}
+            </p>
+
+            <div className="flex-grow" />
+
+            <div className="mt-2 flex items-center justify-between">
+              <span className="text-[11px] sm:text-xs font-medium text-elec-yellow">
+                {ilp ? 'Open plan' : 'Open'}
+              </span>
+              <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/[0.05] border border-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow group-hover:border-elec-yellow transition-all duration-200">
+                <ChevronRight className="w-3.5 h-3.5 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </Link>
+    </motion.section>
+  );
+}
+
 // ─── Section Header ─────────────────────────────────────────────
 
 function SectionHeader({ title }: { title: string }) {
@@ -394,6 +456,9 @@ const ApprenticeHub = () => {
         <motion.section variants={itemVariants} className="px-4 sm:px-0">
           <ApprenticeStatsBar />
         </motion.section>
+
+        {/* My College Plan — front and centre, above the fold */}
+        <CollegePlanHubCard />
 
         {/* Core Learning — 2 featured cards */}
         <motion.section variants={itemVariants} className="space-y-4 px-4 sm:px-0">

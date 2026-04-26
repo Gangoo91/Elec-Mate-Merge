@@ -89,7 +89,7 @@ Deno.serve(async (req) => {
     // Fetch students to compute
     let studentQ = sb
       .from('college_students')
-      .select('id, college_id, cohort_id, status, progress_percent, expected_end_date')
+      .select('id, user_id, college_id, cohort_id, status, progress_percent, expected_end_date')
       .neq('status', 'withdrawn')
       .neq('status', 'completed');
     if (scopedCollegeId) studentQ = studentQ.eq('college_id', scopedCollegeId);
@@ -215,14 +215,18 @@ Deno.serve(async (req) => {
         }
       }
 
-      // 3. Portfolio staleness
-      const { data: lastPortfolio } = await sb
-        .from('portfolio_items')
-        .select('created_at, updated_at')
-        .eq('student_id', student.id)
-        .order('updated_at', { ascending: false })
-        .limit(1)
-        .maybeSingle();
+      // 3. Portfolio staleness — portfolio_items uses user_id (auth.uid),
+      // so resolve via student.user_id. Skip cleanly when learner has no
+      // linked auth user (no apprentice account yet).
+      const { data: lastPortfolio } = student.user_id
+        ? await sb
+            .from('portfolio_items')
+            .select('created_at, updated_at')
+            .eq('user_id', student.user_id)
+            .order('updated_at', { ascending: false })
+            .limit(1)
+            .maybeSingle()
+        : { data: null };
       if (lastPortfolio?.updated_at) {
         const days = Math.floor(
           (now.getTime() - new Date(lastPortfolio.updated_at as string).getTime()) / 86400_000

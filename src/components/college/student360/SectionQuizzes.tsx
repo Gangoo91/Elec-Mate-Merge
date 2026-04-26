@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { Brain, FileUp, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Pill, type Tone } from '@/components/college/primitives';
 import {
@@ -6,6 +7,9 @@ import {
   type AssessmentEntry,
   type AssessmentSource,
 } from '@/hooks/useStudentQuizzes';
+import { QuizAttemptReviewSheet } from '@/components/college/sheets/QuizAttemptReviewSheet';
+import { CreateQuizSheet } from '@/components/college/sheets/CreateQuizSheet';
+import { UploadAssessmentDocSheet } from '@/components/college/sheets/UploadAssessmentDocSheet';
 
 /* ==========================================================================
    SectionQuizzes — assessment + quiz history with pass-rate sparkline.
@@ -57,13 +61,18 @@ export function SectionQuizzes({
   id,
   studentName,
   userId,
+  collegeStudentId,
 }: {
   id: string;
   studentName: string;
   userId: string | null;
+  collegeStudentId?: string;
 }) {
   const { attempts, rollUp, loading } = useStudentQuizzes(userId);
   const [expanded, setExpanded] = useState(false);
+  const [reviewAttemptId, setReviewAttemptId] = useState<string | null>(null);
+  const [createQuiz, setCreateQuiz] = useState(false);
+  const [uploadDoc, setUploadDoc] = useState(false);
 
   const visible = useMemo(
     () => (expanded ? attempts : attempts.slice(0, 8)),
@@ -86,7 +95,10 @@ export function SectionQuizzes({
 
   return (
     <section id={id} className="scroll-mt-6">
-      <Header />
+      <Header
+        onCreateQuiz={() => setCreateQuiz(true)}
+        onUploadDoc={() => setUploadDoc(true)}
+      />
 
       <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
         <StatCard
@@ -158,7 +170,13 @@ export function SectionQuizzes({
         ) : (
           <div className="space-y-2.5">
             {visible.map((a) => (
-              <AttemptRow key={a.id} attempt={a} />
+              <AttemptRow
+                key={a.id}
+                attempt={a}
+                onClick={
+                  a.source === 'tutor_quiz' ? () => setReviewAttemptId(a.id) : undefined
+                }
+              />
             ))}
             {attempts.length > 8 && (
               <button
@@ -172,11 +190,43 @@ export function SectionQuizzes({
           </div>
         )}
       </div>
+
+      <QuizAttemptReviewSheet
+        open={reviewAttemptId !== null}
+        onOpenChange={(o) => {
+          if (!o) setReviewAttemptId(null);
+        }}
+        attemptId={reviewAttemptId}
+        studentName={studentName}
+      />
+
+      {collegeStudentId && (
+        <>
+          <CreateQuizSheet
+            open={createQuiz}
+            onOpenChange={setCreateQuiz}
+            collegeStudentId={collegeStudentId}
+            studentName={studentName}
+          />
+          <UploadAssessmentDocSheet
+            open={uploadDoc}
+            onOpenChange={setUploadDoc}
+            collegeStudentId={collegeStudentId}
+            studentName={studentName}
+          />
+        </>
+      )}
     </section>
   );
 }
 
-function Header() {
+function Header({
+  onCreateQuiz,
+  onUploadDoc,
+}: {
+  onCreateQuiz: () => void;
+  onUploadDoc: () => void;
+}) {
   return (
     <div className="flex items-end justify-between gap-4 flex-wrap">
       <div>
@@ -187,11 +237,35 @@ function Header() {
           Quizzes &amp; assessments
         </h2>
       </div>
+      <div className="flex items-center gap-1.5">
+        <button
+          type="button"
+          onClick={onCreateQuiz}
+          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+        >
+          <Sparkles className="h-3.5 w-3.5" />
+          New quiz
+        </button>
+        <button
+          type="button"
+          onClick={onUploadDoc}
+          className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-white/[0.04] border border-white/[0.10] text-white text-[12px] font-semibold hover:bg-white/[0.08] transition-colors touch-manipulation"
+        >
+          <FileUp className="h-3.5 w-3.5" />
+          From doc
+        </button>
+      </div>
     </div>
   );
 }
 
-function AttemptRow({ attempt }: { attempt: AssessmentEntry }) {
+function AttemptRow({
+  attempt,
+  onClick,
+}: {
+  attempt: AssessmentEntry;
+  onClick?: () => void;
+}) {
   const verdict =
     attempt.passed === true
       ? { label: 'Pass', class: 'text-emerald-300', dot: 'bg-emerald-400' }
@@ -199,8 +273,20 @@ function AttemptRow({ attempt }: { attempt: AssessmentEntry }) {
         ? { label: 'Fail', class: 'text-red-300', dot: 'bg-red-400' }
         : null;
 
+  const Wrapper: React.ElementType = onClick ? 'button' : 'div';
+  const wrapperProps = onClick
+    ? {
+        type: 'button' as const,
+        onClick,
+        className:
+          'w-full text-left bg-[hsl(0_0%_12%)] border border-white/[0.06] hover:bg-white/[0.02] hover:border-white/[0.10] rounded-2xl px-4 sm:px-5 py-3.5 flex items-start gap-3 transition-colors touch-manipulation',
+      }
+    : {
+        className: 'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 sm:px-5 py-3.5 flex items-start gap-3',
+      };
+
   return (
-    <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 sm:px-5 py-3.5 flex items-start gap-3">
+    <Wrapper {...wrapperProps}>
       <span
         aria-hidden
         className={cn('mt-1.5 inline-block h-2 w-2 rounded-full flex-shrink-0', SOURCE_DOT[attempt.source])}
@@ -268,7 +354,7 @@ function AttemptRow({ attempt }: { attempt: AssessmentEntry }) {
           </div>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
 

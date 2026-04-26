@@ -47,8 +47,7 @@ export interface CollegeConversation {
   };
   student?: {
     id: string;
-    first_name: string;
-    last_name: string;
+    name: string;
   };
 }
 
@@ -93,7 +92,7 @@ export const collegeConversationService = {
         .select(
           `
           *,
-          student:college_students(id, first_name, last_name)
+          student:college_students(id, name)
         `
         )
         .or(`participant_1_id.eq.${user.id},participant_2_id.eq.${user.id}`)
@@ -437,27 +436,28 @@ export const collegeChatHelpers = {
     if (type === 'student') {
       const { data } = await supabase
         .from('college_students')
-        .select('first_name, last_name, avatar_url')
+        .select('name, photo_url')
         .eq('user_id', userId)
         .single();
 
       return {
-        name: data ? `${data.first_name} ${data.last_name}` : 'Unknown Student',
-        avatar_url: data?.avatar_url || null,
+        name: (data as { name?: string } | null)?.name ?? 'Unknown Student',
+        avatar_url: (data as { photo_url?: string | null } | null)?.photo_url ?? null,
       };
     }
 
     if (type === 'staff') {
       const { data } = await supabase
         .from('college_staff')
-        .select('first_name, last_name, avatar_url, role')
+        .select('name, role, photo_url')
         .eq('user_id', userId)
         .single();
 
+      const row = data as { name?: string; role?: string; photo_url?: string | null } | null;
       return {
-        name: data ? `${data.first_name} ${data.last_name}` : 'Unknown Staff',
-        avatar_url: data?.avatar_url || null,
-        role: data?.role,
+        name: row?.name ?? 'Unknown Staff',
+        avatar_url: row?.photo_url ?? null,
+        role: row?.role,
       };
     }
 

@@ -111,11 +111,15 @@ const LessonPlanPage = lazy(() => import('@/pages/college/LessonPlanPage'));
 const LessonDeliverPage = lazy(() => import('@/pages/college/LessonDeliverPage'));
 const LessonPrintPage = lazy(() => import('@/pages/college/LessonPrintPage'));
 const Student360Page = lazy(() => import('@/pages/college/Student360Page'));
+const Learner360PrintPage = lazy(() => import('@/pages/college/Learner360PrintPage'));
 const PolicyDetailPage = lazy(() => import('@/pages/college/PolicyDetailPage'));
 const CompliancePackPage = lazy(() => import('@/pages/college/CompliancePackPage'));
 const IqaDashboardPage = lazy(() => import('@/pages/college/IqaDashboardPage'));
 const IqaSamplingPlanPage = lazy(() => import('@/pages/college/IqaSamplingPlanPage'));
 const CollegeOtjPage = lazy(() => import('@/pages/college/CollegeOtjPage'));
+const CohortEpaPage = lazy(() => import('@/pages/college/CohortEpaPage'));
+const TutorQuizzesPage = lazy(() => import('@/pages/college/TutorQuizzesPage'));
+const TutorQuizDetailPage = lazy(() => import('@/pages/college/TutorQuizDetailPage'));
 const CurriculumSettingsPage = lazy(() => import('@/pages/college/CurriculumSettingsPage'));
 const ElecIdPage = lazyWithRetry(() => import('@/pages/ElecIdPage'));
 const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'));
@@ -1904,6 +1908,18 @@ const AppRouter = () => {
             }
           />
 
+          {/* People Hub — printable Ofsted-ready Learner 360 PDF */}
+          <Route
+            path="college/students/:id/print"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <Learner360PrintPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
           {/* Compliance — institution policy detail */}
           <Route
             path="college/policies/:id"
@@ -1959,6 +1975,40 @@ const AppRouter = () => {
               <LazyRoute>
                 <CollegeGuard>
                   <CollegeOtjPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Cohort EPA readiness — every learner's verdicts at a glance */}
+          <Route
+            path="college/epa"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <CohortEpaPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+
+          {/* Tutor quizzes / assessments dashboard */}
+          <Route
+            path="college/quizzes"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <TutorQuizzesPage />
+                </CollegeGuard>
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="college/quizzes/:id"
+            element={
+              <LazyRoute>
+                <CollegeGuard>
+                  <TutorQuizDetailPage />
                 </CollegeGuard>
               </LazyRoute>
             }

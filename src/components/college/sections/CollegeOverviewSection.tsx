@@ -14,6 +14,7 @@ import { ComplianceLeadsWidget } from '@/components/college/widgets/ComplianceLe
 import { VerifierInboxWidget } from '@/components/college/widgets/VerifierInboxWidget';
 import { MyAcknowledgementsWidget } from '@/components/college/widgets/MyAcknowledgementsWidget';
 import { TopExpiringWidget } from '@/components/college/widgets/TopExpiringWidget';
+import { DailyDigestCard } from '@/components/college/sections/DailyDigestCard';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useSubmissionQueue } from '@/hooks/college/usePortfolioSubmissions';
@@ -234,6 +235,11 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
       animate="visible"
       className="mx-auto max-w-7xl space-y-12 sm:space-y-16 lg:space-y-20"
     >
+      {/* ──────────────── DAILY DIGEST ──────────────── */}
+      <motion.section variants={itemVariants}>
+        <DailyDigestCard />
+      </motion.section>
+
       {/* ──────────────── HERO KPI STRIP ──────────────── */}
       <motion.section variants={itemVariants}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">

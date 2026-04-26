@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Pill, type Tone } from '@/components/college/primitives';
 import {
@@ -10,6 +10,8 @@ import {
 } from '@/hooks/useStudentIlp';
 import { IlpEditorSheet } from '@/components/college/sheets/IlpEditorSheet';
 import { IlpGoalSheet } from '@/components/college/sheets/IlpGoalSheet';
+import { IlpGenerateSheet } from '@/components/college/sheets/IlpGenerateSheet';
+import { Wand2 } from 'lucide-react';
 
 /* ==========================================================================
    SectionIlp — bidirectional Individual Learning Plan panel.
@@ -72,10 +74,24 @@ export function SectionIlp({
   const { ilp, goals, rollUp, loading } = hook;
 
   const [editorOpen, setEditorOpen] = useState(false);
+  const [generateOpen, setGenerateOpen] = useState(false);
   const [goalSheetOpen, setGoalSheetOpen] = useState<{
     mode: 'add' | 'edit';
     goal?: IlpGoal;
+    acContext?: { unit_code: string; ac_code: string };
   } | null>(null);
+
+  // Cross-section bridge: SectionCoverage's AC cells can dispatch an event
+  // to open the goal sheet pre-filled in from_ac AI mode.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail as { unit_code: string; ac_code: string } | undefined;
+      if (!detail) return;
+      setGoalSheetOpen({ mode: 'add', acContext: detail });
+    };
+    window.addEventListener('ilp:suggest-from-ac', handler);
+    return () => window.removeEventListener('ilp:suggest-from-ac', handler);
+  }, []);
 
   if (!collegeStudentId) {
     return (
@@ -89,24 +105,34 @@ export function SectionIlp({
     <section id={id} className="scroll-mt-6">
       <Header
         onEdit={() => setEditorOpen(true)}
+        onAi={() => setGenerateOpen(true)}
         rollUp={rollUp}
         hasIlp={!!ilp}
       />
 
       {!ilp && !loading ? (
         <div className="mt-5 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
-          <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-            No ILP yet for {studentName.split(' ')[0]}. Create one to set personalised
-            goals and support strategies that {studentName.split(' ')[0]} can see in their
-            app and tick off as they complete them.
+          <p className="text-[12.5px] text-white/85 max-w-md mx-auto leading-relaxed">
+            No ILP yet for {studentName.split(' ')[0]}. Generate one with AI from
+            cross-hub data, or create a blank plan and write it yourself.
           </p>
-          <button
-            type="button"
-            onClick={() => setEditorOpen(true)}
-            className="mt-4 inline-flex items-center justify-center h-10 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
-          >
-            Create ILP
-          </button>
+          <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
+            <button
+              type="button"
+              onClick={() => setGenerateOpen(true)}
+              className="inline-flex items-center justify-center gap-1.5 h-10 px-4 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation"
+            >
+              <Wand2 className="h-3.5 w-3.5" strokeWidth={2.5} />
+              Generate with AI
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditorOpen(true)}
+              className="inline-flex items-center justify-center h-10 px-4 rounded-full border border-white/[0.12] text-white text-[12.5px] font-medium hover:bg-white/[0.06] transition-all touch-manipulation"
+            >
+              Create blank
+            </button>
+          </div>
         </div>
       ) : ilp ? (
         <>
@@ -144,6 +170,17 @@ export function SectionIlp({
         addGoal={hook.addGoal}
         updateGoal={hook.updateGoal}
         removeGoal={hook.removeGoal}
+        collegeStudentId={collegeStudentId}
+        acContext={goalSheetOpen?.acContext ?? null}
+      />
+
+      <IlpGenerateSheet
+        open={generateOpen}
+        onOpenChange={setGenerateOpen}
+        studentId={collegeStudentId}
+        studentName={studentName}
+        hookActions={{ upsertIlp: hook.upsertIlp, addGoal: hook.addGoal }}
+        onSaved={hook.refresh}
       />
     </section>
   );
@@ -153,10 +190,12 @@ export function SectionIlp({
 
 function Header({
   onEdit,
+  onAi,
   rollUp,
   hasIlp,
 }: {
   onEdit: (() => void) | null;
+  onAi?: (() => void) | null;
   rollUp?: ReturnType<typeof useStudentIlp>['rollUp'];
   hasIlp?: boolean;
 }) {
@@ -180,14 +219,25 @@ function Header({
           </div>
         )}
       </div>
-      {onEdit && (
-        <button
-          onClick={onEdit}
-          className="text-[12px] font-medium text-elec-yellow/85 hover:text-elec-yellow transition-colors touch-manipulation no-print"
-        >
-          {hasIlp ? 'Edit ILP →' : 'Create ILP →'}
-        </button>
-      )}
+      <div className="flex items-center gap-2 no-print">
+        {onAi && (
+          <button
+            onClick={onAi}
+            className="inline-flex items-center gap-1.5 h-9 px-3 rounded-full bg-elec-yellow/[0.08] border border-elec-yellow/30 text-elec-yellow text-[12px] font-semibold hover:bg-elec-yellow/[0.14] transition-colors touch-manipulation"
+          >
+            <Wand2 className="h-3 w-3" strokeWidth={2.5} />
+            {hasIlp ? 'Refine with AI' : 'Generate with AI'}
+          </button>
+        )}
+        {onEdit && (
+          <button
+            onClick={onEdit}
+            className="text-[12px] font-medium text-white/85 hover:text-white transition-colors touch-manipulation"
+          >
+            {hasIlp ? 'Edit ILP →' : 'Create blank →'}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

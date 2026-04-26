@@ -97,6 +97,15 @@ export interface Student360 {
     notes: boolean;
     risk: boolean;
   };
+  /** Per-slice error so empty states can explain "permission denied" vs "no data". */
+  errors: {
+    core: string | null;
+    attendance: string | null;
+    grades: string | null;
+    acCoverage: string | null;
+    notes: string | null;
+    risk: string | null;
+  };
   error: string | null;
   refresh: () => Promise<void>;
   /**
@@ -128,6 +137,14 @@ export function useStudent360(studentId: string | null): Student360 {
     notes: true,
     risk: true,
   });
+  const [errors, setErrors] = useState<Student360['errors']>({
+    core: null,
+    attendance: null,
+    grades: null,
+    acCoverage: null,
+    notes: null,
+    risk: null,
+  });
   const [error, setError] = useState<string | null>(null);
 
   const fetchAll = useCallback(async () => {
@@ -155,7 +172,7 @@ export function useStudent360(studentId: string | null): Student360 {
     const corePromise = supabase
       .from('college_students')
       .select(
-        'id, user_id, name, email, phone, uln, photo_url, cohort_id, course_id, employer_id, start_date, expected_end_date, status, progress_percent, risk_level, send_flags, eal, ehcp_ref, first_language, pronouns, accessibility_notes, college_cohorts(name), college_courses(title)'
+        'id, user_id, name, email, phone, uln, photo_url, cohort_id, course_id, employer_id, start_date, expected_end_date, status, progress_percent, risk_level, send_flags, eal, ehcp_ref, first_language, pronouns, accessibility_notes, college_cohorts(name), college_courses(name)'
       )
       .eq('id', studentId)
       .maybeSingle()
@@ -184,7 +201,7 @@ export function useStudent360(studentId: string | null): Student360 {
           cohort_id: data.cohort_id,
           cohort_name: (data.college_cohorts as { name?: string } | null)?.name ?? null,
           course_id: data.course_id,
-          course_name: (data.college_courses as { title?: string } | null)?.title ?? null,
+          course_name: (data.college_courses as { name?: string } | null)?.name ?? null,
           employer_id: data.employer_id,
           start_date: data.start_date,
           expected_end_date: data.expected_end_date,
@@ -228,8 +245,17 @@ export function useStudent360(studentId: string | null): Student360 {
       .from('student_ac_coverage')
       .select('qualification_code, unit_code, ac_code, status, evidence_count, last_evidence_at')
       .eq('student_id', studentId)
-      .then(({ data }) => {
-        setAcCoverage((data ?? []) as AcCoverageRow[]);
+      .then(({ data, error: qErr }) => {
+        if (qErr) {
+          // Surface the real error (RLS denial, network, etc.) so the
+          // section can explain why it's empty rather than misleading the tutor.
+          console.error('[useStudent360] ac coverage query failed', qErr);
+          setErrors((e) => ({ ...e, acCoverage: qErr.message ?? 'unknown' }));
+          setAcCoverage([]);
+        } else {
+          setErrors((e) => ({ ...e, acCoverage: null }));
+          setAcCoverage((data ?? []) as AcCoverageRow[]);
+        }
       })
       .finally(() => setLoading((l) => ({ ...l, acCoverage: false })));
 
@@ -392,6 +418,7 @@ export function useStudent360(studentId: string | null): Student360 {
       risk,
       riskHistory,
       loading,
+      errors,
       error,
       refresh: fetchAll,
       prependOptimisticNote,
@@ -407,6 +434,7 @@ export function useStudent360(studentId: string | null): Student360 {
       risk,
       riskHistory,
       loading,
+      errors,
       error,
       fetchAll,
       prependOptimisticNote,

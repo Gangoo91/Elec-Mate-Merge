@@ -114,11 +114,10 @@ export function useCollegeOtjOverview(filters: OtjOverviewFilters = {}): OtjOver
       // Get the student list scoped to the current user's college via RLS.
       // We pull from college_students directly — RLS on that table already
       // restricts to the staff member's college.
+      // No embeds — separate lookups for cohort/course names below.
       let q = supabase
         .from('college_students')
-        .select(
-          'id, user_id, name, status, cohort_id, course_id, employer_id, college_cohorts(name), college_courses(title)'
-        );
+        .select('id, user_id, name, status, cohort_id, course_id, employer_id');
       if (filters.cohort_id) q = q.eq('cohort_id', filters.cohort_id);
       if (filters.course_id) q = q.eq('course_id', filters.course_id);
       const { data: students, error: stuErr } = await q;
@@ -129,9 +128,33 @@ export function useCollegeOtjOverview(filters: OtjOverviewFilters = {}): OtjOver
         user_id: string | null;
         name: string;
         status: string | null;
-        college_cohorts: { name?: string } | null;
-        college_courses: { title?: string } | null;
+        cohort_id: string | null;
+        course_id: string | null;
       }>;
+
+      // Resolve cohort + course names in two batched lookups
+      const cohortIds = Array.from(
+        new Set(studentList.map((s) => s.cohort_id).filter((v): v is string => !!v))
+      );
+      const courseIds = Array.from(
+        new Set(studentList.map((s) => s.course_id).filter((v): v is string => !!v))
+      );
+      const [cohortRows, courseRows] = await Promise.all([
+        cohortIds.length
+          ? supabase.from('college_cohorts').select('id, name').in('id', cohortIds)
+          : Promise.resolve({ data: [] }),
+        courseIds.length
+          ? supabase.from('college_courses').select('id, name').in('id', courseIds)
+          : Promise.resolve({ data: [] }),
+      ]);
+      const cohortNameById = new Map<string, string>();
+      for (const r of (cohortRows.data ?? []) as Array<{ id: string; name: string }>) {
+        cohortNameById.set(r.id, r.name);
+      }
+      const courseTitleById = new Map<string, string>();
+      for (const r of (courseRows.data ?? []) as Array<{ id: string; name: string }>) {
+        courseTitleById.set(r.id, r.name);
+      }
 
       const userIds = studentList.map((s) => s.user_id).filter((u): u is string => !!u);
 
@@ -258,8 +281,8 @@ export function useCollegeOtjOverview(filters: OtjOverviewFilters = {}): OtjOver
           student_id: s.id,
           user_id: uid,
           name: s.name,
-          cohort_name: s.college_cohorts?.name ?? null,
-          course_name: s.college_courses?.title ?? null,
+          cohort_name: s.cohort_id ? (cohortNameById.get(s.cohort_id) ?? null) : null,
+          course_name: s.course_id ? (courseTitleById.get(s.course_id) ?? null) : null,
           employer_name: null,
           this_week_minutes: Math.round(thisWeek),
           last_4_weeks_minutes: Math.round(last4),

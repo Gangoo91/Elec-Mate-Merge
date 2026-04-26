@@ -6,6 +6,7 @@ import { LazyRoute } from '@/components/LazyRoute';
 const ApprenticeHub = lazy(() => import('@/pages/ApprenticeHub'));
 const ApprenticeMentalHealth = lazy(() => import('@/pages/MentalHealthHub'));
 const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
+const MyCollegePlanPage = lazy(() => import('@/pages/apprentice/MyCollegePlanPage'));
 const RightsWages = lazy(() => import('@/pages/apprentice/rights-guide/WagesPage'));
 const RightsYourRights = lazy(() => import('@/pages/apprentice/rights-guide/RightsPage'));
 const RightsSupport = lazy(() => import('@/pages/apprentice/rights-guide/SupportPage'));
@@ -186,6 +187,7 @@ const LearningVideos = lazy(() => import('@/pages/apprentice/LearningVideos'));
 const SiteDiary = lazy(() => import('@/pages/apprentice/SiteDiary'));
 const EPASimulator = lazy(() => import('@/pages/apprentice/epa/EPASimulator'));
 const AM2Simulator = lazy(() => import('@/pages/apprentice/am2/AM2Simulator'));
+const TakeQuizPage = lazy(() => import('@/pages/apprentice/TakeQuizPage'));
 
 const ApprenticeRoutes = () => (
   <Routes>
@@ -283,6 +285,14 @@ const ApprenticeRoutes = () => (
       element={
         <LazyRoute>
           <RightsAndPay />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="college-plan"
+      element={
+        <LazyRoute>
+          <MyCollegePlanPage />
         </LazyRoute>
       }
     />
@@ -1107,6 +1117,14 @@ const ApprenticeRoutes = () => (
       element={
         <LazyRoute>
           <AM2Simulator />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="college/quiz/:id"
+      element={
+        <LazyRoute>
+          <TakeQuizPage />
         </LazyRoute>
       }
     />

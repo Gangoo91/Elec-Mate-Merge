@@ -7,6 +7,7 @@
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { forwardRef, type ReactNode } from 'react';
+import { SheetTitle, SheetDescription } from '@/components/ui/sheet';
 
 export { PeopleListRow } from './PeopleListRow';
 export type {
@@ -959,11 +960,17 @@ export function SheetShell({
       </div>
       <div className="flex-shrink-0 border-b border-white/[0.06] px-5 pb-4">
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-        <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
-          {title}
-        </div>
-        {description && (
-          <div className="mt-1.5 text-[12.5px] text-white">{description}</div>
+        <SheetTitle asChild>
+          <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
+            {title}
+          </div>
+        </SheetTitle>
+        {description ? (
+          <SheetDescription asChild>
+            <div className="mt-1.5 text-[12.5px] text-white">{description}</div>
+          </SheetDescription>
+        ) : (
+          <SheetDescription className="sr-only">{typeof title === 'string' ? title : 'Sheet'}</SheetDescription>
         )}
       </div>
       <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
