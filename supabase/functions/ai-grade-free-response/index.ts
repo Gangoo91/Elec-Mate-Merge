@@ -59,10 +59,21 @@ type LearnerAnswer =
   | { kind: 'multi_choice'; index: number }
   | { kind: 'true_false'; value: boolean }
   | { kind: 'short_answer' | 'long_answer' | 'scenario'; text: string }
-  | { kind: 'calculation'; numeric: number | null; working: string };
+  | { kind: 'calculation'; numeric: number | null; working: string }
+  | {
+      kind: 'image_annotation' | 'practical_evidence';
+      caption: string;
+      files: Array<{ url: string; name: string; mime?: string }>;
+    };
 
 function isFreeResponse(kind: string): boolean {
-  return kind === 'short_answer' || kind === 'long_answer' || kind === 'scenario';
+  return (
+    kind === 'short_answer' ||
+    kind === 'long_answer' ||
+    kind === 'scenario' ||
+    kind === 'image_annotation' ||
+    kind === 'practical_evidence'
+  );
 }
 
 /* ───────────────────────── auth ───────────────────────── */
@@ -185,7 +196,18 @@ function buildUserPrompt(items: Array<{ q: QuestionRow; a: LearnerAnswer | undef
   lines.push('');
 
   for (const { q, a } of items) {
-    const text = a && (a.kind === 'short_answer' || a.kind === 'long_answer' || a.kind === 'scenario') ? a.text : '';
+    let learnerText = '';
+    let mediaSummary = '';
+    if (a) {
+      if (a.kind === 'short_answer' || a.kind === 'long_answer' || a.kind === 'scenario') {
+        learnerText = a.text ?? '';
+      } else if (a.kind === 'image_annotation' || a.kind === 'practical_evidence') {
+        learnerText = a.caption ?? '';
+        if (a.files && a.files.length > 0) {
+          mediaSummary = a.files.map((f) => `${f.name}${f.mime ? ` (${f.mime})` : ''}`).join(', ');
+        }
+      }
+    }
     const expected = q.expected_answer ?? {};
     lines.push(`## Question id=${q.id} — max ${q.points ?? 1} pts (kind=${q.question_kind})`);
     if (q.ac_ref) lines.push(`AC: ${q.ac_ref}`);
@@ -200,8 +222,14 @@ function buildUserPrompt(items: Array<{ q: QuestionRow; a: LearnerAnswer | undef
         lines.push(`  - ${c.ref}${c.snippet ? `: ${c.snippet}` : ''}`);
       }
     }
-    lines.push(`Learner answer:`);
-    lines.push(text.trim() ? text.trim() : '[no answer submitted]');
+    if (mediaSummary) {
+      lines.push(`Media uploaded: ${mediaSummary}`);
+      lines.push(
+        '(You cannot view the file directly — grade based on the learner caption + your knowledge of what the AC requires. Be conservative if the caption is empty.)'
+      );
+    }
+    lines.push(`Learner answer (${q.question_kind === 'image_annotation' || q.question_kind === 'practical_evidence' ? 'caption' : 'text'}):`);
+    lines.push(learnerText.trim() ? learnerText.trim() : '[no answer submitted]');
     lines.push('');
   }
   lines.push('Grade every question above via submit_grades. One entry per question_id.');

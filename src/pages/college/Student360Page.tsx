@@ -60,6 +60,19 @@ export default function Student360Page() {
   const [quizOpen, setQuizOpen] = useState<{ acCodes?: string[] } | null>(null);
   const [uploadDocOpen, setUploadDocOpen] = useState(false);
 
+  // Listen for "quiz:suggest-from-ac" events from AC chips (shift-click) or
+  // weak-AC bulk action — opens CreateQuizSheet pre-filled with the AC codes.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ ac_code?: string; ac_codes?: string[] }>).detail;
+      const codes = detail?.ac_codes ?? (detail?.ac_code ? [detail.ac_code] : []);
+      if (codes.length === 0) return;
+      setQuizOpen({ acCodes: codes });
+    };
+    window.addEventListener('quiz:suggest-from-ac', handler);
+    return () => window.removeEventListener('quiz:suggest-from-ac', handler);
+  }, []);
+
   const neighbors = useCohortNeighbors(id ?? null);
   const staffRole = useStaffRole();
 
@@ -1177,8 +1190,17 @@ function AcCell({ row }: { row: AcCoverageRow }) {
   return (
     <button
       type="button"
-      title={`AC ${row.ac_code} · ${row.status.replace('_', ' ')} — click to AI-suggest a goal targeting this AC`}
-      onClick={() => {
+      title={`AC ${row.ac_code} · ${row.status.replace('_', ' ')} — click for AI-suggested ILP goal · shift-click for AI quiz`}
+      onClick={(e) => {
+        if (e.shiftKey) {
+          window.dispatchEvent(
+            new CustomEvent('quiz:suggest-from-ac', {
+              detail: { unit_code: row.unit_code, ac_code: row.ac_code },
+            })
+          );
+          document.getElementById('quizzes')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
         window.dispatchEvent(
           new CustomEvent('ilp:suggest-from-ac', {
             detail: { unit_code: row.unit_code, ac_code: row.ac_code },

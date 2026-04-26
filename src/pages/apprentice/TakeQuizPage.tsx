@@ -74,7 +74,12 @@ type LearnerAnswer =
   | { kind: 'multi_choice'; index: number }
   | { kind: 'true_false'; value: boolean }
   | { kind: 'short_answer' | 'long_answer' | 'scenario'; text: string }
-  | { kind: 'calculation'; numeric: number | null; working: string };
+  | { kind: 'calculation'; numeric: number | null; working: string }
+  | {
+      kind: 'image_annotation' | 'practical_evidence';
+      caption: string;
+      files: Array<{ url: string; name: string; mime?: string }>;
+    };
 
 interface AttemptRow {
   id: string;
@@ -327,7 +332,9 @@ export default function TakeQuizPage() {
         } else if (
           q.question_kind === 'short_answer' ||
           q.question_kind === 'long_answer' ||
-          q.question_kind === 'scenario'
+          q.question_kind === 'scenario' ||
+          q.question_kind === 'image_annotation' ||
+          q.question_kind === 'practical_evidence'
         ) {
           // Defer to AI grading
           pendingGradeRows.push({ question_id: q.id, learner_answer: a });
@@ -1022,16 +1029,201 @@ function AnswerInput({
     );
   }
 
-  // image_annotation / practical_evidence — not yet supported on the apprentice side
+  // image_annotation / practical_evidence — file upload + caption
+  if (q.question_kind === 'image_annotation' || q.question_kind === 'practical_evidence') {
+    return (
+      <MediaAnswerInput
+        q={q}
+        answer={answer}
+        locked={locked}
+        onAnswer={onAnswer}
+      />
+    );
+  }
+
+  return null;
+}
+
+function MediaAnswerInput({
+  q,
+  answer,
+  locked,
+  onAnswer,
+}: {
+  q: QuizQuestion;
+  answer: LearnerAnswer | undefined;
+  locked: boolean;
+  onAnswer: (qid: string, value: LearnerAnswer, revealExplanation?: boolean) => void;
+}) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const isMedia =
+    q.question_kind === 'image_annotation' || q.question_kind === 'practical_evidence';
+  if (!isMedia) return null;
+  const current =
+    answer?.kind === 'image_annotation' || answer?.kind === 'practical_evidence'
+      ? answer
+      : ({ kind: q.question_kind, caption: '', files: [] } as LearnerAnswer & {
+          kind: typeof q.question_kind;
+          caption: string;
+          files: Array<{ url: string; name: string; mime?: string }>;
+        });
+  const accept =
+    q.question_kind === 'image_annotation'
+      ? 'image/*'
+      : 'image/*,video/*,application/pdf';
+
+  const handleFiles = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    try {
+      const { data: userData } = await supabase.auth.getUser();
+      const uid = userData?.user?.id;
+      if (!uid) throw new Error('Not signed in');
+      const uploaded: Array<{ url: string; name: string; mime?: string }> = [];
+      for (const f of Array.from(files)) {
+        if (f.size > 10 * 1024 * 1024) {
+          throw new Error(`${f.name} is over 10 MB.`);
+        }
+        const safe = f.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+        const path = `quiz-evidence/${uid}/${q.id}/${Date.now()}-${safe}`;
+        const { error: upErr } = await supabase.storage
+          .from('portfolio-evidence')
+          .upload(path, f, { contentType: f.type || 'application/octet-stream' });
+        if (upErr) throw new Error(upErr.message);
+        const { data: pub } = supabase.storage
+          .from('portfolio-evidence')
+          .getPublicUrl(path);
+        uploaded.push({ url: pub.publicUrl, name: f.name, mime: f.type });
+      }
+      const next: LearnerAnswer = {
+        kind: q.question_kind as 'image_annotation' | 'practical_evidence',
+        caption: current.caption,
+        files: [...current.files, ...uploaded],
+      };
+      onAnswer(q.id, next, false);
+    } catch (e) {
+      // best-effort — surface error inline next render via local state would
+      // mean another hook; instead just log and let the user try again.
+      console.error(e);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const removeFile = (idx: number) => {
+    const next: LearnerAnswer = {
+      kind: q.question_kind as 'image_annotation' | 'practical_evidence',
+      caption: current.caption,
+      files: current.files.filter((_, i) => i !== idx),
+    };
+    onAnswer(q.id, next, false);
+  };
+
   return (
-    <div className="rounded-xl border border-amber-500/[0.30] bg-amber-500/[0.05] px-4 py-3">
-      <div className="text-[10px] font-semibold uppercase tracking-[0.18em] text-amber-200 mb-1">
-        Not yet supported
-      </div>
-      <p className="text-[12px] text-white leading-snug">
-        This question type ({kindLabel(q.question_kind)}) needs to be answered with your tutor. Skip
-        for now and they'll mark it offline.
-      </p>
+    <div className="space-y-3">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept={accept}
+        multiple
+        className="hidden"
+        disabled={locked}
+        onChange={(e) => void handleFiles(e.target.files)}
+      />
+      <button
+        type="button"
+        onClick={() => fileInputRef.current?.click()}
+        disabled={locked || uploading}
+        className="w-full rounded-xl border-2 border-dashed border-white/[0.10] bg-white/[0.02] hover:bg-white/[0.04] px-4 py-5 text-center disabled:opacity-50 touch-manipulation"
+      >
+        <div className="inline-flex items-center justify-center h-9 w-9 rounded-xl bg-white/[0.06] mb-1.5">
+          <Brain className="h-4 w-4 text-white" />
+        </div>
+        <div className="text-[13px] font-semibold text-white">
+          {uploading
+            ? 'Uploading…'
+            : q.question_kind === 'image_annotation'
+              ? 'Tap to upload your annotated image'
+              : 'Tap to upload photo / video / PDF evidence'}
+        </div>
+        <div className="text-[10.5px] text-white/65 mt-0.5">
+          Up to 10 MB per file. {q.question_kind === 'image_annotation' ? 'Image only.' : 'Image, video or PDF.'}
+        </div>
+      </button>
+      {current.files.length > 0 && (
+        <ul className="space-y-1.5">
+          {current.files.map((f, i) => (
+            <li
+              key={i}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_15%)] px-3 py-2 flex items-center gap-2"
+            >
+              {f.mime?.startsWith('image/') ? (
+                <img
+                  src={f.url}
+                  alt={f.name}
+                  className="h-12 w-12 rounded-md object-cover flex-shrink-0"
+                />
+              ) : (
+                <div className="h-12 w-12 rounded-md bg-white/[0.04] inline-flex items-center justify-center flex-shrink-0">
+                  <BookOpen className="h-5 w-5 text-white/65" />
+                </div>
+              )}
+              <div className="min-w-0 flex-1">
+                <div className="text-[12px] text-white truncate">{f.name}</div>
+                <a
+                  href={f.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-[10.5px] text-blue-300 hover:underline"
+                >
+                  Open
+                </a>
+              </div>
+              {!locked && (
+                <button
+                  type="button"
+                  onClick={() => removeFile(i)}
+                  className="h-8 w-8 inline-flex items-center justify-center rounded-md hover:bg-white/[0.06] text-white/65 hover:text-red-300 touch-manipulation"
+                  aria-label="Remove"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      <textarea
+        value={current.caption}
+        disabled={locked}
+        onChange={(e) =>
+          onAnswer(
+            q.id,
+            {
+              kind: q.question_kind as 'image_annotation' | 'practical_evidence',
+              caption: e.target.value,
+              files: current.files,
+            },
+            false
+          )
+        }
+        rows={3}
+        placeholder={
+          q.question_kind === 'image_annotation'
+            ? 'Describe what each annotation marks (the AI marks against your description + the image).'
+            : 'Describe what the evidence shows and how it meets the AC.'
+        }
+        className="w-full rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[12.5px] text-white placeholder:text-white/35 px-4 py-3 leading-relaxed touch-manipulation resize-y disabled:opacity-70"
+      />
+      {q.marking_guidance && locked && (
+        <div className="rounded-lg bg-white/[0.03] border border-white/[0.08] px-3 py-2">
+          <div className="text-[9.5px] font-semibold uppercase tracking-[0.18em] text-white/65 mb-0.5">
+            Marking guidance
+          </div>
+          <p className="text-[11.5px] text-white/85 leading-snug">{q.marking_guidance}</p>
+        </div>
+      )}
     </div>
   );
 }
@@ -1287,7 +1479,13 @@ function kindLabel(kind: QuestionKind): string {
 }
 
 function isFreeResponseKind(kind: QuestionKind): boolean {
-  return kind === 'short_answer' || kind === 'long_answer' || kind === 'scenario';
+  return (
+    kind === 'short_answer' ||
+    kind === 'long_answer' ||
+    kind === 'scenario' ||
+    kind === 'image_annotation' ||
+    kind === 'practical_evidence'
+  );
 }
 
 function questionKindMixLabel(qs: QuizQuestion[]): string {
@@ -1334,6 +1532,11 @@ function answerPreview(q: QuizQuestion, a: LearnerAnswer | undefined): string | 
   if (a.kind === 'calculation') {
     const expected = (q.expected_answer ?? {}) as { units?: string };
     return a.numeric == null ? '—' : `${a.numeric}${expected.units ? ' ' + expected.units : ''}`;
+  }
+  if (a.kind === 'image_annotation' || a.kind === 'practical_evidence') {
+    const fileLabel = a.files.length === 0 ? 'no files' : `${a.files.length} file${a.files.length === 1 ? '' : 's'}`;
+    if (!a.caption) return fileLabel;
+    return `${fileLabel} · ${a.caption.length > 80 ? a.caption.slice(0, 77) + '…' : a.caption}`;
   }
   return a.text.length > 120 ? a.text.slice(0, 117) + '…' : a.text;
 }

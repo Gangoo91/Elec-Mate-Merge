@@ -48,6 +48,12 @@ interface QuizMeta {
   creator_id: string | null;
 }
 
+type LearnerAnswer =
+  | { kind: 'multi_choice'; index: number }
+  | { kind: 'true_false'; value: boolean }
+  | { kind: 'short_answer' | 'long_answer' | 'scenario'; text: string }
+  | { kind: 'calculation'; numeric: number | null; working: string };
+
 interface AttemptRow {
   id: string;
   student_id: string;
@@ -56,6 +62,7 @@ interface AttemptRow {
   started_at: string | null;
   completed_at: string | null;
   time_taken_seconds: number | null;
+  answers: Record<string, LearnerAnswer> | null;
   student_name: string;
 }
 
@@ -66,6 +73,16 @@ interface QuestionRow {
   ac_ref: string | null;
   points: number | null;
   sort_order: number | null;
+  options: string[] | null;
+  correct_answer_index: number | null;
+  expected_answer: Record<string, unknown> | null;
+}
+
+interface GradeRow {
+  attempt_id: string;
+  question_id: string;
+  ai_score: number | null;
+  tutor_override_score: number | null;
 }
 
 export default function TutorQuizDetailPage() {
@@ -77,6 +94,7 @@ export default function TutorQuizDetailPage() {
   const [questions, setQuestions] = useState<QuestionRow[]>([]);
   const [attempts, setAttempts] = useState<AttemptRow[]>([]);
   const [pendingByAttempt, setPendingByAttempt] = useState<Record<string, number>>({});
+  const [allGrades, setAllGrades] = useState<GradeRow[]>([]);
   const [reviewAttemptId, setReviewAttemptId] = useState<string | null>(null);
   const [reviewStudentName, setReviewStudentName] = useState<string | undefined>();
   const [busy, setBusy] = useState<'publish' | 'regrade' | null>(null);
@@ -105,13 +123,15 @@ export default function TutorQuizDetailPage() {
     const [{ data: qs }, { data: at }] = await Promise.all([
       supabase
         .from('tutor_quiz_questions')
-        .select('id, question_kind, question_text, ac_ref, points, sort_order')
+        .select(
+          'id, question_kind, question_text, ac_ref, points, sort_order, options, correct_answer_index, expected_answer'
+        )
         .eq('quiz_id', id)
         .order('sort_order', { ascending: true, nullsFirst: false }),
       supabase
         .from('tutor_quiz_attempts')
         .select(
-          'id, student_id, score, total_points, started_at, completed_at, time_taken_seconds'
+          'id, student_id, score, total_points, started_at, completed_at, time_taken_seconds, answers'
         )
         .eq('quiz_id', id)
         .order('started_at', { ascending: false }),
@@ -137,23 +157,26 @@ export default function TutorQuizDetailPage() {
       attemptList.map((a) => ({ ...a, student_name: nameById.get(a.student_id) ?? 'Apprentice' }))
     );
 
-    // Pending AI grades
+    // All grades — used for both per-attempt pending count and per-question stats
     if (attemptList.length > 0) {
       const { data: grades } = await supabase
         .from('tutor_quiz_answer_grades')
-        .select('attempt_id, ai_score')
+        .select('attempt_id, question_id, ai_score, tutor_override_score')
         .in(
           'attempt_id',
           attemptList.map((a) => a.id)
         );
+      const rows = (grades ?? []) as GradeRow[];
+      setAllGrades(rows);
       const map: Record<string, number> = {};
-      for (const g of (grades ?? []) as Array<{ attempt_id: string; ai_score: number | null }>) {
+      for (const g of rows) {
         if (g.ai_score == null) {
           map[g.attempt_id] = (map[g.attempt_id] ?? 0) + 1;
         }
       }
       setPendingByAttempt(map);
     } else {
+      setAllGrades([]);
       setPendingByAttempt({});
     }
     setLoading(false);
@@ -175,6 +198,92 @@ export default function TutorQuizDetailPage() {
       supabase.removeChannel(ch);
     };
   }, [id, load]);
+
+  const questionStats = useMemo(() => {
+    if (questions.length === 0 || attempts.length === 0) return [];
+    const completedAttempts = attempts.filter((a) => a.completed_at);
+    const gradesByAttemptQ = new Map<string, GradeRow>();
+    for (const g of allGrades) {
+      gradesByAttemptQ.set(`${g.attempt_id}:${g.question_id}`, g);
+    }
+    return questions.map((q) => {
+      let correct = 0;
+      let incorrect = 0;
+      let partial = 0;
+      let pending = 0;
+      let unanswered = 0;
+      for (const a of completedAttempts) {
+        const ans = a.answers?.[q.id];
+        if (ans == null) {
+          unanswered += 1;
+          continue;
+        }
+        if (q.question_kind === 'multi_choice' && ans.kind === 'multi_choice') {
+          if (ans.index === q.correct_answer_index) correct += 1;
+          else incorrect += 1;
+        } else if (q.question_kind === 'true_false' && ans.kind === 'true_false') {
+          const expectedTrue = q.correct_answer_index === 0;
+          if (ans.value === expectedTrue) correct += 1;
+          else incorrect += 1;
+        } else if (q.question_kind === 'calculation' && ans.kind === 'calculation') {
+          const expected = (q.expected_answer ?? {}) as { numeric_value?: number; tolerance?: number };
+          if (
+            expected.numeric_value != null &&
+            ans.numeric != null &&
+            Math.abs(ans.numeric - expected.numeric_value) <= (expected.tolerance ?? 0)
+          ) {
+            correct += 1;
+          } else {
+            incorrect += 1;
+          }
+        } else {
+          // Free-response — read from grade row
+          const g = gradesByAttemptQ.get(`${a.id}:${q.id}`);
+          const points = q.points ?? 1;
+          const effective = g?.tutor_override_score ?? g?.ai_score;
+          if (effective == null) pending += 1;
+          else if (effective >= points) correct += 1;
+          else if (effective <= 0) incorrect += 1;
+          else partial += 1;
+        }
+      }
+      const total = correct + incorrect + partial + pending + unanswered;
+      const correctness = total > 0 ? Math.round(((correct + partial * 0.5) / total) * 100) : null;
+      return {
+        question: q,
+        correct,
+        incorrect,
+        partial,
+        pending,
+        unanswered,
+        total,
+        correctness,
+      };
+    });
+  }, [questions, attempts, allGrades]);
+
+  const acStats = useMemo(() => {
+    const acMap = new Map<
+      string,
+      { correct: number; total: number; questions: number }
+    >();
+    for (const qs of questionStats) {
+      const ac = qs.question.ac_ref;
+      if (!ac) continue;
+      const cur = acMap.get(ac) ?? { correct: 0, total: 0, questions: 0 };
+      cur.correct += qs.correct + qs.partial * 0.5;
+      cur.total += qs.total;
+      cur.questions += 1;
+      acMap.set(ac, cur);
+    }
+    return Array.from(acMap.entries())
+      .map(([ac, s]) => ({
+        ac_ref: ac,
+        correctness: s.total > 0 ? Math.round((s.correct / s.total) * 100) : null,
+        questions: s.questions,
+      }))
+      .sort((a, b) => (a.correctness ?? 100) - (b.correctness ?? 100));
+  }, [questionStats]);
 
   const stats = useMemo(() => {
     const completed = attempts.filter((a) => a.completed_at);
@@ -418,6 +527,151 @@ export default function TutorQuizDetailPage() {
           icon={<TrendingUp className="h-3.5 w-3.5" />}
         />
       </div>
+
+      {/* Question performance */}
+      {questionStats.length > 0 && stats.completed > 0 && (
+        <div className="mt-6">
+          <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
+            Question performance
+          </div>
+          <h2 className="mt-1 text-[18px] font-semibold text-white tracking-tight">
+            Where the cohort struggles
+          </h2>
+
+          {acStats.length > 0 && (
+            <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2">
+              {acStats.slice(0, 3).map((s) => (
+                <button
+                  key={s.ac_ref}
+                  type="button"
+                  onClick={() =>
+                    window.dispatchEvent(
+                      new CustomEvent('quiz:suggest-from-ac', {
+                        detail: { ac_codes: [s.ac_ref] },
+                      })
+                    )
+                  }
+                  className={cn(
+                    'rounded-2xl border px-4 py-3 text-left touch-manipulation transition-colors hover:ring-1 hover:ring-elec-yellow/40',
+                    (s.correctness ?? 100) < 50
+                      ? 'border-red-500/[0.30] bg-red-500/[0.05]'
+                      : (s.correctness ?? 100) < 75
+                        ? 'border-amber-500/[0.30] bg-amber-500/[0.05]'
+                        : 'border-emerald-500/[0.20] bg-emerald-500/[0.05]'
+                  )}
+                  title="Send a follow-up quiz on this AC"
+                >
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/85">
+                    AC {s.ac_ref}
+                  </div>
+                  <div className="mt-1 flex items-baseline gap-2">
+                    <span className="text-[20px] font-semibold tabular-nums text-white leading-none">
+                      {s.correctness ?? '—'}%
+                    </span>
+                    <span className="text-[10.5px] text-white/65 tabular-nums">
+                      across {s.questions}{' '}
+                      {s.questions === 1 ? 'question' : 'questions'}
+                    </span>
+                  </div>
+                  <div className="mt-1.5 text-[10.5px] text-white/85 inline-flex items-center gap-1">
+                    <Sparkles className="h-3 w-3" />
+                    Tap to send a quiz on this AC
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+
+          <ol className="mt-3 space-y-2">
+            {questionStats.map((qs, i) => (
+              <li
+                key={qs.question.id}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-4 py-3"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 inline-flex items-center justify-center h-9 w-9 rounded-xl bg-white/[0.04] border border-white/[0.10] text-[11px] font-semibold tabular-nums text-white">
+                    Q{i + 1}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-1.5 flex-wrap mb-0.5">
+                      {qs.question.ac_ref && (
+                        <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.10] border border-blue-400/30 text-[9.5px] font-semibold tracking-[0.06em] uppercase text-blue-200">
+                          AC {qs.question.ac_ref}
+                        </span>
+                      )}
+                      <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-white/[0.04] border border-white/[0.10] text-[9.5px] font-semibold tracking-[0.06em] uppercase text-white">
+                        {qs.question.question_kind.replace('_', ' ')}
+                      </span>
+                    </div>
+                    <div className="text-[12.5px] text-white leading-snug truncate">
+                      {qs.question.question_text}
+                    </div>
+                    {/* Bar */}
+                    <div className="mt-2 h-2 rounded-full bg-white/[0.05] overflow-hidden flex">
+                      {qs.correct > 0 && (
+                        <div
+                          className="bg-emerald-400/85"
+                          style={{ width: `${(qs.correct / qs.total) * 100}%` }}
+                        />
+                      )}
+                      {qs.partial > 0 && (
+                        <div
+                          className="bg-amber-400/85"
+                          style={{ width: `${(qs.partial / qs.total) * 100}%` }}
+                        />
+                      )}
+                      {qs.incorrect > 0 && (
+                        <div
+                          className="bg-red-400/85"
+                          style={{ width: `${(qs.incorrect / qs.total) * 100}%` }}
+                        />
+                      )}
+                      {qs.pending > 0 && (
+                        <div
+                          className="bg-blue-400/85"
+                          style={{ width: `${(qs.pending / qs.total) * 100}%` }}
+                        />
+                      )}
+                      {qs.unanswered > 0 && (
+                        <div
+                          className="bg-white/[0.10]"
+                          style={{ width: `${(qs.unanswered / qs.total) * 100}%` }}
+                        />
+                      )}
+                    </div>
+                    <div className="mt-1.5 flex items-center gap-x-2 text-[10.5px] tabular-nums flex-wrap">
+                      <span className="text-emerald-300">{qs.correct} correct</span>
+                      {qs.partial > 0 && <span className="text-amber-300">· {qs.partial} partial</span>}
+                      <span className="text-red-300">· {qs.incorrect} wrong</span>
+                      {qs.pending > 0 && <span className="text-blue-300">· {qs.pending} pending</span>}
+                      {qs.unanswered > 0 && <span className="text-white/55">· {qs.unanswered} skipped</span>}
+                    </div>
+                  </div>
+                  <div className="flex-shrink-0 text-right">
+                    <div
+                      className={cn(
+                        'text-[16px] font-semibold tabular-nums leading-none',
+                        qs.correctness == null
+                          ? 'text-white/55'
+                          : qs.correctness >= 75
+                            ? 'text-emerald-300'
+                            : qs.correctness >= 50
+                              ? 'text-amber-300'
+                              : 'text-red-300'
+                      )}
+                    >
+                      {qs.correctness ?? '—'}%
+                    </div>
+                    <div className="mt-0.5 text-[10px] text-white/55 tabular-nums">
+                      n={qs.total}
+                    </div>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
 
       {/* Attempts list */}
       <div className="mt-6">

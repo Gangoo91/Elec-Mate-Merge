@@ -410,6 +410,97 @@ export function UploadAssessmentDocSheet({
                 </div>
               )}
 
+              {/* Targeting */}
+              <Field label="Send to">
+                <div className="grid grid-cols-2 gap-1.5">
+                  {(['learner', 'cohort'] as const).map((mode) => {
+                    const disabled = mode === 'learner' && !studentName;
+                    return (
+                      <button
+                        key={mode}
+                        type="button"
+                        onClick={() => !disabled && setTargetMode(mode)}
+                        disabled={disabled}
+                        className={cn(
+                          'rounded-xl border px-3 py-2.5 text-left transition-colors touch-manipulation',
+                          disabled && 'opacity-40 cursor-not-allowed',
+                          targetMode === mode
+                            ? 'bg-elec-yellow/[0.10] border-elec-yellow/40'
+                            : 'bg-[hsl(0_0%_15%)] border-white/[0.10] hover:bg-white/[0.04]'
+                        )}
+                      >
+                        <div className="flex items-center gap-1.5">
+                          {mode === 'learner' ? (
+                            <User className="h-3.5 w-3.5 text-white" />
+                          ) : (
+                            <Users className="h-3.5 w-3.5 text-white" />
+                          )}
+                          <span className="text-[12.5px] font-semibold text-white">
+                            {mode === 'learner' ? (studentName ?? 'Single learner') : 'Whole cohort'}
+                          </span>
+                        </div>
+                        <div className="mt-0.5 text-[10.5px] text-white/85 leading-snug">
+                          {mode === 'learner'
+                            ? studentName
+                              ? `Visible only to ${studentName.split(' ')[0]}.`
+                              : 'Open from a Student 360 page.'
+                            : 'Visible to every active member of the cohort.'}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Field>
+
+              {targetMode === 'cohort' && (
+                <Field label="Cohort">
+                  {cohorts.length === 0 ? (
+                    <div className="rounded-xl border border-white/[0.10] bg-[hsl(0_0%_15%)] px-3 py-3 text-[12px] text-white">
+                      No cohorts in your college yet.
+                    </div>
+                  ) : (
+                    <select
+                      value={selectedCohortId ?? ''}
+                      onChange={(e) => setSelectedCohortId(e.target.value || null)}
+                      className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
+                    >
+                      <option value="">Choose cohort…</option>
+                      {cohorts.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                          {c.course_name ? ` · ${c.course_name}` : ''}
+                          {' '}({c.member_count} active)
+                        </option>
+                      ))}
+                    </select>
+                  )}
+                </Field>
+              )}
+
+              {lessonPlans.length > 0 && (
+                <Field label="Link to lesson plan (optional)">
+                  <select
+                    value={selectedLessonPlanId ?? ''}
+                    onChange={(e) => setSelectedLessonPlanId(e.target.value || null)}
+                    className="w-full h-11 rounded-xl bg-[hsl(0_0%_15%)] border border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow text-[13.5px] text-white px-4 touch-manipulation"
+                  >
+                    <option value="">No lesson plan</option>
+                    {lessonPlans
+                      .filter(
+                        (l) =>
+                          !selectedCohortId ||
+                          l.cohort_id === selectedCohortId ||
+                          l.cohort_id == null
+                      )
+                      .map((l) => (
+                        <option key={l.id} value={l.id}>
+                          {l.title}
+                        </option>
+                      ))}
+                  </select>
+                </Field>
+              )}
+
               {/* Title + description */}
               <Field label="Title">
                 <input
@@ -641,6 +732,50 @@ function PreviewBlock({
   const handleDelete = (id: string) => {
     setQuestions((prev) => prev.filter((p) => p.id !== id));
   };
+  const { toast: addToast } = useToast();
+  const [adding, setAdding] = useState(false);
+  const handleAddNew = async () => {
+    if (adding) return;
+    setAdding(true);
+    try {
+      const nextSort = questions.length + 1;
+      const { data, error } = await supabase
+        .from('tutor_quiz_questions')
+        .insert({
+          quiz_id: result.quiz_id,
+          question_kind: 'multi_choice',
+          question_text: 'New question — tap Edit to write it.',
+          options: ['Option A', 'Option B', 'Option C', 'Option D'],
+          correct_answer_index: 0,
+          expected_answer: {},
+          explanation: null,
+          marking_guidance: null,
+          ac_ref: null,
+          points: 1,
+          sort_order: nextSort,
+          difficulty: 'medium',
+          bs7671_citations: [],
+        })
+        .select(
+          'id, question_kind, question_text, options, correct_answer_index, expected_answer, marking_guidance, explanation, category, difficulty, ac_ref, points, bs7671_citations'
+        )
+        .single();
+      if (error) throw new Error(error.message);
+      setQuestions((prev) => [
+        ...prev,
+        data as unknown as PreviewQuestion,
+      ]);
+      addToast({ title: 'Question added — edit it now' });
+    } catch (e) {
+      addToast({
+        title: 'Could not add question',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setAdding(false);
+    }
+  };
 
   if (!result) return null;
   return (
@@ -687,6 +822,16 @@ function PreviewBlock({
           </li>
         )}
       </ol>
+
+      <button
+        type="button"
+        onClick={handleAddNew}
+        disabled={adding}
+        className="w-full h-11 rounded-xl border border-dashed border-white/[0.18] bg-white/[0.02] hover:bg-white/[0.04] text-[12.5px] font-semibold text-white inline-flex items-center justify-center gap-1.5 touch-manipulation disabled:opacity-50"
+      >
+        <Plus className="h-3.5 w-3.5" />
+        {adding ? 'Adding…' : 'Add a question manually'}
+      </button>
     </div>
   );
 }
