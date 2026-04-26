@@ -166,6 +166,11 @@ DebouncedInput.displayName = 'DebouncedInput';
 const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRScheduleOfTestsProps) => {
   const [testResults, setTestResults] = useState<TestResult[]>([]);
   const [distributionBoards, setDistributionBoards] = useState<DistributionBoard[]>([]);
+  // ELE-856: prevent re-initialisation on remount (e.g. tab switch, accordion toggle).
+  // Without this guard, every remount calls migrateToMultiBoard(formData) which reads
+  // the prop — if formData hasn't synced the latest circuit edits yet, it resets the
+  // local state to a stale/empty version and the 1s debounced save then overwrites cloud.
+  const hasInitialisedRef = useRef(false);
   const [expandedBoards, setExpandedBoards] = useState<Set<string>>(new Set([MAIN_BOARD_ID]));
   const [showAnalytics, setShowAnalytics] = useState(false);
   const [showAutoFillPrompt, setShowAutoFillPrompt] = useState(false);
@@ -1066,7 +1071,12 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
   // NOTE: We no longer use getDefaultCpcSize - replaced by twinAndEarthCpcFor utility
 
   // Initialize boards and test results from form data
+  // ELE-856: only run once per mount — hasInitialisedRef prevents remount from
+  // resetting local state with stale formData prop before the debounced save flushes.
   useEffect(() => {
+    if (hasInitialisedRef.current) return;
+    hasInitialisedRef.current = true;
+
     // Migrate to multi-board structure (handles both legacy and new format)
     const { distributionBoards: migratedBoards, scheduleOfTests: migratedCircuits } =
       migrateToMultiBoard(formData);

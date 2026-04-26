@@ -182,9 +182,14 @@ function isNearEmpty(reportType: string, data: any): boolean {
     case 'solar-pv':
       return (data.panels?.length ?? 0) === 0 && (data.inverters?.length ?? 0) === 0;
     default:
+      // ELE-856: changed scheduleOfTests threshold from <= 1 to === 0.
+      // A new EICR always starts with exactly 1 blank circuit row, so <= 1 was
+      // treating a brand-new mobile session (1 blank row) as near-empty and
+      // allowing it to overwrite a cloud cert that had real circuits saved from PC.
+      // Any report with even 1 circuit row must be treated as having data.
       return (
         (data.circuits?.length ?? 0) === 0 &&
-        (data.scheduleOfTests?.length ?? 0) <= 1 &&
+        (data.scheduleOfTests?.length ?? 0) === 0 &&
         (data.distributionBoards?.length ?? 0) === 0
       );
   }
