@@ -100,7 +100,7 @@ Deno.test('Schema accepts empty object and fills defaults', () => {
   assertEquals(result.success, true);
   if (result.success) {
     assertEquals(result.data.certificate_number, '');
-    assertEquals(result.data.bs7671_amendment_date, 'A3:2024');
+    assertEquals(result.data.bs7671_amendment_date, '15 April 2026');
     assertEquals(result.data.earthing.conductor_material, 'Copper');
     assertEquals(result.data.supply.voltage, '230');
     assertEquals(result.data.tests.insulation_voltage, '500');

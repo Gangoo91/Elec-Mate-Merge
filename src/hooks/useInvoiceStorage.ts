@@ -180,10 +180,13 @@ export const useInvoiceStorage = () => {
           }
         )
         .subscribe((status, err) => {
-          if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || err) {
-            captureApiError(err ?? new Error(`Realtime status: ${status}`), 'invoices/realtime', {
-              status,
-            });
+          // CHANNEL_ERROR / TIMED_OUT without an err object are transient
+          // network blips (Supabase reconnects automatically). Only escalate
+          // when there's a real error payload to investigate.
+          if (err) {
+            captureApiError(err, 'invoices/realtime', { status });
+          } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+            addBreadcrumb(`Realtime ${status}`, 'realtime', { channel: 'invoice-realtime' });
           }
         });
 
