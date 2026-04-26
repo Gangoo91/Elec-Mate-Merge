@@ -1275,8 +1275,13 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       company_email: get('companyEmail'),
       company_website: get('companyWebsite'),
       company_logo: (() => {
+        // ELE-876 — accept short HTTP URLs too. Previously the >100 char check
+        // dropped any non-data-URL logo (most users pointing at a hosted PNG).
+        // We just filter literal "placeholder" / empty strings.
         const l = get('companyLogo');
-        return l && l.length > 100 && !l.includes('placeholder') ? l : '';
+        if (!l) return '';
+        if (l.includes('placeholder')) return '';
+        return l;
       })(),
       company_tagline: get('companyTagline'),
       company_accent_color: get('companyAccentColor'),

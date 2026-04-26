@@ -348,23 +348,26 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
   const loadDefaultInspectorProfile = async () => {
     const defaultProfile = getDefaultProfile();
     if (defaultProfile) {
-      // If inspector profile doesn't have a logo, try to get it from company_profiles
-      let companyLogo = defaultProfile.companyLogo || '';
+      // ELE-876 — fetch company_profiles ALWAYS (not only when companyLogo is
+      // missing) so registrationSchemeLogo can read from it too. The previous
+      // code declared companyProfile inside the `if (!companyLogo)` block,
+      // making it `undefined` for users who already had a logo on their
+      // inspector profile — which silently dropped the scheme logo.
+      let companyProfile: { logo_url?: string; registration_scheme_logo?: string } | null = null;
+      try {
+        const { data } = await supabase.rpc('get_my_company_profile');
+        companyProfile = Array.isArray(data) ? data[0] : data;
+      } catch (error) {
+        console.warn(
+          '[EICRFormProvider] Failed to fetch company profile:',
+          error
+        );
+      }
 
-      if (!companyLogo) {
-        try {
-          const { data } = await supabase.rpc('get_my_company_profile');
-          const companyProfile = Array.isArray(data) ? data[0] : data;
-          if (companyProfile?.logo_url) {
-            companyLogo = companyProfile.logo_url;
-            console.log('[EICRFormProvider] Using logo from company_profiles:', companyLogo);
-          }
-        } catch (error) {
-          console.warn(
-            '[EICRFormProvider] Failed to fetch company profile for logo fallback:',
-            error
-          );
-        }
+      let companyLogo = defaultProfile.companyLogo || '';
+      if (!companyLogo && companyProfile?.logo_url) {
+        companyLogo = companyProfile.logo_url;
+        console.log('[EICRFormProvider] Using logo from company_profiles:', companyLogo);
       }
 
       setFormData((prev) => ({
@@ -387,8 +390,13 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         companyWebsite: defaultProfile.companyWebsite || '',
         companyRegistrationNumber: defaultProfile.companyRegistrationNumber || '',
         vatNumber: defaultProfile.vatNumber || '',
+        // ELE-876 — fall back through every possible source for the scheme logo:
+        // 1) companyProfile RPC, 2) inspector profile data URL, 3) inspector profile URL
         registrationSchemeLogo:
-          companyProfile?.registration_scheme_logo || defaultProfile.registrationSchemeLogo || '',
+          companyProfile?.registration_scheme_logo ||
+          (defaultProfile as { schemeLogoDataUrl?: string }).schemeLogoDataUrl ||
+          defaultProfile.registrationSchemeLogo ||
+          '',
       }));
     }
   };

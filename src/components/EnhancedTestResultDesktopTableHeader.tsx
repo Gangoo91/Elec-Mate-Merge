@@ -8,8 +8,9 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   showRegulationStatus?: boolean;
   collapsedGroups: Set<string>;
   onToggleGroup: (groupName: string) => void;
-  onFillAllRcdTestButton?: () => void;
-  onFillAllAfdd?: () => void;
+  // ELE-871 — RCD/AFDD/Functional bulk-fill now accept a value (Pass/Fail/N/A etc)
+  onFillAllRcdTestButton?: (value: string) => void;
+  onFillAllAfdd?: (value: string) => void;
   onFillAllRcdBsStandard?: (value: string) => void;
   onFillAllRcdType?: (value: string) => void;
   onFillAllRcdRating?: (value: string) => void;
@@ -19,11 +20,13 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllInsulationLiveNeutral?: (value: string) => void;
   onFillAllInsulationLiveEarth?: (value: string) => void;
   onFillAllPolarity?: (value: string) => void;
-  onFillAllFunctional?: () => void;
+  onFillAllFunctional?: (value: string) => void;
   onFillAllWiringType?: (value: string) => void;
   onFillAllRefMethod?: (value: string) => void;
   onFillAllKa?: (value: string) => void;
   onFillAllAfddNA?: () => void;
+  // ELE-871 — smart RCD per-circuit fill based on bsStandard
+  onSmartFillRcd?: () => void;
 }
 
 const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTableHeaderProps> = ({
@@ -46,6 +49,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllRefMethod,
   onFillAllKa,
   onFillAllAfddNA,
+  onSmartFillRcd,
 }) => {
   const [rcdBsPopoverOpen, setRcdBsPopoverOpen] = useState(false);
   const [rcdTypePopoverOpen, setRcdTypePopoverOpen] = useState(false);
@@ -143,8 +147,11 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </button>
         </TableHead>
 
-        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 4} className="sot-header-group-cell">
+        {/* ELE-871 — overflow-hidden + key on the button stops the duplicate-label
+            visual artifact during the colSpan recalc when toggling collapse. */}
+        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 4} className="sot-header-group-cell overflow-hidden">
           <button
+            key={isGroupCollapsed('insulation') ? 'insulation-collapsed' : 'insulation-expanded'}
             onClick={() => onToggleGroup('insulation')}
             className="sot-collapse-btn w-full justify-center"
           >
@@ -246,7 +253,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllWiringType && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300 hover:bg-transparent"><CheckCircle className="h-3.5 w-3.5" /></Button>
+                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-2 z-[9999] bg-background border border-white/10" align="center">
                       <p className="text-[10px] text-white mb-2 font-semibold">Fill all wiring type</p>
@@ -264,7 +271,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllRefMethod && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300 hover:bg-transparent"><CheckCircle className="h-3.5 w-3.5" /></Button>
+                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
                     </PopoverTrigger>
                     <PopoverContent className="w-48 p-2 z-[9999] bg-background border border-white/10" align="center">
                       <p className="text-[10px] text-white mb-2 font-semibold">Fill all ref method</p>
@@ -333,7 +340,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                 {onFillAllKa && (
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300 hover:bg-transparent"><CheckCircle className="h-3.5 w-3.5" /></Button>
+                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
                     </PopoverTrigger>
                     <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
                       <p className="text-[10px] text-white mb-2 font-semibold">Fill all kA</p>
@@ -441,6 +448,28 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                         >
                           BS 7288
                         </button>
+                        {/* ELE-871 — N/A option for non-RCD circuits */}
+                        <button
+                          onClick={() => {
+                            onFillAllRcdBsStandard('N/A');
+                            setRcdBsPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          N/A
+                        </button>
+                        {/* ELE-871 — Smart fill: per-circuit based on bsStandard */}
+                        {onSmartFillRcd && (
+                          <button
+                            onClick={() => {
+                              onSmartFillRcd();
+                              setRcdBsPopoverOpen(false);
+                            }}
+                            className="w-full text-left px-3 py-2 text-sm rounded-md bg-elec-yellow/10 border border-elec-yellow/30 text-elec-yellow hover:bg-elec-yellow/20 transition-colors mt-1"
+                          >
+                            ⚡ Smart fill (auto by device)
+                          </button>
+                        )}
                       </div>
                     </PopoverContent>
                   </Popover>
@@ -507,6 +536,16 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                         >
                           B+
                         </button>
+                        {/* ELE-871 — N/A option */}
+                        <button
+                          onClick={() => {
+                            onFillAllRcdType('N/A');
+                            setRcdTypePopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          N/A
+                        </button>
                       </div>
                     </PopoverContent>
                   </Popover>
@@ -572,6 +611,16 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                           className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
                         >
                           500mA
+                        </button>
+                        {/* ELE-871 — N/A option */}
+                        <button
+                          onClick={() => {
+                            onFillAllRcdRating('N/A');
+                            setRcdRatingPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          N/A
                         </button>
                       </div>
                     </PopoverContent>
@@ -677,6 +726,16 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                           className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
                         >
                           125A
+                        </button>
+                        {/* ELE-871 — N/A option */}
+                        <button
+                          onClick={() => {
+                            onFillAllRcdRatingA('N/A');
+                            setRcdRatingAPopoverOpen(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                        >
+                          N/A
                         </button>
                       </div>
                     </PopoverContent>
@@ -978,34 +1037,40 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
             >
               <div className="flex items-center justify-center gap-2">
                 <span>Btn</span>
+                {/* ELE-871 — Pass / Fail / N/A menu (was Pass-only) */}
                 {onFillAllRcdTestButton && (
-                  <button
-                    onClick={onFillAllRcdTestButton}
-                    className="sot-fill-all-btn"
-                    title="Fill all with Pass"
-                  >
-                    <CheckCircle className="h-5 w-5 text-amber-400" />
-                  </button>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-36 p-2 z-[9999] bg-background border border-white/10" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all RCD Btn</p>
+                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllRcdTestButton('✓')}>All Pass</Button>
+                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllRcdTestButton('✗')}>All Fail</Button>
+                      <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllRcdTestButton('N/A')}>All N/A</Button>
+                    </PopoverContent>
+                  </Popover>
                 )}
               </div>
             </TableHead>
           </>
         )}
 
-        {/* AFDD Test */}
+        {/* AFDD Test — ELE-871 Sat / Unsat / N/A menu */}
         {!isGroupCollapsed('afdd') && (
           <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="afdd">
             <div className="flex items-center justify-center gap-2">
               <span>Test</span>
-              {(onFillAllAfdd || onFillAllAfddNA) && (
+              {onFillAllAfdd && (
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button variant="ghost" size="icon" className="h-5 w-5 p-0 text-amber-400 hover:text-amber-300 hover:bg-transparent"><CheckCircle className="h-3.5 w-3.5" /></Button>
+                    <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-36 p-2 z-[9999] bg-background border border-white/10" align="center">
+                  <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
                     <p className="text-[10px] text-white mb-2 font-semibold">Fill all AFDD</p>
-                    {onFillAllAfdd && <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={onFillAllAfdd}>All Pass</Button>}
-                    {onFillAllAfddNA && <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={onFillAllAfddNA}>All N/A</Button>}
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllAfdd('✓')}>All Satisfactory</Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllAfdd('✗')}>All Unsatisfactory</Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllAfdd('N/A')}>All N/A</Button>
                   </PopoverContent>
                 </Popover>
               )}
@@ -1013,7 +1078,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
           </TableHead>
         )}
 
-        {/* Functional */}
+        {/* Functional — ELE-871 Sat / Unsat / N/A menu */}
         {!isGroupCollapsed('functional') && (
           <TableHead
             className="sot-header-cell w-16 min-w-[70px] max-w-[70px]"
@@ -1022,13 +1087,17 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
             <div className="flex items-center justify-center gap-2">
               <span>Func</span>
               {onFillAllFunctional && (
-                <button
-                  onClick={onFillAllFunctional}
-                  className="sot-fill-all-btn"
-                  title="Fill all with Satisfactory"
-                >
-                  <CheckCircle className="h-5 w-5 text-amber-400" />
-                </button>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
+                    <p className="text-[10px] text-white mb-2 font-semibold">Fill all Functional</p>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllFunctional('✓')}>All Satisfactory</Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllFunctional('✗')}>All Unsatisfactory</Button>
+                    <Button variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllFunctional('N/A')}>All N/A</Button>
+                  </PopoverContent>
+                </Popover>
               )}
             </div>
           </TableHead>

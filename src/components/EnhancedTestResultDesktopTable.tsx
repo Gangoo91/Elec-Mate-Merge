@@ -83,37 +83,38 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     setCollapsedGroups(newCollapsed);
   };
 
-  const handleFillAllRcdTestButton = () => {
+  // ELE-871 — accept a value so the header popover can offer Pass/Fail/N/A
+  const handleFillAllRcdTestButton = (value: string = '✓') => {
     if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('rcdTestButton', '✓');
+      onBulkFieldUpdate('rcdTestButton', value);
     } else {
       testResults.forEach((result) => {
-        onUpdate(result.id, 'rcdTestButton', '✓');
+        onUpdate(result.id, 'rcdTestButton', value);
       });
     }
-    toast.success(`All ${testResults.length} RCD Test Button fields filled with Pass`);
+    toast.success(`All ${testResults.length} RCD Test Button fields filled with ${value}`);
   };
 
-  const handleFillAllAfdd = () => {
+  const handleFillAllAfdd = (value: string = '✓') => {
     if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('afddTest', '✓');
+      onBulkFieldUpdate('afddTest', value);
     } else {
       testResults.forEach((result) => {
-        onUpdate(result.id, 'afddTest', '✓');
+        onUpdate(result.id, 'afddTest', value);
       });
     }
-    toast.success(`All ${testResults.length} AFDD fields filled with Pass ✓`);
+    toast.success(`All ${testResults.length} AFDD fields filled with ${value}`);
   };
 
-  const handleFillAllFunctional = () => {
+  const handleFillAllFunctional = (value: string = '✓') => {
     if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('functionalTesting', '✓');
+      onBulkFieldUpdate('functionalTesting', value);
     } else {
       testResults.forEach((result) => {
-        onUpdate(result.id, 'functionalTesting', '✓');
+        onUpdate(result.id, 'functionalTesting', value);
       });
     }
-    toast.success(`All ${testResults.length} Functional Test fields filled with Satisfactory ✓`);
+    toast.success(`All ${testResults.length} Functional Test fields filled with ${value}`);
   };
 
   const handleFillAllRcdBsStandard = (value: string) => {
@@ -286,13 +287,60 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     toast.success(`All kA fields filled with ${value}`);
   };
 
-  const handleFillAllAfddNA = () => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('afddTest', 'N/A');
-    } else {
-      testResults.forEach((result) => { onUpdate(result.id, 'afddTest', 'N/A'); });
+  const handleFillAllAfddNA = () => handleFillAllAfdd('N/A');
+
+  // ELE-871 — Smart RCD per-circuit fill based on the protective device type.
+  // Saves a huge amount of clicking on certs where most circuits are MCBs (no RCD).
+  // - BS EN 60898 / BS 88 / BS 3036 / BS 1361 → set all RCD detail fields to N/A
+  // - BS EN 61009 (RCBO) → fill RCD details from the device data
+  // - BS EN 61008 (RCD)  → same
+  const handleSmartFillRcd = () => {
+    if (!onBulkUpdate) {
+      toast.error('Smart fill requires bulk update support');
+      return;
     }
-    toast.success('All AFDD fields filled with N/A');
+    let naCount = 0;
+    let filledCount = 0;
+    testResults.forEach((result) => {
+      const bs = (result.bsStandard || '').toUpperCase();
+      const isRcbo = bs.includes('61009');
+      const isRcd = bs.includes('61008');
+      const isNonRcdDevice =
+        bs.includes('60898') || bs.includes('BS 88') || bs.includes('3036') || bs.includes('1361');
+
+      if (isRcbo || isRcd) {
+        // Already-filled fields take priority — only backfill blanks
+        const updates: Partial<TestResult> = {};
+        if (!result.rcdBsStandard) {
+          updates.rcdBsStandard = isRcbo ? 'BS EN 61009' : 'BS EN 61008';
+        }
+        if (!result.rcdType) updates.rcdType = 'AC';
+        if (!result.rcdRating) updates.rcdRating = '30';
+        if (!result.rcdRatingA && result.protectiveDeviceRating) {
+          updates.rcdRatingA = result.protectiveDeviceRating;
+        }
+        if (Object.keys(updates).length > 0) {
+          onBulkUpdate(result.id, updates);
+          filledCount++;
+        }
+      } else if (isNonRcdDevice) {
+        const updates: Partial<TestResult> = {
+          rcdBsStandard: 'N/A',
+          rcdType: 'N/A',
+          rcdRating: 'N/A',
+          rcdRatingA: 'N/A',
+        };
+        onBulkUpdate(result.id, updates);
+        naCount++;
+      }
+    });
+    if (naCount + filledCount === 0) {
+      toast.info('No circuits matched smart-fill rules (set BS standard first)');
+    } else {
+      toast.success(
+        `Smart fill: ${filledCount} RCD/RCBO filled, ${naCount} non-RCD set to N/A`
+      );
+    }
   };
 
   const isEmpty = testResults.length === 0;
@@ -352,6 +400,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllRcdType={handleFillAllRcdType}
                     onFillAllRcdRating={handleFillAllRcdRating}
                     onFillAllRcdRatingA={handleFillAllRcdRatingA}
+                    onSmartFillRcd={handleSmartFillRcd}
                     onFillAllMaxZs={handleFillAllMaxZs}
                     onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
                     onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}

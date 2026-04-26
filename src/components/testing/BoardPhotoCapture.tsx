@@ -829,27 +829,70 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
             </p>
           </div>
 
-          {/* Primary CTA */}
-          <Button
-            onClick={startCamera}
-            className="w-full h-14 text-base gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation shadow-lg shadow-elec-yellow/20"
-          >
-            <Camera className="h-5 w-5" />
-            Use Camera
-          </Button>
+          {/* ELE-867 — On PC web, the Upload path is primary because most desktops
+              don't have a usable rear camera. On mobile we keep "Use Camera" primary.
+              We detect "PC web" by checking if the device is a coarse pointer (touch).
+              touchscreen → primary camera; mouse-only → primary upload. */}
+          {(() => {
+            const isCoarsePointer =
+              typeof window !== 'undefined' &&
+              window.matchMedia &&
+              window.matchMedia('(pointer: coarse)').matches;
 
-          {/* Secondary — text link style */}
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              fileInputRef.current?.click();
-            }}
-            className="flex items-center gap-2 text-sm text-white font-medium py-2 touch-manipulation active:opacity-70 transition-opacity"
-          >
-            <Upload className="h-4 w-4" />
-            Upload from gallery
-          </button>
+            const cameraBtn = (
+              <Button
+                onClick={startCamera}
+                className="w-full h-14 text-base gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation shadow-lg shadow-elec-yellow/20"
+              >
+                <Camera className="h-5 w-5" />
+                Use Camera
+              </Button>
+            );
+
+            const uploadBtnPrimary = (
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
+                className="w-full h-14 text-base gap-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold rounded-xl touch-manipulation shadow-lg shadow-elec-yellow/20"
+              >
+                <Upload className="h-5 w-5" />
+                Upload Photos
+              </Button>
+            );
+
+            const cameraBtnSecondary = (
+              <button
+                onClick={startCamera}
+                className="flex items-center gap-2 text-sm text-white font-medium py-2 touch-manipulation active:opacity-70 transition-opacity"
+              >
+                <Camera className="h-4 w-4" />
+                Use Webcam (if available)
+              </button>
+            );
+
+            const uploadBtnSecondary = (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
+                className="flex items-center gap-2 text-sm text-white font-medium py-2 touch-manipulation active:opacity-70 transition-opacity"
+              >
+                <Upload className="h-4 w-4" />
+                Upload from gallery
+              </button>
+            );
+
+            return isCoarsePointer ? (
+              <>{cameraBtn}{uploadBtnSecondary}</>
+            ) : (
+              <>{uploadBtnPrimary}{cameraBtnSecondary}</>
+            );
+          })()}
         </div>
       )}
 

@@ -147,10 +147,18 @@ function isSubstantiallyPopulated(reportType: string, data: any): boolean {
       return (data.panels?.length ?? 0) >= 1 || (data.inverters?.length ?? 0) >= 1;
     default:
       // EICR, EIC, minor-works — consider >=3 circuits/SoT rows OR >=2 distribution boards as "populated"
+      // ELE-875 — also consider an EICR with >=10 inspection items having outcomes as
+      // "populated" so the blank-overwrite guard protects inspection-checklist work
+      // even when scheduleOfTests is short. Fixes the case where mobile remounts
+      // with empty inspectionItems and overwrites the cloud copy filled on PC.
       return (
         (data.circuits?.length ?? 0) >= 3 ||
         (data.scheduleOfTests?.length ?? 0) >= 3 ||
-        (data.distributionBoards?.length ?? 0) >= 2
+        (data.distributionBoards?.length ?? 0) >= 2 ||
+        (Array.isArray(data.inspectionItems) &&
+          data.inspectionItems.filter(
+            (i: { outcome?: string }) => i?.outcome && i.outcome !== ''
+          ).length >= 10)
       );
   }
 }
@@ -182,15 +190,21 @@ function isNearEmpty(reportType: string, data: any): boolean {
     case 'solar-pv':
       return (data.panels?.length ?? 0) === 0 && (data.inverters?.length ?? 0) === 0;
     default:
-      // ELE-856: changed scheduleOfTests threshold from <= 1 to === 0.
+      // ELE-856: scheduleOfTests threshold tightened from <= 1 to === 0.
       // A new EICR always starts with exactly 1 blank circuit row, so <= 1 was
       // treating a brand-new mobile session (1 blank row) as near-empty and
       // allowing it to overwrite a cloud cert that had real circuits saved from PC.
       // Any report with even 1 circuit row must be treated as having data.
+      // ELE-875 — also gate on inspectionItems having no outcomes; otherwise a
+      // mobile remount with the empty checklist could be treated as non-empty.
       return (
         (data.circuits?.length ?? 0) === 0 &&
         (data.scheduleOfTests?.length ?? 0) === 0 &&
-        (data.distributionBoards?.length ?? 0) === 0
+        (data.distributionBoards?.length ?? 0) === 0 &&
+        (!Array.isArray(data.inspectionItems) ||
+          data.inspectionItems.filter(
+            (i: { outcome?: string }) => i?.outcome && i.outcome !== ''
+          ).length === 0)
       );
   }
 }

@@ -52,6 +52,16 @@ const EICRInspectionChecklist = ({
   const [expandedSections, setExpandedSections] = React.useState<Record<string, boolean>>({});
   const observationsRef = React.useRef<HTMLDivElement>(null);
 
+  // ELE-875 — synchronous source of truth for inspection items.
+  // Why: previously getInspectionItems() read straight from formData.inspectionItems,
+  // and scrollSafeUpdate's multi-setTimeout scroll restoration caused re-renders
+  // that fired BEFORE the parent's debounced save committed the latest update.
+  // Items 1.3 and 4.23 (last items in their A4:2026 sections) consistently lost
+  // outcomes because the user navigated/collapsed immediately after tapping.
+  // This ref captures the just-set value synchronously so subsequent reads see it
+  // even before formData propagates back down.
+  const localInspectionItemsRef = React.useRef<InspectionItem[] | null>(null);
+
   const getInspectionItems = (): InspectionItem[] => {
     // Use all sections from the BS 7671 residential checklist (up to 100A supply).
     // All 8 sections / ~60 items are relevant regardless of property type —
@@ -74,14 +84,21 @@ const EICRInspectionChecklist = ({
       }))
     );
 
+    // ELE-875 — prefer local ref if a write has happened in this render cycle.
+    // Otherwise fall back to formData (for fresh hydration or external updates).
+    const sourceItems =
+      (localInspectionItemsRef.current && localInspectionItemsRef.current.length > 0
+        ? localInspectionItemsRef.current
+        : formData.inspectionItems) as InspectionItem[] | undefined;
+
     // If we have existing form data, merge it with the expected structure.
     // A4:2026 FIX — only carry over outcome/notes/inspected. Item text, clause,
     // section name + number always come from the CURRENT data file so renames
     // (e.g. A2 → A4 wording, renumbered 1.1/1.2/1.3) never leak through from
     // stale drafts saved before the amendment.
-    if (formData.inspectionItems && formData.inspectionItems.length > 0) {
+    if (sourceItems && sourceItems.length > 0) {
       const existingItemsMap = new Map(
-        formData.inspectionItems.map((item: InspectionItem) => [item.id, item])
+        sourceItems.map((item: InspectionItem) => [item.id, item])
       );
 
       return expectedItems.map((expectedItem) => {
@@ -104,17 +121,35 @@ const EICRInspectionChecklist = ({
     return formData.defectObservations || [];
   };
 
-  // Scroll-safe onUpdate wrapper — prevents scroll jump on state changes
+  // Scroll-safe onUpdate wrapper — prevents scroll jump on state changes.
+  // ELE-875 — for inspectionItems writes, we ALSO mirror the new value into a
+  // local ref synchronously so subsequent reads in the same render cycle
+  // (e.g. user immediately collapses the section) see the just-set outcome
+  // even before the parent's debounced save fires. The multi-setTimeout retry
+  // is kept (it does its job for scroll position) but no longer causes data
+  // loss because reads now go through the ref.
   const scrollSafeUpdate = React.useCallback((field: string, value: any) => {
+    if (field === 'inspectionItems' && Array.isArray(value)) {
+      localInspectionItemsRef.current = value as InspectionItem[];
+    }
     const scrollY = window.scrollY;
     onUpdate(field, value);
-    // Restore scroll after React re-render (multiple attempts to catch async updates)
     const restore = () => window.scrollTo(0, scrollY);
     requestAnimationFrame(restore);
     setTimeout(restore, 50);
     setTimeout(restore, 100);
     setTimeout(restore, 200);
   }, [onUpdate]);
+
+  // ELE-875 — when formData changes from outside (initial load, undo, sync
+  // from cloud), refresh the local ref so we don't keep an out-of-date copy.
+  // This effect runs only when the array identity changes (new save), not on
+  // every render.
+  React.useEffect(() => {
+    if (Array.isArray(formData.inspectionItems)) {
+      localInspectionItemsRef.current = formData.inspectionItems as InspectionItem[];
+    }
+  }, [formData.inspectionItems]);
 
   const updateInspectionItem = (
     id: string,
@@ -138,7 +173,7 @@ const EICRInspectionChecklist = ({
       );
       // Force re-initialization if item not found
       const initializedItems = getInspectionItems();
-      onUpdate('inspectionItems', initializedItems);
+      scrollSafeUpdate('inspectionItems', initializedItems);
       return;
     }
 
@@ -346,7 +381,7 @@ const EICRInspectionChecklist = ({
     console.log(
       `[EICRInspectionChecklist] Bulk marking ${sectionItemsCount} items as satisfactory in section ${section.title}`
     );
-    onUpdate('inspectionItems', updatedItems);
+    scrollSafeUpdate('inspectionItems', updatedItems);
   };
 
   const bulkClearSection = (sectionId: string) => {
@@ -377,7 +412,7 @@ const EICRInspectionChecklist = ({
     console.log(
       `[EICRInspectionChecklist] Bulk clearing ${sectionItemsCount} items in section ${section.title}`
     );
-    onUpdate('inspectionItems', updatedItems);
+    scrollSafeUpdate('inspectionItems', updatedItems);
   };
 
   // Initialize inspection items if not already present or if count mismatch
@@ -397,7 +432,7 @@ const EICRInspectionChecklist = ({
           sampleItems: initialItems.slice(0, 3),
         }
       );
-      onUpdate('inspectionItems', initialItems);
+      scrollSafeUpdate('inspectionItems', initialItems);
     }
   }, []);
 

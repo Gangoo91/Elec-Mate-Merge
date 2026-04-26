@@ -55,6 +55,13 @@ const InspectionItemRow = ({
   const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
   const [showPhotoUpload, setShowPhotoUpload] = React.useState(false);
+  // Cursor-jump fix — track the value we most recently sent UP via debounce so
+  // we can ignore the prop echo when it bounces back. Without this, the
+  // resync useEffect clobbers `localNotes` mid-typing whenever the parent
+  // re-renders for an unrelated reason, and the cursor jumps to the end.
+  const lastSentRef = React.useRef<string>(inspectionItem?.notes || '');
+  // Track focus to avoid prop-syncs while the user is mid-edit.
+  const isFocusedRef = React.useRef(false);
 
   const currentOutcome = inspectionItem?.outcome || 'not-applicable';
   const isInspected = inspectionItem?.inspected || false;
@@ -75,9 +82,17 @@ const InspectionItemRow = ({
     setShowPhotoUpload(false);
   };
 
-  // Sync local notes when inspection item changes
+  // Sync local notes only when the prop changes externally (not from our
+  // own debounce echo) AND the input isn't focused. Prevents cursor-jump.
   React.useEffect(() => {
-    setLocalNotes(inspectionItem?.notes || '');
+    const incoming = inspectionItem?.notes || '';
+    if (isFocusedRef.current) return; // user is mid-edit — leave alone
+    if (incoming === lastSentRef.current) return; // it's our own echo
+    if (incoming === localNotes) return; // already in sync
+    setLocalNotes(incoming);
+    lastSentRef.current = incoming;
+    // localNotes intentionally omitted — we only react to incoming prop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inspectionItem?.notes]);
 
   // Handle notes input with debouncing
@@ -91,6 +106,7 @@ const InspectionItemRow = ({
 
     // Set new timer for debounced update
     const newTimer = setTimeout(() => {
+      lastSentRef.current = value;
       onUpdateItem(sectionItem.id, 'notes', value);
     }, 300); // 300ms debounce
 
@@ -190,6 +206,22 @@ const InspectionItemRow = ({
           placeholder="Notes..."
           value={localNotes}
           onChange={(e) => handleNotesChange(e.target.value)}
+          onFocus={() => {
+            isFocusedRef.current = true;
+          }}
+          onBlur={() => {
+            isFocusedRef.current = false;
+            // Flush pending debounce immediately on blur so the cloud has the
+            // latest value before the user navigates away.
+            if (debounceTimer) {
+              clearTimeout(debounceTimer);
+              setDebounceTimer(null);
+              if (localNotes !== lastSentRef.current) {
+                lastSentRef.current = localNotes;
+                onUpdateItem(sectionItem.id, 'notes', localNotes);
+              }
+            }
+          }}
           className={`text-xs ${isCritical ? 'bg-black text-white placeholder-gray-400 border-gray-600' : ''}`}
         />
       </TableCell>

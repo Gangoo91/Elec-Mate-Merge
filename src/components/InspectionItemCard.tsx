@@ -52,13 +52,24 @@ const InspectionItemCard = ({
 }: InspectionItemCardProps) => {
   const [localNotes, setLocalNotes] = React.useState(inspectionItem?.notes || '');
   const [debounceTimer, setDebounceTimer] = React.useState<NodeJS.Timeout | null>(null);
+  // Cursor-jump fix — track our own debounce echo and active focus so the
+  // prop sync doesn't clobber localNotes mid-typing.
+  const lastSentRef = React.useRef<string>(inspectionItem?.notes || '');
+  const isFocusedRef = React.useRef(false);
 
   const currentOutcome = inspectionItem?.outcome || 'not-applicable';
   const isInspected = inspectionItem?.inspected || false;
 
-  // Sync local notes when inspection item changes
+  // Sync local notes only on EXTERNAL changes — skip if focused or if it's our
+  // own debounce echo bouncing back from the parent.
   React.useEffect(() => {
-    setLocalNotes(inspectionItem?.notes || '');
+    const incoming = inspectionItem?.notes || '';
+    if (isFocusedRef.current) return;
+    if (incoming === lastSentRef.current) return;
+    if (incoming === localNotes) return;
+    setLocalNotes(incoming);
+    lastSentRef.current = incoming;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inspectionItem?.notes]);
 
   // Handle notes input with debouncing
@@ -72,6 +83,7 @@ const InspectionItemCard = ({
 
     // Set new timer for debounced update
     const newTimer = setTimeout(() => {
+      lastSentRef.current = value;
       onUpdateItem(sectionItem.id, 'notes', value);
     }, 300); // 300ms debounce
 
@@ -202,6 +214,20 @@ const InspectionItemCard = ({
               placeholder="Add inspection notes, observations, or additional details..."
               value={localNotes}
               onChange={(e) => handleNotesChange(e.target.value)}
+              onFocus={() => {
+                isFocusedRef.current = true;
+              }}
+              onBlur={() => {
+                isFocusedRef.current = false;
+                if (debounceTimer) {
+                  clearTimeout(debounceTimer);
+                  setDebounceTimer(null);
+                  if (localNotes !== lastSentRef.current) {
+                    lastSentRef.current = localNotes;
+                    onUpdateItem(sectionItem.id, 'notes', localNotes);
+                  }
+                }
+              }}
               rows={2}
               className="mt-1 touch-manipulation text-base min-h-[100px] md:min-h-[120px]"
             />

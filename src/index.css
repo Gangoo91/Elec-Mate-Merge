@@ -2734,7 +2734,11 @@ input::-webkit-caps-lock-indicator {
     @apply inline-flex items-center justify-center gap-1 h-6 px-2 rounded;
     /* Toned down — group headers shouldn't visually compete with data */
     @apply text-xs font-semibold uppercase tracking-wider text-white/70 hover:text-white;
-    @apply hover:bg-white/5 transition-all duration-150;
+    /* ELE-871 — was `transition-all` which animated width/layout during the
+       colSpan change on collapse, causing a duplicated/overlapping label
+       artifact. Limit transition to colour properties so only hover changes
+       animate, never layout. */
+    @apply hover:bg-white/5 transition-colors duration-150;
   }
 
   /* ============================================

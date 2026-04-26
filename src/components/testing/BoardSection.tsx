@@ -804,34 +804,67 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                       <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
                         Make
                       </Label>
-                      <MobileSelectPicker
-                        value={board.spdMake || ''}
-                        onValueChange={(v) => {
-                          // Changing make wipes model — models are cascaded from make
-                          onUpdateBoard(board.id, {
-                            spdMake: v,
-                            spdModel: '',
-                          });
-                        }}
-                        options={SPD_MAKES}
-                        placeholder="Select"
-                        title="SPD Make"
-                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
-                      />
+                      {/* ELE-871 — Allow free text when make isn't in dropdown.
+                          If user picks "__custom__" or current value isn't in the list,
+                          render a text input instead. */}
+                      {board.spdMake && !SPD_MAKES.some((o) => o.value === board.spdMake) ? (
+                        <Input
+                          value={board.spdMake}
+                          onChange={(e) =>
+                            onUpdateBoard(board.id, { spdMake: e.target.value, spdModel: '' })
+                          }
+                          placeholder="Enter SPD make"
+                          className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40"
+                        />
+                      ) : (
+                        <MobileSelectPicker
+                          value={board.spdMake || ''}
+                          onValueChange={(v) => {
+                            const next = v === '__custom__' ? 'Custom' : v;
+                            onUpdateBoard(board.id, { spdMake: next, spdModel: '' });
+                          }}
+                          options={[
+                            ...SPD_MAKES,
+                            { value: '__custom__', label: 'Other (type your own)…' },
+                          ]}
+                          placeholder="Select"
+                          title="SPD Make"
+                          triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
+                        />
+                      )}
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
                         Model
                       </Label>
-                      <MobileSelectPicker
-                        value={board.spdModel || ''}
-                        onValueChange={(v) => onUpdateBoard(board.id, 'spdModel', v)}
-                        options={getSpdModelsForMake(board.spdMake || '')}
-                        placeholder={board.spdMake ? 'Select' : 'Pick make first'}
-                        title="SPD Model"
-                        disabled={!board.spdMake}
-                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
-                      />
+                      {/* ELE-871 — free text when model isn't in dropdown for the make */}
+                      {board.spdModel &&
+                      !getSpdModelsForMake(board.spdMake || '').some(
+                        (o) => o.value === board.spdModel
+                      ) ? (
+                        <Input
+                          value={board.spdModel}
+                          onChange={(e) => onUpdateBoard(board.id, 'spdModel', e.target.value)}
+                          placeholder="Enter SPD model"
+                          className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40"
+                        />
+                      ) : (
+                        <MobileSelectPicker
+                          value={board.spdModel || ''}
+                          onValueChange={(v) => {
+                            const next = v === '__custom__' ? 'Custom' : v;
+                            onUpdateBoard(board.id, 'spdModel', next);
+                          }}
+                          options={[
+                            ...getSpdModelsForMake(board.spdMake || ''),
+                            { value: '__custom__', label: 'Other (type your own)…' },
+                          ]}
+                          placeholder={board.spdMake ? 'Select' : 'Pick make first'}
+                          title="SPD Model"
+                          disabled={!board.spdMake}
+                          triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
+                        />
+                      )}
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
