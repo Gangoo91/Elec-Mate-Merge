@@ -330,4 +330,11 @@ verify_jwt = false
 [functions.meta-capi]
 verify_jwt = false
 
+# iCal subscription feed — calendar apps (Apple Calendar, Google, Outlook)
+# cannot send Authorization headers when polling a webcal:// subscription.
+# The per-user UUID token in the URL IS the auth, validated inside the
+# function against profiles.ical_feed_token. Must be public.
+[functions.calendar-ical-feed]
+verify_jwt = false
+
 

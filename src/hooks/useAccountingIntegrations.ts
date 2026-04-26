@@ -14,6 +14,17 @@ import {
   getProviderDisplayName,
 } from '@/types/accounting';
 
+export interface InvoiceStatusPullResult {
+  isPaid: boolean;
+  paidAt: string | null;
+  provider: AccountingProvider;
+  externalStatus: string;
+  amountPaid?: number;
+  amountDue?: number;
+  updated: boolean; // true if Elec-Mate row was changed by this pull
+  wasAlreadyPaidInElecMate: boolean;
+}
+
 interface UseAccountingIntegrationsReturn {
   integrations: AccountingIntegration[];
   loading: boolean;
@@ -25,6 +36,7 @@ interface UseAccountingIntegrationsReturn {
   disconnectProvider: (provider: AccountingProvider) => Promise<void>;
   syncInvoice: (invoiceId: string, provider?: AccountingProvider) => Promise<boolean>;
   syncExpenses: (expenseIds: string[], provider: AccountingProvider) => Promise<boolean>;
+  refreshInvoiceStatus: (invoiceId: string) => Promise<InvoiceStatusPullResult | null>;
   refreshStatus: () => Promise<void>;
 
   // Helpers
@@ -356,6 +368,78 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
     [integrations, refreshStatus]
   );
 
+  // Pull latest payment status for an invoice from the connected provider
+  // (e.g. user marked the invoice paid in Xero — bring that into Elec-Mate).
+  const refreshInvoiceStatus = useCallback(
+    async (invoiceId: string): Promise<InvoiceStatusPullResult | null> => {
+      try {
+        if (!invoiceId || invoiceId === 'undefined' || invoiceId === 'null') {
+          toast.error('Invalid invoice');
+          return null;
+        }
+        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        if (!uuidRegex.test(invoiceId)) {
+          toast.error('Invalid invoice ID format');
+          return null;
+        }
+
+        const { data: session } = await supabase.auth.getSession();
+        if (!session.session) {
+          toast.error('Please log in to refresh invoice status');
+          return null;
+        }
+
+        const response = await supabase.functions.invoke('accounting-pull-invoice-status', {
+          headers: { Authorization: `Bearer ${session.session.access_token}` },
+          body: { invoiceId },
+        });
+
+        if (response.data?.success === false) {
+          const mainError = response.data?.error || 'Failed to refresh invoice status';
+          const detail = response.data?.detail;
+          toast.error(detail ? `${mainError}: ${detail.substring(0, 200)}` : mainError, {
+            duration: 8000,
+          });
+          return null;
+        }
+
+        if (response.error) {
+          throw new Error(response.error.message || 'Failed to refresh invoice status');
+        }
+
+        const result = response.data as InvoiceStatusPullResult;
+        const providerName = getProviderDisplayName(result.provider);
+
+        if (result.updated) {
+          toast.success(
+            `Marked as paid in Elec-Mate — ${providerName} confirmed payment${
+              result.paidAt ? ` on ${new Date(result.paidAt).toLocaleDateString('en-GB')}` : ''
+            }`,
+            { duration: 6000 }
+          );
+        } else if (result.isPaid && result.wasAlreadyPaidInElecMate) {
+          toast.success(`Already up to date — ${providerName} also shows this as paid`);
+        } else if (!result.isPaid) {
+          toast(
+            `${providerName} status: ${result.externalStatus.toLowerCase()}${
+              result.amountDue !== undefined && result.amountDue > 0
+                ? ` — £${result.amountDue.toFixed(2)} outstanding`
+                : ''
+            }`,
+            { duration: 5000 }
+          );
+        }
+
+        return result;
+      } catch (error: any) {
+        console.error('Error refreshing invoice status:', error);
+        toast.error(error?.message || 'Failed to refresh invoice status');
+        return null;
+      }
+    },
+    []
+  );
+
   // Helper: Get integration by provider
   const getIntegration = useCallback(
     (provider: AccountingProvider): AccountingIntegration | undefined => {
@@ -381,6 +465,7 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
     disconnectProvider,
     syncInvoice,
     syncExpenses,
+    refreshInvoiceStatus,
     refreshStatus,
     getIntegration,
     isProviderConnected,

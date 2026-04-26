@@ -46,7 +46,9 @@ const InvoiceViewPage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showActionsSheet, setShowActionsSheet] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
-  const { hasConnectedProvider, syncInvoice, integrations } = useAccountingIntegrations();
+  const [isRefreshingFromProvider, setIsRefreshingFromProvider] = useState(false);
+  const { hasConnectedProvider, syncInvoice, refreshInvoiceStatus, integrations } =
+    useAccountingIntegrations();
 
   const connectedProvider = integrations.find((i) => i.status === 'connected');
   const providerName = connectedProvider?.provider
@@ -67,6 +69,23 @@ const InvoiceViewPage = () => {
       toast({ title: 'Sync failed', variant: 'destructive' });
     } finally {
       setIsSyncing(false);
+    }
+  };
+
+  // Pull payment status FROM the accounting provider (e.g. Xero) — used when
+  // the user has marked the invoice paid externally and wants Elec-Mate to
+  // catch up. ELE-872.
+  const handleRefreshStatusFromProvider = async () => {
+    if (!invoice) return;
+    setIsRefreshingFromProvider(true);
+    try {
+      const result = await refreshInvoiceStatus(invoice.id);
+      if (result?.updated) {
+        // Status changed — pull the fresh row so the page reflects it.
+        await fetchInvoice();
+      }
+    } finally {
+      setIsRefreshingFromProvider(false);
     }
   };
 
@@ -640,20 +659,41 @@ const InvoiceViewPage = () => {
           <div>
             <SectionHeader title="Accounting" />
             {alreadySynced ? (
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-[14px] font-medium text-white">
-                    Synced to {(invoice as any).external_invoice_provider
-                      ? (invoice as any).external_invoice_provider.charAt(0).toUpperCase() + (invoice as any).external_invoice_provider.slice(1)
-                      : providerName}
-                  </p>
-                  {(invoice as any).external_invoice_synced_at && (
-                    <p className="text-[12px] text-white/50 mt-0.5">
-                      {format(new Date((invoice as any).external_invoice_synced_at), 'd MMM yyyy, HH:mm')}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-[14px] font-medium text-white">
+                      Synced to {(invoice as any).external_invoice_provider
+                        ? (invoice as any).external_invoice_provider.charAt(0).toUpperCase() + (invoice as any).external_invoice_provider.slice(1)
+                        : providerName}
                     </p>
-                  )}
+                    {(invoice as any).external_invoice_synced_at && (
+                      <p className="text-[12px] text-white/50 mt-0.5">
+                        {format(new Date((invoice as any).external_invoice_synced_at), 'd MMM yyyy, HH:mm')}
+                      </p>
+                    )}
+                  </div>
+                  <span className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">Synced</span>
                 </div>
-                <span className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">Synced</span>
+                <button
+                  onClick={handleRefreshStatusFromProvider}
+                  disabled={isRefreshingFromProvider}
+                  className="w-full flex items-center justify-between py-3 touch-manipulation active:scale-[0.99] disabled:opacity-50 border-t border-white/[0.06]"
+                >
+                  <div className="text-left">
+                    <p className="text-[14px] font-medium text-blue-400">
+                      {isRefreshingFromProvider
+                        ? `Checking ${(invoice as any).external_invoice_provider || providerName}…`
+                        : `Sync status from ${(invoice as any).external_invoice_provider
+                            ? (invoice as any).external_invoice_provider.charAt(0).toUpperCase() + (invoice as any).external_invoice_provider.slice(1)
+                            : providerName}`}
+                    </p>
+                    <p className="text-[11px] text-white/50 mt-0.5">
+                      Pull the latest payment status if marked paid in your accounting software
+                    </p>
+                  </div>
+                  <span className="text-[12px] text-white/50">↻</span>
+                </button>
               </div>
             ) : (
               <button
@@ -752,6 +792,22 @@ const InvoiceViewPage = () => {
                   {isSyncing ? 'Syncing...' : alreadySynced ? `Re-sync to ${providerName}` : `Sync to ${providerName}`}
                 </span>
                 {alreadySynced && <span className="text-[11px] text-emerald-400">Synced</span>}
+              </button>
+            )}
+            {alreadySynced && (
+              <button
+                onClick={() => { setShowActionsSheet(false); handleRefreshStatusFromProvider(); }}
+                disabled={isRefreshingFromProvider}
+                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all disabled:opacity-50"
+              >
+                <span className="text-[15px] font-medium text-blue-400">
+                  {isRefreshingFromProvider
+                    ? 'Checking…'
+                    : `Sync status from ${(invoice as any).external_invoice_provider
+                        ? (invoice as any).external_invoice_provider.charAt(0).toUpperCase() + (invoice as any).external_invoice_provider.slice(1)
+                        : providerName}`}
+                </span>
+                <span className="text-[11px] text-white/50">↻</span>
               </button>
             )}
             <div className="border-t border-white/[0.06] mt-2 pt-2">

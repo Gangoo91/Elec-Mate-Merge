@@ -1,5 +1,5 @@
 import { copyToClipboard } from '@/utils/clipboard';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import {
   Sheet,
   SheetContent,
@@ -16,11 +16,51 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, Unplug, Loader2, CheckCircle2, Copy, Check, ChevronRight } from 'lucide-react';
+import {
+  RefreshCw,
+  Unplug,
+  Loader2,
+  CheckCircle2,
+  Copy,
+  Check,
+  ChevronRight,
+  Apple,
+  Smartphone,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { GoogleCalendarStatus, CalendarView } from '@/types/calendar';
+
+type Platform = 'ios' | 'android' | 'web';
+
+function detectPlatform(): Platform {
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') return 'web';
+  const ua = navigator.userAgent || '';
+  if (/iPad|iPhone|iPod/.test(ua)) return 'ios';
+  if (/Macintosh/.test(ua) && 'ontouchend' in document) return 'ios'; // iPadOS
+  if (/Android/i.test(ua)) return 'android';
+  return 'web';
+}
+
+// Open a URL — uses Capacitor Browser if running natively to avoid the in-app
+// WebView swallowing webcal:// links. Falls back to window.open on web.
+async function openExternal(url: string) {
+  try {
+    const { Capacitor } = await import('@capacitor/core');
+    if (Capacitor.isNativePlatform()) {
+      // window.location is the most reliable trigger for webcal:// on iOS
+      // (the system handles the protocol and prompts to subscribe).
+      window.location.href = url;
+      return;
+    }
+  } catch {
+    // not Capacitor — fall through
+  }
+  if (typeof window !== 'undefined') {
+    window.location.href = url;
+  }
+}
 
 const SUPABASE_URL = 'https://jtwygbeceundfgnkirof.supabase.co';
 
@@ -72,6 +112,31 @@ const CalendarSettingsSheet = ({
   const [syncStep, setSyncStep] = useState<SyncStep>('idle');
   const [copied, setCopied] = useState(false);
   const { toast } = useToast();
+
+  const platform = useMemo(() => detectPlatform(), []);
+
+  // Convert https:// feed URL to webcal:// — iOS handles webcal natively and
+  // prompts to subscribe in Apple Calendar with a single tap.
+  const webcalUrl = useMemo(() => {
+    if (!feedUrl) return null;
+    return feedUrl.replace(/^https?:\/\//, 'webcal://');
+  }, [feedUrl]);
+
+  // Google Calendar deep link — drops the user straight into "Add by URL".
+  const googleCalUrl = useMemo(() => {
+    if (!feedUrl) return null;
+    return `https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(feedUrl)}`;
+  }, [feedUrl]);
+
+  const handleSubscribeApple = useCallback(async () => {
+    if (!webcalUrl) return;
+    await openExternal(webcalUrl);
+  }, [webcalUrl]);
+
+  const handleSubscribeGoogle = useCallback(async () => {
+    if (!googleCalUrl) return;
+    await openExternal(googleCalUrl);
+  }, [googleCalUrl]);
 
   const handleGetFeedUrl = useCallback(async () => {
     try {
@@ -158,23 +223,81 @@ const CalendarSettingsSheet = ({
 
                 {syncStep === 'ready' && (
                   <div className="divide-y divide-white/[0.06]">
-                    {/* Step 1: Copy */}
+                    {/* Primary action — platform-aware */}
                     <div className="p-4 space-y-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
-                          <span className="text-xs font-bold text-white">1</span>
+                      <p className="text-xs text-white">
+                        {platform === 'ios'
+                          ? 'Tap the button below — iOS will prompt you to subscribe in Apple Calendar. No copy-paste needed.'
+                          : platform === 'android'
+                            ? 'Tap to add the feed to your Google Calendar in one step.'
+                            : "Pick the calendar app you use. We'll open it with the link ready to add."}
+                      </p>
+
+                      {/* iOS / iPadOS / macOS — webcal:// one-tap */}
+                      {platform === 'ios' ? (
+                        <>
+                          <Button
+                            onClick={handleSubscribeApple}
+                            className="h-12 w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                          >
+                            <Apple className="h-4 w-4 mr-2" />
+                            Subscribe in Apple Calendar
+                          </Button>
+                          <Button
+                            onClick={handleSubscribeGoogle}
+                            variant="outline"
+                            className="h-11 w-full bg-white/[0.04] hover:bg-white/[0.08] text-white border-white/[0.1] font-medium rounded-xl touch-manipulation active:scale-[0.98]"
+                          >
+                            <Smartphone className="h-4 w-4 mr-2" />
+                            Or add to Google Calendar
+                          </Button>
+                        </>
+                      ) : platform === 'android' ? (
+                        <>
+                          <Button
+                            onClick={handleSubscribeGoogle}
+                            className="h-12 w-full bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                          >
+                            <Smartphone className="h-4 w-4 mr-2" />
+                            Add to Google Calendar
+                          </Button>
+                          <Button
+                            onClick={handleSubscribeApple}
+                            variant="outline"
+                            className="h-11 w-full bg-white/[0.04] hover:bg-white/[0.08] text-white border-white/[0.1] font-medium rounded-xl touch-manipulation active:scale-[0.98]"
+                          >
+                            <Apple className="h-4 w-4 mr-2" />
+                            Or open in Apple Calendar
+                          </Button>
+                        </>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-2">
+                          <Button
+                            onClick={handleSubscribeApple}
+                            className="h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                          >
+                            <Apple className="h-4 w-4 mr-2" />
+                            Apple
+                          </Button>
+                          <Button
+                            onClick={handleSubscribeGoogle}
+                            className="h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-bold rounded-xl touch-manipulation active:scale-[0.98]"
+                          >
+                            <Smartphone className="h-4 w-4 mr-2" />
+                            Google
+                          </Button>
                         </div>
-                        <span className="text-sm font-semibold text-white">
-                          Copy your sync link
-                        </span>
-                      </div>
+                      )}
+
+                      {/* Copy fallback — always available */}
                       <Button
                         onClick={handleCopyFeedUrl}
+                        variant="outline"
                         className={cn(
-                          'h-12 w-full font-bold rounded-xl touch-manipulation active:scale-[0.98]',
+                          'h-11 w-full font-medium rounded-xl touch-manipulation active:scale-[0.98] border-white/[0.1]',
                           copied
-                            ? 'bg-emerald-600 text-white'
-                            : 'bg-emerald-500 hover:bg-emerald-600 text-white'
+                            ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                            : 'bg-white/[0.02] hover:bg-white/[0.06] text-white'
                         )}
                       >
                         {copied ? (
@@ -182,46 +305,42 @@ const CalendarSettingsSheet = ({
                         ) : (
                           <Copy className="h-4 w-4 mr-2" />
                         )}
-                        {copied ? 'Copied!' : 'Copy Link'}
+                        {copied ? 'Link copied' : 'Copy link instead'}
                       </Button>
                     </div>
 
-                    {/* Step 2: Instructions per platform */}
-                    <div className="p-4 space-y-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
-                          <span className="text-xs font-bold text-white">2</span>
-                        </div>
-                        <span className="text-sm font-semibold text-white">
-                          Open your calendar app and subscribe
+                    {/* Per-platform manual instructions (collapsed) */}
+                    <div className="p-4 space-y-2">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-semibold text-white/70">
+                          Manual setup (if the buttons don't work)
                         </span>
                       </div>
-
-                      <div className="space-y-2">
-                        <InstructionRow
-                          title="iPhone (Apple Calendar)"
-                          steps="Settings → Calendar → Accounts → Add Account → Other → Add Subscribed Calendar → Paste link"
-                        />
-                        <InstructionRow
-                          title="Google Calendar"
-                          steps="Open Google Calendar → Settings → Add calendar → From URL → Paste link"
-                        />
-                        <InstructionRow
-                          title="Samsung Calendar"
-                          steps="Menu → Manage calendars → Add account → Add subscription → Paste link"
-                        />
-                        <InstructionRow
-                          title="Outlook"
-                          steps="Settings → View all Outlook settings → Calendar → Shared calendars → Subscribe from web → Paste link"
-                        />
-                      </div>
+                      <InstructionRow
+                        title="iPhone (Apple Calendar)"
+                        steps="Settings → Calendar → Accounts → Add Account → Other → Add Subscribed Calendar → Paste link"
+                      />
+                      <InstructionRow
+                        title="Google Calendar"
+                        steps="Open Google Calendar → Settings → Add calendar → From URL → Paste link"
+                      />
+                      <InstructionRow
+                        title="Samsung Calendar"
+                        steps="Menu → Manage calendars → Add account → Add subscription → Paste link"
+                      />
+                      <InstructionRow
+                        title="Outlook"
+                        steps="Settings → View all Outlook settings → Calendar → Shared calendars → Subscribe from web → Paste link"
+                      />
                     </div>
 
                     {/* Done note */}
                     <div className="px-4 py-3 bg-emerald-500/5">
                       <p className="text-xs text-emerald-400">
-                        Once subscribed, your events will sync automatically. No need to do anything
-                        else.
+                        Once subscribed, new events will sync automatically every few hours. Most
+                        calendar apps update on their own schedule — Apple Calendar refreshes by
+                        default; you can tighten this in Settings → Calendar → Accounts → your
+                        Elec-Mate subscription → Refresh Calendars.
                       </p>
                     </div>
                   </div>

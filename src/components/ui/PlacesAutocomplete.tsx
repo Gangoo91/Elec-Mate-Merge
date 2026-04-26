@@ -39,19 +39,90 @@ export function PlacesAutocomplete({
   const placesService = useRef<google.maps.places.PlacesService | null>(null);
   const sessionToken = useRef<google.maps.places.AutocompleteSessionToken | null>(null);
 
+  // Initialise (or re-initialise) the Google Places services. Safe to call any
+  // number of times — only does work when window.google.maps.places is ready.
+  // Returns true if services are available afterwards.
+  const initServices = useCallback((): boolean => {
+    if (typeof window === 'undefined' || !window.google?.maps?.places) {
+      return false;
+    }
+    try {
+      if (!autocompleteService.current) {
+        autocompleteService.current = new google.maps.places.AutocompleteService();
+      }
+      if (!placesService.current) {
+        const dummyDiv = document.createElement('div');
+        placesService.current = new google.maps.places.PlacesService(dummyDiv);
+      }
+      if (!sessionToken.current) {
+        sessionToken.current = new google.maps.places.AutocompleteSessionToken();
+      }
+      return true;
+    } catch (err) {
+      console.error('[PlacesAutocomplete] init failed:', err);
+      return false;
+    }
+  }, []);
+
   // Initialise services when Google Maps is loaded
   useEffect(() => {
-    if (isLoaded && window.google) {
-      autocompleteService.current = new google.maps.places.AutocompleteService();
-      // PlacesService requires a DOM element or map
-      const dummyDiv = document.createElement('div');
-      placesService.current = new google.maps.places.PlacesService(dummyDiv);
-      sessionToken.current = new google.maps.places.AutocompleteSessionToken();
-    }
-  }, [isLoaded]);
+    if (isLoaded) initServices();
+  }, [isLoaded, initServices]);
+
+  // Re-initialise on Capacitor app resume (iOS may discard refs when app is
+  // backgrounded and relaunched, leaving the autocomplete service stale).
+  useEffect(() => {
+    let isMounted = true;
+    let removeListener: (() => void) | undefined;
+
+    const setup = async () => {
+      try {
+        const { Capacitor } = await import('@capacitor/core');
+        if (!Capacitor.isNativePlatform() || !isMounted) return;
+        const { App } = await import('@capacitor/app');
+        if (!isMounted) return;
+
+        const handle = await App.addListener('appStateChange', ({ isActive }) => {
+          if (isActive) {
+            // Returning to foreground — refresh service references.
+            // Drop refs first so initServices rebuilds them with the current
+            // window.google instance.
+            autocompleteService.current = null;
+            placesService.current = null;
+            sessionToken.current = null;
+            initServices();
+          }
+        });
+        if (!isMounted) {
+          handle.remove();
+          return;
+        }
+        removeListener = () => handle.remove();
+      } catch (err) {
+        // Not running under Capacitor or plugin missing — silently ignore.
+        console.debug('[PlacesAutocomplete] Capacitor resume listener skipped:', err);
+      }
+    };
+
+    setup();
+
+    return () => {
+      isMounted = false;
+      if (removeListener) removeListener();
+    };
+  }, [initServices]);
 
   // Fetch predictions when value changes
   const fetchPredictions = useCallback(async (input: string) => {
+    // Lazy re-init if refs are stale (e.g. after iOS app resume) — gives us
+    // one shot to recover before bailing out silently.
+    if (!autocompleteService.current) {
+      const ok = initServices();
+      if (!ok) {
+        setPredictions([]);
+        return;
+      }
+    }
     if (!autocompleteService.current || !input.trim()) {
       setPredictions([]);
       return;
@@ -75,7 +146,7 @@ export function PlacesAutocomplete({
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [initServices]);
 
   // Debounce input
   useEffect(() => {
@@ -94,7 +165,10 @@ export function PlacesAutocomplete({
   // Handle place selection
   const handleSelectPlace = useCallback(
     (prediction: google.maps.places.AutocompletePrediction) => {
-      if (!placesService.current) return;
+      if (!placesService.current) {
+        const ok = initServices();
+        if (!ok || !placesService.current) return;
+      }
 
       const request: google.maps.places.PlaceDetailsRequest = {
         placeId: prediction.place_id,
@@ -127,7 +201,7 @@ export function PlacesAutocomplete({
         }
       });
     },
-    [onChange, onPlaceSelect]
+    [onChange, onPlaceSelect, initServices]
   );
 
   // Close dropdown when clicking outside
