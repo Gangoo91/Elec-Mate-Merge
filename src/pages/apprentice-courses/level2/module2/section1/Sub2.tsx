@@ -29,7 +29,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'SI base and derived units | Level 2 Module 2.1.2 | Elec-Mate';
 const DESCRIPTION =
-  'The seven SI base units and the derived units a working spark relies on — metre, kilogram, second, ampere, and the volts/ohms/watts that come out of them.';
+  'The seven SI base units and the derived units a working electrician relies on — metre, kilogram, second, ampere, and the volts/ohms/watts that come out of them.';
 
 const checks = [
   {
@@ -52,7 +52,21 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'Newton (force) = kg·m/s². Multiply by another metre for torque (N·m). Even mechanical units used by sparks (motor torque, fixings) trace back to base units.',
+      'Newton (force) = kg·m/s². Multiply by another metre for torque (N·m). Even mechanical units used by electricians (motor torque, fixings) trace back to base units.',
+  },
+  {
+    id: 'si-coulomb-derivation-check',
+    question:
+      'The coulomb (C) is the SI derived unit of electric charge. How is it built from base units?',
+    options: [
+      '1 C = 1 V × 1 A',
+      '1 C = 1 A × 1 s (one ampere flowing for one second)',
+      '1 C = 1 W × 1 s',
+      '1 C is itself a base unit',
+    ],
+    correctIndex: 1,
+    explanation:
+      "1 C = 1 A·s. Charge is current multiplied by time — exactly how a battery's capacity in ampere-hours converts to coulombs (1 Ah = 3,600 C). Two base units (ampere + second), one derived unit.",
   },
 ];
 
@@ -149,7 +163,7 @@ const faqs = [
   {
     question: "Do I need to know all seven base units for my Level 2 exam?",
     answer:
-      "Yes — name them and know which quantity each measures (length, mass, time, current, temperature, amount of substance, luminous intensity). You'll mainly use four day-to-day on the tools: metre, kilogram, second and ampere. The other three (kelvin, mole, candela) come up in lighting design, chemistry and theory.",
+      "Yes — name them and know which quantity each measures (length, mass, time, current, temperature, amount of substance, luminous intensity). You'll mainly use four day-to-day on site: metre, kilogram, second and ampere. The other three (kelvin, mole, candela) come up in lighting design, chemistry and theory.",
   },
   {
     question: "What's the difference between a base and a derived unit?",
@@ -159,7 +173,7 @@ const faqs = [
   {
     question: 'Why use kelvin instead of celsius for temperature?',
     answer:
-      "Kelvin is the SI base. It starts at absolute zero (the coldest anything can get) so you can't have negative kelvin. In practice, sparks read most temperatures in °C — but cable derating tables and motor thermal limits often quote ΔT (a temperature DIFFERENCE) in kelvin, because a 1 K change and a 1 °C change are exactly the same size.",
+      "Kelvin is the SI base. It starts at absolute zero (the coldest anything can get) so you can't have negative kelvin. In practice, electricians read most temperatures in °C — but cable derating tables and motor thermal limits often quote ΔT (a temperature DIFFERENCE) in kelvin, because a 1 K change and a 1 °C change are exactly the same size.",
   },
   {
     question: 'What about VA on a transformer label — is that the same as W?',
@@ -183,7 +197,7 @@ export default function Sub2() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -191,7 +205,7 @@ export default function Sub2() {
           <PageHero
             eyebrow="Module 2 · Section 1 · Subsection 2"
             title="SI base and derived units"
-            description="The seven SI base units, the handful of derived units sparks use daily, and why getting the case of a single letter wrong can blow your test sheet up by a factor of a million."
+            description="The seven SI base units, the handful of derived units electricians use daily, and why getting the case of a single letter wrong can blow your test sheet up by a factor of a million."
             tone="emerald"
           />
 
@@ -218,7 +232,7 @@ export default function Sub2() {
           <ContentEyebrow>Why a global unit system exists</ContentEyebrow>
 
           <ConceptBlock
-            title="One language so a UK spark and a German manufacturer agree"
+            title="One language so a UK electrician and a German manufacturer agree"
             plainEnglish="SI = Système International d'Unités. Agreed in 1960. Every serious country uses it. Every BS, every IEC, every EN standard, every test instrument."
             onSite="Pick up a Hager MCB or a Schneider RCD off the wholesaler shelf — the rating is in amps, the breaking capacity is in kA, the temperature curve is in kelvin. Same units, same meaning, anywhere in the world."
           >
@@ -243,7 +257,7 @@ export default function Sub2() {
 
           <ConceptBlock
             title="The whole edifice rests on these seven"
-            onSite="Of the seven, sparks use four constantly: metre (cable runs, room dimensions), kilogram (weight of consumer units, cable drums), second (RCD trip times, pulse widths) and ampere (current — the big one)."
+            onSite="Of the seven, electricians use four constantly: metre (cable runs, room dimensions), kilogram (weight of consumer units, cable drums), second (RCD trip times, pulse widths) and ampere (current — the big one)."
           >
             <p>The seven SI base units, what each measures and the symbol:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -268,7 +282,7 @@ export default function Sub2() {
                 thermal limits.
               </li>
               <li>
-                <strong>Mole (mol)</strong> — amount of substance. Chemistry; rarely on the tools.
+                <strong>Mole (mol)</strong> — amount of substance. Chemistry; rarely on site.
               </li>
               <li>
                 <strong>Candela (cd)</strong> — luminous intensity. Sits behind lighting design
@@ -308,7 +322,7 @@ export default function Sub2() {
             plainEnglish="Volt = work done per unit charge. Ohm = volt per amp. Watt = joule per second. They all trace back to the base seven."
           >
             <p>
-              Most of the units a spark touches are DERIVED — combinations of the base seven. You
+              Most of the units an electrician touches are DERIVED — combinations of the base seven. You
               don't have to memorise the derivation, but understanding the principle stops the units
               feeling like magic. A few examples:
             </p>
@@ -392,7 +406,7 @@ export default function Sub2() {
             </ul>
             <p>
               Every one of those is an SI unit. None of them is academic — they're the daily
-              vocabulary of being on the tools.
+              vocabulary of being on site.
             </p>
           </ConceptBlock>
 
@@ -401,7 +415,7 @@ export default function Sub2() {
             onSite="The bill the customer points at when the smart meter goes mad is in kWh, not joules. They mean the same kind of thing — energy used over time — but kWh is sized for household amounts. 1 kWh = 3,600,000 J."
           >
             <p>
-              The strict SI unit of energy is the joule. But for billing and load calcs, sparks (and
+              The strict SI unit of energy is the joule. But for billing and load calcs, electricians (and
               everyone else) use the kilowatt-hour (kWh) — power in kW × time in hours. They both
               measure energy; kWh is just a friendlier scale for the kind of numbers a home or shop
               actually uses.
@@ -420,6 +434,65 @@ export default function Sub2() {
             options={checks[1].options}
             correctIndex={checks[1].correctIndex}
             explanation={checks[1].explanation}
+          />
+
+          <ConceptBlock
+            title="Coherent units — why the SI maths just works"
+            plainEnglish="The SI system is 'coherent' — every derived unit is built from base units with no fudge factors of 1.6 or 2.54. Multiply the base units in the formula and the answer comes out in the right derived unit, automatically."
+            onSite="That's why P = V × I gives you watts when V is in volts and I is in amps. No conversion factor. Same with V = I × R giving volts, or E = P × t giving joules when t is in seconds. Mix base and non-base units (mA, kV, hours) and you have to convert first."
+          >
+            <p>
+              "Coherent" is the formal property: each derived SI unit is the product or quotient of
+              base units with a numerical factor of <strong>exactly 1</strong>. So:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                1 newton = 1 kg × 1 m/s² (no fudge factor — just the base units multiplied
+                together).
+              </li>
+              <li>1 joule = 1 N × 1 m = 1 kg·m²/s² (force × distance).</li>
+              <li>1 watt = 1 J ÷ 1 s = 1 kg·m²/s³ (energy per second).</li>
+              <li>1 volt = 1 J ÷ 1 C = 1 kg·m²/(A·s³) (energy per unit charge).</li>
+            </ul>
+            <p>
+              The practical upshot: as long as everything is in <strong>base SI units</strong> when
+              you start, the answer comes out in the right derived unit at the end. Plug 230 V × 13
+              A into P = V × I and you get 2,990 W — straight out, no conversion. Plug 230 V × 13,000
+              mA in and you get 2,990,000 mVA, which is the same number expressed in a unit you
+              never wanted. Convert before, not after.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="The dimensional sanity check — units catch wrong formulas"
+            plainEnglish="If your answer comes out in the wrong unit, your maths is wrong. Tracking units through a calculation is one of the cheapest ways to spot an error before you sign off."
+            onSite="A 4 kW immersion on a 230 V supply. Rough current? P ÷ V. The units check: W ÷ V = (J/s) ÷ (J/C) = C/s = A. Comes out in amps — formula is the right way up. If you'd written I = V × P by mistake, the units would be V × W = V² × A, which is nonsense — and the unit check catches it before you spec the wrong cable."
+          >
+            <p>
+              Every SI calculation can be unit-checked. The trick is to write the units alongside
+              the numbers and treat them like algebra. Cancel matching units top and bottom; the
+              remainder is the unit your answer is in. If that doesn't match the unit you expected,
+              your formula is wrong.
+            </p>
+            <p>
+              Example. Cable resistance heating: P = I² × R. Plug in I in amps and R in ohms. The
+              units: A² × Ω = A² × (V/A) = A × V = W. Comes out in watts — exactly what you'd want
+              for a power. Now imagine you'd remembered the formula as P = I × R by mistake: A × Ω
+              = A × V/A = V. Comes out in volts — that's voltage drop, not power. The unit check
+              tells you instantly that you've used the wrong formula.
+            </p>
+            <p>
+              Make this a habit on every calc. It costs five seconds and catches the kind of slip
+              that fails a calc paper, mis-sizes a cable, or worse.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={checks[2].id}
+            question={checks[2].question}
+            options={checks[2].options}
+            correctIndex={checks[2].correctIndex}
+            explanation={checks[2].explanation}
           />
 
           <SectionRule />
@@ -513,9 +586,9 @@ export default function Sub2() {
 
           <KeyTakeaways
             points={[
-              "Seven SI base units: metre, kilogram, second, ampere, kelvin, mole, candela. Memorise the four sparks use most — m, kg, s, A.",
+              "Seven SI base units: metre, kilogram, second, ampere, kelvin, mole, candela. Memorise the four electricians use most — m, kg, s, A.",
               "The ampere is the electrical base unit. Every other electrical unit (V, Ω, W, J, Hz, C) is derived from base units.",
-              "1 V = 1 J/C, 1 Ω = 1 V/A, 1 W = 1 J/s. You don't need to recite these on the tools, but knowing the units have meaning stops them feeling random.",
+              "1 V = 1 J/C, 1 Ω = 1 V/A, 1 W = 1 J/s. You don't need to recite these on site, but knowing the units have meaning stops them feeling random.",
               'Energy comes in joules (SI) but bills and loads use kWh — same quantity, friendlier scale.',
               "Symbols are case-sensitive. Lower-case m = milli, upper-case M = mega. Wrong case = wrong answer by a factor of a million.",
               'Every reputable UK manufacturer, BS 7671 itself, and your test instruments all use SI. No conversion gymnastics required.',
@@ -533,7 +606,7 @@ export default function Sub2() {
                 <ChevronLeft className="h-3 w-3" /> Previous subsection
               </div>
               <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Maths principles for sparks
+                Maths principles for electricians
               </div>
             </button>
             <button

@@ -164,14 +164,14 @@ const quizQuestions = [
     id: 7,
     question: 'What’s the law on ladder pre-use checks?',
     options: [
-      'Inspected once a year by the gaffer',
+      'Inspected once a year by the supervisor',
       'Visual pre-use check by the user, plus a recorded detailed inspection at intervals (typically every 3–12 months)',
       'No check needed if it looks fine',
       'PAT-tested every 3 months',
     ],
     correctAnswer: 1,
     explanation:
-      "WAHR Reg 12 plus PUWER 1998. You eyeball it before each use — stiles, rungs, feet, locking bars. The company keeps a recorded inspection log. No record = the gaffer can’t prove the kit was fit for use.",
+      "WAHR Reg 12 plus PUWER 1998. You eyeball it before each use — stiles, rungs, feet, locking bars. The company keeps a recorded inspection log. No record = the supervisor can’t prove the kit was fit for use.",
   },
   {
     id: 8,
@@ -233,7 +233,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -267,7 +267,7 @@ export default function Sub4() {
 
           <ContentEyebrow>Why this section matters</ContentEyebrow>
 
-          <ConceptBlock title="Falls and bad air kill more sparks than electricity does">
+          <ConceptBlock title="Falls and bad air kill more electricians than electricity does">
             <p>
               HSE figures every year tell the same story. Falls from height are the biggest single
               cause of fatal injury on construction sites — usually from low heights, doing routine
@@ -295,7 +295,7 @@ export default function Sub4() {
             <p>
               The Work at Height Regulations 2005 (WAHR) replaced an older patchwork that did have
               height thresholds. The 2005 Regs binned the threshold and made it about{' '}
-              <strong>risk of injury</strong>, not metres. A spark falling backwards off a
+              <strong>risk of injury</strong>, not metres. An electrician falling backwards off a
               two-rung hop-up onto a concrete floor breaks just as many bones as one falling off
               an extension ladder.
             </p>
@@ -476,7 +476,7 @@ export default function Sub4() {
               </li>
             </ul>
             <p>
-              Sparks meet confined spaces all the time and don’t always clock it: cable risers,
+              Electricians meet confined spaces all the time and don’t always clock it: cable risers,
               floor voids, basement plant rooms, manholes for street lighting, transformer rooms,
               ducts behind switchgear, lift pits. If both parts of the test are met, the Regs
               apply — full stop.
@@ -498,8 +498,9 @@ export default function Sub4() {
 
           <ConceptBlock title="The four things that have to happen before anyone enters">
             <p>
-              If avoidance isn’t reasonably practicable, the Regs (Reg 4(2) and Reg 5) require a
-              safe system of work plus emergency arrangements. In practice that means:
+              If avoidance isn’t reasonably practicable, the Confined Spaces Regs 1997
+              (Reg 4(2) and Reg 5) require a safe system of work plus emergency
+              arrangements. In practice that means:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -551,7 +552,7 @@ export default function Sub4() {
           <ContentEyebrow>The electrical add-ons</ContentEyebrow>
 
           <ConceptBlock
-            title="What makes height and confined-space work harder for sparks"
+            title="What makes height and confined-space work harder for electricians"
             plainEnglish="Wet, cramped, metal everywhere, often using power tools. The shock and arc-flash risks are higher than in a dry lounge."
           >
             <p>Two environments stack extra electrical risks on top of the obvious ones:</p>
@@ -627,7 +628,7 @@ export default function Sub4() {
           <ConceptBlock title="Who can do what — and what training looks like">
             <p>
               WAHR Reg 5 and Confined Spaces Reg 4(2) both put a competence duty on the employer.
-              For us on the tools that means specific tickets:
+              For us on site that means specific tickets:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>

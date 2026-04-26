@@ -172,7 +172,7 @@ const faqs = [
   {
     question: 'Are Newton’s laws actually useful on site, or just exam content?',
     answer:
-      'Both. They’re the reason ladders need to be footed (gravity wants to swing the base out — first law and reaction forces explain why). They’re why a drill kicks back when it bites (third law). They’re why a falling spanner from height does a lot more damage than one dropped at waist height (it accelerates the whole way down — second law). You won’t quote them on the tools, but you use them every day.',
+      'Both. They’re the reason ladders need to be footed (gravity wants to swing the base out — first law and reaction forces explain why). They’re why a drill kicks back when it bites (third law). They’re why a falling spanner from height does a lot more damage than one dropped at waist height (it accelerates the whole way down — second law). You won’t quote them on site, but you use them every day.',
   },
   {
     question: 'What’s the difference between speed, velocity and acceleration?',
@@ -211,7 +211,7 @@ export default function Sub2() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -433,7 +433,7 @@ export default function Sub2() {
               </li>
             </ul>
             <p>
-              You won’t quote a law to your gaffer, but knowing which one is in play is the
+              You won’t quote a law to your supervisor, but knowing which one is in play is the
               difference between a tool surprising you and you knowing what it’s about to do next.
             </p>
           </ConceptBlock>

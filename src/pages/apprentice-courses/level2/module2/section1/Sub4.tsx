@@ -29,7 +29,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'SI prefixes and conversions | Level 2 Module 2.1.4 | Elec-Mate';
 const DESCRIPTION =
-  'Milli, kilo, mega, micro, nano — the SI prefixes a working spark uses constantly, and how to convert cleanly without 1000× errors that fail certificates.';
+  'Milli, kilo, mega, micro, nano — the SI prefixes a working electrician uses constantly, and how to convert cleanly without 1000× errors that fail certificates.';
 
 const checks = [
   {
@@ -175,7 +175,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -232,8 +232,8 @@ export default function Sub4() {
           <ContentEyebrow>The prefixes you'll meet daily</ContentEyebrow>
 
           <ConceptBlock
-            title="Six prefixes cover ~99% of spark work"
-            onSite="Print the table, stick it in the back of the OSG, refer to it until you've memorised it. After about six months on the tools the conversions become automatic."
+            title="Six prefixes cover ~99% of electrician work"
+            onSite="Print the table, stick it in the back of the OSG, refer to it until you've memorised it. After about six months on site the conversions become automatic."
           >
             <p>
               Each step up multiplies by 1,000. Each step down divides by 1,000.
@@ -271,18 +271,176 @@ export default function Sub4() {
 
           <UnitPrefixConverter />
 
+          <ConceptBlock
+            title="Each prefix step is exactly 10³ — three decimal places at a time"
+            plainEnglish="The standard engineering prefixes (k, M, G going up; m, µ, n going down) are spaced in factors of 1,000. Move one step and the number's decimal point shifts three places. That's why conversions feel mechanical once you see the pattern."
+            onSite="Reading 250 MΩ and wanting it in kΩ? One step down (mega → kilo) = ÷ by 1,000 (no, the other way — mega is bigger than kilo, so you multiply). 250 MΩ × 1,000 = 250,000 kΩ. Step direction matters; ask 'is the new prefix bigger or smaller than the old one?' to decide which way the decimal moves."
+          >
+            <p>
+              The prefix ladder, with the multiplier between each step:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                G (giga) ← × 1,000 ← M (mega) ← × 1,000 ← k (kilo) ← × 1,000 ← <strong>BASE</strong>{' '}
+                ← × 1,000 ← m (milli) ← × 1,000 ← µ (micro) ← × 1,000 ← n (nano).
+              </li>
+              <li>
+                Going LEFT (towards bigger prefixes) divides the number by 1,000 each step.
+              </li>
+              <li>Going RIGHT (towards smaller prefixes) multiplies the number by 1,000 each step.</li>
+            </ul>
+            <p>
+              Worked example. 5 mΩ to MΩ. Three steps to the LEFT (m → base → k → M), so divide
+              by 1,000 three times = ÷ 1,000,000,000. 5 mΩ ÷ 10⁹ = 5 × 10⁻⁹ MΩ = 0.000000005 MΩ.
+              Microscopic — which makes sense, because milliohms are tiny and megohms are huge.
+            </p>
+            <p>
+              Worked example. 0.5 MΩ to mΩ. Three steps to the RIGHT (M → k → base → m), so
+              multiply by 1,000 three times = × 1,000,000,000. 0.5 MΩ × 10⁹ = 500,000,000 mΩ.
+              Vast — same logic in reverse.
+            </p>
+            <p>
+              You don't need to memorise the multiplier across every possible jump. Memorise the
+              ladder, count the steps, and multiply or divide by 1,000 per step in the right
+              direction. The arithmetic is rote once the structure clicks.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Why µ (micro) and m (milli) get mixed up — and how to stop it"
+            plainEnglish="They sound similar, look similar in handwriting and sit on the same side of the prefix ladder — both 'less than base'. The factor between them is 1,000. Get it wrong and your value is off by three decimal places."
+            onSite="Capacitor markings, RCD trip currents, low leakage measurements — these are the values where m and µ collide most often. Print clearly, use the digital cert software's dropdown, and double-check anything that looks too big or too small for the application."
+          >
+            <p>
+              Three rules to keep them apart:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Anchor each to a familiar value.</strong> 30 mA = the standard RCD trip
+                current. 470 µF = a typical motor-run capacitor. 4 µA = the kind of leakage current
+                a healthy circuit draws to earth at standby. Keep one solid example for each
+                prefix in your head.
+              </li>
+              <li>
+                <strong>Spell it out when in doubt.</strong> "30 milliamps" or "30 mA" are
+                unambiguous in writing — "30 ma" is not. The Greek µ doesn't appear on a UK
+                keyboard easily, so people sometimes substitute "u" or "mu" — both acceptable as
+                long as they're consistent.
+              </li>
+              <li>
+                <strong>Use the dropdown, not the keyboard.</strong> On every digital cert software
+                the prefix is a separate selectable field. Pick from the list and the case can't
+                go wrong. Free-typing the unit is the source of half the prefix errors on a typical
+                EICR.
+              </li>
+            </ul>
+            <p>
+              The penalty for a m/µ mix-up: 1,000×. A 30 µA leakage written as 30 mA is the
+              difference between an installation that's healthy and one that should already be off.
+              Slow down for the prefix on every value you record.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="The 'sensible-prefix sweet spot' — picking the right one for the result"
+            plainEnglish="A good final prefix puts the number between roughly 0.1 and 1,000. Outside that range, switch to the next prefix up or down. Saves zeros, avoids decimal-place mistakes when others read the cert."
+            onSite="A measured Zs of 0.0005 Ω — write it as 0.5 mΩ. A measured insulation resistance of 4,700,000 Ω — write it as 4.7 MΩ. Both have the same value as the long form but read in a fraction of a glance and are far less prone to typos."
+          >
+            <p>
+              The convention electricians and engineers follow for "what prefix should the answer
+              be in?":
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Aim for a number with <strong>one to four significant digits</strong> ahead of any
+                decimal — typically between 0.1 and 1,000.
+              </li>
+              <li>
+                If the result is below 0.1, step DOWN to a smaller-base prefix (e.g. 0.05 A → 50
+                mA).
+              </li>
+              <li>
+                If the result is above 1,000, step UP to a larger-base prefix (e.g. 4,700 V →
+                4.7 kV).
+              </li>
+              <li>
+                Two-digit-decimal results (e.g. 12.6 V, 0.45 Ω, 9.5 kW) are usually the cleanest
+                — keep them.
+              </li>
+            </ul>
+            <p>
+              Why bother? Two reasons. First, the next person reading your cert reads numbers
+              faster and more accurately when there are fewer zeros to count. Second, sanity-checks
+              get easier — "13 A drawn by a kettle" is recognisable; "13,000,000 µA drawn by a
+              kettle" is the same value but the digit count alone makes it harder to spot whether
+              it's right or wrong. Tidy maths is safer maths.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Prefixes on test instruments — what the screen is actually telling you"
+            plainEnglish="Every multimeter, insulation tester, loop tester and RCD tester puts the prefix on the screen. Reading the prefix is just as important as reading the digits. Half the test-sheet typos start with someone reading '5' instead of '5 m' or '5 M'."
+            onSite="On most modern testers the prefix and the unit appear together to the right of the digits — '4.7 MΩ' or '50 mA' or '0.78 Ω'. Older meters (especially analogue) put the prefix on the range knob, not the screen — you have to read the knob and translate. Knowing which type of meter you're using means you don't lose a prefix when transcribing onto the cert."
+          >
+            <p>
+              Three prefix-reading habits that catch typos before they ship:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Read the screen, then read the unit, then write down both together.</strong>{' '}
+                Don't write the digits, look away, then come back and add the unit — that's where
+                the m/M slips happen.
+              </li>
+              <li>
+                <strong>Sanity-check against the expected range</strong> before recording. If the
+                ring final R1+R2 should be 0.4-0.8 Ω and the meter says 0.45, that fits — record
+                it. If it says 450, you've got the wrong range or you're reading mΩ as Ω. Stop and
+                check.
+              </li>
+              <li>
+                <strong>Re-read the prefix on auto-ranging meters every time.</strong> The same
+                test on the same circuit might display in mΩ, Ω or kΩ depending on what the meter
+                decides is the most readable scale. Don't assume the prefix from the previous
+                reading carries over.
+              </li>
+            </ul>
+            <p>
+              Insulation testers in particular love to switch from MΩ to GΩ when the reading goes
+              very high. A 250 MΩ reading on Tuesday and a 0.5 GΩ reading on Wednesday are not
+              "different" — they're the same level of healthy insulation, just displayed in
+              different prefixes. Train yourself to read the unit every time.
+            </p>
+          </ConceptBlock>
+
           <RegsCallout
-            source="BS 7671 — Regulation 415.1.1 (RCDs for additional protection)"
-            clause="Where an RCD is required for additional protection (in conjunction with basic and fault protection in accordance with Section 411), it shall have a rated residual operating current (I∆n) not exceeding 30 mA, and shall disconnect the supply within 40 ms when subjected to a residual current of 5 × I∆n. Guidance Note 3 elaborates on the test method and acceptance criteria."
+            source="BS 7671 — Regulation 415.1.1 (RCDs as additional protection)"
+            clause="The use of RCDs with a rated residual operating current (I∆n) not exceeding 30 mA is recognized in AC systems as additional protection in the event of failure of the provision for basic protection and/or the provision for fault protection or carelessness by users."
             meaning={
               <>
-                Note the <strong>m</strong> in <strong>mA</strong> — lower-case, milli, ÷ 1,000.
-                30 mA is 0.03 A. Write it as 30 A on a test sheet (upper-case A only) and you've
-                described an RCD that wouldn't trip until far above the lethal threshold. Same goes
-                for the 40 ms — <strong>ms</strong> is milliseconds, not megaseconds.
+                What 415.1.1 actually says: a 30 mA RCD is recognised as <em>additional</em>{' '}
+                protection on top of basic and fault protection — not a replacement for them. Note
+                the <strong>m</strong> in <strong>mA</strong> — lower-case, milli, ÷ 1,000. 30 mA is
+                0.03 A. Write it as 30 A on a test sheet (upper-case A only) and you've described an
+                RCD that wouldn't trip until far above the lethal threshold.
               </>
             }
-            cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Regulation 415.1.1 and IET Guidance Note 3 for full text"
+            cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Regulation 415.1.1 for full text"
+          />
+
+          <RegsCallout
+            source="BS 7671 Table 41.1 + BS EN 61008 / BS EN 61009 (RCD trip times)"
+            clause="A general-purpose 30 mA RCD complying with BS EN 61008-1 / BS EN 61009-1 must disconnect the supply within 300 ms at I∆n, 150 ms at 2 × I∆n, 40 ms at 5 × I∆n, and 40 ms at 500 A test current. BS 7671 Regulation 643.8 (initial verification) and Table 41.1 reference these product-standard limits as the acceptance criteria for RCD testing."
+            meaning={
+              <>
+                The famous "trips in 40 ms at 5 × I∆n" figure is a <strong>product-standard</strong>{' '}
+                requirement on the device itself (BS EN 61008/61009), referenced by BS 7671
+                Regulation 643.8 and Table 41.1 as the test pass criterion — it is not the wording
+                of Reg 415.1.1. Same goes for the time figure — <strong>ms</strong> is
+                milliseconds, not megaseconds. Apprentices regularly mis-attribute this clause; the
+                regs and the product standards do separate jobs.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 Table 41.1 and Reg 643.8; product limits in BS EN 61008-1 / BS EN 61009-1. Wording paraphrased."
           />
 
           <InlineCheck

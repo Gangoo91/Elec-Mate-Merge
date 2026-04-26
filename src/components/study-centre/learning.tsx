@@ -372,13 +372,12 @@ export function SectionRule() {
 
 export { AM2LearningOutcomes as LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
 
-/* ── Video components — editorial card that opens YouTube in a new tab ─
+/* ── Video components — editorial card that plays inline on tap ───────
 
-   Why card + new tab (not iframe embed):
-   - Lighter UX, no ad pre-roll inside the page, no embedding TOS risk
-   - Native YouTube controls (subtitles, speed, fullscreen) on whichever device
-   - Click is a hard signal we can record as a "watch start" via the
-     existing useVideoBookmarks().trackVideoWatched(videoId) hook
+   Tap to play inline — replaces thumbnail with iframe via
+   Capacitor.isNativePlatform() proxy on native, youtube-nocookie embed
+   on web. Tap is also a hard signal we record as a "watch start" via
+   the existing useVideoBookmarks().trackVideoWatched(videoId) hook.
 */
 
 /** Extract the YouTube video ID from any common URL shape. */

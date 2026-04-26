@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
+import { deriveProgressKeys } from '@/lib/apprentice-progress';
 
 interface QuizQuestion {
   id?: number;
@@ -23,33 +24,6 @@ interface QuizQuestion {
 interface QuizProps {
   questions: QuizQuestion[];
   title?: string;
-}
-
-// Extract course and section from current URL for auto-recording
-const CATEGORY_PREFIXES = ['general-upskilling', 'personal-development', 'upskilling'];
-
-function deriveKeysFromUrl(): { courseKey: string; sectionKey: string } {
-  const path = window.location.pathname;
-  const studyPart = path.replace(/.*\/study-centre\//, '').replace(/.*\/apprentice\//, '');
-  const parts = studyPart.split('/');
-  const category = parts[0] || '';
-
-  if (CATEGORY_PREFIXES.includes(category) && parts.length > 1) {
-    const firstSeg = parts[1];
-    const moduleMatch = firstSeg.match(/^(.+?)-(module-\d+.*)$/);
-    if (moduleMatch) {
-      const rest = parts.slice(2).filter((p) => p !== 'quiz').join('/');
-      const section = moduleMatch[2] + (rest ? '/' + rest : '');
-      return { courseKey: moduleMatch[1], sectionKey: section + '-quiz' };
-    }
-    const restParts = parts.slice(2).filter((p) => p !== 'quiz');
-    return {
-      courseKey: parts[1],
-      sectionKey: restParts.length ? restParts.join('/') + '-quiz' : 'quiz',
-    };
-  }
-
-  return { courseKey: category, sectionKey: parts.slice(1).join('/') || 'quiz' };
 }
 
 export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Knowledge check' }) => {
@@ -132,9 +106,9 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Knowledge check'
   useEffect(() => {
     if (quizCompleted && !hasRecorded.current) {
       hasRecorded.current = true;
-      const { courseKey, sectionKey } = deriveKeysFromUrl();
+      const { courseKey, sectionKey } = deriveProgressKeys(window.location.pathname);
       if (courseKey) {
-        recordProgress(courseKey, sectionKey + '-quiz', 100, true);
+        recordProgress(courseKey, `${sectionKey}-quiz`, 100, true);
       }
     }
   }, [quizCompleted, recordProgress]);

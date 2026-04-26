@@ -33,7 +33,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'PPE for electrical work | Level 2 Module 1.4.2 | Elec-Mate';
 const DESCRIPTION =
-  'The specific PPE for sparks: insulated gloves (IEC 60903), arc-rated kit (BS EN 61482), insulated tools (BS EN 60900), eyes, head, feet — with the ratings and the standards that matter.';
+  'The specific PPE for electricians: insulated gloves (IEC 60903), arc-rated kit (BS EN 61482), insulated tools (BS EN 60900), eyes, head, feet — with the ratings and the standards that matter.';
 
 /* ── Inline check questions (preserved — wired into stats/streaks) ── */
 
@@ -49,7 +49,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      'Class 0 = 1000 V AC max use voltage, comfortably above 230 V. Class 00 (500 V AC) would also exceed 230 V but Class 0 is the standard call for any LV work — it’s the de facto industry minimum for sparks. Class 2 is HV-only — overkill, and stiffer to work with.',
+      'Class 0 = 1000 V AC max use voltage, comfortably above 230 V. Class 00 (500 V AC) would also exceed 230 V but Class 0 is the standard call for any LV work — it’s the de facto industry minimum for electricians. Class 2 is HV-only — overkill, and stiffer to work with.',
   },
   {
     id: 'insulated-tools-check',
@@ -157,7 +157,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: 'Which eye protection standard applies to safety glasses on a sparky’s site?',
+    question: 'Which eye protection standard applies to safety glasses on an electrician’s site?',
     options: [
       'BS 7671',
       'BS EN 166',
@@ -209,7 +209,7 @@ const faqs = [
   {
     question: 'Do I need a hard hat for normal domestic rewires?',
     answer:
-      "Depends on the job. EN 397 helmets are needed where there’s a real risk of falling objects — construction sites, roof spaces, working under scaffold. For a settled domestic install with no overhead risk, your gaffer might issue a bump cap (EN 812) instead — lighter, just there to stop you cracking your head on a joist. The RAMS makes the call.",
+      "Depends on the job. EN 397 helmets are needed where there’s a real risk of falling objects — construction sites, roof spaces, working under scaffold. For a settled domestic install with no overhead risk, your supervisor might issue a bump cap (EN 812) instead — lighter, just there to stop you cracking your head on a joist. The RAMS makes the call.",
   },
   {
     question: 'What about hi-vis on a domestic job — really?',
@@ -228,7 +228,7 @@ export default function Sub2() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 4
           </button>
@@ -236,7 +236,7 @@ export default function Sub2() {
           <PageHero
             eyebrow="Module 1 · Section 4 · Subsection 2"
             title="PPE for electrical work"
-            description="The specific PPE for sparks. Ratings, standards, what they actually protect against — and the kit you should expect to be holding before you go anywhere near a live conductor."
+            description="The specific PPE for electricians. Ratings, standards, what they actually protect against — and the kit you should expect to be holding before you go anywhere near a live conductor."
             tone="emerald"
           />
 
@@ -278,7 +278,7 @@ export default function Sub2() {
                 Sometimes used for ELV / control work.
               </li>
               <li>
-                <strong>Class 0</strong> — max use 1000 V AC (1500 V DC). The standard sparky
+                <strong>Class 0</strong> — max use 1000 V AC (1500 V DC). The standard electrician
                 glove for LV (up to 1000 V AC) — covers all 230 V single-phase and 400 V
                 three-phase work.
               </li>
@@ -297,7 +297,7 @@ export default function Sub2() {
             </ul>
             <p>
               Each class also has a TYPE designation (Type A, B, C, H, R, Z) covering
-              resistance to acid, oil, ozone, etc. Most general-purpose sparky gloves are
+              resistance to acid, oil, ozone, etc. Most general-purpose electrician gloves are
               Type R (acid + oil + ozone resistant) or Type Z (ozone-only).
             </p>
             <p>
@@ -449,8 +449,8 @@ export default function Sub2() {
               energy.
             </p>
             <p>
-              Domestic sparks rarely need full arc-flash kit; commercial / industrial /
-              utility sparks routinely do. Either way, the rule is the same: never substitute
+              Domestic electricians rarely need full arc-flash kit; commercial / industrial /
+              utility electricians routinely do. Either way, the rule is the same: never substitute
               cotton overalls or polyester hi-vis for arc-rated gear. Polyester MELTS onto
               skin in an arc flash — it’s WORSE than nothing.
             </p>
@@ -507,7 +507,7 @@ export default function Sub2() {
               <li>
                 <strong>Safety footwear — EN ISO 20345.</strong> SB = basic 200 J toe-cap.
                 S1 = adds antistatic + heel energy absorption. S1P = adds penetration-
-                resistant midsole. S3 = adds water-resistance. Most sparks wear S3 boots —
+                resistant midsole. S3 = adds water-resistance. Most electricians wear S3 boots —
                 handles wet, screws-in-the-floor, drops. NB: dielectric (live-working)
                 footwear is a separate spec — EN 50321-1 — not normal site boots.
               </li>
@@ -526,7 +526,7 @@ export default function Sub2() {
               </li>
               <li>
                 <strong>Respiratory protection — BS EN 149 (FFP masks).</strong> FFP1 =
-                low-toxicity dust, FFP2 = standard sparky use (drill dust, plaster), FFP3 =
+                low-toxicity dust, FFP2 = standard electrician use (drill dust, plaster), FFP3 =
                 high-protection (asbestos-suspect, lead). Single-use; replace when breathing
                 resistance increases. Tight-fit RPE needs face-fit testing — beards defeat
                 the seal.
@@ -584,7 +584,7 @@ export default function Sub2() {
             title="The CU change with two phases of risk"
             situation={
               <>
-                You and your gaffer turn up to swap an old wylex CU for a new dual-RCD
+                You and your supervisor turn up to swap an old wylex CU for a new dual-RCD
                 board. The DNO meter is energised; tails go into the existing CU. You agree
                 to (a) call the DNO for cut-out fuse pull, but they can’t come till next
                 week, OR (b) work it live on the cut-out side — pull tails after declaring
@@ -622,9 +622,9 @@ export default function Sub2() {
 
           <ContentEyebrow>The kit list, pulled together</ContentEyebrow>
 
-          <ConceptBlock title="What ‘fully kitted’ looks like for an LV sparky">
+          <ConceptBlock title="What ‘fully kitted’ looks like for an LV electrician">
             <p>
-              For most apprentice work this is what your gaffer should be issuing you with —
+              For most apprentice work this is what your supervisor should be issuing you with —
               and what you should expect to see in your tool bag, dated, marked, and ready:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -659,7 +659,7 @@ export default function Sub2() {
               "BS EN 60900 = the only spec that means ‘insulated tool for live work’. Factory tested at 10 kV, rated 1000 V AC live use. Look for the double-triangle ‘1000 V’ mark.",
               "BS EN 61482 = arc-flash protective clothing rating in cal/cm². 8 cal/cm² is a typical LV minimum; the actual number comes from an arc-flash hazard study.",
               "Gloves stop SHOCK; arc kit stops FLASH; insulated tools stop the SCREWDRIVER becoming the conductor. Different hazards, different PPE.",
-              "EN ISO 20345 SB minimum for footwear (S3 typical for sparks); EN 397 helmets; BS EN 166 eye protection; EN ISO 20471 Class 2 hi-vis as a baseline.",
+              "EN ISO 20345 SB minimum for footwear (S3 typical for electricians); EN 397 helmets; BS EN 166 eye protection; EN ISO 20471 Class 2 hi-vis as a baseline.",
               "Cheap unmarked imports are NOT certified PPE. No CE/UKCA + standard reference + class + test date = hard refuse, every time.",
             ]}
           />

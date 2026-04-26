@@ -28,7 +28,7 @@ import useSEO from '@/hooks/useSEO';
 const TITLE =
   'The Electricity at Work Regulations 1989 (EAWR) | Level 2 Module 1.1.2 | Elec-Mate';
 const DESCRIPTION =
-  "The electrical version of HASAWA. The reg behind every prove-dead, every lock-off, and every reason your gaffer says 'isolate it first'.";
+  "The electrical version of HASAWA. The reg behind every prove-dead, every lock-off, and every reason your supervisor says 'isolate it first'.";
 
 /* ── Inline check questions (preserved — wired into stats/streaks) ── */
 
@@ -44,13 +44,13 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "EAWR is the electrical version of HASAWA. Made under it in 1989, in force from April 1990. It puts hard duties on duty-holders — your boss, the self-employed spark, and you — to prevent danger from electricity at work.",
+      "EAWR is the electrical version of HASAWA. Made under it in 1989, in force from April 1990. It puts hard duties on duty-holders — your boss, the self-employed electrician, and you — to prevent danger from electricity at work.",
   },
   {
     id: 'reg14-live-work-check',
     question: 'When can you legally work on or near a live conductor under EAWR Reg 14?',
     options: [
-      'Whenever the gaffer says crack on',
+      'Whenever the supervisor says crack on',
       'Only if dead working is unreasonable AND it’s reasonable to do live AND suitable precautions are taken',
       'Never, under any circumstances',
       'Only if you’ve got rubber gloves on',
@@ -63,7 +63,7 @@ const checks = [
     id: 'competence-check',
     question: "You’re a first-year. Where do you sit under Reg 16?",
     options: [
-      'Skilled person — same as a time-served spark',
+      'Skilled person — same as a time-served electrician',
       'Ordinary person — same as the customer',
       'Instructed person — you can do what you’ve been shown, under suitable supervision',
       "It doesn’t apply to apprentices",
@@ -101,7 +101,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      "EAWR puts duties on every duty-holder for matters within their control. That includes you as the apprentice on the tools — different scope from the gaffer, but a real personal duty all the same.",
+      "EAWR puts duties on every duty-holder for matters within their control. That includes you as the apprentice on site — different scope from the supervisor, but a real personal duty all the same.",
   },
   {
     id: 3,
@@ -152,7 +152,7 @@ const quizQuestions = [
   },
   {
     id: 7,
-    question: "You’re sent to swap a faulty socket. The lead spark says 'breaker’s off, crack on'. No padlock, no tester out. What do you do?",
+    question: "You’re sent to swap a faulty socket. The lead electrician says 'breaker’s off, crack on'. No padlock, no tester out. What do you do?",
     options: [
       'Crack on — he’s the lead',
       'Stop. Ask for the lock-off and the prove-dead. Won’t take long.',
@@ -184,7 +184,7 @@ const faqs = [
   {
     question: 'Does EAWR apply to me as an apprentice?',
     answer:
-      "Yep. The moment you’re at work on anything electrical — paid, unpaid, on a training day — EAWR is on you. You’re a duty-holder for matters within your control. Different scope from the gaffer, same Act.",
+      "Yep. The moment you’re at work on anything electrical — paid, unpaid, on a training day — EAWR is on you. You’re a duty-holder for matters within your control. Different scope from the supervisor, same Act.",
   },
   {
     question: "What’s the actual difference between EAWR and BS 7671?",
@@ -223,7 +223,7 @@ export default function Sub2() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -284,7 +284,7 @@ export default function Sub2() {
               <>
                 A "duty-holder" is anyone who has any control over an electrical system at work —
                 employers, the self-employed, AND employees. That last one is you.{' '}
-                <strong>Different scope from the gaffer, same Act.</strong> Your duty is for the
+                <strong>Different scope from the supervisor, same Act.</strong> Your duty is for the
                 bits within YOUR control: doing what you’ve been shown to do, properly, and not
                 doing what you haven’t.
               </>
@@ -299,7 +299,7 @@ export default function Sub2() {
           <ConceptBlock
             title="Absolute vs reasonably practicable — and why it matters more here"
             plainEnglish="Some duties are 'do this, no exceptions'. Others are 'balance the risk against what it’d take to prevent it'. EAWR has a heavy mix of both — that’s what makes electrical work stricter than most."
-            onSite="When the gaffer says 'we always prove dead' — that’s because Reg 4 doesn’t give him a choice. There’s no 'reasonable cost' argument for skipping it."
+            onSite="When the supervisor says 'we always prove dead' — that’s because Reg 4 doesn’t give him a choice. There’s no 'reasonable cost' argument for skipping it."
           >
             <p>
               Most of HASAWA is "so far as is reasonably practicable" — you balance risk against
@@ -501,7 +501,7 @@ export default function Sub2() {
 
           <ConceptBlock
             title="Reg 16: skilled, instructed, or supervised. Pick one."
-            onSite="The reason you can’t just rock up and second-fix a board on your own as a first-year isn’t that the gaffer’s being mean. It’s Reg 16. Your card hasn’t earned it yet."
+            onSite="The reason you can’t just rock up and second-fix a board on your own as a first-year isn’t that the supervisor’s being mean. It’s Reg 16. Your card hasn’t earned it yet."
           >
             <p>
               Reg 16 is the one that splits people into roles. It’s the reason BS 7671 talks about
@@ -510,7 +510,7 @@ export default function Sub2() {
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 <strong>Skilled person</strong> — has the technical knowledge AND experience to
-                avoid danger. Time-served spark with the right tickets and the right hours.
+                avoid danger. Time-served electrician with the right tickets and the right hours.
               </li>
               <li>
                 <strong>Instructed person</strong> — has been instructed or supervised by a skilled
@@ -561,8 +561,8 @@ export default function Sub2() {
             title="Treating 'breaker flicked off' as 'isolated'"
             whatHappens={
               <>
-                Quick socket swap. The lead spark flicks the breaker, says "right, off you go". No
-                lock, no label, no prove-dead. You crack on. Halfway through, another sparky in the
+                Quick socket swap. The lead electrician flicks the breaker, says "right, off you go". No
+                lock, no label, no prove-dead. You crack on. Halfway through, another electrician in the
                 cupboard sees the breaker tripped and helpfully resets it. You’re now holding live
                 conductors.
               </>
@@ -581,8 +581,8 @@ export default function Sub2() {
             title="The fault-find on a live distribution board"
             situation={
               <>
-                You’re a second-year. You’re with the gaffer at a small commercial unit. A circuit
-                keeps tripping. The gaffer pops the cover off the DB and starts probing with a
+                You’re a second-year. You’re with the supervisor at a small commercial unit. A circuit
+                keeps tripping. The supervisor pops the cover off the DB and starts probing with a
                 multimeter, board fully energised. He waves you over to "have a look at this".
               </>
             }
@@ -599,7 +599,7 @@ export default function Sub2() {
                 Reg 14’s three tests have to be satisfied <em>for the person doing the work</em>.
                 You being supervised is great, but it doesn’t transfer his competence onto you for
                 live working specifically. And Reg 16 means if it goes wrong while you’ve got the
-                probe in your hand, the "I told him to" defence won’t save the gaffer or you.
+                probe in your hand, the "I told him to" defence won’t save the supervisor or you.
               </>
             }
           />
@@ -619,7 +619,7 @@ export default function Sub2() {
               following BS 7671 is generally accepted as one way of meeting EAWR.
             </p>
             <p>
-              That’s why your RAMS, your SOPs, your tutor, your gaffer all bang on about BS 7671 —
+              That’s why your RAMS, your SOPs, your tutor, your supervisor all bang on about BS 7671 —
               it’s the route to legal compliance with EAWR, and through it, with HASAWA. Departure
               from BS 7671 isn’t automatically illegal, but you’ll have to prove your alternative
               prevents danger just as well. Easier to follow it.

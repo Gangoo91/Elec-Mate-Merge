@@ -212,7 +212,7 @@ export default function Sub5() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -606,7 +606,7 @@ export default function Sub5() {
           >
             <p>
               Don’t let the simplicity of the single-loop drawing fool you — it’s not a teaching
-              toy. It’s the same machine you’ll meet on the tools, just with more turns, more
+              toy. It’s the same machine you’ll meet on site, just with more turns, more
               poles, and a beefier shaft. Three places it’s already working in kit you’ve seen:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">

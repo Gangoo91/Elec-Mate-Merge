@@ -51,7 +51,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      "On three-phase TN with N: L1-L2, L2-L3, L1-L3, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E, N-E — ten combinations. Misses any one and a backfeed or borrowed neutral can hide. Some sparks tally them on the back of the hand.",
+      "On three-phase TN with N: L1-L2, L2-L3, L1-L3, L1-N, L2-N, L3-N, L1-E, L2-E, L3-E, N-E — ten combinations. Misses any one and a backfeed or borrowed neutral can hide. Some electricians tally them on the back of the hand.",
   },
   {
     id: 's5-4-pv-isolation-check',
@@ -235,7 +235,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -464,7 +464,7 @@ export default function Sub4() {
               </li>
             </ol>
             <p>
-              The key thing: live testing is the last step, not the first. A spark who walks up
+              The key thing: live testing is the last step, not the first. An electrician who walks up
               to a CU, opens it and starts probing live with their multimeter is breaking
               EAWR Reg 14 — and skipping the dead tests that would have found the fault faster
               anyway.
@@ -516,7 +516,7 @@ export default function Sub4() {
                 operate the dedicated PV AC isolator (it’ll be near the inverter), lock it off,
                 operate the dedicated PV DC isolator at the same enclosure, lock that off too.
                 Re-prove all combinations dead. Then resume work. Update the schedule and the CU
-                label so the next sparky knows.
+                label so the next electrician knows.
               </>
             }
             whyItMatters={

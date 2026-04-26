@@ -182,7 +182,7 @@ export default function Sub2() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -244,7 +244,7 @@ export default function Sub2() {
             <p>
               The next blocks unpack each of these properly — units, scale, worked examples — and
               then you’ll see why every transformer designer in the country lives inside this one
-              equation. You won’t do those design calcs on the tools, but you’ll see the units
+              equation. You won’t do those design calcs on site, but you’ll see the units
               everywhere: on transformer plates, on motor data sheets, in BS 7671 itself.
             </p>
           </ConceptBlock>

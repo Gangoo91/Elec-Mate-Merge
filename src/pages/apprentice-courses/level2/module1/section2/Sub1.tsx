@@ -102,7 +102,7 @@ const quizQuestions = [
     options: ['Foot to foot', 'Hand to foot', 'Hand to hand across the chest', 'Forearm only'],
     correctAnswer: 2,
     explanation:
-      "Hand-to-hand drives the current straight across the chest cavity and through the heart. Highest risk of ventricular fibrillation. It’s the reason you’ll hear sparks talk about 'one-handed working' near anything that might still be live.",
+      "Hand-to-hand drives the current straight across the chest cavity and through the heart. Highest risk of ventricular fibrillation. It’s the reason you’ll hear electricians talk about 'one-handed working' near anything that might still be live.",
   },
   {
     id: 4,
@@ -180,7 +180,7 @@ const faqs = [
       "Easily. 230 V across a hand-to-hand path with damp skin pushes well over 100 mA through the body — more than enough to fibrillate the heart in under a second. Most UK electrical fatalities at work happen at 230 V, not on HV systems.",
   },
   {
-    question: "Why do sparks talk about working one-handed?",
+    question: "Why do electricians talk about working one-handed?",
     answer:
       "If a fault catches you, you’d much rather the current go hand-to-hand-via-tool-to-floor than hand-to-hand-across-the-chest. Keep your spare hand in your pocket or behind your back when you’re near anything that might still be live. Breaks the path that goes through the heart.",
   },
@@ -216,7 +216,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -250,7 +250,7 @@ export default function Sub1() {
 
           <ContentEyebrow>Why this is the first hazard you learn</ContentEyebrow>
 
-          <ConceptBlock title="Most common serious injury on the tools — and the reason for every other safety habit">
+          <ConceptBlock title="Most common serious injury on site — and the reason for every other safety habit">
             <p>
               The HSE gets reports of around <strong>1,000 electric-shock and burn accidents at
               work each year</strong>. About <strong>30 of those are fatal</strong>. Most of the
@@ -365,7 +365,7 @@ export default function Sub1() {
               off balance.
             </p>
             <p>
-              That’s why the experienced sparks you’ll see drop test leads and screwdrivers don’t
+              That’s why the experienced electricians you’ll see drop test leads and screwdrivers don’t
               just grab the bare end with two hands. They isolate the path. It looks fussy until
               the day it doesn’t.
             </p>

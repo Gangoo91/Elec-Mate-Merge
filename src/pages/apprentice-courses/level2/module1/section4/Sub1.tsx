@@ -109,7 +109,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'A sparky says "We don’t need to isolate, just stick the gloves on". What’s wrong with that?',
+    question: 'An electrician says "We don’t need to isolate, just stick the gloves on". What’s wrong with that?',
     options: [
       'Nothing — gloves are fine',
       'Insulated gloves are too hot to wear all day',
@@ -135,7 +135,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question: "Your gaffer hands you a 'one-size-fits-all' high-vis that drowns you and gloves two sizes too big. Is this OK?",
+    question: "Your supervisor hands you a 'one-size-fits-all' high-vis that drowns you and gloves two sizes too big. Is this OK?",
     options: [
       "Yes — at least it’s PPE",
       "No — PPE that doesn’t fit doesn’t protect; ask for the right size",
@@ -144,7 +144,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "PPER 2022 Reg 4(3): PPE must be SUITABLE for the wearer — fit included. Loose gloves slip off or snag, oversized hi-vis catches on tools, helmets that wobble don’t protect. Politely insist on the right size. Your gaffer has to provide it.",
+      "PPER 2022 Reg 4(3): PPE must be SUITABLE for the wearer — fit included. Loose gloves slip off or snag, oversized hi-vis catches on tools, helmets that wobble don’t protect. Politely insist on the right size. Your supervisor has to provide it.",
   },
   {
     id: 6,
@@ -232,7 +232,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 4
           </button>
@@ -269,7 +269,7 @@ export default function Sub1() {
           <ConceptBlock
             title="A definition that means something"
             plainEnglish="Anything you wear or hold whose only job is to protect YOU from a workplace risk. Helmet, glasses, gloves, boots, hi-vis, ear defenders, harness, RPE — all PPE."
-            onSite="The vest your gaffer hands you at the gate, the gloves in your tool bag, the boots on your feet — all PPE. The thing they have in common: take them off and the hazard is unchanged. They protect the person, not the job."
+            onSite="The vest your supervisor hands you at the gate, the gloves in your tool bag, the boots on your feet — all PPE. The thing they have in common: take them off and the hazard is unchanged. They protect the person, not the job."
           >
             <p>
               The Personal Protective Equipment at Work Regulations 1992 (amended 2022) define
@@ -370,7 +370,7 @@ export default function Sub1() {
 
           <ContentEyebrow>What PPE protects against</ContentEyebrow>
 
-          <ConceptBlock title="The hazards on a normal sparky’s day">
+          <ConceptBlock title="The hazards on a normal electrician’s day">
             <p>
               You’ll meet most of these every week. PPE doesn’t fix any of them — it just
               softens the blow when something gets to you:
@@ -551,7 +551,7 @@ export default function Sub1() {
             title="Treating PPE like a substitute for a proper safety control"
             whatHappens={
               <>
-                Job needs isolation. Gaffer says "it’ll take ages, just whack the gloves on".
+                Job needs isolation. Supervisor says "it’ll take ages, just whack the gloves on".
                 You wear the gloves, work it live, nothing goes wrong this time. Next time the
                 gloves have a pinhole you didn’t spot, or the voltage is higher than you
                 thought, or the screwdriver slips and arcs across two phases. Now the gloves
@@ -575,7 +575,7 @@ export default function Sub1() {
             situation={
               <>
                 First week on the job. You’re sent into a domestic CU change with a senior
-                spark. He throws you a pair of standard work gloves — leather, no markings.
+                electrician. He throws you a pair of standard work gloves — leather, no markings.
                 You ask about insulated gloves. He says "we don’t bother for domestic — just
                 don’t touch the live bits". The supply’s coming in on a TT system, the meter’s
                 already disconnected, but the CU still has tails dangling.
@@ -622,7 +622,7 @@ export default function Sub1() {
               That specificity isn’t bureaucracy — it’s how you (and your employer) prove
               you’ve thought through the hazards and chosen kit that actually matches them.
               When the assessor at the end of your apprenticeship asks "why those gloves",
-              the answer comes from the RAMS, not from "the gaffer told me to wear them".
+              the answer comes from the RAMS, not from "the supervisor told me to wear them".
             </p>
           </ConceptBlock>
 

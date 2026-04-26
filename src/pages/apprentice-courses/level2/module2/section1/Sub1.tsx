@@ -1,5 +1,5 @@
 /**
- * Module 2 · Section 1 · Sub 1 — Maths principles for sparks
+ * Module 2 · Section 1 · Sub 1 — Maths principles for electricians
  * Maps to City & Guilds 2365-02 / Unit 202 / LO1 / AC 1.1
  *   "identify and apply appropriate mathematical principles which are relevant
  *    to electrical work tasks"
@@ -27,9 +27,9 @@ import {
 import { OhmsLawTriangle, PowerTriangle } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Maths principles for sparks | Level 2 Module 2.1.1 | Elec-Mate';
+const TITLE = 'Maths principles for electricians | Level 2 Module 2.1.1 | Elec-Mate';
 const DESCRIPTION =
-  'Fractions, percentages, ratios, transposition, indices and scientific notation — the maths an apprentice spark actually uses on the tools.';
+  'Fractions, percentages, ratios, transposition, indices and scientific notation — the maths an apprentice electrician actually uses on site.';
 
 /* ── Inline checks (wired into streaks/stats) ─────────────────────── */
 
@@ -140,14 +140,14 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: "I'm rubbish at maths. Will that hold me back as a spark?",
+    question: "I'm rubbish at maths. Will that hold me back as an electrician?",
     answer:
       "No, but you can't dodge it forever. The maths in this section is the same handful of moves repeated everywhere — fractions, percentages, transposing one formula, scientific notation, and the prefix system. Get those down and you'll cope with cable sizing, voltage drop, load calcs and your AM2 calc paper.",
   },
   {
     question: "Do I have to do it in my head, or can I use a calculator?",
     answer:
-      'Calculator is fine — every working spark uses one. But you need a sense of whether the answer looks right. If you key in 230 ÷ 10 and get 23,000, you know straight away you fat-fingered the decimal. The mental check stops you sizing a 95 mm² cable for a doorbell.',
+      'Calculator is fine — every working electrician uses one. But you need a sense of whether the answer looks right. If you key in 230 ÷ 10 and get 23,000, you know straight away you fat-fingered the decimal. The mental check stops you sizing a 95 mm² cable for a doorbell.',
   },
   {
     question: 'Why does it matter whether I write 0.5 or 1/2 or 50%?',
@@ -181,21 +181,21 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
 
           <PageHero
             eyebrow="Module 2 · Section 1 · Subsection 1"
-            title="Maths principles for sparks"
-            description="Fractions, percentages, ratios, transposition, indices and scientific notation — the maths you actually use on the tools, not GCSE algebra for its own sake."
+            title="Maths principles for electricians"
+            description="Fractions, percentages, ratios, transposition, indices and scientific notation — the maths you actually use on site, not GCSE algebra for its own sake."
             tone="emerald"
           />
 
           <TLDR
             points={[
-              'Five moves cover most spark maths: fractions/decimals/percentages, ratios, transposition, indices, and scientific notation.',
+              'Five moves cover most electrician maths: fractions/decimals/percentages, ratios, transposition, indices, and scientific notation.',
               "Transposition is the big one — V = I × R, P = V × I, voltage drop, cable sizing all come back to rearranging one formula.",
               'Get a feel for the size of the answer before you trust the calculator. A wrong decimal place is the difference between safe and on fire.',
             ]}
@@ -216,9 +216,9 @@ export default function Sub1() {
           <ContentEyebrow>Why this matters</ContentEyebrow>
 
           <ConceptBlock
-            title="The maths a spark uses is narrow, not deep"
+            title="The maths an electrician uses is narrow, not deep"
             plainEnglish="Same handful of sums, all day. Cable sizing, volt drop, load checks, prefix conversions — they're all five or six moves recycled."
-            onSite="The gaffer doesn't care if you can do calculus. He cares that when the customer asks 'will my new oven trip the board?' you can do P ÷ V in your head and give a straight answer."
+            onSite="The supervisor doesn't care if you can do calculus. He cares that when the customer asks 'will my new oven trip the board?' you can do P ÷ V in your head and give a straight answer."
           >
             <p>
               You don't need university maths to wire a house. You need to handle fractions and
@@ -478,7 +478,7 @@ export default function Sub1() {
           <ContentEyebrow>Where it goes wrong</ContentEyebrow>
 
           <CommonMistake
-            title="The decimal-place slip — the single biggest unforced error in spark maths"
+            title="The decimal-place slip — the single biggest unforced error in electrician maths"
             whatHappens={
               <>
                 You're sizing a circuit. You key 9000 ÷ 230 into the calculator. Phone vibrates, you
@@ -500,7 +500,7 @@ export default function Sub1() {
             title="A 30 mA RCD that someone wrote up as 30 A"
             situation={
               <>
-                You're shadowing on an EICR. The previous spark filled out the test sheet by hand —
+                You're shadowing on an EICR. The previous electrician filled out the test sheet by hand —
                 under the RCD section, where the trip current should be 30 mA, he's written "30 A".
                 Just an A instead of mA. The certificate has been issued and is sitting on the
                 customer's records.
@@ -531,16 +531,16 @@ export default function Sub1() {
 
           <KeyTakeaways
             points={[
-              'Five core moves: fractions/decimals/percentages, ratios, transposition, indices, scientific notation. That covers most Level 2 spark maths.',
+              'Five core moves: fractions/decimals/percentages, ratios, transposition, indices, scientific notation. That covers most Level 2 electrician maths.',
               "Transposing V = I × R and P = V × I is the highest-mileage skill. Use the triangle if rearranging in your head still feels shaky.",
               'P = I²R explains why undersized cables cook — the heat goes up with the square of the current.',
               'mm² is an area, not a diameter. Cables are sized by cross-sectional area of copper.',
               'SI prefixes (k, m, M, μ) shift the decimal in or out by three places at a time. Always read the prefix before the number.',
-              'Sanity-check every calculator answer for ballpark size. A wrong decimal place is the most common — and most dangerous — maths error in spark work.',
+              'Sanity-check every calculator answer for ballpark size. A wrong decimal place is the most common — and most dangerous — maths error in electrician work.',
             ]}
           />
 
-          <Quiz title="Spark maths knowledge check" questions={quizQuestions} />
+          <Quiz title="Electrician maths knowledge check" questions={quizQuestions} />
 
           {/* ── Prev / next nav ─────────────────────────────────── */}
           <div className="grid grid-cols-2 gap-3 pt-2">

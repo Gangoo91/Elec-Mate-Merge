@@ -29,7 +29,7 @@ import useSEO from '@/hooks/useSEO';
 const TITLE =
   'Why electronics matters on site + the resistor (6.1) | Level 2 Module 2.6.1 | Elec-Mate';
 const DESCRIPTION =
-  'Every modern installation has electronics inside it — RCDs, AFDDs, smart sockets, EV chargers, LED drivers. Start here: why a spark needs the basics, and the humble resistor.';
+  'Every modern installation has electronics inside it — RCDs, AFDDs, smart sockets, EV chargers, LED drivers. Start here: why an electrician needs the basics, and the humble resistor.';
 
 const checks = [
   {
@@ -66,7 +66,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: 'Why does a Level 2 spark need to know basic electronics?',
+    question: 'Why does a Level 2 electrician need to know basic electronics?',
     options: [
       'They don’t — leave it to the manufacturer.',
       'Because every modern board, smart switch, RCD, AFDD and EV charger has electronics inside that you’ll have to fault-find or replace.',
@@ -198,7 +198,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 6
           </button>
@@ -220,7 +220,7 @@ export default function Sub1() {
 
           <LearningOutcomes
             outcomes={[
-              'Explain why a Level 2 spark needs a working knowledge of electronic components.',
+              'Explain why a Level 2 electrician needs a working knowledge of electronic components.',
               'Tell the difference between electrical (power) and electronic (signal/control) work.',
               'Identify a resistor on a PCB and read its value from the four-band colour code.',
               'Apply Ohm’s law to a single resistor — calculate V, I or R given the other two.',
@@ -301,7 +301,7 @@ export default function Sub1() {
           <ConceptBlock
             title="The colour code in one rude sentence"
             plainEnglish="Memorise one daft phrase and you’ve got the digit-to-colour map for life."
-            onSite="Every spark on the tools who can still read a resistor in their fifties learnt it the same way — one mnemonic, one afternoon, never forgotten."
+            onSite="Every electrician on site who can still read a resistor in their fifties learnt it the same way — one mnemonic, one afternoon, never forgotten."
           >
             <p>
               Old-school resistors carry coloured bands instead of printed numbers. To read the

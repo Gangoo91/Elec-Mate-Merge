@@ -81,7 +81,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question: "You arrive on site and your gaffer hands you a RAMS document. What’s the first thing you should do with it?",
+    question: "You arrive on site and your supervisor hands you a RAMS document. What’s the first thing you should do with it?",
     options: [
       "Sign it without reading — everyone else has",
       "Read it. Check the hazards listed match what you can actually see on site",
@@ -94,9 +94,9 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: "The site RAMS says 'isolate at the local DB before drilling'. The DB you’re drilling near isn’t labelled and the gaffer says 'just kill the lighting circuit, you’ll be fine'. What do you do?",
+    question: "The site RAMS says 'isolate at the local DB before drilling'. The DB you’re drilling near isn’t labelled and the supervisor says 'just kill the lighting circuit, you’ll be fine'. What do you do?",
     options: [
-      "Crack on — the gaffer’s been here 20 years",
+      "Crack on — the supervisor’s been here 20 years",
       "Stop. The RAMS doesn’t match what’s on site. Flag it before you drill",
       "Switch off everything in the building to be safe",
       "Drill through and check afterwards",
@@ -172,7 +172,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: "Your firm employs 4 sparks including you. Does the law require risk assessments to be written down?",
+    question: "Your firm employs 4 electricians including you. Does the law require risk assessments to be written down?",
     options: [
       "Yes — always",
       "No — under 5 employees the SIGNIFICANT FINDINGS don’t have to be recorded by law (but are still expected as good practice)",
@@ -191,7 +191,7 @@ const faqs = [
   {
     question: "I’m the apprentice — am I supposed to write risk assessments?",
     answer:
-      "Not full ones, no. The legal duty sits with the employer. But you ARE expected to read them, understand them, point out where they don’t match the site, and contribute observations during point-of-work checks. As you move through your apprenticeship you’ll do dynamic risk assessments (the on-the-spot ones) more and more — and by the time you’re a Level 3 spark, writing job-specific RAMS is part of the role.",
+      "Not full ones, no. The legal duty sits with the employer. But you ARE expected to read them, understand them, point out where they don’t match the site, and contribute observations during point-of-work checks. As you move through your apprenticeship you’ll do dynamic risk assessments (the on-the-spot ones) more and more — and by the time you’re a Level 3 electrician, writing job-specific RAMS is part of the role.",
   },
   {
     question: "What if there’s no RAMS on the job?",
@@ -230,7 +230,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>
@@ -268,7 +268,7 @@ export default function Sub1() {
             <p>
               You learnt in Section 1 that HASAWA puts a general duty on the boss to keep you safe.
               You learnt in Section 2 what electricity actually does to a body, and the other things
-              on site that quietly hurt sparks (slips, manual handling, working at height). A risk
+              on site that quietly hurt electricians (slips, manual handling, working at height). A risk
               assessment is the bridge between those two.
             </p>
             <p>
@@ -291,7 +291,7 @@ export default function Sub1() {
           <ConceptBlock
             title="Hazard, risk, control measure — they’re not the same thing"
             plainEnglish="A hazard is the thing that could hurt you. The risk is how likely it is, and how bad if it does. The control measure is what you’re doing about it."
-            onSite="When the gaffer asks 'what’s the hazard?' and you say 'electricity', you’re half-right. Better answer: 'the live tails coming into the consumer unit' — that’s a specific hazard. 'Mate working overhead' is a risk factor. 'Lock-off, prove dead, work cover off' is the control."
+            onSite="When the supervisor asks 'what’s the hazard?' and you say 'electricity', you’re half-right. Better answer: 'the live tails coming into the consumer unit' — that’s a specific hazard. 'Mate working overhead' is a risk factor. 'Lock-off, prove dead, work cover off' is the control."
           >
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -320,7 +320,7 @@ export default function Sub1() {
             clause="Every employer shall make a suitable and sufficient assessment of (a) the risks to the health and safety of his employees to which they are exposed whilst they are at work; and (b) the risks to the health and safety of persons not in his employment arising out of or in connection with the conduct by him of his undertaking."
             meaning={
               <>
-                The legal hook. Every employer (and any self-employed spark working for themselves)
+                The legal hook. Every employer (and any self-employed electrician working for themselves)
                 has to assess the risks before work happens. It covers <em>employees</em> AND{' '}
                 <em>everyone else affected by the work</em> — customers, the public, other trades.
                 'Suitable and sufficient' is the test the HSE applies if anything goes wrong.
@@ -463,7 +463,7 @@ export default function Sub1() {
                 drills into a buried cable that the RAMS specifically warned about. He’s lucky —
                 burns to the hand and a six-month cardiac follow-up. The HSE looks at the
                 clipboard, sees his signature, sees he never actually read the document. Now it’s
-                his s.7 problem too — not just the gaffer’s.
+                his s.7 problem too — not just the supervisor’s.
               </>
             }
             doInstead={
@@ -472,7 +472,7 @@ export default function Sub1() {
                 Find the hazards listed, find your name, find what you’re supposed to do
                 differently. If something doesn’t make sense, ASK before you sign. 'I just want
                 to check what this section means' is a normal, professional question — not a
-                pain in the gaffer’s side.
+                pain in the supervisor’s side.
               </>
             }
           />
@@ -501,7 +501,7 @@ export default function Sub1() {
           />
 
           <Scenario
-            title="The site induction RAMS says 'isolate before drilling'. The gaffer says 'just crack on, it’s only a sub-board.'"
+            title="The site induction RAMS says 'isolate before drilling'. The supervisor says 'just crack on, it’s only a sub-board.'"
             situation={
               <>
                 You’re on a small commercial fit-out, second week. RAMS for the day’s work
@@ -527,7 +527,7 @@ export default function Sub1() {
               <>
                 If you drill into a live cable because you ignored the RAMS on someone else’s
                 say-so, the HSE prosecution lands on YOU under HASAWA s.7 (you knowingly
-                breached a written safe system of work) AND the gaffer (he instructed you to).
+                breached a written safe system of work) AND the supervisor (he instructed you to).
                 Both go down. 'He told me to' is not a defence. The RAMS is the agreed plan —
                 and it changes only on paper, not on the say-so of a supervisor under time
                 pressure.
@@ -589,7 +589,7 @@ export default function Sub1() {
           <KeyTakeaways
             points={[
               "A risk assessment names the hazards on THIS job and decides what controls go in. It’s a planning tool, not paperwork.",
-              "Legal duty: MHSWR 1999 Reg 3 — sits on the employer (and on self-employed sparks for their own work).",
+              "Legal duty: MHSWR 1999 Reg 3 — sits on the employer (and on self-employed electricians for their own work).",
               "'Suitable and sufficient' = identifies significant risks, considers everyone affected, proportionate to the job, has a review trigger.",
               "Significant findings have to be in writing if the employer has 5+ employees. Almost every firm writes them down anyway.",
               "ALARP is the test every control measure gets judged against — push the risk down until further effort costs grossly more than the safety gain.",

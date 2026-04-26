@@ -200,7 +200,7 @@ export default function Sub5() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>
@@ -381,7 +381,7 @@ export default function Sub5() {
             cite="Source: BS 7671:2018+A4:2026 — Regulation 522.1.1 (verbatim) and Appendix 4 (Ca/Cg/Ci/Cf correction factors)."
           />
 
-          <InlineCheck {...checks[3]} />
+          <InlineCheck {...checks[2]} />
 
           <VideoCard
             url={videos.electricHeating.url}
@@ -397,6 +397,159 @@ export default function Sub5() {
           <SectionRule />
 
           <ContentEyebrow>Where it fails on site</ContentEyebrow>
+
+          <ConceptBlock
+            title="The thermal-runaway feedback loop — why small overloads escalate"
+            plainEnglish="Hot conductors have higher resistance. Higher resistance means more I²R heat at the same current. More heat means more resistance. The cable can spiral upwards faster than common sense expects."
+            onSite="A cable that's been sitting at 25 A for years and ‘never bothered anyone’ is the one that fails the day someone adds a 7 kW heater on a long extension lead. The extra current pushes it past its corrected rating; the temperature rises; the resistance rises; the loss climbs faster than linearly. By the time the smell reaches the kitchen, the insulation is already cooked."
+          >
+            <p>
+              Three feedback effects that make thermal failures non-linear and surprising:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Positive temperature coefficient of copper</strong> (Sub3.3): copper's
+                resistance rises by about 0.4% per °C. A conductor at 70°C has roughly 20% more
+                resistance than the same one at 20°C. So I²R losses climb faster than the
+                straightforward "I squared" tells you, because R is also rising.
+              </li>
+              <li>
+                <strong>Insulation degradation</strong>: PVC ages roughly twice as fast for every
+                10°C above its 70°C limit. A cable held at 80°C for ten years comes out as brittle
+                as one held at 70°C for twenty. The damage is permanent — cooling it back down
+                doesn't reverse it.
+              </li>
+              <li>
+                <strong>Convection and radiation efficiency</strong>: a cable can dump heat to its
+                surroundings only as fast as the temperature gradient lets it. Bury it in
+                insulation, group it with other circuits, or run it in a hot ceiling void and the
+                gradient narrows — so heat builds up, temperature rises, and the next loop of the
+                feedback runs hotter still.
+              </li>
+            </ul>
+            <p>
+              The protective device's job is to break the loop before this snowballs. That's why
+              the I²t curve of the MCB has to sit below the cable's thermal limit at every current
+              level — not just at the overload trip threshold.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Why protective devices use I²t, not just current"
+            plainEnglish="Cables and devices both store energy as heat over time. A short, big pulse of current can be safe; a longer, smaller current can be lethal. I²t — current squared multiplied by time — is the energy measure both sides agree on."
+            onSite="The whole reason an MCB has a trip CURVE rather than a single threshold is I²t. A 32 A Type B MCB tolerates roughly 4× rated current for a few seconds (motor inrush) but trips almost instantly above ~5× (short-circuit). Both the device and the cable behind it are sized in I²t — the device's let-through energy must always be less than the cable's withstand energy."
+          >
+            <p>
+              I²t (read "I-squared-t", units A²·s) is the energy proxy used to match protective
+              devices to cables. Two key uses:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Cable withstand</strong> — a cable can absorb a defined amount of I²t before
+                its insulation reaches the failure temperature. Bigger CSA = bigger withstand.
+                BS 7671 Reg 434.5.2 gives the formula k²S² for the withstand energy of a conductor
+                with CSA S and a material constant k (e.g. k = 115 for 70°C PVC copper).
+              </li>
+              <li>
+                <strong>Device let-through</strong> — a fuse or MCB lets a certain amount of I²t
+                through before clearing the fault. Manufacturer datasheets publish let-through
+                curves (energy vs prospective fault current) for every device.
+              </li>
+            </ul>
+            <p>
+              The acceptance condition: <strong>device let-through I²t ≤ cable withstand I²t</strong>{' '}
+              at the prospective fault current the install will see. Get this wrong and the cable
+              cooks faster than the breaker clears — fire risk, even if the breaker is "rated"
+              correctly on the simple amps test.
+            </p>
+            <p>
+              For Level 2 you don't have to crunch the I²t arithmetic by hand. You do have to know
+              that the sizing chain is{' '}
+              <strong>cable Iz ≥ device In ≥ design current Ib</strong> AND that the device's
+              let-through energy has to suit the cable. Both checks, every circuit.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Heat conduction, convection and radiation — where cable heat goes"
+            plainEnglish="A loaded cable produces heat at I²R watts per second. To stop the temperature climbing forever, the same wattage has to leave the cable somehow. Three heat-transfer modes share that job — and which one dominates depends on where the cable is."
+            onSite="A surface-clipped 6 mm² T&E in a cool room is mostly cooled by convection — air rising past the sheath. The same cable buried in loft insulation has almost no convection; it has to dump heat by conduction through the surrounding insulation, which is poor at it. That's why Ci can drop the rating to 50% or less."
+          >
+            <p>
+              Three heat-transfer mechanisms for any current-carrying cable:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Conduction</strong> — heat travels through solids in contact (the
+                conductor, insulation, sheath, then any thermal insulation around it). Rate
+                depends on the materials' thermal conductivity. PVC and XLPE are poor conductors
+                of heat; loft fibreglass is even worse.
+              </li>
+              <li>
+                <strong>Convection</strong> — heat carried away by moving air. The dominant mode
+                for cables clipped or laid in free air. Rising plumes of warm air over the cable
+                continually replace with cooler air.
+              </li>
+              <li>
+                <strong>Radiation</strong> — infrared energy emitted from the cable surface.
+                Significant at higher operating temperatures (90°C+ XLPE), small for a 70°C PVC
+                cable.
+              </li>
+            </ul>
+            <p>
+              Appendix 4's reference installation methods (clipped direct, in conduit, buried, in
+              thermal insulation) are essentially a catalogue of heat-removal environments — each
+              with a different mix of the three mechanisms. The current rating tabulated for each
+              method is whatever current produces a steady-state cable temperature at exactly the
+              insulation limit. Change the environment, and the rating changes — that's why the
+              correction factors exist.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Joule heating put to useful work — heaters, kettles, immersions"
+            plainEnglish="Same I²R that you fight on a cable is what runs every electric heater, kettle, immersion and toaster. Designed to be hot; the conductor IS the load."
+            onSite="An immersion element is a coil of resistance wire (often nichrome) sized so that I²R = the rated wattage at the rated voltage. A 3 kW immersion at 230 V wants R ≈ 17.6 Ω (P = V²/R, so R = V²/P = 230²/3000). Measure that on a healthy element with a multimeter and you'll read close to 17 Ω cold."
+          >
+            <p>
+              Useful applications of I²R heating across UK installs:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Immersion heaters</strong> — nichrome element rated to dissipate 3 kW (or
+                similar) directly into the cylinder water. Cable feeding it is sized so it doesn't
+                overheat; the element itself runs red-hot in air, safely transferring heat to
+                water through the sheath.
+              </li>
+              <li>
+                <strong>Storage heaters and electric panel heaters</strong> — same physics, lower
+                power densities, often controlled by relay or TRIAC.
+              </li>
+              <li>
+                <strong>Underfloor heating mats</strong> — long thin resistive cable laid in
+                screed, sized for power per square metre (typically 100-200 W/m²). Same I²R, just
+                spread out.
+              </li>
+              <li>
+                <strong>Kettle and toaster elements</strong> — resistance wire designed to glow
+                red when energised. Direct conversion of electrical energy to heat with
+                near-100% efficiency (anything not radiated as heat ends up as heat anyway via
+                convection / conduction in the surroundings).
+              </li>
+              <li>
+                <strong>Electric showers</strong> — instantaneous heating of water passing over
+                an element. 9 kW at 230 V means roughly 39 A through the element and a roughly 5
+                Ω cold resistance.
+              </li>
+            </ul>
+            <p>
+              The line between "useful heater" and "fire risk" is just whether the heat is
+              wanted. Same I²R both ways. The reason a cable rated at 32 A doesn't glow when
+              loaded to 32 A is that the cable's resistance is tiny, so the I²R per metre is
+              small. An immersion element's resistance is fifty thousand times bigger — same
+              current, same physics, vastly different heat output.
+            </p>
+          </ConceptBlock>
 
           <ConceptBlock
             title="The big three thermal failures you'll see"

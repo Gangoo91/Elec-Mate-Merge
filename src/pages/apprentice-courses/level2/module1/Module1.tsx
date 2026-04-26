@@ -73,7 +73,7 @@ export default function Module1() {
             you sink a back box, terminate a single core or pick up a meter, the
             trade has decided you have to know how to keep yourself, your mate
             and the customer alive — and how to recognise when you’re about to
-            stop doing that. Around 30 sparks a year die at work in the UK and
+            stop doing that. Around 30 electricians a year die at work in the UK and
             the regs you’ll meet here are written in the lessons paid for by
             those names.
           </p>
@@ -91,7 +91,7 @@ export default function Module1() {
             PPE, GS38 test gear and the daily safe-working habits that make the
             regs into a working day.{' '}
             <span className="text-white font-medium">Section 5</span> is the
-            single most important habit on the tools — safe isolation, prove–
+            single most important habit on site — safe isolation, prove–
             test–prove, lock-off, and where it goes wrong.{' '}
             <span className="text-white font-medium">Section 6</span> closes
             with what to do when something does go wrong — first response,

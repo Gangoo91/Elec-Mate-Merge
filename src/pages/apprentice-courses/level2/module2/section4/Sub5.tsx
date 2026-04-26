@@ -198,7 +198,7 @@ const Sub5 = () => {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 4
           </button>
@@ -262,6 +262,38 @@ const Sub5 = () => {
           </ConceptBlock>
 
           <PowerTriangle variant="dc" caption="P = I × V — the DC power triangle. Cover the value you want; the formula falls out." />
+
+          <ConceptBlock
+            title="Why all three power formulas come from V = I × R"
+            plainEnglish="They're not three separate equations — they're one equation in three outfits. Substitute Ohm's law into P = V × I and the other two pop out."
+            onSite="Knowing the derivation means you don't have to memorise three formulas as standalone facts. You memorise one (P = V × I), one substitution (V = I × R), and the algebra does the rest."
+          >
+            <p>
+              Start with P = V × I. Now substitute Ohm's law two different ways:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                Replace V with I × R: P = (I × R) × I = <strong>I² × R</strong>. This is the form
+                you use when you know current and resistance — handy for cable losses where you
+                always know I (the load current) and R (the cable resistance).
+              </li>
+              <li>
+                Replace I with V ÷ R: P = V × (V ÷ R) = <strong>V² ÷ R</strong>. This is the form
+                you use when you know voltage and resistance — handy for fixed-mains heater
+                elements where V is 230 V and R is the element's resistance.
+              </li>
+              <li>
+                Leave both alone: <strong>P = V × I</strong>. The original form. Use when you have
+                a meter on the live circuit and can read both directly.
+              </li>
+            </ul>
+            <p>
+              All three give the same numerical answer for the same circuit — they're just
+              different starting points. If you're ever stuck for which to use, pick the one that
+              uses the values you have without conversion. If you have all three values (V, I and
+              R), use any of them as a cross-check on each other.
+            </p>
+          </ConceptBlock>
 
           <InlineCheck
             id={checks[0].id}
@@ -372,6 +404,14 @@ const Sub5 = () => {
 
           <PowerCalculator />
 
+          <InlineCheck
+            id={checks[1].id}
+            question={checks[1].question}
+            options={checks[1].options}
+            correctIndex={checks[1].correctIndex}
+            explanation={checks[1].explanation}
+          />
+
           <SectionRule />
 
           <ContentEyebrow>Cable heating — why I² matters so much</ContentEyebrow>
@@ -459,6 +499,44 @@ const Sub5 = () => {
             <p>
               The kWh is the same energy unit you’ll see on inverter logs, EV dashboards and
               every electricity bill in the UK. Get comfortable with the conversion both ways.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Diversity — why total connected load isn't total drawn load"
+            plainEnglish="A house has a 32 A ring, an 8 A lighting circuit, a 40 A shower and a 32 A cooker — that's 112 A of 'rated' load on a 100 A main fuse, and yet it works. Reason: nothing runs flat-out at the same time. The OSG diversity tables let you assume realistic simultaneous use."
+            onSite="The big diversity calculation electricians do is sizing the main supply or DB. Add up the connected load with the OSG percentages applied (e.g. 100% of the largest cooker + 30% of the rest, 66% of socket circuits, etc.) and check the answer against the supply head capacity. Without diversity, every domestic install would need a 200 A supply."
+          >
+            <p>
+              Diversity is the engineering acceptance that not every load runs at full power
+              simultaneously. Power calcs at the design stage use it to size:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>The main supply</strong> — total connected load × diversity factor ≤
+                supply head capacity (typically 60-100 A for domestic).
+              </li>
+              <li>
+                <strong>Sub-mains and tails</strong> — feeder cable from the cut-out to the
+                consumer unit, sized for the after-diversity figure not the raw connected load.
+              </li>
+              <li>
+                <strong>Distribution boards</strong> — incoming switch and the busbar, sized for
+                the realistic total of all the outgoing circuits running together.
+              </li>
+            </ul>
+            <p>
+              The OSG (On-Site Guide) Section A2 tables are the standard reference for domestic
+              diversity factors. Worked example for a typical UK house: 6 kW shower + 7.2 kW
+              cooker + 3 kW immersion + sockets + lighting can total ~25 kW connected, but with
+              diversity applied lands around 14 kW — comfortable on a 100 A (23 kW) supply at 230
+              V.
+            </p>
+            <p>
+              Don't use diversity on circuits that genuinely DO run at full power simultaneously
+              (e.g. an EV charger on a long charge cycle, an instantaneous shower while the
+              cooker is on at dinner time). When in doubt, design for the worst-case
+              simultaneous load — under-sized supply tails are an expensive mistake to dig up.
             </p>
           </ConceptBlock>
 

@@ -5,9 +5,9 @@ import { SectionShell } from '@/components/study-centre/shells';
 const subsections = [
   {
     number: '1.1',
-    title: 'Maths principles for sparks (1.1)',
+    title: 'Maths principles for electricians (1.1)',
     description:
-      'Fractions, percentages, transposition and ratios — the maths you actually use on the tools.',
+      'Fractions, percentages, transposition and ratios — the maths you actually use on site.',
     icon: Calculator,
     href: '1-1',
   },
@@ -64,7 +64,7 @@ export default function Section1() {
             sentences.
           </p>
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
-            We start with the maths habits a spark actually uses on the tools — Sub 1.1
+            We start with the maths habits an electrician actually uses on site — Sub 1.1
             covers fractions, percentages, transposition and ratios. Sub 1.2 introduces
             the seven SI base units and the derived ones electricians live with.
             Sub 1.3 zeroes in on the four you'll meet every shift — volts, amps, ohms

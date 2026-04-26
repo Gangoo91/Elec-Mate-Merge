@@ -180,7 +180,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "CAT II = appliance-side circuits (cord-connected). CAT III = fixed installation final circuits + DBs (most sparky work). CAT IV = origin of installation, supply side of main fuse. The voltage is the max line-to-earth in that category. Using a CAT II meter at the origin of an installation = transient overvoltage could blow it up in your hand.",
+      "CAT II = appliance-side circuits (cord-connected). CAT III = fixed installation final circuits + DBs (most electrician work). CAT IV = origin of installation, supply side of main fuse. The voltage is the max line-to-earth in that category. Using a CAT II meter at the origin of an installation = transient overvoltage could blow it up in your hand.",
   },
 ];
 
@@ -215,7 +215,7 @@ const faqs = [
   {
     question: 'Do GS38 rules apply to MY OWN tester I bought online?',
     answer:
-      "Yes. EAWR 1989 Reg 4(4) says any test equipment must be suitable for the work and properly maintained — applies whoever owns it. If your gaffer-issued kit is unsuitable, your apprentice-bought kit is ALSO unsuitable. ‘Personal’ test gear must still be GS38-compliant, properly fused, CAT-rated, and ideally calibrated. Cheap unmarked stuff online is often none of those.",
+      "Yes. EAWR 1989 Reg 4(4) says any test equipment must be suitable for the work and properly maintained — applies whoever owns it. If your supervisor-issued kit is unsuitable, your apprentice-bought kit is ALSO unsuitable. ‘Personal’ test gear must still be GS38-compliant, properly fused, CAT-rated, and ideally calibrated. Cheap unmarked stuff online is often none of those.",
   },
 ];
 
@@ -229,7 +229,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 4
           </button>
@@ -264,9 +264,9 @@ export default function Sub3() {
           <ContentEyebrow>What GS38 actually is</ContentEyebrow>
 
           <ConceptBlock
-            title="HSE Guidance Note GS38 — the rulebook for sparky test gear"
+            title="HSE Guidance Note GS38 — the rulebook for electrician test gear"
             plainEnglish="GS38 is HSE’s detailed advice on what makes a test instrument and its leads safe for live work. Not a law on its own — but treated as THE recognised way to meet EAWR Reg 4(4). Following it = compliant. Ignoring it = HSE will ask why."
-            onSite="When your gaffer hands you a multimeter or VI, the first thing to check is whether the probes, leads and instrument all meet GS38. The GS38 booklet itself is on the HSE website, free to download — worth keeping a PDF on your phone."
+            onSite="When your supervisor hands you a multimeter or VI, the first thing to check is whether the probes, leads and instrument all meet GS38. The GS38 booklet itself is on the HSE website, free to download — worth keeping a PDF on your phone."
           >
             <p>
               GS38 is currently in its 4th edition, last updated 2015. It’s aimed
@@ -421,7 +421,7 @@ export default function Sub3() {
               <li>
                 <strong>CAT III</strong> — fixed installation final circuits, distribution
                 boards, ring finals, hard-wired motors. <strong>The standard
-                ‘sparky-everyday’ rating.</strong> Most sparky multimeters and VIs are CAT
+                ‘electrician-everyday’ rating.</strong> Most electrician multimeters and VIs are CAT
                 III 600 V or 1000 V.
               </li>
               <li>
@@ -479,7 +479,7 @@ export default function Sub3() {
               can’t tell a real dead reading apart from a broken instrument reading.
             </p>
             <p>
-              Documented UK fatalities have come from exactly this — sparky proves the VI,
+              Documented UK fatalities have come from exactly this — electrician proves the VI,
               tests the supposedly-isolated cable, gets 0 V, removes the cable termination,
               gets a fatal shock. Post-incident: the VI’s internal lead had broken open
               between the proving and the test. The second prove would have shown that and
@@ -618,7 +618,7 @@ export default function Sub3() {
                 STOP. The VI failed sometime between the first prove and now. Your ‘0 V’
                 reading on the tails is unreliable — the tails could still be live and the
                 indicator just isn’t telling you. Don’t touch the conductors. Get a
-                different VI (or borrow your gaffer’s), prove that one on the PU, retest
+                different VI (or borrow your supervisor’s), prove that one on the PU, retest
                 the tails. If those are dead too — proceed, but bin the failed VI and
                 report the incident. If the second VI shows live — you’ve just discovered a
                 wrong-breaker isolation and the prove-test-prove rule has saved your life.
@@ -646,7 +646,7 @@ export default function Sub3() {
           >
             <p>
               Looking at the bigger picture of Section 4: §4.1 told you PPE is the LAST
-              line of defence. §4.2 listed the specific PPE for sparks. This subsection is
+              line of defence. §4.2 listed the specific PPE for electricians. This subsection is
               about making sure the TEST INSTRUMENT itself isn’t a source of risk — because
               you’ll spend more of your career holding test gear than holding insulated
               tools, and a non-GS38 setup turns a routine dead-test into the incident.
@@ -672,7 +672,7 @@ export default function Sub3() {
               "Voltage indicators (VIs) are GS38-preferred for proving dead — single-purpose, no range to set, no wrong-setting risk.",
               "Neon screwdrivers + non-contact pens = NOT GS38, banned on competent sites. Bin them.",
               "PROVE → TEST → PROVE on a known live source EVERY time. The second prove is what catches a silently failed indicator.",
-              "CAT III for fixed-installation final circuits + DBs (most sparky work). CAT IV needed upstream of the consumer unit.",
+              "CAT III for fixed-installation final circuits + DBs (most electrician work). CAT IV needed upstream of the consumer unit.",
             ]}
           />
 

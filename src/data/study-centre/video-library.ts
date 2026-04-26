@@ -143,6 +143,39 @@ export const videos = {
     'Electric heating systems · Unit 202 LO7',
     ['7.3'],
   ),
+
+  /* ── Module 3 — Electrical installations technology (Unit 203) ──── */
+
+  // §4 Earthing / ADS — why MCBs alone can't protect against shock
+  circuitBreakersDontProtectPeople: lookup(
+    'gqEu9t8HwW0',
+    "Why circuit breakers don't protect people · Unit 203 LO4",
+    ['4.2'],
+  ),
+  // §4 Earthing — Ze test on a single-phase supply (Craig Wiltshire)
+  zeTest: lookup(
+    'CSMpfjSQK-g',
+    'Ze test on a single-phase supply · Unit 203 LO4',
+    ['4.5'],
+  ),
+  // §5 Supply — how transformers step voltage up and down (transmission)
+  transformerStepUpDown: lookup(
+    'lWEaGGZv8n8',
+    'How transformers step voltage up and down · Unit 203 LO5',
+    ['5.2'],
+  ),
+  // §6 Micro-renewables — what an inverter is and how it works (PV / battery)
+  inverter: lookup(
+    '8XI6GVLjPng',
+    'What an inverter is and how it works · Unit 203 LO6',
+    ['6.1', '6.2'],
+  ),
+  // §6 Micro-renewables — lead-acid battery electrochemistry (storage)
+  leadAcidBatteries: lookup(
+    'hObLxlXJPPM',
+    'How lead-acid batteries work · Unit 203 LO6',
+    ['6.1'],
+  ),
 } as const satisfies Record<string, VideoLibraryEntry>;
 
 export type VideoKey = keyof typeof videos;

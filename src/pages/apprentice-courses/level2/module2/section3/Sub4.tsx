@@ -148,7 +148,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "Appendix 4 has separate single-phase and three-phase mV/A/m columns. Three-phase values are typically the single-phase value times √3/2 because the neutral current is small in a balanced system.",
+      "Appendix 4 has separate single-phase and three-phase mV/A/m columns. The √3/2 ratio between them is geometric, not 'small neutral current': single-phase mV/A/m is loop voltage drop (line + neutral, 2 conductors), three-phase mV/A/m is line-only (in a balanced 3-phase system the neutral current is approximately zero, so the neutral conductor doesn't contribute). Multiply by √3 for three-phase line-to-line, divide by 2 for single-leg vs loop.",
   },
   {
     id: 8,
@@ -203,7 +203,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>

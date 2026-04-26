@@ -226,7 +226,7 @@ const faqs = [
   {
     question: 'Are diseases reportable?',
     answer:
-      'Yes — Part 7 of RIDDOR covers occupational diseases. For sparks, the relevant ones include carpal tunnel syndrome (from heavy hand-tool use), HAVS (vibration white finger from prolonged power-tool use), occupational dermatitis (from solvents, cement dust, certain insulation), and severe upper-limb cramp / tendinitis. Diagnosed in writing by a doctor + linked to work = reportable.',
+      'Yes — Part 7 of RIDDOR covers occupational diseases. For electricians, the relevant ones include carpal tunnel syndrome (from heavy hand-tool use), HAVS (vibration white finger from prolonged power-tool use), occupational dermatitis (from solvents, cement dust, certain insulation), and severe upper-limb cramp / tendinitis. Diagnosed in writing by a doctor + linked to work = reportable.',
   },
   {
     question: 'Do I report when an apprentice is the casualty?',
@@ -245,7 +245,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 6
           </button>
@@ -390,7 +390,7 @@ export default function Sub3() {
           >
             <p>
               The "over-7-day" threshold replaced the old "over-3-day" rule in October 2012.
-              "Incapacitated" means unable to do their normal range of duties — so a sparky on
+              "Incapacitated" means unable to do their normal range of duties — so an electrician on
               light alternative duties (filing paperwork instead of climbing ladders) is still
               counted as incapacitated for RIDDOR.
             </p>
@@ -469,12 +469,12 @@ export default function Sub3() {
                 EMPLOYER. The fact you were on a customer’s premises doesn’t shift the duty.
               </li>
               <li>
-                <strong>Self-employed sparky working on someone else’s premises:</strong> the
+                <strong>Self-employed electrician working on someone else’s premises:</strong> the
                 PERSON IN CONTROL of those premises is the responsible person. Usually the
                 principal contractor or site owner.
               </li>
               <li>
-                <strong>Self-employed sparky working on their own premises:</strong> THEMSELVES.
+                <strong>Self-employed electrician working on their own premises:</strong> THEMSELVES.
               </li>
               <li>
                 <strong>Member of the public injured by a work activity:</strong> the EMPLOYER
@@ -610,7 +610,7 @@ export default function Sub3() {
             title="Did that 4-day off-work injury hit RIDDOR? (Spoiler: no — but...)"
             situation={
               <>
-                Your gaffer asks: "the labourer who tripped on the cable on Wednesday — he was
+                Your supervisor asks: "the labourer who tripped on the cable on Wednesday — he was
                 off Thursday, Friday, didn’t work the weekend, came back Monday but on light
                 duties only. Is that one a RIDDOR?"
               </>

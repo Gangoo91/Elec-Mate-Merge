@@ -55,7 +55,7 @@ export default function Section3() {
             Section 2 named the hazards. Section 3 is the bit that turns those
             hazards into a written plan that controls them. Risk assessments
             and method statements (RAMS for short) are where the regs stop
-            being a textbook and start being the piece of paper your gaffer
+            being a textbook and start being the piece of paper your supervisor
             hands you on Monday morning. Get this section solid and you’ll
             stop seeing RAMS as paperwork-to-sign and start seeing it as the
             plan that keeps you alive.

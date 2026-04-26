@@ -230,7 +230,7 @@ export default function Sub2() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -441,7 +441,7 @@ export default function Sub2() {
           <ConceptBlock
             title="The middle three steps: the heart of the procedure"
             plainEnglish="Confirm your voltage indicator works, use it to test the circuit is dead, then confirm the indicator STILL works. If the second confirmation fails, your dead reading meant nothing."
-            onSite="Proving unit lives on the same belt as the indicator. Two-second job each end. Skipping it has killed sparks who would otherwise still be on the tools."
+            onSite="Proving unit lives on the same belt as the indicator. Two-second job each end. Skipping it has killed electricians who would otherwise still be on site."
           >
             <p>
               <strong>Step 4 — Prove.</strong> Put the voltage indicator across the proving
@@ -515,7 +515,7 @@ export default function Sub2() {
             <p>
               The padlock and tag on the device are for the device. The warning notice is for
               everyone else who might wander past — customers, cleaners, other trades, the
-              gaffer, the apprentice that turns up to ‘help’.
+              supervisor, the apprentice that turns up to ‘help’.
             </p>
             <p>
               On a permit-to-work site (most large commercial / industrial work), this step also
@@ -562,7 +562,7 @@ export default function Sub2() {
                 where someone in 1985 ran a downlight off the nearest convenient pair. Switch
                 off the next likely circuit (kitchen ring), lock that off too with a separate
                 padlock, re-test. When all three combinations finally read 0 V, you’re truly
-                isolated. Update the schedule afterwards so the next sparky doesn’t have to
+                isolated. Update the schedule afterwards so the next electrician doesn’t have to
                 rediscover it.
               </>
             }

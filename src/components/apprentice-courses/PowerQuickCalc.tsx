@@ -61,7 +61,7 @@ export const PowerQuickCalc: React.FC = () => {
         <div>
           <Label className="text-sm text-muted-foreground">System</Label>
           <Select value={mode} onValueChange={(v) => setMode(v as PowerMode)}>
-            <SelectTrigger className="mt-1 border-blue-200/50 focus:border-blue-400">
+            <SelectTrigger className="mt-1 border-blue-200/50 focus:border-blue-400 text-foreground">
               <SelectValue placeholder="Select system" />
             </SelectTrigger>
             <SelectContent>
@@ -73,7 +73,7 @@ export const PowerQuickCalc: React.FC = () => {
         <div>
           <Label className="text-sm text-muted-foreground">Calculate</Label>
           <Select value={calc} onValueChange={(v) => setCalc(v as CalcType)}>
-            <SelectTrigger className="mt-1 border-emerald-200/50 focus:border-emerald-400">
+            <SelectTrigger className="mt-1 border-emerald-200/50 focus:border-emerald-400 text-foreground">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>

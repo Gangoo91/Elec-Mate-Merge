@@ -221,7 +221,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -623,7 +623,7 @@ export default function Sub4() {
             title="The disconnect that flashed — what went wrong?"
             situation={
               <>
-                Your gaffer disconnects an old 230 V contactor coil under load by ripping the
+                Your supervisor disconnects an old 230 V contactor coil under load by ripping the
                 push-on terminals off — there’s a sharp blue flash and a small bang. Nothing
                 appears damaged. He shrugs, "happens every time." What actually happened?
               </>

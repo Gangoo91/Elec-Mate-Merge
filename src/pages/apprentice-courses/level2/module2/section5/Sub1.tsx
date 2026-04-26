@@ -202,7 +202,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -249,7 +249,7 @@ export default function Sub1() {
             </p>
             <p>
               Get this section solid and you’ve got the physics behind half the kit you’ll touch
-              for the next forty years on the tools. Skip it and AC supplies, motors and
+              for the next forty years on site. Skip it and AC supplies, motors and
               transformers in later modules will feel like magic. They’re not — they’re this.
             </p>
           </ConceptBlock>
@@ -644,7 +644,7 @@ export default function Sub1() {
                 inside a powered CU is a dead-front violation waiting to happen. Worse, on
                 control boards with hall-effect sensors, a magnetised tool waved past the wrong
                 IC can trigger nuisance trips you can’t debug. Knowing magnetism is something you
-                can both create and undo on the bench is part of being on the tools.
+                can both create and undo on the bench is part of being on site.
               </>
             }
           />

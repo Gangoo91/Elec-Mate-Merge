@@ -7,7 +7,7 @@ const subsections = [
     number: 'Subsection 1',
     title: 'Why safe isolation matters',
     description:
-      'The single most important habit on the tools — around 30 sparks a year die at work in the UK and dead-by-default is the law, not a suggestion.',
+      'The single most important habit on site — around 30 electricians a year die at work in the UK and dead-by-default is the law, not a suggestion.',
     icon: Power,
     href: '5-1',
   },
@@ -65,7 +65,7 @@ export default function Section5() {
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
             Section 4 covered the PPE and the daily habits. Section 5 is the
             single most important habit of the lot — safe isolation. Around 30
-            sparks a year die at work in the UK and most of them are on the
+            electricians a year die at work in the UK and most of them are on the
             same 230 V and 400 V systems you’ll work on every day. Get this
             section into muscle memory and it’s the one habit you’ll never
             need to think about again.

@@ -42,7 +42,7 @@ const checks = [
       'Certifies electricians as competent',
       'Sells PPE to contractors',
       'Enforces UK workplace safety law and publishes guidance',
-      'Sets pay rates for sparks',
+      'Sets pay rates for electricians',
     ],
     correctIndex: 2,
     explanation:
@@ -55,7 +55,7 @@ const checks = [
       "They’re the same thing under different names",
       'NICEIC is a competent person scheme (sign off your own Part P work). ECA is a trade body (membership, insurance, voice in the industry)',
       'NICEIC is for England, ECA is for Scotland',
-      'NICEIC tests apprentices, ECA tests qualified sparks',
+      'NICEIC tests apprentices, ECA tests qualified electricians',
     ],
     correctIndex: 1,
     explanation:
@@ -94,7 +94,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question: 'A spark gets a serious shock in a high-street shop. Who would investigate?',
+    question: 'An electrician gets a serious shock in a high-street shop. Who would investigate?',
     options: [
       'The HSE',
       'The local authority (Environmental Health)',
@@ -191,7 +191,7 @@ const faqs = [
   {
     question: 'Honest question — does an apprentice need to know all of these?',
     answer:
-      "Not all the detail, no. But you do need to know which body does what, because they each have a moment in your career when they matter. HSE = enforcement. NICEIC/NAPIT = signing off your firm’s domestic work. JIB = your pay packet. ECS = your site card. IET = your professional membership. BSI/IET = where BS 7671 comes from. ECA = a trade body your gaffer might be in.",
+      "Not all the detail, no. But you do need to know which body does what, because they each have a moment in your career when they matter. HSE = enforcement. NICEIC/NAPIT = signing off your firm’s domestic work. JIB = your pay packet. ECS = your site card. IET = your professional membership. BSI/IET = where BS 7671 comes from. ECA = a trade body your supervisor might be in.",
   },
   {
     question: 'Is NICEIC the only competent person scheme?',
@@ -201,7 +201,7 @@ const faqs = [
   {
     question: "Does NICEIC certify me personally?",
     answer:
-      "No — and this catches a lot of people out. NICEIC certifies the FIRM (the contractor), not the individual electrician. They assess one of your firm’s senior sparks (the 'qualified supervisor') once a year. You’re covered by the firm’s registration, you don’t carry a personal NICEIC certificate.",
+      "No — and this catches a lot of people out. NICEIC certifies the FIRM (the contractor), not the individual electrician. They assess one of your firm’s senior electricians (the 'qualified supervisor') once a year. You’re covered by the firm’s registration, you don’t carry a personal NICEIC certificate.",
   },
   {
     question: "What’s the JIB grading card and do I need one?",
@@ -230,7 +230,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -333,7 +333,7 @@ export default function Sub4() {
               <>
                 Two notices to know by name. <strong>Prohibition</strong> = stop now.{' '}
                 <strong>Improvement</strong> = fix it within a deadline. Both are legal documents,
-                both ignore-at-your-peril. If an HSE inspector turns up on your site, the gaffer
+                both ignore-at-your-peril. If an HSE inspector turns up on your site, the supervisor
                 deals with them — but you cooperate, you tell the truth, and you don’t move
                 anything they’ve asked you to leave.
               </>
@@ -386,7 +386,7 @@ export default function Sub4() {
           <ConceptBlock
             title="Competent Person Schemes — NICEIC, NAPIT, ELECSA, STROMA"
             plainEnglish="Government-approved schemes that let your firm self-certify its own domestic electrical work for Building Regs Part P, without paying the council to come and inspect every job."
-            onSite="When the gaffer says 'we’re NICEIC registered' — what they mean is the firm pays an annual fee, gets assessed once a year by an NICEIC engineer, and in return can stick its own sticker on a consumer unit job and notify Building Control electronically. Cheaper and faster than going through the council."
+            onSite="When the supervisor says 'we’re NICEIC registered' — what they mean is the firm pays an annual fee, gets assessed once a year by an NICEIC engineer, and in return can stick its own sticker on a consumer unit job and notify Building Control electronically. Cheaper and faster than going through the council."
           >
             <p>
               These are <strong>Competent Person Schemes</strong> (CPS). They were set up after
@@ -479,7 +479,7 @@ export default function Sub4() {
               Doing notifiable work without notification — and then trying to sell the house — is
               where this catches people. The buyer’s solicitor asks for the cert, there isn’t
               one, the seller has to pay for a retrospective Building Control inspection (or hire
-              a third-party certifier). Don’t be the spark who put them in that mess.
+              a third-party certifier). Don’t be the electrician who put them in that mess.
             </p>
           </ConceptBlock>
 
@@ -498,7 +498,7 @@ export default function Sub4() {
           />
 
           <Scenario
-            title="The gaffer wants you to do a bathroom shaver socket — but the firm isn’t NICEIC"
+            title="The supervisor wants you to do a bathroom shaver socket — but the firm isn’t NICEIC"
             situation={
               <>
                 You’re handed a job sheet: install a shaver socket in a domestic bathroom.
@@ -708,7 +708,7 @@ export default function Sub4() {
               </li>
             </ul>
             <p>
-              Other BSIs you’ll meet on the tools: BS 5839 (fire alarm systems), BS 5266
+              Other BSIs you’ll meet on site: BS 5839 (fire alarm systems), BS 5266
               (emergency lighting), BS EN 60898 (MCBs), BS EN 61008/61009 (RCDs/RCBOs). All
               published by BSI.
             </p>

@@ -9,7 +9,7 @@ const subsections = [
     number: '6.1',
     title: 'Why electronics matters on site + the resistor (6.1)',
     description:
-      "Why a spark needs the basics, plus the resistor as a component (colour code, series/parallel).",
+      "Why an electrician needs the basics, plus the resistor as a component (colour code, series/parallel).",
     icon: Cpu,
     href: '6-1',
   },

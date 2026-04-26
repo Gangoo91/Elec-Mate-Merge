@@ -62,12 +62,12 @@ const checks = [
   },
   {
     id: 's5-3-multi-hasp-check',
-    question: 'You and another sparky are working on the same isolated sub-main. How should the lock-off be arranged?',
+    question: 'You and another electrician are working on the same isolated sub-main. How should the lock-off be arranged?',
     options: [
       'One padlock, you both share the key',
       'One padlock per person, both clipped onto the same multi-hasp on the device',
       "Don’t lock off — you can watch each other",
-      'The senior sparky locks; the apprentice doesn’t',
+      'The senior electrician locks; the apprentice doesn’t',
     ],
     correctIndex: 1,
     explanation:
@@ -150,7 +150,7 @@ const quizQuestions = [
       'Any padlock from the toolbox',
       'A padlock with a unique key — never a ‘keyed-alike’ set someone else could open',
       'A combination lock — easier to manage',
-      'A keyed-alike set so the gaffer can re-energise if needed',
+      'A keyed-alike set so the supervisor can re-energise if needed',
     ],
     correctAnswer: 1,
     explanation:
@@ -229,7 +229,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -370,7 +370,7 @@ export default function Sub3() {
 
           <ConceptBlock
             title="Your portable known voltage source"
-            onSite="Some sparks clip the proving unit to the same belt loop as the VI so they’re always together. Others keep it in the same pouch. Either way: if the VI is in your hand, the proving unit is within arm’s reach."
+            onSite="Some electricians clip the proving unit to the same belt loop as the VI so they’re always together. Others keep it in the same pouch. Either way: if the VI is in your hand, the proving unit is within arm’s reach."
           >
             <p>
               A proving unit is a battery-powered device that generates a known voltage you can

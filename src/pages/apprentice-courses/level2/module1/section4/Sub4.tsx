@@ -46,7 +46,7 @@ const checks = [
       'Once a week',
       'Before EVERY use, every shift, every time you pick it up after a break',
       "Only if it looks damaged",
-      "Only if your gaffer asks",
+      "Only if your supervisor asks",
     ],
     correctIndex: 1,
     explanation:
@@ -58,7 +58,7 @@ const checks = [
     options: [
       "Crack on — you’re trained",
       'Have a check-in plan with the office (set times to call/text) AND avoid live work until someone’s with you',
-      "Just text your gaffer when you’re done",
+      "Just text your supervisor when you’re done",
       "Take photos in case anything happens",
     ],
     correctIndex: 1,
@@ -128,7 +128,7 @@ const quizQuestions = [
     options: [
       "Banned outright",
       "Allowed for low-risk work but should be risk-assessed; generally avoided for live work",
-      "Only allowed for time-served sparks",
+      "Only allowed for time-served electricians",
       "Mandatory for first-year apprentices",
     ],
     correctAnswer: 1,
@@ -152,7 +152,7 @@ const quizQuestions = [
     id: 6,
     question: 'Misuse and Drugs Act / company policy aside — what’s the SAFETY reason you don’t go on site under the influence?',
     options: [
-      "Annoying the gaffer",
+      "Annoying the supervisor",
       "Impaired judgment + reaction time means you’re more likely to make a fatal mistake on a live system; HASAWA s.7 makes it personally on you",
       "It’s expensive",
       "It looks unprofessional",
@@ -198,7 +198,7 @@ const faqs = [
       "On a typical drill / VI / extension lead — under 30 seconds each. Look it over: cracks, cuts, missing guards. Function check: does it spin, does it switch off when you release the trigger, does the LED light when probed. The whole pre-shift kit check should take maybe 5 minutes for everything in your bag. People who say ‘no time’ are the ones who eventually have a serious incident from a tool defect that was sitting there waiting to be found.",
   },
   {
-    question: 'My gaffer wants me to do a job alone he wouldn’t do alone. Can I refuse?',
+    question: 'My supervisor wants me to do a job alone he wouldn’t do alone. Can I refuse?',
     answer:
       "If the lone-working risk is genuine, yes. HASAWA s.7 + s.44 of the Employment Rights Act 1996 protect you for raising real safety concerns. Don’t make it a fight — flag it: ‘the RAMS for this calls for two people because of X — can we reschedule, or have someone come with me?’. If they push you to do it anyway, log it (date, time, what was said) and escalate above them. Going ahead doesn’t transfer the blame back to them if it goes wrong.",
   },
@@ -210,7 +210,7 @@ const faqs = [
   {
     question: "I’m on prescription medication that makes me drowsy — what should I do?",
     answer:
-      "Tell your gaffer / supervisor BEFORE you start the shift. Most company drug policies treat prescription medication separately from recreational drugs — but the SAFETY issue is the same: drowsy workers near live conductors or up ladders is a foreseeable risk. They may put you on lower-risk tasks for a few days, or arrange supervision. Concealing it doesn’t help — if you have an incident and post-event tests show the medication, you’re in trouble for hiding it AS WELL as for the incident.",
+      "Tell your supervisor / supervisor BEFORE you start the shift. Most company drug policies treat prescription medication separately from recreational drugs — but the SAFETY issue is the same: drowsy workers near live conductors or up ladders is a foreseeable risk. They may put you on lower-risk tasks for a few days, or arrange supervision. Concealing it doesn’t help — if you have an incident and post-event tests show the medication, you’re in trouble for hiding it AS WELL as for the incident.",
   },
   {
     question: "Do mental health and stress count as ‘fitness for work’?",
@@ -234,7 +234,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 4
           </button>
@@ -274,7 +274,7 @@ export default function Sub4() {
             onSite="Pull the drill out of the bag. Spin the chuck — does it run free? Squeeze the trigger — does it stop instantly when released? Look at the cord head-to-tail — any nicks, exposed copper, melted plastic? PAT test sticker still in date? 30 seconds. Then move to the next thing."
           >
             <p>
-              Pre-use checks are the foundation safety habit. They’re what turn ‘the gaffer
+              Pre-use checks are the foundation safety habit. They’re what turn ‘the supervisor
               gave me a drill, must be fine’ into ‘I’ve confirmed this drill is safe before I
               power it on’. The legal basis is layered:
             </p>
@@ -416,7 +416,7 @@ export default function Sub4() {
           <ConceptBlock
             title="Working alone — when it’s OK and when it isn’t"
             plainEnglish="Lone working isn’t banned — but the moment something goes wrong, no-one’s there to call 999, kill the supply, or stop the bleeding. So the risk has to be assessed and managed."
-            onSite="A spark on a maintenance call to a vacant office at 7 pm to fix a tripped breaker? Probably fine — but agreed check-in with the office, no live work, leave when done. A first-year apprentice sent alone to a tower block basement with no signal to first-fix a CU? Absolutely not — that’s an unsupervised live-supply environment with no rescue plan."
+            onSite="An electrician on a maintenance call to a vacant office at 7 pm to fix a tripped breaker? Probably fine — but agreed check-in with the office, no live work, leave when done. A first-year apprentice sent alone to a tower block basement with no signal to first-fix a CU? Absolutely not — that’s an unsupervised live-supply environment with no rescue plan."
           >
             <p>The HSE’s INDG73 (‘Working alone — Health and safety guidance’) sets out:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -494,7 +494,7 @@ export default function Sub4() {
               On a live electrical job, every one of those failure modes can turn into an
               incident. HASAWA s.7 puts a duty on YOU to take reasonable care of yourself —
               that includes turning up rested. If you can’t, flag it. ‘Can I be on the
-              dead-isolated stuff today, gaffer? I’m running on three hours’ sleep’ is the
+              dead-isolated stuff today, supervisor? I’m running on three hours’ sleep’ is the
               right conversation. ‘Crack on and hope’ is not.
             </p>
           </ConceptBlock>
@@ -526,7 +526,7 @@ export default function Sub4() {
               </li>
               <li>
                 <strong>Prescription opioids / sedatives / antihistamines</strong> — many
-                cause drowsiness or impair judgement. Disclose to your gaffer BEFORE the
+                cause drowsiness or impair judgement. Disclose to your supervisor BEFORE the
                 shift, not after the incident.
               </li>
             </ul>
@@ -567,7 +567,7 @@ export default function Sub4() {
             </ul>
             <p>
               HASAWA s.7 covers mental fitness as well as physical. If you’re in a place
-              where you can’t safely do live work — say so. Your gaffer should put you on
+              where you can’t safely do live work — say so. Your supervisor should put you on
               dead-isolated tasks, paperwork, deliveries, store work, until you’re right.
               That’s the responsible call, not the weak one.
             </p>
@@ -669,7 +669,7 @@ export default function Sub4() {
               <>
                 Friday afternoon, end of a long week. You’ve had bad sleep all week — second
                 child just arrived, neither of you has had a full night in two weeks. The
-                gaffer asks you to nip out and isolate + replace a faulty MCB at a vacant
+                supervisor asks you to nip out and isolate + replace a faulty MCB at a vacant
                 rental property an hour away. ‘Be in and out, easy job, save it for Monday
                 otherwise’. You’re an L2 apprentice, 6 months in. The property is empty —
                 no tenants in, you’ll be alone.
@@ -683,7 +683,7 @@ export default function Sub4() {
                 judgement are impaired (HASAWA s.7); (c) it’s a dead-supply environment
                 until proven otherwise — you should have a competent person with you for
                 the isolation. The right answer is: ‘can a senior come with me, or can it
-                wait until Monday with someone else?’. Most decent gaffers will respect that
+                wait until Monday with someone else?’. Most decent supervisors will respect that
                 — and the ones who don’t are the ones whose business eventually has a
                 serious incident.
               </>
@@ -705,11 +705,11 @@ export default function Sub4() {
 
           <ConceptBlock
             title="Section 4 in one paragraph"
-            plainEnglish="PPE is the LAST line (4.1). The specific PPE for sparks is rated, marked, fitted and replaced (4.2). Test gear has its own rules — GS38 — and prove-test-prove every time (4.3). All of it is held together by daily safe-working habits — pre-use checks, lone-working judgement, fitness for work (4.4)."
+            plainEnglish="PPE is the LAST line (4.1). The specific PPE for electricians is rated, marked, fitted and replaced (4.2). Test gear has its own rules — GS38 — and prove-test-prove every time (4.3). All of it is held together by daily safe-working habits — pre-use checks, lone-working judgement, fitness for work (4.4)."
           >
             <p>
               Section 5 (next) ties this all together into the formal SAFE ISOLATION
-              PROCEDURE — the standard sequence every UK sparky uses to take a circuit dead,
+              PROCEDURE — the standard sequence every UK electrician uses to take a circuit dead,
               prove it dead, lock it, and work on it safely. It uses the PPE from §4.2, the
               test gear from §4.3, and the daily habits from this subsection. Without those
               foundations, the safe-isolation procedure is just words on paper.

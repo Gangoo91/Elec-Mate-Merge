@@ -56,7 +56,7 @@ export default function Section2() {
       moduleNumber={2}
       sectionNumber={2}
       title="Basic mechanics — force, work, energy and power"
-      description="Mechanical principles for sparks: mass and weight, force, simple machines, work, energy, power and efficiency. Aligned to LO3 of Unit 202."
+      description="Mechanical principles for electricians: mass and weight, force, simple machines, work, energy, power and efficiency. Aligned to LO3 of Unit 202."
       tone="emerald"
       subsectionsCount={subsections.length}
       prevSectionHref="../section1"

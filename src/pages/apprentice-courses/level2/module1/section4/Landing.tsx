@@ -15,7 +15,7 @@ const subsections = [
     number: 'Subsection 2',
     title: 'PPE for electrical work',
     description:
-      'The specific PPE for sparks — ratings, standards and what each piece actually protects against.',
+      'The specific PPE for electricians — ratings, standards and what each piece actually protects against.',
     icon: HardHat,
     href: '4-2',
   },
@@ -67,7 +67,7 @@ export default function Section4() {
             purpose of PPE and the hierarchy of control — why glove and goggles
             comes after every other option.{' '}
             <span className="text-white font-medium">Sub 2</span> covers the
-            specific PPE a spark wears — Class 0 gloves, AS/NZS arc-rated
+            specific PPE an electrician wears — Class 0 gloves, AS/NZS arc-rated
             clothing, EN 397 hard hats, EN 166 eye protection — and the
             standards each piece is rated to.{' '}
             <span className="text-white font-medium">Sub 3</span> dives into

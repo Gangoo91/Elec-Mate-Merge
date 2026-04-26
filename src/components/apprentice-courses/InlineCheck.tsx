@@ -3,27 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { CheckCircle2, XCircle, ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
-
-// Derive course/section keys from the current URL — same approach Quiz.tsx uses,
-// so InlineCheck progress lands in the same `course_progress` table the streaks
-// + stats screens read from. URL shape:
-//   /study-centre/apprentice/level2/module2/section3/3-5
-//                                     ^^^^^^^         ^^^
-//                                     courseKey       sectionKey-suffix
-function deriveProgressKeys(pathname: string): { courseKey: string; sectionKey: string } {
-  // Strip query/hash and trailing slash, split on '/'
-  const parts = pathname.split('?')[0].split('#')[0].replace(/\/$/, '').split('/').filter(Boolean);
-  // Find the module segment, e.g. "module2"
-  const moduleIdx = parts.findIndex((p) => /^module\d+$/.test(p));
-  if (moduleIdx === -1) return { courseKey: 'unknown', sectionKey: pathname };
-  const levelSegment = parts[moduleIdx - 1] ?? 'level2';
-  const moduleSegment = parts[moduleIdx];
-  const courseKey = `${levelSegment}-${moduleSegment}`;
-  // sectionKey = whatever's after the module (e.g. "section3/3-5")
-  const sectionParts = parts.slice(moduleIdx + 1);
-  const sectionKey = sectionParts.length > 0 ? sectionParts.join('-') : 'landing';
-  return { courseKey, sectionKey };
-}
+import { deriveProgressKeys } from '@/lib/apprentice-progress';
 
 export interface InlineCheckProps {
   id?: string;

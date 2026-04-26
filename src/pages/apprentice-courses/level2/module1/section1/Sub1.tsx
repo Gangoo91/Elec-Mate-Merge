@@ -184,7 +184,7 @@ const faqs = [
   {
     question: 'Does HASAWA apply to me as an apprentice?',
     answer:
-      "Yep. The moment you walk on site — paid, unpaid, training, work experience — HASAWA applies. Section 7 binds you. Section 2 binds your boss. Same rules as the qualified spark next to you.",
+      "Yep. The moment you walk on site — paid, unpaid, training, work experience — HASAWA applies. Section 7 binds you. Section 2 binds your boss. Same rules as the qualified electrician next to you.",
   },
   {
     question: 'What if I refuse to do something I think is unsafe?',
@@ -223,7 +223,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -276,7 +276,7 @@ export default function Sub1() {
 
           <ConceptBlock
             title="HASAWA tells everyone to be safe — it doesn’t tell you exactly how"
-            plainEnglish="Be safe. That’s it. The 'how' is in your RAMS, your training, BS 7671, and the spark showing you the ropes."
+            plainEnglish="Be safe. That’s it. The 'how' is in your RAMS, your training, BS 7671, and the electrician showing you the ropes."
             onSite="Every toolbox talk you’ve sat through? That’s HASAWA in action. Your boss has to deliver it. You have to listen. That’s the deal."
           >
             <p>
@@ -353,12 +353,12 @@ export default function Sub1() {
 
           <ConceptBlock
             title="Section 3: duties to everyone else on site"
-            plainEnglish="Section 2 covers the boss’s own employees. Section 3 covers everyone else affected by the work — the public, the customer, sub-contractors, you when you’re a sparky on someone else’s site."
+            plainEnglish="Section 2 covers the boss’s own employees. Section 3 covers everyone else affected by the work — the public, the customer, sub-contractors, you when you’re an electrician on someone else’s site."
           >
             <p>
               On a typical job there’ll be other trades, the customer, deliveries, neighbours.
               Section 3 says the boss can’t just look after their own crew and ignore the rest.
-              Same applies to you when you’re a self-employed spark on someone else’s site —
+              Same applies to you when you’re a self-employed electrician on someone else’s site —
               you’re a duty-holder under s.3 too.
             </p>
           </ConceptBlock>
@@ -398,7 +398,7 @@ export default function Sub1() {
             meaning={
               <>
                 In English: read the RAMS, wear what they gave you, turn up to the toolbox talks,
-                follow safe isolation. If the gaffer asks you to skip any of that, s.7 actually
+                follow safe isolation. If the supervisor asks you to skip any of that, s.7 actually
                 puts you in the wrong if you go ahead. The pressure doesn’t transfer the blame.
               </>
             }
@@ -435,7 +435,7 @@ export default function Sub1() {
             title="Thinking you’re off the hook because you’re 'just the apprentice'"
             whatHappens={
               <>
-                You’re a year in. A grizzled spark with 20 years on the tools tells you "just do it
+                You’re a year in. A grizzled electrician with 20 years on site tells you "just do it
                 like this, mate". He must know what he’s on about, right? You crack on. Something
                 goes wrong. Now <em>you’re</em> personally on the hook under s.7 — apprentice card
                 or not.
@@ -546,7 +546,7 @@ export default function Sub1() {
             </ul>
             <p>
               And it’s not just bosses who get done. Workers and supervisors regularly get
-              prosecuted under s.7 — if you knew it was unsafe and did it anyway, the gaffer’s
+              prosecuted under s.7 — if you knew it was unsafe and did it anyway, the supervisor’s
               "I told him to" defence won’t save you.
             </p>
           </ConceptBlock>

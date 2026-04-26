@@ -218,7 +218,7 @@ const faqs = [
   {
     question: "Hot works permit — is that really needed for a bit of soldering?",
     answer:
-      "On a live site or commercial building, yes. Soldering, brazing, hot-air gun for shrink-sleeving, angle grinder, anything with a flame or sparks. The insurer wants the permit, the fire watch, the extinguisher and the post-work check. Plenty of buildings have burned down hours after the spark went home because a smouldering cinder reignited. The 30-60 minute fire watch isn’t bureaucracy — it’s there for that exact reason.",
+      "On a live site or commercial building, yes. Soldering, brazing, hot-air gun for shrink-sleeving, angle grinder, anything with a flame or sparks. The insurer wants the permit, the fire watch, the extinguisher and the post-work check. Plenty of buildings have burned down hours after the electrician went home because a smouldering cinder reignited. The 30-60 minute fire watch isn’t bureaucracy — it’s there for that exact reason.",
   },
 ];
 
@@ -232,7 +232,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -495,7 +495,7 @@ export default function Sub3() {
 
           <ConceptBlock
             title="Cutting, grinding, soldering, hot-air gun — that’s hot works"
-            onSite="The classic story: spark cuts a length of trunking with an angle grinder at 4pm, packs up, goes home. A cinder smoulders in the void behind the wall. At 11pm the building’s on fire. Hot works permits and a 30-60 minute fire watch exist precisely to stop that."
+            onSite="The classic story: electrician cuts a length of trunking with an angle grinder at 4pm, packs up, goes home. A cinder smoulders in the void behind the wall. At 11pm the building’s on fire. Hot works permits and a 30-60 minute fire watch exist precisely to stop that."
           >
             <p>
               Anything that produces sparks, flame or hot enough metal to start a fire counts as hot
@@ -533,7 +533,7 @@ export default function Sub3() {
               <>
                 Your insurer’s policy is almost certainly conditional on hot work permits being in
                 place. No permit = uninsured. And the post-work fire watch isn’t bureaucracy —
-                buildings have burned down hours after the spark left because a cinder smouldered
+                buildings have burned down hours after the electrician left because a cinder smouldered
                 quietly in a void.
               </>
             }
@@ -557,7 +557,7 @@ export default function Sub3() {
               In short: the employer has to identify the dangerous substance, assess the risk of an
               explosive atmosphere, classify the area into <strong>zones</strong>, control the
               ignition sources (electrical equipment is one of them), and provide emergency
-              procedures. As the spark, you don’t classify zones — but you do have to read them and
+              procedures. As the electrician, you don’t classify zones — but you do have to read them and
               install kit that matches.
             </p>
           </ConceptBlock>

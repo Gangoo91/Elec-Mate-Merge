@@ -105,7 +105,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "MHSWR Reg 3(1)(b) explicitly covers 'persons not in his employment'. Family members, vulnerable occupants, future maintenance sparks, even visitors. The control measures (cordon off the area, brief the homeowner, lock the CU when you leave for lunch) all flow from naming who could be harmed.",
+      "MHSWR Reg 3(1)(b) explicitly covers 'persons not in his employment'. Family members, vulnerable occupants, future maintenance electricians, even visitors. The control measures (cordon off the area, brief the homeowner, lock the CU when you leave for lunch) all flow from naming who could be harmed.",
   },
   {
     id: 3,
@@ -232,7 +232,7 @@ export default function Sub2() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>
@@ -354,7 +354,7 @@ export default function Sub2() {
 
           <ConceptBlock
             title="Not just you. Not just your team. Anyone affected by the work."
-            plainEnglish="MHSWR Reg 3(1)(b) is explicit: assess risks to people NOT in your employment too. Customers, the public, other trades, future maintenance sparks, vulnerable people."
+            plainEnglish="MHSWR Reg 3(1)(b) is explicit: assess risks to people NOT in your employment too. Customers, the public, other trades, future maintenance electricians, vulnerable people."
             onSite="On a domestic job: the homeowner, kids, pets, the elderly relative who lives upstairs, the cleaner who comes in on Tuesday. On a commercial job: other trades on site, building users, deliveries, security guards, the next person to walk into the room you’ve just isolated."
           >
             <p>
@@ -552,7 +552,7 @@ export default function Sub2() {
                 the drawings at quote stage — 8 sockets on a 32 A radial. Architect comes back
                 today and adds three more sockets in a service area you hadn’t accounted for.
                 The service area is wet (sluice room next to the staff toilet), in zone 1 of
-                what counts as a special location. Your gaffer says 'just add them, same as the
+                what counts as a special location. Your supervisor says 'just add them, same as the
                 others'.
               </>
             }

@@ -69,7 +69,7 @@ const checks = [
   },
   {
     id: 's5-5-removing-someone-elses-lock-check',
-    question: 'You arrive on Monday and find a lock-off and tag from a sparky who didn’t come back on Friday. The site needs the circuit back on. What’s the right process?',
+    question: 'You arrive on Monday and find a lock-off and tag from an electrician who didn’t come back on Friday. The site needs the circuit back on. What’s the right process?',
     options: [
       'Cut the padlock off — you’re here, they’re not',
       "Don’t remove it. Contact the named person. If they genuinely cannot return, follow the formal lock removal process (usually requires manager + safety officer + recorded reason)",
@@ -152,7 +152,7 @@ const quizQuestions = [
   },
   {
     id: 6,
-    question: "Sharing one padlock and one key between you and another sparky is:",
+    question: "Sharing one padlock and one key between you and another electrician is:",
     options: [
       "Fine — saves on padlocks",
       "Wrong — each person needs their own padlock and key (multi-hasp if working on the same isolation)",
@@ -195,7 +195,7 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: "What if I pushed back on a corner-cut and the gaffer threatened my apprenticeship?",
+    question: "What if I pushed back on a corner-cut and the supervisor threatened my apprenticeship?",
     answer:
       "Two things to know. First: HASAWA s.7 puts a personal duty on YOU. ‘Following orders’ has never worked as a legal defence after an incident. Second: Section 44 of the Employment Rights Act 1996 protects workers from detriment (including dismissal, hours pulled, pay docked) for raising a genuine health and safety concern, or for refusing work that’s actually dangerous. Note dates, names, what was said. Escalate above the supervisor if needed — to a director, the principal contractor, the JIB or the union. The HSE also takes calls on its concerns line.",
   },
@@ -207,7 +207,7 @@ const faqs = [
   {
     question: "What does the HSE actually do when they investigate an electrical incident?",
     answer:
-      "They look at the company, the supervisor and the individual on the tools. They want: the safe isolation procedure (written), the test instrument records (calibration, last-prove), the RAMS for the job, the training records of the person involved, the permit-to-work (if any), and witness statements. Gaps in any of those become the prosecution case. Companies and individuals are usually charged together, not instead of each other.",
+      "They look at the company, the supervisor and the individual on site. They want: the safe isolation procedure (written), the test instrument records (calibration, last-prove), the RAMS for the job, the training records of the person involved, the permit-to-work (if any), and witness statements. Gaps in any of those become the prosecution case. Companies and individuals are usually charged together, not instead of each other.",
   },
   {
     question: "How long after a near miss should it be reported?",
@@ -236,7 +236,7 @@ export default function Sub5() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -251,8 +251,8 @@ export default function Sub5() {
           <TLDR
             points={[
               "‘Locked off but live’ almost always means there was a SECOND source nobody identified at Step 1 — PV, UPS, generator, borrowed neutral, dual incomer.",
-              "‘Two-minute jobs’ kill more sparks than planned major works. The procedure doesn’t scale with how routine the task feels.",
-              "Personal padlock, personal key. Sharing keys, removing other people’s padlocks, ‘the gaffer can re-energise if needed’ — all classic prosecution evidence.",
+              "‘Two-minute jobs’ kill more electricians than planned major works. The procedure doesn’t scale with how routine the task feels.",
+              "Personal padlock, personal key. Sharing keys, removing other people’s padlocks, ‘the supervisor can re-energise if needed’ — all classic prosecution evidence.",
             ]}
           />
 
@@ -448,7 +448,7 @@ export default function Sub5() {
           <ContentEyebrow>Personal control failures</ContentEyebrow>
 
           <ConceptBlock
-            title="Sharing keys, removing other people’s locks, ‘gaffer can re-energise’"
+            title="Sharing keys, removing other people’s locks, ‘supervisor can re-energise’"
             plainEnglish="Every variant on ‘someone else can take my padlock off’ defeats personal control. The whole point of personal lock-off is that ONLY the person who applied it can take it off."
             onSite="If your firm has a culture of ‘the supervisor keeps a master key, just in case’ — push back. Master keys defeat personal isolation by design. The only legitimate ‘someone else removed it’ is the formal removal process, which requires the work area to be confirmed safe BEFORE re-energisation."
           >
@@ -459,13 +459,13 @@ export default function Sub5() {
                 whose padlock it is. No shared rings. No keys in the meter cupboard.
               </li>
               <li>
-                <strong>Multi-hasp for shared work.</strong> Two sparks on the same circuit?
+                <strong>Multi-hasp for shared work.</strong> Two electricians on the same circuit?
                 Multi-hasp on the lockout, one personal padlock per person. Circuit comes back
                 live only when the LAST padlock is removed.
               </li>
               <li>
                 <strong>Only the person who applied a padlock removes it.</strong> Not the
-                supervisor. Not the gaffer. Not ‘a mate who has the same brand of key’.
+                supervisor. Not the supervisor. Not ‘a mate who has the same brand of key’.
               </li>
               <li>
                 <strong>Formal lock removal process</strong> for genuine emergencies (the named
@@ -590,7 +590,7 @@ export default function Sub5() {
             </ol>
             <p>
               And the bit nobody talks about: even if no charges follow, the incident sits in
-              your head for the rest of your career. Sparks who’ve had a near miss describe it
+              your head for the rest of your career. Electricians who’ve had a near miss describe it
               the same way years later — the moment, the smell, the silence. Worth ten extra
               seconds on the procedure.
             </p>

@@ -59,6 +59,15 @@ const checks = [
     explanation:
       "PVC tops out at 70°C continuous. XLPE goes to 90°C. Run a cable beyond its insulation rating and the insulation softens, embrittles, and eventually fails — that's a fire and shock risk.",
   },
+  {
+    id: 'aluminium-csa-check',
+    question:
+      'You need to replace a copper sub-main with aluminium for weight reasons. The original was 70 mm² copper. Roughly what aluminium CSA do you need to carry the same current?',
+    options: ['25 mm²', '50 mm²', '95 mm²', '300 mm²'],
+    correctIndex: 2,
+    explanation:
+      'Aluminium has roughly 1.6× the resistivity of copper, so you need about 1.6× the CSA. 70 × 1.6 = 112 mm² — round up to the next standard size, 95 mm² or 120 mm² depending on the design. 50 mm² would undersize and overheat; 300 mm² is overkill and a waste of money.',
+  },
 ];
 
 const quizQuestions = [
@@ -191,7 +200,7 @@ export default function Sub2() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>
@@ -387,6 +396,113 @@ export default function Sub2() {
               </li>
             </ul>
           </ConceptBlock>
+
+          <ConceptBlock
+            title="Stranded vs solid conductor — when to pick which"
+            plainEnglish="Solid is one thick wire. Stranded is many fine wires twisted together. Same conductor material, very different mechanical behaviour."
+            onSite="Twin-and-earth (6242Y) cores are solid up to 4 mm² and stranded above. Flex cords (3183Y, H05VV-F, etc.) are always finely stranded so they survive being moved and bent. Use the wrong one in the wrong place and the conductor work-hardens, snaps, or fails to seat in the terminal."
+          >
+            <p>
+              The conductor inside any cable is either:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Solid</strong> — one thick wire. Cheap, easy to terminate in screw and
+                cage clamps, mechanically stiff. Standard on fixed wiring up to 4 mm² T&E. Fine
+                for runs that won't move.
+              </li>
+              <li>
+                <strong>Stranded</strong> — multiple thinner wires twisted together. More
+                flexible, much better for cables that bend or move. Required for flex (appliance
+                cords, pendant drops, equipment tails) and standard for fixed cores 6 mm² and
+                above (where solid would be unworkably stiff).
+              </li>
+              <li>
+                <strong>Fine-stranded / "Class 5" or "Class 6"</strong> — extra-fine strands for
+                very flexible flex (welder leads, drum-reel cable). Needs the right ferrule
+                terminal — squashing fine-stranded direct under a screw frays the strands and
+                strands escape the terminal, eventually shorting.
+              </li>
+            </ul>
+            <p>
+              Get the conductor class wrong at the terminal and the joint either won't grip
+              (loose strands), or work-hardens and snaps (solid in something that flexes). Either
+              way it ends up in §526.1's territory — a connection that fails to give "durable
+              electrical continuity".
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Sheath chemistry — what the outer jacket is doing for you"
+            plainEnglish="The thing you actually grip when you pull a cable through is the sheath, not the insulation. It's a different material picked for mechanical and environmental performance, not just electrical isolation."
+            onSite="Read the cable marking. Standard T&E is '6242Y' — a PVC sheath over PVC core insulation. SWA is typically PVC-sheathed over XLPE cores with steel armour in between. LSF is a low-smoke, halogen-free outer over standard cores. Each sheath is matched to where the cable lives."
+          >
+            <p>
+              The outer sheath has three jobs that the core insulation can't do alone:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Mechanical protection</strong> — abrasion resistance during installation
+                and over the cable's life. PVC sheaths take a knock and survive; bare core
+                insulation would chafe through against masonry, joists or metal trunking edges.
+              </li>
+              <li>
+                <strong>Environmental protection</strong> — UV stability outdoors (standard PVC
+                degrades; UV-stable PVC and HDPE survive); moisture and chemical resistance for
+                buried, marine and industrial installs.
+              </li>
+              <li>
+                <strong>Fire performance</strong> — LSF/LSZH sheaths cut smoke and acid-gas
+                output during a fire, which is why they're mandatory in stairwells, hospitals,
+                schools and other escape-route environments. Mineral-insulated cable goes
+                further again — survives the fire and keeps fire-alarm circuits running.
+              </li>
+            </ul>
+            <p>
+              The sheath isn't structural insulation under BS 7671 — the core insulation is. But
+              damage to the sheath that exposes the core insulation to UV, moisture or
+              mechanical abuse will eventually take the core insulation down with it. Treat
+              sheath damage seriously, even when the cores still test clean today.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="The semiconductor middle ground — why this matters later"
+            plainEnglish="A few materials sit between conductor and insulator. They behave like insulators in some conditions and like conductors in others — and we control which by 'doping' them with impurities."
+            onSite="Every modern install has semiconductor devices in it: LED drivers, RCD electronics, SMPS power supplies in lighting and chargers, EV charge controllers, inverter PCBs in PV. The diodes and transistors covered in LO6 are all built from doped silicon — neither conductor nor insulator on its own."
+          >
+            <p>
+              Most materials fall cleanly into "conductor" (low resistivity) or "insulator" (very
+              high resistivity). A handful sit in between, with conductivity that depends on
+              temperature, light, voltage or impurities. The big one for electricians is{' '}
+              <strong>silicon</strong>:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Pure silicon</strong> at room temperature has very few free electrons —
+                it behaves nearly as an insulator.
+              </li>
+              <li>
+                Add a tiny amount of phosphorus or boron (parts per million) and the conductivity
+                changes by orders of magnitude. The doped material becomes a controlled
+                semiconductor — used to build diodes, transistors, MOSFETs, SCRs, the silicon
+                inside every modern protective relay, inverter and LED driver.
+              </li>
+              <li>
+                Photoconductors (like the cadmium sulphide in an LDR) work the same way —
+                resistance drops sharply when light energy frees electrons. That's how a
+                dusk-till-dawn sensor works.
+              </li>
+            </ul>
+            <p>
+              You don't need the device-physics for Level 2 — but recognise that BS 7671's
+              "conductor" / "insulator" framework is a useful simplification for cables and
+              fittings. Inside the components themselves, the boundary is blurrier and more
+              controllable. Sub6.1 onwards picks this up.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck {...checks[2]} />
 
           <CableCrossSection type="flex" />
 

@@ -29,7 +29,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electrical instruments | Level 2 Module 2.1.5 | Elec-Mate';
 const DESCRIPTION =
-  'The instruments a working spark uses — multimeter, clamp meter, insulation tester, MFT, voltage indicator — what each measures, when to pick which, and the GS38 rules that keep you alive.';
+  'The instruments a working electrician uses — multimeter, clamp meter, insulation tester, MFT, voltage indicator — what each measures, when to pick which, and the GS38 rules that keep you alive.';
 
 const checks = [
   {
@@ -225,7 +225,7 @@ export default function Sub5() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -260,7 +260,7 @@ export default function Sub5() {
           <ContentEyebrow>The instrument family</ContentEyebrow>
 
           <ConceptBlock
-            title="Five tools cover almost everything a Level 2 spark does"
+            title="Five tools cover almost everything a Level 2 electrician does"
             plainEnglish="Each instrument is good at one or two things. Stop trying to use a multimeter for everything — it'll either give you a bad reading or get you hurt."
             onSite="On most days you'll use the voltage indicator the most (every isolation), the clamp meter often (load surveys), and the MFT on test/EICR days. The multimeter is for bench work and basic continuity. This is the start of a thread — the same multimeter, MFT, clamp meter and two-pole tester will reappear in Sub3.5 (cable temperature checks), Sub4.6 (KVL/KCL sanity checks on real circuits), Sub5.6 (when to switch to True-RMS), and Sub6.6 (RCD/AFDD verification). Keep them in mind."
           >
@@ -311,7 +311,7 @@ export default function Sub5() {
           <ContentEyebrow>The two-pole voltage indicator — proving dead</ContentEyebrow>
 
           <ConceptBlock
-            title="The single most-used instrument on the tools — and the most safety-critical"
+            title="The single most-used instrument on site — and the most safety-critical"
             plainEnglish="Two probes, one job: tells you whether the circuit between them is live or dead. No function dial, no maths."
             onSite="Routine: prove on the proving unit → test the circuit → prove on the proving unit AGAIN. If the second prove fails, your dead test was meaningless and the circuit might still be live."
           >
@@ -514,7 +514,7 @@ export default function Sub5() {
               conductors from each other and from earth.
             </p>
             <p>
-              You'll find the IR test built into every multifunction tester — most sparks don't
+              You'll find the IR test built into every multifunction tester — most electricians don't
               carry a separate IR-only instrument unless they specialise in maintenance.
             </p>
           </ConceptBlock>
@@ -587,7 +587,7 @@ export default function Sub5() {
               <>
                 Don't use it for the EICR. Tell the supervisor — they'll need to either send the kit
                 in for an emergency calibration (24-48 h turnaround at most labs), borrow a calibrated
-                set from another spark, or reschedule the job. Anything you certified today on
+                set from another electrician, or reschedule the job. Anything you certified today on
                 out-of-cal kit could be challenged later — and your scheme membership relies on you
                 spotting this.
               </>

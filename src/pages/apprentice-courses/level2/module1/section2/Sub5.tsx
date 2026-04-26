@@ -30,7 +30,7 @@ import useSEO from '@/hooks/useSEO';
 const TITLE =
   'Slips, Trips and Manual Handling | Level 2 Module 1.2.5 | Elec-Mate';
 const DESCRIPTION =
-  "The injuries that quietly write off more spark careers than electric shock — and how to keep yours intact.";
+  "The injuries that quietly write off more electrician careers than electric shock — and how to keep yours intact.";
 
 /* ── Inline check questions (wired into stats/streaks) ───────────── */
 
@@ -46,7 +46,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "Trailing leads, drill cases and offcuts in the walkway are the classic spark trip. Cable management isn’t admin — it’s how you stop the next person going over.",
+      "Trailing leads, drill cases and offcuts in the walkway are the classic electrician trip. Cable management isn’t admin — it’s how you stop the next person going over.",
   },
   {
     id: 'sub2-5-tile-check',
@@ -72,7 +72,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      "Reg 4 is a hierarchy: AVOID the lift if you can, ASSESS what you can’t avoid, REDUCE the risk to as low as reasonably practicable. Training and belts come well after 'do we even need to carry it?'.",
+      "MHOR Reg 4 is a hierarchy: AVOID the lift if you can, ASSESS what you can’t avoid, REDUCE the risk to as low as reasonably practicable. Training and belts come well after 'do we even need to carry it?'.",
   },
 ];
 
@@ -90,7 +90,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      "MHOR 1992 (amended 2002) covers any lifting, lowering, pushing, pulling or carrying of a load by hand or bodily force — that’s most of what a spark does on a fit-out.",
+      "MHOR 1992 (amended 2002) covers any lifting, lowering, pushing, pulling or carrying of a load by hand or bodily force — that’s most of what an electrician does on a fit-out.",
   },
   {
     id: 2,
@@ -163,7 +163,7 @@ const quizQuestions = [
     ],
     correctAnswer: 2,
     explanation:
-      "Look at any second-fix snag list — leads everywhere, drill flexes draped across doorways. It’s the spark’s signature trip hazard. Use cable covers, route round the edge, lift them when you stop for a brew.",
+      "Look at any second-fix snag list — leads everywhere, drill flexes draped across doorways. It’s the electrician’s signature trip hazard. Use cable covers, route round the edge, lift them when you stop for a brew.",
   },
   {
     id: 8,
@@ -211,7 +211,7 @@ const faqs = [
   {
     question: "Slips and trips sound minor compared to a shock. Are they really worth a whole subsection?",
     answer:
-      "HSE figures put slips, trips and falls on the same level as the biggest single cause of major injury at work — about a third of reported injuries in construction. Manual handling is the biggest single cause of long-term sickness absence. They’re the injuries that quietly take sparks off the tools for months — or for good.",
+      "HSE figures put slips, trips and falls on the same level as the biggest single cause of major injury at work — about a third of reported injuries in construction. Manual handling is the biggest single cause of long-term sickness absence. They’re the injuries that quietly take electricians off the tools for months — or for good.",
   },
 ];
 
@@ -225,7 +225,7 @@ export default function Sub5() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -233,7 +233,7 @@ export default function Sub5() {
           <PageHero
             eyebrow="Module 1 · Section 2 · Subsection 5"
             title="Slips, trips and manual handling"
-            description="Not as dramatic as a 230 V belt, but these are the injuries that quietly write off more spark careers than shock ever does. Worth ten minutes — your back will thank you in twenty years."
+            description="Not as dramatic as a 230 V belt, but these are the injuries that quietly write off more electrician careers than shock ever does. Worth ten minutes — your back will thank you in twenty years."
             tone="emerald"
           />
 
@@ -251,7 +251,7 @@ export default function Sub5() {
               "Apply the TILE method to a real lift on site (Task, Individual, Load, Environment).",
               "Recall the MHOR 1992 hierarchy — avoid, assess, reduce — and what counts as 'reasonably practicable'.",
               "Know the HSE indicative weight figures and why posture and distance change them.",
-              "Spot the classic spark trip hazards (trailing leads, tool cases, offcuts) and fix them at source.",
+              "Spot the classic electrician trip hazards (trailing leads, tool cases, offcuts) and fix them at source.",
               "Refuse a lift that breaches MHOR without losing your job — and document why.",
             ]}
             initialVisibleCount={3}
@@ -259,7 +259,7 @@ export default function Sub5() {
 
           <ContentEyebrow>Why this subsection exists</ContentEyebrow>
 
-          <ConceptBlock title="The injuries that actually take sparks off the tools">
+          <ConceptBlock title="The injuries that actually take electricians off the tools">
             <p>
               Ask any second-year apprentice what’s going to hurt them and they’ll say
               electric shock. Look at HSE’s annual injury figures and the picture flips:
@@ -270,7 +270,7 @@ export default function Sub5() {
             </p>
             <p>
               Shock kills the unlucky few. Bad lifting and a wet floor end careers
-              steadily, year after year. By the time a spark in their forties starts
+              steadily, year after year. By the time an electrician in their forties starts
               telling you "my back’s gone", that’s three decades of small, ignored
               injuries finally cashing in. The point of this subsection is to keep your
               back, knees and shoulders working until you decide to stop using them.
@@ -423,7 +423,7 @@ export default function Sub5() {
             </p>
             <p>
               Reg 8 covers lighting — enough to allow people to work and move about
-              safely. Most spark slip/trip incidents come back to one of these two
+              safely. Most electrician slip/trip incidents come back to one of these two
               regulations on the prosecution paperwork.
             </p>
           </ConceptBlock>
@@ -443,7 +443,7 @@ export default function Sub5() {
             cite="Verbatim from SI 1992/3004 — see HSE.gov.uk/workplace for full text."
           />
 
-          <ConceptBlock title="The four spark trip hazards you’ll see today">
+          <ConceptBlock title="The four electrician trip hazards you’ll see today">
             <p>
               Same four show up on almost every site. They’re worth recognising on
               sight because the fix is in your hands — none of them needs a meeting.
@@ -520,8 +520,8 @@ export default function Sub5() {
               <>
                 Manual handling is a planning test, not a strength test. If a lift
                 fails TILE on any of the four headings, ask for a second person, a
-                board lifter, a sack truck, or a re-plan. The strongest spark on site
-                is the one still on the tools at 55 — not the one who can dead-lift a
+                board lifter, a sack truck, or a re-plan. The strongest electrician on site
+                is the one still on site at 55 — not the one who can dead-lift a
                 consumer unit at 19.
               </>
             }
@@ -605,7 +605,7 @@ export default function Sub5() {
           <ConceptBlock
             title="The kit that takes the strain off your back">
             <p>
-              MHOR’s preferred fix for a heavy or awkward lift isn’t a stronger spark
+              MHOR’s preferred fix for a heavy or awkward lift isn’t a stronger electrician
               — it’s a piece of kit. The common ones on electrical jobs:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -697,12 +697,12 @@ export default function Sub5() {
 
           <KeyTakeaways
             points={[
-              "Slips, trips and manual handling injure more sparks long-term than electric shock — by a long way.",
+              "Slips, trips and manual handling injure more electricians long-term than electric shock — by a long way.",
               "MHOR 1992 Reg 4 hierarchy: AVOID the lift, ASSESS what you can’t avoid, REDUCE the risk to as low as reasonably practicable.",
               "TILE is your assessment: Task, Individual, Load, Environment. If any one fails, re-plan.",
               "HSE indicative figures (25 kg / 16 kg) assume close-to-body, waist-height, no twist. Overhead, low or away from your trunk, the safe weight drops sharply.",
               "Workplace Regulations Reg 12 covers floors and routes — leaving leads or offcuts in walkways breaches it (and HASAWA s.7 puts you personally on the hook).",
-              "Mechanical aids and team lifts aren’t weakness — they’re the regulation working. The strongest spark is the one still on the tools at 55.",
+              "Mechanical aids and team lifts aren’t weakness — they’re the regulation working. The strongest electrician is the one still on site at 55.",
             ]}
           />
 

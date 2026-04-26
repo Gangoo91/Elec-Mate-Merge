@@ -61,7 +61,7 @@ export default function Section2() {
             Section 1 told you the regs exist. Section 2 walks through the
             hazards those regs are written to control — the actual things on a
             UK building site that hurt people. Every Sub here is a hazard you
-            will meet within your first six months on the tools, told plainly,
+            will meet within your first six months on site, told plainly,
             with the numbers behind why the protective devices in BS 7671 are
             sized the way they are.
           </p>
@@ -81,7 +81,7 @@ export default function Section2() {
             UK sites.{' '}
             <span className="text-white font-medium">Sub 5</span> closes with
             slips, trips and manual handling — the unglamorous injuries that
-            quietly write off more spark careers than shock ever does.
+            quietly write off more electrician careers than shock ever does.
           </p>
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
             By the end of Section 2 you’ll be able to walk onto a site, name

@@ -30,7 +30,7 @@ import { videos } from '@/data/study-centre/video-library';
 const TITLE =
   'Resistance and resistivity (R = ρL/A) | Level 2 Module 2.3.3 (AC 4.3) | Elec-Mate';
 const DESCRIPTION =
-  'How length, cross-sectional area, material and temperature change conductor resistance. Worked examples in the units sparks actually use.';
+  'How length, cross-sectional area, material and temperature change conductor resistance. Worked examples in the units electricians actually use.';
 
 const checks = [
   {
@@ -181,7 +181,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>

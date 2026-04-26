@@ -177,7 +177,7 @@ const faqs = [
       'Three reasons. One — each load needs the full 230 V, parallel gives that. Two — one fault on one branch doesn’t take everything offline. Three — BS 7671 314.1 requires installations to be divided into circuits to limit inconvenience, and parallel is what makes that practical.',
   },
   {
-    question: 'Where do I still meet series circuits on the tools?',
+    question: 'Where do I still meet series circuits on site?',
     answer:
       'A switch wired in line with the load it controls is series. Inside LED tape with internal series strings. Decorative festoon strings (still common). Sensing chains in control circuits. Inside cartridge fuses — the element is in series with whatever it’s protecting.',
   },
@@ -203,7 +203,7 @@ const Sub6 = () => {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 4
           </button>

@@ -35,7 +35,7 @@ import useSEO from '@/hooks/useSEO';
 
 const TITLE = 'Electrical SI units — V, A, Ω, W | Level 2 Module 2.1.3 | Elec-Mate';
 const DESCRIPTION =
-  'Volts, amps, ohms, watts — the four electrical units a working spark uses every day, what they really mean and how to determine values from instruments and labels.';
+  'Volts, amps, ohms, watts — the four electrical units a working electrician uses every day, what they really mean and how to determine values from instruments and labels.';
 
 const checks = [
   {
@@ -53,6 +53,15 @@ const checks = [
     correctIndex: 1,
     explanation:
       "Ohms — but tiny. 0.05 Ω is the same as 50 mΩ. A clean R1+R2 reading on a short cable run looks like this. Anything much bigger means a poor connection somewhere.",
+  },
+  {
+    id: 'three-phase-line-voltage-check',
+    question:
+      "On a UK 400 V three-phase supply, what voltage would you expect to read between any phase and neutral?",
+    options: ['400 V', '230 V', '110 V', '0 V'],
+    correctIndex: 1,
+    explanation:
+      "230 V phase-to-neutral, 400 V phase-to-phase. The relationship is V_line = √3 × V_phase (400 ≈ 1.732 × 230). Same supply, two different voltages depending on which two terminals you probe across.",
   },
 ];
 
@@ -188,7 +197,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -411,6 +420,14 @@ export default function Sub3() {
             duration={videos.voltage.duration}
             topic={videos.voltage.topic}
             caption="Five-minute primer that ties potential difference, current and electron flow together visually. Useful if the writing above feels abstract."
+          />
+
+          <InlineCheck
+            id={checks[2].id}
+            question={checks[2].question}
+            options={checks[2].options}
+            correctIndex={checks[2].correctIndex}
+            explanation={checks[2].explanation}
           />
 
           <SectionRule />

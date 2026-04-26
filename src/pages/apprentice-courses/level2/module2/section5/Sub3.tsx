@@ -211,7 +211,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -605,7 +605,7 @@ export default function Sub3() {
               'A solenoid is a coil; an electromagnet is a coil with a soft-iron core. The core multiplies the field by 1,000 or more.',
               'Field strength inside a solenoid scales with current × turns per metre. Reverse the current and the poles swap.',
               'A current-carrying conductor in a magnetic field feels a force F = B × I × L. That’s the working principle of every motor on the planet.',
-              'This effect runs every contactor, relay, solenoid valve, electric lock, motor and RCD coil you’ll touch on the tools.',
+              'This effect runs every contactor, relay, solenoid valve, electric lock, motor and RCD coil you’ll touch on site.',
             ]}
           />
 

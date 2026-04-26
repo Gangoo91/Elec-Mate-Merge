@@ -71,7 +71,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      "HASAWA s.7 puts a duty on YOU. EAWR Reg 3 names every duty-holder, including employees. 'I was told to' is not a defence. The HSE regularly prosecutes individuals — apprentices, sparks and supervisors — alongside the company.",
+      "HASAWA s.7 puts a duty on YOU. EAWR Reg 3 names every duty-holder, including employees. 'I was told to' is not a defence. The HSE regularly prosecutes individuals — apprentices, electricians and supervisors — alongside the company.",
   },
 ];
 
@@ -118,13 +118,13 @@ const quizQuestions = [
     options: ['3 months', '6 months', '2 years', '10 years'],
     correctAnswer: 2,
     explanation:
-      "Up to 2 years in prison plus an unlimited fine. Add gross negligence manslaughter on top if someone dies — that’s up to life. Sparks have done time for it. It’s not theoretical.",
+      "Up to 2 years in prison plus an unlimited fine. Add gross negligence manslaughter on top if someone dies — that’s up to life. Electricians have done time for it. It’s not theoretical.",
   },
   {
     id: 5,
-    question: "An apprentice sees their gaffer working live on a CU 'just for two minutes'. What's the apprentice's position in law?",
+    question: "An apprentice sees their supervisor working live on a CU 'just for two minutes'. What's the apprentice's position in law?",
     options: [
-      'Nothing to do with them — it’s the gaffer’s job',
+      'Nothing to do with them — it’s the supervisor’s job',
       'They have a duty under HASAWA s.7 and EAWR Reg 3 to raise it',
       'Only the company’s safety officer can flag it',
       'Apprentices are exempt because they’re still learning',
@@ -214,7 +214,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -222,7 +222,7 @@ export default function Sub1() {
           <PageHero
             eyebrow="Module 1 · Section 5 · Subsection 1"
             title="Why safe isolation matters"
-            description="The single most important habit on the tools. Around 30 sparks a year die at work in the UK and most of them are on the same 230 V and 400 V systems you’ll work on every day. Here’s why dead-by-default is the law, not the suggestion."
+            description="The single most important habit on site. Around 30 electricians a year die at work in the UK and most of them are on the same 230 V and 400 V systems you’ll work on every day. Here’s why dead-by-default is the law, not the suggestion."
             tone="emerald"
           />
 
@@ -238,7 +238,7 @@ export default function Sub1() {
             outcomes={[
               "State the legal default for working on electrical systems under EAWR Reg 14, and the three tests that must be met before live work is even considered.",
               "Quote rough HSE figures for electrical fatalities and shock incidents at work in the UK.",
-              "Describe the criminal penalties that apply to individuals (apprentices, sparks, supervisors) and to companies under HASAWA and EAWR.",
+              "Describe the criminal penalties that apply to individuals (apprentices, electricians, supervisors) and to companies under HASAWA and EAWR.",
               "Explain why the apprentice has a personal duty of care under HASAWA s.7 and why ‘following orders’ is not a legal defence.",
               "Recognise the moments where isolation is most often skipped (routine work, ‘quick look’, customer pressure) and why those moments produce most of the fatalities.",
               "Link safe isolation back to the layered shock protection in BS 7671 (basic, fault, additional) covered in Section 2.",
@@ -400,7 +400,7 @@ export default function Sub1() {
 
           <ConceptBlock
             title="The HSE will name you, not just the company"
-            plainEnglish="If something goes wrong, the prosecution doesn’t just go after a faceless ‘Acme Electrical Ltd’. It can — and routinely does — name the apprentice, the spark on the tools, the supervisor and the director."
+            plainEnglish="If something goes wrong, the prosecution doesn’t just go after a faceless ‘Acme Electrical Ltd’. It can — and routinely does — name the apprentice, the electrician on site, the supervisor and the director."
           >
             <p>
               Three stacked duties make this personal:
@@ -433,7 +433,7 @@ export default function Sub1() {
               </li>
               <li>
                 <strong>If someone dies</strong> and gross negligence can be shown:{' '}
-                <strong>gross negligence manslaughter</strong> — up to life. Sparks have done
+                <strong>gross negligence manslaughter</strong> — up to life. Electricians have done
                 multi-year stretches for it.
               </li>
               <li>
@@ -471,7 +471,7 @@ export default function Sub1() {
           />
 
           <Scenario
-            title="The ‘two-minute job’ that took a sparky to A&E"
+            title="The ‘two-minute job’ that took an electrician to A&E"
             situation={
               <>
                 A second-year is asked to swap a damaged single 13 A socket-outlet in a small
@@ -495,7 +495,7 @@ export default function Sub1() {
             }
             whyItMatters={
               <>
-                That sparky was lucky — A&E, a few weeks of palpitations, kept his job. The HSE
+                That electrician was lucky — A&E, a few weeks of palpitations, kept his job. The HSE
                 investigated. The company was fined £24k, the supervisor was fined personally
                 and got a suspended sentence. The apprentice escaped prosecution because he’d
                 only just started — but the next year up he’d have been named too.

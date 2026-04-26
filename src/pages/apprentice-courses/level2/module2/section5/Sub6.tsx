@@ -156,7 +156,7 @@ const faqs = [
       'No. ESQCR 2002 allows ±1% — so 49.5 Hz to 50.5 Hz is legal and normal. Daily variations of ±0.2 Hz happen all the time as the National Grid balances generation against demand. Synchronous clocks (the old "mains-frequency" type that count grid cycles) used to drift slightly during the day and were corrected overnight when the grid deliberately overshoots to bring the average back to 50.000 Hz. Modern digital clocks use a quartz crystal so they don’t care.',
   },
   {
-    question: 'When do I genuinely need a true-RMS meter on the tools?',
+    question: 'When do I genuinely need a true-RMS meter on site?',
     answer:
       'Any time you’re measuring on the load side of a variable frequency drive (VFD), a switched-mode power supply (SMPS), a dimmer, an LED driver, an inverter, or a UPS. All of these produce non-sinusoidal waveforms. An average-responding meter (the cheaper kind) assumes everything’s a clean sine wave and applies the 1.11 form factor — when the reality is a chopped, distorted shape, the reading is wrong by anywhere from 10% to 40%. True-RMS meters integrate the actual waveform regardless of shape. If you do any commercial, industrial or modern domestic work, get a true-RMS meter.',
   },
@@ -187,7 +187,7 @@ export default function Sub6() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 5
           </button>
@@ -512,7 +512,7 @@ export default function Sub6() {
               1.11 to display "RMS".
             </p>
             <p>
-              <strong>But this is an LED driver.</strong> Half the LED drivers a spark meets are
+              <strong>But this is an LED driver.</strong> Half the LED drivers an electrician meets are
               non-sinusoidal — switched-mode supplies that pull current in short, sharp pulses
               near the peak of each mains half-cycle. The peak-to-RMS ratio (the "crest factor")
               for a clean sine wave is √2 = <strong>1.414</strong>. For a typical LED-driver

@@ -58,7 +58,7 @@ const checks = [
     ],
     correctIndex: 1,
     explanation:
-      "PPE is the LAST resort, not the first. The hierarchy: eliminate → substitute → engineering controls (extraction, ventilation) → admin (procedures, training) → PPE. If the gaffer goes straight to a dust mask, that’s not COSHH compliance — that’s laziness.",
+      "PPE is the LAST resort, not the first. The hierarchy: eliminate → substitute → engineering controls (extraction, ventilation) → admin (procedures, training) → PPE. If the supervisor goes straight to a dust mask, that’s not COSHH compliance — that’s laziness.",
   },
   {
     id: 'riddor-shock-check',
@@ -160,7 +160,7 @@ const quizQuestions = [
     id: 7,
     question: 'Under the PPE Regs 2022, who pays for your PPE?',
     options: [
-      "You — it’s part of being on the tools",
+      "You — it’s part of being on site",
       'The employer — PPE has to be provided free where it controls a risk',
       'Split 50/50 with the boss',
       'Your training provider',
@@ -190,7 +190,7 @@ const faqs = [
   {
     question: "I’ve had a small belt and I feel fine. Do I really need to report it?",
     answer:
-      "Yes. Tell the gaffer or your supervisor straight away, get checked out (A&E or a walk-in), and let them log it. Cardiac issues from electric shock can show up hours later — that’s why it gets taken seriously. Most shock injuries that get medical attention are reportable under RIDDOR (specified injury or over-7-day absence). The report goes on HSE form F2508.",
+      "Yes. Tell the supervisor or your supervisor straight away, get checked out (A&E or a walk-in), and let them log it. Cardiac issues from electric shock can show up hours later — that’s why it gets taken seriously. Most shock injuries that get medical attention are reportable under RIDDOR (specified injury or over-7-day absence). The report goes on HSE form F2508.",
   },
   {
     question: "What’s a 'dangerous occurrence' under RIDDOR? Bit of a vague phrase.",
@@ -200,10 +200,10 @@ const faqs = [
   {
     question: 'My drill keeps tripping the RCD. PUWER issue or just unlucky?',
     answer:
-      "PUWER. Reg 4 — equipment must be suitable for the work. Reg 5 — must be maintained. A drill that nuisance-trips is telling you the insulation is breaking down or the brushes are knackered. Take it out of service, label it, and tell the gaffer. Don’t keep banging the breaker back in — that’s how shocks happen.",
+      "PUWER. Reg 4 — equipment must be suitable for the work. Reg 5 — must be maintained. A drill that nuisance-trips is telling you the insulation is breaking down or the brushes are knackered. Take it out of service, label it, and tell the supervisor. Don’t keep banging the breaker back in — that’s how shocks happen.",
   },
   {
-    question: "What’s COSHH got to do with me? I’m a sparky, not a chemist.",
+    question: "What’s COSHH got to do with me? I’m an electrician, not a chemist.",
     answer:
       "Loads. Brick dust from chasing walls is a COSHH substance (silica). Solder fumes are COSHH. Mastic, silicone, contact cleaners, lead from old cable insulation, asbestos in older boards — all COSHH. Every one needs an assessment, every one needs proper controls. PPE is the LAST line, not the first.",
   },
@@ -224,7 +224,7 @@ const Sub3 = () => {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -273,7 +273,7 @@ const Sub3 = () => {
             </p>
             <p>
               You’re not expected to recite them. You ARE expected to know what each one is about,
-              so when your gaffer says "this is a COSHH job" or "have we got a working-at-height
+              so when your supervisor says "this is a COSHH job" or "have we got a working-at-height
               permit?" you know what they’re talking about.
             </p>
           </ConceptBlock>
@@ -384,7 +384,7 @@ const Sub3 = () => {
               </li>
             </ul>
             <p>
-              For us as sparks, the big ones to remember: <strong>any electric shock injury that
+              For us as electricians, the big ones to remember: <strong>any electric shock injury that
               needs treatment is almost always reportable</strong>, and so is any short circuit
               that causes a fire. If you’ve taken a belt, even one that left you "fine", tell
               someone. Cardiac issues can show up hours later, which is exactly why RIDDOR takes
@@ -476,11 +476,11 @@ const Sub3 = () => {
           <ConceptBlock
             title="COSHH 2002 — Control of Substances Hazardous to Health"
             plainEnglish="Anything you breathe in, swallow, get on your skin or in your eyes that could harm you — chemicals, dusts, fumes, biological stuff. Boss has to assess it and control it."
-            onSite="Brick dust when you’re chasing a wall? COSHH. Solder fumes? COSHH. Mastic, silicone, contact cleaner, lead from old cable, asbestos in older boards? All COSHH. Yes, even though you’re a sparky."
+            onSite="Brick dust when you’re chasing a wall? COSHH. Solder fumes? COSHH. Mastic, silicone, contact cleaner, lead from old cable, asbestos in older boards? All COSHH. Yes, even though you’re an electrician."
           >
             <p>
               The classic apprentice mistake is thinking COSHH is just for chemists or factory
-              workers. It absolutely isn’t. The list of substances you’ll meet on the tools:
+              workers. It absolutely isn’t. The list of substances you’ll meet on site:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -544,7 +544,7 @@ const Sub3 = () => {
               <>
                 You’re chasing brick all day for back boxes — no extraction, no water suppression,
                 a basic dust mask from the van. Two weeks of that on a refurb. Long term, that’s a
-                silicosis route. COSHH isn’t optional just because you’re a sparky.
+                silicosis route. COSHH isn’t optional just because you’re an electrician.
               </>
             }
             doInstead={
@@ -568,7 +568,7 @@ const Sub3 = () => {
             whatToDo={
               <>
                 Stop. Don’t disturb it any further. Step out, close the area off, leave your overalls
-                where they are (don’t shake them out). Tell the gaffer immediately — they need to
+                where they are (don’t shake them out). Tell the supervisor immediately — they need to
                 check the asbestos register and get a survey done. If you’ve inhaled significant
                 dust, that’s a doctor visit AND a near-miss report. Could become a RIDDOR
                 dangerous-occurrence report depending on extent.
@@ -701,7 +701,7 @@ const Sub3 = () => {
 
           <ConceptBlock
             title="CDM 2015 — Construction (Design and Management) Regulations"
-            plainEnglish="The big one for building sites. Sets out who is responsible for what — from the customer who’s paying, all the way down to you on the tools."
+            plainEnglish="The big one for building sites. Sets out who is responsible for what — from the customer who’s paying, all the way down to you on site."
             onSite="Site induction = CDM in action. The principal contractor has to brief you on the site rules, hazards, emergency procedures and welfare arrangements before you start work."
           >
             <p>The duty-holders, in order:</p>
@@ -755,7 +755,7 @@ const Sub3 = () => {
             <p>
               <strong>DSE 1992 (Display Screen Equipment)</strong> covers anyone who uses a screen
               for a significant chunk of the day — workstation assessments, eye tests, breaks. As an
-              apprentice on the tools you won’t deal with this much. As a designer or estimator
+              apprentice on site you won’t deal with this much. As a designer or estimator
               later in your career, you will.
             </p>
           </ConceptBlock>

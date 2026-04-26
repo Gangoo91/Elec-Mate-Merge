@@ -210,7 +210,7 @@ export default function Sub5() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 6
           </button>
@@ -407,6 +407,93 @@ export default function Sub5() {
             correctIndex={checks[1].correctIndex}
             explanation={checks[1].explanation}
           />
+
+          <SectionRule />
+
+          <ContentEyebrow>How sensors connect to a switching circuit</ContentEyebrow>
+
+          <ConceptBlock
+            title="The voltage divider — how a sensor produces a signal a circuit can read"
+            plainEnglish="A sensor on its own changes resistance — but a controller measures voltage. The voltage divider is the universal trick for converting a changing resistance into a changing voltage."
+            onSite="Pop the cover off any dusk-till-dawn module, UFH thermostat or PIR control board and you'll see the same pattern: the sensor (LDR or thermistor) wired in series with a fixed resistor across the supply, with the midpoint feeding into the comparator or microcontroller input."
+          >
+            <p>
+              A two-resistor divider takes a supply voltage and spits out a midpoint voltage that
+              depends on the ratio of the two resistors:
+            </p>
+            <p className="font-mono text-[15px] text-elec-yellow bg-white/[0.04] border border-white/[0.06] rounded-lg px-4 py-2.5">
+              V_mid = V_supply × R_lower ÷ (R_upper + R_lower)
+            </p>
+            <p>
+              Replace one of the resistors with a sensor and the midpoint voltage now tracks
+              whatever the sensor is sensing. Three worked examples:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Dusk-till-dawn LDR.</strong> 5 V supply, LDR in the upper position
+                (resistance 10 kΩ in office light, 1 MΩ in pitch dark), 10 kΩ fixed resistor
+                below. In office light V_mid ≈ 5 × 10/20 = 2.5 V. In darkness V_mid ≈ 5 × 10/1010
+                ≈ 0.05 V. The big swing is what the comparator looks for.
+              </li>
+              <li>
+                <strong>UFH NTC probe.</strong> 3.3 V supply, 10 kΩ fixed resistor in the upper
+                position, 10 kΩ NTC below. At 25 °C (NTC = 10 kΩ): V_mid = 1.65 V. At 50 °C (NTC
+                ≈ 3 kΩ): V_mid ≈ 0.76 V. The microcontroller reads V_mid, looks up °C on the
+                stored curve.
+              </li>
+              <li>
+                <strong>EV plug temperature.</strong> Charger ECU sees the NTC voltage drop as
+                the contacts heat up. Below the warning threshold = full power; above = derate
+                or trip.
+              </li>
+            </ul>
+            <p>
+              Same circuit topology in every case. Two components, one signal — the simplest way
+              to turn "resistance changed" into "voltage changed", which is what every digital
+              and analogue input is actually measuring.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Hysteresis — why a thermostat doesn't chatter"
+            plainEnglish="A bare comparator switches the moment the input crosses a threshold. In the real world, sensor noise sits the input near the threshold and the output rattles on/off rapidly. Hysteresis is a deliberate gap between 'switch on' and 'switch off' that stops the chatter."
+            onSite="A heating thermostat set to 19 °C might switch the boiler ON at 18.5 °C and OFF at 19.5 °C — a 1 °C dead band. The boiler runs in long, clean cycles instead of clattering on/off every few seconds. Same trick on every dusk-till-dawn lamp, every PIR, every UFH controller."
+          >
+            <p>
+              Without hysteresis, three things go wrong with a sensor-driven switching circuit:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Chattering relays</strong> — the output relay coil bounces on/off as the
+                input drifts a millivolt either side of the threshold. Premature contact wear,
+                audible buzzing, EMI on the supply.
+              </li>
+              <li>
+                <strong>Light flicker</strong> — a dusk-till-dawn lamp at the exact "switch on"
+                light level pulses on and off as a cloud passes. Annoying for neighbours, hard on
+                the lamp's life, mistakable for a fault.
+              </li>
+              <li>
+                <strong>Boiler short-cycling</strong> — heating system that switches on for 30
+                seconds, off for 30 seconds, repeatedly. Reduces efficiency, shortens the life of
+                the boiler and the relay/contactor that drives it.
+              </li>
+            </ul>
+            <p>
+              The fix is built into almost every comparator chip and every thermostat firmware:
+              two thresholds with a deliberate gap. Switch ON at threshold A, switch OFF at
+              threshold B (A and B differ by the "hysteresis band"). The output stays in its
+              current state until the input crosses the OTHER threshold — so noise around either
+              threshold can't cause unwanted switching.
+            </p>
+            <p>
+              When you fault-find a chattering control, the cause is almost always a missing or
+              mis-set hysteresis band — sometimes a setting on the controller, sometimes a worn
+              sensor giving more noise than the band can absorb, sometimes a comparator
+              IC failed in a way that has eliminated its built-in hysteresis. Replacing the
+              sensor first usually clears it.
+            </p>
+          </ConceptBlock>
 
           <SectionRule />
 

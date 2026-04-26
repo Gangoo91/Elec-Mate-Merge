@@ -218,7 +218,7 @@ const faqs = [
   {
     question: "I’m an apprentice — do I need to write or sign these documents?",
     answer:
-      "Sign: yes, you sign to confirm you’ve read and understood the RAMS that covers your work. Write: not full RAMS at apprentice stage, no — but you’ll start contributing to dynamic risk assessments and point-of-work checks (Sub 4) from very early on, and by the time you’re a Level 3 spark you’ll be expected to write site-specific method statements for jobs you supervise.",
+      "Sign: yes, you sign to confirm you’ve read and understood the RAMS that covers your work. Write: not full RAMS at apprentice stage, no — but you’ll start contributing to dynamic risk assessments and point-of-work checks (Sub 4) from very early on, and by the time you’re a Level 3 electrician you’ll be expected to write site-specific method statements for jobs you supervise.",
   },
 ];
 
@@ -232,7 +232,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>
@@ -492,12 +492,12 @@ export default function Sub3() {
             title="Treating the method statement as instructions for someone ELSE"
             whatHappens={
               <>
-                Apprentice arrives on site, RAMS pack handed to the gaffer, gaffer skim-reads
+                Apprentice arrives on site, RAMS pack handed to the supervisor, supervisor skim-reads
                 it, doesn’t share the detail with the apprentice. Apprentice gets stuck into
                 the work knowing only what they’ve been told verbally. Halfway through there’s
                 a step the apprentice didn’t know about (e.g. 'temporary feed required to keep
                 the alarm system live during the CU change'). Alarm goes down, building
-                evacuates, money lost, gaffer blames apprentice, apprentice has no defence
+                evacuates, money lost, supervisor blames apprentice, apprentice has no defence
                 because they never read the document.
               </>
             }
@@ -505,8 +505,8 @@ export default function Sub3() {
               <>
                 If your name is on the team, the MS applies to YOU. Read it. The whole thing,
                 or at minimum every section that mentions your role or your part of the work.
-                If the gaffer hasn’t shared it, ask. 'Can I read the MS before we start?' is a
-                completely normal request — and any gaffer who refuses is making a problem for
+                If the supervisor hasn’t shared it, ask. 'Can I read the MS before we start?' is a
+                completely normal request — and any supervisor who refuses is making a problem for
                 themselves later.
               </>
             }
@@ -520,7 +520,7 @@ export default function Sub3() {
                 explicit: cable pulling requires direct supervision of the apprentice (you).
                 The supervisor steps outside to take a call from the office, says it’ll be
                 'two minutes'. Twenty minutes later they’re still not back. The job is on a
-                schedule and you’re aware time’s being lost. The other spark on site (not your
+                schedule and you’re aware time’s being lost. The other electrician on site (not your
                 supervisor, not in the MS for your supervision) says 'just keep going, I’m
                 here'.
               </>
@@ -530,7 +530,7 @@ export default function Sub3() {
                 Stop pulling cable. The MS specifies 'direct supervision' — not 'someone else
                 in the building'. Either wait for your named supervisor to return, OR get the
                 MS amended on the spot (someone competent has to formally authorise the other
-                spark as your supervisor for the duration). Don’t carry on under informal
+                electrician as your supervisor for the duration). Don’t carry on under informal
                 cover. While you wait, do something the MS doesn’t require supervision for —
                 tidy the route, prep the next pull, label cables. You’re working productively
                 without breaching the system of work.

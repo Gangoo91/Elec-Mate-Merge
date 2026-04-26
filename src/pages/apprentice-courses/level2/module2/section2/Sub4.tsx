@@ -184,7 +184,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -413,48 +413,88 @@ export default function Sub4() {
               Kinetic energy at impact = mgh (all of the PE has converted). Read across by tool,
               down by drop height. Every value below is in <strong>joules</strong>.
             </p>
-            <div className="overflow-x-auto -mx-1">
-              <table className="w-full text-[13px] text-white/95 border-collapse">
-                <thead>
-                  <tr className="border-y border-white/[0.08]">
-                    <th className="text-left font-semibold py-2 pr-2 text-elec-yellow/90 text-[11.5px] uppercase tracking-[0.14em]">Drop height</th>
-                    <th className="text-right font-semibold py-2 px-2 text-[11.5px] uppercase tracking-[0.14em] text-white/80">0.3 kg<br/>screwdriver</th>
-                    <th className="text-right font-semibold py-2 px-2 text-[11.5px] uppercase tracking-[0.14em] text-white/80">0.8 kg<br/>adjustable</th>
-                    <th className="text-right font-semibold py-2 px-2 text-[11.5px] uppercase tracking-[0.14em] text-white/80">2 kg<br/>drill</th>
-                    <th className="text-right font-semibold py-2 pl-2 text-[11.5px] uppercase tracking-[0.14em] text-white/80">3 kg<br/>lump hammer</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-white/[0.06]">
-                    <td className="py-2 pr-2 font-semibold">1 m</td>
-                    <td className="py-2 px-2 text-right tabular-nums">2.9 J</td>
-                    <td className="py-2 px-2 text-right tabular-nums">7.8 J</td>
-                    <td className="py-2 px-2 text-right tabular-nums">19.6 J</td>
-                    <td className="py-2 pl-2 text-right tabular-nums">29.4 J</td>
-                  </tr>
-                  <tr className="border-b border-white/[0.06]">
-                    <td className="py-2 pr-2 font-semibold">3 m</td>
-                    <td className="py-2 px-2 text-right tabular-nums">8.8 J</td>
-                    <td className="py-2 px-2 text-right tabular-nums">23.5 J</td>
-                    <td className="py-2 px-2 text-right tabular-nums">58.9 J</td>
-                    <td className="py-2 pl-2 text-right tabular-nums">88.3 J</td>
-                  </tr>
-                  <tr className="border-b border-white/[0.06]">
-                    <td className="py-2 pr-2 font-semibold">6 m</td>
-                    <td className="py-2 px-2 text-right tabular-nums">17.7 J</td>
-                    <td className="py-2 px-2 text-right tabular-nums">47.1 J</td>
-                    <td className="py-2 px-2 text-right tabular-nums">117.7 J</td>
-                    <td className="py-2 pl-2 text-right tabular-nums">176.6 J</td>
-                  </tr>
-                  <tr>
-                    <td className="py-2 pr-2 font-semibold">12 m</td>
-                    <td className="py-2 px-2 text-right tabular-nums text-orange-300">35.3 J</td>
-                    <td className="py-2 px-2 text-right tabular-nums text-orange-300">94.2 J</td>
-                    <td className="py-2 px-2 text-right tabular-nums text-orange-300">235.4 J</td>
-                    <td className="py-2 pl-2 text-right tabular-nums text-orange-300">353.2 J</td>
-                  </tr>
-                </tbody>
-              </table>
+            {/* Mobile (<sm): card per drop height. Desktop (≥sm): same card grid — no horizontal scroll on either. */}
+            <div className="space-y-3">
+              {[
+                {
+                  height: '1 m',
+                  speed: '≈ 4.4 m/s (brisk walk)',
+                  highlight: false,
+                  values: [
+                    { tool: '0.3 kg screwdriver', joules: '2.9 J' },
+                    { tool: '0.8 kg adjustable', joules: '7.8 J' },
+                    { tool: '2 kg drill', joules: '19.6 J' },
+                    { tool: '3 kg lump hammer', joules: '29.4 J' },
+                  ],
+                },
+                {
+                  height: '3 m',
+                  speed: '≈ 7.7 m/s (slow jog)',
+                  highlight: false,
+                  values: [
+                    { tool: '0.3 kg screwdriver', joules: '8.8 J' },
+                    { tool: '0.8 kg adjustable', joules: '23.5 J' },
+                    { tool: '2 kg drill', joules: '58.9 J' },
+                    { tool: '3 kg lump hammer', joules: '88.3 J' },
+                  ],
+                },
+                {
+                  height: '6 m',
+                  speed: '≈ 10.9 m/s (sprint)',
+                  highlight: false,
+                  values: [
+                    { tool: '0.3 kg screwdriver', joules: '17.7 J' },
+                    { tool: '0.8 kg adjustable', joules: '47.1 J' },
+                    { tool: '2 kg drill', joules: '117.7 J' },
+                    { tool: '3 kg lump hammer', joules: '176.6 J' },
+                  ],
+                },
+                {
+                  height: '12 m',
+                  speed: '≈ 15.3 m/s (about 34 mph)',
+                  highlight: true,
+                  values: [
+                    { tool: '0.3 kg screwdriver', joules: '35.3 J' },
+                    { tool: '0.8 kg adjustable', joules: '94.2 J' },
+                    { tool: '2 kg drill', joules: '235.4 J' },
+                    { tool: '3 kg lump hammer', joules: '353.2 J' },
+                  ],
+                },
+              ].map((row) => (
+                <div
+                  key={row.height}
+                  className={`rounded-xl border p-3 sm:p-4 ${
+                    row.highlight
+                      ? 'border-orange-400/30 bg-orange-500/[0.06]'
+                      : 'border-white/[0.08] bg-white/[0.03]'
+                  }`}
+                >
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 mb-2.5">
+                    <div className="text-[11.5px] font-semibold uppercase tracking-[0.14em] text-elec-yellow/90">
+                      Drop height
+                    </div>
+                    <div className="text-[15px] font-semibold text-white">{row.height}</div>
+                    <div className="text-[12px] text-white/60">{row.speed}</div>
+                  </div>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-1.5 gap-x-4 text-[13px]">
+                    {row.values.map((v) => (
+                      <li
+                        key={v.tool}
+                        className="flex items-baseline justify-between gap-3 border-b border-white/[0.04] pb-1 last:border-b-0 sm:border-b-0 sm:pb-0"
+                      >
+                        <span className="text-white/80">{v.tool}</span>
+                        <span
+                          className={`font-semibold tabular-nums ${
+                            row.highlight ? 'text-orange-300' : 'text-white/95'
+                          }`}
+                        >
+                          {v.joules}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
             <p>
               For scale: a typical hard hat is rated to absorb about 50 J of crown impact (BS EN
@@ -512,7 +552,7 @@ export default function Sub4() {
 
           <ConceptBlock
             title="Where work and energy show up on site"
-            plainEnglish="W = F × d, KE = ½mv², PE = mgh and E = ½CV² aren’t exam props — they describe specific moments you’ll meet on the tools where the maths suddenly becomes real."
+            plainEnglish="W = F × d, KE = ½mv², PE = mgh and E = ½CV² aren’t exam props — they describe specific moments you’ll meet on site where the maths suddenly becomes real."
             onSite="If you can name the formula, you can predict what the kit is about to do. That’s the difference between a controlled job and a near-miss."
           >
             <p>

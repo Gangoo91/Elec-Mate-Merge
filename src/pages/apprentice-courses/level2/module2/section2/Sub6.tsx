@@ -186,7 +186,7 @@ export default function Sub6() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -250,7 +250,7 @@ export default function Sub6() {
                 There’s a real-world reason to care about efficiency: legislation. Since 2017,
                 EU/UK regulations require IE3 (or IE2 with a variable-speed drive) as the minimum
                 for most industrial motors above 0.75 kW. Higher efficiency = less heat dumped in
-                the plant room = lower running cost = less load on the supply. Sparks specifying
+                the plant room = lower running cost = less load on the supply. Electricians specifying
                 replacements need to know which class their kit falls into.
               </>
             }

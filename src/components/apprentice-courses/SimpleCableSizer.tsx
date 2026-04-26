@@ -134,7 +134,7 @@ const SimpleCableSizer: React.FC = () => {
             <SelectTrigger className="bg-background text-foreground">
               <SelectValue placeholder="Select family" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-background border-border z-50">
               {Object.keys(mvamData).map((k) => (
                 <SelectItem key={k} value={k}>
                   {k}
@@ -149,7 +149,7 @@ const SimpleCableSizer: React.FC = () => {
             <SelectTrigger className="bg-background text-foreground">
               <SelectValue placeholder="Select method" />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-background border-border z-50">
               <SelectItem value="Clipped direct">Clipped direct</SelectItem>
               <SelectItem value="Buried">Buried</SelectItem>
             </SelectContent>
@@ -164,7 +164,7 @@ const SimpleCableSizer: React.FC = () => {
             inputMode="decimal"
             value={length}
             onChange={(e) => setLength(e.target.value.replace(/[^0-9.+\-eE]/g, ''))}
-            className="bg-background"
+            className="bg-background h-12 text-base touch-manipulation"
           />
           <p className="text-xs text-muted-foreground">
             One-way length. We double it for out and back.
@@ -176,7 +176,7 @@ const SimpleCableSizer: React.FC = () => {
             inputMode="decimal"
             value={current}
             onChange={(e) => setCurrent(e.target.value.replace(/[^0-9.+\-eE]/g, ''))}
-            className="bg-background"
+            className="bg-background h-12 text-base touch-manipulation"
           />
         </div>
       </div>

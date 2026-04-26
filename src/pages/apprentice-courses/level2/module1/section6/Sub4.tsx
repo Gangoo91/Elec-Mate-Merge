@@ -60,9 +60,9 @@ const checks = [
   {
     id: 'immediate-vs-root-check',
     question:
-      'A spark gets a shock from a CU because the supply wasn’t locked off. What is the immediate cause vs the root cause?',
+      'An electrician gets a shock from a CU because the supply wasn’t locked off. What is the immediate cause vs the root cause?',
     options: [
-      'Immediate cause = the shock; root cause = the spark’s carelessness',
+      'Immediate cause = the shock; root cause = the electrician’s carelessness',
       'Immediate cause = supply was live during work; root cause = no lock-off culture / no enforcement / no kit issued',
       'Immediate cause = the CU; root cause = the customer',
       'Immediate cause = bad luck; root cause = it was Friday',
@@ -217,7 +217,7 @@ const faqs = [
   {
     question: 'What’s a "5 Whys" analysis?',
     answer:
-      'You start with the immediate cause and ask "why?" Each answer becomes the next question. Five rounds usually gets you from the immediate physical cause to a system-level root cause. Example: "Spark got shocked." Why? "Cable was live." Why? "Lock-off wasn’t used." Why? "No kit issued." Why? "Stores never re-stocked after the last one was lost." Why? "No process for replacing it." Now you’ve got something fixable.',
+      'You start with the immediate cause and ask "why?" Each answer becomes the next question. Five rounds usually gets you from the immediate physical cause to a system-level root cause. Example: "Electrician got shocked." Why? "Cable was live." Why? "Lock-off wasn’t used." Why? "No kit issued." Why? "Stores never re-stocked after the last one was lost." Why? "No process for replacing it." Now you’ve got something fixable.',
   },
   {
     question: 'Who actually runs an investigation?',
@@ -246,7 +246,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 6
           </button>
@@ -380,17 +380,17 @@ export default function Sub4() {
             <p>The three layers, with an electrical example:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Immediate cause:</strong> Spark received a shock from a live conductor.
+                <strong>Immediate cause:</strong> Electrician received a shock from a live conductor.
               </li>
               <li>
                 <strong>Underlying causes:</strong> Lock-off kit wasn’t used. The supply was
                 still live during work. The voltage indicator wasn’t proved before/after. The
-                spark was working alone with no second-set-of-eyes check.
+                electrician was working alone with no second-set-of-eyes check.
               </li>
               <li>
                 <strong>Root causes:</strong> Lock-off kit was never issued to that crew. The
                 supervisor doesn’t routinely check lock-off compliance. The site induction
-                doesn’t cover lock-off. There’s informal pressure from the gaffer to "crack on"
+                doesn’t cover lock-off. There’s informal pressure from the supervisor to "crack on"
                 that overrides safe-isolation procedure on tight jobs.
               </li>
             </ul>
@@ -514,7 +514,7 @@ export default function Sub4() {
                 reporting culture.
               </li>
               <li>
-                <strong>Individual judgement and behaviour</strong> — the spark on the day.
+                <strong>Individual judgement and behaviour</strong> — the electrician on the day.
               </li>
             </ul>
             <p>
@@ -555,7 +555,7 @@ export default function Sub4() {
           <ConceptBlock
             title="Lessons learned only count if they reach everyone"
             plainEnglish="An action plan that sits in a folder doesn’t change anything. The plan only works when the lesson reaches the people doing the work."
-            onSite={`The toolbox talk on Monday morning where the gaffer says "right, listen up, this happened on a sister site last week, this is what we’re changing" — that’s lessons learned in action. If you’ve been through a year on the tools without one of those, ask why.`}
+            onSite={`The toolbox talk on Monday morning where the supervisor says "right, listen up, this happened on a sister site last week, this is what we’re changing" — that’s lessons learned in action. If you’ve been through a year on site without one of those, ask why.`}
           >
             <p>The mechanisms for spreading lessons learned:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -616,7 +616,7 @@ export default function Sub4() {
               <>
                 Your firm’s done three RIDDORs and a string of internal investigations on
                 near-misses involving a particular brand of MCB that’s tripping unexpectedly
-                under load. After the first investigation, the action plan said "brief sparks
+                under load. After the first investigation, the action plan said "brief electricians
                 to monitor and report further incidents". The brief was done. Six months later
                 it’s happened again on a different site, same MCB type, this time someone
                 falling off a ladder when the lights dropped.

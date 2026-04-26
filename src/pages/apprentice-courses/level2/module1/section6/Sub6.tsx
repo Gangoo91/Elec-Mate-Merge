@@ -173,7 +173,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'A lone worker is anyone working without close or direct supervision — common for a domestic spark. HSE INDG73 covers lone working. Arrangements should include scheduled check-ins (text the office every couple of hours / on arrival/departure), dynamic risk assessment, lone-worker app or device with panic button, and a written escalation path if check-ins are missed.',
+      'A lone worker is anyone working without close or direct supervision — common for a domestic electrician. HSE INDG73 covers lone working. Arrangements should include scheduled check-ins (text the office every couple of hours / on arrival/departure), dynamic risk assessment, lone-worker app or device with panic button, and a written escalation path if check-ins are missed.',
   },
   {
     id: 7,
@@ -219,9 +219,9 @@ const faqs = [
       'Hypothermia presents as confusion, slurred speech, shivering (or stopping shivering — that’s a bad sign), pale skin. Get them inside, off cold surfaces, into dry layers, give warm (not hot) drinks if conscious. Mild = warm them up gradually. Severe (loss of consciousness, body temp under 32°C) = 999 and warm them slowly under medical guidance — rewarming too fast can be fatal. Frostbite: rewarm the affected part in warm (not hot) water, do NOT rub or use direct heat (radiator, fire), seek medical attention.',
   },
   {
-    question: 'I’m a self-employed sparky working alone in domestics all day — what counts as a lone worker arrangement?',
+    question: 'I’m a self-employed electrician working alone in domestics all day — what counts as a lone worker arrangement?',
     answer:
-      'At minimum: tell someone where you are, what time you expect to be done, when you’ll text/call to say you’re clear of the job. A lone-worker app (Skyguard, StaySafe, Reliance) gives you a panic button on your phone. Some bigger insurance policies require these for sole-trader sparks. Check in religiously — the system only works if you actually USE it.',
+      'At minimum: tell someone where you are, what time you expect to be done, when you’ll text/call to say you’re clear of the job. A lone-worker app (Skyguard, StaySafe, Reliance) gives you a panic button on your phone. Some bigger insurance policies require these for sole-trader electricians. Check in religiously — the system only works if you actually USE it.',
   },
   {
     question: 'What’s the protocol for an asbestos disturbance?',
@@ -236,7 +236,7 @@ const faqs = [
   {
     question: 'What about a security incident — someone aggressive on site?',
     answer:
-      'De-escalate if you safely can — calm voice, open hands, don’t crowd them, don’t turn your back. Get yourself between the person and the exit so YOU have a way out. If the situation continues to deteriorate or you see a weapon: leave the area, raise the alarm, get others out, call 999. Don’t try to physically restrain — you’re a sparky, not a doorman, and you’re not insured for it. Lock yourself in a room if you have to. Police take aggression on building sites seriously.',
+      'De-escalate if you safely can — calm voice, open hands, don’t crowd them, don’t turn your back. Get yourself between the person and the exit so YOU have a way out. If the situation continues to deteriorate or you see a weapon: leave the area, raise the alarm, get others out, call 999. Don’t try to physically restrain — you’re an electrician, not a doorman, and you’re not insured for it. Lock yourself in a room if you have to. Police take aggression on building sites seriously.',
   },
 ];
 
@@ -250,7 +250,7 @@ export default function Sub6() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 6
           </button>
@@ -369,7 +369,7 @@ export default function Sub6() {
             clause="Where any gas escape is known or suspected, the responsible person must take all reasonable steps to prevent the escape continuing, and immediate notification must be given to the supplier or transporter."
             meaning={
               <>
-                Even though sparks aren’t Gas Safe registered, you can still smell or notice a
+                Even though electricians aren’t Gas Safe registered, you can still smell or notice a
                 leak — and the GSIUR puts the duty to act on whoever is in the property,
                 including a tradesperson working there. The "responsible step" is to evacuate
                 and notify (0800 111 999). Failure to act is a prosecutable offence.
@@ -693,7 +693,7 @@ export default function Sub6() {
           >
             <p>
               HSE INDG73 covers lone working. The basic risk-management arrangements every
-              self-employed sparky and every employee working alone should have:
+              self-employed electrician and every employee working alone should have:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -747,7 +747,7 @@ export default function Sub6() {
                 dispatch an engineer. Do not re-enter until the engineer says it’s safe. Once
                 safe, you can return to finish the CU job — but the gas leak is the urgent
                 thing and your CU work is irrelevant until it’s sorted. Note the incident
-                in your day notes, and let your gaffer know.
+                in your day notes, and let your supervisor know.
               </>
             }
             whyItMatters={

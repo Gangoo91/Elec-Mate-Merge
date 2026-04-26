@@ -46,7 +46,7 @@ const checks = [
     options: [
       'Tick a box for the office',
       'Brief the team on the day’s hazards and controls so everyone’s working off the same plan',
-      'Give the gaffer time to make tea',
+      'Give the supervisor time to make tea',
       'Replace the RAMS document',
     ],
     correctIndex: 1,
@@ -101,14 +101,14 @@ const quizQuestions = [
     id: 2,
     question: "You sign the toolbox-talk attendance sheet without listening. Three hours later something on the talk would have warned you about goes wrong. Where’s the legal exposure?",
     options: [
-      "Only on the gaffer who delivered the talk",
+      "Only on the supervisor who delivered the talk",
       "On you personally under HASAWA s.7 (you confirmed you’d been briefed and ignored it), as well as the firm",
       "Nowhere — accidents happen",
       "Only on the firm’s insurance",
     ],
     correctAnswer: 1,
     explanation:
-      "Your signature on the attendance sheet is evidence that you were briefed. If you weren’t actually listening, you can’t un-sign that. HASAWA s.7 catches workers who don’t cooperate with the safety system. Personal prosecution is real — sparks have gone down for less.",
+      "Your signature on the attendance sheet is evidence that you were briefed. If you weren’t actually listening, you can’t un-sign that. HASAWA s.7 catches workers who don’t cooperate with the safety system. Personal prosecution is real — electricians have gone down for less.",
   },
   {
     id: 3,
@@ -125,7 +125,7 @@ const quizQuestions = [
   },
   {
     id: 4,
-    question: "You arrive at a job and there’s no toolbox talk. The gaffer just hands out tasks. What’s the right response?",
+    question: "You arrive at a job and there’s no toolbox talk. The supervisor just hands out tasks. What’s the right response?",
     options: [
       "Crack on — toolbox talks are optional",
       "Ask for the briefing — even five minutes covering the day’s hazards, controls and emergency arrangements is required for a safe system of work",
@@ -156,7 +156,7 @@ const quizQuestions = [
       "Forget about it — no harm done",
       "Stop work, log the near miss, trigger a Step 5 review of the RAMS, brief the team on the new hazard, and add the buried cable to the records",
       "Tell your mate to be more careful next time",
-      "Mention it to the gaffer when you see them",
+      "Mention it to the supervisor when you see them",
     ],
     correctAnswer: 1,
     explanation:
@@ -177,7 +177,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question: "You finish your part of the job 30 minutes early and the gaffer’s left site. There’s no other task in the RAMS for you. What do you do?",
+    question: "You finish your part of the job 30 minutes early and the supervisor’s left site. There’s no other task in the RAMS for you. What do you do?",
     options: [
       "Pick a new task you think looks straightforward and start it",
       "Do something productive that’s within scope and competence (tidy up, document the work, prep for tomorrow), and wait for instruction before starting any unassessed task",
@@ -214,14 +214,14 @@ const faqs = [
       "It’s not named by that term in any single regulation, but it’s the practical expression of MHSWR Reg 3(3) (review when no longer valid) and HASAWA s.7 (cooperate with the system). The HSE’s expectation is that workers continually check conditions against what was assumed in the assessment, and stop if they diverge. Big firms formalise this with mid-job sign-offs; smaller firms expect it as habit.",
   },
   {
-    question: "What if my gaffer never does toolbox talks?",
+    question: "What if my supervisor never does toolbox talks?",
     answer:
       "Politely ask. 'Can we run through today’s plan and the main hazards before we start?' is a normal, professional request. If they refuse repeatedly, that’s an issue you can raise with the firm’s safety lead, the principal contractor (on a CDM site), or your training provider. Working without briefings is working without a safe system of work — which puts YOU on the hook under HASAWA s.7 if anything goes wrong.",
   },
   {
     question: "If I refuse to work because the RAMS doesn’t match the site, can I be sacked?",
     answer:
-      "No — and you have specific legal protection. Section 44 of the Employment Rights Act 1996 protects you from detriment (sacking, loss of hours, disciplinary) for raising a genuine health and safety concern OR refusing work that you reasonably believe is unsafe. Note dates, names, what was said. Most disputes never get that far — most gaffers, when properly approached, will fix the issue.",
+      "No — and you have specific legal protection. Section 44 of the Employment Rights Act 1996 protects you from detriment (sacking, loss of hours, disciplinary) for raising a genuine health and safety concern OR refusing work that you reasonably believe is unsafe. Note dates, names, what was said. Most disputes never get that far — most supervisors, when properly approached, will fix the issue.",
   },
 ];
 
@@ -235,7 +235,7 @@ export default function Sub4() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>
@@ -395,7 +395,7 @@ export default function Sub4() {
           <ConceptBlock
             title="Reality has moved. The paperwork hasn’t. Now what?"
             plainEnglish="The moment you spot a divergence — extra hazard, missing kit, different layout, new occupants — the RAMS is no longer 'suitable and sufficient'. Continuing to work to it is working without a valid safe system of work. Your duty is to STOP and raise it."
-            onSite="This happens constantly. It’s not unusual or dramatic. Floor plan slightly different to the drawing. Gaffer hadn’t mentioned the new circuit. Cable route blocked by something that wasn’t there yesterday. The point isn’t to be paranoid — it’s to be calibrated. Small mismatches: flag them, get them noted, often the RAMS just gets a one-line addition. Big mismatches: stop, escalate, full Step 5 review."
+            onSite="This happens constantly. It’s not unusual or dramatic. Floor plan slightly different to the drawing. Supervisor hadn’t mentioned the new circuit. Cable route blocked by something that wasn’t there yesterday. The point isn’t to be paranoid — it’s to be calibrated. Small mismatches: flag them, get them noted, often the RAMS just gets a one-line addition. Big mismatches: stop, escalate, full Step 5 review."
           >
             <p>The mismatch action sequence:</p>
             <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
@@ -525,7 +525,7 @@ export default function Sub4() {
               That second one matters. Apprentices sometimes hesitate to push back because
               they’re worried about being seen as awkward or losing their position. The law is
               explicit: you’re protected. Note dates, names and what was said in case the
-              dispute escalates — but most don’t. Most gaffers, when properly approached
+              dispute escalates — but most don’t. Most supervisors, when properly approached
               ('I’m not happy with this for X reason — can we sort it before I carry on?'),
               will fix the issue.
             </p>
@@ -535,7 +535,7 @@ export default function Sub4() {
             title="Signing the toolbox-talk attendance sheet without actually listening"
             whatHappens={
               <>
-                Standard morning. Five sparks crowd round the gaffer in the cabin. The talk
+                Standard morning. Five electricians crowd round the supervisor in the cabin. The talk
                 covers six items including 'isolation point for the kitchen ring is in DB-3,
                 tagged red, key with the supervisor'. You’re half-asleep, you nod, you sign.
                 Three hours later you’re in the kitchen, you assume the local lighting circuit
@@ -563,7 +563,7 @@ export default function Sub4() {
                 Day three on a fit-out. You notice the RAMS lists a single isolation point for
                 the area you’re working in — but on site there are clearly two DBs, both
                 feeding the area. You think 'somebody must know' and crack on. You isolate the
-                one the gaffer pointed at. The other one is still live, feeding a circuit
+                one the supervisor pointed at. The other one is still live, feeding a circuit
                 you’re working on. You touch a 'dead' conductor that isn’t. Best case: you
                 jump. Worst case: front page of the local paper.
               </>
@@ -572,7 +572,7 @@ export default function Sub4() {
               <>
                 Speak up the moment you spot it. 'I’ve noticed there are two DBs feeding this
                 area — does the RAMS need updating?' is a five-second sentence. Apprentices
-                catch things experienced sparks have stopped seeing precisely BECAUSE they’re
+                catch things experienced electricians have stopped seeing precisely BECAUSE they’re
                 experienced. Your fresh eyes are a safety asset. The senior who tells you 'do
                 less talking and more working' isn’t a senior — they’re a problem. Note that
                 conversation in case anything later goes wrong.
@@ -581,7 +581,7 @@ export default function Sub4() {
           />
 
           <Scenario
-            title="Toolbox talk says 'isolate before drilling' — gaffer says 'just crack on, it’s only a sub-board'"
+            title="Toolbox talk says 'isolate before drilling' — supervisor says 'just crack on, it’s only a sub-board'"
             situation={
               <>
                 You’re on a small commercial fit-out, week two. This morning’s toolbox talk was
@@ -599,7 +599,7 @@ export default function Sub4() {
                 that was agreed at this morning’s TBT. Your reply: 'I get the time pressure,
                 but the morning brief said isolate first — happy to do this either way but
                 I’m not happy doing it without isolation. If we want to change the approach
-                can we update the RAMS / get the gaffer to authorise it formally?' If they
+                can we update the RAMS / get the supervisor to authorise it formally?' If they
                 push, escalate above them — your own employer, the principal contractor,
                 whoever signs your timesheet. While you wait, do something productive within
                 scope (prep the next pull, sort the cable, tidy). Note the conversation: time,

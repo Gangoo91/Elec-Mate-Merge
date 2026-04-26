@@ -214,7 +214,7 @@ export default function Sub6() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>
@@ -485,6 +485,106 @@ export default function Sub6() {
             </ul>
           </ConceptBlock>
 
+          <ConceptBlock
+            title="The galvanic series — which metal corrodes when paired with which"
+            plainEnglish="Metals can be ranked by how reactive they are. When two are connected through an electrolyte, the more reactive one becomes the sacrificial anode and corrodes first. The bigger the gap on the series, the faster it goes."
+            onSite="Why bonding clamps come in different metals. A copper-jaw clamp on a copper pipe = same metal, no cell, no problem. The same clamp on galvanised steel or aluminium = a few hundred millivolts of EMF, slow corrosion, eventual failure of the bond."
+          >
+            <p>
+              The galvanic series ranks metals from most reactive (most willing to give up
+              electrons and corrode) to least reactive ("noble"). A simplified electrician's
+              version, most-reactive at the top:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Magnesium</strong> — used as sacrificial anodes on water heaters and
+                buried steel pipework precisely because it's so reactive.
+              </li>
+              <li>
+                <strong>Zinc</strong> — the galvanising layer on steel and the cup of a
+                zinc-carbon battery. Sacrificial when paired with steel; corrodes preferentially
+                to protect the steel underneath.
+              </li>
+              <li>
+                <strong>Aluminium</strong> — corrodes when in contact with copper or stainless
+                steel; protects itself with an oxide layer until that's broken.
+              </li>
+              <li>
+                <strong>Mild / galvanised steel</strong> — the substrate metal in most structural
+                applications.
+              </li>
+              <li>
+                <strong>Lead, tin</strong> — relatively unreactive; lead is what survives in old
+                plumbing.
+              </li>
+              <li>
+                <strong>Copper, brass, bronze</strong> — bonding conductors, terminals.
+              </li>
+              <li>
+                <strong>Stainless steel, gold</strong> — least reactive of the common metals.
+              </li>
+            </ul>
+            <p>
+              Pair any two and the higher-up metal corrodes. The effect is small for adjacent
+              pairs (e.g. tin/lead) and dramatic for pairs from far apart (e.g. magnesium/copper).
+              That's why specifications get fussier the further apart the metals on the series.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="The hydrogen risk — why battery rooms need ventilation"
+            plainEnglish="Charging a lead-acid battery electrolyses some of the water in the electrolyte into hydrogen and oxygen gas. Both are released from the cell vents into the air around the battery. Hydrogen is explosive above 4% concentration in air."
+            onSite="Standby battery rooms in commercial buildings (UPS, fire-alarm panels, emergency lighting central battery systems) are designed with permanent natural or forced ventilation calculated against expected charging gassing rates. BS EN IEC 62485-2 sets the design rules. A small unventilated cupboard with a 24 V lead-acid bank inside is a real, documented cause of explosions."
+          >
+            <p>
+              The chemistry: when a lead-acid cell charges past about 2.4 V, the reaction can no
+              longer keep up and the surplus current electrolyses water in the electrolyte:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                At the negative plate: 2H⁺ + 2e⁻ → H₂ (hydrogen gas evolved).
+              </li>
+              <li>
+                At the positive plate: 2H₂O → O₂ + 4H⁺ + 4e⁻ (oxygen gas evolved).
+              </li>
+              <li>
+                The mixture is hydrogen and oxygen in a 2:1 ratio — chemically stoichiometric for
+                combustion. Once hydrogen reaches 4% by volume in air, an arc, spark or flame
+                ignites it explosively.
+              </li>
+            </ul>
+            <p>
+              Mitigation on a real install:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Ventilation</strong> — natural or forced airflow sized to keep hydrogen
+                concentration well below 1% (a quarter of the lower explosive limit, with margin).
+                BS EN IEC 62485-2 has the design formula.
+              </li>
+              <li>
+                <strong>No ignition sources</strong> in the battery enclosure or vent path. No
+                naked flames, no smoking, no switching arcs at battery terminals — switches and
+                contactors mounted outside the battery space.
+              </li>
+              <li>
+                <strong>Sealed (VRLA / AGM / gel) batteries</strong> — recombine hydrogen and
+                oxygen internally during normal charging, so they vent only on overcharge or
+                fault. Lower (but not zero) ventilation requirement.
+              </li>
+              <li>
+                <strong>PPE for service</strong> — splash-proof goggles, acid-resistant gloves,
+                eye-wash station within reach.
+              </li>
+            </ul>
+            <p>
+              EV traction packs and modern lithium battery banks have different chemistries with
+              different (often more dangerous) failure modes — thermal runaway, electrolyte fire.
+              The general rule is the same: respect what the chemistry can do, ventilate
+              appropriately, and follow the manufacturer's safety instructions to the letter.
+            </p>
+          </ConceptBlock>
+
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 522.5.3"
             clause="Materials liable to cause mutual or individual deterioration or hazardous degradation shall not be placed in contact with each other."
@@ -518,7 +618,7 @@ export default function Sub6() {
                 Use a clamp rated for the pipe material (bimetallic for copper-to-galvanised), or
                 clean the pipe back to bare metal, apply a corrosion-inhibiting compound, then
                 fit the clamp and shroud the joint. Document it in the install certificate so the
-                next periodic spark knows what's there.
+                next periodic electrician knows what's there.
               </>
             }
           />

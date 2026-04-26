@@ -40,7 +40,7 @@ import useSEO from '@/hooks/useSEO';
 const TITLE =
   'Environmental legislation and waste (EPA 1990, Hazardous Waste Regs, WEEE, GB CLP) | Level 2 Module 1.1.5 | Elec-Mate';
 const DESCRIPTION =
-  "An apprentice’s guide to environmental law on the tools. Why your van full of old tubes is regulated waste, who pays the fine when it isn’t, and the nine pictograms on the back of every solvent tin.";
+  "An apprentice’s guide to environmental law on site. Why your van full of old tubes is regulated waste, who pays the fine when it isn’t, and the nine pictograms on the back of every solvent tin.";
 
 /* ── Inline check questions (preserved — wired into stats/streaks) ── */
 
@@ -199,9 +199,9 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: "Why does environmental law care about a sparky? I’m not a chemical plant.",
+    question: "Why does environmental law care about an electrician? I’m not a chemical plant.",
     answer:
-      "Because a single van does more environmental damage than people think. A spark working full-time generates fluorescent tubes, LED drivers, dead batteries, copper offcuts, sealant tubes, contact cleaner, isopropyl alcohol, broken switchgear — most of it regulated. Multiply by 250,000 sparks in the UK and you’ve got a significant waste stream. The law treats your van as a mobile waste-producing site, same as a factory.",
+      "Because a single van does more environmental damage than people think. An electrician working full-time generates fluorescent tubes, LED drivers, dead batteries, copper offcuts, sealant tubes, contact cleaner, isopropyl alcohol, broken switchgear — most of it regulated. Multiply by 250,000 electricians in the UK and you’ve got a significant waste stream. The law treats your van as a mobile waste-producing site, same as a factory.",
   },
   {
     question: "What’s the difference between a transfer note and a consignment note?",
@@ -221,7 +221,7 @@ const faqs = [
   {
     question: "I’ve never seen a CLP pictogram tested in college. Why bother learning all nine?",
     answer:
-      "AC 4.1 of Unit 201 is explicit — you have to recognise the GB CLP pictograms. Beyond the assessment, every can of contact cleaner, sealant, primer, lubricant, paint, solvent and battery on your van has them on the label. Knowing what each one means is what stops you putting an oxidiser next to a flammable in a hot van in summer. That’s real-world COSHH applied through CLP labelling.",
+      "Recognising the GB CLP pictograms is on the syllabus for a reason — every can of contact cleaner, sealant, primer, lubricant, paint, solvent and battery on your van has them on the label. Knowing what each one means is what stops you putting an oxidiser next to a flammable in a hot van in summer. That’s real-world COSHH applied through CLP labelling.",
   },
   {
     question: "Site Waste Management Plans — aren’t those a thing of the past?",
@@ -240,7 +240,7 @@ export default function Sub5() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 1
           </button>
@@ -254,7 +254,7 @@ export default function Sub5() {
 
           <TLDR
             points={[
-              "Environmental Protection Act 1990 is the parent law. Section 34 = Duty of Care for waste. Breach it and the fine follows YOU, not just the gaffer.",
+              "Environmental Protection Act 1990 is the parent law. Section 34 = Duty of Care for waste. Breach it and the fine follows YOU, not just the supervisor.",
               "Anything with a plug, battery or circuit board is WEEE — segregated, recorded, only handed to a permitted recycler. Fluorescent tubes are hazardous waste because of the mercury.",
               "Nine GB CLP pictograms cover everything from flammable solvents to environmental hazards. They’re on every COSHH-controlled tin in the van — learn the lot.",
             ]}
@@ -271,12 +271,12 @@ export default function Sub5() {
             initialVisibleCount={3}
           />
 
-          <ContentEyebrow>Why environmental law matters on the tools</ContentEyebrow>
+          <ContentEyebrow>Why environmental law matters on site</ContentEyebrow>
 
           <ConceptBlock title="Fines aren’t just for oil spills — your van’s a mobile waste site">
             <p>
               People hear "environmental law" and picture an oil refinery. Reality is closer to home.
-              A working spark generates a steady stream of regulated waste every week — old
+              A working electrician generates a steady stream of regulated waste every week — old
               fluorescent tubes, dead emergency lights, smoke alarm packs, drill batteries, contact
               cleaner cans, sealant tubes, copper offcuts, PVC sleeve, broken switchgear. Most of it
               is covered by at least one of three regs: the{' '}
@@ -287,7 +287,7 @@ export default function Sub5() {
             <p>
               When the Environment Agency turns up at a fly-tipping site and finds three old
               consumer units in a layby, they don’t just trace the white van. They trace the boxes
-              back to the wholesaler invoice, then back to the firm, then to the spark who signed
+              back to the wholesaler invoice, then back to the firm, then to the electrician who signed
               the job sheet. That’s the Duty of Care chain in action — and it ends with whoever
               dropped the ball, not whoever did the dumping.
             </p>
@@ -305,14 +305,14 @@ export default function Sub5() {
           <ConceptBlock
             title="Environmental Protection Act 1990 — the umbrella"
             plainEnglish="The big environmental law in the UK. Most other waste and pollution regs sit underneath it. Section 33 makes illegal dumping an offence. Section 34 puts a Duty of Care on anyone who handles waste."
-            onSite="Every time the gaffer signs a transfer note for a skip pickup, that’s s.34 EPA being executed. Every time someone fly-tips and gets caught, that’s s.33."
+            onSite="Every time the supervisor signs a transfer note for a skip pickup, that’s s.34 EPA being executed. Every time someone fly-tips and gets caught, that’s s.33."
           >
             <p>
               The EPA is to environmental law what HASAWA is to safety law — the umbrella. It came
               in to clean up a patchwork of older Acts (Control of Pollution Act 1974, Public Health
               Acts) and put one general framework over the top.
             </p>
-            <p>The bits that matter on the tools:</p>
+            <p>The bits that matter on site:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 <strong>Section 33</strong> — offence to deposit, treat or dispose of controlled
@@ -325,7 +325,7 @@ export default function Sub5() {
                 sure it’s handled properly and only passed to an authorised person.
               </li>
               <li>
-                <strong>Section 79</strong> — statutory nuisance (noise, smoke, fumes, dust). Sparks
+                <strong>Section 79</strong> — statutory nuisance (noise, smoke, fumes, dust). Electricians
                 meet this when running gennies overnight or generating dust on a refurb.
               </li>
             </ul>
@@ -362,7 +362,7 @@ export default function Sub5() {
             <p>
               The Hazardous Waste (England and Wales) Regulations 2005 (and the Special Waste
               Regulations in Scotland) define a long list of waste types as "hazardous" using the
-              List of Wastes (LoW) codes. The ones a spark meets regularly:
+              List of Wastes (LoW) codes. The ones an electrician meets regularly:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -440,7 +440,7 @@ export default function Sub5() {
               "Producer Responsibility" — the person who first puts the kit on the UK market is on
               the hook for what happens at end of life.
             </p>
-            <p>WEEE is split into 14 categories. The ones a spark meets:</p>
+            <p>WEEE is split into 14 categories. The ones an electrician meets:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 <strong>Category 5 (lighting equipment)</strong> — fluorescent fittings, LED
@@ -460,7 +460,7 @@ export default function Sub5() {
               </li>
             </ul>
             <p>
-              For a spark, the practical impact:
+              For an electrician, the practical impact:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -482,7 +482,7 @@ export default function Sub5() {
             title="Refurb job: 200 old fluorescent tubes from a school strip-out"
             situation={
               <>
-                You and the gaffer are stripping out an old school office block — 200+ T8
+                You and the supervisor are stripping out an old school office block — 200+ T8
                 fluorescent fittings to come out, replace with LED panels. The skip’s in the
                 playground. Foreman from another trade says "stick the lot in there, mate, easier
                 that way".
@@ -606,7 +606,7 @@ export default function Sub5() {
           >
             <p>
               Copper prices move with global markets but clean copper has been worth roughly
-              £4–£7/kg over the last few years. A busy commercial spark generates several kilos a
+              £4–£7/kg over the last few years. A busy commercial electrician generates several kilos a
               week. That adds up.
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -732,7 +732,7 @@ export default function Sub5() {
 
           <ConceptBlock
             title="The nine hazard pictograms you need to know"
-            plainEnglish="GB CLP = Great Britain Classification, Labelling and Packaging Regulation. It’s the UK version of the global GHS (Globally Harmonised System). Nine red-bordered diamond pictograms cover every chemical hazard you’ll meet on the tools."
+            plainEnglish="GB CLP = Great Britain Classification, Labelling and Packaging Regulation. It’s the UK version of the global GHS (Globally Harmonised System). Nine red-bordered diamond pictograms cover every chemical hazard you’ll meet on site."
             onSite="Look at the back of the next can of contact cleaner you pick up. There’ll be one or two of these diamonds on the label. Each one tells you something specific you need to do — ventilation, gloves, no naked flame, lock it away from the oxidiser."
           >
             <p>
@@ -744,17 +744,17 @@ export default function Sub5() {
             <ul className="space-y-2 list-none pl-0">
               <li>
                 <strong>1. Exploding bomb (GHS01) — Explosive.</strong> Self-reactive substances,
-                explosives, organic peroxides. Rare on a sparky’s van but you’ll see it in some
+                explosives, organic peroxides. Rare on an electrician’s van but you’ll see it in some
                 aerosol propellants.
               </li>
               <li>
-                <strong>2. Flame (GHS02) — Flammable.</strong> The big one for sparks. Contact
+                <strong>2. Flame (GHS02) — Flammable.</strong> The big one for electricians. Contact
                 cleaner, IPA wipes, electrical solvents, some sealants. Means: keep away from heat,
                 sparks, open flames, hot surfaces.
               </li>
               <li>
                 <strong>3. Flame over circle (GHS03) — Oxidiser.</strong> Substances that release
-                oxygen and intensify fire. Less common on the tools but you’ll meet it on some
+                oxygen and intensify fire. Less common on site but you’ll meet it on some
                 industrial cleaners and pool chemicals.
               </li>
               <li>
@@ -769,7 +769,7 @@ export default function Sub5() {
               </li>
               <li>
                 <strong>6. Skull and crossbones (GHS06) — Acute toxic.</strong> Life-threatening
-                even at small doses (oral, dermal, inhalation). Less common on a spark’s tools but
+                even at small doses (oral, dermal, inhalation). Less common on an electrician’s tools but
                 you’ll see it on some specialist solvents and pesticides.
               </li>
               <li>
@@ -833,7 +833,7 @@ export default function Sub5() {
               <strong>Packaging (Essential Requirements) Regs 2015</strong>. The{' '}
               <strong>Site Waste Management Plan</strong> on a commercial job is how all of those
               get implemented in one place — colour-coded skips, named carriers, target percentages.
-              Your bit, on the tools, is the segregation at the point of generation.
+              Your bit, on site, is the segregation at the point of generation.
             </p>
             <p>
               And <strong>GB CLP</strong> sits across the top of all of it on the substance side —

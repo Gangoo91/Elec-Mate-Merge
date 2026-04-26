@@ -174,7 +174,7 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: "Do I really need to know about atoms to be a sparky?",
+    question: "Do I really need to know about atoms to be an electrician?",
     answer:
       "Not for ringing in a circuit, no. But you'll see this stuff again in I&T, in fault-finding and in your AM2 written paper — and it makes the rest of Module 2 click. Once you know that current = charge moving through a cable, voltage drop and I²R heating stop being abstract formulas.",
   },
@@ -215,7 +215,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 3
           </button>
@@ -412,7 +412,7 @@ export default function Sub1() {
             <p>
               They're not contradicting each other. They're equivalent — like describing a road as
               "north-bound" or "south-bound" depending on which side you're on. For everything
-              you'll do as a sparky, use conventional current and forget about the contradiction.
+              you'll do as an electrician, use conventional current and forget about the contradiction.
             </p>
           </ConceptBlock>
 
@@ -474,7 +474,7 @@ export default function Sub1() {
 
           <SectionRule />
 
-          <ContentEyebrow>Putting it together on the tools</ContentEyebrow>
+          <ContentEyebrow>Putting it together on site</ContentEyebrow>
 
           <CommonMistake
             title="Confusing 'voltage flowing' with 'current flowing'"

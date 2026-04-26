@@ -203,7 +203,7 @@ export default function Sub3() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -243,7 +243,7 @@ export default function Sub3() {
             <p>
               People sometimes ask “where does any of this lever/gear/pulley stuff come up in BS
               7671?” The honest answer: nowhere directly — and everywhere through the back door.
-              Three places it lands every week on the tools:
+              Three places it lands every week on site:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
@@ -464,6 +464,52 @@ export default function Sub3() {
               </>
             }
             cite="Source: LOLER 1998 (SI 1998/2307) — full text on legislation.gov.uk"
+          />
+
+          <RegsCallout
+            source="LOLER 1998 — Regulation 9 (Thorough examination and inspection)"
+            clause="Every employer shall ensure that lifting equipment which is exposed to conditions causing deterioration which is liable to result in dangerous situations is thoroughly examined — (a) at least every 6 months in the case of lifting equipment for lifting persons or an accessory for lifting; (b) at least every 12 months in any other case; or (c) in accordance with an examination scheme drawn up by a competent person."
+            meaning={
+              <>
+                Every chain block, sling, eye-bolt and pulley used to lift electrical kit must be
+                <strong> thoroughly examined</strong> on a fixed schedule by a competent person —
+                six-monthly for accessories, twelve-monthly for the lifting machine itself. Look
+                for the certificate / colour code before you trust any lifting gear on site. No
+                in-date paperwork = the gear doesn't get used, however well it looks.
+              </>
+            }
+            cite="Source: LOLER 1998 (SI 1998/2307) Regulation 9 — full text on legislation.gov.uk. Wording paraphrased."
+          />
+
+          <RegsCallout
+            source="PUWER 1998 — Provision and Use of Work Equipment Regulations, Regulation 4 (Suitability of work equipment)"
+            clause="Every employer shall ensure that work equipment is so constructed or adapted as to be suitable for the purpose for which it is used or provided. In selecting work equipment, every employer shall have regard to the working conditions and to the risks to the health and safety of persons which exist in the premises or undertaking in which it is to be used and any additional risk posed by the use of that work equipment."
+            meaning={
+              <>
+                Pliers, side cutters, torque wrenches, gearboxed cordless drills — all "work
+                equipment" under PUWER. The reg requires the right tool for the job, properly
+                maintained, with users instructed in safe use. A worn pair of side cutters used to
+                strip live SWA armour, or a broken torque wrench used on CU terminals, is a PUWER
+                breach as well as a quality issue. Inspect, maintain, replace.
+              </>
+            }
+            cite="Source: PUWER 1998 (SI 1998/2306) Regulation 4 — full text on legislation.gov.uk. Wording paraphrased."
+          />
+
+          <RegsCallout
+            source="WAHR 2005 — Work at Height Regulations, Regulation 10 (Falling objects)"
+            clause="Every employer shall, where necessary to prevent injury to any person, take suitable and sufficient steps to prevent, so far as is reasonably practicable, the fall of any material or object. Where it is not reasonably practicable to comply with the requirements above, every employer shall take suitable and sufficient steps to prevent any person being struck by any falling material or object which is liable to cause personal injury."
+            meaning={
+              <>
+                When pulleys and hoists are used to lift cable, kit or tools at height — running
+                70 mm² SWA up a four-storey riser, lifting a CU into a loft hatch — WAHR's
+                falling-object rule applies on top of LOLER. Exclusion zone below the lift, no-one
+                directly underneath, tool tethers on hand kit at the working level. Pulley
+                mechanics tell you the lift is feasible; WAHR tells you who has to be clear of
+                the load path while it happens.
+              </>
+            }
+            cite="Source: WAHR 2005 (SI 2005/735) Regulation 10 — full text on legislation.gov.uk. Wording paraphrased."
           />
 
           <InlineCheck

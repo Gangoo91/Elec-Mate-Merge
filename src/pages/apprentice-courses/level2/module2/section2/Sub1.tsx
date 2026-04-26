@@ -151,7 +151,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'Day-to-day, people say "weight" when they mean mass — and you won’t correct your gaffer on a Friday afternoon. But for an exam, a calc, or a lift plan involving force loads on brackets, get the language right.',
+      'Day-to-day, people say "weight" when they mean mass — and you won’t correct your supervisor on a Friday afternoon. But for an exam, a calc, or a lift plan involving force loads on brackets, get the language right.',
   },
   {
     id: 8,
@@ -215,7 +215,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 2
           </button>
@@ -247,7 +247,7 @@ export default function Sub1() {
             initialVisibleCount={3}
           />
 
-          <ContentEyebrow>Why a spark needs to know this</ContentEyebrow>
+          <ContentEyebrow>Why an electrician needs to know this</ContentEyebrow>
 
           <ConceptBlock
             title="It matters the moment you lift, fix or carry anything"

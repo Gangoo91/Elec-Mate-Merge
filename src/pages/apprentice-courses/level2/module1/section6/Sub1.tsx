@@ -50,7 +50,7 @@ const checks = [
     ],
     correctIndex: 2,
     explanation:
-      'Isolation comes before everything. While the current’s flowing, he’s a live conductor. Touching him puts you in the circuit and the gaffer ends up with two casualties instead of one. Drop the supply first, then assess, then call 999.',
+      'Isolation comes before everything. While the current’s flowing, he’s a live conductor. Touching him puts you in the circuit and the supervisor ends up with two casualties instead of one. Drop the supply first, then assess, then call 999.',
   },
   {
     id: 'dr-abc-order-check',
@@ -113,7 +113,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question: 'Why is "isolate first, treat second" drilled into every spark from day one?',
+    question: 'Why is "isolate first, treat second" drilled into every electrician from day one?',
     options: [
       'It looks more professional',
       'A live casualty is a live conductor — touch them and you join the circuit',
@@ -239,7 +239,7 @@ export default function Sub1() {
         <PageFrame>
           <button
             onClick={() => navigate('..')}
-            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+            className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Section 6
           </button>
@@ -617,7 +617,7 @@ export default function Sub1() {
               <>
                 Hand-to-hand across the chest at 230 V is the textbook fibrillation path. The
                 person who turns up second is the one who decides whether it stays at one
-                casualty or becomes two. You earn your place on the tools by being the
+                casualty or becomes two. You earn your place on site by being the
                 second-in who gets it right.
               </>
             }
