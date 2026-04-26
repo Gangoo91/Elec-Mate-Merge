@@ -29,8 +29,7 @@ import {
 import { ConsumerUnit } from '@/components/study-centre/diagrams';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE =
-  'Protective device applications | Level 2 Module 3.3.4 (AC 3.4) | Elec-Mate';
+const TITLE = 'Protective device applications | Level 2 Module 3.3.4 (AC 3.4) | Elec-Mate';
 const DESCRIPTION =
   'BS 88 fuses, MCBs (Type B/C/D), RCBOs, RCDs (Type AC/A/F/B), AFDDs and SPDs (Type 1/2/3) — what each protective device does and where BS 7671 says it goes.';
 
@@ -48,7 +47,12 @@ const checks = [
     id: 'rcd-type-check',
     question:
       'A modern EV charger or solar PV inverter draws a residual current with DC components. Which RCD type is appropriate at the AC side?',
-    options: ['Type AC', 'Type A (with 6 mA DC tolerance)', 'Type B (full DC sensitivity)', 'No RCD required'],
+    options: [
+      'Type AC',
+      'Type A (with 6 mA DC tolerance)',
+      'Type B (full DC sensitivity)',
+      'No RCD required',
+    ],
     correctIndex: 2,
     explanation:
       'Type B RCDs are sensitive to AC, pulsing DC and smooth DC residual currents. Required where the load can produce smooth DC fault currents the upstream RCD wouldn’t see — EV chargers without internal Type A+6 mA DC detection, large PV inverters, variable speed drives. Type A handles AC + pulsing DC + small (6 mA) DC.',
@@ -72,8 +76,7 @@ const checks = [
 const quizQuestions = [
   {
     id: 1,
-    question:
-      'A BS 88 series HRC fuse has its main advantage over a BS EN 60898 MCB in:',
+    question: 'A BS 88 series HRC fuse has its main advantage over a BS EN 60898 MCB in:',
     options: [
       'Lower cost per unit',
       'Higher breaking capacity (typically 80 kA+ vs 6–10 kA for domestic MCBs)',
@@ -86,8 +89,7 @@ const quizQuestions = [
   },
   {
     id: 2,
-    question:
-      'A BS EN 60898 Type C MCB has its magnetic trip threshold at:',
+    question: 'A BS EN 60898 Type C MCB has its magnetic trip threshold at:',
     options: ['3 to 5 × In', '5 to 10 × In', '10 to 20 × In', '20 to 50 × In'],
     correctAnswer: 1,
     explanation:
@@ -95,8 +97,7 @@ const quizQuestions = [
   },
   {
     id: 3,
-    question:
-      'An RCBO (BS EN 61009-1) provides:',
+    question: 'An RCBO (BS EN 61009-1) provides:',
     options: [
       'Overload protection only',
       'Earth-fault protection only',
@@ -123,8 +124,7 @@ const quizQuestions = [
   },
   {
     id: 5,
-    question:
-      'A Type 1 SPD installed at the origin of an installation primarily protects against:',
+    question: 'A Type 1 SPD installed at the origin of an installation primarily protects against:',
     options: [
       'Switching transients within the building',
       'Direct lightning strike currents (10/350 µs waveform) and equipotential bonding',
@@ -165,8 +165,7 @@ const quizQuestions = [
   },
   {
     id: 8,
-    question:
-      'BS 7671 443.4.1 requires SPD protection where:',
+    question: 'BS 7671 443.4.1 requires SPD protection where:',
     options: [
       'It’s always optional',
       'The consequence of an overvoltage could result in serious injury, loss of life, failure of a safety service, or significant financial / data loss',
@@ -181,34 +180,35 @@ const quizQuestions = [
 
 const faqs = [
   {
-    question: "Why are RCBOs replacing the old ‘RCD-protected dual-bank’ consumer unit?",
+    question: 'Why are RCBOs replacing the old ‘RCD-protected dual-bank’ consumer unit?',
     answer:
-      "Old design — a single 30 mA RCD protects half the circuits; a fault on any one circuit trips ALL of them. Customer comes home to no fridge, no freezer, no lights on half the house, just because the bathroom shaver socket had a transient. RCBOs put the 30 mA RCD on each circuit individually — a fault on one circuit only kills that one circuit. Required for compliance with 314.1 (minimise inconvenience) and increasingly the standard spec for new builds and rewires.",
+      'Old design — a single 30 mA RCD protects half the circuits; a fault on any one circuit trips ALL of them. Customer comes home to no fridge, no freezer, no lights on half the house, just because the bathroom shaver socket had a transient. RCBOs put the 30 mA RCD on each circuit individually — a fault on one circuit only kills that one circuit. Required for compliance with 314.1 (minimise inconvenience) and increasingly the standard spec for new builds and rewires.',
   },
   {
-    question: "What’s the deal with Type B RCDs and EV chargers?",
+    question: 'What’s the deal with Type B RCDs and EV chargers?',
     answer:
-      "Modern EV chargers can produce smooth DC residual currents under fault — the on-board electronics rectify AC into DC for the battery. A standard Type AC or Type A RCD gets ‘blinded’ by the DC and won’t trip on a real fault. Two solutions: (1) install an upstream Type B RCD (full DC sensitivity), or (2) use a charger with built-in 6 mA DC residual current detection that lets you keep a Type A on the supply side. The charger manual will tell you which option applies.",
+      'Modern EV chargers can produce smooth DC residual currents under fault — the on-board electronics rectify AC into DC for the battery. A standard Type AC or Type A RCD gets ‘blinded’ by the DC and won’t trip on a real fault. Two solutions: (1) install an upstream Type B RCD (full DC sensitivity), or (2) use a charger with built-in 6 mA DC residual current detection that lets you keep a Type A on the supply side. The charger manual will tell you which option applies.',
   },
   {
-    question: "When does an AFDD ‘earn its keep’ vs just adding cost?",
+    question: 'When does an AFDD ‘earn its keep’ vs just adding cost?',
     answer:
-      "AFDDs detect arc faults — the kind of low-current chattering arc you get from a damaged cable insulation, loose terminal or rodent-chewed lead. RCDs don’t see these (no earth path); MCBs don’t see them (current is below trip threshold). Arc faults are a leading cause of electrical fires. In a sleeping-occupancy building (HRRB, student accommodation, care home), the time between arc start and fire is long enough that an AFDD trip can save lives. That’s why 421.1.7 mandates them in those buildings specifically.",
+      'AFDDs detect arc faults — the kind of low-current chattering arc you get from a damaged cable insulation, loose terminal or rodent-chewed lead. RCDs don’t see these (no earth path); MCBs don’t see them (current is below trip threshold). Arc faults are a leading cause of electrical fires. In a sleeping-occupancy building (HRRB, student accommodation, care home), the time between arc start and fire is long enough that an AFDD trip can save lives. That’s why 421.1.7 mandates them in those buildings specifically.',
   },
   {
-    question: "Type 1 + 2 vs Type 2 SPD — which do I install?",
+    question: 'Type 1 + 2 vs Type 2 SPD — which do I install?',
     answer:
-      "Type 1 + 2 (or just Type 1 followed by Type 2) at the origin if the building has external lightning protection (LPS) or is exposed to direct strikes. Type 2 alone at the origin if there’s no LPS and lightning isn’t a major concern (most domestic and small-commercial). Type 3 is downstream, near sensitive equipment, as a final clamp. Reg 534.4.1.1 names the layout — Type 1 OR Type 2 at the origin; Type 2 OR Type 3 close to sensitive equipment.",
+      'Type 1 + 2 (or just Type 1 followed by Type 2) at the origin if the building has external lightning protection (LPS) or is exposed to direct strikes. Type 2 alone at the origin if there’s no LPS and lightning isn’t a major concern (most domestic and small-commercial). Type 3 is downstream, near sensitive equipment, as a final clamp. Reg 534.4.1.1 names the layout — Type 1 OR Type 2 at the origin; Type 2 OR Type 3 close to sensitive equipment.',
   },
   {
-    question: "Why is BS 3036 still in BS 7671 if it’s old technology?",
+    question: 'Why is BS 3036 still in BS 7671 if it’s old technology?',
     answer:
-      "Existing installs. There are still Victorian housing stock, lock-up garages and farm outbuildings with original BS 3036 rewireable fuses on the DB. BS 7671 has to accommodate them when you’re working on the existing circuit. The Cf = 0.725 derating in Sub3 is the BS 7671 mechanism for keeping cables compliant when a BS 3036 fuse is the protective device. New install? Always BS EN 60898 / 61009. BS 3036 is legacy-only.",
+      'Existing installs. There are still Victorian housing stock, lock-up garages and farm outbuildings with original BS 3036 rewireable fuses on the DB. BS 7671 has to accommodate them when you’re working on the existing circuit. The Cf = 0.725 derating in Sub3 is the BS 7671 mechanism for keeping cables compliant when a BS 3036 fuse is the protective device. New install? Always BS EN 60898 / 61009. BS 3036 is legacy-only.',
   },
   {
-    question: "How do I tell the difference between an MCB and an RCBO at a glance in the consumer unit?",
+    question:
+      'How do I tell the difference between an MCB and an RCBO at a glance in the consumer unit?',
     answer:
-      "Three things. (1) Width — RCBOs are usually slightly wider than MCBs (often 18 mm vs 17.5 mm) and may take up two slots or one wider slot. (2) Test button — RCBOs have a small test button (T) on the face; MCBs don’t. (3) Label — RCBOs are marked with a residual current symbol and the trip current (e.g., ‘30 mA Type A’) on the body. If in doubt, look at the model number against the manufacturer’s catalogue.",
+      'Three things. (1) Width — RCBOs are usually slightly wider than MCBs (often 18 mm vs 17.5 mm) and may take up two slots or one wider slot. (2) Test button — RCBOs have a small test button (T) on the face; MCBs don’t. (3) Label — RCBOs are marked with a residual current symbol and the trip current (e.g., ‘30 mA Type A’) on the body. If in doubt, look at the model number against the manufacturer’s catalogue.',
   },
 ];
 
@@ -268,20 +268,20 @@ export default function Sub4() {
             <p>Defining characteristics:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Breaking capacity</strong>: typically 50 kA to 100 kA, well beyond the
-                6 to 10 kA of domestic MCBs. Essential where prospective fault current is high.
+                <strong>Breaking capacity</strong>: typically 50 kA to 100 kA, well beyond the 6 to
+                10 kA of domestic MCBs. Essential where prospective fault current is high.
               </li>
               <li>
                 <strong>Inverse time / current</strong>: fast on heavy faults, slow on small
                 overloads. Designed to coordinate with downstream MCBs (selectivity).
               </li>
               <li>
-                <strong>Sacrificial</strong>: blown fuse must be replaced — no resetting. Pros:
-                no contact wear, very compact. Cons: stock spares, replacement requires isolation.
+                <strong>Sacrificial</strong>: blown fuse must be replaced — no resetting. Pros: no
+                contact wear, very compact. Cons: stock spares, replacement requires isolation.
               </li>
               <li>
-                <strong>Series rating</strong>: gG (general purpose), gM (motor circuit), aM
-                (motor circuit, no overload protection — must be paired with an overload device).
+                <strong>Series rating</strong>: gG (general purpose), gM (motor circuit), aM (motor
+                circuit, no overload protection — must be paired with an overload device).
               </li>
             </ul>
           </ConceptBlock>
@@ -315,8 +315,8 @@ export default function Sub4() {
               <strong>Trade-off</strong>: the higher the magnetic trip threshold, the lower the
               maximum permitted Zs (earth-fault loop impedance) for thermal disconnection in the
               required time. A Type D MCB needs a much lower Zs than a Type B at the same In to
-              ensure ADS in 0.4 s. Designers balance load type against earthing system to choose
-              the right Type.
+              ensure ADS in 0.4 s. Designers balance load type against earthing system to choose the
+              right Type.
             </p>
           </ConceptBlock>
 
@@ -326,9 +326,9 @@ export default function Sub4() {
             meaning={
               <>
                 Translation: BS 7671 names the device families that ‘count’ for overcurrent
-                protection — BS 88 series, BS 3036 rewireable fuses (legacy), BS EN 60898 MCBs,
-                BS EN 60947-2 industrial breakers and BS EN 61009-1 RCBOs. Anything else has to
-                prove equivalent time/current performance.
+                protection — BS 88 series, BS 3036 rewireable fuses (legacy), BS EN 60898 MCBs, BS
+                EN 60947-2 industrial breakers and BS EN 61009-1 RCBOs. Anything else has to prove
+                equivalent time/current performance.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Regulation 533.1.1."
@@ -357,8 +357,8 @@ export default function Sub4() {
               </li>
               <li>
                 <strong>Type-A as standard</strong> — modern RCBOs are predominantly Type A,
-                catching pulsing DC residuals from LED drivers and switching power supplies that
-                a Type AC misses.
+                catching pulsing DC residuals from LED drivers and switching power supplies that a
+                Type AC misses.
               </li>
               <li>
                 <strong>Fits the AFDD-RCBO combo</strong> — many manufacturers now offer combined
@@ -392,9 +392,9 @@ export default function Sub4() {
                 single-phase variable speed drives.
               </li>
               <li>
-                <strong>Type B</strong> — AC + pulsing DC + smooth DC residual currents.
-                Required for installations with smooth DC fault potential (EV chargers without
-                internal 6 mA DC monitoring, large PV inverters, three-phase VSDs).
+                <strong>Type B</strong> — AC + pulsing DC + smooth DC residual currents. Required
+                for installations with smooth DC fault potential (EV chargers without internal 6 mA
+                DC monitoring, large PV inverters, three-phase VSDs).
               </li>
             </ul>
             <p>
@@ -409,11 +409,11 @@ export default function Sub4() {
             clause="In AC installations having RCDs that are intended to be operated by ordinary persons, the RCDs shall comply with: (a) BS EN 61008 series for Type AC and Type A RCCBs; or (b) BS EN 61009 series for Type AC and Type A RCBOs; or (c) BS EN 62423 for Type F and Type B RCCBs and RCBOs; or (d) BS 7288 for Type AC and Type A SRCDs and FCURCDs."
             meaning={
               <>
-                Translation: the RCD must be of a recognised standard for the Type chosen — Type
-                AC and Type A under BS EN 61008/61009, Type F and Type B under BS EN 62423.
-                ‘Ordinary persons’ = users who aren’t electrically skilled, which is almost
-                everyone you install for. Industrial installs with skilled operators have
-                slightly different rules in 531.3.5 onwards.
+                Translation: the RCD must be of a recognised standard for the Type chosen — Type AC
+                and Type A under BS EN 61008/61009, Type F and Type B under BS EN 62423. ‘Ordinary
+                persons’ = users who aren’t electrically skilled, which is almost everyone you
+                install for. Industrial installs with skilled operators have slightly different
+                rules in 531.3.5 onwards.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Regulation 531.3.4.1."
@@ -425,9 +425,9 @@ export default function Sub4() {
             meaning={
               <>
                 Headline domestic rule: every socket-outlet with In ≤ 32 A in a dwelling must have
-                30 mA RCD additional protection. Non-dwellings can omit it ONLY if a documented
-                risk assessment concludes it’s not necessary — and you’d better be able to defend
-                that assessment.
+                30 mA RCD additional protection. Non-dwellings can omit it ONLY if a documented risk
+                assessment concludes it’s not necessary — and you’d better be able to defend that
+                assessment.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Regulation 411.3.3."
@@ -447,18 +447,18 @@ export default function Sub4() {
             <p>What an AFDD detects that other devices don’t:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Series arc faults</strong> — a loose terminal or fractured strand.
-                Current draw stays normal; an MCB never trips. No earth path; an RCD never trips.
-                Heat builds locally → fire.
+                <strong>Series arc faults</strong> — a loose terminal or fractured strand. Current
+                draw stays normal; an MCB never trips. No earth path; an RCD never trips. Heat
+                builds locally → fire.
               </li>
               <li>
                 <strong>Parallel arc faults</strong> — between line and neutral inside damaged
-                cable. Current may be limited by carbon tracking, well below MCB instantaneous
-                trip threshold.
+                cable. Current may be limited by carbon tracking, well below MCB instantaneous trip
+                threshold.
               </li>
               <li>
-                <strong>Earth arc faults</strong> — line to earth via degraded insulation. RCD
-                MAY trip but not always (intermittent, low residual, < 30 mA).
+                <strong>Earth arc faults</strong> — line to earth via degraded insulation. RCD MAY
+                trip but not always (intermittent, low residual, &lt; 30 mA).
               </li>
             </ul>
             <p>
@@ -475,8 +475,8 @@ export default function Sub4() {
               <>
                 Hard requirement in four building categories — HRRBs, HMOs, student accommodation
                 and care homes — for socket-outlet final circuits ≤ 32 A. Strong recommendation
-                everywhere else. Expect this to become a hard requirement across more building
-                types in future amendments.
+                everywhere else. Expect this to become a hard requirement across more building types
+                in future amendments.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7 (as revised in A4:2026)."
@@ -496,19 +496,19 @@ export default function Sub4() {
             <p>The three SPD types by application:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Type 1</strong> — direct lightning current (10/350 µs waveform). Used at
-                the origin of installations with external lightning protection (LPS), or
-                exposed buildings (rural, hilltop, farms with overhead lines).
+                <strong>Type 1</strong> — direct lightning current (10/350 µs waveform). Used at the
+                origin of installations with external lightning protection (LPS), or exposed
+                buildings (rural, hilltop, farms with overhead lines).
               </li>
               <li>
                 <strong>Type 2</strong> — induced / indirect surge (8/20 µs waveform). Standard
-                origin device for buildings without direct strike risk. Most domestic /
-                commercial installs.
+                origin device for buildings without direct strike risk. Most domestic / commercial
+                installs.
               </li>
               <li>
                 <strong>Type 3</strong> — point-of-use, fine clamping near sensitive equipment.
-                Server cabinets, audio-visual racks, medical equipment. Coordinated downstream
-                of Type 1 or 2.
+                Server cabinets, audio-visual racks, medical equipment. Coordinated downstream of
+                Type 1 or 2.
               </li>
             </ul>
             <p>
@@ -524,8 +524,8 @@ export default function Sub4() {
               <>
                 The SPD requirement has expanded. Three mandatory cases — life safety, safety
                 services, significant financial / data loss. ALL other cases also require SPDs
-                UNLESS the owner declares acceptance of the risk in writing. Effectively, default
-                is now ‘fit SPDs’ unless the customer opts out on paper.
+                UNLESS the owner declares acceptance of the risk in writing. Effectively, default is
+                now ‘fit SPDs’ unless the customer opts out on paper.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Regulation 443.4.1."
@@ -536,10 +536,10 @@ export default function Sub4() {
             clause="Where SPDs are required: (a) SPDs installed at the origin of the electrical installation shall be Type 1 or Type 2; (b) SPDs installed close to sensitive equipment to further protect against switching transients originating within the building shall be Type 2 or Type 3."
             meaning={
               <>
-                Translation of placement: at the origin → Type 1 OR Type 2. Close to sensitive
-                kit → Type 2 OR Type 3. The note in the regulation also points out that Type 1
-                SPDs are equipotential bonding SPDs — they alone won’t protect sensitive
-                electronics; Type 2 / 3 downstream is needed for that.
+                Translation of placement: at the origin → Type 1 OR Type 2. Close to sensitive kit →
+                Type 2 OR Type 3. The note in the regulation also points out that Type 1 SPDs are
+                equipotential bonding SPDs — they alone won’t protect sensitive electronics; Type 2
+                / 3 downstream is needed for that.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 — Regulation 534.4.1.1."
@@ -554,21 +554,20 @@ export default function Sub4() {
             whatHappens={
               <>
                 The wholesaler had Type AC RCBOs on shelf and they were cheaper than Type A. You
-                fitted them. Customer’s LED downlight drivers and laptop chargers all produce
-                small pulsing DC residuals — under 6 mA each, but cumulatively enough to ‘blind’
-                the Type AC RCBO. Six months in, you get a callback for an intermittent socket
-                fault. The Type AC isn’t tripping on a real fault because the DC component has
-                desensitised it. The fault current is leaking to earth via somebody’s exposed-
-                conductive-part — and the RCD that should protect them isn’t doing its job.
+                fitted them. Customer’s LED downlight drivers and laptop chargers all produce small
+                pulsing DC residuals — under 6 mA each, but cumulatively enough to ‘blind’ the Type
+                AC RCBO. Six months in, you get a callback for an intermittent socket fault. The
+                Type AC isn’t tripping on a real fault because the DC component has desensitised it.
+                The fault current is leaking to earth via somebody’s exposed- conductive-part — and
+                the RCD that should protect them isn’t doing its job.
               </>
             }
             doInstead={
               <>
-                Type A as the absolute minimum for new domestic installs. Costs a few quid more
-                per RCBO, completely defensible against modern equipment. Type AC is now
-                effectively deprecated — most manufacturers have stopped offering it for
-                domestic-spec consumer units. If you need to retrofit, swap out Type AC for
-                Type A on first opportunity.
+                Type A as the absolute minimum for new domestic installs. Costs a few quid more per
+                RCBO, completely defensible against modern equipment. Type AC is now effectively
+                deprecated — most manufacturers have stopped offering it for domestic-spec consumer
+                units. If you need to retrofit, swap out Type AC for Type A on first opportunity.
               </>
             }
           />
@@ -578,32 +577,31 @@ export default function Sub4() {
             situation={
               <>
                 You’re sub-contracted on a rewire of a 4-storey HMO converted from a Victorian
-                terrace. The main contractor’s schedule of materials lists 18 standard Type A
-                RCBOs and a Type 2 SPD. Customer expects to move tenants back in next week. You
-                spot the building is clearly in scope of Reg 421.1.7 (HMO, sleeping
-                accommodation) — every socket circuit needs an AFDD.
+                terrace. The main contractor’s schedule of materials lists 18 standard Type A RCBOs
+                and a Type 2 SPD. Customer expects to move tenants back in next week. You spot the
+                building is clearly in scope of Reg 421.1.7 (HMO, sleeping accommodation) — every
+                socket circuit needs an AFDD.
               </>
             }
             whatToDo={
               <>
-                Stop and flag. AFDDs aren’t optional in an HMO — 421.1.7 is a hard requirement
-                for socket-outlet final circuits ≤ 32 A. Two practical options. (1) Order
-                combined AFDD/RCBO modules to swap in for the 18 RCBOs (compact, one slot per
-                circuit, fully compliant). (2) Order separate AFDDs (some manufacturers offer
-                them as 1-module add-ons upstream of an RCBO) — needs more DB space. Either
-                way, the rewire CAN’T be signed off as compliant without them. Better to delay
-                the tenant move-in by a week than to issue a non-compliant EIC and have to
-                re-pull the work later.
+                Stop and flag. AFDDs aren’t optional in an HMO — 421.1.7 is a hard requirement for
+                socket-outlet final circuits ≤ 32 A. Two practical options. (1) Order combined
+                AFDD/RCBO modules to swap in for the 18 RCBOs (compact, one slot per circuit, fully
+                compliant). (2) Order separate AFDDs (some manufacturers offer them as 1-module
+                add-ons upstream of an RCBO) — needs more DB space. Either way, the rewire CAN’T be
+                signed off as compliant without them. Better to delay the tenant move-in by a week
+                than to issue a non-compliant EIC and have to re-pull the work later.
               </>
             }
             whyItMatters={
               <>
-                AFDDs aren’t a nice-to-have in HRRBs / HMOs / student accommodation / care homes
-                — they’re a regulatory requirement under 421.1.7 (revised in A4:2026). Tenants
-                in HMO-style sleeping accommodation are the highest-risk demographic for
-                electrical fires (long hours asleep, often-unfamiliar electrics, sometimes
-                damaged equipment). The reg exists for a reason. Sign off non-compliant work
-                and your name is on the EIC when the worst happens.
+                AFDDs aren’t a nice-to-have in HRRBs / HMOs / student accommodation / care homes —
+                they’re a regulatory requirement under 421.1.7 (revised in A4:2026). Tenants in
+                HMO-style sleeping accommodation are the highest-risk demographic for electrical
+                fires (long hours asleep, often-unfamiliar electrics, sometimes damaged equipment).
+                The reg exists for a reason. Sign off non-compliant work and your name is on the EIC
+                when the worst happens.
               </>
             }
           />
@@ -627,7 +625,10 @@ export default function Sub4() {
             ]}
           />
 
-          <Quiz title="Protective device applications — knowledge check" questions={quizQuestions} />
+          <Quiz
+            title="Protective device applications — knowledge check"
+            questions={quizQuestions}
+          />
 
           <div className="grid grid-cols-2 gap-3 pt-2">
             <button

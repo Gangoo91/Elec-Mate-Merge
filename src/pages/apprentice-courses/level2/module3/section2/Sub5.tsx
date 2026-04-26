@@ -186,13 +186,13 @@ const quizQuestions = [
       'You have walked the install with the drawing pack open, ticked off every accessory location, cross-checked the schedule of accessories against the layout, and checked the cable schedule against the board configuration. The pack is consistent. What is the LAST thing to check before you start lifting tools?',
     options: [
       'Nothing — the pack is consistent, you are good',
-      'Confirm safe isolation procedure for the supply, check the RAMS for any site-specific hazards, and confirm with your supervisor what the day\'s priorities are',
+      "Confirm safe isolation procedure for the supply, check the RAMS for any site-specific hazards, and confirm with your supervisor what the day's priorities are",
       'Order all the materials',
       'Take photos for the as-built',
     ],
     correctAnswer: 1,
     explanation:
-      'The drawing pack tells you WHAT goes where; the RAMS tells you HOW to do it safely on this specific site, and safe isolation is non-negotiable before any work on an existing supply. Confirming the day\'s priorities with your supervisor stops you starting on something the gang has already moved past. Drawing prep is one job; site prep is the next.',
+      "The drawing pack tells you WHAT goes where; the RAMS tells you HOW to do it safely on this specific site, and safe isolation is non-negotiable before any work on an existing supply. Confirming the day's priorities with your supervisor stops you starting on something the gang has already moved past. Drawing prep is one job; site prep is the next.",
   },
 ];
 
@@ -217,7 +217,7 @@ const faqs = [
   {
     question: 'What if a manufacturer data sheet is missing from the pack?',
     answer:
-      'Raise an RFI. Reg 526.1 makes following the manufacturer\'s instructions a regulation requirement (terminations, torques, mounting orientation, terminal capacities). Without the data sheet you cannot meet that requirement reliably. The designer or main contractor should issue the missing sheet — do not start commissioning the device without it.',
+      "Raise an RFI. Reg 526.1 makes following the manufacturer's instructions a regulation requirement (terminations, torques, mounting orientation, terminal capacities). Without the data sheet you cannot meet that requirement reliably. The designer or main contractor should issue the missing sheet — do not start commissioning the device without it.",
   },
   {
     question: 'I see "DO NOT SCALE FROM DRAWING" in the title block. Now what?',
@@ -280,8 +280,8 @@ export default function Sub5() {
               Sub 2.1 mapped the document hierarchy — BS 7671, OSG, GN3, manufacturer instructions,
               spec, RAMS, scheme bulletins, drawings. Sub 2.2 introduced the six drawing types —
               block, schematic, wiring, circuit, layout, as-built — and what each one is for. Sub
-              2.3 gave you the BS EN 60617 / IEC 60617 graphical symbol set, the visual alphabet
-              for every UK installation drawing. Sub 2.4 covered scale notation and the conversion
+              2.3 gave you the BS EN 60617 / IEC 60617 graphical symbol set, the visual alphabet for
+              every UK installation drawing. Sub 2.4 covered scale notation and the conversion
               between paper and real dimensions, with the do-not-scale rule for resized prints.
             </p>
             <p>
@@ -291,9 +291,9 @@ export default function Sub5() {
               deliberate wrinkles to show how an electrician handles real-world inconsistencies.
             </p>
             <p className="text-[13px] text-white/75 italic">
-              Tool-bag thread: this is the prep that happens BEFORE you go to site. Two hours
-              spent reading the pack properly saves a day on site. Skipping it is what makes
-              first-fixes drag and drives the snag list at handover.
+              Tool-bag thread: this is the prep that happens BEFORE you go to site. Two hours spent
+              reading the pack properly saves a day on site. Skipping it is what makes first-fixes
+              drag and drives the snag list at handover.
             </p>
           </ConceptBlock>
 
@@ -309,9 +309,9 @@ export default function Sub5() {
             <p>The Hawthorn pack contains:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Sheet 01 — Front sheet.</strong> Project name, plot number, drawing
-                register (a list of every sheet in the pack), revision history table, scale legend,
-                title block, general notes.
+                <strong>Sheet 01 — Front sheet.</strong> Project name, plot number, drawing register
+                (a list of every sheet in the pack), revision history table, scale legend, title
+                block, general notes.
               </li>
               <li>
                 <strong>Sheet 02 — Ground-floor layout.</strong> Scale 1:50. Every socket, switch,
@@ -361,19 +361,17 @@ export default function Sub5() {
             plainEnglish="The front sheet sets the context. Read it first, every time. Skip it and you risk working from the wrong revision or the wrong scale."
             onSite="The most common cause of expensive rework on a fit-out is somebody working from a superseded drawing. Two minutes on the revision history saves it."
           >
-            <p>
-              The front sheet has five things you must look at before opening any other sheet:
-            </p>
+            <p>The front sheet has five things you must look at before opening any other sheet:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
                 <strong>Project name + plot reference.</strong> Confirms the pack matches the job
-                you are on. "The Hawthorn / Plot 14 / Greenacres Phase 2" — does that match the
-                site address you were given?
+                you are on. "The Hawthorn / Plot 14 / Greenacres Phase 2" — does that match the site
+                address you were given?
               </li>
               <li>
-                <strong>Drawing register.</strong> A list of every sheet that should be in the
-                pack. Count the sheets you have actually been handed. Missing one? Raise it before
-                lifting tools.
+                <strong>Drawing register.</strong> A list of every sheet that should be in the pack.
+                Count the sheets you have actually been handed. Missing one? Raise it before lifting
+                tools.
               </li>
               <li>
                 <strong>Revision history.</strong> A table showing every revision issued, the date,
@@ -382,8 +380,8 @@ export default function Sub5() {
               </li>
               <li>
                 <strong>Scale legend.</strong> Confirms which scale the layouts are at (1:50 here),
-                and whether different sheets use different scales (sometimes a site plan is at
-                1:200 alongside floor plans at 1:50).
+                and whether different sheets use different scales (sometimes a site plan is at 1:200
+                alongside floor plans at 1:50).
               </li>
               <li>
                 <strong>General notes.</strong> Project-specific instructions that apply across the
@@ -415,49 +413,28 @@ export default function Sub5() {
               twelve outgoing ways:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>
-                Cct 1 — Lighting downstairs, 6 A Type B RCBO, 30 mA Type A.
-              </li>
-              <li>
-                Cct 2 — Lighting upstairs, 6 A Type B RCBO, 30 mA Type A.
-              </li>
-              <li>
-                Cct 3 — Sockets downstairs ring final, 32 A Type B RCBO, 30 mA Type A.
-              </li>
-              <li>
-                Cct 4 — Sockets upstairs ring final, 32 A Type B RCBO, 30 mA Type A.
-              </li>
-              <li>
-                Cct 5 — Kitchen ring final, 32 A Type B RCBO, 30 mA Type A.
-              </li>
-              <li>
-                Cct 6 — Cooker / hob, 32 A Type B RCBO, 30 mA Type A.
-              </li>
-              <li>
-                Cct 7 — Shower, 40 A Type B RCBO, 30 mA Type A.
-              </li>
-              <li>
-                Cct 8 — Boiler / heating, 6 A Type B RCBO, 30 mA Type A.
-              </li>
-              <li>
-                Cct 9 — Smoke detectors (mains-linked), 6 A Type B RCBO, 30 mA Type A.
-              </li>
+              <li>Cct 1 — Lighting downstairs, 6 A Type B RCBO, 30 mA Type A.</li>
+              <li>Cct 2 — Lighting upstairs, 6 A Type B RCBO, 30 mA Type A.</li>
+              <li>Cct 3 — Sockets downstairs ring final, 32 A Type B RCBO, 30 mA Type A.</li>
+              <li>Cct 4 — Sockets upstairs ring final, 32 A Type B RCBO, 30 mA Type A.</li>
+              <li>Cct 5 — Kitchen ring final, 32 A Type B RCBO, 30 mA Type A.</li>
+              <li>Cct 6 — Cooker / hob, 32 A Type B RCBO, 30 mA Type A.</li>
+              <li>Cct 7 — Shower, 40 A Type B RCBO, 30 mA Type A.</li>
+              <li>Cct 8 — Boiler / heating, 6 A Type B RCBO, 30 mA Type A.</li>
+              <li>Cct 9 — Smoke detectors (mains-linked), 6 A Type B RCBO, 30 mA Type A.</li>
               <li>
                 Cct 10 — EV charge point feed, 32 A Type B RCBO, 30 mA Type A + Type B (per spec).
               </li>
-              <li>
-                Cct 11 — Outdoor sockets / garden, 16 A Type B RCBO, 30 mA Type A.
-              </li>
+              <li>Cct 11 — Outdoor sockets / garden, 16 A Type B RCBO, 30 mA Type A.</li>
               <li>
                 Cct 12 — Spare way (no circuit yet — common on new builds for future expansion).
               </li>
             </ul>
             <p>
               The schematic also shows the MET, the earthing conductor route to the cut-out, the
-              main protective bonding conductors out to gas and water (10 mm² on PME), and any
-              SPDs (surge protection devices). The single-line view tells you the WHOLE story of
-              the board in one diagram. Memorise this layout before you start at the CU on day
-              one.
+              main protective bonding conductors out to gas and water (10 mm² on PME), and any SPDs
+              (surge protection devices). The single-line view tells you the WHOLE story of the
+              board in one diagram. Memorise this layout before you start at the CU on day one.
             </p>
           </ConceptBlock>
 
@@ -476,19 +453,19 @@ export default function Sub5() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>Lounge:</strong> 4 twin sockets (one per wall), 1-gang 1-way switch by
-                door, pendant ceiling rose centre, TV outlet next to chimney breast.
+                <strong>Lounge:</strong> 4 twin sockets (one per wall), 1-gang 1-way switch by door,
+                pendant ceiling rose centre, TV outlet next to chimney breast.
               </li>
               <li>
-                <strong>Hall:</strong> 1-gang 2-way switch by front door (paired with switch at
-                top of stairs), pendant rose, smoke detector ceiling-mounted, doorbell push by
-                door, 1 twin socket under stairs.
+                <strong>Hall:</strong> 1-gang 2-way switch by front door (paired with switch at top
+                of stairs), pendant rose, smoke detector ceiling-mounted, doorbell push by door, 1
+                twin socket under stairs.
               </li>
               <li>
                 <strong>Kitchen-diner:</strong> 5 twin sockets above worktops, 1 FCU 13 A switched
                 for the boiler, 1 FCU 3 A switched for the extractor, cooker outlet (32 A radial),
-                pendant rose over dining table, 6 downlighters over the kitchen run, 1-gang
-                2-way switch by each door (paired across the room).
+                pendant rose over dining table, 6 downlighters over the kitchen run, 1-gang 2-way
+                switch by each door (paired across the room).
               </li>
               <li>
                 <strong>Utility:</strong> 1 twin socket, 1 FCU 13 A switched for the washing
@@ -500,14 +477,14 @@ export default function Sub5() {
                 downlighter (IP-rated for zone), shaver socket on the wall.
               </li>
               <li>
-                <strong>External:</strong> 1 IP-rated twin socket on the rear wall (Cct 11),
-                EV charge point on the front wall (Cct 10), porch light over the front door.
+                <strong>External:</strong> 1 IP-rated twin socket on the rear wall (Cct 11), EV
+                charge point on the front wall (Cct 10), porch light over the front door.
               </li>
             </ul>
             <p>
               Cross-check each one against the schematic — every accessory should belong to one of
-              the twelve circuits. Anything orphaned (a socket the schematic does not feed) is a
-              red flag — raise an RFI.
+              the twelve circuits. Anything orphaned (a socket the schematic does not feed) is a red
+              flag — raise an RFI.
             </p>
           </ConceptBlock>
 
@@ -520,26 +497,40 @@ export default function Sub5() {
               scale rule on the 1:50 face you measure:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
-              <li>CU to first kitchen socket: <strong>4.6 m</strong></li>
-              <li>Socket 1 → Socket 2 (along worktop): <strong>1.2 m</strong></li>
-              <li>Socket 2 → Socket 3: <strong>1.6 m</strong></li>
-              <li>Socket 3 → FCU (boiler): <strong>0.8 m</strong></li>
-              <li>FCU → Socket 4: <strong>1.4 m</strong></li>
-              <li>Socket 4 → Socket 5 (return leg): <strong>2.4 m</strong></li>
-              <li>Socket 5 back to CU (closing the ring): <strong>5.2 m</strong></li>
+              <li>
+                CU to first kitchen socket: <strong>4.6 m</strong>
+              </li>
+              <li>
+                Socket 1 → Socket 2 (along worktop): <strong>1.2 m</strong>
+              </li>
+              <li>
+                Socket 2 → Socket 3: <strong>1.6 m</strong>
+              </li>
+              <li>
+                Socket 3 → FCU (boiler): <strong>0.8 m</strong>
+              </li>
+              <li>
+                FCU → Socket 4: <strong>1.4 m</strong>
+              </li>
+              <li>
+                Socket 4 → Socket 5 (return leg): <strong>2.4 m</strong>
+              </li>
+              <li>
+                Socket 5 back to CU (closing the ring): <strong>5.2 m</strong>
+              </li>
             </ul>
             <p>
               Sum: 4.6 + 1.2 + 1.6 + 0.8 + 1.4 + 2.4 + 5.2 = <strong>17.2 m</strong> straight-line
-              wall distance. Add ~15% for skirting follow, vertical drops into back-boxes, slack
-              at terminations and the route up over a doorframe: ~19.8 m. Round up to{' '}
+              wall distance. Add ~15% for skirting follow, vertical drops into back-boxes, slack at
+              terminations and the route up over a doorframe: ~19.8 m. Round up to{' '}
               <strong>21 m</strong> on the take-off — gives a small safety margin. Repeat for every
               circuit and you have a full cable take-off in about an hour.
             </p>
             <p className="text-[13px] text-white/75 italic">
               Sanity check on the maths: 1:50 means 1 cm paper = 0.5 m real. 4.6 m direct from the
-              CU to the first socket reads as 9.2 cm on the rule when set to the 1:50 face — and
-              the rule's scale face has those numbers printed as real metres, not paper millimetres.
-              The rule does the conversion for you. Multiplying by 50 again is the classic
+              CU to the first socket reads as 9.2 cm on the rule when set to the 1:50 face — and the
+              rule's scale face has those numbers printed as real metres, not paper millimetres. The
+              rule does the conversion for you. Multiplying by 50 again is the classic
               double-conversion mistake.
             </p>
           </ConceptBlock>
@@ -561,28 +552,27 @@ export default function Sub5() {
             plainEnglish="The schedules turn the visual layouts into ordering lists. Cross-reference both against the layouts — every accessory should appear on both."
           >
             <p>
-              <strong>Schedule of accessories</strong> (sheet 05) lists every visible fitting:
-              type, manufacturer reference (per spec), mounting height, IP rating, finish.
-              Example row:
+              <strong>Schedule of accessories</strong> (sheet 05) lists every visible fitting: type,
+              manufacturer reference (per spec), mounting height, IP rating, finish. Example row:
             </p>
             <p className="bg-white/[0.04] border border-white/10 rounded-lg p-3 text-[13.5px]">
-              <strong>K-S-03:</strong> Twin switched socket, MK Logic Plus white moulded, 450 mm
-              to centre, IP2X, kitchen worktop wall, fed from Cct 5.
+              <strong>K-S-03:</strong> Twin switched socket, MK Logic Plus white moulded, 450 mm to
+              centre, IP2X, kitchen worktop wall, fed from Cct 5.
             </p>
             <p>
-              <strong>Cable schedule</strong> (sheet 06) lists every cable run: circuit number,
-              csa, type, OCPD rating, RCD type, estimated length, route notes. Example row:
+              <strong>Cable schedule</strong> (sheet 06) lists every cable run: circuit number, csa,
+              type, OCPD rating, RCD type, estimated length, route notes. Example row:
             </p>
             <p className="bg-white/[0.04] border border-white/10 rounded-lg p-3 text-[13.5px]">
-              <strong>Cct 5:</strong> Kitchen ring final. 2.5/1.5 mm² T&E flat twin and earth.
-              32 A Type B RCBO, 30 mA Type A. Estimated total length 21 m. Route: from CU through
+              <strong>Cct 5:</strong> Kitchen ring final. 2.5/1.5 mm² T&E flat twin and earth. 32 A
+              Type B RCBO, 30 mA Type A. Estimated total length 21 m. Route: from CU through
               under-stair void → kitchen wall via skirting → loops through 5 sockets and 2 FCUs →
               returns to CU via same route.
             </p>
             <p>
               Cross-check rule: every accessory on the schedule should appear on the layout, and
-              every accessory on the layout should appear on the schedule. Counts do not match?
-              That is exactly the RFI in InlineCheck 3 below.
+              every accessory on the layout should appear on the schedule. Counts do not match? That
+              is exactly the RFI in InlineCheck 3 below.
             </p>
           </ConceptBlock>
 
@@ -605,15 +595,15 @@ export default function Sub5() {
           >
             <p>
               The Hawthorn legend covers about 25 symbols — the everyday set you met in Sub 2.3.
-              Switches (1G/1W, 1G/2W, 2G/2W, intermediate, pull-cord), socket-outlets (single,
-              twin, switched, FCU 13 A, FCU 3 A, cooker outlet, shaver), lighting (pendant rose,
+              Switches (1G/1W, 1G/2W, 2G/2W, intermediate, pull-cord), socket-outlets (single, twin,
+              switched, FCU 13 A, FCU 3 A, cooker outlet, shaver), lighting (pendant rose,
               downlighter, batten, wall light, emergency luminaire), accessories (smoke detector,
               heat detector, doorbell push, MET), protective devices on the schematic only (MCB,
               RCD, RCBO with rating + trip curve markings).
             </p>
             <p>
-              Read the legend BEFORE the layouts. It is faster than guessing every symbol the
-              first time.
+              Read the legend BEFORE the layouts. It is faster than guessing every symbol the first
+              time.
             </p>
           </ConceptBlock>
 
@@ -625,8 +615,8 @@ export default function Sub5() {
                 The regulation that anchors everything in this Sub. Drawings need to use the
                 applicable standards — IEC 60617 for graphical symbols, BS EN 60073 / 60446 for
                 notices. A drawing pack with home-made symbols, missing legend entries, or
-                non-standard scale notation does not comply with 514.9.2 and is an RFI back to
-                the designer. Your job on site is to spot that and flag it, not to guess.
+                non-standard scale notation does not comply with 514.9.2 and is an RFI back to the
+                designer. Your job on site is to spot that and flag it, not to guess.
               </>
             }
             cite="Source: BS 7671:2018+A4:2026 Part 5, Regulation 514.9.2 (paraphrased — full A4:2026 wording in the published amendment)"
@@ -647,7 +637,9 @@ export default function Sub5() {
               <li>Board layout — which way numbers go on which busbar segment.</li>
               <li>Terminal capacities — minimum and maximum csa each terminal accepts.</li>
               <li>Torque settings — line, neutral and earth terminals separately specified.</li>
-              <li>RCBO compatibility list — which makes / models are compatible with this board.</li>
+              <li>
+                RCBO compatibility list — which makes / models are compatible with this board.
+              </li>
               <li>Maximum cable count per terminal — most are 1 or 2 conductors max.</li>
               <li>Conformity standards (BS EN 61439-3 typically for domestic CUs).</li>
             </ul>
@@ -674,7 +666,9 @@ export default function Sub5() {
 
           <SectionRule />
 
-          <ContentEyebrow>The discrepancy — what an apprentice does when paper does not match paper</ContentEyebrow>
+          <ContentEyebrow>
+            The discrepancy — what an apprentice does when paper does not match paper
+          </ContentEyebrow>
 
           <ConceptBlock
             title="The kitchen socket count — layout says six, schedule says eight"
@@ -696,18 +690,17 @@ export default function Sub5() {
             <p className="bg-white/[0.04] border border-white/10 rounded-lg p-3 text-[13.5px] italic">
               "RFI 014 — The Hawthorn / Plot 14 / Cct 5 (Kitchen Ring). Drawing 02 Rev D shows 6
               twin sockets + 1 FCU 13 A (boiler) + 1 FCU 3 A (extractor). Schedule of accessories
-              sheet 05 Rev D lists 6 twin sockets + 1 FCU 13 A (boiler) + 1 FCU 3 A (extractor) +
-              1 additional twin socket described as 'under-cupboard transformer feed'. The
-              additional socket does not appear on drawing 02. Please confirm whether the
-              additional socket is required and, if so, the position. Awaiting written response
-              before first-fix."
+              sheet 05 Rev D lists 6 twin sockets + 1 FCU 13 A (boiler) + 1 FCU 3 A (extractor) + 1
+              additional twin socket described as 'under-cupboard transformer feed'. The additional
+              socket does not appear on drawing 02. Please confirm whether the additional socket is
+              required and, if so, the position. Awaiting written response before first-fix."
             </p>
             <p>
               The reply (whatever it is) becomes part of the project record. If it turns out the
-              extra socket WAS supposed to be there and the layout was wrong, you have written
-              proof you asked. If it turns out the schedule was wrong and there is no extra socket,
-              you have written proof you did not over-install. Either way, the cost of the RFI is
-              an email; the cost of guessing wrong is a strip-out at handover.
+              extra socket WAS supposed to be there and the layout was wrong, you have written proof
+              you asked. If it turns out the schedule was wrong and there is no extra socket, you
+              have written proof you did not over-install. Either way, the cost of the RFI is an
+              email; the cost of guessing wrong is a strip-out at handover.
             </p>
           </ConceptBlock>
 
@@ -719,20 +712,20 @@ export default function Sub5() {
             title="Working from a superseded revision"
             whatHappens={
               <>
-                Two prints of the same drawing are sat on the foreman's desk — Rev C and Rev D.
-                The apprentice grabs the cleaner-looking one (Rev C, because nobody has spilt
-                coffee on it yet) and starts working from it. Rev D moved a sub-main and added a
-                new circuit; the apprentice misses both. Two weeks later when the inspector walks
-                the install, the discrepancy comes out and a chunk of the work has to be redone.
+                Two prints of the same drawing are sat on the foreman's desk — Rev C and Rev D. The
+                apprentice grabs the cleaner-looking one (Rev C, because nobody has spilt coffee on
+                it yet) and starts working from it. Rev D moved a sub-main and added a new circuit;
+                the apprentice misses both. Two weeks later when the inspector walks the install,
+                the discrepancy comes out and a chunk of the work has to be redone.
               </>
             }
             doInstead={
               <>
-                Make checking the revision letter the first thing you do on every new sheet —
-                front sheet revision history first, then each individual sheet's title block.
-                Latest revision wins, every time. Mark older copies "VOID" or destroy them so
-                nobody else picks them up. If you find a revision that postdates the front-sheet
-                revision history, raise an RFI — the pack itself is inconsistent.
+                Make checking the revision letter the first thing you do on every new sheet — front
+                sheet revision history first, then each individual sheet's title block. Latest
+                revision wins, every time. Mark older copies "VOID" or destroy them so nobody else
+                picks them up. If you find a revision that postdates the front-sheet revision
+                history, raise an RFI — the pack itself is inconsistent.
               </>
             }
           />
@@ -743,19 +736,19 @@ export default function Sub5() {
               <>
                 The drawing has been printed at A4 from a PDF that was originally A1, with
                 "fit-to-page" selected at the printer dialog. The scale rule reads 60 mm where the
-                named dimension says 4250. The apprentice trusts the rule, orders cable based on
-                the rule's reading, and ends up 30% short.
+                named dimension says 4250. The apprentice trusts the rule, orders cable based on the
+                rule's reading, and ends up 30% short.
               </>
             }
             doInstead={
               <>
-                When the rule disagrees with named dimensions, the print is the problem — trust
-                the named dimensions. They are text and survive resizing. If the title block says
-                "DO NOT SCALE FROM DRAWING", stop scaling immediately and use only named
-                dimensions. If you really need to scale (no named dimensions for what you are
-                measuring), get the drawing reprinted at full scale or check the same measurement
-                against a known feature (a standard door is ~900 mm wide, a standard worktop is
-                600 mm deep — sanity-check against those).
+                When the rule disagrees with named dimensions, the print is the problem — trust the
+                named dimensions. They are text and survive resizing. If the title block says "DO
+                NOT SCALE FROM DRAWING", stop scaling immediately and use only named dimensions. If
+                you really need to scale (no named dimensions for what you are measuring), get the
+                drawing reprinted at full scale or check the same measurement against a known
+                feature (a standard door is ~900 mm wide, a standard worktop is 600 mm deep —
+                sanity-check against those).
               </>
             }
           />
@@ -764,37 +757,36 @@ export default function Sub5() {
             title="Plot 14 day one — what the apprentice actually does"
             situation={
               <>
-                You arrive on site on first-fix Monday morning at Plot 14. You have the full
-                drawing pack you have been studying for the last two days. The plot is at
-                first-fix carcassing stage — joists exposed on the upstairs ceiling, dot-and-dab
-                not yet on the walls, supply available at the temporary builder's board near the
-                cut-out. Your supervisor points at the kitchen and says "you do that today, ring
-                final and the cooker, I'll be back at lunch."
+                You arrive on site on first-fix Monday morning at Plot 14. You have the full drawing
+                pack you have been studying for the last two days. The plot is at first-fix
+                carcassing stage — joists exposed on the upstairs ceiling, dot-and-dab not yet on
+                the walls, supply available at the temporary builder's board near the cut-out. Your
+                supervisor points at the kitchen and says "you do that today, ring final and the
+                cooker, I'll be back at lunch."
               </>
             }
             whatToDo={
               <>
                 Open the pack on the floor. Front sheet first — confirm Rev D matches the prints.
-                Schematic next — confirm Cct 5 (kitchen ring) and Cct 6 (cooker) feed from RCBO
-                ways 5 and 6 on the CU schematic. Layout (sheet 02) — walk to each kitchen
-                position and chalk the back-box centre on the wall (or stud) at the spec'd
-                height (450 mm to centre). Schedule of accessories — confirm the make/finish you
-                were told to use is what arrived from the merchant. Cable schedule — confirm 2.5
-                T&E for the ring, 6.0 T&E for the cooker. Manufacturer data sheet — note the CU
-                terminal torques and conductor capacity for when you get to second-fix. Discover
-                the kitchen socket count discrepancy (six on layout vs eight on schedule), text
-                or call the supervisor before chalking the extra back-box, raise an RFI in
-                writing as soon as practical. Then start carcassing the runs you ARE confident
-                about.
+                Schematic next — confirm Cct 5 (kitchen ring) and Cct 6 (cooker) feed from RCBO ways
+                5 and 6 on the CU schematic. Layout (sheet 02) — walk to each kitchen position and
+                chalk the back-box centre on the wall (or stud) at the spec'd height (450 mm to
+                centre). Schedule of accessories — confirm the make/finish you were told to use is
+                what arrived from the merchant. Cable schedule — confirm 2.5 T&E for the ring, 6.0
+                T&E for the cooker. Manufacturer data sheet — note the CU terminal torques and
+                conductor capacity for when you get to second-fix. Discover the kitchen socket count
+                discrepancy (six on layout vs eight on schedule), text or call the supervisor before
+                chalking the extra back-box, raise an RFI in writing as soon as practical. Then
+                start carcassing the runs you ARE confident about.
               </>
             }
             whyItMatters={
               <>
                 Most of an apprentice's reputation in year one comes from the small things — not
                 guessing, asking the right questions, leaving a paper trail. Reading the pack
-                properly before you lift a tool is the single biggest thing you can do to
-                separate yourself from the apprentices who arrive on Friday with a snag list
-                because they did not read the schedules.
+                properly before you lift a tool is the single biggest thing you can do to separate
+                yourself from the apprentices who arrive on Friday with a snag list because they did
+                not read the schedules.
               </>
             }
           />
@@ -809,7 +801,7 @@ export default function Sub5() {
             points={[
               'A typical UK domestic drawing pack is 8-12 sheets: front sheet, layouts (1:50), single-line schematic, schedules of accessories and cables, symbol legend, manufacturer data sheets. Read in that order.',
               'Front sheet first — every time. Project name, drawing register, revision history, scale legend, general notes. Skip it and you will work from the wrong revision.',
-              'Schematic gives you the system's logic in one diagram. Layouts give you positions in BS EN 60617 / IEC 60617 symbols. Schedules turn both into ordering lists.',
+              "Schematic gives you the system's logic in one diagram. Layouts give you positions in BS EN 60617 / IEC 60617 symbols. Schedules turn both into ordering lists.",
               'Use a scale rule on the matching face — read real metres directly. Multiplying by the scale denominator on top of that is the classic double-conversion mistake.',
               'Discrepancies between any two designer documents are an RFI in writing, not a guess. The cost of asking is an email. The cost of guessing wrong is a strip-out at handover.',
               'Reg 514.9.2 (A4:2026) requires diagrams to comply with applicable standards. Reg 526.1 makes manufacturer terminal instructions a regulation requirement. Both back you up when you raise pack quality issues.',
