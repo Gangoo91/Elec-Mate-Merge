@@ -1,3 +1,10 @@
+/**
+ * Module 1 · Section 1 · Subsection 2 — The Electricity at Work Regulations 1989
+ * City &amp; Guilds 2365-02 → Unit 201 → LO1 → AC 1.1
+ *   "identify roles and responsibilities with regard to current relevant
+ *    Health and Safety legislation" (electrical-specific tier under HASAWA)
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -187,7 +194,7 @@ const faqs = [
   {
     question: "I’ve heard 'absolute' and 'reasonably practicable' used about EAWR — what’s the deal?",
     answer:
-      "EAWR is a mix. Reg 4 (the big one — systems, work activities, equipment) is mostly absolute. No excuses, no balancing. Most of the others (Regs 5–15) are 'reasonably practicable' — you balance the risk against the time, money and effort of fixing it. The absolute bits are why electrical work is treated more strictly than general site safety.",
+      "EAWR is a mix. Reg 4(1) and 4(2) (systems built safe, systems kept safe) are absolute — no excuses, no balancing. So are Regs 5, 7 and 8 (strength/capability, insulation, earthing). Most of the others — including Reg 4(3), Reg 4(4), and Regs 12–16 — are 'reasonably practicable', so you balance the risk against the time, money and effort of fixing it. The absolute bits are why electrical work is treated more strictly than general site safety.",
   },
   {
     question: 'Who actually enforces EAWR?',
@@ -271,7 +278,7 @@ export default function Sub2() {
           </ConceptBlock>
 
           <RegsCallout
-            source="EAWR 1989 — duty-holders"
+            source="EAWR 1989 — duty-holders (paraphrased)"
             clause="It is the duty of every duty-holder to comply with the provisions of these Regulations in so far as they relate to matters that are within their control."
             meaning={
               <>
@@ -282,7 +289,7 @@ export default function Sub2() {
                 doing what you haven’t.
               </>
             }
-            cite="Source: HSE — Electricity at Work Regulations 1989, Reg 3"
+            cite="Verbatim wording paraphrased — see HSE Electricity at Work Regulations 1989, Regulation 3 for the full text."
           />
 
           <SectionRule />
@@ -302,14 +309,15 @@ export default function Sub2() {
             <p>
               The big absolute ones in EAWR are <strong>Reg 4(1)</strong> (systems shall be of such
               construction as to prevent danger) and <strong>Reg 4(2)</strong> (systems shall be
-              maintained to prevent danger). Most of the others (Regs 5–15) are "reasonably
-              practicable", but a few — like the requirement to wear suitable PPE in Reg 4(4) — are
-              also absolute.
+              maintained to prevent danger). <strong>Regs 5, 7 and 8</strong> (strength and
+              capability of equipment, insulation, and earthing or other suitable precautions) are
+              also absolute. Most of the others — including Reg 4(3), Reg 4(4) and Regs 12–16 —
+              are qualified by "so far as is reasonably practicable".
             </p>
             <p>
               Bottom line: when somebody on site tells you "we don’t have to do that, it’s only
-              reasonably practicable" — about prove-dead, about isolation, about Reg 4 — they’re
-              wrong. Some of these duties don’t bend.
+              reasonably practicable" — about prove-dead, about isolation, about Reg 4(1) or 4(2) —
+              they’re wrong. Some of these duties don’t bend (HSE HSR25).
             </p>
           </ConceptBlock>
 
@@ -327,22 +335,25 @@ export default function Sub2() {
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>4(1) — Construction:</strong> any system at work has to be built so it can
-                prevent danger. That covers your installation, your CU, your tails, the lot.
+                <strong>4(1) — Construction (absolute):</strong> any system at work has to be built
+                so as to prevent danger. That covers your installation, your CU, your tails, the
+                lot.
               </li>
               <li>
-                <strong>4(2) — Maintenance:</strong> the system has to be maintained, as far as
-                reasonably practicable, to keep preventing danger. PAT testing, EICRs and routine
-                checks all sit under this.
+                <strong>4(2) — Maintenance (absolute):</strong> the system has to be maintained so
+                as to prevent danger. PAT testing, EICRs and routine checks all sit under this.
               </li>
               <li>
-                <strong>4(3) — Work activities:</strong> any work near a system has to be done in a
-                way that doesn’t cause danger. This is where safe isolation and dead-working sit.
+                <strong>4(3) — Work activities (reasonably practicable):</strong> any work activity
+                — including work near a system — has to be carried out in a way that doesn’t give
+                rise to danger, so far as is reasonably practicable. This is where safe isolation
+                and dead-working sit.
               </li>
               <li>
-                <strong>4(4) — Protective equipment:</strong> any PPE provided has to be suitable,
-                kept in good condition and properly used. Insulated tools, voltage indicators,
-                gloves — all in scope.
+                <strong>4(4) — Protective equipment (reasonably practicable):</strong> any PPE
+                provided for the purposes of complying with these Regulations has to be suitable,
+                maintained and properly used. Insulated tools, voltage indicators, gloves — all in
+                scope.
               </li>
             </ul>
             <p>
@@ -656,7 +667,7 @@ export default function Sub2() {
           <KeyTakeaways
             points={[
               "EAWR 1989 was made under HASAWA s.15. It’s statute — break it and you can be in court. Almost every electrical safety prosecution is brought under EAWR.",
-              "Reg 4 is the big one: systems built safe (4.1), maintained safe (4.2), worked on safely (4.3), with suitable PPE (4.4). Mostly absolute duties.",
+              "Reg 4 is the big one: systems built safe (4.1), maintained safe (4.2), worked on safely (4.3), with suitable PPE (4.4). 4(1) and 4(2) are absolute; 4(3) and 4(4) are reasonably practicable.",
               "Reg 13 = stay dead. Once you’ve isolated, the equipment has to stay isolated for the duration. Lock + label + prove-dead at the point of work.",
               "Reg 14 = live working is the rare exception, not the default. Three tests, all three have to be met, with documented justification.",
               "Reg 16 = competence. Skilled person OR instructed person OR suitable supervision. As an apprentice you’re an instructed person — fine for what you’ve been shown, supervised for the rest.",

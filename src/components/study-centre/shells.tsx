@@ -134,6 +134,8 @@ interface SectionShellProps {
   nextSectionHref?: string;
   nextSectionLabel?: string;
   children: ReactNode;
+  aboveGrid?: ReactNode;
+  belowGrid?: ReactNode;
 }
 
 export function SectionShell({
@@ -151,6 +153,8 @@ export function SectionShell({
   nextSectionHref,
   nextSectionLabel,
   children,
+  aboveGrid,
+  belowGrid,
 }: SectionShellProps) {
   const navigate = useNavigate();
   return (
@@ -164,6 +168,7 @@ export function SectionShell({
         description={description}
         tone={tone}
       />
+      {aboveGrid}
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-3 px-0.5">
           <Eyebrow>Subsections</Eyebrow>
@@ -178,6 +183,8 @@ export function SectionShell({
           {children}
         </div>
       </div>
+
+      {belowGrid}
 
       {(prevSectionHref || nextSectionHref) && (
         <div className="grid grid-cols-2 gap-3 pt-2">
@@ -233,6 +240,8 @@ interface ModuleShellProps {
   nextModuleHref?: string;
   nextModuleLabel?: string;
   children: ReactNode;
+  aboveGrid?: ReactNode;
+  belowGrid?: ReactNode;
 }
 
 export function ModuleShell({
@@ -249,6 +258,8 @@ export function ModuleShell({
   nextModuleHref,
   nextModuleLabel,
   children,
+  aboveGrid,
+  belowGrid,
 }: ModuleShellProps) {
   const navigate = useNavigate();
   return (
@@ -262,6 +273,7 @@ export function ModuleShell({
         description={description}
         tone={tone}
       />
+      {aboveGrid}
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-3 px-0.5">
           <Eyebrow>Sections</Eyebrow>
@@ -276,6 +288,8 @@ export function ModuleShell({
           {children}
         </div>
       </div>
+
+      {belowGrid}
 
       {/* Prev/next module nav — shown when adjacent modules exist */}
       {(prevModuleHref || nextModuleHref) && (

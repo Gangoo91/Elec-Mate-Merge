@@ -66,6 +66,45 @@ export default function Module1() {
       sectionsCount={sections.length}
       nextModuleHref="../module2"
       nextModuleLabel="Principles of electrical science"
+      aboveGrid={
+        <div className="max-w-3xl space-y-3 pt-2">
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Module 1 is the foundation under everything else you’ll learn. Before
+            you sink a back box, terminate a single core or pick up a meter, the
+            trade has decided you have to know how to keep yourself, your mate
+            and the customer alive — and how to recognise when you’re about to
+            stop doing that. Around 30 sparks a year die at work in the UK and
+            the regs you’ll meet here are written in the lessons paid for by
+            those names.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            <span className="text-white font-medium">Section 1</span> covers the
+            UK legal floor — HASAWA, EAWR and the supporting regs that shape
+            every job.{' '}
+            <span className="text-white font-medium">Section 2</span> walks
+            through the hazards themselves — shock, burns, faults, fire, falls,
+            confined spaces, manual handling.{' '}
+            <span className="text-white font-medium">Section 3</span> turns
+            those hazards into paperwork that controls them — risk assessments,
+            method statements, hierarchy of control, RAMS on site.{' '}
+            <span className="text-white font-medium">Section 4</span> covers
+            PPE, GS38 test gear and the daily safe-working habits that make the
+            regs into a working day.{' '}
+            <span className="text-white font-medium">Section 5</span> is the
+            single most important habit on the tools — safe isolation, prove–
+            test–prove, lock-off, and where it goes wrong.{' '}
+            <span className="text-white font-medium">Section 6</span> closes
+            with what to do when something does go wrong — first response,
+            first aid, RIDDOR, fire and the wider workplace emergencies.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            By the end of Module 1 you’ll be able to identify a hazard, write a
+            RAMS to control it, isolate live equipment safely, and respond when
+            something goes wrong — the four moves that keep you, your mate and
+            your customer alive on every job for the rest of your career.
+          </p>
+        </div>
+      }
     >
       {sections.map((section, index) => (
         <SectionCard

@@ -55,6 +55,42 @@ export default function Section2() {
       prevSectionLabel="UK health and safety legislation"
       nextSectionHref="../section3"
       nextSectionLabel="Risk assessment and method statements"
+      aboveGrid={
+        <div className="max-w-3xl space-y-3 pt-2">
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Section 1 told you the regs exist. Section 2 walks through the
+            hazards those regs are written to control — the actual things on a
+            UK building site that hurt people. Every Sub here is a hazard you
+            will meet within your first six months on the tools, told plainly,
+            with the numbers behind why the protective devices in BS 7671 are
+            sized the way they are.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            <span className="text-white font-medium">Sub 1</span> covers electric
+            shock and burns — what current actually does to a body, the
+            thresholds (1 mA, 30 mA, 50 mA) and the reason 30 mA RCDs exist.{' '}
+            <span className="text-white font-medium">Sub 2</span> covers
+            overloads, short circuits and arcing — the three failure modes that
+            turn a healthy circuit into a fire and the protective devices that
+            should clear them.{' '}
+            <span className="text-white font-medium">Sub 3</span> opens up fire
+            and explosive atmospheres — Chapter 42, DSEAR, hazardous-area
+            zoning.{' '}
+            <span className="text-white font-medium">Sub 4</span> covers working
+            at height and confined spaces — still the biggest single killers on
+            UK sites.{' '}
+            <span className="text-white font-medium">Sub 5</span> closes with
+            slips, trips and manual handling — the unglamorous injuries that
+            quietly write off more spark careers than shock ever does.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            By the end of Section 2 you’ll be able to walk onto a site, name
+            the hazards in front of you, and explain in regs language why each
+            one matters — the prerequisite for the risk assessments and method
+            statements you’ll write in Section 3.
+          </p>
+        </div>
+      }
     >
       {subsections.map((subsection, index) => (
         <ModuleCard

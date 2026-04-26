@@ -1,3 +1,11 @@
+/**
+ * Module 1 · Section 1 · Subsection 3 — Other key regulations (RIDDOR, PUWER, COSHH and friends)
+ * City &amp; Guilds 2365-02 → Unit 201 → LO1 → AC 1.1
+ *   "identify roles and responsibilities with regard to current relevant
+ *    Health and Safety legislation"
+ * Also touches LO2 AC 2.4 (responsible persons for reporting) via RIDDOR coverage.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 

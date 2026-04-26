@@ -40,8 +40,16 @@ const quantities: Quantity[] = [
 
 function formatNumber(n: number) {
   if (!isFinite(n)) return '';
-  if (Math.abs(n) >= 1000 || Math.abs(n) < 0.001) return n.toExponential(3);
-  return n.toLocaleString(undefined, { maximumFractionDigits: 6 });
+  // Only fall back to scientific notation for genuinely tiny / huge values that
+  // would otherwise render as 0.0000001 or 12345678. Typical electrical values
+  // (1500 V, 0.005 A, 47000 Ω) display as plain numbers with up to 6dp.
+  if (Math.abs(n) >= 1e7 || (Math.abs(n) > 0 && Math.abs(n) < 1e-6)) {
+    return n.toExponential(3);
+  }
+  // Strip floating-point junk by rounding to 6dp, then format with thousands
+  // separators and trailing zeros stripped (1500 → "1,500", 0.005 → "0.005").
+  const rounded = Number(n.toFixed(6));
+  return rounded.toLocaleString('en-GB', { maximumFractionDigits: 6 });
 }
 
 const UnitPrefixConverter: React.FC = () => {
@@ -65,7 +73,7 @@ const UnitPrefixConverter: React.FC = () => {
           <Select value={qty} onValueChange={(v) => setQty(v as any)}>
             <SelectTrigger
               id="quantity"
-              className="h-12 px-2 text-sm bg-background border-border/40 w-full max-w-[120px]"
+              className="h-12 px-3 text-base bg-background border-border/40 w-full max-w-[160px] text-foreground"
             >
               <SelectValue />
             </SelectTrigger>
@@ -82,7 +90,7 @@ const UnitPrefixConverter: React.FC = () => {
         <div className="space-y-2">
           <Label className="text-sm font-medium text-foreground">From prefix</Label>
           <Select value={fromP} onValueChange={(v) => setFromP(v as PrefixKey)}>
-            <SelectTrigger className="h-12 px-2 text-sm bg-background border-border/40 w-full max-w-[120px]">
+            <SelectTrigger className="h-12 px-3 text-base bg-background border-border/40 w-full max-w-[160px] text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-background border-border z-50">
@@ -98,7 +106,7 @@ const UnitPrefixConverter: React.FC = () => {
         <div className="space-y-2">
           <Label className="text-sm font-medium text-foreground">To prefix</Label>
           <Select value={toP} onValueChange={(v) => setToP(v as PrefixKey)}>
-            <SelectTrigger className="h-12 px-2 text-sm bg-background border-border/40 w-full max-w-[120px]">
+            <SelectTrigger className="h-12 px-3 text-base bg-background border-border/40 w-full max-w-[160px] text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-background border-border z-50">

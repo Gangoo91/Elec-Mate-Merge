@@ -96,7 +96,7 @@ const ResistanceCalculator: React.FC = () => {
           <div className="space-y-2">
             <Label className="text-foreground">Material</Label>
             <Select value={material} onValueChange={onMaterialChange}>
-              <SelectTrigger className="bg-background">
+              <SelectTrigger className="bg-background text-foreground">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -220,7 +220,7 @@ const ResistanceCalculator: React.FC = () => {
             <div className="ml-auto flex items-center gap-2 text-sm">
               <Label className="text-muted-foreground">Decimals</Label>
               <Select value={String(dp)} onValueChange={(v) => setDp(Number(v))}>
-                <SelectTrigger className="w-20 bg-background">
+                <SelectTrigger className="w-20 h-9 px-3 bg-background text-foreground">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>

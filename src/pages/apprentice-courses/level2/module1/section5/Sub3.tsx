@@ -1,928 +1,654 @@
-import {
-  ArrowLeft,
-  Shield,
-  CheckCircle,
-  AlertTriangle,
-  Zap,
-  Lock,
-  FileCheck,
-  Wrench,
-  TestTube,
-  Tag,
-  BookOpen,
-  Target,
-  Eye,
-  FileText,
-  XCircle,
-  Users,
-  ClipboardList,
-  Settings,
-  Key,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 5 · Subsection 3 — Lock-off, tag-out, prove–test–prove
+ *
+ * Unit 201, LO3, AC 3.8 — apprentice has to be able to use isolation
+ * equipment correctly: lock-off devices, tags, proving units and GS38
+ * voltage indicators.
+ *
+ * Hands-on detail on the kit: what each item is for, how to choose it, how
+ * to use it correctly, and how to spot when it’s no longer fit for service.
+ *
+ * Cross-references: §5.2 (the procedure), §1.4 (PPE/test kit overview),
+ * §2.1 (current thresholds the kit is designed to keep you below).
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Safe Isolation Process - Step by Step | Level 2 Electrical Course';
+const TITLE = 'Lock-off, tag-out and prove–test–prove | Level 2 Module 1.5.3 | Elec-Mate';
 const DESCRIPTION =
-  'Master the complete safe isolation procedure with our detailed step-by-step guide. Learn essential safety checks, testing procedures, and professional best practices for electrical work.';
+  'The kit on your belt for safe isolation: lock-off devices, padlocks, tags, multi-hasps, group lock boxes, GS38 voltage indicators and proving units. What to buy, how to use it, when to bin it.';
 
-const Sub3 = () => {
+/* ── Inline checks ────────────────────────────────────────────────── */
+
+const checks = [
+  {
+    id: 's5-3-vi-vs-multimeter-check',
+    question: 'Why is a two-pole voltage indicator preferred over a multimeter for proving dead?',
+    options: [
+      'It’s cheaper',
+      'It can’t be on the wrong range, has fixed leads, and gives a positive ‘live’ indication you can’t miss',
+      'It reads more accurately',
+      'It’s waterproof',
+    ],
+    correctIndex: 1,
+    explanation:
+      "Voltage indicators are purpose-built for safe isolation: no rotary range switch to be on the wrong range, no detachable leads, and integral GS38 features (finger guards, ≤4 mm tip, often LED + haptic + audible indication). A multimeter on AC volts will happily read 0 V because the circuit is dead OR because it’s on amps OR the leads are in the wrong sockets.",
+  },
+  {
+    id: 's5-3-gs38-tip-check',
+    question: 'What is the maximum exposed metal at the tip of a GS38 test probe?',
+    options: ['2 mm (preferably) or 4 mm maximum', '8 mm', '12 mm', 'No limit if you’re careful'],
+    correctIndex: 0,
+    explanation:
+      "GS38 wants ≤4 mm of bare metal at the tip — and ‘preferably 2 mm’ — so a slipped probe can’t bridge two adjacent terminals. Older multimeter probes with 30+ mm of bare metal don’t meet GS38 and shouldn’t be used for proving dead.",
+  },
+  {
+    id: 's5-3-multi-hasp-check',
+    question: 'You and another sparky are working on the same isolated sub-main. How should the lock-off be arranged?',
+    options: [
+      'One padlock, you both share the key',
+      'One padlock per person, both clipped onto the same multi-hasp on the device',
+      "Don’t lock off — you can watch each other",
+      'The senior sparky locks; the apprentice doesn’t',
+    ],
+    correctIndex: 1,
+    explanation:
+      "Multi-hasp (sometimes called a multi-padlock hasp) — designed to take up to 6 padlocks. Every person working on the circuit clips their own padlock to it, keeps their own key. Circuit can’t be re-energised until the LAST padlock comes off — so nobody is forgotten.",
+  },
+];
+
+/* ── End-of-page Quiz ─────────────────────────────────────────────── */
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: 'What does GS38 cover?',
+    options: [
+      'Cable sizing for low-voltage installations',
+      'Test equipment safety for electrical work on LV systems (probes, leads, indicators)',
+      'PPE for arc-flash work',
+      'Approved electricians’ training routes',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "GS38 (HSE Guidance Note GS38) sets out what counts as safe test equipment for working on LV systems. It defines probe geometry, finger guards, fused leads, voltage indicator features and the ‘prove on a known source’ requirement.",
+  },
+  {
+    id: 2,
+    question: 'What item is specifically designed to test that your voltage indicator is working?',
+    options: [
+      'A second multimeter',
+      'A proving unit (battery-powered known voltage source)',
+      'The mains socket nearest the work',
+      'A neon screwdriver',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A proving unit. Battery-powered, generates a known AC voltage (typically 230 V or higher) and often a DC voltage too, with a contact pad/probe set you can press the indicator probes against. Lets you confirm the indicator works without going near a live circuit.",
+  },
+  {
+    id: 3,
+    question: 'Your voltage indicator’s LEDs work but the haptic/buzzer doesn’t. Is the indicator still safe to use?',
+    options: [
+      'Yes — LEDs are the primary indication',
+      'No — GS38 expects multiple indication modes; one failure means the unit is suspect and goes out of service',
+      'Yes if you can see the LEDs clearly',
+      'Only if you double-check with a second tester',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "GS38 wants more than one indication mode (LED + buzzer/vibration + sometimes a digital display) precisely so a single failure doesn’t leave you with a silent ‘dead’ reading. If any one indicator stops working, the unit goes out of service until repaired or replaced.",
+  },
+  {
+    id: 4,
+    question: 'What should be on a lock-off tag?',
+    options: [
+      'Nothing — the lock is enough',
+      "Worker’s name, date applied, brief description of work, contact phone number",
+      'Just the company name',
+      'Only the date',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Name (so anyone wanting to re-energise can find the right person), date applied, brief description of work, and a contact number. Without the name + number, the tag tells nobody anything they can act on.",
+  },
+  {
+    id: 5,
+    question: 'What is a CAT rating on test equipment, and what should you use for distribution-board work?',
+    options: [
+      'It’s a battery type — use AAA',
+      'It’s the IEC 61010 measurement category — CAT III 600 V or higher for LV distribution work',
+      'It’s a price band',
+      'It’s the warranty length',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "CAT (Category) ratings under IEC 61010 describe the transient over-voltages the meter can survive. CAT II is appliances and short cords, CAT III is fixed installation / distribution, CAT IV is supply origin (DNO side). For a CU or sub-main use CAT III 600 V minimum, ideally CAT IV.",
+  },
+  {
+    id: 6,
+    question: 'What kind of padlock should you use for personal lock-off?',
+    options: [
+      'Any padlock from the toolbox',
+      'A padlock with a unique key — never a ‘keyed-alike’ set someone else could open',
+      'A combination lock — easier to manage',
+      'A keyed-alike set so the gaffer can re-energise if needed',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Personal padlocks are ‘keyed-different’ — your key is the only one that opens YOUR lock. ‘Keyed-alike’ sets defeat the entire point of personal control. A combination lock is also unsafe because anyone watching can re-use the combination.",
+  },
+  {
+    id: 7,
+    question: 'A pull-out fuse carrier is the only means of isolation and you can’t fit a lock-off. What do you do?',
+    options: [
+      'Skip the lock-off, just leave a sign',
+      'Withdraw the fuse carrier and keep it physically with you (in your toolbox or van)',
+      'Tape the carrier in place',
+      'Refuse to do the work',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Withdraw the carrier and keep possession of it. The circuit cannot be re-energised without you and the carrier being present. HSE HSG85 explicitly recognises this method where lockable devices aren’t fitted.",
+  },
+  {
+    id: 8,
+    question: 'You drop your voltage indicator off a step-up. It still appears to work. What now?',
+    options: [
+      "Crack on — if it powers up it’s fine",
+      "Take it out of service immediately, prove it on a proving unit + visually inspect, and if there’s any doubt replace it",
+      'Use it but only on dead circuits',
+      "Tape it up if there’s a crack",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A drop can crack internal components, displace a fuse, fracture a lead. Take it out of service, prove on a proving unit, visually check leads/probes/case. ANY doubt — bin it. The cost of a £100 indicator is nothing compared with a false ‘dead’ reading.",
+  },
+];
+
+/* ── FAQs ─────────────────────────────────────────────────────────── */
+
+const faqs = [
+  {
+    question: "What’s the difference between a voltage indicator and a multimeter?",
+    answer:
+      "Voltage indicator (sometimes called a two-pole tester or VI): purpose-built, fixed leads, no range switch, GS38 probes, multiple indication modes. Designed for one job — telling you whether a conductor is live. Multimeter: general-purpose lab/diagnostic tool, detachable leads, rotary range switch, lots of failure modes (wrong range, wrong socket, blown internal fuse). Multimeters have a place in fault-finding, but proving dead during safe isolation is a VI job.",
+  },
+  {
+    question: "Do I need to test my proving unit too?",
+    answer:
+      "Visually before each use (case intact, no cracks, batteries fresh). The proving unit is itself proved against the voltage indicator each time you use it — if the indicator lights up, the proving unit is working AND the indicator is working. They’re a pair. Have both calibrated annually if your firm follows that policy; many manufacturers also recommend battery replacement on a defined schedule.",
+  },
+  {
+    question: "How many lock-off devices should I carry?",
+    answer:
+      "A practical kit covers most of what you’ll meet: universal MCB lockouts (clip onto common breaker bodies), wide-jaw lockouts for older breakers, three-phase isolator lockouts (for rotary switch-disconnectors), socket lockouts for plug-and-socket isolation, plus 4-6 personal padlocks (keyed-different) and at least one multi-hasp. Tags pre-printed and ready to write on.",
+  },
+  {
+    question: "Do I really need a proving unit if there’s a known live socket nearby?",
+    answer:
+      "A proving unit is the safer default — it’s a defined source, it can’t be turned off mid-job, and it lives on the same belt as your indicator. Using a known-live socket means you’re putting your VI’s probes on a live circuit twice (before and after) — defeating part of the point of isolation. Proving units are ~£40-80 and pay for themselves the first time you’re working somewhere with no obvious live source nearby.",
+  },
+  {
+    question: "Can I use the same padlock for two jobs at once?",
+    answer:
+      "If both isolations are for one continuous piece of work that you’re fully in control of and they’re feet apart, yes — one padlock per device, all under your personal control. If the jobs are physically separated (different floor, different room) it’s safer to carry one padlock per device — easier to track and harder to forget on re-instatement.",
+  },
+  {
+    question: "What’s a group lock box, and when do I need one?",
+    answer:
+      "A group lock box is a sealed box where the keys to a set of isolators get locked away. Each person working on the system clips their own personal padlock onto the box. Until every personal padlock is removed, the keys can’t come out and the system can’t be re-energised. Used on big jobs (switchroom upgrades, factory shutdowns) where one ‘master’ isolation has been done by an authorised person and many trades are then working on different bits of the dead system. Covered in more detail with permit-to-work systems in §5.4-equivalent material on multi-trade sites.",
+  },
+];
+
+export default function Sub3() {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
-  const quizQuestions = [
-    {
-      id: 1,
-      question: 'What is the first step in the safe isolation process?',
-      options: [
-        'Lock off the isolator',
-        'Identify the correct circuit',
-        'Test for dead',
-        'Inform others',
-      ],
-      correctAnswer: 1,
-      explanation:
-        "The first step is to identify the correct circuit using the circuit schedule, labelling, or confirmation with colleagues to ensure you’re working on the right circuit.",
-    },
-    {
-      id: 2,
-      question: 'Why is it essential to prove your tester both before and after use?',
-      options: [
-        'To comply with regulations',
-        'To check the battery level',
-        "To confirm the tester works and didn’t fail during testing",
-        'To save the tester settings',
-      ],
-      correctAnswer: 2,
-      explanation:
-        "Testing before and after confirms the tester is working correctly and didn’t fail during use, which could lead to false readings and potential fatal errors.",
-    },
-    {
-      id: 3,
-      question: 'What tool must be used to test for dead?',
-      options: [
-        'Multimeter',
-        'GS38-compliant two-pole voltage tester',
-        'Neon screwdriver',
-        'Phase rotation meter',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'A GS38-compliant two-pole voltage tester must be used to test for dead, as it meets the safety requirements for electrical testing.',
-    },
-    {
-      id: 4,
-      question: 'Why should the isolator be locked off?',
-      options: [
-        'To prevent theft',
-        'To comply with building regulations',
-        'To prevent accidental re-energising',
-        'To mark ownership',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Locking off prevents others from accidentally or deliberately switching the circuit back on while work is in progress, which could cause serious injury or death.',
-    },
-    {
-      id: 5,
-      question: "True or False: It’s okay to share a lock-off key with a teammate.",
-      options: ['True', 'False'],
-      correctAnswer: 1,
-      explanation:
-        'False. Each person working on the circuit must use their own lock and keep their own key. Sharing keys compromises the safety of the isolation system.',
-    },
-    {
-      id: 6,
-      question: 'In what sequence must conductors be tested for dead?',
-      options: [
-        'Line to neutral only',
-        'Line to earth, then neutral to earth',
-        'Line to neutral, line to earth, neutral to earth',
-        'Any order is acceptable',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'All three combinations must be tested: Line to neutral, line to earth, and neutral to earth. This ensures complete verification that the circuit is dead.',
-    },
-    {
-      id: 7,
-      question: 'What is a potential source of backfeed in electrical installations?',
-      options: [
-        'Borrowed neutrals from other circuits',
-        'Solar PV systems',
-        'UPS systems',
-        'All of the above',
-      ],
-      correctAnswer: 3,
-      explanation:
-        'All of these can be sources of backfeed. Borrowed neutrals, solar PV systems, and UPS systems can all energise circuits that appear to be isolated.',
-    },
-    {
-      id: 8,
-      question: 'When using a group lock-off box, what must each electrician do?',
-      options: [
-        'Share one key between the team',
-        'Place their own individual lock on the box',
-        'Sign a register only',
-        'Take turns with the isolation',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Each electrician must place their own individual lock on the group lock-off box. This ensures no one can re-energise the circuit until all workers are finished.',
-    },
-    {
-      id: 9,
-      question: 'What information should be recorded in isolation documentation?',
-      options: [
-        'Circuit reference and isolator location only',
-        'Test results and equipment serial numbers only',
-        'Circuit details, test results, equipment serials, and signatures',
-        'Just the date and time of isolation',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Complete documentation should include circuit reference, isolator location, test results, equipment serial numbers, signatures, and date/time.',
-    },
-    {
-      id: 10,
-      question: "What should you do if your lock-off device doesn’t fit the isolator?",
-      options: [
-        'Use tape to secure the isolator',
-        'Find an appropriate lock-off device or alternative isolator',
-        "Work without locking off if it’s quick work",
-        'Ask someone else to hold the switch',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Never compromise on lock-off. Find the correct lock-off device for that isolator type or use an alternative suitable isolator that can be properly secured.',
-    },
-  ];
-
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 5
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 5
+          </button>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Wrench className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 5.3
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-                The Safe Isolation Process – Step by Step
-              </h1>
-              <p className="text-xl text-white max-w-4xl mt-2">
-                A comprehensive guide to the complete safe isolation procedure
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>
-                  <strong>Safe isolation:</strong> 7-step systematic process for electrical safety.
-                </li>
-                <li>
-                  <strong>Sequential steps:</strong> Each builds on the previous for complete
-                  protection.
-                </li>
-                <li>
-                  <strong>Testing protocol:</strong> Prove-before and prove-after are critical.
-                </li>
-                <li>
-                  <strong>Documentation:</strong> Record every step and result.
-                </li>
-                <li>
-                  <strong>No shortcuts:</strong> Every step is essential for safety.
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>
-                  <strong>Spot:</strong> Skipped steps, wrong circuits, missing locks, untested
-                  testers.
-                </li>
-                <li>
-                  <strong>Use:</strong> Complete 7-step sequence, proper equipment, full testing.
-                </li>
-                <li>
-                  <strong>Apply:</strong> Systematic approach every time, no exceptions.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
-            Learning Outcomes
-          </h2>
-          <p className="text-white mb-4">By the end of this section, you’ll be able to:</p>
-          <ul className="space-y-3 text-foreground">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Master the complete 7-step safe isolation procedure</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Understand critical testing requirements and sequences</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Recognise backfeed scenarios and special considerations</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Apply proper documentation and permit-to-work procedures</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Develop systematic approaches to prevent common mistakes</span>
-            </li>
-          </ul>
-        </Card>
-
-        {/* Section 1: Step-by-Step Procedure */}
-        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              1
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Complete Safe Isolation Procedure
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="font-medium text-blue-800 dark:text-white mb-3">
-                The 7-step safe isolation process must be followed systematically every time. Each
-                step is designed to build on the previous one, creating multiple layers of
-                protection.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <h4 className="font-semibold mb-3 text-foreground">The Complete 7-Step Process:</h4>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
-                    1
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-foreground">Identify the Circuit</h5>
-                    <p className="text-white text-sm">
-                      Use circuit schedules, labels, and confirm with others
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
-                    2
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-foreground">Switch Off and Isolate</h5>
-                    <p className="text-white text-sm">Turn off the correct isolator or MCB</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
-                    3
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-foreground">Secure and Lock Off</h5>
-                    <p className="text-white text-sm">
-                      Apply lock-off device and retain the key
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
-                    4
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-foreground">Post Warning Notices</h5>
-                    <p className="text-white text-sm">
-                      Attach "Do Not Operate" tags at isolation points
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
-                    5
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-foreground">Prove Tester Before Use</h5>
-                    <p className="text-white text-sm">
-                      Test voltage tester on proving unit or known live supply
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
-                    6
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-foreground">Test for Dead</h5>
-                    <p className="text-white text-sm">
-                      Test all conductor combinations: L-N, L-E, N-E
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="bg-elec-yellow text-black rounded-full w-6 h-6 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">
-                    7
-                  </div>
-                  <div>
-                    <h5 className="font-semibold text-foreground">Re-prove Tester After Use</h5>
-                    <p className="text-white text-sm">
-                      Confirm tester still works on proving unit
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Inline Check */}
-        <div className="mb-8">
-          <InlineCheck
-            id="isolation-sequence"
-            question="What must you do with your voltage tester immediately BEFORE and AFTER testing for dead?"
-            options={[
-              'Calibrate it using a multimeter',
-              'Prove it works using a proving unit or known live supply',
-              'Check the battery level',
-              'Clean the test probes',
-            ]}
-            correctIndex={1}
-            explanation="You must prove your tester works using a proving unit both before testing (to ensure it will detect voltage) and after testing (to confirm it didn’t fail during the test). This is critical for safety."
+          <PageHero
+            eyebrow="Module 1 · Section 5 · Subsection 3"
+            title="Lock-off, tag-out and prove–test–prove"
+            description="The kit on your belt that turns the procedure into reality. Lockouts, padlocks, multi-hasps, tags, GS38 voltage indicators, proving units. What to carry, how to use each piece, and when to take a damaged item out of service."
+            tone="emerald"
           />
-        </div>
 
-        {/* Section 2: Testing Matrix */}
-        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              2
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Testing Matrix & Prove-Before/After Protocol
-            </h2>
-          </div>
+          <TLDR
+            points={[
+              "GS38 is the standard for LV test kit. Two-pole voltage indicator (NOT a multimeter), ≤4 mm probe tip, finger guards, fused leads, multiple indication modes.",
+              "Personal padlock, personal key. Multi-hasp for shared work. Group lock box for large multi-trade jobs.",
+              "Prove – test – prove every time. Voltage indicator on proving unit before testing the circuit; on the proving unit again afterwards. Two seconds at each end.",
+            ]}
+          />
 
-          <div className="space-y-6">
-            <div className="bg-elec-yellow/5 bg-elec-yellow/10 border border-elec-yellow/30 border-elec-yellow/20 rounded-lg p-4">
-              <p className="font-medium text-elec-yellow dark:text-elec-yellow mb-3">
-                Testing for dead requires specific combinations and strict prove-before/prove-after
-                protocol to ensure complete safety.
-              </p>
-            </div>
+          <LearningOutcomes
+            outcomes={[
+              "List the items in a competent isolation kit and the role of each (lockouts, padlocks, hasps, tags, voltage indicator, proving unit, GS38 leads).",
+              "Explain why a GS38-compliant two-pole voltage indicator is required for proving dead and why a multimeter is not.",
+              "Describe the GS38 features that make a probe and lead set safe (≤4 mm tip, finger guards, fused leads, multiple indication modes).",
+              "Apply ‘personal control’ correctly using individual padlocks, multi-hasps and group lock boxes.",
+              "Identify when a piece of isolation kit must be taken out of service (drop, damage, missing indication mode, expired calibration).",
+              "Choose the right CAT rating (CAT III 600 V minimum for distribution work) and the right voltage range for the system you’re testing.",
+            ]}
+            initialVisibleCount={3}
+          />
 
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <h4 className="font-semibold mb-3 text-foreground">Single-Phase Testing Matrix:</h4>
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4 mb-4">
-                <div className="text-center">
-                  <div className="bg-muted/50 border border-border rounded-lg p-3">
-                    <p className="font-medium">Line ↔ Neutral</p>
-                    <p className="text-sm text-white">Test 1</p>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="bg-muted/50 border border-border rounded-lg p-3">
-                    <p className="font-medium">Line ↔ Earth</p>
-                    <p className="text-sm text-white">Test 2</p>
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="bg-muted/50 border border-border rounded-lg p-3">
-                    <p className="font-medium">Neutral ↔ Earth</p>
-                    <p className="text-sm text-white">Test 3</p>
-                  </div>
-                </div>
+          <ContentEyebrow>The kit on your belt</ContentEyebrow>
+
+          <ConceptBlock
+            title="Six items make up a competent isolation kit"
+            plainEnglish="No competent person turns up to a job without these. Treat the kit like the harness on a roof — if any of it’s missing or damaged, you don’t do the work."
+          >
+            <p>What lives on your belt or in your tool bag for every isolation:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Lock-off devices</strong> — the bits that physically prevent the
+                isolating device being switched on. Different shapes for MCBs, RCBOs, rotary
+                isolators, plug-and-socket connections, fuse carriers.
+              </li>
+              <li>
+                <strong>Personal padlocks</strong> — keyed-different (your key only opens YOUR
+                lock). Bright colour helps anyone glancing at the board see ‘someone is working
+                on this’. 4-6 in a kit is normal.
+              </li>
+              <li>
+                <strong>Multi-hasp</strong> — a clamp that fits onto a single lock-off device
+                and accepts up to 6 padlocks, so multiple workers can each apply their own lock
+                to the same isolation.
+              </li>
+              <li>
+                <strong>Tags / warning labels</strong> — pre-printed laminated tags with space
+                for name, date, work description, contact number.
+              </li>
+              <li>
+                <strong>Voltage indicator (GS38)</strong> — two-pole, fixed leads, multiple
+                indication modes (LED + buzzer + vibration is typical), CAT III 600 V minimum.
+              </li>
+              <li>
+                <strong>Proving unit</strong> — battery-powered known voltage source. AC and DC
+                outputs, contact pads sized for the voltage indicator’s probes.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>The voltage indicator</ContentEyebrow>
+
+          <ConceptBlock
+            title="Two-pole voltage indicator — purpose-built for safe isolation"
+            plainEnglish="A device with one job: tell you whether two conductors have voltage between them. No rotary switch, no detachable leads, no chance of being on the wrong range."
+            onSite="Check it before every job: visual inspection of leads (any cuts, splits or kinked insulation = bin it), shake it to listen for loose internals, prove on the proving unit."
+          >
+            <p>What makes a voltage indicator different from a multimeter:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Fixed leads</strong> — can’t be plugged into the wrong sockets. No
+                ‘tester reads zero because leads are in the amps holes’ failure mode.
+              </li>
+              <li>
+                <strong>No range switch</strong> — typically auto-ranges across LV bands (12 V,
+                24 V, 50 V, 120 V, 230 V, 400 V, 690 V) with LEDs to show the band detected.
+              </li>
+              <li>
+                <strong>Multiple indication modes</strong> — usually a row of LEDs (bright, easy
+                to see in a CU shadow), a buzzer (audible in a noisy plant room), and often a
+                vibration alert (haptic — felt through gloves). One failure mode doesn’t leave
+                you blind.
+              </li>
+              <li>
+                <strong>GS38 probes</strong> — finger barriers (the moulded ridge stops your
+                finger sliding onto the conductor), ≤4 mm exposed tip (preferably 2 mm), often
+                with retractable shrouds.
+              </li>
+              <li>
+                <strong>Continuity test</strong> — many include a low-voltage continuity test
+                you can use without batteries, useful for ringing out cables.
+              </li>
+            </ul>
+            <p>
+              Common UK brands: Martindale VI-13700 series, Fluke T100/T150, Megger TPT420.
+              Whichever brand, look for GS38 marking and the IEC 61010 CAT rating you need
+              (CAT III 600 V minimum for distribution work, CAT IV 600 V if you’re anywhere near
+              the supply origin).
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="HSE GS38 — Electrical test equipment for use on low-voltage electrical systems"
+            clause="Test probes should be designed and constructed in such a way as to minimise the risk of inadvertent contact with live conductors. They should incorporate finger barriers or be shaped to guard against inadvertent hand contact. The exposed metal tip should not exceed 4 mm and preferably should not exceed 2 mm. Test leads should be flexible and adequately insulated, ideally fitted with high-rupturing-capacity (HRC) fuses."
+            meaning={
+              <>
+                The probe specification is the bit you can SEE every time you pick the kit up.
+                If your VI’s probes have more than 4 mm of bare metal at the tip — or no finger
+                barrier — they don’t meet GS38. Old-school multimeter probes with long bare tips
+                and no guards are common in older toolboxes; bin them and buy GS38 sets.
+              </>
+            }
+            cite="Reference: HSE GS38 (Edition 5) — sections on probes, leads and indicators"
+          />
+
+          <InlineCheck
+            id={checks[0].id}
+            question={checks[0].question}
+            options={checks[0].options}
+            correctIndex={checks[0].correctIndex}
+            explanation={checks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The proving unit</ContentEyebrow>
+
+          <ConceptBlock
+            title="Your portable known voltage source"
+            onSite="Some sparks clip the proving unit to the same belt loop as the VI so they’re always together. Others keep it in the same pouch. Either way: if the VI is in your hand, the proving unit is within arm’s reach."
+          >
+            <p>
+              A proving unit is a battery-powered device that generates a known voltage you can
+              touch the VI’s probes against to confirm the VI is working. Two designs are common:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Switched output</strong> — press a button, the unit generates ~230 V AC
+                (and often a DC test voltage and lower AC bands too) for a few seconds across
+                two contact points.
+              </li>
+              <li>
+                <strong>Always-on contact pad</strong> — touch both probes to the marked pads,
+                voltage is generated automatically.
+              </li>
+            </ul>
+            <p>
+              Modern units typically generate three test voltages (e.g. 50 V, 230 V, 400 V) so
+              you can confirm the indicator’s LEDs light up across the range, not just one band.
+            </p>
+            <p>
+              <strong>When to take it out of service:</strong> any cracks in the case (battery
+              voltage exposed, indicator may be unreliable), failure to generate the test
+              voltage when the VI is known good, batteries that won’t hold charge, expired
+              calibration sticker if your firm calibrates annually. Replacement is ~£40-80 — well
+              under the cost of a single near-miss.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>The lock-off devices</ContentEyebrow>
+
+          <ConceptBlock
+            title="One device for each kind of isolator you’ll meet"
+            plainEnglish="The lock-off device clips, slides or wraps onto the isolating device and presents a hole that takes a padlock. With a padlock through the hole, the device physically can’t be operated."
+            onSite="Carry a small bag of common types — universal MCB clips, wide-jaw RCBO clips, three-phase rotary lockouts, plug lockouts. A weird isolator without a matching lockout? Withdraw the fuse carrier or remove the supply at a parent device instead."
+          >
+            <p>The main types you’ll come across:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Universal MCB lockouts</strong> — colour-coded clips that fit over the
+                toggle of a switched-off MCB and present a padlock hole. ‘Universal’ models cover
+                most modern slim breakers; older or unusually-shaped breakers may need a
+                manufacturer-specific lockout.
+              </li>
+              <li>
+                <strong>Wide-jaw lockouts</strong> — for breakers with a wider toggle (some
+                older Crabtree, Wylex Standard, MEM). Same idea, larger jaws.
+              </li>
+              <li>
+                <strong>Switch-disconnector / rotary isolator lockouts</strong> — for the
+                square-bodied isolator switches you’ll find on three-phase distribution and
+                fixed-equipment supplies. Slide over the rotary handle in the off position and
+                accept a padlock.
+              </li>
+              <li>
+                <strong>Plug-and-socket lockouts</strong> — boxes that enclose a 13 A plug or a
+                BS EN 60309 commando connector so it can’t be plugged back in. Useful where the
+                only means of isolation is unplugging.
+              </li>
+              <li>
+                <strong>Multi-hasps</strong> — the multi-padlock clamp that fits onto a
+                lock-off’s padlock hole and accepts up to 6 personal padlocks, one per worker.
+              </li>
+            </ul>
+            <p>
+              Padlocks are <strong>keyed-different</strong> (your key, your lock, only one
+              works). Bright colour (red, yellow) is the convention so anyone glancing at the
+              CU sees ‘someone is working on this — leave it alone’. Combination locks are
+              not used for personal isolation — anyone observing you set the combination can
+              re-use it.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="BS 7671:2018+A4:2026 — Regulation 537.2.5 (Securing of isolation)"
+            clause="Provision shall be made for securing off-load isolating devices against unwanted or unintentional opening. This may be achieved, for example, by locating the device in a lockable space or lockable enclosure or by padlocking. Alternatively, the off-load device may be interlocked with a load-breaking one."
+            meaning={
+              <>
+                BS 7671 expects the means of isolation to be securable in the off position — the
+                regulation behind why we lock off, and behind why a flick-switch with no
+                provision for a padlock isn’t a means of isolation. If a device can’t be
+                secured, you have to use the next device upstream that CAN be secured.
+              </>
+            }
+            cite="Source: BS 7671:2018+A4:2026 Part 5 Chapter 53 Regulation 537.2.5."
+          />
+
+          <InlineCheck
+            id={checks[1].id}
+            question={checks[1].question}
+            options={checks[1].options}
+            correctIndex={checks[1].correctIndex}
+            explanation={checks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Tags and notices</ContentEyebrow>
+
+          <ConceptBlock
+            title="Anyone walking past should know who locked it, when, and how to reach you"
+            onSite="Sharpie + scrap of duct tape is not a tag. Pre-printed laminated tags cost pennies and survive a wet meter cupboard."
+          >
+            <p>A complete isolation tag has:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Your name</strong> — the person whose padlock is on this device.
+              </li>
+              <li>
+                <strong>Date and time applied.</strong>
+              </li>
+              <li>
+                <strong>Brief description of work</strong> (‘CU change’, ‘kitchen ring extension’).
+              </li>
+              <li>
+                <strong>Contact phone number</strong> — so anyone needing to re-energise can call
+                first instead of cutting your padlock off.
+              </li>
+              <li>
+                Optional: company name, permit number (on permit-to-work jobs).
+              </li>
+            </ul>
+            <p>
+              Separately from the personal tag on the lock, a larger ‘DO NOT OPERATE — Electrician
+              Working’ sign goes on the CU door (or as appropriate) so anyone who doesn’t open the
+              door and read the small tag still gets the message.
+            </p>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Using the indicator-only mode and missing a failed LED"
+            whatHappens={
+              <>
+                Your voltage indicator has LED + buzzer + vibration. The buzzer’s broken (you’ve
+                been meaning to replace it for weeks). You prove on the proving unit, all the
+                LEDs light up, but your hand’s on the case so you don’t notice the buzzer is
+                silent. Test on the circuit — no LEDs light, you call it dead. Two days later the
+                LEDs themselves fail in a way you don’t spot, and your ‘dead’ reading is actually
+                ‘can’t indicate anything’.
+              </>
+            }
+            doInstead={
+              <>
+                Multiple indication modes is GS38’s redundancy. If ANY of them stops working —
+                an LED out, the buzzer silent, the haptic dead — the indicator is out of service
+                until repaired or replaced. ‘It still works mostly’ is exactly the failure-mode
+                trail that GS38 was written to break.
+              </>
+            }
+          />
+
+          <Scenario
+            title="The CU with no obvious means of isolation"
+            situation={
+              <>
+                You arrive at a 1970s flat to swap a damaged 32 A ring final MCB. The CU has a
+                main switch, but it’s a Wylex Standard with rewireable fuses — the ‘breakers’ on
+                the ring final are actually pull-out fuse carriers. There’s no MCB lock-off that
+                fits, the main switch isn’t lockable either, and the customer needs the freezer
+                circuit (different fuseway) to stay live.
+              </>
+            }
+            whatToDo={
+              <>
+                Withdraw the fuse carrier for the ring final and put it in your tool bag. Post a
+                ‘DO NOT OPERATE — fuse withdrawn for work in progress’ sign on the empty fuseway
+                AND on the CU door. Brief the customer. The circuit physically cannot be
+                re-energised without you putting the fuse carrier back in. HSG85 explicitly
+                recognises this as a valid method where lockable devices aren’t fitted. Keep the
+                carrier on YOU, not on top of the CU — that’s the equivalent of ‘key in the
+                lock’.
+              </>
+            }
+            whyItMatters={
+              <>
+                Older installs frequently lack lockable isolating devices. The procedure adapts:
+                physical removal of the fuse / carrier achieves the same outcome (circuit cannot
+                be re-energised by anyone without you). Skipping isolation because ‘there’s
+                nothing to lock’ is the wrong answer.
+              </>
+            }
+          />
+
+          <InlineCheck
+            id={checks[2].id}
+            question={checks[2].question}
+            options={checks[2].options}
+            correctIndex={checks[2].correctIndex}
+            explanation={checks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>When kit goes out of service</ContentEyebrow>
+
+          <ConceptBlock
+            title="Bin it before it bins you"
+            plainEnglish="Test kit is a consumable. The cost of replacing an indicator or proving unit is nothing compared with the cost of a false ‘dead’ reading."
+          >
+            <p>Triggers for taking an item out of service immediately:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-orange-400/70">
+              <li>
+                Any visible damage to leads, probes, finger guards or the case (cracks, splits,
+                exposed conductors, melted insulation).
+              </li>
+              <li>
+                Any indication mode not working (LED, buzzer, vibration). One failure = out.
+              </li>
+              <li>
+                Failure to register on the proving unit at any voltage band.
+              </li>
+              <li>
+                Drop or impact (especially proving units — battery electrolyte can leak into the
+                voltage-generation circuitry).
+              </li>
+              <li>
+                Calibration sticker expired (where the firm or the manufacturer specifies an
+                interval — usually annually).
+              </li>
+              <li>
+                Padlock that won’t close cleanly, lockout that won’t grip the device firmly,
+                multi-hasp with a damaged hinge.
+              </li>
+            </ul>
+            <p>
+              Don’t leave failed kit in the toolbox where you might absent-mindedly grab it next
+              week. Bin it, or quarantine it in a clearly-marked ‘NOT FOR USE’ pouch until it
+              gets repaired/replaced.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              "Six items make a competent isolation kit: lockouts, padlocks, multi-hasp, tags, voltage indicator, proving unit.",
+              "Voltage indicators (not multimeters) for proving dead — fixed leads, no range switch, multiple indication modes, GS38 probes.",
+              "GS38 probe geometry: ≤4 mm tip (2 mm preferred), finger barriers, fused leads, ideally HRC fuses.",
+              "Personal padlock + personal key + your pocket. Multi-hasp for shared work — one personal lock per person.",
+              "Where lock-off can’t be applied (older installs, fuse carriers), withdraw the carrier and keep it with you. HSG85 recognises this as valid.",
+              "Test kit is consumable. Drop, damage, missing indication mode, failed prove = out of service immediately. Cheap to replace, expensive to misuse.",
+            ]}
+          />
+
+          <Quiz title="Lock-off, tag-out and prove–test–prove knowledge check" questions={quizQuestions} />
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section5/5-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
               </div>
-
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h5 className="font-semibold text-foreground mb-2">Three-Phase Systems:</h5>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Test all six phase combinations (L1-L2, L1-L3, L2-L3)</li>
-                    <li>• Include neutral where present (L1-N, L2-N, L3-N)</li>
-                    <li>• Test each phase to earth (L1-E, L2-E, L3-E)</li>
-                    <li>• Include neutral to earth (N-E) if applicable</li>
-                  </ul>
-                </div>
-                <div>
-                  <h5 className="font-semibold text-foreground mb-2">Prove Protocol:</h5>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Prove tester works on known live supply</li>
-                    <li>• Perform all required dead tests</li>
-                    <li>• Re-prove tester on same known supply</li>
-                    <li>• Both proves must confirm voltage presence</li>
-                  </ul>
-                </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                The safe isolation procedure
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 3: Backfeed Scenarios */}
-        <div className="mb-8 border-l-4 border-purple-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              3
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Backfeed Scenarios & Special Considerations
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-              <p className="font-medium text-purple-800 dark:text-purple-200 mb-3">
-                Backfeed occurs when circuits receive power from unexpected sources, making them
-                dangerous even when apparently isolated.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Common Backfeed Sources:</h4>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Borrowed neutrals from other circuits</li>
-                    <li>• Solar PV installations</li>
-                    <li>• UPS systems and emergency supplies</li>
-                    <li>• Generator changeover systems</li>
-                    <li>• Interconnected lighting circuits</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Detection Methods:</h4>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Test all conductor combinations</li>
-                    <li>• Check circuit drawings carefully</li>
-                    <li>• Look for emergency supplies</li>
-                    <li>• Identify solar/generator systems</li>
-                    <li>• Question unusual test readings</li>
-                  </ul>
-                </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section5/5-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
               </div>
-
-              <div className="mt-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-4 rounded-lg">
-                <h4 className="font-semibold text-amber-800 dark:text-amber-200 mb-2">
-                  Special Circuit Considerations:
-                </h4>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <ul className="space-y-1 text-sm text-amber-700 dark:text-amber-300">
-                    <li>
-                      • <strong>Capacitive circuits:</strong> May retain charge after isolation
-                    </li>
-                    <li>
-                      • <strong>Motor circuits:</strong> Check for back-EMF generation
-                    </li>
-                  </ul>
-                  <ul className="space-y-1 text-sm text-amber-700 dark:text-amber-300">
-                    <li>
-                      • <strong>Control circuits:</strong> May have multiple supply sources
-                    </li>
-                    <li>
-                      • <strong>Fire alarm systems:</strong> Often have battery backup
-                    </li>
-                  </ul>
-                </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Isolation in different scenarios
               </div>
-            </div>
+            </button>
           </div>
-        </div>
-
-        {/* Section 4: Documentation & PTW */}
-        <div className="mb-8 border-l-4 border-amber-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-amber-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              4
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Documentation & Permit-to-Work Systems
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-              <p className="font-medium text-amber-800 dark:text-amber-200 mb-3">
-                Proper documentation protects both the electrician and employer, providing legal
-                evidence of safe working practices.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Essential Documentation:</h4>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Circuit reference and description</li>
-                    <li>• Isolator location and type</li>
-                    <li>• Test results for all conductors</li>
-                    <li>• Equipment serial numbers</li>
-                    <li>• Date, time, and signatures</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Permit-to-Work Content:</h4>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Work description and location</li>
-                    <li>• Hazards identified and controls</li>
-                    <li>• Personnel authorised to work</li>
-                    <li>• Start and expected finish times</li>
-                    <li>• Handback procedures</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 5: Practical Tips */}
-        <div className="mb-8 border-l-4 border-indigo-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              5
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Practical On-Site Workflow Tips
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800 rounded-lg p-4">
-              <p className="font-medium text-indigo-800 dark:text-indigo-200 mb-3">
-                Practical workflow management ensures safe isolation procedures are maintained even
-                in busy, complex work environments.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <div className="grid md:grid-cols-2 gap-4 mb-4">
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Work Sequencing:</h4>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Plan isolation sequence in advance</li>
-                    <li>• Consider impact on other workers</li>
-                    <li>• Coordinate with site activities</li>
-                    <li>• Allow time for proper procedures</li>
-                    <li>• Never rush isolation steps</li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Handling Interruptions:</h4>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li>• Complete isolation before stopping</li>
-                    <li>• Secure work area if leaving</li>
-                    <li>• Brief replacement personnel</li>
-                    <li>• Re-verify isolation on return</li>
-                    <li>• Update documentation accordingly</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
-                <h4 className="font-semibold text-foreground mb-3">
-                  Group Lock-Off Best Practice:
-                </h4>
-                <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-                  <div>
-                    <p className="text-sm font-medium">Setup Phase:</p>
-                    <ul className="text-xs text-white">
-                      <li>• Appointed person controls box</li>
-                      <li>• Each worker adds own lock</li>
-                      <li>• Master key secured in box</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">During Work:</p>
-                    <ul className="text-xs text-white">
-                      <li>• No one can remove master key</li>
-                      <li>• Individual responsibility maintained</li>
-                      <li>• Clear communication essential</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">Completion:</p>
-                    <ul className="text-xs text-white">
-                      <li>• Each person removes own lock</li>
-                      <li>• Last person gets master key</li>
-                      <li>• System can be re-energised</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 6: Common Mistakes */}
-        <div className="mb-8 border-l-4 border-rose-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              6
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Common Mistakes & How to Fix Them
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 rounded-lg p-4">
-              <p className="font-medium text-rose-800 dark:text-rose-200 mb-3">
-                Learning from common mistakes helps prevent dangerous situations and reinforces the
-                importance of systematic procedures.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <div className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2 text-red-800 dark:text-red-200">
-                      ❌ Wrong Isolator Selected
-                    </h4>
-                    <div className="space-y-2">
-                      <p className="text-sm text-red-700 dark:text-elec-yellow">
-                        <strong>Problem:</strong> Using local switches instead of main isolators
-                      </p>
-                      <p className="text-sm text-green-700 dark:text-green-300">
-                        <strong>Solution:</strong> Always isolate at the source, use circuit
-                        drawings
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2 text-red-800 dark:text-red-200">
-                      ❌ Skipping Re-Prove Step
-                    </h4>
-                    <div className="space-y-2">
-                      <p className="text-sm text-red-700 dark:text-elec-yellow">
-                        <strong>Problem:</strong> Not testing tester after dead tests
-                      </p>
-                      <p className="text-sm text-green-700 dark:text-green-300">
-                        <strong>Solution:</strong> Always re-prove - tester may have failed
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2 text-red-800 dark:text-red-200">
-                      ❌ Incomplete Testing
-                    </h4>
-                    <div className="space-y-2">
-                      <p className="text-sm text-red-700 dark:text-elec-yellow">
-                        <strong>Problem:</strong> Testing only line to neutral
-                      </p>
-                      <p className="text-sm text-green-700 dark:text-green-300">
-                        <strong>Solution:</strong> Test all combinations: L-N, L-E, N-E
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-4 rounded-lg">
-                    <h4 className="font-medium mb-2 text-red-800 dark:text-red-200">
-                      ❌ Inadequate Lock-Off
-                    </h4>
-                    <div className="space-y-2">
-                      <p className="text-sm text-red-700 dark:text-elec-yellow">
-                        <strong>Problem:</strong> Using tape or temporary measures
-                      </p>
-                      <p className="text-sm text-green-700 dark:text-green-300">
-                        <strong>Solution:</strong> Use proper mechanical lock-off devices
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 7: Case Studies */}
-        <div className="mb-8 border-l-4 border-violet-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-violet-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              7
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Real-World Case Studies
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-violet-50 dark:bg-violet-950/30 border border-violet-200 dark:border-violet-800 rounded-lg p-4">
-              <p className="font-medium text-violet-800 dark:text-violet-200 mb-3">
-                Real incidents demonstrate why each step of the safe isolation process is crucial -
-                shortcuts can have serious consequences.
-              </p>
-            </div>
-
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <div className="space-y-4">
-                <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
-                  <h4 className="font-semibold text-foreground mb-2">
-                    Case 1: Office Refurbishment
-                  </h4>
-                  <p className="text-sm text-white mb-3">
-                    Electrician working on lighting circuit in office building. Circuit schedule
-                    showed simple radial circuit, but emergency lighting shared the same neutral.
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm font-medium">What Went Wrong:</p>
-                      <ul className="text-xs text-white">
-                        <li>• Only tested line to neutral</li>
-                        <li>• Didn’t test neutral to earth</li>
-                        <li>• Emergency supply created neutral voltage</li>
-                        <li>• Received shock when touching neutral</li>
-                      </ul>
-                    </div>
-                    <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
-                      <strong className="text-white">Result:</strong>
-                      <span className="text-white">
-                        {' '}
-                        Full testing sequence would have detected live neutral from emergency
-                        circuit.
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
-                  <h4 className="font-semibold text-foreground mb-2">
-                    Case 2: Factory Maintenance
-                  </h4>
-                  <p className="text-sm text-white mb-3">
-                    Team working on conveyor system. Used group lock-off box but one electrician
-                    removed his lock early to get tools from van.
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm font-medium">What Went Wrong:</p>
-                      <ul className="text-xs text-white">
-                        <li>• Early lock removal compromised system</li>
-                        <li>• Another electrician still working</li>
-                        <li>• Supervisor re-energised thinking work complete</li>
-                        <li>• Working electrician narrowly avoided injury</li>
-                      </ul>
-                    </div>
-                    <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
-                      <strong className="text-white">Result:</strong>
-                      <span className="text-white">
-                        {' '}
-                        Lock-off procedures now include mandatory check-out process before removal.
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
-                  <h4 className="font-semibold text-foreground mb-2">
-                    Case 3: Solar PV Installation
-                  </h4>
-                  <p className="text-sm text-white mb-3">
-                    Electrician testing consumer unit circuits during solar PV maintenance. Forgot
-                    to isolate DC side of inverter system.
-                  </p>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm font-medium">What Went Wrong:</p>
-                      <ul className="text-xs text-white">
-                        <li>• AC isolator switched off only</li>
-                        <li>• DC supply still feeding inverter</li>
-                        <li>• Inverter created AC backfeed</li>
-                        <li>• Circuit appeared dead but wasn’t</li>
-                      </ul>
-                    </div>
-                    <div className="mt-3 p-2 bg-elec-yellow bg-elec-yellow rounded text-sm">
-                      <strong className="text-white">Result:</strong>
-                      <span className="text-white">
-                        {' '}
-                        Now requires isolation of both AC and DC sides, plus specific PV isolation
-                        training.
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 8: Summary */}
-        <div className="mb-8 border-l-4 border-slate-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-slate-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              8
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Module Summary</h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-slate-50 dark:bg-slate-950/30 border border-slate-200 dark:border-slate-800 rounded-lg p-4">
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Key Takeaways:</h4>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Safe isolation is a systematic 7-step process</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Every step is critical - no shortcuts allowed</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Testing must include all conductor combinations</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Prove-before and prove-after testing is mandatory</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Documentation protects both worker and employer</span>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-foreground mb-2">Remember Always:</h4>
-                  <ul className="space-y-1 text-sm text-white">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Identify circuit correctly using multiple methods</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Use proper lock-off devices, never temporary measures</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Watch for backfeed from alternative supplies</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>Keep detailed records of all procedures</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                      <span>When in doubt, get help from experienced colleagues</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} />
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default Sub3;
+}

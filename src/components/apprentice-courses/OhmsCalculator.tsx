@@ -74,7 +74,7 @@ const Field = ({
         placeholder="Enter value"
         className="flex-1 bg-background border-border/40 h-12 md:text-base"
       />
-      <div className="w-14 sm:w-16 md:w-18">{children}</div>
+      <div className="w-20 sm:w-24 shrink-0">{children}</div>
     </div>
   </div>
 );
@@ -245,7 +245,7 @@ const OhmsCalculator: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Field id="voltage" label="Voltage (V)" value={v} onValueChange={setV}>
           <Select value={vUnit} onValueChange={handleVUnitChange}>
-            <SelectTrigger className="h-12 px-2 text-sm bg-background border-border/40">
+            <SelectTrigger className="h-12 px-3 text-base bg-background border-border/40 text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-background border-border z-50">
@@ -258,7 +258,7 @@ const OhmsCalculator: React.FC = () => {
 
         <Field id="current" label="Current (I)" value={i} onValueChange={setI}>
           <Select value={iUnit} onValueChange={handleIUnitChange}>
-            <SelectTrigger className="h-12 px-2 text-sm bg-background border-border/40">
+            <SelectTrigger className="h-12 px-3 text-base bg-background border-border/40 text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-background border-border z-50">
@@ -270,7 +270,7 @@ const OhmsCalculator: React.FC = () => {
 
         <Field id="resistance" label="Resistance (R)" value={r} onValueChange={setR}>
           <Select value={rUnit} onValueChange={handleRUnitChange}>
-            <SelectTrigger className="h-12 px-2 text-sm bg-background border-border/40">
+            <SelectTrigger className="h-12 px-3 text-base bg-background border-border/40 text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-background border-border z-50">
@@ -283,7 +283,7 @@ const OhmsCalculator: React.FC = () => {
 
         <Field id="power" label="Power (P)" value={p} onValueChange={setP}>
           <Select value={pUnit} onValueChange={handlePUnitChange}>
-            <SelectTrigger className="h-12 px-2 text-sm bg-background border-border/40">
+            <SelectTrigger className="h-12 px-3 text-base bg-background border-border/40 text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-background border-border z-50">
@@ -301,11 +301,11 @@ const OhmsCalculator: React.FC = () => {
         >
           Calculate
         </Button>
-        <Button variant="outline" onClick={resetAll} className="border-border/40">
+        <Button variant="outline" onClick={resetAll} className="border-border/40 text-foreground">
           Reset
         </Button>
         <div className="ml-auto flex items-center gap-2 text-sm">
-          <Label htmlFor="precision" className="text-muted-foreground">
+          <Label htmlFor="precision" className="text-foreground">
             Decimals
           </Label>
           <Select
@@ -329,7 +329,7 @@ const OhmsCalculator: React.FC = () => {
               }
             }}
           >
-            <SelectTrigger id="precision" className="w-16 h-8 bg-background border-border/40">
+            <SelectTrigger id="precision" className="w-20 h-9 px-3 bg-background border-border/40 text-foreground">
               <SelectValue />
             </SelectTrigger>
             <SelectContent className="bg-background border-border z-50">

@@ -17,11 +17,26 @@ import {
   AlertTriangle,
   CheckCircle2,
   ChevronDown,
+  Play,
   Quote,
   ScrollText,
   Sparkles,
 } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
 import { cn } from '@/lib/utils';
+import { useVideoBookmarks } from '@/hooks/learning-videos/useVideoBookmarks';
+
+// Native (Capacitor) proxy: bypasses YouTube Error 153 caused by WKWebView's
+// capacitor:// origin not sending a valid HTTP Referer. The proxy page on
+// elec-mate.com loads from a real HTTPS domain, so YouTube accepts the embed.
+const YOUTUBE_PROXY_URL = 'https://www.elec-mate.com/youtube.html';
+
+function buildEmbedSrc(videoId: string): string {
+  if (Capacitor.isNativePlatform()) {
+    return `${YOUTUBE_PROXY_URL}?v=${videoId}&autoplay=1`;
+  }
+  return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0&modestbranding=1`;
+}
 
 /* ── TLDR — the upfront promise. Card. ─────────────────────────────── */
 
@@ -356,3 +371,279 @@ export function SectionRule() {
 /* ── Re-export the existing AM2LearningOutcomes (already editorial) ─ */
 
 export { AM2LearningOutcomes as LearningOutcomes } from '@/components/apprentice-courses/AM2LearningOutcomes';
+
+/* ── Video components — editorial card that opens YouTube in a new tab ─
+
+   Why card + new tab (not iframe embed):
+   - Lighter UX, no ad pre-roll inside the page, no embedding TOS risk
+   - Native YouTube controls (subtitles, speed, fullscreen) on whichever device
+   - Click is a hard signal we can record as a "watch start" via the
+     existing useVideoBookmarks().trackVideoWatched(videoId) hook
+*/
+
+/** Extract the YouTube video ID from any common URL shape. */
+function extractYouTubeId(url: string): string | null {
+  if (!url) return null;
+  // youtu.be/<id>
+  const shortMatch = url.match(/youtu\.be\/([A-Za-z0-9_-]{6,})/);
+  if (shortMatch) return shortMatch[1];
+  // youtube.com/watch?v=<id>
+  const watchMatch = url.match(/[?&]v=([A-Za-z0-9_-]{6,})/);
+  if (watchMatch) return watchMatch[1];
+  // youtube.com/embed/<id> or /shorts/<id> or /v/<id>
+  const pathMatch = url.match(/youtube\.com\/(?:embed|shorts|v)\/([A-Za-z0-9_-]{6,})/);
+  if (pathMatch) return pathMatch[1];
+  return null;
+}
+
+interface VideoCardProps {
+  url: string;
+  title: string;
+  channel?: string;
+  duration?: string;
+  topic?: string;
+  caption?: ReactNode;
+  /** Optional list of AC codes covered by this video — for future analytics. */
+  covers?: string[];
+  className?: string;
+}
+
+export function VideoCard({
+  url,
+  title,
+  channel,
+  duration,
+  topic,
+  caption,
+  className,
+}: VideoCardProps) {
+  const videoId = extractYouTubeId(url);
+  // Try maxres first; fall back to hqdefault on 404 (many older videos lack maxres).
+  const maxThumb = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
+  const hqThumb = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
+
+  const { trackVideoWatched } = useVideoBookmarks();
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    if (!videoId) return;
+    trackVideoWatched(videoId).catch(() => {});
+    setIsPlaying(true);
+  };
+
+  const eyebrow = channel ? `Watch · ${channel}` : 'Watch';
+
+  return (
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] w-full max-w-[520px]',
+        className
+      )}
+    >
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-red-500/70 via-orange-400/70 to-elec-yellow/70 opacity-80" />
+
+      <div className="px-4 pt-4 sm:px-5 sm:pt-5">
+        <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-orange-300">
+          {eyebrow}
+        </div>
+      </div>
+
+      {/* Player area — thumbnail with tap-to-play, swaps to inline iframe */}
+      <div className="relative mt-3 aspect-video w-full bg-[hsl(0_0%_8%)] overflow-hidden">
+        {isPlaying && videoId ? (
+          <iframe
+            src={buildEmbedSrc(videoId)}
+            title={title}
+            className="absolute inset-0 w-full h-full border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+            allowFullScreen
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={handlePlay}
+            disabled={!videoId}
+            aria-label={`Play ${title}`}
+            className="absolute inset-0 group touch-manipulation"
+          >
+            {maxThumb && (
+              <img
+                src={maxThumb}
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  if (hqThumb && img.src !== hqThumb) img.src = hqThumb;
+                }}
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-elec-yellow flex items-center justify-center shadow-lg shadow-black/40 transition-transform duration-200 group-hover:scale-105 group-active:scale-95">
+                <Play className="h-6 w-6 sm:h-7 sm:w-7 text-black fill-black ml-0.5" />
+              </div>
+            </div>
+            {duration && (
+              <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-sm text-[11px] font-medium text-white tabular-nums">
+                {duration}
+              </div>
+            )}
+          </button>
+        )}
+      </div>
+
+      {/* Title + meta */}
+      <div className="px-4 py-4 sm:px-5 sm:py-5">
+        {topic && (
+          <div className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-elec-yellow mb-1.5">
+            {topic}
+          </div>
+        )}
+        <h4 className="text-[15px] sm:text-[16px] font-semibold text-white tracking-tight leading-snug">
+          {title}
+        </h4>
+        {channel && (
+          <div className="mt-1.5 text-[12.5px] text-white/65">{channel}</div>
+        )}
+      </div>
+
+      {caption && (
+        <div className="px-4 pb-4 sm:px-5 sm:pb-5 -mt-2 text-[12px] text-white/70 leading-relaxed">
+          {caption}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── VideoList — compact row format for "Go deeper" sections ─────── */
+
+interface VideoListItem {
+  url: string;
+  title: string;
+  channel?: string;
+  duration?: string;
+  topic?: string;
+}
+
+interface VideoListProps {
+  videos: VideoListItem[];
+  title?: string;
+  className?: string;
+}
+
+export function VideoList({ videos, title = 'Go deeper', className }: VideoListProps) {
+  return (
+    <section className={cn('space-y-3', className)}>
+      {title && (
+        <div className="flex items-center gap-2">
+          <span className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-orange-300">
+            {title}
+          </span>
+        </div>
+      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {videos.map((video, i) => (
+          <VideoListRow key={i} {...video} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function VideoListRow({ url, title, channel, duration, topic }: VideoListItem) {
+  const videoId = extractYouTubeId(url);
+  const maxThumb = videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
+  const hqThumb = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
+
+  const { trackVideoWatched } = useVideoBookmarks();
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handlePlay = () => {
+    if (!videoId) return;
+    trackVideoWatched(videoId).catch(() => {});
+    setIsPlaying(true);
+  };
+
+  if (isPlaying && videoId) {
+    return (
+      <div className="rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] overflow-hidden">
+        <div className="relative w-full aspect-video bg-black">
+          <iframe
+            src={buildEmbedSrc(videoId)}
+            title={title}
+            className="absolute inset-0 w-full h-full border-0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+            allowFullScreen
+          />
+        </div>
+        <div className="px-3 py-2.5">
+          {topic && (
+            <div className="text-[9.5px] font-medium uppercase tracking-[0.16em] text-elec-yellow/85 mb-1 truncate">
+              {topic}
+            </div>
+          )}
+          <div className="text-[13.5px] font-semibold text-white leading-snug line-clamp-2">
+            {title}
+          </div>
+          {channel && (
+            <div className="mt-1 text-[11.5px] text-white/60 truncate">{channel}</div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handlePlay}
+      disabled={!videoId}
+      aria-label={`Play ${title}`}
+      className="group flex gap-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-2.5 hover:border-white/[0.12] transition-colors touch-manipulation w-full text-left"
+    >
+      {/* Thumbnail — fixed aspect, smaller than the primary card */}
+      <div className="relative shrink-0 w-32 sm:w-36 aspect-video rounded-lg overflow-hidden bg-[hsl(0_0%_8%)]">
+        {maxThumb && (
+          <img
+            src={maxThumb}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => {
+              const img = e.currentTarget;
+              if (hqThumb && img.src !== hqThumb) img.src = hqThumb;
+            }}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="h-9 w-9 rounded-full bg-elec-yellow flex items-center justify-center shadow-md shadow-black/40 transition-transform duration-200 group-hover:scale-105">
+            <Play className="h-3.5 w-3.5 text-black fill-black ml-0.5" />
+          </div>
+        </div>
+        {duration && (
+          <div className="absolute bottom-1 right-1 px-1.5 py-0.5 rounded bg-black/75 text-[10px] font-medium text-white tabular-nums">
+            {duration}
+          </div>
+        )}
+      </div>
+
+      {/* Title + meta */}
+      <div className="flex-1 min-w-0 py-0.5">
+        {topic && (
+          <div className="text-[9.5px] font-medium uppercase tracking-[0.16em] text-elec-yellow/85 mb-1 truncate">
+            {topic}
+          </div>
+        )}
+        <div className="text-[13.5px] font-semibold text-white leading-snug line-clamp-2">
+          {title}
+        </div>
+        {channel && (
+          <div className="mt-1 text-[11.5px] text-white/60 truncate">{channel}</div>
+        )}
+      </div>
+    </button>
+  );
+}

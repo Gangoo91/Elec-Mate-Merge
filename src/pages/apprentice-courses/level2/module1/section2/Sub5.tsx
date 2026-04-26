@@ -1,3 +1,12 @@
+/**
+ * Module 1 · Section 2 · Subsection 5 — Slips, trips and manual handling
+ * City &amp; Guilds 2365-02 → Unit 201
+ *   • LO4 → AC 4.4 — describe situations which can constitute a hazard in the
+ *     workplace (slips, trips, manual handling injuries).
+ *   • LO4 → AC 4.5 — explain practices and procedures for addressing hazards
+ *     in the workplace (Manual Handling Operations Regs 1992, lifting limits).
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 

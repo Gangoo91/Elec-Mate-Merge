@@ -112,7 +112,7 @@ export const EnergyCostCalc: React.FC = () => {
               Unit
             </Label>
             <Select value={unit} onValueChange={(v) => setUnit(v as any)}>
-              <SelectTrigger id="unit" className="bg-background border-border h-10">
+              <SelectTrigger id="unit" className="bg-background border-border h-12 px-3 text-base text-foreground">
                 <SelectValue placeholder="Unit" />
               </SelectTrigger>
               <SelectContent>

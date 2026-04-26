@@ -1,650 +1,731 @@
-import {
-  ArrowLeft,
-  CheckCircle,
-  Heart,
-  AlertTriangle,
-  Phone,
-  FileText,
-  Shield,
-  Users,
-  AlertCircle,
-  Brain,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+/**
+ * Module 1 · Section 6 · Subsection 3 — RIDDOR: what must be reported.
+ *
+ * Unit 201 LO2 alignment:
+ *   - AC 2.4: know the legal requirements for reporting accidents and
+ *     dangerous occurrences in the workplace.
+ *
+ * Pedagogy:
+ *   - Anatomy of RIDDOR 2013 — duties, who reports, what counts.
+ *   - The four buckets: deaths, specified injuries (Sched 1), over-7-day
+ *     injuries, dangerous occurrences (Sched 2).
+ *   - The clocks: 10 days for most, 15 days for over-7-day, immediate for
+ *     death.
+ *   - The accident book — internal record vs HSE notification.
+ *   - F2508 form, online RIDDOR portal, telephone 0345 300 9923 for fatals.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
 import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'First Aid Requirements on Site - Level 2 Electrical Course';
+const TITLE =
+  'RIDDOR — what must be reported | Level 2 Module 1.6.3 | Elec-Mate';
 const DESCRIPTION =
-  'Know what first aid is required on electrical sites, how to respond to incidents, and how to record and report properly.';
+  'The legal duty to report serious accidents and dangerous occurrences to the HSE — the four reportable buckets, the clocks, the F2508 form, and what happens if you’re late.';
 
-const Sub3 = () => {
+/* ── Inline check questions (wired into stats/streaks) ──────────────── */
+
+const checks = [
+  {
+    id: 'riddor-7-day-check',
+    question:
+      'A bricklayer slips on Tuesday. He’s off work the rest of that week and the following Monday. Does that hit the RIDDOR over-7-day threshold?',
+    options: [
+      'No — it has to be over 14 consecutive days',
+      'Yes — anything over 7 consecutive days off normal duties (excluding the day of the accident)',
+      'No — only over-3-day injuries are RIDDOR',
+      'Yes — anything that needed first aid is RIDDOR',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Over-7-day means more than 7 consecutive days unable to do their normal work, NOT counting the day of the accident itself. Tuesday (excluded) + Wed–Mon = 6 days. Doesn’t hit RIDDOR yet. If he’s still off on the following Tuesday, that’s 7 days — still not over. He needs to be off into the day AFTER, then it’s reportable. Three-day injuries went out in 2012.',
+  },
+  {
+    id: 'riddor-who-reports-check',
+    question:
+      'You witness a serious accident on site. Who is legally required to make the RIDDOR report?',
+    options: [
+      'You, because you witnessed it',
+      'The injured person',
+      'The "responsible person" — usually the employer, or the person in control of the premises',
+      'The HSE inspector',
+    ],
+    correctIndex: 2,
+    explanation:
+      'RIDDOR puts the duty on the "responsible person" — for an employee, that’s their employer; for self-employed working on someone else’s premises, the person in control of those premises; for the self-employed at their own gaff, themselves. Witnesses report it INTERNALLY (accident book, supervisor) — the employer does the legal RIDDOR notification.',
+  },
+  {
+    id: 'riddor-deadline-check',
+    question:
+      'A worker breaks their wrist falling from a stepladder — definitely a specified injury. What’s the legal deadline to notify the HSE?',
+    options: [
+      'Within 24 hours',
+      'Within 10 days of the accident',
+      'Within 28 days',
+      'When convenient',
+    ],
+    correctIndex: 1,
+    explanation:
+      'For specified injuries (Schedule 1), notification is "without delay" and the report has to be in within 10 days. Over-7-day injuries get 15 days. Deaths must be reported by quickest practical means — usually phone — and confirmed in writing within 10 days. Late notification is itself a separate breach.',
+  },
+];
+
+/* ── End-of-page Quiz (wires into stats/streaks) ─────────────────────── */
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: 'What does RIDDOR stand for?',
+    options: [
+      'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
+      'Regulations for Industrial Death, Disease and Operating Risks',
+      'Recording of Incidents, Diseases, Dangers and Outcome Reports',
+      'Reporting of Industrial Damage and Operating Risks',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'RIDDOR 2013 — Reporting of Injuries, Diseases and Dangerous Occurrences Regulations. UK statutory instrument, made under HASAWA, defines what types of incidents must be reported to the HSE.',
+  },
+  {
+    id: 2,
+    question: 'Who has the legal duty to make a RIDDOR report?',
+    options: [
+      'Anyone who witnessed the accident',
+      'The injured person, in person, at the HSE office',
+      'The "responsible person" — typically the employer, self-employed person, or person in control of the premises',
+      'The first aider who treated the injury',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The "responsible person" definition shifts depending on context — but it’s never the witness or the casualty themselves. Apprentices flag the incident INTERNALLY, the employer makes the legal notification.',
+  },
+  {
+    id: 3,
+    question: 'Which of the following is a Specified Injury under RIDDOR Schedule 1?',
+    options: [
+      'A small cut needing a plaster',
+      'A bruised knee from a fall',
+      'A bone fracture (other than to fingers, thumbs and toes)',
+      'A headache after a long shift',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Schedule 1 specified injuries include bone fractures (other than fingers/thumbs/toes), amputations, sight loss (temporary or permanent), serious burns, scalpings, loss of consciousness from head injury or asphyxia, crush injuries leading to internal organ damage, and 24-hour hospital admission for serious injuries.',
+  },
+  {
+    id: 4,
+    question:
+      'An apprentice is off work for 9 consecutive days after a workplace injury. What category of RIDDOR report applies?',
+    options: [
+      'Specified injury',
+      'Over-7-day injury',
+      'Dangerous occurrence',
+      'No report needed',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Over-7-day means more than 7 consecutive days (excluding the day of the accident) unable to perform their normal work. Reportable within 15 days. The old "over-3-day" threshold was replaced in 2012.',
+  },
+  {
+    id: 5,
+    question: 'Which of these is a Dangerous Occurrence under RIDDOR Schedule 2?',
+    options: [
+      'A late delivery',
+      'An employee is off sick with a cold',
+      'An overhead crane collapses, even though nobody is hurt',
+      'A delayed lunch break',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Dangerous occurrences are near-miss events with serious harm potential — collapse of lifting gear, electrical short causing fire/explosion, unintended collapse of scaffold over 5 m, accidental release of biological agents, etc. Reportable even when nobody is injured.',
+  },
+  {
+    id: 6,
+    question:
+      'A worker is killed in a workplace accident. What is the legal reporting requirement?',
+    options: [
+      'Email the HSE within 30 days',
+      'Notify the HSE by quickest practical means (phone), confirmed in writing within 10 days',
+      'Wait until the inquest concludes',
+      'Tell the family first, then HSE within 28 days',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Fatalities must be reported by the quickest practical means — usually the HSE Incident Contact Centre on 0345 300 9923 — followed by an F2508 form within 10 days. Out-of-hours, the same number routes to a duty officer for a fatal incident.',
+  },
+  {
+    id: 7,
+    question:
+      'You discover a worker fell ill 8 days ago and they’ve only just told you they were off normal duties for 9 days. The original incident was 17 days ago. What now?',
+    options: [
+      'Don’t bother — too late to report',
+      'Submit the over-7-day RIDDOR report now and document why notification was late',
+      'Wait until the next monthly H&S meeting',
+      'Cover it up',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Late notifications still happen and are still better than no notification. Submit immediately. The HSE prefers a late report with an honest explanation over a missing one — but late notification IS a breach in itself, and persistent lateness can trigger an inspection.',
+  },
+  {
+    id: 8,
+    question:
+      'What is the difference between the company accident book and a RIDDOR report?',
+    options: [
+      'They’re the same thing',
+      'The accident book is internal (every injury, near-miss, first-aid event); RIDDOR is the legal external report to the HSE for serious incidents only',
+      'The accident book is for visitors only',
+      'RIDDOR replaces the accident book',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Accident book = internal record of EVERY injury / near-miss / first-aid event, kept under the Social Security (Claims and Payments) Regulations and used for internal trend-spotting and any future insurance/Industrial Injuries claims. RIDDOR = legal duty to notify the HSE of SERIOUS incidents only. Both must happen — they don’t replace each other.',
+  },
+];
+
+/* ── FAQs (apprentice voice) ─────────────────────────────────────────── */
+
+const faqs = [
+  {
+    question: 'I broke my finger at work. Is that RIDDOR?',
+    answer:
+      'Schedule 1 specified injuries cover bone fractures OTHER THAN to fingers, thumbs and toes. So a broken finger by itself isn’t a specified injury. BUT — if you’re off normal duties for more than 7 consecutive days because of it, you become an over-7-day injury and that IS RIDDOR. So a broken finger you can keep working with = no RIDDOR; broken finger that puts you out for 8 days = RIDDOR. The accident book entry happens either way.',
+  },
+  {
+    question: 'Why does the HSE care about near-misses (dangerous occurrences)?',
+    answer:
+      'Because near-misses are leading indicators. For every fatality there are typically thousands of near-misses with the same root cause. Reporting them lets the HSE spot patterns — a rash of crane collapses, a faulty model of switchgear, an industry-wide bad practice — and act before the next near-miss becomes a death. Schedule 2 lists 27 specific dangerous occurrences that must be reported.',
+  },
+  {
+    question: 'What’s the F2508 form?',
+    answer:
+      'The legacy paper form — F2508 for injuries, F2508A for diseases. Mostly replaced now by the HSE’s online RIDDOR portal, which generates an F2508 report when you submit. The form ID still gets used as shorthand for "I’m doing the RIDDOR notification". Fatals can also go by phone first.',
+  },
+  {
+    question: 'What happens if the company doesn’t report when it should?',
+    answer:
+      'Late or missing RIDDOR reports are themselves a breach of HASAWA, prosecutable in their own right. The HSE looks at reporting history when deciding whether to escalate after a serious incident — a clean reporting record helps; a pattern of "we forgot" gets the company put on the high-priority inspection list. Persistent failure can trigger an Improvement or Prohibition Notice and ultimately court.',
+  },
+  {
+    question: 'Are diseases reportable?',
+    answer:
+      'Yes — Part 7 of RIDDOR covers occupational diseases. For sparks, the relevant ones include carpal tunnel syndrome (from heavy hand-tool use), HAVS (vibration white finger from prolonged power-tool use), occupational dermatitis (from solvents, cement dust, certain insulation), and severe upper-limb cramp / tendinitis. Diagnosed in writing by a doctor + linked to work = reportable.',
+  },
+  {
+    question: 'Do I report when an apprentice is the casualty?',
+    answer:
+      'Same rules — apprentices count as employees for RIDDOR. Trainees on work experience also count, even when unpaid. Volunteers can count too depending on the arrangement. Self-employed sub-contractors are trickier but generally count as their own "responsible person" if they’re injured on someone else’s site.',
+  },
+];
+
+export default function Sub3() {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
-  const quizQuestions = [
-    {
-      id: 1,
-      question: 'What law governs first aid at work in the UK?',
-      options: [
-        'Health and Safety at Work Act 1974',
-        'Health and Safety (First-Aid) Regulations 1981',
-        'Construction (Design and Management) Regulations 2015',
-        'Management of Health and Safety at Work Regulations 1999',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'The Health and Safety (First-Aid) Regulations 1981 specifically govern first aid provision in UK workplaces, requiring adequate equipment and trained personnel.',
-    },
-    {
-      id: 2,
-      question: 'Name three items that must be in a first aid kit.',
-      options: [
-        'Paracetamol, bandages, and thermometer',
-        'Sterile dressings, bandages, and disposable gloves',
-        'Antiseptic cream, scissors, and plasters',
-        'Aspirin, eye wash, and burn gel',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Standard first aid kits must contain sterile dressings, bandages, disposable gloves, eye wash solution, and other basic items. Medications are not allowed.',
-    },
-    {
-      id: 3,
-      question: 'Who should you inform after giving first aid?',
-      options: [
-        "The injured person’s family only",
-        'The HSE inspector',
-        'The site supervisor or first aider',
-        'The local GP surgery',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'After giving first aid, you must inform the site supervisor or trained first aider, and record the incident in the accident book.',
-    },
-    {
-      id: 4,
-      question: 'Are painkillers allowed in first aid boxes?',
-      options: ['Yes', 'No'],
-      correctAnswer: 1,
-      explanation:
-        'No. Medications like paracetamol or antiseptic creams are not allowed in standard workplace first aid kits due to allergy risks and legal liability.',
-    },
-    {
-      id: 5,
-      question: 'True or False: Every site must have a trained first aider.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
-      explanation:
-        "False. Small, low-risk sites may only need an 'appointed person' to manage first aid. Larger or high-risk sites require trained first aiders.",
-    },
-    {
-      id: 6,
-      question:
-        'What are the immediate steps after finding someone who has received an electric shock?',
-      options: [
-        "Touch them to check if they’re conscious",
-        'Pour water on them to cool them down',
-        'Isolate the power source, then check breathing',
-        'Give them mouth-to-mouth immediately',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Never touch someone still in contact with electricity. First isolate the power source, then check for breathing and consciousness before providing aid.',
-    },
-    {
-      id: 7,
-      question: "What’s the difference between an appointed person and a trained first aider?",
-      options: [
-        "There’s no difference - they’re the same role",
-        'Appointed person needs less training but can only manage equipment and call 999',
-        'Trained first aider is only for large sites',
-        'Appointed person can give medications',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'An appointed person manages first aid equipment and calls emergency services but needs no formal training. A trained first aider can perform CPR, treat injuries, and requires HSE-approved training.',
-    },
-    {
-      id: 8,
-      question: 'When calling 999, which information is most critical to provide first?',
-      options: [
-        'Your name and company',
-        "The injured person’s medical history",
-        'Location and nature of emergency',
-        'Insurance details',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Location and nature of emergency are critical - emergency services need to know where to go and what to expect. Personal details come later in the call.',
-    },
-    {
-      id: 9,
-      question: 'Which item is NOT allowed in a workplace first aid kit?',
-      options: ['Paracetamol', 'Sterile dressings', 'Disposable gloves', 'Bandages'],
-      correctAnswer: 0,
-      explanation:
-        'Medications like paracetamol are not allowed in standard workplace first-aid kits due to allergy risks and liability issues.',
-    },
-    {
-      id: 10,
-      question: 'How long must accident book records be kept?',
-      options: ['1 year', '2 years', '3 years', 'Permanently'],
-      correctAnswer: 2,
-      explanation:
-        'Accident book records must be kept for 3 years from the date of the last entry, as required by UK health and safety regulations.',
-    },
-  ];
-
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" asChild className="text-white hover:text-white">
-            <Link to=".." className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Section 6
-            </Link>
-          </Button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Section 6
+          </button>
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Title block */}
-        <div className="flex items-start gap-4 mb-8">
-          <Heart className="h-8 w-8 text-elec-yellow mt-2" />
-          <div className="flex-1">
-            <div className="inline-flex items-center px-3 py-1 bg-elec-yellow text-black rounded-full text-sm font-semibold mb-4">
-              Module 6.3
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">First Aid Requirements on Site</h1>
-            <p className="text-xl text-white">
-              Understanding legal first aid provision and emergency response procedures
+          <PageHero
+            eyebrow="Module 1 · Section 6 · Subsection 3"
+            title="RIDDOR — what must be reported"
+            description="The legal duty to report serious accidents to the HSE. The four reportable buckets, the clocks, who reports, the F2508 form, and what happens if you’re late."
+            tone="emerald"
+          />
+
+          <TLDR
+            points={[
+              "RIDDOR 2013 = the law that says certain accidents at work must be reported to the HSE — not just written in the accident book.",
+              "Four buckets: Deaths, Specified Injuries (Sched 1), Over-7-day injuries, and Dangerous Occurrences (Sched 2 near-misses with serious potential).",
+              "The clocks: deaths phoned through immediately; specified injuries reported within 10 days; over-7-day injuries within 15 days. Late = a separate breach.",
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Name what RIDDOR stands for and which Act it sits under.",
+              "Identify which of the four reportable categories an incident falls into.",
+              "Apply the correct reporting clock (immediately / 10 days / 15 days).",
+              "Tell the difference between the accident book (internal) and a RIDDOR notification (external to HSE).",
+              "Recognise common Schedule 1 specified injuries and Schedule 2 dangerous occurrences.",
+              'Explain who the "responsible person" is for an apprentice, an employee, a sub-contractor, and a self-employed worker.',
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <ContentEyebrow>What it is and where it sits</ContentEyebrow>
+
+          <ConceptBlock title="RIDDOR is a regulation made under HASAWA — not a separate law">
+            <p>
+              The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
+              are a statutory instrument under HASAWA. They set out a legal duty on the
+              "responsible person" to notify the HSE — or in some sectors the local authority
+              — when certain serious workplace incidents happen.
             </p>
-          </div>
-        </div>
-
-        {/* Introduction */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h2 className="text-lg font-semibold text-white mb-3">In 30 seconds</h2>
-              <p className="text-white text-sm leading-relaxed">
-                UK law requires adequate first aid provision on all sites. This means proper
-                equipment, trained personnel (appointed person or first aider), clear signage, and
-                emergency communication. For electrical workers, knowing how to respond safely to
-                electric shock and arc burns is critical.
-              </p>
-            </div>
-            <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
-              <h3 className="text-elec-yellow font-semibold mb-2 text-sm">Spot it / Use it</h3>
-              <div className="space-y-2 text-white text-sm">
-                <p>
-                  <span className="text-elec-yellow">Spot:</span> First aid box location, trained
-                  first aider names, emergency contact numbers
-                </p>
-                <p>
-                  <span className="text-elec-yellow">Use:</span> Isolate power first, assess safety,
-                  provide aid within your training, call 999 when needed
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Learning Outcomes</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">
-                Understand legal first aid requirements on electrical sites
-              </span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">
-                Identify site provision: kits, appointed person vs trained first aider
-              </span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">
-                Respond to incidents safely with electrical-specific knowledge
-              </span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">Record incidents and know when RIDDOR applies</span>
-            </div>
-          </div>
-        </Card>
-
-        {/* Section 1 */}
-        <div className="mb-8 border-l-4 border-red-500 p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
-              1
-            </div>
-            <div className="flex-1">
-              <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                First Aid Overview and Legal Duty
-              </h2>
-            </div>
-          </div>
-          <div className="ml-12 space-y-4">
-            <p className="text-white">
-              The Health and Safety (First-Aid) Regulations 1981 place a legal duty on employers to
-              provide adequate and appropriate first aid equipment, facilities, and personnel to
-              ensure employees receive immediate attention if injured or taken ill at work.
+            <p>
+              The point isn’t paperwork. It’s pattern-spotting. The HSE uses RIDDOR data to
+              direct inspections, publish industry guidance, push enforcement against persistent
+              offenders, and decide where to focus resources. A scaffolding firm with three
+              fall-from-height RIDDORs in a year is an inspection target. A switchgear range
+              with multiple electrical-burn RIDDORs across the country is a manufacturer
+              call-in.
             </p>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-2">It covers:</h3>
-                <ul className="text-white text-sm space-y-1">
-                  <li>• Adequate first aid equipment</li>
-                  <li>• Trained personnel availability</li>
-                  <li>• Clear information and signage</li>
-                  <li>• Emergency communication access</li>
-                </ul>
-              </div>
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-2">The aim is to:</h3>
-                <ul className="text-white text-sm space-y-1">
-                  <li>• Preserve life in emergencies</li>
-                  <li>• Prevent conditions worsening</li>
-                  <li>• Promote recovery from injury/illness</li>
-                  <li>• Ensure legal compliance</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Inline Check */}
-        <InlineCheck
-          id="first-aid-check-1"
-          question="Which item is NOT allowed in a workplace first aid kit?"
-          options={['Paracetamol', 'Sterile dressings', 'Disposable gloves', 'Bandages']}
-          correctIndex={0}
-          explanation="Medications like paracetamol are not allowed in standard workplace first-aid kits due to allergy risks and liability issues."
-        />
-
-        {/* Section 2 */}
-        <div className="mb-8 border-l-4 border-orange-500 p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
-              2
-            </div>
-            <div className="flex-1">
-              <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                Site Provision: Kits, People, Locations
-              </h2>
-            </div>
-          </div>
-          <div className="ml-12 space-y-4">
-            <p className="text-white">
-              The level of first aid provision depends on site size, risk level, and nature of work.
-              Electrical sites often require enhanced provision due to specific hazards like
-              electric shock and arc flash.
+            <p>
+              For you as an apprentice, RIDDOR almost never lands on your desk personally — but
+              you will witness incidents, and you have to know what triggers a report so you
+              can flag it to the supervisor while there’s still time on the clock.
             </p>
+          </ConceptBlock>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-2">Essentials for all sites:</h3>
-                <ul className="text-white text-sm space-y-1">
-                  <li>• First aid box (clean, accessible, marked)</li>
-                  <li>• Appointed person or trained first aider</li>
-                  <li>• Clear signage showing locations/names</li>
-                  <li>• Emergency communication access</li>
-                  <li>• Accident recording arrangements</li>
-                </ul>
-              </div>
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-2">Appointed person vs First aider:</h3>
-                <ul className="text-white text-sm space-y-1">
-                  <li>
-                    • <strong>Appointed:</strong> Manages equipment, calls 999
-                  </li>
-                  <li>
-                    • <strong>Appointed:</strong> No formal training required (low risk)
-                  </li>
-                  <li>
-                    • <strong>First aider:</strong> Can perform CPR, treat injuries
-                  </li>
-                  <li>
-                    • <strong>First aider:</strong> Needs 3-day HSE training
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+          <RegsCallout
+            source="RIDDOR 2013 — Regulation 4(1)"
+            clause="Where any person dies as a result of a work-related accident, the responsible person must follow the reporting procedure."
+            meaning={
+              <>
+                Reg 4 starts with the worst case and walks down. Death = phone the HSE Incident
+                Contact Centre at the earliest practical moment (0345 300 9923 in hours, same
+                number out-of-hours routes to a duty officer), confirm in writing on F2508
+                within 10 days. Reg 5 covers specified injuries, Reg 6 over-7-day, Reg 7
+                dangerous occurrences, Reg 8 occupational diseases, Reg 9 gas-related.
+              </>
+            }
+            cite="Reference: RIDDOR 2013 SI 1471, Regulations 4–9."
+          />
 
-        {/* Section 3 */}
-        <div className="mb-8 border-l-4 border-indigo-500 p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
-              3
-            </div>
-            <div className="flex-1">
-              <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                Emergency Response Steps (Electrical-Aware)
-              </h2>
-            </div>
-          </div>
-          <div className="ml-12 space-y-4">
-            <p className="text-white">
-              Electrical emergencies require specific safety considerations. Never touch someone
-              still in contact with electricity. Follow the DR ABC approach: Danger, Response,
-              Airway, Breathing, Circulation.
+          <SectionRule />
+
+          <ContentEyebrow>The four reportable buckets</ContentEyebrow>
+
+          <ConceptBlock
+            title="Bucket 1 — Deaths from work-related accidents"
+            plainEnglish="Anyone (worker, contractor, member of the public) killed by a workplace accident — fatal at the time, or where the injury later causes death within a year."
+          >
+            <p>
+              This bucket also includes deaths caused by acts of physical violence at work, and
+              the death of any self-employed person killed working on someone else’s premises.
+              Reporting is by quickest practical means — phone — followed by F2508 within 10
+              days.
             </p>
-
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">Emergency response sequence:</h3>
-              <ol className="text-white text-sm space-y-1 list-decimal list-inside">
-                <li>Assess danger - isolate power source if safe to do so</li>
-                <li>Check response - speak loudly, tap shoulders</li>
-                <li>Open airway - tilt head back, lift chin</li>
-                <li>Check breathing - look, listen, feel for 10 seconds</li>
-                <li>Check circulation - look for signs of life</li>
-                <li>Call 999 and begin CPR if trained and necessary</li>
-              </ol>
-            </div>
-
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <h3 className="font-semibold text-white mb-2">When calling 999, provide:</h3>
-              <ul className="text-white text-sm space-y-1">
-                <li>
-                  • <strong>Location:</strong> Full address with access details
-                </li>
-                <li>
-                  • <strong>Nature:</strong> What happened, how many injured
-                </li>
-                <li>
-                  • <strong>Condition:</strong> Conscious/unconscious, breathing status
-                </li>
-                <li>
-                  • <strong>Actions:</strong> First aid given, hazards isolated
-                </li>
-                <li>
-                  • <strong>Contact:</strong> Your name and callback number
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 4 */}
-        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
-              4
-            </div>
-            <div className="flex-1">
-              <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                Common Electrical Injuries and Treatment Basics
-              </h2>
-            </div>
-          </div>
-          <div className="ml-12 space-y-4">
-            <p className="text-white">
-              Electrical work presents specific injury risks. Quick, appropriate response can
-              prevent serious complications and save lives. Always prioritise safety and call
-              emergency services for serious incidents.
+            <p>
+              <strong>HSE Incident Contact Centre:</strong> 0345 300 9923 (Mon–Fri 8.30–17.00).
+              Out-of-hours fatals route to a duty officer via the same number.
             </p>
+          </ConceptBlock>
 
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="space-y-3">
-                <div className="bg-muted/50 border border-border rounded-lg p-3">
-                  <h4 className="font-semibold text-white text-sm mb-1">Electric Shock:</h4>
-                  <p className="text-white text-xs">
-                    Isolate power, check breathing, begin CPR if trained, call 999
-                  </p>
-                </div>
-                <div className="bg-muted/50 border border-border rounded-lg p-3">
-                  <h4 className="font-semibold text-white text-sm mb-1">Arc Burns:</h4>
-                  <p className="text-white text-xs">
-                    Cool with water 20min, sterile dressing, no creams, seek medical attention
-                  </p>
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="bg-muted/50 border border-border rounded-lg p-3">
-                  <h4 className="font-semibold text-white text-sm mb-1">Tool Cuts:</h4>
-                  <p className="text-white text-xs">
-                    Direct pressure, elevate limb, sterile dressing, don’t remove embedded objects
-                  </p>
-                </div>
-                <div className="bg-muted/50 border border-border rounded-lg p-3">
-                  <h4 className="font-semibold text-white text-sm mb-1">Falls:</h4>
-                  <p className="text-white text-xs">
-                    Don’t move victim, check spinal injury signs, maintain airway, call 999
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 5 */}
-        <div className="mb-8 border-l-4 border-slate-500 p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-slate-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold text-sm flex-shrink-0">
-              5
-            </div>
-            <div className="flex-1">
-              <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
-                Records, Reporting, and Good Practice
-              </h2>
-            </div>
-          </div>
-          <div className="ml-12 space-y-4">
-            <p className="text-white">
-              Proper record-keeping is legally required and helps identify trends to prevent future
-              incidents. All workplace accidents must be recorded in the accident book (BI 510).
+          <ConceptBlock
+            title="Bucket 2 — Specified Injuries (Schedule 1)"
+            plainEnglish="A defined list of serious injuries. Not minor cuts, not bruises — proper damage."
+          >
+            <p>
+              Schedule 1 of RIDDOR 2013 lists eight categories of specified injury. The big
+              ones for electrical work:
             </p>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-2">Accident book essentials:</h3>
-                <ul className="text-white text-sm space-y-1">
-                  <li>• Date, time, and location of incident</li>
-                  <li>• Details of injured person and witnesses</li>
-                  <li>• Nature of injury and treatment given</li>
-                  <li>• Signed by person making entry</li>
-                  <li>• Records kept for 3 years minimum</li>
-                  <li>• Stored securely (confidentiality)</li>
-                </ul>
-              </div>
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-2">Good practice includes:</h3>
-                <ul className="text-white text-sm space-y-1">
-                  <li>• Regular first aid kit checks and restocking</li>
-                  <li>• Clear, visible signage for kits and personnel</li>
-                  <li>• Practice emergency procedures</li>
-                  <li>• Keep first aider training current</li>
-                  <li>• Know when RIDDOR reporting applies</li>
-                  <li>• Review incidents to prevent recurrence</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Real World Scenario */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Real World Scenario</h2>
-          <div className="space-y-4">
-            <div className="bg-card border border-amber-400/30 rounded-lg p-4">
-              <h3 className="text-amber-400 font-semibold mb-2">
-                Arc Flash Incident During Panel Work
-              </h3>
-              <p className="text-white text-sm">
-                An electrician suffered arc burns to hands and face while working on a distribution
-                panel. A colleague witnessed the flash and immediately responded.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold text-white mb-3">What happened next:</h4>
-              <ul className="space-y-2 text-white text-sm">
-                <li className="flex gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  Colleague immediately isolated the power supply to ensure scene safety
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  Checked victim was conscious and breathing normally
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  Cooled burns with clean running water for 20 minutes
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  Called 999 providing location, nature of injury, and condition
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  Applied sterile dressings from first aid kit while waiting for ambulance
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-elec-yellow">•</span>
-                  Incident recorded in accident book and reported under RIDDOR (over-7-day injury)
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-card border border-green-400/30 rounded-lg p-4">
-              <h4 className="text-green-400 font-semibold mb-1">Why this mattered</h4>
-              <p className="text-white text-sm">
-                Quick isolation prevented further injury. Immediate cooling reduced burn severity.
-                Proper first aid and quick medical response prevented complications and scarring.
-                The incident led to improved arc flash PPE procedures site-wide.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-4">
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-1">
-                Do we always need a trained first aider or is an appointed person enough?
-              </h3>
-              <p className="text-white text-sm">
-                It depends on site size and risk. Small, low-risk sites may only need an appointed
-                person. Larger sites or those with higher risks (like electrical work) typically
-                require trained first aiders. HSE guidance recommends at least one first aider for
-                50+ employees or high-risk environments.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-1">
-                Are medications allowed in first aid kits?
-              </h3>
-              <p className="text-white text-sm">
-                No. Standard workplace first aid kits cannot contain medications like paracetamol,
-                aspirin, or antiseptic creams due to allergy risks and legal liability. Only basic
-                items like dressings, bandages, and eye wash are permitted.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-1">
-                How often should first aid kits be checked and restocked?
-              </h3>
-              <p className="text-white text-sm">
-                Monthly checks are recommended to ensure contents are in date, undamaged, and
-                complete. After any use, kits should be immediately restocked. The appointed person
-                or first aider is typically responsible for maintenance.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-1">
-                Where should first aid information be displayed?
-              </h3>
-              <p className="text-white text-sm">
-                Clear signage must show the location of first aid equipment and the names of trained
-                personnel. This should be at main entrances, mess rooms, and key work areas.
-                Emergency contact numbers should also be prominently displayed.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-1">
-                Who can use an AED (defibrillator) on site? Is training required?
-              </h3>
-              <p className="text-white text-sm">
-                Modern AEDs are designed for use by anyone - they provide voice prompts and won’t
-                deliver a shock unless needed. However, training greatly improves confidence and
-                effectiveness. Many first aid courses now include AED training.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-1">
-                How do first aid records relate to RIDDOR reporting?
-              </h3>
-              <p className="text-white text-sm">
-                All incidents must be recorded in the accident book. RIDDOR applies to serious
-                injuries, dangerous occurrences, and over-7-day injuries. First aid records provide
-                the detail needed for RIDDOR reports and help identify trends to prevent future
-                incidents.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* Summary */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Summary</h2>
-          <div className="space-y-4">
-            <p className="text-white">
-              Effective first aid provision saves lives and reduces injury severity. Every
-              electrical worker should know their site’s arrangements, understand
-              electrical-specific risks, and be prepared to respond safely in emergencies.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Bone fractures</strong> other than to fingers, thumbs and toes.
+              </li>
+              <li>
+                <strong>Amputation</strong> of an arm, hand, finger, thumb, leg, foot or toe.
+              </li>
+              <li>
+                <strong>Permanent loss of sight</strong> or reduction of sight, or temporary
+                blindness from an arc flash.
+              </li>
+              <li>
+                <strong>Crush injuries</strong> to the head or torso causing damage to the
+                brain or internal organs.
+              </li>
+              <li>
+                <strong>Serious burns</strong> covering more than 10% of the body, or causing
+                significant damage to the eyes, respiratory system or other vital organs.
+              </li>
+              <li>
+                <strong>Scalpings</strong> (loss of skin from the scalp) requiring hospital
+                treatment.
+              </li>
+              <li>
+                <strong>Loss of consciousness</strong> caused by head injury or asphyxia
+                (including from electric shock).
+              </li>
+              <li>
+                Any other injury arising from work in an enclosed space leading to
+                <strong>hypothermia, heat-induced illness</strong> or requiring resuscitation
+                or admission to hospital for more than 24 hours.
+              </li>
+            </ul>
+            <p>
+              Specified injuries are reported "without delay" and the F2508 must be in within
+              10 days.
             </p>
+          </ConceptBlock>
 
-            <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
-              <h3 className="text-elec-yellow font-semibold mb-3">Key Takeaways</h3>
-              <ul className="space-y-2 text-white text-sm">
-                <li className="flex gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  Know your site’s first aid arrangements - where kits are and who’s trained
-                </li>
-                <li className="flex gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  Electrical emergencies require power isolation before providing aid
-                </li>
-                <li className="flex gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  Quick, appropriate response prevents complications and saves lives
-                </li>
-                <li className="flex gap-2">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  All incidents must be recorded and serious ones reported under RIDDOR
-                </li>
-              </ul>
-            </div>
+          <ConceptBlock
+            title="Bucket 3 — Over-7-day injuries"
+            plainEnglish="Worker is incapacitated for more than 7 consecutive days (excluding the day of the accident) — unable to perform their normal work."
+            onSite="The clock starts the day AFTER the accident. So a Monday accident, off Tuesday through to the following Tuesday = 7 days off, NOT yet over-7-day. Off into Wednesday = 8 days = reportable."
+          >
+            <p>
+              The "over-7-day" threshold replaced the old "over-3-day" rule in October 2012.
+              "Incapacitated" means unable to do their normal range of duties — so a sparky on
+              light alternative duties (filing paperwork instead of climbing ladders) is still
+              counted as incapacitated for RIDDOR.
+            </p>
+            <p>
+              Over-7-day injuries report on the F2508 within 15 days of the accident. The
+              extra 5 days vs specified injuries is to give time for it to become clear the
+              casualty isn’t coming back to normal work quickly.
+            </p>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Bucket 4 — Dangerous Occurrences (Schedule 2)"
+            plainEnglish="Near-misses — incidents with the POTENTIAL to cause serious harm, even if nobody actually got hurt this time."
+            onSite="The point of reporting near-misses is that the HSE can spot a pattern across the country. A switchgear that explodes in three different sites that week is a recall, not just three flukes."
+          >
+            <p>
+              Schedule 2 lists 27 specific dangerous occurrences. The ones most relevant to
+              electrical work:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Electrical short or overload</strong> causing fire or explosion that
+                stops plant for more than 24 hours OR has the potential to cause death.
+              </li>
+              <li>
+                <strong>Collapse, overturning or failure of load-bearing parts of lifts or
+                lifting equipment.</strong>
+              </li>
+              <li>
+                <strong>Unintended collapse</strong> of any building or structure under
+                construction (or part of one) involving a fall of more than 5 tonnes of
+                material.
+              </li>
+              <li>
+                <strong>Unintended explosion</strong> of pressure vessels.
+              </li>
+              <li>
+                <strong>Accidental release of biological agents</strong> capable of causing
+                severe human disease.
+              </li>
+              <li>
+                <strong>Unintentional release of any substance</strong> liable to cause harm to
+                the public.
+              </li>
+            </ul>
+            <p>
+              Dangerous occurrences are reportable WITHIN 10 DAYS. They report on the F2508
+              same as specified injuries.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={checks[0].id}
+            question={checks[0].question}
+            options={checks[0].options}
+            correctIndex={checks[0].correctIndex}
+            explanation={checks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Who reports — the "responsible person"</ContentEyebrow>
+
+          <ConceptBlock
+            title="The responsible person isn’t always who you’d guess"
+            plainEnglish={`RIDDOR doesn’t put the duty on the casualty, the witness or the first aider. It puts it on the "responsible person" — and that definition shifts depending on the work setup.`}
+          >
+            <p>For a typical UK electrical job:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Employee injured at their employer’s site:</strong> the EMPLOYER is the
+                responsible person. The boss reports.
+              </li>
+              <li>
+                <strong>Employee injured on a third party’s premises:</strong> still the
+                EMPLOYER. The fact you were on a customer’s premises doesn’t shift the duty.
+              </li>
+              <li>
+                <strong>Self-employed sparky working on someone else’s premises:</strong> the
+                PERSON IN CONTROL of those premises is the responsible person. Usually the
+                principal contractor or site owner.
+              </li>
+              <li>
+                <strong>Self-employed sparky working on their own premises:</strong> THEMSELVES.
+              </li>
+              <li>
+                <strong>Member of the public injured by a work activity:</strong> the EMPLOYER
+                or person in control of the work activity.
+              </li>
+            </ul>
+            <p>
+              As an apprentice, you’re an employee — your employer is the responsible person,
+              even when you’re on a customer’s site. Your job is to flag the incident
+              internally fast enough that the boss can hit the legal clock.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={checks[1].id}
+            question={checks[1].question}
+            options={checks[1].options}
+            correctIndex={checks[1].correctIndex}
+            explanation={checks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>How a report actually gets in</ContentEyebrow>
+
+          <ConceptBlock
+            title="The F2508 form and the online RIDDOR portal"
+            plainEnglish="In practice, almost every RIDDOR report now goes via the HSE’s online portal. It walks the responsible person through the right questions and generates an F2508 in the background."
+          >
+            <p>The two routes:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Online portal:</strong> hse.gov.uk/riddor → "Report an incident". Different
+                form for each bucket (injury, dangerous occurrence, gas, disease). Generates
+                an F2508 reference number on submission. This is the route to use for
+                everything except fatals.
+              </li>
+              <li>
+                <strong>Telephone for fatals:</strong> HSE Incident Contact Centre, 0345 300
+                9923. Used to be the route for everything urgent — now mainly for fatals.
+                Followed by the online F2508 within 10 days.
+              </li>
+            </ul>
+            <p>
+              The form needs: details of the responsible person, the casualty (where there is
+              one), the location and time, what happened, what caused it, what the injury was,
+              what the outcome was, and details of any witnesses. Keep notes from the day so
+              this can be filled in accurately later.
+            </p>
+            <p>
+              <strong>Keep a copy of the report for at least three years.</strong> Required by
+              RIDDOR Reg 12.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="RIDDOR 2013 — Regulation 12 (records)"
+            clause="The responsible person must keep a record of any reportable death, injury, occupational disease or dangerous occurrence which is required to be reported under these Regulations, for a period of at least three years from the date on which it was made."
+            meaning={
+              <>
+                The HSE can ask to see RIDDOR records during an inspection — usually as part
+                of investigating a later incident. Three years is the minimum, but most
+                companies keep them indefinitely as part of the company H&S file. Keep your
+                own personal copy of any incident you’re a witness or casualty for — useful
+                if a civil claim arises later.
+              </>
+            }
+            cite="Reference: RIDDOR 2013 SI 1471, Regulation 12."
+          />
+
+          <InlineCheck
+            id={checks[2].id}
+            question={checks[2].question}
+            options={checks[2].options}
+            correctIndex={checks[2].correctIndex}
+            explanation={checks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Accident book vs RIDDOR — they’re not the same</ContentEyebrow>
+
+          <ConceptBlock
+            title="Two records, two different jobs"
+            plainEnglish="Accident book = internal log of EVERY incident, no matter how small. RIDDOR = legal external notification to the HSE for SERIOUS incidents only. You do both."
+          >
+            <p>
+              The company accident book (BI 510 form is the standard) is required by the Social
+              Security (Claims and Payments) Regulations. It’s an internal record of every
+              workplace accident — first-aid only events, near-misses, the lot. Used for
+              internal trend-spotting, supervisor sign-off, and any later insurance or
+              Industrial Injuries claim by the casualty.
+            </p>
+            <p>
+              The RIDDOR report is a separate, EXTERNAL legal notification to the HSE. Only the
+              four serious buckets (death / specified injury / over-7-day / dangerous
+              occurrence) trigger one.
+            </p>
+            <p>
+              <strong>Sequence:</strong> accident → first aid → accident book entry IMMEDIATELY
+              → supervisor briefed → if it hits a RIDDOR bucket, employer files F2508 within
+              the relevant window. The book entry happens for everything; the F2508 only for
+              the serious stuff.
+            </p>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Reporting to RIDDOR after 11 days for an over-7-day injury — the late-notification trap"
+            whatHappens={
+              <>
+                Apprentice falls off a stepladder Monday. Sprained wrist, off Tuesday and the
+                rest of the week. Over the following weekend it’s clear he’s not going to be
+                back in normal duties this week either. Now you’re into day 8, day 9, day 10
+                of incapacity. By the time someone clocks "ah, this is RIDDOR territory" and
+                starts the form, it’s already 11–12 days since the original accident. The
+                15-day clock for over-7-day injuries doesn’t care that you only realised it was
+                reportable last Friday — it started ticking on Tuesday. File late and you’re
+                also breaching Reg 6.
+              </>
+            }
+            doInstead={
+              <>
+                Treat any "off normal duties" injury as a candidate RIDDOR from day 1. The
+                appointed person should diary a check at day 7 — if the casualty isn’t back to
+                normal duties by then, prep the F2508 in case it tips over. If they recover
+                early, you bin the prep — no harm done. If they don’t, the report goes in on
+                day 8 not day 12.
+              </>
+            }
+          />
+
+          <Scenario
+            title="Did that 4-day off-work injury hit RIDDOR? (Spoiler: no — but...)"
+            situation={
+              <>
+                Your gaffer asks: "the labourer who tripped on the cable on Wednesday — he was
+                off Thursday, Friday, didn’t work the weekend, came back Monday but on light
+                duties only. Is that one a RIDDOR?"
+              </>
+            }
+            whatToDo={
+              <>
+                Walk through the buckets. Death? No. Specified injury (Sched 1)? No — it was a
+                bruise, no fracture, no unconsciousness. Over-7-day? Day of accident
+                (Wednesday) excluded. Days off normal duties: Thu, Fri (didn’t work weekend so
+                Sat/Sun don’t count — he wasn’t SCHEDULED to work them), Mon on light duties =
+                still incapacitated for over-7-day purposes. So that’s 3 days incapacitated
+                so far. Not yet over 7. Dangerous occurrence? No. <strong>Not RIDDOR yet.</strong>{' '}
+                BUT: accident book entry is mandatory regardless. AND if the labourer is still
+                on light duties through to next Wednesday/Thursday, he tips over the
+                seven-day mark and IT BECOMES RIDDOR. Diary it. Check on day 7. The 15-day
+                clock will already be running by then.
+              </>
+            }
+            whyItMatters={
+              <>
+                The numbers seem fiddly until they bite you. The over-7-day rule is the most
+                commonly under-reported RIDDOR category in the UK because supervisors think
+                "the casualty is back at work, no big deal" without realising "back on light
+                duties" still counts as incapacitated. When the HSE digs into a workplace later
+                they will absolutely cross-check accident book entries against RIDDOR
+                submissions and ask why the gap.
+              </>
+            }
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The personal angle</ContentEyebrow>
+
+          <ConceptBlock title="What you do as an apprentice in the system">
+            <p>
+              You’re unlikely to be the person submitting the F2508. Your job in the RIDDOR
+              chain is:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Witness an incident → tell the supervisor immediately.</strong> Don’t
+                wait for end-of-day, don’t wait for the casualty to recover, don’t wait to "see
+                if it gets worse". Every clock starts from the time of the incident.
+              </li>
+              <li>
+                <strong>Make sure the accident book entry happens.</strong> If you’re the
+                casualty, write it up yourself (BI 510 form, or the company digital
+                equivalent). If you witnessed it, prompt the casualty / supervisor.
+              </li>
+              <li>
+                <strong>Note details while they’re fresh.</strong> Time, location, what was
+                being done, what was used, who was there, what state the equipment was in. A
+                page in the back of your notebook beats relying on memory two weeks later.
+              </li>
+              <li>
+                <strong>Cooperate with any investigation.</strong> HASAWA s.7 (covered in §1.1)
+                obliges you to. Be honest, don’t embellish, don’t cover for anyone.
+              </li>
+              <li>
+                <strong>Get your own copy of any RIDDOR report you’re named in.</strong> If a
+                civil claim or workplace dispute happens later, it’s yours to refer back to.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              "RIDDOR 2013 is a regulation under HASAWA — legal duty to report serious incidents to the HSE.",
+              "Four buckets: deaths (immediate phone), specified injuries Sched 1 (10 days), over-7-day injuries (15 days), dangerous occurrences Sched 2 (10 days).",
+              "Over-7-day = more than 7 consecutive days unable to do normal work, EXCLUDING the day of the accident. Light duties still counts as incapacitated.",
+              'The "responsible person" reports — typically the employer for an employee, the person in control of premises for a self-employed contractor.',
+              "Accident book = internal record of EVERYTHING. RIDDOR = external legal notification of SERIOUS stuff only. Both happen, neither replaces the other.",
+              "Reports go in via the online portal at hse.gov.uk/riddor (generates an F2508). Fatals phone first — 0345 300 9923 — then F2508 within 10 days.",
+            ]}
+          />
+
+          {/* ── Quiz (preserved — links to streaks/stats) ───────── */}
+
+          <Quiz title="RIDDOR knowledge check" questions={quizQuestions} />
+
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section6/6-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                First aid for electrical injuries
+              </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section6/6-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Accident investigation & lessons learned
+              </div>
+            </button>
           </div>
-        </Card>
-
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} />
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default Sub3;
+}

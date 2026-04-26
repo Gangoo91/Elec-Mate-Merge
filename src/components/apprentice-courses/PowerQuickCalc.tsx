@@ -154,7 +154,8 @@ export const PowerQuickCalc: React.FC = () => {
         <div className="mt-4 p-4 bg-gradient-to-r from-emerald-50 to-blue-50 dark:from-emerald-950/30 dark:to-blue-950/30 rounded-lg border border-emerald-200/50">
           <Label className="text-sm font-semibold text-foreground">{result.label}</Label>
           <div className="mt-1 text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-            {result.value.toFixed(3)}{' '}
+            {/* Smart format — round to 3dp max but strip trailing zeros so 230 displays as "230" not "230.000". */}
+            {Number(result.value.toFixed(3)).toLocaleString('en-GB', { maximumFractionDigits: 3 })}{' '}
             <span className="text-lg text-muted-foreground">{result.unit}</span>
           </div>
         </div>

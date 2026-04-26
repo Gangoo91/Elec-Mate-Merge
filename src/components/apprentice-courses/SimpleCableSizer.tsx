@@ -131,7 +131,7 @@ const SimpleCableSizer: React.FC = () => {
         <div className="space-y-1.5">
           <Label className="text-foreground">Cable family</Label>
           <Select value={family} onValueChange={(v) => setFamily(v as keyof typeof mvamData)}>
-            <SelectTrigger className="bg-background">
+            <SelectTrigger className="bg-background text-foreground">
               <SelectValue placeholder="Select family" />
             </SelectTrigger>
             <SelectContent>
@@ -146,7 +146,7 @@ const SimpleCableSizer: React.FC = () => {
         <div className="space-y-1.5">
           <Label className="text-foreground">Installation</Label>
           <Select value={method} onValueChange={(v) => setMethod(v as any)}>
-            <SelectTrigger className="bg-background">
+            <SelectTrigger className="bg-background text-foreground">
               <SelectValue placeholder="Select method" />
             </SelectTrigger>
             <SelectContent>

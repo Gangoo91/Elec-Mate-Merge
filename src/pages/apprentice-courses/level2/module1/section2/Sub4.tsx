@@ -1,3 +1,14 @@
+/**
+ * Module 1 · Section 2 · Subsection 4 — Working at height and confined spaces
+ * City &amp; Guilds 2365-02 → Unit 201
+ *   • LO4 → AC 4.3 — identify specific hazards associated with the installation
+ *     and maintenance of electrical systems and equipment (height / confined).
+ *   • LO4 → AC 4.4 — describe situations which can constitute a hazard in the
+ *     workplace (Work at Height Regs 2005, Confined Spaces Regs 1997).
+ *   • LO4 → AC 4.5 — explain practices and procedures for addressing hazards
+ *     in the workplace (hierarchy, permits, standby person).
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 

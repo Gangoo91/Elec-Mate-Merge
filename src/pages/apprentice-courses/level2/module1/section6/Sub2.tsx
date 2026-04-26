@@ -1,593 +1,754 @@
-import {
-  ArrowLeft,
-  AlertTriangle,
-  CheckCircle,
-  Clock,
-  Users,
-  FileText,
-  Building,
-  TestTube,
-  Shield,
-  ClipboardList,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 6 · Subsection 2 — First aid for electrical injuries.
+ *
+ * Unit 201 LO2 / LO3 alignment:
+ *   - AC 2.1: respond to electrical accidents and emergencies on site.
+ *   - AC 3.5: know the equipment and procedures used in workplace first aid.
+ *   - AC 3.6: do not misuse first aid kits / equipment; replace what you use.
+ *
+ * Pedagogy:
+ *   - Burns (cool, cover, don’t pop / cream / pick).
+ *   - Arc eye / flash burn — eyes are the most underestimated electrical injury.
+ *   - AED — what it is, when to use, why you can’t harm someone with one.
+ *   - Cardiac arrhythmia — the delayed killer that mandates a hospital check.
+ *   - **EXPLICIT AC 3.6 handling**: don’t raid the first aid box for a dirty
+ *     knee; replace anything used; never administer untrained; the weekly /
+ *     monthly first aid check rota.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'RIDDOR: What Must Be Reported - Level 2 Electrical Course';
+const TITLE =
+  'First aid for electrical injuries | Level 2 Module 1.6.2 | Elec-Mate';
 const DESCRIPTION =
-  'Understand legal reporting requirements (RIDDOR): what must be reported, who reports, and timeframes.';
+  'Burns, arc eye, AED, cardiac arrhythmia — the actual treatment for the things electricity does to a body. Plus the don’t-misuse rules every first aid box runs on.';
 
-const Sub2 = () => {
+/* ── Inline check questions (wired into stats/streaks) ──────────────── */
+
+const checks = [
+  {
+    id: 'burns-cooling-time-check',
+    question:
+      'You’ve cooled an electrical burn under cool running water for 5 minutes — the casualty says it feels better, can you stop?',
+    options: [
+      'Yes, 5 minutes is enough',
+      'No — cool burns under running water for at least 20 minutes, even if it feels better',
+      'Stop and wrap it in a wet cloth instead',
+      'Apply burn cream once it stops hurting',
+    ],
+    correctIndex: 1,
+    explanation:
+      '20 minutes minimum, ideally with cool tap water — not ice, not freezing water. Heat keeps damaging tissue for ages after the source is gone. Stopping early lets the deep tissue keep cooking. After 20 min, cover with cling film or a non-fluffy sterile dressing.',
+  },
+  {
+    id: 'aed-rhythm-check',
+    question: 'When will an AED actually deliver a shock?',
+    options: [
+      'Whenever you press the button — it’s just a switch',
+      'Only when it detects a shockable rhythm like ventricular fibrillation',
+      'Every time the casualty is unconscious',
+      'Only if the casualty is over 18',
+    ],
+    correctIndex: 1,
+    explanation:
+      'AEDs are smart — they analyse the rhythm and only shock VF or pulseless VT. If the heart’s in any other state (asystole, normal rhythm, pulseless electrical activity), the AED refuses. You literally cannot make things worse by attaching one.',
+  },
+  {
+    id: 'first-aid-misuse-check',
+    question:
+      'You scrape your hand on a piece of trunking — there’s a small graze, no bleed. The first aid box is on the wall. What’s the right call?',
+    options: [
+      'Grab a sterile dressing and a couple of plasters — that’s what they’re for',
+      'Wash the graze under the tap, dry it, use ONE plaster, and tell the first aider you used one so it gets replaced',
+      'Don’t bother — leave the box alone, you’ll be fine',
+      'Take the whole box back to the van for the rest of the week',
+    ],
+    correctIndex: 1,
+    explanation:
+      'Use what you need (one plaster), don’t over-help yourself, and TELL THE FIRST AIDER. The box gets checked monthly and contents get replaced when they’re used. Quietly raiding it for non-medical jobs (taping a cable, plastering up a tatty pair of safety glasses) means it’s empty when someone’s actually bleeding.',
+  },
+];
+
+/* ── End-of-page Quiz (wires into stats/streaks) ─────────────────────── */
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: 'How should you cool a fresh electrical burn?',
+    options: [
+      'Apply ice directly to the burn for 20 minutes',
+      'Cool running water for at least 20 minutes, then cover loosely',
+      'Apply burn cream straight away',
+      'Wrap it tightly in cling film immediately',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Cool tap water for at least 20 min — it stops the heat from continuing to damage tissue underneath. Don’t use ice (vasoconstriction makes things worse). Don’t apply creams or fats (lock in heat). Cover loosely with cling film or non-fluffy dressing afterwards.',
+  },
+  {
+    id: 2,
+    question:
+      'What is "arc eye" and how does it present?',
+    options: [
+      'A burn caused by direct current contact',
+      'Inflammation of the cornea from UV exposure during an arc flash, with symptoms appearing 4–12 hours later',
+      'A permanent loss of vision from looking at a working bulb',
+      'A small bruise around the eye after a knock',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Arc eye (photokeratitis) is essentially sunburn of the cornea from the UV in an arc flash or welding arc. Symptoms — gritty feeling, watering, pain, light sensitivity — show up 4–12 hours after exposure, often catching the casualty off-shift. Cool compresses, dark room, A&E. It usually heals in 24–72 hours.',
+  },
+  {
+    id: 3,
+    question:
+      'A casualty had a 230 V shock, jumped clear, says they feel fine. The next day they collapse. What likely killed them?',
+    options: [
+      'A delayed burn',
+      'Cardiac arrhythmia developing hours after the shock',
+      'Shock-induced asthma',
+      'Low blood sugar',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Electric current can disrupt the heart’s electrical system in ways that don’t show on a basic survey. Arrhythmias can develop minutes to hours after the original shock. This is why every electric-shock casualty gets a hospital check, even one who jumps up and says they’re fine.',
+  },
+  {
+    id: 4,
+    question: 'Which of these belongs in a workplace first aid kit?',
+    options: [
+      'Paracetamol and ibuprofen tablets',
+      'Antiseptic cream and antibiotic ointment',
+      'Sterile dressings, plasters, eyewash, gloves, foil blanket, scissors',
+      'A defibrillator only',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Workplace first aid kits hold sterile dressings, plasters, eyewash, gloves, a foil blanket, scissors and similar passive items. They do NOT hold medications — pills, creams, ointments. That’s a legal limit, not a budget thing: dispensing medication needs medical training.',
+  },
+  {
+    id: 5,
+    question:
+      'You used the eyewash bottle on Tuesday for a small splash. What should happen next?',
+    options: [
+      'Nothing — it’s done its job',
+      'Tell the appointed first aider so the bottle is replaced before the next person needs it',
+      'Refill it from the kitchen tap',
+      'Hide the empty bottle so nobody notices',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'AC 3.6 in plain English: when you USE something from the first aid kit, you REPLACE it. Eyewash is single-use and must be discarded once opened. Tell the first aider, sign the replenishment log if there is one. The next person to need it can’t wait while someone runs to a pharmacy.',
+  },
+  {
+    id: 6,
+    question: 'What must NEVER be put on a fresh burn?',
+    options: [
+      'Cool running water',
+      'Cling film loosely wrapped after cooling',
+      'Butter, toothpaste, oils, fluffy dressings, ice',
+      'A foil blanket to keep the casualty warm elsewhere',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Old wives’ tales kill. Butter and toothpaste lock in heat. Ice causes deep frostbite damage on top of the burn. Fluffy dressings stick to the wound and tear tissue when removed. Stick to: cool water → loose non-stick cover → A&E.',
+  },
+  {
+    id: 7,
+    question:
+      'You’re trained in EFAW. Your supervisor asks you to give a colleague a paracetamol from the first aid box. What do you do?',
+    options: [
+      'Hand the paracetamol over — it’s in the box',
+      'Refuse — paracetamol is not in a workplace first aid kit, and you’re not trained to administer medication',
+      'Ask the colleague to take two so it works faster',
+      'Give it but write it in the accident book',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Paracetamol shouldn’t be in the workplace kit in the first place. Even if it is (someone left it there), you’re not authorised to dispense medication. The colleague can buy their own from a shop. AC 3.6 — never administer something you’re not trained for, even if asked.',
+  },
+  {
+    id: 8,
+    question:
+      'How often should the workplace first aid kit be checked, by whom?',
+    options: [
+      'Once a year by anyone who fancies it',
+      'Weekly visual check by the appointed first aider, monthly full audit, plus immediate top-up after any use',
+      'Only when the HSE inspector visits',
+      'It doesn’t need checking — kits last forever',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Weekly quick check (seal intact, contents present), monthly full audit against the contents list, and immediate top-up after any use. Items have expiry dates — sterile dressings, eyewash, AED pads. A box full of expired kit is worse than an empty one because it gives false confidence.',
+  },
+];
+
+/* ── FAQs (apprentice voice) ─────────────────────────────────────────── */
+
+const faqs = [
+  {
+    question: 'Why 20 minutes of cooling for a burn? Feels like overkill.',
+    answer:
+      'Heat doesn’t stop damaging tissue the moment the source is gone. The deep layers of skin keep cooking for several minutes after surface contact ends, and 20 min of cool water is the threshold the NHS and British Burn Association use to halt that process. Less than 20 min and you’re leaving deep damage running. More than 20 min and you risk hypothermia in a cold environment — so cool the burn, keep the rest of the casualty warm with a foil blanket if needed.',
+  },
+  {
+    question: 'What about chemical burns from battery acid or capacitor electrolyte?',
+    answer:
+      'Brush off any dry chemical first if you can do it without getting it on you (gloves). Then flood with copious cool water for at least 20 min — same as a thermal burn. Don’t try to neutralise (acid + alkali = exothermic = more burn). For eyes, eyewash bottle or running tap, lower lid pulled away, water from inner corner outwards. Hospital after, every time.',
+  },
+  {
+    question: 'I’ve seen people put ice on burns — why not?',
+    answer:
+      'Ice causes vasoconstriction (blood vessels squeeze shut), which actually makes the burn deeper because the body can’t flush damaged cells away with blood flow. It can also cause a frostbite injury on top of the original burn. Cool tap water (around 8–25°C) is the sweet spot — cold enough to halt damage, warm enough not to cause new injury.',
+  },
+  {
+    question: 'Can I attach an AED to anyone — including kids?',
+    answer:
+      'Adult AED pads are for ages 8 and up. Most modern AEDs have a child mode (smaller pad placement diagram + reduced energy) for under-8s; if not, use adult pads but place one on the front of the chest and one on the back. Pregnant women — yes, normal placement. Casualty in water — drag them clear and dry the chest before applying pads. Casualty with a pacemaker — place the pad at least an inch away from the lump.',
+  },
+  {
+    question: 'My EFAW certificate is from two and a half years ago. Am I still a first aider?',
+    answer:
+      'Technically yes until the three-year mark, but HSE strongly recommends an annual half-day refresher between certs. Skills decay fast — CPR depth, AED steps, recovery position. Don’t rely on what you remember from a 5-day course three years ago. Ask the boss when the next refresher is.',
+  },
+  {
+    question: 'What if there’s no first aider on site?',
+    answer:
+      'There has to be at least an "appointed person" (someone who calls 999 and looks after the kit). For higher-risk sites or larger crews, a trained first aider is required — the company’s First Aid Needs Assessment decides numbers. If you’re ever on a site with neither, that’s a Health and Safety (First-Aid) Regulations 1981 breach. Flag it in writing.',
+  },
+];
+
+export default function Sub2() {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
-  const quizQuestions = [
-    {
-      id: 1,
-      question: 'What does RIDDOR stand for?',
-      options: [
-        'Reporting of Incidents, Deaths, Diseases and Occupational Regulations',
-        'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations',
-        'Registration of Industrial Deaths, Diseases and Occupational Requirements',
-        'Regulations for Industrial Deaths, Diseases and Occupational Risks',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'RIDDOR stands for Reporting of Injuries, Diseases and Dangerous Occurrences Regulations - the UK legal framework for workplace incident reporting.',
-    },
-    {
-      id: 2,
-      question: 'Which of the following must be reported under RIDDOR?',
-      options: [
-        'Minor cuts and bruises',
-        'Deaths and major injuries like fractures',
-        'Equipment maintenance and routine checks',
-        'Training incidents and practice sessions',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'RIDDOR requires reporting of serious incidents including deaths, major injuries (fractures, amputations, burns requiring hospital treatment), and dangerous occurrences.',
-    },
-    {
-      id: 3,
-      question: 'Who is responsible for reporting RIDDOR incidents?',
-      options: [
-        'The injured person only',
-        'Any witness to the incident',
-        'Employers or responsible persons (site managers, contractors)',
-        'The HSE inspectors',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Employers, responsible persons (such as site managers or contractors), and self-employed persons are responsible for making RIDDOR reports.',
-    },
-    {
-      id: 4,
-      question: 'What is the time limit for reporting an over-7-day injury?',
-      options: ['Immediately', 'Within 15 days', 'Within 24 hours', 'Within 7 days'],
-      correctAnswer: 1,
-      explanation:
-        'Over-7-day injuries (where someone cannot perform normal work for 7+ consecutive days) must be reported within 15 days of the incident.',
-    },
-    {
-      id: 5,
-      question: 'True or False: Near misses never need to be reported.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
-      explanation:
-        "False. Near misses that could have resulted in serious harm are classified as 'dangerous occurrences' and must be reported under RIDDOR.",
-    },
-    {
-      id: 6,
-      question: 'What should be the immediate actions after a serious incident?',
-      options: [
-        'Continue working to meet deadlines',
-        'Secure scene, provide first aid, notify authorities, preserve evidence',
-        'Clean up the area and resume normal operations',
-        'Wait for management to arrive before taking action',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'After a serious incident, immediately secure the scene, provide first aid if needed, notify relevant authorities, and preserve evidence for investigation.',
-    },
-    {
-      id: 7,
-      question: 'Which of these near-miss events would be reportable under RIDDOR?',
-      options: [
-        'A minor slip on a wet floor with no injury',
-        'Equipment failure that could have caused serious injury',
-        'Running out of materials during work',
-        'A brief power outage',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Equipment failures or dangerous occurrences that could have resulted in serious harm must be reported under RIDDOR, even if no injury occurred.',
-    },
-    {
-      id: 8,
-      question: 'How long must RIDDOR records be kept?',
-      options: ['1 year', '2 years', '3 years', '5 years'],
-      correctAnswer: 2,
-      explanation:
-        'RIDDOR records must be kept for a minimum of 3 years to allow for HSE investigations and compliance monitoring.',
-    },
-    {
-      id: 9,
-      question: 'Who can make RIDDOR reports for self-employed persons?',
-      options: [
-        'Their clients or customers',
-        'The local authority',
-        'They must report their own incidents',
-        'Any other contractor on site',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Self-employed persons are responsible for reporting their own incidents under RIDDOR - they cannot rely on others to do this for them.',
-    },
-    {
-      id: 10,
-      question: 'What happens if RIDDOR reporting requirements are not met?',
-      options: [
-        'A verbal warning is given',
-        'Criminal prosecution and unlimited fines are possible',
-        'A small administrative fee is charged',
-        "Nothing, it’s just a guideline",
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Failure to comply with RIDDOR reporting requirements can result in criminal prosecution, unlimited fines, and other serious legal consequences.',
-    },
-  ];
-
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button variant="ghost" asChild>
-            <Link to=".." className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Back to Section 6
-            </Link>
-          </Button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
+          >
+            <ArrowLeft className="h-4 w-4" /> Section 6
+          </button>
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Title Block */}
-        <div className="flex items-start gap-6 mb-12">
-          <AlertTriangle className="h-8 w-8 text-elec-yellow flex-shrink-0 mt-2" />
-          <div className="flex-1">
-            <div className="inline-flex items-center px-3 py-1 bg-elec-yellow text-black rounded-full text-sm font-semibold mb-4">
-              Module 6.2
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">RIDDOR: What Must Be Reported</h1>
-            <p className="text-xl text-white">
-              Legal requirements for reporting workplace incidents and injuries
+          <PageHero
+            eyebrow="Module 1 · Section 6 · Subsection 2"
+            title="First aid for electrical injuries"
+            description="Burns, arc eye, AED, cardiac arrhythmia — what actually goes wrong with a body after current passes through it, and the right treatment for each. Plus the rules every first aid box runs on."
+            tone="emerald"
+          />
+
+          <TLDR
+            points={[
+              "Cool electrical burns under cool running water for at least 20 minutes. No ice, no creams, no butter, no fluffy dressings.",
+              "Arc eye shows up 4–12 hours after the flash. If you’ve been near an arc, you need an A&E check the same day, not the next.",
+              "AEDs are idiot-proof and refuse to shock anyone who doesn’t need one. If there’s one nearby and someone’s not breathing, attach it.",
+              "First aid kit is for first aid. Don’t raid it for non-medical jobs. Replace anything you use. Never give medication you’re not trained for.",
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Treat thermal, contact and arc burns correctly — cool, cover, transport.",
+              "Recognise and treat arc eye / flash burn, including the delayed onset.",
+              "Use an AED safely on an adult casualty in cardiac arrest.",
+              "Explain why every electric-shock casualty gets a hospital check, even when they say they’re fine.",
+              "List what does and doesn’t belong in a workplace first aid kit, and what the appointed first aider is for.",
+              "Apply the AC 3.6 rule: don’t misuse first aid supplies; replace what you use; don’t administer beyond your training.",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <ContentEyebrow>The four classic injuries from current</ContentEyebrow>
+
+          <ConceptBlock title="Burns, arc eye, secondary trauma, and the cardiac one nobody sees coming">
+            <p>
+              Electric current does damage in more than one way. A single incident can leave a
+              casualty with several different injuries, each needing different first aid:
             </p>
-          </div>
-        </div>
-
-        {/* Introduction */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="p-4 bg-card border border-border/20 rounded-lg">
-              <h3 className="text-lg font-semibold text-white mb-3">In 30 seconds</h3>
-              <p className="text-white text-sm leading-relaxed">
-                RIDDOR legally requires reporting of serious workplace incidents to the HSE. This
-                includes deaths, major injuries, over-7-day injuries, occupational diseases,
-                dangerous occurrences, and gas incidents. Employers and responsible persons must
-                report using the HSE online portal within specific timeframes.
-              </p>
-            </div>
-            <div className="p-4 bg-card border border-elec-yellow/30 rounded-lg">
-              <h3 className="text-lg font-semibold text-white mb-3">Spot it / Use it</h3>
-              <p className="text-white text-sm leading-relaxed">
-                <strong>Spot:</strong> Unconsciousness from shock, fractures, burns needing hospital
-                treatment, dangerous near-misses.
-                <br />
-                <strong>Use:</strong> Report immediately for fatal/major injuries, within 15 days
-                for over-7-day injuries. Keep records for 3 years minimum.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Learning Outcomes</h2>
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">Understand what RIDDOR is and why it matters</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">
-                Know what must be reported (major injuries, over-7-day injuries, diseases, dangerous
-                occurrences, gas incidents)
-              </span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">Identify who reports and timeframes</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span className="text-white">
-                Apply good reporting and evidence-preservation practice
-              </span>
-            </div>
-          </div>
-        </Card>
-
-        {/* Section 1: RIDDOR Overview: What and Why */}
-        <div className="mb-8 border-l-4 border-red-500 p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
-              1
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">
-              RIDDOR Overview: What and Why
-            </h2>
-          </div>
-          <div className="ml-12">
-            <p className="text-white mb-6">
-              RIDDOR is a legal requirement under UK law to report certain workplace incidents to
-              the HSE or local authority.
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Thermal / contact / internal burns</strong> — at the entry/exit points
+                of the current path. Often look minor on the surface, much worse underneath.
+              </li>
+              <li>
+                <strong>Arc eye and flash burns</strong> — UV and infrared radiation from an arc
+                flash. Eyes and any exposed skin in direct line of the arc.
+              </li>
+              <li>
+                <strong>Secondary trauma</strong> — falls, impact, cuts. The shock makes them
+                jump, jerk or pass out — they hit the floor, the scaffold, the bench. Concussion
+                and broken bones aren’t rare.
+              </li>
+              <li>
+                <strong>Cardiac arrhythmia</strong> — the heart’s rhythm thrown off by current
+                across the chest. Can be immediate (fibrillation, cardiac arrest) or delayed
+                (irregular rhythm developing minutes to hours later).
+              </li>
+            </ul>
+            <p>
+              §2.1 covered the physiology — what current does to nerves, muscle and the heart.
+              This subsection covers the practical first aid for each injury type.
             </p>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-3">It covers:</h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li>• Serious injuries</li>
-                  <li>• Work-related diseases</li>
-                  <li>• Dangerous occurrences (near misses)</li>
-                  <li>• Fatalities</li>
-                </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>Burns — the right way</ContentEyebrow>
+
+          <ConceptBlock
+            title="Cool, cover, casualty — in that order"
+            plainEnglish="The two things you need to remember are the time (at least 20 minutes of cool running water) and the things you must NEVER put on a burn."
+            onSite="Most sites have a wash station within reach. If not, a thermos of cool water from the van will do the first few minutes while someone gets to a tap. Time matters more than perfect kit."
+          >
+            <p>The burn protocol every UK first-aider uses:</p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stop the source.</strong> If clothing is on fire, smother it (foil
+                blanket, jacket, drop and roll). If it’s an electrical contact burn, the supply
+                is already isolated by now — don’t skip back to a live source.
+              </li>
+              <li>
+                <strong>Cool the burn under cool running water for at least 20 minutes.</strong>
+                Cool tap water — not cold, not iced. If clothing is stuck to the burn, leave it
+                — cool through the fabric. Don’t peel.
+              </li>
+              <li>
+                <strong>Remove jewellery and tight clothing</strong> from around the burn area
+                (not from the burn itself). Burns swell. A ring on a burned finger becomes a
+                tourniquet within minutes.
+              </li>
+              <li>
+                <strong>Cover loosely</strong> with cling film (loose, not wrapped tight) or a
+                clean, non-fluffy sterile dressing. Cling film is brilliant: see-through (the
+                paramedic can assess without lifting), non-stick, and it holds in moisture.
+              </li>
+              <li>
+                <strong>Keep the rest of the casualty warm</strong> — foil blanket round the
+                shoulders if needed. Cooling a big burn for 20 min can drop their core
+                temperature, especially in winter.
+              </li>
+              <li>
+                <strong>Hospital.</strong> Any electrical burn, any burn bigger than the
+                casualty’s palm, any burn to the face / hands / feet / genitals, any burn on a
+                child or elderly casualty — A&E. Same applies if there’s any doubt about depth.
+              </li>
+            </ol>
+            <p>
+              <strong>Never put on a burn:</strong> butter, oils, toothpaste, antiseptic creams,
+              ointments, ice, fluffy dressings (cotton wool especially). All of them either lock
+              in heat, cause secondary damage, or stick to the wound and tear tissue when
+              removed.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="British Burn Association — First aid for burns position statement"
+            clause="Cool the burn with cool or lukewarm running water for 20 minutes. Do not use ice, iced water or any creams or greasy substances such as butter."
+            meaning={
+              <>
+                The 20-minute number is not folklore — it’s the duration the BBA and NHS use as
+                the cut-off below which deep tissue damage is statistically worse. Memorise it.
+                It’s the same for thermal, electrical, chemical and friction burns: <strong>20
+                minutes minimum</strong>.
+              </>
+            }
+            cite="Reference: British Burn Association — First Aid Position Statement."
+          />
+
+          <CommonMistake
+            title="Treating an electrical burn like a kitchen burn and missing the deep damage"
+            whatHappens={
+              <>
+                Casualty took a shock — small black entry mark on the palm, looks no worse than
+                a kettle burn. You cool it for a couple of minutes, slap on a plaster, send him
+                back to work. Hours later he can’t move his hand — the muscle along the
+                current’s path has been cooked from the inside, and the tissue is starting to
+                swell against the tendons.
+              </>
+            }
+            doInstead={
+              <>
+                Any electrical burn, however small the entry mark, gets the full 20-minute
+                treatment AND a hospital check. Internal damage from current flowing through
+                tissue can be invisible at the skin surface — A&E can do bloods (CK, troponin)
+                to spot muscle and cardiac damage. Don’t guess.
+              </>
+            }
+          />
+
+          <InlineCheck
+            id={checks[0].id}
+            question={checks[0].question}
+            options={checks[0].options}
+            correctIndex={checks[0].correctIndex}
+            explanation={checks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The eye one apprentices forget</ContentEyebrow>
+
+          <ConceptBlock
+            title="Arc eye — sunburn of the cornea"
+            plainEnglish="When a power-arc flash goes off, it puts out a wash of UV light same as a welding arc. That UV burns the cornea — the front layer of the eye. The pain doesn’t hit until 4–12 hours later, often after you’ve gone home."
+            onSite="If you saw an arc flash with your naked eye — even a quick one — get an A&E check the same day, before symptoms start. Tell them how far away you were and how long the flash lasted. Don’t wait until it hurts at midnight."
+          >
+            <p>
+              Arc eye (photokeratitis) presents like extreme grit-in-the-eye pain, with watering,
+              redness, painful light sensitivity, and a feeling that something’s scratching the
+              eyeball every time you blink. It’s temporary in most cases (24–72 hours) but it’s
+              agony, and it’s easily complicated by infection.
+            </p>
+            <p>First aid for suspected arc eye:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Cool, damp cloths over closed eyes — eases pain.</li>
+              <li>Dark room, no screens, no driving.</li>
+              <li>
+                Don’t rub — even when it feels gritty, there’s nothing physical in there to
+                rub out. You’ll just damage the cornea further.
+              </li>
+              <li>A&E or out-of-hours GP — they’ll prescribe lubricating drops and anaesthetic eye drops, and rule out anything more serious.</li>
+              <li>
+                Recovery is usually full and within a few days. But repeated arc-eye episodes
+                cause cumulative damage — that’s why arc-flash PPE includes face shields rated
+                for arc, and why you don’t look at switchgear racking with the naked eye.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>The defibrillator question</ContentEyebrow>
+
+          <ConceptBlock
+            title="AED — what it is, what it does, why you can’t do harm with one"
+            plainEnglish="An Automated External Defibrillator analyses the heart’s rhythm. If it sees a shockable rhythm (mainly ventricular fibrillation — VF — or pulseless ventricular tachycardia), it delivers a controlled shock to reset the rhythm. If the heart isn’t in a shockable state, the AED simply refuses to shock."
+            onSite="Public-access AEDs are everywhere now — train stations, shopping centres, bigger sites. The location of the nearest one is something every site brief should cover. If it’s not, ask."
+          >
+            <p>How to use an AED on an adult in cardiac arrest:</p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Switch it on.</strong> The voice prompt starts immediately. Listen and
+                follow.
+              </li>
+              <li>
+                <strong>Bare the casualty’s chest.</strong> Cut clothing if you have to. Dry the
+                skin if it’s wet. Shave excessive chest hair if there’s a razor in the kit
+                (most have one).
+              </li>
+              <li>
+                <strong>Place the pads</strong> exactly where the diagrams on the pads show:
+                one on the upper-right chest below the collar bone, one on the lower-left side
+                below the armpit. The pad images are foolproof.
+              </li>
+              <li>
+                <strong>Stand clear when the AED says to.</strong> "Analysing rhythm — do not
+                touch the casualty." Look up, hands off, sweep nearby people back.
+              </li>
+              <li>
+                <strong>If a shock is advised: "Stand clear, shock now."</strong> Press the
+                shock button if it’s a semi-automatic. Fully-automatic AEDs deliver the shock
+                themselves.
+              </li>
+              <li>
+                <strong>Resume CPR immediately</strong> after the shock — 30:2 — until the AED
+                analyses again (every 2 minutes). Don’t stop unless paramedics arrive, the
+                casualty starts breathing, or the AED tells you to.
+              </li>
+            </ol>
+            <p>
+              Cardiac arrest from electric shock is most often a shockable rhythm — VF caused
+              by current crossing the heart. Of all causes of out-of-hospital cardiac arrest,
+              electrically-induced VF has one of the better survival rates IF an AED arrives
+              fast. Time matters more than anything: every minute without defibrillation drops
+              survival roughly 10%.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Resuscitation Council UK — AED guidelines (Adult)"
+            clause="Once the AED is attached and switched on it will give voice prompts that should be followed. Provide CPR continuously until the AED is ready to analyse, and resume CPR immediately after any shock unless the casualty starts to wake."
+            meaning={
+              <>
+                The headline: AEDs hand-hold you through it. You don’t need to know the rhythms,
+                you don’t need to make any clinical decisions. Switch it on, follow the voice,
+                push the button when told, restart CPR. Children, pregnant women, casualties
+                with pacemakers — there are minor placement adjustments but the basic protocol
+                doesn’t change.
+              </>
+            }
+            cite="Reference: Resuscitation Council UK — Adult Basic Life Support, current edition."
+          />
+
+          <InlineCheck
+            id={checks[1].id}
+            question={checks[1].question}
+            options={checks[1].options}
+            correctIndex={checks[1].correctIndex}
+            explanation={checks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>The delayed killer</ContentEyebrow>
+
+          <ConceptBlock
+            title="Cardiac arrhythmia — why awake-but-shocked still goes to hospital"
+            plainEnglish="Even when current doesn’t cause cardiac arrest on the spot, it can leave the heart’s electrical system in a fragile state. An irregular rhythm can develop minutes, hours, or occasionally days later — sometimes fatal."
+          >
+            <p>
+              The reason every electric-shock casualty gets a hospital check, no exceptions, is
+              this: current that crossed the chest can damage the cardiac conduction system
+              without an immediate visible effect. The heart compensates, then later the rhythm
+              destabilises. A&E will run an ECG, often hold the casualty for observation, and
+              do bloods to check for muscle damage along the current path.
+            </p>
+            <p>
+              <strong>Don’t accept "I’m fine" as a clinical opinion.</strong> Casualties who walk
+              away from a shock are routinely admitted overnight — that’s normal practice, not
+              an over-reaction. The cost of a few hours’ observation is nothing compared to what
+              happens if you send them home and they collapse on the M6 at 3 a.m.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>The first aid box rules — explicit</ContentEyebrow>
+
+          <ConceptBlock
+            title="What goes in a workplace first aid kit (and what does NOT)"
+            plainEnglish="Workplace first aid kits hold passive supplies — dressings, plasters, eyewash, gloves, foil blanket, scissors. They do NOT hold medication. That’s a legal limit, not a budget thing."
+            onSite="The British Standard BS 8599-1 sets the minimum contents for small/medium/large workplace kits. Most decent firms also add an AED and a bigger eyewash bottle for outdoor work."
+          >
+            <p>A typical BS 8599-1 medium workplace kit holds:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Sterile dressings (medium and large)</li>
+              <li>Plasters (assorted, hypoallergenic)</li>
+              <li>Triangular bandages</li>
+              <li>Conforming bandages</li>
+              <li>Eyewash bottles (sealed, 250 ml minimum, single-use)</li>
+              <li>Sterile saline pods or eye pads</li>
+              <li>Disposable gloves (multiple pairs)</li>
+              <li>Foil survival blanket</li>
+              <li>Burn dressings (hydrogel)</li>
+              <li>Scissors, tape, safety pins</li>
+              <li>Resuscitation face shield</li>
+              <li>First aid guidance leaflet</li>
+            </ul>
+            <p>
+              <strong>What does NOT go in:</strong> any oral medication (paracetamol, ibuprofen,
+              aspirin, antihistamines), any cream (antiseptic, antibiotic, hydrocortisone), any
+              eye drops, any inhalers, any medical adhesive sprays. None of it. Workplace
+              first-aiders are not authorised to dispense medication.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="Health and Safety (First-Aid) Regulations 1981 — Regulation 3"
+            clause="An employer shall provide, or ensure that there is provided, such equipment and facilities as are adequate and appropriate in the circumstances for enabling first-aid to be rendered to his employees if they are injured or become ill at work."
+            meaning={
+              <>
+                The boss has to provide the kit, the trained first-aider (or appointed person),
+                and the time/space to use them. The HSE’s First Aid at Work guidance (L74)
+                takes the regulation and turns it into practical numbers — kit contents, first
+                aider:headcount ratios, low/high-risk categorisation. Your boss does a First
+                Aid Needs Assessment to size all of that for the workplace.
+              </>
+            }
+            cite="Reference: Health and Safety (First-Aid) Regulations 1981; HSE L74 ACOP."
+          />
+
+          <ConceptBlock
+            title="Don’t misuse it. Don’t over-help yourself. Replace what you use."
+            plainEnglish="The first aid kit is for first aid — actual injuries. Not for the bits and bobs you might want to fix elsewhere. Use what’s needed, then tell the first aider so it gets replaced before the next emergency."
+            onSite="The classic apprentice trap: scrape your knuckle on a blade, fancy a plaster, raid the box. No big deal — until the next person turns up with a bleed and the box is a sad collection of empty wrappers."
+          >
+            <p>
+              The four-rule version of AC 3.6 — what every apprentice needs to internalise
+              about the kit:
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Don’t raid it for non-medical jobs.</strong> Need tape for a cable? Use
+                proper tape. Need cling film for lunch? Buy a roll. The kit is for injuries.
+              </li>
+              <li>
+                <strong>Use only what you need.</strong> One plaster for one cut, not three
+                "in case". Don’t take the whole pack of dressings back to the van.
+              </li>
+              <li>
+                <strong>Tell the first aider when you’ve used something.</strong> They keep a
+                stock list and order replacements monthly. If they don’t know you used it, the
+                box is short next time.
+              </li>
+              <li>
+                <strong>Never administer something you’re not trained for.</strong> Even if a
+                colleague asks for it. Even if it seems harmless. Painkillers, eye drops, sting
+                creams — not your job, not your liability. Point them at a pharmacy.
+              </li>
+            </ol>
+            <p>
+              <strong>The check rota every site should run:</strong>
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>After every use</strong> — restock immediately. Don’t leave it for "the
+                end of the day".
+              </li>
+              <li>
+                <strong>Weekly</strong> — appointed first aider does a 30-second look: tamper
+                seal intact, contents present, nothing obviously expired.
+              </li>
+              <li>
+                <strong>Monthly</strong> — full audit against the BS 8599-1 contents list,
+                expiry dates checked (eyewash, sterile dressings, AED pads all have shelf
+                lives).
+              </li>
+              <li>
+                <strong>Annually</strong> — replace the whole kit if it’s been heavily used or
+                stored in a hot/damp environment (van in summer, outside cabin in winter).
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Quietly using the eyewash bottle and not telling anyone"
+            whatHappens={
+              <>
+                You catch a flake of paint in your eye on Tuesday. Pop the eyewash bottle, flush
+                it out, feel better, get on with the job. Don’t mention it. On Friday a labourer
+                takes a face-full of plaster dust — eyes streaming, already going red. He
+                fumbles for the bottle. It’s empty. By the time someone runs to a chemist, the
+                damage is worse than it had to be.
+              </>
+            }
+            doInstead={
+              <>
+                <strong>Tell the first aider every single time you use anything.</strong> One
+                plaster. One dressing. The eyewash. The cling film. Doesn’t matter if it feels
+                trivial — the kit can’t restock itself, and the next person to need it might be
+                in a worse state than you were.
+              </>
+            }
+          />
+
+          <InlineCheck
+            id={checks[2].id}
+            question={checks[2].question}
+            options={checks[2].options}
+            correctIndex={checks[2].correctIndex}
+            explanation={checks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <Scenario
+            title="Two casualties, one kit — and a cling film roll"
+            situation={
+              <>
+                A junior labourer takes a flash from a switchgear cabinet — small contact burn
+                on the palm, plus he’s rubbing his eyes complaining the light has gone funny.
+                You’ve already isolated the supply, called 999 and put him on a chair. You’re
+                the only EFAW on site and the kit is the standard medium BS 8599-1 box on the
+                wall.
+              </>
+            }
+            whatToDo={
+              <>
+                Burn first — sink, cool tap water, palm under the flow for 20 minutes. Don’t
+                put anything on it. While he’s under the tap, the eye complaint worries you
+                more — flash, hours-later onset of pain is classic arc eye. Cool damp cloth
+                over closed eyes (gauze + saline pod from the kit), darken the room. After
+                20 minutes, cover the burn loosely with cling film from the kit (or kitchen
+                roll wrapped in cling film if you’re short). Foil blanket round his shoulders
+                so he doesn’t go cold. Brief paramedics on arrival: 230 V flash, contact burn
+                to right palm, suspected arc eye, fully conscious, GCS 15. Hand over. Then
+                tell the appointed first aider what you used — at minimum: eyewash pod, cling
+                film, hydrogel burn dressing, saline pod. They’ll restock before close of
+                business.
+              </>
+            }
+            whyItMatters={
+              <>
+                One incident, three injuries (burn + arc eye + the hidden cardiac risk that
+                forces the hospital trip). Each gets its own first aid. The kit handles all
+                three IF it’s been kept stocked. AC 3.6 in action: if the previous apprentice
+                had quietly used the eyewash on Tuesday and not told anyone, the labourer’s eye
+                gets nothing.
+              </>
+            }
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              "Burns: cool running water 20 min minimum. Cling film loose afterwards. No ice, no creams, no butter, no fluffy dressings.",
+              "Arc eye is delayed (4–12 hours). Same-day A&E if you saw an arc with the naked eye, before symptoms start.",
+              "AEDs are idiot-proof and can’t shock a non-shockable rhythm. If one’s nearby, attach it.",
+              "Cardiac arrhythmia can develop hours after the original shock — every electric-shock casualty gets a hospital check.",
+              "First aid kit holds dressings, plasters, eyewash, gloves, foil blanket — NOT medication. AC 3.6: don’t raid it; replace what you use; never administer beyond your training.",
+              "Check rota: after-use restock, weekly visual, monthly audit, annual full replace if heavily used.",
+            ]}
+          />
+
+          {/* ── Quiz (preserved — links to streaks/stats) ───────── */}
+
+          <Quiz title="First aid for electrical injuries — knowledge check" questions={quizQuestions} />
+
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section6/6-1')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
               </div>
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-white mb-3">The aim is to:</h3>
-                <ul className="space-y-2 text-white text-sm">
-                  <li>• Help monitor accident trends</li>
-                  <li>• Improve workplace safety</li>
-                  <li>• Allow enforcement action when necessary</li>
-                </ul>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                First response to electric shock
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* InlineCheck after Section 1 */}
-        <InlineCheck
-          id="riddor-check-1"
-          question="Which of the following must be reported under RIDDOR?"
-          options={[
-            'Minor cut requiring plaster',
-            'Fracture of wrist',
-            'Feeling tired at work',
-            'Misplaced tool',
-          ]}
-          correctIndex={1}
-          explanation="A fracture of the wrist is classified as a major injury under RIDDOR and must be reported immediately, as it’s a fracture other than to fingers, thumbs, or toes."
-        />
-
-        {/* Section 2: Reportable Injuries (Deaths/Major + Over-7-Day) */}
-        <div className="mb-8 border-l-4 border-orange-500 p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
-              2
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">
-              Reportable Injuries (Deaths/Major + Over-7-Day)
-            </h2>
-          </div>
-          <div className="ml-12">
-            <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-white mb-3 font-medium">
-                Death or Major Injury - Must be reported immediately:
-              </p>
-              <ul className="space-y-2 text-white text-sm">
-                <li>• Deaths on site</li>
-                <li>• Fractures (except fingers, thumbs, toes)</li>
-                <li>• Amputations</li>
-                <li>• Burns requiring hospital treatment</li>
-                <li>• Eye injuries or loss of sight</li>
-                <li>• Electric shock leading to unconsciousness</li>
-              </ul>
-            </div>
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-white mb-3 font-medium">
-                Over-Seven-Day Injuries - Report within 15 days:
-              </p>
-              <p className="text-white text-sm">
-                Injuries where someone is unable to perform their normal work for 7+ consecutive
-                days must be reported within 15 days of the incident.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 3: Occupational Diseases and Gas Incidents */}
-        <div className="mb-8 border-l-4 border-indigo-500 p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-indigo-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
-              3
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">
-              Occupational Diseases and Gas Incidents
-            </h2>
-          </div>
-          <div className="ml-12">
-            <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-white mb-3 font-medium">
-                Occupational Diseases - conditions reportable when diagnosed:
-              </p>
-              <ul className="space-y-2 text-white text-sm">
-                <li>• Hand-arm vibration syndrome</li>
-                <li>• Occupational dermatitis</li>
-                <li>• Carpal tunnel syndrome</li>
-                <li>• Work-related asthma</li>
-              </ul>
-            </div>
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-white mb-3 font-medium">Gas Incidents - must be reported:</p>
-              <p className="text-white text-sm">
-                Gas leaks or faulty appliances that could cause injury or death must be reported.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 4: Dangerous Occurrences and Practical Examples */}
-        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
-              4
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">
-              Dangerous Occurrences and Practical Examples
-            </h2>
-          </div>
-          <div className="ml-12">
-            <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-white mb-3 font-medium">
-                Dangerous Occurrences - Electrical work examples:
-              </p>
-              <ul className="space-y-2 text-white text-sm">
-                <li>• Electrical short circuit causing explosion or fire</li>
-                <li>• Arc flash incident (even if no injury)</li>
-                <li>• Overhead line contact with vehicle/equipment</li>
-                <li>• Cable strike damaging underground electricity cables</li>
-                <li>• Switchgear failure or unintended operation</li>
-              </ul>
-            </div>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <p className="text-white mb-3 font-medium">Must report:</p>
-                <ul className="space-y-2 text-white text-sm">
-                  <li>• Broken wrist (fracture)</li>
-                  <li>• Burns needing hospital treatment</li>
-                  <li>• Unconsciousness from electric shock</li>
-                  <li>• Eye injury from arc flash</li>
-                </ul>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section6/6-3')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
               </div>
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <p className="text-white mb-3 font-medium">Not major injuries:</p>
-                <ul className="space-y-2 text-white text-sm">
-                  <li>• Broken finger or toe</li>
-                  <li>• Minor cuts or bruises</li>
-                  <li>• Minor burns (no hospital)</li>
-                  <li>• Sprains requiring time off</li>
-                </ul>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                RIDDOR — what must be reported
               </div>
-            </div>
+            </button>
           </div>
-        </div>
-
-        {/* Section 5: Reporting Process, Timeframes, and Good Practice */}
-        <div className="mb-8 border-l-4 border-slate-500 p-6 bg-card rounded-lg">
-          <div className="flex items-start gap-4 mb-4">
-            <div className="bg-slate-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">
-              5
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-white">
-              Reporting Process, Timeframes, and Good Practice
-            </h2>
-          </div>
-          <div className="ml-12">
-            <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-white mb-3 font-medium">Who Reports?</p>
-              <ul className="space-y-2 text-white text-sm">
-                <li>• Employers or the responsible person (e.g. site manager, contractor)</li>
-                <li>• Self-employed persons must report their own incidents</li>
-                <li>• Reports are made via the HSE’s online portal</li>
-              </ul>
-            </div>
-            <div className="bg-muted/50 border border-border rounded-lg p-4 mb-6">
-              <p className="text-white mb-3 font-medium">Timeframes:</p>
-              <ul className="space-y-2 text-white text-sm">
-                <li>
-                  • <strong>Fatal or major injuries:</strong> reported immediately
-                </li>
-                <li>
-                  • <strong>Over-7-day injuries:</strong> reported within 15 days
-                </li>
-                <li>
-                  • <strong>Records:</strong> must be kept for at least 3 years
-                </li>
-              </ul>
-            </div>
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <p className="text-white mb-3 font-medium">Good Reporting Practice:</p>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white text-sm">Preserve the scene and gather evidence</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white text-sm">
-                    Provide immediate first aid and ensure safety
-                  </span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white text-sm">Notify relevant parties promptly</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white text-sm">Record facts only, avoid speculation</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white text-sm">Maintain confidentiality and dignity</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Real World Scenario */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Real World Scenario</h2>
-          <div className="bg-card border border-amber-400/30 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">Scenario: Arc Flash Incident</h3>
-            <div className="space-y-4 text-white text-sm">
-              <p>
-                <strong>The Situation:</strong> During routine maintenance at a commercial building,
-                electrician Sarah opens a distribution panel to check connections. A loose terminal
-                causes an arc flash, creating a bright flash and loud bang. Sarah instinctively
-                steps back and isn’t injured, but her safety glasses are cracked from debris, and
-                the incident could have caused serious burns or eye damage.
-              </p>
-
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-3">What happened next:</h4>
-                <div className="space-y-2">
-                  <div className="flex items-start gap-3">
-                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>
-                      Site supervisor immediately secured the area and ensured Sarah was unharmed
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>Power was isolated to the affected panel</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>
-                      Photos were taken of the damaged equipment and Sarah’s cracked glasses
-                    </span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>RIDDOR report was filed immediately as a "dangerous occurrence"</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="bg-elec-yellow w-2 h-2 rounded-full mt-2 flex-shrink-0"></div>
-                    <span>
-                      Investigation revealed the loose terminal and led to improved maintenance
-                      procedures
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-card border border-elec-yellow/30 rounded-lg p-4">
-                <h4 className="font-semibold text-white mb-2">Why this was reportable:</h4>
-                <p>
-                  Even though Sarah wasn’t injured, this was a "dangerous occurrence" under RIDDOR
-                  because the arc flash could have caused serious injury or death. The incident
-                  helped identify a maintenance issue that could affect other workers.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* FAQs */}
-        <Card className="p-6 bg-card border-border/20 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h2>
-          <div className="space-y-6">
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-2">
-                Do I need to report minor injuries that require first aid?
-              </h3>
-              <p className="text-white text-sm">
-                No, minor injuries requiring only basic first aid don’t need RIDDOR reporting.
-                However, if the injury prevents someone from working for 7+ consecutive days, it
-                becomes reportable as an "over-7-day injury."
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-2">
-                What if I’m not sure whether something is reportable?
-              </h3>
-              <p className="text-white text-sm">
-                When in doubt, consult the HSE guidance or speak to your safety officer. It’s better
-                to report something that turns out not to be required than to miss a reportable
-                incident. The HSE provides detailed guidance and a helpline for clarification.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-2">
-                Can I report incidents online outside normal working hours?
-              </h3>
-              <p className="text-white text-sm">
-                Yes, the HSE online reporting system is available 24/7. For fatal or major injuries,
-                you should report immediately regardless of the time. Phone reporting is also
-                available for urgent cases outside office hours.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-2">
-                What happens after I submit a RIDDOR report?
-              </h3>
-              <p className="text-white text-sm">
-                You’ll receive a confirmation with a reference number. Keep this for your records.
-                The HSE may follow up with questions or decide to investigate. In some cases, they
-                may visit the site to examine the circumstances and ensure proper safety measures
-                are in place.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-2">
-                Do subcontractors need to report their own incidents?
-              </h3>
-              <p className="text-white text-sm">
-                Self-employed persons and subcontractors are responsible for reporting their own
-                incidents. However, if you’re the main contractor or responsible person, you should
-                ensure they understand their obligations and assist with reporting if needed.
-              </p>
-            </div>
-
-            <div className="border-l-4 border-elec-yellow pl-4">
-              <h3 className="font-semibold text-white mb-2">
-                What’s the penalty for not reporting a RIDDOR incident?
-              </h3>
-              <p className="text-white text-sm">
-                Failure to report can result in prosecution, unlimited fines, and enforcement
-                action. The HSE takes non-compliance seriously as it prevents them from monitoring
-                workplace safety trends and taking appropriate action to protect workers.
-              </p>
-            </div>
-          </div>
-        </Card>
-
-        {/* Quiz */}
-        <Quiz questions={quizQuestions} />
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default Sub2;
+}

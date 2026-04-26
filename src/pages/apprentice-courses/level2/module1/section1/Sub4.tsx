@@ -1,3 +1,12 @@
+/**
+ * Module 1 · Section 1 · Subsection 4 — The role of regulatory bodies
+ * City &amp; Guilds 2365-02 → Unit 201 → LO1 → AC 1.1
+ *   "identify roles and responsibilities with regard to current relevant
+ *    Health and Safety legislation" (the bodies that enforce / certify)
+ * Also touches LO2 AC 2.4 (specify appropriate responsible persons to whom
+ * Health and Safety and welfare related matters should be reported).
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -803,14 +812,14 @@ export default function Sub4() {
               </div>
             </button>
             <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module1/section2')}
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section1/1-5')}
               className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
+                Next subsection <ChevronRight className="h-3 w-3" />
               </div>
               <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Section 2 — PPE and safe working
+                Environmental legislation and waste
               </div>
             </button>
           </div>

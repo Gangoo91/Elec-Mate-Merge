@@ -1,3 +1,14 @@
+/**
+ * Module 1 · Section 2 · Subsection 3 — Fire hazards and explosive environments
+ * City &amp; Guilds 2365-02 → Unit 201
+ *   • LO4 → AC 4.3 — identify specific hazards associated with the installation
+ *     and maintenance of electrical systems and equipment (fire / arc).
+ *   • LO4 → AC 4.4 — describe situations which can constitute a hazard in the
+ *     workplace (DSEAR / hazardous-area zoning).
+ *   • LO4 → AC 4.6 — identify the correct type of fire extinguisher for a
+ *     particular type of fire.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -293,8 +304,8 @@ export default function Sub3() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671 — Regulation 421.1.1"
-            clause="Persons, livestock and property shall be protected against harmful effects of heat or fire which may be generated or propagated in electrical installations."
+            source="BS 7671:2018+A4:2026 — Regulation 421.11"
+            clause="Persons, livestock and property shall be protected against harmful effects of heat or fire which may be generated or propagated in electrical installations. Manufacturers’ instructions shall be taken into account in addition to the requirements of BS 7671."
             meaning={
               <>
                 The general fire duty. Protect <strong>people</strong>, <strong>animals</strong>{' '}
@@ -302,7 +313,7 @@ export default function Sub3() {
                 propagated through it. Every other Chapter 42 reg flows from this one.
               </>
             }
-            cite="Reference: BS 7671:2018+A4:2026 Part 4 Chapter 42"
+            cite="Source: BS 7671:2018+A4:2026 Part 4 Chapter 42 Regulation 421.11."
           />
 
           <InlineCheck
@@ -391,8 +402,8 @@ export default function Sub3() {
           </ConceptBlock>
 
           <RegsCallout
-            source="BS 7671 — Regulation 527.2 / Chapter 42"
-            clause="Where a wiring system passes through elements of building construction such as floors, walls, roofs, ceilings, partitions or cavity barriers, the openings remaining after passage of the wiring system shall be sealed according to the degree of fire-resistance (if any) prescribed for the respective element of building construction before penetration."
+            source="BS 7671:2018+A4:2026 — Regulation 527.2.1"
+            clause="Where a wiring system passes through elements of building construction such as floors, walls, roofs, ceilings, partitions or cavity barriers, the openings remaining after passage of the wiring system shall be sealed according to the degree of fire-resistance (if any) prescribed for the respective element of building construction before penetration. This requirement is satisfied if the sealing of the wiring system concerned has passed a relevant type test."
             meaning={
               <>
                 You can’t downgrade the building’s fire compartmentation. If you’ve gone through a
@@ -401,7 +412,7 @@ export default function Sub3() {
                 pillows or fire-rated foam — not whatever was in the van.
               </>
             }
-            cite="Reference: BS 7671:2018+A4:2026 Reg 527.2"
+            cite="Source: BS 7671:2018+A4:2026 Part 5 Chapter 52 Regulation 527.2.1."
           />
 
           <ConceptBlock
@@ -668,32 +679,47 @@ export default function Sub3() {
             onSite="Black band = CO₂. That’s the one for live electrical equipment. Most plant rooms and electrical cupboards have one mounted on the wall right by the door — make a note of where it is on day one."
           >
             <p>
-              UK extinguishers are colour-banded so you can tell them apart at a glance:
+              UK fires are split into <strong>classes</strong> by what’s burning. Each class is
+              tackled by a different extinguisher type, and each extinguisher carries a coloured
+              band so you can tell them apart at a glance:
             </p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
               <li>
-                <strong>CO₂ — black band.</strong> Smothers the fire, no conductive residue, won’t
-                damage electrical kit. The default for live electrical fires. Class B (flammable
-                liquids) and electrical.
+                <strong>Class A — solids</strong> (wood, paper, fabric, plastics). Use{' '}
+                <strong>water (red band)</strong> or <strong>foam (cream)</strong>. Dry powder
+                (blue) and wet chemical (yellow) also work on Class A.
               </li>
               <li>
-                <strong>Dry powder — blue band.</strong> Works on most things including electrical,
-                but it’s MESSY. Powder gets into every relay, contact and connector — kit’s usually
-                a write-off. OK in emergency, not first choice.
+                <strong>Class B — flammable liquids</strong> (petrol, paint thinners, oil). Use{' '}
+                <strong>foam (cream)</strong>, <strong>CO₂ (black)</strong> or{' '}
+                <strong>dry powder (blue)</strong>. Never water — it spreads the burning liquid.
               </li>
               <li>
-                <strong>Water — red band.</strong> Class A (paper, wood, fabric). NEVER on live
-                electrical equipment — water conducts and you join the circuit.
+                <strong>Class C — flammable gases</strong> (LPG, methane, butane). Use{' '}
+                <strong>dry powder (blue)</strong>. The first move is always to isolate the gas
+                supply.
               </li>
               <li>
-                <strong>Foam — cream band.</strong> Class A and B. Same problem with live
-                electricals — most foam is conductive. Don’t.
+                <strong>Class D — combustible metals</strong> (magnesium, sodium, lithium). Use a{' '}
+                <strong>specialist Class D powder</strong> only. Standard extinguishers can make a
+                metal fire worse. You’ll see this in battery-storage and lab settings.
               </li>
               <li>
-                <strong>Wet chemical — yellow band.</strong> Class F (cooking oil/fat). Kitchen kit,
-                not for electricians.
+                <strong>Class F — cooking oils and fats</strong>. Use <strong>wet chemical
+                (yellow)</strong>. Never water on a chip-pan fire.
+              </li>
+              <li>
+                <strong>"Electrical" — not a class, but a hazard overlay.</strong> Any fire with
+                live equipment in it. Use <strong>CO₂ (black band)</strong> first choice — no
+                conductive residue, smothers the fire, won’t damage kit. Dry powder works in
+                emergency but it’s messy and ruins electronics.
               </li>
             </ul>
+            <p className="text-orange-300">
+              <strong>Never use water or foam on live electrical equipment.</strong> Both conduct,
+              and the jet can put you straight into the circuit. Isolate the supply first, then
+              CO₂ if you have to fight it.
+            </p>
             <p>
               First move on any electrical fire isn’t the extinguisher — it’s the isolator. Kill the
               power if it’s safe to reach the switch, raise the alarm, evacuate, and only fight the

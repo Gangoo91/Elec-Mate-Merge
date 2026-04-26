@@ -1,3 +1,10 @@
+/**
+ * Module 1 · Section 1 · Subsection 1 — The Health and Safety at Work Act 1974
+ * City &amp; Guilds 2365-02 → Unit 201 → LO1 → AC 1.1
+ *   "identify roles and responsibilities with regard to current relevant
+ *    Health and Safety legislation"
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 

@@ -1,792 +1,634 @@
-import { ArrowLeft, Target, CheckCircle, Shield, FileCheck, Users } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 3 · Subsection 1 — Purpose of risk assessments
+ * City &amp; Guilds 2365-02 → Unit 201
+ *   • LO3 → AC 3.1 — state the procedure for producing risk assessments and
+ *     method statements in accordance with their level of responsibility.
+ *   • LO4 → AC 4.5 — explain practices and procedures for addressing hazards
+ *     in the workplace.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Purpose of Risk Assessments - Level 2 Module 1 Section 3.1';
+const TITLE =
+  'Purpose of risk assessments | Level 2 Module 1.3.1 | Elec-Mate';
 const DESCRIPTION =
-  'Understanding why risk assessments are essential for electrical safety, covering legal requirements, ALARP principles, and practical applications.';
+  "Why every job on every site starts with a piece of paper that names the things that could hurt you — and what happens to apprentices who treat it as paperwork.";
 
-const Sub1 = () => {
+/* ── Inline check questions (preserved — wired into stats/streaks) ── */
+
+const checks = [
+  {
+    id: 'rams-purpose-check',
+    question: "What is a risk assessment actually for?",
+    options: [
+      'Covering the boss when something goes wrong',
+      'Identifying what could hurt people on this job, and what to do about it',
+      'Showing the client you’re professional',
+      'Replacing PPE on site',
+    ],
+    correctIndex: 1,
+    explanation:
+      "It’s a planning tool. You look at the job, you name the things that could hurt someone, you decide how to stop them. Everything else (paperwork, evidence, client tick-boxes) is a side effect. If it’s only being done to cover backsides, it’s being done wrong.",
+  },
+  {
+    id: 'rams-who-must-check',
+    question: "Who has to make sure a suitable and sufficient risk assessment exists for the job?",
+    options: [
+      'The HSE before you start',
+      'The apprentice on the day',
+      'The employer (or self-employed person doing the work)',
+      'The client',
+    ],
+    correctIndex: 2,
+    explanation:
+      "MHSWR 1999 Reg 3 puts the duty on the employer (and on self-employed people for their own work). On site you’ll often see it produced by a competent person on their behalf — but the legal duty is the employer’s.",
+  },
+  {
+    id: 'rams-record-check',
+    question: "When does the law require the significant findings to be written down?",
+    options: [
+      'Only when something has gone wrong',
+      'Only on construction sites',
+      'When the employer has 5 or more employees',
+      'Always — verbal is never acceptable',
+    ],
+    correctIndex: 2,
+    explanation:
+      "MHSWR Reg 3(6) — the trigger is 5 or more employees. Most firms record everything anyway because the written record is what you actually use to run the job and what you reach for if the HSE asks questions later.",
+  },
+];
+
+/* ── End-of-page Quiz (preserved — wires into stats/streaks) ──────── */
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "You arrive on site and your gaffer hands you a RAMS document. What’s the first thing you should do with it?",
+    options: [
+      "Sign it without reading — everyone else has",
+      "Read it. Check the hazards listed match what you can actually see on site",
+      "Ignore it and crack on, you’ve done this kind of job before",
+      "File it in the van for the end of the week",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "RAMS only protects you if you’ve actually read it and the controls are still right for the conditions. Signing without reading is one of the easiest ways an apprentice ends up in front of a coroner — or sacked.",
+  },
+  {
+    id: 2,
+    question: "The site RAMS says 'isolate at the local DB before drilling'. The DB you’re drilling near isn’t labelled and the gaffer says 'just kill the lighting circuit, you’ll be fine'. What do you do?",
+    options: [
+      "Crack on — the gaffer’s been here 20 years",
+      "Stop. The RAMS doesn’t match what’s on site. Flag it before you drill",
+      "Switch off everything in the building to be safe",
+      "Drill through and check afterwards",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "If the assessment doesn’t match reality, the controls don’t apply either. Stop, raise it, get the RAMS amended (or a fresh dynamic assessment done) before you put a drill through a wall.",
+  },
+  {
+    id: 3,
+    question: "Which regulation puts the legal duty to do a risk assessment on the employer?",
+    options: [
+      "BS 7671 Regulation 411.3",
+      "EAWR 1989 Regulation 16",
+      "MHSWR 1999 Regulation 3",
+      "RIDDOR 2013",
+    ],
+    correctAnswer: 2,
+    explanation:
+      "Management of Health and Safety at Work Regulations 1999, Reg 3 — 'Every employer shall make a suitable and sufficient assessment'. It’s the legal hook that turns RAMS from good practice into a hard duty.",
+  },
+  {
+    id: 4,
+    question: "What does 'suitable and sufficient' actually mean for a risk assessment?",
+    options: [
+      "It must be at least 10 pages long",
+      "It identifies the significant risks and helps you make sensible decisions about controls",
+      "It covers every possible thing that could ever go wrong",
+      "It has to be approved by the HSE",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "HSE’s words: proportionate to the risk, identifies the significant hazards, considers who could be harmed, gets the controls right. Big jobs get big assessments. A single-socket swap doesn’t need a 30-page document — but it still needs you to think.",
+  },
+  {
+    id: 5,
+    question: "A mate gets electrocuted because the RAMS missed a buried live cable. The RAMS was a copy-paste from the last job. Who can the HSE prosecute?",
+    options: [
+      "Only the company",
+      "Only the person who wrote the RAMS",
+      "The employer, and potentially the individuals who knew the assessment was inadequate",
+      "Nobody — it was an accident",
+    ],
+    correctAnswer: 2,
+    explanation:
+      "The corporate body gets done under HASAWA and MHSWR. But individuals — directors, supervisors, the person who signed it off — can be prosecuted personally if they knew (or should have known) the assessment wasn’t fit for the job. Generic copy-paste RAMS is a classic prosecution starter.",
+  },
+  {
+    id: 6,
+    question: "What’s the difference between a risk assessment and a method statement?",
+    options: [
+      "They’re the same thing with different names",
+      "Risk assessment names the hazards and controls; method statement says how the work will be done in safe order",
+      "Risk assessment is for the boss; method statement is for you",
+      "Method statement is law; risk assessment is optional",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "RA = what could hurt you and how we’re stopping it. MS = the actual sequence of work, who’s doing what, with what kit, in what order. They’re sister documents — that’s why they’re always bundled together as RAMS.",
+  },
+  {
+    id: 7,
+    question: "When does a risk assessment need to be reviewed?",
+    options: [
+      "Once every 5 years",
+      "Only after an accident",
+      "When circumstances change, when there’s reason to believe it’s no longer valid, or after an incident",
+      "Never — once approved, it’s fixed",
+    ],
+    correctAnswer: 2,
+    explanation:
+      "MHSWR Reg 3(3): review when it’s no longer valid OR there’s been a significant change. New hazard appears, layout changes, near miss happens, weather turns — all triggers. Tomorrow’s site isn’t today’s site.",
+  },
+  {
+    id: 8,
+    question: "Your firm employs 4 sparks including you. Does the law require risk assessments to be written down?",
+    options: [
+      "Yes — always",
+      "No — under 5 employees the SIGNIFICANT FINDINGS don’t have to be recorded by law (but are still expected as good practice)",
+      "Only if the client asks",
+      "Only for jobs over £10,000",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "MHSWR Reg 3(6) only forces written records at 5+ employees. Below that, the assessment still has to happen — you just don’t legally have to write the significant findings down. Almost every firm does anyway, because verbal RAMS = no defence if anything goes wrong.",
+  },
+];
+
+/* ── FAQs (apprentice voice) ──────────────────────────────────────── */
+
+const faqs = [
+  {
+    question: "I’m the apprentice — am I supposed to write risk assessments?",
+    answer:
+      "Not full ones, no. The legal duty sits with the employer. But you ARE expected to read them, understand them, point out where they don’t match the site, and contribute observations during point-of-work checks. As you move through your apprenticeship you’ll do dynamic risk assessments (the on-the-spot ones) more and more — and by the time you’re a Level 3 spark, writing job-specific RAMS is part of the role.",
+  },
+  {
+    question: "What if there’s no RAMS on the job?",
+    answer:
+      "Stop and ask. On a notifiable construction job (CDM 2015) it’s a legal must. On smaller domestic work it might genuinely not exist — but the assessment still has to have happened in someone’s head. If it hasn’t, you’re working blind. Politely flag it before you start. 'I just want to check what the RAMS says about X' is a perfectly normal question.",
+  },
+  {
+    question: "Generic RAMS — is that allowed?",
+    answer:
+      "Generic templates are fine as a starting point — most firms have them for common jobs (CU change, socket add, light replacement). What’s NOT allowed is using a generic without making it site-specific. Suitable and sufficient means the controls match THIS site, THIS day, THIS team. Tick-box generic RAMS are one of the most common HSE prosecution patterns.",
+  },
+  {
+    question: "Does the customer get to see the risk assessment?",
+    answer:
+      "On commercial sites, almost always — they’ll often demand it before letting you on. On domestic, usually not unless they ask. Either way the document belongs to your employer, who has to keep it for the duration of the work and a sensible period after (often quoted as 3+ years).",
+  },
+  {
+    question: "What’s ALARP got to do with risk assessments?",
+    answer:
+      "ALARP — As Low As Reasonably Practicable — is the test the controls are judged against. Once you’ve identified a hazard, you don’t have to eliminate the risk completely (often impossible). You have to reduce it ALARP — to the point where the cost or trouble of doing more outweighs the safety gain. Bigger the risk, more you’ve got to do. It’s the principle every prosecution comes back to.",
+  },
+  {
+    question: "RAMS, risk assessment, method statement, safe system of work — what’s the difference?",
+    answer:
+      "RAMS = the bundle (RA + MS). Risk assessment = the hazard-and-controls list. Method statement = the step-by-step plan. Safe System of Work = the broader concept — the whole way the job is run safely, of which RAMS is the documentation. Permit-to-work systems sit on top for higher-risk jobs (live work, confined spaces). All four are layers of the same idea.",
+  },
+];
+
+export default function Sub1() {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
-  const quickCheckQuestions = [
-    {
-      id: 'purpose-check',
-      question: 'What is the primary purpose of a risk assessment in electrical work?',
-      options: [
-        'To increase paperwork and bureaucracy',
-        'To identify hazards and control risks to protect people',
-        'To blame workers when accidents occur',
-        'To delay work until all risks are eliminated',
-      ],
-      correctIndex: 1,
-      explanation:
-        "Risk assessment’s primary purpose is to systematically identify hazards, evaluate risks, and implement control measures to protect people from harm. It’s a proactive safety tool, not a blame mechanism.",
-    },
-    {
-      id: 'alarp-check',
-      question: 'What does ALARP mean in risk management?',
-      options: [
-        'All Levels Are Risk Proof',
-        'As Low As Reasonably Practicable',
-        'Always Look At Risk Profiles',
-        'Automated Level Assessment Risk Protocol',
-      ],
-      correctIndex: 1,
-      explanation:
-        "ALARP stands for 'As Low As Reasonably Practicable', meaning risks should be reduced to the lowest level achievable while considering cost, time, and effort constraints.",
-    },
-  ];
-
-  const quizQuestions = [
-    {
-      id: 1,
-      question: 'What is the primary purpose of a risk assessment?',
-      options: [
-        'To blame workers for accidents',
-        'To identify hazards and control risks',
-        'To increase paperwork',
-        'To avoid work activities',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'The primary purpose of risk assessment is to identify hazards, evaluate risks, and implement control measures to protect people from harm.',
-    },
-    {
-      id: 2,
-      question: 'When must a risk assessment be reviewed?',
-      options: [
-        'Only when an accident occurs',
-        'Every five years',
-        'When there are significant changes or new hazards',
-        'Never, once completed',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Risk assessments must be reviewed when there are significant changes to work activities, new hazards are identified, or following incidents.',
-    },
-    {
-      id: 3,
-      question: 'Who is responsible for ensuring risk assessments are carried out?',
-      options: [
-        'The Health and Safety Executive only',
-        'Individual workers only',
-        'The employer or duty holder',
-        'Insurance companies',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Under the Management of Health and Safety at Work Regulations 1999, employers and duty holders are responsible for ensuring suitable and sufficient risk assessments are carried out.',
-    },
-    {
-      id: 4,
-      question: 'What does ALARP stand for in risk management?',
-      options: [
-        'All Levels Are Risk Proof',
-        'As Low As Reasonably Practicable',
-        'Always Look At Risk Profiles',
-        'Automated Level Assessment Risk Protocol',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'ALARP stands for As Low As Reasonably Practicable, meaning risks should be reduced to the lowest level that is reasonably achievable considering the costs and benefits.',
-    },
-    {
-      id: 5,
-      question:
-        'True or False: Risk assessments only need to be done for high-voltage electrical work.',
-      options: ['True', 'False'],
-      correctAnswer: 1,
-      explanation:
-        'False. Risk assessments are required for all electrical work, regardless of voltage level, as hazards exist at all voltage levels.',
-    },
-    {
-      id: 6,
-      question: 'Which regulation specifically requires employers to conduct risk assessments?',
-      options: [
-        'Building Regulations 2010',
-        'Management of Health and Safety at Work Regulations 1999',
-        'Construction (Design and Management) Regulations 2015',
-        'Personal Protective Equipment Regulations 2002',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Regulation 3 of the Management of Health and Safety at Work Regulations 1999 specifically requires employers to conduct suitable and sufficient risk assessments.',
-    },
-    {
-      id: 7,
-      question: 'Who should conduct electrical risk assessments?',
-      options: [
-        'Anyone can do it',
-        'Only HSE inspectors',
-        'Competent persons with appropriate knowledge and experience',
-        'Only electrical engineers',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Risk assessments must be carried out by competent persons who have the necessary knowledge, training, and experience to identify electrical hazards and evaluate risks effectively.',
-    },
-    {
-      id: 8,
-      question: 'When must risk assessment findings be recorded?',
-      options: [
-        'Never, verbal communication is sufficient',
-        'Always, regardless of company size',
-        'Only for companies with 5 or more employees',
-        'Only after an accident occurs',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Under the Management Regulations, significant findings must be recorded if the company has 5 or more employees, though good practice suggests recording findings regardless of size.',
-    },
-    {
-      id: 9,
-      question: 'What should happen to risk assessments after they are completed?',
-      options: [
-        'File them away and forget about them',
-        'Communicate findings and review regularly',
-        'Send them to the HSE immediately',
-        'Keep them confidential from workers',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Risk assessments should be communicated to all affected personnel and reviewed regularly, especially when circumstances change or after incidents.',
-    },
-    {
-      id: 10,
-      question: 'Which of these is NOT a common mistake in risk assessment?',
-      options: [
-        'Using generic, copied assessments',
-        'Involving experienced workers in the process',
-        'Failing to review after incidents',
-        'Poor communication of findings',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Involving experienced workers in the risk assessment process is actually good practice, not a mistake. They bring valuable practical knowledge about workplace hazards.',
-    },
-  ];
-
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 3
+          </button>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Target className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 3.1
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-                Purpose of Risk Assessments
-              </h1>
-              <p className="text-xl text-white max-w-4xl mt-2">
-                Understanding why risk assessments are essential for electrical safety
-              </p>
-            </div>
-          </div>
-        </div>
+          <PageHero
+            eyebrow="Module 1 · Section 3 · Subsection 1"
+            title="Purpose of risk assessments"
+            description="Why every job on every site starts with a piece of paper that names the things that could hurt you — and what happens to the apprentices who treat it as paperwork to sign rather than a plan to read."
+            tone="emerald"
+          />
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>
-                  <strong>Legal requirement:</strong> Risk assessments are mandatory under health
-                  and safety regulations.
-                </li>
-                <li>
-                  <strong>Protect lives:</strong> Identify electrical hazards before they cause harm
-                  or death.
-                </li>
-                <li>
-                  <strong>ALARP principle:</strong> Reduce risks to As Low As Reasonably
-                  Practicable.
-                </li>
-                <li>
-                  <strong>Business benefits:</strong> Reduce insurance costs, prevent prosecution,
-                  maintain reputation.
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>
-                  <strong>Spot:</strong> New work activities, changed conditions, incident
-                  follow-ups, significant hazards.
-                </li>
-                <li>
-                  <strong>Use:</strong> Before starting any electrical work, when planning
-                  installations, during method statements.
-                </li>
-                <li>
-                  <strong>Apply:</strong> Document findings, implement controls, train workers,
-                  review regularly.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          <TLDR
+            points={[
+              "A risk assessment names what could hurt you on THIS job and decides how to stop it. Everything else is a side effect.",
+              "It’s a legal duty under MHSWR 1999 Reg 3 — the employer has to do one for every work activity, and write down the significant findings if there are 5+ employees.",
+              "On site, your job is to READ it, check it matches reality, and flag it the moment it doesn’t. Signing without reading is a sackable habit — and not a defence in court.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
-            Learning Outcomes
-          </h2>
-          <p className="text-white mb-4">By the end of this section, you’ll be able to:</p>
-          <ul className="space-y-3 text-foreground">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Explain the fundamental purpose of risk assessment in electrical work</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Understand the legal requirements and business benefits</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Recognise when risk assessments are required</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Apply the ALARP principle to electrical safety decisions</span>
-            </li>
-          </ul>
-        </Card>
+          <LearningOutcomes
+            outcomes={[
+              "Explain what a risk assessment is for, in plain English — and what it isn’t.",
+              "State the legal duty under MHSWR 1999 Reg 3 and who it sits on.",
+              "Tell the difference between hazard, risk, and control measure.",
+              "Describe what 'suitable and sufficient' actually means for a job-specific assessment.",
+              "Apply the ALARP principle to a real on-site decision.",
+              "Recognise when a RAMS document doesn’t match the site — and know what to do about it.",
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* Section 1: Purpose of Risk Assessment */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                1
-              </span>
-              Purpose of Risk Assessment
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Risk assessment is a systematic process for identifying hazards, evaluating risks,
-                and implementing control measures. In electrical work, it’s both a legal requirement
-                and essential safety practice.
-              </p>
+          <ContentEyebrow>Why this exists</ContentEyebrow>
 
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Core objectives:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Identify electrical hazards that could cause harm to people or property</li>
-                    <li>
-                      Evaluate the likelihood and severity of potential harm from identified hazards
-                    </li>
-                    <li>
-                      Determine and implement appropriate control measures to eliminate or reduce
-                      risks
-                    </li>
-                    <li>Monitor and review the effectiveness of control measures regularly</li>
-                    <li>Ensure legal compliance with health and safety regulations</li>
-                  </ul>
-                </div>
+          <ConceptBlock title="The whole point: stop the accident before it happens">
+            <p>
+              You learnt in Section 1 that HASAWA puts a general duty on the boss to keep you safe.
+              You learnt in Section 2 what electricity actually does to a body, and the other things
+              on site that quietly hurt sparks (slips, manual handling, working at height). A risk
+              assessment is the bridge between those two.
+            </p>
+            <p>
+              The HSE prosecutes around{' '}
+              <strong>1,000 electrical incidents at work each year</strong>. Most of them weren’t
+              caused by missing knowledge — they were caused by someone skipping the planning step.
+              Drilling without checking what was behind the wall. Working live because nobody
+              wrote down a safe isolation procedure. A buried cable nobody mapped.
+            </p>
+            <p>
+              The risk assessment is the moment the accident gets prevented — on paper, in the van
+              before you get the kit out. Get the paper right, and the day mostly runs itself.
+            </p>
+          </ConceptBlock>
 
-                <div>
-                  <p className="font-bold">Key benefits:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Protects workers, public, and future maintenance personnel from electrical
-                      hazards
-                    </li>
-                    <li>Provides legal defence against prosecution under health and safety law</li>
-                    <li>Reduces insurance costs and potential compensation claims</li>
-                    <li>Improves operational efficiency through better planning and preparation</li>
-                    <li>Enhances company reputation and competitive advantage in tendering</li>
-                    <li>Creates systematic approach to safety management</li>
-                  </ul>
-                </div>
+          <SectionRule />
 
-                <div>
-                  <p className="font-bold">Electrical industry relevance:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Electrical work involves multiple serious hazards requiring careful assessment
-                    </li>
-                    <li>
-                      Compliance with BS 7671 and other electrical standards supports risk
-                      assessment
-                    </li>
-                    <li>
-                      Safe systems of work and competence requirements derive from risk assessment
-                    </li>
-                    <li>
-                      Method statements and permit-to-work systems implement risk assessment
-                      findings
-                    </li>
-                  </ul>
-                </div>
+          <ContentEyebrow>The three words you have to know</ContentEyebrow>
+
+          <ConceptBlock
+            title="Hazard, risk, control measure — they’re not the same thing"
+            plainEnglish="A hazard is the thing that could hurt you. The risk is how likely it is, and how bad if it does. The control measure is what you’re doing about it."
+            onSite="When the gaffer asks 'what’s the hazard?' and you say 'electricity', you’re half-right. Better answer: 'the live tails coming into the consumer unit' — that’s a specific hazard. 'Mate working overhead' is a risk factor. 'Lock-off, prove dead, work cover off' is the control."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Hazard</strong> — anything with the potential to cause harm. A live conductor, a
+                step ladder, a drum of cable, a wet floor, asbestos in the ceiling void.
+              </li>
+              <li>
+                <strong>Risk</strong> — the chance the hazard actually causes harm × how bad the harm would
+                be. Same hazard, different risks: a 230 V tail in a sealed enclosure has a low risk
+                until you take the cover off, then it’s very high.
+              </li>
+              <li>
+                <strong>Control measure</strong> — what you put in place to reduce the risk. Isolation, PPE,
+                barriers, training, supervision, written procedures. Most jobs need several layers.
+              </li>
+            </ul>
+            <p>
+              The risk assessment is the document that walks through every significant hazard,
+              estimates the risk, and lists the controls. Method statement (next subsection) is how
+              you actually do the work given those controls.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 3(1)"
+            clause="Every employer shall make a suitable and sufficient assessment of (a) the risks to the health and safety of his employees to which they are exposed whilst they are at work; and (b) the risks to the health and safety of persons not in his employment arising out of or in connection with the conduct by him of his undertaking."
+            meaning={
+              <>
+                The legal hook. Every employer (and any self-employed spark working for themselves)
+                has to assess the risks before work happens. It covers <em>employees</em> AND{' '}
+                <em>everyone else affected by the work</em> — customers, the public, other trades.
+                'Suitable and sufficient' is the test the HSE applies if anything goes wrong.
+              </>
+            }
+            cite="Reference: HSE — Management of Health and Safety at Work Regulations 1999, Regulation 3"
+          />
+
+          <InlineCheck
+            id={checks[0].id}
+            question={checks[0].question}
+            options={checks[0].options}
+            correctIndex={checks[0].correctIndex}
+            explanation={checks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>What the law actually wants</ContentEyebrow>
+
+          <ConceptBlock
+            title="'Suitable and sufficient' — what HSE means by it"
+            plainEnglish="Big enough to do its job, no bigger. Identifies the real significant hazards, considers who’s affected, gets the controls right. A 30-page document for swapping a socket is wrong. A two-line sentence for a CU change is also wrong."
+          >
+            <p>
+              HSE guidance (HSG65 / INDG163) breaks the 'suitable and sufficient' test into four
+              parts. Your assessment has to:
+            </p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Identify the significant risks</strong> — not every conceivable risk, just the
+                ones that could realistically cause harm. Trivial risks (a paper cut from the
+                spec sheet) you can ignore.
+              </li>
+              <li>
+                <strong>Identify who’s affected</strong> — yourself, mates, other trades, the customer,
+                the public, vulnerable people (kids, elderly, anyone with a disability).
+              </li>
+              <li>
+                <strong>Be appropriate to the nature of the work</strong> — proportionate. Bigger and more
+                dangerous the job, more detailed the assessment.
+              </li>
+              <li>
+                <strong>Identify the period of time it remains valid</strong> — when it gets reviewed and
+                what triggers an early review.
+              </li>
+            </ol>
+            <p>
+              That last one trips people up. A risk assessment isn’t a one-off. It’s alive for the
+              duration of the work — and the moment something significant changes (new hazard,
+              different team, weather turns, near miss happens), it gets reviewed.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="HSE INDG163 — 'Risk assessment: A brief guide to controlling risks in the workplace'"
+            clause="A risk assessment is not about creating huge amounts of paperwork, but rather about identifying sensible measures to control the risks in your workplace. The law does not expect you to eliminate all risk, but you are required to protect people as far as 'reasonably practicable'."
+            meaning={
+              <>
+                Straight from HSE. Risk assessment is a thinking exercise, not a paperwork
+                exercise. The output is sensible controls, not a document for the filing cabinet.
+                Anyone telling you otherwise has missed the point — and the HSE inspector who
+                turns up after an accident has missed nothing.
+              </>
+            }
+            cite="Reference: HSE INDG163 (paraphrased) — original text on HSE website"
+          />
+
+          <ConceptBlock
+            title="The 5+ employees rule — when it has to be in writing"
+            onSite="Most firms above the size of one person and a van will have written RAMS for everything anyway. The legal threshold is the floor, not the standard. Verbal RAMS = no audit trail = no defence."
+          >
+            <p>
+              MHSWR Reg 3(6) only forces written records when the employer has 5 or more
+              employees. Below that, the assessment still has to happen — the employer just
+              isn’t legally forced to write it down.
+            </p>
+            <p>
+              In practice this distinction barely matters. Insurance won’t cover you without
+              written records. Larger clients won’t let you on site without RAMS. And if anything
+              ever goes wrong, the HSE will ask 'show me your assessment' — and 'I had it in my
+              head' is not an acceptable answer.
+            </p>
+          </ConceptBlock>
+
+          <InlineCheck
+            id={checks[1].id}
+            question={checks[1].question}
+            options={checks[1].options}
+            correctIndex={checks[1].correctIndex}
+            explanation={checks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>ALARP — the test every control gets measured against</ContentEyebrow>
+
+          <ConceptBlock
+            title="As Low As Reasonably Practicable — the principle behind every decision"
+            plainEnglish="You don’t have to make it impossible for anyone to ever get hurt. You have to push the risk down until the cost, time and trouble of doing more outweighs the safety gain."
+            onSite="Two examples. (1) An RCD on every socket is now ALARP — they’re cheap, they save lives, no excuse not to. (2) Body-worn arc-flash suits for every CU change is NOT ALARP — the risk doesn’t justify the cost on a typical domestic install. The judgement is what makes the assessor competent."
+          >
+            <p>
+              ALARP comes from HASAWA (the 'so far as is reasonably practicable' phrase you met in
+              Section 1.1) and runs through every UK safety reg. It defines what 'good enough'
+              looks like. Three regions:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Intolerable</strong> — the risk is so high it cannot be justified, whatever the
+                benefit. Working on a live HV busbar without authorisation. Not negotiable.
+              </li>
+              <li>
+                <strong>ALARP / tolerable</strong> — the risk is real but you’ve pushed it down to where
+                further reduction would cost grossly more than the safety benefit. This is where
+                most well-controlled work lives.
+              </li>
+              <li>
+                <strong>Broadly acceptable</strong> — the risk is so low it’s not worth doing more about it
+                (within reason). Routine tasks with proven controls.
+              </li>
+            </ul>
+            <p>
+              The risk assessment is where you make the ALARP call for each significant hazard.
+              The HSE inspector who turns up after an incident asks one question: was the risk
+              ALARP at the time? If yes, you defended yourself. If no, prosecution.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>What goes wrong when it gets skipped</ContentEyebrow>
+
+          <CommonMistake
+            title="Treating RAMS as paperwork to sign rather than a plan to read"
+            whatHappens={
+              <>
+                Eight blokes on a site. RAMS comes round on a clipboard. Everyone signs it
+                without reading because that’s what they always do. Three weeks in, an apprentice
+                drills into a buried cable that the RAMS specifically warned about. He’s lucky —
+                burns to the hand and a six-month cardiac follow-up. The HSE looks at the
+                clipboard, sees his signature, sees he never actually read the document. Now it’s
+                his s.7 problem too — not just the gaffer’s.
+              </>
+            }
+            doInstead={
+              <>
+                Treat the signature like a contract you’ve actually read. Two minutes per page.
+                Find the hazards listed, find your name, find what you’re supposed to do
+                differently. If something doesn’t make sense, ASK before you sign. 'I just want
+                to check what this section means' is a normal, professional question — not a
+                pain in the gaffer’s side.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Reading the RAMS once at induction and never looking at it again"
+            whatHappens={
+              <>
+                Day-one site induction is a fire-hose. RAMS, traffic management plan, welfare
+                arrangements, fire muster point — you nod through it. Three months later you’re
+                still on the same job and the conditions have completely changed (a wall came
+                down, scaffold went up, a new sub-contractor arrived). You’re working off the
+                day-one mental model. None of the new hazards are in your head. Easy way to walk
+                into an accident.
+              </>
+            }
+            doInstead={
+              <>
+                The RAMS lives in the site office or the cabin for a reason. Re-read the bits
+                relevant to your work each morning — takes 60 seconds. If anything has changed on
+                site, the RAMS should have been reviewed. If it hasn’t, that’s your point-of-work
+                check (Sub 4) — flag it. Old RAMS + new hazards = the textbook prosecution
+                pattern.
+              </>
+            }
+          />
+
+          <Scenario
+            title="The site induction RAMS says 'isolate before drilling'. The gaffer says 'just crack on, it’s only a sub-board.'"
+            situation={
+              <>
+                You’re on a small commercial fit-out, second week. RAMS for the day’s work
+                clearly says any drilling near electrical equipment requires the local
+                distribution board to be isolated and proved dead first. You’re fitting trunking
+                and need to drill through a partition near a sub-DB. The site supervisor walks
+                past, sees you setting up the lock-off, and says 'leave it, don’t bother with
+                that, it’s only a sub-board, just crack on.'
+              </>
+            }
+            whatToDo={
+              <>
+                Don’t crack on. The RAMS is the legal document that controls how the work gets
+                done — the supervisor verbally overriding it doesn’t make that legal. Politely:
+                'The RAMS says I need to isolate first — I’m happy to do it the way it’s written
+                but I’m not happy ignoring it. Can we get the RAMS amended if we want to do it
+                differently, or shall I just isolate?' If they push back, escalate above them —
+                principal contractor, your own employer, whoever signs your timesheet. Note the
+                conversation: time, name, what was said.
+              </>
+            }
+            whyItMatters={
+              <>
+                If you drill into a live cable because you ignored the RAMS on someone else’s
+                say-so, the HSE prosecution lands on YOU under HASAWA s.7 (you knowingly
+                breached a written safe system of work) AND the gaffer (he instructed you to).
+                Both go down. 'He told me to' is not a defence. The RAMS is the agreed plan —
+                and it changes only on paper, not on the say-so of a supervisor under time
+                pressure.
+              </>
+            }
+          />
+
+          <InlineCheck
+            id={checks[2].id}
+            question={checks[2].question}
+            options={checks[2].options}
+            correctIndex={checks[2].correctIndex}
+            explanation={checks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Where it links back to the rest of the safety stack</ContentEyebrow>
+
+          <ConceptBlock
+            title="HASAWA → MHSWR → RAMS → safe isolation"
+            plainEnglish="Each layer turns the one above into something more concrete. HASAWA: 'be safe'. MHSWR Reg 3: 'plan to be safe'. RAMS: 'this is the plan for THIS job'. Safe isolation procedure: 'this is the exact step on the day'."
+          >
+            <p>
+              You met HASAWA in Section 1.1 and the specific hazards in Section 2. The risk
+              assessment is what stitches them together for a real job. It’s where the law
+              becomes a list of actions you do today.
+            </p>
+            <p>
+              The next three subsections walk through the practical mechanics — the five-step
+              HSE method (Sub 2), how method statements turn the controls into a sequence of
+              work (Sub 3), and how RAMS gets used live on site through toolbox talks and
+              point-of-work checks (Sub 4). Section 5 then drills into safe isolation — the
+              single most-used control measure in any electrical RAMS.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 3(3)"
+            clause="Any assessment such as is referred to in paragraph (1) or (2) shall be reviewed by the employer or self-employed person who made it if (a) there is reason to suspect that it is no longer valid; or (b) there has been a significant change in the matters to which it relates; and where as a result of any such review changes to an assessment are required, the employer or self-employed person concerned shall make them."
+            meaning={
+              <>
+                Risk assessment is not 'do it once, file it forever'. It has to be reviewed when
+                anything significant changes — new equipment, new people, a near miss, a
+                different layout, weather conditions. Most jobs have a 'live document' field on
+                the RAMS for exactly this reason. Your point-of-work checks (Sub 4) are the
+                ground-floor version of this same duty.
+              </>
+            }
+            cite="Reference: HSE — Management of Health and Safety at Work Regulations 1999, Regulation 3(3)"
+          />
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              "A risk assessment names the hazards on THIS job and decides what controls go in. It’s a planning tool, not paperwork.",
+              "Legal duty: MHSWR 1999 Reg 3 — sits on the employer (and on self-employed sparks for their own work).",
+              "'Suitable and sufficient' = identifies significant risks, considers everyone affected, proportionate to the job, has a review trigger.",
+              "Significant findings have to be in writing if the employer has 5+ employees. Almost every firm writes them down anyway.",
+              "ALARP is the test every control measure gets judged against — push the risk down until further effort costs grossly more than the safety gain.",
+              "Your job as an apprentice: READ the RAMS, check it matches the site, flag it the second it doesn’t. Signing without reading is a sackable habit and not a defence.",
+            ]}
+          />
+
+          {/* ── Quiz (preserved — links to streaks/stats) ───────── */}
+
+          <Quiz title="Purpose of risk assessments knowledge check" questions={quizQuestions} />
+
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section2/2-5')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
               </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: The ALARP Principle */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                2
-              </span>
-              The ALARP Principle
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                ALARP stands for "As Low As Reasonably Practicable" - the fundamental principle for
-                managing risk in UK health and safety law.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Definition and scope:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Legal requirement to reduce risks to the lowest level reasonably practicable
-                    </li>
-                    <li>Balance between risk reduction and the cost, time, and effort required</li>
-                    <li>Applies to all workplace hazards, not just high-risk activities</li>
-                    <li>Requires ongoing assessment as technology and knowledge improve</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">ALARP risk regions:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      <strong>Unacceptable region:</strong> Risk cannot be justified and must be
-                      eliminated regardless of cost
-                    </li>
-                    <li>
-                      <strong>Tolerable region (ALARP):</strong> Risk acceptable only if further
-                      reduction is impracticable
-                    </li>
-                    <li>
-                      <strong>Broadly acceptable region:</strong> Risk generally acceptable with
-                      routine monitoring
-                    </li>
-                    <li>Decisions must be proportionate to the level of risk involved</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Practical application:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Consider hierarchy of control measures when implementing ALARP</li>
-                    <li>
-                      Document reasoning for decisions, especially when not implementing measures
-                    </li>
-                    <li>Review regularly as new control measures become available</li>
-                    <li>
-                      Industry good practice sets minimum standards for what is reasonably
-                      practicable
-                    </li>
-                  </ul>
-                </div>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Slips, trips and manual handling
               </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Legal Requirements */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                3
-              </span>
-              Legal Requirements
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Risk assessments are mandatory under several key regulations governing electrical
-                work and general workplace safety.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">
-                    Management of Health and Safety at Work Regulations 1999:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Regulation 3 requires employers to conduct suitable and sufficient risk
-                      assessments
-                    </li>
-                    <li>Must cover all work activities and persons who may be affected</li>
-                    <li>
-                      Assessment must be reviewed if it is no longer valid or circumstances change
-                    </li>
-                    <li>
-                      Significant findings must be recorded for employers with 5 or more employees
-                    </li>
-                    <li>
-                      Employees must be provided with comprehensible information about risks and
-                      control measures
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Electricity at Work Regulations 1989:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Regulation 4(3) requires that work on or near electrical equipment be carried
-                      out safely
-                    </li>
-                    <li>
-                      Regulation 14 mandates that work on live conductors only occurs where
-                      reasonable in circumstances
-                    </li>
-                    <li>Risk assessment must inform decisions about dead vs live working</li>
-                    <li>Assessment must consider precautions needed for safe working</li>
-                    <li>Emergency procedures must be planned based on risk assessment findings</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Corporate manslaughter implications:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Failure to conduct adequate risk assessments can lead to corporate
-                      manslaughter charges
-                    </li>
-                    <li>Senior management duty to ensure systematic approach to risk management</li>
-                    <li>Risk assessments provide evidence of due diligence in legal proceedings</li>
-                    <li>Must demonstrate continuous improvement in safety management systems</li>
-                  </ul>
-                </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section3/3-2')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 4: When Risk Assessments Are Required */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                4
-              </span>
-              When Risk Assessments Are Required
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Risk assessments are required before starting any electrical work and must be
-                reviewed regularly or when circumstances change.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Mandatory timing requirements:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Before commencing any new electrical installation or modification work</li>
-                    <li>
-                      Prior to maintenance, repair, or testing activities on electrical systems
-                    </li>
-                    <li>When planning emergency electrical work or fault-finding operations</li>
-                    <li>Before introducing new electrical equipment or changing work procedures</li>
-                    <li>
-                      At regular intervals as determined by risk level and regulatory requirements
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Review triggers:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Significant changes to work environment, equipment, or electrical systems
-                    </li>
-                    <li>Following electrical incidents, near misses, or accidents</li>
-                    <li>When new hazards are identified or existing controls prove inadequate</li>
-                    <li>After substantial changes in personnel, especially key electrical staff</li>
-                    <li>When new regulations, standards, or industry guidance are introduced</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Special circumstances:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Working in hazardous environments (explosive atmospheres, confined spaces)
-                    </li>
-                    <li>High-voltage electrical work requiring additional precautions</li>
-                    <li>
-                      Live working operations where dead working is not reasonably practicable
-                    </li>
-                    <li>
-                      Work affecting safety-critical electrical systems (fire alarms, emergency
-                      lighting)
-                    </li>
-                  </ul>
-                </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                The five-step risk assessment process
               </div>
-            </div>
+            </button>
           </div>
-        </div>
-
-        {/* Section 5: Who Should Conduct Risk Assessments */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                5
-              </span>
-              Who Should Conduct Risk Assessments
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Risk assessments must be carried out by competent persons with appropriate
-                knowledge, training, and experience.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Essential knowledge and skills:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Understanding of electrical hazards, their effects, and control measures
-                    </li>
-                    <li>
-                      Knowledge of relevant regulations (EAWR, MHSWR, CDM) and standards (BS 7671)
-                    </li>
-                    <li>
-                      Familiarity with electrical systems, equipment, and safe working practices
-                    </li>
-                    <li>
-                      Risk assessment methodology, including hazard identification and risk
-                      evaluation
-                    </li>
-                    <li>Understanding of hierarchy of control measures and ALARP principles</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Competency framework:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Formal qualifications in electrical engineering or related field</li>
-                    <li>Practical experience in electrical work and hazard recognition</li>
-                    <li>Training in risk assessment techniques and legal requirements</li>
-                    <li>Continuing professional development to maintain currency</li>
-                    <li>Ability to communicate findings clearly to all levels of personnel</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Team approach benefits:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Electrical engineers provide technical expertise and design knowledge</li>
-                    <li>
-                      Safety professionals bring regulatory knowledge and risk management skills
-                    </li>
-                    <li>
-                      Experienced electricians contribute practical workplace hazard recognition
-                    </li>
-                    <li>
-                      Operations personnel understand work processes and environmental factors
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 6: Documentation Requirements */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                6
-              </span>
-              Documentation Requirements
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Proper documentation ensures risk assessments are communicated effectively and can
-                be reviewed and updated as needed.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Legal documentation requirements:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Record significant findings if employing 5 or more people</li>
-                    <li>Include hazards identified and persons at risk</li>
-                    <li>Document existing control measures and their effectiveness</li>
-                    <li>Record additional control measures required and implementation plans</li>
-                    <li>Set review dates and assign responsibilities for updates</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Documentation standards:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Use clear, simple language that all workers can understand</li>
-                    <li>Include site-specific details and accurate hazard descriptions</li>
-                    <li>Reference applicable standards, regulations, and guidance documents</li>
-                    <li>Ensure assessments are dated, signed, and version controlled</li>
-                    <li>Keep records proportionate to the risk level and complexity</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Communication and accessibility:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Share findings with all affected personnel through briefings and toolbox talks
-                    </li>
-                    <li>Make assessments available at work locations and project offices</li>
-                    <li>Include key points in method statements and work instructions</li>
-                    <li>Provide training on control measures identified in assessments</li>
-                    <li>Ensure subcontractors and visitors understand relevant risks</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 7: Common Mistakes to Avoid */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-elec-yellow/5/50 dark:bg-blue-950/50 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                7
-              </span>
-              Common Mistakes to Avoid
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Understanding common pitfalls helps ensure risk assessments are effective and
-                legally compliant.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Assessment quality issues:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>
-                      Using generic, copied assessments that don’t reflect actual site conditions
-                    </li>
-                    <li>Failing to involve competent people with relevant electrical knowledge</li>
-                    <li>Inadequate hazard identification missing key electrical risks</li>
-                    <li>
-                      Poor risk evaluation that doesn’t consider likelihood and severity properly
-                    </li>
-                    <li>
-                      Selecting inappropriate control measures not suited to the specific hazards
-                    </li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Process and management failures:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Failing to review assessments when conditions change significantly</li>
-                    <li>Not updating assessments following incidents or near misses</li>
-                    <li>Poor communication of findings to workers and supervisors</li>
-                    <li>Lack of monitoring to ensure control measures remain effective</li>
-                    <li>Treating risk assessment as a paper exercise rather than practical tool</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Legal and compliance problems:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Failing to document significant findings as required by regulations</li>
-                    <li>Not providing adequate information and training to employees</li>
-                    <li>Ignoring hierarchy of control measures and jumping to PPE solutions</li>
-                    <li>Inadequate consultation with workers who have practical experience</li>
-                    <li>Missing links between risk assessment and safe systems of work</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Key Takeaways */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Key Takeaways</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-            <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Essential Points</h3>
-              <ul className="space-y-2 text-white text-sm">
-                <li>• Risk assessment protects people and businesses</li>
-                <li>• Legal requirement under multiple regulations</li>
-                <li>• ALARP principle guides risk decisions</li>
-                <li>• Must be reviewed when circumstances change</li>
-              </ul>
-            </div>
-            <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Best Practices</h3>
-              <ul className="space-y-2 text-white text-sm">
-                <li>• Involve competent people in assessments</li>
-                <li>• Focus on significant risks first</li>
-                <li>• Keep records proportionate to risk</li>
-                <li>• Communicate findings to all involved</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Quiz Section */}
-        <Quiz questions={quizQuestions} title="Purpose of Risk Assessments Quiz" />
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center mt-8">
-          <Button variant="outline" asChild>
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
-            </Link>
-          </Button>
-
-          <Button asChild>
-            <Link to="/study-centre/apprentice/level2/module1/section3/3-2">
-              Next: The Five Steps of Risk Assessment
-              <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
-            </Link>
-          </Button>
-        </div>
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default Sub1;
+}

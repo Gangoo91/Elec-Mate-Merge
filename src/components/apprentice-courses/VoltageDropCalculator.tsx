@@ -187,7 +187,7 @@ const VoltageDropCalculator: React.FC = () => {
               setCableSize('');
             }}
           >
-            <SelectTrigger className="bg-background">
+            <SelectTrigger className="bg-background text-foreground">
               <SelectValue placeholder="Select family" />
             </SelectTrigger>
             <SelectContent>
@@ -212,7 +212,7 @@ const VoltageDropCalculator: React.FC = () => {
               setCableSize('');
             }}
           >
-            <SelectTrigger className="bg-background">
+            <SelectTrigger className="bg-background text-foreground">
               <SelectValue placeholder="Select method" />
             </SelectTrigger>
             <SelectContent>
@@ -229,7 +229,7 @@ const VoltageDropCalculator: React.FC = () => {
         <div className="space-y-2">
           <Label className="text-foreground">Cable size (mm²)</Label>
           <Select value={cableSize} onValueChange={setCableSize}>
-            <SelectTrigger className="bg-background">
+            <SelectTrigger className="bg-background text-foreground">
               <SelectValue placeholder="Select size" />
             </SelectTrigger>
             <SelectContent>

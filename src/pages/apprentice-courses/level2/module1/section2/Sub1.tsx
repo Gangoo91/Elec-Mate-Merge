@@ -1,3 +1,13 @@
+/**
+ * Module 1 · Section 2 · Subsection 1 — Electric shock and burns
+ * City &amp; Guilds 2365-02 → Unit 201
+ *   • LO4 → AC 4.3 — identify specific hazards associated with the installation
+ *     and maintenance of electrical systems and equipment.
+ *   • LO2 → AC 2.1 — state the procedures that should be followed in the case
+ *     of accidents which involve injury, including requirements for the
+ *     treatment of electric shock / electrical burns.
+ */
+
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -318,7 +328,7 @@ export default function Sub1() {
           </ConceptBlock>
 
           <RegsCallout
-            source="Electrical Health and Safety — HSE-aligned learner reference"
+            source="HSE HSG85 — Electricity at work: safe working practices"
             clause="Each year about 1,000 accidents at work involving electric shock or burns are reported to the Health and Safety Executive (HSE). Around 30 of these are fatal. Most of these fatalities arise from contact with overhead or underground power cables. Even non-fatal shocks can cause severe and permanent injury."
             meaning={
               <>
@@ -327,7 +337,7 @@ export default function Sub1() {
                 the "non-fatal" column. Treat every potential shock path like it could be the one.
               </>
             }
-            cite="Reference: HSE — Electricity at Work general guidance (HSG85)"
+            cite="Reference: HSE HSG85 — Electricity at work: safe working practices"
           />
 
           <InlineCheck
@@ -471,8 +481,8 @@ export default function Sub1() {
           />
 
           <RegsCallout
-            source="BS 7671:2018+A4:2026 — Regulation 415.1 (additional protection)"
-            clause="Where specified, additional protection is provided by an RCD with rated residual operating current not exceeding 30 mA, in accordance with Regulation 415.1."
+            source="BS 7671:2018+A4:2026 — Regulation 415.1.1 (additional protection)"
+            clause="The use of RCDs with a rated residual operating current not exceeding 30 mA is recognized in AC systems as additional protection in the event of failure of the provision for basic protection and/or the provision for fault protection or carelessness by users."
             meaning={
               <>
                 30 mA is the magic number. It’s set deliberately below the threshold at which
@@ -482,7 +492,7 @@ export default function Sub1() {
                 domestic install needs 30 mA RCD protection — and most lighting circuits too.
               </>
             }
-            cite="Reference: BS 7671:2018+A4:2026 Part 4 Chapter 41 Regulation 415.1"
+            cite="Source: BS 7671:2018+A4:2026 Part 4 Chapter 41 Regulation 415.1.1."
           />
 
           <SectionRule />

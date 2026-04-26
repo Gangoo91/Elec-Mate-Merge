@@ -1,901 +1,705 @@
-import {
-  ArrowLeft,
-  Target,
-  BookOpen,
-  Lightbulb,
-  AlertCircle,
-  CheckCircle,
-  Shield,
-  AlertTriangle,
-  Settings,
-  HardHat,
-  Wrench,
-  Users,
-  Zap,
-  Eye,
-  Clock,
-  Printer,
-  Award,
-  TrendingUp,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 3 · Subsection 4 — Working with RAMS on site
+ * City &amp; Guilds 2365-02 → Unit 201
+ *   • LO3 → AC 3.1 — state the procedure for producing risk assessments and
+ *     method statements in accordance with their level of responsibility
+ *     (live use, point-of-work checks, dynamic re-assessment).
+ *   • LO3 → AC 3.7 — describe and demonstrate safe practices and procedures
+ *     for the use of equipment and materials in the working environment.
+ *   • LO2 → AC 2.7 — explain why it is important to report any hazards to the
+ *     environment that arise from work procedures (near-miss reporting).
+ *   • LO4 → AC 4.5 — explain practices and procedures for addressing hazards
+ *     in the workplace.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
 const TITLE =
-  'Control Measures and Hierarchy of Control - Module 1.3.4 | Level 2 Electrical Course';
+  'Working with RAMS on site | Level 2 Module 1.3.4 | Elec-Mate';
 const DESCRIPTION =
-  'Master the hierarchy of control for electrical safety, learning to select the most effective control measures to protect workers and comply with BS 7671.';
+  "How RAMS gets used live on site — toolbox talks each morning, point-of-work checks throughout the day, and what to do when reality stops matching the plan.";
 
-const Sub4 = () => {
+/* ── Inline check questions (preserved — wired into stats/streaks) ── */
+
+const checks = [
+  {
+    id: 'toolbox-talk-purpose-check',
+    question: "What’s the actual purpose of a toolbox talk at the start of the shift?",
+    options: [
+      'Tick a box for the office',
+      'Brief the team on the day’s hazards and controls so everyone’s working off the same plan',
+      'Give the gaffer time to make tea',
+      'Replace the RAMS document',
+    ],
+    correctIndex: 1,
+    explanation:
+      "Toolbox talks are short, focused briefings — usually 5-15 minutes — that cover the hazards and controls relevant to that shift’s work. They turn the RAMS document into shared, on-the-day understanding. Sign-on isn’t the box-tick; sign-on confirms YOU heard and understood.",
+  },
+  {
+    id: 'pow-check-when',
+    question: "When should you do a point-of-work risk assessment?",
+    options: [
+      'Once at the start of the job',
+      'At the moment you reach a new task or hazard during the day — informal, quick, between you and the work',
+      'Only on Mondays',
+      'Only when a supervisor tells you to',
+    ],
+    correctIndex: 1,
+    explanation:
+      "POW (also called dynamic risk assessment) is the live, in-the-moment check you do as conditions change. New room. New piece of kit. Something you didn’t expect. Stop, think, decide if the existing controls still work. Takes seconds. Stops accidents.",
+  },
+  {
+    id: 'rams-mismatch-check',
+    question: "You spot something on site that doesn’t match the RAMS — different layout, extra hazard, missing kit. What’s your duty?",
+    options: [
+      'Crack on, sort it out later',
+      'Stop, raise it with the supervisor or RAMS author, get the document amended before continuing',
+      'Just adjust your work and don’t mention it',
+      'Take a photo for evidence',
+    ],
+    correctIndex: 1,
+    explanation:
+      "MHSWR Reg 3(3) and HASAWA s.7 both apply. The RAMS is no longer 'suitable and sufficient' if reality has diverged. Your duty as a worker is to stop, raise it, and get it sorted. Carrying on quietly is a personal s.7 breach if anything later goes wrong.",
+  },
+];
+
+/* ── End-of-page Quiz (preserved — wires into stats/streaks) ──────── */
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "Toolbox talk this morning covered isolation procedure for the CU change. Two hours in, the architect adds a new circuit you weren’t expecting. What’s the right move?",
+    options: [
+      "Just isolate the new circuit the same way",
+      "Stop, treat it as a Step 5 trigger — assess the new circuit (different OCPD, different load, possibly different RCD requirement), brief the team, then continue",
+      "Crack on without changing anything",
+      "Go home for the day",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "The morning’s toolbox talk only covered what was known at 8am. New work = new hazards = fresh thinking required. Don’t assume same-as-before. Quick point-of-work assessment, quick brief to the team, then proceed. That’s how the system stays alive.",
+  },
+  {
+    id: 2,
+    question: "You sign the toolbox-talk attendance sheet without listening. Three hours later something on the talk would have warned you about goes wrong. Where’s the legal exposure?",
+    options: [
+      "Only on the gaffer who delivered the talk",
+      "On you personally under HASAWA s.7 (you confirmed you’d been briefed and ignored it), as well as the firm",
+      "Nowhere — accidents happen",
+      "Only on the firm’s insurance",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Your signature on the attendance sheet is evidence that you were briefed. If you weren’t actually listening, you can’t un-sign that. HASAWA s.7 catches workers who don’t cooperate with the safety system. Personal prosecution is real — sparks have gone down for less.",
+  },
+  {
+    id: 3,
+    question: "What’s a 'point-of-work risk assessment' (also called dynamic risk assessment)?",
+    options: [
+      "A formal written document for every individual task",
+      "A live, in-the-moment check you do as you reach a new task or hazard — quick, informal, but it stops you walking into surprises",
+      "The same as a toolbox talk",
+      "A type of permit-to-work",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "POW assessments are the in-the-moment, on-the-spot version of the five-step process. New room: scan for hazards. Unexpected condition: stop and think. They aren’t formal documents (usually) — they’re a habit. They’re what closes the gap between the written RAMS and what’s actually in front of you.",
+  },
+  {
+    id: 4,
+    question: "You arrive at a job and there’s no toolbox talk. The gaffer just hands out tasks. What’s the right response?",
+    options: [
+      "Crack on — toolbox talks are optional",
+      "Ask for the briefing — even five minutes covering the day’s hazards, controls and emergency arrangements is required for a safe system of work",
+      "Refuse to work without a 30-minute talk",
+      "Email the HSE",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Briefings aren’t legally named in MHSWR by the term 'toolbox talk', but Reg 10 (information for employees) and HASAWA s.2(2)(c) (instruction and supervision) make them effectively unavoidable for any non-trivial job. 'Can we run through what we’re doing today and any hazards I should know about?' is a polite, professional ask.",
+  },
+  {
+    id: 5,
+    question: "Mid-job, you notice the lock-off you applied this morning has been removed by someone else. What do you do?",
+    options: [
+      "Just put your lock back on and crack on",
+      "Stop ALL work that depends on that isolation, find out who removed it and why, re-prove dead before re-isolating, and treat it as a serious safety incident",
+      "Ignore it",
+      "Lock yourself out of the site",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "An unauthorised lock removal means the system you trusted is no longer trustworthy. Stop, investigate, prove dead again, re-establish the isolation properly. This is a HASAWA s.8 breach by whoever removed your lock — never assume it’s harmless. Could have been re-energised since.",
+  },
+  {
+    id: 6,
+    question: "You spot a near miss — your mate nearly drilled into a buried cable that wasn’t marked on the RAMS. Nobody got hurt. What should happen next?",
+    options: [
+      "Forget about it — no harm done",
+      "Stop work, log the near miss, trigger a Step 5 review of the RAMS, brief the team on the new hazard, and add the buried cable to the records",
+      "Tell your mate to be more careful next time",
+      "Mention it to the gaffer when you see them",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Near misses are gifts — they tell you about a hazard before it causes an injury. MHSWR Reg 3(3) explicitly lists significant changes (which include unrecorded hazards being discovered) as a review trigger. Logging near misses also catches patterns over time. Many companies treat near-miss culture as a leading indicator of safety performance.",
+  },
+  {
+    id: 7,
+    question: "You’re asked to take part in delivering a toolbox talk to your apprentices below you. What’s the structure of a useful talk?",
+    options: [
+      "Read out the whole RAMS document",
+      "Cover today’s scope, the significant hazards relevant to today’s work, the controls in place, the emergency arrangements, and check understanding by asking questions back",
+      "Tell jokes for 15 minutes",
+      "Hand out the RAMS to read in silence",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Useful TBT structure: scope of today’s work, significant hazards (not all hazards — the relevant ones), controls expected, emergency arrangements, then check-back questions. 'Where’s the first-aider?' 'Where’s the muster point?' 'What’s the isolation point for the work we’re doing this morning?' Confirms understanding, not just attendance.",
+  },
+  {
+    id: 8,
+    question: "You finish your part of the job 30 minutes early and the gaffer’s left site. There’s no other task in the RAMS for you. What do you do?",
+    options: [
+      "Pick a new task you think looks straightforward and start it",
+      "Do something productive that’s within scope and competence (tidy up, document the work, prep for tomorrow), and wait for instruction before starting any unassessed task",
+      "Go home early without telling anyone",
+      "Ask another sub-contractor to give you something",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "If a task isn’t in the RAMS, it hasn’t been assessed and you don’t have authorisation. Picking up a new task off your own bat is exactly how unassessed work happens. Stay productive within scope, wait for proper instruction. Sub-contractors can’t formally authorise you either — your firm has to.",
+  },
+];
+
+/* ── FAQs (apprentice voice) ──────────────────────────────────────── */
+
+const faqs = [
+  {
+    question: "How long should a toolbox talk actually be?",
+    answer:
+      "Five to fifteen minutes for most jobs, daily. Longer for new starts on site, longer when significant hazards are coming up, longer after an incident. Shorter daily reminders for ongoing routine work. The bar is 'long enough to cover what matters today, short enough that people are still listening at the end'.",
+  },
+  {
+    question: "Do I have to ATTEND every toolbox talk if it’s a job I’ve done a hundred times?",
+    answer:
+      "Yes. The talk isn’t about whether YOU know the work — it’s about today’s specific conditions: who else is on site, what other trades are doing, where the muster point is, what changed since yesterday. Even on routine work, things move — and the talk is when those changes get communicated.",
+  },
+  {
+    question: "What’s the difference between a toolbox talk and a method-statement briefing?",
+    answer:
+      "Method-statement briefing is at the start of a piece of work — once, covers the whole MS, makes sure everyone understands the plan. Toolbox talks are recurring (usually daily) and focus on what’s relevant for THAT shift. On a long job you’ll have one MS briefing at the start and many TBTs as it runs.",
+  },
+  {
+    question: "Point-of-work check sounds informal — is it actually required?",
+    answer:
+      "It’s not named by that term in any single regulation, but it’s the practical expression of MHSWR Reg 3(3) (review when no longer valid) and HASAWA s.7 (cooperate with the system). The HSE’s expectation is that workers continually check conditions against what was assumed in the assessment, and stop if they diverge. Big firms formalise this with mid-job sign-offs; smaller firms expect it as habit.",
+  },
+  {
+    question: "What if my gaffer never does toolbox talks?",
+    answer:
+      "Politely ask. 'Can we run through today’s plan and the main hazards before we start?' is a normal, professional request. If they refuse repeatedly, that’s an issue you can raise with the firm’s safety lead, the principal contractor (on a CDM site), or your training provider. Working without briefings is working without a safe system of work — which puts YOU on the hook under HASAWA s.7 if anything goes wrong.",
+  },
+  {
+    question: "If I refuse to work because the RAMS doesn’t match the site, can I be sacked?",
+    answer:
+      "No — and you have specific legal protection. Section 44 of the Employment Rights Act 1996 protects you from detriment (sacking, loss of hours, disciplinary) for raising a genuine health and safety concern OR refusing work that you reasonably believe is unsafe. Note dates, names, what was said. Most disputes never get that far — most gaffers, when properly approached, will fix the issue.",
+  },
+];
+
+export default function Sub4() {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
-  const quickCheckQuestions = [
-    {
-      id: 1,
-      question: 'What is the most effective form of risk control?',
-      options: [
-        'Personal Protective Equipment (PPE)',
-        'Administrative controls',
-        'Elimination of the hazard',
-        'Engineering controls',
-      ],
-      correctIndex: 2,
-      explanation:
-        'Elimination is the most effective form of risk control because it completely removes the hazard, making an accident impossible.',
-    },
-    {
-      id: 2,
-      question: 'Why is PPE considered the least effective control measure?',
-      options: [
-        "It’s too expensive",
-        'It relies on the person wearing it correctly',
-        "It’s not required by law",
-        "It’s uncomfortable to wear",
-      ],
-      correctIndex: 1,
-      explanation:
-        'PPE is least effective because it relies on human behaviour and only reduces exposure rather than removing the hazard entirely.',
-    },
-    {
-      id: 3,
-      question: "What does 'substitution' mean in the hierarchy of control?",
-      options: [
-        'Replacing workers with machines',
-        'Using different tools for the same job',
-        'Replacing a hazard with something less dangerous',
-        'Changing the work schedule',
-      ],
-      correctIndex: 2,
-      explanation:
-        'Substitution means replacing a hazard with something less dangerous, such as using low-voltage equipment instead of mains voltage.',
-    },
-  ];
-
-  const quizQuestions = [
-    {
-      id: 1,
-      question: 'In the hierarchy of control, which is the most effective method of risk control?',
-      options: [
-        'Personal Protective Equipment',
-        'Engineering controls',
-        'Elimination',
-        'Administrative controls',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Elimination is the most effective because it completely removes the hazard, making accidents impossible. For example, isolating electrical power before work begins.',
-    },
-    {
-      id: 2,
-      question: 'Which of these is an example of substitution in electrical work?',
-      options: [
-        'Wearing insulated gloves',
-        'Using battery-powered tools instead of mains-powered',
-        'Installing barriers around equipment',
-        'Training workers in safety procedures',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Using battery-powered tools instead of mains-powered tools is substitution - replacing a higher risk option with a lower risk alternative.',
-    },
-    {
-      id: 3,
-      question: 'What type of control measure is fitting guards around electrical panels?',
-      options: ['Elimination', 'Substitution', 'Engineering control', 'Administrative control'],
-      correctAnswer: 2,
-      explanation:
-        'Installing guards or barriers is an engineering control - it physically prevents contact with hazards without relying on human behaviour.',
-    },
-    {
-      id: 4,
-      question: 'Why should you try to avoid relying solely on PPE for protection?',
-      options: [
-        "It’s the most expensive option",
-        "It’s not legally required",
-        "It doesn’t remove the hazard and relies on human behaviour",
-        'It takes too long to put on',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'PPE is the least reliable form of protection because the hazard remains present and protection depends on correct use by the individual.',
-    },
-    {
-      id: 5,
-      question: 'Which of these is an example of an administrative control?',
-      options: [
-        'Installing RCD protection',
-        'Using rubber matting',
-        'Implementing a permit-to-work system',
-        'Wearing safety boots',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'A permit-to-work system is an administrative control - it uses procedures and documentation to control how work is carried out.',
-    },
-    {
-      id: 6,
-      question: 'When selecting control measures, you should:',
-      options: [
-        'Always choose the cheapest option',
-        'Start at the top of the hierarchy and work down',
-        'Only use PPE',
-        'Choose whatever is most convenient',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'You should start at the top of the hierarchy (elimination) and work down, selecting the most effective controls that are reasonably practicable.',
-    },
-    {
-      id: 7,
-      question: 'What is the main weakness of administrative controls?',
-      options: [
-        'They are too expensive',
-        'They rely on people following procedures correctly',
-        'They are not legally valid',
-        'They take too long to implement',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Administrative controls rely on people following procedures correctly and consistently, making them less reliable than physical controls.',
-    },
-    {
-      id: 8,
-      question: 'Which combination of controls is often most effective?',
-      options: [
-        'PPE only',
-        'Administrative controls only',
-        'Multiple types working together',
-        'Engineering controls only',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Using multiple types of controls together (defence in depth) provides the best protection as if one control fails, others remain in place.',
-    },
-    {
-      id: 9,
-      question: 'What should you do if elimination of a hazard is not possible?',
-      options: [
-        'Move straight to PPE',
-        'Consider substitution as the next best option',
-        'Ignore the hazard',
-        'Stop the work completely',
-      ],
-      correctAnswer: 1,
-      explanation:
-        "If elimination isn’t possible, consider substitution - replacing the hazard with something less dangerous is the next most effective control.",
-    },
-    {
-      id: 10,
-      question: 'In electrical work, what would be an example of elimination?',
-      options: [
-        'Wearing insulated gloves',
-        'Using a voltage detector',
-        'Switching off and isolating the power supply',
-        'Installing warning signs',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Switching off and isolating the power supply eliminates the electrical hazard completely, making it the most effective control measure.',
-    },
-  ];
-
-  const faqs = [
-    {
-      question: 'Why is elimination not always possible in electrical work?',
-      answer:
-        'Some electrical work requires live testing for fault finding or system commissioning. However, elimination should always be the first consideration, and live work should only be done when absolutely necessary with proper precautions.',
-    },
-    {
-      question: 'Can I use multiple control measures from different levels?',
-      answer:
-        "Yes, using multiple control measures is often the best approach. This is called 'defence in depth' - if one control fails, others are still in place to protect workers.",
-    },
-    {
-      question: "How do I decide which control measures are 'reasonably practicable'?",
-      answer:
-        'Consider the risk level, cost, technical feasibility, and time required. High-risk situations justify more expensive or complex controls. The courts expect greater efforts for serious risks.',
-    },
-    {
-      question: "What if workers don’t want to use the control measures I’ve selected?",
-      answer:
-        'This highlights the importance of consulting workers and explaining the reasons for controls. Training, involvement in selection, and clear communication help improve compliance.',
-    },
-    {
-      question: 'Are there legal requirements about which controls to use?',
-      answer:
-        'The Management of Health and Safety at Work Regulations require you to avoid risks where possible, evaluate unavoidable risks, and control them at source using the hierarchy of control principles.',
-    },
-    {
-      question: 'How do I know if my control measures are working effectively?',
-      answer:
-        'Monitor compliance, check for near misses and accidents, get feedback from workers, and review control measures regularly. Look for signs that people are taking shortcuts or bypassing controls.',
-    },
-    {
-      question: "What’s the difference between engineering and administrative controls?",
-      answer:
-        'Engineering controls physically prevent access to hazards (like guards or barriers), while administrative controls rely on procedures and training to control behaviour.',
-    },
-    {
-      question: 'Should PPE always be provided even with other controls in place?',
-      answer:
-        "Yes, PPE often serves as backup protection. Even with other controls, PPE may be needed for residual risks or emergency situations. It’s part of a comprehensive safety approach.",
-    },
-  ];
-
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 3
+          </button>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <Shield className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 3.4
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-                Control Measures and the Hierarchy of Control
-              </h1>
-              <p className="text-xl text-white max-w-4xl mt-2">
-                Ranking safety controls by effectiveness to choose the best protection for
-                electrical work
-              </p>
-            </div>
-          </div>
-        </div>
+          <PageHero
+            eyebrow="Module 1 · Section 3 · Subsection 4"
+            title="Working with RAMS on site"
+            description="How RAMS gets used live on site — toolbox talks each morning, point-of-work checks throughout the day, near-miss reporting, and what to do when reality stops matching the plan. The bit that turns paperwork into actual safety."
+            tone="emerald"
+          />
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>
-                  <strong>Hierarchy:</strong> Ranks controls from most to least effective
-                  protection.
-                </li>
-                <li>
-                  <strong>Elimination:</strong> Most effective - completely removes the hazard.
-                </li>
-                <li>
-                  <strong>PPE:</strong> Least effective - last resort protection method.
-                </li>
-                <li>
-                  <strong>Selection:</strong> Start at the top and work down the hierarchy.
-                </li>
-                <li>
-                  <strong>Combination:</strong> Multiple controls together provide best protection.
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>
-                  <strong>Spot:</strong> High-risk tasks, over-reliance on PPE, new installations,
-                  live work requirements.
-                </li>
-                <li>
-                  <strong>Use:</strong> Risk assessment planning, method statement creation, safety
-                  briefings.
-                </li>
-                <li>
-                  <strong>Apply:</strong> Elimination first, substitution next, multiple controls
-                  together.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+          <TLDR
+            points={[
+              "RAMS only protects you if it’s LIVE — read every morning at the toolbox talk, checked every time conditions change, updated whenever reality diverges from the plan.",
+              "Point-of-work risk assessment = the in-the-moment check you do as you hit a new task or hazard. Takes seconds. Stops accidents.",
+              "When the RAMS doesn’t match the site, your legal duty under HASAWA s.7 is to STOP and raise it — not to crack on quietly. 'I noticed but didn’t say' is the apprentice version of negligence.",
+            ]}
+          />
 
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
-            Learning Outcomes
-          </h2>
-          <p className="text-white mb-4">By the end of this section, you’ll be able to:</p>
-          <ul className="space-y-3 text-foreground">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>
-                Understand what control measures are and their purpose in electrical safety
-              </span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Know the five levels of the hierarchy of control and their effectiveness</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Apply the hierarchy to electrical safety scenarios and risk management</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Understand why PPE is the last line of defence in protection</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>
-                Select appropriate combinations of control measures for different situations
-              </span>
-            </li>
-          </ul>
-        </Card>
+          <LearningOutcomes
+            outcomes={[
+              "Explain the purpose and structure of a useful toolbox talk.",
+              "Carry out a point-of-work (dynamic) risk assessment when you reach a new task or hazard.",
+              "Recognise when reality has diverged from the RAMS — and the action this triggers.",
+              "Report a near miss properly and understand why near misses matter as much as incidents.",
+              "State your personal duties as a worker under HASAWA s.7 and MHSWR Reg 14 — and the protection you have under ERA 1996 s.44 if you refuse unsafe work.",
+              "Apply 'stop the job' authority appropriately — the moment when polite escalation isn’t enough.",
+            ]}
+            initialVisibleCount={3}
+          />
 
-        {/* What Are Control Measures */}
-        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              1
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              What Are Control Measures?
-            </h2>
-          </div>
+          <ContentEyebrow>Why this subsection exists</ContentEyebrow>
 
-          <div className="space-y-4">
-            <div className="bg-elec-yellow/5 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <p className="text-blue-800 dark:text-white font-medium">
-                A control measure is anything you do to remove or reduce a hazard. The right control
-                measures reduce the likelihood of an accident and/or reduce the severity if
-                something does go wrong.
-              </p>
-            </div>
-
-            <p className="text-white">
-              In electrical work, control measures might include switching off the power, using
-              insulated tools, wearing protective equipment, or following specific procedures. The
-              key is choosing the most effective controls for each situation.
+          <ConceptBlock title="The gap between the RAMS in the office and the work on the floor">
+            <p>
+              You’ve learnt what a risk assessment is for (Sub 1), the five-step method to
+              produce one (Sub 2), and how method statements and safe systems of work turn
+              controls into a sequence of work (Sub 3). All of that is preparation. This
+              subsection is where it meets the floor.
             </p>
-
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Zap className="h-4 w-4 text-elec-yellow" />
-                  Electrical Safety Examples
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Isolating power before starting work</li>
-                  <li>• Using battery tools instead of mains</li>
-                  <li>• Installing RCD protection</li>
-                  <li>• Proper earthing and bonding</li>
-                </ul>
-              </div>
-              <div className="bg-muted/50 border border-border rounded-lg p-4">
-                <h4 className="font-semibold mb-2 flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-elec-yellow" />
-                  Physical Protection Examples
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Barriers around work areas</li>
-                  <li>• Cable guards and covers</li>
-                  <li>• Safety screens and enclosures</li>
-                  <li>• Proper cable management</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck
-          id="control-measures-basic"
-          question="What is the most effective form of risk control?"
-          options={quickCheckQuestions[0].options}
-          correctIndex={quickCheckQuestions[0].correctIndex}
-          explanation={quickCheckQuestions[0].explanation}
-        />
-
-        {/* The Hierarchy of Control */}
-        <div className="mb-8 border-l-4 border-elec-yellow p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-elec-yellow text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              2
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              The Hierarchy of Control
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-              <p className="text-purple-800 dark:text-purple-200 font-medium">
-                This is a system used to prioritise the safest and most effective ways to control
-                risk. Start at the top and work your way down.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              {/* Level 1 - Elimination */}
-              <div className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-950/30 dark:to-green-900/30 border-l-4 border-green-500 rounded-lg p-6">
-                <div className="flex items-start gap-4">
-                  <span className="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">
-                    1
-                  </span>
-                  <div className="flex-1">
-                    <h4 className="text-lg sm:text-xl font-semibold text-green-700 dark:text-green-300 mb-2">
-                      Eliminate the Hazard
-                    </h4>
-                    <p className="text-green-800 dark:text-green-200 mb-3">
-                      Completely remove the hazard so that harm is impossible.
-                    </p>
-                    <div className="bg-green-200 dark:bg-green-800/50 rounded-lg p-3">
-                      <p className="text-sm text-green-800 dark:text-green-200">
-                        <strong>Electrical Example:</strong> Switch off and isolate the power supply
-                        before beginning work. If there’s no electrical energy present, electrical
-                        shock is impossible.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Level 2 - Substitution */}
-              <div className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-950/30 dark:to-blue-900/30 border-l-4 border-elec-yellow rounded-lg p-6">
-                <div className="flex items-start gap-4">
-                  <span className="bg-elec-yellow text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">
-                    2
-                  </span>
-                  <div className="flex-1">
-                    <h4 className="text-lg sm:text-xl font-semibold text-blue-700 dark:text-elec-yellow mb-2">
-                      Substitute the Hazard
-                    </h4>
-                    <p className="text-blue-800 dark:text-white mb-3">
-                      Replace the hazard with something less dangerous.
-                    </p>
-                    <div className="bg-blue-200 dark:bg-blue-800/50 rounded-lg p-3">
-                      <p className="text-sm text-blue-800 dark:text-white">
-                        <strong>Electrical Example:</strong> Use 110V or battery-powered tools
-                        instead of 230V mains power, or use insulated tools instead of standard
-                        ones.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Level 3 - Engineering Controls */}
-              <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-950/30 dark:to-yellow-900/30 border-l-4 border-elec-yellow rounded-lg p-6">
-                <div className="flex items-start gap-4">
-                  <span className="bg-elec-yellow text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">
-                    3
-                  </span>
-                  <div className="flex-1">
-                    <h4 className="text-lg sm:text-xl font-semibold text-yellow-700 dark:text-yellow-300 mb-2">
-                      Engineering Controls
-                    </h4>
-                    <p className="text-yellow-800 dark:text-yellow-200 mb-3">
-                      Use physical measures to prevent access to the hazard.
-                    </p>
-                    <div className="bg-yellow-200 dark:bg-yellow-800/50 rounded-lg p-3">
-                      <p className="text-sm text-yellow-800 dark:text-yellow-200">
-                        <strong>Electrical Example:</strong> Install barriers, guards, or enclosures
-                        around electrical panels and live equipment to prevent accidental contact.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Level 4 - Administrative Controls */}
-              <div className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-950/30 dark:to-orange-900/30 border-l-4 border-orange-500 rounded-lg p-6">
-                <div className="flex items-start gap-4">
-                  <span className="bg-orange-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">
-                    4
-                  </span>
-                  <div className="flex-1">
-                    <h4 className="text-lg sm:text-xl font-semibold text-orange-700 dark:text-elec-yellow mb-2">
-                      Administrative Controls
-                    </h4>
-                    <p className="text-orange-800 dark:text-orange-200 mb-3">
-                      Use procedures, training, and policies to control behaviour.
-                    </p>
-                    <div className="bg-orange-200 dark:bg-orange-800/50 rounded-lg p-3">
-                      <p className="text-sm text-orange-800 dark:text-orange-200">
-                        <strong>Electrical Example:</strong> Permit-to-work systems, safety
-                        briefings, competency requirements, and limiting access to qualified
-                        personnel only.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Level 5 - PPE */}
-              <div className="bg-gradient-to-r from-red-50 to-red-100 dark:from-red-950/30 dark:to-red-900/30 border-l-4 border-red-500 rounded-lg p-6">
-                <div className="flex items-start gap-4">
-                  <span className="bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-lg font-bold flex-shrink-0">
-                    5
-                  </span>
-                  <div className="flex-1">
-                    <h4 className="text-lg sm:text-xl font-semibold text-red-700 dark:text-elec-yellow mb-2">
-                      Personal Protective Equipment (PPE)
-                    </h4>
-                    <p className="text-red-800 dark:text-red-200 mb-3">
-                      Protect the individual worker from harm.
-                    </p>
-                    <div className="bg-red-200 dark:bg-red-800/50 rounded-lg p-3">
-                      <p className="text-sm text-red-800 dark:text-red-200">
-                        <strong>Electrical Example:</strong> Insulated gloves, safety glasses, arc
-                        flash suits, insulated footwear, and hard hats for electrical work.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck
-          id="control-measures-ppe"
-          question="Why is PPE considered the least effective control measure?"
-          options={quickCheckQuestions[1].options}
-          correctIndex={quickCheckQuestions[1].correctIndex}
-          explanation={quickCheckQuestions[1].explanation}
-        />
-
-        {/* Why the Hierarchy Works */}
-        <div className="mb-8 border-l-4 border-orange-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              3
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Why the Hierarchy Works
-            </h2>
-          </div>
-
-          <div className="space-y-4">
-            <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
-              <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-green-700 dark:text-green-300">
-                  Most Effective (Top Levels)
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Remove hazards completely</li>
-                  <li>• Don’t rely on human behaviour</li>
-                  <li>• Protect everyone automatically</li>
-                  <li>• Can’t be easily bypassed</li>
-                  <li>• Long-term protection</li>
-                </ul>
-              </div>
-
-              <div className="bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-yellow-700 dark:text-yellow-300">
-                  Moderately Effective (Middle)
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Provides physical barriers</li>
-                  <li>• Uses systems and procedures</li>
-                  <li>• Requires some human compliance</li>
-                  <li>• Can be circumvented</li>
-                  <li>• Needs maintenance and monitoring</li>
-                </ul>
-              </div>
-
-              <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-red-700 dark:text-elec-yellow">
-                  Least Effective (Bottom Level)
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Hazard remains present</li>
-                  <li>• Relies entirely on individual</li>
-                  <li>• Can be forgotten or misused</li>
-                  <li>• May fail when needed most</li>
-                  <li>• Only protects the wearer</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck
-          id="control-measures-substitution"
-          question="What does 'substitution' mean in the hierarchy of control?"
-          options={quickCheckQuestions[2].options}
-          correctIndex={quickCheckQuestions[2].correctIndex}
-          explanation={quickCheckQuestions[2].explanation}
-        />
-
-        {/* Practical Application */}
-        <div className="mb-8 border-l-4 border-purple-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              4
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">
-              Practical Application in Electrical Work
-            </h2>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-muted/50 border border-border rounded-lg p-4">
-              <h4 className="font-semibold mb-3">
-                Scenario: Installing a new circuit in an office building
-              </h4>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3">
-                  <span className="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    1
-                  </span>
-                  <div>
-                    <p className="font-medium text-green-700 dark:text-green-300">Elimination:</p>
-                    <p className="text-sm">
-                      Switch off and isolate all relevant circuits before starting work.
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    2
-                  </span>
-                  <div>
-                    <p className="font-medium text-blue-700 dark:text-elec-yellow">Substitution:</p>
-                    <p className="text-sm">Use 110V tools instead of 230V where possible.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    3
-                  </span>
-                  <div>
-                    <p className="font-medium text-yellow-700 dark:text-yellow-300">Engineering:</p>
-                    <p className="text-sm">Install temporary barriers around the work area.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    4
-                  </span>
-                  <div>
-                    <p className="font-medium text-orange-700 dark:text-elec-yellow">
-                      Administrative:
-                    </p>
-                    <p className="text-sm">Use a permit-to-work system and brief all workers.</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                    5
-                  </span>
-                  <div>
-                    <p className="font-medium text-red-700 dark:text-elec-yellow">PPE:</p>
-                    <p className="text-sm">
-                      Provide safety glasses, hard hats, and insulated footwear.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Defence in Depth */}
-        <div className="mb-8 border-l-4 border-teal-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-teal-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              5
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Defence in Depth</h2>
-          </div>
-
-          <div className="space-y-4">
-            <p className="text-white">
-              The most effective approach often involves using multiple control measures together.
-              This is called "defence in depth" - if one control fails, others remain in place.
+            <p>
+              Most safety incidents in UK electrical work don’t happen because someone didn’t
+              have RAMS. They happen because the RAMS was on a clipboard somewhere while the
+              job changed underneath it. New trades arrive. Walls come down. The kit doesn’t
+              show up. The weather turns. The architect adds three sockets. Reality moves; the
+              paperwork doesn’t.
             </p>
+            <p>
+              Your job — every day, on every site — is to keep the gap between paperwork and
+              reality small enough that nobody falls through it. That’s what toolbox talks,
+              point-of-work checks and near-miss reporting are for.
+            </p>
+          </ConceptBlock>
 
-            <div className="bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 rounded-lg p-4">
-              <h4 className="font-semibold mb-2 text-purple-700 dark:text-elec-yellow">
-                Example: Multiple Controls Working Together
-              </h4>
-              <p className="text-sm text-purple-800 dark:text-purple-200 mb-2">
-                For electrical panel maintenance:
-              </p>
-              <ul className="text-sm space-y-1 text-purple-800 dark:text-purple-200">
-                <li>
-                  • <strong>Isolation</strong> (Elimination) - Switch off and lock out the supply
-                </li>
-                <li>
-                  • <strong>Testing</strong> (Verification) - Prove the circuit is dead
-                </li>
-                <li>
-                  • <strong>Barriers</strong> (Engineering) - Install protective screens
-                </li>
-                <li>
-                  • <strong>Procedures</strong> (Administrative) - Follow lockout/tagout protocol
-                </li>
-                <li>
-                  • <strong>PPE</strong> (Personal) - Wear appropriate protective equipment
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+          <SectionRule />
 
-        {/* Common Mistakes */}
-        <div className="mb-8 border-l-4 border-red-500 p-6 bg-card rounded-lg">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
-              6
-            </div>
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
-              <AlertTriangle className="h-6 w-6 text-elec-yellow" />
-              Common Mistakes in Control Selection
-            </h2>
-          </div>
+          <ContentEyebrow>Toolbox talks — the morning briefing</ContentEyebrow>
 
-          <div className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-red-50 dark:bg-red-950/30 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-red-700 dark:text-elec-yellow">
-                  What NOT to Do
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Jumping straight to PPE without considering other options</li>
-                  <li>• Relying on a single control measure</li>
-                  <li>• Choosing convenient over effective controls</li>
-                  <li>• Ignoring the hierarchy completely</li>
-                  <li>• Not consulting with workers</li>
-                </ul>
+          <ConceptBlock
+            title="Five to fifteen minutes that turn the RAMS into shared understanding"
+            plainEnglish="A toolbox talk is a short, focused briefing — usually at the start of the shift — covering the day’s scope, the significant hazards, the controls in place and the emergency arrangements. It’s how the written RAMS becomes shared awareness."
+            onSite="The phrase comes from old industrial sites where workers literally gathered round the toolbox at the start of the shift. Modern TBTs serve the same purpose. The supervisor or competent person walks the team through the plan, takes questions, confirms everyone’s on the same page. Sign-on at the end is evidence of attendance — but the value is in actually listening."
+          >
+            <p>Useful TBT structure (most firms have a similar template):</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Scope of today’s work</strong> — what we’re doing, which area, who’s on which task.
+              </li>
+              <li>
+                <strong>Significant hazards</strong> — the three or four things that could realistically
+                hurt someone today. Not the full RAMS list — just what’s live for THIS shift.
+              </li>
+                <li>
+                <strong>Controls in place</strong> — isolation arrangements, lock-off, RCDs,
+                permits, supervision, PPE required, exclusion zones.
+              </li>
+              <li>
+                <strong>Other trades / site-wide hazards</strong> — what else is happening, where
+                the deliveries are coming, where the scaffolders are working overhead.
+              </li>
+              <li>
+                <strong>Emergency arrangements</strong> — first-aider on shift, AED location, muster
+                point, fire warden, ambulance access. Restated daily because day-one
+                inductions fade.
+              </li>
+              <li>
+                <strong>Check-back questions</strong> — supervisor asks 2-3 questions to confirm
+                understanding. 'Where’s the muster point?' 'What’s the isolation point for the
+                CU change?' 'Who’s the first-aider today?'
+              </li>
+              <li>
+                <strong>Sign-on</strong> — every attendee signs to confirm they were briefed and
+                understood. The signature is evidence — both of attendance AND of personal
+                acceptance of the plan.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 10 (Information for employees)"
+            clause="Every employer shall provide his employees with comprehensible and relevant information on the risks to their health and safety identified by the assessment, the preventive and protective measures, the procedures referred to in regulation 8(1)(a), the identity of those persons nominated by him in accordance with regulation 8(1)(b), and the risks notified to him in accordance with regulation 11(1)(c)."
+            meaning={
+              <>
+                The legal hook for toolbox talks. The employer has to give workers
+                'comprehensible and relevant information' about the hazards, the controls and
+                who’s responsible for what. A pile of RAMS dropped on a desk doesn’t meet that
+                test. A daily briefing in language the team understands does.
+              </>
+            }
+            cite="Reference: HSE — Management of Health and Safety at Work Regulations 1999, Regulation 10"
+          />
+
+          <InlineCheck
+            id={checks[0].id}
+            question={checks[0].question}
+            options={checks[0].options}
+            correctIndex={checks[0].correctIndex}
+            explanation={checks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Point-of-work risk assessment — the live check</ContentEyebrow>
+
+          <ConceptBlock
+            title="Stop. Look. Think. Then proceed (or escalate)."
+            plainEnglish="POW (or 'dynamic') risk assessment is what you do at the moment you reach a new task or hazard. Not a form, not a meeting — a habit. Stop. Scan the area. Check the controls listed in the RAMS are still appropriate. If yes, proceed. If no, stop and escalate."
+            onSite="Five-second version: 'Has anything changed since the last assessment? Are the controls still right for what’s in front of me? If a senior tradesperson walked up right now, would I be comfortable explaining what I’m about to do?' Three yeses = crack on. Any no = stop."
+          >
+            <p>
+              The HSE doesn’t name 'point-of-work assessment' as a specific document type, but
+              it’s the practical expression of MHSWR Reg 3(3) (review when no longer valid) and
+              HASAWA s.7 (workers cooperate with the system). It catches the things the
+              morning toolbox talk couldn’t have foreseen.
+            </p>
+            <p>When to do a POW check:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Moving to a new room or area not covered in the morning brief.</li>
+              <li>Starting a new task or activity within the day’s scope.</li>
+              <li>Encountering an unexpected condition (open ceiling, exposed wiring, water leak).</li>
+              <li>Other trades unexpectedly working in your space.</li>
+              <li>Equipment you didn’t bring (someone else’s test gear, borrowed kit).</li>
+              <li>Anything that triggers a 'hmm, that’s odd' reaction. Don’t ignore the gut.</li>
+            </ul>
+            <p>
+              The check itself takes seconds. Look up, look down, look around. Identify hazards
+              you didn’t expect. Decide if existing controls handle them. If not, stop, raise
+              it, get the RAMS amended (Step 5), then carry on. The few seconds you spend on
+              the check are the cheapest insurance you’ll ever buy.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>When the RAMS doesn’t match the site</ContentEyebrow>
+
+          <ConceptBlock
+            title="Reality has moved. The paperwork hasn’t. Now what?"
+            plainEnglish="The moment you spot a divergence — extra hazard, missing kit, different layout, new occupants — the RAMS is no longer 'suitable and sufficient'. Continuing to work to it is working without a valid safe system of work. Your duty is to STOP and raise it."
+            onSite="This happens constantly. It’s not unusual or dramatic. Floor plan slightly different to the drawing. Gaffer hadn’t mentioned the new circuit. Cable route blocked by something that wasn’t there yesterday. The point isn’t to be paranoid — it’s to be calibrated. Small mismatches: flag them, get them noted, often the RAMS just gets a one-line addition. Big mismatches: stop, escalate, full Step 5 review."
+          >
+            <p>The mismatch action sequence:</p>
+            <ol className="space-y-1.5 list-decimal pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Stop the relevant work</strong> (you don’t have to stop the whole site if
+                only one task is affected — but stop the affected work).
+              </li>
+              <li>
+                <strong>Make safe</strong> — if anything’s already partially started, leave it in a
+                known safe state (isolated, bonded, barriered, signed).
+              </li>
+              <li>
+                <strong>Raise it</strong> — supervisor first, then RAMS author or competent person if
+                the supervisor can’t resolve it.
+              </li>
+              <li>
+                <strong>Trigger a Step 5 review</strong> — assessment of the new hazard, controls
+                added, RAMS amended, brief back to the team.
+              </li>
+              <li>
+                <strong>Document</strong> — note what you spotted, when, what was changed in the
+                RAMS, who signed off the amendment.
+              </li>
+              <li>
+                <strong>Resume</strong> — under the amended system of work, with the team aware of
+                the change.
+              </li>
+            </ol>
+            <p>
+              The whole sequence might take fifteen minutes. Compare that to the consequences
+              of NOT doing it. The HSE’s investigation files are full of incidents that began
+              with 'and then we just carried on'.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="HASAWA 1974 — Section 7"
+            clause="It shall be the duty of every employee while at work to take reasonable care for the health and safety of himself and of other persons who may be affected by his acts or omissions at work; and as regards any duty or requirement imposed on his employer or any other person by or under any of the relevant statutory provisions, to co-operate with him so far as is necessary to enable that duty or requirement to be performed or complied with."
+            meaning={
+              <>
+                Two duties on you, personally. First: don’t be reckless or careless — including
+                <em> omissions</em>, things you didn’t do. Second: cooperate with the safety
+                system. Spotting a mismatch and saying nothing is a textbook s.7 omission. So
+                is signing a TBT attendance sheet without listening. Personal liability is
+                real.
+              </>
+            }
+            cite="Reference: HSE — Health and Safety at Work etc. Act 1974, Section 7"
+          />
+
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 14 (Employees’ duties)"
+            clause="Every employee shall use any machinery, equipment, dangerous substance, transport equipment, means of production or safety device provided to him by his employer in accordance both with any training in the use of the equipment concerned which has been received by him and the instructions respecting that use which have been provided to him by the said employer in compliance with the requirements and prohibitions imposed upon the employer by or under the relevant statutory provisions. Every employee shall inform his employer or any other employee of his employer with specific responsibility for the health and safety of his fellow employees of any work situation which a person with the first-mentioned employee’s training and instruction would reasonably consider represented a serious and immediate danger to health and safety; and any matter which a person with the first-mentioned employee’s training and instruction would reasonably consider represented a shortcoming in the employer’s protection arrangements for health and safety, in so far as that situation or matter either affects the health and safety of that first-mentioned employee or arises out of or in connection with his own activities at work, and has not previously been reported to his employer or to any other such employee of that employer in accordance with the requirements of this regulation.'"
+            meaning={
+              <>
+                Reg 14 is the worker-side bookend to the employer’s Reg 3 duty. You have a
+                positive duty to TELL someone when you spot a serious and immediate danger or a
+                shortcoming in the safety arrangements. Spotting a mismatch and staying quiet
+                isn’t neutral — it’s a Reg 14 breach.
+              </>
+            }
+            cite="Reference: HSE — Management of Health and Safety at Work Regulations 1999, Regulation 14"
+          />
+
+          <InlineCheck
+            id={checks[1].id}
+            question={checks[1].question}
+            options={checks[1].options}
+            correctIndex={checks[1].correctIndex}
+            explanation={checks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Near misses — the gift that prevents the next one</ContentEyebrow>
+
+          <ConceptBlock
+            title="The accident that nearly happened is more useful than one that didn’t"
+            plainEnglish="A near miss is an unplanned event that didn’t result in injury or damage but easily could have. Logging them turns lucky escapes into learning — and stops the same hazard catching the next person who isn’t lucky."
+            onSite="Industry research consistently shows that for every serious accident, there are dozens of minor injuries and hundreds of near misses with the same root cause. Catch the near miss early and you stop the serious injury later. Most firms have a near-miss form that takes 60 seconds to fill in."
+          >
+            <p>
+              Examples of near misses on electrical work:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Drill nearly went into a buried cable that wasn’t shown on the drawings.</li>
+              <li>Voltage indicator showed dead but you hadn’t function-tested it that morning — turned out it was faulty.</li>
+              <li>Lock-off was found removed by someone unauthorised; you spotted before re-energising.</li>
+              <li>Step ladder slipped but you caught yourself.</li>
+              <li>You felt a mild tingle off a metal enclosure that should have been at earth potential.</li>
+            </ul>
+            <p>
+              None of those caused injury. All of them could have. Logging them lets the firm
+              spot patterns (the same supplier’s voltage indicators failing repeatedly, the
+              same drawings being inaccurate on every job) and act before someone gets hurt.
+              RIDDOR doesn’t require near misses to be reported externally (with one exception
+              — 'dangerous occurrences' as defined in Schedule 2), but internal logging is best
+              practice and increasingly mandated by client safety standards.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>'Stop the job' authority — and the protection that backs it</ContentEyebrow>
+
+          <ConceptBlock
+            title="You have the authority. The law backs you. Use it when you need to."
+            plainEnglish="If you reasonably believe the work is unsafe, you can stop it — and the law protects you from being punished for stopping it. The first time you do it can be intimidating. After that it becomes just part of being a competent worker."
+            onSite="Most stop-the-job moments are not dramatic — they’re a polite 'I’m not happy with this, can we sort it before I carry on'. Less than 1% escalate to formal disputes. Calibrate accordingly: stop the job for genuine safety concerns, not for things that just don’t suit you. But when it’s real, stop. Don’t self-talk yourself into 'it’ll probably be fine'."
+          >
+            <p>
+              Two things back you up legally when you refuse unsafe work:
+            </p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>HASAWA s.7</strong> — your duty to take reasonable care of yourself and
+                others. Doing unsafe work because you were told to is a personal s.7 breach.
+              </li>
+              <li>
+                <strong>Employment Rights Act 1996, s.44</strong> — protection from detriment for
+                raising health and safety concerns or refusing genuinely unsafe work. Your
+                employer cannot lawfully sack you, cut your hours, or discipline you for
+                refusing work you reasonably believed to be dangerous.
+              </li>
+            </ul>
+            <p>
+              That second one matters. Apprentices sometimes hesitate to push back because
+              they’re worried about being seen as awkward or losing their position. The law is
+              explicit: you’re protected. Note dates, names and what was said in case the
+              dispute escalates — but most don’t. Most gaffers, when properly approached
+              ('I’m not happy with this for X reason — can we sort it before I carry on?'),
+              will fix the issue.
+            </p>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Signing the toolbox-talk attendance sheet without actually listening"
+            whatHappens={
+              <>
+                Standard morning. Five sparks crowd round the gaffer in the cabin. The talk
+                covers six items including 'isolation point for the kitchen ring is in DB-3,
+                tagged red, key with the supervisor'. You’re half-asleep, you nod, you sign.
+                Three hours later you’re in the kitchen, you assume the local lighting circuit
+                is dead because it looks dead, you don’t check DB-3 or ask for the key, you
+                cut a cable. There’s a flash. You’re lucky — only lost an eyebrow. The
+                investigation pulls the TBT sheet. Your signature. Your s.7 problem.
+              </>
+            }
+            doInstead={
+              <>
+                Treat your signature on the TBT sheet exactly the same as your signature on
+                the RAMS. It’s evidence you were briefed. If you weren’t listening, that’s on
+                you. Two minutes of attention saves you from a catalogue of trouble. If
+                something in the talk was unclear, ask BEFORE signing. 'Just to confirm —
+                isolation for the kitchen is DB-3, key with supervisor?' is a perfect
+                check-back.
+              </>
+            }
+          />
+
+          <CommonMistake
+            title="Spotting a mismatch and staying quiet because you don’t want to be 'that apprentice'"
+            whatHappens={
+              <>
+                Day three on a fit-out. You notice the RAMS lists a single isolation point for
+                the area you’re working in — but on site there are clearly two DBs, both
+                feeding the area. You think 'somebody must know' and crack on. You isolate the
+                one the gaffer pointed at. The other one is still live, feeding a circuit
+                you’re working on. You touch a 'dead' conductor that isn’t. Best case: you
+                jump. Worst case: front page of the local paper.
+              </>
+            }
+            doInstead={
+              <>
+                Speak up the moment you spot it. 'I’ve noticed there are two DBs feeding this
+                area — does the RAMS need updating?' is a five-second sentence. Apprentices
+                catch things experienced sparks have stopped seeing precisely BECAUSE they’re
+                experienced. Your fresh eyes are a safety asset. The senior who tells you 'do
+                less talking and more working' isn’t a senior — they’re a problem. Note that
+                conversation in case anything later goes wrong.
+              </>
+            }
+          />
+
+          <Scenario
+            title="Toolbox talk says 'isolate before drilling' — gaffer says 'just crack on, it’s only a sub-board'"
+            situation={
+              <>
+                You’re on a small commercial fit-out, week two. This morning’s toolbox talk was
+                clear: any drilling near electrical equipment requires the local DB to be
+                isolated and proved dead first. You’re fitting trunking and need to drill
+                through a partition near a sub-DB. You’re setting up the lock-off when the
+                site supervisor walks past and says 'leave it, don’t bother with that, it’s
+                only a sub-board, just crack on. We’re behind schedule and that drill bit
+                couldn’t reach anything live anyway.'
+              </>
+            }
+            whatToDo={
+              <>
+                Don’t crack on. The verbal override doesn’t change the safe system of work
+                that was agreed at this morning’s TBT. Your reply: 'I get the time pressure,
+                but the morning brief said isolate first — happy to do this either way but
+                I’m not happy doing it without isolation. If we want to change the approach
+                can we update the RAMS / get the gaffer to authorise it formally?' If they
+                push, escalate above them — your own employer, the principal contractor,
+                whoever signs your timesheet. While you wait, do something productive within
+                scope (prep the next pull, sort the cable, tidy). Note the conversation: time,
+                name, what was said.
+              </>
+            }
+            whyItMatters={
+              <>
+                If you drill into a live cable because you ignored the toolbox-talk briefing on
+                someone else’s say-so, the HSE prosecution lands on YOU under HASAWA s.7
+                (knowingly breached the safe system you’d been briefed on) AND the supervisor
+                (who instructed you to). Both go down. 'He told me to' is not a defence under
+                s.7. The TBT briefing — and your signature on it — is evidence of what you
+                knew. The RAMS is the agreed plan; verbal contradictions on the floor don’t
+                change it. ERA 1996 s.44 protects you against any comeback for refusing the
+                unsafe instruction.
+              </>
+            }
+          />
+
+          <InlineCheck
+            id={checks[2].id}
+            question={checks[2].question}
+            options={checks[2].options}
+            correctIndex={checks[2].correctIndex}
+            explanation={checks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Where this sits in the safety stack</ContentEyebrow>
+
+          <ConceptBlock
+            title="Section 3 closes — and Section 5 is where it gets specific"
+            plainEnglish="You’ve now done the full RAMS journey. Why we do it (Sub 1). The five-step method (Sub 2). Method statements and safe systems of work (Sub 3). Live use on site (this Sub). The next major section drills into PPE — the last layer of the hierarchy of control. Section 5 covers safe isolation in detail — the single most-used control in any electrical RAMS."
+          >
+            <p>
+              Risk assessment is the planning. Method statements are the sequence. Toolbox
+              talks and point-of-work checks are how the plan stays alive on the floor. All
+              four together are how an electrical job runs without anyone getting hurt.
+            </p>
+            <p>
+              Section 4 (next) covers PPE — the bottom rung of the hierarchy of control, but
+              the layer that catches the consequences when everything above has failed.
+              Section 5 then takes you into safe isolation — the procedure that turns the most
+              common control measure ('eliminate the hazard') from a phrase in the RAMS into
+              the actual sequence of switches, padlocks, warning notices and prove-dead checks
+              on the day.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              "Toolbox talks turn the RAMS into shared on-the-day understanding. Five to fifteen minutes covering scope, hazards, controls, emergency arrangements, with check-back questions.",
+              "Point-of-work risk assessment = the in-the-moment, in-the-head check you do whenever conditions change. Takes seconds. Stops accidents.",
+              "Mismatch between RAMS and reality = STOP, raise it, get the RAMS amended (Step 5), then continue. Carrying on quietly is a HASAWA s.7 omission AND an MHSWR Reg 14 breach.",
+              "Near misses are the gift that prevents the next accident. Log them. Pattern-spotting on near misses catches root causes before they injure someone.",
+              "You have stop-the-job authority. ERA 1996 s.44 protects you from sacking, demotion or detriment for refusing genuinely unsafe work. Use it calibrated — most stops are polite resets, not dramatic stand-offs.",
+              "Your signature on the TBT attendance sheet is evidence you were briefed. If you weren’t listening, that’s on you under s.7. Two minutes of attention saves you from a career’s worth of trouble.",
+            ]}
+          />
+
+          {/* ── Quiz (preserved — links to streaks/stats) ───────── */}
+
+          <Quiz title="Working with RAMS on site knowledge check" questions={quizQuestions} />
+
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section3/3-3')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
               </div>
-
-              <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                <h4 className="font-semibold mb-2 text-green-700 dark:text-green-300">
-                  Best Practice Approach
-                </h4>
-                <ul className="text-sm space-y-1">
-                  <li>• Always start at the top of the hierarchy</li>
-                  <li>• Use multiple controls working together</li>
-                  <li>• Consider the specific work situation</li>
-                  <li>• Involve workers in control selection</li>
-                  <li>• Review and improve controls regularly</li>
-                </ul>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                Method statements and safe systems of work
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Lightbulb className="h-6 w-6 text-elec-yellow" />
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
-                <h4 className="font-semibold mb-2">{faq.question}</h4>
-                <p className="text-sm text-white">{faq.answer}</p>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section4/4-1')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
               </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Pocket Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <Shield className="h-6 w-6 text-elec-yellow" />
-            Hierarchy of Control - Quick Reference
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-            <div>
-              <h4 className="font-semibold mb-3">The Hierarchy (Most to Least Effective):</h4>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <span className="bg-green-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                    1
-                  </span>
-                  <span>Elimination - Remove the hazard</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                    2
-                  </span>
-                  <span>Substitution - Use safer alternative</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-elec-yellow text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                    3
-                  </span>
-                  <span>Engineering - Physical barriers/guards</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-orange-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                    4
-                  </span>
-                  <span>Administrative - Procedures/training</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
-                    5
-                  </span>
-                  <span>PPE - Personal protective equipment</span>
-                </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Personal protective equipment (PPE)
               </div>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-3">Quick Selection Guide:</h4>
-              <ul className="space-y-1">
-                <li>□ Can I eliminate the hazard completely?</li>
-                <li>□ Can I use something less dangerous?</li>
-                <li>□ Can I install physical protection?</li>
-                <li>□ What procedures are needed?</li>
-                <li>□ What PPE is required as backup?</li>
-                <li>□ Am I using multiple controls together?</li>
-              </ul>
-            </div>
+            </button>
           </div>
-        </Card>
-
-        {/* Quiz */}
-        <div className="mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Award className="h-6 w-6 text-elec-yellow" />
-            Knowledge Check
-          </h2>
-          <Quiz questions={quizQuestions} />
-        </div>
-
-        {/* Navigation */}
-        <div className="flex justify-between items-center pt-6 border-t">
-          <Link to="/study-centre/apprentice/level2/module1/section3/3-3">
-            <Button variant="outline" className="flex items-center gap-2">
-              <ArrowLeft className="h-4 w-4" />
-              Previous: Method Statements
-            </Button>
-          </Link>
-          <Link to="/study-centre/apprentice/level2/module1/section4">
-            <Button className="flex items-center gap-2">
-              Next: Section 4
-              <ArrowLeft className="h-4 w-4 rotate-180" />
-            </Button>
-          </Link>
-        </div>
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default Sub4;
+}

@@ -1,813 +1,637 @@
-import {
-  ArrowLeft,
-  Target,
-  CheckCircle,
-  Shield,
-  FileCheck,
-  Users,
-  ClipboardList,
-  Eye,
-  Search,
-  List,
-  AlertTriangle,
-  Scale,
-  Settings,
-  ArrowRight,
-  Award,
-} from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Quiz } from '@/components/apprentice-courses/Quiz';
+/**
+ * Module 1 · Section 3 · Subsection 3 — Method statements and safe systems of work
+ * City &amp; Guilds 2365-02 → Unit 201
+ *   • LO3 → AC 3.1 — state the procedure for producing risk assessments and
+ *     method statements in accordance with their level of responsibility.
+ *   • LO3 → AC 3.7 — describe and demonstrate safe practices and procedures
+ *     for the use of equipment and materials in the working environment.
+ *   • LO4 → AC 4.5 — explain practices and procedures for addressing hazards
+ *     in the workplace.
+ */
+
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
+
 import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { PageFrame, PageHero } from '@/components/college/primitives';
+import {
+  TLDR,
+  ConceptBlock,
+  RegsCallout,
+  CommonMistake,
+  Scenario,
+  KeyTakeaways,
+  FAQ,
+  LearningOutcomes,
+  ContentEyebrow,
+  SectionRule,
+} from '@/components/study-centre/learning';
 import useSEO from '@/hooks/useSEO';
 
-const TITLE = 'Method Statements - Level 2 Module 1 Section 3.3';
+const TITLE =
+  'Method statements and safe systems of work | Level 2 Module 1.3.3 | Elec-Mate';
 const DESCRIPTION =
-  'Understanding method statements for electrical work: purpose, creation, components, legal requirements and practical application.';
+  "How the controls from your risk assessment turn into a step-by-step plan you can actually work to — and how permits, safe isolation procedures and toolbox talks fit on top.";
 
-const Sub3 = () => {
+/* ── Inline check questions (preserved — wired into stats/streaks) ── */
+
+const checks = [
+  {
+    id: 'method-statement-purpose-check',
+    question: "What does a method statement add that a risk assessment doesn’t?",
+    options: [
+      'It replaces the risk assessment',
+      'It describes the sequence of work — exactly how the job will be done given the controls',
+      'It’s the legal document the HSE looks at first',
+      'It records what happened after the job',
+    ],
+    correctIndex: 1,
+    explanation:
+      "RA names the hazards and controls. MS turns those controls into the actual order of work — who does what, with what kit, in what sequence, with what handovers. Both are needed; that’s why they’re bundled as RAMS.",
+  },
+  {
+    id: 'permit-to-work-check',
+    question: "When is a permit-to-work typically required on top of a method statement?",
+    options: [
+      'For every electrical job',
+      'For higher-risk work that needs explicit authorisation each time — live work, confined spaces, work near HV',
+      'Only on Mondays',
+      'Only if the customer asks for one',
+    ],
+    correctIndex: 1,
+    explanation:
+      "Permits are a layer ON TOP of RAMS for jobs where you can’t allow someone to just 'crack on' — work that needs a competent person to formally authorise it for that specific shift. Live work, confined spaces, hot work near flammables, work near HV. The permit isn’t the system of work — it’s the authorisation gate.",
+  },
+  {
+    id: 'sssw-definition-check',
+    question: "A 'safe system of work' is BEST described as:",
+    options: [
+      'Just a written document',
+      'The risk assessment',
+      'The whole way the job is run safely — RA, MS, controls, training, supervision, communication, permits',
+      'PPE',
+    ],
+    correctIndex: 2,
+    explanation:
+      "SSoW is the umbrella concept. RAMS is the documentation. Controls, training, permits, supervision, comms, monitoring all sit inside it. HASAWA s.2(2)(a) puts a hard duty on the employer to provide and maintain safe systems of work.",
+  },
+];
+
+/* ── End-of-page Quiz (preserved — wires into stats/streaks) ──────── */
+
+const quizQuestions = [
+  {
+    id: 1,
+    question: "You’re reading a method statement for a CU change. Which of these would you EXPECT to see written down?",
+    options: [
+      "Only the customer’s name",
+      "Sequence of work, isolation procedure, who does what, tools and PPE required, emergency arrangements, drawings/SLD references",
+      "Just the start and finish times",
+      "The price of the job",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A useful method statement tells you the sequence of work, isolation steps, role allocations, kit list, PPE, emergency contacts, and references back to the risk assessment and any relevant drawings or schedules. If it’s missing any of that, it’s probably not site-specific enough.",
+  },
+  {
+    id: 2,
+    question: "The MS step says 'isolate at the main switch and prove dead'. The site reality: the main switch is locked behind a panel only the building manager has the key to, and they’re off today. What do you do?",
+    options: [
+      "Crack on without isolating — it should be fine",
+      "Stop. The MS can’t be followed as written. Either get key access (call building manager), find an alternative isolation point in the MS, or pause the work until tomorrow",
+      "Find a different lock and put yours on it",
+      "Skip just this step and do the rest",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "If you can’t follow the method statement as written, you don’t have a safe system of work. Either restore the conditions the MS assumes (get the key) or pause until you can. Skipping or improvising steps is exactly how prosecutions start.",
+  },
+  {
+    id: 3,
+    question: "Which BEST describes the relationship between a risk assessment, a method statement and a permit-to-work?",
+    options: [
+      "They’re three names for the same document",
+      "RA = hazards and controls; MS = the sequence of work; PTW = formal authorisation for higher-risk tasks for a specific shift",
+      "Permit-to-work replaces both",
+      "Method statement replaces the risk assessment",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Three layers, distinct purposes. RA identifies what could hurt you. MS turns the controls into a sequence. PTW (when needed) is the formal sign-off that says 'you, specifically, are authorised to do this specific job, today, with these conditions in place'.",
+  },
+  {
+    id: 4,
+    question: "Where does the legal duty for a 'safe system of work' actually come from?",
+    options: [
+      "BS 7671 Regulation 411.3",
+      "EAWR 1989 Regulation 4(3)",
+      "HASAWA 1974 Section 2(2)(a) — and EAWR Reg 4 specifically for electrical work",
+      "MHSWR Regulation 14",
+    ],
+    correctAnswer: 2,
+    explanation:
+      "HASAWA s.2(2)(a) puts the general duty on the employer to provide 'safe systems of work'. EAWR 1989 Reg 4(3) makes that specific for electrical work — every work activity on or near electrical equipment must be done in a manner that doesn’t give rise to danger.",
+  },
+  {
+    id: 5,
+    question: "You’re shown a method statement that’s 80 pages long for installing a single LED downlight. What’s most likely wrong?",
+    options: [
+      "Nothing — bigger is always safer",
+      "It’s probably generic and not job-specific. A useful MS is proportionate to the actual work",
+      "It’s perfect — copy it for every future job",
+      "The customer wrote it",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Proportionate documentation is the principle. A single-fitting job that runs to 80 pages is bureaucratic theatre, not safety. Workers won’t read it, the actual hazards get buried, and the MS fails its primary purpose: telling someone how to do the job safely. Right-sized RAMS is part of competence.",
+  },
+  {
+    id: 6,
+    question: "What’s the FIRST thing you should do at the start of a shift covered by a method statement?",
+    options: [
+      "Sign it without reading",
+      "Read the relevant sections, check the controls listed are in place on site, raise anything that doesn’t match",
+      "Photocopy it",
+      "Email it to the customer",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Pre-work check: read it, verify it, raise mismatches. This is the bridge between Step 4 (implement) and Step 5 (review) of the five-step process. It’s also the foundation of point-of-work checks (Sub 4) — the live, on-the-ground version of the same idea.",
+  },
+  {
+    id: 7,
+    question: "On a permit-to-work for live electrical testing, what should the permit specify?",
+    options: [
+      "Only the date",
+      "The exact work to be done, who’s authorised to do it, the duration, the precautions required, and how the permit is closed off when work is finished",
+      "Just the customer’s address",
+      "Nothing — it’s just paperwork",
+    ],
+    correctAnswer: 1,
+    explanation:
+      "A permit isn’t a formality. It defines the work, the people, the duration, the precautions, and the close-out. When the permit is open, the work is authorised under those conditions; when it’s closed, the system goes back to its normal state. That sequence is what makes it a control rather than just paperwork.",
+  },
+  {
+    id: 8,
+    question: "Your RAMS bundle includes a method statement that references 'Procedure SOP-014: Safe Isolation'. The procedure isn’t attached and you’ve never seen it. What do you do?",
+    options: [
+      "Make up your own isolation procedure",
+      "Crack on and assume the standard procedure",
+      "Ask for the procedure document before starting work — the MS isn’t complete without it",
+      "Skip isolation altogether",
+    ],
+    correctAnswer: 2,
+    explanation:
+      "If a method statement references a separate procedure, that procedure is part of the safe system of work. You can’t follow what you haven’t read. Ask for it before you start. 'I assumed' is one of the most common phrases in HSE prosecution narratives.",
+  },
+];
+
+/* ── FAQs (apprentice voice) ──────────────────────────────────────── */
+
+const faqs = [
+  {
+    question: "Are method statements legally required?",
+    answer:
+      "Not directly named in MHSWR — but the 'safe system of work' duty in HASAWA s.2(2)(a) and EAWR Reg 4(3) effectively forces them for any non-trivial job. CDM 2015 makes them the default expectation on construction sites. Most clients won’t let you on site without one. So in practice: yes, expect to need one for almost any work beyond the smallest domestic task.",
+  },
+  {
+    question: "Who should write the method statement?",
+    answer:
+      "A competent person on behalf of the employer — usually a supervisor, project manager, or a designated competent person within the firm. As you progress through your apprenticeship and into qualified work, writing job-specific method statements becomes part of the role. Generic MS templates are common starting points, but each job needs site-specific tweaks.",
+  },
+  {
+    question: "What should a good method statement actually contain?",
+    answer:
+      "Standard contents: scope of work, references to the risk assessment, sequence of operations (numbered steps), people and roles, plant and tools, materials, PPE, isolation procedures, emergency arrangements, supervision, training requirements, references to drawings and standards, sign-off. Some firms also include 'stop the job' triggers and lessons-learned space.",
+  },
+  {
+    question: "What if the actual work doesn’t go to the method statement?",
+    answer:
+      "Stop and review. If you’re halfway through and reality has diverged from the plan, you don’t have a safe system of work any more — you have an improvisation. Either get back to the plan or get the plan changed (Step 5 review of the RAMS, MS amended, briefed back to the team). 'We’re halfway, let’s just push through' is the wrong answer.",
+  },
+  {
+    question: "What’s a 'permit-to-work' and when do I need one?",
+    answer:
+      "A formal written authorisation for higher-risk work that you can’t allow people to just decide to do on their own. Common uses: live electrical work, hot work (welding, cutting), confined spaces, work near HV, work on safety-critical systems. The permit specifies WHO can do WHAT under WHICH conditions for HOW LONG — and it has to be formally closed when the work finishes. It sits ON TOP of RAMS, not instead of them.",
+  },
+  {
+    question: "I’m an apprentice — do I need to write or sign these documents?",
+    answer:
+      "Sign: yes, you sign to confirm you’ve read and understood the RAMS that covers your work. Write: not full RAMS at apprentice stage, no — but you’ll start contributing to dynamic risk assessments and point-of-work checks (Sub 4) from very early on, and by the time you’re a Level 3 spark you’ll be expected to write site-specific method statements for jobs you supervise.",
+  },
+];
+
+export default function Sub3() {
+  const navigate = useNavigate();
   useSEO(TITLE, DESCRIPTION);
 
-  const quickCheckQuestions = [
-    {
-      id: 'method-purpose',
-      question: 'What is the main purpose of a method statement?',
-      options: [
-        'To replace the risk assessment',
-        'To describe how work will be done safely step by step',
-        'To list all possible hazards',
-        'To record accidents after they happen',
-      ],
-      correctIndex: 1,
-      explanation:
-        'A method statement describes how work will be done safely step by step, working alongside the risk assessment to ensure safe execution of tasks.',
-    },
-    {
-      id: 'method-requirement',
-      question: 'When are method statements typically required?',
-      options: [
-        'Only for domestic work',
-        'For commercial sites and high-risk tasks',
-        'Never in electrical work',
-        'Only when accidents occur',
-      ],
-      correctIndex: 1,
-      explanation:
-        'Method statements are typically required on commercial sites, high-risk tasks, and when working as a subcontractor where RAMS documentation is needed.',
-    },
-    {
-      id: 'method-link',
-      question: 'Which document should a method statement refer to?',
-      options: [
-        'Company handbook only',
-        'Previous job records',
-        'The relevant risk assessment',
-        'Electrical regulations only',
-      ],
-      correctIndex: 2,
-      explanation:
-        'A method statement should refer to the relevant risk assessment, as it builds on the hazards and controls identified in that document.',
-    },
-  ];
-
-  const quizQuestions = [
-    {
-      id: 1,
-      question: 'What is the primary purpose of a method statement in electrical work?',
-      options: [
-        'To replace the need for a risk assessment',
-        'To provide step-by-step safe working procedures',
-        'To list all company policies',
-        'To record completed work activities',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'A method statement provides detailed step-by-step procedures for carrying out work safely, building on the risk assessment to ensure safe execution.',
-    },
-    {
-      id: 2,
-      question: 'Which of these is NOT typically included in a method statement?',
-      options: [
-        'Personnel roles and responsibilities',
-        'Required tools and equipment',
-        'Company financial information',
-        'Step-by-step procedures',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Company financial information is not relevant to a method statement, which focuses on safe working procedures, personnel, equipment, and risk controls.',
-    },
-    {
-      id: 3,
-      question: 'When would you typically need to produce a method statement?',
-      options: [
-        'Only for domestic electrical installations',
-        'For high-risk tasks and commercial sites',
-        'Never in electrical work',
-        'Only after an accident has occurred',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Method statements are typically required for high-risk tasks, commercial sites, construction work, and when working as a subcontractor.',
-    },
-    {
-      id: 4,
-      question: 'What should be the relationship between a risk assessment and method statement?',
-      options: [
-        'They are completely separate documents',
-        'The method statement replaces the risk assessment',
-        'The method statement builds on the risk assessment',
-        'Only one document is needed for any job',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'The method statement builds on the risk assessment by explaining how the identified hazards will be controlled during the actual work process.',
-    },
-    {
-      id: 5,
-      question: 'Which section would you expect to find in a comprehensive method statement?',
-      options: [
-        'Weather forecasts for the next month',
-        'Emergency procedures and contact details',
-        'Company share prices',
-        'Historical accident statistics',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Emergency procedures and contact details are essential components of a method statement to ensure quick response if something goes wrong.',
-    },
-    {
-      id: 6,
-      question: 'Who should typically review and approve a method statement before work begins?',
-      options: [
-        'Only the person doing the work',
-        "The client’s accountant",
-        'A competent supervisor or site manager',
-        'No approval is needed',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'A competent supervisor or site manager should review and approve method statements to ensure they are suitable and complete.',
-    },
-    {
-      id: 7,
-      question: 'What type of information about personnel should be included?',
-      options: [
-        'Personal bank details',
-        'Qualifications, roles, and competencies',
-        'Home addresses',
-        'Social media profiles',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'Personnel sections should include relevant qualifications, defined roles, competencies, and any specific training required for the task.',
-    },
-    {
-      id: 8,
-      question: 'How often should a method statement be reviewed during a project?',
-      options: [
-        "Never, once written it’s final",
-        'Only at the end of the project',
-        'Regularly and when conditions change',
-        'Once per year',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'Method statements should be reviewed regularly and updated whenever working conditions, personnel, or procedures change.',
-    },
-    {
-      id: 9,
-      question:
-        'What should happen if the actual work conditions differ from the method statement?',
-      options: [
-        'Continue with the original plan anyway',
-        'Stop work and update the method statement',
-        'Ignore the method statement completely',
-        'Ask someone else to do the work',
-      ],
-      correctAnswer: 1,
-      explanation:
-        'If conditions differ from those described in the method statement, work should stop and the document should be reviewed and updated as necessary.',
-    },
-    {
-      id: 10,
-      question: 'Which of these best describes good method statement practice?',
-      options: [
-        'Use complex technical language to sound professional',
-        'Keep it brief and exclude safety information',
-        'Make it clear, detailed, and easy to follow',
-        'Copy from other unrelated projects',
-      ],
-      correctAnswer: 2,
-      explanation:
-        'A good method statement should be clear, detailed, and easy to follow, ensuring all team members can understand and implement the procedures safely.',
-    },
-  ];
-
-  const faqs = [
-    {
-      question: 'Do I need a method statement for all electrical work?',
-      answer:
-        'Not all electrical work requires a formal method statement. Simple, low-risk domestic tasks may not need one, but method statements are typically required for commercial work, high-risk tasks, construction sites, and when requested by clients or main contractors.',
-    },
-    {
-      question: "What’s the difference between a method statement and a risk assessment?",
-      answer:
-        'A risk assessment identifies hazards and evaluates risks, while a method statement explains how the work will be carried out safely. The method statement builds on the risk assessment by detailing the step-by-step procedures and controls.',
-    },
-    {
-      question: 'How detailed should a method statement be?',
-      answer:
-        'The level of detail should match the complexity and risk of the work. High-risk or complex tasks need more detailed method statements. Include enough detail so that a competent person could follow the procedures safely.',
-    },
-    {
-      question: 'Who should write the method statement?',
-      answer:
-        'Method statements should be written by someone competent and familiar with the work - typically a qualified electrician, supervisor, or project manager. They should be reviewed and approved by a responsible person before work begins.',
-    },
-    {
-      question: 'Can I use the same method statement for different projects?',
-      answer:
-        'Generic method statements can be used as templates, but they must be reviewed and adapted for each specific project. Working conditions, site layouts, equipment, and risks can vary significantly between jobs.',
-    },
-    {
-      question: "What happens if workers don’t follow the method statement?",
-      answer:
-        'Deviation from the method statement without good reason is a serious safety issue. It could lead to accidents, disciplinary action, insurance problems, and potential legal liability. Any necessary changes should be documented and approved.',
-    },
-    {
-      question: 'How do I ensure workers actually read and understand the method statement?',
-      answer:
-        'Hold toolbox talks, conduct briefings, get signed acknowledgments from workers, and regularly check that procedures are being followed. Make the method statement easily accessible on site.',
-    },
-    {
-      question: 'Should method statements include emergency procedures?',
-      answer:
-        'Yes, method statements should include relevant emergency procedures, evacuation routes, emergency contact numbers, and first aid arrangements. This ensures quick response if something goes wrong.',
-    },
-  ];
-
   return (
-    <div className="bg-background">
-      {/* Header */}
-      <div className="border-b border-border/20 bg-card sticky top-0 z-10 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <Button
-            variant="ghost"
-            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
-            asChild
+    <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      <div className="px-4 sm:px-6 lg:px-8 pt-2 pb-24">
+        <PageFrame>
+          <button
+            onClick={() => navigate('..')}
+            className="inline-flex items-center gap-2 h-10 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
-            <Link to="..">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Section 3
-            </Link>
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="h-4 w-4" /> Section 3
+          </button>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-12">
-        <div className="mb-12">
-          <div className="flex items-center gap-3 mb-4">
-            <ClipboardList className="h-8 w-8 text-elec-yellow" />
-            <div>
-              <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-2">
-                Module 3.3
-              </span>
-              <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
-                Method Statements
-              </h1>
-              <p className="text-xl text-white max-w-4xl mt-2">
-                Comprehensive guide to creating and implementing effective method statements for
-                electrical work
-              </p>
-            </div>
-          </div>
-        </div>
+          <PageHero
+            eyebrow="Module 1 · Section 3 · Subsection 3"
+            title="Method statements and safe systems of work"
+            description="How the controls from your risk assessment turn into a step-by-step plan you can actually work to — and how permits, safe isolation procedures and toolbox talks layer on top to make a complete safe system of work."
+            tone="emerald"
+          />
 
-        {/* Introduction */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Introduction</h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-foreground">
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="list-disc pl-6 space-y-1">
+          <TLDR
+            points={[
+              "A method statement turns the risk-assessment controls into a sequence of work — who does what, in what order, with what kit. RA + MS = RAMS.",
+              "A 'safe system of work' is the whole package — RAMS, controls, training, permits, supervision, comms. HASAWA s.2(2)(a) puts a legal duty on the employer to provide one.",
+              "Permits-to-work sit on top of RAMS for higher-risk jobs (live work, confined spaces, hot work). They’re formal authorisation, not just paperwork.",
+            ]}
+          />
+
+          <LearningOutcomes
+            outcomes={[
+              "Explain the difference between a risk assessment, a method statement, a permit-to-work and a safe system of work.",
+              "List the key sections you’d expect in a useful, site-specific method statement.",
+              "State the legal duty for a safe system of work under HASAWA s.2(2)(a) and EAWR Reg 4(3).",
+              "Identify when a permit-to-work is required and what it has to specify.",
+              "Recognise generic vs site-specific MS — and the prosecution risk of working off generics that don’t match the site.",
+              "Use the MS as a live document on the day — pre-work check, mid-job adjustments, close-out.",
+            ]}
+            initialVisibleCount={3}
+          />
+
+          <ContentEyebrow>The four words you have to keep separate</ContentEyebrow>
+
+          <ConceptBlock
+            title="RA, MS, RAMS, SSoW — what each one actually is"
+            plainEnglish="Risk assessment names the hazards and controls. Method statement turns those controls into the order of work. RAMS is the bundle of both. Safe system of work is the bigger picture — RAMS plus the people, training, permits, supervision and comms that make it all actually run."
+            onSite="Most sites you’ll work on will hand you a RAMS pack. The pack contains both documents — sometimes as separate files, sometimes interleaved on the same form. The site’s safe system of work also includes the toolbox talks, permits, induction, and the supervisor walking the floor. RAMS is the documentation; SSoW is the living thing."
+          >
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Risk assessment (RA)</strong> — identifies the significant hazards, who could be
+                harmed and the controls. The 'what' and 'why'.
+              </li>
+              <li>
+                <strong>Method statement (MS)</strong> — describes the actual sequence of work given those
+                controls. The 'how' and 'when' and 'who'.
+              </li>
+              <li>
+                <strong>RAMS</strong> — the combined document or pack. What you’ll be handed on site.
+              </li>
+              <li>
+                <strong>Safe system of work (SSoW)</strong> — the whole way the job is run safely. RAMS
+                plus competence, supervision, communication, permits, monitoring, training. The
+                concept the law actually requires.
+              </li>
+              <li>
+                <strong>Permit-to-work</strong> — a separate formal authorisation document for
+                higher-risk tasks. Sits on top of RAMS for those specific jobs.
+              </li>
+            </ul>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="HASAWA 1974 — Section 2(2)(a)"
+            clause="The provision and maintenance of plant and systems of work that are, so far as is reasonably practicable, safe and without risks to health."
+            meaning={
+              <>
+                'Safe systems of work' is a HASAWA phrase, not a regulation invented later. The
+                duty is on the employer to <em>provide</em> them AND <em>maintain</em> them.
+                Provision is RAMS, training, kit, permits. Maintenance is reviewing, updating,
+                supervising, and stopping work when the system breaks down.
+              </>
+            }
+            cite="Reference: HSE — Health and Safety at Work etc. Act 1974, Section 2(2)(a)"
+          />
+
+          <RegsCallout
+            source="EAWR 1989 — Regulation 4(3)"
+            clause="Every work activity, including operation, use and maintenance of a system and work near a system, shall be carried out in such a manner as not to give rise, so far as is reasonably practicable, to danger."
+            meaning={
+              <>
+                The electrical-specific version. EAWR Reg 4(3) is the hook the HSE uses when an
+                electrical accident traces back to a missing or inadequate method of work. It’s
+                why every electrical job — however small — needs SOMEONE to have thought
+                through how it’s being done safely. RAMS is how you evidence that thinking.
+              </>
+            }
+            cite="Reference: HSE — Electricity at Work Regulations 1989, Regulation 4(3)"
+          />
+
+          <InlineCheck
+            id={checks[0].id}
+            question={checks[0].question}
+            options={checks[0].options}
+            correctIndex={checks[0].correctIndex}
+            explanation={checks[0].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>What goes in a useful method statement</ContentEyebrow>
+
+          <ConceptBlock
+            title="The sections you’ll see — and why each one earns its space"
+            plainEnglish="A method statement isn’t a free-form essay. It has a standard shape because every section answers a question someone on site needs to know the answer to before they can work safely."
+            onSite="When you read an MS for the first time, scan for the sections in this order: scope, sequence, isolation, emergency. Those four tell you 90% of what you need to know about the job. Everything else is supporting detail."
+          >
+            <p>Standard sections of a useful, job-specific MS:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>
+                <strong>Scope</strong> — what work is in (and what’s explicitly out). Stops scope creep
+                being rolled in without a fresh assessment.
+              </li>
+              <li>
+                <strong>Reference documents</strong> — the relevant risk assessment(s), drawings,
+                schedules, manufacturer data, BS 7671 reference. Tells you what to read alongside.
+              </li>
+              <li>
+                <strong>Personnel and roles</strong> — who’s on the team, who’s the competent person in
+                charge, who’s authorised for what (apprentice / instructed / skilled).
+              </li>
                 <li>
-                  <strong>Definition:</strong> Written procedures detailing how work will be done
-                  safely.
-                </li>
-                <li>
-                  <strong>Purpose:</strong> Link risk assessments to practical work methods.
-                </li>
-                <li>
-                  <strong>Requirement:</strong> Essential for high-risk electrical activities.
-                </li>
-                <li>
-                  <strong>Compliance:</strong> Must be followed by all personnel on site.
-                </li>
-                <li>
-                  <strong>Updates:</strong> Living documents that should be updated as needed.
-                </li>
-              </ul>
-            </div>
-            <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-4 border-l-elec-yellow border border-elec-yellow/30">
-              <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-              <ul className="list-disc pl-6 space-y-1">
-                <li>
-                  <strong>Spot:</strong> Complex installations, high-risk work, new procedures,
-                  regulatory requirements.
-                </li>
-                <li>
-                  <strong>Use:</strong> Before starting electrical projects, during planning stages,
-                  safety briefings.
-                </li>
-                <li>
-                  <strong>Apply:</strong> Clear step-by-step procedures, safety controls, emergency
-                  plans.
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Learning Outcomes */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
-            Learning Outcomes
-          </h2>
-          <p className="text-white mb-4">By the end of this section, you’ll be able to:</p>
-          <ul className="space-y-3 text-foreground">
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Understand the purpose and legal requirements for method statements</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Identify when method statements are required for electrical work</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Create comprehensive method statements with all key components</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Link method statements effectively with risk assessments</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <span>Implement best practices for method statement use and maintenance</span>
-            </li>
-          </ul>
-        </Card>
-
-        {/* Section 1: What is a Method Statement */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                1
-              </span>
-              What is a Method Statement?
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                A method statement is a documented procedure that describes how a specific work
-                activity will be carried out safely. For electrical work, it provides step-by-step
-                instructions that ensure all safety measures identified in the risk assessment are
-                properly implemented.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Key characteristics of effective method statements:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Task-specific and tailored to specific electrical work activities</li>
-                    <li>
-                      Step-by-step instructions providing clear sequential guidance for safe
-                      execution
-                    </li>
-                    <li>Risk-linked, directly addressing hazards identified in risk assessments</li>
-                    <li>
-                      Practical and written in language that workers can understand and follow
-                    </li>
-                    <li>Living documents that are updated as conditions or procedures change</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Legal context and requirements:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>CDM Regulations 2015: Required for construction electrical work</li>
-                    <li>HASAWA 1974: Part of duty to ensure safe working practices</li>
-                    <li>EAW Regulations 1989: Support compliance with electrical safety duties</li>
-                    <li>Company policies: Often required by internal safety management systems</li>
-                    <li>Insurance requirements: May be necessary for liability coverage</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Relationship to other safety documents:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Risk Assessment: Identifies what could go wrong and who could be harmed</li>
-                    <li>Method Statement: Explains exactly how to do the work safely</li>
-                    <li>Permit to Work: Formal authorisation system for high-risk activities</li>
-                    <li>
-                      Safe System of Work: Overall framework combining all safety documentation
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck {...quickCheckQuestions[0]} />
-
-        {/* Section 2: When Required */}
-        <div className="mb-8">
-          <div className="border-l-4 border-elec-yellow bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-elec-yellow text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                2
-              </span>
-              When Method Statements are Required
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Method statements are not always required for electrical work, but there are
-                specific situations where they become essential for legal compliance and safety
-                management.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Legal and contractual requirements:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Construction work under CDM Regulations 2015</li>
-                    <li>
-                      Work as a subcontractor where RAMS (Risk Assessment Method Statement) is
-                      requested
-                    </li>
-                    <li>High-risk electrical activities identified in risk assessments</li>
-                    <li>
-                      Client or main contractor specifications requiring documented procedures
-                    </li>
-                    <li>Insurance policy requirements for certain types of work</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Type of work requiring method statements:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Working at height on electrical installations or repairs</li>
-                    <li>Live electrical testing and fault finding procedures</li>
-                    <li>Complex commercial and industrial electrical installations</li>
-                    <li>Work in confined spaces such as substations or cable chambers</li>
-                    <li>Coordination with other trades on construction sites</li>
-                    <li>Emergency electrical repairs in operational facilities</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Workplace and project considerations:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Commercial and industrial premises requiring documented procedures</li>
-                    <li>Healthcare facilities where work could affect critical systems</li>
-                    <li>Educational establishments with specific safety requirements</li>
-                    <li>Public buildings where members of the public could be affected</li>
-                    <li>Sites with multiple contractors requiring coordination</li>
-                    <li>Work in environments with additional hazards (chemicals, machinery)</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck {...quickCheckQuestions[1]} />
-
-        {/* Section 3: Key Components */}
-        <div className="mb-8">
-          <div className="border-l-4 border-orange-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                3
-              </span>
-              Key Components of a Method Statement
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                A comprehensive method statement should include all information necessary for safe
-                execution of the work. The following components ensure complete coverage of safety
-                requirements.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">1. Project and work description:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Clear description of the electrical work to be undertaken</li>
-                    <li>Location details including site address and specific work areas</li>
-                    <li>Project timescales and key milestones</li>
-                    <li>Reference to relevant drawings, specifications, and standards</li>
-                    <li>Connection to associated risk assessments and safety documents</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">2. Personnel requirements and responsibilities:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Competency requirements and necessary qualifications</li>
-                    <li>Specific roles and responsibilities for each team member</li>
-                    <li>Supervision arrangements and reporting lines</li>
-                    <li>Training requirements and competency verification</li>
-                    <li>Communication procedures and safety briefing requirements</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">3. Equipment, tools, and materials:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Complete list of required tools and electrical equipment</li>
-                    <li>Personal protective equipment (PPE) specifications</li>
-                    <li>Safety equipment including isolation devices and testing instruments</li>
-                    <li>Material specifications and storage requirements</li>
-                    <li>Equipment inspection and maintenance requirements</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">4. Step-by-step procedures:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Detailed sequence of operations from start to finish</li>
-                    <li>Safety checks and verification procedures at each stage</li>
-                    <li>Isolation and lockout/tagout procedures</li>
-                    <li>Testing and commissioning requirements</li>
-                    <li>Coordination points with other activities or trades</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">5. Emergency procedures and contacts:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Emergency contact numbers and escalation procedures</li>
-                    <li>First aid arrangements and accident reporting procedures</li>
-                    <li>Evacuation routes and assembly points</li>
-                    <li>Procedures for electrical emergencies and system failures</li>
-                    <li>Incident response and notification requirements</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <InlineCheck {...quickCheckQuestions[2]} />
-
-        {/* Section 4: Creation Process */}
-        <div className="mb-8">
-          <div className="border-l-4 border-purple-500 bg-card dark:bg-card p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                4
-              </span>
-              Method Statement Creation Process
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Creating an effective method statement requires systematic planning and input from
-                competent personnel. Follow this structured approach to ensure comprehensive
-                coverage.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Step 1: Preparation and planning</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Review the risk assessment and identify all significant hazards</li>
-                    <li>Examine site conditions, drawings, and project specifications</li>
-                    <li>Consult with experienced electricians familiar with the type of work</li>
-                    <li>Check relevant regulations, standards, and company procedures</li>
-                    <li>Identify any special requirements or client specifications</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Step 2: Structure and content development</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Break down the work into logical stages and sequences</li>
-                    <li>Define control measures for each identified hazard</li>
-                    <li>Specify required competencies and responsibilities</li>
-                    <li>Detail equipment, tools, and safety systems needed</li>
-                    <li>Include emergency procedures and contingency plans</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Step 3: Review and approval process</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Technical review by competent supervisor or senior electrician</li>
-                    <li>Safety review by safety professional or appointed person</li>
-                    <li>Client or principal contractor approval where required</li>
-                    <li>Final approval by responsible manager before work commences</li>
-                    <li>Distribution to all personnel involved in the work</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Step 4: Implementation and monitoring</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Brief all personnel before work begins</li>
-                    <li>Ensure method statement is accessible on site</li>
-                    <li>Monitor compliance with procedures during work</li>
-                    <li>Address any deviations or changing conditions immediately</li>
-                    <li>Update the method statement if conditions change</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Section 5: Best Practices */}
-        <div className="mb-8">
-          <div className="border-l-4 border-teal-500 bg-teal-500/10 dark:bg-teal-500/10 p-6 rounded-r-lg">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <span className="bg-teal-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">
-                5
-              </span>
-              Best Practices and Common Mistakes
-            </h2>
-            <div className="space-y-4 text-foreground">
-              <p>
-                Learning from experience helps create more effective method statements and avoid
-                common pitfalls that can compromise safety and compliance.
-              </p>
-
-              <div className="space-y-4">
-                <div>
-                  <p className="font-bold">Best practices for effective method statements:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Use clear, simple language that all workers can understand</li>
-                    <li>Include diagrams, photos, or sketches where helpful</li>
-                    <li>Make procedures specific to the actual work and site conditions</li>
-                    <li>Regularly review and update based on lessons learned</li>
-                    <li>Involve experienced workers in development and review</li>
-                    <li>Ensure procedures are practical and achievable</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Common mistakes to avoid:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Generic method statements not adapted to specific conditions</li>
-                    <li>Overly complex language or unnecessary technical jargon</li>
-                    <li>Failing to link method statement to risk assessment</li>
-                    <li>Not updating when conditions or procedures change</li>
-                    <li>Inadequate consultation with workers who will use the document</li>
-                    <li>Missing emergency procedures or contact information</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Implementation and communication:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Hold toolbox talks to explain key safety points</li>
-                    <li>Get signed acknowledgment that workers have read and understood</li>
-                    <li>Keep copies readily available on site for reference</li>
-                    <li>Regular monitoring to ensure procedures are being followed</li>
-                    <li>Encourage feedback and suggestions for improvement</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <p className="font-bold">Continuous improvement:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-sm">
-                    <li>Review method statements after project completion</li>
-                    <li>Incorporate lessons learned into future method statements</li>
-                    <li>Update template method statements based on experience</li>
-                    <li>Share good practices across the organisation</li>
-                    <li>Regular training on method statement development and use</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQs */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Search className="h-6 w-6 text-elec-yellow" />
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div key={index} className="space-y-2">
-                <h3 className="font-medium text-foreground">{faq.question}</h3>
-                <p className="text-sm text-white">{faq.answer}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        {/* Pocket Card */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-            <List className="h-6 w-6 text-elec-yellow" />
-            Method Statements - Quick Reference
-          </h2>
-          <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-            <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Essential Components:</h3>
-              <ul className="space-y-1 text-white">
-                <li>• Work description and scope</li>
-                <li>• Personnel roles and competencies</li>
-                <li>• Required equipment and PPE</li>
-                <li>• Step-by-step procedures</li>
-                <li>• Emergency contacts and procedures</li>
-              </ul>
-            </div>
-            <div className="space-y-3">
-              <h3 className="font-semibold text-foreground">Key Requirements:</h3>
-              <ul className="space-y-1 text-white">
-                <li>• Link to risk assessment</li>
-                <li>• Clear, understandable language</li>
-                <li>• Review and approval process</li>
-                <li>• Regular updates when needed</li>
-                <li>• Accessible on site during work</li>
-              </ul>
-            </div>
-          </div>
-        </Card>
-
-        {/* Summary */}
-        <Card className="mb-6 sm:mb-8 p-4 sm:p-6 bg-card border-border/20">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">Summary</h2>
-          <div className="space-y-4 text-foreground">
+                <strong>Sequence of operations</strong> — numbered steps, in order. The heart of the
+                document. Including the safe isolation procedure as discrete steps with prove-dead.
+              </li>
+              <li>
+                <strong>Plant, tools and equipment</strong> — what kit is needed and what spec. Voltage
+                indicator (must be GS38 compliant). Lock-off kit. Test instruments. Insulated tools.
+              </li>
+              <li>
+                <strong>PPE</strong> — what’s required for which steps. Helmet, eye protection,
+                insulated gloves, arc-rated clothing where applicable.
+              </li>
+              <li>
+                <strong>Isolation arrangements</strong> — exact isolation point, padlock arrangement,
+                warning notices, who holds the key, who proves dead.
+              </li>
+              <li>
+                <strong>Emergency arrangements</strong> — first aid, who’s the first-aider, AED location,
+                emergency contacts, fire muster point, ambulance access. Read it BEFORE you need it.
+              </li>
+              <li>
+                <strong>Sign-off</strong> — who wrote it, who approved it, who briefed the team, who
+                read and understood it. Signatures with dates.
+              </li>
+            </ul>
             <p>
-              Method statements are essential safety documents that translate risk assessments into
-              practical, step-by-step procedures. They ensure that electrical work is carried out
-              safely, consistently, and in compliance with legal requirements.
+              Right-sized to the job. A single-socket replacement MS might be a one-page form
+              with these sections in compressed form. A commercial CU upgrade might be 15-20
+              pages. An LV/HV interface job could be 40+. The principle is proportionate — not
+              minimum, not maximum.
             </p>
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
-              <div>
-                <h3 className="font-semibold mb-2">Remember:</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Method statements complement, don’t replace, risk assessments</li>
-                  <li>• They must be specific to the actual work and conditions</li>
-                  <li>• All personnel must understand and follow the procedures</li>
-                  <li>• Regular review and updates are essential</li>
-                </ul>
+          </ConceptBlock>
+
+          <ConceptBlock
+            title="Generic vs site-specific — the prosecution line"
+            onSite="A generic MS for 'CU change' is a fine starting point. A generic MS used unchanged on a tenanted flat with elderly occupants and a shared meter cupboard is a problem waiting to happen. The work to make it site-specific is the work that actually keeps you safe."
+          >
+            <p>
+              Generic templates exist because most jobs share a common shape. CU changes,
+              socket additions, lighting refurbs — your firm will have a pattern. The risk is
+              treating the generic as the finished article.
+            </p>
+            <p>
+              The HSE’s 'suitable and sufficient' test (and its method-statement equivalent
+              under the safe systems of work duty) demands site-specific application. That
+              means walking the actual site, naming the actual hazards present, listing the
+              actual people involved, and writing the controls for THIS job. Generic templates
+              with site-specific overlays are normal. Generic templates run unchanged are a
+              prosecution starter.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <ContentEyebrow>Permits-to-work — when you need them</ContentEyebrow>
+
+          <ConceptBlock
+            title="A formal authorisation gate for higher-risk work"
+            plainEnglish="Some work is risky enough that you can’t allow it to just happen because someone read the RAMS. It needs a competent person to formally authorise THIS person doing THIS specific job for THIS specific period, with named precautions verified before work starts."
+            onSite="Examples on electrical jobs: live work where dead working isn’t reasonably practicable (rare), work in a confined space (cable pit, riser shaft), hot work near flammables (welding, soldering with naked flame), work on or near HV apparatus, work that requires temporary lift of safety interlocks."
+          >
+            <p>A typical permit-to-work specifies:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>The exact work to be done — scope and limits.</li>
+              <li>Person(s) authorised to do it — by name, with competence verified.</li>
+              <li>Period the permit is valid for — typically a single shift.</li>
+              <li>Precautions that must be in place before work starts — checked off.</li>
+              <li>Precautions that must remain in place during work — supervision, monitoring.</li>
+              <li>Communications arrangements — radio check, lone-worker check-in.</li>
+              <li>Sign-on (issuer, recipient) and sign-off (work complete, system restored).</li>
+            </ul>
+            <p>
+              The permit isn’t paperwork for its own sake. It’s the gate. Open permit = work
+              authorised under named conditions. Closed permit = system back to normal,
+              barriers down, lock-offs removed. The discipline of opening and closing the
+              permit is what stops 'I thought you’d done that' incidents.
+            </p>
+          </ConceptBlock>
+
+          <RegsCallout
+            source="HSE HSG85 — 'Electricity at work: Safe working practices'"
+            clause="A permit-to-work is a formal written system used to control certain types of work which are potentially hazardous. It is a statement, signed by an authorised person, that the conditions for safety have been met and the work specified can proceed."
+            meaning={
+              <>
+                HSG85 is the HSE’s practical guide for electrical work. The permit-to-work
+                section is short but firm: for higher-risk electrical work, formal written
+                authorisation is the expected standard. On larger sites you’ll see permit
+                systems used routinely. On smaller jobs they may be used only for specific
+                tasks (live testing, work near HV).
+              </>
+            }
+            cite="Reference: HSE HSG85 (paraphrased) — full document on HSE website"
+          />
+
+          <InlineCheck
+            id={checks[1].id}
+            question={checks[1].question}
+            options={checks[1].options}
+            correctIndex={checks[1].correctIndex}
+            explanation={checks[1].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>Working to the method statement on the day</ContentEyebrow>
+
+          <ConceptBlock
+            title="Pre-work check, mid-job adjustments, close-out"
+            plainEnglish="The MS isn’t a document you sign and forget. You read it before you start, work to it during the job, and reference it at the end to confirm everything’s back to normal."
+            onSite="Pre-work: read the relevant sections, walk the site, check controls listed are physically in place, raise mismatches BEFORE work starts. Mid-job: if anything changes, stop and trigger a Step 5 review (Sub 2). Close-out: confirm isolations restored, permits closed, area clear, paperwork signed."
+          >
+            <p>Pre-work check — what you’re looking for:</p>
+            <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
+              <li>Are the named people on site? (Including the first-aider.)</li>
+              <li>Is the listed kit available and in date? (Voltage indicator function-tested.)</li>
+              <li>Is the isolation point accessible and labelled?</li>
+              <li>Are the listed PPE items available and in good condition?</li>
+              <li>Have any environmental conditions changed since the MS was written?</li>
+              <li>Does the customer/occupier know what’s about to happen?</li>
+            </ul>
+            <p>
+              Mid-job: if you hit something the MS didn’t cover (an unexpected cable, a different
+              circuit topology, an additional occupant), stop and escalate. Don’t improvise. The
+              MS has to be amended (Step 5) before you carry on. Sub 4 covers point-of-work
+              checks in detail — they’re the live, in-the-moment version of the same idea.
+            </p>
+            <p>
+              Close-out: every isolation restored OR formally left in a known state. Every
+              permit closed. Every lock removed (yours, by you). Customer briefed on anything
+              they need to know. Paperwork completed. The job isn’t finished until the system
+              is documented as back to normal.
+            </p>
+          </ConceptBlock>
+
+          <CommonMistake
+            title="Treating the method statement as instructions for someone ELSE"
+            whatHappens={
+              <>
+                Apprentice arrives on site, RAMS pack handed to the gaffer, gaffer skim-reads
+                it, doesn’t share the detail with the apprentice. Apprentice gets stuck into
+                the work knowing only what they’ve been told verbally. Halfway through there’s
+                a step the apprentice didn’t know about (e.g. 'temporary feed required to keep
+                the alarm system live during the CU change'). Alarm goes down, building
+                evacuates, money lost, gaffer blames apprentice, apprentice has no defence
+                because they never read the document.
+              </>
+            }
+            doInstead={
+              <>
+                If your name is on the team, the MS applies to YOU. Read it. The whole thing,
+                or at minimum every section that mentions your role or your part of the work.
+                If the gaffer hasn’t shared it, ask. 'Can I read the MS before we start?' is a
+                completely normal request — and any gaffer who refuses is making a problem for
+                themselves later.
+              </>
+            }
+          />
+
+          <Scenario
+            title="The MS says 'apprentice to assist with cable pulling under direct supervision'. The supervisor leaves site to take a call."
+            situation={
+              <>
+                You’re on a small commercial fit-out, second day. The method statement is
+                explicit: cable pulling requires direct supervision of the apprentice (you).
+                The supervisor steps outside to take a call from the office, says it’ll be
+                'two minutes'. Twenty minutes later they’re still not back. The job is on a
+                schedule and you’re aware time’s being lost. The other spark on site (not your
+                supervisor, not in the MS for your supervision) says 'just keep going, I’m
+                here'.
+              </>
+            }
+            whatToDo={
+              <>
+                Stop pulling cable. The MS specifies 'direct supervision' — not 'someone else
+                in the building'. Either wait for your named supervisor to return, OR get the
+                MS amended on the spot (someone competent has to formally authorise the other
+                spark as your supervisor for the duration). Don’t carry on under informal
+                cover. While you wait, do something the MS doesn’t require supervision for —
+                tidy the route, prep the next pull, label cables. You’re working productively
+                without breaching the system of work.
+              </>
+            }
+            whyItMatters={
+              <>
+                The MS is the safe system of work for that activity. 'Someone else is here' is
+                not the same as 'direct supervision'. If something goes wrong (you damage the
+                cable, you injure yourself, you damage the building) and you were working
+                outside the MS, you’ve got no defence — and your supervisor is also in the
+                wrong for leaving you. EAWR Reg 16 (technical knowledge or experience) and
+                HASAWA s.2(2)(c) (supervision) both apply. Your willingness to stop the job is
+                a sign of competence, not weakness.
+              </>
+            }
+          />
+
+          <InlineCheck
+            id={checks[2].id}
+            question={checks[2].question}
+            options={checks[2].options}
+            correctIndex={checks[2].correctIndex}
+            explanation={checks[2].explanation}
+          />
+
+          <SectionRule />
+
+          <ContentEyebrow>How it all stacks up</ContentEyebrow>
+
+          <ConceptBlock
+            title="HASAWA → EAWR → RA → MS → permit → safe isolation"
+            plainEnglish="Each layer makes the one above more concrete. The law says 'be safe'. RAMS turns that into 'this is the plan for THIS job'. The permit (where needed) is the formal go-ahead for THIS shift. The safe isolation procedure (Section 5) is the actual sequence of switches and tests on the day."
+          >
+            <p>
+              You met the legal layers in Section 1 (HASAWA, EAWR, BS 7671). Section 2 covered
+              the hazards. Sub 1 of this section explained why we do risk assessments. Sub 2
+              gave you the five-step method.
+            </p>
+            <p>
+              This subsection is the bridge to actual delivery: how the controls turn into a
+              sequence of work (MS), how higher-risk steps get authorised (permits), and how
+              all of it sits inside the bigger 'safe system of work' duty.
+            </p>
+            <p>
+              Sub 4 takes it to the next level: how RAMS gets used live on site — toolbox talks
+              before work starts each morning, point-of-work risk assessments throughout the
+              day, what to do when reality stops matching the plan. That’s where the system
+              meets the floor.
+            </p>
+          </ConceptBlock>
+
+          <SectionRule />
+
+          <FAQ items={faqs} />
+
+          <SectionRule />
+
+          <KeyTakeaways
+            points={[
+              "Method statement = the sequence of work given the controls. RA + MS = RAMS — the bundle you’ll be handed on site.",
+              "Safe system of work (SSoW) is the umbrella concept — RAMS plus competence, training, supervision, comms, permits. HASAWA s.2(2)(a) makes it a legal duty.",
+              "EAWR Reg 4(3) makes the safe-system duty specific for electrical work — every activity must not give rise to danger.",
+              "Permits-to-work sit ON TOP of RAMS for higher-risk tasks (live work, confined spaces, hot work, near HV). They’re formal authorisation, not paperwork.",
+              "Generic MS templates are fine starters; generic MS used unchanged on a real site is prosecution territory. Site-specific is the standard.",
+              "On the day: pre-work check, mid-job stop-and-escalate when reality diverges, formal close-out. The MS is alive throughout the job — not a one-off form.",
+            ]}
+          />
+
+          {/* ── Quiz (preserved — links to streaks/stats) ───────── */}
+
+          <Quiz title="Method statements and safe systems of work knowledge check" questions={quizQuestions} />
+
+          {/* ── Prev / next nav ─────────────────────────────────── */}
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section3/3-2')}
+              className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
+                <ChevronLeft className="h-3 w-3" /> Previous subsection
               </div>
-              <div>
-                <h3 className="font-semibold mb-2">Next Steps:</h3>
-                <ul className="space-y-1 text-white">
-                  <li>• Practice creating method statements for common electrical tasks</li>
-                  <li>• Review examples from your workplace or training materials</li>
-                  <li>• Understand your company’s specific requirements and templates</li>
-                  <li>• Learn about control measures in the next section</li>
-                </ul>
+              <div className="mt-1 text-[14px] font-semibold text-white truncate">
+                The five-step risk assessment process
               </div>
-            </div>
+            </button>
+            <button
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section3/3-4')}
+              className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
+            >
+              <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
+                Next subsection <ChevronRight className="h-3 w-3" />
+              </div>
+              <div className="mt-1 text-[14px] font-semibold text-black truncate">
+                Working with RAMS on site
+              </div>
+            </button>
           </div>
-        </Card>
-
-        {/* Quiz */}
-        <div className="mb-8">
-          <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-            <Award className="h-6 w-6 text-elec-yellow" />
-            Knowledge Check
-          </h2>
-          <Quiz questions={quizQuestions} />
-        </div>
-
-        {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-border/20">
-          <Button variant="outline" asChild>
-            <Link
-              to="/study-centre/apprentice/level2/module1/section3/3-2"
-              className="flex items-center gap-2"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Previous: Five Steps of Risk Assessment
-            </Link>
-          </Button>
-
-          <Button asChild>
-            <Link
-              to="/study-centre/apprentice/level2/module1/section3/3-4"
-              className="flex items-center gap-2"
-            >
-              Next: Control Measures
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </Button>
-        </div>
+        </PageFrame>
       </div>
     </div>
   );
-};
-
-export default Sub3;
+}
