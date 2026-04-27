@@ -1,4 +1,4 @@
-import { AlertTriangle, HardHat, Ladder, Building2, ClipboardCheck } from 'lucide-react';
+import { AlertTriangle, HardHat, MoveVertical, Building2, ClipboardCheck } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
 import { SectionShell } from '@/components/study-centre/shells';
 
@@ -24,7 +24,7 @@ const subsections = [
     title: 'Selecting access equipment (2.3)',
     description:
       'WAHR 2005 hierarchy applied to ladders, podiums, towers and MEWPs. Duration, height, load and competence — and why a ladder is the last-resort option, not the default.',
-    icon: Ladder,
+    icon: MoveVertical,
     href: '2-3',
   },
   {
@@ -63,18 +63,16 @@ export default function Section2() {
       aboveGrid={
         <div className="max-w-3xl space-y-3 pt-2">
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
-            Section 2 is everything you do before the first cable comes off the drum.
-            The work that prevents an accident is the unglamorous five minutes spent
-            walking the area, picking the right kit and choosing how you reach the
-            ceiling — not the heroics afterwards.
+            Section 2 is everything you do before the first cable comes off the drum. The work that
+            prevents an accident is the unglamorous five minutes spent walking the area, picking the
+            right kit and choosing how you reach the ceiling — not the heroics afterwards.
           </p>
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
-            Subs 2.1 to 2.3 cover the three core ACs from Unit 204 — workspace
-            hazards, PPE selection and access equipment. Subs 2.4 and 2.5 are
-            supplementary deep dives — how the prep workflow changes between site
-            types (domestic, commercial, industrial, construction, healthcare,
-            education), and how the documentation chain (RAMS, toolbox talks,
-            permits) wraps around the work.
+            Subs 2.1 to 2.3 cover the three core ACs from Unit 204 — workspace hazards, PPE
+            selection and access equipment. Subs 2.4 and 2.5 are supplementary deep dives — how the
+            prep workflow changes between site types (domestic, commercial, industrial,
+            construction, healthcare, education), and how the documentation chain (RAMS, toolbox
+            talks, permits) wraps around the work.
           </p>
         </div>
       }
