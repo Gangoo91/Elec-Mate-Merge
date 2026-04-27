@@ -1,4 +1,4 @@
-import { Zap, AlertTriangle, Flame, MapPin, Users } from 'lucide-react';
+import { Zap, AlertTriangle, Flame, MapPin, Users, ShieldAlert } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
 import { SectionShell } from '@/components/study-centre/shells';
 
@@ -37,6 +37,13 @@ const subsections = [
     description: 'Common workplace hazards affecting electrical workers',
     icon: Users,
     href: '2-5',
+  },
+  {
+    number: 'Subsection 6',
+    title: 'Asbestos Awareness and Stop-Work Authority',
+    description: 'When to stop and escalate; suspected asbestos in pre-2000 buildings',
+    icon: ShieldAlert,
+    href: '2-6',
   },
 ];
 
@@ -79,9 +86,14 @@ export default function Section2() {
             <span className="text-white font-medium">Sub 4</span> covers working
             at height and confined spaces — still the biggest single killers on
             UK sites.{' '}
-            <span className="text-white font-medium">Sub 5</span> closes with
-            slips, trips and manual handling — the unglamorous injuries that
-            quietly write off more electrician careers than shock ever does.
+            <span className="text-white font-medium">Sub 5</span> covers slips,
+            trips and manual handling — the unglamorous injuries that quietly
+            write off more electrician careers than shock ever does.{' '}
+            <span className="text-white font-medium">Sub 6</span> closes with
+            stop-work authority and suspected asbestos — when to STOP and
+            ESCALATE any H&amp;S issue beyond your competence, and the specific
+            case study of asbestos in pre-2000 UK buildings (CAR 2012, the
+            asbestos register, what an electrician actually touches).
           </p>
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
             By the end of Section 2 you’ll be able to walk onto a site, name

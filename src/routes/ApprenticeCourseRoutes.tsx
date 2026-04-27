@@ -3005,14 +3005,6 @@ const Level2Module6Section6_5 = lazy(() =>
     )
   )
 );
-const Level2Module7MockExam7 = lazy(() =>
-  withTimeout(() =>
-    trackImport(
-      'Level2Module7MockExam7',
-      () => import('@/pages/apprentice-courses/Level2Module7MockExam7')
-    )
-  )
-);
 const Level2Module8MockExam1 = lazy(() =>
   withTimeout(() =>
     trackImport(
@@ -3050,14 +3042,6 @@ const Level2Module8MockExam5 = lazy(() =>
     trackImport(
       'Level2Module8MockExam5',
       () => import('@/pages/apprentice-courses/Level2Module8MockExam5')
-    )
-  )
-);
-const Level2Module8MockExam6 = lazy(() =>
-  withTimeout(() =>
-    trackImport(
-      'Level2Module8MockExam6',
-      () => import('@/pages/apprentice-courses/Level2Module8MockExam6')
     )
   )
 );
@@ -6043,7 +6027,9 @@ const Module4Section7_5 = lazy(() =>
   )
 );
 const Module5 = lazy(() =>
-  withTimeout(() => trackImport('Module5', () => import('@/pages/apprentice-courses/Module5')))
+  withTimeout(() =>
+    trackImport('Module5', () => import('@/pages/apprentice-courses/level2/module5/Module5'))
+  )
 );
 const Module5Section1 = lazy(() =>
   withTimeout(() =>
@@ -6446,199 +6432,6 @@ const Module6Section7_3 = lazy(() =>
 const Module6Section7_4 = lazy(() =>
   withTimeout(() =>
     trackImport('Module6Section7_4', () => import('@/pages/apprentice-courses/Module6Section7_4'))
-  )
-);
-const Module7 = lazy(() =>
-  withTimeout(() => trackImport('Module7', () => import('@/pages/apprentice-courses/Module7')))
-);
-const Module7Section1 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section1', () => import('@/pages/apprentice-courses/Module7Section1'))
-  )
-);
-const Module7Section1_1 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section1_1', () => import('@/pages/apprentice-courses/Module7Section1_1'))
-  )
-);
-const Module7Section1_2 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section1_2', () => import('@/pages/apprentice-courses/Module7Section1_2'))
-  )
-);
-const Module7Section1_3 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section1_3', () => import('@/pages/apprentice-courses/Module7Section1_3'))
-  )
-);
-const Module7Section1_4 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section1_4', () => import('@/pages/apprentice-courses/Module7Section1_4'))
-  )
-);
-const Module7Section1_5 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section1_5', () => import('@/pages/apprentice-courses/Module7Section1_5'))
-  )
-);
-const Module7Section2 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section2', () => import('@/pages/apprentice-courses/Module7Section2'))
-  )
-);
-const Module7Section2_1 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section2_1', () => import('@/pages/apprentice-courses/Module7Section2_1'))
-  )
-);
-const Module7Section2_2 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section2_2', () => import('@/pages/apprentice-courses/Module7Section2_2'))
-  )
-);
-const Module7Section2_3 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section2_3', () => import('@/pages/apprentice-courses/Module7Section2_3'))
-  )
-);
-const Module7Section2_4 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section2_4', () => import('@/pages/apprentice-courses/Module7Section2_4'))
-  )
-);
-const Module7Section2_5 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section2_5', () => import('@/pages/apprentice-courses/Module7Section2_5'))
-  )
-);
-const Module7Section2_6 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section2_6', () => import('@/pages/apprentice-courses/Module7Section2_6'))
-  )
-);
-const Module7Section3 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section3', () => import('@/pages/apprentice-courses/Module7Section3'))
-  )
-);
-const Module7Section3_1 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section3_1', () => import('@/pages/apprentice-courses/Module7Section3_1'))
-  )
-);
-const Module7Section3_2 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section3_2', () => import('@/pages/apprentice-courses/Module7Section3_2'))
-  )
-);
-const Module7Section3_3 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section3_3', () => import('@/pages/apprentice-courses/Module7Section3_3'))
-  )
-);
-const Module7Section3_4 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section3_4', () => import('@/pages/apprentice-courses/Module7Section3_4'))
-  )
-);
-const Module7Section3_5 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section3_5', () => import('@/pages/apprentice-courses/Module7Section3_5'))
-  )
-);
-const Module7Section4 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section4', () => import('@/pages/apprentice-courses/Module7Section4'))
-  )
-);
-const Module7Section4_1 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section4_1', () => import('@/pages/apprentice-courses/Module7Section4_1'))
-  )
-);
-const Module7Section4_2 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section4_2', () => import('@/pages/apprentice-courses/Module7Section4_2'))
-  )
-);
-const Module7Section4_3 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section4_3', () => import('@/pages/apprentice-courses/Module7Section4_3'))
-  )
-);
-const Module7Section4_4 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section4_4', () => import('@/pages/apprentice-courses/Module7Section4_4'))
-  )
-);
-const Module7Section4_5 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section4_5', () => import('@/pages/apprentice-courses/Module7Section4_5'))
-  )
-);
-const Module7Section4_6 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section4_6', () => import('@/pages/apprentice-courses/Module7Section4_6'))
-  )
-);
-const Module7Section5 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section5', () => import('@/pages/apprentice-courses/Module7Section5'))
-  )
-);
-const Module7Section5_1 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section5_1', () => import('@/pages/apprentice-courses/Module7Section5_1'))
-  )
-);
-const Module7Section5_2 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section5_2', () => import('@/pages/apprentice-courses/Module7Section5_2'))
-  )
-);
-const Module7Section5_3 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section5_3', () => import('@/pages/apprentice-courses/Module7Section5_3'))
-  )
-);
-const Module7Section5_4 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section5_4', () => import('@/pages/apprentice-courses/Module7Section5_4'))
-  )
-);
-const Module7Section5_5 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section5_5', () => import('@/pages/apprentice-courses/Module7Section5_5'))
-  )
-);
-const Module7Section6 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section6', () => import('@/pages/apprentice-courses/Module7Section6'))
-  )
-);
-const Module7Section6_1 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section6_1', () => import('@/pages/apprentice-courses/Module7Section6_1'))
-  )
-);
-const Module7Section6_2 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section6_2', () => import('@/pages/apprentice-courses/Module7Section6_2'))
-  )
-);
-const Module7Section6_3 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section6_3', () => import('@/pages/apprentice-courses/Module7Section6_3'))
-  )
-);
-const Module7Section6_4 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section6_4', () => import('@/pages/apprentice-courses/Module7Section6_4'))
-  )
-);
-const Module7Section6_5 = lazy(() =>
-  withTimeout(() =>
-    trackImport('Module7Section6_5', () => import('@/pages/apprentice-courses/Module7Section6_5'))
   )
 );
 const Module8 = lazy(() =>
@@ -9271,13 +9064,11 @@ export default function ApprenticeCourseRoutes() {
         <Route path="level2-module6-section6-3" element={<Level2Module6Section6_3 />} />
         <Route path="level2-module6-section6-4" element={<Level2Module6Section6_4 />} />
         <Route path="level2-module6-section6-5" element={<Level2Module6Section6_5 />} />
-        <Route path="level2-module7-mock-exam7" element={<Level2Module7MockExam7 />} />
         <Route path="level2-module8-mock-exam1" element={<Level2Module8MockExam1 />} />
         <Route path="level2-module8-mock-exam2" element={<Level2Module8MockExam2 />} />
         <Route path="level2-module8-mock-exam3" element={<Level2Module8MockExam3 />} />
         <Route path="level2-module8-mock-exam4" element={<Level2Module8MockExam4 />} />
         <Route path="level2-module8-mock-exam5" element={<Level2Module8MockExam5 />} />
-        <Route path="level2-module8-mock-exam6" element={<Level2Module8MockExam6 />} />
         <Route path="level2-module8-mock-exam8" element={<Level2Module8MockExam8 />} />
         <Route path="level2-module8-section1" element={<Level2Module8Section1 />} />
         <Route path="level2-module8-section2" element={<Level2Module8Section2 />} />
@@ -9798,45 +9589,6 @@ export default function ApprenticeCourseRoutes() {
         <Route path="module6-section7-2" element={<Module6Section7_2 />} />
         <Route path="module6-section7-3" element={<Module6Section7_3 />} />
         <Route path="module6-section7-4" element={<Module6Section7_4 />} />
-        <Route path="module7" element={<Module7 />} />
-        <Route path="module7-section1" element={<Module7Section1 />} />
-        <Route path="module7-section1-1" element={<Module7Section1_1 />} />
-        <Route path="module7-section1-2" element={<Module7Section1_2 />} />
-        <Route path="module7-section1-3" element={<Module7Section1_3 />} />
-        <Route path="module7-section1-4" element={<Module7Section1_4 />} />
-        <Route path="module7-section1-5" element={<Module7Section1_5 />} />
-        <Route path="module7-section2" element={<Module7Section2 />} />
-        <Route path="module7-section2-1" element={<Module7Section2_1 />} />
-        <Route path="module7-section2-2" element={<Module7Section2_2 />} />
-        <Route path="module7-section2-3" element={<Module7Section2_3 />} />
-        <Route path="module7-section2-4" element={<Module7Section2_4 />} />
-        <Route path="module7-section2-5" element={<Module7Section2_5 />} />
-        <Route path="module7-section2-6" element={<Module7Section2_6 />} />
-        <Route path="module7-section3" element={<Module7Section3 />} />
-        <Route path="module7-section3-1" element={<Module7Section3_1 />} />
-        <Route path="module7-section3-2" element={<Module7Section3_2 />} />
-        <Route path="module7-section3-3" element={<Module7Section3_3 />} />
-        <Route path="module7-section3-4" element={<Module7Section3_4 />} />
-        <Route path="module7-section3-5" element={<Module7Section3_5 />} />
-        <Route path="module7-section4" element={<Module7Section4 />} />
-        <Route path="module7-section4-1" element={<Module7Section4_1 />} />
-        <Route path="module7-section4-2" element={<Module7Section4_2 />} />
-        <Route path="module7-section4-3" element={<Module7Section4_3 />} />
-        <Route path="module7-section4-4" element={<Module7Section4_4 />} />
-        <Route path="module7-section4-5" element={<Module7Section4_5 />} />
-        <Route path="module7-section4-6" element={<Module7Section4_6 />} />
-        <Route path="module7-section5" element={<Module7Section5 />} />
-        <Route path="module7-section5-1" element={<Module7Section5_1 />} />
-        <Route path="module7-section5-2" element={<Module7Section5_2 />} />
-        <Route path="module7-section5-3" element={<Module7Section5_3 />} />
-        <Route path="module7-section5-4" element={<Module7Section5_4 />} />
-        <Route path="module7-section5-5" element={<Module7Section5_5 />} />
-        <Route path="module7-section6" element={<Module7Section6 />} />
-        <Route path="module7-section6-1" element={<Module7Section6_1 />} />
-        <Route path="module7-section6-2" element={<Module7Section6_2 />} />
-        <Route path="module7-section6-3" element={<Module7Section6_3 />} />
-        <Route path="module7-section6-4" element={<Module7Section6_4 />} />
-        <Route path="module7-section6-5" element={<Module7Section6_5 />} />
         <Route path="module8" element={<Module8 />} />
         <Route path="moet" element={<MOET />} />
         <Route path="m-o-e-t-module1" element={<MOETModule1 />} />

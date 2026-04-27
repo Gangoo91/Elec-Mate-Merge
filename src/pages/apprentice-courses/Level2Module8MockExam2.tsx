@@ -27,7 +27,7 @@ import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayo
 const Level2Module8MockExam2 = () => {
   useSEO(
     'Mock Exam 2: Electrical Science | Level 2 Electrical Course',
-    'Test your knowledge of Module 2 electrical science principles with this comprehensive 30-question mock exam.'
+    'Test your knowledge of Module 2 electrical science principles with this comprehensive 60-question mock exam aligned to the C&G 2365-02 Unit 202 specification.'
   );
 
   const [examQuestions, setExamQuestions] = useState([]);
@@ -35,14 +35,14 @@ const Level2Module8MockExam2 = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(60 * 45); // 45 minutes
+  const [timeRemaining, setTimeRemaining] = useState(90 * 60); // 90 minutes (C&G 2365-02 spec)
   const [flaggedQuestions, setFlaggedQuestions] = useState(new Set<number>());
   const [reviewMode, setReviewMode] = useState(false);
   const [reviewFilter, setReviewFilter] = useState('all'); // all, correct, incorrect, unanswered, flagged
 
   const startExam = () => {
-    // Get 30 random questions from Module 2 question bank with balanced difficulty
-    const selectedQuestions = getRandomQuestions(30, {
+    // Get 60 random questions from Module 2 question bank with balanced difficulty (C&G 2365-02 spec)
+    const selectedQuestions = getRandomQuestions(60, {
       basic: 40,
       intermediate: 45,
       advanced: 15,
@@ -57,11 +57,11 @@ const Level2Module8MockExam2 = () => {
     }));
 
     setExamQuestions(selectedQuestions);
-    setSelectedAnswers(new Array(30).fill(-1));
+    setSelectedAnswers(new Array(60).fill(-1));
     setCurrentQuestion(0);
     setExamStarted(true);
     setShowResults(false);
-    setTimeRemaining(60 * 45);
+    setTimeRemaining(90 * 60);
     setFlaggedQuestions(new Set());
     setReviewMode(false);
     setReviewFilter('all');
@@ -211,13 +211,13 @@ const Level2Module8MockExam2 = () => {
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm sm:text-sm text-white leading-relaxed">
-                      30 questions randomly selected from Module 2 content
+                      60 questions randomly selected from Module 2 content
                     </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm sm:text-sm text-white leading-relaxed">
-                      45 minutes time limit
+                      90 minutes time limit
                     </p>
                   </div>
                   <div className="flex items-start gap-2">

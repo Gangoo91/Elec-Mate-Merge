@@ -470,6 +470,31 @@ export default function Sub1() {
             }
           />
 
+          <CommonMistake
+            title="Touching a known-dead conductor without a final voltage test at the point of work"
+            whatHappens={
+              <>
+                You isolated upstream at the CU half an hour ago. You proved the indicator on the
+                proving unit, then proved dead at the local DB. Confidence high. You walk down the
+                corridor to the actual termination, take the cover off, and reach in to make the
+                connection without re-testing AT the point of work. In between, the apprentice
+                from the other firm has reset what he thought was a tripped breaker, the standby
+                generator's auto-start has kicked in for ten seconds, or you've simply walked to
+                a different circuit than the one you isolated. The conductor you treated as dead
+                was live the moment you touched it.
+              </>
+            }
+            doInstead={
+              <>
+                Dead-at-point-of-work is a separate test, every time, on every conductor you’re
+                about to touch — even if you isolated five minutes ago at the CU you can still
+                see. Walk back to the indicator, prove on the proving unit, test L-E / L-N / N-E
+                at the conductor, prove on the proving unit again, THEN connect. Time-lag and
+                changed location are exactly when re-energisation incidents happen.
+              </>
+            }
+          />
+
           <Scenario
             title="The ‘two-minute job’ that took an electrician to A&E"
             situation={

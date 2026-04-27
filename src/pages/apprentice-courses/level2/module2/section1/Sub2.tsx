@@ -555,14 +555,16 @@ export default function Sub2() {
             title="A motor nameplate that mixes units"
             situation={
               <>
-                You're commissioning a three-phase motor. The nameplate shows: 7.5 kW, 415 V, 14.5
+                You're commissioning a three-phase motor. The nameplate shows: 7.5 kW, 400 V, 14.5
                 A, 50 Hz, cos φ = 0.85, IP55, weight 65 kg. Six different SI units in three lines.
               </>
             }
             whatToDo={
               <>
-                Read each one with its full meaning. 7.5 kW is real power output. 415 V is the rated
-                line voltage. 14.5 A is the full-load current you'll size cables and overload for.
+                Read each one with its full meaning. 7.5 kW is real power output. 400 V is the rated
+                line voltage (UK harmonised nominal — older plates may show 415 V from the pre-1995
+                nominal, but the supply is the same). 14.5 A is the full-load current you'll size
+                cables and overload for.
                 50 Hz is the supply frequency. cos φ = 0.85 is the power factor (no unit — just a
                 ratio). IP55 is the ingress rating (also no unit — a code). 65 kg is what you'll be
                 lifting onto the bracket.

@@ -429,18 +429,18 @@ export default function Sub4() {
 
           <RegsCallout
             source="BS 7671 Table 41.1 + BS EN 61008 / BS EN 61009 (RCD trip times)"
-            clause="A general-purpose 30 mA RCD complying with BS EN 61008-1 / BS EN 61009-1 must disconnect the supply within 300 ms at I∆n, 150 ms at 2 × I∆n, 40 ms at 5 × I∆n, and 40 ms at 500 A test current. BS 7671 Regulation 643.8 (initial verification) and Table 41.1 reference these product-standard limits as the acceptance criteria for RCD testing."
+            clause="A general-purpose 30 mA RCD complying with BS EN 61008-1 / BS EN 61009-1 must disconnect the supply within 300 ms at I∆n, 150 ms at 2 × I∆n, 40 ms at 5 × I∆n, and 40 ms at 500 A test current. BS 7671 Reg 643.7.3 (test RCD operation) + Table 41.1 (max disconnection times) — the 40 ms / 5 × I∆n product-standard performance comes from BS EN 61008-1 / BS EN 61009-1."
             meaning={
               <>
                 The famous "trips in 40 ms at 5 × I∆n" figure is a <strong>product-standard</strong>{' '}
                 requirement on the device itself (BS EN 61008/61009), referenced by BS 7671
-                Regulation 643.8 and Table 41.1 as the test pass criterion — it is not the wording
+                Reg 643.7.3 and Table 41.1 as the test pass criterion — it is not the wording
                 of Reg 415.1.1. Same goes for the time figure — <strong>ms</strong> is
                 milliseconds, not megaseconds. Apprentices regularly mis-attribute this clause; the
                 regs and the product standards do separate jobs.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 Table 41.1 and Reg 643.8; product limits in BS EN 61008-1 / BS EN 61009-1. Wording paraphrased."
+            cite="Source: BS 7671:2018+A4:2026 Reg 643.7.3 and Table 41.1; product limits in BS EN 61008-1 / BS EN 61009-1. Wording paraphrased."
           />
 
           <InlineCheck

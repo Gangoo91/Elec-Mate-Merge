@@ -35,7 +35,7 @@ const Level2Module8MockExam4 = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(45 * 60); // 45 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState(90 * 60); // 90 minutes (C&G 2365-02 spec)
   const [showResults, setShowResults] = useState(false);
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   const [reviewMode, setReviewMode] = useState<
@@ -47,11 +47,11 @@ const Level2Module8MockExam4 = () => {
 
   // Initialize exam
   const startExam = () => {
-    const questions = getRandomQuestions(30, { basic: 40, intermediate: 45, advanced: 15 });
+    const questions = getRandomQuestions(60, { basic: 40, intermediate: 45, advanced: 15 });
     setExamQuestions(questions);
     setSelectedAnswers({});
     setCurrentQuestion(0);
-    setTimeRemaining(45 * 60);
+    setTimeRemaining(90 * 60);
     setShowResults(false);
     setFlaggedQuestions(new Set());
     setExamStarted(true);
@@ -209,8 +209,8 @@ const Level2Module8MockExam4 = () => {
                   Exam Instructions
                 </h2>
                 <ul className="text-sm text-white space-y-2 text-left">
-                  <li>• 30 questions covering wiring systems, cables, and enclosures</li>
-                  <li>• 45 minutes time limit</li>
+                  <li>• 60 questions covering wiring systems, cables, and enclosures</li>
+                  <li>• 90 minutes time limit</li>
                   <li>• You can flag questions for review</li>
                   <li>• Navigate between questions freely</li>
                   <li>• Submit when ready or time expires</li>

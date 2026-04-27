@@ -71,7 +71,7 @@ const checks = [
     question:
       "You're terminating into a Hager 6 kA RCBO in a domestic consumer unit. The terminal screw is captive and small. The senior electrician says 'use the right driver'. Which one and why?",
     options: [
-      'Whatever cross-head you've got in the van.',
+      "Whatever cross-head you've got in the van.",
       "A VDE-insulated screwdriver of the size and tip type the manufacturer specifies (Hager terminal screws are typically Pozidriv #2). 'VDE' means the shaft is tested to 1000 V AC and the handle insulated — so if the supply gets re-energised you're protected. The right tip prevents cam-out (the slip that strips the screw and leaves you scrapping a £30 RCBO).",
       'A flat blade — quicker.',
       'A magnetised philips driver.',
@@ -160,7 +160,7 @@ const quizQuestions = [
     question:
       "BS 7671 Regulation 526.1 requires every connection to have 'durable electrical continuity and adequate mechanical strength'. How does your choice of stripping tool affect compliance?",
     options: [
-      'It doesn't.',
+      "It doesn't.",
       "Directly. A correctly-sized stripper removes only the insulation, leaving the copper undamaged — full cross-section preserved, full current-carrying capacity, full mechanical strength. A knife strip nicks the copper, reducing the cross-section and creating a stress-riser fracture point. A few months of thermal cycling and the conductor breaks at the nick — high resistance, hot terminal, eventual failure on EICR or worse, on fire alarm. The stripping tool is part of the 526.1 chain.",
       'Only the crimp matters.',
       'Only the screw matters.',
@@ -177,7 +177,7 @@ const quizQuestions = [
       'Vanity.',
       "Three reasons. Practical — site tools migrate; marking yours stops it disappearing into a sub-contractor's pouch. Insurance — if a tool causes an accident, the firm needs to know whose competent person was meant to be checking it. Accountability — under PUWER you're personally responsible for the tools you use; marking tells the supervisor (and the HSE if it ever gets there) that the tool was assigned to a named operative who had the duty of pre-use inspection.",
       'For decoration.',
-      'It's not necessary.',
+      "It's not necessary.",
     ],
     correctAnswer: 1,
     explanation:
@@ -186,7 +186,7 @@ const quizQuestions = [
   {
     id: 8,
     question:
-      "Which three categories together cover everything an apprentice does in their first month of installation work — first-fixing T+E and second-fixing accessories?",
+      "Which categories together cover everything an apprentice does in their first month of installation work — first-fixing T+E and second-fixing accessories?",
     options: [
       'Power tools, paint, glue.',
       "Cutting (T+E shears, side cutters, hacksaw for trunking and conduit), stripping (auto-strippers and a sharp Stanley for outer sheath) and terminating (Pozidriv VDE drivers for accessory terminations, ratchet crimper for ferrules where used). Layered on top of that — measuring (tape, level), marking (pencil or chinagraph), and fixing (claw hammer for joist clips, club hammer for chasing). Six categories in two months.",

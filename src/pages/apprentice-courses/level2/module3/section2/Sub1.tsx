@@ -8,8 +8,9 @@
  *   - Forward to §3 (where these sources land in real wiring decisions)
  *
  * Reg sources cited: 514.9.2 (A4:2026 — diagrams shall comply with applicable
- * standards), 514.9.1 (domestic exception), 132.12 (information to be provided
- * — paraphrased intent), 526.1 (manufacturer instructions for terminations).
+ * standards), 514.9.1 (domestic exception), 132.13 (Documentation —
+ * paraphrased; see 132.13.1 Diagrams and 132.13.2 Routine maintenance),
+ * 526.1 (manufacturer instructions for terminations).
  */
 
 import { useNavigate } from 'react-router-dom';

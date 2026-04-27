@@ -43,7 +43,7 @@ const Level2Module8Section2Section3 = () => {
           <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-elec-yellow/20 rounded-full mb-2 sm:mb-3">
             <CheckSquare className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3 leading-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3 leading-tight">
             Exam Day Preparation
           </h1>
           <p className="text-white max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-2">
@@ -64,8 +64,10 @@ const Level2Module8Section2Section3 = () => {
             <div className="text-xs sm:text-sm text-white">Early arrival time</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">95%</div>
-            <div className="text-xs sm:text-sm text-white">Success with good prep</div>
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">Confident</div>
+            <div className="text-xs sm:text-sm text-white">
+              Apprentices who prep with full mock exams report higher confidence going into the real assessment
+            </div>
           </div>
         </div>
 

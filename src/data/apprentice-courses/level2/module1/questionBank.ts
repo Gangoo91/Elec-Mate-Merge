@@ -1,5 +1,7 @@
 // Module 1: Health and Safety in Building Services Engineering - Question Bank
-// 250 questions covering all Module 1 content for Level 2 Electrical Course
+// 300 questions covering all Module 1 content for Level 2 Electrical Course
+// Expanded 2026-04-27: +50 questions targeting underweight ACs (1.2, 2.3, 2.4-2.7,
+// 3.5/3.6/3.8/3.9, 4.1, 4.7, 4.8) including the new asbestos Sub (Section 2 / Sub 6).
 
 export interface Question {
   id: number;
@@ -3145,6 +3147,731 @@ export const module1Questions: Question[] = [
     correctAnswer: 1,
     explanation:
       'Emergency procedures should be reviewed regularly, after incidents, and when changes occur to the site or operations.',
+  },
+
+  // ── Section 7: Expansion pack (Questions 251-300) ─────────────────
+  // Targets underweight ACs: 1.2, 2.3, 2.4, 2.5, 2.6, 2.7, 3.5, 3.6,
+  // 3.8, 3.9, 4.1, 4.7, 4.8 — including the new Section 2 / Sub 6
+  // asbestos and stop-work content.
+
+  // AC 1.2 — environmental legislation roles and responsibilities
+  {
+    id: 251,
+    question:
+      'Which UK regulator enforces the Environmental Permitting (England and Wales) Regulations 2016 on a typical building site?',
+    options: [
+      'The Health and Safety Executive (HSE)',
+      'The Environment Agency (or Natural Resources Wales / SEPA in the devolved nations)',
+      'The local fire authority',
+      'The Information Commissioner',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Environmental enforcement on site sits with the Environment Agency in England, NRW in Wales, and SEPA in Scotland — not the HSE, who handle health and safety.',
+  },
+  {
+    id: 252,
+    question:
+      'Under the GB CLP Regulation, what does the warning pictogram of a flame on a red-bordered diamond mean?',
+    options: [
+      'Environmental hazard',
+      'Flammable — the substance, vapour or gas can ignite easily',
+      'Health hazard',
+      'Compressed gas',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The GHS02 flame pictogram identifies flammable gases, liquids, solids, aerosols and self-reactive substances. Common on solvents, paints, thinners, propane and many spray cans on site.',
+  },
+  {
+    id: 253,
+    question:
+      'Who is the "duty holder" for managing asbestos in a non-domestic premises under CAR 2012 Regulation 4?',
+    options: [
+      'The electrician on site that day',
+      'Whoever is responsible for the maintenance and repair of the premises (often the owner or, via the lease, the occupier)',
+      'The HSE',
+      'The principal designer under CDM',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'CAR 2012 Reg 4 places the duty to manage asbestos on whoever has responsibility for maintenance and repair — which can be the owner or the tenant depending on the lease.',
+  },
+  {
+    id: 254,
+    question:
+      'Under the GB CLP Regulation, which warning pictogram indicates a substance is corrosive (will burn skin or attack metal)?',
+    options: [
+      'A flame on a black background',
+      'A diamond with a black image of a hand and a surface being eaten away by liquid drops',
+      'A skull and crossbones',
+      'An exclamation mark in a triangle',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'GB CLP corrosion pictogram (GHS05) is a red-bordered diamond showing test tubes pouring liquid onto a hand and a metal surface, both being eaten away. Common on drain cleaners, strong acids, alkalis.',
+  },
+  {
+    id: 255,
+    question:
+      'In a UK building constructed BEFORE which year is asbestos most likely to be present in the fabric?',
+    options: [
+      '1950',
+      '1980',
+      '2000 — chrysotile (white) asbestos was not fully banned in the UK until 1999',
+      '2010',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Crocidolite (blue) and amosite (brown) were banned in 1985, but chrysotile (white) was not fully banned in the UK until 1999. Treat any building constructed or refurbished BEFORE 2000 as potentially containing ACMs.',
+  },
+
+  // AC 2.3 — escalation / stop-work above level of responsibility
+  {
+    id: 256,
+    question:
+      "You're an apprentice and you've spotted what looks like an asbestos insulating board (AIB) ceiling tile above where you're about to drill. The supervisor isn't on site. What's the right call?",
+    options: [
+      'Lift one corner of the tile carefully to check the back',
+      "Stop, don't disturb the tile, isolate the area, ring the supervisor and ask the duty holder for the asbestos register",
+      'Drill anyway and clean up afterwards',
+      'Take a small sample to send to a lab yourself',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Inspection IS disturbance under CAR 2012 Reg 5. Stop, isolate, escalate — and request the duty holder's asbestos register before any work above the ceiling proceeds.",
+  },
+  {
+    id: 257,
+    question:
+      "Under HASAWA section 7 and MHSWR Regulation 14, you've raised a safety concern with your supervisor and they've told you to drop it. What should you do next?",
+    options: [
+      "Drop it — they outrank you, that's the end of it",
+      "Walk off site without telling anyone",
+      "Escalate above the supervisor (your own employer, the principal contractor, your scheme provider) and record the conversation in writing",
+      'Ring the HSE first thing in the morning',
+    ],
+    correctAnswer: 2,
+    explanation:
+      "HASAWA s.7 puts a personal duty on you that doesn't end when someone above you says 'drop it'. Escalate up the chain, document everything, and only go external (HSE) once the firm has had a chance to fix it.",
+  },
+  {
+    id: 258,
+    question:
+      "You're working in a roof void and discover a live conductor that wasn't on the drawings or in the RAMS. What's the correct first action?",
+    options: [
+      'Carry on — you can work around it',
+      'Stop work, isolate yourself from the area, notify your supervisor and update the risk assessment before continuing',
+      'Cut it back so it stops being a problem',
+      'Pull it out of the way with insulated gloves',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Anything not in the RAMS is by definition outside your assessed competence. Stop, isolate, notify, update the assessment — that discharges your MHSWR Reg 14 duty.',
+  },
+  {
+    id: 259,
+    question:
+      'You arrive at a 1970s commercial building and the duty holder cannot produce an asbestos register for the area you are about to drill. What is the correct procedure?',
+    options: [
+      'Crack on — no register means no asbestos',
+      "Stop work, treat the material as 'presumed asbestos' until a sample has been analysed by an accredited lab or the duty holder produces a clean survey",
+      'Drill a small test hole to see what comes out',
+      'Take a sample yourself and send it to a lab',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "CAR 2012 Reg 5 requires asbestos to be presumed present (and not chrysotile alone) where there is doubt. No register or survey means stop and escalate — the duty holder must commission the survey, you do not sample yourself.",
+  },
+  {
+    id: 260,
+    question:
+      'What does "exceeds your level of responsibility" mean in practice for a Level 2 apprentice?',
+    options: [
+      'Anything difficult',
+      'Anything you have not been trained or signed off to do — including live LV work, suspected asbestos, or work outside the scope of the RAMS',
+      'Only paperwork tasks',
+      'Only working alone',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'If it sits outside your training, sign-off or the agreed RAMS, it exceeds your responsibility. The rule is simple: stop, do not guess, escalate to a competent person.',
+  },
+
+  // AC 2.4 — appropriate responsible persons to report to
+  {
+    id: 261,
+    question:
+      'Under the GB CLP Regulation, what does the exclamation mark warning pictogram on a red-bordered diamond indicate?',
+    options: [
+      'Acute toxicity (fatal)',
+      'Less severe health hazards: skin/eye irritation, skin sensitiser, respiratory irritation or harmful if swallowed/inhaled',
+      'Explosive',
+      'Oxidising',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The GHS07 exclamation mark pictogram covers less severe acute toxicity, skin and eye irritation, skin sensitisation, respiratory irritation, and substances harmful if swallowed or inhaled. Common on cleaning products, adhesives and some sealants.',
+  },
+  {
+    id: 262,
+    question:
+      'Under the GB CLP Regulation, what does the warning pictogram of a dead tree and a dead fish (red-bordered diamond) indicate?',
+    options: [
+      'Compressed gas',
+      'Hazardous to the aquatic environment — the substance is toxic to aquatic life with long-lasting effects',
+      'Health hazard to humans only',
+      'Radioactive',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'GHS09 (environment pictogram) marks substances toxic to aquatic life with acute or chronic effects. Common on weed killers, some solvents and oil-based products. These must NEVER reach surface water drains.',
+  },
+  {
+    id: 263,
+    question:
+      'Which of the following is a typical place an electrician might encounter asbestos in a pre-2000 commercial building?',
+    options: [
+      'Modern PVC twin-and-earth cable',
+      'Asbestos insulating board (AIB) ceiling tiles, pipe lagging, textured coatings (Artex), and electrical insulation backing boards behind old fuseboards',
+      'A new RCBO',
+      'A brand-new consumer unit installed last year',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Classic ACM locations an electrician touches: AIB ceiling tiles in suspended ceilings, lagging on old pipework, Artex textured coatings, vinyl floor tiles and the bitumen adhesive under them, gaskets in old switchgear, and insulation backing boards behind fuseboards.',
+  },
+  {
+    id: 264,
+    question:
+      'Which of the three asbestos types was used most heavily in the UK and is the type most commonly encountered in pre-2000 building fabric?',
+    options: [
+      'Crocidolite (blue)',
+      'Amosite (brown)',
+      'Chrysotile (white) — the workhorse, used in cement sheets, textured coatings, gaskets, vinyl floor tiles and some electrical insulation; banned only in 1999',
+      'Tremolite',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Chrysotile (white) was by far the most heavily used asbestos in the UK and is the most commonly encountered fibre in pre-2000 buildings. Visual identification is unreliable — only laboratory analysis can confirm the type.',
+  },
+  {
+    id: 265,
+    question:
+      'On suspicion of disturbing an asbestos-containing material, which of these is the WRONG action?',
+    options: [
+      'Stop work immediately and isolate the area',
+      'Sweep up the dust and bag it for disposal yourself — sweeping releases more fibres into the air, and a domestic vacuum disperses them further',
+      'Notify your supervisor by phone',
+      'Request the asbestos register from the duty holder',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Never sweep, hoover (with a domestic vacuum), bag, sample or clean a suspected ACM yourself. Stop, isolate, do not touch, notify, request the register and record what you did. Only an HSE-licensed contractor handles the cleanup.',
+  },
+
+  // AC 2.5 — environmental impact of work activities
+  {
+    id: 266,
+    question:
+      'Which of the following work activities creates the highest risk of water pollution on a building site?',
+    options: [
+      'Sweeping a dry floor',
+      'Washing out concrete chutes or cement mixers into a surface water drain',
+      'Stacking timber',
+      'Coiling cables',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Washing concrete or cement into surface water drains is one of the most common causes of pollution incidents — wash water is highly alkaline and lethal to aquatic life. Use a designated wash-out area.',
+  },
+  {
+    id: 267,
+    question:
+      'A diesel generator on site refuels by hand-pumping from a 200 L drum. What is the main environmental risk?',
+    options: [
+      'Air pollution from exhaust only',
+      'Soil and groundwater contamination from spills and drips during refuelling',
+      'Noise nuisance only',
+      'Visual impact only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Spills and drips during refuelling are the highest pollution risk — even small volumes contaminate large areas of soil and groundwater. Use drip trays, bunded drums and spill kits.',
+  },
+  {
+    id: 268,
+    question:
+      'Which environmental impact is most associated with operating a petrol breaker or stihl saw in a residential street?',
+    options: [
+      'Water pollution',
+      'Noise nuisance and dust — both can lead to abatement notices from the local authority under the Environmental Protection Act 1990',
+      'Soil contamination only',
+      'No environmental impact',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Noise and dust from cutting equipment are statutory nuisances under the Environmental Protection Act 1990, and the local authority can serve an abatement notice — plan timings and use suppression.',
+  },
+  {
+    id: 269,
+    question:
+      'Cutting old PVC ducting and installing new conduit on a refurb generates plastic offcuts and copper waste. What is the BEST environmental practice?',
+    options: [
+      'Bin everything together as general waste',
+      'Segregate at source — copper to a metals merchant, PVC to a plastic recycling stream, general waste to skip',
+      'Burn the offcuts on site',
+      'Bury the offcuts',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Segregation at source maximises recycling, reduces landfill cost and meets the waste hierarchy in the Waste (England and Wales) Regulations 2011 (prevent → reuse → recycle → recover → dispose).',
+  },
+  {
+    id: 270,
+    question:
+      'What is the environmental waste hierarchy in order of preference?',
+    options: [
+      'Disposal, recovery, recycling, reuse, prevention',
+      'Prevention, reuse, recycling, recovery, disposal',
+      'Reuse, prevention, disposal, recycling, recovery',
+      'There is no hierarchy',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Waste (England and Wales) Regulations 2011 set the hierarchy as prevention first, then reuse, recycling, other recovery (e.g. energy from waste), and disposal as the last resort.',
+  },
+
+  // AC 2.6 — waste processing on site
+  {
+    id: 271,
+    question:
+      'Old fluorescent tubes removed during a re-lamp are classed as:',
+    options: [
+      'General waste — bin them in the skip',
+      'Hazardous waste (mercury content) — segregate, store upright in a labelled container and consign to a permitted carrier',
+      'Recyclable but not hazardous',
+      'Inert waste',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Fluorescent tubes contain mercury and are classed as hazardous waste under the Hazardous Waste Regulations 2005 — they need a consignment note and a permitted disposal route.',
+  },
+  {
+    id: 272,
+    question:
+      'Waste electrical and electronic equipment (WEEE) such as old consumer units and luminaires must be:',
+    options: [
+      'Sent to landfill',
+      'Segregated and sent to an authorised treatment facility (AATF) under the WEEE Regulations 2013',
+      'Burned on site',
+      'Stored indefinitely on site',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Waste Electrical and Electronic Equipment Regulations 2013 require WEEE to be segregated and sent to an authorised treatment facility for proper recovery and disposal.',
+  },
+  {
+    id: 273,
+    question:
+      'A waste transfer note must be retained by the producer for at least how long?',
+    options: [
+      '6 months',
+      '12 months',
+      '2 years',
+      'Indefinitely',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Under the Waste (England and Wales) Regulations 2011, waste transfer notes must be kept for at least two years; consignment notes for hazardous waste must be kept for three.',
+  },
+  {
+    id: 274,
+    question:
+      "What's the correct on-site practice for storing scrap copper cable awaiting collection?",
+    options: [
+      'Pile it loose at the perimeter',
+      'Segregated, secured against theft, in a labelled and dry container — transferred only to an authorised metal carrier with a transfer note',
+      'Take it home for personal disposal',
+      'Burn off the insulation first',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Burning insulation off cable is illegal (releases dioxins) and theft of scrap is rife — copper must be secured, segregated and transferred to a licensed carrier under the Scrap Metal Dealers Act 2013.",
+  },
+  {
+    id: 275,
+    question:
+      'Inert waste (clean rubble, broken brick) on site should be:',
+    options: [
+      'Mixed with hazardous waste',
+      'Segregated into its own skip — the disposal cost is much lower and it can often be reused or recycled as aggregate',
+      'Burned on site',
+      'Buried in the foundations',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Inert waste has its own much cheaper disposal route and is widely recycled as aggregate. Mixing it with hazardous or general waste contaminates the load and increases cost.',
+  },
+
+  // AC 2.7 — importance of reporting environmental hazards
+  {
+    id: 276,
+    question:
+      'Why is it important to report a fuel spill to your supervisor immediately rather than just mopping it up yourself?',
+    options: [
+      "It isn't important",
+      'Spills above certain thresholds must be reported to the Environment Agency, and the firm needs to investigate the cause to prevent a repeat',
+      'To get out of doing the cleanup',
+      'Only large spills matter',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Pollution incidents above certain thresholds are reportable to the Environment Agency, and root-cause investigation is the only way to prevent recurrence. Silence about a spill is itself a breach.',
+  },
+  {
+    id: 277,
+    question:
+      'You see another contractor pouring waste solvent down a surface water drain. What is the right action?',
+    options: [
+      'Ignore it — not your job',
+      'Stop them if safe, report immediately to your supervisor and the principal contractor; record what you saw',
+      'Take a video for social media',
+      'Pour your waste in too',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Pouring solvent down a surface water drain is a criminal offence under the Environmental Permitting Regulations 2016 — challenge it if safe, report up the chain and document what you saw.',
+  },
+  {
+    id: 278,
+    question:
+      'Work on which of the following asbestos-containing materials is LICENSED work that can ONLY be done by an HSE-licensed asbestos contractor?',
+    options: [
+      'Removing modern PVC trunking',
+      'Removing or disturbing AIB (asbestos insulating board), sprayed coatings, or pipe lagging',
+      'Installing a new socket',
+      'Replacing a smoke alarm battery',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Under CAR 2012, work on AIB, sprayed asbestos coatings and pipe lagging is licensed work and may ONLY be done by an HSE-licensed asbestos contractor — never by a general electrical contractor and never by an apprentice.',
+  },
+  {
+    id: 279,
+    question:
+      'Why should near-miss environmental incidents (e.g. a drum that nearly tipped, a leak that nearly reached a drain) be reported even if no harm occurred?',
+    options: [
+      "They don't need reporting",
+      'Near-misses identify weaknesses before they cause real incidents — the same control failure will eventually cause an actual pollution event',
+      'For paperwork only',
+      'Only to blame someone',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Near-miss reporting is the cheapest form of risk control — the same root cause that produced the near-miss will produce a real incident next time unless it is fixed.',
+  },
+  {
+    id: 280,
+    question:
+      'Under the GB CLP Regulation, which warning pictogram on a chemical container indicates an acute toxicity (fatal or toxic) hazard?',
+    options: [
+      'A flame',
+      'A skull and crossbones in a red-bordered diamond',
+      'An exclamation mark',
+      'A tree being attacked by liquid',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'GB CLP acute toxicity pictogram (GHS06) is a black skull and crossbones inside a red-bordered diamond. It marks substances that are fatal or toxic by inhalation, ingestion or skin contact.',
+  },
+
+  // AC 3.5 — first aid facilities required
+  {
+    id: 281,
+    question:
+      'Under the Health and Safety (First-Aid) Regulations 1981, what is the minimum requirement for first-aid provision on every workplace?',
+    options: [
+      'A defibrillator and trauma kit',
+      'Adequate, suitable and sufficient first-aid equipment, facilities and personnel based on a needs assessment',
+      'A doctor on call',
+      'No requirement',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The Regulations require employers to provide adequate, suitable and sufficient first-aid arrangements. The detail (kit contents, number of first-aiders) is set by a documented first-aid needs assessment.',
+  },
+  {
+    id: 282,
+    question:
+      'What is the role of an "appointed person" under the Health and Safety (First-Aid) Regulations 1981?',
+    options: [
+      'A fully qualified first-aider',
+      'A person appointed to take charge of first-aid arrangements (calling emergency services, looking after kit) when no first-aider is required by the assessment',
+      'The site manager',
+      'Anyone wearing a hi-vis',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where the needs assessment shows a trained first-aider is not necessary, the employer must still appoint a person to take charge of first-aid arrangements — calling emergency services and looking after the kit.',
+  },
+  {
+    id: 283,
+    question:
+      'A small electrical contractor site (under 5 low-risk workers) is doing a domestic re-wire. What is the typical first-aid kit standard recommended?',
+    options: [
+      'No kit needed',
+      'A small BS 8599-1 compliant first-aid kit, plus an appointed person',
+      'A trauma kit and defibrillator',
+      'Only plasters',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 8599-1 is the recognised standard for workplace first-aid kits and HSE recommends it; small low-risk sites need at least the small kit plus an appointed person.',
+  },
+  {
+    id: 284,
+    question:
+      'Where should first-aid equipment be kept on a construction site?',
+    options: [
+      'Locked away in the office',
+      "In a clearly identified, easily accessible location known to all workers — flagged at induction and on the site's emergency information",
+      'In the supervisor’s vehicle only',
+      'Wherever convenient',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'First-aid kit must be easily accessible and clearly identified. The location is part of every site induction and is included in the emergency contact information posted on site.',
+  },
+  {
+    id: 285,
+    question:
+      'For sites with electrical risks, what additional equipment may the first-aid needs assessment recommend?',
+    options: [
+      'Just plasters',
+      'An automated external defibrillator (AED) — useful where the casualty may suffer ventricular fibrillation from electric shock',
+      'Hot drinks',
+      'Spare batteries only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSE guidance and BS 8599-1 recognise the value of AEDs where electric shock or sudden cardiac arrest is foreseeable — they significantly improve survival from ventricular fibrillation.',
+  },
+
+  // AC 3.6 — not misuse first aid / replace supplies
+  {
+    id: 286,
+    question:
+      "Why is it important not to use first-aid supplies for non-emergency purposes (e.g. taking plasters home, using the eye-wash to clean glasses)?",
+    options: [
+      "It isn't important",
+      'Supplies may be missing or inadequate when a real injury occurs, leaving the casualty without treatment',
+      'It saves money',
+      'It tidies up the kit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'First-aid kit is for emergencies. Casual use empties the kit so that when a real injury happens the right item is missing — that delay can change the outcome.',
+  },
+  {
+    id: 287,
+    question:
+      'After using items from a first-aid kit, who is responsible for ensuring they are replaced?',
+    options: [
+      'The casualty',
+      'The first-aider, appointed person, or the named responsible person in the workplace — replacement should be prompt and recorded',
+      'The HSE',
+      'Nobody — first-aid kits are disposable',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Replacing used items is part of the first-aid management arrangements under the 1981 Regulations. The first-aider or appointed person checks the kit regularly and arranges replacement.',
+  },
+  {
+    id: 288,
+    question:
+      'How often should first-aid kits be checked to ensure contents are complete and in date?',
+    options: [
+      'Never',
+      'Regularly (typically monthly) — and after every use; sterile items have expiry dates and must be replaced',
+      'Only annually',
+      'Only when an accident occurs',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSE guidance recommends regular checks (monthly is typical) plus after every use; sterile dressings, eye pads and similar items have expiry dates and must be in date to be effective.',
+  },
+  {
+    id: 289,
+    question:
+      'You used the last triangular bandage from the site first-aid kit treating a colleague. What should you do next?',
+    options: [
+      'Nothing — someone else will spot it',
+      'Tell the appointed person or first-aider so the kit is restocked, and note it in the accident book if the use was for an injury',
+      'Replace it from your own pocket and say nothing',
+      'Move the kit somewhere else',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Inform the responsible person so the kit is restocked promptly. If the bandage was used for an injury, the accident also needs to be entered in the firm's accident book.",
+  },
+  {
+    id: 290,
+    question:
+      'Why should you never re-use opened sterile dressings or eye-wash bottles?',
+    options: [
+      'They cost too much',
+      'They are no longer sterile and may introduce infection or contamination to the next casualty',
+      'They look untidy',
+      'They expire on opening only legally',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Once opened, sterility is lost. Re-using a dressing or eye-wash on a later casualty risks introducing infection — discard and replace after every single use.',
+  },
+
+  // AC 3.8 — safe isolation procedures
+  {
+    id: 291,
+    question:
+      'What is the correct sequence for safe isolation of a single-phase final circuit?',
+    options: [
+      'Switch off, lock off, place caution notice, prove voltage indicator on a known supply, test the circuit dead at all relevant points, prove the indicator again',
+      'Switch off and start work',
+      'Test live, then switch off',
+      'Lock off only',
+    ],
+    correctAnswer: 0,
+    explanation:
+      "GS38 / IET Electrician's Guide safe isolation sequence: identify circuit, switch off, lock off and label, prove the test instrument on a known live source, test at the point of work to confirm dead, then re-prove the instrument on the known source.",
+  },
+  {
+    id: 292,
+    question:
+      'What test instrument is recommended by HSE Guidance Note GS38 for proving a circuit dead?',
+    options: [
+      'A non-contact voltage detector (volt-stick) only',
+      'A two-pole voltage indicator (fused or current-limited) compliant with GS38, used with a proving unit',
+      'A multimeter on the wrong range',
+      'A neon screwdriver',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'GS38 recommends a two-pole voltage indicator with built-in current limitation, used with a dedicated proving unit — never a neon screwdriver and never a non-contact detector as the sole means.',
+  },
+  {
+    id: 293,
+    question:
+      'Why is it essential to "prove the prover" before AND after testing a circuit dead?',
+    options: [
+      'It is not necessary',
+      'To confirm the test instrument was working correctly both before AND after the dead test — a fault that develops mid-test could give a false dead reading',
+      'To clean the instrument',
+      'To save the battery',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Proving the instrument on a known live source before AND after the dead test is the only way to confirm a fault didn't develop mid-test, which is what gives the dead test its evidential value.",
+  },
+  {
+    id: 294,
+    question:
+      'When isolating a three-phase circuit, you must test for voltage between:',
+    options: [
+      'Only L1 to neutral',
+      'Each phase to neutral, each phase to earth, AND between each pair of phases (L1-L2, L2-L3, L1-L3)',
+      'Only L1 to earth',
+      'Only neutral to earth',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'For three-phase circuits, test between every conductor combination — phase-to-neutral, phase-to-earth, and phase-to-phase — to prove the entire circuit is dead before work begins.',
+  },
+  {
+    id: 295,
+    question:
+      'Once a circuit has been isolated and proved dead, what additional precaution prevents someone else re-energising it while you work?',
+    options: [
+      'Tell people verbally only',
+      'Apply a personal padlock to the lock-off device, retain the only key, and display a caution notice giving your name and contact',
+      'Trust the supervisor',
+      'Tape across the switch',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Padlock-and-tag (LOTO) with the only key retained by the person doing the work, plus a clear caution notice, is the only way to prevent inadvertent re-energisation.',
+  },
+
+  // AC 3.9 — implications of (not) carrying out safe isolation
+  {
+    id: 296,
+    question:
+      'What is the most likely consequence of failing to carry out safe isolation before working on a circuit?',
+    options: [
+      'A small inconvenience',
+      'Electric shock, arc flash burns, potential fatality — and personal liability under EAWR 1989 Reg 14',
+      'Equipment damage only',
+      'Nothing serious',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Most UK electrical fatalities involve work on circuits believed to be dead. EAWR 1989 Reg 14 prohibits work on or near live conductors unless strictly justified, and the personal duty rests on the worker.',
+  },
+  {
+    id: 297,
+    question:
+      'Under EAWR 1989 Regulation 14, live working is only permitted when:',
+    options: [
+      'It is convenient',
+      "It is unreasonable in all the circumstances to make the conductor dead AND it is reasonable to work live AND suitable precautions are taken — all three tests must be met",
+      'The supervisor says so',
+      'Always allowed',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'EAWR Reg 14 imposes three cumulative tests: dead working unreasonable, live working reasonable, and suitable precautions taken. Live working without all three is a criminal offence.',
+  },
+  {
+    id: 298,
+    question:
+      'What is the correct action if you discover, after starting work, that the circuit you isolated is actually still live?',
+    options: [
+      'Carry on carefully',
+      'Stop immediately, withdraw to a safe position, re-establish isolation correctly, and investigate why the original isolation failed before resuming',
+      'Switch off the local circuit only',
+      'Call the customer first',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A failed isolation is a near-miss with serious potential. Stop, withdraw, re-isolate properly, and investigate the cause — before any work resumes — so the same failure does not happen on the next job.',
+  },
+  {
+    id: 299,
+    question:
+      'Why is locking off and labelling more reliable than just switching off and putting the breaker in the off position?',
+    options: [
+      'It is not — switching off is enough',
+      'Anyone can switch a breaker back on by mistake or routine; a personal padlock with the only key retained, plus a caution notice, prevents inadvertent re-energisation',
+      "It looks more professional",
+      'It complies with insurance only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      "Switching off without locking leaves the circuit one bump away from being re-energised by anyone walking past. Lock-off with the only key retained is the only control that genuinely prevents that.",
+  },
+  {
+    id: 300,
+    question:
+      'Beyond personal injury, what other implications follow from failing to carry out safe isolation?',
+    options: [
+      'No other implications',
+      'Damage to equipment, fire, RIDDOR-reportable dangerous occurrence, criminal prosecution under EAWR/HASAWA, dismissal, and loss of competent person status',
+      'Just a verbal warning',
+      'Insurance refund',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Failed isolation can cause arcing/equipment damage and fire, is reportable as a dangerous occurrence under RIDDOR, can lead to EAWR/HASAWA prosecution of both worker and employer, and typically ends the worker’s competent-person status.',
   },
 ];
 

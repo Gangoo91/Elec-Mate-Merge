@@ -496,6 +496,31 @@ export default function Sub4() {
             }
           />
 
+          <CommonMistake
+            title="Forgetting the post-test prove on the voltage indicator"
+            whatHappens={
+              <>
+                You prove the indicator on the proving unit (good). You test L-E / L-N / N-E
+                at the conductor — all three combinations read dead (good). You start work
+                without re-proving the indicator on the proving unit afterwards. Two hours
+                later, the indicator's internal fuse has failed silently — most likely because
+                it took a hit when you tested across a borrowed neutral and didn't realise.
+                The 'dead' reading you trusted at 09:30 was a 'can't indicate anything' reading
+                by 09:31. Every conductor you worked on after that point you treated as dead
+                with no working indicator behind the call.
+              </>
+            }
+            doInstead={
+              <>
+                Prove – test – PROVE. The post-test prove is the half of the procedure that
+                people skip because the test already showed dead. That's exactly when it
+                matters most — it confirms the indicator was still functional at the moment of
+                the test, not just at the start. Skip the post-test prove and you remove the
+                only safety net GS38 builds in for indicator failure during the test sequence.
+              </>
+            }
+          />
+
           <Scenario
             title="The shop with the PV that wasn’t on the schedule"
             situation={

@@ -9,7 +9,8 @@
  *   - Forward to Sub 4 (reading scale on layout/floor plans)
  *
  * Reg sources cited: 514.9.2 (A4:2026 — diagrams shall comply with applicable
- * standards), 132.12 (information to be provided — paraphrased).
+ * standards), 132.13 (Documentation — paraphrased; see 132.13.1 Diagrams
+ * and 132.13.2 Routine maintenance).
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -450,19 +451,19 @@ export default function Sub2() {
           />
 
           <RegsCallout
-            source="BS 7671 — Regulation 132.12 (information to be provided)"
-            clause="132.12 — Information about the electrical installation shall be provided to enable users, operators and persons subsequently working on the installation to identify circuits, isolation points, protective devices, the means of compliance with the regulations and any specific risks."
+            source="BS 7671 — Regulation 132.13 (Documentation)"
+            clause="132.13 — Documentation for the electrical installation shall be provided so that users, operators and persons subsequently working on the installation can identify circuits, isolation points, protective devices, the means of compliance with the regulations and any specific risks. Sub-clauses cover 132.13.1 (Diagrams) and 132.13.2 (Routine maintenance)."
             meaning={
               <>
                 The regulation that makes drawings, schedules, charts and labels a regulatory
                 requirement (not a paperwork nicety). Block, schematic, wiring, layout and as-built
-                drawings are how you discharge 132.12 in practice. Hand over a job without a usable
+                drawings are how you discharge 132.13 in practice. Hand over a job without a usable
                 drawing pack and you're in breach — the next electrician on the install can't
                 identify the circuits, isolation points or specific risks the regulation says they
                 should be able to.
               </>
             }
-            cite="Reference: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.12 (paraphrased)"
+            cite="Paraphrased — see BS 7671:2018+A4:2026 Regulation 132.13.1 (Diagrams) and 132.13.2 (Routine maintenance)."
           />
 
           <RegsCallout

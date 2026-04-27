@@ -723,14 +723,14 @@ export default function Sub5() {
               </div>
             </button>
             <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module1/section3')}
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section2/2-6')}
               className="rounded-2xl bg-elec-yellow hover:bg-elec-yellow/90 transition-colors border border-elec-yellow p-4 text-right touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-2 justify-end text-[10.5px] uppercase tracking-[0.18em] text-black/70">
-                Next section <ChevronRight className="h-3 w-3" />
+                Next subsection <ChevronRight className="h-3 w-3" />
               </div>
               <div className="mt-1 text-[14px] font-semibold text-black truncate">
-                Risk assessment and method statements
+                Asbestos awareness and stop-work authority
               </div>
             </button>
           </div>

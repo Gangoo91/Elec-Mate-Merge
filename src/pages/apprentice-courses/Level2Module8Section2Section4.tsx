@@ -41,7 +41,7 @@ const Level2Module8Section2Section4 = () => {
           <div className="inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-elec-yellow/20 rounded-full mb-2 sm:mb-3">
             <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
           </div>
-          <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3 leading-tight">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3 leading-tight">
             Common Pitfalls & Solutions
           </h1>
           <p className="text-white max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-2">
@@ -53,16 +53,20 @@ const Level2Module8Section2Section4 = () => {
         {/* Quick Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">78%</div>
-            <div className="text-xs sm:text-sm text-white">Of failures are avoidable</div>
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">Avoidable</div>
+            <div className="text-xs sm:text-sm text-white">
+              Most exam slip-ups are avoidable with the right preparation
+            </div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">5 mins</div>
             <div className="text-xs sm:text-sm text-white">To recover from mistakes</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
-            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">92%</div>
-            <div className="text-xs sm:text-sm text-white">Success with preparation</div>
+            <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">Prepared</div>
+            <div className="text-xs sm:text-sm text-white">
+              Candidates who prepare thoroughly significantly improve their chances of success
+            </div>
           </div>
         </div>
 

@@ -1,5 +1,14 @@
-// Level 2 Mixed Question Bank - 400 Questions from All Modules
-// Comprehensive question bank covering all Level 2 electrical installation modules
+// Level 2 Mixed Question Bank — C&G 2365-02 Mock Exam (Mock 8)
+// 60-question mixed bank drawn ONLY from L2 syllabus units (201, 202, 203, 204, 210).
+// Off-syllabus L3 banks (Module 6 Inspect/Test, Module 7 Fault-finding) are NOT used.
+//
+// Distribution mirrors C&G 2365-02 unit weighting:
+//   Module 1 (Unit 201 — Health & Safety):            12 questions
+//   Module 2 (Unit 202 — Electrical Science):          14 questions
+//   Module 3 (Unit 203 — Installation Tech):           16 questions
+//   Module 4 (Unit 204 — Wiring Systems Install):      12 questions
+//   Module 5 (Unit 210 — Communicate with Others):      6 questions
+//                                              Total: 60 questions
 
 export interface Question {
   id: number;
@@ -13,158 +22,208 @@ export interface Question {
   module: string;
 }
 
-// Import questions from all existing modules
 import { module1Questions } from '../module1/questionBank';
 import { module2QuestionBank } from '../module2/questionBank';
 import { module3QuestionBank } from '../module3/questionBank';
 import { module4QuestionBank } from '../module4/questionBank';
 import { module5QuestionBank } from '../module5/questionBank';
-import { module6QuestionBank } from '../module6/questionBank';
-import { module7QuestionBank } from '../module7/questionBank';
 
-// Transform Module 1 questions to match the standard interface
-const transformModule1Questions = (questions: typeof module1Questions): Question[] => {
-  return questions.slice(0, 55).map((q, index) => ({
+// ---------------------------------------------------------------------------
+// Deterministic Fisher-Yates shuffle (mulberry32 PRNG when a seed is given,
+// Math.random when not). Pure — does not mutate input.
+// ---------------------------------------------------------------------------
+const mulberry32 = (seed: number): (() => number) => {
+  let t = seed >>> 0;
+  return () => {
+    t = (t + 0x6d2b79f5) >>> 0;
+    let r = t;
+    r = Math.imul(r ^ (r >>> 15), r | 1);
+    r ^= r + Math.imul(r ^ (r >>> 7), r | 61);
+    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+  };
+};
+
+const shuffle = <T>(input: readonly T[], seed?: number): T[] => {
+  const arr = [...input];
+  const rand = seed === undefined ? Math.random : mulberry32(seed);
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
+
+// ---------------------------------------------------------------------------
+// Per-module normalisers — every source question is coerced to the unified
+// `Question` interface so downstream consumers can rely on section, topic,
+// difficulty and module being present.
+// ---------------------------------------------------------------------------
+type RawModuleQuestion = {
+  id: number;
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation?: string;
+  section?: string;
+  topic?: string;
+  difficulty?: 'basic' | 'intermediate' | 'advanced';
+};
+
+const normalise = (
+  q: RawModuleQuestion,
+  defaults: { section: string; topic: string; module: string },
+  fallbackDifficulty: 'basic' | 'intermediate' | 'advanced' = 'intermediate'
+): Question => ({
+  id: q.id,
+  question: q.question,
+  options: q.options,
+  correctAnswer: q.correctAnswer,
+  explanation: q.explanation || 'Answer explanation available in course materials.',
+  section: q.section || defaults.section,
+  difficulty: q.difficulty || fallbackDifficulty,
+  topic: q.topic || defaults.topic,
+  module: defaults.module,
+});
+
+const normalisedM1: Question[] = module1Questions.map((q, idx) =>
+  normalise(
+    q,
+    { section: '1.0', topic: 'Health and Safety', module: 'Module 1' },
+    idx < module1Questions.length / 3
+      ? 'basic'
+      : idx < (2 * module1Questions.length) / 3
+        ? 'intermediate'
+        : 'advanced'
+  )
+);
+const normalisedM2: Question[] = module2QuestionBank.map((q) =>
+  normalise(q, { section: '2.0', topic: 'Electrical Science', module: 'Module 2' })
+);
+const normalisedM3: Question[] = module3QuestionBank.map((q) =>
+  normalise(q, { section: '3.0', topic: 'Installation Technology', module: 'Module 3' })
+);
+const normalisedM4: Question[] = module4QuestionBank.map((q) =>
+  normalise(q, { section: '4.0', topic: 'Wiring Systems Installation', module: 'Module 4' })
+);
+const normalisedM5: Question[] = module5QuestionBank.map((q) =>
+  normalise(q, { section: '5.0', topic: 'Communicate with Others', module: 'Module 5' })
+);
+
+// ---------------------------------------------------------------------------
+// C&G 2365-02 distribution — 60 questions total.
+// ---------------------------------------------------------------------------
+export const MIXED_EXAM_DISTRIBUTION = {
+  module1: 12, // Unit 201 — Health & Safety
+  module2: 14, // Unit 202 — Electrical Science
+  module3: 16, // Unit 203 — Installation Tech
+  module4: 12, // Unit 204 — Wiring Systems Install
+  module5: 6, //  Unit 210 — Communicate with Others
+} as const;
+
+export const TOTAL_MIXED_QUESTIONS = Object.values(MIXED_EXAM_DISTRIBUTION).reduce(
+  (a, b) => a + b,
+  0
+);
+
+// ---------------------------------------------------------------------------
+// Build the mixed bank: shuffle each module bank, slice the spec'd count.
+// Optional seed gives deterministic test runs while production calls remain
+// random (different question order each attempt).
+// ---------------------------------------------------------------------------
+const buildMixedBank = (seed?: number): Question[] => {
+  const slice = (bank: Question[], count: number, offset: number) =>
+    shuffle(bank, seed === undefined ? undefined : seed + offset).slice(0, count);
+
+  const picks: Question[] = [
+    ...slice(normalisedM1, MIXED_EXAM_DISTRIBUTION.module1, 1),
+    ...slice(normalisedM2, MIXED_EXAM_DISTRIBUTION.module2, 2),
+    ...slice(normalisedM3, MIXED_EXAM_DISTRIBUTION.module3, 3),
+    ...slice(normalisedM4, MIXED_EXAM_DISTRIBUTION.module4, 4),
+    ...slice(normalisedM5, MIXED_EXAM_DISTRIBUTION.module5, 5),
+  ];
+
+  // Reshuffle the combined picks so questions aren't grouped by module.
+  return shuffle(picks, seed === undefined ? undefined : seed + 99).map((q, index) => ({
+    ...q,
     id: index + 1,
-    question: q.question,
-    options: q.options,
-    correctAnswer: q.correctAnswer,
-    explanation: q.explanation || 'Answer explanation available in course materials.',
-    section: '1.0',
-    difficulty:
-      index < 22
-        ? ('basic' as const)
-        : index < 44
-          ? ('intermediate' as const)
-          : ('advanced' as const),
-    topic: 'Health and Safety',
-    module: 'Module 1',
   }));
 };
 
-// Transform Module 6 questions to match the standard interface
-const transformModule6Questions = (questions: typeof module6QuestionBank): Question[] => {
-  return questions.slice(0, 60).map((q, index) => ({
-    id: index + 55 + 1,
-    question: q.question,
-    options: q.options,
-    correctAnswer: q.correctAnswer,
-    explanation: q.explanation || 'Answer explanation available in course materials.',
-    section: q.section || '6.0',
-    difficulty: q.difficulty,
-    topic: q.topic || 'Testing & Certification',
-    module: 'Module 6',
-  }));
-};
+// Default export: a fresh 60-question mixed bank (random each module load).
+// Note this is computed once on import. Use getRandomQuestions() to draw a
+// fresh random selection on each exam attempt.
+export const mixedQuestionBank: Question[] = buildMixedBank();
 
-// Select questions from each module
-const selectedModule1Questions = transformModule1Questions(module1Questions);
-const selectedModule2Questions = module2QuestionBank.slice(0, 55).map((q, index) => ({
-  ...q,
-  id: index + 115 + 1,
-  module: 'Module 2',
-}));
-const selectedModule3Questions = module3QuestionBank.slice(0, 55).map((q, index) => ({
-  ...q,
-  id: index + 170 + 1,
-  module: 'Module 3',
-}));
-const selectedModule4Questions = module4QuestionBank.slice(0, 55).map((q, index) => ({
-  ...q,
-  id: index + 225 + 1,
-  module: 'Module 4',
-}));
-const selectedModule5Questions = module5QuestionBank.slice(0, 55).map((q, index) => ({
-  ...q,
-  id: index + 280 + 1,
-  module: 'Module 5',
-}));
-const selectedModule6Questions = transformModule6Questions(module6QuestionBank);
-const selectedModule7Questions = module7QuestionBank.slice(0, 55).map((q, index) => ({
-  ...q,
-  id: index + 340 + 1,
-  module: 'Module 7',
-}));
-
-// Combine all questions into mixed bank
-export const mixedQuestionBank: Question[] = [
-  ...selectedModule1Questions, // 55 questions (IDs 1-55)
-  ...selectedModule2Questions, // 55 questions (IDs 116-170)
-  ...selectedModule3Questions, // 55 questions (IDs 171-225)
-  ...selectedModule4Questions, // 55 questions (IDs 226-280)
-  ...selectedModule5Questions, // 55 questions (IDs 281-335)
-  ...selectedModule6Questions, // 60 questions (IDs 56-115)
-  ...selectedModule7Questions, // 55 questions (IDs 341-395)
-];
-
-// Question selection function with difficulty weighting
+// ---------------------------------------------------------------------------
+// Public API — kept compatible with existing callers.
+//
+// `count` and `weights` parameters are accepted for backwards compatibility
+// with the previous mixed bank, but the C&G distribution above is the source
+// of truth: when count === 60 (the standard mock) the per-module counts are
+// honoured exactly. For other counts the modules are scaled proportionally.
+// ---------------------------------------------------------------------------
 export const getRandomQuestions = (
-  count: number = 30,
-  weights?: { basic: number; intermediate: number; advanced: number }
+  count: number = TOTAL_MIXED_QUESTIONS,
+  _weights?: { basic: number; intermediate: number; advanced: number },
+  seed?: number
 ): Question[] => {
-  const defaultWeights = { basic: 40, intermediate: 45, advanced: 15 };
-  const finalWeights = weights || defaultWeights;
+  if (count === TOTAL_MIXED_QUESTIONS) {
+    return buildMixedBank(seed);
+  }
 
-  const basicQuestions = mixedQuestionBank.filter((q) => q.difficulty === 'basic');
-  const intermediateQuestions = mixedQuestionBank.filter((q) => q.difficulty === 'intermediate');
-  const advancedQuestions = mixedQuestionBank.filter((q) => q.difficulty === 'advanced');
+  // Proportional fallback for non-standard counts — preserves the unit
+  // weighting but scales totals.
+  const ratio = count / TOTAL_MIXED_QUESTIONS;
+  const m1Count = Math.max(1, Math.round(MIXED_EXAM_DISTRIBUTION.module1 * ratio));
+  const m2Count = Math.max(1, Math.round(MIXED_EXAM_DISTRIBUTION.module2 * ratio));
+  const m3Count = Math.max(1, Math.round(MIXED_EXAM_DISTRIBUTION.module3 * ratio));
+  const m4Count = Math.max(1, Math.round(MIXED_EXAM_DISTRIBUTION.module4 * ratio));
+  let m5Count = count - m1Count - m2Count - m3Count - m4Count;
+  if (m5Count < 0) m5Count = 0;
 
-  const basicCount = Math.round((finalWeights.basic / 100) * count);
-  const intermediateCount = Math.round((finalWeights.intermediate / 100) * count);
-  const advancedCount = count - basicCount - intermediateCount;
+  const slice = (bank: Question[], n: number, offset: number) =>
+    shuffle(bank, seed === undefined ? undefined : seed + offset).slice(0, n);
 
-  const selectedQuestions: Question[] = [];
+  const picks: Question[] = [
+    ...slice(normalisedM1, m1Count, 1),
+    ...slice(normalisedM2, m2Count, 2),
+    ...slice(normalisedM3, m3Count, 3),
+    ...slice(normalisedM4, m4Count, 4),
+    ...slice(normalisedM5, m5Count, 5),
+  ];
 
-  // Select basic questions
-  const shuffledBasic = [...basicQuestions].sort(() => Math.random() - 0.5);
-  selectedQuestions.push(...shuffledBasic.slice(0, basicCount));
-
-  // Select intermediate questions
-  const shuffledIntermediate = [...intermediateQuestions].sort(() => Math.random() - 0.5);
-  selectedQuestions.push(...shuffledIntermediate.slice(0, intermediateCount));
-
-  // Select advanced questions
-  const shuffledAdvanced = [...advancedQuestions].sort(() => Math.random() - 0.5);
-  selectedQuestions.push(...shuffledAdvanced.slice(0, advancedCount));
-
-  // Shuffle final selection and renumber
-  return selectedQuestions
-    .sort(() => Math.random() - 0.5)
-    .map((q, index) => ({ ...q, id: index + 1 }));
+  return shuffle(picks, seed === undefined ? undefined : seed + 99).map((q, index) => ({
+    ...q,
+    id: index + 1,
+  }));
 };
 
-// Validation function
+// Dev-only validation helper. Safe to call in production but designed to be
+// gated behind `import.meta.env.DEV` by callers — produces console output.
 export const validateQuestionBank = (): void => {
-  const totalQuestions = mixedQuestionBank.length;
-  const moduleDistribution = mixedQuestionBank.reduce(
-    (acc, question) => {
-      acc[question.module] = (acc[question.module] || 0) + 1;
+  const bank = mixedQuestionBank;
+  const moduleDistribution = bank.reduce(
+    (acc, q) => {
+      acc[q.module] = (acc[q.module] || 0) + 1;
       return acc;
     },
     {} as Record<string, number>
   );
 
-  const difficultyDistribution = mixedQuestionBank.reduce(
-    (acc, question) => {
-      acc[question.difficulty] = (acc[question.difficulty] || 0) + 1;
+  const difficultyDistribution = bank.reduce(
+    (acc, q) => {
+      acc[q.difficulty] = (acc[q.difficulty] || 0) + 1;
       return acc;
     },
     {} as Record<string, number>
   );
 
-  console.log('Mixed Question Bank Validation:');
-  console.log(`Total Questions: ${totalQuestions}`);
-  console.log('Module Distribution:', moduleDistribution);
-  console.log('Difficulty Distribution:', difficultyDistribution);
-
-  const basicPercentage = ((difficultyDistribution['basic'] || 0) / totalQuestions) * 100;
-  const intermediatePercentage =
-    ((difficultyDistribution['intermediate'] || 0) / totalQuestions) * 100;
-  const advancedPercentage = ((difficultyDistribution['advanced'] || 0) / totalQuestions) * 100;
-
-  console.log(
-    `Difficulty Percentages: Basic ${basicPercentage.toFixed(1)}%, Intermediate ${intermediatePercentage.toFixed(1)}%, Advanced ${advancedPercentage.toFixed(1)}%`
-  );
+  // eslint-disable-next-line no-console
+  console.log('[Mixed Question Bank] Total:', bank.length);
+  // eslint-disable-next-line no-console
+  console.log('[Mixed Question Bank] By module:', moduleDistribution);
+  // eslint-disable-next-line no-console
+  console.log('[Mixed Question Bank] By difficulty:', difficultyDistribution);
 };
 
 export default mixedQuestionBank;

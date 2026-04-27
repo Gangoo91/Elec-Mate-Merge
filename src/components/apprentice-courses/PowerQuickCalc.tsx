@@ -61,7 +61,7 @@ export const PowerQuickCalc: React.FC = () => {
         <div>
           <Label className="text-sm text-muted-foreground">System</Label>
           <Select value={mode} onValueChange={(v) => setMode(v as PowerMode)}>
-            <SelectTrigger className="mt-1 border-blue-200/50 focus:border-blue-400 text-foreground">
+            <SelectTrigger className="mt-1 h-12 px-3 text-base bg-background border-border/40 text-foreground touch-manipulation">
               <SelectValue placeholder="Select system" />
             </SelectTrigger>
             <SelectContent>
@@ -73,7 +73,7 @@ export const PowerQuickCalc: React.FC = () => {
         <div>
           <Label className="text-sm text-muted-foreground">Calculate</Label>
           <Select value={calc} onValueChange={(v) => setCalc(v as CalcType)}>
-            <SelectTrigger className="mt-1 border-emerald-200/50 focus:border-emerald-400 text-foreground">
+            <SelectTrigger className="mt-1 h-12 px-3 text-base bg-background border-border/40 text-foreground touch-manipulation">
               <SelectValue placeholder="Select" />
             </SelectTrigger>
             <SelectContent>
@@ -90,7 +90,7 @@ export const PowerQuickCalc: React.FC = () => {
             step="0.01"
             min={0}
             max={1}
-            className="mt-1 border-amber-200/50 focus:border-amber-400"
+            className="mt-1 h-12 text-base touch-manipulation border-amber-200/50 focus:border-amber-400"
             value={pf}
             onChange={(e) => setPf(e.target.value)}
             placeholder="1.0"
@@ -105,7 +105,7 @@ export const PowerQuickCalc: React.FC = () => {
           <Input
             type="number"
             inputMode="decimal"
-            className="mt-1 border-purple-200/50 focus:border-purple-400"
+            className="mt-1 h-12 text-base touch-manipulation border-purple-200/50 focus:border-purple-400"
             value={volts}
             onChange={(e) => setVolts(e.target.value)}
             placeholder={mode === 'single' ? '230' : '400'}
@@ -118,7 +118,7 @@ export const PowerQuickCalc: React.FC = () => {
             <Input
               type="number"
               inputMode="decimal"
-              className="mt-1 border-cyan-200/50 focus:border-cyan-400"
+              className="mt-1 h-12 text-base touch-manipulation border-cyan-200/50 focus:border-cyan-400"
               value={amps}
               onChange={(e) => setAmps(e.target.value)}
               placeholder="e.g. 10"
@@ -131,7 +131,7 @@ export const PowerQuickCalc: React.FC = () => {
             <Input
               type="number"
               inputMode="decimal"
-              className="mt-1 border-rose-200/50 focus:border-rose-400"
+              className="mt-1 h-12 text-base touch-manipulation border-rose-200/50 focus:border-rose-400"
               value={kw}
               onChange={(e) => setKw(e.target.value)}
               placeholder="e.g. 2.3"

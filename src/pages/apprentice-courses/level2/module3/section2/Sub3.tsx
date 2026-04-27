@@ -165,7 +165,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      "AFDD = Arc Fault Detection Device, mandated by BS 7671:2018+A4:2026 for certain higher-risk locations (HMOs, care homes, purpose-built student accommodation, premises with thatched roofs). It detects the unique signature of dangerous series and parallel arcs and disconnects before a fire starts.",
+      "AFDD = Arc Fault Detection Device. It's recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice. It detects the unique signature of dangerous series and parallel arcs and disconnects before a fire starts.",
   },
   {
     id: 6,
@@ -620,9 +620,13 @@ export default function Sub3() {
                 residual current (e.g. 30 mA).
               </li>
               <li>
-                <strong>AFDD (Arc Fault Detection Device)</strong> — added in BS 7671:2018+A4:2026
-                as mandatory for certain locations. Symbol shows the breaker base with a small
-                triangle/arc marking and 'AFDD' annotation.
+                <strong>AFDD (Arc Fault Detection Device)</strong> — recommended by BS 7671 Reg
+                421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings. The
+                recommendation strengthens to a requirement in Higher-Risk Residential Buildings
+                (HRRBs) under the Building Safety Act 2022 framework, and supporting fire-safety
+                guidance treats AFDDs as effectively required in HMOs, sleeping accommodation and
+                care homes. Symbol shows the breaker base with a small triangle/arc marking and
+                'AFDD' annotation.
               </li>
             </ul>
           </ConceptBlock>

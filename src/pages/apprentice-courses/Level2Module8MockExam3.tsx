@@ -35,7 +35,7 @@ const Level2Module8MockExam3 = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(45 * 60); // 45 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState(90 * 60); // 90 minutes (C&G 2365-02 spec)
   const [showResults, setShowResults] = useState(false);
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   const [reviewMode, setReviewMode] = useState<
@@ -47,11 +47,11 @@ const Level2Module8MockExam3 = () => {
 
   // Initialize exam
   const startExam = () => {
-    const questions = getRandomQuestions(30, { basic: 40, intermediate: 45, advanced: 15 });
+    const questions = getRandomQuestions(60, { basic: 40, intermediate: 45, advanced: 15 });
     setExamQuestions(questions);
     setSelectedAnswers({});
     setCurrentQuestion(0);
-    setTimeRemaining(45 * 60);
+    setTimeRemaining(90 * 60);
     setShowResults(false);
     setFlaggedQuestions(new Set());
     setExamStarted(true);
@@ -215,12 +215,12 @@ const Level2Module8MockExam3 = () => {
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
                     <p className="text-sm text-white leading-relaxed">
-                      30 questions randomly selected from Module 3 content
+                      60 questions randomly selected from Module 3 content
                     </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm text-white leading-relaxed">45 minutes time limit</p>
+                    <p className="text-sm text-white leading-relaxed">90 minutes time limit</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />

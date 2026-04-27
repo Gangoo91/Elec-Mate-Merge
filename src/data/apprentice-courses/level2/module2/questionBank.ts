@@ -1,5 +1,5 @@
 // Level 2 Module 2: Electrical Principles - Question Bank
-// 250 questions covering all Module 2 content for Level 2 Electrical Course
+// 300 questions covering all Module 2 content for Level 2 Electrical Course
 
 export interface QuestionBank {
   id: number;
@@ -3418,6 +3418,684 @@ export const module2QuestionBank: QuestionBank[] = [
     section: '2.6.6',
     difficulty: 'basic',
     topic: 'Power Concepts Application',
+  },
+  // ====== EXPANSION 251–300: targeted gap fill (50 questions) ======
+  // AC 2.3 — Instruments (sections 2.1.5)
+  {
+    id: 251,
+    question: 'How should an ammeter be connected into a circuit to measure current?',
+    options: [
+      'In parallel with the load',
+      'In series with the load',
+      'Across the supply terminals',
+      'Between line and earth',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An ammeter has very low internal resistance and must be connected in SERIES with the load so all the load current flows through it. Connecting an ammeter in parallel would short the supply.',
+    section: '2.1.5',
+    difficulty: 'basic',
+    topic: 'Ammeter Connection',
+  },
+  {
+    id: 252,
+    question: 'How should a voltmeter be connected to measure voltage across a component?',
+    options: [
+      'In series with the component',
+      'In parallel (across) the component',
+      'Between line and neutral only',
+      'After isolating the component',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A voltmeter has very high internal resistance and is connected in PARALLEL (across) the component being measured, so it samples the potential difference without drawing significant current.',
+    section: '2.1.5',
+    difficulty: 'basic',
+    topic: 'Voltmeter Connection',
+  },
+  {
+    id: 253,
+    question:
+      'What is the test voltage applied by an insulation resistance tester for a standard 230/400V LV circuit?',
+    options: ['100V DC', '250V DC', '500V DC', '1000V DC'],
+    correctAnswer: 2,
+    explanation:
+      'BS 7671 Table 64 / Regulation 643.3 specifies 500V DC for insulation resistance testing of LV circuits up to 500V. SELV/PELV uses 250V DC; circuits above LV (500V to 1000V) use 1000V DC.',
+    section: '2.1.5',
+    difficulty: 'intermediate',
+    topic: 'Insulation Resistance Test Voltage',
+  },
+  {
+    id: 254,
+    question:
+      'What is the main advantage of a clamp meter over a standard in-line ammeter for measuring load current?',
+    options: [
+      'It is more accurate',
+      'It can measure current without breaking the circuit or making contact with live conductors',
+      'It only works on DC',
+      'It does not need batteries',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A clamp meter senses the magnetic field around a single conductor, so the circuit does not need to be broken and the conductor does not need to be disconnected. This makes it the safest and quickest tool for measuring load current under normal operating conditions.',
+    section: '2.1.5',
+    difficulty: 'basic',
+    topic: 'Clamp Meter',
+  },
+  {
+    id: 255,
+    question: 'Why must test instruments used for BS 7671 verification be regularly calibrated?',
+    options: [
+      'It is a manufacturer marketing requirement',
+      'To ensure measured values are accurate and traceable so certificates are valid and safe',
+      'Calibration only matters for digital instruments',
+      'So the instrument lasts longer',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Calibration verifies that the instrument reads correctly against a traceable standard. Uncalibrated readings cannot legitimately support a certificate — pass/fail decisions depend on accurate values (Zs, R1+R2, IR, RCD trip time).',
+    section: '2.1.5',
+    difficulty: 'intermediate',
+    topic: 'Instrument Calibration',
+  },
+  // AC 4.1 — Electron theory (section 2.3.1)
+  {
+    id: 256,
+    question: 'Which subatomic particle is responsible for the flow of current in a metal conductor?',
+    options: ['Proton', 'Neutron', 'Electron', 'Positron'],
+    correctAnswer: 2,
+    explanation:
+      'In metals, current flow is the movement of free (valence) electrons. Protons and neutrons stay locked in the nucleus.',
+    section: '2.3.1',
+    difficulty: 'basic',
+    topic: 'Electron Theory',
+  },
+  {
+    id: 257,
+    question: 'What is the electrical charge of an electron?',
+    options: ['Positive', 'Negative', 'Neutral', 'It varies'],
+    correctAnswer: 1,
+    explanation:
+      'An electron carries a single negative elementary charge of approximately -1.6 x 10^-19 coulombs. Protons carry an equal positive charge.',
+    section: '2.3.1',
+    difficulty: 'basic',
+    topic: 'Electron Charge',
+  },
+  {
+    id: 258,
+    question: 'What is meant by a "free electron" in a metal?',
+    options: [
+      'An electron in the nucleus',
+      'An electron loosely bound in the outer shell that can drift through the lattice',
+      'An electron that has left the metal entirely',
+      'A proton orbiting a neutron',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Metals have valence (outer-shell) electrons that are only loosely held to their parent atoms. These free electrons drift through the lattice when an EMF is applied — that drift is the current.',
+    section: '2.3.1',
+    difficulty: 'intermediate',
+    topic: 'Free Electrons',
+  },
+  {
+    id: 259,
+    question:
+      'What is the difference between conventional current flow and electron flow?',
+    options: [
+      'They flow in the same direction',
+      'Conventional current flows from positive to negative; electron flow is from negative to positive',
+      'Electron flow only occurs in AC circuits',
+      'Conventional current only applies to DC',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Conventional current is defined (historically) as flowing from positive to negative. Actual electron movement is the opposite: from negative to positive. All textbook formulas use conventional current direction.',
+    section: '2.3.1',
+    difficulty: 'intermediate',
+    topic: 'Conventional vs Electron Flow',
+  },
+  {
+    id: 260,
+    question: 'How many electrons make up one coulomb of charge (approximately)?',
+    options: ['6.24 x 10^18', '1.6 x 10^-19', '3.0 x 10^8', '9.11 x 10^-31'],
+    correctAnswer: 0,
+    explanation:
+      'One coulomb is the charge of about 6.24 x 10^18 electrons. The reciprocal value 1.6 x 10^-19 C is the charge carried by a single electron.',
+    section: '2.3.1',
+    difficulty: 'advanced',
+    topic: 'Coulomb Definition',
+  },
+  // AC 4.2 — Conductors/insulators (section 2.3.2)
+  {
+    id: 261,
+    question: 'Which of these materials has the LOWEST resistivity (best conductor)?',
+    options: ['Aluminium', 'Copper', 'Silver', 'Brass'],
+    correctAnswer: 2,
+    explanation:
+      'Silver has the lowest resistivity (~1.59 x 10^-8 ohm-metres), making it the best conductor. Copper (~1.72 x 10^-8) is used in cables because it is far cheaper for almost the same conductivity.',
+    section: '2.3.2',
+    difficulty: 'intermediate',
+    topic: 'Conductor Comparison',
+  },
+  {
+    id: 262,
+    question: 'What is a semiconductor?',
+    options: [
+      'A material that always conducts perfectly',
+      'A material whose conductivity sits between a conductor and an insulator and can be controlled',
+      'A material that only conducts when wet',
+      'Another name for a poor insulator',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Semiconductors (silicon, germanium) have a controllable conductivity that sits between conductors and insulators. This is what makes diodes, transistors and microchips possible.',
+    section: '2.3.2',
+    difficulty: 'basic',
+    topic: 'Semiconductors',
+  },
+  // AC 4.5 — Worked DC calcs (sections 2.4.1–2.4.3)
+  {
+    id: 263,
+    question:
+      'Three resistors of 10 ohm, 20 ohm and 30 ohm are connected in series. What is the total resistance?',
+    options: ['5.45 ohm', '20 ohm', '60 ohm', '600 ohm'],
+    correctAnswer: 2,
+    explanation:
+      'In series, total resistance = R1 + R2 + R3 = 10 + 20 + 30 = 60 ohm.',
+    section: '2.4.1',
+    difficulty: 'basic',
+    topic: 'Series Resistance Calculation',
+  },
+  {
+    id: 264,
+    question:
+      'Two 10 ohm resistors are connected in parallel. What is the total resistance?',
+    options: ['20 ohm', '10 ohm', '5 ohm', '0.2 ohm'],
+    correctAnswer: 2,
+    explanation:
+      'For two equal resistors in parallel, R_total = R / 2 = 10 / 2 = 5 ohm. Or by formula: 1/R = 1/10 + 1/10 = 0.2, so R = 5 ohm.',
+    section: '2.4.2',
+    difficulty: 'basic',
+    topic: 'Parallel Resistance Calculation',
+  },
+  {
+    id: 265,
+    question:
+      'A 230V supply is connected to a 46 ohm heater element. What current flows through the heater?',
+    options: ['2 A', '5 A', '10 A', '23 A'],
+    correctAnswer: 1,
+    explanation:
+      'Using Ohm\'s Law: I = V / R = 230 / 46 = 5 A.',
+    section: '2.3.7',
+    difficulty: 'basic',
+    topic: 'Ohm\'s Law Worked',
+  },
+  {
+    id: 266,
+    question:
+      'A circuit draws 8 A when 24V is applied. What is the resistance of the load?',
+    options: ['0.33 ohm', '3 ohm', '32 ohm', '192 ohm'],
+    correctAnswer: 1,
+    explanation:
+      'R = V / I = 24 / 8 = 3 ohm.',
+    section: '2.3.7',
+    difficulty: 'basic',
+    topic: 'Ohm\'s Law Worked',
+  },
+  {
+    id: 267,
+    question:
+      'In a series circuit with three 4 ohm resistors connected to a 24V supply, what current flows in the circuit?',
+    options: ['1 A', '2 A', '6 A', '8 A'],
+    correctAnswer: 1,
+    explanation:
+      'Total R = 4 + 4 + 4 = 12 ohm. I = V / R = 24 / 12 = 2 A. The same 2 A flows through every resistor in series.',
+    section: '2.4.1',
+    difficulty: 'intermediate',
+    topic: 'Series Circuit Calculation',
+  },
+  {
+    id: 268,
+    question:
+      'A 6 ohm and a 12 ohm resistor are connected in parallel. What is the combined resistance?',
+    options: ['18 ohm', '9 ohm', '4 ohm', '2 ohm'],
+    correctAnswer: 2,
+    explanation:
+      'For two parallel resistors: R = (R1 x R2) / (R1 + R2) = (6 x 12) / (6 + 12) = 72 / 18 = 4 ohm.',
+    section: '2.4.2',
+    difficulty: 'intermediate',
+    topic: 'Parallel Resistance Calculation',
+  },
+  // AC 4.6 — DC Power calcs (section 2.4.5)
+  {
+    id: 269,
+    question:
+      'A 230V immersion heater draws 13 A. What is the power dissipated by the element?',
+    options: ['1.77 kW', '2.99 kW', '3.45 kW', '17.7 W'],
+    correctAnswer: 1,
+    explanation:
+      'P = V x I = 230 x 13 = 2990 W = 2.99 kW (often rounded to 3 kW).',
+    section: '2.4.5',
+    difficulty: 'basic',
+    topic: 'Power Calculation P=VI',
+  },
+  {
+    id: 270,
+    question:
+      'A current of 10 A flows through a 5 ohm resistor. What power is dissipated?',
+    options: ['50 W', '250 W', '500 W', '2 W'],
+    correctAnswer: 2,
+    explanation:
+      'P = I^2 x R = 10^2 x 5 = 100 x 5 = 500 W. This formula highlights that heat in a cable rises with the SQUARE of the current.',
+    section: '2.4.5',
+    difficulty: 'intermediate',
+    topic: 'Power Calculation P=I^2R',
+  },
+  {
+    id: 271,
+    question:
+      'A 2 kW kettle is connected to the 230V mains. What is the working current?',
+    options: ['4.6 A', '8.7 A', '11.5 A', '13 A'],
+    correctAnswer: 1,
+    explanation:
+      'I = P / V = 2000 / 230 = 8.696 A, approximately 8.7 A. A 13 A plug-top fuse is appropriate.',
+    section: '2.4.5',
+    difficulty: 'intermediate',
+    topic: 'Kettle Current',
+  },
+  {
+    id: 272,
+    question:
+      'A heating element has a resistance of 23 ohm and is connected to 230V. What power does it dissipate?',
+    options: ['10 W', '100 W', '1.0 kW', '2.3 kW'],
+    correctAnswer: 3,
+    explanation:
+      'P = V^2 / R = 230^2 / 23 = 52900 / 23 = 2300 W = 2.3 kW.',
+    section: '2.4.5',
+    difficulty: 'intermediate',
+    topic: 'Power Calculation P=V^2/R',
+  },
+  {
+    id: 273,
+    question:
+      'Doubling the current through a fixed resistor changes the heat dissipated by what factor?',
+    options: ['x 0.5', 'x 2', 'x 4', 'No change'],
+    correctAnswer: 2,
+    explanation:
+      'Because P = I^2 x R, doubling the current multiplies the dissipated power by 2^2 = 4. This is why undersized cables overheat so quickly when overloaded.',
+    section: '2.4.5',
+    difficulty: 'advanced',
+    topic: 'Power vs Current Squared',
+  },
+  // AC 4.7 — Voltage drop (section 2.4.6)
+  {
+    id: 274,
+    question:
+      'BS 7671 Appendix 4 gives recommended voltage drop limits from the origin of the installation to a point of utilisation, fed from a public LV supply. What are the figures for lighting and other uses?',
+    options: [
+      '1% lighting, 3% other',
+      '3% lighting, 5% other',
+      '5% lighting, 8% other',
+      '10% lighting, 15% other',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Appendix 4 of BS 7671 gives 3% for lighting and 5% for other uses (e.g. socket-outlets, fixed loads) on installations supplied from a public LV distribution network. For private supplies (e.g. transformer or generator), the figures are 6% and 8%.',
+    section: '2.4.6',
+    difficulty: 'intermediate',
+    topic: 'Voltage Drop Limits',
+  },
+  {
+    id: 275,
+    question:
+      'A 30 m run of cable carries 20 A. The cable has a voltage drop value of 18 mV/A/m. What is the voltage drop?',
+    options: ['1.08 V', '10.8 V', '108 V', '0.18 V'],
+    correctAnswer: 1,
+    explanation:
+      'Voltage drop = (mV/A/m x I x L) / 1000 = (18 x 20 x 30) / 1000 = 10800 / 1000 = 10.8 V.',
+    section: '2.4.6',
+    difficulty: 'intermediate',
+    topic: 'Voltage Drop Calculation',
+  },
+  {
+    id: 276,
+    question:
+      'On a 230V circuit, what is the maximum permitted voltage drop in volts for a lighting circuit (3% rule)?',
+    options: ['2.3 V', '6.9 V', '11.5 V', '23 V'],
+    correctAnswer: 1,
+    explanation:
+      '3% of 230V = 0.03 x 230 = 6.9 V. Any voltage drop greater than this on a lighting circuit fails the BS 7671 Appendix 4 recommendation.',
+    section: '2.4.6',
+    difficulty: 'basic',
+    topic: 'Voltage Drop Limits Worked',
+  },
+  // AC 4.8 — Chemical/thermal effects (sections 2.4.7-2.4.9)
+  {
+    id: 277,
+    question: 'What is electrolysis?',
+    options: [
+      'A chemical reaction caused by the passage of an electric current through a conducting liquid',
+      'The heating effect of current in a wire',
+      'A type of insulation breakdown',
+      'A method of measuring resistance',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Electrolysis is a chemical change caused by current passing through an electrolyte (a conducting liquid). It is used in electroplating and battery operation, and is the cause of bi-metallic corrosion when dissimilar metals are connected together in damp conditions.',
+    section: '2.4.7',
+    difficulty: 'intermediate',
+    topic: 'Electrolysis',
+  },
+  {
+    id: 278,
+    question: 'Why does a fuse element melt when an overcurrent flows?',
+    options: [
+      'Magnetic forces pull it apart',
+      'I^2 x R heating in the small-cross-section element exceeds its melting point',
+      'The voltage drop causes it to vaporise',
+      'It chemically reacts with the air',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A fuse is sized so that under fault current the I^2 x R heat generated in its narrow element rises rapidly above its melting temperature, breaking the circuit. This is a deliberate, controlled use of the thermal effect of current.',
+    section: '2.4.8',
+    difficulty: 'intermediate',
+    topic: 'Fuse Operation',
+  },
+  // AC 5.1 — Magnetism (section 2.5.1)
+  {
+    id: 279,
+    question: 'Which of the following materials is ferromagnetic?',
+    options: ['Aluminium', 'Copper', 'Iron', 'Plastic'],
+    correctAnswer: 2,
+    explanation:
+      'Iron, nickel and cobalt (and their alloys, such as steel) are ferromagnetic — strongly attracted by magnets and capable of being magnetised. Aluminium and copper are non-magnetic.',
+    section: '2.5.1',
+    difficulty: 'basic',
+    topic: 'Ferromagnetic Materials',
+  },
+  {
+    id: 280,
+    question: 'What happens when two like magnetic poles are brought together?',
+    options: ['They attract', 'They repel', 'Nothing happens', 'They cancel completely'],
+    correctAnswer: 1,
+    explanation:
+      'Like poles repel; unlike poles attract. Two north poles (or two south poles) push each other apart.',
+    section: '2.5.1',
+    difficulty: 'basic',
+    topic: 'Magnetic Poles',
+  },
+  {
+    id: 281,
+    question: 'In which direction do magnetic field lines travel outside a bar magnet?',
+    options: [
+      'From south to north',
+      'From north to south',
+      'In random directions',
+      'They form closed loops with no defined direction',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'By convention, external magnetic field lines run from the north pole to the south pole of a magnet. Inside the magnet they continue from south back to north, forming closed loops.',
+    section: '2.5.1',
+    difficulty: 'intermediate',
+    topic: 'Magnetic Field Lines',
+  },
+  {
+    id: 282,
+    question: 'What is the key advantage of an electromagnet over a permanent magnet?',
+    options: [
+      'It is always stronger',
+      'Its magnetic field can be switched on and off (and varied) by controlling the current',
+      'It does not need electricity',
+      'It cannot be demagnetised',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An electromagnet is created by current flowing in a coil. Switch the current off and the field collapses. This controllability makes electromagnets the basis of relays, contactors, solenoids and motors.',
+    section: '2.5.1',
+    difficulty: 'basic',
+    topic: 'Electromagnets',
+  },
+  {
+    id: 283,
+    question: 'Which of the following is NOT a way to increase the strength of an electromagnet?',
+    options: [
+      'Increasing the current in the coil',
+      'Increasing the number of turns in the coil',
+      'Adding a soft iron core',
+      'Increasing the resistance of the coil winding',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'The magnetomotive force (MMF) of a coil is N x I (turns x amps). Adding a soft iron core concentrates the flux. Increasing the resistance of the winding REDUCES the current, so reduces field strength — it does not increase it.',
+    section: '2.5.1',
+    difficulty: 'advanced',
+    topic: 'Electromagnet Strength',
+  },
+  // AC 5.2 — Flux and flux density (section 2.5.2)
+  {
+    id: 284,
+    question: 'What is the SI unit of magnetic flux?',
+    options: ['Tesla (T)', 'Weber (Wb)', 'Henry (H)', 'Coulomb (C)'],
+    correctAnswer: 1,
+    explanation:
+      'Magnetic flux (symbol Φ, phi) is measured in webers (Wb). Flux density B is measured in teslas (T), which are webers per square metre.',
+    section: '2.5.2',
+    difficulty: 'basic',
+    topic: 'Magnetic Flux Unit',
+  },
+  {
+    id: 285,
+    question: 'What is the SI unit of magnetic flux density?',
+    options: ['Weber (Wb)', 'Tesla (T)', 'Ampere (A)', 'Newton (N)'],
+    correctAnswer: 1,
+    explanation:
+      'Magnetic flux density B is measured in teslas (T). 1 T = 1 Wb/m^2 — one weber of flux passing through one square metre.',
+    section: '2.5.2',
+    difficulty: 'basic',
+    topic: 'Flux Density Unit',
+  },
+  {
+    id: 286,
+    question:
+      'A magnetic flux of 0.5 Wb passes through a pole face of area 0.25 m^2. What is the flux density?',
+    options: ['0.125 T', '0.5 T', '2 T', '125 T'],
+    correctAnswer: 2,
+    explanation:
+      'Flux density B = Φ / A = 0.5 / 0.25 = 2 T.',
+    section: '2.5.2',
+    difficulty: 'intermediate',
+    topic: 'Flux Density Calculation',
+  },
+  {
+    id: 287,
+    question:
+      'A pole face has an area of 0.02 m^2 and a flux density of 1.5 T. What is the total flux through the pole?',
+    options: ['0.013 Wb', '0.03 Wb', '0.075 Wb', '75 Wb'],
+    correctAnswer: 1,
+    explanation:
+      'Φ = B x A = 1.5 x 0.02 = 0.03 Wb.',
+    section: '2.5.2',
+    difficulty: 'intermediate',
+    topic: 'Flux Calculation',
+  },
+  // AC 5.4 — AC generation (sections 2.5.6-2.5.7)
+  {
+    id: 288,
+    question: 'What is the standard frequency of the UK mains supply?',
+    options: ['25 Hz', '50 Hz', '60 Hz', '100 Hz'],
+    correctAnswer: 1,
+    explanation:
+      'The UK mains supply is generated and distributed at 50 Hz. North America uses 60 Hz.',
+    section: '2.5.7',
+    difficulty: 'basic',
+    topic: 'UK Mains Frequency',
+  },
+  {
+    id: 289,
+    question:
+      'An AC generator (alternator) has 4 poles and rotates at 1500 rev/min. What is the frequency of the output?',
+    options: ['25 Hz', '50 Hz', '100 Hz', '200 Hz'],
+    correctAnswer: 1,
+    explanation:
+      'Frequency f = (pole pairs x speed in rev/min) / 60. With 4 poles, that is 2 pole pairs. f = (2 x 1500) / 60 = 50 Hz.',
+    section: '2.5.6',
+    difficulty: 'advanced',
+    topic: 'Generator Frequency Calculation',
+  },
+  {
+    id: 290,
+    question:
+      'In a single-loop AC generator, when is the induced EMF at its MAXIMUM value?',
+    options: [
+      'When the coil sides lie alongside the poles (parallel to the field)',
+      'When the coil sides cut the field lines at right angles (perpendicular to the field)',
+      'Only when the coil is stationary',
+      'When the coil is at 30 degrees',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'EMF is proportional to the RATE of cutting flux. When the coil sides move perpendicular to the field they cut flux lines fastest, giving peak EMF. When the coil sides are alongside the poles they move parallel to the field and cut no flux — EMF is zero.',
+    section: '2.5.6',
+    difficulty: 'intermediate',
+    topic: 'EMF Position in Generator',
+  },
+  {
+    id: 291,
+    question:
+      'What is the difference between slip rings and a commutator on a rotating machine?',
+    options: [
+      'They are different names for the same thing',
+      'Slip rings give an AC output; a commutator rectifies the output to DC',
+      'Slip rings only work on small machines',
+      'A commutator is used only on AC generators',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Slip rings make a continuous connection so the alternating EMF in the coil reaches the load unchanged — AC output. A commutator (split ring) reverses the connections every half cycle so the load always sees the same polarity — DC output.',
+    section: '2.5.6',
+    difficulty: 'intermediate',
+    topic: 'Slip Rings vs Commutator',
+  },
+  {
+    id: 292,
+    question: 'What is the period of a 50 Hz AC waveform?',
+    options: ['20 ms', '50 ms', '100 ms', '0.02 s only'],
+    correctAnswer: 0,
+    explanation:
+      'Period T = 1 / f = 1 / 50 = 0.02 s = 20 ms. (0.02 s and 20 ms are the same value, but the question asks for the standard millisecond figure.)',
+    section: '2.5.7',
+    difficulty: 'basic',
+    topic: 'Period of Waveform',
+  },
+  // AC 5.5 — RMS / peak / 3-phase (sections 2.5.8-2.5.9)
+  {
+    id: 293,
+    question:
+      'What is the peak voltage of a sinusoidal supply with an RMS value of 230V?',
+    options: ['163 V', '230 V', '325 V', '400 V'],
+    correctAnswer: 2,
+    explanation:
+      'V_peak = V_rms x sqrt(2) = 230 x 1.414 = 325.27 V (commonly rounded to 325 V).',
+    section: '2.5.8',
+    difficulty: 'intermediate',
+    topic: 'Peak Voltage Calculation',
+  },
+  {
+    id: 294,
+    question:
+      'An AC waveform has a peak voltage of 100V. What is its RMS value?',
+    options: ['50 V', '70.7 V', '100 V', '141 V'],
+    correctAnswer: 1,
+    explanation:
+      'V_rms = V_peak / sqrt(2) = 100 / 1.414 = 70.7 V. RMS is the equivalent DC value that would produce the same heating effect.',
+    section: '2.5.8',
+    difficulty: 'intermediate',
+    topic: 'RMS from Peak',
+  },
+  {
+    id: 295,
+    question:
+      'A balanced 3-phase load draws 32 A line current at 400V line-to-line with a power factor of 0.85. What is the total real power?',
+    options: ['10.9 kW', '12.8 kW', '18.8 kW', '22.2 kW'],
+    correctAnswer: 2,
+    explanation:
+      'P = sqrt(3) x V_L x I_L x cos(phi) = 1.732 x 400 x 32 x 0.85 = 18,839 W = approximately 18.8 kW.',
+    section: '2.5.9',
+    difficulty: 'advanced',
+    topic: '3-Phase Power Calculation',
+  },
+  {
+    id: 296,
+    question:
+      'In a balanced 3-phase star (wye) system, what is the relationship between line voltage and phase voltage?',
+    options: [
+      'They are equal',
+      'V_line = V_phase x sqrt(3)',
+      'V_line = V_phase / sqrt(3)',
+      'V_line = V_phase x 2',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'In a star-connected balanced system, V_line = sqrt(3) x V_phase. With phase voltage 230V, line voltage = 230 x 1.732 = approximately 400V (the UK harmonised value).',
+    section: '2.5.9',
+    difficulty: 'intermediate',
+    topic: 'Star Voltage Relationship',
+  },
+  // AC 6.2 — Component operating principles (sections 2.6.2-2.6.5)
+  {
+    id: 297,
+    question:
+      'What is the typical forward voltage drop across a silicon signal diode when conducting?',
+    options: ['0.2 V', '0.7 V', '2.0 V', '12 V'],
+    correctAnswer: 1,
+    explanation:
+      'A silicon diode has a forward voltage drop of approximately 0.7 V when conducting. Germanium diodes drop about 0.3 V; LEDs typically 1.8 V to 3.5 V depending on colour.',
+    section: '2.6.2',
+    difficulty: 'intermediate',
+    topic: 'Diode Forward Voltage',
+  },
+  {
+    id: 298,
+    question:
+      'A capacitor stores 10 mC of charge when 5V is applied across its plates. What is its capacitance?',
+    options: ['50 microfarads', '500 microfarads', '2000 microfarads', '50 millifarads'],
+    correctAnswer: 2,
+    explanation:
+      'C = Q / V = (10 x 10^-3) / 5 = 2 x 10^-3 F = 2 mF = 2000 microfarads (uF).',
+    section: '2.6.3',
+    difficulty: 'advanced',
+    topic: 'Capacitor C=Q/V',
+  },
+  {
+    id: 299,
+    question:
+      'A 100 microfarad capacitor charges through a 10 kohm resistor. What is the time constant (tau)?',
+    options: ['1 ms', '10 ms', '100 ms', '1 s'],
+    correctAnswer: 3,
+    explanation:
+      'tau = R x C = 10,000 ohm x 100 x 10^-6 F = 1 s. After one time constant the capacitor is charged to about 63% of supply voltage; after 5 tau (5 s here) it is essentially fully charged.',
+    section: '2.6.3',
+    difficulty: 'advanced',
+    topic: 'RC Time Constant',
+  },
+  {
+    id: 300,
+    question:
+      'What is the main function of a transistor in an electronic circuit?',
+    options: [
+      'To store charge',
+      'To rectify AC to DC',
+      'To act as a switch or amplifier controlled by a small signal',
+      'To convert voltage to current',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'A transistor uses a small base/gate current (or voltage in a FET) to control a much larger collector/drain current. This allows it to act as either an electronic switch (relays, logic) or an amplifier (audio, RF, sensor signals).',
+    section: '2.6.3',
+    difficulty: 'basic',
+    topic: 'Transistor Function',
   },
 ];
 

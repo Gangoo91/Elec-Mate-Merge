@@ -38,7 +38,7 @@ const Level2Module8Section2Section2 = () => {
           <div className="inline-flex items-center justify-center w-12 h-12 bg-elec-yellow/20 rounded-full mb-3">
             <Search className="h-6 w-6 text-elec-yellow" />
           </div>
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">
             Question Analysis Techniques
           </h1>
           <p className="text-white max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
@@ -51,8 +51,10 @@ const Level2Module8Section2Section2 = () => {
         {/* Quick Stats */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
-            <div className="text-2xl font-bold text-elec-yellow mb-1">78%</div>
-            <div className="text-sm text-white">Improvement with analysis</div>
+            <div className="text-2xl font-bold text-elec-yellow mb-1">Stronger</div>
+            <div className="text-sm text-white">
+              Reviewing past attempts measurably improves your next score
+            </div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow mb-1">5-step</div>

@@ -36,8 +36,8 @@ export default function Module8() {
       description="Practice papers and exam technique tips to build confidence for the real assessment."
       tone="emerald"
       sectionsCount={sections.length}
-      prevModuleHref="../module7"
-      prevModuleLabel="Electrical fault finding and diagnosis"
+      prevModuleHref="../module5"
+      prevModuleLabel="Communicate with others within building services"
     >
       {sections.map((section, index) => (
         <SectionCard

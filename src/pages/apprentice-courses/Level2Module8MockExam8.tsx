@@ -39,7 +39,7 @@ const Level2Module8MockExam8 = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(60 * 60); // 60 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState(90 * 60); // 90 minutes (C&G 2365-02 spec)
   const [showResults, setShowResults] = useState(false);
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   const [reviewMode, setReviewMode] = useState<
@@ -55,11 +55,13 @@ const Level2Module8MockExam8 = () => {
     setExamQuestions(questions);
     setSelectedAnswers({});
     setCurrentQuestion(0);
-    setTimeRemaining(60 * 60);
+    setTimeRemaining(90 * 60);
     setShowResults(false);
     setFlaggedQuestions(new Set());
     setExamStarted(true);
-    validateQuestionBank(); // Log validation info
+    if (import.meta.env.DEV) {
+      validateQuestionBank(); // Dev-only: log mixed-bank composition
+    }
   };
 
   // Timer effect
@@ -224,7 +226,7 @@ const Level2Module8MockExam8 = () => {
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm text-white leading-relaxed">60 minutes time limit</p>
+                    <p className="text-sm text-white leading-relaxed">90 minutes time limit</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />

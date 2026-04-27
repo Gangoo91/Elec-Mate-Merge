@@ -31,10 +31,9 @@ const Level2 = lazy(() => import('@/pages/apprentice-courses/Level2'));
 const Module1 = lazy(() => import('@/pages/apprentice-courses/level2/module1/Module1'));
 const Module2 = lazy(() => import('@/pages/apprentice-courses/level2/module2/Module2'));
 const Module3 = lazy(() => import('@/pages/apprentice-courses/level2/module3/Module3'));
-const Module4 = lazy(() => import('@/pages/apprentice-courses/Module4'));
-const Module5 = lazy(() => import('@/pages/apprentice-courses/Module5'));
+const Module4 = lazy(() => import('@/pages/apprentice-courses/level2/module4/Module4'));
+const Module5 = lazy(() => import('@/pages/apprentice-courses/level2/module5/Module5'));
 const Module6 = lazy(() => import('@/pages/apprentice-courses/Module6'));
-const Module7 = lazy(() => import('@/pages/apprentice-courses/Module7'));
 const Module8 = lazy(() => import('@/pages/apprentice-courses/Module8'));
 
 // Module 1 Section pages
@@ -60,6 +59,9 @@ const Subsection6 = lazy(() => import('@/pages/apprentice-courses/level2/module1
 const Subsection7 = lazy(() => import('@/pages/apprentice-courses/level2/module1/section2/Sub3'));
 const Subsection8 = lazy(() => import('@/pages/apprentice-courses/level2/module1/section2/Sub4'));
 const Subsection9 = lazy(() => import('@/pages/apprentice-courses/level2/module1/section2/Sub5'));
+const Module1Section2_6 = lazy(
+  () => import('@/pages/apprentice-courses/level2/module1/section2/Sub6')
+);
 
 // Module 1 Subsection pages - Section 3
 const Subsection10 = lazy(() => import('@/pages/apprentice-courses/level2/module1/section3/Sub1'));
@@ -178,98 +180,79 @@ const Module3Section6_4 = lazy(() => import('@/pages/apprentice-courses/level2/m
 const Module3Section6_5 = lazy(() => import('@/pages/apprentice-courses/level2/module3/section6/Sub5'));
 
 // Module 4 pages
-const Module4Section1 = lazy(() => import('@/pages/apprentice-courses/Module4Section1'));
-const Module4Section1_1 = lazy(() => import('@/pages/apprentice-courses/Module4Section1_1'));
-const Module4Section1_2 = lazy(() => import('@/pages/apprentice-courses/Module4Section1_2'));
-const Module4Section1_3 = lazy(() => import('@/pages/apprentice-courses/Module4Section1_3'));
-const Module4Section1_4 = lazy(() => import('@/pages/apprentice-courses/Module4Section1_4'));
-const Module4Section1_5 = lazy(() => import('@/pages/apprentice-courses/Module4Section1_5'));
-const Module4Section2 = lazy(() => import('@/pages/apprentice-courses/Module4Section2'));
-const Module4Section2_1 = lazy(() => import('@/pages/apprentice-courses/Module4Section2_1'));
-const Module4Section2_2 = lazy(() => import('@/pages/apprentice-courses/Module4Section2_2'));
-const Module4Section2_3 = lazy(() => import('@/pages/apprentice-courses/Module4Section2_3'));
-const Module4Section2_4 = lazy(() => import('@/pages/apprentice-courses/Module4Section2_4'));
-const Module4Section3 = lazy(() => import('@/pages/apprentice-courses/Module4Section3'));
-const Module4Section3_1 = lazy(() => import('@/pages/apprentice-courses/Module4Section3_1'));
-const Module4Section3_2 = lazy(() => import('@/pages/apprentice-courses/Module4Section3_2'));
-const Module4Section3_3 = lazy(() => import('@/pages/apprentice-courses/Module4Section3_3'));
-const Module4Section3_4 = lazy(() => import('@/pages/apprentice-courses/Module4Section3_4'));
-const Module4Section3_5 = lazy(() => import('@/pages/apprentice-courses/Module4Section3_5'));
-const Module4Section4 = lazy(() => import('@/pages/apprentice-courses/Module4Section4'));
-const Module4Section4_1 = lazy(() => import('@/pages/apprentice-courses/Module4Section4_1'));
-const Module4Section4_2 = lazy(() => import('@/pages/apprentice-courses/Module4Section4_2'));
-const Module4Section4_3 = lazy(() => import('@/pages/apprentice-courses/Module4Section4_3'));
-const Module4Section4_4 = lazy(() => import('@/pages/apprentice-courses/Module4Section4_4'));
-const Module4Section4_5 = lazy(() => import('@/pages/apprentice-courses/Module4Section4_5'));
-const Module4Section4_6 = lazy(() => import('@/pages/apprentice-courses/Module4Section4_6'));
-const Module4Section4_7 = lazy(() => import('@/pages/apprentice-courses/Module4Section4_7'));
-const Module4Section5 = lazy(() => import('@/pages/apprentice-courses/Module4Section5'));
-const Module4Section5_1 = lazy(() => import('@/pages/apprentice-courses/Module4Section5_1'));
-const Module4Section5_2 = lazy(() => import('@/pages/apprentice-courses/Module4Section5_2'));
-const Module4Section5_3 = lazy(() => import('@/pages/apprentice-courses/Module4Section5_3'));
-const Module4Section5_4 = lazy(() => import('@/pages/apprentice-courses/Module4Section5_4'));
-const Module4Section5_5 = lazy(() => import('@/pages/apprentice-courses/Module4Section5_5'));
-const Module4Section5_6 = lazy(() => import('@/pages/apprentice-courses/Module4Section5_6'));
-const Module4Section5_7 = lazy(() => import('@/pages/apprentice-courses/Module4Section5_7'));
-const Module4Section5_8 = lazy(() => import('@/pages/apprentice-courses/Module4Section5_8'));
-const Module4Section6 = lazy(() => import('@/pages/apprentice-courses/Module4Section6'));
-const Module4Section6_1 = lazy(() => import('@/pages/apprentice-courses/Module4Section6_1'));
-const Module4Section6_2 = lazy(() => import('@/pages/apprentice-courses/Module4Section6_2'));
-const Module4Section6_3 = lazy(() => import('@/pages/apprentice-courses/Module4Section6_3'));
-const Module4Section6_4 = lazy(() => import('@/pages/apprentice-courses/Module4Section6_4'));
-const Module4Section6_5 = lazy(() => import('@/pages/apprentice-courses/Module4Section6_5'));
-const Module4Section6_6 = lazy(() => import('@/pages/apprentice-courses/Module4Section6_6'));
-const Module4Section7 = lazy(() => import('@/pages/apprentice-courses/Module4Section7'));
-const Module4Section7_1 = lazy(() => import('@/pages/apprentice-courses/Module4Section7_1'));
-const Module4Section7_2 = lazy(() => import('@/pages/apprentice-courses/Module4Section7_2'));
-const Module4Section7_3 = lazy(() => import('@/pages/apprentice-courses/Module4Section7_3'));
-const Module4Section7_4 = lazy(() => import('@/pages/apprentice-courses/Module4Section7_4'));
-const Module4Section7_5 = lazy(() => import('@/pages/apprentice-courses/Module4Section7_5'));
+const Module4Section1 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section1/Landing'));
+const Module4Section1_1 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section1/Sub1'));
+const Module4Section1_2 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section1/Sub2'));
+const Module4Section1_3 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section1/Sub3'));
+const Module4Section1_4 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section1/Sub4'));
+const Module4Section1_5 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section1/Sub5'));
+const Module4Section2 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section2/Landing'));
+const Module4Section2_1 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section2/Sub1'));
+const Module4Section2_2 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section2/Sub2'));
+const Module4Section2_3 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section2/Sub3'));
+const Module4Section2_4 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section2/Sub4'));
+const Module4Section2_5 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section2/Sub5'));
+const Module4Section3 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Landing'));
+const Module4Section3_1 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub1'));
+const Module4Section3_2 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub2'));
+const Module4Section3_3 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub3'));
+const Module4Section3_4 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub4'));
+const Module4Section3_5 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub5'));
+const Module4Section3_6 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub6'));
+const Module4Section3_7 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub7'));
+const Module4Section3_8 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub8'));
+const Module4Section3_9 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section3/Sub9'));
+const Module4Section4 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section4/Landing'));
+const Module4Section4_1 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section4/Sub1'));
+const Module4Section4_2 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section4/Sub2'));
+const Module4Section4_3 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section4/Sub3'));
+const Module4Section4_4 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section4/Sub4'));
+const Module4Section4_5 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section4/Sub5'));
+const Module4Section4_6 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section4/Sub6'));
+const Module4Section5 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section5/Landing'));
+const Module4Section5_1 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section5/Sub1'));
+const Module4Section5_2 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section5/Sub2'));
+const Module4Section5_3 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section5/Sub3'));
+const Module4Section5_4 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section5/Sub4'));
+const Module4Section6 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Landing'));
+const Module4Section6_1 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Sub1'));
+const Module4Section6_2 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Sub2'));
+const Module4Section6_3 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Sub3'));
+const Module4Section6_4 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Sub4'));
+const Module4Section6_5 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Sub5'));
+const Module4Section6_6 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Sub6'));
+const Module4Section6_7 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Sub7'));
+const Module4Section6_8 = lazy(() => import('@/pages/apprentice-courses/level2/module4/section6/Sub8'));
 
-// Module 5 pages
-const Module5Section1 = lazy(() => import('@/pages/apprentice-courses/Module5Section1'));
-const Module5Section1_1 = lazy(() => import('@/pages/apprentice-courses/Module5Section1_1'));
-const Module5Section1_2 = lazy(() => import('@/pages/apprentice-courses/Module5Section1_2'));
-const Module5Section1_3 = lazy(() => import('@/pages/apprentice-courses/Module5Section1_3'));
-const Module5Section1_4 = lazy(() => import('@/pages/apprentice-courses/Module5Section1_4'));
-const Module5Section1_5 = lazy(() => import('@/pages/apprentice-courses/Module5Section1_5'));
-const Module5Section1_6 = lazy(() => import('@/pages/apprentice-courses/Module5Section1_6'));
-const Module5Section2 = lazy(() => import('@/pages/apprentice-courses/Module5Section2'));
-const Module5Section2_1 = lazy(() => import('@/pages/apprentice-courses/Module5Section2_1'));
-const Module5Section2_2 = lazy(() => import('@/pages/apprentice-courses/Module5Section2_2'));
-const Module5Section2_3 = lazy(() => import('@/pages/apprentice-courses/Module5Section2_3'));
-const Module5Section2_4 = lazy(() => import('@/pages/apprentice-courses/Module5Section2_4'));
-const Module5Section2_5 = lazy(() => import('@/pages/apprentice-courses/Module5Section2_5'));
-const Module5Section3 = lazy(() => import('@/pages/apprentice-courses/Module5Section3'));
-const Module5Section3_1 = lazy(() => import('@/pages/apprentice-courses/Module5Section3_1'));
-const Module5Section3_2 = lazy(() => import('@/pages/apprentice-courses/Module5Section3_2'));
-const Module5Section3_3 = lazy(() => import('@/pages/apprentice-courses/Module5Section3_3'));
-const Module5Section3_4 = lazy(() => import('@/pages/apprentice-courses/Module5Section3_4'));
-const Module5Section3_5 = lazy(() => import('@/pages/apprentice-courses/Module5Section3_5'));
-const Module5Section3_6 = lazy(() => import('@/pages/apprentice-courses/Module5Section3_6'));
-const Module5Section4 = lazy(() => import('@/pages/apprentice-courses/Module5Section4'));
-const Module5Section4_1 = lazy(() => import('@/pages/apprentice-courses/Module5Section4_1'));
-const Module5Section4_2 = lazy(() => import('@/pages/apprentice-courses/Module5Section4_2'));
-const Module5Section4_3 = lazy(() => import('@/pages/apprentice-courses/Module5Section4_3'));
-const Module5Section4_4 = lazy(() => import('@/pages/apprentice-courses/Module5Section4_4'));
-const Module5Section4_5 = lazy(() => import('@/pages/apprentice-courses/Module5Section4_5'));
-const Module5Section5 = lazy(() => import('@/pages/apprentice-courses/Module5Section5'));
-const Module5Section5_1 = lazy(() => import('@/pages/apprentice-courses/Module5Section5_1'));
-const Module5Section5_2 = lazy(() => import('@/pages/apprentice-courses/Module5Section5_2'));
-const Module5Section5_3 = lazy(() => import('@/pages/apprentice-courses/Module5Section5_3'));
-const Module5Section5_4 = lazy(() => import('@/pages/apprentice-courses/Module5Section5_4'));
-const Module5Section5_5 = lazy(() => import('@/pages/apprentice-courses/Module5Section5_5'));
-const Module5Section6 = lazy(() => import('@/pages/apprentice-courses/Module5Section6'));
-const Module5Section6_1 = lazy(() => import('@/pages/apprentice-courses/Module5Section6_1'));
-const Module5Section6_2 = lazy(() => import('@/pages/apprentice-courses/Module5Section6_2'));
-const Module5Section6_3 = lazy(() => import('@/pages/apprentice-courses/Module5Section6_3'));
-const Module5Section6_4 = lazy(() => import('@/pages/apprentice-courses/Module5Section6_4'));
-const Module5Section7 = lazy(() => import('@/pages/apprentice-courses/Module5Section7'));
-const Module5Section7_1 = lazy(() => import('@/pages/apprentice-courses/Module5Section7_1'));
-const Module5Section7_2 = lazy(() => import('@/pages/apprentice-courses/Module5Section7_2'));
-const Module5Section7_3 = lazy(() => import('@/pages/apprentice-courses/Module5Section7_3'));
-const Module5Section7_4 = lazy(() => import('@/pages/apprentice-courses/Module5Section7_4'));
-const Module5Section7_5 = lazy(() => import('@/pages/apprentice-courses/Module5Section7_5'));
+// Module 5 pages (modular tree — Unit 210 Communicate with others)
+const Module5Section1 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section1/Landing'));
+const Module5Section1_1 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section1/Sub1'));
+const Module5Section1_2 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section1/Sub2'));
+const Module5Section1_3 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section1/Sub3'));
+const Module5Section1_4 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section1/Sub4'));
+const Module5Section1_5 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section1/Sub5'));
+const Module5Section2 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section2/Landing'));
+const Module5Section2_1 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section2/Sub1'));
+const Module5Section2_2 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section2/Sub2'));
+const Module5Section2_3 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section2/Sub3'));
+const Module5Section2_4 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section2/Sub4'));
+const Module5Section3 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section3/Landing'));
+const Module5Section3_1 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section3/Sub1'));
+const Module5Section3_2 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section3/Sub2'));
+const Module5Section3_3 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section3/Sub3'));
+const Module5Section3_4 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section3/Sub4'));
+const Module5Section3_5 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section3/Sub5'));
+const Module5Section4 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section4/Landing'));
+const Module5Section4_1 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section4/Sub1'));
+const Module5Section4_2 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section4/Sub2'));
+const Module5Section4_3 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section4/Sub3'));
+const Module5Section4_4 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section4/Sub4'));
+const Module5Section5 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section5/Landing'));
+const Module5Section5_1 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section5/Sub1'));
+const Module5Section5_2 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section5/Sub2'));
+const Module5Section5_3 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section5/Sub3'));
+const Module5Section5_4 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section5/Sub4'));
+const Module5Section5_5 = lazy(() => import('@/pages/apprentice-courses/level2/module5/section5/Sub5'));
 
 // Module 6 pages
 const Module6Section1 = lazy(() => import('@/pages/apprentice-courses/Module6Section1'));
@@ -325,49 +308,6 @@ const Module6Section7_2 = lazy(() => import('@/pages/apprentice-courses/Module6S
 const Module6Section7_3 = lazy(() => import('@/pages/apprentice-courses/Module6Section7_3'));
 const Module6Section7_4 = lazy(() => import('@/pages/apprentice-courses/Module6Section7_4'));
 
-// Module 7 pages
-const Module7Section1 = lazy(() => import('@/pages/apprentice-courses/Module7Section1'));
-const Module7Section1_1 = lazy(() => import('@/pages/apprentice-courses/Module7Section1_1'));
-const Module7Section1_2 = lazy(() => import('@/pages/apprentice-courses/Module7Section1_2'));
-const Module7Section1_3 = lazy(() => import('@/pages/apprentice-courses/Module7Section1_3'));
-const Module7Section1_4 = lazy(() => import('@/pages/apprentice-courses/Module7Section1_4'));
-const Module7Section1_5 = lazy(() => import('@/pages/apprentice-courses/Module7Section1_5'));
-const Module7Section2 = lazy(() => import('@/pages/apprentice-courses/Module7Section2'));
-const Module7Section2_1 = lazy(() => import('@/pages/apprentice-courses/Module7Section2_1'));
-const Module7Section2_2 = lazy(() => import('@/pages/apprentice-courses/Module7Section2_2'));
-const Module7Section2_3 = lazy(() => import('@/pages/apprentice-courses/Module7Section2_3'));
-const Module7Section2_4 = lazy(() => import('@/pages/apprentice-courses/Module7Section2_4'));
-const Module7Section2_5 = lazy(() => import('@/pages/apprentice-courses/Module7Section2_5'));
-const Module7Section2_6 = lazy(() => import('@/pages/apprentice-courses/Module7Section2_6'));
-const Module7Section3 = lazy(() => import('@/pages/apprentice-courses/Module7Section3'));
-const Module7Section3_1 = lazy(() => import('@/pages/apprentice-courses/Module7Section3_1'));
-const Module7Section3_2 = lazy(() => import('@/pages/apprentice-courses/Module7Section3_2'));
-const Module7Section3_3 = lazy(() => import('@/pages/apprentice-courses/Module7Section3_3'));
-const Module7Section3_4 = lazy(() => import('@/pages/apprentice-courses/Module7Section3_4'));
-const Module7Section3_5 = lazy(() => import('@/pages/apprentice-courses/Module7Section3_5'));
-const Module7Section4 = lazy(() => import('@/pages/apprentice-courses/Module7Section4'));
-const Module7Section4_1 = lazy(() => import('@/pages/apprentice-courses/Module7Section4_1'));
-const Module7Section4_2 = lazy(() => import('@/pages/apprentice-courses/Module7Section4_2'));
-const Module7Section4_3 = lazy(() => import('@/pages/apprentice-courses/Module7Section4_3'));
-const Module7Section4_4 = lazy(() => import('@/pages/apprentice-courses/Module7Section4_4'));
-const Module7Section4_5 = lazy(() => import('@/pages/apprentice-courses/Module7Section4_5'));
-const Module7Section4_6 = lazy(() => import('@/pages/apprentice-courses/Module7Section4_6'));
-const Module7Section5 = lazy(() => import('@/pages/apprentice-courses/Module7Section5'));
-const Module7Section5_1 = lazy(() => import('@/pages/apprentice-courses/Module7Section5_1'));
-const Module7Section5_2 = lazy(() => import('@/pages/apprentice-courses/Module7Section5_2'));
-const Module7Section5_3 = lazy(() => import('@/pages/apprentice-courses/Module7Section5_3'));
-const Module7Section5_4 = lazy(() => import('@/pages/apprentice-courses/Module7Section5_4'));
-const Module7Section5_5 = lazy(() => import('@/pages/apprentice-courses/Module7Section5_5'));
-const Module7Section6 = lazy(() => import('@/pages/apprentice-courses/Module7Section6'));
-const Module7Section6_1 = lazy(() => import('@/pages/apprentice-courses/Module7Section6_1'));
-const Module7Section6_2 = lazy(() => import('@/pages/apprentice-courses/Module7Section6_2'));
-const Module7Section6_3 = lazy(() => import('@/pages/apprentice-courses/Module7Section6_3'));
-const Module7Section6_4 = lazy(() => import('@/pages/apprentice-courses/Module7Section6_4'));
-const Module7Section6_5 = lazy(() => import('@/pages/apprentice-courses/Module7Section6_5'));
-const Level2Module7MockExam7 = lazy(
-  () => import('@/pages/apprentice-courses/Level2Module7MockExam7')
-);
-
 // Module 8 pages (Mock Exams)
 const Level2Module8Section1 = lazy(
   () => import('@/pages/apprentice-courses/Level2Module8Section1')
@@ -402,9 +342,6 @@ const Level2Module8MockExam4 = lazy(
 const Level2Module8MockExam5 = lazy(
   () => import('@/pages/apprentice-courses/Level2Module8MockExam5')
 );
-const Level2Module8MockExam6 = lazy(
-  () => import('@/pages/apprentice-courses/Level2Module8MockExam6')
-);
 const Level2Module8MockExam8 = lazy(
   () => import('@/pages/apprentice-courses/Level2Module8MockExam8')
 );
@@ -431,6 +368,7 @@ export default function Level2Routes() {
         <Route path="module1/section2/2-3" element={<Subsection7 />} />
         <Route path="module1/section2/2-4" element={<Subsection8 />} />
         <Route path="module1/section2/2-5" element={<Subsection9 />} />
+        <Route path="module1/section2/2-6" element={<Module1Section2_6 />} />
         <Route path="module1/section3" element={<Section3 />} />
         <Route path="module1/section3/3-1" element={<Subsection10 />} />
         <Route path="module1/section3/3-2" element={<Subsection11 />} />
@@ -557,12 +495,17 @@ export default function Level2Routes() {
         <Route path="module4/section2/2-2" element={<Module4Section2_2 />} />
         <Route path="module4/section2/2-3" element={<Module4Section2_3 />} />
         <Route path="module4/section2/2-4" element={<Module4Section2_4 />} />
+        <Route path="module4/section2/2-5" element={<Module4Section2_5 />} />
         <Route path="module4/section3" element={<Module4Section3 />} />
         <Route path="module4/section3/3-1" element={<Module4Section3_1 />} />
         <Route path="module4/section3/3-2" element={<Module4Section3_2 />} />
         <Route path="module4/section3/3-3" element={<Module4Section3_3 />} />
         <Route path="module4/section3/3-4" element={<Module4Section3_4 />} />
         <Route path="module4/section3/3-5" element={<Module4Section3_5 />} />
+        <Route path="module4/section3/3-6" element={<Module4Section3_6 />} />
+        <Route path="module4/section3/3-7" element={<Module4Section3_7 />} />
+        <Route path="module4/section3/3-8" element={<Module4Section3_8 />} />
+        <Route path="module4/section3/3-9" element={<Module4Section3_9 />} />
         <Route path="module4/section4" element={<Module4Section4 />} />
         <Route path="module4/section4/4-1" element={<Module4Section4_1 />} />
         <Route path="module4/section4/4-2" element={<Module4Section4_2 />} />
@@ -570,16 +513,11 @@ export default function Level2Routes() {
         <Route path="module4/section4/4-4" element={<Module4Section4_4 />} />
         <Route path="module4/section4/4-5" element={<Module4Section4_5 />} />
         <Route path="module4/section4/4-6" element={<Module4Section4_6 />} />
-        <Route path="module4/section4/4-7" element={<Module4Section4_7 />} />
         <Route path="module4/section5" element={<Module4Section5 />} />
         <Route path="module4/section5/5-1" element={<Module4Section5_1 />} />
         <Route path="module4/section5/5-2" element={<Module4Section5_2 />} />
         <Route path="module4/section5/5-3" element={<Module4Section5_3 />} />
         <Route path="module4/section5/5-4" element={<Module4Section5_4 />} />
-        <Route path="module4/section5/5-5" element={<Module4Section5_5 />} />
-        <Route path="module4/section5/5-6" element={<Module4Section5_6 />} />
-        <Route path="module4/section5/5-7" element={<Module4Section5_7 />} />
-        <Route path="module4/section5/5-8" element={<Module4Section5_8 />} />
         <Route path="module4/section6" element={<Module4Section6 />} />
         <Route path="module4/section6/6-1" element={<Module4Section6_1 />} />
         <Route path="module4/section6/6-2" element={<Module4Section6_2 />} />
@@ -587,14 +525,10 @@ export default function Level2Routes() {
         <Route path="module4/section6/6-4" element={<Module4Section6_4 />} />
         <Route path="module4/section6/6-5" element={<Module4Section6_5 />} />
         <Route path="module4/section6/6-6" element={<Module4Section6_6 />} />
-        <Route path="module4/section7" element={<Module4Section7 />} />
-        <Route path="module4/section7/7-1" element={<Module4Section7_1 />} />
-        <Route path="module4/section7/7-2" element={<Module4Section7_2 />} />
-        <Route path="module4/section7/7-3" element={<Module4Section7_3 />} />
-        <Route path="module4/section7/7-4" element={<Module4Section7_4 />} />
-        <Route path="module4/section7/7-5" element={<Module4Section7_5 />} />
+        <Route path="module4/section6/6-7" element={<Module4Section6_7 />} />
+        <Route path="module4/section6/6-8" element={<Module4Section6_8 />} />
 
-        {/* Module 5: Design & Planning */}
+        {/* Module 5: Communicate with others within building services engineering */}
         <Route path="module5" element={<Module5 />} />
         <Route path="module5/section1" element={<Module5Section1 />} />
         <Route path="module5/section1/1-1" element={<Module5Section1_1 />} />
@@ -602,43 +536,28 @@ export default function Level2Routes() {
         <Route path="module5/section1/1-3" element={<Module5Section1_3 />} />
         <Route path="module5/section1/1-4" element={<Module5Section1_4 />} />
         <Route path="module5/section1/1-5" element={<Module5Section1_5 />} />
-        <Route path="module5/section1/1-6" element={<Module5Section1_6 />} />
         <Route path="module5/section2" element={<Module5Section2 />} />
         <Route path="module5/section2/2-1" element={<Module5Section2_1 />} />
         <Route path="module5/section2/2-2" element={<Module5Section2_2 />} />
         <Route path="module5/section2/2-3" element={<Module5Section2_3 />} />
         <Route path="module5/section2/2-4" element={<Module5Section2_4 />} />
-        <Route path="module5/section2/2-5" element={<Module5Section2_5 />} />
         <Route path="module5/section3" element={<Module5Section3 />} />
         <Route path="module5/section3/3-1" element={<Module5Section3_1 />} />
         <Route path="module5/section3/3-2" element={<Module5Section3_2 />} />
         <Route path="module5/section3/3-3" element={<Module5Section3_3 />} />
         <Route path="module5/section3/3-4" element={<Module5Section3_4 />} />
         <Route path="module5/section3/3-5" element={<Module5Section3_5 />} />
-        <Route path="module5/section3/3-6" element={<Module5Section3_6 />} />
         <Route path="module5/section4" element={<Module5Section4 />} />
         <Route path="module5/section4/4-1" element={<Module5Section4_1 />} />
         <Route path="module5/section4/4-2" element={<Module5Section4_2 />} />
         <Route path="module5/section4/4-3" element={<Module5Section4_3 />} />
         <Route path="module5/section4/4-4" element={<Module5Section4_4 />} />
-        <Route path="module5/section4/4-5" element={<Module5Section4_5 />} />
         <Route path="module5/section5" element={<Module5Section5 />} />
         <Route path="module5/section5/5-1" element={<Module5Section5_1 />} />
         <Route path="module5/section5/5-2" element={<Module5Section5_2 />} />
         <Route path="module5/section5/5-3" element={<Module5Section5_3 />} />
         <Route path="module5/section5/5-4" element={<Module5Section5_4 />} />
         <Route path="module5/section5/5-5" element={<Module5Section5_5 />} />
-        <Route path="module5/section6" element={<Module5Section6 />} />
-        <Route path="module5/section6/6-1" element={<Module5Section6_1 />} />
-        <Route path="module5/section6/6-2" element={<Module5Section6_2 />} />
-        <Route path="module5/section6/6-3" element={<Module5Section6_3 />} />
-        <Route path="module5/section6/6-4" element={<Module5Section6_4 />} />
-        <Route path="module5/section7" element={<Module5Section7 />} />
-        <Route path="module5/section7/7-1" element={<Module5Section7_1 />} />
-        <Route path="module5/section7/7-2" element={<Module5Section7_2 />} />
-        <Route path="module5/section7/7-3" element={<Module5Section7_3 />} />
-        <Route path="module5/section7/7-4" element={<Module5Section7_4 />} />
-        <Route path="module5/section7/7-5" element={<Module5Section7_5 />} />
 
         {/* Module 6: Inspection & Testing */}
         <Route path="module6" element={<Module6 />} />
@@ -685,48 +604,6 @@ export default function Level2Routes() {
         <Route path="module6/section7/7-3" element={<Module6Section7_3 />} />
         <Route path="module6/section7/7-4" element={<Module6Section7_4 />} />
 
-        {/* Module 7: Fault Finding */}
-        <Route path="module7" element={<Module7 />} />
-        <Route path="module7/section1" element={<Module7Section1 />} />
-        <Route path="module7/section1/1-1" element={<Module7Section1_1 />} />
-        <Route path="module7/section1/1-2" element={<Module7Section1_2 />} />
-        <Route path="module7/section1/1-3" element={<Module7Section1_3 />} />
-        <Route path="module7/section1/1-4" element={<Module7Section1_4 />} />
-        <Route path="module7/section1/1-5" element={<Module7Section1_5 />} />
-        <Route path="module7/section2" element={<Module7Section2 />} />
-        <Route path="module7/section2/2-1" element={<Module7Section2_1 />} />
-        <Route path="module7/section2/2-2" element={<Module7Section2_2 />} />
-        <Route path="module7/section2/2-3" element={<Module7Section2_3 />} />
-        <Route path="module7/section2/2-4" element={<Module7Section2_4 />} />
-        <Route path="module7/section2/2-5" element={<Module7Section2_5 />} />
-        <Route path="module7/section2/2-6" element={<Module7Section2_6 />} />
-        <Route path="module7/section3" element={<Module7Section3 />} />
-        <Route path="module7/section3/3-1" element={<Module7Section3_1 />} />
-        <Route path="module7/section3/3-2" element={<Module7Section3_2 />} />
-        <Route path="module7/section3/3-3" element={<Module7Section3_3 />} />
-        <Route path="module7/section3/3-4" element={<Module7Section3_4 />} />
-        <Route path="module7/section3/3-5" element={<Module7Section3_5 />} />
-        <Route path="module7/section4" element={<Module7Section4 />} />
-        <Route path="module7/section4/4-1" element={<Module7Section4_1 />} />
-        <Route path="module7/section4/4-2" element={<Module7Section4_2 />} />
-        <Route path="module7/section4/4-3" element={<Module7Section4_3 />} />
-        <Route path="module7/section4/4-4" element={<Module7Section4_4 />} />
-        <Route path="module7/section4/4-5" element={<Module7Section4_5 />} />
-        <Route path="module7/section4/4-6" element={<Module7Section4_6 />} />
-        <Route path="module7/section5" element={<Module7Section5 />} />
-        <Route path="module7/section5/5-1" element={<Module7Section5_1 />} />
-        <Route path="module7/section5/5-2" element={<Module7Section5_2 />} />
-        <Route path="module7/section5/5-3" element={<Module7Section5_3 />} />
-        <Route path="module7/section5/5-4" element={<Module7Section5_4 />} />
-        <Route path="module7/section5/5-5" element={<Module7Section5_5 />} />
-        <Route path="module7/section6" element={<Module7Section6 />} />
-        <Route path="module7/section6/6-1" element={<Module7Section6_1 />} />
-        <Route path="module7/section6/6-2" element={<Module7Section6_2 />} />
-        <Route path="module7/section6/6-3" element={<Module7Section6_3 />} />
-        <Route path="module7/section6/6-4" element={<Module7Section6_4 />} />
-        <Route path="module7/section6/6-5" element={<Module7Section6_5 />} />
-        <Route path="module7/mock-exam-7" element={<Level2Module7MockExam7 />} />
-
         {/* Module 8: Mock Exams */}
         <Route path="module8" element={<Module8 />} />
         <Route path="module8/section1" element={<Level2Module8Section1 />} />
@@ -735,7 +612,6 @@ export default function Level2Routes() {
         <Route path="module8/section1/mock3" element={<Level2Module8MockExam3 />} />
         <Route path="module8/section1/mock4" element={<Level2Module8MockExam4 />} />
         <Route path="module8/section1/mock5" element={<Level2Module8MockExam5 />} />
-        <Route path="module8/section1/mock6" element={<Level2Module8MockExam6 />} />
         <Route path="module8/section1/mock8" element={<Level2Module8MockExam8 />} />
         <Route path="module8/section2" element={<Level2Module8Section2 />} />
         <Route path="module8/section2/section1" element={<Level2Module8Section2Section1 />} />

@@ -2237,7 +2237,7 @@ export const module3QuestionBank: QuestionBank[] = [
   // For brevity, I'll add a representative sample to show the continued structure:
 
   {
-    id: 200,
+    id: 301,
     question: 'What type of earthing system is most common in UK domestic installations?',
     options: ['TT system', 'TN-S system', 'TN-C-S system', 'IT system'],
     correctAnswer: 2,
@@ -2249,7 +2249,7 @@ export const module3QuestionBank: QuestionBank[] = [
   },
 
   {
-    id: 250,
+    id: 302,
     question:
       'Which standard specifically covers the selection and erection of electrical equipment?',
     options: ['BS 6351', 'BS 7671', 'BS 7909', 'BS 7430'],
@@ -3674,6 +3674,828 @@ export const module3QuestionBank: QuestionBank[] = [
     section: '3.6.5',
     difficulty: 'intermediate',
     topic: 'Certification Authority',
+  },
+
+  // ============================================================
+  // 50 ADDITIONAL QUESTIONS — Unit 203 LO/AC alignment (A4:2026)
+  // Tagged with Unit 203 LO/AC codes: '203-<LO>.<AC>'
+  // ============================================================
+
+  // ---- LO1: Industry regulations (8 questions) ----
+  {
+    id: 251,
+    question:
+      'Which of the following is a STATUTORY regulation that applies to electrical work in the UK?',
+    options: [
+      'BS 7671:2018+A4:2026',
+      'IET Guidance Note 3',
+      'The Electricity at Work Regulations 1989 (EAWR)',
+      'The IET On-Site Guide',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'EAWR 1989 is statutory law made under the Health and Safety at Work etc. Act 1974 — breach is a criminal offence. BS 7671, GN3 and OSG are non-statutory guidance documents.',
+    section: '203-1.1',
+    difficulty: 'basic',
+    topic: 'Statutory regulations',
+  },
+  {
+    id: 252,
+    question:
+      'Under the Health and Safety at Work etc. Act 1974, what duty does an employee owe whilst at work?',
+    options: [
+      'No duty — the employer carries all responsibility',
+      'A duty only to follow written procedures',
+      'A duty to take reasonable care for the health and safety of themselves and others affected by their acts or omissions',
+      'A duty only to report accidents',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Section 7 of HASAWA places a duty on every employee to take reasonable care for the health and safety of themselves and others, and to co-operate with the employer on health and safety matters.',
+    section: '203-1.1',
+    difficulty: 'intermediate',
+    topic: 'HASAWA employee duties',
+  },
+  {
+    id: 253,
+    question:
+      'Which non-statutory document is the recognised UK national standard for electrical installation design and erection?',
+    options: [
+      'The Building Regulations Approved Document P',
+      'BS 7671:2018+A4:2026 (IET Wiring Regulations)',
+      'EAWR 1989',
+      'CDM Regulations 2015',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS 7671:2018+A4:2026 is the UK national standard for low-voltage electrical installation. It is non-statutory but compliance is the recognised method of meeting EAWR Regulation 4(1) for installation safety.',
+    section: '203-1.2',
+    difficulty: 'basic',
+    topic: 'BS 7671',
+  },
+  {
+    id: 254,
+    question:
+      'Which IET publication gives practical guidance on inspection, testing and certification of installations?',
+    options: [
+      'On-Site Guide (OSG)',
+      'Guidance Note 3 — Inspection & Testing',
+      'Guidance Note 1 — Selection & Erection',
+      'BS EN 60617',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Guidance Note 3 (GN3) covers initial verification, periodic inspection and the test sequence. The OSG is a simplified design and installation guide; GN1 covers selection & erection of equipment.',
+    section: '203-1.2',
+    difficulty: 'basic',
+    topic: 'IET Guidance Notes',
+  },
+  {
+    id: 255,
+    question:
+      'A breach of the Electricity at Work Regulations 1989 can result in which of the following?',
+    options: [
+      'Only a written warning from the HSE',
+      'A civil claim only',
+      'Criminal prosecution, including fines and imprisonment',
+      'Removal from the JIB grading scheme only',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'EAWR 1989 is statutory law. Breach is a criminal offence prosecuted by the HSE — penalties include unlimited fines and, for serious breaches, imprisonment.',
+    section: '203-1.3',
+    difficulty: 'intermediate',
+    topic: 'EAWR enforcement',
+  },
+  {
+    id: 256,
+    question:
+      'The Building Regulations Approved Document P applies to fixed electrical work in which type of premises in England?',
+    options: [
+      'Commercial premises only',
+      'Industrial premises only',
+      'Dwellings (domestic premises)',
+      'Hospitals only',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Approved Document P of the Building Regulations applies to fixed electrical installations in dwellings in England. Notifiable work must either be carried out by a registered Competent Person or notified to building control.',
+    section: '203-1.3',
+    difficulty: 'basic',
+    topic: 'Building Regs Part P',
+  },
+  {
+    id: 257,
+    question:
+      'What is the practical implication for an electrician who is NOT registered with a Competent Person Scheme (e.g. NICEIC, NAPIT, ELECSA) when undertaking notifiable Part P work?',
+    options: [
+      'No implication — the work can still be self-certified',
+      'The work must be notified to local authority Building Control before commencement and a third-party inspection arranged',
+      'The work cannot be carried out at all',
+      'Only the customer needs to notify the supplier',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A non-registered installer must notify Building Control in advance of notifiable work; Building Control will charge for inspection and a third-party Electrical Installation Certificate may be required. Registered Competent Persons can self-certify.',
+    section: '203-1.4',
+    difficulty: 'intermediate',
+    topic: 'Competent Person Schemes',
+  },
+  {
+    id: 258,
+    question:
+      'Why is following the IET On-Site Guide considered good industry practice even though it is non-statutory?',
+    options: [
+      'It is the only document that allows certification',
+      'It provides simplified, deemed-to-satisfy guidance for common installations consistent with BS 7671',
+      'It overrides BS 7671 in all cases',
+      'It is published by the HSE',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The OSG provides deemed-to-satisfy tables and guidance for typical small installations that comply with BS 7671. Following it gives a defensible audit trail; BS 7671 itself remains the underlying standard.',
+    section: '203-1.4',
+    difficulty: 'intermediate',
+    topic: 'OSG deemed-to-satisfy',
+  },
+
+  // ---- LO2: Technical information and drawings (8 questions) ----
+  {
+    id: 259,
+    question:
+      'Which document on a construction site sets out the safe systems of work, hazards and control measures for a specific task?',
+    options: [
+      'The schematic diagram',
+      'The Risk Assessment & Method Statement (RAMS)',
+      'The block diagram',
+      'The bill of quantities',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'RAMS combine the risk assessment (hazards, who is at risk, controls) with the method statement (the agreed sequence of work). They are required under the Management of Health and Safety at Work Regulations 1999.',
+    section: '203-2.1',
+    difficulty: 'basic',
+    topic: 'Sources of technical information',
+  },
+  {
+    id: 260,
+    question:
+      'On a construction project, which document shows the architect-specified positions of accessories such as socket-outlets, switches and luminaires?',
+    options: [
+      'The block diagram',
+      'The schematic diagram',
+      'The layout (general arrangement) drawing',
+      'The wiring diagram',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Layout drawings (general arrangement) show the physical positions of accessories overlaid on the building plan. Schematics show how circuits are connected logically; wiring diagrams show actual conductor connections.',
+    section: '203-2.1',
+    difficulty: 'intermediate',
+    topic: 'Drawing pack purpose',
+  },
+  {
+    id: 261,
+    question:
+      'A drawing that uses single lines and standard symbols to show how circuits and equipment are connected logically — without showing physical positions — is called a:',
+    options: [
+      'Layout drawing',
+      'Schematic (single-line) diagram',
+      'Block diagram',
+      'Detail drawing',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A schematic / single-line diagram uses one line per circuit with BS EN 60617 symbols to show electrical relationships. It is the primary diagram type used for distribution boards and switchgear.',
+    section: '203-2.2',
+    difficulty: 'basic',
+    topic: 'Drawing types',
+  },
+  {
+    id: 262,
+    question:
+      'What is the primary purpose of a BLOCK diagram in an electrical drawing pack?',
+    options: [
+      'To show every conductor termination',
+      'To show the overall system at a high level — major items and their interconnections — without internal detail',
+      'To show wall positions of accessories',
+      'To replace the schematic in all cases',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A block diagram shows the system at the top level — e.g. supply intake → meter → main switch → distribution boards — using simple labelled rectangles. Detail is then expanded in schematics and wiring diagrams.',
+    section: '203-2.2',
+    difficulty: 'intermediate',
+    topic: 'Block diagrams',
+  },
+  {
+    id: 263,
+    question:
+      'BS EN 60617 is the standard that defines what for electrical drawings?',
+    options: [
+      'The cable colour code',
+      'Graphical symbols used in electrical and electronic schematic and wiring diagrams',
+      'The format of the Electrical Installation Certificate',
+      'Cable current-carrying capacity',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BS EN 60617 specifies the standard graphical symbols (e.g. resistor, switch, socket, fuse, motor, transformer) used across electrical and electronic schematics so that drawings are interpreted consistently.',
+    section: '203-2.3',
+    difficulty: 'basic',
+    topic: 'BS EN 60617',
+  },
+  {
+    id: 264,
+    question:
+      'Which BS EN 60617 symbol represents a switched socket-outlet on a layout drawing?',
+    options: [
+      'A circle bisected by a horizontal diameter line',
+      'A semi-circle on a horizontal line, with a short stroke through it (denoting the switch)',
+      'A square with a cross inside',
+      'A triangle with a line through it',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The standard symbol for a socket-outlet is a semi-circle sitting on a horizontal line; an additional short stroke through it indicates a switched (controlled) socket-outlet. Multiple short strokes denote multi-gang.',
+    section: '203-2.3',
+    difficulty: 'intermediate',
+    topic: 'Drawing symbols',
+  },
+  {
+    id: 265,
+    question:
+      'A drawing is produced at a scale of 1:50. A wall measures 80 mm on the drawing. What is the actual length of the wall?',
+    options: ['1.6 m', '4.0 m', '40 m', '8 m'],
+    correctAnswer: 1,
+    explanation:
+      'At 1:50, every 1 mm on the drawing represents 50 mm on site. 80 mm × 50 = 4,000 mm = 4.0 m.',
+    section: '203-2.4',
+    difficulty: 'intermediate',
+    topic: 'Scale conversion',
+  },
+  {
+    id: 266,
+    question:
+      'On a 1:100 scale layout drawing, you measure the distance between two socket-outlets as 35 mm. How far apart are they on site?',
+    options: ['0.35 m', '3.5 m', '35 m', '350 mm'],
+    correctAnswer: 1,
+    explanation:
+      'At 1:100, each 1 mm on paper = 100 mm on site. 35 mm × 100 = 3,500 mm = 3.5 m.',
+    section: '203-2.4',
+    difficulty: 'basic',
+    topic: 'Scale conversion',
+  },
+
+  // ---- LO3: Wiring systems theory — under-served ACs (4 questions) ----
+  {
+    id: 267,
+    question:
+      'In a RING final circuit wired in 2.5 mm² twin & earth, the line, neutral and CPC conductors each form a complete loop back to the consumer unit. What is the maximum standard rating of the protective device for a 32 A ring final circuit serving socket-outlets in a domestic dwelling?',
+    options: ['16 A', '20 A', '32 A', '40 A'],
+    correctAnswer: 2,
+    explanation:
+      'The standard A2 ring final circuit uses a 32 A overcurrent device (typically Type B MCB) with 2.5 mm² T&E and 1.5 mm² CPC. This is the OSG Table 7.1 / Appendix 15 of BS 7671 standard arrangement.',
+    section: '203-3.1',
+    difficulty: 'basic',
+    topic: 'Ring final circuit',
+  },
+  {
+    id: 268,
+    question:
+      'What is the principal advantage of a RADIAL final circuit over a ring final circuit for socket-outlets?',
+    options: [
+      'It always carries more current',
+      'Simpler fault-finding — a single break interrupts only the outlets downstream of the break, and there is only one route to test',
+      'It does not need a CPC',
+      'It does not need an RCD',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A radial circuit has a single feed and end — easier to test and fault-find than a ring (which can mask a break in continuity until tested at end-to-end and r1+r2). Both still require RCD additional protection per Reg 411.3.3.',
+    section: '203-3.1',
+    difficulty: 'intermediate',
+    topic: 'Radial vs ring',
+  },
+  {
+    id: 269,
+    question:
+      'The space factor (cable percentage fill) for a STRAIGHT run of trunking, per the IET On-Site Guide, should not exceed:',
+    options: ['20%', '35%', '45%', '60%'],
+    correctAnswer: 2,
+    explanation:
+      'OSG Appendix E gives a maximum 45% space factor for cables in straight runs of trunking. This allows for heat dissipation, future additions, and ease of cable installation.',
+    section: '203-3.6',
+    difficulty: 'intermediate',
+    topic: 'Trunking space factor',
+  },
+  {
+    id: 270,
+    question:
+      'Using the IET On-Site Guide cable factor / conduit factor method, what is the rule for a conduit run that contains BENDS or sets and is longer than ~3 m?',
+    options: [
+      'Use the straight-run conduit factor unchanged',
+      'Use the appropriate factor from the bends table for the run length and number of bends, which gives a smaller permitted fill',
+      'Always use 45%',
+      'Bends never affect the calculation',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'OSG Appendix E gives separate cable and conduit factor tables for runs containing bends. The tabulated factors reduce as length and number of bends increase, reflecting the increased pulling tension required.',
+    section: '203-3.6',
+    difficulty: 'advanced',
+    topic: 'Conduit fill — bends',
+  },
+
+  // ---- LO4: Earthing systems and ADS (10 questions) ----
+  {
+    id: 271,
+    question:
+      'BS 7671:2018+A4:2026 Regulation 312.2.1 recognises five UK earthing arrangements. Which of the following lists is correct?',
+    options: [
+      'TN-S, TN-C-S (PME), TN-C-S (PNB), TT, IT',
+      'TN-S, TN-C, TT, IT, PME',
+      'TN, TT, IT, PME, PNB',
+      'TN-S, TN-C-S, TT, IT, hybrid',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Reg 312.2.1 of A4:2026 recognises TN-S, TN-C-S in its PME variant, TN-C-S in its PNB sub-arrangement (newly figured at 312.2.1.1), TT and IT. PNB is a TN-C-S where the N-E link is made within the consumer\u2019s installation.',
+    section: '203-4.1',
+    difficulty: 'intermediate',
+    topic: 'Earthing arrangements',
+  },
+  {
+    id: 272,
+    question:
+      'In a TN-S system, where does the protective conductor (earth) originate?',
+    options: [
+      'A consumer-installed earth electrode at the property',
+      'A separate metallic protective conductor (typically the cable sheath) supplied by the DNO from the substation',
+      'The combined PEN conductor of the supply',
+      'The neutral terminal of the consumer unit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'TN-S has a SEPARATE earth provided by the DNO — historically the lead sheath of the supply cable. The earth and neutral are separate throughout. PME (TN-C-S) combines them in the supply (PEN) and splits at the cut-out.',
+    section: '203-4.1',
+    difficulty: 'intermediate',
+    topic: 'TN-S vs TN-C-S',
+  },
+  {
+    id: 273,
+    question:
+      'Automatic Disconnection of Supply (ADS) under Reg 411 requires which three coordinated elements to function correctly?',
+    options: [
+      'An RCD, a smoke alarm, and a main switch',
+      'Earthing of exposed-conductive-parts, protective equipotential bonding, and a protective device that disconnects in the required time',
+      'A surge protective device, an AFDD, and a fuse',
+      'A ring main, a radial circuit, and a sub-main',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'ADS relies on (1) reliable earthing of exposed-conductive-parts (Reg 411.3.1.1), (2) main protective equipotential bonding (Reg 411.3.1.2) and (3) an overcurrent device or RCD that disconnects within the time limits of Reg 411.3.2 (e.g. 0.4 s for final circuits ≤ 32 A on TN systems).',
+    section: '203-4.2',
+    difficulty: 'intermediate',
+    topic: 'ADS components',
+  },
+  {
+    id: 274,
+    question:
+      'On a TN system, what is the maximum disconnection time required by Reg 411.3.2.2 for a final circuit of nominal voltage 230 V AC and rating not exceeding 32 A?',
+    options: ['0.1 s', '0.4 s', '1.0 s', '5.0 s'],
+    correctAnswer: 1,
+    explanation:
+      'Reg 411.3.2.2 of BS 7671:2018+A4:2026 sets a maximum disconnection time of 0.4 s for TN final circuits ≤ 32 A at 230 V AC. Distribution circuits may have up to 5 s (Reg 411.3.2.3).',
+    section: '203-4.2',
+    difficulty: 'basic',
+    topic: 'Disconnection time',
+  },
+  {
+    id: 275,
+    question:
+      'Which of the following is an EXPOSED conductive part as defined in BS 7671?',
+    options: [
+      'A copper water service pipe entering the building',
+      'The metal casing of a Class I appliance',
+      'A structural steel beam in the loft',
+      'The plastic enclosure of a consumer unit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An exposed-conductive-part is a conductive part of equipment that can be touched and which is NOT normally live but may become live under fault conditions — e.g. the metal case of a Class I appliance or a metal switchgear enclosure.',
+    section: '203-4.3',
+    difficulty: 'basic',
+    topic: 'Exposed conductive parts',
+  },
+  {
+    id: 276,
+    question:
+      'Why are EXPOSED conductive parts of a Class I appliance required to be connected to the protective earthing system?',
+    options: [
+      'To lower the operating current',
+      'To create a low-impedance fault path so that the protective device disconnects within the required time during an L–earth fault',
+      'To reduce voltage drop',
+      'To improve power factor',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Earthing exposed-conductive-parts creates the low-impedance loop required by ADS (Reg 411). On an L-to-case fault, sufficient current flows for the overcurrent device or RCD to disconnect within the time limits of Reg 411.3.2.',
+    section: '203-4.3',
+    difficulty: 'intermediate',
+    topic: 'Earthing of exposed parts',
+  },
+  {
+    id: 277,
+    question:
+      'Which of the following is most likely to be an EXTRANEOUS conductive part in a domestic dwelling?',
+    options: [
+      'A copper-clad fridge',
+      'A 22 mm copper incoming water service pipe',
+      'A PVC waste pipe',
+      'A timber stud wall',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'An extraneous-conductive-part is a conductive part NOT forming part of the electrical installation but liable to introduce a potential, generally earth potential — typically a metallic incoming water or gas service. It is connected by main protective bonding (Reg 411.3.1.2).',
+    section: '203-4.4',
+    difficulty: 'basic',
+    topic: 'Extraneous conductive parts',
+  },
+  {
+    id: 278,
+    question:
+      'What is the minimum cross-sectional area of a copper main protective bonding conductor in a typical TN-C-S (PME) installation with a 25 mm² supply neutral?',
+    options: ['4 mm²', '6 mm²', '10 mm²', '16 mm²'],
+    correctAnswer: 2,
+    explanation:
+      'For PME/TN-C-S, BS 7671 Table 54.8 sizes the main protective bonding conductor against the supply neutral. For a 25 mm² neutral, the minimum copper main bonding csa is 10 mm².',
+    section: '203-4.4',
+    difficulty: 'advanced',
+    topic: 'Main bonding sizing',
+  },
+  {
+    id: 279,
+    question:
+      'In a TN-S system, which of the following is NOT part of the earth fault loop impedance (Zs) path?',
+    options: [
+      'The line conductor from origin to fault',
+      'The CPC from the fault back to the MET',
+      'The earthing conductor and the supply transformer winding earth path',
+      'The consumer\u2019s incoming neutral conductor',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'In TN-S, the fault current returns via the SEPARATE PE (sheath) — NOT via the neutral. So Zs = Ze (external) + R1 (line) + R2 (CPC). In TN-C-S the PEN combines the return path until the cut-out, but the consumer\u2019s neutral inside the installation is still not part of the fault loop.',
+    section: '203-4.5',
+    difficulty: 'advanced',
+    topic: 'Earth fault loop path',
+  },
+  {
+    id: 280,
+    question:
+      'A 32 A Type B MCB protects a final circuit on a TN system. Per BS 7671:2018+A4:2026 Table 41.3, what is the maximum permitted measured Zs (corrected for conductor temperature) to satisfy the 0.4 s disconnection requirement?',
+    options: ['0.72 Ω', '1.09 Ω', '1.37 Ω', '2.19 Ω'],
+    correctAnswer: 2,
+    explanation:
+      'Table 41.3 of A4:2026 gives 1.37 Ω for a 32 A Type B MCB at 230 V (Note: this REPLACES the older A2 figure of 1.44 Ω). Other Type B values: B6=7.28, B10=4.37, B16=2.73, B20=2.19, B40=1.09 Ω.',
+    section: '203-4.5',
+    difficulty: 'advanced',
+    topic: 'Table 41.3 — B32 Zs',
+  },
+
+  // ---- LO5: Supply network (10 questions) ----
+  {
+    id: 281,
+    question:
+      'Which of the following is NOT a method of large-scale electricity generation supplying the UK National Grid?',
+    options: [
+      'Combined-cycle gas turbine (CCGT)',
+      'Nuclear fission',
+      'Offshore wind',
+      'Domestic Class 2 double-insulated lighting',
+    ],
+    correctAnswer: 3,
+    explanation:
+      'CCGT, nuclear and offshore wind are all major UK grid generation methods. Class 2 double-insulated lighting is a method of shock protection on a final circuit — it is not a generation method.',
+    section: '203-5.1',
+    difficulty: 'basic',
+    topic: 'Generation methods',
+  },
+  {
+    id: 282,
+    question:
+      'Why is electricity transmitted across the National Grid at very high voltages (e.g. 400 kV / 275 kV) rather than at 230 V?',
+    options: [
+      'To reduce the size of household appliances',
+      'To minimise I²R (resistive) losses in the transmission conductors for a given amount of power',
+      'To allow direct connection of TT systems',
+      'To avoid using transformers',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'For a fixed power P = V × I, raising V drops I. Resistive losses are proportional to I², so transmitting at high voltage and low current dramatically reduces line losses. Voltage is then stepped down at substations.',
+    section: '203-5.1',
+    difficulty: 'intermediate',
+    topic: 'Transmission losses',
+  },
+  {
+    id: 283,
+    question:
+      'A small hydroelectric scheme uses which energy conversion sequence?',
+    options: [
+      'Chemical → thermal → electrical',
+      'Kinetic (water) → mechanical (turbine/generator) → electrical',
+      'Solar → thermal → electrical',
+      'Nuclear → thermal → electrical',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Hydro converts the kinetic/potential energy of falling or flowing water into mechanical rotation of a turbine coupled to a generator, producing electricity. No combustion is involved.',
+    section: '203-5.1',
+    difficulty: 'basic',
+    topic: 'Hydro generation',
+  },
+  {
+    id: 284,
+    question:
+      'What are the three principal AC TRANSMISSION voltages used on the UK Grid (above the 132 kV distribution level)?',
+    options: [
+      '11 kV, 33 kV, 132 kV',
+      '132 kV, 275 kV, 400 kV',
+      '400 V, 11 kV, 33 kV',
+      '230 V, 400 V, 11 kV',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'UK transmission is at 132 kV, 275 kV and 400 kV (the 400 kV "Supergrid" being the highest). 33 kV and 11 kV are sub-transmission/distribution voltages; 400/230 V is the final LV distribution.',
+    section: '203-5.2',
+    difficulty: 'basic',
+    topic: 'Transmission voltages',
+  },
+  {
+    id: 285,
+    question:
+      'What is the purpose of operating long-distance transmission as 3-phase AC rather than single-phase?',
+    options: [
+      'It eliminates the need for transformers',
+      'It produces a constant total power transfer, allows smaller conductors per kW transmitted, and enables efficient rotating-field motors',
+      'It uses fewer protective devices',
+      'It avoids the need for earthing',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Three-phase AC delivers near-constant instantaneous power, requires less conductor mass per unit power than equivalent single-phase, and naturally drives 3-phase induction motors via a rotating magnetic field.',
+    section: '203-5.2',
+    difficulty: 'intermediate',
+    topic: 'Three-phase transmission',
+  },
+  {
+    id: 286,
+    question:
+      'In the UK, what is the standard nominal LV DISTRIBUTION voltage delivered to the consumer (single-phase line-to-neutral)?',
+    options: ['110 V', '230 V', '400 V', '11 kV'],
+    correctAnswer: 1,
+    explanation:
+      'UK nominal single-phase LV is 230 V (line-to-neutral), with the corresponding 3-phase line-to-line at 400 V. Tolerance is +10 % / −6 % per ESQCR. 11 kV is a primary distribution voltage at the substation side.',
+    section: '203-5.3',
+    difficulty: 'basic',
+    topic: 'LV distribution voltage',
+  },
+  {
+    id: 287,
+    question:
+      'Primary distribution from a Bulk Supply Point to a primary substation in an urban area is typically operated at which voltage?',
+    options: ['230 V', '400 V', '11 kV or 33 kV', '275 kV'],
+    correctAnswer: 2,
+    explanation:
+      'Primary distribution is typically 33 kV (rural/urban backbone) stepped down to 11 kV for local distribution. 11 kV/400 V transformers at the secondary substation feed the LV network to consumers.',
+    section: '203-5.3',
+    difficulty: 'intermediate',
+    topic: 'Distribution voltage',
+  },
+  {
+    id: 288,
+    question:
+      'Which body OWNS and OPERATES the local LV cables, the cut-out and the supply fuse on the customer side of the meter boundary?',
+    options: [
+      'The customer',
+      'The electricity supplier (e.g. Octopus, British Gas)',
+      'The Distribution Network Operator (DNO)',
+      'National Grid ESO only',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'The DNO owns and maintains the LV network up to and including the cut-out and supply fuse. The supplier owns the meter (or the MOP does on their behalf). Everything past the meter tails is the customer\u2019s installation.',
+    section: '203-5.4',
+    difficulty: 'intermediate',
+    topic: 'DNO boundary',
+  },
+  {
+    id: 289,
+    question:
+      'Place these in the correct order from generation to consumer:',
+    options: [
+      'Generator → distribution substation → grid supply point → transmission lines → consumer',
+      'Generator → step-up transformer → transmission lines → grid supply point → primary substation → secondary (11 kV/400 V) substation → consumer',
+      'Generator → consumer → transformer → grid',
+      'Consumer → secondary substation → primary substation → generator',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Power flow is: generation → step-up transformer (to 275/400 kV) → transmission → grid supply point (down to 132 kV / 33 kV) → primary substation (11 kV) → secondary substation (400 V LV) → consumer service cable → cut-out → meter → consumer unit.',
+    section: '203-5.4',
+    difficulty: 'intermediate',
+    topic: 'Network end-to-end',
+  },
+  {
+    id: 290,
+    question:
+      'On the consumer side of a typical UK domestic LV supply, in what order does the supply pass from the street into the consumer unit?',
+    options: [
+      'Service cable → cut-out (with DNO fuse) → meter → meter tails → main switch in consumer unit',
+      'Meter → cut-out → consumer unit → service cable',
+      'Service cable → consumer unit → meter → cut-out',
+      'Cut-out → consumer unit → meter → service cable',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The DNO service cable terminates at the cut-out (containing the DNO\u2019s service-protection fuse). Meter tails connect cut-out → meter → main switch of the consumer unit. The MET is bonded near the cut-out.',
+    section: '203-5.4',
+    difficulty: 'basic',
+    topic: 'Domestic intake order',
+  },
+
+  // ---- LO6: Micro-renewable energy (10 questions) ----
+  {
+    id: 291,
+    question:
+      'A solar photovoltaic (PV) array converts which form of energy directly into DC electricity?',
+    options: [
+      'Heat from the sun',
+      'Photons (light) striking a semiconductor junction',
+      'Wind passing over the panels',
+      'Magnetic flux from the earth',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'PV cells use the photovoltaic effect: photons striking a doped semiconductor (typically silicon) excite electrons across the p–n junction, producing a DC voltage. Cells are wired into modules and arrays, then converted to AC by an inverter.',
+    section: '203-6.1',
+    difficulty: 'basic',
+    topic: 'Solar PV principle',
+  },
+  {
+    id: 292,
+    question:
+      'A small domestic micro-wind turbine converts which energy sequence?',
+    options: [
+      'Chemical → electrical',
+      'Wind kinetic → mechanical (rotor/generator) → electrical (typically AC, then rectified/inverted as required)',
+      'Thermal → electrical',
+      'Light → electrical',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A micro-wind turbine uses aerofoil blades to convert wind kinetic energy into rotational mechanical energy, driving a generator (often a permanent-magnet alternator). Output is conditioned by an inverter for grid-tie or battery use.',
+    section: '203-6.1',
+    difficulty: 'basic',
+    topic: 'Micro-wind',
+  },
+  {
+    id: 293,
+    question:
+      'A ground source heat pump (GSHP) is best described as a:',
+    options: [
+      'Generation technology that produces electricity for export',
+      'Heat-transfer technology that uses electrical energy to move thermal energy from the ground into the building, with a typical CoP of 3–4',
+      'Combustion device that burns ground gas',
+      'Photovoltaic device',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A heat pump moves heat rather than generating electricity. A GSHP uses a refrigeration cycle to transfer low-grade heat from the ground (via a buried collector loop) into the building. Coefficient of Performance (CoP) is typically 3–4 — i.e. 3–4 kW of heat per 1 kW of electricity.',
+    section: '203-6.1',
+    difficulty: 'intermediate',
+    topic: 'Heat pumps',
+  },
+  {
+    id: 294,
+    question:
+      'Battery Energy Storage Systems (BESS) installed alongside domestic PV provide which primary benefit?',
+    options: [
+      'They generate additional electricity from sunlight',
+      'They store excess generation for use at times of low generation or high tariff, increasing self-consumption',
+      'They replace the need for an earth electrode',
+      'They eliminate the need for an isolator',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'BESS stores DC energy (typically Li-ion) so that excess PV generation in the day can be discharged at night or during peak tariff periods, raising self-consumption from ~30 % to ~70 %+. They do not generate energy themselves.',
+    section: '203-6.1',
+    difficulty: 'intermediate',
+    topic: 'Battery storage',
+  },
+  {
+    id: 295,
+    question:
+      'A grid-connected PV inverter rated up to 16 A per phase (single-phase) requires which type of connection agreement with the DNO?',
+    options: [
+      'No notification needed',
+      'Connect-and-notify under Engineering Recommendation G98',
+      'Pre-application under Engineering Recommendation G99',
+      'Building Control sign-off only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'EREC G98 covers connect-and-notify for fully type-tested generation up to 16 A per phase per inverter (single- or three-phase). Larger or non-type-tested generation requires G99 (pre-application). MCS sign-off is also required for FiT/SEG eligibility.',
+    section: '203-6.2',
+    difficulty: 'intermediate',
+    topic: 'G98 / G99',
+  },
+  {
+    id: 296,
+    question:
+      'Which BS 7671 section gives the specific requirements for solar PV power supply systems?',
+    options: [
+      'Section 705',
+      'Section 712',
+      'Section 722',
+      'Section 743',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Section 712 of BS 7671 covers solar photovoltaic (PV) power supply systems. Section 705 covers agricultural premises, 722 covers EV charging, and 743 covers PV string isolation and rapid shutdown additions (newer A4:2026 work).',
+    section: '203-6.2',
+    difficulty: 'basic',
+    topic: 'BS 7671 Section 712',
+  },
+  {
+    id: 297,
+    question:
+      'For a PV installation to qualify for the Smart Export Guarantee (SEG) and other consumer protections, the installer and product must typically be certified under which UK scheme?',
+    options: [
+      'JIB graded only',
+      'MCS (Microgeneration Certification Scheme)',
+      'CHAS only',
+      'NICEIC Approved Contractor only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'MCS certification of both the installer and the product is the standard route to SEG eligibility and consumer protections. NICEIC/NAPIT registration covers electrical competence; MCS adds the renewables-specific scheme.',
+    section: '203-6.2',
+    difficulty: 'intermediate',
+    topic: 'MCS certification',
+  },
+  {
+    id: 298,
+    question:
+      'Which of the following is a well-recognised ADVANTAGE of solar PV for a domestic customer?',
+    options: [
+      'Generation is constant 24 hours a day',
+      'Zero-carbon, zero-fuel-cost generation during daylight, with very low maintenance and a typical 25-year module performance warranty',
+      'Eliminates the need for a consumer unit',
+      'Removes the requirement for any DNO notification',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'PV produces zero-carbon electricity at zero fuel cost while the sun shines, with no moving parts, very low maintenance, and module performance warranties typically 25 years (~80 % output retained). It is intermittent, not 24/7.',
+    section: '203-6.3',
+    difficulty: 'basic',
+    topic: 'PV advantages',
+  },
+  {
+    id: 299,
+    question:
+      'Which of the following is a common DISADVANTAGE shared by both micro-wind and solar PV?',
+    options: [
+      'They require gas supplies',
+      'They are intermittent — output depends on weather and time of day, so storage or grid backup is needed for continuous supply',
+      'They cannot be earthed',
+      'They are not allowed in the UK',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Both PV and wind are weather-dependent and intermittent. Continuity of supply requires either grid back-up or local storage (BESS). This is why design has shifted toward hybrid PV + battery systems.',
+    section: '203-6.3',
+    difficulty: 'intermediate',
+    topic: 'Renewables intermittency',
+  },
+  {
+    id: 300,
+    question:
+      'A homeowner is considering air source heat pump (ASHP) versus a gas combi boiler for heating. Which statement best summarises the trade-off?',
+    options: [
+      'ASHP always costs less to run regardless of building condition',
+      'ASHP delivers 3–4 kWh of heat per 1 kWh electrical input (high efficiency) but works best in well-insulated dwellings with low flow temperatures (~45 °C); a poorly insulated house with high-temperature radiators can negate the running-cost advantage',
+      'Gas combi boilers are zero-carbon',
+      'ASHP cannot be installed in the UK',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A heat pump\u2019s CoP (typically 3–4) gives a strong efficiency advantage, but only when the building fabric and emitter design (oversized radiators or underfloor heating with low flow temperatures) suit low-temperature heat. Without that, running costs can be comparable to or worse than gas.',
+    section: '203-6.3',
+    difficulty: 'advanced',
+    topic: 'Heat pump trade-offs',
   },
 ];
 

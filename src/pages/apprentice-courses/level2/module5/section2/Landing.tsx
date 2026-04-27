@@ -1,4 +1,4 @@
-import { Scale, FileText, Receipt, BookMarked } from 'lucide-react';
+import { Scale, ShieldCheck, Gavel, Users } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
 import { SectionShell } from '@/components/study-centre/shells';
 
@@ -7,32 +7,32 @@ const subsections = [
     number: '2.1',
     title: 'Statutory legislation and guidance (2.1)',
     description:
-      'HASAWA, EAWR, BS 7671, HSE guidance — the legal and technical documents you have to know exist and where to find them.',
+      'Three layers — statutory law, HSE guidance, industry standards. Where HASAWA, EAWR, CDM, BS 7671 and Approved Document P sit, and which ones a court treats as binding.',
     icon: Scale,
     href: '2-1',
   },
   {
     number: '2.2',
-    title: 'Workplace information (2.2)',
+    title: 'HASAWA & EAWR — your duties',
     description:
-      'Drawings, specs, RAMS, work instructions, schedules — the day-to-day paperwork that tells you what to do and how.',
-    icon: FileText,
+      'The personal-duty layer. HASAWA s.7, s.8 and s.37, and EAWR Reg 3, Reg 14 and Reg 16 — what they require of you on Monday morning, and what happens if you breach them.',
+    icon: ShieldCheck,
     href: '2-2',
   },
   {
     number: '2.3',
-    title: 'Customer-facing information (2.3)',
+    title: 'HSE vs Local Authority enforcement',
     description:
-      'Quotes, invoices, certificates and handover documents — what the customer gets and why each one matters.',
-    icon: Receipt,
+      'Who turns up after an incident. HSE inspectors for higher-risk premises, Local Authority EHOs for lower-risk. Powers under HASAWA s.20-22 and s.33, and the RIDDOR reporting that brings them in.',
+    icon: Gavel,
     href: '2-3',
   },
   {
     number: '2.4',
-    title: 'Company policies and procedures (2.4)',
+    title: 'Equality Act 2010 — fair treatment on site',
     description:
-      'The internal rules that govern how your firm works — equality, dignity at work, disciplinary, IT and social media policies.',
-    icon: BookMarked,
+      'Level 2 awareness — nine protected characteristics, reasonable adjustments for disabled workers, harassment, the banter trap and the apprentice\'s own legal exposure.',
+    icon: Users,
     href: '2-4',
   },
 ];
@@ -44,8 +44,8 @@ export default function Section2() {
       backLabel="Module 5"
       moduleNumber={5}
       sectionNumber={2}
-      title="Information sources"
-      description="Statutory law, workplace paperwork, customer-facing documents and company policies — aligned to LO2 of Unit 210."
+      title="Statutory & regulatory framework"
+      description="The legal landscape an electrician works inside — statute, guidance and standard, your personal duties, who enforces it, and the Equality Act floor for fair treatment on site."
       tone="emerald"
       subsectionsCount={subsections.length}
       prevSectionHref="../section1"
@@ -55,16 +55,18 @@ export default function Section2() {
       aboveGrid={
         <div className="max-w-3xl space-y-3 pt-2">
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
-            Information on a job site comes from four directions — government and
-            standards bodies set the legal floor, the design office sends the drawings,
-            the customer signs off the quote and the certificate, and your own company
-            sets the rules everyone's expected to follow.
+            Section 2 is the legal floor every electrician works on. Sub 2.1 is the
+            mapped 210 AC — the three layers of rule (statutory, guidance, standard)
+            and how BS 7671 sits inside the statutory Building Regulations regime.
+            Subs 2.2 to 2.4 are supplementary — they extend Sub 2.1 with the personal-
+            duty layer, the enforcement layer, and the Equality Act floor for fair
+            treatment on site.
           </p>
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
-            Sub 2.1 is statutory — the legislation and guidance you'll cite when
-            something goes wrong. Sub 2.2 is workplace — drawings, specs and RAMS. Sub
-            2.3 is the customer-facing paperwork. Sub 2.4 finishes on the company
-            policies that quietly shape every working relationship on site.
+            The point of the section is to leave you able to answer four questions in
+            plain English on a job. What law applies to what I&apos;m doing? What does
+            it require of ME, personally? Who shows up if it goes wrong? And how do
+            people on site have to treat each other under the Equality Act?
           </p>
         </div>
       }

@@ -3,9 +3,7 @@ import {
   Zap,
   Wrench,
   HardHat,
-  FileText,
-  TestTube,
-  AlertTriangle,
+  MessageSquare,
   GraduationCap,
 } from 'lucide-react';
 import { ModuleCard } from '@/components/upskilling/cards';
@@ -46,33 +44,17 @@ const modules = [
   },
   {
     moduleNumber: 5,
-    title: 'Design, planning and communication',
+    title: 'Communicate with others within building services',
     description:
-      'Reading drawings, design principles, site planning, working with other trades and documentation.',
-    icon: FileText,
+      'Site roles, statutory framework, workplace and customer information, communication methods and conflict — Unit 210.',
+    icon: MessageSquare,
     link: 'module5',
   },
   {
     moduleNumber: 6,
-    title: 'Inspection, testing and certification',
-    description:
-      'Visual inspection, testing instruments, continuity, polarity, insulation resistance and certification.',
-    icon: TestTube,
-    link: 'module6',
-  },
-  {
-    moduleNumber: 7,
-    title: 'Electrical fault finding and diagnosis',
-    description:
-      'Common fault types, signs and symptoms, logical testing, safe tool use and reporting.',
-    icon: AlertTriangle,
-    link: 'module7',
-  },
-  {
-    moduleNumber: 8,
     title: 'Mock examinations and assessment',
     description:
-      'Practice exam papers and exam technique tips to build confidence for the real assessment.',
+      'Practice exam papers and exam technique tips to build confidence for the real 2365-02 assessment.',
     icon: GraduationCap,
     link: 'module8',
     isExam: true,

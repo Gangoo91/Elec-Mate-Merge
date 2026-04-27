@@ -165,13 +165,13 @@ const quizQuestions = [
       'AFDDs (Reg 421.1.7) on this small commercial install (no sleeping accommodation):',
     options: [
       'Are mandatory on every final circuit.',
-      'Are mandatory only on circuits feeding sleeping accommodation, high-rise residential, care homes etc — not strictly required here, but a sensible fit on key circuits given the recommendation in 421.1.7.',
+      'Are recommended by Reg 421.1.7 for AC final circuits supplying socket-outlets ≤ 32 A in dwellings — strengthened to a requirement in HRRBs under the Building Safety Act 2022, and treated as effectively required in HMOs / sleeping accommodation / care homes by fire-safety guidance. Not strictly required on this small commercial install, but a sensible fit on the IT rack and EV circuits.',
       'Are prohibited.',
       'Are required only on the EV circuit.',
     ],
     correctAnswer: 1,
     explanation:
-      'Reg 421.1.7 mandates AFDDs in specific higher-risk locations (sleeping accommodation, high-rise residential, care homes) and recommends them more widely. A retail unit with no sleeping accommodation is not in the mandatory scope, but fitting AFDDs on the IT rack and EV circuits is good practice — both are arc-fault-prone loads.',
+      'AFDDs are recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice. A retail unit with no sleeping accommodation is not in that scope, but fitting AFDDs on the IT rack and EV circuits is good practice — both are arc-fault-prone loads.',
   },
   {
     id: 8,
@@ -505,7 +505,7 @@ export default function Sub8() {
               <li><strong>EV charger (S6)</strong> — Type B RCBO (or Type A + integrated DC RCM in the charger). BS 7671 Section 722 + Reg 722.531.3.5 require DC fault protection.</li>
               <li><strong>HVAC (D1)</strong> — Type C MCB (5–10× In magnetic trip) to ride out the compressor inrush. RCBO if the condenser is outdoors.</li>
               <li><strong>Water heater (D2)</strong> — Type B MCB at 16 A. Steady resistive load, no inrush.</li>
-              <li><strong>Server PDU (D3)</strong> — Type B AFDD-RCBO. Reg 421.1.7 recommends AFDD broadly; a server room with high-density wiring and concealed cabling is exactly the kind of arc-fault-risk environment where it earns its keep, even when not strictly mandatory.</li>
+              <li><strong>Server PDU (D3)</strong> — Type B AFDD-RCBO. Reg 421.1.7 recommends AFDDs for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (with the recommendation strengthening to a requirement in HRRBs under the Building Safety Act 2022 framework, and treated as effectively required in HMOs / sleeping accommodation / care homes by fire-safety guidance). On this commercial install AFDDs are not in that scope, but a server room with high-density wiring and concealed cabling is exactly the kind of arc-fault-risk environment where they earn their keep.</li>
               <li><strong>Origin SPD</strong> — Type 2 SPD at the consumer-unit origin (Section 443 / 534). No exposed overhead supply, no external lightning protection system, so Type 1 is not required.</li>
             </ul>
           </ConceptBlock>
@@ -547,19 +547,22 @@ export default function Sub8() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 421.1.7 (Arc fault detection devices) (paraphrased)"
-            clause="Regulation 421.1.7 has been introduced recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits of a fixed installation due to the effects of arc fault currents."
+            clause="Regulation 421.1.7 has been introduced recommending the installation of arc fault detection devices (AFDDs) to mitigate the risk of fire in AC final circuits of a fixed installation due to the effects of arc fault currents — specifically AC final circuits supplying socket-outlets with rated current not exceeding 32 A in dwellings."
             meaning={
               <>
-                Reg 421.1.7 recommends AFDDs broadly across AC final circuits and mandates them
-                in specified higher-risk locations (high-rise residential, sleeping
-                accommodation, care homes etc.). Our small commercial unit is not in the
-                mandated scope, but the AFDD-RCBO on the server PDU is a sensible application
-                of the recommendation — high-density cabling, concealed runs, expensive and
-                hard-to-replace IT load. AFDDs are prohibited in medical group 0 and 2
-                locations (Reg 710.421.1.7) — not relevant here, but worth knowing.
+                Reg 421.1.7 itself uses <em>recommending</em> wording: AFDDs are recommended for
+                AC final circuits supplying socket-outlets ≤ 32 A in dwellings. The recommendation
+                strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under
+                the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care
+                homes, supporting fire-safety guidance treats AFDDs as effectively required
+                practice. Our small commercial unit is not in any of those categories, but the
+                AFDD-RCBO on the server PDU is a sensible application of the recommendation —
+                high-density cabling, concealed runs, expensive and hard-to-replace IT load.
+                AFDDs are prohibited in medical group 0 and 2 locations (Reg 710.421.1.7) — not
+                relevant here, but worth knowing.
               </>
             }
-            cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulation 421.1.7 for the full text."
+            cite="Verbatim wording paraphrased — see BS 7671:2018+A4:2026 Part 4, Chapter 42, Regulation 421.1.7 for the full text; Building Safety Act 2022 framework for HRRBs."
           />
 
           <InlineCheck

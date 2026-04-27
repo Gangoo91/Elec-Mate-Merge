@@ -585,6 +585,41 @@ export default function Sub2() {
             explanation={checks[2].explanation}
           />
 
+          <RegsCallout
+            source="Construction (Design and Management) Regulations 2015 — Regulation 4 (Client duties in relation to managing projects)"
+            clause="A client must make suitable arrangements for managing a project, including the allocation of sufficient time and other resources. Arrangements are suitable if they ensure that — (a) the construction work can be carried out, so far as is reasonably practicable, without risks to the health or safety of any person affected by the project; and (b) the facilities required by Schedule 2 are provided in respect of any person carrying out construction work. The client must ensure that these arrangements are maintained and reviewed throughout the project."
+            meaning={
+              <>
+                The client (the customer paying for the work) has a legal duty to provide
+                enough TIME and enough INFORMATION for the work to be done safely. That
+                feeds straight into your risk assessment — if the client hasn't provided
+                pre-construction information about asbestos, services routes or existing
+                hazards, that's a CDM Reg 4 breach, and the assessment can't reasonably
+                conclude &quot;controls in place&quot;. The customer pressuring you to skip
+                steps doesn't transfer the legal duty — the duty is theirs, the
+                consequences are everyone's.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 4 — verbatim from legislation.gov.uk."
+          />
+
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 14 (Employees' duties)"
+            clause="(2) Every employee shall inform his employer or any other employee of that employer with specific responsibility for the health and safety of his fellow employees — (a) of any work situation which a person with the first-mentioned employee's training and instruction would reasonably consider represented a serious and immediate danger to health and safety; and (b) of any matter which a person with the first-mentioned employee's training and instruction would reasonably consider represented a shortcoming in the employer's protection arrangements for health and safety, in so far as that situation or matter either affects the health and safety of that first-mentioned employee or arises out of or in connection with his own activities at work, and has not previously been reported to his employer."
+            meaning={
+              <>
+                The employee-side counterpart to the employer's Reg 3 duty. If the risk
+                assessment is wrong, missing or no longer valid, you have a personal legal
+                duty to flag it up. The bar is &quot;what a reasonable person with YOUR
+                training would consider a danger or a shortcoming&quot; — for an apprentice
+                that's deliberately set low. Spotted hazards that aren't on the RAMS, RAMS
+                that doesn't match the job in front of you, controls listed but not in
+                place — all Reg 14 reportable.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 14(2) — verbatim from legislation.gov.uk."
+          />
+
           <SectionRule />
 
           <FAQ items={faqs} />

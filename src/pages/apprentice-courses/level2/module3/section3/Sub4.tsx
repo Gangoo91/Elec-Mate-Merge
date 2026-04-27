@@ -60,16 +60,16 @@ const checks = [
   {
     id: 'afdd-where-check',
     question:
-      'BS 7671 421.1.7 (in HRRBs, HMOs, student accommodation, care homes) requires AFDDs on:',
+      'BS 7671 421.1.7 (the AFDD regulation) recommends AFDDs in dwellings on:',
     options: [
       'All circuits',
       'Lighting only',
-      'Final circuits supplying socket-outlets ≤ 32 A',
+      'AC final circuits supplying socket-outlets ≤ 32 A',
       'Only the main switch',
     ],
     correctIndex: 2,
     explanation:
-      'Reg 421.1.7 mandates AFDDs on AC final circuits supplying socket-outlets up to 32 A in Higher-Risk Residential Buildings, Houses in Multiple Occupation, Purpose-built student accommodation and Care homes. RECOMMENDED (not mandatory) on other premises for single-phase circuits.',
+      'AFDDs are recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice.',
   },
 ];
 
@@ -138,7 +138,7 @@ const quizQuestions = [
   {
     id: 6,
     question:
-      'Reg 421.1.7 requires AFDDs in HRRBs, HMOs, student accommodation and care homes for:',
+      'Reg 421.1.7 (BS 7671:2018+A4:2026) recommends AFDDs in dwellings on:',
     options: [
       'All final circuits',
       'AC final circuits supplying socket-outlets ≤ 32 A',
@@ -147,7 +147,7 @@ const quizQuestions = [
     ],
     correctAnswer: 1,
     explanation:
-      'AC final circuits supplying socket-outlets with rated current not exceeding 32 A in Higher-Risk Residential Buildings, Houses in Multiple Occupation, Purpose-built student accommodation, and Care homes. Recommended (not required) elsewhere for single-phase final circuits.',
+      'Reg 421.1.7 recommends AFDDs for AC final circuits supplying socket-outlets ≤ 32 A in dwellings. The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice.',
   },
   {
     id: 7,
@@ -192,7 +192,7 @@ const faqs = [
   {
     question: 'When does an AFDD ‘earn its keep’ vs just adding cost?',
     answer:
-      'AFDDs detect arc faults — the kind of low-current chattering arc you get from a damaged cable insulation, loose terminal or rodent-chewed lead. RCDs don’t see these (no earth path); MCBs don’t see them (current is below trip threshold). Arc faults are a leading cause of electrical fires. In a sleeping-occupancy building (HRRB, student accommodation, care home), the time between arc start and fire is long enough that an AFDD trip can save lives. That’s why 421.1.7 mandates them in those buildings specifically.',
+      'AFDDs detect arc faults — the kind of low-current chattering arc you get from a damaged cable insulation, loose terminal or rodent-chewed lead. RCDs don’t see these (no earth path); MCBs don’t see them (current is below trip threshold). Arc faults are a leading cause of electrical fires. In a sleeping-occupancy building (HRRB, student accommodation, care home), the time between arc start and fire is long enough that an AFDD trip can save lives. BS 7671 Reg 421.1.7 itself recommends AFDDs on AC final circuits supplying socket-outlets ≤ 32 A in dwellings; that recommendation strengthens to a requirement in HRRBs under the Building Safety Act 2022 framework, and in HMOs / sleeping accommodation / care homes supporting fire-safety guidance treats them as effectively required practice.',
   },
   {
     question: 'Type 1 + 2 vs Type 2 SPD — which do I install?',
@@ -248,7 +248,7 @@ export default function Sub4() {
               'Distinguish between BS EN 60898 MCB Types B, C and D by magnetic trip range and typical loads.',
               'Describe an RCBO and explain why it dominates modern domestic consumer units.',
               'Distinguish between RCD Types AC, A, F and B by waveform sensitivity, with practical examples.',
-              'Describe AFDD operation and identify where Reg 421.1.7 mandates them.',
+              'Describe AFDD operation and identify where Reg 421.1.7 recommends them (and where the Building Safety Act 2022 framework / fire-safety guidance strengthens that to an effective requirement).',
               'Distinguish between SPD Types 1, 2 and 3 by lightning waveform, location and equipment protected.',
             ]}
             initialVisibleCount={3}
@@ -442,7 +442,7 @@ export default function Sub4() {
           <ConceptBlock
             title="The newest device family — catches the faults RCDs and MCBs miss"
             plainEnglish="An AFDD watches for the electrical signature of an arc fault — small, chattering, intermittent arcs caused by damaged cable insulation, loose terminals, rodent-chewed leads, deteriorated joints. Trips before the arc develops into a full fire."
-            onSite="Mandatory in HRRBs, HMOs, student accommodation and care homes per 421.1.7. Increasingly recommended elsewhere. Costs noticeably more than a plain RCBO but has saved measurable numbers of fires in countries where mandated for longer (Germany, US)."
+            onSite="Recommended for AC final circuits supplying socket-outlets ≤ 32 A in dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety guidance treats them as effectively required practice. Costs noticeably more than a plain RCBO but has saved measurable numbers of fires in countries where they have been used widely for longer (Germany, US)."
           >
             <p>What an AFDD detects that other devices don’t:</p>
             <ul className="space-y-1.5 list-disc pl-5 marker:text-elec-yellow/70">
@@ -470,16 +470,18 @@ export default function Sub4() {
 
           <RegsCallout
             source="BS 7671:2018+A4:2026 — Regulation 421.1.7 (Arc fault detection devices)"
-            clause="It is now a requirement to protect final circuits supplying socket-outlets with a rated current not exceeding 32 A using arc fault detection devices (AFDD) in Higher Risk Residential Buildings, Houses in Multiple Occupation, Purpose-built student accommodation and Care homes. For all other premises, the regulation recommends AFDDs for single-phase final circuits supplying socket-outlets with a rated current not exceeding 32 A."
+            clause="The regulation recommends the installation of arc fault detection devices (AFDDs) for AC final circuits supplying socket-outlets with a rated current not exceeding 32 A in dwellings. (BS 7671 itself uses 'recommending' wording — strengthening to a requirement in Higher-Risk Residential Buildings comes from the Building Safety Act 2022 framework, and supporting fire-safety guidance treats AFDDs as effectively required practice in HMOs, sleeping accommodation and care homes.)"
             meaning={
               <>
-                Hard requirement in four building categories — HRRBs, HMOs, student accommodation
-                and care homes — for socket-outlet final circuits ≤ 32 A. Strong recommendation
-                everywhere else. Expect this to become a hard requirement across more building types
-                in future amendments.
+                BS 7671 421.1.7 itself <em>recommends</em> AFDDs on AC final circuits supplying
+                socket-outlets ≤ 32 A in dwellings. The recommendation strengthens to a requirement
+                in Higher-Risk Residential Buildings (HRRBs) under the Building Safety Act 2022
+                framework. In HMOs, sleeping accommodation and care homes, supporting fire-safety
+                guidance treats them as effectively required practice. Expect the AFDD scope to
+                expand further in future amendments.
               </>
             }
-            cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7 (as revised in A4:2026)."
+            cite="Source: BS 7671:2018+A4:2026 — Regulation 421.1.7 (as revised in A4:2026); Building Safety Act 2022 framework for HRRBs."
           />
 
           <InlineCheck {...checks[2]} />
@@ -585,23 +587,28 @@ export default function Sub4() {
             }
             whatToDo={
               <>
-                Stop and flag. AFDDs aren’t optional in an HMO — 421.1.7 is a hard requirement for
-                socket-outlet final circuits ≤ 32 A. Two practical options. (1) Order combined
-                AFDD/RCBO modules to swap in for the 18 RCBOs (compact, one slot per circuit, fully
-                compliant). (2) Order separate AFDDs (some manufacturers offer them as 1-module
-                add-ons upstream of an RCBO) — needs more DB space. Either way, the rewire CAN’T be
-                signed off as compliant without them. Better to delay the tenant move-in by a week
-                than to issue a non-compliant EIC and have to re-pull the work later.
+                Stop and flag. BS 7671 Reg 421.1.7 <em>recommends</em> AFDDs on AC final circuits
+                supplying socket-outlets ≤ 32 A in dwellings — and that recommendation strengthens
+                to a requirement in HRRBs under the Building Safety Act 2022 framework. In HMOs,
+                sleeping accommodation and care homes, supporting fire-safety guidance treats AFDDs
+                as effectively required practice — so on this HMO rewire you should fit them. Two
+                practical options. (1) Order combined AFDD/RCBO modules to swap in for the 18 RCBOs
+                (compact, one slot per circuit). (2) Order separate AFDDs (some manufacturers offer
+                them as 1-module add-ons upstream of an RCBO) — needs more DB space. Better to
+                delay the tenant move-in by a week than to issue an EIC the wider fire-safety
+                regime would treat as non-compliant.
               </>
             }
             whyItMatters={
               <>
-                AFDDs aren’t a nice-to-have in HRRBs / HMOs / student accommodation / care homes —
-                they’re a regulatory requirement under 421.1.7 (revised in A4:2026). Tenants in
+                AFDDs are recommended for AC final circuits supplying socket-outlets ≤ 32 A in
+                dwellings (per BS 7671 Reg 421.1.7). The recommendation strengthens to a
+                requirement in Higher-Risk Residential Buildings (HRRBs) under the Building Safety
+                Act 2022 framework. In HMOs, sleeping accommodation and care homes, supporting
+                fire-safety guidance treats them as effectively required practice. Tenants in
                 HMO-style sleeping accommodation are the highest-risk demographic for electrical
                 fires (long hours asleep, often-unfamiliar electrics, sometimes damaged equipment).
-                The reg exists for a reason. Sign off non-compliant work and your name is on the EIC
-                when the worst happens.
+                Sign off without AFDDs and your name is on the EIC when the worst happens.
               </>
             }
           />
@@ -618,7 +625,7 @@ export default function Sub4() {
               'MCB Type B/C/D differ by magnetic trip threshold — pick to match inrush profile, balance against Zs requirement.',
               'RCBOs dominate modern domestic — one circuit per device with combined overload + 30 mA earth-fault, satisfying 314.1 selectivity.',
               'RCD Type matters: Type AC is deprecated; Type A is modern domestic minimum; Type B for EV / PV / VSD with smooth DC residual.',
-              'Reg 421.1.7 (revised) requires AFDDs on socket-outlet circuits ≤ 32 A in HRRBs, HMOs, student accommodation and care homes.',
+              'Reg 421.1.7 (revised) recommends AFDDs on AC final circuits supplying socket-outlets ≤ 32 A in dwellings; the recommendation strengthens to a requirement in HRRBs under the Building Safety Act 2022 framework, and in HMOs / sleeping accommodation / care homes supporting fire-safety guidance treats them as effectively required.',
               'Reg 443.4.1 expands SPD requirements — default is now ‘fit SPDs’ unless owner declares acceptance of risk in writing.',
               'Reg 534.4.1.1 places SPDs: Type 1 or 2 at the origin; Type 2 or 3 near sensitive equipment.',
               'Reg 411.3.3 mandates 30 mA RCD additional protection on socket-outlets ≤ 32 A in all dwellings; non-dwellings can omit only with documented risk assessment.',

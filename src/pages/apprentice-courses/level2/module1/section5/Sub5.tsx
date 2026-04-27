@@ -435,6 +435,33 @@ export default function Sub5() {
             }
           />
 
+          <CommonMistake
+            title="Removing the lock-off before recording the isolation"
+            whatHappens={
+              <>
+                Job done. Customer wants the power back on. You walk to the CU, take your
+                padlock off the MCB, snap it on, head back to the van. Nobody wrote down the
+                isolation sequence — when it went on, when it came off, what was tested in
+                between. Three weeks later there's a query from the customer's insurer about
+                the work, or a near-miss report from another trade who says they saw a live
+                conductor where they shouldn't have. There's no audit trail. Your word against
+                theirs. The HSE inspector who turns up later asks the firm 'show me your
+                isolation log' and the firm has nothing.
+              </>
+            }
+            doInstead={
+              <>
+                The isolation only ends on PAPER. Lock-off goes on, stays on until the
+                isolation log entry is complete: time on, time off, what was tested, which
+                indicator, which proving unit, who carried out the work, sign-off. THEN the
+                padlock comes off and the supply gets restored. The log is what proves the
+                isolation happened correctly — without it, you've done the work and lost the
+                evidence. Most firms now use a printed permit/log book or a tablet entry; some
+                schemes require it. Either way, paperwork before padlock-off, every time.
+              </>
+            }
+          />
+
           <InlineCheck
             id={checks[1].id}
             question={checks[1].question}

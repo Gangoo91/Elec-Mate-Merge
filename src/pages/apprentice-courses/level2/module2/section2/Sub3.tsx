@@ -568,9 +568,9 @@ export default function Sub3() {
             title="Thinking a hoist or gearbox gives you something for nothing"
             whatHappens={
               <>
-                A bloke at the back of the class works out that a 4:1 hoist lets him lift 100 kg
-                with 25 kg of effort and decides it’s magic. Then he tries to lift the load 2 m and
-                wonders why he’s pulled 8 m of rope through.
+                An apprentice at the back of the class works out that a 4:1 hoist lets them lift
+                100 kg with 25 kg of effort and decides it’s magic. Then they try to lift the load
+                2 m and wonder why they’ve pulled 8 m of rope through.
               </>
             }
             doInstead={

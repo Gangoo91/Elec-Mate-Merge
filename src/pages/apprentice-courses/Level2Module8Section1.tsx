@@ -1,119 +1,113 @@
-import { Link } from 'react-router-dom';
-import { ArrowLeft, FileText, Layers, Wrench } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { FileText, Layers } from 'lucide-react';
+import { ModuleCard } from '@/components/upskilling/cards';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const mockExams = [
   {
-    number: 'Mock Exam 1',
-    title: 'Health and Safety in Building Services Engineering',
+    number: 'Mock 1',
+    title: 'Health and safety in building services engineering',
     description:
-      'Test your knowledge of essential health and safety practices for electrical work environments, covering regulations, hazards, and safety procedures.',
+      'Module 1 paper — regulations, hazards, PPE, safe working procedures and incident response on the electrical site.',
     icon: FileText,
     href: 'mock1',
   },
   {
-    number: 'Mock Exam 2',
-    title: 'Principles of Electrical Science',
+    number: 'Mock 2',
+    title: 'Principles of electrical science',
     description:
-      'Assess your understanding of fundamental electrical theory, voltage, current, resistance and power calculations.',
+      'Module 2 paper — voltage, current, resistance, power, magnetism and the maths underneath every circuit calculation.',
     icon: FileText,
     href: 'mock2',
   },
   {
-    number: 'Mock Exam 3',
-    title: 'Electrical Installation Methods & Technology',
+    number: 'Mock 3',
+    title: 'Electrical installations technology',
     description:
-      'Test your knowledge of wiring systems, containment methods, tools and materials for electrical installations.',
+      'Module 3 paper — wiring systems, containment, accessories, supplies and the technology that makes a real installation work.',
     icon: FileText,
     href: 'mock3',
   },
   {
-    number: 'Mock Exam 4',
-    title: 'Installing Wiring Systems & Enclosures',
+    number: 'Mock 4',
+    title: 'Installation of wiring systems and enclosures',
     description:
-      'Evaluate your understanding of hands-on installation techniques for PVC, trunking, conduit and cable tray systems.',
+      'Module 4 paper — tools, preparation, fixings, terminations, bonding and the dead-test sequence on a small installation.',
     icon: FileText,
     href: 'mock4',
   },
   {
-    number: 'Mock Exam 5',
-    title: 'Design, Planning & Communication',
+    number: 'Mock 5',
+    title: 'Communicate with others within building services',
     description:
-      'Test your knowledge of project planning, technical documentation and effective team communication skills.',
+      'Test your knowledge of site roles, statutory framework, workplace and customer information, communication methods and conflict — Unit 210.',
     icon: FileText,
     href: 'mock5',
   },
   {
-    number: 'Mock Exam 6',
-    title: 'Inspection, Testing & Certification',
+    number: 'Mock 6 — Mixed',
+    title: 'Mixed mock — full Level 2 paper',
     description:
-      'Assess your understanding of safe isolation procedures, continuity testing, insulation resistance and certification requirements.',
-    icon: FileText,
-    href: 'mock6',
-  },
-  {
-    number: 'Mock Exam 7',
-    title: 'Electrical Fault Finding and Diagnosis',
-    description:
-      'Test your ability to identify, diagnose, and safely resolve electrical faults in installations using systematic approaches.',
-    icon: FileText,
-    href: 'mock7',
-  },
-  {
-    number: 'Mock Exam 8',
-    title: 'Mixed Mock Exam',
-    description:
-      'Comprehensive examination covering all Level 2 modules with mixed questions to simulate real exam conditions.',
+      'Comprehensive mixed paper drawing on Modules 1 to 5 — sat under exam conditions to simulate the real Level 2 assessment.',
     icon: Layers,
     href: 'mock8',
   },
 ];
 
 const Level2Module8Section1 = () => {
-  useSEO(
-    'Level 2 Mock Examinations - Section 1 | Electrical Training',
-    'Access comprehensive mock examinations for Level 2 electrical installation. Practice with module-specific tests, mixed exams, and practical assessments to prepare for your qualification.'
-  );
+  useSEO({
+    title: 'Mock examinations — Level 2 Section 1 | Module 8 | Elec-Mate',
+    description:
+      'Six full Level 2 mock papers — one per module plus a mixed paper — sat under realistic exam conditions to build pace, accuracy and confidence before the live assessment.',
+  });
 
   return (
-    <div className="bg-background p-4 sm:p-6 lg:p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <Link
-            to=".."
-            className="inline-flex items-center text-white hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Module 8
-          </Link>
+    <SectionShell
+      backTo=".."
+      backLabel="Module 8"
+      moduleNumber={8}
+      sectionNumber={1}
+      title="Mock examinations"
+      description="Six full mock papers covering Level 2 Modules 1 to 5 plus a mixed paper — sat under exam conditions to build pace, accuracy and confidence."
+      tone="emerald"
+      subsectionsCount={mockExams.length}
+      nextSectionHref="../section2"
+      nextSectionLabel="How to pass exams — tips and techniques"
+      aboveGrid={
+        <div className="max-w-3xl space-y-3 pt-2">
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Section 1 is the practice-paper bank. Each of the first five mocks covers a single
+            Level 2 module — health &amp; safety, electrical science, installations technology,
+            wiring systems and communication — so you can pressure-test one module at a time and
+            spot the topics that need another revision pass.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Once the per-module mocks feel comfortable, the{' '}
+            <span className="text-white font-medium">mixed mock</span> draws questions from across
+            all five modules in random order — the closest thing to the real Level 2 assessment.
+            Sit it timed, no notes, in one go.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Each paper auto-marks at the end with a per-question explanation and a flag/review
+            tool, so the mocks double as a structured revision resource. Aim for{' '}
+            <span className="text-white font-medium">70%+ on every paper</span> before booking the
+            real exam.
+          </p>
         </div>
-
-        <div className="mb-8">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4">
-            Mock Examinations
-          </h1>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {mockExams.map((exam) => {
-            if (exam.number === 'Mock Exam 4') {
-              console.log('Mock Exam 4 card data:', exam);
-            }
-            return (
-              <ModuleCard
-                key={exam.number}
-                number={exam.number}
-                title={exam.title}
-                description={exam.description}
-                icon={exam.icon}
-                href={exam.href}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </div>
+      }
+    >
+      {mockExams.map((exam) => (
+        <ModuleCard
+          key={exam.href}
+          to={exam.href}
+          moduleNumber={exam.number}
+          title={exam.title}
+          description={exam.description}
+          icon={exam.icon}
+          isExam
+        />
+      ))}
+    </SectionShell>
   );
 };
 

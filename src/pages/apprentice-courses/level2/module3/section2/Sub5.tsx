@@ -257,7 +257,7 @@ export default function Sub5() {
             points={[
               'Synthesis means reading the whole pack as one conversation — front sheet sets context, layouts show position, schedules detail the parts, schematics show the logic, manufacturer sheets tell you how to fit each device.',
               'There is a reading order. Front sheet, then schematic to understand the system, then layouts to walk the install, then the schedules to confirm parts and cables, then manufacturer sheets for anything non-standard.',
-              'Discrepancies between any two designer documents (layout vs schedule, drawing vs spec, two prints with different revisions) are an RFI in writing — never a guess. Reg 132.12 (information to be provided) and Reg 514.9.2 (diagrams to comply with applicable standards) back you up when the pack is incomplete or non-compliant.',
+              'Discrepancies between any two designer documents (layout vs schedule, drawing vs spec, two prints with different revisions) are an RFI in writing — never a guess. Reg 132.13 (Documentation) and Reg 514.9.2 (diagrams to comply with applicable standards) back you up when the pack is incomplete or non-compliant.',
             ]}
           />
 

@@ -580,6 +580,39 @@ export default function Sub1() {
             cite="Reference: HSE — Management of Health and Safety at Work Regulations 1999, Regulation 3(3)"
           />
 
+          <RegsCallout
+            source="MHSWR 1999 — Regulation 4 (Principles of prevention to be applied)"
+            clause="Where an employer implements any preventive and protective measures he shall do so on the basis of the principles specified in Schedule 1 to these Regulations. (Schedule 1 — avoiding risks; evaluating the risks which cannot be avoided; combating the risks at source; adapting the work to the individual; adapting to technical progress; replacing the dangerous by the non-dangerous or the less dangerous; developing a coherent overall prevention policy; giving collective protective measures priority over individual protective measures; giving appropriate instructions to employees.)"
+            meaning={
+              <>
+                Reg 4 + Schedule 1 is the legal hierarchy of prevention. It's the
+                regulation that says you can't jump to PPE — you have to consider avoiding
+                the risk first, then engineering, then collective protection, with PPE last.
+                Every controlled risk on your RAMS should map back to one of these nine
+                principles. If the assessor can't show which principle the chosen control
+                came from, the RAMS is weak.
+              </>
+            }
+            cite="Source: Management of Health and Safety at Work Regulations 1999 (SI 1999/3242), Reg 4 and Schedule 1 — verbatim from legislation.gov.uk."
+          />
+
+          <RegsCallout
+            source="Construction (Design and Management) Regulations 2015 — Regulation 13 (Duties of a principal contractor in relation to health and safety at the construction phase)"
+            clause="The principal contractor must — (a) plan, manage and monitor the construction phase and coordinate matters relating to health and safety during the construction phase to ensure that, so far as is reasonably practicable, construction work is carried out without risks to health or safety; (b) organise cooperation between contractors (including successive contractors on the same construction site); (c) ensure, so far as is reasonably practicable, that every contractor and every worker under the control of the principal contractor is provided with a suitable site induction, before that contractor or worker carries out construction work for the first time on that site."
+            meaning={
+              <>
+                On any CDM-notifiable project (most commercial / industrial work), the
+                principal contractor has a legal duty to brief every worker — you included —
+                on the site-specific risks, controls and emergency arrangements BEFORE you
+                pick up a tool. The site induction is the document that turns the project
+                risk assessment into your day-one knowledge. If you walk on site without an
+                induction, that's a CDM Reg 13 breach by the principal contractor — and
+                your cue to stop and ask for one.
+              </>
+            }
+            cite="Source: Construction (Design and Management) Regulations 2015 (SI 2015/51), Reg 13 — verbatim from legislation.gov.uk."
+          />
+
           <SectionRule />
 
           <FAQ items={faqs} />
@@ -605,14 +638,14 @@ export default function Sub1() {
 
           <div className="grid grid-cols-2 gap-3 pt-2">
             <button
-              onClick={() => navigate('/study-centre/apprentice/level2/module1/section2/2-5')}
+              onClick={() => navigate('/study-centre/apprentice/level2/module1/section2/2-6')}
               className="rounded-2xl bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors border border-white/[0.06] p-4 text-left touch-manipulation active:scale-[0.99]"
             >
               <div className="flex items-center gap-2 text-[10.5px] uppercase tracking-[0.18em] text-white">
                 <ChevronLeft className="h-3 w-3" /> Previous subsection
               </div>
               <div className="mt-1 text-[14px] font-semibold text-white truncate">
-                Slips, trips and manual handling
+                Asbestos awareness and stop-work authority
               </div>
             </button>
             <button

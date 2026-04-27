@@ -3896,6 +3896,860 @@ export const module4QuestionBank: QuestionBank[] = [
     difficulty: 'basic',
     topic: 'Installation Documentation',
   },
+
+  // ===== A4:2026 expansion (questions 251-300) =====
+  // Brings bank to 300 questions. Weighted to LO5/LO6 (verification & testing),
+  // LO3.7 (JIB safe isolation), and bonding/cable-size topics.
+  {
+    id: 251,
+    question:
+      'Under BS 7671:2018+A4:2026, what is the status of AFDDs for AC final circuits supplying socket-outlets rated up to 32 A in dwellings?',
+    options: [
+      'Mandatory in every dwelling regardless of building type',
+      'Recommended; the recommendation strengthens to a requirement in higher-risk residential buildings (HRRBs) under the Building Safety Act 2022 framework',
+      'Prohibited unless specifically justified by risk assessment',
+      'Required only on lighting circuits',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 421.1.7 of BS 7671:2018+A4:2026 recommends AFDDs for AC final circuits to mitigate the risk of fire. The recommendation becomes a requirement in higher-risk residential buildings under the Building Safety Act 2022 framework, not within 421.1.7 itself.',
+    section: '4.1.1',
+    difficulty: 'intermediate',
+    topic: 'AFDD A4:2026',
+  },
+  {
+    id: 252,
+    question:
+      'Which version of the IET Wiring Regulations should you be working to on a new domestic installation in 2026?',
+    options: [
+      'BS 7671:2008',
+      'BS 7671:2018+A2:2022',
+      'BS 7671:2018+A4:2026',
+      'BS 7671:1992',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'BS 7671:2018 incorporating Amendment 4:2026 is the current edition. A4 introduces new provisions including the AFDD recommendation in 421.1.7 and revised cable retention requirements for escape routes (522.8.5).',
+    section: '4.1.1',
+    difficulty: 'basic',
+    topic: 'BS 7671 Currency',
+  },
+  {
+    id: 253,
+    question:
+      'Regulation 522.8.5 in BS 7671:2018+A4:2026 requires cables to be supported so they are not exposed to undue mechanical strain. Which additional consideration does this regulation specifically include?',
+    options: [
+      'Only the cost of installation materials',
+      'Mechanical strain imposed by the supported weight of the cable, with consumer-unit meter tails explicitly within scope',
+      'Only the colour of the cable',
+      'Only the cable manufacturer',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 522.8.5 requires that cables and conductors are supported to avoid undue mechanical strain, taking account of the supported weight of the cable. The accompanying note confirms that consumer-unit meter tails are within scope.',
+    section: '4.1.2',
+    difficulty: 'intermediate',
+    topic: 'Reg 522.8.5',
+  },
+  {
+    id: 254,
+    question:
+      'What is the correct numerical order for the JIB safe isolation procedure as published by the Joint Industry Board?',
+    options: [
+      'Isolate first, then identify the circuit, then test for dead',
+      'Identify, notify, prove indicator, isolate, lock and label, test for dead at point of work, re-prove indicator, polarity, record',
+      'Test for dead, then isolate, then notify',
+      'Lock and label, identify, isolate, then go for tea',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The JIB nine-step safe isolation procedure runs: (1) identify circuit, (2) notify affected persons, (3) prove voltage indicator on a known live source, (4) isolate, (5) lock off and label, (6) test for dead at the point of work, (7) re-prove the voltage indicator, (8) confirm polarity, (9) record the isolation. All nine steps must be followed in sequence.',
+    section: '4.7.1',
+    difficulty: 'basic',
+    topic: 'JIB Safe Isolation',
+  },
+  {
+    id: 255,
+    question:
+      'Which voltage indicator standard should the device used for proving dead during safe isolation comply with?',
+    options: [
+      'BS 1363',
+      'GS38 (HSE Guidance Note)',
+      'BS 88',
+      'BS EN 60898',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The voltage indicator used to prove dead must comply with HSE Guidance Note GS38, which specifies probe design (finger barriers, exposed metal limited to ~4 mm), shrouded leads, and current limitation to reduce arc-flash risk.',
+    section: '4.7.2',
+    difficulty: 'intermediate',
+    topic: 'GS38 Voltage Indicator',
+  },
+  {
+    id: 256,
+    question:
+      'During safe isolation, why must the voltage indicator be re-proved on a known live source after testing the circuit for dead?',
+    options: [
+      'It is not required by JIB',
+      'To confirm the indicator was still working when it showed the circuit as dead, ruling out a faulty indicator giving a false-safe reading',
+      'To charge the indicator battery',
+      'To check the indicator colour',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Re-proving the voltage indicator on a known live source (proving unit or known live circuit) confirms it was functional throughout the test. A failed indicator could otherwise give a false-safe reading, leading to working live by mistake.',
+    section: '4.7.1',
+    difficulty: 'intermediate',
+    topic: 'JIB Re-prove',
+  },
+  {
+    id: 257,
+    question:
+      'On a TN-C-S (PME) supply with meter tails of 25 mm², what minimum cross-sectional area of copper main protective bonding conductor is required by Table 54.8 of BS 7671?',
+    options: [
+      '4 mm²',
+      '6 mm²',
+      '10 mm²',
+      '25 mm²',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Table 54.8 requires a minimum 10 mm² copper main protective bonding conductor on a PME supply where the line conductor (meter tails) is up to and including 35 mm² copper equivalent. Above 35 mm², 16 mm² is required.',
+    section: '4.4.3',
+    difficulty: 'intermediate',
+    topic: 'Main Bonding Sizing',
+  },
+  {
+    id: 258,
+    question:
+      'On a TN-C-S (PME) supply with 50 mm² meter tails, what minimum copper main protective bonding conductor cross-sectional area is required?',
+    options: [
+      '6 mm²',
+      '10 mm²',
+      '16 mm²',
+      '25 mm²',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Per Table 54.8, where the line conductor exceeds 35 mm² copper equivalent on a PME supply, the minimum main protective bonding conductor is 16 mm² copper.',
+    section: '4.4.3',
+    difficulty: 'intermediate',
+    topic: 'Main Bonding Sizing',
+  },
+  {
+    id: 259,
+    question:
+      'What is the minimum cross-sectional area of a supplementary equipotential bonding conductor in a location containing a bath or shower where the conductor is mechanically protected?',
+    options: [
+      '1.5 mm²',
+      '2.5 mm²',
+      '4 mm²',
+      '6 mm²',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A supplementary bonding conductor that is mechanically protected (e.g. enclosed in conduit or trunking) may be 2.5 mm² copper. Where unprotected, the minimum is 4 mm². Note that in a bathroom, supplementary bonding may be omitted under Regulation 701.415.2 if all the conditions for whole-circuit RCD protection and main bonding are met.',
+    section: '4.4.3',
+    difficulty: 'intermediate',
+    topic: 'Supplementary Bonding',
+  },
+  {
+    id: 260,
+    question:
+      'A BS 951 earth clamp is fitted to an extraneous-conductive-part. What wording must appear on the durably fixed warning notice required by Regulation 514.13.1?',
+    options: [
+      '"Caution — Earth"',
+      '"Safety Electrical Connection — Do Not Remove"',
+      '"Live — Do Not Touch"',
+      '"Bonded — Disconnect Before Work"',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 514.13.1 requires a permanent, durable warning notice marked "Safety Electrical Connection — Do Not Remove" to be securely fixed in a visible position at or near every earth electrode connection, every main earthing terminal where separated from the consumer unit, and every bonding conductor connection.',
+    section: '4.4.3',
+    difficulty: 'basic',
+    topic: 'BS 951 Warning Notice',
+  },
+  {
+    id: 261,
+    question:
+      'When testing continuity of a circuit protective conductor (cpc) using the R1 + R2 method, what does the reading represent?',
+    options: [
+      'The insulation resistance of the cable',
+      'The combined resistance of the line conductor and circuit protective conductor from origin to the furthest point',
+      'The earth fault loop impedance Zs',
+      'The prospective fault current',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'R1 + R2 is the sum of the line conductor resistance (R1) and the circuit protective conductor resistance (R2) from the origin of the circuit to the furthest accessory. It is used to verify cpc continuity (Reg 643.2.1) and to calculate Zs at design stage (Zs = Ze + (R1 + R2)).',
+    section: '4.6.1',
+    difficulty: 'intermediate',
+    topic: 'R1+R2 Continuity',
+  },
+  {
+    id: 262,
+    question:
+      'Which test instrument setting and lead arrangement is correct for the R1 + R2 continuity test on a radial circuit?',
+    options: [
+      'Insulation resistance tester at 500 V, leads between L and N',
+      'Low-resistance ohmmeter (continuity range, ≥200 mA test current), with the line and cpc linked at the consumer unit and resistance measured between L and cpc terminals at the furthest accessory',
+      'Earth loop impedance tester between L and earth',
+      'RCD tester at 5 × IΔn',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The R1 + R2 test uses a low-resistance ohmmeter (≥200 mA test current, open-circuit voltage 4–24 V) with the line and cpc temporarily linked together at the distribution board. Measurement is taken between L and cpc at the furthest point of the circuit.',
+    section: '4.6.1',
+    difficulty: 'intermediate',
+    topic: 'R1+R2 Method',
+  },
+  {
+    id: 263,
+    question:
+      'What test method does Regulation 643.2.2 of BS 7671:2018+A4:2026 set out for verifying the continuity of a ring final circuit?',
+    options: [
+      'A single insulation-resistance test at 500 V',
+      'A three-step end-to-end measurement of r1, rn and r2, followed by cross-connection of the line/neutral loops and the line/cpc loops, with readings at each socket expected to be approximately constant and equal to (r1 + rn)/4 (and similarly for L–cpc)',
+      'An RCD trip-time measurement',
+      'A polarity test using a voltmeter',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 643.2.2 requires the three-step ring final continuity test: measure end-to-end resistances r1, rn and r2, then cross-connect L1–N2/L2–N1 and L1–cpc2/L2–cpc1 and measure at each socket. Readings around the ring should be approximately constant and equal to (r1 + rn)/4 for the L–N loop and (r1 + r2)/4 for the L–cpc loop, confirming a complete ring with no interconnections.',
+    section: '4.6.2',
+    difficulty: 'advanced',
+    topic: 'Ring Final Test',
+  },
+  {
+    id: 264,
+    question:
+      'During the third step of the ring final test (line linked to cpc), what would a reading at one socket significantly higher than the others indicate?',
+    options: [
+      'The ring is complete and healthy',
+      'A possible high-resistance joint or break in the cpc at or near that socket',
+      'A short circuit between line and neutral',
+      'The RCD has tripped',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'In a healthy ring, the L–cpc readings at every socket should be approximately equal to (r1 + r2)/4. A reading noticeably higher at one socket indicates a high-resistance joint or break in the cpc loop close to that socket and must be investigated before energising.',
+    section: '4.6.2',
+    difficulty: 'advanced',
+    topic: 'Ring Final Diagnosis',
+  },
+  {
+    id: 265,
+    question:
+      'According to Table 64 of BS 7671, what minimum insulation resistance is acceptable for a 230 V lighting circuit tested at 500 V DC?',
+    options: [
+      '0.25 MΩ',
+      '0.5 MΩ',
+      '1.0 MΩ',
+      '10 MΩ',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Table 64 specifies that for nominal circuit voltages over 50 V up to and including 500 V (other than SELV/PELV), insulation resistance is tested at 500 V DC and must be at least 1.0 MΩ to be considered satisfactory.',
+    section: '4.6.3',
+    difficulty: 'intermediate',
+    topic: 'Table 64 IR',
+  },
+  {
+    id: 266,
+    question:
+      'What test voltage and minimum insulation resistance value applies to a SELV or PELV circuit per Table 64?',
+    options: [
+      '500 V DC and 1.0 MΩ',
+      '250 V DC and 0.5 MΩ',
+      '1000 V DC and 1.0 MΩ',
+      '50 V DC and 0.1 MΩ',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Table 64 requires SELV and PELV circuits to be tested at 250 V DC with a minimum insulation resistance of 0.5 MΩ.',
+    section: '4.6.3',
+    difficulty: 'intermediate',
+    topic: 'Table 64 SELV',
+  },
+  {
+    id: 267,
+    question:
+      'What test voltage and minimum insulation resistance value applies to a circuit operating above 500 V (e.g. 690 V) per Table 64?',
+    options: [
+      '250 V DC and 0.5 MΩ',
+      '500 V DC and 1.0 MΩ',
+      '1000 V DC and 1.0 MΩ',
+      '1000 V DC and 10 MΩ',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Table 64 specifies that circuits with a nominal voltage above 500 V are tested at 1000 V DC with a minimum insulation resistance of 1.0 MΩ.',
+    section: '4.6.3',
+    difficulty: 'intermediate',
+    topic: 'Table 64 HV',
+  },
+  {
+    id: 268,
+    question:
+      'Before carrying out an insulation resistance test on a final circuit, which of the following must be done to avoid damage to connected equipment?',
+    options: [
+      'Leave all equipment connected and energised',
+      'Disconnect, unplug or short out vulnerable items (electronic dimmers, RCBOs with electronic components, lamps with electronic control gear) and link line to neutral where instructed',
+      'Test only at 250 V DC regardless of the circuit',
+      'Only test if the customer asks',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Voltage-sensitive equipment (electronic dimmers, electronic ballasts, RCDs/RCBOs with electronic components, smoke alarms, surge protective devices) must be disconnected, unplugged or short-circuited L–N before applying 500 V DC test voltage. Where line and neutral cannot be tested separately, they may be linked together and tested to earth.',
+    section: '4.6.3',
+    difficulty: 'intermediate',
+    topic: 'IR Test Precautions',
+  },
+  {
+    id: 269,
+    question:
+      'A 30 mA RCD on a final circuit is tested at rated residual operating current (1 × IΔn) using an alternating current test under BS 7671:2018+A4:2026. What is the maximum permitted disconnection time for a general non-delay type RCD?',
+    options: [
+      '40 ms',
+      '150 ms',
+      '300 ms',
+      '500 ms',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Per BS 7671:2018+A4:2026, effectiveness of a general non-delay RCD is verified where the device disconnects within 300 ms when tested at rated residual operating current (IΔn) using an AC test. The previous 5 × IΔn / Table 3A timings have been superseded.',
+    section: '4.6.4',
+    difficulty: 'advanced',
+    topic: 'RCD Trip Time',
+  },
+  {
+    id: 270,
+    question:
+      'For a Type S (selective, time-delayed) RCD tested at rated residual operating current, what disconnection time band is acceptable?',
+    options: [
+      '0–40 ms',
+      '130–500 ms',
+      '500–1000 ms',
+      '1000–2000 ms',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A Type S (selective) RCD has an intentional time delay so that it can discriminate with downstream non-delay RCDs. The acceptable disconnection time at rated residual operating current is 130–500 ms.',
+    section: '4.6.4',
+    difficulty: 'advanced',
+    topic: 'Type S RCD',
+  },
+  {
+    id: 271,
+    question:
+      'Why is a polarity test (Regulation 643.6) required at every accessory before energising an installation?',
+    options: [
+      'To verify the cable colour',
+      'To confirm that single-pole switching, fuses and circuit-breakers are connected in the line conductor only, and that socket polarity is correct, ensuring isolation devices break the line not the neutral',
+      'To check the cost of materials',
+      'To verify the bend radius',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 643.6 requires polarity verification to confirm single-pole protective devices and switches are connected in the line conductor, that centre-contact lampholder centre pins are connected to the line conductor, and that socket-outlet wiring is correct. Reverse polarity leaves equipment energised when "switched off" and is a significant shock and fire risk.',
+    section: '4.6.5',
+    difficulty: 'intermediate',
+    topic: 'Polarity Test',
+  },
+  {
+    id: 272,
+    question:
+      'Which of the following correctly describes a functional test under Regulation 643.10?',
+    options: [
+      'Measuring insulation resistance of a circuit',
+      'Verifying that assemblies such as switchgear, controlgear, drives, controls and interlocks operate correctly to confirm they have been properly mounted, adjusted and installed',
+      'Calculating the prospective fault current',
+      'Recording the cable manufacturer',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 643.10 functional testing verifies that assemblies such as switchgear, controls, interlocks, motor controllers and similar equipment operate correctly when the installation is energised — confirming mounting, adjustment and installation are satisfactory.',
+    section: '4.6.5',
+    difficulty: 'intermediate',
+    topic: 'Functional Test',
+  },
+  {
+    id: 273,
+    question:
+      'In what order should the dead tests on a new installation normally be carried out, per BS 7671 Section 643?',
+    options: [
+      'Earth fault loop impedance, then RCD test, then insulation resistance',
+      'Continuity of protective conductors, continuity of ring final conductors, insulation resistance, polarity',
+      'RCD test, then polarity, then continuity',
+      'Functional test, then insulation resistance, then continuity',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Section 643 lists the dead test sequence as: continuity of protective conductors (including main and supplementary bonding), continuity of ring final circuit conductors, insulation resistance, polarity (dead). Sequence matters because, for example, IR cannot be safely interpreted without knowing the cpc is continuous.',
+    section: '4.6.6',
+    difficulty: 'intermediate',
+    topic: 'Test Sequence',
+  },
+  {
+    id: 274,
+    question:
+      'Following the dead tests, which live tests are required before issuing the Electrical Installation Certificate?',
+    options: [
+      'Only insulation resistance',
+      'Earth electrode resistance (where applicable), earth fault loop impedance (Ze and Zs), prospective fault current, RCD operation and functional tests',
+      'Only RCD operation',
+      'Only polarity at the consumer unit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Live tests required before certification include: earth electrode resistance where applicable; earth fault loop impedance Ze at the origin and Zs at every relevant point; prospective fault current at the origin; RCD operation; and functional testing of switchgear and controlgear.',
+    section: '4.6.6',
+    difficulty: 'intermediate',
+    topic: 'Live Test Sequence',
+  },
+  {
+    id: 275,
+    question:
+      'For a 32 A Type B circuit-breaker complying with BS EN 60898, what is the maximum permitted Zs value at the standard ambient temperature given in Table 41.3 of BS 7671:2018+A4:2026?',
+    options: [
+      '1.10 Ω',
+      '1.37 Ω',
+      '1.44 Ω',
+      '1.50 Ω',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Table 41.3 of BS 7671:2018+A4:2026 gives a maximum Zs of 1.37 Ω for a 32 A Type B circuit-breaker. The previously published 1.44 Ω value (under earlier amendments) has been superseded; always work to the current A4 value.',
+    section: '4.6.6',
+    difficulty: 'advanced',
+    topic: 'Table 41.3 Zs',
+  },
+  {
+    id: 276,
+    question:
+      'Which document is the primary source for completion certification of a new installation under BS 7671?',
+    options: [
+      'A handover note',
+      'The Electrical Installation Certificate (EIC) with associated Schedule of Inspections and Schedule of Test Results, required by Regulation 644.1.1',
+      'A delivery note from the wholesaler',
+      'An invoice',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 644.1.1 requires that on completion of a new installation or addition/alteration, an Electrical Installation Certificate (EIC) is issued together with a Schedule of Inspections and a Schedule of Test Results. The EIC is signed by competent persons for design, construction and inspection/testing.',
+    section: '4.6.6',
+    difficulty: 'basic',
+    topic: 'EIC Reg 644.1.1',
+  },
+  {
+    id: 277,
+    question:
+      'Which BS 7671 regulation requires that information on the design, construction, inspection and testing of an installation be provided to the person ordering the work?',
+    options: [
+      'Regulation 132.13',
+      'Regulation 132.12',
+      'Regulation 411.1',
+      'Regulation 522.6',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 132.13 of BS 7671:2018+A4:2026 requires that documentation including drawings, diagrams, charts and information on installed equipment is provided. (Note: 132.12 covers a different chapter scope; the documentation reference is 132.13.)',
+    section: '4.6.6',
+    difficulty: 'intermediate',
+    topic: 'Reg 132.13 Documentation',
+  },
+  {
+    id: 278,
+    question:
+      'After installing the cpc and main bonding, which test is performed first as part of initial verification?',
+    options: [
+      'Insulation resistance',
+      'Continuity of protective conductors (Regulation 643.2.1), including main and supplementary bonding',
+      'RCD operation',
+      'Earth fault loop impedance',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 643.2.1 requires continuity of every protective conductor (including main and supplementary bonding) to be verified by an electrical test using a low-resistance ohmmeter. This is the first dead test in the sequence because subsequent tests rely on a verified earth path.',
+    section: '4.6.1',
+    difficulty: 'basic',
+    topic: 'Reg 643.2.1',
+  },
+  {
+    id: 279,
+    question:
+      'A low-resistance ohmmeter used for continuity testing should provide what minimum short-circuit test current and what no-load voltage range?',
+    options: [
+      '5 mA at 50 V',
+      'At least 200 mA short-circuit test current with a no-load voltage in the range 4 V to 24 V AC or DC',
+      '10 A at 230 V',
+      '1 mA at 1000 V',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A low-resistance ohmmeter for continuity testing must deliver a short-circuit test current of at least 200 mA with a no-load voltage between 4 V and 24 V (AC or DC). This is sufficient to detect high-resistance joints in protective conductors.',
+    section: '4.6.1',
+    difficulty: 'intermediate',
+    topic: 'Continuity Tester Spec',
+  },
+  {
+    id: 280,
+    question:
+      'What is the recommended maximum pulling tension for stranded copper cables drawn into conduit using a stocking grip, per the IET Electrical Installation Design Guide?',
+    options: [
+      'About 5 N/mm² of conductor cross-section',
+      'About 50 N/mm² of conductor cross-section (≈ 5 kg/mm²)',
+      'About 500 N/mm² of conductor cross-section',
+      'There is no recommended limit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The IET Electrical Installation Design Guide recommends a maximum pulling tension of approximately 50 N/mm² (≈ 5 kg/mm²) of conductor cross-sectional area for copper cables pulled with a stocking grip. Excessive tension stretches the conductor and damages insulation.',
+    section: '4.4.4',
+    difficulty: 'advanced',
+    topic: 'Pulling Tension',
+  },
+  {
+    id: 281,
+    question:
+      'What is the typical minimum bend radius for steel-wire armoured (SWA) cable?',
+    options: [
+      '4 × overall diameter',
+      '6 × overall diameter',
+      '8 × overall diameter',
+      '20 × overall diameter',
+    ],
+    correctAnswer: 2,
+    explanation:
+      'Steel-wire armoured (SWA) cable typically has a minimum bend radius of 8 × the overall diameter to avoid damaging the armour and insulation. Mineral-insulated copper-clad (MICC) is typically 6× and unarmoured cables are typically 6×. Always check the manufacturer\'s data sheet.',
+    section: '4.3.1',
+    difficulty: 'intermediate',
+    topic: 'SWA Bend Radius',
+  },
+  {
+    id: 282,
+    question:
+      'Under BS 7671:2018+A4:2026 Regulation 522.8.5, cables installed along an emergency escape route must be supported in a way that:',
+    options: [
+      'Allows them to fall away if a fire occurs, to clear the route',
+      'Prevents premature collapse of the cable in the event of fire — typically by using metallic fixings or supports rather than plastic cable clips alone',
+      'Uses only adhesive tape to reduce smoke generation',
+      'Has no specific requirement',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 522.8.5 (escape route cable retention, A4:2026) requires that wiring systems on escape routes are supported so that they will not be liable to premature collapse in a fire. In practice this means using metallic clips, saddles, cleats or supports rather than relying on plastic cable clips, ties or trunking that would soften and release the cable.',
+    section: '4.4.1',
+    difficulty: 'advanced',
+    topic: 'Escape Route Retention',
+  },
+  {
+    id: 283,
+    question:
+      'Which HSE document, alongside the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th edition), provides guidance on PAT/in-service inspection on construction sites?',
+    options: [
+      'INDG236 (low-risk office environments)',
+      'HSG107 — Maintaining portable electric equipment',
+      'BS 7671 Appendix 6',
+      'GS38',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'HSG107 "Maintaining portable electric equipment" — used together with the IET Code of Practice for In-service Inspection and Testing of Electrical Equipment (5th edition) — is the appropriate HSE guidance for higher-risk environments such as construction sites. INDG236 is the lighter-touch leaflet aimed at low-risk office settings.',
+    section: '4.7.3',
+    difficulty: 'advanced',
+    topic: 'HSG107 vs INDG236',
+  },
+  {
+    id: 284,
+    question:
+      'When selecting cable sizes from drawings (LO 4.1), which factor must be considered alongside the design current Ib?',
+    options: [
+      'Only the cable colour',
+      'Installation method, ambient temperature, grouping (Ca, Ci, Cg), thermal insulation (Ci), and any rewireable fuse derating (Cf), so that the corrected current-carrying capacity Iz ≥ In ≥ Ib',
+      'Only the manufacturer\'s logo',
+      'Only the cable length',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Cable selection must apply rating factors for ambient temperature (Ca), thermal insulation (Ci), grouping (Cg) and, where used, rewireable fuses (Cf), so that the corrected tabulated capacity It × product of factors gives Iz ≥ In ≥ Ib. Voltage drop and earth fault loop impedance must also be checked.',
+    section: '4.4.4',
+    difficulty: 'advanced',
+    topic: 'Cable Sizing',
+  },
+  {
+    id: 285,
+    question:
+      'When fixing a BS 951 earth clamp to a metallic water service pipe for main protective bonding, where should the connection be made?',
+    options: [
+      'On the customer\'s side of any insulating section, and within 600 mm of the meter outlet union or, where this is impracticable, as near as practicable to the point of entry of the pipe into the building',
+      'Anywhere convenient on the pipe',
+      'On the supplier\'s side of the meter',
+      'Outside the building only',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'The main protective bonding connection to a metallic water installation pipe must be made on the consumer\'s side of any insulating section, within 600 mm of the meter outlet union, or as near as practicable to the point of entry of the pipe into the building (Regulation 544.1.2).',
+    section: '4.4.3',
+    difficulty: 'intermediate',
+    topic: 'BS 951 Position',
+  },
+  {
+    id: 286,
+    question:
+      'During termination of conductors at a busbar or terminal, which BS 7671 regulation requires that the connection has appropriate mechanical strength and electrical continuity, with no appreciable mechanical strain on the conductor?',
+    options: [
+      'Regulation 411.3.1.1',
+      'Regulation 526.1 and 526.5',
+      'Regulation 643.7.3',
+      'Regulation 132.13',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 526.1 requires every connection between conductors, and between conductors and equipment, to provide durable electrical continuity and adequate mechanical strength. Regulation 526.5 specifies that terminations must be enclosed (e.g. in an accessory, equipment enclosure or junction box of suitable material) and accessible for inspection unless the joint is maintenance-free per 526.3.',
+    section: '4.5.1',
+    difficulty: 'intermediate',
+    topic: 'Reg 526 Terminations',
+  },
+  {
+    id: 287,
+    question:
+      'A maintenance-free connection (e.g. a crimped or compression joint complying with the relevant standard) may be installed in an inaccessible position only if which of the following applies?',
+    options: [
+      'The customer asks for it',
+      'It is made in accordance with Regulation 526.3 — for example, a compression joint to a manufacturer\'s instructions, a brazed/welded joint, or a connection forming part of equipment that complies with its product standard',
+      'It is more than 6 m from a switch',
+      'It is fitted only on lighting circuits',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 526.3 lists the categories of joint that may be inaccessible, including compression joints made to the manufacturer\'s instructions, brazed/welded/soldered joints, joints in cables in the ground (with appropriate sheathing), and joints forming part of equipment complying with its product standard.',
+    section: '4.5.1',
+    difficulty: 'advanced',
+    topic: 'Reg 526.3 Maintenance-Free',
+  },
+  {
+    id: 288,
+    question:
+      'When stripping the insulation from a single-core 2.5 mm² conductor for termination at a 13 A socket-outlet, which is the most important quality criterion?',
+    options: [
+      'Stripping as much insulation as possible to make connection easier',
+      'Removing only the length of insulation needed so that no bare conductor is visible outside the terminal, while ensuring no conductor strands are nicked or broken',
+      'Twisting the strands tightly with pliers before insertion',
+      'Soldering the strands together',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A good termination removes the minimum insulation required so that no bare conductor protrudes from the terminal, with no strands nicked, severed or splayed outside the terminal. Nicked strands reduce cross-sectional area and create a high-resistance joint that can overheat under load.',
+    section: '4.5.2',
+    difficulty: 'basic',
+    topic: 'Termination Quality',
+  },
+  {
+    id: 289,
+    question:
+      'Why must the line, neutral and cpc terminations at a 13 A socket-outlet be tightened to the manufacturer\'s specified torque?',
+    options: [
+      'For appearance only',
+      'To ensure low-resistance connections that will not loosen over time and overheat, while avoiding over-tightening that crushes or shears strands',
+      'It is not required',
+      'To reduce material cost',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Manufacturer-specified torque values produce a reliable low-resistance connection. Under-tightening causes loose joints that arc and overheat; over-tightening can crush stranded conductors or strip the terminal. A calibrated torque screwdriver should be used wherever a torque value is specified.',
+    section: '4.5.2',
+    difficulty: 'intermediate',
+    topic: 'Termination Torque',
+  },
+  {
+    id: 290,
+    question:
+      'What is the correct sequence for terminating an SWA cable at a steel gland?',
+    options: [
+      'Cut to length, strip outer sheath, trim armour to gland length, fit gland and lock-nut, terminate cores, fit shroud',
+      'Strip insulation, twist cores, push into gland, hope for the best',
+      'Cut, strip cores only, omit the gland',
+      'Solder the armour to the cable cores',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'SWA termination procedure: cut to length, strip the outer LSF/PVC sheath to the required dimension, trim the steel-wire armour to the gland\'s armour cone length, fit the gland body and lock-nut to the enclosure (with earth tag where required), terminate the cores at the equipment, and fit the protective shroud. The armour itself provides the cpc and must be terminated correctly to maintain continuity.',
+    section: '4.5.3',
+    difficulty: 'advanced',
+    topic: 'SWA Termination',
+  },
+  {
+    id: 291,
+    question:
+      'When using OSG Appendix C / Table H1 to size a conduit run for cables, what method is used?',
+    options: [
+      'Calculate using π × r² of each cable and divide by π × r² of the conduit',
+      'Look up the cable factor for each conductor and the conduit factor for the chosen size and length, then check that the sum of cable factors does not exceed the conduit factor',
+      'Always use the next size up regardless of fill',
+      'There is no published method; use experience',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The On-Site Guide Appendix C / Table H1 method assigns a "cable factor" to each conductor and a "conduit factor" to each size of conduit (taking length and number of bends into account). The sum of cable factors must not exceed the conduit factor. The raw geometric area calculation does not account for cable jam, friction or pulling effort.',
+    section: '4.4.4',
+    difficulty: 'advanced',
+    topic: 'OSG Cable Factor',
+  },
+  {
+    id: 292,
+    question:
+      'Why does the OSG conduit factor table reduce the allowable fill as the run length and number of bends increase?',
+    options: [
+      'To increase material cost',
+      'Because friction and the risk of cable jamming during pulling rise with length and bends, so a lower fill is needed to keep pulling tensions safe',
+      'For aesthetic reasons',
+      'It does not — fill is constant',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Pulling friction increases with run length and the number of bends. The OSG factors reduce permissible fill so that pulling tensions stay within safe limits and cables are not damaged. A short straight run permits a higher fill than a long run with multiple bends.',
+    section: '4.4.4',
+    difficulty: 'advanced',
+    topic: 'OSG Run Length',
+  },
+  {
+    id: 293,
+    question:
+      'Which Regulation states that the protective measure "automatic disconnection of supply" requires (a) a protective earthing arrangement and (b) main protective bonding of extraneous-conductive-parts?',
+    options: [
+      'Regulations 411.3.1.1 and 411.3.1.2',
+      'Regulation 522.6',
+      'Regulation 132.13',
+      'Regulation 643.10',
+    ],
+    correctAnswer: 0,
+    explanation:
+      'Regulation 411.3.1.1 requires a protective equipotential earthing arrangement, and Regulation 411.3.1.2 requires main protective bonding of extraneous-conductive-parts (such as metallic gas, water and structural pipework entering the building) as part of the protective measure ADS.',
+    section: '4.4.3',
+    difficulty: 'intermediate',
+    topic: 'Reg 411.3.1.1/.2',
+  },
+  {
+    id: 294,
+    question:
+      'When testing functionality of an RCBO that has both overcurrent and residual-current protection, which two checks should be performed?',
+    options: [
+      'Only operate the test button',
+      'Operate the integral test button (functional check) and verify residual operating current using an RCD tester (Regulation 643.7.3) — the test button alone does not verify trip time',
+      'Only measure insulation resistance',
+      'Only check polarity',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'The integral test button confirms the device operates mechanically but does not verify that disconnection occurs within the BS 7671 trip-time limits. A formal RCD test using an instrument is required under Regulation 643.7.3 to demonstrate compliance.',
+    section: '4.6.4',
+    difficulty: 'intermediate',
+    topic: 'RCBO Functional Test',
+  },
+  {
+    id: 295,
+    question:
+      'When recording test results on the Schedule of Test Results, which of the following must be included for each circuit?',
+    options: [
+      'Only the cable colour',
+      'Circuit reference, conductor sizes, protective device details, R1+R2 (or Rn for ring) and R2 values, IR readings, polarity confirmation, Zs, and RCD operating time where applicable',
+      'Only the customer\'s name',
+      'Only the install date',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A complete Schedule of Test Results entry per circuit includes: circuit reference and description, conductor csa, protective device type/rating/breaking capacity, continuity readings (R1+R2 or rn, r2, ring values), IR readings (L–N, L–E, N–E or all conductors to earth), polarity, measured Zs, and RCD trip time where the circuit is RCD-protected.',
+    section: '4.6.6',
+    difficulty: 'intermediate',
+    topic: 'Schedule of Test Results',
+  },
+  {
+    id: 296,
+    question:
+      'During safe isolation, after locking off the isolator, which item should be attached to indicate the isolation and identify the responsible person?',
+    options: [
+      'A handwritten sticky note',
+      'A durable caution/danger notice or padlock-mounted tag identifying the person who applied the lock and the reason for isolation',
+      'A piece of insulating tape with no information',
+      'Nothing — locking off is enough',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Step 5 of the JIB safe isolation procedure (lock and label) requires both a lock-off device and a durable caution notice or tag identifying who carried out the isolation, the date/time and the reason. This prevents anyone else re-energising the circuit and supports the chain of responsibility.',
+    section: '4.7.1',
+    difficulty: 'basic',
+    topic: 'Lock and Label',
+  },
+  {
+    id: 297,
+    question:
+      'A proving unit (e.g. compliant with the manufacturer\'s GS38-aligned design) is used to:',
+    options: [
+      'Test insulation resistance',
+      'Verify that a voltage indicator/two-pole tester is functioning correctly before and after testing for dead, without exposing the user to a live source',
+      'Replace the need for a low-resistance ohmmeter',
+      'Calculate prospective fault current',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'A proving unit provides a known, intrinsically safe voltage source so the operator can confirm the voltage indicator is working both before testing the circuit for dead and afterwards. This avoids the need to find a known live source on site, which carries its own risks.',
+    section: '4.7.2',
+    difficulty: 'intermediate',
+    topic: 'Proving Unit',
+  },
+  {
+    id: 298,
+    question:
+      'What is the recommended approach when working on an installation where multiple circuits could be live in the same enclosure (e.g. a distribution board)?',
+    options: [
+      'Isolate only the circuit under test',
+      'Isolate the entire board where reasonably practicable, or apply lock-off to every circuit that could become live within reach, and barrier off any remaining live parts to provide protection per HSE EAW Regulation 14',
+      'Work live to save time',
+      'Switch off the lighting only',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where possible the entire board should be isolated. If only part can be isolated, every other circuit within reach should be locked off or live parts must be barriered/insulated to prevent inadvertent contact. Working live is permitted only where strict criteria of Electricity at Work Regulation 14 are met (unreasonable to work dead, reasonable to work live, suitable precautions).',
+    section: '4.7.4',
+    difficulty: 'advanced',
+    topic: 'EAWR Reg 14',
+  },
+  {
+    id: 299,
+    question:
+      'A risk assessment for installation work in an occupied office identifies vulnerable persons (members of the public). Which control should be prioritised?',
+    options: [
+      'Putting the kettle on',
+      'Segregating the work area with barriers/signage, scheduling noisy or dust-creating tasks outside occupied hours where possible, and using dust extraction and low-voltage 110 V CTE tools or RCD-protected 230 V supply',
+      'Working faster regardless of risk',
+      'Removing all PPE for comfort',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Where vulnerable persons are present, the hierarchy of controls applies: eliminate or substitute hazards (work out of hours), engineering controls (barriers, dust extraction, 110 V CTE tooling or RCD protection), administrative controls (signage, briefings), then PPE. Segregation of the work area and protection of the public take priority over convenience.',
+    section: '4.7.5',
+    difficulty: 'intermediate',
+    topic: 'Risk Controls',
+  },
+  {
+    id: 300,
+    question:
+      'After completing the dead and live tests on a new installation, which of the following must be issued before the installation is put into service under BS 7671:2018+A4:2026?',
+    options: [
+      'A receipt only',
+      'An Electrical Installation Certificate (EIC) signed by the responsible competent persons for design, construction and inspection/testing, accompanied by a Schedule of Inspections and a Schedule of Test Results, plus the documentation required by Regulation 132.13',
+      'Just a verbal handover',
+      'A photograph of the consumer unit',
+    ],
+    correctAnswer: 1,
+    explanation:
+      'Regulation 644.1.1 requires the EIC, Schedule of Inspections and Schedule of Test Results to be issued on completion of a new installation or addition/alteration. Regulation 132.13 also requires that documentation, drawings and information are provided to the person ordering the work so the installation can be operated and maintained safely.',
+    section: '4.6.6',
+    difficulty: 'basic',
+    topic: 'EIC Handover',
+  },
 ];
 
 // Helper functions to filter questions

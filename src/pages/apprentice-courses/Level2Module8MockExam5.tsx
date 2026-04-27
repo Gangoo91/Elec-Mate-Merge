@@ -26,8 +26,8 @@ import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayo
 
 const Level2Module8MockExam5 = () => {
   useSEO(
-    'Mock Exam 5: Design, Planning & Communication - Level 2 Module 8',
-    'Test your knowledge of electrical design principles, planning techniques, documentation, and communication skills for Level 2 electrical installation.'
+    'Mock Exam 5: Communicate with others within building services (Unit 210) - Level 2 Module 8',
+    'Test your knowledge of site roles, statutory framework, workplace and customer information, communication methods and conflict for C&G 2365-02 Unit 210.'
   );
 
   // Exam state management
@@ -35,7 +35,7 @@ const Level2Module8MockExam5 = () => {
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState(45 * 60); // 45 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState(90 * 60); // 90 minutes (C&G 2365-02 spec)
   const [showResults, setShowResults] = useState(false);
   const [flaggedQuestions, setFlaggedQuestions] = useState<Set<number>>(new Set());
   const [reviewMode, setReviewMode] = useState<
@@ -47,11 +47,11 @@ const Level2Module8MockExam5 = () => {
 
   // Initialize exam
   const startExam = () => {
-    const questions = getRandomQuestions(30, { basic: 40, intermediate: 45, advanced: 15 });
+    const questions = getRandomQuestions(60, { basic: 40, intermediate: 45, advanced: 15 });
     setExamQuestions(questions);
     setSelectedAnswers({});
     setCurrentQuestion(0);
-    setTimeRemaining(45 * 60);
+    setTimeRemaining(90 * 60);
     setShowResults(false);
     setFlaggedQuestions(new Set());
     setExamStarted(true);
@@ -199,9 +199,11 @@ const Level2Module8MockExam5 = () => {
             <div className="text-center space-y-6">
               <div>
                 <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
-                  Module 5: Design, Planning & Communication
+                  Module 5: Communicate with others within building services
                 </h1>
-                <p className="text-white">Level 2 Electrical Installation - Mock Exam 5</p>
+                <p className="text-white">
+                  Level 2 Electrical Installation - Mock Exam 5 (C&amp;G 2365-02 Unit 210)
+                </p>
               </div>
 
               <div className="bg-background/50 p-6 rounded-lg border border-elec-yellow/30">
@@ -209,8 +211,11 @@ const Level2Module8MockExam5 = () => {
                   Exam Instructions
                 </h2>
                 <ul className="text-sm text-white space-y-2 text-left">
-                  <li>• 30 questions covering design principles, planning, and communication</li>
-                  <li>• 45 minutes time limit</li>
+                  <li>
+                    • 60 questions covering site roles, statutory framework, workplace &amp;
+                    customer information, communication methods and conflict
+                  </li>
+                  <li>• 90 minutes time limit</li>
                   <li>• You can flag questions for review</li>
                   <li>• Navigate between questions freely</li>
                   <li>• Submit when ready or time expires</li>
@@ -453,7 +458,9 @@ const Level2Module8MockExam5 = () => {
                   <CheckCircle className="h-6 w-6 text-elec-yellow" />
                 </div>
                 <h1 className="text-xl font-bold text-foreground mb-2">Exam Complete</h1>
-                <h2 className="text-lg text-elec-yellow">Design, Planning & Communication</h2>
+                <h2 className="text-lg text-elec-yellow">
+                  Communicate with others within building services (Unit 210)
+                </h2>
               </div>
 
               <div className="bg-background p-6 rounded-xl border border-muted/40 text-center mb-6">
@@ -765,7 +772,7 @@ const Level2Module8MockExam5 = () => {
 
                   <div className="text-xs text-center text-white pt-2 border-t border-elec-yellow/30">
                     <div>Exam: Module 5</div>
-                    <div>Design & Communication</div>
+                    <div>Unit 210 - Communicate with others</div>
                   </div>
                 </div>
               </div>

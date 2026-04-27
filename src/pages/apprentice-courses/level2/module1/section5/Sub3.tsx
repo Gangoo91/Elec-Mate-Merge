@@ -524,6 +524,33 @@ export default function Sub3() {
             }
           />
 
+          <CommonMistake
+            title="Believing a socket tester proves dead"
+            whatHappens={
+              <>
+                You're working on a faulty socket. You plug in your three-LED socket tester (the
+                little green / amber / red plug-in unit), all the LEDs are off, you assume the
+                circuit is dead and start unscrewing the faceplate. The socket tester reads
+                'no power' for all sorts of reasons that aren't 'circuit is isolated and dead' —
+                a broken neutral elsewhere on the ring, the tester's own internal LEDs failing,
+                or a partial isolation that drops voltage to one socket but leaves the line
+                conductor live. You take a shock from the line terminal as you pull the
+                faceplate off.
+              </>
+            }
+            doInstead={
+              <>
+                A socket tester is a quick functional check, not a means of proving dead. It is
+                NOT a GS38-compliant voltage indicator and HSE GS38 explicitly excludes it from
+                the safe-isolation procedure. Prove dead with a proper two-pole voltage
+                indicator on a proving unit, test L-E / L-N / N-E at the actual conductors with
+                the faceplate already off, then re-prove on the proving unit. The plug-in tester
+                tells you about polarity and continuity once power is back; it tells you nothing
+                reliable about whether the conductors you're about to touch are dead.
+              </>
+            }
+          />
+
           <Scenario
             title="The CU with no obvious means of isolation"
             situation={

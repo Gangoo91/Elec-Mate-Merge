@@ -544,6 +544,32 @@ export default function Sub2() {
             }
           />
 
+          <CommonMistake
+            title="Locking off the wrong device"
+            whatHappens={
+              <>
+                You're working in a sub-board and the labels are vague. You snap what you think
+                is the correct MCB to off, hang your padlock and caveat tag on it, and start
+                work — but the device you locked off isn’t the one feeding the circuit you’re
+                working on. The customer reports their kettle stopped working five minutes
+                later — that's because the breaker you locked off was actually the kitchen ring,
+                not the lighting circuit you wanted. Worse: the lighting circuit is still live,
+                and your indicator showed dead because the lighting was simply switched off at
+                the wall switch, not isolated at the board.
+              </>
+            }
+            doInstead={
+              <>
+                Identify the correct device by tracing the circuit (function-test the load on
+                the way down, walk the wiring back if you have to) BEFORE you lock anything off.
+                Confirm the device you've chosen by switching it and watching the actual load
+                you intend to work on go dead — at the load, not at a label. THEN lock off. THEN
+                prove dead at the point of work. Lock-off without correct identification is just
+                a padlock on the wrong breaker.
+              </>
+            }
+          />
+
           <Scenario
             title="The borrowed neutral that wasn’t obvious"
             situation={

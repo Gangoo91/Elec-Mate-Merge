@@ -9,8 +9,8 @@
  *     measurement off scaled drawings)
  *
  * Reg sources cited: 514.9.2 (A4:2026 — diagrams shall comply with
- * applicable standards), Reg 132.12 (information to be provided —
- * paraphrased intent: legible scaled drawings).
+ * applicable standards), Reg 132.13 (Documentation — paraphrased; see
+ * 132.13.1 Diagrams and 132.13.2 Routine maintenance).
  */
 
 import { useNavigate } from 'react-router-dom';
@@ -564,19 +564,19 @@ export default function Sub4() {
           />
 
           <RegsCallout
-            source="BS 7671 — Regulation 132.12 (information to be provided)"
-            clause="132.12 — Information about the electrical installation shall be provided to enable users, operators and persons subsequently working on the installation to identify circuits, isolation points, protective devices, the means of compliance with the regulations and any specific risks."
+            source="BS 7671 — Regulation 132.13 (Documentation)"
+            clause="132.13 — Documentation for the electrical installation shall be provided so that users, operators and persons subsequently working on the installation can identify circuits, isolation points, protective devices, the means of compliance with the regulations and any specific risks. Sub-clauses cover 132.13.1 (Diagrams) and 132.13.2 (Routine maintenance)."
             meaning={
               <>
                 Drawings have to be legible — a measurement that can't be read is information that
                 hasn't been provided. A drawing scaled too small to make out, or printed without a
-                scale bar / named dimensions, doesn't satisfy 132.12 because the next electrician
+                scale bar / named dimensions, doesn't satisfy 132.13 because the next electrician
                 can't identify cable runs, equipment positions or the means of compliance. Scale
                 conversion isn't just a maths skill — it's how you USE drawings to discharge the
-                132.12 information duty.
+                132.13 documentation duty.
               </>
             }
-            cite="Reference: BS 7671:2018+A4:2026 Part 1, Chapter 13, Regulation 132.12 (paraphrased)"
+            cite="Paraphrased — see BS 7671:2018+A4:2026 Regulation 132.13.1 (Diagrams) and 132.13.2 (Routine maintenance)."
           />
 
           <RegsCallout

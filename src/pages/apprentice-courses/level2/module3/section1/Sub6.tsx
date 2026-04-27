@@ -753,7 +753,38 @@ export default function Sub6() {
             onSite="A common point of confusion early in the apprenticeship: 'do I need NICEIC?' — no, the scheme registers the firm. 'Do I need my own PL insurance?' — no, you're covered under the firm's policy as long as you're acting within scope. 'Do I need EL?' — your firm needs EL to cover YOU; you don't need to buy it personally. 'Do I need a JIB card?' — yes, this is YOUR personal credential."
           >
             <p>The credential split:</p>
-            <div className="overflow-x-auto -mx-1 my-2">
+            {/* Mobile: card list (<sm) */}
+            <div className="space-y-2 my-2 sm:hidden">
+              {[
+                { credential: 'CPS registration (NICEIC / NAPIT / ELECSA)', heldBy: 'Firm', needs: 'No' },
+                { credential: 'Public Liability insurance', heldBy: 'Firm', needs: "No (covered under firm's policy)" },
+                { credential: "Employers' Liability insurance", heldBy: 'Firm (statutory duty)', needs: 'No — firm holds it to cover you' },
+                { credential: 'Professional Indemnity', heldBy: 'Firm (if design-active)', needs: 'No' },
+                { credential: 'JIB card (apprentice grade)', heldBy: 'Operative (you)', needs: 'YES — your personal credential' },
+                { credential: 'ECS card (site access)', heldBy: 'Operative (you)', needs: 'YES — required for most major sites' },
+                { credential: 'College enrolment / progression record', heldBy: 'Operative (you)', needs: 'YES — your apprenticeship record' },
+                { credential: 'ECA / SELECT trade body membership', heldBy: 'Firm', needs: 'No' },
+              ].map((row) => (
+                <div
+                  key={row.credential}
+                  className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3 text-[13px] text-white/90 space-y-1.5"
+                >
+                  <div className="font-semibold text-white">{row.credential}</div>
+                  <div className="flex justify-between gap-3">
+                    <span className="text-white/60 uppercase tracking-wide text-[10px] pt-0.5">Held by</span>
+                    <span className="text-right text-white/90">{row.heldBy}</span>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <span className="text-white/60 uppercase tracking-wide text-[10px] pt-0.5">
+                      Apprentice needs personally?
+                    </span>
+                    <span className="text-right text-white/90">{row.needs}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {/* Desktop: table (>=sm) */}
+            <div className="hidden sm:block my-2">
               <table className="w-full text-[13px] text-white/90 border-collapse">
                 <thead>
                   <tr className="border-b border-white/[0.1]">

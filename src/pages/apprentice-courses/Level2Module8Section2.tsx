@@ -1,87 +1,97 @@
-import { Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Search, CheckSquare, AlertTriangle } from 'lucide-react';
-import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
+import { Clock, Search, CheckSquare, AlertTriangle } from 'lucide-react';
+import { SectionCard } from '@/components/upskilling/cards';
+import { SectionShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
 
 const subsections = [
   {
-    number: 'Section 1',
-    title: 'Time Management Mastery',
-    description:
-      'Master essential time management strategies for both written and practical exams, including allocation techniques and pacing methods.',
+    id: 1,
+    title: 'Time management mastery',
     icon: Clock,
+    description:
+      'Pacing strategies for the Level 2 paper — minutes-per-question, when to flag and skip, and how to bank time for the long-form items.',
     href: 'section1',
   },
   {
-    number: 'Section 2',
-    title: 'Question Analysis Techniques',
-    description:
-      'Learn how to break down exam questions, identify key requirements, and structure your answers effectively.',
+    id: 2,
+    title: 'Question analysis techniques',
     icon: Search,
+    description:
+      'Reading the question properly — spotting command words, ruling out distractors, and structuring an answer that earns every available mark.',
     href: 'section2',
   },
   {
-    number: 'Section 3',
-    title: 'Exam Day Preparation',
-    description:
-      'Essential preparation steps for exam day, including mental preparation, required materials, and last-minute revision strategies.',
+    id: 3,
+    title: 'Exam day preparation',
     icon: CheckSquare,
+    description:
+      'The 24-hour run-up — what to revise, what to pack, what to eat and how to walk into the exam room with the right mindset.',
     href: 'section3',
   },
   {
-    number: 'Section 4',
-    title: 'Common Pitfalls & Solutions',
-    description:
-      'Identify and avoid common exam mistakes, with practical solutions and preventive strategies for better performance.',
+    id: 4,
+    title: 'Common pitfalls and how to avoid them',
     icon: AlertTriangle,
+    description:
+      'The mistakes that cost candidates a pass — misreading the question, running out of time, second-guessing the right answer.',
     href: 'section4',
   },
 ];
 
 const Level2Module8Section2 = () => {
-  useSEO(
-    'How to Pass Exams - Level 2 Electrical Installation | Module 8 Section 2',
-    'Master exam success with proven strategies, time management techniques, and expert tips for Level 2 electrical installation examinations. BS7671 compliant preparation guide.'
-  );
+  useSEO({
+    title: 'How to pass exams — tips and techniques | Module 8 Section 2 | Elec-Mate',
+    description:
+      'Exam strategy for the Level 2 electrical assessment — time management, question analysis, exam-day preparation and common pitfalls to avoid.',
+  });
 
   return (
-    <div className="bg-background p-4 sm:p-6 lg:p-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <Link
-            to=".."
-            className="inline-flex items-center text-white hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Module 8
-          </Link>
-        </div>
-
-        <div className="mb-8">
-          <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-4">
-            How to Pass Exams – Tips and Techniques
-          </h1>
-          <p className="text-white text-lg max-w-4xl">
-            Master the essential strategies and techniques needed to excel in your Level 2
-            electrical installation examinations. Learn proven methods for time management, question
-            analysis, and exam preparation that will maximise your performance and confidence.
+    <SectionShell
+      backTo=".."
+      backLabel="Module 8"
+      moduleNumber={8}
+      sectionNumber={2}
+      title="How to pass exams — tips and techniques"
+      description="Proven exam strategy — pacing, question analysis, exam-day prep and the common pitfalls — so the work you put into the mocks actually shows up on the day."
+      tone="emerald"
+      subsectionsCount={subsections.length}
+      prevSectionHref="../section1"
+      prevSectionLabel="Mock examinations"
+      aboveGrid={
+        <div className="max-w-3xl space-y-3 pt-2">
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Section 2 is the exam-technique playbook. The mocks in Section 1 build your knowledge
+            and pace — this section is the layer on top that turns that preparation into marks
+            on paper. Strong technique can lift a borderline candidate over the pass mark and
+            stop a confident one from throwing it away on careless mistakes.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            <span className="text-white font-medium">Sub 1</span> covers timing — how to plan
+            minutes per question and when to flag-and-skip. <span className="text-white font-medium">Sub 2</span>{' '}
+            covers question analysis — reading command words, ruling out distractors and earning
+            every mark. <span className="text-white font-medium">Sub 3</span> covers the
+            24-hour run-up to the exam, and <span className="text-white font-medium">Sub 4</span>{' '}
+            covers the common pitfalls that cost candidates a pass.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Read these once early in your revision so you sit the mocks the right way, then
+            re-read them in the final week before your assessment.
           </p>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {subsections.map((subsection) => (
-            <ModuleCard
-              key={subsection.number}
-              number={subsection.number}
-              title={subsection.title}
-              description={subsection.description}
-              icon={subsection.icon}
-              href={subsection.href}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
+      }
+    >
+      {subsections.map((subsection, index) => (
+        <SectionCard
+          key={subsection.id}
+          to={subsection.href}
+          sectionNumber={subsection.id}
+          title={subsection.title}
+          description={subsection.description}
+          icon={subsection.icon}
+          index={index}
+        />
+      ))}
+    </SectionShell>
   );
 };
 

@@ -176,6 +176,33 @@ export const videos = {
     'How lead-acid batteries work · Unit 203 LO6',
     ['6.1'],
   ),
+
+  /* ── Module 4 (Unit 204) — Installation, inspection & testing ────── */
+
+  // §3 Safe isolation — JIB 9-step procedure: where to test (Craig Wiltshire)
+  safeIsolation: lookup(
+    'YMJzWC_e_Uw',
+    'JIB safe isolation — where to test · Unit 204 LO3',
+    ['3.7'],
+  ),
+  // §6 Ring final test — three-part method (Craig Wiltshire)
+  ringFinalTest: lookup(
+    'K7-FxWD87Kg',
+    'Ring final continuity test · Unit 204 LO6',
+    ['6.2'],
+  ),
+  // §6 Insulation resistance — A4:2026 procedure (Craig Wiltshire)
+  insulationResistanceAmd2: lookup(
+    'sWvtpLZsAEE',
+    'Insulation resistance per AMD2 · Unit 204 LO6',
+    ['6.3'],
+  ),
+  // §5 Schedule of Inspections — full walkthrough (Craig Wiltshire)
+  scheduleOfInspections: lookup(
+    'DJn8KIQkApo',
+    'Schedule of Inspections walkthrough · Unit 204 LO5',
+    ['5.1'],
+  ),
 } as const satisfies Record<string, VideoLibraryEntry>;
 
 export type VideoKey = keyof typeof videos;

@@ -1,11 +1,11 @@
-import { Ruler, Plug, Link2, Activity } from 'lucide-react';
+import { Ruler, Plug, Link2, Activity, GitCompare, Network } from 'lucide-react';
 import { ModuleCard } from '@/components/apprentice-courses/ModuleCard';
 import { SectionShell } from '@/components/study-centre/shells';
 
 const subsections = [
   {
     number: '4.1',
-    title: 'Identifying cable sizes (4.1)',
+    title: 'Identify cable sizes (4.1)',
     description:
       '10 mm² / 16 mm² / 25 mm² — the rules in BS 7671 411 and 544 that decide which to fit for main bonding.',
     icon: Ruler,
@@ -13,7 +13,7 @@ const subsections = [
   },
   {
     number: '4.2',
-    title: 'Terminating bonding cables (4.2)',
+    title: 'Terminate bonding cables (4.2)',
     description:
       'Stripping, sleeving, identifying and landing the bond cable into the MET and the clamp without damage.',
     icon: Plug,
@@ -21,7 +21,7 @@ const subsections = [
   },
   {
     number: '4.3',
-    title: 'Connecting bonding clamps (4.3)',
+    title: 'Connect bonding clamps (4.3)',
     description:
       'BS 951 clamps within 600 mm of the meter, on clean pipework — gas, water, oil and structural steel.',
     icon: Link2,
@@ -29,11 +29,27 @@ const subsections = [
   },
   {
     number: '4.4',
-    title: 'Testing continuity of main bonds (4.4)',
+    title: 'Test continuity of main bonds (4.4)',
     description:
       'Low-resistance ohmmeter, leads nulled, reading recorded — the test that proves the bond actually does its job.',
     icon: Activity,
     href: '4-4',
+  },
+  {
+    number: '4.5',
+    title: 'Main vs supplementary bonding deep dive',
+    description:
+      'Reg 411.3.1.2 vs Reg 415.2 — system-wide intake equipotential vs local high-risk equipotential. Plus the Reg 701.415.2 bathroom omission permission.',
+    icon: GitCompare,
+    href: '4-5',
+  },
+  {
+    number: '4.6',
+    title: 'Bonding scenarios across services',
+    description:
+      'Per-service bonding for gas, water, oil, structural steel, lightning protection, PV arrays and battery storage — the quirks behind the general framework.',
+    icon: Network,
+    href: '4-6',
   },
 ];
 
@@ -64,8 +80,18 @@ export default function Section4() {
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
             Sub 4.1 covers picking the right cable size against BS 7671 544.1. Sub 4.2
             walks the termination of bonding cables — sleeving, labelling and landing.
-            Sub 4.3 covers BS 951 clamps onto each service. Sub 4.4 closes the section
-            with the continuity test and how the result lands on the test schedule.
+            Sub 4.3 covers BS 951 clamps onto each service. Sub 4.4 closes the practical
+            sequence with the continuity test and how the result lands on the test
+            schedule.
+          </p>
+          <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
+            Subs 4.5 + 4.6 are supplementary deep-dives. Sub 4.5 walks through the
+            difference between main bonding (at the building&apos;s intake) and
+            supplementary bonding (at high-risk locations like bathrooms), including
+            when supplementary bonding can be omitted under modern A4:2026 RCD provisions.
+            Sub 4.6 walks through bonding scenarios across all the services you&apos;ll
+            meet on site — gas, water, oil, structural steel, lightning protection,
+            swimming pools, PV arrays, battery storage.
           </p>
         </div>
       }

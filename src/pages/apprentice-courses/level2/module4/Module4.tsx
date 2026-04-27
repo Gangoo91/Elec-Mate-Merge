@@ -103,7 +103,7 @@ export default function Module4() {
           </p>
           <p className="text-white/80 leading-relaxed text-[14px] sm:text-[15px]">
             By the end of Module 4 you should be able to plan, install, terminate, bond,
-            inspect and dead-test a small installation to a standard a competent spark
+            inspect and dead-test a small installation to a standard a competent electrician
             would happily sign off.
           </p>
         </div>

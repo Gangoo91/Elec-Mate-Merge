@@ -333,14 +333,16 @@ export default function Sub3() {
                 electrical input — the input is higher because the motor isn't 100% efficient.
               </li>
               <li>
-                <strong>415 V, 3 ~</strong> — rated voltage between any two phases. Volts (V), AC,
-                three-phase. Each phase to neutral would be 240 V (legacy) or 230 V on the
-                harmonised system.
+                <strong>400 V, 3 ~</strong> — rated voltage between any two phases. Volts (V), AC,
+                three-phase, on the UK harmonised supply (ESQCR — 230 V phase-to-neutral, 400 V
+                line-to-line). Older plates may still read 415 V (the pre-1995 nominal); the
+                tolerance bands overlap so the motor still runs, but design Vd / fault calcs should
+                use 230/400 V.
               </li>
               <li>
                 <strong>14.5 A</strong> — rated full-load current per phase. Amps (A). This is the
                 figure your overload, MCB and cable have to handle. Sense-check: S = √3 × V × I =
-                1.732 × 415 × 14.5 ≈ 10,400 VA ≈ 10.4 kVA apparent power.
+                1.732 × 400 × 14.5 ≈ 10,045 VA ≈ 10.0 kVA apparent power.
               </li>
               <li>
                 <strong>50 Hz</strong> — supply frequency. Hertz (Hz), cycles per second. UK / EU
@@ -349,8 +351,8 @@ export default function Sub3() {
               </li>
               <li>
                 <strong>cos φ = 0.85</strong> — power factor. Dimensionless. Real power P = S × cos φ
-                = 10.4 × 0.85 ≈ 8.84 kW of electrical input. The 7.5 kW rating is what comes out of
-                the shaft, so motor efficiency η ≈ 7.5 ÷ 8.84 ≈ 85%. Apprentice rule of thumb: a
+                = 10.0 × 0.85 ≈ 8.5 kW of electrical input. The 7.5 kW rating is what comes out of
+                the shaft, so motor efficiency η ≈ 7.5 ÷ 8.5 ≈ 88%. Apprentice rule of thumb: a
                 modern induction motor of this size lands around 85-90% on both PF and efficiency.
               </li>
               <li>
