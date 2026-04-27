@@ -20,7 +20,10 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
-import { getRandomQuestions } from '@/data/apprentice-courses/level2/module1/questionBank';
+import {
+  getRandomQuestions,
+  type Question,
+} from '@/data/apprentice-courses/level2/module1/questionBank';
 import { ExamDesktopSidebar } from '@/components/apprentice-courses/ExamDesktopSidebar';
 import { ExamMobileLayout } from '@/components/apprentice-courses/ExamMobileLayout';
 
@@ -30,7 +33,7 @@ const Level2Module8MockExam1 = () => {
     'Test your knowledge of Module 1 health and safety topics with this comprehensive 60-question mock exam aligned to the C&G 2365-02 Unit 201 specification.'
   );
 
-  const [examQuestions, setExamQuestions] = useState<any[]>([]);
+  const [examQuestions, setExamQuestions] = useState<Question[]>([]);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
