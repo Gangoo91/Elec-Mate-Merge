@@ -169,6 +169,20 @@ export async function formatEicJson(
     boardRefMap[board.id] = board.reference || board.name || board.dbReference || '';
   });
 
+  // ELE-876 — resolve scheme + company logos to PDF-safe forms (data URL or
+  // absolute URL). Relative paths get fetched + converted to data URLs so
+  // PDFMonkey's renderer can embed them inline.
+  const { resolveSchemeLogo, resolveCompanyLogo } = await import(
+    '@/utils/resolveSchemeLogo'
+  );
+  const resolvedSchemeLogo = await resolveSchemeLogo(
+    companyProfile?.scheme_logo_data_url || companyProfile?.registration_scheme_logo,
+    companyProfile?.registration_scheme || formData.registrationScheme
+  );
+  const resolvedCompanyLogo = await resolveCompanyLogo(
+    companyProfile?.logo_data_url || companyProfile?.logo_url
+  );
+
   const json: any = {
     // Flat inspection keys at root
     ...flatInspectionKeys,
@@ -611,15 +625,16 @@ export async function formatEicJson(
       company_phone: companyProfile?.company_phone || '',
       company_email: companyProfile?.company_email || '',
       company_website: companyProfile?.company_website || '',
-      company_logo: companyProfile?.logo_data_url || companyProfile?.logo_url || '',
+      // ELE-876 — resolved company logo (data URL for relative paths)
+      company_logo: resolvedCompanyLogo,
       company_accent_color: companyProfile?.accent_color || '',
       registration_scheme: companyProfile?.registration_scheme || '',
       registration_number: companyProfile?.registration_number || '',
     },
 
-    // Root-level logo fields (template checks these at root)
-    company_logo: companyProfile?.logo_data_url || companyProfile?.logo_url || '',
-    registration_scheme_logo: companyProfile?.scheme_logo_data_url || '',
+    // ELE-876 — root-level logos use resolved (PDF-safe) values
+    company_logo: resolvedCompanyLogo,
+    registration_scheme_logo: resolvedSchemeLogo,
 
     // Accent colour for PDF theming (CSS --accent-color variable)
     company_accent_color: companyProfile?.accent_color || '',

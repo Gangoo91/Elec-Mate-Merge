@@ -340,6 +340,42 @@ export const generateBulkPDFs = async (
         // Minor Works, notices: edge function handles transform internally
       }
 
+      // ELE-876 — safety net for scheme + company logos. Runs for every cert
+      // type. Formatters that already resolved logos will pass through
+      // unchanged (data URLs / absolute URLs are detected and returned as-is).
+      // Catches the cases where the formatter wasn't run (Minor Works, EIC
+      // through certain paths) or where a stored cert's pdf_payload still
+      // has stale relative paths.
+      try {
+        const { resolveSchemeLogo, resolveCompanyLogo } = await import(
+          './resolveSchemeLogo'
+        );
+        const fd = dataForPdf as Record<string, unknown>;
+        const resolvedScheme = await resolveSchemeLogo(
+          (fd.registration_scheme_logo as string) ||
+            (fd.registrationSchemeLogo as string) ||
+            (fd.schemeLogoDataUrl as string) ||
+            (fd.schemeLogo as string),
+          (fd.registration_scheme as string) ||
+            (fd.registrationScheme as string) ||
+            (fd.schemeProvider as string)
+        );
+        const resolvedCompany = await resolveCompanyLogo(
+          (fd.company_logo as string) || (fd.companyLogo as string)
+        );
+        dataForPdf = {
+          ...fd,
+          registration_scheme_logo: resolvedScheme,
+          registrationSchemeLogo: resolvedScheme,
+          schemeLogoDataUrl: resolvedScheme,
+          schemeLogo: resolvedScheme,
+          company_logo: resolvedCompany,
+          companyLogo: resolvedCompany,
+        };
+      } catch (e) {
+        console.warn('[bulkPdfExport] logo resolver failed (non-fatal):', e);
+      }
+
       // Optimise data before sending (use enriched data)
       const optimizationResult = optimizeForPdfGeneration(dataForPdf);
       console.log(

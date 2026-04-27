@@ -299,6 +299,30 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
         }
       }
 
+      // ELE-876 — resolve scheme + company logos to PDF-safe data URLs before
+      // the edge function receives them. Relative paths like
+      // `/logos/schemes/niceic.png` would otherwise render as broken images
+      // in PDFMonkey because it can't fetch our static asset paths.
+      const { resolveSchemeLogo, resolveCompanyLogo } = await import(
+        '@/utils/resolveSchemeLogo'
+      );
+      const resolvedSchemeLogo = await resolveSchemeLogo(
+        dataWithBranding.schemeLogoDataUrl ||
+          dataWithBranding.registrationSchemeLogo ||
+          dataWithBranding.schemeLogo,
+        dataWithBranding.registrationScheme || dataWithBranding.schemeProvider
+      );
+      const resolvedCompanyLogo = await resolveCompanyLogo(
+        dataWithBranding.companyLogo
+      );
+      dataWithBranding = {
+        ...dataWithBranding,
+        schemeLogo: resolvedSchemeLogo,
+        schemeLogoDataUrl: resolvedSchemeLogo,
+        registrationSchemeLogo: resolvedSchemeLogo,
+        companyLogo: resolvedCompanyLogo,
+      };
+
       // Format form data for better PDF presentation
       const formattedFormData = { ...dataWithBranding };
       Object.keys(formattedFormData).forEach((key) => {

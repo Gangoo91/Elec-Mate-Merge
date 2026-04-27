@@ -376,6 +376,41 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
         // EIC and Minor Works: no standalone formatter available, fall through with raw data
       }
 
+      // ELE-876 — make sure scheme + company logos are PDF-safe (data URLs or
+      // absolute URLs) regardless of which formatter ran (or didn't). Relative
+      // paths like `/logos/schemes/niceic.png` would otherwise render as
+      // broken images in PDFMonkey. This is a safety net — formatters that
+      // already resolved the logos will pass through unchanged.
+      try {
+        const { resolveSchemeLogo, resolveCompanyLogo } = await import(
+          '@/utils/resolveSchemeLogo'
+        );
+        const fd = dataForPdf as Record<string, unknown>;
+        const resolvedScheme = await resolveSchemeLogo(
+          (fd.registration_scheme_logo as string) ||
+            (fd.registrationSchemeLogo as string) ||
+            (fd.schemeLogoDataUrl as string) ||
+            (fd.schemeLogo as string),
+          (fd.registration_scheme as string) ||
+            (fd.registrationScheme as string) ||
+            (fd.schemeProvider as string)
+        );
+        const resolvedCompany = await resolveCompanyLogo(
+          (fd.company_logo as string) || (fd.companyLogo as string)
+        );
+        dataForPdf = {
+          ...fd,
+          registration_scheme_logo: resolvedScheme,
+          registrationSchemeLogo: resolvedScheme,
+          schemeLogoDataUrl: resolvedScheme,
+          schemeLogo: resolvedScheme,
+          company_logo: resolvedCompany,
+          companyLogo: resolvedCompany,
+        };
+      } catch (e) {
+        console.warn('[ReportPdfViewer] logo resolver failed (non-fatal):', e);
+      }
+
       // Optimize data and check size
       console.log('Optimizing data for PDF generation...');
       const optimizationResult = optimizeForPdfGeneration(dataForPdf);

@@ -903,6 +903,20 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   // Put flat inspection keys FIRST to avoid truncation issues
   const flatKeys = formatFlatInspection();
 
+  // ELE-876 — resolve the scheme + company logos to PDF-safe forms. Legacy
+  // certs may have relative paths like `/logos/schemes/niceic.png` which
+  // PDFMonkey can't fetch — convert to data URLs. If the stored scheme logo
+  // is missing entirely but `registrationScheme` is set, derive from the
+  // bundled lookup.
+  const { resolveSchemeLogo, resolveCompanyLogo } = await import(
+    '@/utils/resolveSchemeLogo'
+  );
+  const resolvedSchemeLogo = await resolveSchemeLogo(
+    get('registrationSchemeLogo'),
+    get('registrationScheme')
+  );
+  const resolvedCompanyLogo = await resolveCompanyLogo(get('companyLogo'));
+
   return {
     // Spread flat keys at the TOP of the object
     ...flatKeys,
@@ -1274,15 +1288,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       company_phone: get('companyPhone'),
       company_email: get('companyEmail'),
       company_website: get('companyWebsite'),
-      company_logo: (() => {
-        // ELE-876 — accept short HTTP URLs too. Previously the >100 char check
-        // dropped any non-data-URL logo (most users pointing at a hosted PNG).
-        // We just filter literal "placeholder" / empty strings.
-        const l = get('companyLogo');
-        if (!l) return '';
-        if (l.includes('placeholder')) return '';
-        return l;
-      })(),
+      // ELE-876 — use resolved company logo (data URL for relative paths,
+      // pass-through for data URLs and absolute URLs, dropped for placeholders).
+      company_logo: resolvedCompanyLogo,
       company_tagline: get('companyTagline'),
       company_accent_color: get('companyAccentColor'),
       company_registration_number: get('companyRegistrationNumber'),
@@ -1294,7 +1302,8 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       insurance_policy_number: get('insurancePolicyNumber'),
       insurance_coverage: get('insuranceCoverage'),
       insurance_expiry: get('insuranceExpiry'),
-      registration_scheme_logo: get('registrationSchemeLogo'),
+      // ELE-876 — use the resolved (data URL) version so PDFMonkey can render it
+      registration_scheme_logo: resolvedSchemeLogo,
     },
 
     observations: await formatDefects(),
@@ -1490,8 +1499,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     registrationNumber: get('registrationNumber'),
     registration_expiry: get('registrationExpiry'),
     registrationExpiry: get('registrationExpiry'),
-    registration_scheme_logo: get('registrationSchemeLogo'),
-    registrationSchemeLogo: get('registrationSchemeLogo'),
+    // ELE-876 — flat aliases use the resolved version too
+    registration_scheme_logo: resolvedSchemeLogo,
+    registrationSchemeLogo: resolvedSchemeLogo,
 
     // Insurance (flat)
     insurance_provider: get('insuranceProvider'),
@@ -1512,8 +1522,9 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     companyPhone: get('companyPhone'),
     company_email: get('companyEmail'),
     companyEmail: get('companyEmail'),
-    company_logo: get('companyLogo'),
-    companyLogo: get('companyLogo'),
+    // ELE-876 — flat aliases also use the resolved value
+    company_logo: resolvedCompanyLogo,
+    companyLogo: resolvedCompanyLogo,
     company_website: get('companyWebsite'),
     companyWebsite: get('companyWebsite'),
     company_tagline: get('companyTagline'),
