@@ -120,26 +120,28 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
     return recommendations[propertyType] || '5';
   };
 
-  // Auto-set recommended interval when property type changes
-  React.useEffect(() => {
-    if (formData.description && !formData.inspectionInterval) {
-      const recommended = getRecommendedInterval(formData.description);
-      onUpdate('inspectionInterval', recommended);
+  // ELE-882 — Track whether the user has manually overridden the next
+  // inspection date. Once they have, never silently recompute it again.
+  // Initial value: if a date already exists when the component mounts (loaded
+  // cert), assume it's intentional unless the user explicitly clears it.
+  const [manualNextDate, setManualNextDate] = useState<boolean>(
+    !!formData.nextInspectionDate
+  );
 
-      toast({
-        title: 'Recommended Interval Set',
-        description: `${recommended} years is recommended for ${formData.description?.replace('-', ' ')} properties according to BS7671`,
-        duration: 3000,
-      });
-    }
-  }, [formData.description]);
+  // ELE-882 — Removed silent auto-set of inspectionInterval on description
+  // change. Was setting 10y for domestic without consent, and 5y as a
+  // fallback for unrecognised property types. The recommended interval is
+  // now only surfaced visually next to the interval picker (see render below)
+  // — the user must tap a button to apply it. No silent writes.
 
-  // Auto-calculate next inspection when date or interval changes
+  // Auto-calculate next inspection only when the user hasn't manually set it.
+  // ELE-882 — was overwriting any manual edit on every parent re-render.
   React.useEffect(() => {
+    if (manualNextDate) return;
     if (formData.inspectionDate && formData.inspectionInterval) {
       calculateNextInspectionDate();
     }
-  }, [formData.inspectionDate, formData.inspectionInterval]);
+  }, [formData.inspectionDate, formData.inspectionInterval, manualNextDate]);
 
   const isOtherPurposeRequired = formData.purposeOfInspection === 'other';
 
@@ -222,9 +224,26 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
               <Input
                 type="date"
                 value={formData.nextInspectionDate || ''}
-                onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
+                onChange={(e) => {
+                  // ELE-882 — flag manual edit so the auto-calc effect stops
+                  // overwriting it on every parent re-render.
+                  setManualNextDate(true);
+                  onUpdate('nextInspectionDate', e.target.value);
+                }}
                 className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
               />
+              {manualNextDate && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptic.light();
+                    setManualNextDate(false); // hand control back to auto-calc
+                  }}
+                  className="text-[10px] text-white/60 hover:text-elec-yellow underline mt-1"
+                >
+                  Reset to auto-calculate from interval
+                </button>
+              )}
             </FormField>
           </div>
 
@@ -252,12 +271,31 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
                 </button>
               ))}
             </div>
-            {formData.description && (
-              <span className="text-xs text-elec-yellow/80 flex items-center gap-1 mt-2">
-                <span className="w-1 h-1 rounded-full bg-elec-yellow inline-block"></span>
-                Recommended: {getRecommendedInterval(formData.description)} years for this property type
-              </span>
-            )}
+            {/* ELE-882 — explicit suggestion + Apply button instead of silent
+                auto-set. User must tap to apply the BS 7671 recommendation. */}
+            {formData.description &&
+              formData.inspectionInterval !== getRecommendedInterval(formData.description) && (
+                <div className="flex items-center justify-between gap-2 mt-2 px-3 py-2 rounded-lg border border-elec-yellow/20 bg-elec-yellow/5">
+                  <span className="text-xs text-elec-yellow/80 flex items-center gap-1.5">
+                    <span className="w-1 h-1 rounded-full bg-elec-yellow inline-block"></span>
+                    BS 7671 recommends {getRecommendedInterval(formData.description)} years for this
+                    property type
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptic.light();
+                      onUpdate(
+                        'inspectionInterval',
+                        getRecommendedInterval(formData.description)
+                      );
+                    }}
+                    className="text-[10px] font-semibold text-elec-yellow border border-elec-yellow/40 rounded-md px-2 py-1 hover:bg-elec-yellow/10 touch-manipulation"
+                  >
+                    Apply
+                  </button>
+                </div>
+              )}
           </FormField>
 
           <FormField

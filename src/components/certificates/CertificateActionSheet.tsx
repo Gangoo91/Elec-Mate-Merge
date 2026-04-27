@@ -8,6 +8,7 @@ import {
   Trash2,
   FileText,
   ArrowRightCircle,
+  Copy,
 } from 'lucide-react';
 
 export interface CertificateActionSheetProps {
@@ -28,6 +29,8 @@ export interface CertificateActionSheetProps {
   onLinkCustomer?: () => void;
   onUnlinkCustomer?: () => void;
   onDelete: () => void;
+  /** ELE-881 — duplicate cert as template for similar jobs (e.g. block of apartments) */
+  onDuplicate?: () => void;
 }
 
 /**
@@ -45,6 +48,7 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
   onLinkCustomer,
   onUnlinkCustomer,
   onDelete,
+  onDuplicate,
 }) => {
   if (!certificate) return null;
 
@@ -121,6 +125,15 @@ export const CertificateActionSheet: React.FC<CertificateActionSheetProps> = ({
       label: 'Unlink Customer',
       icon: <Users className="h-5 w-5 text-amber-400" />,
       onClick: onUnlinkCustomer,
+    });
+  }
+
+  // ELE-881 — Duplicate cert as a template (block-of-apartments workflow)
+  if (onDuplicate) {
+    actions.push({
+      label: 'Duplicate as Template',
+      icon: <Copy className="h-5 w-5 text-elec-yellow" />,
+      onClick: onDuplicate,
     });
   }
 

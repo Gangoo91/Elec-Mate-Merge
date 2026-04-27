@@ -89,6 +89,12 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const [typeFilter, setTypeFilter] = useState<TypeFilter>('all');
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [reportToDelete, setReportToDelete] = useState<CloudReport | null>(null);
+  // ELE-881 — confirmation when duplicating a cert with >=20 circuits
+  const [duplicateConfirm, setDuplicateConfirm] = useState<{
+    reportId: string;
+    reportType: string;
+    circuitCount: number;
+  } | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showImportDialog, setShowImportDialog] = useState(false);
   const [isBulkMode, setIsBulkMode] = useState(false);
@@ -455,6 +461,86 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   const handleExportToEICRComplete = (eicrReportId: string) => {
     refetchReports();
     navigate(`/electrician/inspection-testing?section=eicr&reportId=${eicrReportId}`);
+  };
+
+  // ELE-881 — Duplicate cert as a template (block-of-apartments workflow).
+  // Confirms with user if the source is large (>=20 circuits), then loads
+  // source, strips identity, generates a new cert number, and persists the
+  // new draft row. Routes into the new draft via onEditReport.
+  const performDuplicate = async (reportId: string, reportType: string) => {
+    toast({
+      title: 'Duplicating certificate…',
+      description: 'Copying spec to a new draft.',
+    });
+    try {
+      const { duplicateCertificate, isDuplicable } = await import(
+        '@/utils/duplicateCertificate'
+      );
+      if (!isDuplicable(reportType)) {
+        toast({
+          title: 'Not supported',
+          description: `Duplicate isn't available for ${reportType.toUpperCase()} yet.`,
+          variant: 'destructive',
+        });
+        return;
+      }
+      const { newReportId, data, sourceReportId } = await duplicateCertificate(
+        reportId,
+        reportType
+      );
+      // Persist immediately so the form loads from cloud via the standard
+      // useReportSync flow rather than needing navigate-state plumbing.
+      const { error: insertError } = await supabase.from('reports').insert({
+        report_id: newReportId,
+        user_id: user?.id,
+        report_type: reportType,
+        status: 'draft',
+        data,
+        client_name: null,
+      });
+      if (insertError) throw insertError;
+      toast({
+        title: 'Duplicated',
+        description: `New ${reportType.toUpperCase()} ${newReportId} ready — change client + address.`,
+      });
+      refetchReports();
+      onEditReport(newReportId, reportType);
+      void sourceReportId;
+    } catch (err) {
+      toast({
+        title: 'Duplicate failed',
+        description: err instanceof Error ? err.message : 'Unknown error',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  // Pre-flight: load enough of the source to count circuits, then confirm if
+  // it's a large cert before kicking off the duplicate.
+  const handleDuplicate = async (reportId: string, reportType: string) => {
+    setActionSheetOpen(false);
+    try {
+      const { countCircuits, LARGE_CERT_CIRCUIT_THRESHOLD } = await import(
+        '@/utils/duplicateCertificate'
+      );
+      const sourceRow = reports.find((r) => r.report_id === reportId);
+      const circuitCount = countCircuits(sourceRow?.data);
+      if (circuitCount >= LARGE_CERT_CIRCUIT_THRESHOLD) {
+        setDuplicateConfirm({
+          reportId,
+          reportType,
+          circuitCount,
+        });
+        return;
+      }
+      await performDuplicate(reportId, reportType);
+    } catch (err) {
+      toast({
+        title: 'Duplicate failed',
+        description: err instanceof Error ? err.message : 'Unknown error',
+        variant: 'destructive',
+      });
+    }
   };
 
   // Download PDF handler (replaces preview - viewer was unreliable)
@@ -1063,7 +1149,45 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             handleDeleteReport(selectedCertificate.report_id);
           }
         }}
+        onDuplicate={() => {
+          if (selectedCertificate) {
+            handleDuplicate(selectedCertificate.report_id, selectedCertificate.report_type);
+          }
+        }}
       />
+
+      {/* ELE-881 — Confirmation for duplicating large certs */}
+      <AlertDialog
+        open={!!duplicateConfirm}
+        onOpenChange={(open) => {
+          if (!open) setDuplicateConfirm(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Duplicate this certificate?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This {duplicateConfirm?.reportType.toUpperCase()} has{' '}
+              <strong>{duplicateConfirm?.circuitCount} circuits</strong>. A copy will be
+              created with the same supply, board and circuit setup — client name, address,
+              dates and signatures will be cleared.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                const c = duplicateConfirm;
+                setDuplicateConfirm(null);
+                if (c) void performDuplicate(c.reportId, c.reportType);
+              }}
+              className="bg-elec-yellow text-black hover:bg-elec-yellow/90"
+            >
+              Duplicate
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       {/* Delete Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
