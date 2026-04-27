@@ -30,8 +30,8 @@ const Level2Module8MockExam2 = () => {
     'Test your knowledge of Module 2 electrical science principles with this comprehensive 60-question mock exam aligned to the C&G 2365-02 Unit 202 specification.'
   );
 
-  const [examQuestions, setExamQuestions] = useState([]);
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [examQuestions, setExamQuestions] = useState<any[]>([]);
+  const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [examStarted, setExamStarted] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -57,7 +57,7 @@ const Level2Module8MockExam2 = () => {
     }));
 
     setExamQuestions(selectedQuestions);
-    setSelectedAnswers(new Array(60).fill(-1));
+    setSelectedAnswers({});
     setCurrentQuestion(0);
     setExamStarted(true);
     setShowResults(false);
@@ -70,23 +70,30 @@ const Level2Module8MockExam2 = () => {
   // Timer effect
   useEffect(() => {
     if (examStarted && !showResults && timeRemaining > 0) {
-      const timer = setTimeout(() => setTimeRemaining(timeRemaining - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeRemaining === 0 && examStarted && !showResults) {
-      handleSubmit();
+      const timer = setInterval(() => {
+        setTimeRemaining((prev) => {
+          if (prev <= 1) {
+            handleSubmit();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
     }
-  }, [timeRemaining, examStarted, showResults]);
+  }, [examStarted, showResults]);
 
-  const formatTime = (seconds) => {
+  const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
     return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  const handleAnswerSelect = (answerIndex) => {
-    const newAnswers = [...selectedAnswers];
-    newAnswers[currentQuestion] = answerIndex;
-    setSelectedAnswers(newAnswers);
+  const handleAnswerSelect = (answerIndex: number) => {
+    setSelectedAnswers((prev) => ({
+      ...prev,
+      [currentQuestion]: answerIndex,
+    }));
   };
 
   const handleNext = () => {
@@ -116,15 +123,19 @@ const Level2Module8MockExam2 = () => {
   };
 
   const calculateScore = () => {
-    return selectedAnswers.reduce((score, answer, index) => {
-      return answer === examQuestions[index]?.correctAnswer ? score + 1 : score;
-    }, 0);
+    let correct = 0;
+    examQuestions.forEach((question, index) => {
+      if (selectedAnswers[index] === question.correctAnswer) {
+        correct++;
+      }
+    });
+    return correct;
   };
 
-  const getQuestionStatus = (index) => {
+  const getQuestionStatus = (index: number) => {
     const answer = selectedAnswers[index];
     const isCorrect = answer === examQuestions[index]?.correctAnswer;
-    const isAnswered = answer !== -1;
+    const isAnswered = answer !== undefined;
 
     if (!isAnswered) return { type: 'unanswered', color: 'text-white' };
     if (isCorrect) return { type: 'correct', color: 'text-green-500' };
@@ -159,10 +170,12 @@ const Level2Module8MockExam2 = () => {
     ).length;
     const incorrect = examQuestions.filter(
       (_, index) =>
-        selectedAnswers[index] !== -1 &&
+        selectedAnswers[index] !== undefined &&
         selectedAnswers[index] !== examQuestions[index]?.correctAnswer
     ).length;
-    const unanswered = examQuestions.filter((_, index) => selectedAnswers[index] === -1).length;
+    const unanswered = examQuestions.filter(
+      (_, index) => selectedAnswers[index] === undefined
+    ).length;
     const flagged = flaggedQuestions.size;
 
     return { correct, incorrect, unanswered, flagged };
@@ -177,7 +190,7 @@ const Level2Module8MockExam2 = () => {
     }
   };
 
-  const answeredQuestions = selectedAnswers.filter((answer) => answer !== -1).length;
+  const answeredQuestions = Object.keys(selectedAnswers).length;
   const progressPercentage = (answeredQuestions / examQuestions.length) * 100;
 
   if (!examStarted) {
@@ -729,7 +742,7 @@ const Level2Module8MockExam2 = () => {
                   </h3>
                   <div className="grid grid-cols-5 gap-2">
                     {examQuestions.map((_, index) => {
-                      const isAnswered = selectedAnswers[index] !== -1;
+                      const isAnswered = selectedAnswers[index] !== undefined;
                       const isCurrent = index === currentQuestion;
                       const isFlagged = flaggedQuestions.has(index);
 

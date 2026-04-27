@@ -40,7 +40,7 @@ const subsections = [
 
 const Level2Module8Section2 = () => {
   useSEO({
-    title: 'How to pass exams — tips and techniques | Module 8 Section 2 | Elec-Mate',
+    title: 'How to pass exams — tips and techniques | Mock Examinations Section 2 | Elec-Mate',
     description:
       'Exam strategy for the Level 2 electrical assessment — time management, question analysis, exam-day preparation and common pitfalls to avoid.',
   });
@@ -48,8 +48,8 @@ const Level2Module8Section2 = () => {
   return (
     <SectionShell
       backTo=".."
-      backLabel="Module 8"
-      moduleNumber={8}
+      backLabel="Mock Examinations and Assessment"
+      moduleNumber={6}
       sectionNumber={2}
       title="How to pass exams — tips and techniques"
       description="Proven exam strategy — pacing, question analysis, exam-day prep and the common pitfalls — so the work you put into the mocks actually shows up on the day."

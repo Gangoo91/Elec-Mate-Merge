@@ -56,7 +56,7 @@ const mockExams = [
 
 const Level2Module8Section1 = () => {
   useSEO({
-    title: 'Mock examinations — Level 2 Section 1 | Module 8 | Elec-Mate',
+    title: 'Mock examinations — Level 2 Section 1 | Mock Examinations and Assessment | Elec-Mate',
     description:
       'Six full Level 2 mock papers — one per module plus a mixed paper — sat under realistic exam conditions to build pace, accuracy and confidence before the live assessment.',
   });
@@ -64,8 +64,8 @@ const Level2Module8Section1 = () => {
   return (
     <SectionShell
       backTo=".."
-      backLabel="Module 8"
-      moduleNumber={8}
+      backLabel="Mock Examinations and Assessment"
+      moduleNumber={6}
       sectionNumber={1}
       title="Mock examinations"
       description="Six full mock papers covering Level 2 Modules 1 to 5 plus a mixed paper — sat under exam conditions to build pace, accuracy and confidence."

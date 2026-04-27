@@ -22,7 +22,7 @@ const sections = [
 
 export default function Module8() {
   useSEO({
-    title: 'Module 8: Mock Examinations and Assessment | Level 2 Electrical | Elec-Mate',
+    title: 'Mock Examinations and Assessment | Level 2 Electrical | Elec-Mate',
     description:
       'Practice exam papers and exam technique tips to build confidence for the Level 2 electrical installation assessment.',
   });
@@ -31,7 +31,7 @@ export default function Module8() {
     <ModuleShell
       backTo=".."
       backLabel="Level 2 electrical installation"
-      moduleNumber={8}
+      moduleNumber={6}
       title="Mock examinations and assessment"
       description="Practice papers and exam technique tips to build confidence for the real assessment."
       tone="emerald"
