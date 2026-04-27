@@ -41,23 +41,34 @@ const CompanySheet = ({
   const [deleteLogo, setDeleteLogo] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Hydrate form state ONCE per open transition. Previously this used
+  // [profile, open] as deps, which meant any change to the `profile`
+  // reference (e.g. parent re-render, save echo, hook re-fetch) would
+  // overwrite the user's in-progress edits and reset the input — manifested
+  // as "type one letter, cursor zones back, type another, zones back".
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setCompanyName(profile.company_name || '');
-      setCompanyEmail(profile.company_email || '');
-      setCompanyPhone(profile.company_phone || '');
-      setCompanyWebsite(profile.company_website || '');
-      setVatNumber(profile.vat_number || '');
-      setCompanyAddress(profile.company_address || '');
-      setCompanyPostcode(profile.company_postcode || '');
-      setCompanyRegistration(profile.company_registration || '');
-      setOfficeLat(profile.office_lat || null);
-      setOfficeLng(profile.office_lng || null);
-      setLogoPreview(profile.logo_url || null);
-      setLogoSize((profile as any).logo_size || 'medium');
-      setLogoFile(null);
-      setDeleteLogo(false);
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setCompanyName(profile.company_name || '');
+    setCompanyEmail(profile.company_email || '');
+    setCompanyPhone(profile.company_phone || '');
+    setCompanyWebsite(profile.company_website || '');
+    setVatNumber(profile.vat_number || '');
+    setCompanyAddress(profile.company_address || '');
+    setCompanyPostcode(profile.company_postcode || '');
+    setCompanyRegistration(profile.company_registration || '');
+    setOfficeLat(profile.office_lat || null);
+    setOfficeLng(profile.office_lng || null);
+    setLogoPreview(profile.logo_url || null);
+    setLogoSize((profile as any).logo_size || 'medium');
+    setLogoFile(null);
+    setDeleteLogo(false);
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   const handleLogoChange = (event: React.ChangeEvent<HTMLInputElement>) => {

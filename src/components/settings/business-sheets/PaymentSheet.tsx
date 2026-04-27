@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
@@ -48,15 +48,22 @@ const PaymentSheet = ({ open, onOpenChange, profile, onSave }: PaymentSheetProps
   const [stripeLoading, setStripeLoading] = useState(true);
   const [connecting, setConnecting] = useState(false);
 
+  // Hydrate ONCE per open transition (see CompanySheet for rationale).
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setBankDetails({
-        accountName: profile.bank_details?.accountName || '',
-        bankName: profile.bank_details?.bankName || '',
-        accountNumber: profile.bank_details?.accountNumber || '',
-        sortCode: profile.bank_details?.sortCode || '',
-      });
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setBankDetails({
+      accountName: profile.bank_details?.accountName || '',
+      bankName: profile.bank_details?.bankName || '',
+      accountNumber: profile.bank_details?.accountNumber || '',
+      sortCode: profile.bank_details?.sortCode || '',
+    });
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   useEffect(() => {

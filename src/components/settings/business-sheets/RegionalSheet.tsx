@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Label } from '@/components/ui/label';
 import {
@@ -24,11 +24,18 @@ const RegionalSheet = ({ open, onOpenChange, profile, onSave }: RegionalSheetPro
   const [currency, setCurrency] = useState('GBP');
   const [locale, setLocale] = useState('en-GB');
 
+  // Hydrate ONCE per open transition (see CompanySheet for rationale).
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setCurrency(profile.currency || 'GBP');
-      setLocale(profile.locale || 'en-GB');
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setCurrency(profile.currency || 'GBP');
+    setLocale(profile.locale || 'en-GB');
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   const handleSave = async () => {

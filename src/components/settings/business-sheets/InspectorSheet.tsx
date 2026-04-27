@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -48,20 +48,27 @@ const InspectorSheet = ({ open, onOpenChange, profile, onSave }: InspectorSheetP
   const [insuranceExpiry, setInsuranceExpiry] = useState('');
   const [signatureData, setSignatureData] = useState('');
 
+  // Hydrate ONCE per open transition (see CompanySheet for rationale).
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setInspectorName(profile.inspector_name || '');
-      setRegistrationScheme(profile.registration_scheme || '');
-      setRegistrationNumber(profile.registration_number || '');
-      setRegistrationExpiry(profile.registration_expiry || '');
-      setSchemeLogoDataUrl(profile.scheme_logo_data_url || null);
-      setQualifications(profile.inspector_qualifications || []);
-      setInsuranceProvider(profile.insurance_provider || '');
-      setInsurancePolicyNumber(profile.insurance_policy_number || '');
-      setInsuranceCoverage(profile.insurance_coverage || '');
-      setInsuranceExpiry(profile.insurance_expiry || '');
-      setSignatureData(profile.signature_data || '');
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setInspectorName(profile.inspector_name || '');
+    setRegistrationScheme(profile.registration_scheme || '');
+    setRegistrationNumber(profile.registration_number || '');
+    setRegistrationExpiry(profile.registration_expiry || '');
+    setSchemeLogoDataUrl(profile.scheme_logo_data_url || null);
+    setQualifications(profile.inspector_qualifications || []);
+    setInsuranceProvider(profile.insurance_provider || '');
+    setInsurancePolicyNumber(profile.insurance_policy_number || '');
+    setInsuranceCoverage(profile.insurance_coverage || '');
+    setInsuranceExpiry(profile.insurance_expiry || '');
+    setSignatureData(profile.signature_data || '');
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   const handleSave = async () => {

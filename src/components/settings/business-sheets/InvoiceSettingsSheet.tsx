@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -106,15 +106,22 @@ const InvoiceSettingsSheet = ({
     'late_payment',
   ]);
 
+  // Hydrate ONCE per open transition (see CompanySheet for rationale).
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setLatePaymentInterestRate(profile.late_payment_interest_rate || '8% p.a.');
-      setPreferredPaymentMethod(profile.preferred_payment_method || 'Bank Transfer');
-      const parsed = parseInvoiceTerms(profile.invoice_terms);
-      setSelectedInvoiceTerms(parsed.selected);
-      setCustomInvoiceTerms(parsed.custom);
-      setNewCustomInvoiceTerm('');
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setLatePaymentInterestRate(profile.late_payment_interest_rate || '8% p.a.');
+    setPreferredPaymentMethod(profile.preferred_payment_method || 'Bank Transfer');
+    const parsed = parseInvoiceTerms(profile.invoice_terms);
+    setSelectedInvoiceTerms(parsed.selected);
+    setCustomInvoiceTerms(parsed.custom);
+    setNewCustomInvoiceTerm('');
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   const handleSave = async () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,12 +19,19 @@ const BrandSheet = ({ open, onOpenChange, profile, onSave }: BrandSheetProps) =>
   const [secondaryColor, setSecondaryColor] = useState('#1A1A1A');
   const [accentColor, setAccentColor] = useState('#F59E0B');
 
+  // Hydrate ONCE per open transition (see CompanySheet for rationale).
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setPrimaryColor(profile.primary_color || '#FFCC00');
-      setSecondaryColor(profile.secondary_color || '#1A1A1A');
-      setAccentColor(profile.accent_color || '#F59E0B');
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setPrimaryColor(profile.primary_color || '#FFCC00');
+    setSecondaryColor(profile.secondary_color || '#1A1A1A');
+    setAccentColor(profile.accent_color || '#F59E0B');
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   const handleSave = async () => {

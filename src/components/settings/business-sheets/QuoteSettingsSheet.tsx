@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -115,16 +115,23 @@ const QuoteSettingsSheet = ({ open, onOpenChange, profile, onSave }: QuoteSettin
   const [newCustomTerm, setNewCustomTerm] = useState('');
   const [expandedGroups, setExpandedGroups] = useState<string[]>(['payment', 'compliance']);
 
+  // Hydrate ONCE per open transition (see CompanySheet for rationale).
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setQuoteValidityDays(profile.quote_validity_days || 30);
-      setDepositPercentage(profile.deposit_percentage ?? 30);
-      setWarrantyPeriod(profile.warranty_period || '12 months');
-      const parsed = parseQuoteTerms(profile.quote_terms);
-      setSelectedTerms(parsed.selected);
-      setCustomTerms(parsed.custom);
-      setNewCustomTerm('');
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setQuoteValidityDays(profile.quote_validity_days || 30);
+    setDepositPercentage(profile.deposit_percentage ?? 30);
+    setWarrantyPeriod(profile.warranty_period || '12 months');
+    const parsed = parseQuoteTerms(profile.quote_terms);
+    setSelectedTerms(parsed.selected);
+    setCustomTerms(parsed.custom);
+    setNewCustomTerm('');
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   const handleSave = async () => {

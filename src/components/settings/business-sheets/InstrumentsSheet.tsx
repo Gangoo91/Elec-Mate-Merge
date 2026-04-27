@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,10 +34,17 @@ const InstrumentsSheet = ({ open, onOpenChange, profile, onSave }: InstrumentsSh
   const [isSaving, setIsSaving] = useState(false);
   const [instruments, setInstruments] = useState<TestingInstrument[]>([]);
 
+  // Hydrate ONCE per open transition (see CompanySheet for rationale).
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setInstruments(profile.testing_instruments || []);
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setInstruments(profile.testing_instruments || []);
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   const handleAddInstrument = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -44,14 +44,21 @@ const PricingSheet = ({ open, onOpenChange, profile, onSave }: PricingSheetProps
   const [profitMargin, setProfitMargin] = useState(20);
   const [workerRates, setWorkerRates] = useState<WorkerRates>(DEFAULT_WORKER_RATES);
 
+  // Hydrate ONCE per open transition (see CompanySheet for rationale).
+  const hydratedForOpenRef = useRef(false);
   useEffect(() => {
-    if (profile && open) {
-      setHourlyRate(profile.hourly_rate || 45);
-      setPaymentTerms(profile.payment_terms || '30 days');
-      setOverheadPercentage(profile.overhead_percentage ?? 15);
-      setProfitMargin(profile.profit_margin ?? 20);
-      setWorkerRates(profile.worker_rates || DEFAULT_WORKER_RATES);
+    if (!open) {
+      hydratedForOpenRef.current = false;
+      return;
     }
+    if (hydratedForOpenRef.current) return;
+    if (!profile) return;
+    setHourlyRate(profile.hourly_rate || 45);
+    setPaymentTerms(profile.payment_terms || '30 days');
+    setOverheadPercentage(profile.overhead_percentage ?? 15);
+    setProfitMargin(profile.profit_margin ?? 20);
+    setWorkerRates(profile.worker_rates || DEFAULT_WORKER_RATES);
+    hydratedForOpenRef.current = true;
   }, [profile, open]);
 
   const handleSave = async () => {
