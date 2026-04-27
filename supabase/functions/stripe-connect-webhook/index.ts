@@ -128,7 +128,9 @@ async function sendClientThankYouEmail(
   try {
     const { data, error } = await resend.emails.send({
       from: `${companyName} <founder@elec-mate.com>`,
-      reply_to: companyEmail || 'info@elec-mate.com',
+      // ELE-662 — drop info@elec-mate.com fallback (unmonitored). If no
+      // company_email is set, omit Reply-To so it falls back to From.
+      ...(companyEmail ? { replyTo: companyEmail } : {}),
       to: [clientEmail],
       subject: `Payment Confirmation - Invoice ${invoiceNumber}`,
       html: emailHtml,

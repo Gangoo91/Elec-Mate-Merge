@@ -337,4 +337,10 @@ verify_jwt = false
 [functions.calendar-ical-feed]
 verify_jwt = false
 
+# Invoice mark-paid token endpoint (ELE-880) — hit from a confirmation page
+# the electrician opens via a link in the payment-reminder email. The
+# random URL-safe token in invoice_action_tokens IS the auth.
+[functions.mark-invoice-paid-token]
+verify_jwt = false
+
 

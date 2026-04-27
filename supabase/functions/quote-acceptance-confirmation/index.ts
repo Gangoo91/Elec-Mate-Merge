@@ -6,6 +6,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { Resend } from '../_shared/mailer.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -46,7 +47,8 @@ serve(async (req: Request) => {
 
     // Fetch quote to get user_id
     let companyName = 'Your Electrician';
-    let replyToEmail = 'info@elec-mate.com';
+    // ELE-662 — drop info@elec-mate.com fallback (unmonitored).
+    let replyToEmail = '';
 
     if (quoteId) {
       const { data: quote } = await supabase
@@ -64,7 +66,7 @@ serve(async (req: Request) => {
 
         if (company) {
           companyName = company.company_name || 'Your Electrician';
-          replyToEmail = company.company_email || company.email || 'info@elec-mate.com';
+          replyToEmail = company.company_email || company.email || '';
         }
       }
     }
@@ -217,36 +219,29 @@ serve(async (req: Request) => {
       </html>
     `;
 
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: `${companyName} <founder@elec-mate.com>`,
-        reply_to: replyToEmail,
-        to: clientEmail,
-        subject: `Quote Accepted - Next Steps | ${quoteNumber}`,
-        html: html,
-      }),
+    // ELE-662 — migrated from direct Resend fetch to Brevo via mailer shim.
+    const resend = new Resend(resendApiKey);
+    const { data: result, error: emailError } = await resend.emails.send({
+      from: `${companyName} <founder@elec-mate.com>`,
+      ...(replyToEmail ? { replyTo: replyToEmail } : {}),
+      to: clientEmail,
+      subject: `Quote Accepted - Next Steps | ${quoteNumber}`,
+      html: html,
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Resend API error:', errorText);
-      return new Response(JSON.stringify({ error: 'Failed to send email', details: errorText }), {
+    if (emailError) {
+      console.error('Email send error:', emailError);
+      return new Response(JSON.stringify({ error: 'Failed to send email', details: emailError.message }), {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
-    const result = await response.json();
     console.log(
       `✅ Acceptance confirmation sent to ${clientEmail} for quote ${quoteNumber} from ${companyName}`
     );
 
-    return new Response(JSON.stringify({ success: true, messageId: result.id }), {
+    return new Response(JSON.stringify({ success: true, messageId: result?.id }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });

@@ -10,6 +10,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { Resend } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -149,7 +150,8 @@ serve(async (req: Request) => {
 
       // Get company profile for sender info
       let companyName = 'Your Electrician';
-      let replyToEmail = 'info@elec-mate.com';
+      // ELE-662 — drop info@elec-mate.com fallback (unmonitored).
+      let replyToEmail = '';
 
       const { data: company } = await supabase
         .from('company_profiles')
@@ -159,7 +161,29 @@ serve(async (req: Request) => {
 
       if (company) {
         companyName = company.company_name || 'Your Electrician';
-        replyToEmail = company.company_email || company.email || 'info@elec-mate.com';
+        replyToEmail = company.company_email || company.email || '';
+      }
+
+      // ELE-880 — mint a mark-paid token so the reminder includes a one-tap
+      // "Mark this invoice as paid" button (visible in the BCC'd electrician
+      // copy and labelled "For ${companyName} only" in the client copy).
+      let markPaidUrl: string | null = null;
+      try {
+        const { data: tokenRows, error: tokenErr } = await supabase.rpc(
+          'get_or_create_invoice_action_token',
+          { p_invoice_id: invoice.id, p_action: 'mark_paid' }
+        );
+        if (tokenErr) {
+          console.warn('[automated-invoice-reminders] token mint failed', tokenErr.message);
+        } else if (Array.isArray(tokenRows) && tokenRows[0]?.public_token) {
+          const appOrigin =
+            Deno.env.get('APP_PUBLIC_ORIGIN') || 'https://www.elec-mate.com';
+          markPaidUrl = `${appOrigin}/invoices/${encodeURIComponent(
+            tokenRows[0].public_token
+          )}/mark-paid`;
+        }
+      } catch (mintErr) {
+        console.warn('[automated-invoice-reminders] token mint exception', mintErr);
       }
 
       // Generate email content
@@ -169,32 +193,30 @@ serve(async (req: Request) => {
         invoice.invoice_number,
         invoice.total,
         daysOverdue,
-        companyName
+        companyName,
+        markPaidUrl
       );
 
-      // Send email
+      // ELE-662 + ELE-880 — Send via Brevo (Resend banned us at the domain
+      // level). BCC the electrician so they receive a copy with the
+      // mark-paid button in their inbox.
+      const resend = new Resend(resendApiKey);
       try {
-        const response = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${resendApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: `${companyName} <founder@elec-mate.com>`,
-            reply_to: replyToEmail,
-            to: clientEmail,
-            subject: emailContent.subject,
-            html: emailContent.html,
-          }),
+        const { data, error } = await resend.emails.send({
+          from: `${companyName} <founder@elec-mate.com>`,
+          ...(replyToEmail ? { replyTo: replyToEmail } : {}),
+          ...(replyToEmail ? { bcc: [replyToEmail] } : {}),
+          to: [clientEmail],
+          subject: emailContent.subject,
+          html: emailContent.html,
         });
 
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error(`Failed to send reminder for ${invoice.invoice_number}:`, errorText);
-          results.push({ invoice: invoice.invoice_number, status: 'failed', reason: errorText });
+        if (error) {
+          console.error(`Failed to send reminder for ${invoice.invoice_number}:`, error.message);
+          results.push({ invoice: invoice.invoice_number, status: 'failed', reason: error.message });
           continue;
         }
+        console.log(`[automated-invoice-reminders] sent ${invoice.invoice_number}`, data?.id);
 
         // Update invoice with reminder tracking
         await supabase
@@ -260,7 +282,8 @@ function generateReminderEmail(
   invoiceNumber: string,
   total: number,
   daysOverdue: number,
-  companyName: string
+  companyName: string,
+  markPaidUrl: string | null = null
 ): { subject: string; html: string } {
   const formattedTotal = new Intl.NumberFormat('en-GB', {
     style: 'currency',
@@ -399,6 +422,27 @@ function generateReminderEmail(
               </p>
             </td>
           </tr>
+
+          ${
+            markPaidUrl
+              ? `
+          <!-- ELE-880 electrician mark-paid one-tap button -->
+          <tr>
+            <td style="border-top: 1px solid #e5e7eb; padding: 16px 32px 0;">
+              <p style="margin: 0 0 6px; font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.08em;">
+                For ${companyName} only
+              </p>
+              <p style="margin: 0 0 10px; font-size: 12.5px; color: #6b7280; line-height: 1.5;">
+                If your customer has already paid, mark this invoice as paid in one tap so reminders stop.
+              </p>
+              <a href="${markPaidUrl}"
+                style="display: inline-block; font-size: 12.5px; font-weight: 600; color: #1a1a1a; background: #FFD700; text-decoration: none; padding: 8px 14px; border-radius: 8px;">
+                Mark this invoice as paid →
+              </a>
+            </td>
+          </tr>`
+              : ''
+          }
 
           <!-- Footer -->
           <tr>

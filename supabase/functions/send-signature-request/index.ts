@@ -81,7 +81,7 @@ const handler = async (req: Request): Promise<Response> => {
       to: [request.signer_email],
       subject: `Signature Required: ${request.document_title}`,
       html: emailHtml,
-      reply_to: senderProfile?.email || undefined,
+      replyTo: senderProfile?.email || undefined,
     });
 
     if (emailError) {

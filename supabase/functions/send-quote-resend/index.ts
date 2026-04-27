@@ -548,28 +548,31 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 11: Send email via Resend
     // ========================================================================
-    // Only use company email for Reply-To - never fall back to personal email
-    const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
+    // ELE-662 — drop info@elec-mate.com fallback (unmonitored); cascade to
+    // user's auth email instead, then omit if neither set.
+    const replyToEmail = companyProfile?.company_email || userEmail || '';
     const subject = `Quote ${quoteNumber} - ${companyName}`;
 
     console.log(`📧 Sending to: ${clientEmail}`);
-    console.log(`📧 Reply-to: ${replyToEmail}`);
+    console.log(`📧 Reply-to: ${replyToEmail || '(none)'}`);
     console.log(`📧 Company profile email: ${companyProfile?.company_email || 'NOT SET'}`);
 
     const emailOptions: {
       from: string;
-      reply_to: string;
+      replyTo?: string;
       to: string[];
       subject: string;
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
       from: `${companyName} <founder@elec-mate.com>`,
-      reply_to: replyToEmail,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
     };
+    if (replyToEmail) {
+      emailOptions.replyTo = replyToEmail;
+    }
 
     if (pdfAttachmentSuccess && pdfBase64) {
       emailOptions.attachments = [

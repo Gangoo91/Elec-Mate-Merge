@@ -445,15 +445,16 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 10: Send email via Resend
     // ========================================================================
-    const replyToEmail = companyEmail || 'info@elec-mate.com';
+    // ELE-662 — drop info@elec-mate.com fallback; only set Reply-To if real.
+    const replyToEmail = companyEmail || '';
     const subject = `Project Photos: ${projectName} - ${companyName}`;
 
     console.log(`Sending to: ${recipientEmail}`);
-    console.log(`Reply-to: ${replyToEmail}`);
+    console.log(`Reply-to: ${replyToEmail || '(none)'}`);
 
     const { data: emailData, error: emailError } = await resend.emails.send({
       from: `${companyName} <founder@elec-mate.com>`,
-      reply_to: replyToEmail,
+      ...(replyToEmail ? { replyTo: replyToEmail } : {}),
       to: [recipientEmail.trim()],
       subject: subject,
       html: emailHtml,

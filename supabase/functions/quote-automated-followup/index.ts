@@ -322,11 +322,12 @@ const handler = async (req: Request): Promise<Response> => {
           );
 
           const subject = `Quote ${quote.quote_number} from ${companyName}`;
-          const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
+          // ELE-662 — drop info@elec-mate.com fallback (unmonitored).
+          const replyToEmail = companyProfile?.company_email || '';
 
           const { error: emailError } = await resend.emails.send({
             from: `${companyName} <founder@elec-mate.com>`,
-            reply_to: replyToEmail,
+            ...(replyToEmail ? { replyTo: replyToEmail } : {}),
             to: [quote.client_email],
             subject: subject,
             html: emailHtml,

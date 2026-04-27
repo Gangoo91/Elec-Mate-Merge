@@ -48,6 +48,7 @@ const PhotoSharePage = lazy(() => import('@/pages/public/PhotoSharePage'));
 const ScopeSharePage = lazy(() => import('@/pages/public/ScopeSharePage'));
 const CompletionSignOffPage = lazy(() => import('@/pages/public/CompletionSignOffPage'));
 const SharedPortfolioView = lazy(() => import('@/pages/public/SharedPortfolioView'));
+const InvoiceMarkPaid = lazy(() => import('@/pages/public/InvoiceMarkPaid'));
 const LaTeXPDFGeneratorPage = lazy(() => import('@/pages/LaTeXPDFGeneratorPage'));
 const InvoiceQuoteBuilder = lazy(() => import('@/pages/electrician/InvoiceQuoteBuilder'));
 const InvoiceViewPage = lazy(() => import('@/pages/electrician/InvoiceViewPage'));
@@ -503,6 +504,15 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <SupervisorVerificationPage />
+            </LazyRoute>
+          }
+        />
+        {/* ELE-880 — public mark-paid confirmation page */}
+        <Route
+          path="/invoices/:token/mark-paid"
+          element={
+            <LazyRoute>
+              <InvoiceMarkPaid />
             </LazyRoute>
           }
         />

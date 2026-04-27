@@ -15,6 +15,7 @@
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { Resend } from '../_shared/mailer.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
@@ -240,31 +241,26 @@ serve(async (req: Request) => {
       );
 
       try {
-        const response = await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${resendApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: `ElecMate <founder@elec-mate.com>`,
-            reply_to: companyEmail || 'support@elec-mate.com',
-            to: customer.email,
-            subject: emailContent.subject,
-            html: emailContent.html,
-          }),
+        // ELE-662 — migrated from direct Resend fetch to Brevo via mailer
+        // shim. Drop support@elec-mate.com fallback (unmonitored).
+        const resend = new Resend(resendApiKey);
+        const { error: emailError } = await resend.emails.send({
+          from: `ElecMate <founder@elec-mate.com>`,
+          ...(companyEmail ? { replyTo: companyEmail } : {}),
+          to: customer.email,
+          subject: emailContent.subject,
+          html: emailContent.html,
         });
 
-        if (!response.ok) {
-          const errorText = await response.text();
+        if (emailError) {
           console.error(
             `Failed to send client reminder for ${cert.certificate_number}:`,
-            errorText
+            emailError.message
           );
           results.push({
             certificate: cert.certificate_number,
             status: 'failed',
-            reason: errorText,
+            reason: emailError.message,
           });
           continue;
         }

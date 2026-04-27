@@ -294,7 +294,7 @@ serve(async (req: Request) => {
     for (const tmpl of templates) {
       const { error: sendError } = await resend.emails.send({
         from: 'ElecMate <founder@elec-mate.com>',
-        reply_to: 'support@elec-mate.com',
+        replyTo: 'founder@elec-mate.com',
         to: [email],
         subject: tmpl.subject,
         html: tmpl.html,

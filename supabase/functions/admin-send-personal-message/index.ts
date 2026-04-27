@@ -164,7 +164,7 @@ serve(async (req) => {
     const sendPayload = {
       from: FROM_EMAIL,
       to: [toEmail],
-      reply_to: REPLY_TO,
+      replyTo: REPLY_TO,
       subject,
       html,
     };

@@ -239,7 +239,7 @@ export async function sendCheatsheetCampaignEmail(params: {
   try {
     const { error } = await resend.emails.send({
       from: 'Elec-Mate <founder@elec-mate.com>',
-      reply_to: 'support@elec-mate.com',
+      replyTo: 'founder@elec-mate.com',
       to: [params.email],
       subject,
       html,

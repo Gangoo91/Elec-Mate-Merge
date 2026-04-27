@@ -121,7 +121,7 @@ serve(async (req) => {
 
     const { data: emailResult, error: emailError } = await resend.emails.send({
       from: 'ElecMate <founder@elec-mate.com>',
-      reply_to: 'support@elec-mate.com',
+      replyTo: 'founder@elec-mate.com',
       to: [referrerProfile.email],
       subject,
       html: bodyHtml,

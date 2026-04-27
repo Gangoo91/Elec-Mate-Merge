@@ -1249,7 +1249,7 @@ Deno.serve(async (req) => {
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           to: [userWithEmail.email.trim().toLowerCase()],
           subject: `Quick question, ${singleFirstName}`,
-          reply_to: 'founder@elec-mate.com',
+          replyTo: 'founder@elec-mate.com',
           html: emailHtml,
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v8' },
@@ -1339,7 +1339,7 @@ Deno.serve(async (req) => {
               from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
               to: [userWithEmail.email.trim().toLowerCase()],
               subject: `Quick question, ${bulkFirstName}`,
-              reply_to: 'founder@elec-mate.com',
+              replyTo: 'founder@elec-mate.com',
               html: emailHtml,
               tags: [
                 { name: 'campaign', value: 'incomplete_signup_v8' },
@@ -1413,7 +1413,7 @@ Deno.serve(async (req) => {
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           to: [testEmail.trim().toLowerCase()],
           subject: '[TEST] Your Elec-Mate account is waiting for you',
-          reply_to: 'founder@elec-mate.com',
+          replyTo: 'founder@elec-mate.com',
           html: emailHtml,
           tags: [
             { name: 'campaign', value: 'incomplete_signup' },
@@ -1451,7 +1451,7 @@ Deno.serve(async (req) => {
           from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
           to: [manualEmail.trim().toLowerCase()],
           subject: `Quick question, ${manualFirstName}`,
-          reply_to: 'founder@elec-mate.com',
+          replyTo: 'founder@elec-mate.com',
           html: manualEmailHtml,
           tags: [
             { name: 'campaign', value: 'incomplete_signup_v8' },

@@ -332,7 +332,7 @@ Deno.serve(async (req) => {
             to: [email],
             subject,
             html: emailHtml,
-            reply_to: 'founder@elec-mate.com',
+            replyTo: 'founder@elec-mate.com',
           });
 
           if (error) {

@@ -484,7 +484,7 @@ serve(async (req: Request) => {
 
       const { error: sendError } = await resend.emails.send({
         from: 'ElecMate <founder@elec-mate.com>',
-        reply_to: 'support@elec-mate.com',
+        replyTo: 'founder@elec-mate.com',
         to: [userData.user.email!],
         subject,
         html: htmlGenerator(userName, amountFormatted, payUrl),

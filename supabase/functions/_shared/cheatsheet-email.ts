@@ -147,7 +147,7 @@ export async function sendCheatSheetEmail(
   try {
     const { error } = await resend.emails.send({
       from: 'Elec-Mate <founder@elec-mate.com>',
-      reply_to: 'support@elec-mate.com',
+      replyTo: 'founder@elec-mate.com',
       to: [email],
       subject: 'Your BS 7671 A4:2026 cheat sheet is here 📄',
       html: emailHtml,

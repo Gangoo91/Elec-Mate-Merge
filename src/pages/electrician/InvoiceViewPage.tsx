@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
+import { copyToClipboard } from '@/utils/clipboard';
 
 /** Gradient section header — matching QuoteViewPage */
 const SectionHeader = ({ title }: { title: string }) => (
@@ -86,6 +87,44 @@ const InvoiceViewPage = () => {
       }
     } finally {
       setIsRefreshingFromProvider(false);
+    }
+  };
+
+  // ELE-880 — generate or reuse a mark-paid token, copy the public URL to
+  // clipboard so the electrician can share it (or use it themselves) without
+  // waiting for the next reminder email.
+  const handleCopyMarkPaidLink = async () => {
+    if (!invoice) return;
+    try {
+      const { data, error } = await supabase.rpc('get_or_create_invoice_action_token', {
+        p_invoice_id: invoice.id,
+        p_action: 'mark_paid',
+      });
+      if (error) throw error;
+      const row = Array.isArray(data) ? data[0] : data;
+      const tokenValue = row?.public_token;
+      if (!tokenValue) throw new Error('No token returned');
+      const origin =
+        typeof window !== 'undefined' && window.location?.origin
+          ? window.location.origin
+          : 'https://www.elec-mate.com';
+      const url = `${origin}/invoices/${encodeURIComponent(tokenValue)}/mark-paid`;
+      const ok = await copyToClipboard(url);
+      if (ok) {
+        toast({
+          title: 'Mark-paid link copied',
+          description: 'Single-use link valid for 30 days. Share it with whoever needs to confirm.',
+        });
+      } else {
+        toast({ title: 'Failed to copy link', variant: 'destructive' });
+      }
+    } catch (err) {
+      console.error('Failed to mint mark-paid token:', err);
+      toast({
+        title: 'Could not generate link',
+        description: err instanceof Error ? err.message : 'Please try again',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -808,6 +847,15 @@ const InvoiceViewPage = () => {
                         : providerName}`}
                 </span>
                 <span className="text-[11px] text-white/50">↻</span>
+              </button>
+            )}
+            {!isPaid && (
+              <button
+                onClick={() => { setShowActionsSheet(false); handleCopyMarkPaidLink(); }}
+                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+              >
+                <span className="text-[15px] font-medium text-elec-yellow">Copy mark-paid link</span>
+                <span className="text-[11px] text-white/50">⧉</span>
               </button>
             )}
             <div className="border-t border-white/[0.06] mt-2 pt-2">

@@ -683,28 +683,33 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 12: Send email via Resend
     // ========================================================================
-    // Only use company email for Reply-To - never fall back to personal email
-    const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
+    // Reply-To cascade (ELE-662): company email → user's auth email. NEVER
+    // info@elec-mate.com — that's an unmonitored alias and replies bounce.
+    const replyToEmail = companyProfile?.company_email || userEmail || '';
     const subject = `Invoice ${invoiceNumber} - ${companyName}`;
 
     console.log(`📧 Sending to: ${clientEmail}`);
-    console.log(`📧 Reply-to: ${replyToEmail}`);
+    console.log(`📧 Reply-to: ${replyToEmail || '(none — no company_email or auth email)'}`);
     console.log(`📧 Company profile email: ${companyProfile?.company_email || 'NOT SET'}`);
 
     const emailOptions: {
       from: string;
-      reply_to: string;
+      replyTo?: string;
       to: string[];
       subject: string;
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
       from: `${companyName} <founder@elec-mate.com>`,
-      reply_to: replyToEmail,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
     };
+    // Only set Reply-To if we have a real address — otherwise omit, so
+    // Brevo doesn't write a header pointing at the unmonitored sender.
+    if (replyToEmail) {
+      emailOptions.replyTo = replyToEmail;
+    }
 
     if (pdfAttachmentSuccess && pdfBase64) {
       emailOptions.attachments = [

@@ -330,11 +330,12 @@ const handler = async (req: Request): Promise<Response> => {
           : 'Following Up: ';
 
     const subject = `${subjectPrefix}Quote ${quote.quote_number} - ${companyName}`;
-    const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
+    // ELE-662 — never fall back to info@elec-mate.com (unmonitored).
+    const replyToEmail = companyProfile?.company_email || '';
 
     const { data: emailData, error: emailError } = await resend.emails.send({
       from: `${companyName} <founder@elec-mate.com>`,
-      reply_to: replyToEmail,
+      ...(replyToEmail ? { replyTo: replyToEmail } : {}),
       to: [clientEmail],
       subject: subject,
       html: emailHtml,

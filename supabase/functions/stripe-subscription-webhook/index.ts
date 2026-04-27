@@ -342,7 +342,7 @@ async function sendWelcomeEmail(
   try {
     const { data, error } = await resend.emails.send({
       from: 'Elec-Mate <founder@elec-mate.com>',
-      reply_to: 'support@elec-mate.com',
+      replyTo: 'founder@elec-mate.com',
       to: [email],
       subject: `Welcome to Elec-Mate — Your ${tierName} subscription is active`,
       html: emailHtml,
@@ -477,7 +477,7 @@ async function sendPaymentFailedEmail(
   try {
     const { data, error } = await resend.emails.send({
       from: 'ElecMate <founder@elec-mate.com>',
-      reply_to: 'support@elec-mate.com',
+      replyTo: 'founder@elec-mate.com',
       to: [email],
       subject: "Your ElecMate payment didn't go through",
       html: emailHtml,

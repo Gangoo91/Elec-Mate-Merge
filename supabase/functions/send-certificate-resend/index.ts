@@ -360,7 +360,9 @@ const handler = async (req: Request): Promise<Response> => {
 
       const { data: testEmailData, error: testEmailError } = await resend.emails.send({
         from: 'Spark & Sons Electrical <founder@elec-mate.com>',
-        reply_to: 'info@elec-mate.com',
+        // ELE-662 — was hardcoded info@elec-mate.com (unmonitored). For test
+        // mode mirror the fake company so the Reply-To matches sender brand.
+        replyTo: 'info@sparkandsons.co.uk',
         to: [String(body.recipientEmail)],
         subject: 'Your EICR Certificate - 47 Riverside Gardens',
         html: testEmailHtml,
@@ -638,7 +640,9 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     // STEP 9: Send email via Resend
     // ========================================================================
-    const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
+    // Reply-To cascade (ELE-662): company email → user's auth email. NEVER
+    // info@elec-mate.com — that's an unmonitored alias.
+    const replyToEmail = companyProfile?.company_email || user.email || '';
     const addressOrRef = String(report.installation_address || report.certificate_number || '')
       .replace(/[\r\n\t]+/g, ' ')
       .replace(/\s{2,}/g, ' ')
@@ -646,22 +650,24 @@ const handler = async (req: Request): Promise<Response> => {
     const subject = `Your ${certificateTypeDisplay} Certificate - ${addressOrRef}`.trim();
 
     console.log(`📧 Sending to: ${clientEmail}`);
-    console.log(`📧 Reply-to: ${replyToEmail}`);
+    console.log(`📧 Reply-to: ${replyToEmail || '(none — no company_email or auth email)'}`);
 
     const emailOptions: {
       from: string;
-      reply_to: string;
+      replyTo?: string;
       to: string[];
       subject: string;
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
       from: `${companyName} <founder@elec-mate.com>`,
-      reply_to: replyToEmail,
       to: [clientEmail],
       subject: subject,
       html: emailHtml,
     };
+    if (replyToEmail) {
+      emailOptions.replyTo = replyToEmail;
+    }
 
     if (pdfAttachmentSuccess && pdfBase64) {
       const filename = `${certificateTypeDisplay.replace(/\s+/g, '-')}_${certificateNumber}.pdf`;

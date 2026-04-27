@@ -95,13 +95,39 @@ const handler = async (req: Request): Promise<Response> => {
       Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
     );
 
+    // ELE-880 — Mint (or reuse) a one-tap "Mark as Paid" token so the
+    // electrician can close the loop straight from the email when the
+    // client tells them they've paid externally. This is intentionally
+    // *embedded* in the same email that goes to the client; it's gated
+    // behind a "Are you the electrician?" footer so the client won't tap
+    // it. Even if they did, only the electrician would have access to
+    // their email forwards / the link is safe to share with the owner.
+    let markPaidUrl: string | null = null;
+    try {
+      const { data: tokenRows, error: tokenErr } = await supabase.rpc(
+        'get_or_create_invoice_action_token',
+        { p_invoice_id: invoiceId, p_action: 'mark_paid' }
+      );
+      if (tokenErr) {
+        console.warn('[send-payment-reminder] token mint failed', tokenErr.message);
+      } else if (Array.isArray(tokenRows) && tokenRows[0]?.public_token) {
+        const appOrigin = Deno.env.get('APP_PUBLIC_ORIGIN') || 'https://www.elec-mate.com';
+        markPaidUrl = `${appOrigin}/invoices/${encodeURIComponent(
+          tokenRows[0].public_token
+        )}/mark-paid`;
+      }
+    } catch (mintErr) {
+      console.warn('[send-payment-reminder] token mint exception', mintErr);
+    }
+
     // Generate email content
     const emailContent = generateReminderEmail(
       reminderType,
       invoice,
       clientData,
       companyProfile,
-      daysOverdue
+      daysOverdue,
+      markPaidUrl
     );
 
     console.log(`📧 Sending ${reminderType} payment reminder for ${invoice.invoice_number} to ${clientEmail}`);
@@ -114,13 +140,25 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     const resend = new Resend(resendApiKey);
-    const fromEmail = companyProfile?.company_email || 'invoices@elec-mate.com';
+    // ELE-662 — never use info@elec-mate.com or invoices@elec-mate.com as
+    // Reply-To; both are unmonitored. Cascade: company_email → fall back to
+    // omitting Reply-To entirely so Brevo uses the From address (which the
+    // mailer's snake_case alias still rejects gracefully).
+    const fromEmail = companyProfile?.company_email || '';
     const fromName = companyProfile?.company_name || 'Your Electrician';
+
+    // ELE-880 — BCC the electrician so they receive a copy in their own
+    // inbox containing the "Mark as paid" button. This is what makes the
+    // one-tap close-the-loop UX work: when the client replies "I've paid",
+    // the electrician opens the original reminder (now in their inbox) and
+    // taps the link.
+    const electricianCopyBcc = fromEmail || undefined;
 
     const { data: emailResult, error: emailError } = await resend.emails.send({
       from: `${fromName} <founder@elec-mate.com>`,
-      reply_to: fromEmail,
+      ...(fromEmail ? { replyTo: fromEmail } : {}),
       to: [clientEmail],
+      ...(electricianCopyBcc ? { bcc: [electricianCopyBcc] } : {}),
       subject: emailContent.subject,
       html: emailContent.html,
     });
@@ -176,7 +214,8 @@ function generateReminderEmail(
   invoice: any,
   client: any,
   company: any,
-  daysOverdue: number
+  daysOverdue: number,
+  markPaidUrl: string | null = null
 ) {
   const companyName = company?.company_name || 'Your Electrician';
   const companyPhone = company?.company_phone || '';
@@ -416,6 +455,27 @@ function generateReminderEmail(
               </p>
             </td>
           </tr>
+
+          ${
+            markPaidUrl
+              ? `
+          <!-- ELE-880 electrician footer: one-tap mark-paid -->
+          <tr>
+            <td style="border-top: 1px solid #e5e7eb; padding: 16px 32px 0;">
+              <p style="margin: 0 0 6px; font-size: 11px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.08em;">
+                For ${companyName} only
+              </p>
+              <p style="margin: 0 0 10px; font-size: 12.5px; color: #6b7280; line-height: 1.5;">
+                If your customer has already paid, mark this invoice as paid in one tap so reminders stop.
+              </p>
+              <a href="${markPaidUrl}"
+                style="display: inline-block; font-size: 12.5px; font-weight: 600; color: #1a1a1a; background: #FFD700; text-decoration: none; padding: 8px 14px; border-radius: 8px;">
+                Mark this invoice as paid →
+              </a>
+            </td>
+          </tr>`
+              : ''
+          }
 
           <!-- Footer -->
           <tr>

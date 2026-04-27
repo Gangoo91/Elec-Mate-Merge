@@ -27,8 +27,18 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-const CHAT_MODEL = 'gpt-5-mini-2025-08-07';
-const MAX_COMPLETION_TOKENS = 6_000;
+// ELE-879 — gpt-5-mini-2025-08-07 is not yet available on OpenAI's API;
+// requests with that model name return 200 OK with no tool_calls, which the
+// parser below interprets as `no_tool_call` and surfaces as a 500.
+// gpt-4o-mini is the closest production-ready equivalent that supports
+// tool calling with reliable function-call output.
+const CHAT_MODEL = 'gpt-4o-mini';
+// Each authored question runs ~600-900 tokens once you account for citations
+// + explanation + marking_guidance. 14k headroom covers ~15 questions before
+// the model truncates mid-tool-call (the cause of the "timeout on >5
+// questions" symptom — it wasn't a network timeout, it was the model running
+// out of completion budget mid-JSON, breaking the tool_call args parse).
+const MAX_COMPLETION_TOKENS = 14_000;
 const FACET_TOP_K = 5;
 
 interface AuthorRequest {

@@ -202,14 +202,14 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailOptions: {
       from: string;
-      reply_to: string;
+      replyTo: string;
       to: string[];
       subject: string;
       html: string;
       attachments?: Array<{ filename: string; content: string }>;
     } = {
       from: `${companyName} <founder@elec-mate.com>`,
-      reply_to: replyTo,
+      replyTo: replyTo,
       to: [to.trim()],
       subject,
       html,

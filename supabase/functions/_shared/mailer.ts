@@ -98,7 +98,15 @@ async function brevoSend(
 
   if (params.html) body.htmlContent = params.html;
   if (params.text) body.textContent = params.text;
-  if (params.replyTo) body.replyTo = parseAddress(params.replyTo);
+  // Accept both camelCase (Resend SDK) and snake_case (legacy call sites
+  // pre-migration). ELE-662 — many edge functions still pass `reply_to`,
+  // which was silently dropped before this alias was added, causing client
+  // replies to land on the sender (founder@elec-mate.com) instead of the
+  // electrician.
+  const replyToRaw = params.replyTo ?? (params as Record<string, unknown>).reply_to;
+  if (typeof replyToRaw === 'string' && replyToRaw.trim()) {
+    body.replyTo = parseAddress(replyToRaw);
+  }
   if (params.cc) body.cc = parseAddresses(params.cc);
   if (params.bcc) body.bcc = parseAddresses(params.bcc);
   if (params.headers && Object.keys(params.headers).length) body.headers = params.headers;
