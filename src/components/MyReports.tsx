@@ -468,6 +468,14 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
   // source, strips identity, generates a new cert number, and persists the
   // new draft row. Routes into the new draft via onEditReport.
   const performDuplicate = async (reportId: string, reportType: string) => {
+    if (!user?.id) {
+      toast({
+        title: 'Not signed in',
+        description: 'You must be signed in to duplicate certificates.',
+        variant: 'destructive',
+      });
+      return;
+    }
     toast({
       title: 'Duplicating certificate…',
       description: 'Copying spec to a new draft.',
@@ -484,27 +492,35 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
         });
         return;
       }
-      const { newReportId, data, sourceReportId } = await duplicateCertificate(
-        reportId,
-        reportType
-      );
-      // Persist immediately so the form loads from cloud via the standard
-      // useReportSync flow rather than needing navigate-state plumbing.
-      const { error: insertError } = await supabase.from('reports').insert({
-        report_id: newReportId,
-        user_id: user?.id,
-        report_type: reportType,
-        status: 'draft',
+      const { newReportId: newCertNumber, data, sourceReportId } =
+        await duplicateCertificate(reportId, reportType);
+      // ELE-881 — use the canonical reportCloud.createReport so the row gets
+      // the correct shape (UUID-style report_id, separate certificate_number
+      // column, status calculation, customer_id null, last_synced_at).
+      // Direct .insert() previously bypassed all of this and got a 400 from
+      // the unique-constraint / NOT NULL columns on the reports table.
+      const result = await reportCloud.createReport(
+        user.id,
+        reportType as Parameters<typeof reportCloud.createReport>[1],
         data,
-        client_name: null,
-      });
-      if (insertError) throw insertError;
+        undefined,
+        false
+      );
+      if (!result.success || !result.reportId) {
+        throw new Error(
+          result.error instanceof Error
+            ? result.error.message
+            : typeof result.error === 'string'
+              ? result.error
+              : 'Could not create duplicate'
+        );
+      }
       toast({
         title: 'Duplicated',
-        description: `New ${reportType.toUpperCase()} ${newReportId} ready — change client + address.`,
+        description: `New ${reportType.toUpperCase()} ${newCertNumber} ready — change client + address.`,
       });
       refetchReports();
-      onEditReport(newReportId, reportType);
+      onEditReport(result.reportId, reportType);
       void sourceReportId;
     } catch (err) {
       toast({
@@ -564,13 +580,27 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
           description: 'Your PDF has been downloaded.',
         });
       } else {
-        throw new Error('PDF generation failed');
+        // Surface the actual validation message from bulkPdfExport so the user
+        // knows WHY it failed (missing fields, etc.) instead of a generic
+        // "PDF generation failed".
+        // result.errors entries are formatted "EICR-XXXX: Please complete: …"
+        // — strip the cert-id prefix so the toast is cleaner.
+        const firstError = result.errors[0] || '';
+        const message = firstError.includes(':')
+          ? firstError.substring(firstError.indexOf(':') + 1).trim()
+          : firstError || 'PDF generation failed.';
+        throw new Error(message);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const description =
+        error instanceof Error ? error.message : 'Could not generate PDF. Please try again.';
+      // Detect "Please complete: …" so we can show a more actionable title
+      const isMissingFields = description.toLowerCase().includes('please complete');
       toast({
-        title: 'Download Failed',
-        description: error?.message || 'Failed to generate PDF. Please try again.',
+        title: isMissingFields ? 'Missing required fields' : 'Download failed',
+        description,
         variant: 'destructive',
+        duration: 8000,
       });
     }
   };

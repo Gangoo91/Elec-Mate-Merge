@@ -166,7 +166,18 @@ export const duplicateCertificate = async (
 
   // 5) Set new cert number + provenance trail
   cloned.certificateNumber = newCertNumber;
-  cloned.duplicatedFrom = reportId;
+  // Provenance — store the HUMAN-READABLE cert number (e.g. "EICR-2026-2680"),
+  // not the row's `report_id` UUID (e.g. "EICR-1768653632981-0p28c6"). The
+  // human number is what the inspector recognises and what's printed on the
+  // PDF. Fall back through the available sources.
+  const sourceRow = source as Record<string, unknown> & {
+    certificate_number?: string;
+    data?: { certificateNumber?: string };
+  };
+  cloned.duplicatedFrom =
+    sourceRow.certificate_number ||
+    sourceRow.data?.certificateNumber ||
+    reportId;
   cloned.status = 'draft';
 
   return {

@@ -28,6 +28,7 @@ import { getZsLimitFromDeviceString } from '@/data/zsLimits';
 
 // New tab-based components
 import MWFormHeader from '@/components/minor-works/MWFormHeader';
+import DuplicatedFromBanner from '@/components/certificates/DuplicatedFromBanner';
 import MWDetailsTab from '@/components/minor-works/MWDetailsTab';
 import MWCircuitTab from '@/components/minor-works/MWCircuitTab';
 import MWTestingTab from '@/components/minor-works/MWTestingTab';
@@ -1112,17 +1113,12 @@ const MinorWorksForm = ({
           <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
         </div>
 
-        {/* ELE-881 — provenance banner when duplicated from another cert */}
+        {/* ELE-881 — provenance banner */}
         {formData.duplicatedFrom && (
-          <div className="px-4 py-2 sm:px-6 bg-elec-yellow/10 border-b border-elec-yellow/30">
-            <p className="text-xs text-elec-yellow flex items-center gap-2">
-              <span className="text-base leading-none">📋</span>
-              <span>
-                Duplicated from <strong className="font-mono">{formData.duplicatedFrom}</strong> —
-                update the client name, address and dates for this property.
-              </span>
-            </p>
-          </div>
+          <DuplicatedFromBanner
+            sourceCertNumber={formData.duplicatedFrom}
+            onDismiss={() => handleUpdate('duplicatedFrom', '')}
+          />
         )}
 
         {/* Main Content — full-width mobile */}

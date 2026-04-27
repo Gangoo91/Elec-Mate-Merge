@@ -3,6 +3,7 @@ import { EICFormProvider, useEICForm } from './eic/EICFormProvider';
 import { useEICTabs, EICTabValue } from '@/hooks/useEICTabs';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 import EICFormHeader from './eic/EICFormHeader';
+import DuplicatedFromBanner from './certificates/DuplicatedFromBanner';
 import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
@@ -119,17 +120,12 @@ const EICFormInner = ({ onBack }: { onBack: () => void }) => {
         <div className="h-[1px] bg-gradient-to-r from-elec-yellow/40 via-elec-yellow/20 to-transparent" />
       </div>
 
-      {/* ELE-881 — provenance banner when duplicated from another cert */}
+      {/* ELE-881 — provenance banner */}
       {formData.duplicatedFrom && (
-        <div className="px-4 py-2 sm:px-6 bg-elec-yellow/10 border-b border-elec-yellow/30">
-          <p className="text-xs text-elec-yellow flex items-center gap-2">
-            <span className="text-base leading-none">📋</span>
-            <span>
-              Duplicated from <strong className="font-mono">{formData.duplicatedFrom}</strong> —
-              update the client name, address and dates for this property.
-            </span>
-          </p>
-        </div>
+        <DuplicatedFromBanner
+          sourceCertNumber={formData.duplicatedFrom}
+          onDismiss={() => updateFormData('duplicatedFrom', '')}
+        />
       )}
 
       {/* Main Content — full-width mobile */}
