@@ -16,10 +16,21 @@ import { cn } from '@/lib/utils';
    evidence_urls array on the entry.
    ========================================================================== */
 
+interface Prefill {
+  title?: string;
+  description?: string;
+  duration_minutes?: number;
+  activity_type?: string;
+  unit_codes?: string[];
+}
+
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmitted?: () => void;
+  /** Optional pre-fill from an AI-drafted proposal. Apprentice can edit
+      anything before submitting — nothing is auto-filed. */
+  prefill?: Prefill;
 }
 
 // Subset of the schema's activity_type values, ordered for work-based first.
@@ -73,7 +84,7 @@ function emptyForm(): FormState {
   };
 }
 
-export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted }: Props) {
+export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }: Props) {
   const [form, setForm] = useState<FormState>(emptyForm());
   const [photos, setPhotos] = useState<File[]>([]);
   const [saving, setSaving] = useState(false);
@@ -81,13 +92,35 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted }: Props) {
   const fileRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
+  // Single open-time effect: when the sheet opens, either hydrate from the
+  // AI-drafted prefill or start from an empty form. Apprentice keeps full
+  // edit control — nothing is auto-filed. Fires only on the open transition
+  // (refs to prefill captured then), so editing won't be wiped if the parent
+  // re-renders mid-edit.
+  const wasOpenRef = useRef(false);
   useEffect(() => {
-    if (open) {
-      setForm(emptyForm());
+    if (open && !wasOpenRef.current) {
+      if (prefill) {
+        setForm({
+          activity_date: todayIso(),
+          activity_type: prefill.activity_type ?? 'practical',
+          title: prefill.title ?? '',
+          duration_minutes:
+            prefill.duration_minutes != null ? String(prefill.duration_minutes) : '',
+          description: prefill.description ?? '',
+          unit_codes_text:
+            prefill.unit_codes && prefill.unit_codes.length > 0
+              ? prefill.unit_codes.join(', ')
+              : '',
+        });
+      } else {
+        setForm(emptyForm());
+      }
       setPhotos([]);
       setSavedTick(false);
     }
-  }, [open]);
+    wasOpenRef.current = open;
+  }, [open, prefill]);
 
   const minutes = Number(form.duration_minutes) || 0;
   const valid =

@@ -10,7 +10,11 @@ import { cn } from '@/lib/utils';
  * Radix Dialog sets overflow:hidden on body which causes scroll-to-top on iOS.
  * This wrapper saves/restores scroll position around open/close.
  */
-const Sheet = ({ open, onOpenChange, ...props }: React.ComponentPropsWithoutRef<typeof SheetPrimitive.Root>) => {
+const Sheet = ({
+  open,
+  onOpenChange,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof SheetPrimitive.Root>) => {
   const scrollPos = React.useRef(0);
   const wasOpenRef = React.useRef(false);
 
@@ -79,20 +83,40 @@ interface SheetContentProps
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = 'right', className, children, hideCloseButton = false, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
-      {children}
-      {!hideCloseButton && (
-        <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-          <X className="h-4 w-4" />
-          <span className="sr-only">Close</span>
-        </SheetPrimitive.Close>
-      )}
-    </SheetPrimitive.Content>
-  </SheetPortal>
-));
+>(
+  (
+    { side = 'right', className, children, hideCloseButton = false, onOpenAutoFocus, ...props },
+    ref
+  ) => (
+    <SheetPortal>
+      <SheetOverlay />
+      <SheetPrimitive.Content
+        ref={ref}
+        className={cn(sheetVariants({ side }), className)}
+        // Default: don't auto-focus the first input. Mobile keyboards popping
+        // up immediately hide the form before the user can read it. Caller
+        // can opt back in by passing their own onOpenAutoFocus handler that
+        // doesn't preventDefault().
+        onOpenAutoFocus={(e) => {
+          if (onOpenAutoFocus) {
+            onOpenAutoFocus(e);
+          } else {
+            e.preventDefault();
+          }
+        }}
+        {...props}
+      >
+        {children}
+        {!hideCloseButton && (
+          <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </SheetPrimitive.Close>
+        )}
+      </SheetPrimitive.Content>
+    </SheetPortal>
+  )
+);
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (

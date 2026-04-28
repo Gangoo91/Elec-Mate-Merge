@@ -95,6 +95,74 @@ interface RawAction {
   target_id?: string;
 }
 
+/* ───────────────────────── proposals (write-back) ─────────────────────── */
+
+type ProposalKind = 'propose_otj_reflection';
+
+interface RawProposal {
+  kind: ProposalKind;
+  title: string;
+  description: string;
+  estimated_minutes?: number;
+  activity_type?: string;
+  suggested_unit_codes?: string[];
+}
+
+interface Proposal {
+  kind: ProposalKind;
+  title: string;
+  description: string;
+  estimated_minutes: number;
+  activity_type: string;
+  suggested_unit_codes: string[];
+}
+
+const ALLOWED_ACTIVITY_TYPES = new Set([
+  'practical',
+  'shadowing',
+  'manufacturer_training',
+  'industry_visit',
+  'employer_meeting',
+  'simulation',
+  'mentoring',
+  'theory',
+  'assessment',
+  'other',
+]);
+
+/** Validate + normalise a proposal coming back from the structure tool.
+    Drops anything malformed so we never persist an invalid draft. */
+function resolveProposal(raw: RawProposal): Proposal | null {
+  if (raw?.kind !== 'propose_otj_reflection') return null;
+  const title = raw.title?.trim().slice(0, 120);
+  const description = raw.description?.trim().slice(0, 4_000);
+  if (!title || !description || description.length < 30) return null;
+
+  const minutes =
+    typeof raw.estimated_minutes === 'number' && raw.estimated_minutes > 0
+      ? Math.min(Math.round(raw.estimated_minutes), 600)
+      : 60;
+  const activityType =
+    raw.activity_type && ALLOWED_ACTIVITY_TYPES.has(raw.activity_type)
+      ? raw.activity_type
+      : 'practical';
+  const unitCodes = Array.isArray(raw.suggested_unit_codes)
+    ? raw.suggested_unit_codes
+        .map((c) => (typeof c === 'string' ? c.trim() : ''))
+        .filter((c): c is string => c.length > 0 && c.length < 40)
+        .slice(0, 6)
+    : [];
+
+  return {
+    kind: 'propose_otj_reflection',
+    title,
+    description,
+    estimated_minutes: minutes,
+    activity_type: activityType,
+    suggested_unit_codes: unitCodes,
+  };
+}
+
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /**
@@ -315,6 +383,19 @@ Action kinds and what target_id (if any) to pass:
 
 If you don't have a real target_id for an action that needs one, omit the action entirely — never make one up.
 
+Proposals (apprentice persona only — leave empty for tutor):
+Emit a propose_otj_reflection proposal ONLY when the apprentice has either:
+  (a) explicitly asked you to draft an OTJ reflection / write up a job, OR
+  (b) described a real piece of work they did with enough detail to draft from.
+If they're asking for an explanation, theory, or general advice — DO NOT emit a proposal. Empty array is the correct default.
+
+When you do emit one:
+- title: 4-10 words summarising what they did. Verb-led.
+- description: 80-400 words, first person ("I tested...", "I noticed..."), capturing what they did, why it mattered, what they learnt, any BS 7671 reg they applied (in plain English with the reg number). This will be filed as a real OTJ entry — write it the way the apprentice would write it themselves, not the way an AI writes.
+- estimated_minutes: realistic duration. 60 if unsure.
+- activity_type: pick the closest match (practical / shadowing / manufacturer_training / industry_visit / employer_meeting / simulation / mentoring / theory / assessment / other).
+- suggested_unit_codes: up to 6 unit codes from the supplied AC catalogue that this activity genuinely covers. Empty if none clearly fit.
+
 If this is the FIRST turn, set title_suggestion to a 3-6 word title. Otherwise leave empty.
 
 Output via the submit_structure tool exactly once.`;
@@ -384,6 +465,60 @@ const STRUCTURE_TOOL = {
             required: ['label', 'kind'],
           },
         },
+        proposals: {
+          type: 'array',
+          maxItems: 1,
+          description:
+            'Zero or one structured DRAFT the apprentice can confirm to file into a real record. Currently only propose_otj_reflection is supported. Emit ONLY when the apprentice has clearly described or asked you to draft a reflection on a real piece of work — never speculatively. Apprentice persona only — leave empty for tutor persona.',
+          items: {
+            type: 'object',
+            additionalProperties: false,
+            properties: {
+              kind: {
+                type: 'string',
+                enum: ['propose_otj_reflection'],
+              },
+              title: {
+                type: 'string',
+                description:
+                  'Short title for the OTJ entry — 4-10 words summarising the activity. e.g. "Tested ring final on flat refurb".',
+              },
+              description: {
+                type: 'string',
+                description:
+                  'The reflection itself — 80-400 words, first person, what the apprentice did, why it mattered, what they learnt. Plain English. Use real BS 7671 refs in plain English when relevant.',
+              },
+              estimated_minutes: {
+                type: 'integer',
+                minimum: 15,
+                maximum: 600,
+                description: 'Estimated duration in minutes for this activity.',
+              },
+              activity_type: {
+                type: 'string',
+                enum: [
+                  'practical',
+                  'shadowing',
+                  'manufacturer_training',
+                  'industry_visit',
+                  'employer_meeting',
+                  'simulation',
+                  'mentoring',
+                  'theory',
+                  'assessment',
+                  'other',
+                ],
+              },
+              suggested_unit_codes: {
+                type: 'array',
+                description:
+                  'Up to 6 unit codes from the supplied AC catalogue that this activity covers. Use real codes only.',
+                items: { type: 'string' },
+              },
+            },
+            required: ['kind', 'title', 'description'],
+          },
+        },
         title_suggestion: {
           type: 'string',
           description: 'Conversation title — 3-6 words. Empty after first turn.',
@@ -397,6 +532,7 @@ const STRUCTURE_TOOL = {
 interface StructureArgs {
   citations: Citation[];
   suggested_actions: RawAction[];
+  proposals?: RawProposal[];
   title_suggestion?: string;
 }
 
@@ -948,6 +1084,19 @@ Deno.serve(async (req) => {
           if (resolvedActions.length >= 3) break;
         }
 
+        // Resolve proposals — apprentice persona only. Server validates +
+        // normalises shape so the apprentice's confirm sheet is always given
+        // a clean draft to render.
+        const resolvedProposals: Proposal[] = [];
+        if (body.persona === 'apprentice') {
+          for (const raw of structure.proposals ?? []) {
+            const p = resolveProposal(raw);
+            if (!p) continue;
+            resolvedProposals.push(p);
+            if (resolvedProposals.length >= 1) break;
+          }
+        }
+
         // Persist assistant message.
         const { data: asstRow } = await sb
           .from('notebook_messages')
@@ -957,6 +1106,7 @@ Deno.serve(async (req) => {
             content: proseAnswer,
             citations: structure.citations ?? null,
             suggested_actions: resolvedActions,
+            proposals: resolvedProposals.length > 0 ? resolvedProposals : null,
           })
           .select('id, created_at')
           .single();
@@ -975,6 +1125,7 @@ Deno.serve(async (req) => {
             answer: proseAnswer,
             citations: structure.citations ?? [],
             suggested_actions: resolvedActions,
+            proposals: resolvedProposals,
             title: structure.title_suggestion ?? null,
           })
         );

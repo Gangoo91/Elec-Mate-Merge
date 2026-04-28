@@ -1,3 +1,4 @@
+import { Capacitor } from '@capacitor/core';
 import { supabase } from '@/integrations/supabase/client';
 
 interface PushSubscriptionData {
@@ -9,9 +10,16 @@ interface PushSubscriptionData {
 }
 
 /**
- * Check if push notifications are supported
+ * Check if WEB push notifications are supported in this runtime.
+ *
+ * On Capacitor native (iOS + Android) we use the @capacitor/push-notifications
+ * plugin instead — the web push pipeline (service worker → PushManager →
+ * VAPID) doesn't survive native app suspension. Returning false here makes
+ * usePushNotifications a no-op on native, leaving useNativeApp as the
+ * single owner of push on iOS / Android.
  */
 export const isPushSupported = (): boolean => {
+  if (Capacitor.isNativePlatform()) return false;
   return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
 };
 

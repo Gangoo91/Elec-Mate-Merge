@@ -46,6 +46,24 @@ export interface SuggestedAction {
   href: string;
 }
 
+/* ───────── Proposals (AI write-back) ─────────
+   Each assistant message can carry zero or one structured drafts the
+   apprentice can confirm to file into a real record. Phase 1 supports
+   propose_otj_reflection only; further kinds (portfolio, ILP) plug in here. */
+
+export type ProposalKind = 'propose_otj_reflection';
+
+export interface OtjReflectionProposal {
+  kind: 'propose_otj_reflection';
+  title: string;
+  description: string;
+  estimated_minutes: number;
+  activity_type: string;
+  suggested_unit_codes: string[];
+}
+
+export type Proposal = OtjReflectionProposal;
+
 export interface NotebookConversation {
   id: string;
   title: string | null;
@@ -66,6 +84,7 @@ export interface NotebookMessage {
   content: string;
   citations: Citation[] | null;
   suggested_actions: SuggestedAction[] | null;
+  proposals: Proposal[] | null;
   created_at: string;
   /** True while tokens are still streaming in. UI uses this to show the cursor. */
   streaming?: boolean;
@@ -122,7 +141,7 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
     setLoadingMessages(true);
     const { data } = await supabase
       .from('notebook_messages')
-      .select('id, role, content, citations, suggested_actions, created_at')
+      .select('id, role, content, citations, suggested_actions, proposals, created_at')
       .eq('conversation_id', conversationId)
       .order('created_at');
     setMessages(((data ?? []) as NotebookMessage[]).filter((m) => m.role !== 'system'));
@@ -173,6 +192,7 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
         content: trimmed,
         citations: null,
         suggested_actions: null,
+        proposals: null,
         created_at: new Date().toISOString(),
       };
       setMessages((prev) => [...prev, optMsg]);
@@ -236,6 +256,7 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
                   content: pending,
                   citations: null,
                   suggested_actions: null,
+                  proposals: null,
                   created_at: new Date().toISOString(),
                   streaming: true,
                 },
@@ -304,10 +325,13 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
                   answer: string;
                   citations: Citation[];
                   suggested_actions: SuggestedAction[];
+                  proposals?: Proposal[];
                 };
                 conversationIdFromServer = payload.conversation_id;
                 setActiveId(payload.conversation_id);
                 const finalId = payload.assistant_message_id ?? `srv-${Date.now()}`;
+                const proposalsForMsg =
+                  payload.proposals && payload.proposals.length > 0 ? payload.proposals : null;
                 setMessages((prev) => {
                   if (streamingMsgInserted) {
                     return prev.map((m) =>
@@ -318,6 +342,7 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
                             content: payload.answer,
                             citations: payload.citations ?? null,
                             suggested_actions: payload.suggested_actions ?? null,
+                            proposals: proposalsForMsg,
                             streaming: false,
                           }
                         : m
@@ -331,6 +356,7 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
                       content: payload.answer,
                       citations: payload.citations ?? null,
                       suggested_actions: payload.suggested_actions ?? null,
+                      proposals: proposalsForMsg,
                       created_at: new Date().toISOString(),
                     },
                   ];

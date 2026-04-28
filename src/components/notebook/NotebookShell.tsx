@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState, type ReactNode } from 'react';
+import { memo, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft } from 'lucide-react';
@@ -11,7 +11,10 @@ import {
   type SuggestedAction,
   type Citation,
   type CitationType,
+  type Proposal,
+  type OtjReflectionProposal,
 } from '@/hooks/useNotebook';
+import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
 import { fmtRel } from '@/lib/format';
 
 /* ==========================================================================
@@ -159,6 +162,32 @@ export function NotebookShell({
   const empty = messages.length === 0;
   const t = TONE[tone];
 
+  // AI write-back: which proposal is the apprentice currently confirming?
+  // Single sheet, switches its prefill based on which proposal was tapped.
+  // Tracks the source (messageId + index) so we can mark it filed once the
+  // confirm sheet succeeds — stops the apprentice double-filing the same draft.
+  const [activeProposal, setActiveProposal] = useState<{
+    messageId: string;
+    index: number;
+    proposal: Proposal;
+  } | null>(null);
+  const [filedProposalKeys, setFiledProposalKeys] = useState<Set<string>>(() => new Set());
+
+  // Memoise the prefill object so SubmitWorkOtjSheet's open-time effect
+  // doesn't see a fresh reference on every parent render (which would wipe
+  // the apprentice's edits live).
+  const otjPrefill = useMemo(() => {
+    const p = activeProposal?.proposal;
+    if (p?.kind !== 'propose_otj_reflection') return undefined;
+    return {
+      title: p.title,
+      description: p.description,
+      duration_minutes: p.estimated_minutes,
+      activity_type: p.activity_type,
+      unit_codes: p.suggested_unit_codes,
+    };
+  }, [activeProposal]);
+
   const handleSend = async () => {
     const v = draft.trim();
     if (!v || streaming) return;
@@ -276,6 +305,10 @@ export function NotebookShell({
                   tone={tone}
                   eyebrow={eyebrow}
                   isLast={i === messages.length - 1}
+                  filedProposalKeys={filedProposalKeys}
+                  onProposalTap={(idx, proposal) =>
+                    setActiveProposal({ messageId: m.id, index: idx, proposal })
+                  }
                 />
               ))}
               {streaming &&
@@ -333,6 +366,28 @@ export function NotebookShell({
           </section>
         </div>
       </div>
+
+      {/* AI write-back: confirm sheet for OTJ reflection proposals.
+          Only mounted on apprentice surfaces — tutor proposals (when
+          they land) will mount their own sheets. */}
+      <SubmitWorkOtjSheet
+        open={activeProposal?.proposal.kind === 'propose_otj_reflection'}
+        onOpenChange={(o) => {
+          if (!o) setActiveProposal(null);
+        }}
+        prefill={otjPrefill}
+        onSubmitted={() => {
+          if (activeProposal) {
+            const k = `${activeProposal.messageId}::${activeProposal.index}`;
+            setFiledProposalKeys((prev) => {
+              const next = new Set(prev);
+              next.add(k);
+              return next;
+            });
+          }
+          setActiveProposal(null);
+        }}
+      />
     </div>
   );
 }
@@ -465,10 +520,19 @@ interface MessageBlockProps {
   tone: Tone;
   eyebrow: string;
   isLast: boolean;
+  filedProposalKeys: Set<string>;
+  onProposalTap: (index: number, proposal: Proposal) => void;
 }
 
 const MessageBlock = memo(
-  function MessageBlock({ message, tone, eyebrow, isLast }: MessageBlockProps) {
+  function MessageBlock({
+    message,
+    tone,
+    eyebrow,
+    isLast,
+    filedProposalKeys,
+    onProposalTap,
+  }: MessageBlockProps) {
     const t = TONE[tone];
     const isUser = message.role === 'user';
 
@@ -638,6 +702,25 @@ const MessageBlock = memo(
             </AnimatePresence>
           </div>
 
+          {!message.streaming && message.proposals && message.proposals.length > 0 && (
+            <div className="pt-2 space-y-2">
+              {message.proposals.map((p, i) => {
+                const filed = filedProposalKeys.has(`${message.id}::${i}`);
+                return (
+                  <ProposalPanel
+                    key={`${p.kind}-${i}`}
+                    proposal={p}
+                    tone={tone}
+                    filed={filed}
+                    onTap={() => {
+                      if (!filed) onProposalTap(i, p);
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
+
           {!message.streaming && message.citations && message.citations.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5 pt-1">
               <span className="text-[10px] uppercase tracking-[0.22em] text-white/55 mr-1">
@@ -669,13 +752,15 @@ const MessageBlock = memo(
     );
   },
   // Skip re-render unless the message itself, its streaming flag, isLast,
-  // or tone/eyebrow change. Crucial: completed messages don't re-render
-  // when a newer message receives streaming deltas.
+  // tone/eyebrow, or the filed-proposal Set identity change. Crucial:
+  // completed messages don't re-render when a newer message receives
+  // streaming deltas.
   (prev, next) =>
     prev.message === next.message &&
     prev.tone === next.tone &&
     prev.eyebrow === next.eyebrow &&
-    prev.isLast === next.isLast
+    prev.isLast === next.isLast &&
+    prev.filedProposalKeys === next.filedProposalKeys
 );
 
 /* ───────────────────────── composing indicator ────────────────────────── */
@@ -711,6 +796,101 @@ function ComposingIndicator({ tone, eyebrow }: { tone: Tone; eyebrow: string }) 
 }
 
 /* ───────────────────────── citation + action chips ────────────────────── */
+
+function ProposalPanel({
+  proposal,
+  tone,
+  filed,
+  onTap,
+}: {
+  proposal: Proposal;
+  tone: Tone;
+  filed: boolean;
+  onTap: () => void;
+}) {
+  const t = TONE[tone];
+  if (proposal.kind === 'propose_otj_reflection') {
+    return <OtjProposalPanel proposal={proposal} t={t} filed={filed} onTap={onTap} />;
+  }
+  return null;
+}
+
+function OtjProposalPanel({
+  proposal,
+  t,
+  filed,
+  onTap,
+}: {
+  proposal: OtjReflectionProposal;
+  t: ToneStyle;
+  filed: boolean;
+  onTap: () => void;
+}) {
+  const hours = Math.floor(proposal.estimated_minutes / 60);
+  const mins = proposal.estimated_minutes % 60;
+  const durationLabel = hours > 0 ? `${hours}h${mins > 0 ? ` ${mins}m` : ''}` : `${mins}m`;
+
+  return (
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl border px-3.5 py-3 transition-opacity',
+        filed
+          ? 'border-emerald-300/30 bg-emerald-500/[0.06]'
+          : cn(
+              'bg-gradient-to-br from-cyan-500/[0.08] via-[hsl(0_0%_11%)] to-[hsl(0_0%_11%)]',
+              t.ring
+            )
+      )}
+    >
+      <div
+        className={cn(
+          'absolute inset-x-0 top-0 h-px opacity-50',
+          filed ? 'bg-emerald-300' : t.cursor
+        )}
+      />
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <div
+            className={cn(
+              'text-[10px] font-medium uppercase tracking-[0.22em]',
+              filed ? 'text-emerald-300' : t.accent
+            )}
+          >
+            {filed ? '✓ Filed as OTJ' : `✨ Proposed OTJ entry · ${durationLabel} · ready to file`}
+          </div>
+          <div className="mt-1.5 text-[13.5px] font-semibold text-white leading-snug">
+            {proposal.title}
+          </div>
+          <p
+            className={cn(
+              'mt-1 text-[12.5px] leading-snug line-clamp-3',
+              filed ? 'text-white/65' : 'text-white/85'
+            )}
+          >
+            {proposal.description}
+          </p>
+        </div>
+        {filed ? (
+          <span className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-emerald-200 bg-emerald-500/[0.10] border border-emerald-300/25">
+            Sent to tutor
+          </span>
+        ) : (
+          <button
+            type="button"
+            onClick={onTap}
+            className={cn(
+              'shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black transition-colors touch-manipulation',
+              t.send,
+              t.sendHover
+            )}
+          >
+            Review &amp; file →
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function CitationChip({ citation }: { citation: Citation }) {
   return (
