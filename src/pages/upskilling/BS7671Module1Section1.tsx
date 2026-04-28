@@ -296,7 +296,7 @@ export default function BS7671Module1Section1() {
         <PageFrame>
           <button
             type="button"
-            onClick={() => navigate('..')}
+            onClick={() => navigate('../bs7671-module-1')}
             className="inline-flex items-center gap-2 h-11 px-3 rounded-full bg-white/[0.06] border border-white/[0.1] text-white text-[13px] font-medium touch-manipulation hover:bg-white/[0.1] mb-1 self-start"
           >
             <ArrowLeft className="h-4 w-4" /> Module 1

@@ -1,4 +1,4 @@
-import { Grid, Calculator, Thermometer, Zap, Shield, TrendingUp } from 'lucide-react';
+import { Grid, Calculator, Thermometer, Zap, Shield } from 'lucide-react';
 import { SectionCard } from '@/components/upskilling/cards';
 import { ModuleShell } from '@/components/study-centre/shells';
 import useSEO from '@/hooks/useSEO';
@@ -33,12 +33,6 @@ const sections = [
     title: 'Earthing arrangements and protective measures selection',
     icon: Shield,
     description: 'Matching earthing systems with appropriate protection strategies.',
-  },
-  {
-    id: 6,
-    title: 'Amendment 3 current requirements',
-    icon: TrendingUp,
-    description: 'Latest bidirectional protection and renewable energy integration requirements.',
   },
 ];
 
