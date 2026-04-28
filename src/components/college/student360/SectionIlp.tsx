@@ -85,7 +85,9 @@ export function SectionIlp({
   // to open the goal sheet pre-filled in from_ac AI mode.
   useEffect(() => {
     const handler = (e: Event) => {
-      const detail = (e as CustomEvent).detail as { unit_code: string; ac_code: string } | undefined;
+      const detail = (e as CustomEvent).detail as
+        | { unit_code: string; ac_code: string }
+        | undefined;
       if (!detail) return;
       setGoalSheetOpen({ mode: 'add', acContext: detail });
     };
@@ -113,8 +115,8 @@ export function SectionIlp({
       {!ilp && !loading ? (
         <div className="mt-5 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-6 py-8 text-center">
           <p className="text-[12.5px] text-white/85 max-w-md mx-auto leading-relaxed">
-            No ILP yet for {studentName.split(' ')[0]}. Generate one with AI from
-            cross-hub data, or create a blank plan and write it yourself.
+            No ILP yet for {studentName.split(' ')[0]}. Generate one with AI from cross-hub data, or
+            create a blank plan and write it yourself.
           </p>
           <div className="mt-4 flex items-center justify-center gap-2 flex-wrap">
             <button
@@ -271,7 +273,14 @@ function HeadlineCard({
         <div className="mt-3 flex items-center gap-4">
           <div className="relative h-[88px] w-[88px] flex-shrink-0">
             <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
-              <circle cx="18" cy="18" r="15.5" fill="none" strokeWidth="2.5" className="stroke-white/[0.08]" />
+              <circle
+                cx="18"
+                cy="18"
+                r="15.5"
+                fill="none"
+                strokeWidth="2.5"
+                className="stroke-white/[0.08]"
+              />
               <circle
                 cx="18"
                 cy="18"
@@ -299,7 +308,9 @@ function HeadlineCard({
             {ilp.target_completion_date && (
               <>
                 <div className="text-white/45 mt-1.5">Target</div>
-                <div className="text-white tabular-nums">{formatDate(ilp.target_completion_date)}</div>
+                <div className="text-white tabular-nums">
+                  {formatDate(ilp.target_completion_date)}
+                </div>
               </>
             )}
             {ilp.review_date && (
@@ -363,11 +374,15 @@ function Block({
       <div
         className={cn(
           'text-[10px] font-medium uppercase tracking-[0.18em] mb-1',
-          tone === 'emerald' ? 'text-emerald-300/85' :
-          tone === 'amber' ? 'text-amber-300/85' :
-          tone === 'blue' ? 'text-blue-300/85' :
-          tone === 'purple' ? 'text-purple-300/85' :
-          'text-elec-yellow/85'
+          tone === 'emerald'
+            ? 'text-emerald-300/85'
+            : tone === 'amber'
+              ? 'text-amber-300/85'
+              : tone === 'blue'
+                ? 'text-blue-300/85'
+                : tone === 'purple'
+                  ? 'text-purple-300/85'
+                  : 'text-elec-yellow/85'
         )}
       >
         {label}
@@ -414,8 +429,8 @@ function GoalsList({
         ) : goals.length === 0 ? (
           <div className="px-5 py-8 text-center">
             <p className="text-[12.5px] text-white/65 max-w-md mx-auto leading-relaxed">
-              No goals on this ILP yet. Add the first one — it'll appear in
-              {' '}{studentName.split(' ')[0]}'s app for them to acknowledge and work on.
+              No goals on this ILP yet. Add the first one — it'll appear in{' '}
+              {studentName.split(' ')[0]}'s app for them to acknowledge and work on.
             </p>
           </div>
         ) : (
@@ -477,7 +492,10 @@ function GoalRow({
         className="min-w-0 flex-1 text-left touch-manipulation"
       >
         <div className="flex items-center gap-2 flex-wrap">
-          <span aria-hidden className={cn('inline-block h-1.5 w-1.5 rounded-full', PRIORITY_DOT[goal.priority])} />
+          <span
+            aria-hidden
+            className={cn('inline-block h-1.5 w-1.5 rounded-full', PRIORITY_DOT[goal.priority])}
+          />
           <Pill tone={STATUS_TONE[status]}>{STATUS_LABEL[status]}</Pill>
           <span className="text-[10.5px] uppercase tracking-[0.12em] text-white/55">
             {CATEGORY_LABEL[goal.category]}
@@ -493,18 +511,37 @@ function GoalRow({
               {formatDate(goal.target_date)}
             </span>
           )}
+          {goal.source === 'student' && (
+            <span
+              className="inline-flex items-center h-4 px-1.5 rounded-md bg-cyan-500/[0.12] border border-cyan-400/40 text-[9px] font-semibold tracking-[0.06em] uppercase text-cyan-200"
+              title="Apprentice proposed this goal — review and accept, edit, or reject."
+            >
+              Apprentice proposed
+            </span>
+          )}
+          {goal.source === 'ai_suggested' && (
+            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-purple-500/[0.12] border border-purple-400/40 text-[9px] font-semibold tracking-[0.06em] uppercase text-purple-200">
+              AI suggested
+            </span>
+          )}
           {!goal.student_acknowledged && (
             <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-amber-500/[0.1] border border-amber-500/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-amber-200">
               Unread
             </span>
           )}
-          {goal.student_comment_at && (!goal.tutor_comment_at || goal.student_comment_at > goal.tutor_comment_at) && (
-            <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.1] border border-blue-500/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-blue-200">
-              New comment
-            </span>
-          )}
+          {goal.student_comment_at &&
+            (!goal.tutor_comment_at || goal.student_comment_at > goal.tutor_comment_at) && (
+              <span className="inline-flex items-center h-4 px-1.5 rounded-md bg-blue-500/[0.1] border border-blue-500/30 text-[9px] font-semibold tracking-[0.06em] uppercase text-blue-200">
+                New comment
+              </span>
+            )}
         </div>
-        <h3 className={cn('mt-1.5 text-[13.5px] font-medium leading-tight', isComplete ? 'text-white/55 line-through' : 'text-white')}>
+        <h3
+          className={cn(
+            'mt-1.5 text-[13.5px] font-medium leading-tight',
+            isComplete ? 'text-white/55 line-through' : 'text-white'
+          )}
+        >
           {goal.title}
         </h3>
         {goal.description && (

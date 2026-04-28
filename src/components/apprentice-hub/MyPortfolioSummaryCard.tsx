@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+
+const PORTFOLIO_AI_PROMPT =
+  "Help me write up a piece of work for my portfolio. I'll describe the job and you draft the entry against the right ACs.";
 
 /* ==========================================================================
    MyPortfolioSummaryCard — apprentice-side digest of portfolio state visible
@@ -195,22 +199,50 @@ export function MyPortfolioSummaryCard() {
                 >
                   Respond to tutor →
                 </button>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => navigate('/apprentice/portfolio-hub?section=evidence')}
+                    className="h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/85 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation"
+                  >
+                    Add evidence
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      navigate(
+                        `/apprentice/college-ai?prompt=${encodeURIComponent(PORTFOLIO_AI_PROMPT)}`
+                      )
+                    }
+                    className="inline-flex items-center justify-center gap-1.5 h-11 rounded-lg border border-blue-300/30 bg-blue-300/[0.08] text-blue-200 text-[12.5px] font-semibold hover:bg-blue-300/[0.14] transition-colors touch-manipulation"
+                  >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Draft with AI
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
                 <button
                   type="button"
                   onClick={() => navigate('/apprentice/portfolio-hub?section=evidence')}
-                  className="w-full h-11 rounded-lg border border-white/[0.10] bg-white/[0.02] text-[12.5px] font-medium text-white/85 hover:text-white hover:border-white/[0.22] transition-colors touch-manipulation"
+                  className="h-11 rounded-lg bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-400 transition-colors touch-manipulation"
                 >
                   Add evidence
                 </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(
+                      `/apprentice/college-ai?prompt=${encodeURIComponent(PORTFOLIO_AI_PROMPT)}`
+                    )
+                  }
+                  className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-blue-300/30 bg-blue-300/[0.08] text-blue-200 text-[13px] font-semibold hover:bg-blue-300/[0.14] transition-colors touch-manipulation"
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Draft with AI
+                </button>
               </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => navigate('/apprentice/portfolio-hub?section=evidence')}
-                className="mt-4 w-full h-11 rounded-lg bg-blue-500 text-white text-[13px] font-semibold hover:bg-blue-400 transition-colors touch-manipulation"
-              >
-                Add evidence
-              </button>
             )}
           </>
         )}

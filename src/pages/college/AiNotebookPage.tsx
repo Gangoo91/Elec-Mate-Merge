@@ -5,6 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNotebook } from '@/hooks/useNotebook';
 import { NotebookShell } from '@/components/notebook/NotebookShell';
+import { CohortThisWeekCard } from '@/components/college/CohortThisWeekCard';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -185,6 +186,8 @@ export default function AiNotebookPage() {
       newConversation={nb.newConversation}
       deleteConversation={nb.deleteConversation}
       togglePinned={nb.togglePinned}
+      markProposalFiled={nb.markProposalFiled}
+      welcomeExtra={<CohortThisWeekCard />}
       headerExtra={
         activeLearner && (
           <button

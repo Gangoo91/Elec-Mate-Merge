@@ -27,7 +27,9 @@ interface Prefill {
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmitted?: () => void;
+  /** Fired after a successful insert. Receives the new row's id so callers
+      can persist filed-state (e.g. AI write-back proposal tracking). */
+  onSubmitted?: (insertedId: string | null) => void;
   /** Optional pre-fill from an AI-drafted proposal. Apprentice can edit
       anything before submitting — nothing is auto-filed. */
   prefill?: Prefill;
@@ -187,23 +189,27 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
         .map((s) => s.trim())
         .filter(Boolean);
 
-      const { error: insErr } = await supabase.from('college_otj_entries').insert({
-        college_id: collegeId,
-        student_id: uid,
-        recorded_by: uid,
-        recorded_by_name_snapshot: recordedByName,
-        activity_date: form.activity_date,
-        activity_type: form.activity_type,
-        title: form.title.trim(),
-        description: form.description.trim(),
-        duration_minutes: minutes,
-        unit_codes: unitCodes,
-        evidence_url: evidenceUrls[0] ?? null,
-        evidence_urls: evidenceUrls.length > 0 ? evidenceUrls : null,
-        source: 'apprentice',
-        source_kind: 'apprentice_submitted',
-        verification_status: 'pending',
-      });
+      const { data: inserted, error: insErr } = await supabase
+        .from('college_otj_entries')
+        .insert({
+          college_id: collegeId,
+          student_id: uid,
+          recorded_by: uid,
+          recorded_by_name_snapshot: recordedByName,
+          activity_date: form.activity_date,
+          activity_type: form.activity_type,
+          title: form.title.trim(),
+          description: form.description.trim(),
+          duration_minutes: minutes,
+          unit_codes: unitCodes,
+          evidence_url: evidenceUrls[0] ?? null,
+          evidence_urls: evidenceUrls.length > 0 ? evidenceUrls : null,
+          source: 'apprentice',
+          source_kind: 'apprentice_submitted',
+          verification_status: 'pending',
+        })
+        .select('id')
+        .maybeSingle();
       if (insErr) throw insErr;
 
       setSavedTick(true);
@@ -211,7 +217,7 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
         title: 'Sent to your tutor',
         description: `${minutes}m · ${form.title.trim()} — awaiting verification.`,
       });
-      onSubmitted?.();
+      onSubmitted?.((inserted as { id?: string } | null)?.id ?? null);
       setTimeout(() => {
         setSavedTick(false);
         onOpenChange(false);

@@ -13,8 +13,12 @@ import {
   type CitationType,
   type Proposal,
   type OtjReflectionProposal,
+  type PortfolioItemProposal,
+  type IlpGoalProposal,
 } from '@/hooks/useNotebook';
 import { SubmitWorkOtjSheet } from '@/components/apprentice-hub/SubmitWorkOtjSheet';
+import { FilePortfolioItemSheet } from '@/components/apprentice-hub/FilePortfolioItemSheet';
+import { ProposeIlpGoalSheet } from '@/components/apprentice-hub/ProposeIlpGoalSheet';
 import { fmtRel } from '@/lib/format';
 
 /* ==========================================================================
@@ -103,6 +107,8 @@ interface Props {
   newConversation: () => void;
   deleteConversation: (id: string) => Promise<void>;
   togglePinned: (id: string, pinned: boolean) => Promise<void>;
+  /** AI write-back: persist filed-state on the proposal so it survives reload. */
+  markProposalFiled?: (messageId: string, proposalIndex: number, recordId: string) => Promise<void>;
   /** Optional badge or pill rendered next to the page title (e.g. learner name). */
   headerExtra?: ReactNode;
   /** Optional content rendered above the welcome screen (empty state only).
@@ -128,6 +134,7 @@ export function NotebookShell({
   newConversation,
   deleteConversation,
   togglePinned,
+  markProposalFiled,
   headerExtra,
   welcomeExtra,
 }: Props) {
@@ -163,19 +170,19 @@ export function NotebookShell({
   const t = TONE[tone];
 
   // AI write-back: which proposal is the apprentice currently confirming?
-  // Single sheet, switches its prefill based on which proposal was tapped.
-  // Tracks the source (messageId + index) so we can mark it filed once the
-  // confirm sheet succeeds — stops the apprentice double-filing the same draft.
+  // Single sheet per kind, switches prefill based on which proposal was tapped.
+  // Filed-state lives on the proposal itself (proposal.filed_at) — survives
+  // reload and stops double-filing across sessions.
   const [activeProposal, setActiveProposal] = useState<{
     messageId: string;
     index: number;
     proposal: Proposal;
   } | null>(null);
-  const [filedProposalKeys, setFiledProposalKeys] = useState<Set<string>>(() => new Set());
 
-  // Memoise the prefill object so SubmitWorkOtjSheet's open-time effect
-  // doesn't see a fresh reference on every parent render (which would wipe
-  // the apprentice's edits live).
+  // Memoise the prefill objects so each sheet's open-time effect doesn't
+  // see a fresh reference on every parent render (which would wipe the
+  // apprentice's edits live). One memo per kind so changing kinds doesn't
+  // remount or re-run the wrong sheet.
   const otjPrefill = useMemo(() => {
     const p = activeProposal?.proposal;
     if (p?.kind !== 'propose_otj_reflection') return undefined;
@@ -185,6 +192,32 @@ export function NotebookShell({
       duration_minutes: p.estimated_minutes,
       activity_type: p.activity_type,
       unit_codes: p.suggested_unit_codes,
+    };
+  }, [activeProposal]);
+
+  const portfolioPrefill = useMemo(() => {
+    const p = activeProposal?.proposal;
+    if (p?.kind !== 'propose_portfolio_item') return undefined;
+    return {
+      title: p.title,
+      description: p.description,
+      reflection_notes: p.reflection_notes,
+      category: p.category,
+      assessment_criteria_met: p.assessment_criteria_met,
+      date_completed: p.date_completed,
+    };
+  }, [activeProposal]);
+
+  const ilpPrefill = useMemo(() => {
+    const p = activeProposal?.proposal;
+    if (p?.kind !== 'propose_ilp_goal') return undefined;
+    return {
+      title: p.title,
+      description: p.description,
+      acceptance_criteria: p.acceptance_criteria,
+      category: p.category,
+      priority: p.priority,
+      target_date: p.target_date,
     };
   }, [activeProposal]);
 
@@ -305,7 +338,6 @@ export function NotebookShell({
                   tone={tone}
                   eyebrow={eyebrow}
                   isLast={i === messages.length - 1}
-                  filedProposalKeys={filedProposalKeys}
                   onProposalTap={(idx, proposal) =>
                     setActiveProposal({ messageId: m.id, index: idx, proposal })
                   }
@@ -376,14 +408,37 @@ export function NotebookShell({
           if (!o) setActiveProposal(null);
         }}
         prefill={otjPrefill}
-        onSubmitted={() => {
-          if (activeProposal) {
-            const k = `${activeProposal.messageId}::${activeProposal.index}`;
-            setFiledProposalKeys((prev) => {
-              const next = new Set(prev);
-              next.add(k);
-              return next;
-            });
+        onSubmitted={(insertedId) => {
+          if (activeProposal && insertedId && markProposalFiled) {
+            void markProposalFiled(activeProposal.messageId, activeProposal.index, insertedId);
+          }
+          setActiveProposal(null);
+        }}
+      />
+
+      <FilePortfolioItemSheet
+        open={activeProposal?.proposal.kind === 'propose_portfolio_item'}
+        onOpenChange={(o) => {
+          if (!o) setActiveProposal(null);
+        }}
+        prefill={portfolioPrefill}
+        onSubmitted={(insertedId) => {
+          if (activeProposal && insertedId && markProposalFiled) {
+            void markProposalFiled(activeProposal.messageId, activeProposal.index, insertedId);
+          }
+          setActiveProposal(null);
+        }}
+      />
+
+      <ProposeIlpGoalSheet
+        open={activeProposal?.proposal.kind === 'propose_ilp_goal'}
+        onOpenChange={(o) => {
+          if (!o) setActiveProposal(null);
+        }}
+        prefill={ilpPrefill}
+        onSubmitted={(insertedId) => {
+          if (activeProposal && insertedId && markProposalFiled) {
+            void markProposalFiled(activeProposal.messageId, activeProposal.index, insertedId);
           }
           setActiveProposal(null);
         }}
@@ -520,19 +575,11 @@ interface MessageBlockProps {
   tone: Tone;
   eyebrow: string;
   isLast: boolean;
-  filedProposalKeys: Set<string>;
   onProposalTap: (index: number, proposal: Proposal) => void;
 }
 
 const MessageBlock = memo(
-  function MessageBlock({
-    message,
-    tone,
-    eyebrow,
-    isLast,
-    filedProposalKeys,
-    onProposalTap,
-  }: MessageBlockProps) {
+  function MessageBlock({ message, tone, eyebrow, isLast, onProposalTap }: MessageBlockProps) {
     const t = TONE[tone];
     const isUser = message.role === 'user';
 
@@ -705,7 +752,7 @@ const MessageBlock = memo(
           {!message.streaming && message.proposals && message.proposals.length > 0 && (
             <div className="pt-2 space-y-2">
               {message.proposals.map((p, i) => {
-                const filed = filedProposalKeys.has(`${message.id}::${i}`);
+                const filed = Boolean(p.filed_at);
                 return (
                   <ProposalPanel
                     key={`${p.kind}-${i}`}
@@ -751,16 +798,16 @@ const MessageBlock = memo(
       </motion.div>
     );
   },
-  // Skip re-render unless the message itself, its streaming flag, isLast,
-  // tone/eyebrow, or the filed-proposal Set identity change. Crucial:
-  // completed messages don't re-render when a newer message receives
-  // streaming deltas.
+  // Skip re-render unless the message reference, tone, eyebrow, or isLast
+  // change. Crucial: completed messages don't re-render when a newer
+  // message receives streaming deltas. The hook produces a new message
+  // object whenever proposals[].filed_at changes via markProposalFiled,
+  // so message reference equality is enough for filed-state updates too.
   (prev, next) =>
     prev.message === next.message &&
     prev.tone === next.tone &&
     prev.eyebrow === next.eyebrow &&
-    prev.isLast === next.isLast &&
-    prev.filedProposalKeys === next.filedProposalKeys
+    prev.isLast === next.isLast
 );
 
 /* ───────────────────────── composing indicator ────────────────────────── */
@@ -811,6 +858,12 @@ function ProposalPanel({
   const t = TONE[tone];
   if (proposal.kind === 'propose_otj_reflection') {
     return <OtjProposalPanel proposal={proposal} t={t} filed={filed} onTap={onTap} />;
+  }
+  if (proposal.kind === 'propose_portfolio_item') {
+    return <PortfolioProposalPanel proposal={proposal} filed={filed} onTap={onTap} />;
+  }
+  if (proposal.kind === 'propose_ilp_goal') {
+    return <IlpGoalProposalPanel proposal={proposal} filed={filed} onTap={onTap} />;
   }
   return null;
 }
@@ -871,9 +924,7 @@ function OtjProposalPanel({
           </p>
         </div>
         {filed ? (
-          <span className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-emerald-200 bg-emerald-500/[0.10] border border-emerald-300/25">
-            Sent to tutor
-          </span>
+          <FiledPill href="/apprentice/college-plan#otj" label="Sent to tutor" />
         ) : (
           <button
             type="button"
@@ -885,6 +936,181 @@ function OtjProposalPanel({
             )}
           >
             Review &amp; file →
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** Filed-state pill for proposal panels — emerald, with an optional
+    deep-link so the apprentice can jump to the surface where their just-
+    filed record now lives (OTJ list / portfolio). */
+function FiledPill({ href, label }: { href: string; label: string }) {
+  const navigate = useNavigate();
+  return (
+    <button
+      type="button"
+      onClick={() => navigate(href)}
+      className="shrink-0 inline-flex items-center gap-1 h-8 px-3 rounded-md text-[11.5px] font-semibold text-emerald-200 bg-emerald-500/[0.10] border border-emerald-300/25 hover:bg-emerald-500/[0.16] transition-colors touch-manipulation"
+    >
+      {label} <span className="text-emerald-300/80">→</span>
+    </button>
+  );
+}
+
+function PortfolioProposalPanel({
+  proposal,
+  filed,
+  onTap,
+}: {
+  proposal: PortfolioItemProposal;
+  filed: boolean;
+  onTap: () => void;
+}) {
+  return (
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl border px-3.5 py-3 transition-opacity',
+        filed
+          ? 'border-emerald-300/30 bg-emerald-500/[0.06]'
+          : 'border-blue-300/30 bg-gradient-to-br from-blue-500/[0.08] via-[hsl(0_0%_11%)] to-[hsl(0_0%_11%)]'
+      )}
+    >
+      <div
+        className={cn(
+          'absolute inset-x-0 top-0 h-px opacity-50',
+          filed ? 'bg-emerald-300' : 'bg-blue-300'
+        )}
+      />
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <div
+            className={cn(
+              'text-[10px] font-medium uppercase tracking-[0.22em]',
+              filed ? 'text-emerald-300' : 'text-blue-300'
+            )}
+          >
+            {filed
+              ? '✓ Filed in your portfolio'
+              : `📁 Portfolio entry · ${proposal.category} · ready to file`}
+          </div>
+          <div className="mt-1.5 text-[13.5px] font-semibold text-white leading-snug">
+            {proposal.title}
+          </div>
+          <p
+            className={cn(
+              'mt-1 text-[12.5px] leading-snug line-clamp-3',
+              filed ? 'text-white/65' : 'text-white/85'
+            )}
+          >
+            {proposal.description}
+          </p>
+          {proposal.assessment_criteria_met.length > 0 && !filed && (
+            <div className="mt-2 flex items-center flex-wrap gap-1">
+              {proposal.assessment_criteria_met.slice(0, 6).map((ac) => (
+                <span
+                  key={ac}
+                  className="inline-flex items-center h-5 px-1.5 rounded-md border border-purple-300/30 bg-purple-500/[0.06] text-[10.5px] font-medium text-purple-200 font-mono"
+                >
+                  {ac}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+        {filed ? (
+          <FiledPill href="/apprentice/college-plan#portfolio" label="In portfolio" />
+        ) : (
+          <button
+            type="button"
+            onClick={onTap}
+            className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black bg-blue-300 hover:bg-blue-200 transition-colors touch-manipulation"
+          >
+            Review &amp; save →
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function IlpGoalProposalPanel({
+  proposal,
+  filed,
+  onTap,
+}: {
+  proposal: IlpGoalProposal;
+  filed: boolean;
+  onTap: () => void;
+}) {
+  const priorityLabel =
+    proposal.priority === 'high'
+      ? 'High priority'
+      : proposal.priority === 'low'
+        ? 'Low priority'
+        : 'Medium priority';
+  const dateLabel = proposal.target_date
+    ? new Date(proposal.target_date).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'short',
+      })
+    : null;
+
+  return (
+    <div
+      className={cn(
+        'relative overflow-hidden rounded-2xl border px-3.5 py-3 transition-opacity',
+        filed
+          ? 'border-emerald-300/30 bg-emerald-500/[0.06]'
+          : 'border-amber-300/30 bg-gradient-to-br from-amber-500/[0.08] via-[hsl(0_0%_11%)] to-[hsl(0_0%_11%)]'
+      )}
+    >
+      <div
+        className={cn(
+          'absolute inset-x-0 top-0 h-px opacity-50',
+          filed ? 'bg-emerald-300' : 'bg-amber-300'
+        )}
+      />
+      <div className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <div
+            className={cn(
+              'text-[10px] font-medium uppercase tracking-[0.22em]',
+              filed ? 'text-emerald-300' : 'text-amber-300'
+            )}
+          >
+            {filed
+              ? '✓ Sent for tutor review'
+              : `🎯 Proposed goal · ${priorityLabel}${dateLabel ? ` · by ${dateLabel}` : ''}`}
+          </div>
+          <div className="mt-1.5 text-[13.5px] font-semibold text-white leading-snug">
+            {proposal.title}
+          </div>
+          <p
+            className={cn(
+              'mt-1 text-[12.5px] leading-snug line-clamp-3',
+              filed ? 'text-white/65' : 'text-white/85'
+            )}
+          >
+            {proposal.description}
+          </p>
+          {proposal.acceptance_criteria && !filed && (
+            <p className="mt-2 text-[11.5px] text-amber-100/85 leading-snug">
+              <span className="text-amber-300/85 font-medium">Done when:</span>{' '}
+              {proposal.acceptance_criteria}
+            </p>
+          )}
+        </div>
+        {filed ? (
+          <FiledPill href="/apprentice/college-plan#plan" label="Awaiting tutor" />
+        ) : (
+          <button
+            type="button"
+            onClick={onTap}
+            className="shrink-0 inline-flex items-center h-8 px-3 rounded-md text-[11.5px] font-semibold text-black bg-amber-300 hover:bg-amber-200 transition-colors touch-manipulation"
+          >
+            Review &amp; send →
           </button>
         )}
       </div>

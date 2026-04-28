@@ -97,25 +97,59 @@ interface RawAction {
 
 /* ───────────────────────── proposals (write-back) ─────────────────────── */
 
-type ProposalKind = 'propose_otj_reflection';
+type ProposalKind = 'propose_otj_reflection' | 'propose_portfolio_item' | 'propose_ilp_goal';
 
+/** Loose shape coming back from the structure tool. We accept fields per
+    kind via optional props and validate downstream. */
 interface RawProposal {
   kind: ProposalKind;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
+  // OTJ-only
   estimated_minutes?: number;
   activity_type?: string;
   suggested_unit_codes?: string[];
+  // Portfolio-only
+  reflection_notes?: string;
+  category?: string;
+  assessment_criteria_met?: string[];
+  date_completed?: string;
+  // ILP goal-only
+  acceptance_criteria?: string;
+  priority?: string;
+  target_date?: string;
 }
 
-interface Proposal {
-  kind: ProposalKind;
+interface OtjReflectionProposal {
+  kind: 'propose_otj_reflection';
   title: string;
   description: string;
   estimated_minutes: number;
   activity_type: string;
   suggested_unit_codes: string[];
 }
+
+interface PortfolioItemProposal {
+  kind: 'propose_portfolio_item';
+  title: string;
+  description: string;
+  reflection_notes: string;
+  category: string;
+  assessment_criteria_met: string[];
+  date_completed: string;
+}
+
+interface IlpGoalProposal {
+  kind: 'propose_ilp_goal';
+  title: string;
+  description: string;
+  acceptance_criteria: string;
+  category: string;
+  priority: string;
+  target_date: string | null;
+}
+
+type Proposal = OtjReflectionProposal | PortfolioItemProposal | IlpGoalProposal;
 
 const ALLOWED_ACTIVITY_TYPES = new Set([
   'practical',
@@ -130,37 +164,108 @@ const ALLOWED_ACTIVITY_TYPES = new Set([
   'other',
 ]);
 
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+function todayIsoDate(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
 /** Validate + normalise a proposal coming back from the structure tool.
     Drops anything malformed so we never persist an invalid draft. */
 function resolveProposal(raw: RawProposal): Proposal | null {
-  if (raw?.kind !== 'propose_otj_reflection') return null;
-  const title = raw.title?.trim().slice(0, 120);
-  const description = raw.description?.trim().slice(0, 4_000);
-  if (!title || !description || description.length < 30) return null;
+  if (raw?.kind === 'propose_otj_reflection') {
+    const title = raw.title?.trim().slice(0, 120);
+    const description = raw.description?.trim().slice(0, 4_000);
+    if (!title || !description || description.length < 30) return null;
 
-  const minutes =
-    typeof raw.estimated_minutes === 'number' && raw.estimated_minutes > 0
-      ? Math.min(Math.round(raw.estimated_minutes), 600)
-      : 60;
-  const activityType =
-    raw.activity_type && ALLOWED_ACTIVITY_TYPES.has(raw.activity_type)
-      ? raw.activity_type
-      : 'practical';
-  const unitCodes = Array.isArray(raw.suggested_unit_codes)
-    ? raw.suggested_unit_codes
-        .map((c) => (typeof c === 'string' ? c.trim() : ''))
-        .filter((c): c is string => c.length > 0 && c.length < 40)
-        .slice(0, 6)
-    : [];
+    const minutes =
+      typeof raw.estimated_minutes === 'number' && raw.estimated_minutes > 0
+        ? Math.min(Math.round(raw.estimated_minutes), 600)
+        : 60;
+    const activityType =
+      raw.activity_type && ALLOWED_ACTIVITY_TYPES.has(raw.activity_type)
+        ? raw.activity_type
+        : 'practical';
+    const unitCodes = Array.isArray(raw.suggested_unit_codes)
+      ? raw.suggested_unit_codes
+          .map((c) => (typeof c === 'string' ? c.trim() : ''))
+          .filter((c): c is string => c.length > 0 && c.length < 40)
+          .slice(0, 6)
+      : [];
 
-  return {
-    kind: 'propose_otj_reflection',
-    title,
-    description,
-    estimated_minutes: minutes,
-    activity_type: activityType,
-    suggested_unit_codes: unitCodes,
-  };
+    return {
+      kind: 'propose_otj_reflection',
+      title,
+      description,
+      estimated_minutes: minutes,
+      activity_type: activityType,
+      suggested_unit_codes: unitCodes,
+    };
+  }
+
+  if (raw?.kind === 'propose_ilp_goal') {
+    const title = raw.title?.trim().slice(0, 200);
+    const description = raw.description?.trim().slice(0, 4_000);
+    if (!title || !description || description.length < 30) return null;
+
+    const acceptanceCriteria = raw.acceptance_criteria?.trim().slice(0, 2_000) ?? '';
+    const allowedCategories = new Set([
+      'academic',
+      'behavioural',
+      'skills',
+      'employability',
+      'wellbeing',
+      'attendance',
+      'other',
+    ]);
+    const category =
+      raw.category && allowedCategories.has(raw.category) ? raw.category : 'academic';
+    const allowedPriority = new Set(['low', 'medium', 'high']);
+    const priority = raw.priority && allowedPriority.has(raw.priority) ? raw.priority : 'medium';
+    const targetDate =
+      raw.target_date && ISO_DATE_RE.test(raw.target_date) ? raw.target_date : null;
+
+    return {
+      kind: 'propose_ilp_goal',
+      title,
+      description,
+      acceptance_criteria: acceptanceCriteria,
+      category,
+      priority,
+      target_date: targetDate,
+    };
+  }
+
+  if (raw?.kind === 'propose_portfolio_item') {
+    const title = raw.title?.trim().slice(0, 120);
+    const description = raw.description?.trim().slice(0, 4_000);
+    if (!title || !description || description.length < 30) return null;
+
+    const reflectionNotes = raw.reflection_notes?.trim().slice(0, 6_000) ?? '';
+    const category = raw.category?.trim().slice(0, 80) || 'Practical work evidence';
+    const acs = Array.isArray(raw.assessment_criteria_met)
+      ? raw.assessment_criteria_met
+          .map((c) => (typeof c === 'string' ? c.trim() : ''))
+          .filter((c): c is string => c.length > 0 && c.length < 40)
+          .slice(0, 8)
+      : [];
+    const dateCompleted =
+      raw.date_completed && ISO_DATE_RE.test(raw.date_completed)
+        ? raw.date_completed
+        : todayIsoDate();
+
+    return {
+      kind: 'propose_portfolio_item',
+      title,
+      description,
+      reflection_notes: reflectionNotes,
+      category,
+      assessment_criteria_met: acs,
+      date_completed: dateCompleted,
+    };
+  }
+
+  return null;
 }
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -384,17 +489,35 @@ Action kinds and what target_id (if any) to pass:
 If you don't have a real target_id for an action that needs one, omit the action entirely — never make one up.
 
 Proposals (apprentice persona only — leave empty for tutor):
-Emit a propose_otj_reflection proposal ONLY when the apprentice has either:
-  (a) explicitly asked you to draft an OTJ reflection / write up a job, OR
+Emit proposals ONLY when the apprentice has either:
+  (a) explicitly asked you to draft / write up a job, OR
   (b) described a real piece of work they did with enough detail to draft from.
 If they're asking for an explanation, theory, or general advice — DO NOT emit a proposal. Empty array is the correct default.
 
-When you do emit one:
-- title: 4-10 words summarising what they did. Verb-led.
-- description: 80-400 words, first person ("I tested...", "I noticed..."), capturing what they did, why it mattered, what they learnt, any BS 7671 reg they applied (in plain English with the reg number). This will be filed as a real OTJ entry — write it the way the apprentice would write it themselves, not the way an AI writes.
-- estimated_minutes: realistic duration. 60 if unsure.
-- activity_type: pick the closest match (practical / shadowing / manufacturer_training / industry_visit / employer_meeting / simulation / mentoring / theory / assessment / other).
-- suggested_unit_codes: up to 6 unit codes from the supplied AC catalogue that this activity genuinely covers. Empty if none clearly fit.
+Three kinds:
+1. propose_otj_reflection — off-the-job training entry. About TIME and LEARNING. Tutor-verified, counts toward ESFA hours.
+2. propose_portfolio_item — competency evidence. About WHAT THEY DID and WHICH ACs IT PROVES. Goes into their portfolio.
+3. propose_ilp_goal — a SMART learning goal sent to the tutor for review. About WHAT THEY WANT TO ACHIEVE NEXT. Different from the others — this is forward-looking, not a record of past work.
+
+Past work (something they already did): emit OTJ + portfolio together. Same first-person body is fine for both — they're complementary records, not duplicates.
+Past learning only (theory study, manufacturer training, shadowing without doing): just OTJ.
+Past evidence only (no time framing): just portfolio.
+Forward-looking — apprentice asks "help me set a goal" / "what should I work on" / mentions wanting to improve at X: propose_ilp_goal. Can stand alone, or accompany an OTJ/portfolio if they're filing a record AND setting a goal off the back of it.
+
+OTJ proposal:
+- title: 4-10 words. Verb-led.
+- description: 80-400 words, first person ("I tested...", "I noticed..."), what they did, why it mattered, what they learnt, any BS 7671 reg in plain English with the reg number. Write it the way the apprentice would, not the way an AI writes.
+- estimated_minutes: realistic. 60 if unsure.
+- activity_type: closest match from the enum.
+- suggested_unit_codes: up to 6 unit codes from the supplied AC catalogue.
+
+Portfolio proposal:
+- title: 4-10 words. Verb-led.
+- description: 80-400 words, first person, the actual work — process, observations, results, decisions.
+- reflection_notes: optional, a longer reflective body. Omit if description captures the learning too.
+- category: short tag like "Initial Verification — site work" or "Inspection & Testing".
+- assessment_criteria_met: up to 8 AC codes from the supplied AC catalogue. Use real codes only.
+- date_completed: YYYY-MM-DD. Defaults to today.
 
 If this is the FIRST turn, set title_suggestion to a 3-6 word title. Otherwise leave empty.
 
@@ -467,35 +590,37 @@ const STRUCTURE_TOOL = {
         },
         proposals: {
           type: 'array',
-          maxItems: 1,
+          maxItems: 3,
           description:
-            'Zero or one structured DRAFT the apprentice can confirm to file into a real record. Currently only propose_otj_reflection is supported. Emit ONLY when the apprentice has clearly described or asked you to draft a reflection on a real piece of work — never speculatively. Apprentice persona only — leave empty for tutor persona.',
+            "Zero to three structured DRAFTS the apprentice can confirm to file. Three kinds available: propose_otj_reflection (off-the-job training entry — time + learning, ESFA-defensible), propose_portfolio_item (competency evidence — what they did against which ACs), and propose_ilp_goal (a SMART learning goal sent to the tutor for review). A real piece of work often produces both an OTJ entry and a portfolio item. An ILP goal is different — it's the apprentice asking the tutor to set them a learning target. Don't duplicate kinds. Apprentice persona only — leave empty for tutor persona.",
           items: {
             type: 'object',
             additionalProperties: false,
             properties: {
               kind: {
                 type: 'string',
-                enum: ['propose_otj_reflection'],
+                enum: ['propose_otj_reflection', 'propose_portfolio_item', 'propose_ilp_goal'],
               },
               title: {
                 type: 'string',
                 description:
-                  'Short title for the OTJ entry — 4-10 words summarising the activity. e.g. "Tested ring final on flat refurb".',
+                  'Short title — 4-10 words summarising the activity / evidence. e.g. "Tested ring final on flat refurb".',
               },
               description: {
                 type: 'string',
                 description:
-                  'The reflection itself — 80-400 words, first person, what the apprentice did, why it mattered, what they learnt. Plain English. Use real BS 7671 refs in plain English when relevant.',
+                  'The body — 80-400 words, first person, what the apprentice did, why it mattered, what they learnt. Plain English. Use real BS 7671 refs in plain English when relevant.',
               },
+              // OTJ-only
               estimated_minutes: {
                 type: 'integer',
                 minimum: 15,
                 maximum: 600,
-                description: 'Estimated duration in minutes for this activity.',
+                description: 'OTJ only. Estimated duration in minutes.',
               },
               activity_type: {
                 type: 'string',
+                description: 'OTJ only.',
                 enum: [
                   'practical',
                   'shadowing',
@@ -512,8 +637,46 @@ const STRUCTURE_TOOL = {
               suggested_unit_codes: {
                 type: 'array',
                 description:
-                  'Up to 6 unit codes from the supplied AC catalogue that this activity covers. Use real codes only.',
+                  'OTJ only. Up to 6 unit codes from the supplied AC catalogue that this activity covers. Use real codes only.',
                 items: { type: 'string' },
+              },
+              // Portfolio-only
+              reflection_notes: {
+                type: 'string',
+                description:
+                  'Portfolio only. A longer reflective body (description = the work, reflection_notes = the learning). Optional — omit if description already captures both.',
+              },
+              category: {
+                type: 'string',
+                description:
+                  'Portfolio: short tag for the kind of evidence (e.g. "Initial Verification — site work"). ILP goal: one of academic / behavioural / skills / employability / wellbeing / attendance / other.',
+              },
+              assessment_criteria_met: {
+                type: 'array',
+                description:
+                  'Portfolio only. Up to 8 AC codes from the supplied AC catalogue that this evidence demonstrates. Use real codes only.',
+                items: { type: 'string' },
+              },
+              date_completed: {
+                type: 'string',
+                description:
+                  'Portfolio only. ISO date (YYYY-MM-DD) of when the work happened. Defaults to today.',
+              },
+              // ILP goal-only
+              acceptance_criteria: {
+                type: 'string',
+                description:
+                  'ILP goal only. Short SMART definition of "done" — what evidence proves the goal is met. e.g. "Pass the next initial verification quiz with ≥80% and complete one site IV under supervision".',
+              },
+              priority: {
+                type: 'string',
+                description: 'ILP goal only.',
+                enum: ['low', 'medium', 'high'],
+              },
+              target_date: {
+                type: 'string',
+                description:
+                  'ILP goal only. ISO date (YYYY-MM-DD) the apprentice aims to hit by. Use a realistic 2-8 week horizon unless context suggests otherwise.',
               },
             },
             required: ['kind', 'title', 'description'],
@@ -1085,15 +1248,20 @@ Deno.serve(async (req) => {
         }
 
         // Resolve proposals — apprentice persona only. Server validates +
-        // normalises shape so the apprentice's confirm sheet is always given
-        // a clean draft to render.
+        // normalises shape so each confirm sheet is always given a clean
+        // draft. Up to 3 (one OTJ + one portfolio + one ILP goal — the
+        // theoretical max from a single rich turn).
         const resolvedProposals: Proposal[] = [];
         if (body.persona === 'apprentice') {
+          const seenKinds = new Set<ProposalKind>();
           for (const raw of structure.proposals ?? []) {
             const p = resolveProposal(raw);
             if (!p) continue;
+            // De-dup: only one of each kind per turn.
+            if (seenKinds.has(p.kind)) continue;
+            seenKinds.add(p.kind);
             resolvedProposals.push(p);
-            if (resolvedProposals.length >= 1) break;
+            if (resolvedProposals.length >= 3) break;
           }
         }
 

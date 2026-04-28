@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { useNotebook } from '@/hooks/useNotebook';
 import { NotebookShell } from '@/components/notebook/NotebookShell';
@@ -26,6 +28,23 @@ export default function CollegeAiPage() {
 
   const nb = useNotebook({ persona: 'apprentice' });
 
+  // Deep-link auto-prompt: cards on the apprentice hub link here with
+  // ?prompt=... to fire the AI write-back loop directly. Auto-sends once
+  // on first load, then strips the param. Guarded by a ref so React's
+  // strict-mode double-mount in dev doesn't double-fire.
+  const [searchParams, setSearchParams] = useSearchParams();
+  const autoPromptedRef = useRef(false);
+  useEffect(() => {
+    if (autoPromptedRef.current) return;
+    const prompt = searchParams.get('prompt');
+    if (!prompt || nb.streaming) return;
+    autoPromptedRef.current = true;
+    void nb.send(prompt);
+    const next = new URLSearchParams(searchParams);
+    next.delete('prompt');
+    setSearchParams(next, { replace: true });
+  }, [searchParams, setSearchParams, nb]);
+
   return (
     <NotebookShell
       eyebrow="College AI"
@@ -45,6 +64,7 @@ export default function CollegeAiPage() {
       newConversation={nb.newConversation}
       deleteConversation={nb.deleteConversation}
       togglePinned={nb.togglePinned}
+      markProposalFiled={nb.markProposalFiled}
       welcomeExtra={<MyThisWeekCard />}
     />
   );

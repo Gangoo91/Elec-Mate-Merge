@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ChevronRight, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { SubmitWorkOtjSheet } from './SubmitWorkOtjSheet';
@@ -80,6 +81,7 @@ function fmtRel(iso: string | null): string {
 }
 
 export function MyOtjSubmitCard() {
+  const navigate = useNavigate();
   const [rows, setRows] = useState<OtjRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -191,14 +193,31 @@ export function MyOtjSubmitCard() {
             apprenticeship. Submit work activities here and your tutor signs them off.
           </p>
 
-          {/* Submit CTA — primary action of the card */}
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="mt-4 w-full h-11 rounded-lg bg-emerald-500 text-black text-[13px] font-semibold hover:bg-emerald-400 transition-colors touch-manipulation"
-          >
-            Submit work activity
-          </button>
+          {/* CTA row — primary submit, secondary AI write-up shortcut. The
+              AI path lands on College AI with a pre-prompt that fires the
+              write-back loop, drafting the OTJ entry + portfolio item +
+              optional ILP goal off a real story. */}
+          <div className="mt-4 grid grid-cols-1 sm:grid-cols-[1fr_auto] gap-2">
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              className="h-11 rounded-lg bg-emerald-500 text-black text-[13px] font-semibold hover:bg-emerald-400 transition-colors touch-manipulation"
+            >
+              Submit work activity
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                const prompt =
+                  "Help me write up the work I did today. I'll describe it and you draft the OTJ entry, the portfolio entry against any ACs it covers, and any goal worth setting.";
+                navigate(`/apprentice/college-ai?prompt=${encodeURIComponent(prompt)}`);
+              }}
+              className="inline-flex items-center justify-center gap-1.5 h-11 px-4 rounded-lg border border-cyan-300/30 bg-cyan-300/[0.08] text-cyan-200 text-[13px] font-semibold hover:bg-cyan-300/[0.14] transition-colors touch-manipulation"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Write up with AI
+            </button>
+          </div>
 
           {/* Recent submissions */}
           {rows.length > 0 && (

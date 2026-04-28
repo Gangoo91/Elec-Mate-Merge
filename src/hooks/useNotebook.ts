@@ -47,13 +47,21 @@ export interface SuggestedAction {
 }
 
 /* ───────── Proposals (AI write-back) ─────────
-   Each assistant message can carry zero or one structured drafts the
-   apprentice can confirm to file into a real record. Phase 1 supports
-   propose_otj_reflection only; further kinds (portfolio, ILP) plug in here. */
+   Each assistant message can carry up to two structured drafts the
+   apprentice can confirm to file into real records. A real piece of work
+   often produces both — an OTJ entry (time + learning) and a portfolio
+   item (competency evidence). Phase 3+ adds ILP goals. */
 
-export type ProposalKind = 'propose_otj_reflection';
+export type ProposalKind = 'propose_otj_reflection' | 'propose_portfolio_item' | 'propose_ilp_goal';
 
-export interface OtjReflectionProposal {
+/** Filed-state lives on the proposal itself so it survives reloads. Set
+    by mark_notebook_proposal_filed RPC after the apprentice confirms. */
+interface ProposalFiledState {
+  filed_at?: string | null;
+  filed_record_id?: string | null;
+}
+
+export interface OtjReflectionProposal extends ProposalFiledState {
   kind: 'propose_otj_reflection';
   title: string;
   description: string;
@@ -62,7 +70,27 @@ export interface OtjReflectionProposal {
   suggested_unit_codes: string[];
 }
 
-export type Proposal = OtjReflectionProposal;
+export interface PortfolioItemProposal extends ProposalFiledState {
+  kind: 'propose_portfolio_item';
+  title: string;
+  description: string;
+  reflection_notes: string;
+  category: string;
+  assessment_criteria_met: string[];
+  date_completed: string;
+}
+
+export interface IlpGoalProposal extends ProposalFiledState {
+  kind: 'propose_ilp_goal';
+  title: string;
+  description: string;
+  acceptance_criteria: string;
+  category: string;
+  priority: string;
+  target_date: string | null;
+}
+
+export type Proposal = OtjReflectionProposal | PortfolioItemProposal | IlpGoalProposal;
 
 export interface NotebookConversation {
   id: string;
@@ -397,6 +425,40 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
     [activeId, persona, streaming, subjectStudentId, fetchConversations]
   );
 
+  /** AI write-back: mark a proposal as filed into a real record. Optimistic
+      local update first (so the panel flips green instantly), then RPC to
+      persist filed_at + filed_record_id on the JSONB proposal — survives
+      reloads and stops the apprentice double-filing the same draft. */
+  const markProposalFiled = useCallback(
+    async (messageId: string, proposalIndex: number, recordId: string) => {
+      const filedAt = new Date().toISOString();
+
+      setMessages((prev) =>
+        prev.map((m) => {
+          if (m.id !== messageId || !m.proposals) return m;
+          const next = m.proposals.map((p, i) =>
+            i === proposalIndex ? { ...p, filed_at: filedAt, filed_record_id: recordId } : p
+          );
+          return { ...m, proposals: next };
+        })
+      );
+
+      // RPC is idempotent — calling it again later just overwrites filed_at.
+      // Errors are swallowed: optimistic state still protects within session,
+      // and we don't want to invalidate the apprentice's success toast.
+      try {
+        await supabase.rpc('mark_notebook_proposal_filed', {
+          p_message_id: messageId,
+          p_proposal_index: proposalIndex,
+          p_filed_record_id: recordId,
+        });
+      } catch {
+        /* no-op */
+      }
+    },
+    []
+  );
+
   const renameConversation = useCallback(async (conversationId: string, title: string) => {
     const trimmed = title.trim().slice(0, 80);
     if (!trimmed) return;
@@ -450,6 +512,7 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
       renameConversation,
       deleteConversation,
       togglePinned,
+      markProposalFiled,
       refresh: fetchConversations,
     }),
     [
@@ -465,6 +528,7 @@ export function useNotebook({ persona, subjectStudentId = null }: UseNotebookOpt
       renameConversation,
       deleteConversation,
       togglePinned,
+      markProposalFiled,
       fetchConversations,
     ]
   );
